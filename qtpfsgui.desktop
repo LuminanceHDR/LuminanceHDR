@@ -1,0 +1,27 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Qtpfsgui
+Name[en_US]=Qtpfsgui
+GenericName=HDR imaging
+GenericName[en_US]=HDR imaging
+GenericName[ru]=Cоздание HDR-снимков
+GenericName[it]=Workflow per immagini HDR
+Categories=Graphics;RasterGraphics;Photography;Viewer;Qt;
+Comment=Qtpfsgui is a graphical user interface used to create and tonemap HDR images
+Comment[en_US]=Qtpfsgui is a graphical user interface used to create and tonemap HDR images
+Comment[ru]=Qtpfsgui — программа для создания HDR-снимков и расчёта тонов
+Comment[it]=Qtpfsgui e' una interfaccia grafica usata per creare ed eseguire il tonemapping di immagini HDR
+Exec=/usr/local/bin/qtpfsgui
+TryExec=/usr/local/bin/qtpfsgui
+Icon=/usr/share/pixmaps/qtpfsgui.png
+MimeType=
+Path=
+StartupNotify=true
+StartupWMClass=qtpfsgui
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DCOP-ServiceType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+#X-StandardInstall=false

@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/new/prefix1" >
+        <file>images/appearance.png</file>
+        <file>images/apply.png</file>
+        <file>images/exit.png</file>
+        <file>images/fileclose.png</file>
+        <file>images/fileopen.png</file>
+        <file>images/filesave.png</file>
+        <file>images/filesaveas.png</file>
+        <file>images/help.png</file>
+        <file>images/newfile.png</file>
+        <file>images/options.png</file>
+        <file>images/qtpfsgui.png</file>
+        <file>images/raw_import.png</file>
+        <file>images/rotate_left.png</file>
+        <file>images/rotate_right.png</file>
+        <file>images/tonemap.png</file>
+        <file>images/undo.png</file>
+        <file>images/viewmag1.png</file>
+        <file>images/viewmag_dec.png</file>
+        <file>images/viewmag_inc.png</file>
+        <file>images/viewmagfit.png</file>
+    </qresource>
+</RCC>

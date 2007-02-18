@@ -1,0 +1,10 @@
+BYPASSED, PREGAMMA ALWAYS COMPUTED* consider in tonemapping rgb->xyz ... xyz->rgb (DONE, std::map hack still required)
+* Put a resize menu in main window. (Brandon Andrews's suggestions)
+* TEST/IMPROVE the icip06 antighosting feature (Pablo D'Angelo's suggestions)
+* consider supporting tiff LDR input/output.
+* audit code.
+
+* Frank's suggestions
+Another thing is the tonmapping parameters which are currently stored in
+the filename. How about storing them as EXIF comments when saving as
+jpeg? AFAIK, in EXIF comments can contain any text.

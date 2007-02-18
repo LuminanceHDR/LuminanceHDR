@@ -1,0 +1,73 @@
+13-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
+* added initial raw image format input support in "Open Hdr..." 
+	and in the "New Hdr..." wizard.
+	the raw import functionality is obtained via dcraw's code.
+* added settings panel.
+* added KDE/GNOME desktop integration
+
+05-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
+* Fixed exif calculations when APEX values are used. This fixes another red-image hdr bug.
+* Fixed a Segmentation Fault (const/noconst uchar*) bug that happens when compiling in Linux (Suse 10.2) against recent versions of Qt4.
+* Fixed some small memory leaks.
+
+29-01-2006 Giuseppe Rota <grota@users.sourceforge.net>
+* The only LDR image format supported is now JPEG, the one that has EXIF tags.
+* better EXIF tag check: if exif data not found user is warned and operation is aborted
+* code that displays negative hdr pixels in black has been commented out.
+* libpfs: added renameRGBChannelsToXYZ() renameXYZChannelsToRGB() convertRGBChannelsToXYZ() convertXYZChannelsToRGB()
+* restored PFS stream compatibility (PFS stream has XYZ color chans, not RGB!).
+* fixed color bug for reinhard04 tmo.
+
+18-01-2006 Giuseppe Rota <grota@users.sourceforge.net>
+* drastic changes in code layout/design aimed to reduce memory usage.
+* ``Fit to window'' option now keeps image ratio.
+* Faster computation of Durand va fftw3. Users need to download the new Win
+Dep Pckg.
+		
+
+25-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+Christmas changes:
+*  Initial anti-ghosting (BETA) feature.
+*  restored the "what you see is what you save" behaviour in TMO dialog. (fix saveLDR bug)
+*  removed buttons in the TMO section: modifying the settings implies istantaneous computation.
+*  fixed shortcuts action functionality.
+*  fixed save ldr dialog (if no extension specified it uses the one belonging to the current ``filter'')
+*  zoom in/out/original and fit to window enabled
+*  the application now remembers the last used directory for
+	open/save hdr
+	load/save settings
+	load input exposures
+
+22-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+v1.4
+*  tonemapping dialog: added save... load... line_edit pushbutton widgets.
+*  loading input ldr exposures      starts from last used directory.
+*  loading input TMO settings file  starts from last used directory.
+*  fixed stupid inefficiency while showing hdr.
+*  fixed memory leaks while closing hdr window.
+*  implemented loadsettings, savesettings, fromGui2Txt, fromTxt2Gui
+
+20-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+*  Changed behaviour in the TMO dialog: 
+	Combobox moved to the top of the preview image.
+	Clicking save you'll get the full (100%) input hdr tonemapped with current settings.
+*  Cleared some pfs buffers when the TMO dialog gets closed.
+*  Added a "Done!" label that shows up when the input ldr exposures have finished loading.
+
+20-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+*  changed some #includes
+*  added comment showing original pfshdrcreate hack: it was NOT in svn, now it's there only for future reference, in case it's needed.
+*  restructuring of svn repository in branches/qt4: moved hdrcreate* files into their own directory
+
+18-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+v1.3
+*  fixed bug: some cameras (NIKON D50) don't write ISO values in the JPEGS. That led to a wrong (completely red) hdr result. Now if qtpfsgui doesn't find a ISO value, it uses internally a default value of ISO=100 for all input exposures.
+
+15-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+*  created branch of qtpfsgui, using Qt4. (in svn the code is in branches/qtpfsgui-qt4)
+*  the code integrates libpfs/pfstmo/pfshdrcreate, now it's stand-alone.
+*  the code requires libexiv2-devel
+*  Compilable both in linux and in windows with mingw.
+*  supported hdr formats in windows are only: HDR(rgbe) and PFS.
+   Linux also supports OpenEXR. Still problems compiling OpenEXR in windows with MinGW, seems like no one has ever done it... :(
+   Also, OpenEXR is compilable with Cygwin, but Qt (qmake and everything) doesn't work with cygwin.

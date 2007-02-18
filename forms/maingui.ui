@@ -1,0 +1,416 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>MainGui</class>
+ <widget class="QMainWindow" name="MainGui" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>683</width>
+    <height>605</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Qtpfsgui</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+  </property>
+  <property name="toolButtonStyle" >
+   <enum>Qt::ToolButtonTextUnderIcon</enum>
+  </property>
+  <widget class="QWidget" name="centralwidget" />
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>683</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>Help</string>
+    </property>
+    <addaction name="helpAboutAction" />
+   </widget>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>File</string>
+    </property>
+    <addaction name="fileNewAction" />
+    <addaction name="fileOpenAction" />
+    <addaction name="fileSaveAsAction" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="menuSettings" >
+    <property name="title" >
+     <string>Settings</string>
+    </property>
+    <addaction name="OptionsAction" />
+   </widget>
+   <widget class="QMenu" name="menuImage" >
+    <property name="title" >
+     <string>Image</string>
+    </property>
+    <widget class="QMenu" name="menuResize" >
+     <property name="title" >
+      <string>Resize</string>
+     </property>
+    </widget>
+    <addaction name="rotateccw" />
+    <addaction name="rotatecw" />
+    <addaction name="separator" />
+    <addaction name="TonemapAction" />
+   </widget>
+   <widget class="QMenu" name="menuView" >
+    <property name="title" >
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuHDR_Histogram" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="title" >
+      <string>HDR Histogram</string>
+     </property>
+     <addaction name="Fit_to_dynamic_range" />
+     <addaction name="Low_dynamic_range" />
+     <addaction name="Shrink_dynamic_range" />
+     <addaction name="Extend_dynamic_range" />
+     <addaction name="Decrease_exposure" />
+     <addaction name="Increase_exposure" />
+    </widget>
+    <addaction name="menuHDR_Histogram" />
+    <addaction name="fitToWindowAct" />
+    <addaction name="normalSizeAct" />
+    <addaction name="zoomInAct" />
+    <addaction name="zoomOutAct" />
+   </widget>
+   <addaction name="menuFile" />
+   <addaction name="menuImage" />
+   <addaction name="menuView" />
+   <addaction name="menuSettings" />
+   <addaction name="menuHelp" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>583</y>
+     <width>683</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="toolBar" >
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <number>4</number>
+   </attribute>
+   <addaction name="fileNewAction" />
+   <addaction name="fileOpenAction" />
+   <addaction name="fileSaveAsAction" />
+   <addaction name="separator" />
+   <addaction name="TonemapAction" />
+   <addaction name="separator" />
+   <addaction name="fileExitAction" />
+  </widget>
+  <action name="fileNewAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/newfile.png</iconset>
+   </property>
+   <property name="text" >
+    <string>New Hdr...</string>
+   </property>
+   <property name="iconText" >
+    <string>New Hdr...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Create new HDR from a set of LDR (i.e. JPEG or PNG) images</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="fileOpenAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/fileopen.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Open Hdr...</string>
+   </property>
+   <property name="iconText" >
+    <string>Open Hdr....</string>
+   </property>
+   <property name="toolTip" >
+    <string>Open existing Hdr file and load it into the workspace</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="fileSaveAsAction" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Save Hdr as...</string>
+   </property>
+   <property name="iconText" >
+    <string>Save Hdr as...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save current Hdr to file</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="TonemapAction" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="checked" >
+    <bool>false</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/tonemap.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Tonemap the Hdr...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="fileExitAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Exit</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="rotateccw" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_left.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Rotate CounterClockWise</string>
+   </property>
+   <property name="iconText" >
+    <string>Rotate CounterClockWise</string>
+   </property>
+   <property name="toolTip" >
+    <string>Rotate Counterclockwise the HDR</string>
+   </property>
+   <property name="shortcut" >
+    <string>&lt;</string>
+   </property>
+  </action>
+  <action name="rotatecw" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_right.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Rotate ClockWise</string>
+   </property>
+   <property name="iconText" >
+    <string>Rotate ClockWise</string>
+   </property>
+   <property name="toolTip" >
+    <string>Rotate ClockWise</string>
+   </property>
+   <property name="shortcut" >
+    <string>></string>
+   </property>
+  </action>
+  <action name="Low_dynamic_range" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Low Dynamic Range</string>
+   </property>
+   <property name="shortcut" >
+    <string>L</string>
+   </property>
+  </action>
+  <action name="Fit_to_dynamic_range" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Fit to Dynamic Range</string>
+   </property>
+   <property name="shortcut" >
+    <string>\</string>
+   </property>
+  </action>
+  <action name="Shrink_dynamic_range" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Shrink Dynamic Range</string>
+   </property>
+   <property name="shortcut" >
+    <string>[</string>
+   </property>
+  </action>
+  <action name="Extend_dynamic_range" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Extend Dynamic Range</string>
+   </property>
+   <property name="shortcut" >
+    <string>]</string>
+   </property>
+  </action>
+  <action name="Decrease_exposure" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Decrease Exposure</string>
+   </property>
+   <property name="shortcut" >
+    <string>0</string>
+   </property>
+  </action>
+  <action name="Increase_exposure" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>&amp;Increase Exposure</string>
+   </property>
+   <property name="shortcut" >
+    <string>9</string>
+   </property>
+  </action>
+  <action name="helpAboutAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
+   </property>
+   <property name="text" >
+    <string>About...</string>
+   </property>
+   <property name="iconText" >
+    <string>About...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Show some quick help</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="normalSizeAct" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Normal Size</string>
+   </property>
+   <property name="shortcut" >
+    <string>O</string>
+   </property>
+  </action>
+  <action name="zoomInAct" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut" >
+    <string>+</string>
+   </property>
+  </action>
+  <action name="zoomOutAct" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut" >
+    <string>-</string>
+   </property>
+  </action>
+  <action name="fitToWindowAct" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Fit to Window</string>
+   </property>
+   <property name="shortcut" >
+    <string>W</string>
+   </property>
+  </action>
+  <action name="OptionsAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/options.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Configure Qtpfsgui...</string>
+   </property>
+   <property name="iconText" >
+    <string>Qtpfsgui Options</string>
+   </property>
+   <property name="toolTip" >
+    <string>Set the various options of qtpfsgui</string>
+   </property>
+  </action>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <resources>
+  <include location="../icons.qrc" />
+  <include location="icons.qrc" />
+ </resources>
+ <connections/>
+</ui>

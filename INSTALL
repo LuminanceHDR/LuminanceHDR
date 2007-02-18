@@ -1,0 +1,9 @@
+To compile from source, first, execute the command:
+        $qmake
+to generate the Makefile, then execute the command:
+        $make
+to compile the source code, and finally execute the command:
+        $make install
+to install the target file
+
+please read the README file as well, it's much more detailed!
