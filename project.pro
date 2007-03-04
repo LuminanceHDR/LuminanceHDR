@@ -1,6 +1,8 @@
 TEMPLATE = app
-
 CONFIG += release qt thread
+
+unix {
+########################################### QT ###########################################
 message( "Detecting Qt version:" )
 isEmpty(QT_VERSION) {
 message( "error, Qt3 found!")
@@ -22,16 +24,7 @@ error( "fatal error, bailing out." )
 message("Qt4, OK")
 }
 
-
-unix {
-target.path	= /usr/local/bin
-menu.files      = qtpfsgui.desktop
-menu.path       = /usr/share/applications
-icon.files      = images/qtpfsgui.png
-icon.path       = /usr/share/pixmaps
-INSTALLS	+= target menu icon
-
-#exiv2
+########################################### EXIV2 ###########################################
 message ( "" )
 message ( "Detecting exiv2:" )
 #I think these are the only paths where we have to search for.
@@ -56,6 +49,7 @@ isEmpty(EXIV2PATH) {
 INCLUDEPATH	*= $$EXIV2PATH
 LIBS		+= -lexiv2
 
+########################################### OPENEXR ###########################################
 #openEXR dependencies
 message ( "" )
 message ( "Detecting OpenEXR:" )
@@ -81,6 +75,7 @@ isEmpty(OPENEXRDIR) {
 INCLUDEPATH *= $$OPENEXRDIR
 LIBS += -lIlmImf -lImath -lHalf -lIex
 
+########################################### FFTW3 ###########################################
 #durand02 requires fftw3
 message ( "" )
 message ( "Detecting fftw3:" )
@@ -107,6 +102,7 @@ INCLUDEPATH *= $$FFTW3DIR
 LIBS += -lfftw3f -lm
 DEFINES += HAVE_FFTW
 
+########################################### LIBJPEG ###########################################
 #dcraw requires libjpeg
 message ( "" )
 message ( "Detecting libjpeg:" )
@@ -131,16 +127,31 @@ isEmpty(LIBJPEGDIR) {
 }
 INCLUDEPATH *= $$LIBJPEGDIR
 LIBS += -ljpeg
+######################################## end of detection ########################################
 
+############################## required by "make install" ########################################
+target.path	= /usr/local/bin
+menu.files      = qtpfsgui.desktop
+menu.path       = /usr/share/applications
+icon.files      = images/qtpfsgui.png
+icon.path       = /usr/share/pixmaps
+INSTALLS	+= target menu icon
+#################################################################################################
 #CONFIG += debug
 }
 
+macx {
+#TODO!
+
+}
+
 win32 {
+# this is just how my MinGW installation is. You gotta change it, if you want to compile it in windows.
 CONFIG += windows
 #CONFIG += debug
 #CONFIG += console
 
-#OpenEXR not available yet
+#OpenEXR not available yet in win32
 #LIBS += -lIlmImf -lImath -lHalf -lIex
 #LIBS += -LC:\devcppprojects\temp
 #INCLUDEPATH += C:\cygwin\usr\local\include\OpenEXR

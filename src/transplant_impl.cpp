@@ -94,7 +94,7 @@ void TransplantExifDialog::moveup_left() {
 		return;
 	//"VIEW"
 	//copy the before-first element to the past-end of the selection
-	leftlist->insertItem(stop_left+1,leftlist->item(start_left-1));
+	leftlist->insertItem(stop_left+1,QFileInfo(from.at(start_left-1)).fileName());
 	//remove the before-first element
 	leftlist->takeItem(start_left-1);
 	//"MODEL"
@@ -112,7 +112,7 @@ void TransplantExifDialog::moveup_right() {
 		return;
 	//"VIEW"
 	//copy the before-first element to the past-end of the selection
-	rightlist->insertItem(stop_right+1,rightlist->item(start_right-1));
+	rightlist->insertItem(stop_right+1,QFileInfo(to.at(start_right-1)).fileName());
 	//remove the before-first element
 	rightlist->takeItem(start_right-1);
 	//"MODEL"
@@ -130,7 +130,7 @@ void TransplantExifDialog::movedown_left() {
 		return;
 	//"VIEW"
 	//copy the past-end to the before-first element of the selection
-	leftlist->insertItem(start_left,leftlist->item(stop_left+1));
+	leftlist->insertItem(start_left,QFileInfo(from.at(stop_left+1)).fileName());
 	//remove the past-end
 	leftlist->takeItem(stop_left+2);
 	//"MODEL"
@@ -148,7 +148,7 @@ void TransplantExifDialog::movedown_right() {
 		return;
 	//"VIEW"
 	//copy the past-end to the before-first element of the selection
-	rightlist->insertItem(start_right,rightlist->item(stop_right+1));
+	rightlist->insertItem(start_right,QFileInfo(to.at(stop_right+1)).fileName());
 	//remove the past-end
 	rightlist->takeItem(stop_right+2);
 	//"MODEL"
@@ -187,10 +187,8 @@ void TransplantExifDialog::remove_right() {
 }
 
 void TransplantExifDialog::append_left() {
-	QString filetypes;
-// 	filetypes += "JPEG (*.jpeg *.jpg *.JPG *.JPEG);;";
-	filetypes += "All Files (*)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", "/home/grota/Desktop/raw formats", filetypes );
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", QDir::currentPath(), filetypes );
 	if (!files.isEmpty()) {
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {
@@ -206,10 +204,8 @@ void TransplantExifDialog::append_left() {
 }
 
 void TransplantExifDialog::append_right() {
-	QString filetypes;
-// 	filetypes += "JPEG (*.jpeg *.jpg *.JPG *.JPEG);;";
-	filetypes += "All Files (*)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", "/home/grota/Desktop/da modificare", filetypes );
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", QDir::currentPath(), filetypes );
 	if (!files.isEmpty()) {
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {
@@ -286,7 +282,7 @@ void TransplantExifDialog::transplant_requested() {
 			//check if current source key exists in destination file
 			Exiv2::ExifData::iterator maybe_exists = dest_exifData.findKey( Exiv2::ExifKey(i->key()) );
 // 			//if exists AND we are told not to overwrite
-			if (maybe_exists != dest_exifData.end() && !checkBox_dont_overwrite->isChecked()) {
+			if (maybe_exists != dest_exifData.end() && checkBox_dont_overwrite->isChecked()) {
 				continue;
 			} else {
 				//here we copy the value

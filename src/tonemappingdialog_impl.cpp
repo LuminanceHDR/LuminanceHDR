@@ -479,7 +479,7 @@ void TMODialog::saveLDR() {
 			if( ! QImagecurrentLDR->save(outfname,format,100) ) {
 				QMessageBox::warning(this,"","Failed to save to <b>" + outfname + "</b>",
 						QMessageBox::Ok, QMessageBox::NoButton);
-			} else if (QString(format).startsWith("jp")) {
+			} else if ((fd->selectedFilter()).startsWith("JPEG")) {
 				//success in saving file, time to write the exif data...
 				writeExifData(outfname);
 			}
