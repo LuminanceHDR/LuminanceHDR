@@ -1,4 +1,4 @@
-This is the README file for qtpfsgui v1.8.0
+This is the README file for qtpfsgui v1.8.1
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net/
@@ -19,27 +19,22 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.0 of qtpfsgui, a Qt4 graphical user interface that
-enables users to work on HDR images.
+This is version 1.8.1 of qtpfsgui, a Qt4 graphical user interface that
+provides a workflow for HDR imaging.
 Supported operations include: creations of a HDR file from a set of
 images of a scene taken at different exposure setting, loading an
-existing HDR image, saving an image in a HDR format, rotating HDRs,
+existing HDR image, saving an image in a HDR format, rotating and resizing HDRs,
 and tonemapping an HDR image into a common LDR image format (e.g jpeg or png).
+Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 4 (Changes) to read the changes for version 1.8.0.
-*****WARNING*****
-The Windows users of v1.8.0 have to download the new ``Windows 
-dependency package V2'', make sure to get it at:
-http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs.zip?use_mirror=osdn
+Read section 4 (Changes) to read the changes for version 1.8.1.
 
-The code is in part based on the existing opensource program "pfsview"
-(belonging to the pfstools package) by Grzegorz Krawczyk 
-and on "qpfstmo", by Nicholas Phillips.
+The code is in part based on the existing opensource packages:
+"pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
+"qpfstmo", by Nicholas Phillips.
+"dcraw", by Dave Coffin.
 Without their contribution all of this would have not been possible.
-The code also integrates the packages pfstools and pfstmo by
-Grzegorz Krawczyk, see below for links.
-The code also integrates the code from Dave Coffin's dcraw.
 
 
 
@@ -50,16 +45,16 @@ Qtpfsgui has 5 dependencies (4 in windows):
 2) exiv2 (www.exiv2.org)
 3) fftw3 (www.fftw.org)
 4) libjpeg (www.ijg.org)
-5) OpenEXR (www.openexr.com, Linux only)
+5) OpenEXR (www.openexr.com, **Linux only**)
 
-On Windows you can satisfy all the runtime dependencies by downloading the ``Window Dependency package'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs.zip?use_mirror=osdn
+On Windows you can satisfy all the runtime dependencies by downloading the ``Window Dependency package V2'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V2.zip?use_mirror=belnet
 On linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
 
 1) Qt4 is required because it's the framework the graphical interface was built on.
 
-2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images.
+2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other exif-related functionalities).
 
-3) fftw is required by the fast implementation of Durand tonemapping algorithm. In case you are building the sources and you don't want fftw as a dependency read the next chapter: ``Compiling from source''.
+3) fftw is required by the fast implementation of Durand tonemapping algorithm.
 In particular qtpfsgui requires the "float" variety of fftw3.
 
 4) libjpeg is required by the underlying dcraw's implementation for raw file formats.
@@ -70,6 +65,8 @@ OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial 
 The package is also known as ``ilmbase'' on some distros.
 As for the other dependencies, OpenEXR is required at runtime as well.
 
+
+
 3. Compiling from source
 -------------------------------------------------------------------
 The build system is based on Qt's qmake.
@@ -77,22 +74,20 @@ The build description is contained in the project.pro file.
 Running
 > qmake 
 from the directory where there is project.pro creates the Makefile.
-Then you can run 
+Starting v1.8.1 qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
+Then you can run
 > make
 to compile.
 In linux you can also run
 # make install
 as root to install the qtpfsgui executable in /usr/local/bin.
 
-WARNING: the naive build system makes the assumption that the exiv2
-headers are in /usr/include/exiv2/ and the various libraries in /usr/lib.
-If that is not true on your system, please change the related
-variables in qtpfsgui.pro before running ``qmake'' as explained below.
-(On ubuntu run "apt-get install libexiv2-dev")
-This is true also for the fftw3 and OpenEXR (linux only).
-For example on Fedora Core 6 (FC6) you need to install OpenEXR-1.4.0a-3.fc6 and ilmbase-0.9.0; Then you need to modify the INCLUDEPATH to point to /usr/local/include/OpenEXR (that's where the headers of openexr are installed to in FC6).
+WARNING:
+Starting v1.8.1, qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
+If something goes wrong drop me an email.
 
-WARNING: In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On ubuntu you can install the program ``galternatives'' that lets you pick from qt3's or qt4's executables.
+WARNING:
+In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On ubuntu you can install the program ``galternatives'' that lets you pick from qt3's or qt4's executables.
 
 Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X.X seems to have solved the issue.
 
@@ -109,6 +104,8 @@ to be changed according to your setup.
 -------------------------------------------------------------------
 Here I'll describe the workflow in qtpfsgui: pretty much the same
 information can be found in the Help->About dialog.
+See also:
+http://osp.wikidot.com/qtpfsgui-manual
 
 From the main window you can see the buttons that enable the user
 to work on HDR images:
@@ -136,7 +133,7 @@ and very cpu demanding.
 
 "Save Hdr as...", "Open Hdr..." and "Tonemap the Hdr...":
 Once the hdr is loaded into the main workspace you can choose to rotate it,
-save it (in one of the HDR supported formats) or to tonemap it.
+resize it, save it (in one of the HDR supported formats) or to tonemap it.
 
 Through "Open Hdr..." you can also choose to open an existing HDR image 
 format and load it into the workspace. The user can now load also a raw image file.
@@ -151,22 +148,32 @@ You can also choose a working size different from the original
 one (the TMO will be faster: this is useful for getting
 a quick peek at the results of the current settings).
 
-After you're satisfied with the results you can press the big save
+After you're satisfied with the results you can press the save
 button to save the results to one of the plain LDR formats,
 like PNG or JPEG.
 
 NOTE:
-The tonemapping step works like this (as a pipe, some people would say):
+The tonemapping step works like this (as a pipeline, some people would say):
 (pre)gamma -> tonemapping operator -> (post)gamma
-Now, postgamma is the usual run-of-the-mill gamma effect: it 
+Now, postgamma is the usual run-of-the-mill gamma effect: it
 roughly changes brightness.
 The tonemapping operator transforms an HDR into a LDR.
-The pregamma changes the gamma in the HDR before the tonemapping: 
-depending on the chosen tonemapping operator it can yield 
+The pregamma changes the gamma in the HDR before the tonemapping:
+depending on the chosen tonemapping operator it can yield
 unexpected effects like changing color saturation.
+
 
 5. Changes
 -------------------------------------------------------------------
+v1.8.1
+	* New functionalities:
+		Dialog to resize an HDR.
+		Dialog to transplant exif data.
+	* Dependency detection system when compiling in Linux
+	* We write exif data in output JPEG image: various tonemapping parameters in "Comment" and qtpfsgui in "software"
+	* Apply button in tonemapping dialog
+	* Improved usability in: spinboxes, file dialogs, error messages
+
 v1.8.0
 	* added initial raw image format input support in "Open Hdr..." 
 	and in the "New Hdr..." wizard.
@@ -177,7 +184,7 @@ v1.8.0
 ***WARNING***
 The Windows users of v1.8.0 have to download the new ``Windows
 dependency package V2'', make sure to get it at:
-http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs.zip?use_mirror=osdn
+http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V2.zip?use_mirror=belnet
 
 Read the Changelog file for previous versions' details.
 
