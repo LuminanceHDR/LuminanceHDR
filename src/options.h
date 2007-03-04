@@ -40,6 +40,14 @@
 
 #define KEY_KEEPSIZE "keep_size_on_tabswitch"
 
+//--------------------PATHS & co. ----------------
+#define KEY_RECENT_PATH_LOAD_SAVE_HDR "RecentDirHDRSetting"
+#define KEY_RECENT_FILES "recentFileList"
+#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "RecentDirTMOSetting"
+#define KEY_RECENT_PATH_SAVE_LDR "RecentDirLDRSetting"
+#define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "RecentDirInputLDRs"
+
+
 struct dcraw_opts {
 	bool auto_wb; // "-a" Use automatic white balance. DEFAULT IS FALSE.
 	bool camera_wb; //"-w" Use camera white balance, if possible. DEFAULT IS (FALSE, but set it) TRUE.

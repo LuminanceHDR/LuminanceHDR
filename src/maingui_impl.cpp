@@ -27,6 +27,7 @@
 #include "../generated_uic/ui_help_about.h"
 #include "pfsindcraw.h"
 #include "config.h"
+#include "transplant_impl.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
@@ -75,7 +76,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 	workspace->setScrollBarsEnabled( TRUE );
 	setCentralWidget(workspace);
 
-	RecentDirHDRSetting=settings.value("RecentDirHDRSetting",QDir::currentPath()).toString();
+	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
 	qtpfsgui_options=new qtpfsgui_opts();
 	load_options(qtpfsgui_options);
 
@@ -87,6 +88,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
+	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
 	connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_ldr_exposure()));
 	connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_fit_exposure()));
 	connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_shrink_exposure()));
@@ -100,6 +102,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 // 	connect(menuView,SIGNAL(aboutToShow()),this,SLOT(viewMenuAboutToShow()));
 	connect(helpAboutAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
+	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
             recentFileActs[i] = new QAction(this);
@@ -122,7 +125,7 @@ void MainGui::fileNewViaWizard() {
 		ImageMDIwindow *newmdi=new ImageMDIwindow( this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor );
 		newmdi->updateHDR(wizard->getPfsFrameHDR());
 		workspace->addWindow(newmdi);
-		newmdi->toolBar->addAction(TonemapAction);
+// 		newmdi->toolBar->addAction(TonemapAction);
 		newmdi->setWindowTitle(wizard->getCaptionTEXT());
 		newmdi->show();
 	}
@@ -138,16 +141,17 @@ void MainGui::fileOpen()
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC);;";
 	filetypes += "PFS Stream (*.pfs *.PFS);;";
-	filetypes += "CANON RAW (*.crw *.CRW *.cr2 *CR2);;";
-	filetypes += "NIKON RAW (*.nef *.NEF);;";
-	filetypes += "ADOBE DNG (*.dng *.DNG);;";
-	filetypes += "MINOLTA RAW (*.mrw *.MRW);;";
-	filetypes += "OLYMPUS RAW (*.olf *.OLF);;";
-	filetypes += "KODAK RAW (*.kdc *.KDC *.dcr *DCR);;";
-	filetypes += "SONY RAW (*.arw *.ARW);;";
-	filetypes += "FUJI RAW (*.raf *.RAF);;";
-	filetypes += "PENTAX RAW (*.ptx *.PTX *.pef *.PEF);;";
-	filetypes += "SIGMA RAW (*.x3f *.X3F)";
+	filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+// 	filetypes += "CANON RAW (*.crw *.CRW *.cr2 *CR2);;";
+// 	filetypes += "NIKON RAW (*.nef *.NEF);;";
+// 	filetypes += "ADOBE DNG (*.dng *.DNG);;";
+// 	filetypes += "MINOLTA RAW (*.mrw *.MRW);;";
+// 	filetypes += "OLYMPUS RAW (*.olf *.OLF);;";
+// 	filetypes += "KODAK RAW (*.kdc *.KDC *.dcr *DCR);;";
+// 	filetypes += "SONY RAW (*.arw *.ARW);;";
+// 	filetypes += "FUJI RAW (*.raf *.RAF);;";
+// 	filetypes += "PENTAX RAW (*.ptx *.PTX *.pef *.PEF);;";
+// 	filetypes += "SIGMA RAW (*.x3f *.X3F)";
 	QString opened = QFileDialog::getOpenFileName(
 			this,
 			"Choose a HDR file to OPEN...",
@@ -162,8 +166,8 @@ if( ! opened.isEmpty() ) {
 	// update internal field variable
 	RecentDirHDRSetting=qfi.path();
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirHDRSetting != settings.value("RecentDirHDRSetting",QDir::currentPath()).toString()) {
-		settings.setValue("RecentDirHDRSetting", RecentDirHDRSetting);
+	if (RecentDirHDRSetting != settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString()) {
+		settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 	}
 	if (!qfi.isReadable()) {
 	    QMessageBox::warning(this,"Aborting...","File is not readable (check existence, permissions,...)",
@@ -199,7 +203,7 @@ if( ! opened.isEmpty() ) {
 	nuova=new ImageMDIwindow(this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
 	nuova->updateHDR(hdrpfsframe);
 	workspace->addWindow(nuova);
-	nuova->toolBar->addAction(TonemapAction);
+// 	nuova->toolBar->addAction(TonemapAction);
 	nuova->setWindowTitle(opened);
 	nuova->show();
 	return true;
@@ -209,46 +213,57 @@ return false;
 
 void MainGui::fileSaveAs()
 {
-    QString filetypes;
+	QStringList filetypes;
 #ifndef __WIN32
-    filetypes += "OpenEXR (*.exr);;";
+	filetypes += "OpenEXR (*.exr)";
 #endif
-    filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC);;";
-    filetypes += "PFS Stream (*.pfs *.PFS)";
+	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC)";
+	filetypes += "PFS Stream (*.pfs *.PFS)";
 
-	QString fname =QFileDialog::getSaveFileName(
-			this,
-			"SAVE the HDR to...",
-			RecentDirHDRSetting,
-			filetypes);
-
-	if(!fname.isEmpty()) {
-		QFileInfo qfi(fname);
-		// update internal field variable
-		RecentDirHDRSetting=qfi.path();
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-		if (RecentDirHDRSetting != settings.value("RecentDirHDRSetting",QDir::currentPath()).toString()) {
-			settings.setValue("RecentDirHDRSetting", RecentDirHDRSetting);
-		}
+	QFileDialog *fd = new QFileDialog(this);
+	fd->setWindowTitle("SAVE the HDR to...");
+	fd->setDirectory(RecentDirHDRSetting);
+// 	fd->selectFile(...);
+	fd->setFileMode(QFileDialog::AnyFile);
+	fd->setFilters(filetypes);
+	fd->setAcceptMode(QFileDialog::AcceptSave);
+	fd->setConfirmOverwrite(true);
+#ifdef _WIN32
+	fd->setDefaultSuffix("hdr");
+#else
+	fd->setDefaultSuffix("exr");
+#endif
+	if (fd->exec()) {
+		QString fname=(fd->selectedFiles()).at(0);
+		if(!fname.isEmpty()) {
+			QFileInfo qfi(fname);
+			// update internal field variable
+			RecentDirHDRSetting=qfi.path();
+			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+			if (RecentDirHDRSetting != settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString()) {
+				settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
+			}
 #ifndef _WIN32
-		if (qfi.suffix().toUpper()=="EXR") {
-			writeEXRfile  (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
-		} else 
+			if (qfi.suffix().toUpper()=="EXR") {
+				writeEXRfile  (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
+			} else 
 #endif
-			if (qfi.suffix().toUpper()=="HDR") {
-			writeRGBEfile (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
-		} else if (qfi.suffix().toUpper()=="PFS") {
-			pfs::DOMIO pfsio;
-			FILE * fp=fopen(qfi.filePath().toAscii().constData(),"wb");
-			(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertRGBChannelsToXYZ();
-			pfsio.writeFrame(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),fp);
-			(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertXYZChannelsToRGB();
-		} else {
-	    		QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, and PFS files up until now.",
-				 QMessageBox::Ok,QMessageBox::NoButton);
+				if (qfi.suffix().toUpper()=="HDR") {
+				writeRGBEfile (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
+			} else if (qfi.suffix().toUpper()=="PFS") {
+				pfs::DOMIO pfsio;
+				FILE * fp=fopen(qfi.filePath().toAscii().constData(),"wb");
+				(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertRGBChannelsToXYZ();
+				pfsio.writeFrame(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),fp);
+				(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertXYZChannelsToRGB();
+			} else {
+				QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, and PFS files up until now.",
+					QMessageBox::Ok,QMessageBox::NoButton);
+			}
+			setCurrentFile(fname);
 		}
-		setCurrentFile(fname);
 	}
+	delete fd;
 }
 
 void MainGui::updatecurrentMDIwindow( QWidget * w )
@@ -264,6 +279,7 @@ void MainGui::updatecurrentMDIwindow( QWidget * w )
 	Extend_dynamic_range->setEnabled(w!=NULL);
 	Decrease_exposure->setEnabled(w!=NULL);
 	Increase_exposure->setEnabled(w!=NULL);
+	actionResizeHDR->setEnabled(w!=NULL);
 	if (w!=NULL) {
 		ImageMDIwindow* current=(ImageMDIwindow*)(workspace->activeWindow());
 // 		current->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
@@ -318,6 +334,22 @@ void MainGui::dispatchrotate( bool clockwise) {
 	rotatecw->setEnabled(true);
 }
 
+void MainGui::resize_requested() {
+	if ((((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())==NULL) {
+		QMessageBox::warning(this,"","Problem with original (source) buffer...",
+					QMessageBox::Ok, QMessageBox::NoButton);
+		return;
+	}
+	ResizeDialog *resizedialog=new ResizeDialog(this,((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame());
+	if (resizedialog->exec() == QDialog::Accepted) {
+		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
+		((ImageMDIwindow*)(workspace->activeWindow()))->updateHDR(resizedialog->getResizedFrame());
+		QApplication::restoreOverrideCursor();
+	}
+	delete resizedialog;
+}
+
 void MainGui::current_mdiwindow_decrease_exposure() {
 ((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->decreaseExposure();
 }
@@ -370,7 +402,7 @@ void MainGui::helpAbout() {
 }
 
 void MainGui::updateRecentFileActions() {
-	QStringList files = settings.value("recentFileList").toStringList();
+	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	
 	int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 	separatorRecentFiles->setVisible(numRecentFiles > 0);
@@ -396,13 +428,13 @@ void MainGui::openRecentFile() {
 }
 
 void MainGui::setCurrentFile(const QString &fileName) {
-	QStringList files = settings.value("recentFileList").toStringList();
+	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	files.removeAll(fileName);
 	files.prepend(fileName);
 	while (files.size() > MaxRecentFiles)
 		files.removeLast();
 
-	settings.setValue("recentFileList", files);
+	settings.setValue(KEY_RECENT_FILES, files);
 	updateRecentFileActions();
 }
 
@@ -417,6 +449,12 @@ void MainGui::options_called() {
 			((ImageMDIwindow*)p)->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
 		}
 	}
+}
+
+void MainGui::transplant_called() {
+	TransplantExifDialog *transplant=new TransplantExifDialog(this);
+	transplant->setAttribute(Qt::WA_DeleteOnClose);
+	transplant->exec();
 }
 
 void MainGui::load_options(qtpfsgui_opts *dest) {

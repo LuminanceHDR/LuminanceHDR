@@ -59,19 +59,20 @@ private:
 	void prepareLDR();
 	bool setting_graphic_widgets;
 	QImage *QImagecurrentLDR; uchar *imagedata;
-	QString caption,fname;
+	QString caption,fname,exif_comment;
 	QSettings settings;
 	QString RecentDirTMOSetting,inputSettingsFilename;
 	QString RecentDirLDRSetting;
 	bool keep_size;
 
-private slots:
-	void startChain();
 	void setWorkSize( int index );
 	void pregammasliderchanged();
 	void runToneMap();
 	void postgammasliderchanged();
-	
+	void writeExifData(const QString);
+
+private slots:
+	void startChain();
 	void preGammaReset();
 	void postGammaReset();
 	void ashikhminReset();
@@ -82,7 +83,7 @@ private slots:
 	void reinhard02Reset();
 	void reinhard04Reset();
 	void saveLDR();
-	void tabPageChanged();
+// 	void tabPageChanged();
 
 	void savesettings();
 	void loadsettings();

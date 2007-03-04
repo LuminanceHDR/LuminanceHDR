@@ -8,16 +8,16 @@ Sourceforge:   http://sourceforge.net/projects/qtpfsgui/
 Contents
 ---------
 
-0. What it is
-1. Dependencies 
-2. Compiling from source
-3. Workflow in the gui
-4. Changes
-5. Contact and Links
+1. What it is
+2. Dependencies
+3. Compiling from source
+4. Workflow in the gui
+5. Changes
+6. Contact and Links
 
 
 
-0. What it is
+1. What it is
 ---------------------------------------------------------------------
 This is version 1.8.0 of qtpfsgui, a Qt4 graphical user interface that
 enables users to work on HDR images.
@@ -43,35 +43,34 @@ The code also integrates the code from Dave Coffin's dcraw.
 
 
 
-1. Dependencies
+2. Dependencies
 -------------------------------------------------------------------
-Qtpfsgui has 3 dependencies:
+Qtpfsgui has 5 dependencies (4 in windows):
 1) Qt4 (www.trolltech.com)
 2) exiv2 (www.exiv2.org)
 3) fftw3 (www.fftw.org)
 4) libjpeg (www.ijg.org)
-
-Qt4 is required because it's the framework the graphical interface was built on.
-
-libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images.
-
-fftw is required by the fast implementation of Durand tonemapping algorithm. In case you are building the sources and you don't want fftw as a dependency read the next chapter: ``Compiling from source''.
-In particular qtpfsgui requires the "float" variety of fftw3.
-
-libjpeg is required by the underlying dcraw's implementation for raw file formats.
+5) OpenEXR (www.openexr.com, Linux only)
 
 On Windows you can satisfy all the runtime dependencies by downloading the ``Window Dependency package'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs.zip?use_mirror=osdn
-
 On linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
 
-If you want to compile the software from source in linux you also need:
-5) OpenEXR (www.openexr.com)
-OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial Light & Magic for use in computer imaging applications.
+1) Qt4 is required because it's the framework the graphical interface was built on.
+
+2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images.
+
+3) fftw is required by the fast implementation of Durand tonemapping algorithm. In case you are building the sources and you don't want fftw as a dependency read the next chapter: ``Compiling from source''.
+In particular qtpfsgui requires the "float" variety of fftw3.
+
+4) libjpeg is required by the underlying dcraw's implementation for raw file formats.
+
+5) OpenEXR (www.openexr.com, Linux only)
 OpenEXR hdr format is available only on linux platforms for now.
+OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial Light & Magic for use in computer imaging applications.
 The package is also known as ``ilmbase'' on some distros.
 As for the other dependencies, OpenEXR is required at runtime as well.
 
-2. Compiling from source
+3. Compiling from source
 -------------------------------------------------------------------
 The build system is based on Qt's qmake.
 The build description is contained in the project.pro file.
@@ -106,7 +105,7 @@ to be changed according to your setup.
 
 
 
-3. Workflow in the gui
+4. Workflow in the gui
 -------------------------------------------------------------------
 Here I'll describe the workflow in qtpfsgui: pretty much the same
 information can be found in the Help->About dialog.
@@ -166,7 +165,7 @@ The pregamma changes the gamma in the HDR before the tonemapping:
 depending on the chosen tonemapping operator it can yield 
 unexpected effects like changing color saturation.
 
-4. Changes
+5. Changes
 -------------------------------------------------------------------
 v1.8.0
 	* added initial raw image format input support in "Open Hdr..." 
@@ -183,7 +182,7 @@ http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs.zip?use_mirror=o
 Read the Changelog file for previous versions' details.
 
 
-5. Contact and Links
+6. Contact and Links
 -------------------------------------------------------------------
 All comments and suggestions concerning this package or implementation
 of particular algorithm are very welcome. Please report bugs and

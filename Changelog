@@ -1,3 +1,16 @@
+04-03-2004 v1.8.1 Giuseppe Rota <grota@users.sourceforge.net>
+* new dialogs: resize and transplant
+* new actions in mainwindow: transplant and resize
+* now using doublespinboxes rather than QLineEdits in tonemapping dialog
+* now using "apply" button
+* initial dependency detection system when compiling in linux
+* critical changes in gang.{h,cpp}, to use QDoubleSpinboxes
+* updated icip06 exponent: 24->12 (it still seems to not work) :(
+* hdrwizard: improved error message
+* hdrwizard & mainwindow: gathered all raw formats in 1 filter
+* swapped increase/decrease exposure
+* writing tonemapping parameters in output ldr
+
 13-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
 * added initial raw image format input support in "Open Hdr..." 
 	and in the "New Hdr..." wizard.

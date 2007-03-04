@@ -1,5 +1,5 @@
 <ui version="4.0" >
- <author></author>
+ <author>Giuseppe Rota</author>
  <comment></comment>
  <exportmacro></exportmacro>
  <class>TMODialog</class>
@@ -23,17 +23,37 @@
   </property>
   <layout class="QHBoxLayout" >
    <property name="margin" >
-    <number>9</number>
+    <number>3</number>
    </property>
    <property name="spacing" >
-    <number>6</number>
+    <number>0</number>
    </property>
    <item>
-    <widget class="QSplitter" name="" >
+    <widget class="QSplitter" name="splitter" >
+     <property name="lineWidth" >
+      <number>1</number>
+     </property>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="" >
+     <property name="handleWidth" >
+      <number>17</number>
+     </property>
+     <widget class="QFrame" name="frame_TMSettings" >
+      <property name="sizePolicy" >
+       <sizepolicy>
+        <hsizetype>5</hsizetype>
+        <vsizetype>5</vsizetype>
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape" >
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow" >
+       <enum>QFrame::Plain</enum>
+      </property>
       <layout class="QVBoxLayout" >
        <property name="margin" >
         <number>0</number>
@@ -45,7 +65,7 @@
         <widget class="QTabWidget" name="operators_tabWidget" >
          <property name="sizePolicy" >
           <sizepolicy>
-           <hsizetype>13</hsizetype>
+           <hsizetype>5</hsizetype>
            <vsizetype>5</vsizetype>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
@@ -190,20 +210,21 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="contrastLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="contrastdsb" >
+               <property name="focusPolicy" >
+                <enum>Qt::StrongFocus</enum>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="decimals" >
+                <number>2</number>
+               </property>
+               <property name="maximum" >
+                <double>1</double>
+               </property>
+               <property name="singleStep" >
+                <double>0.1</double>
+               </property>
+               <property name="value" >
+                <double>0.5</double>
                </property>
               </widget>
              </item>
@@ -240,6 +261,9 @@
                </property>
                <property name="icon" >
                 <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+               </property>
+               <property name="autoDefault" >
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -308,20 +332,18 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="biasLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="biasdsb" >
+               <property name="maximum" >
+                <double>1</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="minimum" >
+                <double>0.5</double>
+               </property>
+               <property name="singleStep" >
+                <double>0.04</double>
+               </property>
+               <property name="value" >
+                <double>0.85</double>
                </property>
               </widget>
              </item>
@@ -426,20 +448,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="spatialLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="spatialdsb" >
+               <property name="maximum" >
+                <double>60</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>10</double>
+               </property>
+               <property name="value" >
+                <double>8</double>
                </property>
               </widget>
              </item>
@@ -468,20 +485,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="rangeLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="rangedsb" >
+               <property name="maximum" >
+                <double>10</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.2</double>
+               </property>
+               <property name="value" >
+                <double>0.4</double>
                </property>
               </widget>
              </item>
@@ -510,20 +522,12 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="baseLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="basedsb" >
+               <property name="maximum" >
+                <double>10</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="value" >
+                <double>5</double>
                </property>
               </widget>
              </item>
@@ -628,20 +632,21 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="alphaLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="alphadsb" >
+               <property name="decimals" >
+                <number>3</number>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="maximum" >
+                <double>2</double>
+               </property>
+               <property name="minimum" >
+                <double>0.001</double>
+               </property>
+               <property name="singleStep" >
+                <double>0.2</double>
+               </property>
+               <property name="value" >
+                <double>0.1</double>
                </property>
               </widget>
              </item>
@@ -670,20 +675,21 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="betaLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="betadsb" >
+               <property name="decimals" >
+                <number>2</number>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="maximum" >
+                <double>1.7</double>
+               </property>
+               <property name="minimum" >
+                <double>0.1</double>
+               </property>
+               <property name="singleStep" >
+                <double>0.1</double>
+               </property>
+               <property name="value" >
+                <double>0.8</double>
                </property>
               </widget>
              </item>
@@ -712,20 +718,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="saturation2LineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="saturation2dsb" >
+               <property name="maximum" >
+                <double>3</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.5</double>
+               </property>
+               <property name="value" >
+                <double>1</double>
                </property>
               </widget>
              </item>
@@ -830,20 +831,18 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="multiplierLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="multiplierdsb" >
+               <property name="decimals" >
+                <number>3</number>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="maximum" >
+                <double>50</double>
+               </property>
+               <property name="minimum" >
+                <double>0.001</double>
+               </property>
+               <property name="value" >
+                <double>1</double>
                </property>
               </widget>
              </item>
@@ -867,7 +866,7 @@
              <item>
               <widget class="QCheckBox" name="autoYcheckbox" >
                <property name="text" >
-                <string>Cone and Rod based on Image Luminance</string>
+                <string>Cone and Rod based on Luminance</string>
                </property>
               </widget>
              </item>
@@ -896,20 +895,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="coneLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="conedsb" >
+               <property name="maximum" >
+                <double>1</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.1</double>
+               </property>
+               <property name="value" >
+                <double>0.5</double>
                </property>
               </widget>
              </item>
@@ -938,20 +932,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="rodLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="roddsb" >
+               <property name="maximum" >
+                <double>1</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.1</double>
+               </property>
+               <property name="value" >
+                <double>0.5</double>
                </property>
               </widget>
              </item>
@@ -1063,20 +1052,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="keyLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="keydsb" >
+               <property name="maximum" >
+                <double>1</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.2</double>
+               </property>
+               <property name="value" >
+                <double>0.18</double>
                </property>
               </widget>
              </item>
@@ -1105,20 +1089,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="phiLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="phidsb" >
+               <property name="maximum" >
+                <double>50</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>7</double>
+               </property>
+               <property name="value" >
+                <double>1</double>
                </property>
               </widget>
              </item>
@@ -1165,23 +1144,18 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="range2LineEdit" >
+              <widget class="QDoubleSpinBox" name="range2dsb" >
                <property name="enabled" >
                 <bool>false</bool>
                </property>
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+               <property name="maximum" >
+                <double>15</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="minimum" >
+                <double>2</double>
+               </property>
+               <property name="value" >
+                <double>8</double>
                </property>
               </widget>
              </item>
@@ -1216,23 +1190,21 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lowerLineEdit" >
+              <widget class="QDoubleSpinBox" name="lowerdsb" >
                <property name="enabled" >
                 <bool>false</bool>
                </property>
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+               <property name="maximum" >
+                <double>100</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="minimum" >
+                <double>1</double>
+               </property>
+               <property name="singleStep" >
+                <double>10</double>
+               </property>
+               <property name="value" >
+                <double>1</double>
                </property>
               </widget>
              </item>
@@ -1267,23 +1239,21 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="upperLineEdit" >
+              <widget class="QDoubleSpinBox" name="upperdsb" >
                <property name="enabled" >
                 <bool>false</bool>
                </property>
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+               <property name="maximum" >
+                <double>100</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="minimum" >
+                <double>1</double>
+               </property>
+               <property name="singleStep" >
+                <double>10</double>
+               </property>
+               <property name="value" >
+                <double>43</double>
                </property>
               </widget>
              </item>
@@ -1388,20 +1358,18 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="brightnessLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="brightnessdsb" >
+               <property name="maximum" >
+                <double>10</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="minimum" >
+                <double>-35</double>
+               </property>
+               <property name="singleStep" >
+                <double>5</double>
+               </property>
+               <property name="value" >
+                <double>-10</double>
                </property>
               </widget>
              </item>
@@ -1430,20 +1398,15 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="saturationLineEdit" >
-               <property name="sizePolicy" >
-                <sizepolicy>
-                 <hsizetype>0</hsizetype>
-                 <vsizetype>0</vsizetype>
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
+              <widget class="QDoubleSpinBox" name="saturationdsb" >
+               <property name="maximum" >
+                <double>1.2</double>
                </property>
-               <property name="maximumSize" >
-                <size>
-                 <width>71</width>
-                 <height>23</height>
-                </size>
+               <property name="singleStep" >
+                <double>0.3</double>
+               </property>
+               <property name="value" >
+                <double>0.99</double>
                </property>
               </widget>
              </item>
@@ -1510,6 +1473,19 @@
         </widget>
        </item>
        <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>454</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QGroupBox" name="lower_settings" >
          <property name="sizePolicy" >
           <sizepolicy>
@@ -1562,6 +1538,9 @@
               <property name="icon" >
                <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
               </property>
+              <property name="autoDefault" >
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="3" colspan="2" >
@@ -1585,20 +1564,18 @@
              </widget>
             </item>
             <item row="1" column="4" >
-             <widget class="QLineEdit" name="pregammalineedit" >
-              <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>0</hsizetype>
-                <vsizetype>0</vsizetype>
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             <widget class="QDoubleSpinBox" name="pregammadsb" >
+              <property name="decimals" >
+               <number>3</number>
               </property>
-              <property name="maximumSize" >
-               <size>
-                <width>71</width>
-                <height>23</height>
-               </size>
+              <property name="maximum" >
+               <double>3</double>
+              </property>
+              <property name="singleStep" >
+               <double>0.1</double>
+              </property>
+              <property name="value" >
+               <double>1</double>
               </property>
              </widget>
             </item>
@@ -1654,6 +1631,9 @@
               <property name="icon" >
                <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
               </property>
+              <property name="autoDefault" >
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="3" colspan="2" >
@@ -1673,24 +1653,6 @@
              <widget class="QLabel" name="label_42" >
               <property name="text" >
                <string>Post Tonemapping gamma adjustment</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4" >
-             <widget class="QLineEdit" name="postgammalineedit" >
-              <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>0</hsizetype>
-                <vsizetype>0</vsizetype>
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize" >
-               <size>
-                <width>71</width>
-                <height>23</height>
-               </size>
               </property>
              </widget>
             </item>
@@ -1717,265 +1679,20 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>33</width>
-              <height>27</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_4" >
-            <property name="title" >
-             <string>Tonemapping settings</string>
-            </property>
-            <layout class="QHBoxLayout" >
-             <property name="margin" >
-              <number>0</number>
-             </property>
-             <property name="spacing" >
-              <number>0</number>
-             </property>
-             <item>
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" >
-                <size>
-                 <width>29</width>
-                 <height>29</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="savesettingsbutton" >
-               <property name="toolTip" >
-                <string>Save current parameters (pre/post gamma and TMO) to a text file</string>
-               </property>
-               <property name="text" >
-                <string>Save...</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="loadsettingsbutton" >
-               <property name="toolTip" >
-                <string>Load an existing text file containing pre/post gamma and TMO settings</string>
-               </property>
-               <property name="text" >
-                <string>Load...</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="lineEditTMOsetting" >
-               <property name="enabled" >
-                <bool>false</bool>
-               </property>
-               <property name="minimumSize" >
-                <size>
-                 <width>175</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="toolTip" >
-                <string>the settings file in use</string>
-               </property>
-               <property name="readOnly" >
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_applyTMOSetting" >
-               <property name="enabled" >
-                <bool>false</bool>
-               </property>
-               <property name="text" >
-                <string>Apply Settings</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="button_fromTxt2Gui" >
-               <property name="enabled" >
-                <bool>false</bool>
-               </property>
-               <property name="toolTip" >
-                <string>Apply Settings File to preview</string>
-               </property>
-               <property name="icon" >
-                <iconset resource="../icons.qrc" >:/new/prefix1/images/apply.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" >
-                <size>
-                 <width>29</width>
-                 <height>29</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>33</width>
-              <height>16</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QGroupBox" name="groupBox_2" >
-              <property name="title" >
-               <string/>
+            <item row="1" column="4" >
+             <widget class="QDoubleSpinBox" name="postgammadsb" >
+              <property name="decimals" >
+               <number>3</number>
               </property>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>0</number>
-               </property>
-               <property name="spacing" >
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="closedialogbutton" >
-                 <property name="toolTip" >
-                  <string>Close this Tonemapping Dialog</string>
-                 </property>
-                 <property name="layoutDirection" >
-                  <enum>Qt::RightToLeft</enum>
-                 </property>
-                 <property name="autoFillBackground" >
-                  <bool>false</bool>
-                 </property>
-                 <property name="icon" >
-                  <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
-                 </property>
-                 <property name="iconSize" >
-                  <size>
-                   <width>69</width>
-                   <height>69</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="labelclosedialog" >
-                 <property name="frameShape" >
-                  <enum>QFrame::NoFrame</enum>
-                 </property>
-                 <property name="frameShadow" >
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="lineWidth" >
-                  <number>1</number>
-                 </property>
-                 <property name="midLineWidth" >
-                  <number>0</number>
-                 </property>
-                 <property name="text" >
-                  <string>Close dialog</string>
-                 </property>
-                 <property name="textFormat" >
-                  <enum>Qt::AutoText</enum>
-                 </property>
-                 <property name="alignment" >
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
+              <property name="maximum" >
+               <double>3</double>
               </property>
-              <property name="sizeHint" >
-               <size>
-                <width>211</width>
-                <height>106</height>
-               </size>
+              <property name="singleStep" >
+               <double>0.1</double>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QGroupBox" name="groupBox_3" >
-              <property name="title" >
-               <string/>
+              <property name="value" >
+               <double>1</double>
               </property>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>0</number>
-               </property>
-               <property name="spacing" >
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="saveLDRbutton" >
-                 <property name="toolTip" >
-                  <string>Save the Image as seen in the preview</string>
-                 </property>
-                 <property name="text" >
-                  <string/>
-                 </property>
-                 <property name="icon" >
-                  <iconset resource="../icons.qrc" >:/new/prefix1/images/filesaveas.png</iconset>
-                 </property>
-                 <property name="iconSize" >
-                  <size>
-                   <width>69</width>
-                   <height>69</height>
-                  </size>
-                 </property>
-                 <property name="shortcut" >
-                  <string>Ctrl+S</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="labelsaveldr" >
-                 <property name="text" >
-                  <string>Save Image</string>
-                 </property>
-                 <property name="alignment" >
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </widget>
             </item>
            </layout>
@@ -1983,20 +1700,237 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>454</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_4" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>13</hsizetype>
+           <vsizetype>5</vsizetype>
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title" >
+          <string>Tonemapping settings</string>
+         </property>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="savesettingsbutton" >
+            <property name="toolTip" >
+             <string>Save current parameters (pre/post gamma and TMO) to a text file</string>
+            </property>
+            <property name="text" >
+             <string>Save...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="loadsettingsbutton" >
+            <property name="toolTip" >
+             <string>Load an existing text file containing pre/post gamma and TMO settings</string>
+            </property>
+            <property name="text" >
+             <string>Load...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditTMOsetting" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize" >
+             <size>
+              <width>175</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>the settings file in use</string>
+            </property>
+            <property name="readOnly" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_applyTMOSetting" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="text" >
+             <string>Apply file</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="button_fromTxt2Gui" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="toolTip" >
+             <string>Apply Settings File to preview</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/orange_apply.png</iconset>
+            </property>
+            <property name="autoDefault" >
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>454</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="closedialogbutton" >
+           <property name="minimumSize" >
+            <size>
+             <width>66</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text" >
+            <string>Close</string>
+           </property>
+           <property name="icon" >
+            <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>44</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="toolButtonStyle" >
+            <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>311</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="applyButton" >
+           <property name="minimumSize" >
+            <size>
+             <width>66</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="text" >
+            <string>Apply</string>
+           </property>
+           <property name="icon" >
+            <iconset resource="../icons.qrc" >:/new/prefix1/images/apply.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>44</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="shortcut" >
+            <string>Ctrl+A</string>
+           </property>
+           <property name="toolButtonStyle" >
+            <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget" >
+     <widget class="QFrame" name="frame_preview" >
+      <property name="sizePolicy" >
+       <sizepolicy>
+        <hsizetype>7</hsizetype>
+        <vsizetype>5</vsizetype>
+        <horstretch>5</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape" >
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow" >
+       <enum>QFrame::Sunken</enum>
+      </property>
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="spacing" >
-        <number>1</number>
+        <number>0</number>
        </property>
        <item>
         <layout class="QHBoxLayout" >
          <property name="margin" >
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="spacing" >
           <number>6</number>
@@ -2008,8 +1942,8 @@
            </property>
            <property name="sizeHint" >
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>20</width>
+             <height>21</height>
             </size>
            </property>
           </spacer>
@@ -2017,7 +1951,7 @@
          <item>
           <widget class="QLabel" name="label_33" >
            <property name="text" >
-            <string>Image Preview Size:</string>
+            <string>Result Size:</string>
            </property>
           </widget>
          </item>
@@ -2025,9 +1959,9 @@
           <widget class="QComboBox" name="sizeComboBox" >
            <property name="sizePolicy" >
             <sizepolicy>
-             <hsizetype>0</hsizetype>
+             <hsizetype>3</hsizetype>
              <vsizetype>0</vsizetype>
-             <horstretch>3</horstretch>
+             <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
@@ -2049,16 +1983,58 @@
            </property>
            <property name="sizeHint" >
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>81</width>
+             <height>21</height>
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelsaveldr" >
+           <property name="text" >
+            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Save Image&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="saveLDRbutton" >
+           <property name="sizePolicy" >
+            <sizepolicy>
+             <hsizetype>0</hsizetype>
+             <vsizetype>0</vsizetype>
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip" >
+            <string>Save the Image as seen in the preview</string>
+           </property>
+           <property name="text" >
+            <string/>
+           </property>
+           <property name="icon" >
+            <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
+           </property>
+           <property name="shortcut" >
+            <string>Ctrl+S</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item>
         <widget class="QFrame" name="PreviewFrame" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>3</hsizetype>
+           <vsizetype>3</vsizetype>
+           <horstretch>9</horstretch>
+           <verstretch>9</verstretch>
+          </sizepolicy>
+         </property>
          <property name="frameShape" >
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -2080,34 +2056,18 @@
  </resources>
  <connections>
   <connection>
-   <sender>closedialogbutton</sender>
-   <signal>clicked()</signal>
-   <receiver>TMODialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>507</x>
-     <y>703</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>5</x>
-     <y>672</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>simpleCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>eq2RadioButton</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>485</x>
+     <x>85</x>
      <y>123</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>605</x>
-     <y>126</y>
+     <x>153</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
@@ -2118,12 +2078,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>507</x>
+     <x>85</x>
      <y>123</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>671</x>
-     <y>126</y>
+     <x>213</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
@@ -2134,12 +2094,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>527</x>
+     <x>85</x>
      <y>123</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>843</x>
-     <y>159</y>
+     <x>306</x>
+     <y>162</y>
     </hint>
    </hints>
   </connection>
@@ -2150,28 +2110,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>507</x>
+     <x>85</x>
      <y>123</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>508</x>
-     <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>contrastLineEdit</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>533</x>
-     <y>123</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>964</x>
-     <y>163</y>
+     <x>179</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2182,44 +2126,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>573</x>
-     <y>137</y>
+     <x>123</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>702</x>
-     <y>137</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>coneLineEdit</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>535</x>
-     <y>136</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>930</x>
-     <y>160</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>rodLineEdit</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>499</x>
-     <y>136</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>904</x>
-     <y>193</y>
+     <x>273</x>
+     <y>153</y>
     </hint>
    </hints>
   </connection>
@@ -2230,12 +2142,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>538</x>
-     <y>133</y>
+     <x>123</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>550</x>
-     <y>203</y>
+     <x>188</x>
+     <y>222</y>
     </hint>
    </hints>
   </connection>
@@ -2246,44 +2158,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>570</x>
-     <y>140</y>
+     <x>123</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>576</x>
-     <y>165</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>coneLineEdit</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>865</x>
-     <y>129</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>949</x>
-     <y>168</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>rodLineEdit</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>826</x>
-     <y>130</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>908</x>
-     <y>207</y>
+     <x>196</x>
+     <y>185</y>
     </hint>
    </hints>
   </connection>
@@ -2294,12 +2174,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>807</x>
-     <y>128</y>
+     <x>273</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>770</x>
-     <y>168</y>
+     <x>196</x>
+     <y>185</y>
     </hint>
    </hints>
   </connection>
@@ -2310,12 +2190,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>910</x>
-     <y>130</y>
+     <x>273</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>715</x>
-     <y>197</y>
+     <x>188</x>
+     <y>222</y>
     </hint>
    </hints>
   </connection>
@@ -2326,12 +2206,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>97</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -2342,28 +2222,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lowerLineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>530</x>
-     <y>57</y>
+     <x>203</x>
+     <y>253</y>
     </hint>
    </hints>
   </connection>
@@ -2374,12 +2238,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>99</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
@@ -2390,28 +2254,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>upperLineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>530</x>
-     <y>57</y>
+     <x>205</x>
+     <y>290</y>
     </hint>
    </hints>
   </connection>
@@ -2422,12 +2270,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>63</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>
@@ -2438,92 +2286,220 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>120</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>169</x>
+     <y>216</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_cone</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>273</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>90</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_rod</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>273</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>82</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_cone</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>123</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>90</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_rod</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>123</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>82</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>contrastdsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>59</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>514</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>conedsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>66</x>
+     <y>137</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>514</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>roddsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>52</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>514</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>conedsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>357</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>514</x>
+     <y>188</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>roddsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>327</x>
+     <y>148</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>514</x>
+     <y>225</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>usescalescheckbox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>range2LineEdit</receiver>
+   <receiver>range2dsb</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>559</x>
-     <y>64</y>
+     <x>27</x>
+     <y>100</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>530</x>
-     <y>57</y>
+     <x>514</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>autoYcheckbox</sender>
+   <sender>usescalescheckbox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_cone</receiver>
-   <slot>setDisabled(bool)</slot>
+   <receiver>lowerdsb</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>887</x>
-     <y>144</y>
+     <x>262</x>
+     <y>103</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>519</x>
-     <y>163</y>
+     <x>514</x>
+     <y>256</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>autoYcheckbox</sender>
+   <sender>usescalescheckbox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_rod</receiver>
-   <slot>setDisabled(bool)</slot>
+   <receiver>upperdsb</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>807</x>
-     <y>143</y>
+     <x>140</x>
+     <y>104</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>518</x>
-     <y>205</y>
+     <x>514</x>
+     <y>293</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_cone</receiver>
-   <slot>setDisabled(bool)</slot>
+   <sender>closedialogbutton</sender>
+   <signal>clicked()</signal>
+   <receiver>TMODialog</receiver>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>523</x>
-     <y>138</y>
+     <x>33</x>
+     <y>632</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>527</x>
-     <y>175</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_rod</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>570</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>499</x>
-     <y>196</y>
+     <x>-4</x>
+     <y>634</y>
     </hint>
    </hints>
   </connection>

@@ -19,50 +19,35 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * based on previous GPL code from qpfstmo
  */
 
-#ifndef GANG_H
-#define GANG_H
+#ifndef TRANSPLANT_IMPL_H
+#define TRANSPLANT_IMPL_H
 
-// #include <qwidget.h>
-#include <QSlider>
-#include <QDoubleSpinBox>
+#include <QDialog>
+#include "../generated_uic/ui_transplantexifdialog.h"
 
-class Gang : public QObject
+class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	Gang(QSlider* s_, QDoubleSpinBox* dsb_, 
-		const float minv_, const float maxv_, 
-		const float vv, const bool logs = false);
-	
-	float v() const { return v_; };
-	void setDefault();
-	bool changed() const { return changed_; };
-	QString flag(const QString f) const;
-	QString fname(const QString f) const;
-	float p2v(const int p) const;
-	int v2p(const float x) const;
-public slots:
-	void sliderMoved(int p);
-	void sliderValueChanged(int p);
-// 	void spinboxFocusEnter();
-	void spinboxValueChanged(double);
-signals:
-	void finished();
+	TransplantExifDialog(QWidget *);
+	~TransplantExifDialog();
 private:
-	QSlider *s;
-	QDoubleSpinBox *dsb;
-	float minv;
-	float maxv;
-	float defaultv;
-	bool logscaling;
-	float v_;
-	bool value_from_text;
-	bool value_from_slider;
-	bool graphics_only;
-	bool changed_;
+	int start_left,stop_left,start_right,stop_right;
+	QStringList from,to;
+	bool done;
+	void updateinterval(bool);
+private slots:
+	void transplant_requested();
+	void help_requested();
+	void moveup_left();
+	void moveup_right();
+	void movedown_left();
+	void movedown_right();
+	void remove_left();
+	void remove_right();
+	void append_left();
+	void append_right();
 };
-
 #endif

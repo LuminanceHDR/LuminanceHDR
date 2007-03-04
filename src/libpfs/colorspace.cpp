@@ -42,9 +42,9 @@ static const float rgb2xyzD65Mat[3][3] =
   { 0.019332f, 0.119193f, 0.950444f } };
 
 static const float xyz2rgbD65Mat[3][3] =
-{ {  3.240708, -1.537259, -0.498570 },
-  { -0.969257,  1.875995,  0.041555 },
-  {  0.055636, -0.203996,  1.057069 } };
+{ {  3.240708f, -1.537259f, -0.498570f },
+  { -0.969257f,  1.875995f,  0.041555f },
+  {  0.055636f, -0.203996f,  1.057069f } };
 
 // //--- precise values for matrix convertion (above float precission)
 // static const float rgb2xyzD65Mat[3][3] =

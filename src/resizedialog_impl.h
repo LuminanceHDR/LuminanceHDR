@@ -19,50 +19,37 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * based on previous GPL code from qpfstmo
  */
 
-#ifndef GANG_H
-#define GANG_H
+#ifndef RESIZEDIALOG_IMPL_H
+#define RESIZEDIALOG_IMPL_H
 
-// #include <qwidget.h>
-#include <QSlider>
-#include <QDoubleSpinBox>
+#include <QDialog>
+#include "../generated_uic/ui_resizedialog.h"
+#include "pfs.h"
 
-class Gang : public QObject
+class ResizeDialog : public QDialog, private Ui::ResizeDialog
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	Gang(QSlider* s_, QDoubleSpinBox* dsb_, 
-		const float minv_, const float maxv_, 
-		const float vv, const bool logs = false);
-	
-	float v() const { return v_; };
-	void setDefault();
-	bool changed() const { return changed_; };
-	QString flag(const QString f) const;
-	QString fname(const QString f) const;
-	float p2v(const int p) const;
-	int v2p(const float x) const;
+	ResizeDialog(QWidget *parent,pfs::Frame *orig);
+	~ResizeDialog();
+	pfs::Frame* getResizedFrame();
 public slots:
-	void sliderMoved(int p);
-	void sliderValueChanged(int p);
-// 	void spinboxFocusEnter();
-	void spinboxValueChanged(double);
-signals:
-	void finished();
+	void scaledPressed();
+	void switch_px_percentage(int);
+	void update_heightSpinBox();
+	void update_widthSpinBox();
+	void defaultpressed();
 private:
-	QSlider *s;
-	QDoubleSpinBox *dsb;
-	float minv;
-	float maxv;
-	float defaultv;
-	bool logscaling;
-	float v_;
-	bool value_from_text;
-	bool value_from_slider;
-	bool graphics_only;
-	bool changed_;
+	pfs::Frame *original;
+	pfs::Frame *resized;
+	int orig_width,orig_height;
+	int resized_width,resized_height;
+	void updatelabel();
+	int rh_from_rw();
+	int rw_from_rh();
+	bool from_other_spinbox;
 };
 
 #endif

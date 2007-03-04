@@ -2,6 +2,7 @@
  * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2002-2005 Nicholas Phillips
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * based on previous GPL code from qpfstmo
+ * based on previous GPL code from qpfstmo, by Nicholas Phillips.
  */
 
 #include <iostream>
@@ -29,21 +30,18 @@
 using namespace std;
 
 
-Gang::Gang(QSlider* slider_, QLineEdit* lineedit_, 
+Gang::Gang(QSlider* slider_, QDoubleSpinBox* doublespinbox_, 
 		const float minv_, const float maxv_, 
 		const float vv, const bool logs) : 
-			s(slider_), le(lineedit_), minv(minv_), maxv(maxv_), defaultv(vv), logscaling(logs)
+			s(slider_), dsb(doublespinbox_), minv(minv_), maxv(maxv_), defaultv(vv), logscaling(logs)
 {
-// 	cerr << "Gang::Gang()" << endl;
-	connect( s,  SIGNAL(valueChanged(int)), this, SLOT(sliderMoved(int)));
-	connect( le, SIGNAL(returnPressed()),   this, SLOT(textChanged()));
+	s->setTracking(false);
+	graphics_only=false;
+	connect( s, SIGNAL(sliderMoved(int)),  this, SLOT(sliderMoved(int)));
+	connect( s, SIGNAL(valueChanged(int)), this, SLOT(sliderValueChanged(int)));
+// 	connect( dsb, SIGNAL(editingFinished()), this, SLOT(spinboxFocusEnter()));
+	connect( dsb, SIGNAL(valueChanged(double)), this, SLOT(spinboxValueChanged(double)));
 	
-	/*
-	value_from_text = false;
-	v_ = defaultv;
-	s->setValue( v2p(v()) );
-	changed_ = false;
-	*/
 	setDefault();
 	return;
 }
@@ -68,25 +66,67 @@ int Gang::v2p(const float x) const
 	return  (int) ( (s->maximum() - s->minimum() )*y + s->minimum() );
 }
 
-void Gang::sliderMoved(int p) 
+void Gang::sliderMoved(int p)
 {
+// 	qDebug("Slider moved");
 	if( value_from_text ) {
 		value_from_text = false;
+// 		qDebug("bailing out");
 		return;
 	}
+	value_from_slider=true;
 	v_ = p2v(p);
-	le->setText( QString("%1").arg( v() )  );
+	dsb->setValue(v());
 	changed_ = true;
+	value_from_slider=false;
+	return;
+}
+void Gang::sliderValueChanged(int p)
+{
+// 	qDebug("Slider changed");
+	if( value_from_text ) {
+		value_from_text = false;
+// 		qDebug("bailing out");
+		if (!graphics_only)
+			emit finished();
+		return;
+	}
+	value_from_slider=true;
+	v_ = p2v(p);
+	dsb->setValue(v());
+	v_ = dsb->value();
+	changed_ = true;
+	value_from_slider=false;
+	if (!graphics_only)
+		emit finished();
 	return;
 }
 
-void Gang::textChanged()
+// void Gang::spinboxFocusEnter()
+// {
+// 	qDebug("Spinbox lost_focus/enter");
+// 	if( value_from_slider ) {
+// 		value_from_slider = false;
+// 		qDebug("bailing out");
+// 		return;
+// 	}
+// 	float x = dsb->value();
+// 	v_ = x;
+// // 	value_from_text = true;
+// 	qDebug("0");
+// 	s->setValue( v2p(v() ) );
+// 	qDebug("1");
+// 	changed_ = true;
+// 	return;
+// }
+void Gang::spinboxValueChanged(double x)
 {
-	bool ok;
-	
-	float x = le->text().toFloat(&ok);
-	if( ! ok ) 
-		x = v();
+// 	qDebug("Spinbox value_changed");
+	if( value_from_slider ) {
+		value_from_slider = false;
+// 		qDebug("bailing out");
+		return;
+	}
 	v_ = x;
 	value_from_text = true;
 	s->setValue( v2p(v() ) );
@@ -96,11 +136,17 @@ void Gang::textChanged()
 
 void Gang::setDefault()
 {
+// 	qDebug("def");
+	graphics_only=true;
 	v_ = defaultv;
-	le->setText( QString("%1").arg(v()));
+	value_from_slider=true;
+	dsb->setValue(v());
 	value_from_text = true;
 	s->setValue( v2p(v()) );
 	changed_ = false;
+	value_from_text = false;
+	value_from_slider=false;
+	graphics_only=false;
 	return;
 }
 

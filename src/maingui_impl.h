@@ -31,8 +31,8 @@
 #include "hdrwizardform_impl.h"
 #include "../generated_uic/ui_maingui.h"
 #include "pfsindcraw.h"
-// #include "config.h"
 #include "options_impl.h"
+#include "resizedialog_impl.h"
 
 
 class MainGui : public QMainWindow, private Ui::MainGui
@@ -51,6 +51,7 @@ private slots:
 	void tonemap_requested();
 	void rotateccw_requested();
 	void rotatecw_requested();
+	void resize_requested();
 	void current_mdiwindow_increase_exposure();
 	void current_mdiwindow_decrease_exposure();
 	void current_mdiwindow_extend_exposure();
@@ -64,6 +65,7 @@ private slots:
 // 	void viewMenuAboutToShow();
 	void helpAbout();
 	void options_called();
+	void transplant_called();
 // 	void fileExit();
 
 	void openRecentFile();

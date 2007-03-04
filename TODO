@@ -1,10 +1,7 @@
-BYPASSED, PREGAMMA ALWAYS COMPUTED* consider in tonemapping rgb->xyz ... xyz->rgb (DONE, std::map hack still required)
-* Put a resize menu in main window. (Brandon Andrews's suggestions)
-* TEST/IMPROVE the icip06 antighosting feature (Pablo D'Angelo's suggestions)
-* consider supporting tiff LDR input/output.
-* audit code.
+* medium term: provide both capabilities, update via button and istantaneously
+* long term: write dialog to align images
+* long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
 
-* Frank's suggestions
-Another thing is the tonmapping parameters which are currently stored in
-the filename. How about storing them as EXIF comments when saving as
-jpeg? AFAIK, in EXIF comments can contain any text.
+* consider supporting HDR/LDR tiff files as input/output.
+
+BYPASSED, PREGAMMA ALWAYS COMPUTED* consider in tonemapping rgb->xyz ... xyz->rgb (it's ugly, though)

@@ -232,7 +232,7 @@ void LuminanceRangeWidget::mouseMoveEvent( QMouseEvent *me )
 
 }
   
-void LuminanceRangeWidget::decreaseExposure()
+void LuminanceRangeWidget::increaseExposure()
 {
   windowMin -= exposureStep;
   windowMax -= exposureStep;
@@ -240,7 +240,7 @@ void LuminanceRangeWidget::decreaseExposure()
   emit updateRangeWindow();
 }
 
-void LuminanceRangeWidget::increaseExposure()
+void LuminanceRangeWidget::decreaseExposure()
 {
   windowMin += exposureStep;
   windowMax += exposureStep;

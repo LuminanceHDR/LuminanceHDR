@@ -75,7 +75,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	expotime2=new Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue");
 
 	QSettings settings("Qtpfsgui", "Qtpfsgui");
-	RecentDirInputLDRs=settings.value("RecentDirInputLDRs",QDir::currentPath()).toString();
+	RecentDirInputLDRs=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
 	chosen_config=&predef_confs[0];
 	backbutton->setEnabled(FALSE);
 	Next_Finishbutton->setEnabled(FALSE);
@@ -84,16 +84,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 void HdrWizardForm::loadfiles() {
     QString filetypes;
     filetypes += "JPEG (*.jpeg *.jpg *.JPG *.JPEG);;";
-    filetypes += "CANON RAW (*.crw *.CRW *.cr2 *CR2);;";
-    filetypes += "NIKON RAW (*.nef *.NEF);;";
-    filetypes += "ADOBE DNG (*.dng *.DNG);;";
-    filetypes += "MINOLTA RAW (*.mrw *.MRW);;";
-    filetypes += "OLYMPUS RAW (*.olf *.OLF);;";
-    filetypes += "KODAK RAW (*.kdc *.KDC *.dcr *DCR);;";
-    filetypes += "SONY RAW (*.arw *.ARW);;";
-    filetypes += "FUJI RAW (*.raf *.RAF);;";
-    filetypes += "PENTAX RAW (*.ptx *.PTX *.pef *.PEF);;";
-    filetypes += "SIGMA RAW (*.x3f *.X3F)";
+    filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
 //     filetypes += "TIFF (*.tif *tiff *TIF *TIFF);;"; //in this case we should use libtiff
     QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirInputLDRs, filetypes );
     if (!files.isEmpty() ) {
@@ -102,8 +93,8 @@ void HdrWizardForm::loadfiles() {
 	// update internal field variable
 	RecentDirInputLDRs=qfi.path();
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirInputLDRs != settings.value("RecentDirInputLDRs",QDir::currentPath()).toString()) {
-		settings.setValue("RecentDirInputLDRs", RecentDirInputLDRs);
+	if (RecentDirInputLDRs != settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString()) {
+		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 
 	numberinputfiles=files.count();
@@ -122,7 +113,12 @@ void HdrWizardForm::loadfiles() {
 			listShowFiles->clear();
 			clearlists();
 			delete expotimes;
-			QMessageBox::critical(this,"Error reading the EXIF tags in the image", QString("Qtpfsgui was not able to find the relevant EXIF tags\nin the input image: %1.\nPlease make sure to load images that have at least\nthe following exif data: SHUTTER SPEED (seconds) and Aperture (f-number) ").arg(qfi->fileName()));
+			QMessageBox::critical(this,"Error reading the EXIF tags in the image", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nin the input image: <font color=\"#FF9500\"><i><b>%1</b</i></font>.<br>\
+Please make sure to load images that have at least\nthe following exif data: \
+<ul><li>Shutter Speed (seconds)</li>\
+<li>Aperture (f-number)</li></ul>\
+<hr>This can happen when you preprocess your pictures.<br>\
+You can <b>Copy the exif data</b> from some input images to some other output images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item.").arg(qfi->fileName()));
 			return;
 		}
 		listShowFiles->addItem(qfi->fileName()); //fill graphical list

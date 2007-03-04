@@ -62,7 +62,7 @@ void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax )
     if( m<Mmin || m>Mmax )
       w[m] = 0.0f;
     else
-      w[m]=1.0f-pow( ( (2.0f*float(m-Mmin)/float(Mmax-Mmin)) - 1.0f), 24.0f);
+      w[m]=1.0f-pow( ( (2.0f*float(m-Mmin)/float(Mmax-Mmin)) - 1.0f), 12.0f);
 }
 
 void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )

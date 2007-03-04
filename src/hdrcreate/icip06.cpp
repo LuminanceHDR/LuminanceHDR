@@ -186,9 +186,12 @@ for ( int ITER=0; ITER<iterations; ITER++ ) { // for all the iterations ITER
 			float sum=0;
 			float div=0;
 			// get the 3 channel values for the current pixel, exposure, location col,row
-			float Ch1x=logf(FLT_MIN+  qRed(cur_exposure->pixel(col,row)) );
-			float Ch2x=logf(FLT_MIN+qGreen(cur_exposure->pixel(col,row)) );
-			float Ch3x=logf(FLT_MIN+ qBlue(cur_exposure->pixel(col,row)) );
+// 			float Ch1x=logf(FLT_MIN+  qRed(cur_exposure->pixel(col,row)) );
+// 			float Ch2x=logf(FLT_MIN+qGreen(cur_exposure->pixel(col,row)) );
+// 			float Ch3x=logf(FLT_MIN+ qBlue(cur_exposure->pixel(col,row)) );
+			float Ch1x=qRed(cur_exposure->pixel(col,row))/255.0;
+			float Ch2x=qGreen(cur_exposure->pixel(col,row))/255.0;
+			float Ch3x=qBlue(cur_exposure->pixel(col,row))/255.0;
 			float Ch1y,Ch2y,Ch3y;
 
 			// go through neighborhood, deep into the exposures, to update weight.
@@ -197,17 +200,23 @@ for ( int ITER=0; ITER<iterations; ITER++ ) { // for all the iterations ITER
 				QImage *exposure_in_neighb=list->at(I);
 				// if top-left is in boundaries
 				if (col-1>=0 && row-1>=0) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row-1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row-1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row-1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row-1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row-1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row-1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col-1,row-1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col-1,row-1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col-1,row-1))/255.0;
 					sum+=(*Ptemp[I])(col-1,row-1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 2.0f ));
 					div+=(*Ptemp[I])(col-1,row-1);
 				}
 				//if top is in boundaries
 				if (row-1>=0) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col,row-1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col,row-1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col,row-1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col,row-1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col,row-1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col,row-1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col,row-1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col,row-1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col,row-1))/255.0;
 					float a=(*Ptemp[I])(col,row-1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 1.0f ));
 					float b=(*Ptemp[I])(col,row-1);
 					sum+=a;
@@ -215,49 +224,67 @@ for ( int ITER=0; ITER<iterations; ITER++ ) { // for all the iterations ITER
 				}
 				// if top-right is in boundaries
 				if (col+1<width && row-1>=0) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row-1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row-1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row-1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row-1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row-1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row-1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col+1,row-1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col+1,row-1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col+1,row-1))/255.0;
 					sum+=(*Ptemp[I])(col+1,row-1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 2.0f ));
 					div+=(*Ptemp[I])(col+1,row-1);
 				}
 				// if left is in boundaries
 				if (col-1>=0) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col-1,row))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col-1,row))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col-1,row))/255.0;
 					sum+=(*Ptemp[I])(col-1,row)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 1.0f ));
 					div+=(*Ptemp[I])(col-1,row);
 				}
 				// if right is in boundaries
 				if (col+1<width) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col+1,row))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col+1,row))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col+1,row))/255.0;
 					sum+=(*Ptemp[I])(col+1,row)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 1.0f ));
 					div+=(*Ptemp[I])(col+1,row);
 				}
 				// if bottom-left is in boundaries
 				if (col-1>=0 && row+1<height) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row+1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row+1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row+1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col-1,row+1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col-1,row+1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col-1,row+1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col-1,row+1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col-1,row+1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col-1,row+1))/255.0;
 					sum+=(*Ptemp[I])(col-1,row+1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 2.0f ));
 					div+=(*Ptemp[I])(col-1,row+1);
 				}
 				// if bottom is in boundaries
 				if (row+1<height) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col,row+1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col,row+1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col,row+1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col,row+1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col,row+1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col,row+1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col,row+1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col,row+1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col,row+1))/255.0;
 					sum+=(*Ptemp[I])(col,row+1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 1.0f ));
 					div+=(*Ptemp[I])(col,row+1);
 				}
 				// if bottom-right is in boundaries
 				if (col+1<width && row+1<height) {
-					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row+1)) );
-					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row+1)) );
-					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row+1)) );
+// 					Ch1y=logf(FLT_MIN+  qRed(exposure_in_neighb->pixel(col+1,row+1)) );
+// 					Ch2y=logf(FLT_MIN+qGreen(exposure_in_neighb->pixel(col+1,row+1)) );
+// 					Ch3y=logf(FLT_MIN+ qBlue(exposure_in_neighb->pixel(col+1,row+1)) );
+					Ch1y=qRed(exposure_in_neighb->pixel(col+1,row+1))/255.0;
+					Ch2y=qGreen(exposure_in_neighb->pixel(col+1,row+1))/255.0;
+					Ch3y=qBlue(exposure_in_neighb->pixel(col+1,row+1))/255.0;
 					sum+=(*Ptemp[I])(col+1,row+1)*k*expf(-0.5*((Ch1x-Ch1y)*(Ch1x-Ch1y) + (Ch2x-Ch2y)*(Ch2x-Ch2y) + (Ch3x-Ch3y)*(Ch3x-Ch3y) + 2.0f ));
 					div+=(*Ptemp[I])(col+1,row+1);
 				}

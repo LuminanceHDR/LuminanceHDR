@@ -1,0 +1,428 @@
+<ui version="4.0" >
+ <author>Giuseppe Rota</author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>TransplantExifDialog</class>
+ <widget class="QDialog" name="TransplantExifDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>470</width>
+    <height>429</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Copy Exif data</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>9</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="title_label" >
+       <property name="text" >
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:13pt; font-weight:600;">Copy EXIF data&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="moveup_left_button" >
+         <property name="toolTip" >
+          <string>Move up selected file(s)</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="movedown_left_button" >
+         <property name="toolTip" >
+          <string>Move down selected file(s)</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="removeleft" >
+         <property name="toolTip" >
+          <string>Remove selected file(s) from the list</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/remove.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="addleft" >
+         <property name="toolTip" >
+          <string>Append files to the list</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label" >
+         <property name="text" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">From...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="leftlist" >
+         <property name="editTriggers" >
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionMode" >
+          <enum>QAbstractItemView::ContiguousSelection</enum>
+         </property>
+         <property name="currentRow" >
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="Tolabel" >
+         <property name="layoutDirection" >
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">To...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="alignment" >
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="rightlist" >
+         <property name="editTriggers" >
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="selectionMode" >
+          <enum>QAbstractItemView::ContiguousSelection</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>0</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="moveup_right_button" >
+         <property name="toolTip" >
+          <string>Move up selected file(s)</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="movedown_right_button" >
+         <property name="toolTip" >
+          <string>Move down selected file(s)</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="removeright" >
+         <property name="toolTip" >
+          <string>Remove selected file(s) from the list</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/remove.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="addright" >
+         <property name="toolTip" >
+          <string>Append files to the list</string>
+         </property>
+         <property name="icon" >
+          <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
+         </property>
+         <property name="toolButtonStyle" >
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progressBar" >
+     <property name="value" >
+      <number>0</number>
+     </property>
+     <property name="alignment" >
+      <set>Qt::AlignHCenter</set>
+     </property>
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="Done_label" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_dont_overwrite" >
+     <property name="text" >
+      <string>Keep existing exif tags in destination file</string>
+     </property>
+     <property name="checked" >
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QPushButton" name="HelpButton" >
+       <property name="text" >
+        <string>Help</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelbutton" >
+       <property name="text" >
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="TransplantButton" >
+       <property name="text" >
+        <string>Start!</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <resources>
+  <include location="../icons.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>cancelbutton</sender>
+   <signal>clicked()</signal>
+   <receiver>TransplantExifDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>311</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>54</x>
+     <y>421</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

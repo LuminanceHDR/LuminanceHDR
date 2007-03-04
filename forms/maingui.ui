@@ -31,42 +31,6 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
-     <string>Help</string>
-    </property>
-    <addaction name="helpAboutAction" />
-   </widget>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
-     <string>File</string>
-    </property>
-    <addaction name="fileNewAction" />
-    <addaction name="fileOpenAction" />
-    <addaction name="fileSaveAsAction" />
-    <addaction name="separator" />
-    <addaction name="fileExitAction" />
-   </widget>
-   <widget class="QMenu" name="menuSettings" >
-    <property name="title" >
-     <string>Settings</string>
-    </property>
-    <addaction name="OptionsAction" />
-   </widget>
-   <widget class="QMenu" name="menuImage" >
-    <property name="title" >
-     <string>Image</string>
-    </property>
-    <widget class="QMenu" name="menuResize" >
-     <property name="title" >
-      <string>Resize</string>
-     </property>
-    </widget>
-    <addaction name="rotateccw" />
-    <addaction name="rotatecw" />
-    <addaction name="separator" />
-    <addaction name="TonemapAction" />
-   </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
      <string>View</string>
@@ -90,6 +54,46 @@
     <addaction name="normalSizeAct" />
     <addaction name="zoomInAct" />
     <addaction name="zoomOutAct" />
+   </widget>
+   <widget class="QMenu" name="menuImage" >
+    <property name="title" >
+     <string>Image</string>
+    </property>
+    <widget class="QMenu" name="menuResize" >
+     <property name="title" >
+      <string>Resize</string>
+     </property>
+    </widget>
+    <addaction name="rotateccw" />
+    <addaction name="rotatecw" />
+    <addaction name="separator" />
+    <addaction name="actionResizeHDR" />
+    <addaction name="separator" />
+    <addaction name="TonemapAction" />
+   </widget>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>File</string>
+    </property>
+    <addaction name="fileNewAction" />
+    <addaction name="fileOpenAction" />
+    <addaction name="fileSaveAsAction" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>Help</string>
+    </property>
+    <addaction name="helpAboutAction" />
+   </widget>
+   <widget class="QMenu" name="menuSettings" >
+    <property name="title" >
+     <string>Tools</string>
+    </property>
+    <addaction name="OptionsAction" />
+    <addaction name="separator" />
+    <addaction name="Transplant_Exif_Data_action" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -404,6 +408,43 @@
    </property>
    <property name="toolTip" >
     <string>Set the various options of qtpfsgui</string>
+   </property>
+   <property name="shortcut" >
+    <string>CTRL+P</string>
+   </property>
+  </action>
+  <action name="actionResizeHDR" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/scale.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Resize the HDR...</string>
+   </property>
+   <property name="iconText" >
+    <string>Resize the HDR</string>
+   </property>
+   <property name="toolTip" >
+    <string>Resize the HDR</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="Transplant_Exif_Data_action" >
+   <property name="text" >
+    <string>Copy Exif Data...</string>
+   </property>
+   <property name="iconText" >
+    <string>Copy Exif Data</string>
+   </property>
+   <property name="toolTip" >
+    <string>Copy (i.e. transplant) Exif Data</string>
+   </property>
+   <property name="shortcut" >
+    <string>CTRL+E</string>
    </property>
   </action>
  </widget>
