@@ -168,11 +168,11 @@ unexpected effects like changing color saturation.
 v1.8.1
 	* New functionalities:
 		Dialog to resize an HDR.
-		Dialog to transplant exif data.
+		Dialog to transplant exif data between 2 sets of files.
 	* Dependency detection system when compiling in Linux
-	* We write exif data in output JPEG image: various tonemapping parameters in "Comment" and qtpfsgui in "software"
-	* Apply button in tonemapping dialog
-	* Improved usability in: spinboxes, file dialogs, error messages
+	* We write some exif data in the output JPEG image: we store the  tonemapping parameters in the "Comment" tag and we mention qtpfsgui in the "software" tag.
+	* Apply button in tonemapping dialog (this enables changing more than one thing before computing the result)
+	* Improved usability in: spinboxes, file dialogs, error messages, ...
 
 v1.8.0
 	* added initial raw image format input support in "Open Hdr..." 
