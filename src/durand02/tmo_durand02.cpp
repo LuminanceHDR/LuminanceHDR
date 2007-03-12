@@ -42,7 +42,7 @@
 #else
 #include "bilateral.h"
 #endif
-
+#define FLT_MIN 1e-6
 
 void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum);
@@ -88,10 +88,10 @@ void tmo_durand02(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B,
     (*G)(i) /= (*I)(i);
     (*B)(i) /= (*I)(i);
 
-    (*I)(i) = log( (*I)(i) );
-    if (!finite((*I)(i))) {
-    fprintf(stderr,"nf");
-    }
+    (*I)(i) = log(FLT_MIN+(*I)(i) );
+//     if (!finite((*I)(i))) {
+//     fprintf(stderr,"nf");
+//     }
   }
 
 #ifdef HAVE_FFTW

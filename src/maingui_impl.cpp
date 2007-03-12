@@ -28,6 +28,7 @@
 #include "pfsindcraw.h"
 #include "config.h"
 #include "transplant_impl.h"
+#include "align_impl.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
@@ -103,6 +104,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 	connect(helpAboutAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
+	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
             recentFileActs[i] = new QAction(this);
@@ -455,6 +457,12 @@ void MainGui::transplant_called() {
 	TransplantExifDialog *transplant=new TransplantExifDialog(this);
 	transplant->setAttribute(Qt::WA_DeleteOnClose);
 	transplant->exec();
+}
+
+void MainGui::align_called() {
+	AlignDialog *aligndialog=new AlignDialog(this);
+	aligndialog->setAttribute(Qt::WA_DeleteOnClose);
+	aligndialog->exec();
 }
 
 void MainGui::load_options(qtpfsgui_opts *dest) {

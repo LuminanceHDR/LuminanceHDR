@@ -35,6 +35,7 @@
 #define Array2D_H
 
 #include <assert.h>
+#include <sys/mman.h>
 
 namespace pfs
 {
@@ -157,12 +158,16 @@ namespace pfs
 
       Array2DImpl( int cols, int rows ) : cols( cols ), rows( rows )
         {
-          data = new float[cols*rows];
+          fprintf(stderr,"constr A2D\n");
+          data = (float*)mmap(0, cols*rows*4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
+//           data = new float[cols*rows];
         }
     
       ~Array2DImpl()
         {
-          delete[] data;
+//           delete[] data;
+          if (data) munmap(data, cols*rows*4);
+          fprintf(stderr,"free A2D\n");
         }
 
       inline int getCols() const { return cols; }

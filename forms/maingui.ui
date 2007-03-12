@@ -94,6 +94,7 @@
     <addaction name="OptionsAction" />
     <addaction name="separator" />
     <addaction name="Transplant_Exif_Data_action" />
+    <addaction name="actionAlign_Images" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -410,7 +411,7 @@
     <string>Set the various options of qtpfsgui</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+P</string>
+    <string>Ctrl+P</string>
    </property>
   </action>
   <action name="actionResizeHDR" >
@@ -444,7 +445,12 @@
     <string>Copy (i.e. transplant) Exif Data</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+E</string>
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionAlign_Images" >
+   <property name="text" >
+    <string>Align Images...</string>
    </property>
   </action>
  </widget>

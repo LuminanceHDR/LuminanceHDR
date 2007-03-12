@@ -74,6 +74,7 @@ static bool temporal_coherent;
 extern double V1 (int x, int y, int level);
 extern void build_pyramid (double **luminance, int image_width, int image_height);
 extern void clean_pyramid ();
+extern int PyramidHeight;
 
 #define SIGMA_I(i)       (sigma_0 + ((double)i/(double)range)*(sigma_1 - sigma_0))
 #define S_I(i)           (exp (SIGMA_I(i)))
@@ -218,6 +219,10 @@ void tonemap_image ()
       {
 	prefscale = range - 1;
 	for (scale = 0; scale < range - 1; scale++) {
+	  if (scale>=PyramidHeight) {
+	  	prefscale = scale;
+	  	break;
+	  }
 	  if (fabs(ACTIVITY(x,y,scale)) > threshold) {
 	    prefscale = scale;
 	    break;

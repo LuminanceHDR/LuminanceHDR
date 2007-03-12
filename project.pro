@@ -182,6 +182,7 @@ FORMS = forms/maingui.ui \
         forms/help_about.ui \
         forms/options.ui \
         forms/transplantexifdialog.ui \
+        forms/aligndialog.ui \
         forms/resizedialog.ui
 
 RESOURCES = icons.qrc
@@ -193,6 +194,8 @@ HEADERS += src/libpfs/array2d.h \
            src/tonemappingdialog_impl.h \
            src/options_impl.h \
            src/transplant_impl.h \
+           src/align_impl.h \
+           src/show_image.h \
            src/resizedialog_impl.h \
            src/hdrcreate/createhdr.h \
            src/hdrcreate/robertson02.h \
@@ -221,6 +224,8 @@ SOURCES += src/libpfs/pfs.cpp \
            src/tonemappingdialog_impl.cpp \
            src/options_impl.cpp \
            src/transplant_impl.cpp \
+           src/align_impl.cpp \
+           src/show_image.cpp \
            src/resizedialog_impl.cpp \
            src/hdrcreate/createhdr.cpp \
            src/hdrwizardform_impl.cpp \

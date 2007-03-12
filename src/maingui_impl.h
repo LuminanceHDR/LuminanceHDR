@@ -66,6 +66,7 @@ private slots:
 	void helpAbout();
 	void options_called();
 	void transplant_called();
+	void align_called();
 // 	void fileExit();
 
 	void openRecentFile();

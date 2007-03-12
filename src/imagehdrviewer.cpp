@@ -165,10 +165,10 @@ void ImageMDIwindow::updateHDR(pfs::Frame* inputframe) {
     scaleFactor = 1.0;
     //make the label use the image dimensions
     imageLabel->adjustSize();
-    update();
+//     update();
     imageLabel->update();
-    repaint();
-    imageLabel->repaint();
+//     repaint();
+//     imageLabel->repaint();
 }
 
 
