@@ -27,6 +27,7 @@
 #include <iostream>
 #include <pfs.h>
 #include <QImage>
+#include <endian.h>
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
 {
@@ -56,10 +57,17 @@ QImage* fromLDRPFStoPPM_QImage( pfs::Frame* inpfsframe, uchar * data) {
 	data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
 	for( int y = 0; y < height; y++ ) { // For each row of the image
 		for( int x = 0; x < width; x++ ) {
+#if BYTE_ORDER == BIG_ENDIAN
+			*(data + 3 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
+			*(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+			*(data + 0 + (y*width+x)*4) = 0xff;
+#elif BYTE_ORDER == LITTLE_ENDIAN
 			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
 			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
 			*(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
 			*(data + 3 + (y*width+x)*4) = 0xff;
+#endif
 		}
 	}
 #if QT_VERSION <= 0x040200
