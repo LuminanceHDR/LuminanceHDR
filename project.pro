@@ -29,7 +29,7 @@ message ( "" )
 message ( "Detecting exiv2:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-EXIV2IMAGEHPP = /usr/include/exiv2/image.hpp /usr/local/include/exiv2/image.hpp
+EXIV2IMAGEHPP = /usr/include/exiv2/image.hpp /usr/local/include/exiv2/image.hpp $$(LOCALSOFT)/include/exiv2/image.hpp 
 for(path, EXIV2IMAGEHPP) {
 	exists($$path) {
 		EXIV2PATH = $$dirname(path)
@@ -55,7 +55,7 @@ message ( "" )
 message ( "Detecting OpenEXR:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h /usr/include/ilmbase/ImfHeader.h
+OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h  /usr/include/ilmbase/ImfHeader.h $$(LOCALSOFT)/include/OpenEXR/ImfHeader.h 
 for(path, OPENEXRHEADER) {
 	exists($$path) {
 		OPENEXRDIR = $$dirname(path)
@@ -81,7 +81,7 @@ message ( "" )
 message ( "Detecting fftw3:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-FFTW3HEADER = /usr/include/fftw3.h
+FFTW3HEADER = /usr/include/fftw3.h  /usr/local/include/fftw3.h $$(LOCALSOFT)/include/fftw3.h
 for(path, FFTW3HEADER) {
 	exists($$path) {
 		FFTW3DIR = $$dirname(path)
@@ -108,7 +108,7 @@ message ( "" )
 message ( "Detecting libjpeg:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-LIBJPEGHEADER = /usr/include/jpeglib.h
+LIBJPEGHEADER = /usr/include/jpeglib.h /usr/local/include/jpeglib.h $$(LOCALSOFT)/include/jpeglib.h 
 for(path, LIBJPEGHEADER) {
 	exists($$path) {
 		LIBJPEGDIR = $$dirname(path)
@@ -141,8 +141,13 @@ INSTALLS	+= target menu icon
 }
 
 macx {
-#TODO!
+#TODO we have to complete this.
+LIBS+=-lIlmThread
 
+# Enable universal (require a universal Qt)
+CONFIG += x86 ppc
+# Add some extra PATHS in LIBS:
+LIBS += -L$$(LOCALSOFT)/lib
 }
 
 win32 {
