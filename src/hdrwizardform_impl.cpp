@@ -145,7 +145,7 @@ You can <b>Copy the exif data</b> from some input images to some other output im
 				listShowFiles->clear();
 				clearlists();
 				delete expotimes;
-				QMessageBox::critical(this,"Error reading the EXIF tags in the image", QString("8 bit or 16 bit tiffs only").arg(qfi->fileName()));
+				QMessageBox::critical(this,"Tiff error", QString("8 bit or 16 bit tiffs only").arg(qfi->fileName()));
 				return;
 			}
 		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)

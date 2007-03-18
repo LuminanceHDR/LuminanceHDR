@@ -134,7 +134,7 @@ message ( "" )
 message ( "Detecting libtiff:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-LIBTIFFHEADER = /usr/include/tiffio.h /usr/local/include/tiffio.h
+LIBTIFFHEADER = /usr/include/tiffio.h /usr/local/include/tiffio.h $$(LOCALSOFT)/include/tiffio.h
 for(path, LIBTIFFHEADER) {
 	exists($$path) {
 		LIBTIFFDIR = $$dirname(path)
