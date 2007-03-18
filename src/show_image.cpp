@@ -32,8 +32,6 @@ ScrollArea::ScrollArea(ShowImage * data): QScrollArea(),mousePos(0,0) {
 	setBackgroundRole(QPalette::Dark);
 	setWidgetResizable(false);
 	setWidget(data);
-// 	qDebug("ScrollArea()");
-// 	connect(this,SIGNAL(left_clicked(int,int)),data,SLOT(left_clicked(int,int)));
 }
 
 void ScrollArea::mouseMoveEvent(QMouseEvent *e) {
@@ -57,8 +55,8 @@ ScrollArea::~ScrollArea() {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //			IMAGE VIEWER
 ////////////////////////////////////////////////////////////////////////////////////////////////
-ShowImage::ShowImage(QList<Image *> *p, int listimgs_own_idx, QList<QPair<CP*,CP*> > *_pairs, bool _left) : QWidget(), ownindex(listimgs_own_idx), ptrlistimages(p), pairs(_pairs), otherindex(0), data(p->at(ownindex)), temp(NULL), dragged(NULL), left(_left) {
-	//FIXME: otherindex is 0, should we add it to the constructor?
+ShowImage::ShowImage(QList<Image *> *p, int listimgs_own_idx, QList<QPair<CP*,CP*> > *_pairs/*, bool _left*/) : QWidget(), ownindex(listimgs_own_idx), ptrlistimages(p), pairs(_pairs), otherindex(0), data(p->at(ownindex)), temp(NULL), dragged(NULL)/*, left(_left)*/ {
+	//FIXME: otherindex=0 now, should we add it to the constructor instead?
 	this->setCursor(QCursor(QPixmap(":/new/prefix1/images/crosshair.png"),15,15));
 // 	qDebug("ShowImage()");
 }
@@ -72,7 +70,6 @@ void ShowImage::paintEvent(QPaintEvent *e) {
 			if ( (p.first==data->listcps[i] && p.second->whobelongsto==ptrlistimages->at(otherindex)) || (p.second==data->listcps[i] && p.first->whobelongsto==ptrlistimages->at(otherindex)) ) {
 // 				qDebug(left? "left: found a point" : "right: found a point");
 				painter.setPen(Qt::yellow);
-// 				painter.setBrush(Qt::NoBrush);
 				painter.drawEllipse((int)data->listcps[i]->x-9, (int)data->listcps[i]->y-9, 19,19);
 				break;
 			}
@@ -155,9 +152,9 @@ void ShowImage::update_firstPoint(CP* newcp) {
 }
 
 ShowImage::~ShowImage(){
+	//TODO check with valgrind the mem leaks
 // 	qDebug("~ShowImage()");
 	//data and temp have to be left untouched
-	//TODO check with valgrind the mem leaks
 // 	if (data) {
 // 		qDebug("deleting data->payload"); delete data->payload; data->payload=NULL;
 // 		qDebug("deleting data"); delete data; data=NULL;

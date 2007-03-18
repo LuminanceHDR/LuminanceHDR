@@ -160,7 +160,7 @@ TMODialog::TMODialog(QWidget *parent, bool ks) : QDialog(parent), setting_graphi
 }
 
 void TMODialog::setOrigBuffer(pfs::Frame* hdrpfsframe) {
-// 	qDebug("begin setOrigBuffer");
+	qDebug("begin setOrigBuffer");
 	assert(hdrpfsframe!=NULL);
 	//origbuffer, internal field, points to the same memory area pointed by variables outside of this class, therefore treat origbuffer as readonly.
 	origbuffer=hdrpfsframe;
@@ -181,7 +181,7 @@ void TMODialog::setOrigBuffer(pfs::Frame* hdrpfsframe) {
 	for(int i = 0; i < sizes.size(); i++) {
 		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(r*sizes[i]) ));
 	}
-// 	qDebug("end  setOrigBuffer");
+	qDebug("end  setOrigBuffer");
 	//choose the smallest size
 	this->setWorkSize(0);
 }
@@ -220,9 +220,10 @@ void TMODialog::setWorkSize(int index) {
 	} else {
 		resizedHdrbuffer=resizeFrame(origbuffer, sizes[index]);
 		//here I cannot delete origbuffer
+		//(only here) I can put origbuffer to sleep //XXX
 	}
 	QApplication::restoreOverrideCursor();
-// 	qDebug("after setWorkSize");
+	qDebug("after setWorkSize");
 	pregammasliderchanged(); //continue chain
 }
 
@@ -230,7 +231,7 @@ void TMODialog::setWorkSize(int index) {
 //////////////////////////////////////  resized ----> pregamma  ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TMODialog::pregammasliderchanged() {
-// 	qDebug("begin pregammasliderchanged");
+	qDebug("begin pregammasliderchanged");
 
 	float pregamma = pregammagang->v();
 	if ( resizedHdrbuffer==NULL ) {
@@ -251,7 +252,7 @@ void TMODialog::pregammasliderchanged() {
 	resizedHdrbuffer=NULL;
 
 	QApplication::restoreOverrideCursor();
-// 	qDebug("after pregammasliderchanged");
+	qDebug("after pregammasliderchanged");
 	runToneMap(); //continue chain
 }
 
@@ -259,7 +260,7 @@ void TMODialog::pregammasliderchanged() {
 //////////////////////////////////////   pregamma  ---> TM'ed   ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TMODialog::runToneMap() {
-// 	qDebug("begin runToneMap");
+	qDebug("begin runToneMap");
 
 	if( afterPreGammabuffer==NULL ) {
 		QMessageBox::warning(this,"","Problem with input pregamma buffer, in RUNTONEMAP",
@@ -289,7 +290,7 @@ void TMODialog::runToneMap() {
 // 		}
 // 	}
 	QApplication::restoreOverrideCursor();
-// 	qDebug("after runToneMap");
+	qDebug("after runToneMap");
 	postgammasliderchanged(); //continue chain
 }
 
@@ -324,7 +325,7 @@ return;
 //////////////////////////////////////   TM'ed ---> postgamma   ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TMODialog::postgammasliderchanged() {
-// 	qDebug("begin postgammasliderchanged");
+	qDebug("begin postgammasliderchanged");
 
 	float postgamma = postgammagang->v();
 
@@ -354,7 +355,7 @@ void TMODialog::postgammasliderchanged() {
 	afterToneMappedBuffer=NULL;
 
 	QApplication::restoreOverrideCursor();
-// 	qDebug("end postgammasliderchanged");
+	qDebug("end postgammasliderchanged");
 	prepareLDR();
 }
 
@@ -362,7 +363,7 @@ void TMODialog::postgammasliderchanged() {
 ////////////////////////////////////////   postgamma ---> LDR   ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void TMODialog::prepareLDR() {
-// 	qDebug("begin prepareLDR");
+	qDebug("begin prepareLDR");
 	if(  afterPostgammaBuffer==NULL ) {
 		QMessageBox::warning(this,"","Problem with input postgamma buffer, in prepareLDR()",
 					QMessageBox::Ok, QMessageBox::NoButton);
@@ -453,10 +454,10 @@ void TMODialog::saveLDR() {
 		QString outfname=(fd->selectedFiles()).at(0);
 		if(!outfname.isEmpty()) {
 			QFileInfo qfi(outfname);
-			// update internal field variable
-			RecentDirLDRSetting=qfi.path();
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-			if (RecentDirLDRSetting != settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()) {
+			if (RecentDirLDRSetting != qfi.path()) {
+				// update internal field variable
+				RecentDirLDRSetting=qfi.path();
 				settings.setValue(KEY_RECENT_PATH_SAVE_LDR, RecentDirLDRSetting);
 			}
 			const char * format=qfi.suffix().toAscii();
@@ -551,7 +552,7 @@ case 3:
 	exif_comment+=QString("Beta: %1\n").arg(betaGang->v());
 	fname+=QString("saturation_%1_").arg(saturation2Gang->v());
 	caption+=QString("Saturation=%1 ~ ").arg(saturation2Gang->v());
-	exif_comment+=QString("Color Saturation: %1 ~ ").arg(saturation2Gang->v());
+	exif_comment+=QString("Color Saturation: %1 ").arg(saturation2Gang->v());
 	break;
 case 4:
 	caption+="Pattanaik00:     ~ ";
@@ -616,7 +617,7 @@ case 6:
 }
 fname+=QString("pregamma_%1_").arg(pregammagang->v());
 caption+=QString("PreGamma=%1 ~ ").arg(pregammagang->v());
-exif_comment+=QString("------\nPreGamma: %1\n").arg(pregammagang->v());
+exif_comment+=QString("\n------\nPreGamma: %1\n").arg(pregammagang->v());
 fname+=QString("postgamma_%1").arg(postgammagang->v());
 caption+=QString("PostGamma=%1").arg(postgammagang->v());
 exif_comment+=QString("PostGamma: %1").arg(postgammagang->v());

@@ -30,7 +30,7 @@
 #include <QSettings>
 #include "hdrwizardform_impl.h"
 #include "../generated_uic/ui_maingui.h"
-#include "pfsindcraw.h"
+#include "fileformat/pfsindcraw.h"
 #include "options_impl.h"
 #include "resizedialog_impl.h"
 
@@ -66,7 +66,7 @@ private slots:
 	void helpAbout();
 	void options_called();
 	void transplant_called();
-	void align_called();
+// 	void align_called();
 // 	void fileExit();
 
 	void openRecentFile();
@@ -76,7 +76,7 @@ private slots:
 private:
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
-	QString strippedName(const QString &fullFileName);
+// 	QString strippedName(const QString &fullFileName);
 	void setCurrentFile(const QString &fileName);
 	void load_options(qtpfsgui_opts *);
 	QWorkspace* workspace;

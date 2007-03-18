@@ -32,8 +32,8 @@
  * $Id: tmo_pattanaik00.cpp,v 1.5 2004/12/14 15:34:04 krawczyk Exp $
  */
 
-#include <pfs.h>
 #include <math.h>
+#include "../libpfs/pfs.h"
 #include "tmo_pattanaik00.h"
 
 

@@ -35,7 +35,11 @@
 #define Array2D_H
 
 #include <assert.h>
+#ifndef _WIN32
 #include <sys/mman.h>
+#else
+#include <windows.h>
+#endif
 
 namespace pfs
 {
@@ -158,16 +162,24 @@ namespace pfs
 
       Array2DImpl( int cols, int rows ) : cols( cols ), rows( rows )
         {
-          fprintf(stderr,"constr A2D\n");
+//           fprintf(stderr,"constr A2D\n");
+#ifndef _WIN32
           data = (float*)mmap(0, cols*rows*4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
+#else
+          data = (float*)VirtualAlloc(NULL,cols*rows*4,MEM_COMMIT,PAGE_READWRITE);
+#endif
 //           data = new float[cols*rows];
         }
     
       ~Array2DImpl()
         {
 //           delete[] data;
+#ifndef _WIN32
           if (data) munmap(data, cols*rows*4);
-          fprintf(stderr,"free A2D\n");
+#else
+          if (data) VirtualFree(data,0,MEM_RELEASE);
+#endif
+//           fprintf(stderr,"free A2D\n");
         }
 
       inline int getCols() const { return cols; }

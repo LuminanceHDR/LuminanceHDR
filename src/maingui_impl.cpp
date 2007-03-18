@@ -21,18 +21,18 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "maingui_impl.h"
-#include "imagehdrviewer.h"
-#include "tonemappingdialog_impl.h"
-#include "../generated_uic/ui_help_about.h"
-#include "pfsindcraw.h"
-#include "config.h"
-#include "transplant_impl.h"
-#include "align_impl.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
+#include "maingui_impl.h"
+#include "fileformat/pfstiff.h"
+#include "imagehdrviewer.h"
+#include "tonemappingdialog_impl.h"
+#include "../generated_uic/ui_help_about.h"
+#include "config.h"
+#include "transplant_impl.h"
+// #include "align_impl.h"
 
 pfs::Frame* readEXRfile  (const char * filename);
 pfs::Frame* readRGBEfile (const char * filename);
@@ -104,7 +104,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 	connect(helpAboutAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
+// 	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
             recentFileActs[i] = new QAction(this);
@@ -131,29 +131,18 @@ void MainGui::fileNewViaWizard() {
 		newmdi->setWindowTitle(wizard->getCaptionTEXT());
 		newmdi->show();
 	}
-	if (wizard != NULL)
-		delete wizard;
+	delete wizard;
 }
 
-void MainGui::fileOpen()
-{	
+void MainGui::fileOpen() {
 	QString filetypes;
 #ifndef _WIN32
 	filetypes += "OpenEXR (*.exr);;";
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC);;";
-	filetypes += "PFS Stream (*.pfs *.PFS);;";
-	filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
-// 	filetypes += "CANON RAW (*.crw *.CRW *.cr2 *CR2);;";
-// 	filetypes += "NIKON RAW (*.nef *.NEF);;";
-// 	filetypes += "ADOBE DNG (*.dng *.DNG);;";
-// 	filetypes += "MINOLTA RAW (*.mrw *.MRW);;";
-// 	filetypes += "OLYMPUS RAW (*.olf *.OLF);;";
-// 	filetypes += "KODAK RAW (*.kdc *.KDC *.dcr *DCR);;";
-// 	filetypes += "SONY RAW (*.arw *.ARW);;";
-// 	filetypes += "FUJI RAW (*.raf *.RAF);;";
-// 	filetypes += "PENTAX RAW (*.ptx *.PTX *.pef *.PEF);;";
-// 	filetypes += "SIGMA RAW (*.x3f *.X3F)";
+	filetypes += "TIFF Images (*.tiff *.TIFF *.tif *.TIF);;";
+	filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F);;";
+	filetypes += "PFS Stream (*.pfs *.PFS)";
 	QString opened = QFileDialog::getOpenFileName(
 			this,
 			"Choose a HDR file to OPEN...",
@@ -165,10 +154,10 @@ void MainGui::fileOpen()
 bool MainGui::loadFile(QString opened) {
 if( ! opened.isEmpty() ) {
 	QFileInfo qfi(opened);
-	// update internal field variable
-	RecentDirHDRSetting=qfi.path();
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirHDRSetting != settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString()) {
+	if (RecentDirHDRSetting != qfi.path() ) {
+		// update internal field variable
+		RecentDirHDRSetting=qfi.path();
 		settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 	}
 	if (!qfi.isReadable()) {
@@ -179,7 +168,7 @@ if( ! opened.isEmpty() ) {
 	ImageMDIwindow *nuova;
 	pfs::Frame* hdrpfsframe = NULL;
 	QString extension=qfi.suffix().toUpper();
-	bool rawinput=(extension!="PFS")&&(extension!="EXR")&&(extension!="HDR");
+	bool rawinput=(extension!="PFS")&&(extension!="EXR")&&(extension!="HDR")&&(!extension.startsWith("TIF"));
 #ifndef _WIN32
 	if (extension=="EXR") {
 		hdrpfsframe = readEXRfile(qfi.filePath().toAscii().constData());
@@ -192,16 +181,19 @@ if( ! opened.isEmpty() ) {
 		FILE * fp=fopen(qfi.filePath().toAscii().constData(),"rb");
 		hdrpfsframe=pfsio.readFrame(fp);
 		hdrpfsframe->convertXYZChannelsToRGB();
+	} else if (extension.startsWith("TIF")) {
+		TiffReader reader(qfi.filePath().toAscii().constData());
+		hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 	} 
 	else if (rawinput) {
 		hdrpfsframe = readRAWfile(qfi.filePath().toAscii().constData(), &(qtpfsgui_options->dcraw_options));
-		assert(hdrpfsframe!=NULL);
 	}
 	else {
 		QMessageBox::warning(this,"Aborting...","We only support <br>Radiance rgbe (hdr), PFS, raw, and exr (linux only) <br>files up until now.",
 				 QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
+	assert(hdrpfsframe!=NULL);
 	nuova=new ImageMDIwindow(this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
 	nuova->updateHDR(hdrpfsframe);
 	workspace->addWindow(nuova);
@@ -220,6 +212,7 @@ void MainGui::fileSaveAs()
 	filetypes += "OpenEXR (*.exr)";
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC)";
+	filetypes += "TIFF Images (*.tiff *.TIFF *.tif *.TIF)";
 	filetypes += "PFS Stream (*.pfs *.PFS)";
 
 	QFileDialog *fd = new QFileDialog(this);
@@ -239,10 +232,10 @@ void MainGui::fileSaveAs()
 		QString fname=(fd->selectedFiles()).at(0);
 		if(!fname.isEmpty()) {
 			QFileInfo qfi(fname);
-			// update internal field variable
-			RecentDirHDRSetting=qfi.path();
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-			if (RecentDirHDRSetting != settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString()) {
+			if (RecentDirHDRSetting != qfi.path() ) {
+				// update internal field variable
+				RecentDirHDRSetting=qfi.path();
 				settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 			}
 #ifndef _WIN32
@@ -252,6 +245,12 @@ void MainGui::fileSaveAs()
 #endif
 				if (qfi.suffix().toUpper()=="HDR") {
 				writeRGBEfile (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
+			} else if (qfi.suffix().toUpper().startsWith("TIF")) {
+				TiffWriter tiffwriter(qfi.filePath().toAscii().constData(), ((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame());
+				if (qtpfsgui_options->saveLogLuvTiff)
+					tiffwriter.writeLogLuvTiff();
+				else
+					tiffwriter.writeFloatTiff();
 			} else if (qfi.suffix().toUpper()=="PFS") {
 				pfs::DOMIO pfsio;
 				FILE * fp=fopen(qfi.filePath().toAscii().constData(),"wb");
@@ -410,7 +409,7 @@ void MainGui::updateRecentFileActions() {
 	separatorRecentFiles->setVisible(numRecentFiles > 0);
 	
 	for (int i = 0; i < numRecentFiles; ++i) {
-		QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+		QString text = tr("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
 		recentFileActs[i]->setText(text);
 		recentFileActs[i]->setData(files[i]);
 		recentFileActs[i]->setVisible(true);
@@ -419,9 +418,9 @@ void MainGui::updateRecentFileActions() {
 		recentFileActs[j]->setVisible(false);
 }
 
-QString MainGui::strippedName(const QString &fullFileName) {
-	return QFileInfo(fullFileName).fileName();
-}
+// QString MainGui::strippedName(const QString &fullFileName) {
+// 	return QFileInfo(fullFileName).fileName();
+// }
 
 void MainGui::openRecentFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
@@ -459,11 +458,11 @@ void MainGui::transplant_called() {
 	transplant->exec();
 }
 
-void MainGui::align_called() {
-	AlignDialog *aligndialog=new AlignDialog(this);
-	aligndialog->setAttribute(Qt::WA_DeleteOnClose);
-	aligndialog->exec();
-}
+// void MainGui::align_called() {
+// 	AlignDialog *aligndialog=new AlignDialog(this);
+// 	aligndialog->setAttribute(Qt::WA_DeleteOnClose);
+// 	aligndialog->exec();
+// }
 
 void MainGui::load_options(qtpfsgui_opts *dest) {
 	settings.beginGroup(GROUP_DCRAW);
@@ -506,6 +505,12 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 		if (!settings.contains(KEY_KEEPSIZE))
 			settings.setValue(KEY_KEEPSIZE,false);
 		dest->keepsize=settings.value(KEY_KEEPSIZE,false).toBool();
+	settings.endGroup();
+
+	settings.beginGroup(GROUP_TIFF);
+		if (!settings.contains(KEY_SAVE_LOGLUV))
+			settings.setValue(KEY_SAVE_LOGLUV,true);
+		dest->saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
 	settings.endGroup();
 }
 

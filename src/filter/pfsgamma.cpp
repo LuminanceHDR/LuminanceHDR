@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 #include <QFile>
 
 void applyGamma( pfs::Array2D *arrayto, pfs::Array2D *arrayfrom, const float exponent/*, const float multiplier*/ );

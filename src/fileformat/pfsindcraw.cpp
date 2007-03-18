@@ -24,7 +24,7 @@
    grota: added a couple of functions to integrate in qtpfsgui
  */
 #include <QImage>
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 extern "C" {
 #include "pfsindcraw.h"
 #define DCRAWVERSION "8.53"

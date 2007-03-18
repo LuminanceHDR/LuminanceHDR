@@ -25,10 +25,10 @@
 #define TRANSPLANT_IMPL_H
 
 #include <QDialog>
+#include <QSettings>
 #include "../generated_uic/ui_transplantexifdialog.h"
 
-class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog
-{
+class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog {
 Q_OBJECT
 public:
 	TransplantExifDialog(QWidget *);
@@ -38,6 +38,9 @@ private:
 	QStringList from,to;
 	bool done;
 	void updateinterval(bool);
+	QSettings settings;
+	QString RecentDirEXIFfrom;
+	QString RecentDirEXIFto;
 private slots:
 	void transplant_requested();
 	void help_requested();

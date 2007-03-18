@@ -27,11 +27,11 @@
 #include <QDialog>
 #include <QString>
 #include <QMap>
-#include "../generated_uic/ui_hdrwizardform.h"
-#include "createhdr.h"
-#include "options.h"
 #include <image.hpp>
 #include <exif.hpp>
+#include "../generated_uic/ui_hdrwizardform.h"
+#include "hdrcreate/createhdr.h"
+#include "options.h"
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 {
@@ -58,6 +58,7 @@ private:
 	Exiv2::ExifKey *iso;
 	Exiv2::ExifKey *fnum, *fnum2;
 	bool input_is_ldr;
+	bool ldr_tiff;
 
 	QList<QImage*> ImagePtrList;  //ldr input
 	Array2DList listhdrR,listhdrG,listhdrB; //hdr input

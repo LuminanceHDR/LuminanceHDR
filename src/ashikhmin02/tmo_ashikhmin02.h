@@ -29,8 +29,8 @@
 #ifndef _tmo_ashikhmin02_h_
 #define _tmo_ashikhmin02_h_
 
-#include <array2d.h>
-#include <pfs.h>
+#include "../libpfs/array2d.h"
+#include "../libpfs/pfs.h"
 /**
  * @brief Michael Ashikhmin tone mapping operator
  *

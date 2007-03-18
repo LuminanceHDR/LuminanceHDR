@@ -21,13 +21,13 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef  CREATEHDR_H
+#ifndef CREATEHDR_H
 #define CREATEHDR_H
 
 #include <QString>
 #include <QList>
 #include <QImage>
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 #include <stdarg.h>
 
 #include "responses.h"

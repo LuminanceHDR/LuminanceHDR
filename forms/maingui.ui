@@ -1,7 +1,4 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>MainGui</class>
  <widget class="QMainWindow" name="MainGui" >
   <property name="geometry" >
@@ -31,6 +28,33 @@
      <height>29</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuImage" >
+    <property name="title" >
+     <string>Image</string>
+    </property>
+    <addaction name="rotateccw" />
+    <addaction name="rotatecw" />
+    <addaction name="separator" />
+    <addaction name="actionResizeHDR" />
+    <addaction name="separator" />
+    <addaction name="TonemapAction" />
+   </widget>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>File</string>
+    </property>
+    <addaction name="fileNewAction" />
+    <addaction name="fileOpenAction" />
+    <addaction name="fileSaveAsAction" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>Help</string>
+    </property>
+    <addaction name="helpAboutAction" />
+   </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
      <string>View</string>
@@ -55,38 +79,6 @@
     <addaction name="zoomInAct" />
     <addaction name="zoomOutAct" />
    </widget>
-   <widget class="QMenu" name="menuImage" >
-    <property name="title" >
-     <string>Image</string>
-    </property>
-    <widget class="QMenu" name="menuResize" >
-     <property name="title" >
-      <string>Resize</string>
-     </property>
-    </widget>
-    <addaction name="rotateccw" />
-    <addaction name="rotatecw" />
-    <addaction name="separator" />
-    <addaction name="actionResizeHDR" />
-    <addaction name="separator" />
-    <addaction name="TonemapAction" />
-   </widget>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
-     <string>File</string>
-    </property>
-    <addaction name="fileNewAction" />
-    <addaction name="fileOpenAction" />
-    <addaction name="fileSaveAsAction" />
-    <addaction name="separator" />
-    <addaction name="fileExitAction" />
-   </widget>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
-     <string>Help</string>
-    </property>
-    <addaction name="helpAboutAction" />
-   </widget>
    <widget class="QMenu" name="menuSettings" >
     <property name="title" >
      <string>Tools</string>
@@ -102,16 +94,7 @@
    <addaction name="menuSettings" />
    <addaction name="menuHelp" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" >
-   <property name="geometry" >
-    <rect>
-     <x>0</x>
-     <y>583</y>
-     <width>683</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
+  <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
    <property name="orientation" >
     <enum>Qt::Horizontal</enum>
@@ -449,12 +432,17 @@
    </property>
   </action>
   <action name="actionAlign_Images" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="text" >
     <string>Align Images...</string>
    </property>
+   <property name="toolTip" >
+    <string>WORK IN PROGRESS</string>
+   </property>
   </action>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="../icons.qrc" />
   <include location="icons.qrc" />

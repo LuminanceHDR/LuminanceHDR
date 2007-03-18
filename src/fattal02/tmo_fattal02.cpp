@@ -32,13 +32,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 #include <math.h>
-#include <array2d.h>
-
-#include "pde.h"
-
 #include <assert.h>
+#include "../libpfs/array2d.h"
+#include "pde.h"
 
 using namespace std;
 

@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 #include <sstream>
 #include <QFile>
 
@@ -155,8 +155,8 @@ pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize) {
 		pfs::Channel *originalCh = it->getNext();
 // 		fprintf(stderr,"computing chan %s\n",originalCh->getName());
 		pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-		
 		resampleArray( originalCh, newCh, filter );
+		//(only here) I can CONSIDER(threshold) putting originalCh to sleep //XXX
 	}
 
 	pfs::copyTags( inpfsframe, resizedFrame );

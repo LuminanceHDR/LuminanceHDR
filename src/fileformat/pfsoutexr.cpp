@@ -25,13 +25,13 @@
  * @author Giuseppe Rota  <grota@users.sourceforge.net>
  */
 
-#include <pfs.h>
 #include <ImfHeader.h>
 #include <ImfChannelList.h>
 #include <ImfOutputFile.h>
 #include <ImfRgbaFile.h>
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
+#include "../libpfs/pfs.h"
 #define min(x,y) ( (x)<(y) ? (x) : (y) )
 using namespace Imf;
 using namespace Imath;

@@ -106,6 +106,13 @@ void QtpfsguiOptions::ok_clicked() {
 		}
 	settings->endGroup();
 
+	settings->beginGroup(GROUP_TIFF);
+		if (radioButtonLogLuv->isChecked() != opts->saveLogLuvTiff) {
+			opts->saveLogLuvTiff=radioButtonLogLuv->isChecked();
+			settings->setValue(KEY_SAVE_LOGLUV,radioButtonLogLuv->isChecked());
+		}
+	settings->endGroup();
+
 	accept();
 }
 
@@ -126,6 +133,8 @@ void QtpfsguiOptions::from_options_to_gui() {
 	change_color_of(infnan_color_button,&infnancolor);
 // 	qDebug("keepsize=%d",opts->keepsize);
 	checkBox_currentsize->setChecked(opts->keepsize);
+	radioButtonLogLuv->setChecked(opts->saveLogLuvTiff);
+	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
 }
 
 QtpfsguiOptions::~QtpfsguiOptions() {

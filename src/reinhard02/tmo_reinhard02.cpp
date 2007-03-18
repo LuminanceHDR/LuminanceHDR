@@ -37,8 +37,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 
 extern "C" {
 void print_parameter_settings ();
@@ -430,8 +429,9 @@ void tmo_reinhard02(const pfs::Array2D *Y, pfs::Array2D *L,
 //  print_parameter_settings();
 
   deallocate_memory();
-  if( use_scales )
-  clean_pyramid();
+  if( use_scales ) {
+  	clean_pyramid();
+  }
 }
 
 }

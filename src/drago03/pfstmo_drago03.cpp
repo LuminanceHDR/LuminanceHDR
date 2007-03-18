@@ -33,10 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#include <pfs.h>
 #include <QFile>
-#include <tmo_drago03.h>
+#include "../libpfs/pfs.h"
+#include "tmo_drago03.h"
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum );
 

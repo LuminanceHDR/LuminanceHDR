@@ -33,7 +33,7 @@
 
 #ifndef _tmo_durand02_h_
 #define _tmo_durand02_h_
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 
 /*
  * @brief Fast bilateral filtering

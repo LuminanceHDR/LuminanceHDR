@@ -1,7 +1,7 @@
 /**
  * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2007 Giuseppe Rota
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,12 +29,14 @@
 #include <iostream>
 #include "transplant_impl.h"
 #include "../generated_uic/ui_help_about.h"
+#include "options.h"
+
 static const QString helptext = 
 "<hr> <h1>The ``Copy Exif data'' Dialog</h1> \
-<p>In this dialog you will be able to transplant (i.e. copy) the exif data contained in a set of files (the sources, on the left) into another set of files (the destinations, on the right).<br>This is a one-to-one data copy, i.e. the first file in the destination list gets the exif data from the first file in the sources list and so on.</p> ";
+<p>In this dialog you will be able to transplant (i.e. copy) the exif data contained in a set of files (the sources, on the left) into another set of files (the destinations, on the right).<br>This is a one-to-one data copy, i.e. the first file in the destination list gets the exif data from the first file in the sources list, the second file in the destination list gets the exif data from the second file in the sources list, and so on.</p> ";
 
 
-TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false) {
+TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	connect(moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
 	connect(moveup_right_button,	SIGNAL(clicked()),this,SLOT(moveup_right()));
@@ -46,6 +48,8 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	connect(addright,		SIGNAL(clicked()),this,SLOT(append_right()));
 	connect(TransplantButton,	SIGNAL(clicked()),this,SLOT(transplant_requested()));
 	connect(HelpButton,		SIGNAL(clicked()),this,SLOT(help_requested()));
+	RecentDirEXIFfrom=settings.value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
+	RecentDirEXIFto=settings.value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
 }
 
 TransplantExifDialog::~TransplantExifDialog() {
@@ -187,9 +191,16 @@ void TransplantExifDialog::remove_right() {
 }
 
 void TransplantExifDialog::append_left() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", QDir::currentPath(), filetypes );
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.tif *.tiff *.TIF *.TIFF *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFfrom, filetypes );
 	if (!files.isEmpty()) {
+		QFileInfo qfi(files.at(0));
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+		if (RecentDirEXIFfrom != qfi.path()) {
+			// update internal field variable
+			RecentDirEXIFfrom=qfi.path();
+			settings.setValue(KEY_RECENT_PATH_EXIF_FROM, RecentDirEXIFfrom);
+		}
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {
 			QFileInfo *qfi=new QFileInfo(*it);
@@ -204,9 +215,16 @@ void TransplantExifDialog::append_left() {
 }
 
 void TransplantExifDialog::append_right() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", QDir::currentPath(), filetypes );
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.ptx *.PTX *.x3f *.X3F)";
+	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFto, filetypes );
 	if (!files.isEmpty()) {
+		QFileInfo qfi(files.at(0));
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+		if (RecentDirEXIFto != qfi.path()) {
+			// update internal field variable
+			RecentDirEXIFto=qfi.path();
+			settings.setValue(KEY_RECENT_PATH_EXIF_TO, RecentDirEXIFto);
+		}
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {
 			QFileInfo *qfi=new QFileInfo(*it);
@@ -298,6 +316,14 @@ void TransplantExifDialog::transplant_requested() {
 	done=true;
 	Done_label->setText("<center><font color=\"#00FF00\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>");
 	TransplantButton->setText("Done.");
+	moveup_left_button->setDisabled(true);
+	moveup_right_button->setDisabled(true);
+	movedown_left_button->setDisabled(true);
+	movedown_right_button->setDisabled(true);
+	removeleft->setDisabled(true);
+	removeright->setDisabled(true);
+	addleft->setDisabled(true);
+	addright->setDisabled(true);
 	cancelbutton->setDisabled(true);
 }
 

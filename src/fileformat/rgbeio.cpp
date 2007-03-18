@@ -30,7 +30,7 @@
 #include <math.h>
 #include <assert.h>
 
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 
 #include "rgbeio.h"
 

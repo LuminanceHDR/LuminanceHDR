@@ -55,7 +55,7 @@ message ( "" )
 message ( "Detecting OpenEXR:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h  /usr/include/ilmbase/ImfHeader.h $$(LOCALSOFT)/include/OpenEXR/ImfHeader.h 
+OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h /usr/include/ilmbase/ImfHeader.h $$(LOCALSOFT)/include/OpenEXR/ImfHeader.h 
 for(path, OPENEXRHEADER) {
 	exists($$path) {
 		OPENEXRDIR = $$dirname(path)
@@ -81,7 +81,7 @@ message ( "" )
 message ( "Detecting fftw3:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-FFTW3HEADER = /usr/include/fftw3.h  /usr/local/include/fftw3.h $$(LOCALSOFT)/include/fftw3.h
+FFTW3HEADER = /usr/include/fftw3.h /usr/local/include/fftw3.h $$(LOCALSOFT)/include/fftw3.h
 for(path, FFTW3HEADER) {
 	exists($$path) {
 		FFTW3DIR = $$dirname(path)
@@ -127,14 +127,43 @@ isEmpty(LIBJPEGDIR) {
 }
 INCLUDEPATH *= $$LIBJPEGDIR
 LIBS += -ljpeg
+
+########################################### LIBTIFF ###########################################
+#required, since we want to read hdr/ldr tiff files.
+message ( "" )
+message ( "Detecting libtiff:" )
+#I think these are the only paths where we have to search for.
+#If your system is more exotic let me know.
+LIBTIFFHEADER = /usr/include/tiffio.h /usr/local/include/tiffio.h
+for(path, LIBTIFFHEADER) {
+	exists($$path) {
+		LIBTIFFDIR = $$dirname(path)
+		message ( headers found in $$LIBTIFFDIR)
+	}
+}
+isEmpty(LIBTIFFDIR) {
+	message("libtiff devel package not found")
+	message("In ubuntu you can run:")
+	message("sudo apt-get install libtiff4-dev")
+	message("in fedora core 6 run (as root):")
+	message("yum install libtiff-devel")
+	message("Or, if you have to compile the sources go to http://www.remotesensing.org/libtiff/")
+	message("If you, on the other had, think that this message is wrong and indeed you HAVE libtiff-devel installed, send an email to grota@users.sourceforge.net saying so.")
+	error( "fatal error, bailing out." )	
+}
+INCLUDEPATH *= $$LIBTIFFDIR
+LIBS += -ltiff
 ######################################## end of detection ########################################
 
 ############################## required by "make install" ########################################
-target.path	= /usr/local/bin
+isEmpty(PREFIX) {
+       PREFIX = ""
+}
+target.path    = $${PREFIX}/usr/local/bin
 menu.files      = qtpfsgui.desktop
-menu.path       = /usr/share/applications
+menu.path       = $${PREFIX}/usr/share/applications
 icon.files      = images/qtpfsgui.png
-icon.path       = /usr/share/pixmaps
+icon.path       = $${prefix}/usr/share/pixmaps
 INSTALLS	+= target menu icon
 #################################################################################################
 #CONFIG += debug
@@ -166,7 +195,7 @@ INCLUDEPATH += C:\msys\1.0\local\include\exiv2
 LIBS            += -lexiv2 -LC:\msys\1.0\local\lib
 
 #fftw3
-LIBS += -lfftw3f-3 -lm 
+LIBS += -lfftw3f-3 -lm
 DEFINES += HAVE_FFTW
 INCLUDEPATH += C:\comp_prj\fftw3
 LIBS += -LC:\comp_prj\fftw3
@@ -176,10 +205,14 @@ LIBS += -ljpeg62 -lWs2_32
 LIBS += -LC:\comp_prj\libjpeg
 INCLUDEPATH += C:\comp_prj\libjpeg\include
 
+#tiff
+INCLUDEPATH += C:\Programmi\GnuWin32\include
+LIBS += -LC:\Programmi\GnuWin32\lib -llibtiff
+
 RC_FILE = src/qtpfsgui_ico.rc
 }
 
-INCLUDEPATH += src/libpfs src/fileformat src/hdrcreate src/ashikhmin02 src/drago03 src/durand02 src/fattal02 src/pattanaik00 src/reinhard02
+#INCLUDEPATH += src/libpfs src/fileformat src/hdrcreate src/ashikhmin02 src/drago03 src/durand02 src/fattal02 src/pattanaik00 src/reinhard02
 
 FORMS = forms/maingui.ui \
         forms/hdrwizardform.ui \
@@ -187,10 +220,7 @@ FORMS = forms/maingui.ui \
         forms/help_about.ui \
         forms/options.ui \
         forms/transplantexifdialog.ui \
-        forms/aligndialog.ui \
         forms/resizedialog.ui
-
-RESOURCES = icons.qrc
 
 HEADERS += src/libpfs/array2d.h \
            src/libpfs/pfs.h \
@@ -199,8 +229,6 @@ HEADERS += src/libpfs/array2d.h \
            src/tonemappingdialog_impl.h \
            src/options_impl.h \
            src/transplant_impl.h \
-           src/align_impl.h \
-           src/show_image.h \
            src/resizedialog_impl.h \
            src/hdrcreate/createhdr.h \
            src/hdrcreate/robertson02.h \
@@ -212,6 +240,7 @@ HEADERS += src/libpfs/array2d.h \
            src/histogram.h \
            src/gang.h \
            src/fileformat/rgbeio.h \
+           src/fileformat/pfstiff.h \
            src/ashikhmin02/pyramid.h \
            src/ashikhmin02/tmo_ashikhmin02.h \
            src/drago03/tmo_drago03.h \
@@ -229,8 +258,6 @@ SOURCES += src/libpfs/pfs.cpp \
            src/tonemappingdialog_impl.cpp \
            src/options_impl.cpp \
            src/transplant_impl.cpp \
-           src/align_impl.cpp \
-           src/show_image.cpp \
            src/resizedialog_impl.cpp \
            src/hdrcreate/createhdr.cpp \
            src/hdrwizardform_impl.cpp \
@@ -250,6 +277,7 @@ SOURCES += src/libpfs/pfs.cpp \
            src/fileformat/rgbeio.cpp \
            src/fileformat/pfsoutldrimage.cpp \
            src/fileformat/pfsindcraw.cpp \
+           src/fileformat/pfstiff.cpp \
            src/ashikhmin02/pfstmo_ashikhmin02.cpp \
            src/ashikhmin02/tmo_ashikhmin02.cpp \
            src/drago03/pfstmo_drago03.cpp \
@@ -267,8 +295,18 @@ SOURCES += src/libpfs/pfs.cpp \
            src/reinhard02/tmo_reinhard02.cpp \
            src/reinhard02/approx.cpp
 
+RESOURCES = icons.qrc
+
+# Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
 #src/durand02/bilateral.cpp \
+
+# Manual align dialog. we should call Pablo's application now.
+#           src/align_impl.cpp \
+#           src/show_image.cpp \
+#           src/align_impl.h \
+#           src/show_image.h \
+#        forms/aligndialog.ui \
 
 unix {
 SOURCES += src/fileformat/pfsinexr.cpp \

@@ -31,9 +31,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <pfs.h>
-#include <tmo_ashikhmin02.h>
 #include <QFile>
+#include "tmo_ashikhmin02.h"
+#include "../libpfs/pfs.h"
 
 using namespace std;
 

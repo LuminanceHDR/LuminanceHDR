@@ -26,8 +26,6 @@
 #define IMAGEHDRVIEWER_H
 #include <QMainWindow>
 #include <QImage>
-#include <array2d.h>
-#include <pfs.h>
 #include <QComboBox>
 #include <QPaintEvent>
 #include <QPainter>
@@ -37,6 +35,8 @@
 #include <QToolBar>
 #include <QResizeEvent>
 #include "luminancerange_widget.h"
+#include "libpfs/array2d.h"
+#include "libpfs/pfs.h"
 
 enum LumMappingMethod {
   MAP_LINEAR,

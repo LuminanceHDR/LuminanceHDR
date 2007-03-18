@@ -36,7 +36,7 @@
 #ifndef _tmo_pattanaik00_h_
 #define _tmo_pattanaik00_h_
 
-#include <pfs.h>
+#include "../libpfs/pfs.h"
 
 class VisualAdaptationModel;
 

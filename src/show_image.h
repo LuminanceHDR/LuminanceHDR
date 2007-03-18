@@ -64,7 +64,7 @@ class ShowImage : public QWidget
 {
 Q_OBJECT
 public:
-	ShowImage(QList<Image *> *p, int listimgs_own_idx, QList<QPair<CP*,CP*> > *pairs, bool left);
+	ShowImage(QList<Image *> *p, int listimgs_own_idx, QList<QPair<CP*,CP*> > *pairs/*, bool left*/);
 	~ShowImage();
 	void update_firstPoint(CP*);
 

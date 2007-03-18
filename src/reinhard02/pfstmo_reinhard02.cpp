@@ -33,10 +33,10 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include <pfs.h>
-#include <tmo_reinhard02.h>
 #include <QFile>
+#include <math.h>
+#include "../libpfs/pfs.h"
+#include "tmo_reinhard02.h"
 
 using namespace std;
 

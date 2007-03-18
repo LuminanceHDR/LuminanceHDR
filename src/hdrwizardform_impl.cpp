@@ -28,7 +28,8 @@
 #include <QMessageBox>
 #include <cmath>
 #include "hdrwizardform_impl.h"
-#include "pfsindcraw.h"
+#include "fileformat/pfsindcraw.h"
+#include "fileformat/pfstiff.h"
 
 config_triple predef_confs[6]= {
 {TRIANGULAR, GAMMA, DEBEVEC,""},
@@ -40,7 +41,7 @@ config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), RecentDirInputLDRs(""), expotimes(NULL), expotime(NULL), expotime2(NULL), iso(NULL), fnum(NULL), fnum2(NULL), input_is_ldr(true), opts(options) {
+HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), expotime(NULL), expotime2(NULL), iso(NULL), fnum(NULL), fnum2(NULL), input_is_ldr(true), ldr_tiff(false), opts(options) {
 	setupUi(this);
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
@@ -84,16 +85,16 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 void HdrWizardForm::loadfiles() {
     QString filetypes;
     filetypes += "JPEG (*.jpeg *.jpg *.JPG *.JPEG);;";
+    filetypes += "TIFF Images (*.tiff *.tif *.TIFF *.TIF);;";
     filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
-//     filetypes += "TIFF (*.tif *tiff *TIF *TIFF);;"; //in this case we should use libtiff
     QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirInputLDRs, filetypes );
     if (!files.isEmpty() ) {
 	QFileInfo qfi(files.at(0));
 	QSettings settings("Qtpfsgui", "Qtpfsgui");
-	// update internal field variable
-	RecentDirInputLDRs=qfi.path();
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirInputLDRs != settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString()) {
+	if (RecentDirInputLDRs != qfi.path()) {
+		// update internal field variable
+		RecentDirInputLDRs=qfi.path();
 		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 
@@ -126,7 +127,28 @@ You can <b>Copy the exif data</b> from some input images to some other output im
 		if (extension.startsWith("JP")) { //check for extension: if JPEG:
 			ImagePtrList.append( new QImage(qfi->filePath()) ); // fill memory with image data
 			input_is_ldr=true;
-		} else { //not a jpeg file, so it's raw input (hdr)
+		} else if(extension.startsWith("TIF")) {
+			TiffReader reader(qfi->filePath().toAscii().constData());
+			if (reader.is8bitTiff()) {
+				ImagePtrList.append( reader.readIntoQImage() );
+				input_is_ldr=true;
+				ldr_tiff=true;
+			} else if (reader.is16bitTiff()) {
+				pfs::Frame *framepointer=reader.readIntoPfsFrame();
+				pfs::Channel *R, *G, *B;
+				framepointer->getRGBChannels( R, G, B );
+				listhdrR.push_back(R);
+				listhdrG.push_back(G);
+				listhdrB.push_back(B);
+				input_is_ldr=false;
+			} else {
+				listShowFiles->clear();
+				clearlists();
+				delete expotimes;
+				QMessageBox::critical(this,"Error reading the EXIF tags in the image", QString("8 bit or 16 bit tiffs only").arg(qfi->fileName()));
+				return;
+			}
+		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)
 			pfs::Frame *framepointer=readRAWfile(qfi->filePath().toAscii().constData(), opts);
 			pfs::Channel *R, *G, *B;
 			framepointer->getRGBChannels( R, G, B );
@@ -252,7 +274,6 @@ void HdrWizardForm::backpressed() {
 }
 
 float HdrWizardForm::obtain_expotime( QString filename ) {
-    //TODO makernotes for brand models, maybe?
     Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename.toStdString());
     image->readMetadata();
     Exiv2::ExifData &exifData = image->exifData();
@@ -387,12 +408,20 @@ return "";
 
 void HdrWizardForm::clearlists() {
 	if (ImagePtrList.size() != 0) {
-		qDebug("cleaning LDR exposures list");
+// 		qDebug("cleaning LDR exposures list");
+		if (ldr_tiff) {
+			foreach(QImage *p,ImagePtrList) {
+// 				qDebug("while cleaning ldr tiffs, %ld",p->bits());
+				delete p->bits();
+// 				qDebug("cleaned");
+			}
+		}
 		qDeleteAll(ImagePtrList);
+// 		qDebug("cleaned ImagePtrList");
 		ImagePtrList.clear();
 	}
 	if (listhdrR.size()!=0 && listhdrG.size()!=0 && listhdrB.size()!=0) {
-		qDebug("cleaning HDR exposures list");
+// 		qDebug("cleaning HDR exposures list");
 		Array2DList::iterator itR=listhdrR.begin(), itG=listhdrG.begin(), itB=listhdrB.begin();
 		for (; itR!=listhdrR.end(); itR++,itG++,itB++ ){
 			delete *itR; delete *itG; delete *itB;
@@ -403,13 +432,13 @@ void HdrWizardForm::clearlists() {
 
 
 HdrWizardForm::~HdrWizardForm() {
-// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.
-if (fnum)      delete fnum;
-if (fnum2)     delete fnum2;
-if (iso)       delete iso;
-if (expotime)  delete expotime;
-if (expotime2) delete expotime2;
-if (expotimes) delete [] expotimes;
-clearlists();
+	// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.
+	if (fnum)      delete fnum;
+	if (fnum2)     delete fnum2;
+	if (iso)       delete iso;
+	if (expotime)  delete expotime;
+	if (expotime2) delete expotime2;
+	if (expotimes) delete [] expotimes;
+	clearlists();
 }
 

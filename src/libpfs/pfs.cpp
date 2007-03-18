@@ -249,8 +249,12 @@ protected:
 public:
   ChannelImpl( int width, int height, const char *n_name ) : width( width ), height( height )
   {
-    fprintf(stderr,"constr Chan\n");
+//     fprintf(stderr,"constr Chan\n");
+#ifndef _WIN32
     data = (float*)mmap(0, width*height*4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
+#else
+    data = (float*)VirtualAlloc(NULL,width*height*4,MEM_COMMIT,PAGE_READWRITE);
+#endif
 //     data = new float[width*height];
     tags = new TagContainerImpl();
     name = strdup( n_name );
@@ -259,9 +263,13 @@ public:
   virtual ~ChannelImpl() 
   {
     if (tags) delete tags;
+#ifndef _WIN32
     if (data) munmap(data, width*height*4);
+#else
+    if (data) VirtualFree(data,0,MEM_RELEASE);
+#endif
 //     if (data) delete[] data;
-    fprintf(stderr,"free Chan\n");
+//     fprintf(stderr,"free Chan\n");
     free( (void*)name );
   }
 

@@ -37,8 +37,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <pfs.h>
-#include <tmo_pattanaik00.h>
+#include "../libpfs/pfs.h"
+#include "tmo_pattanaik00.h"
 #include <QFile>
 
 using namespace std;

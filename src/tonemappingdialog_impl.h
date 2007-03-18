@@ -28,12 +28,12 @@
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "gang.h"
-#include "tmo_ashikhmin02.h"
-#include "tmo_drago03.h"
-#include "tmo_durand02.h"
-#include "tmo_fattal02.h"
-#include "tmo_pattanaik00.h"
-#include "tmo_reinhard02.h"
+#include "ashikhmin02/tmo_ashikhmin02.h"
+#include "drago03/tmo_drago03.h"
+#include "durand02/tmo_durand02.h"
+#include "fattal02/tmo_fattal02.h"
+#include "pattanaik00/tmo_pattanaik00.h"
+#include "reinhard02/tmo_reinhard02.h"
 
 extern "C" pfs::Frame* pfstmo_reinhard04(pfs::Frame* inpfsframe, float br, float sat );
 

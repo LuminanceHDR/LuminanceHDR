@@ -21,7 +21,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef  _icip06_h_
+#ifndef _icip06_h_
 #define _icip06_h_
 #include <math.h>
 #include <QList>

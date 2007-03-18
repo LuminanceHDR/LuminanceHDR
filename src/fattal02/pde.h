@@ -28,10 +28,10 @@
  * $Id: pde.h,v 1.3 2004/12/15 09:48:52 krawczyk Exp $
  */
 
-#ifndef _fmg_pde_h_
-#define _fmg_pde_h_
+#ifndef _FMG_PDE_H_
+#define _FMG_PDE_H_
 
-#include <array2d.h>
+#include "../libpfs/array2d.h"
 
 /// limit of iterations for successive overrelaxation
 #define SOR_MAXITS 5001

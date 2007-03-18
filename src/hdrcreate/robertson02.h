@@ -29,8 +29,8 @@
 
 #ifndef _robertson02_h_
 #define _robertson02_h_
-#include <QList> 
-#include <QImage> 
+#include <QList>
+#include <QImage>
 #include "responses.h"
 
 /**

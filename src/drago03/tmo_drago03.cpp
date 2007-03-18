@@ -27,9 +27,9 @@
 
 #include <iostream>
 #include <math.h>
-#include <array2d.h>
-#include "tmo_drago03.h"
 #include <assert.h>
+#include "../libpfs/array2d.h"
+#include "tmo_drago03.h"
 
 /// Type of algorithm
 #define FAST 0

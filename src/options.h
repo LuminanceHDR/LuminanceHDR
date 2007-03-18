@@ -24,10 +24,8 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#define GROUP_DCRAW "DCRAW_Options"
-#define GROUP_HDRVISUALIZATION "HDR_visualization"
-#define GROUP_TONEMAPPING "Tonemapping_Options"
 
+#define GROUP_DCRAW "DCRAW_Options"
 #define KEY_AUTOWB "auto_white_balance"
 #define KEY_CAMERAWB "camera_white_balance"
 #define KEY_HIGHLIGHTS "highlights_recovery_mode"
@@ -35,10 +33,15 @@
 #define KEY_4COLORS "use_4colors_interpolation"
 #define KEY_OUTCOLOR "output_color_space"
 
+#define GROUP_HDRVISUALIZATION "HDR_visualization"
 #define KEY_NANINFCOLOR "nan_inf_color"
 #define KEY_NEGCOLOR "neg_color"
 
+#define GROUP_TONEMAPPING "Tonemapping_Options"
 #define KEY_KEEPSIZE "keep_size_on_tabswitch"
+
+#define GROUP_TIFF "TIFF_Options"
+#define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
 
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "RecentDirHDRSetting"
@@ -46,6 +49,8 @@
 #define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "RecentDirTMOSetting"
 #define KEY_RECENT_PATH_SAVE_LDR "RecentDirLDRSetting"
 #define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "RecentDirInputLDRs"
+#define KEY_RECENT_PATH_EXIF_FROM "recent_path_exif_from"
+#define KEY_RECENT_PATH_EXIF_TO "recent_path_exif_to"
 
 
 struct dcraw_opts {
@@ -63,5 +68,6 @@ struct qtpfsgui_opts {
 	dcraw_opts dcraw_options; //options for RAW import functionality, thanks to dcraw
 	unsigned int naninfcolor, negcolor; //color used to draw the NAN/INF or the negative colors
 	bool keepsize; //keep size of ToneMapping result when changing operator tab
+	bool saveLogLuvTiff; //if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 };
 #endif

@@ -33,9 +33,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <pfs.h>
-#include <tmo_durand02.h>
 #include <QFile>
+#include "../libpfs/array2d.h"
+#include "tmo_durand02.h"
 
 using namespace std;
 

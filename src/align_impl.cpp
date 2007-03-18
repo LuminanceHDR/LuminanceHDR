@@ -228,6 +228,7 @@ void AlignDialog::setmaster(){
 		current_master->master=false;
 	}
 	listimages.at(row)->master=true;
+	current_master=listimages.at(row);
 	refresh_graphical_list();
 }
 
@@ -251,17 +252,12 @@ void AlignDialog::progress_tab(int newpage){
 // 				qDebug("current # of tabs=%d",left_tabs->count());
 				while(left_tabs->count()>0) {
 					QWidget *l=left_tabs->widget(0);
-// 					qDebug("before removetab LEFT");
-					//FIXME cast obj necessary? and check memory leaks
+					//FIXME is cast obj necessary? and check memory leaks
 					left_tabs->removeTab(0);
-// 					qDebug("after removetab LEFT");
-					//disconnect
 					delete l;
 					QWidget *r=right_tabs->widget(0);
-// 					qDebug("before removetab RIGHT");
-					//FIXME cast obj necessary? and check memory leaks
+					//FIXME is cast obj necessary? and check memory leaks
 					right_tabs->removeTab(0);
-// 					qDebug("after removetab RIGHT");
 					delete r;
 				}
 				//create new ones
@@ -286,7 +282,7 @@ void AlignDialog::create_tabs() {
 		inner_frameL->setFrameShape(QFrame::StyledPanel);
 		inner_frameL->setFrameShadow(QFrame::Raised);
 		VBL_L->addWidget(inner_frameL);
-		ShowImage *imageL = new ShowImage(&listimages,i,&listcps,true);
+		ShowImage *imageL = new ShowImage(&listimages,i,&listcps/*,true*/);
 		connect(imageL,SIGNAL(finished_point_in_image(int,int)),this,SLOT(newpoint_in_leftarea(int,int)));
 		connect(imageL,SIGNAL(point_finished_moving(CP*)),this,SLOT(point_finished_moving(CP*)));
 		connect(this,SIGNAL(clear_temp_CP()),imageL,SLOT(clear_temp_CP()));
@@ -304,7 +300,7 @@ void AlignDialog::create_tabs() {
 		inner_frameR->setFrameShape(QFrame::StyledPanel);
 		inner_frameR->setFrameShadow(QFrame::Raised);
 		VBL_R->addWidget(inner_frameR);
-		ShowImage *imageR = new ShowImage(&listimages,i,&listcps,false);
+		ShowImage *imageR = new ShowImage(&listimages,i,&listcps/*,false*/);
 		connect(imageR,SIGNAL(finished_point_in_image(int,int)),this,SLOT(newpoint_in_rightarea(int,int)));
 		connect(imageR,SIGNAL(point_finished_moving(CP*)),this,SLOT(point_finished_moving(CP*)));
 		connect(this,SIGNAL(clear_temp_CP()),imageR,SLOT(clear_temp_CP()));
@@ -334,7 +330,7 @@ void AlignDialog::newpoint_in_leftarea(int x, int y) {
 // 	qDebug("Dialog, SLOT x leftclick in LEFT area, tab_%d",left_tabs->currentIndex()+1);
 	//create new point, it belongs to the currently selected image.
 	CP* p=new CP; p->x=x;p->y=y;p->whobelongsto=listimages.at(left_tabs->currentIndex());
-	//reach the showimage, ugly code, maybe change in design? but how? FIXME using signal, as in "else" here below.
+	//reach the showimage
 	ShowImage *si=qobject_cast<ShowImage *>(sender());
 	assert(si);
 	//new pair initiation
@@ -366,7 +362,6 @@ void AlignDialog::newpoint_in_leftarea(int x, int y) {
 		//VIEW
 		append_pair_tothe_table(current_new_pair,false); //updates the CP details table
 		current_new_pair=NULL; //for next initiation
-// 		si->update();
 		//conclusion, both false so that next click will be the first one
 		prevclickleft=false;
 		prevclickright=false;
@@ -389,7 +384,7 @@ void AlignDialog::newpoint_in_rightarea(int x, int y) {
 // 	qDebug("Dialog, SLOT x leftclick in RIGHT area, tab_%d",right_tabs->currentIndex()+1);
 	//create new point, it belongs to the currently selected image.
 	CP* p=new CP; p->x=x;p->y=y;p->whobelongsto=listimages.at(right_tabs->currentIndex());
-	//reach the showimage, ugly code, maybe change in design? but how? FIXME using signal, as in "else" here below.
+	//reach the showimage
 	ShowImage *si=qobject_cast<ShowImage *>(sender());
 	assert(si);
 	//new pair initiation
@@ -421,7 +416,6 @@ void AlignDialog::newpoint_in_rightarea(int x, int y) {
 		//VIEW
 		append_pair_tothe_table(current_new_pair,false); //updates the CP details table
 		current_new_pair=NULL; //for next initiation
-// 		si->update();
 		//conclusion, both false so that next click will be the first one
 		prevclickleft=false;
 		prevclickright=false;
@@ -430,7 +424,6 @@ void AlignDialog::newpoint_in_rightarea(int x, int y) {
 }
 
 void AlignDialog::point_finished_moving(CP* point){
-	//TODO
 // 	qDebug("dialog, point finished moving");
 	//number of rows in graphical list has to be in sync with model
 	assert(Details_CP_table->rowCount()==of_two_imgs.count());
@@ -512,7 +505,7 @@ void AlignDialog::append_pair_tothe_table(QPair<CP*,CP*> *newpair, bool swapleft
 }
 
 void AlignDialog::remove_current_pair() {
-	//TODO multiple selections, calling smthing similar to update_selection
+	//TODO multiple selections, use something similar to update_selection
 	//number of rows in graphical list has to be in sync with model
 	assert(Details_CP_table->rowCount()==of_two_imgs.count());
 	int idxlist=Details_CP_table->currentRow();
@@ -520,7 +513,7 @@ void AlignDialog::remove_current_pair() {
 	of_two_imgs.removeAt(idxlist);
 	//VIEW
 	Details_CP_table->removeRow(idxlist);
-	//TODO not so easy, e' simile a remove all CPs in first tab
+	//FIXME not so easy, e' simile a remove all CPs in first tab
 }
 
 void AlignDialog::refresh_graphical_list() {

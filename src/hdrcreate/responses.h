@@ -28,13 +28,13 @@
  * $Id: responses.cpp,v 1.6 2006/09/13 14:27:06 gkrawczyk Exp $
  */
 
-#ifndef  _std_responses_h_
+#ifndef _std_responses_h_
 #define _std_responses_h_
 
 #include <stdio.h>
 
 #include <vector>
-#include <array2d.h>
+#include "../libpfs/array2d.h"
 
 /**
  * @brief Container for images taken with different exposures
