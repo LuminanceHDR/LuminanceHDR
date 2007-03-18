@@ -1,8 +1,9 @@
-* medium term: provide both capabilities, update via button and istantaneously
-* long term: write dialog to align images
+* short term: check memleaks with valgrind
+* medium term: add some help, tooltips and tutorial.
+* medium term: provide both capabilities, update via button and istantaneously.
+* medium term: modular and external execution of dcraw and Pablo's alignment tool.
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
 
-* consider supporting HDR/LDR tiff files as input/output.
 * http://freenet-homepage.de/hsbosny/HDR_Tutorial/HDR_Tutorial-en.html if exif data is missing let the user select the fstop numbers for each image, and figure out a value for the time.
 * http://www.vips.ecs.soton.ac.uk/ a powerful and modular image processing library that supports very large images and multiple processors natively. (to reduce memory footprint)
 

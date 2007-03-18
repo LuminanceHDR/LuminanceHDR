@@ -1,8 +1,8 @@
-This is the README file for qtpfsgui v1.8.1
+This is the README file for qtpfsgui v1.8.2
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
-Webpage:       http://qtpfsgui.sourceforge.net/
-Sourceforge:   http://sourceforge.net/projects/qtpfsgui/
+Webpage:       http://qtpfsgui.sourceforge.net
+Sourceforge:   http://sourceforge.net/projects/qtpfsgui
 
 
 Contents
@@ -19,16 +19,31 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.1 of qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.2 of qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
-Supported operations include: creations of a HDR file from a set of
-images of a scene taken at different exposure setting, loading an
-existing HDR image, saving an image in a HDR format, rotating and resizing HDRs,
-and tonemapping an HDR image into a common LDR image format (e.g jpeg or png).
+
+Supported HDR formats:
+* OpenEXR (extension: exr, linux and Mac OS X only)
+* Radiance RGBE (extension: hdr)
+* Tiff formats: 16bit, 32bit (float) and LogLuv (extension: tiff)
+* Raw image formats (extension: various)
+* PFS native format (extension: pfs)
+
+Supported LDR formats:
+* JPEG, PNG, PPM, PBM, TIFF
+
+Supported features:
+* Create an HDR file from a set of images (JPEG, TIFF 8bit and 16bit, RAW)
+of the same scene taken at different exposure setting.
+* Save and load HDR files.
+* Rotate and resize HDR files.
+* Tonemap HDR images.
+* Copy exif data between sets of images.
+
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 4 (Changes) to read the changes for version 1.8.1.
+Read section 4 (Changes) to read the changes for version 1.8.2.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -40,14 +55,15 @@ Without their contribution all of this would have not been possible.
 
 2. Dependencies
 -------------------------------------------------------------------
-Qtpfsgui has 5 dependencies (4 in windows):
+Qtpfsgui has 6 dependencies (5 in windows):
 1) Qt4 (www.trolltech.com)
 2) exiv2 (www.exiv2.org)
 3) fftw3 (www.fftw.org)
 4) libjpeg (www.ijg.org)
-5) OpenEXR (www.openexr.com, **Linux only**)
+5) libtiff (http://www.remotesensing.org/libtiff)
+6) OpenEXR (www.openexr.com, **Linux only**)
 
-On Windows you can satisfy all the runtime dependencies by downloading the ``Window Dependency package V2'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V2.zip?use_mirror=belnet
+On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V3'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
 On linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
 
 1) Qt4 is required because it's the framework the graphical interface was built on.
@@ -59,7 +75,9 @@ In particular qtpfsgui requires the "float" variety of fftw3.
 
 4) libjpeg is required by the underlying dcraw's implementation for raw file formats.
 
-5) OpenEXR (www.openexr.com, Linux only)
+5) libtiff is required because of the tiff load/save feature.
+
+6) OpenEXR (www.openexr.com, Linux only)
 OpenEXR hdr format is available only on linux platforms for now.
 OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial Light & Magic for use in computer imaging applications.
 The package is also known as ``ilmbase'' on some distros.
@@ -72,19 +90,16 @@ As for the other dependencies, OpenEXR is required at runtime as well.
 The build system is based on Qt's qmake.
 The build description is contained in the project.pro file.
 Running
-> qmake 
+> qmake
 from the directory where there is project.pro creates the Makefile.
-Starting v1.8.1 qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
+Qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
+If something goes wrong drop me an email.
 Then you can run
 > make
 to compile.
 In linux you can also run
 # make install
 as root to install the qtpfsgui executable in /usr/local/bin.
-
-WARNING:
-Starting v1.8.1, qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
-If something goes wrong drop me an email.
 
 WARNING:
 In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On ubuntu you can install the program ``galternatives'' that lets you pick from qt3's or qt4's executables.
@@ -102,10 +117,11 @@ to be changed according to your setup.
 
 4. Workflow in the gui
 -------------------------------------------------------------------
+This is a little bit outdated, see also:
+http://osp.wikidot.com/qtpfsgui-manual
+
 Here I'll describe the workflow in qtpfsgui: pretty much the same
 information can be found in the Help->About dialog.
-See also:
-http://osp.wikidot.com/qtpfsgui-manual
 
 From the main window you can see the buttons that enable the user
 to work on HDR images:
@@ -165,26 +181,18 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
-v1.8.1
-	* New functionalities:
-		Dialog to resize an HDR.
-		Dialog to transplant exif data between 2 sets of files.
-	* Dependency detection system when compiling in Linux
-	* We write some exif data in the output JPEG image: we store the  tonemapping parameters in the "Comment" tag and we mention qtpfsgui in the "software" tag.
-	* Apply button in tonemapping dialog (this enables changing more than one thing before computing the result)
-	* Improved usability in: spinboxes, file dialogs, error messages, ...
-
-v1.8.0
-	* added initial raw image format input support in "Open Hdr..." 
-	and in the "New Hdr..." wizard.
-	the raw import functionality is obtained via dcraw's code.
-	* added settings panel.
-	* added KDE/GNOME desktop integration.
+v1.8.2 Giuseppe Rota <grota@users.sourceforge.net>
+	* Qtpfsgui now supports tiff file formats in:
+	"File->Load HDR..." (8,16,32 bit and logluv tiff formats)
+	"File->Save HDR..." (32 bit and logluv tiff formats)
+	"File->New HDR..." (8 and 16 bit tiff formats)
+	* memory allocation via mmap (linux,mac) and virtualalloc (win32)
+	* added a missing newline in exif comments.
+	* fixed alignment bugs on PowerPC architectures ("blue image")
 
 ***WARNING***
-The Windows users of v1.8.0 have to download the new ``Windows
-dependency package V2'', make sure to get it at:
-http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V2.zip?use_mirror=belnet
+The Windows users of v1.8.2 have to download the new ``Windows DLL Package V3'', make sure to get it at:
+http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
 
 Read the Changelog file for previous versions' details.
 
