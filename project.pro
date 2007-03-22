@@ -4,7 +4,8 @@ CONFIG += release qt thread
 unix {
 ########################################### QT ###########################################
 message( "Detecting Qt version:" )
-isEmpty(QT_VERSION) {
+checkqt4 = $$[QT_VERSION]
+isEmpty(checkqt4) {
 message( "error, Qt3 found!")
 message( "It seems like we are using Qt3, which is wrong!" )
 message( "to install qt4 in ubuntu run:" )

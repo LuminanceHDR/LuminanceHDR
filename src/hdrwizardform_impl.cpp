@@ -314,7 +314,7 @@ float HdrWizardForm::obtain_expotime( QString filename ) {
 	iso=iiso->toFloat();
     }
     if (expo!=-1 && iso!=-1 && fnum!=-1) {
-//      std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << std::endl;
+//         std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
 	return ( (expo * iso) / (fnum*fnum*12.07488f) ); //this is PFM :)
     } else {
 	return -1;
@@ -412,7 +412,7 @@ void HdrWizardForm::clearlists() {
 		if (ldr_tiff) {
 			foreach(QImage *p,ImagePtrList) {
 // 				qDebug("while cleaning ldr tiffs, %ld",p->bits());
-				delete p->bits();
+				delete [] p->bits();
 // 				qDebug("cleaned");
 			}
 		}

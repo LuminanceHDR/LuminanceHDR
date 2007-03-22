@@ -1,5 +1,3 @@
-* short term: check memleaks with valgrind
-* medium term: add some help, tooltips and tutorial.
 * medium term: provide both capabilities, update via button and istantaneously.
 * medium term: modular and external execution of dcraw and Pablo's alignment tool.
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
