@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h1>Hints &#038; Tips for Qtpfsgui</h1>
+<ol>
+<li><A href="#singleraw">Single Raw file workflow</A></li>
+<li><A href="#postproc">Post-processing of the LDR</A></li>
+</ol>
+
+<A name="singleraw"><h2>Single Raw file workflow</h2></A>
+<p>You can load directly a raw file in qtpfsgui via the "File->Load Hdr..." menu item. Doing so you will be able to tonemap directly this single raw file. This means that there is no need to create different exposures in Ufraw from your raw file.</p>
+<!--Qtpfsgui integrates the code of dcraw to load raw files.-->
+<p>If you don't like what qtpfsgui does with your raw file, or if you want to process you raw file before loading it in qtpfsgui (white balance, color profile, and so on), you can use Ufraw to tweak the color settings of your raw file, and then save the result as a 16-bits tiff tile.<br>
+Just remember to save the result as a 16-bits file, or you'll lose some dynamic range in the process.</p>
+
+<A name="postproc"><h2>Post-processing of the LDR</h2></A>
+<p>This is quite obvious, but if you don't like the result of a specific tone mapping operator, please keep in mind that after the tone mapping step you can still use tools like GIMP to post process the resulting image. For example, you can still fix the brightness, change the gamma or the levels, and so on.
+</p>
+</body>
+</html>
