@@ -45,14 +45,14 @@ public:
 
 private:
 	QString curvefilename;
-	config_triple *chosen_config;
+	config_triple chosen_config;
 	QMap<QString,TResponse> fromQStringToResponse;
 	QMap<QString,TModel>    fromQStringToModel;
 	QMap<QString,TWeight>   fromQStringToWeight;
 	QString RecentDirInputLDRs;
 	QString getQStringFromConfig( int type );
 	void clearlists();
-	int numberinputfiles;
+	int numberinputfiles; //it is also the lenght of the array below
 	float *expotimes;
 	Exiv2::ExifKey *expotime, *expotime2;
 	Exiv2::ExifKey *iso;
@@ -65,6 +65,8 @@ private:
 	dcraw_opts *opts;
 
 	float obtain_expotime( QString );
+	void fillEVcombobox();
+	void transform_indices_into_values();
 	pfs::Frame* PfsFrameHDR;
 
 private slots:
@@ -80,8 +82,10 @@ private slots:
 	void load_response_curve_from_file();
 	void loadfiles();
 	void fix_gui_custom_config();
-	void fix_gui_uncheck_custom(bool);
+	void custom_toggled(bool);
 	void update_current_config_calibrate();
 	void setLoadFilename(const QString&);
+	void EVcomboBoxactivated(int);
+	void fileselected(int);
 };
 #endif

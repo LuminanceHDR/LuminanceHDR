@@ -27,11 +27,12 @@
 #include <QSettings>
 #include <QMessageBox>
 #include <cmath>
+#include <QTextStream>
 #include "hdrwizardform_impl.h"
 #include "fileformat/pfsindcraw.h"
 #include "fileformat/pfstiff.h"
 
-config_triple predef_confs[6]= {
+const config_triple predef_confs[6]= {
 {TRIANGULAR, GAMMA, DEBEVEC,""},
 {TRIANGULAR, LINEAR,DEBEVEC,""},
 {PLATEAU, LINEAR,DEBEVEC,""},
@@ -41,7 +42,7 @@ config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), expotime(NULL), expotime2(NULL), iso(NULL), fnum(NULL), fnum2(NULL), input_is_ldr(true), ldr_tiff(false), opts(options) {
+HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), input_is_ldr(true), ldr_tiff(false), opts(options) {
 	setupUi(this);
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
@@ -55,10 +56,12 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	connect(loadFileButton,SIGNAL(clicked()),this,SLOT(load_response_curve_from_file()));
 	connect(loadsetButton,SIGNAL(clicked()),this,SLOT(loadfiles()));
 	connect(radioButton_use_Predefined,SIGNAL(clicked()),this,SLOT(fix_gui_custom_config()));
-	connect(checkBoxCallCustom,SIGNAL(toggled(bool)),this,SLOT(fix_gui_uncheck_custom(bool)));
+	connect(checkBoxCallCustom,SIGNAL(toggled(bool)),this,SLOT(custom_toggled(bool)));
 	connect(coboxRespCurve_Antighost,SIGNAL(activated(int)),this,SLOT(update_current_antighost_curve(int)));
 	connect(radio_usecalibrate_02,SIGNAL(toggled(bool)),this,SLOT(update_current_config_calibrate()));
-	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(setLoadFilename(const QString&)));
+	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)), this, SLOT(setLoadFilename(const QString&)));
+	connect(EVcomboBox, SIGNAL(activated(int)), this, SLOT(EVcomboBoxactivated(int)));
+	connect(listShowFiles, SIGNAL(currentRowChanged(int)), this, SLOT(fileselected(int)));
 	fromQStringToWeight["Triangular"]=TRIANGULAR;
 	fromQStringToWeight["Gaussian"]=GAUSSIAN;
 	fromQStringToWeight["Plateau"]=PLATEAU;
@@ -77,9 +80,8 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 
 	QSettings settings("Qtpfsgui", "Qtpfsgui");
 	RecentDirInputLDRs=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
-	chosen_config=&predef_confs[0];
-	backbutton->setEnabled(FALSE);
-	Next_Finishbutton->setEnabled(FALSE);
+	chosen_config=predef_confs[0];
+	fillEVcombobox();
 }
 
 void HdrWizardForm::loadfiles() {
@@ -105,35 +107,21 @@ void HdrWizardForm::loadfiles() {
 	int index_expotimes=0;
 	QStringList::Iterator it = files.begin();
 	while( it != files.end() ) {
-		QFileInfo *qfi=new QFileInfo(*it);
-		expotimes[index_expotimes]=obtain_expotime(qfi->filePath()); //fill array of exposure times
-		if (expotimes[index_expotimes]==-1) {
-			//if we are here it means that this image doesn't contain (enough) exif tags
-			//we therefore warn the user, clear the graphical list and return.
-			//we also clear the lists containing the ldr/hdr images
-			listShowFiles->clear();
-			clearlists();
-			delete expotimes;
-			QMessageBox::critical(this,"Error reading the EXIF tags in the image", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nin the input image: <font color=\"#FF9500\"><i><b>%1</b</i></font>.<br>\
-Please make sure to load images that have at least\nthe following exif data: \
-<ul><li>Shutter Speed (seconds)</li>\
-<li>Aperture (f-number)</li></ul>\
-<hr>This can happen when you preprocess your pictures.<br>\
-You can <b>Copy the exif data</b> from some input images to some other output images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item.").arg(qfi->fileName()));
-			return;
-		}
-		listShowFiles->addItem(qfi->fileName()); //fill graphical list
-		QString extension=qfi->suffix().toUpper(); //get filename extension
+		QFileInfo qfi(*it);
+		expotimes[index_expotimes]=obtain_expotime(qfi.filePath()); //fill array of exposure times, -1 is error
+		listShowFiles->addItem(qfi.fileName()); //fill graphical list
+		QString extension=qfi.suffix().toUpper(); //get filename extension
+		//now go and fill the list of image data (real payload)
 		if (extension.startsWith("JP")) { //check for extension: if JPEG:
-			ImagePtrList.append( new QImage(qfi->filePath()) ); // fill memory with image data
+			ImagePtrList.append( new QImage(qfi.filePath()) ); // fill with image data
 			input_is_ldr=true;
-		} else if(extension.startsWith("TIF")) {
-			TiffReader reader(qfi->filePath().toAscii().constData());
-			if (reader.is8bitTiff()) {
+		} else if(extension.startsWith("TIF")) { //if tiff
+			TiffReader reader(qfi.filePath().toAscii().constData());
+			if (reader.is8bitTiff()) { //if 8bit (tiff) treat as ldr
 				ImagePtrList.append( reader.readIntoQImage() );
 				input_is_ldr=true;
 				ldr_tiff=true;
-			} else if (reader.is16bitTiff()) {
+			} else if (reader.is16bitTiff()) { //if 16bit (tiff) treat as hdr
 				pfs::Frame *framepointer=reader.readIntoPfsFrame();
 				pfs::Channel *R, *G, *B;
 				framepointer->getRGBChannels( R, G, B );
@@ -145,11 +133,11 @@ You can <b>Copy the exif data</b> from some input images to some other output im
 				listShowFiles->clear();
 				clearlists();
 				delete expotimes;
-				QMessageBox::critical(this,"Tiff error", QString("8 bit or 16 bit tiffs only").arg(qfi->fileName()));
+				QMessageBox::critical(this,"Tiff error", QString("the file<br>%1<br> is not a 8 bit or 16 bit tiff").arg(qfi.fileName()));
 				return;
 			}
 		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)
-			pfs::Frame *framepointer=readRAWfile(qfi->filePath().toAscii().constData(), opts);
+			pfs::Frame *framepointer=readRAWfile(qfi.filePath().toAscii().constData(), opts);
 			pfs::Channel *R, *G, *B;
 			framepointer->getRGBChannels( R, G, B );
 			listhdrR.push_back(R);
@@ -159,35 +147,68 @@ You can <b>Copy the exif data</b> from some input images to some other output im
 		}
 		++it;
 		index_expotimes++;
-		delete qfi;
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
-	Next_Finishbutton->setEnabled(TRUE);
-	confirmloadlabel->setText("<center><font color=\"#00FF00\"><h3><b>Done!</b></h3></font></center>");
+
+// 	check if at least one image doesn't contain (the needed) exif tags
+	bool all_ok=true;
+	QStringList files_lacking_exif;
+	for (int i=0; i<numberinputfiles; i++) {
+		if (expotimes[i]==-1) {
+			files_lacking_exif+="<li><font color=\"#FF9500\"><i><b>"+ listShowFiles->item(i)->text()+ "</b></i></font></li>\n";
+			all_ok=false;
+		}
+	}
+
+	if (all_ok) {
+		Next_Finishbutton->setEnabled(TRUE);
+		confirmloadlabel->setText("<center><font color=\"#008400\"><h3><b>Done!</b></h3></font></center>");
+	} else {
+//if we didn't find the exif data for at least one image, we need to set all the values to -1, so that the user has to fill *all* the values by hand.
+		for (int j=0;j<numberinputfiles;j++) {
+			expotimes[j]=-1;
+		}
+		EVcomboBox->setEnabled(TRUE);
+		label_EV->setEnabled(TRUE);
+		QString warning_message("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
+Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>");
+		foreach (QString str, files_lacking_exif)
+			warning_message+=str;
+		warning_message+="</ul>\
+<hr>You can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for each one of your images.\
+<hr>If you want Qtfsgui to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
+<ul><li>Shutter Speed (seconds)</li>\
+<li>Aperture (f-number)</li></ul>\
+<hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
+You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item.";
+		QMessageBox::warning(this,"EXIF data not found",warning_message);
+		confirmloadlabel->setText("<center><font color=\"#FF9500\"><h3><b>To proceed fill all the values.</b></h3></font></center>");
+	}
+
 	loadsetButton->setEnabled(FALSE);
-	progressBar->setEnabled(FALSE);
     }
 }
 
-void HdrWizardForm::fix_gui_uncheck_custom(bool checked) {
-if (!checked) {
-	if (!checkBoxAntighosting->isChecked()) {
-	label_3->setDisabled(TRUE);
-	coboxRespCurve_Antighost->setDisabled(TRUE);
-	label_4->setDisabled(TRUE);
-	spinBoxIterations->setDisabled(TRUE);
+void HdrWizardForm::custom_toggled(bool checked) {
+	if (!checked) {
+		if (!checkBoxAntighosting->isChecked()) {
+			label_RespCurve_Antighost->setDisabled(TRUE);
+			coboxRespCurve_Antighost->setDisabled(TRUE);
+			label_Iterations->setDisabled(TRUE);
+			spinBoxIterations->setDisabled(TRUE);
+		}
+		else {
+			label_predef_configs->setDisabled(TRUE);
+			comboBox_PredefConfigs->setDisabled(TRUE);
+			label_weights->setDisabled(TRUE);
+			lineEdit_showWeight->setDisabled(TRUE);
+			label_resp->setDisabled(TRUE);
+			lineEdit_show_resp->setDisabled(TRUE);
+			label_model->setDisabled(TRUE);
+			lineEdit_showmodel->setDisabled(TRUE);
+		}
+	update_currentconfig(comboBox_PredefConfigs->currentIndex());
 	}
-	else {
-	label_predef_configs->setDisabled(TRUE);
-	comboBox_PredefConfigs->setDisabled(TRUE);
-	label_weights->setDisabled(TRUE);
-	lineEdit_showWeight->setDisabled(TRUE);
-	label_resp->setDisabled(TRUE);
-	lineEdit_show_resp->setDisabled(TRUE);
-	label_model->setDisabled(TRUE);
-	lineEdit_showmodel->setDisabled(TRUE);
-	}
-}
 }
 
 void HdrWizardForm::fix_gui_custom_config() {
@@ -204,8 +225,8 @@ void HdrWizardForm::update_current_config_file_or_notfile( bool checkedfile ) {
     //if checkbox is checked AND we have a valid filename
     if (checkedfile && curvefilename != "") {
 	//update chosen config
-	chosen_config->response_curve=FROM_FILE;
-	chosen_config->CurveFilename=curvefilename;
+	chosen_config.response_curve=FROM_FILE;
+	chosen_config.CurveFilename=curvefilename;
 	//and ENABLE nextbutton
 	Next_Finishbutton->setEnabled(true);
     }
@@ -213,37 +234,40 @@ void HdrWizardForm::update_current_config_file_or_notfile( bool checkedfile ) {
     else  if (checkedfile && curvefilename == "") {
 	// DISABLE nextbutton until situation is fixed
 	Next_Finishbutton->setEnabled(false);
-    } 
+    }
     //checkbox not checked
     else {
 	// update chosen config
-	chosen_config->response_curve=fromQStringToResponse[comboBox_gamma_lin_log->currentText()];
-	chosen_config->CurveFilename="";
+	chosen_config.response_curve=fromQStringToResponse[comboBox_gamma_lin_log->currentText()];
+	chosen_config.CurveFilename="";
 	//and ENABLE nextbutton
 	Next_Finishbutton->setEnabled(true);
     }
 }
 
 void HdrWizardForm::currentPageChangedInto(int newindex) {
-	if      (newindex==0) { //initial page
+/*	if      (newindex==0) { //initial page
 		//can't end up here, I guess.
 	}
-	else if (newindex==1) { //predefined configs page
+	else*/ if (newindex==1) { //predefined configs page
+		backbutton->setEnabled(FALSE);
 	}
 	else if (newindex==2) { //custom config
 		update_currentconfig(0);
+		backbutton->setEnabled(TRUE);
 	}
 	else if (newindex==3) { //ending page
 		Next_Finishbutton->setText("Finish");
-		Next_Finishbutton->setEnabled(false);
+		Next_Finishbutton->setEnabled(FALSE);
+		backbutton->setEnabled(FALSE);
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//CREATE THE HDR
 		if (input_is_ldr)
-			PfsFrameHDR=createHDR(expotimes,chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&ImagePtrList);
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&ImagePtrList);
 		else
-			PfsFrameHDR=createHDR(expotimes,chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&listhdrR,&listhdrG,&listhdrB);
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&listhdrR,&listhdrG,&listhdrB);
 		QApplication::restoreOverrideCursor();
-		Next_Finishbutton->setEnabled(true);
+		Next_Finishbutton->setEnabled(TRUE);
 		return;
 	}
 	Next_Finishbutton->setText("Next >");
@@ -254,71 +278,84 @@ void HdrWizardForm::update_current_antighost_curve(int/* fromgui*/) {
 }
 
 void HdrWizardForm::nextpressed() {
-	if (pagestack->currentIndex()==3)
-		accept();
-	else {
-		if (pagestack->currentIndex()==1 && !checkBoxCallCustom->isChecked()) {
-			pagestack->setCurrentIndex(pagestack->currentIndex()+2);
+	switch (pagestack->currentIndex()) {
+	case 0:
+		transform_indices_into_values();
+		break;
+	case 1:
+		if(!checkBoxCallCustom->isChecked()) {
+			pagestack->setCurrentIndex(3);
+			return;
 		}
-		else
-			pagestack->setCurrentIndex(pagestack->currentIndex()+1);
-		backbutton->setEnabled(TRUE);
+		break;
+	case 2:
+		break;
+	case 3:	
+		accept();
+		return;
 	}
+	pagestack->setCurrentIndex(pagestack->currentIndex()+1);
 }
 
 void HdrWizardForm::backpressed() {
 	if (pagestack->currentIndex()==3 && !checkBoxCallCustom->isChecked())
-		pagestack->setCurrentIndex(pagestack->currentIndex()-2);
+		pagestack->setCurrentIndex(1);
 	else
 		pagestack->setCurrentIndex(pagestack->currentIndex()-1);
 }
 
 float HdrWizardForm::obtain_expotime( QString filename ) {
-    Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename.toStdString());
-    image->readMetadata();
-    Exiv2::ExifData &exifData = image->exifData();
-    if (exifData.empty()) {
+try {
+	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename.toStdString());
+	image->readMetadata();
+	Exiv2::ExifData &exifData = image->exifData();
+	if (exifData.empty())
+		return -1;
+
+	Exiv2::ExifData::const_iterator iexpo = exifData.findKey(*expotime);
+	Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(*expotime2);
+	Exiv2::ExifData::const_iterator iiso  = exifData.findKey(*iso);
+	Exiv2::ExifData::const_iterator ifnum = exifData.findKey(*fnum);
+	Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(*fnum2);
+	float expo=-1; float iso=-1; float fnum=-1;
+
+	if (iexpo != exifData.end()) {
+		expo=iexpo->toFloat();
+	} else if (iexpo2 != exifData.end()) {
+		long num=1, div=1;
+		double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
+		if (tmp > 1) {
+			div = static_cast<long>(tmp + 0.5);
+		}
+		else {
+			num = static_cast<long>(1/tmp + 0.5);
+		}
+		expo=static_cast<float>(num)/static_cast<float>(div);
+	}
+
+	if (ifnum != exifData.end()) {
+		fnum=ifnum->toFloat();
+	} else if (ifnum2 != exifData.end()) {
+		fnum=static_cast<float>(std::exp(std::log(2.0) * ifnum2->toFloat() / 2));
+	}
+	if (fnum==0)
+		return -1;
+
+	if (iiso == exifData.end()) {
+		iso=100.0;
+	} else {
+		iso=iiso->toFloat();
+	}
+
+	if (expo!=-1 && iso!=-1 && fnum!=-1) {
+// 		std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
+		return ( (expo * iso) / (fnum*fnum*12.07488f) ); //this is PFM :)
+	} else {
+		return -1;
+	}
+} catch (Exiv2::AnyError& e) {
 	return -1;
-    }
-
-    Exiv2::ExifData::const_iterator iexpo = exifData.findKey(*expotime);
-    Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(*expotime2);
-    Exiv2::ExifData::const_iterator iiso  = exifData.findKey(*iso);
-    Exiv2::ExifData::const_iterator ifnum = exifData.findKey(*fnum);
-    Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(*fnum2);
-    float expo=-1; float iso=-1; float fnum=-1;
-
-    if (iexpo != exifData.end()) {
-	expo=iexpo->toFloat();
-    } else if (iexpo2 != exifData.end()) {
-        long num=1, div=1;
-        double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
-        if (tmp > 1) {
-            div = static_cast<long>(tmp + 0.5);
-        }
-        else {
-            num = static_cast<long>(1/tmp + 0.5);
-        }
-        expo=static_cast<float>(num)/static_cast<float>(div);
-    }
-
-    if (ifnum != exifData.end()) {
-	fnum=ifnum->toFloat();
-    } else if (ifnum2 != exifData.end()) {
-	fnum=static_cast<float>(std::exp(std::log(2.0) * ifnum2->toFloat() / 2));
-    }
-
-    if (iiso == exifData.end()) {
-	iso=100.0;
-    } else {
-	iso=iiso->toFloat();
-    }
-    if (expo!=-1 && iso!=-1 && fnum!=-1) {
-//         std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
-	return ( (expo * iso) / (fnum*fnum*12.07488f) ); //this is PFM :)
-    } else {
-	return -1;
-    }
+}
 }
 
 void HdrWizardForm::load_response_curve_from_file() {
@@ -334,32 +371,33 @@ void HdrWizardForm::load_response_curve_from_file() {
 }
 
 void HdrWizardForm::update_currentconfig( int index_from_gui ) {
-	chosen_config=&predef_confs[ index_from_gui];
+// 	qDebug("updating config to %d", index_from_gui);
+	chosen_config=predef_confs[ index_from_gui];
 	lineEdit_showWeight->setText(getQStringFromConfig(1));
 	lineEdit_show_resp->setText(getQStringFromConfig(2));
 	lineEdit_showmodel->setText(getQStringFromConfig(3));
 }
 
 void HdrWizardForm::update_current_config_weights( const QString & from_gui) {
-	chosen_config-> weights=fromQStringToWeight[from_gui];
+	chosen_config.weights=fromQStringToWeight[from_gui];
 }
 
 void HdrWizardForm::update_current_config_gamma_lin_log( const QString & from_gui) {
-	chosen_config->response_curve=fromQStringToResponse[from_gui];
+	chosen_config.response_curve=fromQStringToResponse[from_gui];
 }
 
 void HdrWizardForm::update_current_config_model( const QString & from_gui) {
-	chosen_config->model=fromQStringToModel[from_gui];
+	chosen_config.model=fromQStringToModel[from_gui];
 }
 
 void HdrWizardForm::update_current_config_calibrate() {
-	chosen_config->response_curve=FROM_ROBERTSON;;
+	chosen_config.response_curve=FROM_ROBERTSON;;
 }
 
 void HdrWizardForm::setLoadFilename( const QString & filename_from_gui) {
 	if (filename_from_gui!="") {
-		chosen_config->response_curve=FROM_FILE;
-		chosen_config->CurveFilename=filename_from_gui;
+		chosen_config.response_curve=FROM_FILE;
+		chosen_config.CurveFilename=filename_from_gui;
 	}
 }
 
@@ -373,7 +411,7 @@ QString HdrWizardForm::getCaptionTEXT() {
 
 QString HdrWizardForm::getQStringFromConfig( int type ) {
     if (type==1) { //return String for weights
-	switch (chosen_config->weights) {
+	switch (chosen_config.weights) {
 	case TRIANGULAR:
 	    return "Triangular";
 	case PLATEAU:
@@ -382,7 +420,7 @@ QString HdrWizardForm::getQStringFromConfig( int type ) {
 	    return "Gaussian";
 	}
     } else if (type==2) {   //return String for response curve
-	switch (chosen_config->response_curve) {
+	switch (chosen_config.response_curve) {
 	case LINEAR:
 	    return "Linear";
 	case GAMMA:
@@ -395,7 +433,7 @@ QString HdrWizardForm::getQStringFromConfig( int type ) {
 	    return "From File";
 	}
     } else if (type==3) {   //return String for model
-	switch (chosen_config->model) {
+	switch (chosen_config.model) {
 	case DEBEVEC:
 	    return "Debevec";
 	case ROBERTSON:
@@ -404,7 +442,6 @@ QString HdrWizardForm::getQStringFromConfig( int type ) {
     } else return "";
 return "";
 }
-
 
 void HdrWizardForm::clearlists() {
 	if (ImagePtrList.size() != 0) {
@@ -430,6 +467,84 @@ void HdrWizardForm::clearlists() {
 	}
 }
 
+void HdrWizardForm::fillEVcombobox() {
+	for (int i=-6*4;i<=6*4;i++){
+		float ev_value=-100;
+		QString stop_string="";
+		switch (abs(i%4)) {
+			case 0:
+			ev_value=0;
+			stop_string=((i>0)? "+":"") + QString("%1").arg((i/4));
+			break;
+			case 1:
+			ev_value= (i>0)? +0.3 : -0.3;
+			stop_string=((i>0)? "+":"") + QString("%1/3").arg(( (i/4)*3 + ((i>0)? +1:-1) ));
+			break;
+			case 2:
+			ev_value= (i>0)? +0.5 : -0.5;
+			stop_string=((i>0)? "+":"") + QString("%1/2").arg(( (i/4)*2 + ((i>0)? +1:-1) ));
+			break;
+			case 3:
+			ev_value= (i>0)? +0.7 : -0.7;
+			stop_string=((i>0)? "+":"") + QString("%1/3").arg(( (i/4)*3 + ((i>0)? +2:-2) ));
+			break;
+		}
+		ev_value+=i/4;
+		QString result;
+		QTextStream ts(&result);
+		ts << "EV "<< qSetFieldWidth(4) << left << forcesign << ev_value << " || stops " << qSetFieldWidth(4) << forcesign << left << stop_string;
+		EVcomboBox->addItem(result);
+	}
+	EVcomboBox->setCurrentIndex(-1);
+}
+
+void HdrWizardForm::transform_indices_into_values() {
+//for precise values I cannot parse back what I put in the combobox, I have to recompute the values. In other words 4/3 != 1.3
+	for (int i=0; i<numberinputfiles; i++) {
+		int ni=(int)expotimes[i]-(6*4);
+		float v=-100;
+		switch (abs(ni%4)) {
+			case 0:
+				v=ni/4;
+				break;
+			case 1:
+				v=float((ni/4)*3 + ((ni>0)? +1:-1)) / 3.0f;
+				break;
+			case 2:
+				v=float((ni/4)*2 + ((ni>0)? +1:-1)) / 2.0f;
+				break;
+			case 3:
+				v=float((ni/4)*3 + ((ni>0)? +2:-2)) / 3.0f;
+				break;
+		}
+		assert(v!=-100);
+		expotimes[i]=exp2f(v);
+	}
+}
+
+void HdrWizardForm::EVcomboBoxactivated(int i) {
+	assert(listShowFiles->count()==numberinputfiles);
+	//for the time being expotimes contains the indices into the combobox (from 0 to 48)
+	expotimes[listShowFiles->currentRow()]=i;
+// 	qDebug("setting expotimes[%d]=%d",listShowFiles->currentRow(),i);
+	bool all_ok=true;
+	for (int i=0; i<numberinputfiles; i++) {
+		if (expotimes[i]==-1) {
+			all_ok=false;
+		}
+	}
+	if (all_ok) {
+		Next_Finishbutton->setEnabled(TRUE);
+		confirmloadlabel->setText("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>");
+	}
+}
+
+void HdrWizardForm::fileselected(int i) {
+	assert(listShowFiles->count()==numberinputfiles);
+	//right now expotimes contains the indices into the combobox (from 0 to 48)
+	EVcomboBox->setCurrentIndex((int)expotimes[i]); //works with -1 (value not set) as well.
+// 	qDebug("selected %d, moving to index=%f",i,expotimes[i]);
+}
 
 HdrWizardForm::~HdrWizardForm() {
 	// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.

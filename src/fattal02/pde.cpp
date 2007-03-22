@@ -69,7 +69,7 @@ inline float min( float a, float b )
 }
 
 
-//!! TODO: for debugging purposes
+//!!: for debugging purposes
 // #define PFSEOL "\x0a"
 // static void dumpPFS( const char *fileName, const pfs::Array2D *data, const char *channelName )
 // {

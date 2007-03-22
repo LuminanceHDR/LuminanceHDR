@@ -31,11 +31,6 @@
 #include "../generated_uic/ui_help_about.h"
 #include "options.h"
 
-static const QString helptext = 
-"<hr> <h1>The ``Copy Exif data'' Dialog</h1> \
-<p>In this dialog you will be able to transplant (i.e. copy) the exif data contained in a set of files (the sources, on the left) into another set of files (the destinations, on the right).<br>This is a one-to-one data copy, i.e. the first file in the destination list gets the exif data from the first file in the sources list, the second file in the destination list gets the exif data from the second file in the sources list, and so on.</p> ";
-
-
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	connect(moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
@@ -53,10 +48,8 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 }
 
 TransplantExifDialog::~TransplantExifDialog() {
-// 	qDebug("start~");
 	leftlist->clear();
 	rightlist->clear();
-// 	qDebug("end~");
 }
 
 void TransplantExifDialog::help_requested() {
@@ -64,7 +57,8 @@ void TransplantExifDialog::help_requested() {
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
-	ui.tb->setHtml(helptext);
+	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	ui.tb->setSource(QUrl("manual.html#copyexif"));
 	help->exec();
 }
 
@@ -78,7 +72,7 @@ void TransplantExifDialog::updateinterval(bool left) {
 				stop_left= (stop_left<i) ? i : stop_left;
 			}
 		}
-		qDebug("L %d-%d",start_left,stop_left);
+// 		qDebug("L %d-%d",start_left,stop_left);
 	} else {
 		start_right=rightlist->count();
 		stop_right=-1;
@@ -88,7 +82,7 @@ void TransplantExifDialog::updateinterval(bool left) {
 				stop_right= (stop_right<i) ? i : stop_right;
 			}
 		}
-		qDebug("R %d-%d",start_right,stop_right);
+// 		qDebug("R %d-%d",start_right,stop_right);
 	}
 }
 
@@ -209,6 +203,10 @@ void TransplantExifDialog::append_left() {
 			delete qfi;
 		}
 		from+=files; // add the new files to the "model"
+		if (leftlist->count()==rightlist->count() && rightlist->count()!=0)
+			TransplantButton->setEnabled(TRUE);
+		else
+			TransplantButton->setEnabled(FALSE);
 // 		for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
 // 			qDebug((*i).toAscii());
 	}
@@ -233,6 +231,10 @@ void TransplantExifDialog::append_right() {
 			delete qfi;
 		}
 		to+=files; // add the new files to the "model"
+		if (leftlist->count()==rightlist->count() && rightlist->count()!=0)
+			TransplantButton->setEnabled(TRUE);
+		else
+			TransplantButton->setEnabled(FALSE);
 // 		for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
 // 			qDebug((*i).toAscii());
 	}
@@ -244,11 +246,11 @@ void TransplantExifDialog::transplant_requested() {
 		return;
 	}
 
-	//check if number of jpeg file in left and right lists is the same
-	if (leftlist->count()!=rightlist->count()) {
-		QMessageBox::critical(this,"different number of files", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> Different number of files in the left and right columns."));
-		return;
-	}
+// 	//check if number of jpeg file in left and right lists is the same
+// 	if (leftlist->count()!=rightlist->count()) {
+// 		QMessageBox::critical(this,"different number of files", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> Different number of files in the left and right columns."));
+// 		return;
+// 	}
 
 	progressBar->setMaximum(leftlist->count());
 	//initialize string iterators to the beginning of the lists.
@@ -260,15 +262,17 @@ void TransplantExifDialog::transplant_requested() {
 			//these 2 below throw an exception if file is not supported by exiv2
 			Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open((*i_source).toStdString());
 			Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open((*i_dest).toStdString());
+ 			//Callers must check the size of individual metadata types before accessing the data. FIXME how do I check the size?
+ 			//readMetadata can throw an exception, if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
 			sourceimage->readMetadata();
 			Exiv2::ExifData &src_exifData = sourceimage->exifData();
 			// if source file has no EXIF data, abort
 			if (src_exifData.empty()) {
-				QMessageBox::critical(this,"No exif data found", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font>Aborting... the file <font color=\"#FF9500\"><i><b>%1</b</i></font> does not contain exif data.").arg(*i_source));
+				QMessageBox::critical(this,"No exif data found", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font>No exif-copy has been made... the file <font color=\"#FF9500\"><i><b>%1</b</i></font> does not contain exif data.").arg(*i_source));
 				return;
 			}
 		} catch (Exiv2::AnyError& e) {
-			QMessageBox::critical(this,"File not supported", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> %1").arg(QString::fromStdString(e.what())));
+			QMessageBox::critical(this,"File not supported", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font>%1").arg( QString::fromStdString(e.what()) ));
 			return;
 		}
 	}
@@ -291,6 +295,7 @@ void TransplantExifDialog::transplant_requested() {
 		Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open((*i_source).toStdString());
 		Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open((*i_dest).toStdString());
 		sourceimage->readMetadata();
+		//FIXME this one below can throw an exception: low priority
 		destimage->readMetadata(); //doesn't matter if it is empty
 		Exiv2::ExifData &src_exifData = sourceimage->exifData();
 		Exiv2::ExifData &dest_exifData = destimage->exifData(); //doesn't matter if it is empty
@@ -310,11 +315,15 @@ void TransplantExifDialog::transplant_requested() {
 				dest_tag.setValue(&(i->value()));
 			}
 		}
+// 		try {
 		destimage->writeMetadata();
+// 		} catch (Exiv2::Error &e) { //TODO on error continue and provide log
+// 			std::cerr << e.what();
+// 		}
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
 	done=true;
-	Done_label->setText("<center><font color=\"#00FF00\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>");
+	Done_label->setText("<center><font color=\"#008400\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>");
 	TransplantButton->setText("Done.");
 	moveup_left_button->setDisabled(true);
 	moveup_right_button->setDisabled(true);

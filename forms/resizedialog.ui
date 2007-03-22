@@ -1,15 +1,12 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>ResizeDialog</class>
  <widget class="QDialog" name="ResizeDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>308</width>
-    <height>186</height>
+    <width>337</width>
+    <height>171</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -33,47 +30,14 @@
      <property name="title" >
       <string>HDR Image Size</string>
      </property>
-     <layout class="QGridLayout" >
+     <layout class="QVBoxLayout" >
       <property name="margin" >
        <number>9</number>
       </property>
       <property name="spacing" >
        <number>6</number>
       </property>
-      <item row="2" column="0" colspan="2" >
-       <spacer>
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" >
-         <size>
-          <width>181</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="2" >
-       <widget class="QToolButton" name="restoredefault" >
-        <property name="text" >
-         <string>Reset</string>
-        </property>
-        <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
-        </property>
-        <property name="toolButtonStyle" >
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="2" >
-       <widget class="QLabel" name="sizepreview" >
-        <property name="text" >
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" >
+      <item>
        <layout class="QHBoxLayout" >
         <property name="margin" >
          <number>0</number>
@@ -82,25 +46,69 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QLabel" name="label" >
-          <property name="text" >
-           <string>Width:</string>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
           </property>
-         </widget>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label" >
+            <property name="minimumSize" >
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Width:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="widthSpinBox" >
+            <property name="minimumSize" >
+             <size>
+              <width>85</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>85</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="widthSpinBox" >
-          <property name="minimumSize" >
-           <size>
-            <width>85</width>
-            <height>0</height>
-           </size>
+         <widget class="QComboBox" name="px_or_percentage" >
+          <property name="sizePolicy" >
+           <sizepolicy>
+            <hsizetype>3</hsizetype>
+            <vsizetype>0</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
+          <item>
+           <property name="text" >
+            <string>Pixels</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Percent</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
       </item>
-      <item row="1" column="0" >
+      <item>
        <layout class="QHBoxLayout" >
         <property name="margin" >
          <number>0</number>
@@ -109,45 +117,87 @@
          <number>6</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_2" >
-          <property name="text" >
-           <string>Height:</string>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2" >
+            <property name="sizePolicy" >
+             <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>5</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize" >
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text" >
+             <string>Height:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="heightSpinBox" >
+            <property name="sizePolicy" >
+             <sizepolicy>
+              <hsizetype>0</hsizetype>
+              <vsizetype>0</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize" >
+             <size>
+              <width>85</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>85</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="sizepreview" >
+          <property name="frameShape" >
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow" >
+           <enum>QFrame::Sunken</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="heightSpinBox" >
-          <property name="minimumSize" >
-           <size>
-            <width>85</width>
-            <height>0</height>
-           </size>
+         <widget class="QToolButton" name="restoredefault" >
+          <property name="toolTip" >
+           <string>Restore original size</string>
+          </property>
+          <property name="text" >
+           <string>Reset</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+          </property>
+          <property name="toolButtonStyle" >
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item row="0" column="1" colspan="2" >
-       <widget class="QComboBox" name="px_or_percentage" >
-        <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>3</hsizetype>
-          <vsizetype>0</vsizetype>
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <item>
-         <property name="text" >
-          <string>Pixels</string>
-         </property>
-        </item>
-        <item>
-         <property name="text" >
-          <string>Percent</string>
-         </property>
-        </item>
-       </widget>
       </item>
      </layout>
     </widget>
@@ -191,7 +241,6 @@
    </item>
   </layout>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="../icons.qrc" />
  </resources>

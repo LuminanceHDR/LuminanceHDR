@@ -1,7 +1,5 @@
 <ui version="4.0" >
  <author>Giuseppe Rota</author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>TransplantExifDialog</class>
  <widget class="QDialog" name="TransplantExifDialog" >
   <property name="geometry" >
@@ -394,6 +392,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="TransplantButton" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
        <property name="text" >
         <string>Start!</string>
        </property>
@@ -403,7 +404,6 @@
    </item>
   </layout>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="../icons.qrc" />
  </resources>

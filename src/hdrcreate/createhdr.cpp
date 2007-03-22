@@ -41,11 +41,11 @@ inline float min3( float a, float b, float c ) {
   return (c<min) ? c : min;
 }
 
-pfs::Frame* createHDR(const float * arrayofexptime, config_triple* chosen_config, bool antighosting, int iterations, const bool ldrinput, ...){
+pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, const bool ldrinput, ...){
 
 //only one of these two is used by casting extra parameters:
-//listldr is used when input is a list of jpegs (and LDR tiffs, not yet implemented).
-//listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs(not yet implemented)).
+//listldr is used when input is a list of jpegs (and LDR tiffs).
+//listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs).
 QList<QImage*> *listldr=NULL;
 Array2DList *listhdrR=NULL;
 Array2DList *listhdrG=NULL;
@@ -96,13 +96,13 @@ int maxResponse=0;
     switch( opt_weight )
     {
     case TRIANGULAR:
-	qDebug("using triangular-shaped weights");
+	qDebug("using TRIANGULAR-shaped weights");
 	break;
     case GAUSSIAN:
-	qDebug( "using gaussian-shaped weights");
+	qDebug( "using GAUSSIAN-shaped weights");
 	break;
     case PLATEAU:
-	qDebug( "using plateau-shaped weights");
+	qDebug( "using PLATEAU-shaped weights");
 	break;
     default:
 	throw pfs::Exception("weights not recognized");
@@ -115,16 +115,16 @@ int maxResponse=0;
 	qDebug("loading response curve from file");
 	break;
     case LINEAR:
-	qDebug( "initial response: linear" );
+	qDebug( "initial response: LINEAR" );
 	break;
     case GAMMA:
-	qDebug( "initial response: gamma");
+	qDebug( "initial response: GAMMA");
 	break;
     case LOG10:
-	qDebug("initial response: logarithmic");
+	qDebug("initial response: LOGARITHMIC");
 	break;
     case FROM_ROBERTSON:
-	qDebug( "response curve to be found from image set");
+	qDebug( "response curve TO BE FOUND from image set");
 	break;
     default:
 	throw pfs::Exception("undefined standard response");
@@ -135,10 +135,10 @@ int maxResponse=0;
     switch( chosen_config->model )
     {
     case ROBERTSON:
-	qDebug("using robertson model");
+	qDebug("using ROBERTSON model");
 	break;
     case DEBEVEC:
-	qDebug("using debevec model");
+	qDebug("using DEBEVEC model");
 	break;
     default:
 	throw pfs::Exception("hdr generation method not set or not supported");
@@ -167,8 +167,8 @@ if (ldrinput) {
 	}
 }
 
-qDebug("maxResponse=%d",maxResponse);
-qDebug("minResponse=%d",minResponse);
+// qDebug("maxResponse=%d",maxResponse);
+// qDebug("minResponse=%d",minResponse);
 
     //1) fill in w based on weights preferences
     switch( opt_weight )

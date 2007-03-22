@@ -1,14 +1,11 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>HdrWizardForm</class>
  <widget class="QDialog" name="HdrWizardForm" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>416</width>
+    <width>511</width>
     <height>456</height>
    </rect>
   </property>
@@ -20,24 +17,15 @@
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="spacing" >
-    <number>0</number>
+    <number>6</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="pagestack" >
      <property name="autoFillBackground" >
       <bool>true</bool>
-     </property>
-     <property name="frameShape" >
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="lineWidth" >
-      <number>0</number>
      </property>
      <property name="currentIndex" >
       <number>0</number>
@@ -45,24 +33,24 @@
      <widget class="QWidget" name="choose_files" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>9</number>
+        <number>3</number>
        </property>
        <property name="spacing" >
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox" >
          <property name="title" >
-          <string>Choose Input Files...</string>
+          <string>[1/3] Choose Input Files</string>
          </property>
          <layout class="QGridLayout" >
           <property name="margin" >
-           <number>9</number>
+           <number>8</number>
           </property>
           <property name="spacing" >
-           <number>6</number>
+           <number>3</number>
           </property>
-          <item row="0" column="0" >
+          <item row="0" column="1" >
            <layout class="QVBoxLayout" >
             <property name="margin" >
              <number>0</number>
@@ -71,9 +59,25 @@
              <number>6</number>
             </property>
             <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
              <widget class="QLabel" name="label" >
               <property name="text" >
-               <string>Click the button to load the input exposures</string>
+               <string>Click the button below to load the input exposures</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
               </property>
               <property name="wordWrap" >
                <bool>true</bool>
@@ -86,7 +90,50 @@
                <string>Load Input Images</string>
               </property>
               <property name="text" >
-               <string>Load...</string>
+               <string>Load images...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_4" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_EV" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="text" >
+               <string>Exposure value
+for current image</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="EVcomboBox" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="font" >
+               <font>
+                <family>Monospace</family>
+               </font>
+              </property>
+              <property name="toolTip" >
+               <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_5" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -98,14 +145,14 @@
               <property name="sizeHint" >
                <size>
                 <width>20</width>
-                <height>181</height>
+                <height>111</height>
                </size>
               </property>
              </spacer>
             </item>
            </layout>
           </item>
-          <item row="0" column="1" >
+          <item row="0" column="0" >
            <layout class="QVBoxLayout" >
             <property name="margin" >
              <number>0</number>
@@ -116,12 +163,19 @@
             <item>
              <widget class="QLabel" name="label_2" >
               <property name="text" >
-               <string>Loaded Files:</string>
+               <string>Files Currently Loaded:</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QListWidget" name="listShowFiles" />
+             <widget class="QListWidget" name="listShowFiles" >
+              <property name="selectionBehavior" >
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -156,9 +210,6 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text" >
-               <string/>
-              </property>
              </widget>
             </item>
            </layout>
@@ -171,40 +222,53 @@
      <widget class="QWidget" name="chooseHDRconfig" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>9</number>
+        <number>3</number>
        </property>
        <property name="spacing" >
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox_2" >
          <property name="title" >
-          <string>Choose HDR Creation Configuration</string>
+          <string>[2/3] Choose Settings for HDR Creation</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
-           <number>0</number>
+           <number>8</number>
           </property>
           <property name="spacing" >
-           <number>0</number>
+           <number>3</number>
           </property>
           <item>
            <layout class="QHBoxLayout" >
             <property name="margin" >
-             <number>0</number>
+             <number>3</number>
             </property>
             <property name="spacing" >
-             <number>6</number>
+             <number>14</number>
             </property>
             <item>
              <widget class="QLabel" name="label_predef_configs" >
               <property name="text" >
-               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Choose one of the following &lt;/p>&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">predefined configurations:&lt;/p>&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">The first choice in the list &lt;/span>&lt;/p>&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">is the one that usually leads to &lt;/p>&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">best  results, change it only if &lt;/p>&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">resulting hdr is not good enough&lt;/p>&lt;/body>&lt;/html></string>
+               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Please choose one of the predefined configurations listed on the right:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">The first one in the list usually leads to best results, change it only if the resulting HDR is not good enough.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+              </property>
+              <property name="wordWrap" >
+               <bool>true</bool>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QComboBox" name="comboBox_PredefConfigs" >
+              <property name="toolTip" >
+               <string>list of default configuration settings</string>
+              </property>
               <item>
                <property name="text" >
                 <string>Configuration 1</string>
@@ -242,7 +306,7 @@
           <item>
            <layout class="QHBoxLayout" >
             <property name="margin" >
-             <number>0</number>
+             <number>2</number>
             </property>
             <property name="spacing" >
              <number>6</number>
@@ -428,7 +492,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_3" >
+             <widget class="QLabel" name="label_RespCurve_Antighost" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -494,7 +558,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLabel" name="label_4" >
+             <widget class="QLabel" name="label_Iterations" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -558,22 +622,22 @@ above do not yield good results)</string>
      <widget class="QWidget" name="CustomConfigPage" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>9</number>
+        <number>3</number>
        </property>
        <property name="spacing" >
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox_3" >
          <property name="title" >
-          <string>Choose Custom Configuration</string>
+          <string>[2/3] Choose Custom Configuration</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
-           <number>0</number>
+           <number>8</number>
           </property>
           <property name="spacing" >
-           <number>1</number>
+           <number>3</number>
           </property>
           <item>
            <widget class="QGroupBox" name="groupBox_4" >
@@ -822,27 +886,30 @@ response curve
      <widget class="QWidget" name="confirmcreated" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>9</number>
+        <number>3</number>
        </property>
        <property name="spacing" >
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox_7" >
          <property name="title" >
-          <string>Procedure Completed!</string>
+          <string>[3/3] Procedure Completed!</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
-           <number>1</number>
+           <number>8</number>
           </property>
           <property name="spacing" >
-           <number>6</number>
+           <number>3</number>
           </property>
           <item>
            <widget class="QLabel" name="label_8" >
             <property name="text" >
-             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:18pt;">HDR Image &lt;/span>&lt;span style=" font-size:18pt; font-weight:600;">created&lt;/span>&lt;span style=" font-size:18pt;">...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:19pt;">HDR Image created...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
             </property>
            </widget>
           </item>
@@ -907,7 +974,7 @@ response curve
      <item>
       <widget class="QPushButton" name="Next_Finishbutton" >
        <property name="enabled" >
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text" >
         <string>Next ></string>
@@ -926,7 +993,6 @@ response curve
   </layout>
  </widget>
  <layoutdefault spacing="0" margin="0" />
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="icons.qrc" />
   <include location="../icons.qrc" />
@@ -939,8 +1005,8 @@ response curve
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>321</x>
-     <y>434</y>
+     <x>508</x>
+     <y>453</y>
     </hint>
     <hint type="destinationlabel" >
      <x>309</x>
@@ -959,8 +1025,8 @@ response curve
      <y>319</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>86</x>
-     <y>161</y>
+     <x>98</x>
+     <y>157</y>
     </hint>
    </hints>
   </connection>
@@ -975,8 +1041,8 @@ response curve
      <y>303</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>320</x>
-     <y>163</y>
+     <x>403</x>
+     <y>155</y>
     </hint>
    </hints>
   </connection>
@@ -987,12 +1053,12 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>254</x>
-     <y>331</y>
+     <x>265</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>54</x>
-     <y>186</y>
+     <x>66</x>
+     <y>184</y>
     </hint>
    </hints>
   </connection>
@@ -1007,8 +1073,8 @@ response curve
      <y>317</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>320</x>
-     <y>185</y>
+     <x>403</x>
+     <y>182</y>
     </hint>
    </hints>
   </connection>
@@ -1023,8 +1089,8 @@ response curve
      <y>318</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>63</x>
-     <y>218</y>
+     <x>75</x>
+     <y>211</y>
     </hint>
    </hints>
   </connection>
@@ -1035,12 +1101,12 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>271</x>
-     <y>326</y>
+     <x>282</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>320</x>
-     <y>214</y>
+     <x>403</x>
+     <y>209</y>
     </hint>
    </hints>
   </connection>
@@ -1051,12 +1117,12 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>151</x>
-     <y>325</y>
+     <x>173</x>
+     <y>315</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>312</x>
-     <y>232</y>
+     <x>391</x>
+     <y>231</y>
     </hint>
    </hints>
   </connection>
@@ -1071,8 +1137,8 @@ response curve
      <y>200</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>370</x>
-     <y>232</y>
+     <x>391</x>
+     <y>231</y>
     </hint>
    </hints>
   </connection>
@@ -1087,8 +1153,8 @@ response curve
      <y>200</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>102</x>
-     <y>236</y>
+     <x>98</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>
@@ -1103,8 +1169,8 @@ response curve
      <y>303</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>325</x>
-     <y>94</y>
+     <x>403</x>
+     <y>90</y>
     </hint>
    </hints>
   </connection>
@@ -1135,8 +1201,8 @@ response curve
      <y>200</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>298</x>
-     <y>170</y>
+     <x>308</x>
+     <y>169</y>
     </hint>
    </hints>
   </connection>
@@ -1151,8 +1217,8 @@ response curve
      <y>308</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>236</y>
+     <x>98</x>
+     <y>234</y>
     </hint>
    </hints>
   </connection>
@@ -1183,8 +1249,8 @@ response curve
      <y>308</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>298</x>
-     <y>170</y>
+     <x>308</x>
+     <y>169</y>
     </hint>
    </hints>
   </connection>
@@ -1195,8 +1261,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>24</x>
-     <y>243</y>
+     <x>36</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>317</x>
@@ -1207,12 +1273,12 @@ response curve
   <connection>
    <sender>checkBoxAntighosting</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_3</receiver>
+   <receiver>label_RespCurve_Antighost</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>103</x>
-     <y>243</y>
+     <x>115</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>221</x>
@@ -1227,8 +1293,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>48</x>
-     <y>243</y>
+     <x>60</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>325</x>
@@ -1243,8 +1309,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>23</x>
-     <y>239</y>
+     <x>35</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>28</x>
@@ -1259,19 +1325,19 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>16</x>
-     <y>244</y>
+     <x>28</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>103</x>
-     <y>212</y>
+     <x>115</x>
+     <y>211</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>checkBoxCallCustom</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_3</receiver>
+   <receiver>label_RespCurve_Antighost</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1279,8 +1345,8 @@ response curve
      <y>316</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>187</x>
-     <y>238</y>
+     <x>293</x>
+     <y>239</y>
     </hint>
    </hints>
   </connection>
@@ -1307,8 +1373,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>23</x>
-     <y>245</y>
+     <x>35</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>306</x>
@@ -1323,8 +1389,8 @@ response curve
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>94</x>
-     <y>241</y>
+     <x>106</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>326</x>
@@ -1343,8 +1409,8 @@ response curve
      <y>312</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>14</x>
-     <y>239</y>
+     <x>26</x>
+     <y>238</y>
     </hint>
    </hints>
   </connection>
@@ -1355,8 +1421,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>50</x>
-     <y>243</y>
+     <x>62</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>79</x>
@@ -1371,8 +1437,8 @@ response curve
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>109</x>
-     <y>244</y>
+     <x>121</x>
+     <y>238</y>
     </hint>
     <hint type="destinationlabel" >
      <x>108</x>
@@ -1391,15 +1457,15 @@ response curve
      <y>319</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>318</x>
-     <y>239</y>
+     <x>403</x>
+     <y>238</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>checkBoxAntighosting</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_4</receiver>
+   <receiver>label_Iterations</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1407,8 +1473,8 @@ response curve
      <y>235</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>70</x>
-     <y>248</y>
+     <x>198</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
@@ -1431,7 +1497,7 @@ response curve
   <connection>
    <sender>checkBoxCallCustom</sender>
    <signal>toggled(bool)</signal>
-   <receiver>label_4</receiver>
+   <receiver>label_Iterations</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1439,8 +1505,8 @@ response curve
      <y>305</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>70</x>
-     <y>248</y>
+     <x>198</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>

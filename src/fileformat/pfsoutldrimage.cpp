@@ -29,7 +29,11 @@
 #include <QImage>
 
 #ifndef _WIN32
+#if defined(__MACH__) && defined(__APPLE__)
+#include <machine/endian.h>
+#else
 #include <endian.h>
+#endif
 #endif
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )

@@ -40,37 +40,7 @@ pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-static const QString helptext = 
-"<p align=\"center\"><b><font size=\"+4\"><u>Q t p f s g u i</u></b></p>\
-<p align=\"center\">v"QTPFSGUIVERSION " (Qt4)</p>\
-<hr> <h1>Overview and Usage</h1> \
-<p>This is a graphical user interface (GUI) that operates on High dynamic range (HDR) images.</p> \
-<p>If you use this software to create HDRs and/or to Tonemap an HDR to a LDR, please specify somewhere that you used this program. For example use a \"qtpfsgui\" tag in flickr.</p> \
-<p>The <b>Open</b>&#160;<img src=\":/new/prefix1/images/fileopen.png\">,&#160; <b>New</b>   <img src=\":/new/prefix1/images/newfile.png\"> &#160;and <b>Save as...</b><img src=\":/new/prefix1/images/filesave.png\">&#160; buttons in the main window operate on HDR images: the \"<b>New</b>\" button pops up a wizard. <br>\
-Throughout the guided procedure you will be asked about the location of your source images, and the configuration you want to use to create the HDR.</p> \
-<h2>The HDR configurations in the wizard</h2>\
-<p>Usually one of the 6 default configurations leads to very good results, but if you want you can enable the \"<b>custom configuration</b>\" checkbox that will prompt you with all the possibilities. <br>\
-Let me know if you find one combination (that is not already in the default ones) that creates good results for you.</p>\
-<br><hr>\
-<h1>Tonemapping the HDR into a LDR</h1>\
-<p>Once you have a window with a HDR in it you can tonemap it to a Low Dynamic Range (LDR) image via the <b>Tonemap</b>  <img src=\":/new/prefix1/images/tonemap.png\"> button, that creates a new dialog where you can fiddle with the various <b><i>tone mapping operators</i></b> (<b>TMO</b>s) and related settings.\
-It is usually a good idea to work on a smaller scale image while trying out the TMOs, because they can be very cpu-intensive.<br>\
-Once you are satisfied with the results you can click on the Save button:\
-<br><img src=\":/new/prefix1/images/filesaveas.png\"><br>\
-to save the resulting <b><i>low dynamic range</i></b> (<b>LDR</b>) image.</p>\
-<hr><h1>Contact</h1>\
-<p>If you use this program, please, please let me know:</p>\
-<ul>\
-<li>if you find any bug.\
-<li>if you find any usability issue.\
-</ul>\
-<p>Even if you just use this program and find it useful, it would be great if you would let me know.</p>\
-Giuseppe Rota<br>\
-grota at users.sourceforge.net";
-
-
-MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
-{
+MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	connect(this->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
 	workspace = new QWorkspace(this);
@@ -101,7 +71,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui")
 	connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdiwindow_fit_to_win(bool)));
 	connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_original_size()));
 // 	connect(menuView,SIGNAL(aboutToShow()),this,SLOT(viewMenuAboutToShow()));
-	connect(helpAboutAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
+	connect(helpAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
+	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 // 	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
@@ -161,7 +132,7 @@ if( ! opened.isEmpty() ) {
 		settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 	}
 	if (!qfi.isReadable()) {
-	    QMessageBox::warning(this,"Aborting...","File is not readable (check existence, permissions,...)",
+	    QMessageBox::critical(this,"Aborting...","File is not readable (check existence, permissions,...)",
 				 QMessageBox::Ok,QMessageBox::NoButton);
 	    return false;
 	}
@@ -189,7 +160,7 @@ if( ! opened.isEmpty() ) {
 		hdrpfsframe = readRAWfile(qfi.filePath().toAscii().constData(), &(qtpfsgui_options->dcraw_options));
 	}
 	else {
-		QMessageBox::warning(this,"Aborting...","We only support <br>Radiance rgbe (hdr), PFS, raw, and exr (linux only) <br>files up until now.",
+		QMessageBox::warning(this,"Aborting...","We only support <br>Radiance rgbe (hdr), PFS, raw, tiff and exr (linux only) <br>files up until now.",
 				 QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
@@ -258,7 +229,7 @@ void MainGui::fileSaveAs()
 				pfsio.writeFrame(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),fp);
 				(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
-				QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, and PFS files up until now.",
+				QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, TIFF and PFS files up until now.",
 					QMessageBox::Ok,QMessageBox::NoButton);
 			}
 			setCurrentFile(fname);
@@ -320,7 +291,7 @@ void MainGui::rotatecw_requested() {
 
 void MainGui::dispatchrotate( bool clockwise) {
 	if ((((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())==NULL) {
-		QMessageBox::warning(this,"","Problem with original (source) buffer...",
+		QMessageBox::critical(this,"","Problem with original (source) buffer...",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -337,7 +308,7 @@ void MainGui::dispatchrotate( bool clockwise) {
 
 void MainGui::resize_requested() {
 	if ((((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())==NULL) {
-		QMessageBox::warning(this,"","Problem with original (source) buffer...",
+		QMessageBox::critical(this,"","Problem with original (source) buffer...",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -398,7 +369,8 @@ void MainGui::helpAbout() {
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
-	ui.tb->setHtml(helptext);
+	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	ui.tb->setSource(QUrl("index.html"));
 	help->show();
 }
 
@@ -417,10 +389,6 @@ void MainGui::updateRecentFileActions() {
 	for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
 		recentFileActs[j]->setVisible(false);
 }
-
-// QString MainGui::strippedName(const QString &fullFileName) {
-// 	return QFileInfo(fullFileName).fileName();
-// }
 
 void MainGui::openRecentFile() {
 	QAction *action = qobject_cast<QAction *>(sender());

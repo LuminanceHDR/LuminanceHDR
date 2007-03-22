@@ -52,14 +52,13 @@ private:
 	pfs::Frame *resizedHdrbuffer, *afterPreGammabuffer, *afterToneMappedBuffer, *afterPostgammaBuffer;
 	void disable_Applybuttons();
 	void enable_Applybuttons();
-	bool filter_first_tabpage_change;
 	QLabel *imageLabel;
 	void executeToneMap();
 	void getCaptionAndFileName();
 	void prepareLDR();
 	bool setting_graphic_widgets;
 	QImage *QImagecurrentLDR; uchar *imagedata;
-	QString caption,fname,exif_comment;
+	QString caption,exif_comment,savefnameprefix,savefnamepostfix;
 	QSettings settings;
 	QString RecentDirTMOSetting,inputSettingsFilename;
 	QString RecentDirLDRSetting;
@@ -70,6 +69,7 @@ private:
 	void runToneMap();
 	void postgammasliderchanged();
 	void writeExifData(const QString);
+	void findprefix(QString);
 
 private slots:
 	void startChain();

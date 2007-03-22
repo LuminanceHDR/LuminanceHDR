@@ -49,11 +49,14 @@
     <addaction name="separator" />
     <addaction name="fileExitAction" />
    </widget>
-   <widget class="QMenu" name="menuHelp" >
+   <widget class="QMenu" name="menuSettings" >
     <property name="title" >
-     <string>Help</string>
+     <string>Tools</string>
     </property>
-    <addaction name="helpAboutAction" />
+    <addaction name="OptionsAction" />
+    <addaction name="separator" />
+    <addaction name="Transplant_Exif_Data_action" />
+    <addaction name="actionAlign_Images" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -79,14 +82,12 @@
     <addaction name="zoomInAct" />
     <addaction name="zoomOutAct" />
    </widget>
-   <widget class="QMenu" name="menuSettings" >
+   <widget class="QMenu" name="menuHelp" >
     <property name="title" >
-     <string>Tools</string>
+     <string>Help</string>
     </property>
-    <addaction name="OptionsAction" />
-    <addaction name="separator" />
-    <addaction name="Transplant_Exif_Data_action" />
-    <addaction name="actionAlign_Images" />
+    <addaction name="helpAction" />
+    <addaction name="actionAbout_Qt" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -121,7 +122,13 @@
     <string>New Hdr...</string>
    </property>
    <property name="toolTip" >
-    <string>Create new HDR from a set of LDR (i.e. JPEG or PNG) images</string>
+    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+   </property>
+   <property name="statusTip" >
+    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+N</string>
@@ -138,7 +145,13 @@
     <string>Open Hdr....</string>
    </property>
    <property name="toolTip" >
-    <string>Open existing Hdr file and load it into the workspace</string>
+    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+   </property>
+   <property name="statusTip" >
+    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+O</string>
@@ -158,7 +171,13 @@
     <string>Save Hdr as...</string>
    </property>
    <property name="toolTip" >
-    <string>Save current Hdr to file</string>
+    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
+   </property>
+   <property name="statusTip" >
+    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
+   </property>
+   <property name="whatsThis" >
+    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+S</string>
@@ -181,7 +200,13 @@
     <string>Tonemap the Hdr...</string>
    </property>
    <property name="toolTip" >
-    <string>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
+   </property>
+   <property name="statusTip" >
+    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+T</string>
@@ -192,6 +217,15 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
+    <string>Exit</string>
+   </property>
+   <property name="toolTip" >
+    <string>Exit</string>
+   </property>
+   <property name="statusTip" >
+    <string>Exit</string>
+   </property>
+   <property name="whatsThis" >
     <string>Exit</string>
    </property>
    <property name="shortcut" >
@@ -214,6 +248,12 @@
    <property name="toolTip" >
     <string>Rotate Counterclockwise the HDR</string>
    </property>
+   <property name="statusTip" >
+    <string>Rotate Counterclockwise the HDR</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Rotate Counterclockwise the HDR</string>
+   </property>
    <property name="shortcut" >
     <string>&lt;</string>
    </property>
@@ -232,6 +272,12 @@
     <string>Rotate ClockWise</string>
    </property>
    <property name="toolTip" >
+    <string>Rotate ClockWise</string>
+   </property>
+   <property name="statusTip" >
+    <string>Rotate ClockWise</string>
+   </property>
+   <property name="whatsThis" >
     <string>Rotate ClockWise</string>
    </property>
    <property name="shortcut" >
@@ -304,18 +350,24 @@
     <string>9</string>
    </property>
   </action>
-  <action name="helpAboutAction" >
+  <action name="helpAction" >
    <property name="icon" >
     <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text" >
-    <string>About...</string>
+    <string>Documentation...</string>
    </property>
    <property name="iconText" >
     <string>About...</string>
    </property>
    <property name="toolTip" >
-    <string>Show some quick help</string>
+    <string>Show Qtpfsgui Help</string>
+   </property>
+   <property name="statusTip" >
+    <string>Show Qtpfsgui Help</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Show Qtpfsgui Help</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+H</string>
@@ -331,6 +383,15 @@
    <property name="text" >
     <string>Normal Size</string>
    </property>
+   <property name="toolTip" >
+    <string>View HDR at Normal Size</string>
+   </property>
+   <property name="statusTip" >
+    <string>View HDR at Normal Size</string>
+   </property>
+   <property name="whatsThis" >
+    <string>View HDR at Normal Size</string>
+   </property>
    <property name="shortcut" >
     <string>O</string>
    </property>
@@ -345,6 +406,12 @@
    <property name="text" >
     <string>Zoom In</string>
    </property>
+   <property name="statusTip" >
+    <string>Zoom In</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Zoom In</string>
+   </property>
    <property name="shortcut" >
     <string>+</string>
    </property>
@@ -357,6 +424,12 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
    </property>
    <property name="text" >
+    <string>Zoom Out</string>
+   </property>
+   <property name="statusTip" >
+    <string>Zoom Out</string>
+   </property>
+   <property name="whatsThis" >
     <string>Zoom Out</string>
    </property>
    <property name="shortcut" >
@@ -376,6 +449,12 @@
    <property name="text" >
     <string>Fit to Window</string>
    </property>
+   <property name="statusTip" >
+    <string>Shrink the HDR to fit its containing window</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Shrink the HDR to fit its containing window</string>
+   </property>
    <property name="shortcut" >
     <string>W</string>
    </property>
@@ -391,7 +470,13 @@
     <string>Qtpfsgui Options</string>
    </property>
    <property name="toolTip" >
-    <string>Set the various options of qtpfsgui</string>
+    <string>Set the various options of Qtpfsgui.</string>
+   </property>
+   <property name="statusTip" >
+    <string>Set the various options of Qtpfsgui.</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Set the various options of Qtpfsgui.</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+P</string>
@@ -411,7 +496,13 @@
     <string>Resize the HDR</string>
    </property>
    <property name="toolTip" >
-    <string>Resize the HDR</string>
+    <string>Resize (shrink or expand) the HDR</string>
+   </property>
+   <property name="statusTip" >
+    <string>Resize (shrink or expand) the HDR</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Resize (shrink or expand) the HDR</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+R</string>
@@ -427,6 +518,12 @@
    <property name="toolTip" >
     <string>Copy (i.e. transplant) Exif Data</string>
    </property>
+   <property name="statusTip" >
+    <string>Copy (i.e. transplant) Exif Data between two setd of files</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Copy (i.e. transplant) Exif Data between two setd of files</string>
+   </property>
    <property name="shortcut" >
     <string>Ctrl+E</string>
    </property>
@@ -440,6 +537,17 @@
    </property>
    <property name="toolTip" >
     <string>WORK IN PROGRESS</string>
+   </property>
+   <property name="statusTip" >
+    <string>WORK IN PROGRESS</string>
+   </property>
+   <property name="whatsThis" >
+    <string>WORK IN PROGRESS</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt" >
+   <property name="text" >
+    <string>About Qt</string>
    </property>
   </action>
  </widget>

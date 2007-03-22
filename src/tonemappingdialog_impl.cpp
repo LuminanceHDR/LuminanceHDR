@@ -140,8 +140,8 @@ TMODialog::TMODialog(QWidget *parent, bool ks) : QDialog(parent), setting_graphi
 	RecentDirTMOSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 	RecentDirLDRSetting=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 	inputSettingsFilename="";
-
-	filter_first_tabpage_change=true;
+	savefnameprefix="untitled ";
+	savefnamepostfix="";
 
 	imageLabel = new QLabel;
 	imageLabel->setScaledContents(false);
@@ -207,7 +207,7 @@ void TMODialog::decide_size() {
 void TMODialog::setWorkSize(int index) {
 	qDebug("begin setWorkSize");
 	if (origbuffer==NULL) {
-		QMessageBox::warning(this,"","Problem with original (source) buffer...",
+		QMessageBox::critical(this,"","Problem with original (source) buffer...",
 				QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -235,7 +235,7 @@ void TMODialog::pregammasliderchanged() {
 
 	float pregamma = pregammagang->v();
 	if ( resizedHdrbuffer==NULL ) {
-		QMessageBox::warning(this,"","Problem with input resized buffer, in PREGAMMA",
+		QMessageBox::critical(this,"","Problem with input resized buffer, in PREGAMMA",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -263,7 +263,7 @@ void TMODialog::runToneMap() {
 	qDebug("begin runToneMap");
 
 	if( afterPreGammabuffer==NULL ) {
-		QMessageBox::warning(this,"","Problem with input pregamma buffer, in RUNTONEMAP",
+		QMessageBox::critical(this,"","Problem with input pregamma buffer, in RUNTONEMAP",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -331,7 +331,7 @@ void TMODialog::postgammasliderchanged() {
 
 // 	qDebug("before initial if");
 	if (afterToneMappedBuffer==NULL ) {
-		QMessageBox::warning(this,"","Problem with input resized buffer, in POSTGAMMA",
+		QMessageBox::critical(this,"","Problem with input resized buffer, in POSTGAMMA",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -365,7 +365,7 @@ void TMODialog::postgammasliderchanged() {
 void TMODialog::prepareLDR() {
 	qDebug("begin prepareLDR");
 	if(  afterPostgammaBuffer==NULL ) {
-		QMessageBox::warning(this,"","Problem with input postgamma buffer, in prepareLDR()",
+		QMessageBox::critical(this,"","Problem with input postgamma buffer, in prepareLDR()",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
@@ -385,7 +385,6 @@ void TMODialog::prepareLDR() {
 	imageLabel->update();
 	getCaptionAndFileName();
 	setWindowTitle(caption);
-	filter_first_tabpage_change=false;
 // 	this->showMaximized();
 	QApplication::restoreOverrideCursor();
 	qDebug("after prepareLDR");
@@ -445,7 +444,7 @@ void TMODialog::saveLDR() {
 	QFileDialog *fd = new QFileDialog(this);
 	fd->setWindowTitle("Choose a filename to SAVE the LDR to");
 	fd->setDirectory( RecentDirLDRSetting );
-	fd->selectFile( fname + ".jpg");
+	fd->selectFile( savefnameprefix + savefnamepostfix+ ".jpg");
 	fd->setFileMode(QFileDialog::AnyFile);
 	fd->setFilters(filetypes);
 	fd->setAcceptMode(QFileDialog::AcceptSave);
@@ -460,7 +459,7 @@ void TMODialog::saveLDR() {
 				RecentDirLDRSetting=qfi.path();
 				settings.setValue(KEY_RECENT_PATH_SAVE_LDR, RecentDirLDRSetting);
 			}
-			const char * format=qfi.suffix().toAscii();
+			QString format=qfi.suffix();
 			if (qfi.suffix().isEmpty()) {
 				QString usedfilter=fd->selectedFilter();
 				if (usedfilter.startsWith("PNG")) {
@@ -477,148 +476,173 @@ void TMODialog::saveLDR() {
 					outfname+=".bmp";
 				}
 			}
-			if( ! QImagecurrentLDR->save(outfname,format,100) ) {
+			if( !QImagecurrentLDR->save(outfname,format.toAscii().constData(),100) ) {
 				QMessageBox::warning(this,"","Failed to save to <b>" + outfname + "</b>",
 						QMessageBox::Ok, QMessageBox::NoButton);
-			} else if ((fd->selectedFilter()).startsWith("JPEG")) {
-				//success in saving file, time to write the exif data...
-				writeExifData(outfname);
+			} else { //save is succesful
+// 				if ((fd->selectedFilter()).startsWith("JPEG")) {
+				if (format=="jpeg" || format=="jpg") {
+					//time to write the exif data...
+					writeExifData(outfname);
+				}
+				//now find saved name prefix TODO
+				findprefix(qfi.baseName());
 			}
 		}
 	}
 	delete fd;
 }
 
+void TMODialog::findprefix(QString baseName) {
+	int idx=-1;
+	if ((idx=baseName.indexOf("ashikhmin02"))!=-1) {
+	} else if ((idx=baseName.indexOf("drago03"))!=-1) {
+	} else if ((idx=baseName.indexOf("durand02"))!=-1) {
+	} else if ((idx=baseName.indexOf("fattal02"))!=-1) {
+	} else if ((idx=baseName.indexOf("pattanaik00"))!=-1) {
+	} else if ((idx=baseName.indexOf("reinhard"))!=-1) {
+	}
+	
+	savefnameprefix=baseName;
+	if (idx!=-1) {
+		savefnameprefix.truncate(idx);
+// 		fname=savefnameprefix+baseName.remove(0,idx);
+	}
+	if (!savefnameprefix.endsWith(' ')) {
+		savefnameprefix+=' ';
+	}
+}
+
 void TMODialog::getCaptionAndFileName() {
 caption="Qtpfsgui v"QTPFSGUIVERSION"   ---   ";
-fname="untitled_";
+savefnamepostfix.clear();
 exif_comment="Qtpfsgui tonemapping parameters:\n";
 exif_comment+="Operator: ";
 switch (operators_tabWidget->currentIndex()) {
 case 0:
 	caption+="Ashikhmin02:     ~ ";
-	fname+="ashikhmin02_";
+	savefnamepostfix+="ashikhmin02_";
 	exif_comment+="Ashikhmin\nParameters:\n";
 	if (simpleCheckBox->isChecked()) {
-		fname+="-simple_";
+		savefnamepostfix+="-simple_";
 		caption+="simple ~ ";
 		exif_comment+="Simple\n";
 	} else {
 		if (eq2RadioButton->isChecked()) {
-			fname+="-eq2_";
+			savefnamepostfix+="-eq2_";
 			caption+="Equation 2 ~ ";
 			exif_comment+="Equation 2\n";
 		} else {
-			fname+="-eq4_";
+			savefnamepostfix+="-eq4_";
 			caption+="Equation 4 ~ ";
 			exif_comment+="Equation 4\n";
 		}
-		fname+=QString("local_%1_").arg(contrastGang->v());
+		savefnamepostfix+=QString("local_%1_").arg(contrastGang->v());
 		caption+=QString("Local=%1 ~ ").arg(contrastGang->v());
 		exif_comment+=QString("Local Contrast value: %1\n").arg(contrastGang->v());;
 	}
 	break;
 case 1:
 	caption+="Drago03:     ~ ";
-	fname+="drago03_";
+	savefnamepostfix+="drago03_";
 	exif_comment+="Drago\nParameters:\n";
-	fname+=QString("bias_%1_").arg(biasGang->v());
+	savefnamepostfix+=QString("bias_%1_").arg(biasGang->v());
 	caption+=QString("Bias=%1 ~ ").arg(biasGang->v());
 	exif_comment+=QString("Bias: %1\n").arg(biasGang->v());;
 	break;
 case 2:
 	caption+="Durand02:     ~ ";
-	fname+="durand02_";
+	savefnamepostfix+="durand02_";
 	exif_comment+="Durand\nParameters:\n";
-	fname+=QString("spacial_%1_").arg(spatialGang->v());
+	savefnamepostfix+=QString("spacial_%1_").arg(spatialGang->v());
 	caption+=QString("Spacial=%1 ~ ").arg(spatialGang->v());
 	exif_comment+=QString("Spacial Kernel Sigma: %1\n").arg(spatialGang->v());
-	fname+=QString("range_%1_").arg(rangeGang->v());
+	savefnamepostfix+=QString("range_%1_").arg(rangeGang->v());
 	caption+=QString("Range=%1 ~ ").arg(rangeGang->v());
 	exif_comment+=QString("Range Kernel Sigma: %1\n").arg(rangeGang->v());
-	fname+=QString("base_%1_").arg(baseGang->v());
+	savefnamepostfix+=QString("base_%1_").arg(baseGang->v());
 	caption+=QString("Base=%1 ~ ").arg(baseGang->v());
 	exif_comment+=QString("Base Contrast: %1\n").arg(baseGang->v());
 	break;
 case 3:
 	caption+="Fattal02:     ~ ";
-	fname+="fattal02_";
+	savefnamepostfix+="fattal02_";
 	exif_comment+="Fattal\nParameters:\n";
-	fname+=QString("alpha_%1_").arg(alphaGang->v());
+	savefnamepostfix+=QString("alpha_%1_").arg(alphaGang->v());
 	caption+=QString("Alpha=%1 ~ ").arg(alphaGang->v());
 	exif_comment+=QString("Alpha: %1\n").arg(alphaGang->v());
-	fname+=QString("beta_%1_").arg(betaGang->v());
+	savefnamepostfix+=QString("beta_%1_").arg(betaGang->v());
 	caption+=QString("Beta=%1 ~ ").arg(betaGang->v());
 	exif_comment+=QString("Beta: %1\n").arg(betaGang->v());
-	fname+=QString("saturation_%1_").arg(saturation2Gang->v());
+	savefnamepostfix+=QString("saturation_%1_").arg(saturation2Gang->v());
 	caption+=QString("Saturation=%1 ~ ").arg(saturation2Gang->v());
-	exif_comment+=QString("Color Saturation: %1 ").arg(saturation2Gang->v());
+	exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2Gang->v());
 	break;
 case 4:
 	caption+="Pattanaik00:     ~ ";
-	fname+="pattanaik00_";
+	savefnamepostfix+="pattanaik00_";
 	exif_comment+="Pattanaik\nParameters:\n";
-	fname+=QString("mul_%1_").arg(multiplierGang->v());
+	savefnamepostfix+=QString("mul_%1_").arg(multiplierGang->v());
 	caption+=QString("Multiplier=%1 ~ ").arg(multiplierGang->v());
 	exif_comment+=QString("Multiplier: %1\n").arg(multiplierGang->v());
 	if (pattalocal->isChecked()) {
-		fname+="local_";
+		savefnamepostfix+="local_";
 		caption+="Local ~ ";
 		exif_comment+="Local Tone Mapping\n";
 	} else if (autoYcheckbox->isChecked()) {
-		fname+="autolum_";
+		savefnamepostfix+="autolum_";
 		caption+="AutoLuminance ~ ";
 		exif_comment+="Con and Rod based on image luminance\n";
 	} else {
-		fname+=QString("cone_%1_").arg(coneGang->v());
+		savefnamepostfix+=QString("cone_%1_").arg(coneGang->v());
 		caption+=QString("Cone=%1 ~ ").arg(coneGang->v());
 		exif_comment+=QString("Cone Level: %1\n").arg(coneGang->v());
-		fname+=QString("rod_%1_").arg(rodGang->v());
+		savefnamepostfix+=QString("rod_%1_").arg(rodGang->v());
 		caption+=QString("Rod=%1 ~ ").arg(rodGang->v());
 		exif_comment+=QString("Rod Level: %1\n").arg(coneGang->v());
 	}
 	break;
 case 5:
 	caption+="Reinhard02:     ~ ";
-	fname+="reinhard02_";
+	savefnamepostfix+="reinhard02_";
 	exif_comment+="Reinhard02\nParameters:\n";
-	fname+=QString("key_%1_").arg(keyGang->v());
+	savefnamepostfix+=QString("key_%1_").arg(keyGang->v());
 	caption+=QString("Key=%1 ~ ").arg(keyGang->v());
 	exif_comment+=QString("Key: %1\n").arg(keyGang->v());
-	fname+=QString("phi_%1_").arg(phiGang->v());
+	savefnamepostfix+=QString("phi_%1_").arg(phiGang->v());
 	caption+=QString("Phi=%1 ~ ").arg(phiGang->v());
 	exif_comment+=QString("Phi: %1\n").arg(phiGang->v());
 	if (usescalescheckbox->isChecked()) {
-		fname+=QString("scales_");
+		savefnamepostfix+=QString("scales_");
 		caption+=QString("Scales: ~ ");
 		exif_comment+=QString("Scales\n");
-		fname+=QString("range_%1_").arg(range2Gang->v());
+		savefnamepostfix+=QString("range_%1_").arg(range2Gang->v());
 		caption+=QString("Range=%1 ~ ").arg(range2Gang->v());
 		exif_comment+=QString("Range: %1\n").arg(range2Gang->v());
-		fname+=QString("lower%1_").arg(lowerGang->v());
+		savefnamepostfix+=QString("lower%1_").arg(lowerGang->v());
 		caption+=QString("Lower=%1 ~ ").arg(lowerGang->v());
 		exif_comment+=QString("Lower: %1\n").arg(lowerGang->v());
-		fname+=QString("upper%1_").arg(upperGang->v());
+		savefnamepostfix+=QString("upper%1_").arg(upperGang->v());
 		caption+=QString("Upper=%1 ~ ").arg(upperGang->v());
 		exif_comment+=QString("Upper: %1\n").arg(upperGang->v());
 	}
 	break;
 case 6:
 	caption+="Reinhard04:     ~ ";
-	fname+="reinhard04_";
+	savefnamepostfix+="reinhard04_";
 	exif_comment+="Reinhard04\nParameters:\n";
-	fname+=QString("brightness_%1_").arg(brightnessGang->v());
+	savefnamepostfix+=QString("brightness_%1_").arg(brightnessGang->v());
 	caption+=QString("Brightness=%1 ~ ").arg(brightnessGang->v());
 	exif_comment+=QString("Brightness: %1\n").arg(brightnessGang->v());
-	fname+=QString("saturation_%1_").arg(saturationGang->v());
+	savefnamepostfix+=QString("saturation_%1_").arg(saturationGang->v());
 	caption+=QString("Saturation=%1 ~ ").arg(saturationGang->v());
 	exif_comment+=QString("Saturation: %1\n").arg(saturationGang->v());
 	break;
 }
-fname+=QString("pregamma_%1_").arg(pregammagang->v());
+savefnamepostfix+=QString("pregamma_%1_").arg(pregammagang->v());
 caption+=QString("PreGamma=%1 ~ ").arg(pregammagang->v());
-exif_comment+=QString("\n------\nPreGamma: %1\n").arg(pregammagang->v());
-fname+=QString("postgamma_%1").arg(postgammagang->v());
+exif_comment+=QString("------\nPreGamma: %1\n").arg(pregammagang->v());
+savefnamepostfix+=QString("postgamma_%1").arg(postgammagang->v());
 caption+=QString("PostGamma=%1").arg(postgammagang->v());
 exif_comment+=QString("PostGamma: %1").arg(postgammagang->v());
 return;
@@ -633,7 +657,7 @@ void TMODialog::loadsettings() {
 	if( ! opened.isEmpty() ) {
 		QFileInfo qfi(opened);
 		if (!qfi.isReadable()) {
-		QMessageBox::warning(this,"Aborting...","File is not readable (check existence, permissions,...)",
+		QMessageBox::critical(this,"Aborting...","File is not readable (check existence, permissions,...)",
 					QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 		}
@@ -684,7 +708,7 @@ void TMODialog::savesettings() {
 void TMODialog::fromGui2Txt(QString destination) {
 	QFile file(destination);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QMessageBox::warning(this,"Aborting...","File is not writable (check permissions, path...)",
+		QMessageBox::critical(this,"Aborting...","File is not writable (check permissions, path...)",
 					QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
@@ -747,7 +771,7 @@ void TMODialog::fromGui2Txt(QString destination) {
 void TMODialog::fromTxt2Gui() {
 	QFile file(inputSettingsFilename);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		QMessageBox::warning(this,"Aborting...","File is not readable (check permissions, path...)",
+		QMessageBox::critical(this,"Aborting...","File is not readable (check permissions, path...)",
 					QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
@@ -765,7 +789,7 @@ void TMODialog::fromTxt2Gui() {
 		value=line.section('=',1,1); //get the value
 		if (field=="TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
-				QMessageBox::warning(this,"Aborting...","Error, Tonemapping Setting file has a different version than the expected one.",
+				QMessageBox::critical(this,"Aborting...","Error, Tonemapping Setting file has a different version than the expected one.",
 							QMessageBox::Ok,QMessageBox::NoButton);
 				return;
 			}

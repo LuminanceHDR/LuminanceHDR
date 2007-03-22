@@ -26,9 +26,15 @@
  */
 
 #include <cmath>
+
 #ifndef _WIN32
+#if defined(__MACH__) && defined(__APPLE__)
+#include <machine/endian.h>
+#else
 #include <endian.h>
 #endif
+#endif
+
 #include "pfstiff.h"
 
 TiffReader::TiffReader( const char* filename ) {

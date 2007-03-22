@@ -103,32 +103,6 @@ INCLUDEPATH *= $$FFTW3DIR
 LIBS += -lfftw3f -lm
 DEFINES += HAVE_FFTW
 
-########################################### LIBJPEG ###########################################
-#dcraw requires libjpeg
-message ( "" )
-message ( "Detecting libjpeg:" )
-#I think these are the only paths where we have to search for.
-#If your system is more exotic let me know.
-LIBJPEGHEADER = /usr/include/jpeglib.h /usr/local/include/jpeglib.h $$(LOCALSOFT)/include/jpeglib.h 
-for(path, LIBJPEGHEADER) {
-	exists($$path) {
-		LIBJPEGDIR = $$dirname(path)
-		message ( headers found in $$LIBJPEGDIR)
-	}
-}
-isEmpty(LIBJPEGDIR) {
-	message("libjpeg devel package not found")
-	message("In ubuntu you can run:")
-	message("sudo apt-get install libjpeg62-dev")
-	message("in fedora core 6 run (as root):")
-	message("yum install libjpeg-devel")
-	message("Or, if you have to compile the sources go to http://www.ijg.org")
-	message("If you, on the other had, think that this message is wrong and indeed you HAVE libjpeg-devel installed, send an email to grota@users.sourceforge.net saying so.")
-	error( "fatal error, bailing out." )	
-}
-INCLUDEPATH *= $$LIBJPEGDIR
-LIBS += -ljpeg
-
 ########################################### LIBTIFF ###########################################
 #required, since we want to read hdr/ldr tiff files.
 message ( "" )
@@ -154,18 +128,49 @@ isEmpty(LIBTIFFDIR) {
 }
 INCLUDEPATH *= $$LIBTIFFDIR
 LIBS += -ltiff
+
+########################################### LIBJPEG ###########################################
+#dcraw requires libjpeg
+message ( "" )
+message ( "Detecting libjpeg:" )
+#I think these are the only paths where we have to search for.
+#If your system is more exotic let me know.
+LIBJPEGHEADER = /usr/include/jpeglib.h /usr/local/include/jpeglib.h $$(LOCALSOFT)/include/jpeglib.h 
+for(path, LIBJPEGHEADER) {
+	exists($$path) {
+		LIBJPEGDIR = $$dirname(path)
+		message ( headers found in $$LIBJPEGDIR)
+	}
+}
+isEmpty(LIBJPEGDIR) {
+	message("libjpeg devel package not found")
+	message("In ubuntu you can run:")
+	message("sudo apt-get install libjpeg62-dev")
+	message("in fedora core 6 run (as root):")
+	message("yum install libjpeg-devel")
+	message("Or, if you have to compile the sources go to http://www.ijg.org")
+	message("If you, on the other had, think that this message is wrong and indeed you HAVE libjpeg-devel installed, send an email to grota@users.sourceforge.net saying so.")
+	error( "fatal error, bailing out." )	
+}
+INCLUDEPATH *= $$LIBJPEGDIR
+LIBS += -ljpeg
 ######################################## end of detection ########################################
 
 ############################## required by "make install" ########################################
 isEmpty(PREFIX) {
        PREFIX = ""
 }
-target.path    = $${PREFIX}/usr/local/bin
-menu.files      = qtpfsgui.desktop
-menu.path       = $${PREFIX}/usr/share/applications
-icon.files      = images/qtpfsgui.png
-icon.path       = $${prefix}/usr/share/pixmaps
-INSTALLS	+= target menu icon
+target.path      = $${PREFIX}/usr/local/bin
+menu.files       = qtpfsgui.desktop
+menu.path        = $${PREFIX}/usr/share/applications
+icon.files       = images/qtpfsgui.png
+icon.path        = $${PREFIX}/usr/share/pixmaps
+htmls.files      = html/index.html html/manual.html hints.html faq.html
+htmls.path       = $${PREFIX}/usr/local/share/qtpfsgui/html
+htmlimages.files =  html/images/copy_exif.jpeg html/images/mainwin.jpeg html/images/resize.jpeg html/images/snap-qt4_3.jpeg html/images/snap-qt4_4.jpeg html/images/snap-qt4_5.jpeg html/images/snap-qt4_6.jpeg html/images/tonemapdialog.jpeg
+htmlimages.path  = $${PREFIX}/usr/local/share/qtpfsgui/html/images
+
+INSTALLS        += target menu icon htmls htmlimages
 #################################################################################################
 #CONFIG += debug
 }

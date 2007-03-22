@@ -56,6 +56,6 @@ extern "C" {
  * @brief it can either create an hdr from a qt list of LDRs (QtImage) or from a list of HDR data (raw formats, hdr tiffs).
  *
 **/
-pfs::Frame* createHDR(const float * arrayofexptime, config_triple* chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
+pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
 }
 #endif

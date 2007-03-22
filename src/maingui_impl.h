@@ -76,7 +76,6 @@ private slots:
 private:
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
-// 	QString strippedName(const QString &fullFileName);
 	void setCurrentFile(const QString &fileName);
 	void load_options(qtpfsgui_opts *);
 	QWorkspace* workspace;

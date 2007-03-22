@@ -44,8 +44,6 @@ void readRadiance( FILE *file, int width, int height, float exposure,
 		   pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
 void writeRadiance( FILE *file, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
 
-
-//---
 // RGBE IO classes implementation
 
 RGBEReader::RGBEReader( FILE *fh ) : fh(fh)
@@ -60,9 +58,7 @@ void RGBEReader::readImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
 }
 
 RGBEReader::~RGBEReader()
-{
-  //TODO: empty
-}
+{}
 
 void RGBEWriter::writeImage( pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z )
 {

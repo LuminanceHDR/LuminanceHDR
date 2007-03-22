@@ -1,19 +1,27 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>HelpDialog</class>
  <widget class="QDialog" name="HelpDialog" >
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>479</height>
+    <width>1210</width>
+    <height>619</height>
    </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy>
+    <hsizetype>7</hsizetype>
+    <vsizetype>7</vsizetype>
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle" >
    <string>Qtpfsgui Help</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
@@ -23,9 +31,140 @@
     <number>6</number>
    </property>
    <item>
+    <widget class="QFrame" name="frame" >
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="lineWidth" >
+      <number>5</number>
+     </property>
+     <layout class="QHBoxLayout" >
+      <property name="margin" >
+       <number>0</number>
+      </property>
+      <property name="spacing" >
+       <number>13</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="backButton" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/back.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="forwardButton" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/forward.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="homeButton" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/home.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2" >
+        <property name="orientation" >
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_2" >
+        <property name="text" >
+         <string>...</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
+        </property>
+        <property name="iconSize" >
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QTextBrowser" name="tb" >
      <property name="html" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -55,13 +194,15 @@
        <property name="text" >
         <string>Close</string>
        </property>
+       <property name="default" >
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="../icons.qrc" />
  </resources>
@@ -73,12 +214,92 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>499</x>
-     <y>455</y>
+     <x>1199</x>
+     <y>606</y>
     </hint>
     <hint type="destinationlabel" >
      <x>453</x>
      <y>455</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>backButton</sender>
+   <signal>clicked()</signal>
+   <receiver>tb</receiver>
+   <slot>backward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>46</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>63</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>forwardButton</sender>
+   <signal>clicked()</signal>
+   <receiver>tb</receiver>
+   <slot>forward()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>107</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>112</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>homeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>tb</receiver>
+   <slot>home()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>162</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>177</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButton</sender>
+   <signal>clicked()</signal>
+   <receiver>tb</receiver>
+   <slot>zoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>213</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>217</x>
+     <y>128</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>tb</receiver>
+   <slot>zoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>268</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>268</x>
+     <y>121</y>
     </hint>
    </hints>
   </connection>
