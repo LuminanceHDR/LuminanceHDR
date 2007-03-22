@@ -1,4 +1,4 @@
-This is the README file for qtpfsgui v1.8.2
+This is the README file for qtpfsgui v1.8.3
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.2 of qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.3 of qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -43,7 +43,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 4 (Changes) to read the changes for version 1.8.2.
+Read section 4 (Changes) to read the changes for version 1.8.3.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -117,8 +117,8 @@ to be changed according to your setup.
 
 4. Workflow in the gui
 -------------------------------------------------------------------
-This is a little bit outdated, see also:
-http://osp.wikidot.com/qtpfsgui-manual
+See also the online help:
+Help->Documentation...
 
 Here I'll describe the workflow in qtpfsgui: pretty much the same
 information can be found in the Help->About dialog.
@@ -181,14 +181,12 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
-v1.8.2 Giuseppe Rota <grota@users.sourceforge.net>
-	* Qtpfsgui now supports tiff file formats in:
-	"File->Load HDR..." (8,16,32 bit and logluv tiff formats)
-	"File->Save HDR..." (32 bit and logluv tiff formats)
-	"File->New HDR..." (8 and 16 bit tiff formats)
-	* memory allocation via mmap (linux,mac) and virtualalloc (win32)
-	* added a missing newline in exif comments.
-	* fixed alignment bugs on PowerPC architectures ("blue image")
+v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
+	Added the possibility to load image files without exif data: the user will specify manually the difference in exposure values (EV or stops).
+	Added online documentation: manual,FAQ,hints.
+	The tonemapping dialog remembers the last used filename.
+	Fixed PowerPC compile-time alignment bug.
+	Fixed aperture=0 bug.
 
 ***WARNING***
 The Windows users of v1.8.2 have to download the new ``Windows DLL Package V3'', make sure to get it at:
