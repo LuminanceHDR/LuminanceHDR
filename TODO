@@ -1,3 +1,5 @@
+* check for latest version, file online on sf.
+* substitute " " with "_" in filename. use original hdr filename or list.at(0) for prefix
 * medium term: provide both capabilities, update via button and istantaneously.
 * medium term: modular and external execution of dcraw and Pablo's alignment tool.
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
