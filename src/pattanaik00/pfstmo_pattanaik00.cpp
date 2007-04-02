@@ -49,7 +49,7 @@ pfs::Frame* pfstmo_pattanaik00 (pfs::Frame* inpfsframe, bool _local,float _multi
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
-	//--- default tone mapping parameters;
+	//--- get tone mapping parameters;
 	bool local = _local;
 	float multiplier = _multiplier;
 	float Acone = _Acone;
@@ -82,13 +82,9 @@ pfs::Frame* pfstmo_pattanaik00 (pfs::Frame* inpfsframe, bool _local,float _multi
 			am->setAdaptation(Yo);
 	}
 	
-// 	// tone mapping
-// 	int w = Y->getCols();
-// 	int h = Y->getRows();
-	
-	pfs::transformColorSpace( pfs::CS_XYZ, Xo, Yo, Zo, pfs::CS_RGB, Xo, Yo, Zo ); //in:xyz ---> out:rgb
+	pfs::transformColorSpace( pfs::CS_XYZ, Xo, Yo, Zo, pfs::CS_RGB, Xo, Yo, Zo );
 	tmo_pattanaik00( Xo, Yo, Zo, Y, am, local );
-	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo ); //out:rgb ---> out:xyz
+	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo );
 	
 	delete am; // delete visual adaptation model
 	
