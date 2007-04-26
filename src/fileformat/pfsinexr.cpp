@@ -56,7 +56,7 @@ static string escapeString( const string &src )
 pfs::Frame *readEXRfile (const char *filename) {
 
     pfs::DOMIO pfsio;
-    FILE *inputEXRfile=fopen(filename,"rb");
+    /*FILE *inputEXRfile=*/fopen(filename,"rb");
     InputFile file( filename );
 
     FrameBuffer frameBuffer;

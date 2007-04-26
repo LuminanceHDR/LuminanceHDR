@@ -157,7 +157,7 @@ if (ldrinput) {
 		}
 	}
 } else {
-	for( int i=0 ; i<listhdrR->size() ; i++ ) {
+	for( size_t i=0 ; i<listhdrR->size() ; i++ ) {
 		for( int j=0 ; j<width*height ; j++ ) {
 			int maxval = (int) max3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
 			int minval = (int) min3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
