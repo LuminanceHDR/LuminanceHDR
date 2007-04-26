@@ -299,13 +299,13 @@ void TMWidget::fromGui2Txt(QString destination) {
 	out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
 	out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
 	switch (operators_tabWidget->currentIndex()) {
-	case 0:
+	case 1:
 		out << "TMO=" << "Ashikhmin02" << endl;
 		out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
 		out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
 		out << "CONTRAST=" << contrastGang->v() << endl;
 		break;
-	case 1:
+	case 3:
 		out << "TMO=" << "Drago03" << endl;
 		out << "BIAS=" << biasGang->v() << endl;
 		break;
@@ -315,7 +315,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "RANGE=" << rangeGang->v() << endl;
 		out << "BASE=" << baseGang->v() << endl;
 		break;
-	case 3:
+	case 0:
 		out << "TMO=" << "Fattal02" << endl;
 		out << "ALPHA=" << alphaGang->v() << endl;
 		out << "BETA=" << betaGang->v() << endl;
