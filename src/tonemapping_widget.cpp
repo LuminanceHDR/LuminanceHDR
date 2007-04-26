@@ -374,13 +374,13 @@ void TMWidget::fromTxt2Gui() {
 			}
 		} else if (field=="TMO") {
 			if (value=="Ashikhmin02") {
-				operators_tabWidget->setCurrentIndex(0);
-			} else if (value == "Drago03") {
 				operators_tabWidget->setCurrentIndex(1);
+			} else if (value == "Drago03") {
+				operators_tabWidget->setCurrentIndex(3);
 			} else if (value == "Durand02") {
 				operators_tabWidget->setCurrentIndex(2);
 			} else if (value == "Fattal02") {
-				operators_tabWidget->setCurrentIndex(3);
+				operators_tabWidget->setCurrentIndex(0);
 			} else if (value == "Pattanaik00") {
 				operators_tabWidget->setCurrentIndex(4);
 			} else if (value == "Reinhard02") {
