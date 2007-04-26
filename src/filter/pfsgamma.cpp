@@ -26,61 +26,44 @@
  * $Id: pfsgamma.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+// #include <iostream>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <QFile>
+#include <cmath>
 #include "../libpfs/pfs.h"
-#include <QFile>
 
-void applyGamma( pfs::Array2D *arrayto, pfs::Array2D *arrayfrom, const float exponent/*, const float multiplier*/ );
+void applyGamma( pfs::Array2D *arraydest, const float exponent);
 
-pfs::Frame* applyGammaFrame( pfs::Frame* inpfsframe, float _gamma, bool inputXYZ) {
+//input is rgb, output will be xyz, because next step will be tone mapping, which
+//requires a frame with channels in xyz format
+void applyGammaFrame( pfs::Frame* inpfsframe, const float _gamma) {
 
 	assert(inpfsframe!=NULL);
 	pfs::DOMIO pfsio;
 	float gamma = _gamma;
 
 	pfs::Channel *R, *G, *B;
-	if (inputXYZ)
-		inpfsframe->getXYZChannels( R, G, B );
-	else
-		inpfsframe->getRGBChannels( R, G, B );
+	inpfsframe->getRGBChannels( R, G, B );
 	assert( R!=NULL && G!=NULL && B!=NULL );
 
-	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
-	assert(outframe != NULL);
-	pfs::Channel  *X, *Y, *Z;
-	outframe->createXYZChannels( X,Y,Z );
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
-
-	if (gamma==1) {
-		if (inputXYZ) {
-			copyArray(R,X);
-			copyArray(G,Y);
-			copyArray(B,Z);
-		} else {
-			pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, X,Y,Z );
-		}
-	} else {
-		if (inputXYZ)
-			pfs::transformColorSpace( pfs::CS_XYZ, R, G, B, pfs::CS_RGB, R, G, B );
-		applyGamma( R,X, 1/gamma/*, multiplier*/ );
-		applyGamma( G,Y, 1/gamma/*, multiplier*/ );
-		applyGamma( B,Z, 1/gamma/*, multiplier*/ );
-		pfs::transformColorSpace( pfs::CS_RGB, X,Y,Z, pfs::CS_XYZ, X,Y,Z );
+	if (gamma!=1.0f) {
+		applyGamma( R, 1.0f/gamma );
+		applyGamma( G, 1.0f/gamma );
+		applyGamma( B, 1.0f/gamma );
 	}
+	//convertRGBChannelsToXYZ renames the Channels performing color-space conversion
+	inpfsframe->convertRGBChannelsToXYZ();
 	inpfsframe->getTags()->setString("LUMINANCE", "DISPLAY");
-	return outframe;
 }
 
-void applyGamma( pfs::Array2D *arrayfrom, pfs::Array2D *to, const float exponent/*, const float multiplier*/ )
-{
-	int imgSize = arrayfrom->getRows()*arrayfrom->getCols();
+void applyGamma( pfs::Array2D *arraydest, const float exponent ) {
+	int imgSize = arraydest->getRows()*arraydest->getCols();
 	for( int index = 0; index < imgSize ; index++ ) {
-		float &v_in = (*arrayfrom)(index);
-		float &v_out = (*to)(index);
-		if( v_in < 0 ) v_out = 0;
-		v_out = powf( v_in/**multiplier*/, exponent );
+		float &v = (*arraydest)(index);
+		if( v < 0.0f )
+		  v = 0.0f;
+		else
+		  v = powf( v, exponent );
 	}
 }

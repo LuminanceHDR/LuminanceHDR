@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include "createhdr.h"
 
-extern "C" {
+// extern "C" {
 inline float max3( float a, float b, float c ) {
   float max = (a>b) ? a : b;
   return (c>max) ? c : max;
@@ -196,7 +196,7 @@ if (ldrinput) {
     {
     case FROM_FILE:
 	{
-	    FILE * respfile=fopen(chosen_config->CurveFilename.toAscii().constData(),"r");
+	    FILE * respfile=fopen(chosen_config->CurveFilename.toUtf8().constData(),"r");
 	    // read camera response from file
 	    bool loadR_ok = responseLoad(respfile, Ir, M);
 	    bool loadG_ok = responseLoad(respfile, Ig, M);
@@ -281,4 +281,4 @@ if (ldrinput) {
 	delete[] Ib;
 	return frameout;
 }
-}//extern "C"
+// }//extern "C"

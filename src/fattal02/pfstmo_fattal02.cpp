@@ -51,9 +51,6 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_b
 	float opt_beta = _opt_beta;
 	float opt_saturation=_opt_saturation;
 	
-// 	pfs::Channel *R, *G, *B;
-// 	inpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
@@ -63,11 +60,6 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_b
 	pfs::Channel *Xo, *Yo, *Zo;
 	outframe->createXYZChannels( Xo, Yo, Zo );
 	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
-// 	pfs::Channel *Ro, *Go, *Bo;
-// 	outframe->createRGBChannels( Ro, Go, Bo );
-// 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
-
-// 	pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Ro, Go, Bo );
 	
 	// tone mapping
 	int w = Y->getCols();
@@ -83,9 +75,7 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_b
 			(*Zo)(x,y) = powf( (*Z)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
 			(*Yo)(x,y) = (*L)(x,y);
 		}
-	
 	delete L;
-// 	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
 	
 	return outframe;
 }

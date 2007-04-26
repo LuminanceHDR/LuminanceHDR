@@ -45,5 +45,6 @@ private slots:
 	void negative_clicked();
 	void infnan_clicked();
 	void ok_clicked();
+	void updateLineEditString();
 };
 #endif

@@ -24,7 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define QTPFSGUIVERSION "1.8.3"
-#define TMOSETTINGSVERSION "0.1"
+#define QTPFSGUIVERSION "1.8.4"
+#define TMOSETTINGSVERSION "0.2"
 
 #endif

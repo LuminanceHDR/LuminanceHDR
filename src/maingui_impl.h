@@ -33,6 +33,7 @@
 #include "fileformat/pfsindcraw.h"
 #include "options_impl.h"
 #include "resizedialog_impl.h"
+#include "hdrviewer.h"
 
 
 class MainGui : public QMainWindow, private Ui::MainGui
@@ -42,6 +43,7 @@ Q_OBJECT
 public:
 	MainGui(QWidget *parent=0);
 	~MainGui();
+	HdrViewer* currenthdr;
 public  slots:
 private slots:
 	void fileNewViaWizard();
@@ -62,16 +64,16 @@ private slots:
 	void current_mdiwindow_zoomout();
 	void current_mdiwindow_fit_to_win(bool checked);
 	void current_mdiwindow_original_size();
-// 	void viewMenuAboutToShow();
 	void helpAbout();
 	void options_called();
 	void transplant_called();
+	void reEnableHdrViewer();
 // 	void align_called();
 // 	void fileExit();
 
 	void openRecentFile();
 
-	void updatecurrentMDIwindow( QWidget * w );
+	void updateActions( QWidget * w );
 
 private:
 	void dispatchrotate( bool clockwise);

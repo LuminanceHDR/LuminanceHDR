@@ -39,7 +39,7 @@
 #include <math.h>
 #include "../libpfs/pfs.h"
 
-extern "C" {
+// extern "C" {
 void print_parameter_settings ();
 //--- from defines.h
 typedef struct {
@@ -79,7 +79,7 @@ extern int PyramidHeight;
 #define S_I(i)           (exp (SIGMA_I(i)))
 #define V2(x,y,i)        (V1(x,y,i+1))
 #define ACTIVITY(x,y,i)  ((V1(x,y,i) - V2(x,y,i)) / (((key * pow (2., phi))/(S_I(i)*S_I(i))) + V1(x,y,i)))
-}
+// }
 
 
 /**
@@ -123,7 +123,7 @@ public:
 
 static TemporalSmoothVariable<double> avg_luminance, max_luminance;
 
-extern "C" {
+// extern "C" {
 
 /*
  * Kaiser-Bessel stuff
@@ -434,4 +434,4 @@ void tmo_reinhard02(const pfs::Array2D *Y, pfs::Array2D *L,
   }
 }
 
-}
+// }

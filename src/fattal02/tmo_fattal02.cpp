@@ -204,6 +204,8 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   pfs::Array2D** fi = new pfs::Array2D*[nlevels];
 
   fi[nlevels-1] = new pfs::Array2DImpl(width,height);
+  for (int j=0; j<width*height; j++)
+  	(*fi[nlevels-1])(j)=1.0f;
   for( k=nlevels-1 ; k>=0 ; k-- )
   {
     width = gradients[k]->getCols();
@@ -218,7 +220,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
         float value=1.0;
         if( grad>1e-4 )
           value = a/grad * pow(grad/a, beta);
-        (*fi[k])(x,y) = value;
+        (*fi[k])(x,y) *= value;
       }
 		
     // create next level

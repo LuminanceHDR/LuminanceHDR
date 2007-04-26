@@ -117,14 +117,8 @@ public:
 
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize) {
 
-//TODO well, original, "not-cut-down" pfssize code has many more options: minX/Y, maxX/Y and ratio :)
-// 	float ratio = -1;
 	int xSize = -1;
 	int ySize = -1;
-// 	int minX = -1;
-// 	int maxX = -1;
-// 	int minY = -1;
-// 	int maxY = -1;
 	ResampleFilter *filter = new LinearFilter();
 
 	xSize=_xSize;
@@ -132,31 +126,15 @@ pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize) {
 	pfs::DOMIO pfsio;
 	pfs::Frame *resizedFrame = NULL;
 
-// 	pfs::Channel *R, *G, *B;
-// 	inpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
-
-
-	// Size given
-// 	if( xSize == -1 )
-// 	xSize = (int)((float)frame->getWidth() * (float)ySize / (float)frame->getHeight());
-// 	else if( ySize == -1 )
 	ySize = (int)((float)inpfsframe->getHeight() * (float)xSize / (float)inpfsframe->getWidth());
-
-//       errorCheck( xSize > 0 && ySize > 0 && xSize <= 65536 && ySize <= 65536, "Wrong frame size" );
-//       errorCheck( ((frame->getWidth() <= xSize) && (frame->getHeight() <= ySize)) ||
-//         ((frame->getWidth() >= xSize) && (frame->getHeight() >= ySize)),
-//         "Can upsample / downsample image only in both dimensions simultaneously" );
 
 	resizedFrame = pfsio.createFrame( xSize, ySize );
 
 	pfs::ChannelIterator *it = inpfsframe->getChannels();
 	while( it->hasNext() ) {
 		pfs::Channel *originalCh = it->getNext();
-// 		fprintf(stderr,"computing chan %s\n",originalCh->getName());
 		pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
 		resampleArray( originalCh, newCh, filter );
-		//(only here) I can CONSIDER(threshold) putting originalCh to sleep //XXX
 	}
 
 	pfs::copyTags( inpfsframe, resizedFrame );

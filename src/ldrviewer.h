@@ -19,43 +19,40 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ *
  */
 
-#ifndef CREATEHDR_H
-#define CREATEHDR_H
+#ifndef IMAGELDRVIEWER_H
+#define IMAGELDRVIEWER_H
 
-#include <QString>
-#include <QList>
-#include <QImage>
-#include "../libpfs/pfs.h"
-#include <stdarg.h>
+#include "smart_scroll_area.h"
+#include "tonemapping_widget.h"
 
-#include "responses.h"
-#include "robertson02.h"
-#include "icip06.h"
-#include "debevec.h"
+class LdrViewer : public QWidget {
+	Q_OBJECT
+public:
+	LdrViewer(QWidget *parent, QImage*, tonemapping_options*);
+	~LdrViewer();
+	bool getFittingWin();
+	void LevelsRequested(bool);
+	QString getFilenamePostFix();
+	QString getExifComment();
+	QImage* getQImage();
+signals:
+	void levels_closed();
+public slots:
+	void fitToWindow(bool checked);
+private slots:
+	void updatePreview(unsigned char *);
+	void restoreoriginal();
+private:
+	void parseOptions(tonemapping_options *opts);
+	QString caption,postfix,exif_comment;
+protected:
+	QLabel *imageLabel;
+	SmartScrollArea *scrollArea;
+	QImage *origimage,*currentimage;
+	QImage previewimage;
+};
 
-// extern "C" {
-  enum TWeight
-  { TRIANGULAR, GAUSSIAN, PLATEAU };
-  enum TResponse
-  { FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
-  enum TModel
-  { ROBERTSON, DEBEVEC };
-
-
-  struct config_triple {
-      TWeight weights;
-      TResponse response_curve;
-      TModel model;
-      QString CurveFilename;
-  };
-
-/**
- * @brief main hdr creation function.
- * @brief it can either create an hdr from a qt list of LDRs (QtImage) or from a list of HDR data (raw formats, hdr tiffs).
- *
-**/
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
-// }
 #endif

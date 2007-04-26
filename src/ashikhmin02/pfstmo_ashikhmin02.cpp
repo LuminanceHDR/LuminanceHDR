@@ -47,6 +47,7 @@ pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool _simple, float _lc_
 	bool simple_flag=_simple;
 	float lc_value = _lc_value;
 	int eq = _eq;
+	assert(eq==2||eq==4);
 
 // 	pfs::Channel *R, *G, *B;
 // 	inpfsframe->getRGBChannels( R, G, B );

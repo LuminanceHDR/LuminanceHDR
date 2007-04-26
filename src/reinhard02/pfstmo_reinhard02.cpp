@@ -31,16 +31,16 @@
  */
 
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <QFile>
 #include <math.h>
 #include "../libpfs/pfs.h"
 #include "tmo_reinhard02.h"
 
-using namespace std;
+// using namespace std;
 
-extern "C" pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, int _num, int _low, int _high, bool _use_scales ) {
+pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, int _num, int _low, int _high, bool _use_scales ) {
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;

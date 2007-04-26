@@ -47,7 +47,7 @@ using namespace std;
  * @param B blue channel
  * @param Y luminance channel
  */
-extern "C" void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
+void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
   pfs::Array2D* Y, float f, float w )
 {
   float max_lum = (*Y)(0);
@@ -123,7 +123,7 @@ extern "C" void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* 
     }
 }
 
-extern "C" pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float sat ) {
+pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float sat ) {
 	assert(inputpfsframe!=NULL);
 	//--- default tone mapping parameters;
 	float brightness = br;

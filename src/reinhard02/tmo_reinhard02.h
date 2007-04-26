@@ -41,11 +41,11 @@
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-extern "C" {
+// extern "C" {
 void tmo_reinhard02(const pfs::Array2D *Y, pfs::Array2D *L, 
   bool use_scales, float key, float phi, 
   int num, int low, int high, bool temporal_coherent );
 
 pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, int _num, int _low, int _high, bool _use_scales );
-}
+// }
 #endif /* _tmo_reinhard02_h_ */

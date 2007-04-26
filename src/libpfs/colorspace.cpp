@@ -46,28 +46,6 @@ static const float xyz2rgbD65Mat[3][3] =
   { -0.969257f,  1.875995f,  0.041555f },
   {  0.055636f, -0.203996f,  1.057069f } };
 
-// //--- precise values for matrix convertion (above float precission)
-// static const float rgb2xyzD65Mat[3][3] =
-// { { 0.412424,  0.357579, 0.180464 },
-//   { 0.212656,  0.715158, 0.0721856 },
-//   { 0.0193324, 0.119193, 0.950444 } };
-
-// static const float xyz2rgbD65Mat[3][3] =
-// { {  3.24071,   -1.53726,  -0.498571 },
-//   { -0.969258,   1.87599,   0.0415557 },
-//   {  0.0556352, -0.203996,  1.05707 } };
-
-// //--- original values which lead to mean sq error of above 3 for green channel
-// static const float rgb2xyzD65Mat[3][3] =
-// { { 0.4124f, 0.3576f, 0.1805f },
-//   { 0.2126f, 0.7152f, 0.0722f },
-//   { 0.0193f, 0.1192f, 0.9505f } };
-
-// static const float xyz2rgbD65Mat[3][3] =
-// { { 3.2406f, -1.5372f, -0.4986f },
-//   { -0.9689f, 1.8758f,  0.0415f },
-//   { 0.0557f, -0.2040f,  1.0570f } };
-
 
 static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
   Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )

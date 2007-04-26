@@ -27,7 +27,6 @@
 #include <QMessageBox>
 #include "maingui_impl.h"
 #include "fileformat/pfstiff.h"
-#include "imagehdrviewer.h"
 #include "tonemappingdialog_impl.h"
 #include "../generated_uic/ui_help_about.h"
 #include "config.h"
@@ -40,7 +39,7 @@ pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui") {
+MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	connect(this->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
 	workspace = new QWorkspace(this);
@@ -52,7 +51,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui") 
 	load_options(qtpfsgui_options);
 
 	setWindowTitle("Qtpfsgui v"QTPFSGUIVERSION);
-	connect(workspace, SIGNAL(windowActivated(QWidget*)), this, SLOT(updatecurrentMDIwindow(QWidget *)) );
+	connect(workspace, SIGNAL(windowActivated(QWidget*)), this, SLOT(updateActions(QWidget *)) );
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
@@ -70,11 +69,12 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui") 
 	connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_zoomout()));
 	connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdiwindow_fit_to_win(bool)));
 	connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_original_size()));
-// 	connect(menuView,SIGNAL(aboutToShow()),this,SLOT(viewMenuAboutToShow()));
 	connect(helpAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
+	connect(actionTile,SIGNAL(activated()),workspace,SLOT(tile()));
+	connect(actionCascade,SIGNAL(activated()),workspace,SLOT(cascade()));
 // 	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -95,10 +95,9 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), settings("Qtpfsgui", "Qtpfsgui") 
 void MainGui::fileNewViaWizard() {
 	wizard=new HdrWizardForm (this,&(qtpfsgui_options->dcraw_options));
 	if (wizard->exec() == QDialog::Accepted) {
-		ImageMDIwindow *newmdi=new ImageMDIwindow( this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor );
+		HdrViewer *newmdi=new HdrViewer( this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor, true);
 		newmdi->updateHDR(wizard->getPfsFrameHDR());
 		workspace->addWindow(newmdi);
-// 		newmdi->toolBar->addAction(TonemapAction);
 		newmdi->setWindowTitle(wizard->getCaptionTEXT());
 		newmdi->show();
 	}
@@ -136,28 +135,27 @@ if( ! opened.isEmpty() ) {
 				 QMessageBox::Ok,QMessageBox::NoButton);
 	    return false;
 	}
-	ImageMDIwindow *nuova;
+	HdrViewer *newhdr;
 	pfs::Frame* hdrpfsframe = NULL;
 	QString extension=qfi.suffix().toUpper();
 	bool rawinput=(extension!="PFS")&&(extension!="EXR")&&(extension!="HDR")&&(!extension.startsWith("TIF"));
 #ifndef _WIN32
 	if (extension=="EXR") {
-		hdrpfsframe = readEXRfile(qfi.filePath().toAscii().constData());
+		hdrpfsframe = readEXRfile(qfi.filePath().toUtf8().constData());
 	} else
 #endif
 	       if (extension=="HDR") {
-		hdrpfsframe = readRGBEfile(qfi.filePath().toAscii().constData());
+		hdrpfsframe = readRGBEfile(qfi.filePath().toUtf8().constData());
 	} else if (extension=="PFS") {
 		pfs::DOMIO pfsio;
-		FILE * fp=fopen(qfi.filePath().toAscii().constData(),"rb");
-		hdrpfsframe=pfsio.readFrame(fp);
+		hdrpfsframe=pfsio.readFrame(qfi.filePath());
 		hdrpfsframe->convertXYZChannelsToRGB();
 	} else if (extension.startsWith("TIF")) {
-		TiffReader reader(qfi.filePath().toAscii().constData());
+		TiffReader reader(qfi.filePath().toUtf8().constData());
 		hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 	} 
 	else if (rawinput) {
-		hdrpfsframe = readRAWfile(qfi.filePath().toAscii().constData(), &(qtpfsgui_options->dcraw_options));
+		hdrpfsframe = readRAWfile(qfi.filePath().toUtf8().constData(), &(qtpfsgui_options->dcraw_options));
 	}
 	else {
 		QMessageBox::warning(this,"Aborting...","We only support <br>Radiance rgbe (hdr), PFS, raw, tiff and exr (linux only) <br>files up until now.",
@@ -165,12 +163,12 @@ if( ! opened.isEmpty() ) {
 		return false;
 	}
 	assert(hdrpfsframe!=NULL);
-	nuova=new ImageMDIwindow(this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
-	nuova->updateHDR(hdrpfsframe);
-	workspace->addWindow(nuova);
-// 	nuova->toolBar->addAction(TonemapAction);
-	nuova->setWindowTitle(opened);
-	nuova->show();
+	newhdr=new HdrViewer(this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor, false);
+	newhdr->updateHDR(hdrpfsframe);
+	newhdr->filename=opened;
+	newhdr->setWindowTitle(opened);
+	workspace->addWindow(newhdr);
+	newhdr->show();
 	return true;
 }
 return false;
@@ -178,6 +176,7 @@ return false;
 
 void MainGui::fileSaveAs()
 {
+	assert(currenthdr!=NULL);
 	QStringList filetypes;
 #ifndef __WIN32
 	filetypes += "OpenEXR (*.exr)";
@@ -211,34 +210,37 @@ void MainGui::fileSaveAs()
 			}
 #ifndef _WIN32
 			if (qfi.suffix().toUpper()=="EXR") {
-				writeEXRfile  (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
+				writeEXRfile  (currenthdr->getHDRPfsFrame(),qfi.filePath().toUtf8().constData());
 			} else 
 #endif
 				if (qfi.suffix().toUpper()=="HDR") {
-				writeRGBEfile (((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),qfi.filePath().toAscii().constData());
+				writeRGBEfile (currenthdr->getHDRPfsFrame(), qfi.filePath().toUtf8().constData());
 			} else if (qfi.suffix().toUpper().startsWith("TIF")) {
-				TiffWriter tiffwriter(qfi.filePath().toAscii().constData(), ((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame());
+				TiffWriter tiffwriter(qfi.filePath().toUtf8().constData(), currenthdr->getHDRPfsFrame());
 				if (qtpfsgui_options->saveLogLuvTiff)
 					tiffwriter.writeLogLuvTiff();
 				else
 					tiffwriter.writeFloatTiff();
 			} else if (qfi.suffix().toUpper()=="PFS") {
 				pfs::DOMIO pfsio;
-				FILE * fp=fopen(qfi.filePath().toAscii().constData(),"wb");
-				(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertRGBChannelsToXYZ();
-				pfsio.writeFrame(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),fp);
-				(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())->convertXYZChannelsToRGB();
+				(currenthdr->getHDRPfsFrame())->convertRGBChannelsToXYZ();
+				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),qfi.filePath());
+				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
 				QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, TIFF and PFS files up until now.",
-					QMessageBox::Ok,QMessageBox::NoButton);
+				QMessageBox::Ok,QMessageBox::NoButton);
+				delete fd;
+				return;
 			}
 			setCurrentFile(fname);
+			currenthdr->NeedsSaving=false;
+			currenthdr->filename=fname;
 		}
 	}
 	delete fd;
 }
 
-void MainGui::updatecurrentMDIwindow( QWidget * w )
+void MainGui::updateActions( QWidget * w )
 {
 	TonemapAction->setEnabled(w!=NULL);
 	fileSaveAsAction->setEnabled(w!=NULL);
@@ -253,20 +255,20 @@ void MainGui::updatecurrentMDIwindow( QWidget * w )
 	Increase_exposure->setEnabled(w!=NULL);
 	actionResizeHDR->setEnabled(w!=NULL);
 	if (w!=NULL) {
-		ImageMDIwindow* current=(ImageMDIwindow*)(workspace->activeWindow());
-// 		current->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
-		if (current->getFittingWin()) {
+		currenthdr=(HdrViewer*)(workspace->activeWindow());
+		if (currenthdr->getFittingWin()) {
 			normalSizeAct->setEnabled(false);
 			zoomInAct->setEnabled(false);
 			zoomOutAct->setEnabled(false);
 			fitToWindowAct->setEnabled(true);
 		} else {
-			zoomOutAct->setEnabled(current->getScaleFactor() > 0.222);
-			zoomInAct->setEnabled(current->getScaleFactor() < 3.0);
+			zoomOutAct->setEnabled(currenthdr->getScaleFactor() > 0.222);
+			zoomInAct->setEnabled(currenthdr->getScaleFactor() < 3.0);
 			fitToWindowAct->setEnabled(true);
 			normalSizeAct->setEnabled(true);
 		}
 	} else {
+		currenthdr=NULL;
 		normalSizeAct->setEnabled(false);
 		zoomInAct->setEnabled(false);
 		zoomOutAct->setEnabled(false);
@@ -275,10 +277,29 @@ void MainGui::updatecurrentMDIwindow( QWidget * w )
 }
 
 void MainGui::tonemap_requested() {
-	TMODialog *tmodialog=new TMODialog(this,qtpfsgui_options->keepsize);
-	tmodialog->setOrigBuffer(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame());
-	tmodialog->exec();
-	delete tmodialog;
+	assert(currenthdr!=NULL);
+	if (currenthdr->NeedsSaving) {
+		QMessageBox::warning(this,"Please save first...","Please save the hdr before tonemapping.",
+		QMessageBox::Ok,QMessageBox::NoButton);
+		fileSaveAs();
+		if (currenthdr->NeedsSaving)
+			return;
+	}
+	QFileInfo test(qtpfsgui_options->tempfilespath);
+	if (test.isWritable()) {
+		this->setDisabled(true);
+		TonemappingWindow *tmodialog=new TonemappingWindow(this,currenthdr->getHDRPfsFrame(),qtpfsgui_options->tempfilespath, currenthdr->filename);
+		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableHdrViewer()));
+		tmodialog->show();
+		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+	} else {
+		QMessageBox::critical(this,"Error...","Qtpfsgui needs to cache its results using temporary files, but the current selected directory is not writable.\nPlease choose a writable path in the Options panel.",
+		QMessageBox::Ok,QMessageBox::NoButton);
+	}
+}
+
+void MainGui::reEnableHdrViewer() {
+	this->setEnabled(true);
 }
 
 void MainGui::rotateccw_requested() {
@@ -290,7 +311,8 @@ void MainGui::rotatecw_requested() {
 }
 
 void MainGui::dispatchrotate( bool clockwise) {
-	if ((((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())==NULL) {
+	assert(currenthdr!=NULL);
+	if ((currenthdr->getHDRPfsFrame())==NULL) {
 		QMessageBox::critical(this,"","Problem with original (source) buffer...",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
@@ -298,68 +320,67 @@ void MainGui::dispatchrotate( bool clockwise) {
 	rotateccw->setEnabled(false);
 	rotatecw->setEnabled(false);
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	pfs::Frame *rotated=rotateFrame(((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame(),clockwise);
+	pfs::Frame *rotated=rotateFrame(currenthdr->getHDRPfsFrame(),clockwise);
 	//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-	((ImageMDIwindow*)(workspace->activeWindow()))->updateHDR(rotated);
+	currenthdr->updateHDR(rotated);
 	QApplication::restoreOverrideCursor();
 	rotateccw->setEnabled(true);
 	rotatecw->setEnabled(true);
 }
 
 void MainGui::resize_requested() {
-	if ((((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame())==NULL) {
+	assert(currenthdr!=NULL);
+	if ((currenthdr->getHDRPfsFrame())==NULL) {
 		QMessageBox::critical(this,"","Problem with original (source) buffer...",
 					QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
-	ResizeDialog *resizedialog=new ResizeDialog(this,((ImageMDIwindow*)(workspace->activeWindow()))->getHDRPfsFrame());
+	ResizeDialog *resizedialog=new ResizeDialog(this,currenthdr->getHDRPfsFrame());
 	if (resizedialog->exec() == QDialog::Accepted) {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-		((ImageMDIwindow*)(workspace->activeWindow()))->updateHDR(resizedialog->getResizedFrame());
+		currenthdr->updateHDR(resizedialog->getResizedFrame());
 		QApplication::restoreOverrideCursor();
 	}
 	delete resizedialog;
 }
 
 void MainGui::current_mdiwindow_decrease_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->decreaseExposure();
+	currenthdr->lumRange->decreaseExposure();
 }
 void MainGui::current_mdiwindow_extend_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->extendRange();
+	currenthdr->lumRange->extendRange();
 }
 void MainGui::current_mdiwindow_fit_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->fitToDynamicRange();
+	currenthdr->lumRange->fitToDynamicRange();
 }
 void MainGui::current_mdiwindow_increase_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->increaseExposure();
+	currenthdr->lumRange->increaseExposure();
 }
 void MainGui::current_mdiwindow_shrink_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->shrinkRange();
+	currenthdr->lumRange->shrinkRange();
 }
 void MainGui::current_mdiwindow_ldr_exposure() {
-((ImageMDIwindow*)(workspace->activeWindow()))->lumRange->lowDynamicRange();
+	currenthdr->lumRange->lowDynamicRange();
 }
 void MainGui::current_mdiwindow_zoomin() {
-	ImageMDIwindow* current=(ImageMDIwindow*)(workspace->activeWindow());
-	current->zoomIn();
+	currenthdr->zoomIn();
 	zoomOutAct->setEnabled(true);
-	zoomInAct->setEnabled(current->getScaleFactor() < 3.0);
+	zoomInAct->setEnabled(currenthdr->getScaleFactor() < 3.0);
 }
 void MainGui::current_mdiwindow_zoomout() {
-	ImageMDIwindow* current=(ImageMDIwindow*)(workspace->activeWindow());
-	current->zoomOut();
+	currenthdr->zoomOut();
 	zoomInAct->setEnabled(true);
-	zoomOutAct->setEnabled(current->getScaleFactor() > 0.222);
+	zoomOutAct->setEnabled(currenthdr->getScaleFactor() > 0.222);
 }
 void MainGui::current_mdiwindow_fit_to_win(bool checked) {
-	((ImageMDIwindow*)(workspace->activeWindow()))->fitToWindow(checked);
+	currenthdr->fitToWindow(checked);
 	zoomInAct->setEnabled(!checked);
 	zoomOutAct->setEnabled(!checked);
 	normalSizeAct->setEnabled(!checked);
 }
 void MainGui::current_mdiwindow_original_size() {
-	((ImageMDIwindow*)(workspace->activeWindow()))->normalSize();
+	currenthdr->normalSize();
 	zoomInAct->setEnabled(true);
 	zoomOutAct->setEnabled(true);
 }
@@ -415,7 +436,7 @@ void MainGui::options_called() {
 	if (opts->exec() == QDialog::Accepted && (negcol!=qtpfsgui_options->negcolor || naninfcol!=qtpfsgui_options->naninfcolor) ) {
 		QWidgetList allhdrs=workspace->windowList();
 		foreach(QWidget *p,allhdrs) {
-			((ImageMDIwindow*)p)->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
+			((HdrViewer*)p)->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
 		}
 	}
 }
@@ -470,9 +491,9 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TONEMAPPING);
-		if (!settings.contains(KEY_KEEPSIZE))
-			settings.setValue(KEY_KEEPSIZE,false);
-		dest->keepsize=settings.value(KEY_KEEPSIZE,false).toBool();
+		if (!settings.contains(KEY_TEMP_RESULT_PATH))
+			settings.setValue(KEY_TEMP_RESULT_PATH, QDir::currentPath());
+		dest->tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);

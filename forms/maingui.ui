@@ -28,17 +28,6 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuImage" >
-    <property name="title" >
-     <string>Image</string>
-    </property>
-    <addaction name="rotateccw" />
-    <addaction name="rotatecw" />
-    <addaction name="separator" />
-    <addaction name="actionResizeHDR" />
-    <addaction name="separator" />
-    <addaction name="TonemapAction" />
-   </widget>
    <widget class="QMenu" name="menuFile" >
     <property name="title" >
      <string>File</string>
@@ -49,14 +38,16 @@
     <addaction name="separator" />
     <addaction name="fileExitAction" />
    </widget>
-   <widget class="QMenu" name="menuSettings" >
+   <widget class="QMenu" name="menuImage" >
     <property name="title" >
-     <string>Tools</string>
+     <string>Image</string>
     </property>
-    <addaction name="OptionsAction" />
+    <addaction name="rotateccw" />
+    <addaction name="rotatecw" />
     <addaction name="separator" />
-    <addaction name="Transplant_Exif_Data_action" />
-    <addaction name="actionAlign_Images" />
+    <addaction name="actionResizeHDR" />
+    <addaction name="separator" />
+    <addaction name="TonemapAction" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -82,6 +73,15 @@
     <addaction name="zoomInAct" />
     <addaction name="zoomOutAct" />
    </widget>
+   <widget class="QMenu" name="menuSettings" >
+    <property name="title" >
+     <string>Tools</string>
+    </property>
+    <addaction name="OptionsAction" />
+    <addaction name="separator" />
+    <addaction name="Transplant_Exif_Data_action" />
+    <addaction name="actionAlign_Images" />
+   </widget>
    <widget class="QMenu" name="menuHelp" >
     <property name="title" >
      <string>Help</string>
@@ -89,14 +89,25 @@
     <addaction name="helpAction" />
     <addaction name="actionAbout_Qt" />
    </widget>
+   <widget class="QMenu" name="menuWindows" >
+    <property name="title" >
+     <string>Windows</string>
+    </property>
+    <addaction name="actionTile" />
+    <addaction name="actionCascade" />
+   </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
    <addaction name="menuView" />
    <addaction name="menuSettings" />
+   <addaction name="menuWindows" />
    <addaction name="menuHelp" />
   </widget>
   <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
+   <property name="windowTitle" >
+    <string>Common operations</string>
+   </property>
    <property name="orientation" >
     <enum>Qt::Horizontal</enum>
    </property>
@@ -509,6 +520,9 @@
    </property>
   </action>
   <action name="Transplant_Exif_Data_action" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/copyexif.png</iconset>
+   </property>
    <property name="text" >
     <string>Copy Exif Data...</string>
    </property>
@@ -519,10 +533,10 @@
     <string>Copy (i.e. transplant) Exif Data</string>
    </property>
    <property name="statusTip" >
-    <string>Copy (i.e. transplant) Exif Data between two setd of files</string>
+    <string>Copy (i.e. transplant) Exif Data between two set of files</string>
    </property>
    <property name="whatsThis" >
-    <string>Copy (i.e. transplant) Exif Data between two setd of files</string>
+    <string>Copy (i.e. transplant) Exif Data between two set of files</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+E</string>
@@ -548,6 +562,22 @@
   <action name="actionAbout_Qt" >
    <property name="text" >
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionTile" >
+   <property name="text" >
+    <string>Tile</string>
+   </property>
+  </action>
+  <action name="actionCascade" >
+   <property name="text" >
+    <string>Cascade</string>
+   </property>
+   <property name="iconText" >
+    <string>Cascade</string>
+   </property>
+   <property name="toolTip" >
+    <string>Cascade</string>
    </property>
   </action>
  </widget>

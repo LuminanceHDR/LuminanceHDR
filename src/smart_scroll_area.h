@@ -1,7 +1,7 @@
 /**
  * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2007 Giuseppe Rota
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,41 +21,45 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef CREATEHDR_H
-#define CREATEHDR_H
+#ifndef SMARTSA_H
+#define SMARTSA_H
 
-#include <QString>
-#include <QList>
-#include <QImage>
-#include "../libpfs/pfs.h"
-#include <stdarg.h>
-
-#include "responses.h"
-#include "robertson02.h"
-#include "icip06.h"
-#include "debevec.h"
-
-// extern "C" {
-  enum TWeight
-  { TRIANGULAR, GAUSSIAN, PLATEAU };
-  enum TResponse
-  { FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
-  enum TModel
-  { ROBERTSON, DEBEVEC };
-
-
-  struct config_triple {
-      TWeight weights;
-      TResponse response_curve;
-      TModel model;
-      QString CurveFilename;
-  };
-
-/**
- * @brief main hdr creation function.
- * @brief it can either create an hdr from a qt list of LDRs (QtImage) or from a list of HDR data (raw formats, hdr tiffs).
- *
-**/
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
-// }
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QLabel>
+#include <QMouseEvent>
+class SmartScrollArea : public QScrollArea {
+	Q_OBJECT
+public:
+	SmartScrollArea( QWidget *parent, QLabel *imagelabel );
+	void zoomIn();
+	void zoomOut();
+	void fitToWindow(bool checked);
+	void normalSize();
+	void scaleLabelToFit();
+	double getScaleFactor() {
+		return scaleFactor;
+	}
+	bool isFitting() {
+		return fittingwin;
+	}
+public slots:
+protected:
+	void resizeEvent ( QResizeEvent * );
+	void mousePressEvent(QMouseEvent *e) {
+		mousePos = e->pos();
+	}
+	void mouseMoveEvent(QMouseEvent *e);
+private:
+	QLabel *imageLabel;
+	QPoint mousePos;
+	double scaleFactor;
+	bool fittingwin;
+	void scaleImage(double);
+	void adjustScrollBar(QScrollBar *scrollBar, double factor);
+};
 #endif
+
+
+
+

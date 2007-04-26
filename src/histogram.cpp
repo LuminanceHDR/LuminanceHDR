@@ -98,4 +98,3 @@ float Histogram::getMaxP() const
   }
   return maxP;
 }
-

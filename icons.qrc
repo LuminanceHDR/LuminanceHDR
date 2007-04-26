@@ -4,6 +4,7 @@
         <file>images/appearance.png</file>
         <file>images/apply.png</file>
         <file>images/back.png</file>
+        <file>images/copyexif.png</file>
         <file>images/downarrow.png</file>
         <file>images/exit.png</file>
         <file>images/fileclose.png</file>
@@ -11,6 +12,7 @@
         <file>images/filesave.png</file>
         <file>images/forward.png</file>
         <file>images/help.png</file>
+        <file>images/histogram.png</file>
         <file>images/home.png</file>
         <file>images/newfile.png</file>
         <file>images/options.png</file>

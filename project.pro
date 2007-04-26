@@ -165,7 +165,7 @@ menu.files       = qtpfsgui.desktop
 menu.path        = $${PREFIX}/usr/share/applications
 icon.files       = images/qtpfsgui.png
 icon.path        = $${PREFIX}/usr/share/pixmaps
-htmls.files      = html/index.html html/manual.html hints.html faq.html
+htmls.files      = html/index.html html/manual.html html/hints.html html/faq.html
 htmls.path       = $${PREFIX}/usr/local/share/qtpfsgui/html
 htmlimages.files =  html/images/copy_exif.jpeg html/images/mainwin.jpeg html/images/resize.jpeg html/images/snap-qt4_3.jpeg html/images/snap-qt4_4.jpeg html/images/snap-qt4_5.jpeg html/images/snap-qt4_6.jpeg html/images/tonemapdialog.jpeg
 htmlimages.path  = $${PREFIX}/usr/local/share/qtpfsgui/html/images
@@ -223,16 +223,21 @@ RC_FILE = src/qtpfsgui_ico.rc
 FORMS = forms/maingui.ui \
         forms/hdrwizardform.ui \
         forms/tonemappingdialog.ui \
+        forms/tonemappingoptions.ui \
         forms/help_about.ui \
         forms/options.ui \
         forms/transplantexifdialog.ui \
-        forms/resizedialog.ui
+        forms/resizedialog.ui \
+        forms/gamma_and_levels.ui
 
 HEADERS += src/libpfs/array2d.h \
            src/libpfs/pfs.h \
            src/maingui_impl.h \
            src/hdrwizardform_impl.h \
+           src/gamma_and_levels.h \
            src/tonemappingdialog_impl.h \
+           src/tonemapping_widget.h \
+           src/tonemapper_thread.h \
            src/options_impl.h \
            src/transplant_impl.h \
            src/resizedialog_impl.h \
@@ -241,7 +246,9 @@ HEADERS += src/libpfs/array2d.h \
            src/hdrcreate/responses.h   \
            src/hdrcreate/icip06.h \
            src/hdrcreate/debevec.h \
-           src/imagehdrviewer.h \
+           src/ldrviewer.h \
+           src/hdrviewer.h \
+           src/smart_scroll_area.h \
            src/luminancerange_widget.h \
            src/histogram.h \
            src/gang.h \
@@ -261,17 +268,22 @@ SOURCES += src/libpfs/pfs.cpp \
            src/libpfs/colorspace.cpp \
            src/main.cpp \
            src/maingui_impl.cpp \
+           src/gamma_and_levels.cpp \
            src/tonemappingdialog_impl.cpp \
+           src/tonemapping_widget.cpp \
+           src/tonemapper_thread.cpp \
            src/options_impl.cpp \
            src/transplant_impl.cpp \
            src/resizedialog_impl.cpp \
-           src/hdrcreate/createhdr.cpp \
            src/hdrwizardform_impl.cpp \
+           src/hdrcreate/createhdr.cpp \
            src/hdrcreate/robertson02.cpp  \
            src/hdrcreate/responses.cpp  \
            src/hdrcreate/icip06.cpp \
            src/hdrcreate/debevec.cpp \
-           src/imagehdrviewer.cpp \
+           src/ldrviewer.cpp \
+           src/hdrviewer.cpp \
+           src/smart_scroll_area.cpp \
            src/luminancerange_widget.cpp \
            src/histogram.cpp \
            src/gang.cpp \

@@ -21,41 +21,37 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef CREATEHDR_H
-#define CREATEHDR_H
+#ifndef TONEMAPPERTHREAD_H
+#define TONEMAPPERTHREAD_H
 
-#include <QString>
-#include <QList>
-#include <QImage>
-#include "../libpfs/pfs.h"
-#include <stdarg.h>
+#include <QThread>
+#include <QReadWriteLock>
+#include "tonemapping_widget.h"
 
-#include "responses.h"
-#include "robertson02.h"
-#include "icip06.h"
-#include "debevec.h"
+class TonemapperThread : public QThread {
+Q_OBJECT
 
-// extern "C" {
-  enum TWeight
-  { TRIANGULAR, GAUSSIAN, PLATEAU };
-  enum TResponse
-  { FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
-  enum TModel
-  { ROBERTSON, DEBEVEC };
+public:
+	TonemapperThread(int origsize, QString cachepath);
+	~TonemapperThread();
+	//pass by value, bit-copy should be enough (default should be available)
+	void ComputeImage(const tonemapping_options opts );
 
+signals:
+	void ImageComputed( QImage *newimage,tonemapping_options *opts );
 
-  struct config_triple {
-      TWeight weights;
-      TResponse response_curve;
-      TModel model;
-      QString CurveFilename;
-  };
+protected:
+	void run();
 
-/**
- * @brief main hdr creation function.
- * @brief it can either create an hdr from a qt list of LDRs (QtImage) or from a list of HDR data (raw formats, hdr tiffs).
- *
-**/
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
-// }
+private:
+	int originalxsize;
+	bool colorspaceconversion;
+	tonemapping_options opt;
+	pfs::Frame *workingframe;
+	void fetch(QString);
+	void swap(pfs::Frame *, QString );
+// 	void dumpOpts();
+	enum {from_resize,from_pregamma,from_tm} status;
+	QString cachepath;
+};
 #endif

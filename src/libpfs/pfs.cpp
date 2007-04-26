@@ -26,26 +26,12 @@
  *
  * $Id: pfs.cpp,v 1.9 2006/10/26 14:57:54 gkrawczyk Exp $
  */
-#if defined(_MSC_VER) || defined(__CYGWIN__)
-#include <io.h>
-#define HAVE_SETMODE
-#endif
-
-#include <fcntl.h>
-
-#include <string.h>
-#include <assert.h>
-#include <string>
-#include <list>
-
 #include <map>
 
 #include "pfs.h"
 
 #define PFSEOL "\x0a"
 #define PFSEOLCH '\x0a'
-
-#define MAX_RES 65535
 
 using namespace std;
 
@@ -66,20 +52,20 @@ class TagIteratorImpl: public TagIterator
   TagList::const_iterator it;
   const TagList &tagList;
   string tagName;
-  
+
 public:
   TagIteratorImpl( const TagList &tagList ) : tagList( tagList )
   {
     it = tagList.begin();
   }
-  
+
   /**
    * Get next item on the list.
    */
   const char *getNext()
   {
     const string &tag = *(it++);
-    size_t equalSign = tag.find( '=' );
+    int equalSign = tag.find( '=' );
     assert( equalSign != -1 );
     tagName = string( tag, 0, equalSign );
     return tagName.c_str();
@@ -92,23 +78,18 @@ public:
   {
     return it != tagList.end();
   }
-  
+
 };
 
-class TagContainerImpl: public TagContainer
+class TagContainerImpl : public TagContainer
 {
 public:
 private:
-  
+
   TagList tagList;
 
 public:
 
-//   ~TagContainerImpl()
-//   {
-//     tagList.clear();
-//   }
-  
   TagList::const_iterator tagsBegin() const
   {
     return tagList.begin();
@@ -134,7 +115,7 @@ public:
   {
     tagList.push_back( tagValue );
   }
-  
+
   TagList::iterator findTag( const char *tagName )
   {
     size_t tagNameLen = strlen( tagName );
@@ -192,40 +173,35 @@ public:
   {
     return TagIteratorPtr( new TagIteratorImpl( tagList ) );
   }
-  
+
   void removeAllTags()
   {
     tagList.clear();
   }
-  
 
-};
+}; //TagContainerImpl
 
-void copyTags( const TagContainer *from, TagContainer *to )
-{
-  TagContainerImpl *f = (TagContainerImpl*)from;
-  TagContainerImpl *t = (TagContainerImpl*)to;
-
-  t->removeAllTags();
-  
-  TagList::const_iterator it;
-  for( it = f->tagsBegin(); it != f->tagsEnd(); it++ ) {
-    t->appendTag( *it );
-  }
+void copyTags( const TagContainer *from, TagContainer *to ) {
+	TagContainerImpl *f = (TagContainerImpl*)from;
+	TagContainerImpl *t = (TagContainerImpl*)to;
+	
+	t->removeAllTags();
+	
+	TagList::const_iterator it;
+	for( it = f->tagsBegin(); it != f->tagsEnd(); it++ )
+		t->appendTag( *it );
 }
 
-void copyTags( Frame *from, Frame *to )
-{
-  copyTags( from->getTags(), to->getTags() );
-  pfs::ChannelIterator *it = from->getChannels();
-  while( it->hasNext() ) {
-    pfs::Channel *fromCh = it->getNext();
-    pfs::Channel *toCh = to->getChannel( fromCh->getName() );
-    if( toCh == NULL ) // Skip if there is no corresponding channel
-      continue;
-    copyTags( fromCh->getTags(), toCh->getTags() );
-  }  
-  
+void copyTags( Frame *from, Frame *to ) {
+	copyTags( from->getTags(), to->getTags() );
+	pfs::ChannelIterator *it = from->getChannels();
+	while( it->hasNext() ) {
+		pfs::Channel *fromCh = it->getNext();
+		pfs::Channel *toCh = to->getChannel( fromCh->getName() );
+		if( toCh == NULL ) // Skip if there is no corresponding channel
+		continue;
+		copyTags( fromCh->getTags(), toCh->getTags() );
+	}
 }
 
 
@@ -237,97 +213,92 @@ Channel::~Channel() {}
 class DOMIOImpl;
 
 class ChannelImpl: public Channel {
-  int width, height;
-  float *data;
-  const char *name;
+	int width, height;
+	float *data;
+	const char *name;
 
 protected:
-  friend class DOMIOImpl;
-
-  TagContainerImpl *tags;
+	friend class DOMIOImpl;
+	
+	TagContainerImpl *tags;
 
 public:
-  ChannelImpl( int width, int height, const char *n_name ) : width( width ), height( height )
-  {
-//     fprintf(stderr,"constr Chan\n");
+ChannelImpl( int width, int height, const char *n_name ) : width(width), height(height) {
+// 	fprintf(stderr,"constr Chan\n");
 #ifndef _WIN32
-    data = (float*)mmap(0, width*height*4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
+	data = (float*)mmap(0, width*height*4, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANON, -1, 0);
 #else
-    data = (float*)VirtualAlloc(NULL,width*height*4,MEM_COMMIT,PAGE_READWRITE);
+	data = (float*)VirtualAlloc(NULL,width*height*4,MEM_COMMIT,PAGE_READWRITE);
 #endif
 //     data = new float[width*height];
-    tags = new TagContainerImpl();
-    name = strdup( n_name );
-  }
+	tags = new TagContainerImpl();
+	name = strdup( n_name );
+}
 
-  virtual ~ChannelImpl() 
-  {
-    if (tags) delete tags;
+virtual ~ChannelImpl() {
+	if (tags) delete tags;
 #ifndef _WIN32
-    if (data) munmap(data, width*height*4);
+	if (data) munmap(data, width*height*4);
 #else
-    if (data) VirtualFree(data,0,MEM_RELEASE);
+	if (data) VirtualFree(data,0,MEM_RELEASE);
 #endif
-//     if (data) delete[] data;
-//     fprintf(stderr,"free Chan\n");
-    free( (void*)name );
-  }
+	//     if (data) delete[] data;
+// 	fprintf(stderr,"free Chan\n");
+	free( (void*)name );
+}
 
-  // Channel implementation
-  TagContainer *getTags() {
-    return tags;
-  }
+// Channel implementation
+TagContainer *getTags() {
+	return tags;
+}
 
-  float *getRawData() {
-    return data;
-  }
+float *getRawData() {
+	return data;
+}
 
-  //Array2D implementation
+//Array2D implementation
 
-  virtual int getCols() const {
-    return width;
-  }
+virtual int getCols() const {
+	return width;
+}
 
-  virtual int getRows() const {
-    return height;
-  }
+virtual int getRows() const {
+	return height;
+}
 
-  virtual const char *getName() const {
-    return name;
-  }
+virtual const char *getName() const {
+	return name;
+}
 
-  virtual void setName(const char* newname) {
-    name=strdup(newname);
-  }
-  
-  inline float& operator()( int x, int y ) {
-    assert( x >= 0 && x < width );
-    assert( y >= 0 && y < height );
-    return data[ x+y*width ];
-  }
+virtual void setName(const char* newname) {
+	name=strdup(newname);
+}
 
-  inline const float& operator()( int x, int y ) const
-  {
-    assert( x >= 0 && x < width );
-    assert( y >= 0 && y < height );
-    return data[ x+y*width ];
-  }
+inline float& operator()( int x, int y ) {
+	assert( x >= 0 && x < width );
+	assert( y >= 0 && y < height );
+	return data[ x+y*width ];
+}
 
-  inline float& operator()( int rowMajorIndex )
-  {
-    assert( rowMajorIndex < width*height );    
-    assert( rowMajorIndex >= 0 );    
-    return data[ rowMajorIndex ];
-  }
-  
-  inline const float& operator()( int rowMajorIndex ) const
-  {
-    assert( rowMajorIndex < width*height );    
-    assert( rowMajorIndex >= 0 );    
-    return data[ rowMajorIndex ];
-  }
+inline const float& operator()( int x, int y ) const {
+	assert( x >= 0 && x < width );
+	assert( y >= 0 && y < height );
+	return data[ x+y*width ];
+}
 
-};
+inline float& operator()( int rowMajorIndex ) {
+	assert( rowMajorIndex < width*height );
+	assert( rowMajorIndex >= 0 );
+	return data[ rowMajorIndex ];
+}
+
+inline const float& operator()( int rowMajorIndex ) const {
+	assert( rowMajorIndex < width*height );
+	assert( rowMajorIndex >= 0 );
+	return data[ rowMajorIndex ];
+}
+
+};//ChannelImpl
 
 
 //------------------------------------------------------------------------------
@@ -380,8 +351,7 @@ public:
 //------------------------------------------------------------------------------
 
 //A pure virtual destructor
-Frame::~Frame()
-  {}
+Frame::~Frame() {}
 
 class FrameImpl: public Frame {
   int width, height;
@@ -390,18 +360,12 @@ protected:
   friend class DOMIOImpl;
 
   TagContainerImpl *tags;
-
-//  enum ChannelID { CH_X = 0, CH_Y, CH_Z, CH_ALPHA, CH_DEPTH, CH_AUXLUM, CH_COUNT };
-//  static const char* const channelStrID[CH_COUNT];
-
   ChannelMap channel;
-
   ChannelIteratorImpl channelIterator;
 
 public:
 
-  FrameImpl( int width, int height ): width( width ), height( height ),
-    channelIterator( &channel )
+  FrameImpl( int width, int height ): width( width ), height( height ), channelIterator( &channel ) 
   {
     tags = new TagContainerImpl();
   }
@@ -593,32 +557,42 @@ virtual void renameRGBChannelsToXYZ() {
 
 };
 
-static void readTags( TagContainerImpl *tags, FILE *in )
+static void readTags( TagContainerImpl *tags, QDataStream &in )
 {
-  int readItems;
-  int tagCount;
-  readItems = fscanf( in, "%d" PFSEOL, &tagCount );
-  if( readItems != 1 || tagCount < 0 || tagCount > 1024 )
-    throw Exception( "Corrupted PFS tag section: missing or wrong number of tags" );
+	int tagCount;
+	char singlechar[1];
+	bool conversionok;
+	QString tempstr;
+	do {
+		in.readRawData(singlechar,1);
+		tempstr+=*singlechar;
+	} while (memcmp(singlechar,PFSEOL,1));
+	tagCount=tempstr.toInt(&conversionok);
+	tempstr.clear();
+	if( !conversionok )
+		throw Exception( "Corrupted PFS tag section: missing or wrong number of tags" );
 
-  char buf[1024];
-  for( int i = 0; i < tagCount; i++ ) {
-    char *read = fgets( buf, 1024, in );
-    if( read == NULL ) throw Exception( "Corrupted PFS tag section: missing tag" );
-    char *equalSign = strstr( buf, "=" );
-    if( equalSign == NULL ) throw Exception( "Corrupted PFS tag section ('=' sign missing)" );
-    tags->appendTagEOL( buf );
-  }
+	for( int i = 0; i < tagCount; i++ ) {
+		do {
+			in.readRawData(singlechar,1);
+			tempstr+=*singlechar;
+		} while (memcmp(singlechar,PFSEOL,1));
+		if( tempstr.isEmpty() ) throw Exception( "Corrupted PFS tag section: missing tag" );
+		if( tempstr.indexOf("=") == -1 ) throw Exception( "Corrupted PFS tag section ('=' sign missing)" );
+		tags->appendTagEOL( tempstr.toUtf8().constData() );
+		tempstr.clear();
+	}
 }
 
-static void writeTags( const TagContainerImpl *tags, FILE *out )
-{
-  TagList::const_iterator it;
-  fprintf( out, "%d" PFSEOL, tags->getSize() );
-  for( it = tags->tagsBegin(); it != tags->tagsEnd(); it++ ) {
-    fprintf( out, it->c_str() );
-    fprintf( out, PFSEOL );
-  }
+static void writeTags( const TagContainerImpl *tags, QDataStream &out ) {
+	TagList::const_iterator it;
+	QString tagsize=QString("%1" PFSEOL).arg(tags->getSize());
+	out.writeRawData(tagsize.toUtf8().constData(),tagsize.size());
+	for( it = tags->tagsBegin(); it != tags->tagsEnd(); it++ ) {
+		QString name=QString(it->c_str());
+		out.writeRawData(name.toUtf8().constData(),name.size());
+		out.writeRawData(PFSEOL,1);
+	}
 }
 
 
@@ -630,168 +604,157 @@ static void writeTags( const TagContainerImpl *tags, FILE *out )
 class DOMIOImpl {
 public:
 
-  Frame *readFrame( FILE *inputStream )
-  {
-    assert( inputStream != NULL );
-    
-#ifdef HAVE_SETMODE
-    // Needed under MS windows (text translation IO for stdin/out)
-    int old_mode = setmode( fileno( inputStream ), _O_BINARY );
-#endif
+Frame *readFrame( QString filepath ) {
+	assert( !filepath.isEmpty() );
+	int read; //number of bytes that have been read
 
-    size_t read;
+	QFile file(filepath);
+	file.open(QIODevice::ReadOnly);
+	QDataStream in(&file);
 
-    char buf[5];
-    read = fread( buf, 1, 5, inputStream );
-    if( read == 0 ) return NULL; // EOF
+	char buf[5];
+	read = in.readRawData(buf,5);
 
-    if( memcmp( buf, PFSFILEID, 5 ) ) throw Exception( "Incorrect PFS file header" );
+	if( memcmp( buf, PFSFILEID, 5 ) ) throw Exception( "Incorrect PFS file header" );
 
-    int width, height, channelCount;
-    read = fscanf( inputStream, "%d %d" PFSEOL, &width, &height );
-    if( read != 2 || width <= 0 || width > MAX_RES || height <= 0 || height > MAX_RES )
-      throw Exception( "Corrupted PFS file: missing or wrong 'width', 'height' tags" );
-    read = fscanf( inputStream, "%d" PFSEOL, &channelCount );
-    if( read != 1 || channelCount < 0 || channelCount > 1024 )
-      throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
+	int width, height, channelCount;
+	char singlechar[1];
+	bool conversionok;
+	QString tempstr;
 
-    FrameImpl *frame = (FrameImpl*)createFrame( width, height );
+	do {
+		in.readRawData(singlechar,1);
+		tempstr+=*singlechar;
+	} while (memcmp(singlechar," ",1));
+	width=tempstr.toInt(&conversionok);
+	if (!conversionok) 
+		throw Exception( "Corrupted PFS file: missing or wrong 'width'");
+	tempstr.clear();
 
-    readTags( frame->tags, inputStream );
+	do {
+		in.readRawData(singlechar,1);
+		tempstr+=*singlechar;
+	} while (memcmp(singlechar,PFSEOL,1));
+	height=tempstr.toInt(&conversionok);
+	if (!conversionok) 
+		throw Exception( "Corrupted PFS file: missing or wrong 'height'");
+	tempstr.clear();
 
-    //Read channel IDs and tags
-    //       FrameImpl::ChannelID *channelID = new FrameImpl::ChannelID[channelCount];
-    list<ChannelImpl*> orderedChannel;
-    for( int i = 0; i < channelCount; i++ ) {
-      char channelName[10], *rs;
-      rs = fgets( channelName, 10, inputStream );
-      if( rs == NULL ) 
-        throw Exception( "Corrupted PFS file: missing channel name" );
-      size_t len = strlen( channelName );
-//      fprintf( stderr, "s = '%s' len = %d\n", channelName, len );      
-      if( len < 1 || channelName[len-1] != PFSEOLCH ) 
-        throw Exception( "Corrupted PFS file: bad channel name" );
-      channelName[len-1] = 0;
-      ChannelImpl *ch = (ChannelImpl*)frame->createChannel( channelName );
-      readTags( ch->tags, inputStream );
-      orderedChannel.push_back( ch );
-    }
+	do {
+		in.readRawData(singlechar,1);
+		tempstr+=*singlechar;
+	} while (memcmp(singlechar,PFSEOL,1));
+	channelCount=tempstr.toInt(&conversionok);
+	if (!conversionok)
+		throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag");
+	tempstr.clear();
 
-    read = fread( buf, 1, 4, inputStream );
-    if( read == 0 || memcmp( buf, "ENDH", 4 ) )
-      throw Exception( "Corrupted PFS file: missing end of header (ENDH) token" );
-    
+	FrameImpl *frame = (FrameImpl*)createFrame( width, height );
 
-    //Read channels
-    list<ChannelImpl*>::iterator it;
-    for( it = orderedChannel.begin(); it != orderedChannel.end(); it++ ) {
-      ChannelImpl *ch = *it;
-      int size = frame->getWidth()*frame->getHeight();
-      read = fread( ch->getRawData(), sizeof( float ), size, inputStream );
-      if( read != size )
-        throw Exception( "Corrupted PFS file: missing channel data" );
-    }
-#ifdef HAVE_SETMODE
-    setmode( fileno( inputStream ), old_mode );
-#endif
-    return frame;
-  }
+	readTags( frame->tags, in );
 
+	//Read channel IDs and tags
+	list<ChannelImpl*> orderedChannel;
+	for( int i = 0; i < channelCount; i++ ) {
+		do {
+			in.readRawData(singlechar,1);
+			tempstr+=*singlechar;
+		} while (memcmp(singlechar,PFSEOL,1));
 
-  Frame *createFrame( int width, int height )
-  {
-/*    if( lastFrame != NULL && lastFrame->width() == width && lastFrame->height() == height ) {
-// Reuse last frame
-return lastFrame;
-} else
-delete lastFrame;*/
-
-    Frame *frame = new FrameImpl( width, height );
-    if( frame == NULL ) throw Exception( "Out of memory" );
-    return frame;
-  }
-
-
-  void writeFrame( Frame *frame, FILE *outputStream )
-  {
-    assert( outputStream != NULL );
-    assert( frame != NULL );
-#ifdef HAVE_SETMODE
-    // Needed under MS windows (text translation IO for stdin/out)
-    int old_mode = setmode( fileno( outputStream ), _O_BINARY );
-#endif
-    
-    FrameImpl *frameImpl = (FrameImpl*)frame;
-
-    fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
-    
-    fprintf( outputStream, "%d %d" PFSEOL, frame->getWidth(), frame->getHeight() );
-    fprintf( outputStream, "%d" PFSEOL, frameImpl->channel.size() );
-
-    writeTags( frameImpl->tags, outputStream );
-
-    //Write channel IDs and tags
-    for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ ) {
-      fprintf( outputStream, "%s" PFSEOL, it->second->getName() );
-      writeTags( it->second->tags, outputStream );
-    }
-
-    fprintf( outputStream, "ENDH");
-    
-    //Write channels
-	{
-    for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ ) {
-        int size = frame->getWidth()*frame->getHeight();
-        fwrite( it->second->getRawData(), sizeof( float ), size, outputStream );
-      }
+		if( tempstr.isEmpty() ) {
+			throw Exception( "Corrupted PFS file: missing channel name" );
+		}
+		tempstr=tempstr.trimmed();
+		ChannelImpl *ch = (ChannelImpl*)frame->createChannel( tempstr.toUtf8().constData() );
+		readTags( ch->tags, in );
+		orderedChannel.push_back( ch );
+		tempstr.clear();
 	}
 
-    //Very important for pfsoutavi !!!
-    fflush(outputStream);
-#ifdef HAVE_SETMODE
-    setmode( fileno( outputStream ), old_mode );
-#endif
-  }
-
-  void freeFrame( Frame *frame )
-  {
-    delete frame;
-  }
-
-};
-
-
-DOMIO::DOMIO()
-{
-  impl = new DOMIOImpl();
-}
-
-DOMIO::~DOMIO()
-{
-  delete impl;
-}
-
-Frame *DOMIO::createFrame( int width, int height )
-{
-  return impl->createFrame( width, height );
+	char buf2[4];
+	read = in.readRawData(buf2,4);
+	if( read != 4 || memcmp( buf2, "ENDH", 4 ) ) 
+		throw Exception( "Corrupted PFS file: missing end of header (ENDH) token" );
+	//Read channels
+	list<ChannelImpl*>::iterator it;
+	for( it = orderedChannel.begin(); it != orderedChannel.end(); it++ ) {
+		ChannelImpl *ch = *it;
+		int size = frame->getWidth()*frame->getHeight();
+		read = in.readRawData(reinterpret_cast<char*>(ch->getRawData()),4*size);
+		if( read != 4*size )
+			throw Exception( "Corrupted PFS file: missing channel data" );
+	}
+	return frame;
 }
 
 
-Frame *DOMIO::readFrame( FILE *inputStream )
-{
-  return impl->readFrame( inputStream );
+Frame *createFrame( int width, int height ) {
+	Frame *frame = new FrameImpl( width, height );
+	if( frame == NULL ) throw Exception( "Out of memory" );
+	return frame;
 }
 
 
-void DOMIO::writeFrame( Frame *frame, FILE *outputStream )
-{
-  impl->writeFrame( frame, outputStream );
+void writeFrame( Frame *frame, QString filepath ) {
+	assert( !filepath.isEmpty() );
+	assert( frame != NULL );
+	QFile file(filepath);
+	file.open(QIODevice::WriteOnly);
+	QDataStream out(&file);
+	FrameImpl *frameImpl = (FrameImpl*)frame;
+	out.writeRawData(PFSFILEID,5);// Write header ID
+	QString width_and_height=QString("%1 %2" PFSEOL).arg(frame->getWidth()).arg(frame->getHeight());
+	out.writeRawData(width_and_height.toUtf8().constData(),width_and_height.size());
+	QString chansize=QString("%1" PFSEOL).arg(frameImpl->channel.size());
+	out.writeRawData(chansize.toUtf8().constData(),chansize.size());
+
+	writeTags( frameImpl->tags, out );
+
+	//Write channel IDs and tags
+	for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ ) {
+		QString name=QString("%1" PFSEOL).arg(it->second->getName());
+		out.writeRawData(name.toUtf8().constData(),name.size());
+		writeTags( it->second->tags, out );
+	}
+
+	out.writeRawData("ENDH",4);
+	//Write channels
+	for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ ) {
+		int size = frame->getWidth()*frame->getHeight();
+		out.writeRawData(reinterpret_cast<const char*>(it->second->getRawData()),4*size);
+	}
+	file.close();
 }
 
-
-void DOMIO::freeFrame( Frame *frame )
-{
-  impl->freeFrame( frame );
+void freeFrame( Frame *frame ) {
+	delete frame;
 }
 
-};
+}; //DOMIOImpl
+
+
+DOMIO::DOMIO() {
+	impl = new DOMIOImpl();
+}
+
+DOMIO::~DOMIO() {
+	delete impl;
+}
+
+Frame *DOMIO::createFrame( int width, int height ) {
+	return impl->createFrame( width, height );
+}
+
+Frame *DOMIO::readFrame( QString filepath ) {
+	return impl->readFrame( filepath );
+}
+
+void DOMIO::writeFrame( Frame *frame, QString filepath ) {
+	impl->writeFrame( frame, filepath );
+}
+
+void DOMIO::freeFrame( Frame *frame ) {
+	impl->freeFrame( frame );
+}
+
+}; //namespace pfs

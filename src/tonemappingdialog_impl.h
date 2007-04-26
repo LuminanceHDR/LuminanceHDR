@@ -25,70 +25,37 @@
 #define TONEMAPPINGDIALOG_IMPL_H
 
 #include <QSettings>
+#include <QWorkspace>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
-#include "gang.h"
-#include "ashikhmin02/tmo_ashikhmin02.h"
-#include "drago03/tmo_drago03.h"
-#include "durand02/tmo_durand02.h"
-#include "fattal02/tmo_fattal02.h"
-#include "pattanaik00/tmo_pattanaik00.h"
-#include "reinhard02/tmo_reinhard02.h"
+#include "libpfs/pfs.h"
+#include "tonemapping_widget.h"
 
-extern "C" pfs::Frame* pfstmo_reinhard04(pfs::Frame* inpfsframe, float br, float sat );
-
-class TMODialog : public QDialog, private Ui::TMODialog 
+class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
 {
 Q_OBJECT
 
 public:
-	TMODialog(QWidget *parent, bool keepsize);
-	~TMODialog();
-	void setOrigBuffer(pfs::Frame*);
+	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString cachepath, QString prefixname);
+	~TonemappingWindow();
+protected:
+	void closeEvent ( QCloseEvent * );
+signals:
+	void closing();
 private:
-	QVector<int> sizes;
-	Gang  *contrastGang,*biasGang,*spatialGang,*rangeGang,*baseGang,*alphaGang,*betaGang,*saturation2Gang,*multiplierGang,*coneGang,*rodGang,*keyGang,*phiGang,*range2Gang,*lowerGang,*upperGang,*brightnessGang,*saturationGang,*pregammagang,*postgammagang;
-	pfs::Frame *origbuffer;
-	pfs::Frame *resizedHdrbuffer, *afterPreGammabuffer, *afterToneMappedBuffer, *afterPostgammaBuffer;
-	void disable_Applybuttons();
-	void enable_Applybuttons();
-	QLabel *imageLabel;
-	void executeToneMap();
-	void getCaptionAndFileName();
-	void prepareLDR();
-	bool setting_graphic_widgets;
-	QImage *QImagecurrentLDR; uchar *imagedata;
-	QString caption,exif_comment,savefnameprefix,savefnamepostfix;
+	QWorkspace* workspace;
 	QSettings settings;
-	QString RecentDirTMOSetting,inputSettingsFilename;
-	QString RecentDirLDRSetting;
-	bool keep_size;
-
-	void setWorkSize( int index );
-	void pregammasliderchanged();
-	void runToneMap();
-	void postgammasliderchanged();
+	QString recentPathSaveLDR, prefixname;
 	void writeExifData(const QString);
-	void findprefix(QString);
 
 private slots:
-	void startChain();
-	void preGammaReset();
-	void postGammaReset();
-	void ashikhminReset();
-	void dragoReset();
-	void durandReset();
-	void fattalReset();
-	void pattanaikReset();
-	void reinhard02Reset();
-	void reinhard04Reset();
+	void addMDIresult(QImage*,tonemapping_options*);
+	void LevelsRequested(bool);
+	void levels_closed();
+	void updateActions(QWidget *);
+	void viewAllAsThumbnails();
+	void current_ldr_fit_to_win(bool);
+	void close_all();
 	void saveLDR();
-// 	void tabPageChanged();
-
-	void savesettings();
-	void loadsettings();
-	void fromTxt2Gui(); //i.e. APPLY tmo settings from text file
-	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to   text file
-	void decide_size();
 };
 #endif

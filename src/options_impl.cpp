@@ -23,6 +23,7 @@
 
 #include "options_impl.h"
 #include <QColorDialog>
+#include <QFileDialog>
 
 QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings *s) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor), settings(s) {
 	setupUi(this);
@@ -31,6 +32,7 @@ QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings
 	connect(infnan_color_button,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(OptionListWidget,SIGNAL(currentRowChanged(int)),stackedWidget,SLOT(setCurrentIndex(int)));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
+	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
 }
 
 void QtpfsguiOptions::negative_clicked() {
@@ -57,32 +59,26 @@ void QtpfsguiOptions::change_color_of(QPushButton *button, QColor *newcolor) {
 void QtpfsguiOptions::ok_clicked() {
 	settings->beginGroup(GROUP_DCRAW);
 		if (checkBox_camwb->isChecked() != opts->dcraw_options.camera_wb) {
-	// 		qDebug("switching camera_wb from %d to %d",opts->dcraw_options.camera_wb,checkBox_camwb->isChecked());
 			opts->dcraw_options.camera_wb=checkBox_camwb->isChecked();
 			settings->setValue(KEY_CAMERAWB,checkBox_camwb->isChecked());
 		}
 		if (checkBox_autowb->isChecked() != opts->dcraw_options.auto_wb) {
-	// 		qDebug("switching auto_wb from %d to %d",opts->dcraw_options.auto_wb,checkBox_autowb->isChecked());
 			opts->dcraw_options.auto_wb=checkBox_autowb->isChecked();
 			settings->setValue(KEY_AUTOWB,checkBox_autowb->isChecked());
 		}
 		if (checkBox_4colors->isChecked() != opts->dcraw_options.four_colors) {
-	// 		qDebug("switching 4colors from %d to %d",opts->dcraw_options.four_colors,checkBox_4colors->isChecked());
 			opts->dcraw_options.four_colors=checkBox_4colors->isChecked();
 			settings->setValue(KEY_4COLORS,checkBox_4colors->isChecked());
 		}
 		if (spinBox_highlights->value() != opts->dcraw_options.highlights) {
-	// 		qDebug("switching highlights from %d to %d",opts->dcraw_options.highlights,spinBox_highlights->value());
 			opts->dcraw_options.highlights=spinBox_highlights->value();
 			settings->setValue(KEY_HIGHLIGHTS,spinBox_highlights->value());
 		}
 		if (comboBox_outcolspace->currentIndex() != opts->dcraw_options.output_color_space) {
-	// 		qDebug("switching out_color_space from %d to %d",opts->dcraw_options.output_color_space,comboBox_outcolspace->currentIndex());
 			opts->dcraw_options.output_color_space=comboBox_outcolspace->currentIndex();
 			settings->setValue(KEY_OUTCOLOR,comboBox_outcolspace->currentIndex());
 		}
 		if (comboBox_quality->currentIndex() != opts->dcraw_options.quality) {
-	// 		qDebug("switching quality from %d to %d",opts->dcraw_options.quality,comboBox_quality->currentIndex());
 			opts->dcraw_options.quality=comboBox_quality->currentIndex();
 			settings->setValue(KEY_QUALITY,comboBox_quality->currentIndex());
 		}
@@ -100,9 +96,9 @@ void QtpfsguiOptions::ok_clicked() {
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TONEMAPPING);
-		if (checkBox_currentsize->isChecked() != opts->keepsize) {
-			opts->keepsize=checkBox_currentsize->isChecked();
-			settings->setValue(KEY_KEEPSIZE,checkBox_currentsize->isChecked());
+		if (lineEditTempPath->text() != opts->tempfilespath) {
+			opts->tempfilespath=lineEditTempPath->text();
+			settings->setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
 	settings->endGroup();
 
@@ -117,25 +113,29 @@ void QtpfsguiOptions::ok_clicked() {
 }
 
 void QtpfsguiOptions::from_options_to_gui() {
-// 	qDebug("autowb=%s", opts->dcraw_options.auto_wb ? "true":"false");
 	checkBox_autowb->setChecked(opts->dcraw_options.auto_wb);
-// 	qDebug("camwb=%s", opts->dcraw_options.camera_wb ? "true":"false");
 	checkBox_camwb->setChecked(opts->dcraw_options.camera_wb);
-// 	qDebug("4col=%s", opts->dcraw_options.four_colors ? "true":"false");
 	checkBox_4colors->setChecked(opts->dcraw_options.four_colors);
-// 	qDebug("highlights=%d",opts->dcraw_options.highlights);
 	spinBox_highlights->setValue(opts->dcraw_options.highlights);
-// 	qDebug("output_color_space=%d",opts->dcraw_options.output_color_space);
 	comboBox_outcolspace->setCurrentIndex(opts->dcraw_options.output_color_space);
-// 	qDebug("quality=%d",opts->dcraw_options.quality);
 	comboBox_quality->setCurrentIndex(opts->dcraw_options.quality);
 	change_color_of(negative_color_button,&negcolor);
 	change_color_of(infnan_color_button,&infnancolor);
-// 	qDebug("keepsize=%d",opts->keepsize);
-	checkBox_currentsize->setChecked(opts->keepsize);
 	radioButtonLogLuv->setChecked(opts->saveLogLuvTiff);
 	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
+	lineEditTempPath->setText(opts->tempfilespath);
 }
 
 QtpfsguiOptions::~QtpfsguiOptions() {
+}
+
+void QtpfsguiOptions::updateLineEditString() {
+	QString dir=QFileDialog::getExistingDirectory(
+	this,
+	"Choose a directory",
+	QDir::currentPath(),
+	QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
+	if (!dir.isEmpty()) {
+		lineEditTempPath->setText(dir);
+	}
 }

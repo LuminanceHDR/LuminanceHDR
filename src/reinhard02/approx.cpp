@@ -34,7 +34,7 @@
 #include <stdio.h>
 #include <math.h>
 
-extern "C" {
+// extern "C" {
 extern double **luminance; 
 int      ImageWidth, ImageHeight;
 
@@ -210,4 +210,4 @@ double V1( int x, int y, int level )
   return((1-s)*(1-t)*Pyramid[level][y0][x0] + s*(1-t)*Pyramid[level][y0][x01]
           + (1-s)*t*Pyramid[level][y01][x0] + s*t*Pyramid[level][y01][x01]);
 }
-}
+// }

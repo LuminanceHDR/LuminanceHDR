@@ -116,7 +116,7 @@ void HdrWizardForm::loadfiles() {
 			ImagePtrList.append( new QImage(qfi.filePath()) ); // fill with image data
 			input_is_ldr=true;
 		} else if(extension.startsWith("TIF")) { //if tiff
-			TiffReader reader(qfi.filePath().toAscii().constData());
+			TiffReader reader(qfi.filePath().toUtf8().constData());
 			if (reader.is8bitTiff()) { //if 8bit (tiff) treat as ldr
 				ImagePtrList.append( reader.readIntoQImage() );
 				input_is_ldr=true;
@@ -137,7 +137,7 @@ void HdrWizardForm::loadfiles() {
 				return;
 			}
 		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)
-			pfs::Frame *framepointer=readRAWfile(qfi.filePath().toAscii().constData(), opts);
+			pfs::Frame *framepointer=readRAWfile(qfi.filePath().toUtf8().constData(), opts);
 			pfs::Channel *R, *G, *B;
 			framepointer->getRGBChannels( R, G, B );
 			listhdrR.push_back(R);

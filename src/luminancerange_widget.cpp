@@ -143,9 +143,6 @@ void LuminanceRangeWidget::paintEvent( QPaintEvent */*pe */)
       p.drawLine( x, fRect.top(), x, fRect.bottom() );
     }
   }
-//   p.end();
-// 
-//   QFrame::paintEvent( pe );
 }
 float LuminanceRangeWidget::draggedMin()
 {

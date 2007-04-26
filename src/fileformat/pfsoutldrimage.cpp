@@ -44,11 +44,11 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 
-QImage* fromLDRPFStoPPM_QImage( pfs::Frame* inpfsframe, uchar * data) {
+QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
 
-	if(data != NULL)
-		delete [] data;
+// 	if(data != NULL)
+// 		delete [] data;
 
 	pfs::DOMIO pfsio;
 	pfs::Channel *X, *Y, *Z;
@@ -57,13 +57,15 @@ QImage* fromLDRPFStoPPM_QImage( pfs::Frame* inpfsframe, uchar * data) {
 
 	//we are modifying the input buffer here!!!
 	//but it should be ok since this is the endpoint
-	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_SRGB, X,Y,Z );
+	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
 
 	int width = X->getCols();
 	int height =  X->getRows();
-	data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
+	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
 	for( int y = 0; y < height; y++ ) { // For each row of the image
 		for( int x = 0; x < width; x++ ) {
+// 			if ((*X)(x,y)>1.f||(*X)(x,y)<-1e-6||(*Y)(x,y)>1.f||(*Y)(x,y)<-1e-6||(*Z)(x,y)>1.f||(*Z)(x,y)<-1e-6)
+// 			  qDebug("out of bounds, X=%f Y=%f, Z=%f",(*X)(x,y),(*Y)(x,y),(*Z)(x,y));
 #if ( (BYTE_ORDER == LITTLE_ENDIAN) || (defined(_WIN32)) )
 			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
 			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
@@ -80,7 +82,8 @@ QImage* fromLDRPFStoPPM_QImage( pfs::Frame* inpfsframe, uchar * data) {
 #if QT_VERSION <= 0x040200
 	QImage *toreturn=new QImage(data,width,height,QImage::Format_RGB32);
 #else
-	QImage *toreturn=new QImage(const_cast<const uchar *>(data),width,height,QImage::Format_RGB32);
+//not const uchar*! will it crash on old qt distributions?
+	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
 #endif
 	return toreturn;
 }
