@@ -285,9 +285,16 @@ void GrayBar::mouseReleaseEvent( QMouseEvent * e) {
 	if (dragging==DRAGGRAY) {
 		float mediumpos = (float)blackpos+ ((float)whitepos-(float)blackpos)/2.0f;
 		if (e->x()>mediumpos) {
+//exp10f is not defined on MinGW in windows.
+#ifdef _GNU_SOURCE
 			emit gamma_changed( exp10f( (mediumpos-(float)e->x())/((float)(whitepos)-mediumpos) ) );
 		} else {
 			emit gamma_changed( exp10f( (mediumpos-(float)e->x())/(mediumpos-(float)(blackpos)) ) );
+#else
+			emit gamma_changed( pow10f(10.0f, (mediumpos-(float)e->x())/((float)(whitepos)-mediumpos) ) );
+		} else {
+			emit gamma_changed( pow10f(10.0f, (mediumpos-(float)e->x())/(mediumpos-(float)(blackpos)) ) );
+#endif
 		}
 	}
 	dragging=DRAGNONE;
