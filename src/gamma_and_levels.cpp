@@ -291,9 +291,9 @@ void GrayBar::mouseReleaseEvent( QMouseEvent * e) {
 		} else {
 			emit gamma_changed( exp10f( (mediumpos-(float)e->x())/(mediumpos-(float)(blackpos)) ) );
 #else
-			emit gamma_changed( pow10f(10.0f, (mediumpos-(float)e->x())/((float)(whitepos)-mediumpos) ) );
+			emit gamma_changed( powf(10.0f, (mediumpos-(float)e->x())/((float)(whitepos)-mediumpos) ) );
 		} else {
-			emit gamma_changed( pow10f(10.0f, (mediumpos-(float)e->x())/(mediumpos-(float)(blackpos)) ) );
+			emit gamma_changed( powf(10.0f, (mediumpos-(float)e->x())/(mediumpos-(float)(blackpos)) ) );
 #endif
 		}
 	}
