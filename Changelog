@@ -1,3 +1,19 @@
+26-04-2007 v1.8.4 Giuseppe Rota <grota@users.sourceforge.net>
+* The Tone mapping window has been restyled, so that now
+we can have multiple results at the same time.
+* Threaded execution keeps user interface responsive, and on a
+multi-processor machine (SMP) each thread gets allocated on a different CPU.
+* Qtpfsgui now caches intermediate results (using temporary files)
+for faster execution.
+* Faster (post)gamma correction on LDR images.
+
+v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
+	Added the possibility to load image files without exif data: the user will specify manually the difference in exposure values (EV or stops).
+	Added online documentation: manual,FAQ,hints.
+	The tonemapping dialog remembers the last used filename.
+	Fixed PowerPC compile-time alignment bug.
+	Fixed aperture=0 bug.
+
 18-03-2007 v1.8.2 Giuseppe Rota <grota@users.sourceforge.net>
 * Qtpfsgui now supports tiff file formats in:
 "File->Load HDR..." (8,16,32 bit and logluv tiff formats)

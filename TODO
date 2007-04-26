@@ -1,11 +1,4 @@
 * check for latest version, file online on sf.
-* icon on mac, mandus suggestions
-* substitute " " with "_" in filename. use original hdr filename or list.at(0) for prefix
-* medium term: provide both capabilities, update via button and istantaneously.
-* medium term: modular and external execution of dcraw and Pablo's alignment tool.
+* medium term: modular and external execution of dcraw and Pablo's alignment tool (or manually?).
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
-
-* http://freenet-homepage.de/hsbosny/HDR_Tutorial/HDR_Tutorial-en.html if exif data is missing let the user select the fstop numbers for each image, and figure out a value for the time.
-* http://www.vips.ecs.soton.ac.uk/ a powerful and modular image processing library that supports very large images and multiple processors natively. (to reduce memory footprint)
-
-BYPASSED, PREGAMMA ALWAYS COMPUTED* consider in tonemapping rgb->xyz ... xyz->rgb (it's ugly, though)
+* provide log for exif transfer

@@ -176,6 +176,8 @@ INSTALLS        += target menu icon htmls htmlimages
 }
 
 macx {
+ICON = images/qtpfsgui.icns
+
 #TODO we have to complete this.
 LIBS+=-lIlmThread
 
@@ -215,7 +217,7 @@ INCLUDEPATH += C:\comp_prj\libjpeg\include
 INCLUDEPATH += C:\Programmi\GnuWin32\include
 LIBS += -LC:\Programmi\GnuWin32\lib -llibtiff
 
-RC_FILE = src/qtpfsgui_ico.rc
+RC_FILE = images/qtpfsgui_ico.rc
 }
 
 #INCLUDEPATH += src/libpfs src/fileformat src/hdrcreate src/ashikhmin02 src/drago03 src/durand02 src/fattal02 src/pattanaik00 src/reinhard02

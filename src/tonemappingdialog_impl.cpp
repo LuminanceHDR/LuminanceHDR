@@ -102,7 +102,7 @@ void TonemappingWindow::saveLDR() {
 	QFileDialog *fd = new QFileDialog(this);
 	fd->setWindowTitle("Choose a filename to SAVE the LDR to");
 	fd->setDirectory( recentPathSaveLDR );
-	fd->selectFile(prefixname + currentLDR->getFilenamePostFix()+ ".jpg");
+	fd->selectFile(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg");
 	fd->setFileMode(QFileDialog::AnyFile);
 	fd->setFilters(filetypes);
 	fd->setAcceptMode(QFileDialog::AcceptSave);

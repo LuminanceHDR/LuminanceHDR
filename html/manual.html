@@ -136,7 +136,7 @@ Even if qtpfsgui doesn't find the required exif data (Shutter Speed &#038; Apert
 On the second page the wizard will also ask you which kind of configuration you want to use to create the hdr from the source images: usually the first choice leads to good results, so feel free to accept the default "Config 1" option by pressing next.<br>
 If you think that the results can be improved you can try one of the other predefined configurations.<br>
 If you want to fiddle with settings you can check the "custom" option and another page of the wizard will show up with a complete set of configurations. It is worth mentioning that you should use the custom option as a last resort because the predefined configurations (which are a sub-set of the all possible configurations you can have in the custom configuration panel) are known to yield good results.<br>
-The "anti-ghosting" feature is still beta and very CPU demanding, use it with few and small input exposures.
+The "anti-ghosting" feature is still beta (even buggy) and very CPU demanding, use it with few and small input exposures.
 
 
 
@@ -157,7 +157,7 @@ pre-gamma -> tonemapping operator
 <li>Pregamma changes the gamma in the HDR before the tone mapping: depending on the chosen tone mapping operator this can yield unexpected effects, like color saturation.</li>
 <li>The tone mapping operator transforms an HDR into a LDR.</li>
 </ul>
-NOTE: the previous post-gamma operation can be performed via the "Correct Histogram" button.<br>
+NOTE: the post-gamma operation (typical of previous versions of qtpfsgui) can be performed via the "Correct Histogram" button.<br>
 With the "Correct Histogram" button you can tweak the histogram of the current LDR image, the tool has been designed to be similar to the one in GIMP: you can drag the triangular handles to set the new value.
 
 <A name="parameters"><h4>The tone mapping operators and their parameters</h4></A>
