@@ -22,12 +22,10 @@
  * based on Rafal Mantiuk and Grzegorz Krawczyk 's pfsview code
  */
 
-#include "imagehdrviewer.h"
-#include <stdio.h>
+#include "hdrviewer.h"
 #include <math.h>
 #include <QApplication>
-#include <QLabel>
-#include <QFileInfo>
+#include <QVBoxLayout>
 
 inline float clamp( float val, float min, float max )
 {
@@ -80,78 +78,55 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
     return l;
 }
 
-// static void transformImageToWorkArea( pfs::Array2D **workArea,
-// 				      pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z ) {
-// 
-//     for( int c = 0; c < 3; c++ ) {
-// 	if( workArea[c] == NULL ) {
-// 	    workArea[c] = new pfs::Array2DImpl( X->getCols(), X->getRows() );
-// 	}
-// 	// workArea has different colums/rows when rotating
-// 	if ( workArea[c]->getCols() != X->getCols()) {
-// 	    delete workArea[c] ;
-// 	    workArea[c]=new pfs::Array2DImpl( X->getCols(), X->getRows() );
-// 	}
-//     }
-//     //Copy & tranform image to work area
-//     copyArray( X, workArea[0] );
-//     copyArray( Y, workArea[1] );
-//     copyArray( Z, workArea[2] );
-// 
-//     pfs::transformColorSpace( pfs::CS_XYZ, workArea[0], workArea[1], workArea[2],
-// 			         pfs::CS_RGB, workArea[0], workArea[1], workArea[2] );
-// }
-
-
 //==================================================================================
 //**********************************************************************************
 //==================================================================================
 
-ImageMDIwindow::ImageMDIwindow( QWidget *parent, unsigned int neg, unsigned int naninf ) : QMainWindow(parent), pfsFrame(NULL), mappingMethod( MAP_GAMMA2_2 ), minValue( 1.0f ), maxValue( 1.0f ), fittingwin(false), naninfcol(naninf), negcol(neg) {
+HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bool ns) : QWidget(parent), NeedsSaving(ns), filename(""), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    image=NULL;
-    workArea[0] = workArea[1] = workArea[2] = NULL;
+	image=NULL;
+	workArea[0] = workArea[1] = workArea[2] = NULL;
+	setAttribute(Qt::WA_DeleteOnClose);
 
-    imageLabel = new QLabel;
-    imageLabel->setBackgroundRole(QPalette::Base);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    imageLabel->setScaledContents(true); ///true in qt4 example
+	QVBoxLayout *VBL_L = new QVBoxLayout(this);
+	VBL_L->setSpacing(0);
+	VBL_L->setMargin(0);
 
-    scrollArea = new QScrollArea;
-    scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
-    setCentralWidget(scrollArea);
+	toolBar = new QToolBar("Viewing Settings Toolbar",this);
+	QLabel *mappingMethodLabel = new QLabel( "&Mapping:", toolBar );
+	mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
+	mappingMethodCB = new QComboBox( toolBar );
+	toolBar->addWidget(mappingMethodLabel);
+	toolBar->addWidget(mappingMethodCB);
+	toolBar->addSeparator();
+	mappingMethodLabel->setBuddy( mappingMethodCB );
+	QStringList methods;
+	methods+="Linear";
+	methods+="Gamma 1.4";
+	methods+="Gamma 1.8";
+	methods+="Gamma 2.2";
+	methods+="Gamma 2.6";
+	methods+="Logarithmic";
+	mappingMethodCB->addItems(methods);
+	mappingMethodCB->setCurrentIndex( 3 );
+	connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
 
-    toolBar = this->addToolBar("Viewing Settings Toolbar");
-    QLabel *mappingMethodLabel = new QLabel( "&Mapping:", toolBar );
-    mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    mappingMethodCB = new QComboBox( toolBar );
-    toolBar->addWidget(mappingMethodLabel);
-    toolBar->addWidget(mappingMethodCB);
-    toolBar->addSeparator();
-    mappingMethodLabel->setBuddy( mappingMethodCB );
-    QStringList methods;
-    methods+="Linear";
-    methods+="Gamma 1.4";
-    methods+="Gamma 1.8";
-    methods+="Gamma 2.2";
-    methods+="Gamma 2.6";
-    methods+="Logarithmic";
-    mappingMethodCB->addItems(methods);
-    mappingMethodCB->setCurrentIndex( 3 );
-    connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+	QLabel *histlabel = new QLabel( "Histogram:", toolBar );
+	lumRange = new LuminanceRangeWidget( toolBar );
+	toolBar->addWidget(histlabel);
+	toolBar->addWidget(lumRange);
+	toolBar->addSeparator();
+	connect( lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
+	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+	VBL_L->addWidget(toolBar);
 
-    QLabel *histlabel = new QLabel( "Histogram:", toolBar );
-    lumRange = new LuminanceRangeWidget( toolBar );
-    toolBar->addWidget(histlabel);
-    toolBar->addWidget(lumRange);
-    toolBar->addSeparator();
-    connect( lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
+	imageLabel = new QLabel;
+	scrollArea = new SmartScrollArea(this,imageLabel);
+	VBL_L->addWidget(scrollArea);
 }
 
 
-void ImageMDIwindow::updateHDR(pfs::Frame* inputframe) {
+void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     assert(inputframe!=NULL);
     //delete previous pfs::Frame*.
     if (pfsFrame!=NULL)
@@ -162,7 +137,6 @@ void ImageMDIwindow::updateHDR(pfs::Frame* inputframe) {
     //fitToDynamicRange() already takes care -indirectly- to call updateImage()
 //     updateImage();
     //zoom at original size, 100%
-    scaleFactor = 1.0;
     //make the label use the image dimensions
     imageLabel->adjustSize();
 //     update();
@@ -172,7 +146,7 @@ void ImageMDIwindow::updateHDR(pfs::Frame* inputframe) {
 }
 
 
-void ImageMDIwindow::updateImage() {
+void HdrViewer::updateImage() {
 	assert( pfsFrame != NULL );
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	
@@ -181,7 +155,6 @@ void ImageMDIwindow::updateImage() {
 	assert(R!=NULL && G!=NULL && B!=NULL);
 	
 	//workarea  needed in updateMapping(...) called by mapFrameToImage(...)
-// 	transformImageToWorkArea( workArea, X, Y, Z );
 	workArea[0]=R;
 	workArea[1]=G;
 	workArea[2]=B;
@@ -203,7 +176,7 @@ void ImageMDIwindow::updateImage() {
 	QApplication::restoreOverrideCursor();
 }
 
-void ImageMDIwindow::mapFrameToImage() {
+void HdrViewer::mapFrameToImage() {
 
     int rows = workArea[0]->getRows();
     int cols = workArea[0]->getCols();
@@ -249,87 +222,54 @@ void ImageMDIwindow::mapFrameToImage() {
     }
 }
 
-void ImageMDIwindow::updateRangeWindow() {
+void HdrViewer::updateRangeWindow() {
  setRangeWindow( pow( 10, lumRange->getRangeWindowMin() ), pow( 10, lumRange->getRangeWindowMax() ) );
 }
 
-void ImageMDIwindow::setRangeWindow( float min, float max ) {
+void HdrViewer::setRangeWindow( float min, float max ) {
 	minValue = min;
 	maxValue = max;
 	updateImage();
 }
-void ImageMDIwindow::setLumMappingMethod( int method ) {
+void HdrViewer::setLumMappingMethod( int method ) {
 	mappingMethodCB->setCurrentIndex( method );
 	mappingMethod = (LumMappingMethod)method;
 	updateImage();
 }
-void ImageMDIwindow::zoomIn() {
-	scaleImage(1.25);
+
+
+void HdrViewer::zoomIn() {
+	scrollArea->zoomIn();
 }
-void ImageMDIwindow::zoomOut() {
-	scaleImage(0.8);
+void HdrViewer::zoomOut() {
+	scrollArea->zoomOut();
 }
-void ImageMDIwindow::fitToWindow(bool checked) {
-// 	scrollArea->setWidgetResizable(checked);
-	fittingwin=checked;
-	if (checked)
-		scaleImageToFit();
-	else
-		// restore to the previous zoom factor
-		scaleImage(1);
+void HdrViewer::fitToWindow(bool checked) {
+	scrollArea->fitToWindow(checked);
 }
-void ImageMDIwindow::normalSize() {
-// 	scrollArea->setWidgetResizable(false);
-	imageLabel->adjustSize();
-	scaleFactor = 1.0;
+void HdrViewer::normalSize() {
+	scrollArea->normalSize();
 }
-void ImageMDIwindow::scaleImageToFit() {
-	int sa_width=scrollArea->size().width();
-	int sa_height=scrollArea->size().height();
-	float imageratio=float(imageLabel->pixmap()->size().width())/float(imageLabel->pixmap()->size().height());
-	float factor=1;
-	if (sa_width<imageratio*sa_height) {
-		factor=float(sa_width)/float(imageLabel->pixmap()->size().width());
-	} else {
-		factor=float(sa_height)/float(imageLabel->pixmap()->size().height());
-	}
-	imageLabel->resize(factor * 0.99 * imageLabel->pixmap()->size());
+double HdrViewer::getScaleFactor() {
+	return scrollArea->getScaleFactor();
 }
-void ImageMDIwindow::scaleImage(double factor) {
-	scaleFactor *= factor;
-	imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
-	adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
-	adjustScrollBar(scrollArea->verticalScrollBar(), factor);
+bool HdrViewer::getFittingWin(){
+	return scrollArea->isFitting();
 }
-void ImageMDIwindow::adjustScrollBar(QScrollBar *scrollBar, double factor) {
-	scrollBar->setValue(int(factor * scrollBar->value() + ((factor - 1) * scrollBar->pageStep()/2)));
-}
-double ImageMDIwindow::getScaleFactor() {
-	return scaleFactor;
-}
-bool ImageMDIwindow::getFittingWin(){
-	return fittingwin;
-}
-void ImageMDIwindow::resizeEvent ( QResizeEvent * ) {
-	if (fittingwin) {
-		scaleImageToFit();
-	}
-}
-void ImageMDIwindow::update_colors( unsigned int neg, unsigned int naninf ) {
+void HdrViewer::update_colors( unsigned int neg, unsigned int naninf ) {
 	naninfcol=naninf;
 	negcol=neg;
 	updateImage();
-// 	qDebug("uc: %u and %u",naninfcol,negcol);
 }
 
-const pfs::Array2D *ImageMDIwindow::getPrimaryChannel() {
+const pfs::Array2D *HdrViewer::getPrimaryChannel() {
     assert( pfsFrame != NULL );
     pfs::Channel *R, *G, *B;
     pfsFrame->getRGBChannels( R, G, B );
     return G;
 }
 
-ImageMDIwindow::~ImageMDIwindow() {
+HdrViewer::~HdrViewer() {
 	//do not delete workarea, it shares the same memory area of pfsFrame
 	if (imageLabel) delete imageLabel;
 	if (scrollArea) delete scrollArea;
@@ -338,6 +278,6 @@ ImageMDIwindow::~ImageMDIwindow() {
 		delete pfsFrame;
 }
 
-pfs::Frame* ImageMDIwindow::getHDRPfsFrame() {
-    return pfsFrame;
+pfs::Frame*& HdrViewer::getHDRPfsFrame() {
+	return pfsFrame;
 }

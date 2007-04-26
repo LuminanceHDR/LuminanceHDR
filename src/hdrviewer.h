@@ -22,18 +22,14 @@
  * based on Rafal Mantiuk and Grzegorz Krawczyk 's pfsview code
  */
 
-#ifndef  IMAGEHDRVIEWER_H
+#ifndef IMAGEHDRVIEWER_H
 #define IMAGEHDRVIEWER_H
-#include <QMainWindow>
 #include <QImage>
 #include <QComboBox>
-#include <QPaintEvent>
-#include <QPainter>
-#include <QScrollBar>
-#include <QScrollArea>
 #include <QLabel>
 #include <QToolBar>
 #include <QResizeEvent>
+#include "smart_scroll_area.h"
 #include "luminancerange_widget.h"
 #include "libpfs/array2d.h"
 #include "libpfs/pfs.h"
@@ -48,47 +44,43 @@ enum LumMappingMethod {
 };
 
 
-class ImageMDIwindow : public QMainWindow {
+class HdrViewer : public QWidget {
 	Q_OBJECT
 public:
-	ImageMDIwindow ( QWidget *parent, unsigned int negcol, unsigned int naninfcol );
-	~ImageMDIwindow();
+	HdrViewer ( QWidget *parent, unsigned int negcol, unsigned int naninfcol, bool NeedsSaving );
+	~HdrViewer();
 	LuminanceRangeWidget *lumRange;
+	bool NeedsSaving;
 	QToolBar *toolBar;
+	QString filename;
 	double getScaleFactor();
 	bool getFittingWin();
 	void updateHDR(pfs::Frame*);
-	pfs::Frame* getHDRPfsFrame();
-	void update_colors( unsigned int negcol, unsigned int naninfcol );
+	pfs::Frame* &getHDRPfsFrame();
+	void update_colors(unsigned int negcol, unsigned int naninfcol);
 public slots:
-	void updateRangeWindow();
-	void setLumMappingMethod( int method );
 	void zoomIn();
 	void zoomOut();
 	void fitToWindow(bool checked);
 	void normalSize();
+	void updateRangeWindow();
+	void setLumMappingMethod( int method );
 protected:
-	void resizeEvent ( QResizeEvent * event );
 	QLabel *imageLabel;
-	QScrollArea *scrollArea;
+	SmartScrollArea *scrollArea;
 	QImage *image;
 	void setRangeWindow( float min, float max );
 	const pfs::Array2D *getPrimaryChannel();
 	void updateImage();
 private:
-	pfs::Frame* hdrpfsframe;
-	void scaleImage(double);
-	void scaleImageToFit();
-	void adjustScrollBar(QScrollBar *scrollBar, double factor);
 	void mapFrameToImage();
+	pfs::Frame* hdrpfsframe;
 	QComboBox *mappingMethodCB;
 	pfs::Array2D *workArea[3];
 	pfs::Frame *pfsFrame;
 	LumMappingMethod mappingMethod;
 	float minValue;
 	float maxValue;
-	double scaleFactor;
-	bool fittingwin;
 	unsigned int naninfcol,negcol;
 };
 #endif
