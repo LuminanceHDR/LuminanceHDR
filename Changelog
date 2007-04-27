@@ -6,6 +6,8 @@ multi-processor machine (SMP) each thread gets allocated on a different CPU.
 * Qtpfsgui now caches intermediate results (using temporary files)
 for faster execution.
 * Faster (post)gamma correction on LDR images.
+* It is now possible to use Utf8 file names.
+* Corrected bug in fattal tone mapping operator.
 
 v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
 	Added the possibility to load image files without exif data: the user will specify manually the difference in exposure values (EV or stops).

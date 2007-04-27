@@ -66,34 +66,34 @@ void TonemapperThread::run() {
 	if (opt.xsize==originalxsize && opt.pregamma==1.0f) {
 		//original goes into tone mapping
 		qDebug("::::::original goes into tone mapping");
-		fetch("./original.pfs");
+		fetch("/original.pfs");
 		status=from_tm;
 		colorspaceconversion=true;
 	} else if (opt.xsize==xsize && opt.pregamma==1.0f) {
 		//resized goes into tone mapping
 		qDebug("::::::resized goes into tone mapping");
-		fetch("./after_resize.pfs");
+		fetch("/after_resize.pfs");
 		status=from_tm;
 		colorspaceconversion=true;
 	} else if ( (opt.xsize==xsize && opt.pregamma==pregamma) || (opt.xsize==originalxsize && opt.pregamma==pregamma) ) {
 		//after_pregamma goes into tone mapping
 		qDebug("::::::after_pregamma goes into tone mapping");
-		fetch("./after_pregamma.pfs");
+		fetch("/after_pregamma.pfs");
 		status=from_tm;
 	} else if (opt.xsize==xsize) {
 		//resized goes into pregamma
 		qDebug("::::::resized goes into pregamma");
-		fetch("./after_resize.pfs");
+		fetch("/after_resize.pfs");
 		status=from_pregamma;
 	} else if (opt.xsize==originalxsize) {
 		//original goes into pregamma
 		qDebug("::::::original goes into pregamma");
-		fetch("./original.pfs");
+		fetch("/original.pfs");
 		status=from_pregamma;
 	} else {
 		//original goes into resize
 		qDebug("::::::original goes into resize");
-		fetch("./original.pfs");
+		fetch("/original.pfs");
 		status=from_resize;
 	}
 	lock.unlock();
@@ -103,7 +103,7 @@ void TonemapperThread::run() {
 		qDebug("executing resize step");
 		pfs::Frame *resized=resizeFrame(workingframe, opt.xsize);
 		lock.lockForWrite();
-		swap(resized,"./after_resize.pfs");
+		swap(resized,"/after_resize.pfs");
 		xsize=opt.xsize;
 		pregamma=-1;
 		lock.unlock();
@@ -115,7 +115,7 @@ void TonemapperThread::run() {
 		qDebug("executing pregamma step");
 		applyGammaFrame( workingframe, opt.pregamma );
 		lock.lockForWrite();
-		swap(workingframe,"./after_pregamma.pfs");
+		swap(workingframe,"/after_pregamma.pfs");
 		if (opt.xsize==originalxsize)
 			xsize=-1;
 		else

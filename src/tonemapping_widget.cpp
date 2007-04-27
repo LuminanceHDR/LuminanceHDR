@@ -117,12 +117,12 @@ TMWidget::~TMWidget() {
 delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete saturationGang; delete pregammagang;
 	//fetch original frame from hd
 	pfs::DOMIO pfsio;
-	OriginalPfsFrame=pfsio.readFrame(cachepath+"./original.pfs");
+	OriginalPfsFrame=pfsio.readFrame(cachepath+"/original.pfs");
 	xsize=-1;
 	pregamma=-1;
-	QFile::remove(cachepath+"./original.pfs");
-	QFile::remove(cachepath+"./after_resize.pfs");
-	QFile::remove(cachepath+"./after_pregamma.pfs");
+	QFile::remove(cachepath+"/original.pfs");
+	QFile::remove(cachepath+"/after_resize.pfs");
+	QFile::remove(cachepath+"/after_pregamma.pfs");
 }
 void TMWidget::ashikhminReset() {
 contrastGang->setDefault();
