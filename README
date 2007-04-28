@@ -1,4 +1,4 @@
-This is the README file for qtpfsgui v1.8.4
+This is the README file for qtpfsgui v1.8.5
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.4 of qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.5 of qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -43,7 +43,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.4.
+Read section 5 (Changes) to read the changes for version 1.8.5.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -174,7 +174,14 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
-v1.8.4 Giuseppe Rota <grota@users.sourceforge.net>
+v1.8.5
+* added progressbars in tonemapping status bar
+* added some status_tips in tone mapping dialog
+* added all available formats in load hdr dialog
+* fixed filename path bug
+* press and hold middle mouse button to scroll images
+
+v1.8.4
 * The Tone mapping window has been restyled, so that now
 we can have multiple results at the same time.
 * Threaded execution keeps user interface responsive, and on a

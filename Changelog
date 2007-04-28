@@ -1,3 +1,10 @@
+28-04-2007 v1.8.5 Giuseppe Rota <grota@users.sourceforge.net>
+* added progressbars in tonemapping status bar
+* added some status_tips in tone mapping dialog
+* added all available formats in load hdr dialog
+* fixed filename path bug
+* press and hold middle mouse button to scroll hdr and ldr images.
+
 26-04-2007 v1.8.4 Giuseppe Rota <grota@users.sourceforge.net>
 * The Tone mapping window has been restyled, so that now
 we can have multiple results at the same time.
