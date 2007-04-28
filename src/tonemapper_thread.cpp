@@ -264,6 +264,10 @@ void TonemapperThread::dumpOpts() {
 void TonemapperThread::ComputeImage(const tonemapping_options opt) {
 	this->opt=opt;
 	if (!isRunning()) {
+#ifdef _WIN32
+		start();
+#else
 		start(HighestPriority);
+#endif
 	}
 }

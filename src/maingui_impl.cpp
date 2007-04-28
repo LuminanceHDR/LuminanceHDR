@@ -178,7 +178,7 @@ void MainGui::fileSaveAs()
 {
 	assert(currenthdr!=NULL);
 	QStringList filetypes;
-#ifndef __WIN32
+#ifndef _WIN32
 	filetypes += "OpenEXR (*.exr)";
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.pic)";
