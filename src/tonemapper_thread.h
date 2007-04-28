@@ -32,18 +32,20 @@ class TonemapperThread : public QThread {
 Q_OBJECT
 
 public:
-	TonemapperThread(int origsize, QString cachepath);
+	TonemapperThread(int origsize, QString cachepath, QProgressBar *itsbar);
 	~TonemapperThread();
 	//pass by value, bit-copy should be enough (default should be available)
 	void ComputeImage(const tonemapping_options opts );
 
 signals:
 	void ImageComputed( QImage *newimage,tonemapping_options *opts );
+	void removeProgressBar( QProgressBar *pb );
 
 protected:
 	void run();
 
 private:
+	QProgressBar *bar;
 	int originalxsize;
 	bool colorspaceconversion;
 	tonemapping_options opt;

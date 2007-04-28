@@ -1,5 +1,4 @@
 * displaying progress bar when loading HDR images
-* displaying progress bar when applying changes in 'Tone map' dialog
 * check for latest version, file online on sf.
 * medium term: modular and external execution of dcraw and Pablo's alignment tool (or manually?).
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)

@@ -71,4 +71,52 @@ struct qtpfsgui_opts {
 	bool saveLogLuvTiff; //if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 	QString tempfilespath;
 };
+
+
+enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard04};
+struct tonemapping_options {
+	int xsize;
+	float pregamma;
+	enum tmoperator tmoperator;
+	union {
+		struct {
+			bool simple;
+			bool eq2; //false means eq4
+			float lct;
+		} ashikhminoptions;
+		struct{
+			float bias;
+		} dragooptions;
+		struct {
+			float spatial;
+			float range;
+			float base;
+		} durandoptions;
+		struct {
+			float alpha;
+			float beta;
+			float color;
+		} fattaloptions;
+		struct {
+			bool autolum;
+			bool local;
+			float cone;
+			float rod;
+			float multiplier;
+		} pattanaikoptions;
+		struct {
+			bool scales;
+			float key;
+			float phi;
+			int range;
+			int lower;
+			int upper;
+		} reinhard02options;
+		struct {
+			float brightness;
+			float saturation;
+		} reinhard04options;
+	} operator_options;
+};
+
 #endif

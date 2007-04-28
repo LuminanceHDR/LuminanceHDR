@@ -105,14 +105,14 @@ void MainGui::fileNewViaWizard() {
 }
 
 void MainGui::fileOpen() {
-	QString filetypes;
+	QString filetypes = "All HDR formats (*.hdr *.pic *.tiff *.tif *.pfs *.exr *.crw *.cr2 *.nef *.dng *.mrw *.olf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f" ;
 #ifndef _WIN32
-	filetypes += "OpenEXR (*.exr);;";
+	filetypes += " *.exr);; OpenEXR (*.exr" ;
 #endif
-	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC);;";
-	filetypes += "TIFF Images (*.tiff *.TIFF *.tif *.TIF);;";
-	filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F);;";
-	filetypes += "PFS Stream (*.pfs *.PFS)";
+	filetypes += ");; Radiance RGBE (*.hdr *.pic);;";
+	filetypes += "TIFF Images (*.tiff *.tif);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.olf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f);;";
+	filetypes += "PFS Stream (*.pfs)";
 	QString opened = QFileDialog::getOpenFileName(
 			this,
 			"Choose a HDR file to OPEN...",
@@ -181,9 +181,9 @@ void MainGui::fileSaveAs()
 #ifndef __WIN32
 	filetypes += "OpenEXR (*.exr)";
 #endif
-	filetypes += "Radiance RGBE (*.hdr *.HDR *.pic *.PIC)";
-	filetypes += "TIFF Images (*.tiff *.TIFF *.tif *.TIF)";
-	filetypes += "PFS Stream (*.pfs *.PFS)";
+	filetypes += "Radiance RGBE (*.hdr *.pic)";
+	filetypes += "TIFF Images (*.tiff *.tif)";
+	filetypes += "PFS Stream (*.pfs)";
 
 	QFileDialog *fd = new QFileDialog(this);
 	fd->setWindowTitle("SAVE the HDR to...");

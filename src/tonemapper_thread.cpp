@@ -22,6 +22,7 @@
  */
 
 #include "tonemapper_thread.h"
+#include <QProgressBar>
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 void applyGammaFrame( pfs::Frame*, const float);
 pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
@@ -41,7 +42,7 @@ float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)<
 QReadWriteLock lock;
 
 
-TonemapperThread::TonemapperThread(int xorigsize, QString cachepath) : QThread(0), originalxsize(xorigsize), cachepath(cachepath){
+TonemapperThread::TonemapperThread(int xorigsize, QString cachepath, QProgressBar* b) : QThread(0), bar(b), originalxsize(xorigsize), cachepath(cachepath){
 	colorspaceconversion=false;
 }
 
@@ -62,6 +63,7 @@ void TonemapperThread::swap(pfs::Frame *frame, QString filename) {
 
 void TonemapperThread::run() {
 // 	dumpOpts();
+// 	qDebug("::::::begin thread, size=%d, gamma=%f",xsize, pregamma);
 	lock.lockForRead();
 	if (opt.xsize==originalxsize && opt.pregamma==1.0f) {
 		//original goes into tone mapping
@@ -69,32 +71,44 @@ void TonemapperThread::run() {
 		fetch("/original.pfs");
 		status=from_tm;
 		colorspaceconversion=true;
+		bar->setMaximum(2);
+		bar->setValue(1);
 	} else if (opt.xsize==xsize && opt.pregamma==1.0f) {
 		//resized goes into tone mapping
 		qDebug("::::::resized goes into tone mapping");
 		fetch("/after_resize.pfs");
 		status=from_tm;
 		colorspaceconversion=true;
+		bar->setMaximum(2);
+		bar->setValue(1);
 	} else if ( (opt.xsize==xsize && opt.pregamma==pregamma) || (opt.xsize==originalxsize && opt.pregamma==pregamma) ) {
 		//after_pregamma goes into tone mapping
 		qDebug("::::::after_pregamma goes into tone mapping");
 		fetch("/after_pregamma.pfs");
 		status=from_tm;
+		bar->setMaximum(2);
+		bar->setValue(1);
 	} else if (opt.xsize==xsize) {
 		//resized goes into pregamma
 		qDebug("::::::resized goes into pregamma");
 		fetch("/after_resize.pfs");
 		status=from_pregamma;
+		bar->setMaximum(3);
+		bar->setValue(1);
 	} else if (opt.xsize==originalxsize) {
 		//original goes into pregamma
 		qDebug("::::::original goes into pregamma");
 		fetch("/original.pfs");
 		status=from_pregamma;
+		bar->setMaximum(3);
+		bar->setValue(1);
 	} else {
 		//original goes into resize
 		qDebug("::::::original goes into resize");
 		fetch("/original.pfs");
 		status=from_resize;
+		bar->setMaximum(4);
+		bar->setValue(1);
 	}
 	lock.unlock();
 
@@ -110,18 +124,21 @@ void TonemapperThread::run() {
 		delete workingframe;
 		workingframe=resized;
 		status=from_pregamma;
+		bar->setValue(bar->value()+1);
 	}
 	if (status==from_pregamma) {
 		qDebug("executing pregamma step");
 		applyGammaFrame( workingframe, opt.pregamma );
 		lock.lockForWrite();
 		swap(workingframe,"/after_pregamma.pfs");
+		pregamma=opt.pregamma;
 		if (opt.xsize==originalxsize)
 			xsize=-1;
 		else
 			xsize=opt.xsize;
 		lock.unlock();
 		status=from_tm;
+		bar->setValue(bar->value()+1);
 	}
 	if (status==from_tm) {
 		qDebug("executing tone mapping step");
@@ -133,33 +150,60 @@ void TonemapperThread::run() {
 			//fattal is NOT even reentrant! (problem in PDE solving)
 			//therefore I need to use a mutex here
 			lock.lockForWrite();
-			result=pfstmo_fattal02(workingframe, opt.operator_options.fattaloptions.alpha, opt.operator_options.fattaloptions.beta, opt.operator_options.fattaloptions.color);
+			result=pfstmo_fattal02(workingframe,
+			opt.operator_options.fattaloptions.alpha,
+			opt.operator_options.fattaloptions.beta,
+			opt.operator_options.fattaloptions.color);
 			lock.unlock();
 		break;
 		case ashikhmin:
-			result=pfstmo_ashikhmin02(workingframe, opt.operator_options.ashikhminoptions.simple, opt.operator_options.ashikhminoptions.lct, opt.operator_options.ashikhminoptions.eq2 ? 2 : 4);
+			result=pfstmo_ashikhmin02(workingframe,
+			opt.operator_options.ashikhminoptions.simple,
+			opt.operator_options.ashikhminoptions.lct,
+			opt.operator_options.ashikhminoptions.eq2 ? 2 : 4);
 		break;
 		case durand:
-			result=pfstmo_durand02(workingframe, opt.operator_options.durandoptions.spatial, opt.operator_options.durandoptions.range, opt.operator_options.durandoptions.base);
+			//even durand seems to be not reentrant
+			lock.lockForWrite();
+			result=pfstmo_durand02(workingframe,
+			opt.operator_options.durandoptions.spatial,
+			opt.operator_options.durandoptions.range,
+			opt.operator_options.durandoptions.base);
+			lock.unlock();
 		break;
 		case drago:
 			result=pfstmo_drago03(workingframe, opt.operator_options.dragooptions.bias);
 		break;
 		case pattanaik:
-			result=pfstmo_pattanaik00(workingframe, opt.operator_options.pattanaikoptions.local, opt.operator_options.pattanaikoptions.multiplier, opt.operator_options.pattanaikoptions.cone, opt.operator_options.pattanaikoptions.rod, opt.operator_options.pattanaikoptions.autolum);
+			result=pfstmo_pattanaik00(workingframe,
+			opt.operator_options.pattanaikoptions.local,
+			opt.operator_options.pattanaikoptions.multiplier,
+			opt.operator_options.pattanaikoptions.cone,
+			opt.operator_options.pattanaikoptions.rod,
+			opt.operator_options.pattanaikoptions.autolum);
 		break;
 		case reinhard02:
-			result=pfstmo_reinhard02(workingframe, opt.operator_options.reinhard02options.key, opt.operator_options.reinhard02options.phi, opt.operator_options.reinhard02options.range, opt.operator_options.reinhard02options.lower, opt.operator_options.reinhard02options.upper, opt.operator_options.reinhard02options.scales);
+			result=pfstmo_reinhard02(workingframe,
+			opt.operator_options.reinhard02options.key,
+			opt.operator_options.reinhard02options.phi,
+			opt.operator_options.reinhard02options.range,
+			opt.operator_options.reinhard02options.lower,
+			opt.operator_options.reinhard02options.upper,
+			opt.operator_options.reinhard02options.scales);
 		break;
 		case reinhard04:
-			result=pfstmo_reinhard04(workingframe, opt.operator_options.reinhard04options.brightness, opt.operator_options.reinhard04options.saturation);
+			result=pfstmo_reinhard04(workingframe,
+			opt.operator_options.reinhard04options.brightness,
+			opt.operator_options.reinhard04options.saturation);
 		break;
 		}
+	bar->setValue(bar->value()+1);
 	assert(result!=NULL);
 	delete workingframe;
 	QImage* res=fromLDRPFStoQImage(result);
 	delete result;
 	emit ImageComputed(res,&opt);
+	emit removeProgressBar(bar);
 	}
 }
 

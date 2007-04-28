@@ -25,6 +25,8 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QDir>
+#include <QStatusBar>
+#include <QProgressBar>
 #include "tonemapping_widget.h"
 #include "options.h"
 #include "config.h"
@@ -33,7 +35,7 @@
 extern int xsize;
 extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), sb(_sb) {
 	setupUi(this);
 
 	// ashikhmin02
@@ -163,10 +165,16 @@ pregammagang->setDefault();
 void TMWidget::apply_clicked() {
 	FillToneMappingOptions();
 
+	QProgressBar *newprogressbar=new QProgressBar();
+
 	//tone mapper thread needs to know full size of the hdr
-	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1],cachepath);
+	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], cachepath, newprogressbar);
+
 	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-	connect(thread, SIGNAL(ImageComputed(QImage *,tonemapping_options*)), this, SLOT(ImageComputed(QImage *,tonemapping_options*)));
+	connect(thread, SIGNAL(ImageComputed(QImage *,tonemapping_options*)), this, SIGNAL(newResult(QImage *,tonemapping_options*)));
+	connect(thread, SIGNAL(removeProgressBar(QProgressBar*)), this, SLOT(removeProgressBar(QProgressBar*)));
+
+	sb->addWidget(newprogressbar);
 	//start thread
 	thread->ComputeImage(ToneMappingOptions);
 }
@@ -225,9 +233,6 @@ void TMWidget::FillToneMappingOptions() {
 	}
 }
 
-void TMWidget::ImageComputed(QImage *threadresult,tonemapping_options *opts) {
-	emit newResult(threadresult,opts);
-}
 
 void TMWidget::loadsettings() {
 	QString opened = QFileDialog::getOpenFileName(
@@ -440,4 +445,8 @@ void TMWidget::fromTxt2Gui() {
 		}
 	}
 	apply_clicked();
+}
+
+void TMWidget::removeProgressBar(QProgressBar* pb) {
+	sb->removeWidget(pb);
 }

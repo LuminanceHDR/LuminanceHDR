@@ -28,60 +28,15 @@
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "gang.h"
 #include "libpfs/pfs.h"
+#include "options.h"
 
-enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard04};
-struct tonemapping_options {
-	int xsize;
-	float pregamma;
-	enum tmoperator tmoperator;
-	union {
-		struct {
-			bool simple;
-			bool eq2; //false means eq4
-			float lct;
-		} ashikhminoptions;
-		struct{
-			float bias;
-		} dragooptions;
-		struct {
-			float spatial;
-			float range;
-			float base;
-		} durandoptions;
-		struct {
-			float alpha;
-			float beta;
-			float color;
-		} fattaloptions;
-		struct {
-			bool autolum;
-			bool local;
-			float cone;
-			float rod;
-			float multiplier;
-		} pattanaikoptions;
-		struct {
-			bool scales;
-			float key;
-			float phi;
-			int range;
-			int lower;
-			int upper;
-		} reinhard02options;
-		struct {
-			float brightness;
-			float saturation;
-		} reinhard04options;
-	} operator_options;
-};
-
-
-
+class QStatusBar;
+class QProgressBar;
 class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath);
+	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar* sb);
 	~TMWidget();
 signals:
 	void newResult(QImage*,tonemapping_options*);
@@ -94,6 +49,7 @@ private:
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QSettings settings;
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
+	QStatusBar *sb;
 private slots:
 	void preGammaReset();
 	void ashikhminReset();
@@ -104,7 +60,7 @@ private slots:
 	void reinhard02Reset();
 	void reinhard04Reset();
 	void apply_clicked();
-	void ImageComputed( QImage *newimage,tonemapping_options *opt );
+	void removeProgressBar(QProgressBar*);
 	void savesettings();
 	void loadsettings();
 	void fromTxt2Gui(); //i.e. APPLY tmo settings from text file

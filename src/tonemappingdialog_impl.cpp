@@ -52,7 +52,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setShown(bool)));
 
-	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath);
+	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, statusBar());
 	dock->setWidget(tmwidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	connect(tmwidget,SIGNAL(newResult(QImage*,tonemapping_options*)),this,SLOT(addMDIresult(QImage*,tonemapping_options*)));
