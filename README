@@ -212,11 +212,6 @@ http://www.mpii.mpg.de/resources/pfstools/
 PFStmo web-page (a tone mapping library):
 http://www.mpii.mpg.de/resources/tmo/
 
-pfshdrcreate, a commandline tool used to create an HDR from a set 
-of LDR images (branch of pfscalibration), hosted on the same 
-sourceforge page as qtpfsgui:
-http://sourceforge.net/projects/qtpfsgui/
-
 PFScalibration, the original software from which the backend pfshdrcreate
 was obtained (not needed for qtpfsgui):
 http://www.mpii.mpg.de/resources/hdr/calibration/pfs.html
