@@ -22,7 +22,7 @@
  */
 
 #include "smart_scroll_area.h"
-
+#include <QPixmap>
 SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), fittingwin(false) {
 	setBackgroundRole(QPalette::Light);
 	imageLabel->setBackgroundRole(QPalette::Base);
