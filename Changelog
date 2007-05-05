@@ -1,3 +1,8 @@
+05-05-2007 v1.8.6
+* fixed "QPaintEngine::setSystemClip" bug.
+* solved a compile-time error with some version of Qt4.
+* updated FAQ (in the html documentation).
+
 28-04-2007 v1.8.5 Giuseppe Rota <grota@users.sourceforge.net>
 * added progressbars in tonemapping status bar
 * added some status_tips in tone mapping dialog
