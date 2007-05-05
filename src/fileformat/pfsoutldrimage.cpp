@@ -44,11 +44,9 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 
-QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
+#include "../tonemapper_thread.h"
+QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
-
-// 	if(data != NULL)
-// 		delete [] data;
 
 	pfs::DOMIO pfsio;
 	pfs::Channel *X, *Y, *Z;
@@ -80,10 +78,10 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 		}
 	}
 #if QT_VERSION <= 0x040200
-	QImage *toreturn=new QImage(data,width,height,QImage::Format_RGB32);
+	QImage toreturn(data,width,height,QImage::Format_RGB32);
 #else
 //not const uchar*! will it crash on old qt distributions?
-	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
+	QImage toreturn(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
 #endif
 	return toreturn;
 }

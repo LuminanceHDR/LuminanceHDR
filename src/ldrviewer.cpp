@@ -25,7 +25,9 @@
 #include "ldrviewer.h"
 #include "gamma_and_levels.h"
 
-LdrViewer::LdrViewer(QWidget *parent, QImage *origimage, tonemapping_options *opts) : QWidget(parent),origimage(origimage),currentimage(origimage) {
+LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : QWidget(parent),origimage(o) {
+// 	origimage=QImage(o);
+	currentimage=&origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
 	QVBoxLayout *VBL_L = new QVBoxLayout(this);
@@ -33,7 +35,7 @@ LdrViewer::LdrViewer(QWidget *parent, QImage *origimage, tonemapping_options *op
 	VBL_L->setMargin(0);
 
 	imageLabel = new QLabel;
-	imageLabel->setPixmap(QPixmap::fromImage(*origimage));
+	imageLabel->setPixmap(QPixmap::fromImage(origimage));
 	scrollArea = new SmartScrollArea(this,imageLabel);
 	VBL_L->addWidget(scrollArea);
 
@@ -209,7 +211,7 @@ void LdrViewer::fitToWindow(bool checked) {
 bool LdrViewer::getFittingWin() {
 	return scrollArea->isFitting();
 }
-QImage* LdrViewer::getQImage() {
+const QImage* LdrViewer::getQImage() {
 	return currentimage;
 }
 QString LdrViewer::getExifComment() {
@@ -218,9 +220,12 @@ QString LdrViewer::getExifComment() {
 
 void LdrViewer::LevelsRequested(bool a) {
 	assert(a); //a is always true
+	qDebug("accessing currentimage");
 	//copy original data
 	previewimage=currentimage->copy();
+	qDebug("constructing");
 	GammaAndLevels *levels=new GammaAndLevels(0,origimage);
+	qDebug("constructed");
 	levels->setAttribute(Qt::WA_DeleteOnClose);
 	//when closing levels, inform the Tone Mapping dialog.
 	connect(levels,SIGNAL(closing()),this,SIGNAL(levels_closed()));
@@ -234,9 +239,9 @@ void LdrViewer::LevelsRequested(bool a) {
 
 void LdrViewer::updatePreview(unsigned char *LUT) {
 // 	qDebug("LdrViewer::updatePreview");
-	for (int x=0; x<origimage->width(); x++) {
-		for (int y=0; y<origimage->height(); y++) {
-			QRgb rgb=origimage->pixel(x,y);
+	for (int x=0; x<origimage.width(); x++) {
+		for (int y=0; y<origimage.height(); y++) {
+			QRgb rgb=origimage.pixel(x,y);
 			QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
 			previewimage.setPixel(x,y,withgamma);
 		}
@@ -246,6 +251,6 @@ void LdrViewer::updatePreview(unsigned char *LUT) {
 }
 
 void LdrViewer::restoreoriginal() {
-	imageLabel->setPixmap(QPixmap::fromImage(*origimage));
-	currentimage=origimage;
+	imageLabel->setPixmap(QPixmap::fromImage(origimage));
+	currentimage=&origimage;
 }

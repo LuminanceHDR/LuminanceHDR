@@ -38,7 +38,7 @@ public:
 	void ComputeImage(const tonemapping_options opts );
 
 signals:
-	void ImageComputed( QImage *newimage,tonemapping_options *opts );
+	void ImageComputed(const QImage&,tonemapping_options *);
 	void removeProgressBar( QProgressBar *pb );
 
 protected:
@@ -55,5 +55,6 @@ private:
 // 	void dumpOpts();
 	enum {from_resize,from_pregamma,from_tm} status;
 	QString cachepath;
+	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 };
 #endif

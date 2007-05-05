@@ -31,13 +31,13 @@
 class LdrViewer : public QWidget {
 	Q_OBJECT
 public:
-	LdrViewer(QWidget *parent, QImage*, tonemapping_options*);
+	LdrViewer(QWidget *parent, const QImage&, tonemapping_options*);
 	~LdrViewer();
 	bool getFittingWin();
 	void LevelsRequested(bool);
 	QString getFilenamePostFix();
 	QString getExifComment();
-	QImage* getQImage();
+	const QImage* getQImage();
 signals:
 	void levels_closed();
 public slots:
@@ -51,7 +51,8 @@ private:
 protected:
 	QLabel *imageLabel;
 	SmartScrollArea *scrollArea;
-	QImage *origimage,*currentimage;
+	const QImage origimage;
+	const QImage *currentimage;
 	QImage previewimage;
 };
 

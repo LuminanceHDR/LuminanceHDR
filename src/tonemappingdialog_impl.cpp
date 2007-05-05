@@ -55,7 +55,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, statusBar());
 	dock->setWidget(tmwidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
-	connect(tmwidget,SIGNAL(newResult(QImage*,tonemapping_options*)),this,SLOT(addMDIresult(QImage*,tonemapping_options*)));
+	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));
 
 	connect(actionAsThumbnails,SIGNAL(activated()),this,SLOT(viewAllAsThumbnails()));
 	connect(actionCascade,SIGNAL(activated()),workspace,SLOT(cascade()));
@@ -67,7 +67,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	this->showMaximized();
 }
 
-void TonemappingWindow::addMDIresult(QImage* i,tonemapping_options* opts) {
+void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options* opts) {
 	LdrViewer *n=new LdrViewer(this,i,opts);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 	workspace->addWindow(n);
@@ -135,7 +135,7 @@ void TonemappingWindow::saveLDR() {
 					outfname+=".bmp";
 				}
 			}
-			if(!(currentLDR->getQImage())->save(outfname,format.toAscii().constData(),100)) {
+			if(!((currentLDR->getQImage())->save(outfname,format.toAscii().constData(),100))) {
 				QMessageBox::warning(this,"","Failed to save to <b>" + outfname + "</b>",
 						QMessageBox::Ok, QMessageBox::NoButton);
 			} else { //save is succesful

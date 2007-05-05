@@ -39,7 +39,7 @@ public:
 	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar* sb);
 	~TMWidget();
 signals:
-	void newResult(QImage*,tonemapping_options*);
+	void newResult(const QImage&,tonemapping_options*);
 private:
 	QVector<int> sizes;
 	Gang  *contrastGang,*biasGang,*spatialGang,*rangeGang,*baseGang,*alphaGang,*betaGang,*saturation2Gang,*multiplierGang,*coneGang,*rodGang,*keyGang,*phiGang,*range2Gang,*lowerGang,*upperGang,*brightnessGang,*saturationGang,*pregammagang;

@@ -29,7 +29,7 @@
 #include <cassert>
 
 
-GammaAndLevels::GammaAndLevels(QWidget *parent, QImage* data) : QDialog(parent) {
+GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(parent) {
 	setupUi(this);
 	connect(cancelButton,SIGNAL(clicked()),this,SIGNAL(closing()));
 	connect(okButton,SIGNAL(clicked()),this,SIGNAL(closing()));
@@ -165,7 +165,7 @@ void GammaAndLevels::refreshLUT() {
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-HistogramLDR::HistogramLDR(QWidget *parent, const QImage *data, int accuracy) : QWidget(parent), accuracy(accuracy){
+HistogramLDR::HistogramLDR(QWidget *parent, const QImage data, int accuracy) : QWidget(parent), accuracy(accuracy){
 	P = new float[256];
 
 	//initialize to 0
@@ -173,8 +173,8 @@ HistogramLDR::HistogramLDR(QWidget *parent, const QImage *data, int accuracy) : 
 		P[i]=0;
 
 	//increment bins
-	for (int i=0; i<data->width()*data->height(); i+=accuracy) {
-		int v=qGray(*((QRgb*)(data->bits())+i));
+	for (int i=0; i<data.width()*data.height(); i+=accuracy) {
+		int v=qGray(*((QRgb*)(data.bits())+i));
 		assert(v>=0 && v<=255);
 		P[v] += 1;
 	}

@@ -66,7 +66,7 @@ private:
 	float *P;
 	int accuracy;
 public:
-	HistogramLDR(QWidget *parent, const QImage *input_image, int accuracy=1);
+	HistogramLDR(QWidget *parent, const QImage input_image, int accuracy=1);
 	~HistogramLDR();
 // 	int getClipFromBlack();
 // 	int getClipFromWhite();
@@ -88,7 +88,7 @@ private:
 	float gamma;
 	void refreshLUT();
 public:
-	GammaAndLevels(QWidget *parent, QImage *image);
+	GammaAndLevels(QWidget *parent,const QImage image);
 	~GammaAndLevels();
 	GrayBar *gb1,*gb2;
 	HistogramLDR *histogram;

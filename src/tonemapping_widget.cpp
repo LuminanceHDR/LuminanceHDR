@@ -171,7 +171,8 @@ void TMWidget::apply_clicked() {
 	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], cachepath, newprogressbar);
 
 	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-	connect(thread, SIGNAL(ImageComputed(QImage *,tonemapping_options*)), this, SIGNAL(newResult(QImage *,tonemapping_options*)));
+	qRegisterMetaType<QImage>("QImage");
+	connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
 	connect(thread, SIGNAL(removeProgressBar(QProgressBar*)), this, SLOT(removeProgressBar(QProgressBar*)));
 
 	sb->addWidget(newprogressbar);

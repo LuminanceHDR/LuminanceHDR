@@ -49,7 +49,7 @@ private:
 	void writeExifData(const QString);
 
 private slots:
-	void addMDIresult(QImage*,tonemapping_options*);
+	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QWidget *);
