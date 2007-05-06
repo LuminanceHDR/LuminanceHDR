@@ -86,9 +86,9 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 
 void HdrWizardForm::loadfiles() {
     QString filetypes;
-    filetypes += "JPEG (*.jpeg *.jpg *.JPG *.JPEG);;";
-    filetypes += "TIFF Images (*.tiff *.tif *.TIFF *.TIF);;";
-    filetypes += "RAW Images (*.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.raf *.RAF *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+    filetypes += "JPEG (*.jpeg *.jpg);;";
+    filetypes += "TIFF Images (*.tiff *.tif);;";
+    filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f)";
     QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirInputLDRs, filetypes );
     if (!files.isEmpty() ) {
 	QFileInfo qfi(files.at(0));

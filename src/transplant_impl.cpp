@@ -185,7 +185,7 @@ void TransplantExifDialog::remove_right() {
 }
 
 void TransplantExifDialog::append_left() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.tif *.tiff *.TIF *.TIFF *.crw *.CRW *.cr2 *CR2 *.nef *.NEF *.dng *.DNG *.mrw *.MRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.arw *.ARW *.ptx *.PTX *.pef *.PEF *.x3f *.X3F)";
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f)";
 	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFfrom, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
@@ -213,7 +213,7 @@ void TransplantExifDialog::append_left() {
 }
 
 void TransplantExifDialog::append_right() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.JPG *.JPEG *.crw *.CRW *.olf *.OLF *.kdc *.KDC *.dcr *DCR *.ptx *.PTX *.x3f *.X3F)";
+	QString filetypes = "All Supported Types (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)";
 	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFto, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
