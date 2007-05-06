@@ -295,7 +295,7 @@ void MainGui::tonemap_requested() {
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
 	} else {
-		QMessageBox::critical(this,"Error...","Qtpfsgui needs to cache its results using temporary files, but the current selected directory is not writable.\nPlease choose a writable path in the Options panel.",
+		QMessageBox::critical(this,"Error...","Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not writable.\nPlease choose a writable path in Tools -> Configure Qtpfsgui... -> Tone mapping.",
 		QMessageBox::Ok,QMessageBox::NoButton);
 	}
 }
