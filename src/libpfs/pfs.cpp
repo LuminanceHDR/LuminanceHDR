@@ -684,6 +684,7 @@ Frame *readFrame( QString filepath ) {
 		if( read != 4*size )
 			throw Exception( "Corrupted PFS file: missing channel data" );
 	}
+	file.close();
 	return frame;
 }
 

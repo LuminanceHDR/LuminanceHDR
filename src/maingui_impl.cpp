@@ -41,7 +41,7 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
 MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
-	connect(this->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
+	connect(this->fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
 	workspace = new QWorkspace(this);
 	workspace->setScrollBarsEnabled( TRUE );
 	setCentralWidget(workspace);
@@ -95,7 +95,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 void MainGui::fileNewViaWizard() {
 	wizard=new HdrWizardForm (this,&(qtpfsgui_options->dcraw_options));
 	if (wizard->exec() == QDialog::Accepted) {
-		HdrViewer *newmdi=new HdrViewer( this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor, true);
+		HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
 		newmdi->updateHDR(wizard->getPfsFrameHDR());
 		workspace->addWindow(newmdi);
 		newmdi->setWindowTitle(wizard->getCaptionTEXT());
@@ -121,6 +121,7 @@ void MainGui::fileOpen() {
 	if (loadFile(opened))
 		setCurrentFile(opened);
 }
+
 bool MainGui::loadFile(QString opened) {
 if( ! opened.isEmpty() ) {
 	QFileInfo qfi(opened);
@@ -235,6 +236,7 @@ void MainGui::fileSaveAs()
 			setCurrentFile(fname);
 			currenthdr->NeedsSaving=false;
 			currenthdr->filename=fname;
+			currenthdr->setWindowTitle(fname);
 		}
 	}
 	delete fd;
@@ -286,7 +288,7 @@ void MainGui::tonemap_requested() {
 			return;
 	}
 	QFileInfo test(qtpfsgui_options->tempfilespath);
-	if (test.isWritable()) {
+	if (test.isWritable() && test.exists() && test.isDir()) {
 		this->setDisabled(true);
 		TonemappingWindow *tmodialog=new TonemappingWindow(this,currenthdr->getHDRPfsFrame(),qtpfsgui_options->tempfilespath, currenthdr->filename);
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableHdrViewer()));
@@ -323,6 +325,10 @@ void MainGui::dispatchrotate( bool clockwise) {
 	pfs::Frame *rotated=rotateFrame(currenthdr->getHDRPfsFrame(),clockwise);
 	//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 	currenthdr->updateHDR(rotated);
+	if (! currenthdr->NeedsSaving) {
+		currenthdr->NeedsSaving=true;
+		currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
+	}
 	QApplication::restoreOverrideCursor();
 	rotateccw->setEnabled(true);
 	rotatecw->setEnabled(true);
@@ -340,6 +346,10 @@ void MainGui::resize_requested() {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 		currenthdr->updateHDR(resizedialog->getResizedFrame());
+		if (! currenthdr->NeedsSaving) {
+			currenthdr->NeedsSaving=true;
+			currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
+		}
 		QApplication::restoreOverrideCursor();
 	}
 	delete resizedialog;
@@ -413,8 +423,14 @@ void MainGui::updateRecentFileActions() {
 
 void MainGui::openRecentFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
-	if (action)
-		loadFile(action->data().toString());
+	if (action) {
+		if (! loadFile(action->data().toString()) ) {
+			QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+			files.removeAll(action->data().toString());
+			settings.setValue(KEY_RECENT_FILES, files);
+			updateRecentFileActions();
+		}
+	}
 }
 
 void MainGui::setCurrentFile(const QString &fileName) {
@@ -509,5 +525,18 @@ MainGui::~MainGui() {
 		delete recentFileActs[i];
 	}
 	//separatorRecentFiles should not be required
+}
+
+void MainGui::fileExit() {
+	QWidgetList allhdrs=workspace->windowList();
+	bool closeok=true;
+	foreach(QWidget *p,allhdrs) {
+		if (((HdrViewer*)p)->NeedsSaving)
+			closeok=false;
+	}
+	if (closeok || (QMessageBox::warning(this,"Unsaved changes...","There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost.",
+			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
+		== QMessageBox::Discard))
+		emit close();
 }
 

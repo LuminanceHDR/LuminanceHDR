@@ -1,4 +1,4 @@
-This is the README file for qtpfsgui v1.8.6
+This is the README file for qtpfsgui v1.8.7
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.6 of qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.7 of qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -174,6 +174,13 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
+v1.8.7
+* fixed test for the correctness of the cache path (important for windows version).
+* closed pending file descriptors.
+* qtpfsgui warns the user when she attempts to close modified/unsaved HDRs in the workspace and also when she closes the main window.
+* fixed underscore and ~ for LDRs description.
+* when attempting to load a non-existent recent files history entry qtpfsgui now removes graphically that entry.
+
 v1.8.6
 * fixed the "QPaintEngine::setSystemClip" bug.
 * solved a compile-time error with some version of Qt4.

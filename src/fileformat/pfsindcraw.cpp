@@ -7564,6 +7564,7 @@ output_bps=16;
     if (oprof) free(oprof);
 //     free (ofname);
     free (image);
+    fclose(ifp);
     return frame;
 }
 

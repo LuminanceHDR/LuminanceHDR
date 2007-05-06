@@ -406,7 +406,7 @@ pfs::Frame* HdrWizardForm::getPfsFrameHDR() {
 }
 
 QString HdrWizardForm::getCaptionTEXT() {
-	return "Weights: "+getQStringFromConfig(1) + " - Response curve: " + getQStringFromConfig(2) + " - Model: " + getQStringFromConfig(3);
+	return "(*) Weights: "+getQStringFromConfig(1) + " - Response curve: " + getQStringFromConfig(2) + " - Model: " + getQStringFromConfig(3);
 }
 
 QString HdrWizardForm::getQStringFromConfig( int type ) {

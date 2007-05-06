@@ -72,6 +72,7 @@ protected:
 	void setRangeWindow( float min, float max );
 	const pfs::Array2D *getPrimaryChannel();
 	void updateImage();
+	void closeEvent ( QCloseEvent * event );
 private:
 	void mapFrameToImage();
 	pfs::Frame* hdrpfsframe;

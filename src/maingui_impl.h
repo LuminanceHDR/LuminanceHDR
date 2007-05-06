@@ -69,7 +69,7 @@ private slots:
 	void transplant_called();
 	void reEnableHdrViewer();
 // 	void align_called();
-// 	void fileExit();
+	void fileExit();
 
 	void openRecentFile();
 

@@ -26,6 +26,7 @@
 #include <math.h>
 #include <QApplication>
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 inline float clamp( float val, float min, float max )
 {
@@ -280,4 +281,17 @@ HdrViewer::~HdrViewer() {
 
 pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 	return pfsFrame;
+}
+
+void HdrViewer::closeEvent ( QCloseEvent * event ) {
+	if (NeedsSaving) {
+		QMessageBox::StandardButton ret=QMessageBox::warning(this,"Unsaved changes...","This HDR has unsaved changes.<br>If you quit now, these changes will be lost.",
+		QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard);
+		if (ret==QMessageBox::Discard)
+			event->accept();
+		else
+			event->ignore();
+	} else {
+		event->accept();
+	}
 }

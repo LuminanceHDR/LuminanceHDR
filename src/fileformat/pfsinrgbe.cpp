@@ -41,5 +41,6 @@ pfs::Frame* readRGBEfile (const char * filename) {
 // 	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
 	frame->getTags()->setString("LUMINANCE", "RELATIVE");
 	frame->getTags()->setString( "FILE_NAME", filename );
+	fclose(inputRGBEfile);
 	return frame;
 }

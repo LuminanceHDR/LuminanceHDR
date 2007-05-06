@@ -69,8 +69,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+=QString("beta_%1_").arg(beta);
 		caption+=QString("Beta=%1 ~ ").arg(beta);
 		exif_comment+=QString("Beta: %1\n").arg(beta);
-		postfix+=QString("saturation_%1_").arg(saturation2);
-		caption+=QString("Saturation=%1 ~ ").arg(saturation2);
+		postfix+=QString("saturation_%1").arg(saturation2);
+		caption+=QString("Saturation=%1").arg(saturation2);
 		exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2);
 		}
 		break;
@@ -79,8 +79,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+="ashikhmin_";
 		exif_comment+="Ashikhmin\nParameters:\n";
 		if (opts->operator_options.ashikhminoptions.simple) {
-			postfix+="-simple_";
-			caption+="simple ~ ";
+			postfix+="-simple";
+			caption+="simple";
 			exif_comment+="Simple\n";
 		} else {
 			if (opts->operator_options.ashikhminoptions.eq2) {
@@ -92,8 +92,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 				caption+="Equation 4 ~ ";
 				exif_comment+="Equation 4\n";
 			}
-			postfix+=QString("local_%1_").arg(opts->operator_options.ashikhminoptions.lct);
-			caption+=QString("Local=%1 ~ ").arg(opts->operator_options.ashikhminoptions.lct);
+			postfix+=QString("local_%1").arg(opts->operator_options.ashikhminoptions.lct);
+			caption+=QString("Local=%1").arg(opts->operator_options.ashikhminoptions.lct);
 			exif_comment+=QString("Local Contrast value: %1\n").arg(opts->operator_options.ashikhminoptions.lct);;
 		}
 		}
@@ -102,8 +102,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		caption+="Drago: ~ ";
 		postfix+="drago_";
 		exif_comment+="Drago\nParameters:\n";
-		postfix+=QString("bias_%1_").arg(opts->operator_options.dragooptions.bias);
-		caption+=QString("Bias=%1 ~ ").arg(opts->operator_options.dragooptions.bias);
+		postfix+=QString("bias_%1").arg(opts->operator_options.dragooptions.bias);
+		caption+=QString("Bias=%1").arg(opts->operator_options.dragooptions.bias);
 		exif_comment+=QString("Bias: %1\n").arg(opts->operator_options.dragooptions.bias);
 		}
 		break;
@@ -120,8 +120,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+=QString("range_%1_").arg(range);
 		caption+=QString("Range=%1 ~ ").arg(range);
 		exif_comment+=QString("Range Kernel Sigma: %1\n").arg(range);
-		postfix+=QString("base_%1_").arg(base);
-		caption+=QString("Base=%1 ~ ").arg(base);
+		postfix+=QString("base_%1").arg(base);
+		caption+=QString("Base=%1").arg(base);
 		exif_comment+=QString("Base Contrast: %1\n").arg(base);
 		}
 		break;
@@ -136,12 +136,12 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		caption+=QString("Multiplier=%1 ~ ").arg(multiplier);
 		exif_comment+=QString("Multiplier: %1\n").arg(multiplier);
 		if (opts->operator_options.pattanaikoptions.local) {
-			postfix+="local_";
-			caption+="Local ~ ";
+			postfix+="local";
+			caption+="Local";
 			exif_comment+="Local Tone Mapping\n";
 		} else if (opts->operator_options.pattanaikoptions.autolum) {
-			postfix+="autolum_";
-			caption+="AutoLuminance ~ ";
+			postfix+="autolum";
+			caption+="AutoLuminance";
 			exif_comment+="Con and Rod based on image luminance\n";
 		} else {
 			postfix+=QString("cone_%1_").arg(cone);
@@ -165,12 +165,12 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+=QString("key_%1_").arg(key);
 		caption+=QString("Key=%1 ~ ").arg(key);
 		exif_comment+=QString("Key: %1\n").arg(key);
-		postfix+=QString("phi_%1_").arg(phi);
-		caption+=QString("Phi=%1 ~ ").arg(phi);
+		postfix+=QString("phi_%1").arg(phi);
+		caption+=QString("Phi=%1").arg(phi);
 		exif_comment+=QString("Phi: %1\n").arg(phi);
 		if (opts->operator_options.reinhard02options.scales) {
-			postfix+=QString("scales_");
-			caption+=QString("Scales: ~ ");
+			postfix+=QString("_scales_");
+			caption+=QString(" ~ Scales: ~ ");
 			exif_comment+=QString("Scales\n");
 			postfix+=QString("range_%1_").arg(range);
 			caption+=QString("Range=%1 ~ ").arg(range);
@@ -178,8 +178,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 			postfix+=QString("lower%1_").arg(lower);
 			caption+=QString("Lower=%1 ~ ").arg(lower);
 			exif_comment+=QString("Lower: %1\n").arg(lower);
-			postfix+=QString("upper%1_").arg(upper);
-			caption+=QString("Upper=%1 ~ ").arg(upper);
+			postfix+=QString("upper%1").arg(upper);
+			caption+=QString("Upper=%1").arg(upper);
 			exif_comment+=QString("Upper: %1\n").arg(upper);
 		}
 		}
@@ -193,8 +193,8 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+=QString("brightness_%1_").arg(brightness);
 		caption+=QString("Brightness=%1 ~ ").arg(brightness);
 		exif_comment+=QString("Brightness: %1\n").arg(brightness);
-		postfix+=QString("saturation_%1_").arg(saturation);
-		caption+=QString("Saturation=%1 ~ ").arg(saturation);
+		postfix+=QString("saturation_%1").arg(saturation);
+		caption+=QString("Saturation=%1").arg(saturation);
 		exif_comment+=QString("Saturation: %1\n").arg(saturation);
 		}
 		break;

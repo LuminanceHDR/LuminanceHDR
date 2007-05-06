@@ -56,7 +56,7 @@ static string escapeString( const string &src )
 pfs::Frame *readEXRfile (const char *filename) {
 
     pfs::DOMIO pfsio;
-    /*FILE *inputEXRfile=*/fopen(filename,"rb");
+    FILE *inputEXRfile=fopen(filename,"rb");
     InputFile file( filename );
 
     FrameBuffer frameBuffer;
@@ -143,6 +143,6 @@ pfs::Frame *readEXRfile (const char *filename) {
 
 //     pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
     frame->getTags()->setString( "FILE_NAME", filename );
-
+    fclose(inputEXRfile);
     return frame;
 }
