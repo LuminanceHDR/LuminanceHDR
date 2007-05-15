@@ -904,11 +904,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="120"/>
-        <source>Choose a HDR file to Open...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/maingui_impl.cpp" line="235"/>
         <source>Aborting...</source>
         <translation type="unfinished"></translation>
@@ -966,6 +961,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/maingui_impl.cpp" line="531"/>
         <source>There is at least one HDR with unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="120"/>
+        <source>Load an HDR file...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
