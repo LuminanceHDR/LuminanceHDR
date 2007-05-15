@@ -36,7 +36,7 @@ int main( int argc, char ** argv )
 	QString locale = QLocale::system().name();
 	QTranslator translator;
 	translator.load(QString("lang_") + locale, I18NDIR);
-	qDebug( I18NDIR );
+// 	qDebug( I18NDIR );
 	a.installTranslator(&translator);
 	MainGui w;
 	a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
