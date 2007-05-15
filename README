@@ -1,4 +1,4 @@
-This is the README file for qtpfsgui v1.8.7
+This is the README file for Qtpfsgui v1.8.8
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.7 of qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.8 of Qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -39,11 +39,12 @@ of the same scene taken at different exposure setting.
 * Rotate and resize HDR files.
 * Tonemap HDR images.
 * Copy exif data between sets of images.
+* Supports internationalization.
 
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.5.
+Read section 5 (Changes) to read the changes for version 1.8.8.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -71,7 +72,7 @@ On linux you have to compile the code and you need the aforementioned packages (
 2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other exif-related functionalities).
 
 3) fftw is required by the fast implementation of Durand tonemapping algorithm.
-In particular qtpfsgui requires the "float" variety of fftw3.
+In particular Qtpfsgui requires the "float" variety of fftw3.
 
 4) libjpeg is required by the underlying dcraw's implementation for raw file formats.
 
@@ -120,7 +121,7 @@ to be changed according to your setup.
 See also the online help:
 Help->Documentation...
 
-Here I'll only describe the basic workflow in qtpfsgui.
+Here I'll only describe the basic workflow in Qtpfsgui.
 
 From the main window you can see the buttons that enable the user
 to work on HDR images:
@@ -174,12 +175,16 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
+v1.8.8
+* initial support for internationalization, see http://qtpfsgui.sourceforge.net/i18n.html
+* fixes some crashes in the windows version.
+
 v1.8.7
 * fixed test for the correctness of the cache path (important for windows version).
 * closed pending file descriptors.
-* qtpfsgui warns the user when she attempts to close modified/unsaved HDRs in the workspace and also when she closes the main window.
+* Qtpfsgui warns the user when she attempts to close modified/unsaved HDRs in the workspace and also when she closes the main window.
 * fixed underscore and ~ for LDRs description.
-* when attempting to load a non-existent recent files history entry qtpfsgui now removes graphically that entry.
+* when attempting to load a non-existent recent files history entry Qtpfsgui now removes graphically that entry.
 
 v1.8.6
 * fixed the "QPaintEngine::setSystemClip" bug.
@@ -203,7 +208,7 @@ for faster execution.
 * Faster (post)gamma correction on LDR images.
 
 ***WARNING***
-Starting qtpfsgui 1.8.2, Windows users have to download the new
+Starting Qtpfsgui 1.8.2, Windows users have to download the new
 ``Windows DLL Package V3'', make sure to get it at:
 http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
 If you already have "V3" you don't need to download it again.
@@ -225,7 +230,7 @@ PFStmo web-page (a tone mapping library):
 http://www.mpii.mpg.de/resources/tmo/
 
 PFScalibration, the original software from which the backend pfshdrcreate
-was obtained (not needed for qtpfsgui):
+was obtained (not needed for Qtpfsgui):
 http://www.mpii.mpg.de/resources/hdr/calibration/pfs.html
 
 Dcraw: code used for raw images support.

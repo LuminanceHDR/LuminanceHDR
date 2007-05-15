@@ -3,3 +3,4 @@
 * medium term: modular and external execution of dcraw and Pablo's alignment tool (or manually?).
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
 * provide log for exif transfer
+* i18n

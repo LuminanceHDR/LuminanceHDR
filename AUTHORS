@@ -2,7 +2,11 @@ Main author and maintainer:
 Giuseppe Rota <grota@sourceforge.net>
 
 Contributors:
-Alexandre Prokoudine (gui improvements -still to be implemented-, desktop integration)
+Mandus (Mac OS X packager, Norwegian translator)
+Douglas E. Warner (fc6 packager and bug reports)
+Ralph Kaeppeli (German Translator)
+Sloan Poe (found and fixed bug regarding legacy actions signal)
+Alexandre Prokoudine (gui improvements, desktop integration)
 Arne Hagenah (various suggestions)
 Frank Boehme (various suggestions)
 Erik Ouchterlony
