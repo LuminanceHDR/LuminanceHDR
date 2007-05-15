@@ -232,7 +232,7 @@ INCLUDEPATH += C:\comp_prj\libjpeg\include
 INCLUDEPATH += C:\Programmi\GnuWin32\include
 LIBS += -LC:\Programmi\GnuWin32\lib -llibtiff
 
-DEFINES += I18NDIR=QCoreApplication::applicationDirPath()
+DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
 RC_FILE = images/qtpfsgui_ico.rc
 }
 
