@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QPushButton" name="chooseCachePathButton" >
                 <property name="text" >
-                 <string>Choose...</string>
+                 <string>&amp;Load...</string>
                 </property>
                </widget>
               </item>
@@ -766,14 +766,17 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QPushButton" name="okButton" >
        <property name="text" >
-        <string>OK</string>
+        <string>&amp;OK</string>
+       </property>
+       <property name="default" >
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="cancelButton" >
        <property name="text" >
-        <string>Cancel</string>
+        <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>

@@ -165,15 +165,20 @@ pregammagang->setDefault();
 void TMWidget::apply_clicked() {
 	FillToneMappingOptions();
 
-	QProgressBar *newprogressbar=new QProgressBar();
+	QProgressBar *newprogressbar=new QProgressBar(sb);
 
 	//tone mapper thread needs to know full size of the hdr
 	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], cachepath, newprogressbar);
 
 	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+
+// 	connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+
 	qRegisterMetaType<QImage>("QImage");
 	connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
 	connect(thread, SIGNAL(removeProgressBar(QProgressBar*)), this, SLOT(removeProgressBar(QProgressBar*)));
+	connect(thread, SIGNAL(setMaximumSteps(int)),newprogressbar,SLOT(setMaximum(int)));
+	connect(thread, SIGNAL(setCurrentProgress(int)),newprogressbar,SLOT(setValue(int)));
 
 	sb->addWidget(newprogressbar);
 	//start thread
@@ -238,13 +243,13 @@ void TMWidget::FillToneMappingOptions() {
 void TMWidget::loadsettings() {
 	QString opened = QFileDialog::getOpenFileName(
 			this,
-			"Choose a tonemapping settings text file to OPEN...",
+			tr("Load a tonemapping settings text file..."),
 			RecentPathLoadSaveTmoSettings,
-			"Qtpfsgui tonemapping settings text file (*.txt *.TXT)" );
+			tr("Qtpfsgui tonemapping settings text file (*.txt)") );
 	if( ! opened.isEmpty() ) {
 		QFileInfo qfi(opened);
 		if (!qfi.isReadable()) {
-		QMessageBox::critical(this,"Aborting...","File is not readable (check existence, permissions,...)",
+		QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"),
 					QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 		}
@@ -269,9 +274,9 @@ void TMWidget::loadsettings() {
 void TMWidget::savesettings() {
 	QString fname =QFileDialog::getSaveFileName(
 			this,
-			"SAVE tonemapping settings text file to...",
+			tr("Save tonemapping settings text file to..."),
 			RecentPathLoadSaveTmoSettings,
-			"Qtpfsgui tonemapping settings text file (*.txt *.TXT)");
+			tr("Qtpfsgui tonemapping settings text file (*.txt)"));
 	if( ! fname.isEmpty() ) {
 		QFileInfo qfi(fname);
 		// update internal field variable
@@ -295,8 +300,8 @@ void TMWidget::savesettings() {
 void TMWidget::fromGui2Txt(QString destination) {
 	QFile file(destination);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-		QMessageBox::critical(this,"Aborting...","File is not writable (check permissions, path...)",
-					QMessageBox::Ok,QMessageBox::NoButton);
+		QMessageBox::critical(this,tr("Aborting..."),tr("File is not writable (check permissions, path...)"),
+		QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
 	QTextStream out(&file);
@@ -357,7 +362,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 void TMWidget::fromTxt2Gui() {
 	QFile file(TMOSettingsFilename);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-		QMessageBox::critical(this,"Aborting...","File is not readable (check permissions, path...)",
+		QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check permissions, path...)"),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
@@ -374,8 +379,8 @@ void TMWidget::fromTxt2Gui() {
 		value=line.section('=',1,1); //get the value
 		if (field=="TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
-				QMessageBox::critical(this,"Aborting...","Error, Tonemapping Setting file format has changed. This (old) file cannot be used with this version of qtpfsgui. Create a new one.",
-							QMessageBox::Ok,QMessageBox::NoButton);
+				QMessageBox::critical(this,tr("Aborting..."),tr("Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one."),
+				QMessageBox::Ok,QMessageBox::NoButton);
 				return;
 			}
 		} else if (field=="TMO") {
@@ -450,4 +455,5 @@ void TMWidget::fromTxt2Gui() {
 
 void TMWidget::removeProgressBar(QProgressBar* pb) {
 	sb->removeWidget(pb);
+	delete pb;
 }

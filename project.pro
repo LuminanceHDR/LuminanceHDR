@@ -158,19 +158,34 @@ LIBS += -ljpeg
 
 ############################## required by "make install" ########################################
 isEmpty(PREFIX) {
-       PREFIX = ""
+        PREFIX = "/usr/local"
 }
-target.path      = $${PREFIX}/usr/local/bin
-menu.files       = qtpfsgui.desktop
-menu.path        = $${PREFIX}/usr/share/applications
-icon.files       = images/qtpfsgui.png
-icon.path        = $${PREFIX}/usr/share/pixmaps
-htmls.files      = html/index.html html/manual.html html/hints.html html/faq.html
-htmls.path       = $${PREFIX}/usr/local/share/qtpfsgui/html
-htmlimages.files =  html/images/copy_exif.jpeg html/images/mainwin.jpeg html/images/resize.jpeg html/images/snap-qt4_3.jpeg html/images/snap-qt4_4.jpeg html/images/snap-qt4_5.jpeg html/images/snap-qt4_6.jpeg html/images/tonemapdialog.jpeg
-htmlimages.path  = $${PREFIX}/usr/local/share/qtpfsgui/html/images
+isEmpty(I18NDIR) {
+	I18NDIR = "$${PREFIX}/share/qtpfsgui/i18n"
+}
+DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
 
-INSTALLS        += target menu icon htmls htmlimages
+target.path      = $${PREFIX}/bin
+menu.files       = qtpfsgui.desktop
+menu.path        = $${PREFIX}/share/applications
+icon.files       = images/qtpfsgui.png
+icon.path        = $${PREFIX}/share/icons/hicolor/48x48/apps
+htmls.files      = html
+htmls.path       = $${PREFIX}/share/qtpfsgui
+i18n.files       = i18n/lang_it.qm
+i18n.path        = $$I18NDIR
+
+INSTALLS        += target menu icon htmls i18n
+message ( "" )
+message ("********************************************************************")
+message ("Qtpfsgui's PREFIX=$$PREFIX")
+message ("Here's what will be installed:")
+message ("\"qtpfsgui\" ==> $$target.path")
+message ("\"qtpfsgui.desktop\" ==> $$menu.path")
+message ("\"qtpfsgui.png\" ==> $$icon.path")
+message ("\"html\" directory ==> $$htmls.path")
+message ("i18n messages ==> $$i18n.path")
+message ("********************************************************************")
 #################################################################################################
 #CONFIG += debug
 }
@@ -188,7 +203,7 @@ LIBS += -L$$(LOCALSOFT)/lib
 }
 
 win32 {
-# this is just how my MinGW installation is. You gotta change it, if you want to compile it in windows.
+# this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 CONFIG += windows
 #CONFIG += debug
 #CONFIG += console
@@ -217,6 +232,7 @@ INCLUDEPATH += C:\comp_prj\libjpeg\include
 INCLUDEPATH += C:\Programmi\GnuWin32\include
 LIBS += -LC:\Programmi\GnuWin32\lib -llibtiff
 
+DEFINES += I18NDIR=QCoreApplication::applicationDirPath()
 RC_FILE = images/qtpfsgui_ico.rc
 }
 
@@ -316,6 +332,9 @@ SOURCES += src/libpfs/pfs.cpp \
            src/reinhard02/approx.cpp
 
 RESOURCES = icons.qrc
+
+TRANSLATIONS = i18n/lang_it.ts \
+               i18n/lang_no.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \

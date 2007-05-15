@@ -328,7 +328,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QPushButton" name="ResetButton" >
        <property name="text" >
-        <string>Reset</string>
+        <string>&amp;Reset</string>
        </property>
       </widget>
      </item>
@@ -348,14 +348,14 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QPushButton" name="cancelButton" >
        <property name="text" >
-        <string>Cancel</string>
+        <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="okButton" >
        <property name="text" >
-        <string>OK</string>
+        <string>&amp;OK</string>
        </property>
       </widget>
      </item>

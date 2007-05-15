@@ -9,9 +9,6 @@
     <height>599</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>tonemapping functionalities</string>
-  </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
@@ -160,7 +157,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip" >
-           <string>Restore PREgamma's default value (1).</string>
+           <string>Restore pregamma's default value (1).</string>
           </property>
           <property name="text" >
            <string/>
@@ -176,7 +173,7 @@
         <item>
          <widget class="QSlider" name="pregammaSlider" >
           <property name="toolTip" >
-           <string>pregamma</string>
+           <string>Gamma applied before tone mapping</string>
           </property>
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
@@ -1708,10 +1705,10 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="toolTip" >
-        <string>Use current parameters (pregamma and TMO) above to compute a result</string>
+        <string>Use current parameters above (pregamma and tone mapping operator) to compute a LDR image</string>
        </property>
        <property name="text" >
-        <string>&amp;Apply</string>
+        <string>Apply</string>
        </property>
        <property name="icon" >
         <iconset resource="../icons.qrc" >:/new/prefix1/images/apply.png</iconset>
@@ -1854,7 +1851,7 @@ p, li { white-space: pre-wrap; }
          </size>
         </property>
         <property name="toolTip" >
-         <string>the settings file in use</string>
+         <string>The tone mapping settings file in use</string>
         </property>
         <property name="readOnly" >
          <bool>true</bool>
@@ -1877,7 +1874,7 @@ p, li { white-space: pre-wrap; }
          <bool>false</bool>
         </property>
         <property name="toolTip" >
-         <string>Apply Settings File to preview</string>
+         <string>Apply Settings File</string>
         </property>
         <property name="icon" >
          <iconset resource="../icons.qrc" >:/new/prefix1/images/orange_apply.png</iconset>

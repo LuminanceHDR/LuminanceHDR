@@ -30,7 +30,7 @@
    </property>
    <widget class="QMenu" name="menuFile" >
     <property name="title" >
-     <string>File</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="fileNewAction" />
     <addaction name="fileOpenAction" />
@@ -40,7 +40,7 @@
    </widget>
    <widget class="QMenu" name="menuImage" >
     <property name="title" >
-     <string>Image</string>
+     <string>&amp;Image</string>
     </property>
     <addaction name="rotateccw" />
     <addaction name="rotatecw" />
@@ -51,14 +51,14 @@
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuHDR_Histogram" >
      <property name="enabled" >
       <bool>false</bool>
      </property>
      <property name="title" >
-      <string>HDR Histogram</string>
+      <string>HDR &amp;Histogram</string>
      </property>
      <addaction name="Fit_to_dynamic_range" />
      <addaction name="Low_dynamic_range" />
@@ -75,26 +75,26 @@
    </widget>
    <widget class="QMenu" name="menuSettings" >
     <property name="title" >
-     <string>Tools</string>
+     <string>&amp;Tools</string>
     </property>
     <addaction name="OptionsAction" />
     <addaction name="separator" />
     <addaction name="Transplant_Exif_Data_action" />
     <addaction name="actionAlign_Images" />
    </widget>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
-     <string>Help</string>
-    </property>
-    <addaction name="helpAction" />
-    <addaction name="actionAbout_Qt" />
-   </widget>
    <widget class="QMenu" name="menuWindows" >
     <property name="title" >
-     <string>Windows</string>
+     <string>&amp;Windows</string>
     </property>
     <addaction name="actionTile" />
     <addaction name="actionCascade" />
+   </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="helpAction" />
+    <addaction name="actionAbout_Qt" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -127,7 +127,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/newfile.png</iconset>
    </property>
    <property name="text" >
-    <string>New Hdr...</string>
+    <string>&amp;New Hdr...</string>
    </property>
    <property name="iconText" >
     <string>New Hdr...</string>
@@ -150,7 +150,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/fileopen.png</iconset>
    </property>
    <property name="text" >
-    <string>Open Hdr...</string>
+    <string>&amp;Open Hdr...</string>
    </property>
    <property name="iconText" >
     <string>Open Hdr....</string>
@@ -176,7 +176,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text" >
-    <string>Save Hdr as...</string>
+    <string>&amp;Save Hdr as...</string>
    </property>
    <property name="iconText" >
     <string>Save Hdr as...</string>
@@ -208,7 +208,10 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/tonemap.png</iconset>
    </property>
    <property name="text" >
-    <string>Tonemap the Hdr...</string>
+    <string>&amp;Tonemap the Hdr...</string>
+   </property>
+   <property name="iconText" >
+    <string>Tonemap the Hdr</string>
    </property>
    <property name="toolTip" >
     <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
@@ -228,7 +231,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
    <property name="toolTip" >
     <string>Exit</string>
@@ -251,7 +254,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_left.png</iconset>
    </property>
    <property name="text" >
-    <string>Rotate CounterClockWise</string>
+    <string>Rotate C&amp;ounterClockWise</string>
    </property>
    <property name="iconText" >
     <string>Rotate CounterClockWise</string>
@@ -277,7 +280,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_right.png</iconset>
    </property>
    <property name="text" >
-    <string>Rotate ClockWise</string>
+    <string>Rotate C&amp;lockWise</string>
    </property>
    <property name="iconText" >
     <string>Rotate ClockWise</string>
@@ -366,7 +369,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text" >
-    <string>Documentation...</string>
+    <string>&amp;Documentation...</string>
    </property>
    <property name="iconText" >
     <string>About...</string>
@@ -392,7 +395,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
    </property>
    <property name="text" >
-    <string>Normal Size</string>
+    <string>&amp;Normal Size</string>
    </property>
    <property name="toolTip" >
     <string>View HDR at Normal Size</string>
@@ -415,7 +418,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
    </property>
    <property name="text" >
-    <string>Zoom In</string>
+    <string>Zoom &amp;In</string>
    </property>
    <property name="statusTip" >
     <string>Zoom In</string>
@@ -435,7 +438,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
    </property>
    <property name="text" >
-    <string>Zoom Out</string>
+    <string>Zoom &amp;Out</string>
    </property>
    <property name="statusTip" >
     <string>Zoom Out</string>
@@ -458,7 +461,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text" >
-    <string>Fit to Window</string>
+    <string>&amp;Fit to Window</string>
    </property>
    <property name="statusTip" >
     <string>Shrink the HDR to fit its containing window</string>
@@ -475,7 +478,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/options.png</iconset>
    </property>
    <property name="text" >
-    <string>Configure Qtpfsgui...</string>
+    <string>&amp;Configure Qtpfsgui...</string>
    </property>
    <property name="iconText" >
     <string>Qtpfsgui Options</string>
@@ -501,7 +504,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/scale.png</iconset>
    </property>
    <property name="text" >
-    <string>Resize the HDR...</string>
+    <string>&amp;Resize the HDR...</string>
    </property>
    <property name="iconText" >
     <string>Resize the HDR</string>
@@ -524,7 +527,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/copyexif.png</iconset>
    </property>
    <property name="text" >
-    <string>Copy Exif Data...</string>
+    <string>Copy &amp;Exif Data...</string>
    </property>
    <property name="iconText" >
     <string>Copy Exif Data</string>
@@ -547,7 +550,7 @@
     <bool>false</bool>
    </property>
    <property name="text" >
-    <string>Align Images...</string>
+    <string>&amp;Align Images...</string>
    </property>
    <property name="toolTip" >
     <string>WORK IN PROGRESS</string>
@@ -561,17 +564,17 @@
   </action>
   <action name="actionAbout_Qt" >
    <property name="text" >
-    <string>About Qt</string>
+    <string>&amp;About Qt</string>
    </property>
   </action>
   <action name="actionTile" >
    <property name="text" >
-    <string>Tile</string>
+    <string>&amp;Tile</string>
    </property>
   </action>
   <action name="actionCascade" >
    <property name="text" >
-    <string>Cascade</string>
+    <string>&amp;Cascade</string>
    </property>
    <property name="iconText" >
     <string>Cascade</string>

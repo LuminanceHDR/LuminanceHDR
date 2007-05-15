@@ -10,7 +10,7 @@ Contents
 
 1. What it is
 2. Dependencies
-3. Compiling from source
+3. Compiling the sources
 4. Workflow in the gui
 5. Changes
 6. Contact and Links
@@ -45,6 +45,7 @@ Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
 Read section 5 (Changes) to read the changes for version 1.8.8.
+Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a distro.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -86,7 +87,7 @@ As for the other dependencies, OpenEXR is required at runtime as well.
 
 
 
-3. Compiling from source
+3. Compiling the sources
 -------------------------------------------------------------------
 The build system is based on Qt's qmake.
 The build description is contained in the project.pro file.
@@ -98,6 +99,9 @@ If something goes wrong drop me an email.
 Then you can run
 > make
 to compile.
+If you want Qtpfsgui to use a language different from english you should also run:
+> lrelease project.pro
+to create a "qm" file for each "ts" file in the i18n directory.
 In linux you can also run
 # make install
 as root to install the qtpfsgui executable in /usr/local/bin.
@@ -106,6 +110,16 @@ WARNING:
 In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On ubuntu you can install the program ``galternatives'' that lets you switch from qt3's to qt4's executables.
 
 Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X.X has solved the issue.
+
+NOTE FOR PACKAGERS:
+Qtpfsgui's default PREFIX is "/usr/local". You can execute:
+qmake PREFIX=/usr
+before running make in order to modify the default PREFIX.
+Also, the icon qtpfsgui.png will be installed in $${PREFIX}/share/icons/hicolor/48x48/apps. This has been chosen in order to make the icon show up in the KDE/GNOME menu in both cases of PREFIX=/usr/local and PREFIX=/usr.
+You may need to run update-desktop-database in case Qtpfsgui's entry doesn't show up in the graphical menus.
+In case you need it you can also specify a path where the "translation messages" (qm files) will be installed to. You can do that specifying the I18NDIR variable like this:
+qmake I18NDIR=/choose/your/path
+The default is I18NDIR=$${PREFIX}/share/qtpfsgui/i18n
 
 The Windows EXE was obtained on Windows XP using MinGW and MSYS.
 In linux you have to compile the code and you need the packages mentioned in Chapter 2 (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).

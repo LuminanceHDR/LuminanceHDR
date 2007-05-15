@@ -132,7 +132,7 @@ QtpfsguiOptions::~QtpfsguiOptions() {
 void QtpfsguiOptions::updateLineEditString() {
 	QString dir=QFileDialog::getExistingDirectory(
 	this,
-	"Choose a directory",
+	tr("Choose a directory"),
 	QDir::currentPath(),
 	QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
 	if (!dir.isEmpty()) {

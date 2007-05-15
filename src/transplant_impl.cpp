@@ -185,8 +185,8 @@ void TransplantExifDialog::remove_right() {
 }
 
 void TransplantExifDialog::append_left() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFfrom, filetypes );
+	QString filetypes = tr("All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)");
+	QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirEXIFfrom, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
@@ -213,8 +213,8 @@ void TransplantExifDialog::append_left() {
 }
 
 void TransplantExifDialog::append_right() {
-	QString filetypes = "All Supported Types (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)";
-	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirEXIFto, filetypes );
+	QString filetypes = tr("All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)");
+	QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirEXIFto, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
@@ -323,7 +323,7 @@ void TransplantExifDialog::transplant_requested() {
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
 	done=true;
-	Done_label->setText("<center><font color=\"#008400\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>");
+	Done_label->setText(tr("<center><font color=\"#008400\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>"));
 	TransplantButton->setText("Done.");
 	moveup_left_button->setDisabled(true);
 	moveup_right_button->setDisabled(true);

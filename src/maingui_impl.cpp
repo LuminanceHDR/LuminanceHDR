@@ -51,6 +51,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	load_options(qtpfsgui_options);
 
 	setWindowTitle("Qtpfsgui v"QTPFSGUIVERSION);
+// 	qDebug("Qtpfsgui v"QTPFSGUIVERSION);
 	connect(workspace, SIGNAL(windowActivated(QWidget*)), this, SLOT(updateActions(QWidget *)) );
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
@@ -73,8 +74,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-	connect(actionTile,SIGNAL(activated()),workspace,SLOT(tile()));
-	connect(actionCascade,SIGNAL(activated()),workspace,SLOT(cascade()));
+	connect(actionTile,SIGNAL(triggered()),workspace,SLOT(tile()));
+	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
 // 	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -89,7 +90,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	updateRecentFileActions();
 
 	this->showMaximized();
-	statusBar()->showMessage("Ready.... Now open an HDR or create one!",17000);
+	statusBar()->showMessage(tr("Ready.... Now open an HDR or create one!"),17000);
 }
 
 void MainGui::fileNewViaWizard() {
@@ -105,17 +106,18 @@ void MainGui::fileNewViaWizard() {
 }
 
 void MainGui::fileOpen() {
-	QString filetypes = "All HDR formats (*.hdr *.pic *.tiff *.tif *.pfs *.exr *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f" ;
+	QString filetypes = tr("All HDR formats ");
+	filetypes += "(*.hdr *.pic *.tiff *.tif *.pfs *.exr *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw" ;
 #ifndef _WIN32
-	filetypes += " *.exr);; OpenEXR (*.exr" ;
+	filetypes += " *.exr);;OpenEXR (*.exr" ;
 #endif
-	filetypes += ");; Radiance RGBE (*.hdr *.pic);;";
+	filetypes += ");;Radiance RGBE (*.hdr *.pic);;";
 	filetypes += "TIFF Images (*.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;";
 	filetypes += "PFS Stream (*.pfs)";
 	QString opened = QFileDialog::getOpenFileName(
 			this,
-			"Choose a HDR file to OPEN...",
+			tr("Load an HDR file..."),
 			RecentDirHDRSetting,
 			filetypes );
 	if (loadFile(opened))
@@ -132,8 +134,7 @@ if( ! opened.isEmpty() ) {
 		settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 	}
 	if (!qfi.isReadable()) {
-	    QMessageBox::critical(this,"Aborting...","File is not readable (check existence, permissions,...)",
-				 QMessageBox::Ok,QMessageBox::NoButton);
+	    QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"), QMessageBox::Ok,QMessageBox::NoButton);
 	    return false;
 	}
 	HdrViewer *newhdr;
@@ -159,7 +160,7 @@ if( ! opened.isEmpty() ) {
 		hdrpfsframe = readRAWfile(qfi.filePath().toUtf8().constData(), &(qtpfsgui_options->dcraw_options));
 	}
 	else {
-		QMessageBox::warning(this,"Aborting...","We only support <br>Radiance rgbe (hdr), PFS, raw, tiff and exr (linux only) <br>files up until now.",
+		QMessageBox::warning(this,tr("Aborting..."),tr("Qtpfsgui supports only <br>Radiance rgbe (hdr), PFS, raw, hdr tiff and OpenEXR (linux only) <br>files up until now."),
 				 QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
@@ -180,14 +181,17 @@ void MainGui::fileSaveAs()
 	assert(currenthdr!=NULL);
 	QStringList filetypes;
 #ifndef _WIN32
+	filetypes += tr("All HDR formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
 	filetypes += "OpenEXR (*.exr)";
+#else
+	filetypes += tr("All HDR formats (*.hdr *.pic *.tiff *.tif *.pfs)");
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.pic)";
-	filetypes += "TIFF Images (*.tiff *.tif)";
+	filetypes += "HDR TIFF (*.tiff *.tif)";
 	filetypes += "PFS Stream (*.pfs)";
 
 	QFileDialog *fd = new QFileDialog(this);
-	fd->setWindowTitle("SAVE the HDR to...");
+	fd->setWindowTitle(tr("Save the HDR..."));
 	fd->setDirectory(RecentDirHDRSetting);
 // 	fd->selectFile(...);
 	fd->setFileMode(QFileDialog::AnyFile);
@@ -228,7 +232,7 @@ void MainGui::fileSaveAs()
 				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),qfi.filePath());
 				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
-				QMessageBox::warning(this,"Aborting...","We only support <br>EXR(linux only), HDR, TIFF and PFS files up until now.",
+				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only <br>Radiance rgbe (hdr), PFS, hdr tiff and OpenEXR (linux only) <br>files up until now."),
 				QMessageBox::Ok,QMessageBox::NoButton);
 				delete fd;
 				return;
@@ -281,7 +285,7 @@ void MainGui::updateActions( QWidget * w )
 void MainGui::tonemap_requested() {
 	assert(currenthdr!=NULL);
 	if (currenthdr->NeedsSaving) {
-		QMessageBox::warning(this,"Please save first...","Please save the hdr before tonemapping.",
+		QMessageBox::warning(this,tr("Save the HDR..."),tr("Save the hdr before tone mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		fileSaveAs();
 		if (currenthdr->NeedsSaving)
@@ -295,7 +299,7 @@ void MainGui::tonemap_requested() {
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
 	} else {
-		QMessageBox::critical(this,"Error...","Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not writable.\nPlease choose a writable path in Tools -> Configure Qtpfsgui... -> Tone mapping.",
+		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Configure Qtpfsgui... -> Tone mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 	}
 }
@@ -314,11 +318,6 @@ void MainGui::rotatecw_requested() {
 
 void MainGui::dispatchrotate( bool clockwise) {
 	assert(currenthdr!=NULL);
-	if ((currenthdr->getHDRPfsFrame())==NULL) {
-		QMessageBox::critical(this,"","Problem with original (source) buffer...",
-					QMessageBox::Ok, QMessageBox::NoButton);
-		return;
-	}
 	rotateccw->setEnabled(false);
 	rotatecw->setEnabled(false);
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
@@ -336,11 +335,6 @@ void MainGui::dispatchrotate( bool clockwise) {
 
 void MainGui::resize_requested() {
 	assert(currenthdr!=NULL);
-	if ((currenthdr->getHDRPfsFrame())==NULL) {
-		QMessageBox::critical(this,"","Problem with original (source) buffer...",
-					QMessageBox::Ok, QMessageBox::NoButton);
-		return;
-	}
 	ResizeDialog *resizedialog=new ResizeDialog(this,currenthdr->getHDRPfsFrame());
 	if (resizedialog->exec() == QDialog::Accepted) {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
@@ -412,7 +406,7 @@ void MainGui::updateRecentFileActions() {
 	separatorRecentFiles->setVisible(numRecentFiles > 0);
 	
 	for (int i = 0; i < numRecentFiles; ++i) {
-		QString text = tr("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
+		QString text = QString("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
 		recentFileActs[i]->setText(text);
 		recentFileActs[i]->setData(files[i]);
 		recentFileActs[i]->setVisible(true);
@@ -534,7 +528,7 @@ void MainGui::fileExit() {
 		if (((HdrViewer*)p)->NeedsSaving)
 			closeok=false;
 	}
-	if (closeok || (QMessageBox::warning(this,"Unsaved changes...","There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost.",
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost."),
 			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
 		== QMessageBox::Discard))
 		emit close();

@@ -49,10 +49,10 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
 	connect(checkbox_load_from_file,SIGNAL(toggled(bool)),this,SLOT(update_current_config_file_or_notfile(bool)));
-	connect(comboBox_model,SIGNAL(activated(const QString&)),this,SLOT(update_current_config_model(const QString&)));
-	connect(comboBox_gamma_lin_log,SIGNAL(activated(const QString&)),this,SLOT(update_current_config_gamma_lin_log(const QString&)));
-	connect(comboBox_tri_gau_plateau,SIGNAL(activated(const QString&)),this,SLOT(update_current_config_weights(const QString&)));
-	connect(comboBox_PredefConfigs,SIGNAL(activated(int)),this,SLOT(update_currentconfig(int)));
+	connect(comboBox_model,SIGNAL(activated(int)), this,SLOT(update_current_config_model(int)));
+	connect(comboBox_gamma_lin_log,SIGNAL(activated(int)), this,SLOT(update_current_config_gamma_lin_log(int)));
+	connect(comboBox_tri_gau_plateau,SIGNAL(activated(int)), this,SLOT(update_current_config_weights(int)));
+	connect(comboBox_PredefConfigs,SIGNAL(activated(int)), this,SLOT(update_currentconfig(int)));
 	connect(loadFileButton,SIGNAL(clicked()),this,SLOT(load_response_curve_from_file()));
 	connect(loadsetButton,SIGNAL(clicked()),this,SLOT(loadfiles()));
 	connect(radioButton_use_Predefined,SIGNAL(clicked()),this,SLOT(fix_gui_custom_config()));
@@ -62,15 +62,24 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)), this, SLOT(setLoadFilename(const QString&)));
 	connect(EVcomboBox, SIGNAL(activated(int)), this, SLOT(EVcomboBoxactivated(int)));
 	connect(listShowFiles, SIGNAL(currentRowChanged(int)), this, SLOT(fileselected(int)));
-	fromQStringToWeight["Triangular"]=TRIANGULAR;
-	fromQStringToWeight["Gaussian"]=GAUSSIAN;
-	fromQStringToWeight["Plateau"]=PLATEAU;
-	fromQStringToResponse["Gamma"]=GAMMA;
-	fromQStringToResponse["Linear"]=LINEAR;
-	fromQStringToResponse["Log"]=LOG10;
-	fromQStringToResponse["Calibration"]=FROM_ROBERTSON;
-	fromQStringToModel["Robertson"]=ROBERTSON;
-	fromQStringToModel["Debevec"]=DEBEVEC;
+	weights_in_gui[0]=TRIANGULAR;
+	weights_in_gui[1]=GAUSSIAN;
+	weights_in_gui[2]=PLATEAU;
+// 	fromQStringToWeight["Triangular"]=TRIANGULAR;
+// 	fromQStringToWeight["Gaussian"]=GAUSSIAN;
+// 	fromQStringToWeight["Plateau"]=PLATEAU;
+	responses_in_gui[0]=GAMMA;
+	responses_in_gui[1]=LINEAR;
+	responses_in_gui[2]=LOG10;
+	responses_in_gui[3]=FROM_ROBERTSON;
+// 	fromQStringToResponse["Gamma"]=GAMMA;
+// 	fromQStringToResponse["Linear"]=LINEAR;
+// 	fromQStringToResponse["Log"]=LOG10;
+// 	fromQStringToResponse["Calibration"]=FROM_ROBERTSON;
+	models_in_gui[0]=ROBERTSON;
+	models_in_gui[1]=DEBEVEC;
+// 	fromQStringToModel["Robertson"]=ROBERTSON;
+// 	fromQStringToModel["Debevec"]=DEBEVEC;
 
 	fnum=new Exiv2::ExifKey("Exif.Photo.FNumber");
 	fnum2=new Exiv2::ExifKey("Exif.Photo.ApertureValue");
@@ -86,10 +95,11 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 
 void HdrWizardForm::loadfiles() {
     QString filetypes;
-    filetypes += "JPEG (*.jpeg *.jpg);;";
-    filetypes += "TIFF Images (*.tiff *.tif);;";
-    filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f)";
-    QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", RecentDirInputLDRs, filetypes );
+    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;");
+    filetypes += tr("JPEG (*.jpeg *.jpg);;");
+    filetypes += tr("TIFF Images (*.tiff *.tif);;");
+    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)");
+    QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
     if (!files.isEmpty() ) {
 	QFileInfo qfi(files.at(0));
 	QSettings settings("Qtpfsgui", "Qtpfsgui");
@@ -133,7 +143,7 @@ void HdrWizardForm::loadfiles() {
 				listShowFiles->clear();
 				clearlists();
 				delete expotimes;
-				QMessageBox::critical(this,"Tiff error", QString("the file<br>%1<br> is not a 8 bit or 16 bit tiff").arg(qfi.fileName()));
+				QMessageBox::critical(this,tr("Tiff error"), QString(tr("the file<br>%1<br> is not a 8 bit or 16 bit tiff")).arg(qfi.fileName()));
 				return;
 			}
 		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)
@@ -162,7 +172,7 @@ void HdrWizardForm::loadfiles() {
 
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
-		confirmloadlabel->setText("<center><font color=\"#008400\"><h3><b>Done!</b></h3></font></center>");
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Done!</b></h3></font></center>"));
 	} else {
 //if we didn't find the exif data for at least one image, we need to set all the values to -1, so that the user has to fill *all* the values by hand.
 		for (int j=0;j<numberinputfiles;j++) {
@@ -170,21 +180,18 @@ void HdrWizardForm::loadfiles() {
 		}
 		EVcomboBox->setEnabled(TRUE);
 		label_EV->setEnabled(TRUE);
-		QString warning_message("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
-Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>");
-		foreach (QString str, files_lacking_exif)
-			warning_message+=str;
-		warning_message+="</ul>\
+		QString warning_message=(QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
+Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
+%1</ul>\
 <hr>You can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for each one of your images.\
 <hr>If you want Qtfsgui to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
 <ul><li>Shutter Speed (seconds)</li>\
 <li>Aperture (f-number)</li></ul>\
 <hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
-You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item.";
-		QMessageBox::warning(this,"EXIF data not found",warning_message);
-		confirmloadlabel->setText("<center><font color=\"#FF9500\"><h3><b>To proceed fill all the values.</b></h3></font></center>");
+You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(files_lacking_exif.join(""));
+		QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
+		confirmloadlabel->setText(QString(tr("<center><font color=\"#FF9500\"><h3><b>To proceed you need to manually set the exposure values.<br>%1 values still required.</b></h3></font></center>")).arg(numberinputfiles));
 	}
-
 	loadsetButton->setEnabled(FALSE);
     }
 }
@@ -238,7 +245,7 @@ void HdrWizardForm::update_current_config_file_or_notfile( bool checkedfile ) {
     //checkbox not checked
     else {
 	// update chosen config
-	chosen_config.response_curve=fromQStringToResponse[comboBox_gamma_lin_log->currentText()];
+	chosen_config.response_curve=responses_in_gui[comboBox_gamma_lin_log->currentIndex()];
 	chosen_config.CurveFilename="";
 	//and ENABLE nextbutton
 	Next_Finishbutton->setEnabled(true);
@@ -257,7 +264,7 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 		backbutton->setEnabled(TRUE);
 	}
 	else if (newindex==3) { //ending page
-		Next_Finishbutton->setText("Finish");
+		Next_Finishbutton->setText(tr("&Finish"));
 		Next_Finishbutton->setEnabled(FALSE);
 		backbutton->setEnabled(FALSE);
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
@@ -268,13 +275,14 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&listhdrR,&listhdrG,&listhdrB);
 		QApplication::restoreOverrideCursor();
 		Next_Finishbutton->setEnabled(TRUE);
+		Next_Finishbutton->setFocus();
 		return;
 	}
-	Next_Finishbutton->setText("Next >");
+	Next_Finishbutton->setText(tr("&Next >"));
 }
 
-void HdrWizardForm::update_current_antighost_curve(int/* fromgui*/) {
-	update_current_config_gamma_lin_log(coboxRespCurve_Antighost->currentText());
+void HdrWizardForm::update_current_antighost_curve(int fromgui) {
+	update_current_config_gamma_lin_log(fromgui);
 }
 
 void HdrWizardForm::nextpressed() {
@@ -361,9 +369,9 @@ try {
 void HdrWizardForm::load_response_curve_from_file() {
 	curvefilename = QFileDialog::getOpenFileName(
 			this,
-			"Choose a camera response curve file to open",
+			tr("Load a camera response curve file"),
 			QDir::currentPath(),
-			"Camera response curve (*.m);;All Files (*)" );
+			tr("Camera response curve (*.m);;All Files (*)") );
 	if (curvefilename !="")  {
 		ShowFileloadedLineEdit->setText(curvefilename);
 		update_current_config_file_or_notfile(checkbox_load_from_file->isChecked());
@@ -372,22 +380,22 @@ void HdrWizardForm::load_response_curve_from_file() {
 
 void HdrWizardForm::update_currentconfig( int index_from_gui ) {
 // 	qDebug("updating config to %d", index_from_gui);
-	chosen_config=predef_confs[ index_from_gui];
+	chosen_config=predef_confs[index_from_gui];
 	lineEdit_showWeight->setText(getQStringFromConfig(1));
 	lineEdit_show_resp->setText(getQStringFromConfig(2));
 	lineEdit_showmodel->setText(getQStringFromConfig(3));
 }
 
-void HdrWizardForm::update_current_config_weights( const QString & from_gui) {
-	chosen_config.weights=fromQStringToWeight[from_gui];
+void HdrWizardForm::update_current_config_weights(int from_gui) {
+	chosen_config.weights=weights_in_gui[from_gui];
 }
 
-void HdrWizardForm::update_current_config_gamma_lin_log( const QString & from_gui) {
-	chosen_config.response_curve=fromQStringToResponse[from_gui];
+void HdrWizardForm::update_current_config_gamma_lin_log(int from_gui) {
+	chosen_config.response_curve=responses_in_gui[from_gui];
 }
 
-void HdrWizardForm::update_current_config_model( const QString & from_gui) {
-	chosen_config.model=fromQStringToModel[from_gui];
+void HdrWizardForm::update_current_config_model(int from_gui) {
+	chosen_config.model=models_in_gui[from_gui];
 }
 
 void HdrWizardForm::update_current_config_calibrate() {
@@ -406,38 +414,38 @@ pfs::Frame* HdrWizardForm::getPfsFrameHDR() {
 }
 
 QString HdrWizardForm::getCaptionTEXT() {
-	return "(*) Weights: "+getQStringFromConfig(1) + " - Response curve: " + getQStringFromConfig(2) + " - Model: " + getQStringFromConfig(3);
+	return tr("(*) Weights: ")+getQStringFromConfig(1) + tr(" - Response curve: ") + getQStringFromConfig(2) + tr(" - Model: ") + getQStringFromConfig(3);
 }
 
 QString HdrWizardForm::getQStringFromConfig( int type ) {
     if (type==1) { //return String for weights
 	switch (chosen_config.weights) {
 	case TRIANGULAR:
-	    return "Triangular";
+	    return tr("Triangular");
 	case PLATEAU:
-	    return "Plateau";
+	    return tr("Plateau");
 	case GAUSSIAN:
-	    return "Gaussian";
+	    return tr("Gaussian");
 	}
     } else if (type==2) {   //return String for response curve
 	switch (chosen_config.response_curve) {
 	case LINEAR:
-	    return "Linear";
+	    return tr("Linear");
 	case GAMMA:
-	    return "Gamma";
+	    return tr("Gamma");
 	case LOG10:
-	    return "Logarithmic";
+	    return tr("Logarithmic");
 	case FROM_ROBERTSON:
-	    return "From Calibration";
+	    return tr("From Calibration");
 	case FROM_FILE:
-	    return "From File";
+	    return tr("From File");
 	}
     } else if (type==3) {   //return String for model
 	switch (chosen_config.model) {
 	case DEBEVEC:
-	    return "Debevec";
+	    return tr("Debevec");
 	case ROBERTSON:
-	    return "Robertson";
+	    return tr("Robertson");
 	}
     } else return "";
 return "";
@@ -528,14 +536,18 @@ void HdrWizardForm::EVcomboBoxactivated(int i) {
 	expotimes[listShowFiles->currentRow()]=i;
 // 	qDebug("setting expotimes[%d]=%d",listShowFiles->currentRow(),i);
 	bool all_ok=true;
+	int files_unspecified=0;
 	for (int i=0; i<numberinputfiles; i++) {
 		if (expotimes[i]==-1) {
 			all_ok=false;
+			files_unspecified++;
 		}
 	}
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
-		confirmloadlabel->setText("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>");
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>"));
+	} else {
+		confirmloadlabel->setText(QString(tr("<center><font color=\"#FF9500\"><h3><b>To proceed you need to manually set the exposure values.<br>%1 values still required.</b></h3></font></center>")).arg(files_unspecified));
 	}
 }
 

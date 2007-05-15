@@ -39,7 +39,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	setupUi(this);
 
 	prefixname=QFileInfo(_file).completeBaseName();
-	setWindowTitle("Tone mapping Window: "+ prefixname);
+	setWindowTitle(tr("Tone mapping Window: ")+ prefixname);
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 
 	workspace = new QWorkspace(this);
@@ -47,7 +47,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	connect(workspace,SIGNAL(windowActivated(QWidget*)), this, SLOT(updateActions(QWidget *)) );
 	setCentralWidget(workspace);
 
-	QDockWidget *dock = new QDockWidget("Tone mapping Panel", this);
+	QDockWidget *dock = new QDockWidget(tr("Tone mapping Panel"), this);
 	dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setShown(bool)));
@@ -57,12 +57,12 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));
 
-	connect(actionAsThumbnails,SIGNAL(activated()),this,SLOT(viewAllAsThumbnails()));
-	connect(actionCascade,SIGNAL(activated()),workspace,SLOT(cascade()));
+	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
+	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
 	connect(actionFit_to_Window,SIGNAL(toggled(bool)),this,SLOT(current_ldr_fit_to_win(bool)));
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
-	connect(actionClose_All,SIGNAL(activated()),this,SLOT(close_all()));
-	connect(actionSave, SIGNAL(activated()),this, SLOT(saveLDR()));
+	connect(actionClose_All,SIGNAL(triggered()),this,SLOT(close_all()));
+	connect(actionSave, SIGNAL(triggered()),this, SLOT(saveLDR()));
 
 	this->showMaximized();
 }
@@ -95,12 +95,13 @@ void TonemappingWindow::levels_closed() {
 void TonemappingWindow::saveLDR() {
 	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
 	QStringList filetypes;
-	filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG)";
-	filetypes += "PNG (*.png *.PNG)";
-	filetypes += "PPM PBM  (*.ppm *.pbm *.PPM *.PBM)";
-	filetypes += "BMP (*.bmp *.BMP)";
+	filetypes += tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)");
+	filetypes += "JPEG (*.jpg *.jpeg)";
+	filetypes += "PNG (*.png)";
+	filetypes += "PPM PBM  (*.ppm *.pbm)";
+	filetypes += "BMP (*.bmp)";
 	QFileDialog *fd = new QFileDialog(this);
-	fd->setWindowTitle("Choose a filename to SAVE the LDR to");
+	fd->setWindowTitle(tr("Save the LDR to..."));
 	fd->setDirectory( recentPathSaveLDR );
 	fd->selectFile(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg");
 	fd->setFileMode(QFileDialog::AnyFile);
@@ -136,7 +137,7 @@ void TonemappingWindow::saveLDR() {
 				}
 			}
 			if(!((currentLDR->getQImage())->save(outfname,format.toAscii().constData(),100))) {
-				QMessageBox::warning(this,"","Failed to save to <b>" + outfname + "</b>",
+				QMessageBox::warning(this,"",tr("Failed to save <b>") + outfname + "</b>",
 						QMessageBox::Ok, QMessageBox::NoButton);
 			} else { //save is succesful
 				if (format=="jpeg" || format=="jpg") {

@@ -187,7 +187,7 @@
            <string>Restore original size</string>
           </property>
           <property name="text" >
-           <string>Reset</string>
+           <string>&amp;Reset</string>
           </property>
           <property name="icon" >
            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
@@ -226,14 +226,14 @@
      <item>
       <widget class="QPushButton" name="cancelButton" >
        <property name="text" >
-        <string>Cancel</string>
+        <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="scaleButton" >
        <property name="text" >
-        <string>Scale</string>
+        <string>&amp;Scale</string>
        </property>
       </widget>
      </item>

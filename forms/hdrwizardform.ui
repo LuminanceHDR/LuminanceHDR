@@ -41,7 +41,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox" >
          <property name="title" >
-          <string>[1/3] Choose Input Files</string>
+          <string>[1/3] Load Input Images</string>
          </property>
          <layout class="QGridLayout" >
           <property name="margin" >
@@ -74,7 +74,7 @@
             <item>
              <widget class="QLabel" name="label" >
               <property name="text" >
-               <string>Click the button below to load the input exposures</string>
+               <string>Click the button below to load the input images</string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignCenter</set>
@@ -90,7 +90,7 @@
                <string>Load Input Images</string>
               </property>
               <property name="text" >
-               <string>Load images...</string>
+               <string>&amp;Load images...</string>
               </property>
              </widget>
             </item>
@@ -127,13 +127,6 @@ for current image</string>
               </property>
               <property name="toolTip" >
                <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="Line" name="line_5" >
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -253,7 +246,7 @@ for current image</string>
                <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Please choose one of the predefined configurations listed on the right:&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Please choose one of the predefined profiles listed on the right:&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">The first one in the list usually leads to best results, change it only if the resulting HDR is not good enough.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
               </property>
               <property name="alignment" >
@@ -267,36 +260,36 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QComboBox" name="comboBox_PredefConfigs" >
               <property name="toolTip" >
-               <string>list of default configuration settings</string>
+               <string>list of default profiles</string>
               </property>
               <item>
                <property name="text" >
-                <string>Configuration 1</string>
+                <string>Profile 1</string>
                </property>
               </item>
               <item>
                <property name="text" >
-                <string>Configuration 2</string>
+                <string>Profile 2</string>
                </property>
               </item>
               <item>
                <property name="text" >
-                <string>Configuration 3</string>
+                <string>Profile 3</string>
                </property>
               </item>
               <item>
                <property name="text" >
-                <string>Configuration 4</string>
+                <string>Profile 4</string>
                </property>
               </item>
               <item>
                <property name="text" >
-                <string>Configuration 5</string>
+                <string>Profile 5</string>
                </property>
               </item>
               <item>
                <property name="text" >
-                <string>Configuration 6</string>
+                <string>Profile 6</string>
                </property>
               </item>
              </widget>
@@ -595,8 +588,8 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QCheckBox" name="checkBoxCallCustom" >
             <property name="text" >
-             <string>Use custom configuration
-(use this only if default configurations 
+             <string>Use custom configuration.
+(use this only if the default profiles
 above do not yield good results)</string>
             </property>
            </widget>
@@ -786,7 +779,7 @@ pixel values&lt;/p></string>
                     <bool>false</bool>
                    </property>
                    <property name="text" >
-                    <string>...</string>
+                    <string>Load...</string>
                    </property>
                   </widget>
                  </item>
@@ -820,9 +813,7 @@ pixel values&lt;/p></string>
              <item>
               <widget class="QRadioButton" name="radio_usecalibrate_02" >
                <property name="text" >
-                <string>use calibration to find 
-response curve 
-(robertson02 algorithm)</string>
+                <string>Use calibration to find response curve (robertson02 algorithm)</string>
                </property>
               </widget>
              </item>
@@ -967,7 +958,7 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <property name="text" >
-        <string>&lt; Back</string>
+        <string>&lt; &amp;Back</string>
        </property>
       </widget>
      </item>
@@ -977,14 +968,14 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <property name="text" >
-        <string>Next ></string>
+        <string>&amp;Next ></string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="cancelbutton" >
        <property name="text" >
-        <string>Cancel</string>
+        <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>

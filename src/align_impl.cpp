@@ -195,7 +195,7 @@ void AlignDialog::remove_pairs_belonging_to(int listimgs_idx) {
 }
 
 void AlignDialog::append_files(){
-	QString filetypes = "JPEG Files (*.jpeg *.jpg *.JPG *.JPEG)";
+	QString filetypes = "JPEG Files (*.jpeg *.jpg)";
 	QStringList files = QFileDialog::getOpenFileNames(this, "Select the input Images", QDir::currentPath()+"/JPGS", filetypes );
 	if (!files.isEmpty()) {
 		QStringList::Iterator it = files.begin();

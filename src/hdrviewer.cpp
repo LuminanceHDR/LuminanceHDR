@@ -93,7 +93,7 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	VBL_L->setSpacing(0);
 	VBL_L->setMargin(0);
 
-	toolBar = new QToolBar("Viewing Settings Toolbar",this);
+	toolBar = new QToolBar(tr("Viewing Settings Toolbar"),this);
 	QLabel *mappingMethodLabel = new QLabel( "&Mapping:", toolBar );
 	mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
 	mappingMethodCB = new QComboBox( toolBar );
@@ -102,17 +102,17 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	toolBar->addSeparator();
 	mappingMethodLabel->setBuddy( mappingMethodCB );
 	QStringList methods;
-	methods+="Linear";
-	methods+="Gamma 1.4";
-	methods+="Gamma 1.8";
-	methods+="Gamma 2.2";
-	methods+="Gamma 2.6";
-	methods+="Logarithmic";
+	methods+=tr("Linear");
+	methods+=tr("Gamma 1.4");
+	methods+=tr("Gamma 1.8");
+	methods+=tr("Gamma 2.2");
+	methods+=tr("Gamma 2.6");
+	methods+=tr("Logarithmic");
 	mappingMethodCB->addItems(methods);
 	mappingMethodCB->setCurrentIndex( 3 );
 	connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
 
-	QLabel *histlabel = new QLabel( "Histogram:", toolBar );
+	QLabel *histlabel = new QLabel( tr("Histogram:"), toolBar );
 	lumRange = new LuminanceRangeWidget( toolBar );
 	toolBar->addWidget(histlabel);
 	toolBar->addWidget(lumRange);
@@ -285,7 +285,7 @@ pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 
 void HdrViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,"Unsaved changes...","This HDR has unsaved changes.<br>If you quit now, these changes will be lost.",
+		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This HDR has unsaved changes.<br>If you quit now, these changes will be lost."),
 		QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard);
 		if (ret==QMessageBox::Discard)
 			event->accept();

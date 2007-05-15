@@ -9,9 +9,6 @@
     <height>822</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>Tonemapping Window</string>
-  </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
@@ -25,23 +22,23 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
-     <string>File</string>
-    </property>
-    <addaction name="actionSave" />
-    <addaction name="actionClose_All" />
-    <addaction name="separator" />
-    <addaction name="actionFinishTM" />
-   </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
-     <string>View</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="actionFit_to_Window" />
     <addaction name="separator" />
     <addaction name="actionAsThumbnails" />
     <addaction name="actionCascade" />
+   </widget>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionSave" />
+    <addaction name="actionClose_All" />
+    <addaction name="separator" />
+    <addaction name="actionFinishTM" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuView" />
@@ -70,7 +67,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
-    <string>Close Dialog</string>
+    <string>&amp;Close Dialog</string>
    </property>
    <property name="iconText" >
     <string>Close Dialog</string>
@@ -122,16 +119,19 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text" >
-    <string>Fix Histogram</string>
+    <string>Tune &amp;Histogram</string>
    </property>
    <property name="iconText" >
-    <string>Correct Histogram</string>
+    <string>Tune Histogram</string>
+   </property>
+   <property name="toolTip" >
+    <string>Tune the histogram for the current LDR</string>
    </property>
    <property name="statusTip" >
-    <string>Edit Histogram for the current LDR</string>
+    <string>Tune the histogram for the current LDR</string>
    </property>
    <property name="whatsThis" >
-    <string>Edit Histogram for the current LDR</string>
+    <string>Tune the histogram for the current LDR</string>
    </property>
   </action>
   <action name="actionSave" >
@@ -142,7 +142,10 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text" >
-    <string>Save Result</string>
+    <string>&amp;Save</string>
+   </property>
+   <property name="iconText" >
+    <string>Save</string>
    </property>
    <property name="toolTip" >
     <string>Save currently selected LDR</string>
@@ -165,7 +168,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
    </property>
    <property name="text" >
-    <string>Close All</string>
+    <string>C&amp;lose All</string>
    </property>
    <property name="iconText" >
     <string>Close All</string>
@@ -179,10 +182,13 @@
    <property name="whatsThis" >
     <string>Close all the LDRs in the workspace</string>
    </property>
+   <property name="shortcut" >
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="actionAsThumbnails" >
    <property name="text" >
-    <string>As Thumbnails</string>
+    <string>As &amp;Thumbnails</string>
    </property>
    <property name="iconText" >
     <string>As Thumbnails</string>
@@ -199,7 +205,7 @@
   </action>
   <action name="actionCascade" >
    <property name="text" >
-    <string>Cascade</string>
+    <string>&amp;Cascade</string>
    </property>
    <property name="statusTip" >
     <string/>
@@ -216,7 +222,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
    </property>
    <property name="text" >
-    <string>Fit to Window</string>
+    <string>&amp;Fit to Window</string>
    </property>
    <property name="statusTip" >
     <string>Fit the current LDR to its containing window.</string>

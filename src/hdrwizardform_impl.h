@@ -26,7 +26,7 @@
 
 #include <QDialog>
 #include <QString>
-#include <QMap>
+// #include <QMap>
 #include <image.hpp>
 #include <exif.hpp>
 #include "../generated_uic/ui_hdrwizardform.h"
@@ -46,9 +46,12 @@ public:
 private:
 	QString curvefilename;
 	config_triple chosen_config;
-	QMap<QString,TResponse> fromQStringToResponse;
-	QMap<QString,TModel>    fromQStringToModel;
-	QMap<QString,TWeight>   fromQStringToWeight;
+// 	QMap<QString,TResponse> fromQStringToResponse;
+// 	QMap<QString,TModel>    fromQStringToModel;
+// 	QMap<QString,TWeight>   fromQStringToWeight;
+	TResponse responses_in_gui[4];
+	TModel models_in_gui[2];
+	TWeight weights_in_gui[3];
 	QString RecentDirInputLDRs;
 	QString getQStringFromConfig( int type );
 	void clearlists();
@@ -74,10 +77,10 @@ private slots:
 	void backpressed();
 	void currentPageChangedInto(int);
 	void update_current_config_file_or_notfile(bool);
-	void update_current_config_model(const QString&);
-	void update_current_config_gamma_lin_log(const QString&);
+	void update_current_config_model(int);
+	void update_current_config_gamma_lin_log(int);
+	void update_current_config_weights(int);
 	void update_currentconfig(int);
-	void update_current_config_weights(const QString&);
 	void update_current_antighost_curve(int);
 	void load_response_curve_from_file();
 	void loadfiles();

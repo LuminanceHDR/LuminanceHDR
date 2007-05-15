@@ -39,6 +39,8 @@ public:
 
 signals:
 	void ImageComputed(const QImage&,tonemapping_options *);
+	void setMaximumSteps(int);
+	void setCurrentProgress(int);
 	void removeProgressBar( QProgressBar *pb );
 
 protected:

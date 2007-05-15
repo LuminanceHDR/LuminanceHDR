@@ -22,13 +22,24 @@
  */
 
 #include <QApplication>
+#include <QLocale>
+#include <QTranslator>
+// #include <QDir>
+// #include <QDebug>
 #include "maingui_impl.h"
 
 int main( int argc, char ** argv )
 {
-    QApplication a( argc, argv );
-    MainGui w;
-    w.show();
-    a.connect( &a, SIGNAL( lastWindowClosed() ), &a, SLOT( quit() ) );
-    return a.exec();
+	QApplication a( argc, argv );
+// 	qDebug() << "QDir::currentPath()=" << QDir::currentPath();
+// 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
+	QString locale = QLocale::system().name();
+	QTranslator translator;
+	translator.load(QString("lang_") + locale, I18NDIR);
+	qDebug( I18NDIR );
+	a.installTranslator(&translator);
+	MainGui w;
+	a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
+	w.show();
+	return a.exec();
 }
