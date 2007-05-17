@@ -334,7 +334,8 @@ SOURCES += src/libpfs/pfs.cpp \
 RESOURCES = icons.qrc
 
 TRANSLATIONS = i18n/lang_it.ts \
-               i18n/lang_no.ts
+               i18n/lang_no.ts \
+               i18n/lang_fr.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
