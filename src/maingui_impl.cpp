@@ -394,7 +394,9 @@ void MainGui::helpAbout() {
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
-	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	QString docDir = QCoreApplication::applicationDirPath();
+	docDir.append("/../Resources/html");
+	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html" << docDir << "/Applications/qtpfsgui.app/Contents/Resources/html");
 	ui.tb->setSource(QUrl("index.html"));
 	help->show();
 }

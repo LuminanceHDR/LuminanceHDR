@@ -200,6 +200,9 @@ LIBS+=-lIlmThread
 CONFIG += x86 ppc
 # Add some extra PATHS in LIBS:
 LIBS += -L$$(LOCALSOFT)/lib
+
+#I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
+I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
 }
 
 win32 {
@@ -334,8 +337,10 @@ SOURCES += src/libpfs/pfs.cpp \
 RESOURCES = icons.qrc
 
 TRANSLATIONS = i18n/lang_it.ts \
-               i18n/lang_no.ts \
-               i18n/lang_fr.ts
+               i18n/lang_fr.ts \
+               i18n/lang_de.ts \
+               i18n/lang_es.ts \
+               i18n/lang_pl.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
