@@ -203,6 +203,7 @@ LIBS += -L$$(LOCALSOFT)/lib
 
 #I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
 I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
+DEFINES += I18NDIR=\"$$I18NDIR\"
 }
 
 win32 {
