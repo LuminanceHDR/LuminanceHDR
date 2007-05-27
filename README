@@ -44,7 +44,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.8.
+Read section 5 (Changes) to read the changes for version 1.8.9.
 Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a distro.
 
 The code is in part based on the existing opensource packages:
