@@ -1,10 +1,10 @@
 Read the README file as well, it's much more detailed!
-To compile from source, first, execute the command:
-        $qmake
+To compile from source, first execute the command:
+	$> qmake
 to generate the Makefile.
 Then execute the command:
-        $make
+	$> make
 to compile the source code.
-Finally execute the command:
-        $make install
+Finally execute (as root) the command:
+	#> make install
 to install the target file.

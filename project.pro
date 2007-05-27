@@ -158,12 +158,12 @@ LIBS += -ljpeg
 
 ############################## required by "make install" ########################################
 isEmpty(PREFIX) {
-        PREFIX = "/usr/local"
+        PREFIX = /usr/local
 }
 isEmpty(I18NDIR) {
-	I18NDIR = "$${PREFIX}/share/qtpfsgui/i18n"
+	I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
 }
-DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
+DEFINES += I18NDIR=$$I18NDIR
 
 target.path      = $${PREFIX}/bin
 menu.files       = qtpfsgui.desktop
@@ -180,10 +180,10 @@ message ( "" )
 message ("********************************************************************")
 message ("Qtpfsgui's PREFIX=$$PREFIX")
 message ("Here's what will be installed:")
-message ("\"qtpfsgui\" ==> $$target.path")
-message ("\"qtpfsgui.desktop\" ==> $$menu.path")
-message ("\"qtpfsgui.png\" ==> $$icon.path")
-message ("\"html\" directory ==> $$htmls.path")
+message ("qtpfsgui ==> $$target.path")
+message ("qtpfsgui.desktop ==> $$menu.path")
+message ("qtpfsgui.png ==> $$icon.path")
+message ("html directory ==> $$htmls.path")
 message ("i18n messages ==> $$i18n.path")
 message ("********************************************************************")
 #################################################################################################

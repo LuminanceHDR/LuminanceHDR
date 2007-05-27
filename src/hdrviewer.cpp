@@ -285,9 +285,14 @@ pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 
 void HdrViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
+#if QT_VERSION <= 0x040200
+		int ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This HDR has unsaved changes.<br>If you quit now, these changes will be lost."), QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton);
+		if (ret==QMessageBox::Ignore)
+#else
 		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This HDR has unsaved changes.<br>If you quit now, these changes will be lost."),
 		QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard);
 		if (ret==QMessageBox::Discard)
+#endif
 			event->accept();
 		else
 			event->ignore();

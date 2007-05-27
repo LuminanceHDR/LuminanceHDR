@@ -530,9 +530,15 @@ void MainGui::fileExit() {
 		if (((HdrViewer*)p)->NeedsSaving)
 			closeok=false;
 	}
+#if QT_VERSION <= 0x040200
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost."),
+			QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton)
+		== QMessageBox::Ignore))
+#else
 	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost."),
 			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
 		== QMessageBox::Discard))
+#endif
 		emit close();
 }
 
