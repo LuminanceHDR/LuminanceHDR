@@ -1,4 +1,4 @@
-This is the README file for Qtpfsgui v1.8.8
+This is the README file for Qtpfsgui v1.8.9
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.8 of Qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.9 of Qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -191,37 +191,13 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
+v1.8.9
+* fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
+* The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
+
 v1.8.8
 * initial support for internationalization, see http://qtpfsgui.sourceforge.net/i18n.html
 * fixes some crashes in the windows version.
-
-v1.8.7
-* fixed test for the correctness of the cache path (important for windows version).
-* closed pending file descriptors.
-* Qtpfsgui warns the user when she attempts to close modified/unsaved HDRs in the workspace and also when she closes the main window.
-* fixed underscore and ~ for LDRs description.
-* when attempting to load a non-existent recent files history entry Qtpfsgui now removes graphically that entry.
-
-v1.8.6
-* fixed the "QPaintEngine::setSystemClip" bug.
-* solved a compile-time error with some version of Qt4.
-* updated FAQ (in the html documentation).
-
-v1.8.5
-* added progressbars in tonemapping status bar
-* added some status_tips in tone mapping dialog
-* added all available formats in load hdr dialog
-* fixed filename path bug
-* press and hold middle mouse button to scroll images
-
-v1.8.4
-* The Tone mapping window has been restyled, so that now
-we can have multiple results at the same time.
-* Threaded execution keeps user interface responsive, and on a
-multi-processor machine (SMP) each thread gets allocated on a different CPU.
-* Qtpfsgui now caches intermediate results (using temporary files)
-for faster execution.
-* Faster (post)gamma correction on LDR images.
 
 ***WARNING***
 Starting Qtpfsgui 1.8.2, Windows users have to download the new

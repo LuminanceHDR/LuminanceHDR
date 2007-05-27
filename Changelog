@@ -1,3 +1,17 @@
+Changes:
+27-05-2007 v1.8.9
+* fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
+* The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
+
+15-05-2007 v1.8.8
+* Fixed bug causing crash in windows.
+* Qtpfsgui now can be translated in your language (supports internationalization, see http://qtpfsgui.sourceforge.net/i18n.html).
+* Added "All supported files ..." file-filter where appropriate.
+* Fixed "button does nothing" bug.
+* Added shortcuts for menu items, fixed some visual text messages.
+* Improved build system, better support for distro packagers (see README file).
+* The hdr creation wizard now shows for how many remaining files we have to specify, in manual mode, the EV value.
+
 06-05-2007 v1.8.7
 * fixed test for the correctness of the cache path (important for windows version).
 * closed pending file descriptors.
