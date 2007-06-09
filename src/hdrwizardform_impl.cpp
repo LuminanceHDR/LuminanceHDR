@@ -183,7 +183,7 @@ void HdrWizardForm::loadfiles() {
 		QString warning_message=(QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
 Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
 %1</ul>\
-<hr>You can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for each one of your images.\
+<hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for each one of your images.\
 <hr>If you want Qtfsgui to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
 <ul><li>Shutter Speed (seconds)</li>\
 <li>Aperture (f-number)</li></ul>\

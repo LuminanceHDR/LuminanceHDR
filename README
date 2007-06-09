@@ -105,6 +105,8 @@ to create a "qm" file for each "ts" file in the i18n directory.
 In linux you can also run
 # make install
 as root to install the qtpfsgui executable in /usr/local/bin.
+This last step also installs the icon, the desktop file, the html documentation and the "qm" translation file.
+This last step is usually required in order for Qtpfsgui to locate the "qm" files used for internationalization.
 
 WARNING:
 In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``galternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).

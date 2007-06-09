@@ -163,7 +163,6 @@ isEmpty(PREFIX) {
 isEmpty(I18NDIR) {
 	I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
 }
-DEFINES += I18NDIR=$$I18NDIR
 
 target.path      = $${PREFIX}/bin
 menu.files       = qtpfsgui.desktop
@@ -172,7 +171,7 @@ icon.files       = images/qtpfsgui.png
 icon.path        = $${PREFIX}/share/icons/hicolor/48x48/apps
 htmls.files      = html
 htmls.path       = $${PREFIX}/share/qtpfsgui
-i18n.files       = i18n/lang_it.qm
+i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm i18n/lang_ru.qm
 i18n.path        = $$I18NDIR
 
 INSTALLS        += target menu icon htmls i18n
@@ -186,6 +185,16 @@ message ("qtpfsgui.png ==> $$icon.path")
 message ("html directory ==> $$htmls.path")
 message ("i18n messages ==> $$i18n.path")
 message ("********************************************************************")
+
+MAJOR_MINOR_QT_VERSION = $$[QT_VERSION]
+MAJOR_MINOR_QT_VERSION ~= s/(4\..)\../\1
+contains(MAJOR_MINOR_QT_VERSION,4.2) {
+DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
+#message("Detected Qt4.2")
+} else {
+DEFINES += I18NDIR=\"$$I18NDIR\"
+#message("Detected Qt4.1")
+}
 #################################################################################################
 #CONFIG += debug
 }
@@ -341,7 +350,8 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_fr.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
-               i18n/lang_pl.ts
+               i18n/lang_pl.ts \
+               i18n/lang_ru.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \

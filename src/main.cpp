@@ -27,7 +27,7 @@
 // #include <QDir>
 // #include <QDebug>
 #include "maingui_impl.h"
-#define QUOTEME(x) #x
+// #define QUOTEME( x ) #x
 
 int main( int argc, char ** argv )
 {
@@ -36,7 +36,7 @@ int main( int argc, char ** argv )
 // 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	translator.load(QString("lang_") + locale, QUOTEME(I18NDIR));
+	translator.load(QString("lang_") + locale, I18NDIR);
 // 	qDebug( I18NDIR );
 	a.installTranslator(&translator);
 	MainGui w;

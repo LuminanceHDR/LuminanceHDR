@@ -1,5 +1,5 @@
 * displaying progress bar when loading HDR images
 * check for latest version, file online on sf.
-* medium term: modular and external execution of dcraw and Pablo's alignment tool (or manually?).
+* medium term: modular and external execution of dcraw and Pablo's alignment tool.
 * long term: TEST/IMPROVE the antighosting algorithm (Pablo D'Angelo's suggestions)
 * provide log for exif transfer

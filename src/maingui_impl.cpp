@@ -90,7 +90,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	updateRecentFileActions();
 
 	this->showMaximized();
-	statusBar()->showMessage(tr("Ready.... Now open an HDR or create one!"),17000);
+	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
 }
 
 void MainGui::fileNewViaWizard() {
@@ -106,7 +106,7 @@ void MainGui::fileNewViaWizard() {
 }
 
 void MainGui::fileOpen() {
-	QString filetypes = tr("All HDR formats ");
+	QString filetypes = tr("All Hdr formats ");
 	filetypes += "(*.hdr *.pic *.tiff *.tif *.pfs *.exr *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw" ;
 #ifndef _WIN32
 	filetypes += " *.exr);;OpenEXR (*.exr" ;
@@ -117,7 +117,7 @@ void MainGui::fileOpen() {
 	filetypes += "PFS Stream (*.pfs)";
 	QString opened = QFileDialog::getOpenFileName(
 			this,
-			tr("Load an HDR file..."),
+			tr("Load an Hdr file..."),
 			RecentDirHDRSetting,
 			filetypes );
 	if (loadFile(opened))
@@ -181,10 +181,10 @@ void MainGui::fileSaveAs()
 	assert(currenthdr!=NULL);
 	QStringList filetypes;
 #ifndef _WIN32
-	filetypes += tr("All HDR formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
+	filetypes += tr("All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
 	filetypes += "OpenEXR (*.exr)";
 #else
-	filetypes += tr("All HDR formats (*.hdr *.pic *.tiff *.tif *.pfs)");
+	filetypes += tr("All Hdr formats (*.hdr *.pic *.tiff *.tif *.pfs)");
 #endif
 	filetypes += "Radiance RGBE (*.hdr *.pic)";
 	filetypes += "HDR TIFF (*.tiff *.tif)";
@@ -285,7 +285,7 @@ void MainGui::updateActions( QWidget * w )
 void MainGui::tonemap_requested() {
 	assert(currenthdr!=NULL);
 	if (currenthdr->NeedsSaving) {
-		QMessageBox::warning(this,tr("Save the HDR..."),tr("Save the hdr before tone mapping."),
+		QMessageBox::warning(this,tr("Save the HDR..."),tr("Save the Hdr before tone mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		fileSaveAs();
 		if (currenthdr->NeedsSaving)
@@ -531,11 +531,11 @@ void MainGui::fileExit() {
 			closeok=false;
 	}
 #if QT_VERSION <= 0x040200
-	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost."),
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>If you quit now, these changes will be lost."),
 			QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton)
 		== QMessageBox::Ignore))
 #else
-	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR with unsaved changes.<br>If you quit now, these changes will be lost."),
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>If you quit now, these changes will be lost."),
 			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
 		== QMessageBox::Discard))
 #endif

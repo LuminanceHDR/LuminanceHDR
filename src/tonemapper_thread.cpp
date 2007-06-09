@@ -34,10 +34,10 @@ pfs::Frame* pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
 pfs::Frame* pfstmo_reinhard04 (pfs::Frame *,float,float);
 // QImage* fromLDRPFStoQImage(pfs::Frame*);
 
-// width of the pfs:frame written on disk during resize operation
+// width of the pfs:frame written on disk during resize operation, cannot be the 100% size: originalxsize, because i don't resize to 100% and write to disk.
 int xsize=-1; //-1 means nothing has been computed yet
 // gamma of the pfs:frame written on disk after resize
-float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)<
+float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)
 //pregamma!=-1 means that the pregamma frame has the xsize as width
 QReadWriteLock lock;
 
@@ -48,7 +48,7 @@ TonemapperThread::TonemapperThread(int xorigsize, QString cachepath, QProgressBa
 
 TonemapperThread::~TonemapperThread() {
 	wait();
-	qDebug("~TonemapperThread()");
+// 	qDebug("~TonemapperThread()");
 }
 
 void TonemapperThread::fetch(QString filename) {
@@ -64,7 +64,7 @@ void TonemapperThread::swap(pfs::Frame *frame, QString filename) {
 
 void TonemapperThread::run() {
 // 	dumpOpts();
-// 	qDebug("::::::begin thread, size=%d, gamma=%f",xsize, pregamma);
+	qDebug("::::::begin thread, size=%d, gamma=%f",xsize, pregamma);
 	lock.lockForRead();
 	if (opt.xsize==originalxsize && opt.pregamma==1.0f) {
 		//original goes into tone mapping
@@ -82,7 +82,7 @@ void TonemapperThread::run() {
 		colorspaceconversion=true;
 		emit setMaximumSteps(2);
 		emit setCurrentProgress(1);
-	} else if ( (opt.xsize==xsize && opt.pregamma==pregamma) || (opt.xsize==originalxsize && opt.pregamma==pregamma) ) {
+	} else if ( (opt.xsize==xsize && opt.pregamma==pregamma) || (opt.xsize==originalxsize && xsize==-1 && opt.pregamma==pregamma) ) {
 		//after_pregamma goes into tone mapping
 		qDebug("::::::after_pregamma goes into tone mapping");
 		fetch("/after_pregamma.pfs");
@@ -115,6 +115,7 @@ void TonemapperThread::run() {
 
 
 	if (status==from_resize) {
+		assert(opt.xsize!=originalxsize);
 		qDebug("executing resize step");
 		pfs::Frame *resized=resizeFrame(workingframe, opt.xsize);
 		lock.lockForWrite();
