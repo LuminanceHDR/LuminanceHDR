@@ -28,7 +28,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox" >
      <property name="title" >
-      <string>HDR Image Size</string>
+      <string>Hdr Image Size</string>
      </property>
      <layout class="QVBoxLayout" >
       <property name="margin" >

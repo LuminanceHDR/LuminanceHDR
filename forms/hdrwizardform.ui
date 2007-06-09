@@ -223,7 +223,7 @@ for current image</string>
        <item>
         <widget class="QGroupBox" name="groupBox_2" >
          <property name="title" >
-          <string>[2/3] Choose Settings for HDR Creation</string>
+          <string>[2/3] Choose Settings for Hdr Creation</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
@@ -247,7 +247,7 @@ for current image</string>
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Please choose one of the predefined profiles listed on the right:&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">The first one in the list usually leads to best results, change it only if the resulting HDR is not good enough.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignJustify|Qt::AlignVCenter</set>
@@ -409,7 +409,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="label_model" >
               <property name="text" >
-               <string>HDR creation model:</string>
+               <string>Hdr creation model:</string>
               </property>
              </widget>
             </item>
@@ -836,7 +836,7 @@ pixel values&lt;/p></string>
           <item>
            <widget class="QGroupBox" name="groupBox_6" >
             <property name="title" >
-             <string>HDR creation equation:</string>
+             <string>Hdr creation equation:</string>
             </property>
             <layout class="QHBoxLayout" >
              <property name="margin" >
@@ -900,7 +900,7 @@ pixel values&lt;/p></string>
              <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:19pt;">HDR Image created...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:19pt;">Hdr Image created...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
             </property>
            </widget>
           </item>

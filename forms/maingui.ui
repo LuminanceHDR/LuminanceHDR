@@ -49,29 +49,12 @@
     <addaction name="separator" />
     <addaction name="TonemapAction" />
    </widget>
-   <widget class="QMenu" name="menuView" >
+   <widget class="QMenu" name="menuHelp" >
     <property name="title" >
-     <string>&amp;View</string>
+     <string>&amp;Help</string>
     </property>
-    <widget class="QMenu" name="menuHDR_Histogram" >
-     <property name="enabled" >
-      <bool>false</bool>
-     </property>
-     <property name="title" >
-      <string>HDR &amp;Histogram</string>
-     </property>
-     <addaction name="Fit_to_dynamic_range" />
-     <addaction name="Low_dynamic_range" />
-     <addaction name="Shrink_dynamic_range" />
-     <addaction name="Extend_dynamic_range" />
-     <addaction name="Decrease_exposure" />
-     <addaction name="Increase_exposure" />
-    </widget>
-    <addaction name="menuHDR_Histogram" />
-    <addaction name="fitToWindowAct" />
-    <addaction name="normalSizeAct" />
-    <addaction name="zoomInAct" />
-    <addaction name="zoomOutAct" />
+    <addaction name="helpAction" />
+    <addaction name="actionAbout_Qt" />
    </widget>
    <widget class="QMenu" name="menuSettings" >
     <property name="title" >
@@ -89,12 +72,29 @@
     <addaction name="actionTile" />
     <addaction name="actionCascade" />
    </widget>
-   <widget class="QMenu" name="menuHelp" >
+   <widget class="QMenu" name="menuView" >
     <property name="title" >
-     <string>&amp;Help</string>
+     <string>&amp;View</string>
     </property>
-    <addaction name="helpAction" />
-    <addaction name="actionAbout_Qt" />
+    <widget class="QMenu" name="menuHDR_Histogram" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="title" >
+      <string>Hdr &amp;Histogram</string>
+     </property>
+     <addaction name="Fit_to_dynamic_range" />
+     <addaction name="Low_dynamic_range" />
+     <addaction name="Shrink_dynamic_range" />
+     <addaction name="Extend_dynamic_range" />
+     <addaction name="Decrease_exposure" />
+     <addaction name="Increase_exposure" />
+    </widget>
+    <addaction name="menuHDR_Histogram" />
+    <addaction name="fitToWindowAct" />
+    <addaction name="normalSizeAct" />
+    <addaction name="zoomInAct" />
+    <addaction name="zoomOutAct" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -133,13 +133,13 @@
     <string>New Hdr...</string>
    </property>
    <property name="toolTip" >
-    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+    <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
    </property>
    <property name="statusTip" >
-    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+    <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
    </property>
    <property name="whatsThis" >
-    <string>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+    <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+N</string>
@@ -156,13 +156,13 @@
     <string>Open Hdr....</string>
    </property>
    <property name="toolTip" >
-    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+    <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
    </property>
    <property name="statusTip" >
-    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+    <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
    </property>
    <property name="whatsThis" >
-    <string>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+    <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+O</string>
@@ -182,13 +182,13 @@
     <string>Save Hdr as...</string>
    </property>
    <property name="toolTip" >
-    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
+    <string>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
    </property>
    <property name="statusTip" >
-    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
+    <string>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
    </property>
    <property name="whatsThis" >
-    <string>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
+    <string>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+S</string>
@@ -214,13 +214,13 @@
     <string>Tonemap the Hdr</string>
    </property>
    <property name="toolTip" >
-    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="statusTip" >
-    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="whatsThis" >
-    <string>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+T</string>
@@ -260,13 +260,13 @@
     <string>Rotate CounterClockWise</string>
    </property>
    <property name="toolTip" >
-    <string>Rotate Counterclockwise the HDR</string>
+    <string>Rotate Counterclockwise the Hdr</string>
    </property>
    <property name="statusTip" >
-    <string>Rotate Counterclockwise the HDR</string>
+    <string>Rotate Counterclockwise the Hdr</string>
    </property>
    <property name="whatsThis" >
-    <string>Rotate Counterclockwise the HDR</string>
+    <string>Rotate Counterclockwise the Hdr</string>
    </property>
    <property name="shortcut" >
     <string>&lt;</string>
@@ -286,13 +286,13 @@
     <string>Rotate ClockWise</string>
    </property>
    <property name="toolTip" >
-    <string>Rotate ClockWise</string>
+    <string>Rotate ClockWise the Hdr</string>
    </property>
    <property name="statusTip" >
-    <string>Rotate ClockWise</string>
+    <string>Rotate ClockWise the Hdr</string>
    </property>
    <property name="whatsThis" >
-    <string>Rotate ClockWise</string>
+    <string>Rotate ClockWise the Hdr</string>
    </property>
    <property name="shortcut" >
     <string>></string>
@@ -398,13 +398,13 @@
     <string>&amp;Normal Size</string>
    </property>
    <property name="toolTip" >
-    <string>View HDR at Normal Size</string>
+    <string>View Hdr at Normal Size</string>
    </property>
    <property name="statusTip" >
-    <string>View HDR at Normal Size</string>
+    <string>View Hdr at Normal Size</string>
    </property>
    <property name="whatsThis" >
-    <string>View HDR at Normal Size</string>
+    <string>View Hdr at Normal Size</string>
    </property>
    <property name="shortcut" >
     <string>O</string>
@@ -464,10 +464,10 @@
     <string>&amp;Fit to Window</string>
    </property>
    <property name="statusTip" >
-    <string>Shrink the HDR to fit its containing window</string>
+    <string>Shrink the Hdr to fit its containing window</string>
    </property>
    <property name="whatsThis" >
-    <string>Shrink the HDR to fit its containing window</string>
+    <string>Shrink the Hdr to fit its containing window</string>
    </property>
    <property name="shortcut" >
     <string>W</string>
@@ -507,16 +507,16 @@
     <string>&amp;Resize the HDR...</string>
    </property>
    <property name="iconText" >
-    <string>Resize the HDR</string>
+    <string>Resize the Hdr</string>
    </property>
    <property name="toolTip" >
-    <string>Resize (shrink or expand) the HDR</string>
+    <string>Resize (shrink or expand) the Hdr</string>
    </property>
    <property name="statusTip" >
-    <string>Resize (shrink or expand) the HDR</string>
+    <string>Resize (shrink or expand) the Hdr</string>
    </property>
    <property name="whatsThis" >
-    <string>Resize (shrink or expand) the HDR</string>
+    <string>Resize (shrink or expand) the Hdr</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+R</string>
