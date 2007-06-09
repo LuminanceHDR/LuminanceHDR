@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="es_ES">
-<defaultcodec></defaultcodec>
 <context>
     <name>HdrViewer</name>
     <message>
@@ -44,14 +43,14 @@
         <translation>Histograma:</translation>
     </message>
     <message>
-        <location filename="../src/hdrviewer.cpp" line="288"/>
+        <location filename="../src/hdrviewer.cpp" line="292"/>
         <source>Unsaved changes...</source>
         <translation>Cambios no guardados...</translation>
     </message>
     <message>
-        <location filename="../src/hdrviewer.cpp" line="288"/>
-        <source>This HDR has unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
-        <translation>Este HDR tiene cambios sin guardar.&lt;br&gt;Si cierra ahora estos cambios se perderan.</translation>
+        <location filename="../src/hdrviewer.cpp" line="292"/>
+        <source>This Hdr has unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
+        <translation>Este Hdr tiene cambios sin guardar.&lt;br&gt;Si cierra ahora estos cambios se perderan.</translation>
     </message>
 </context>
 <context>
@@ -97,24 +96,6 @@ de la imagen actual</translation>
         <location filename="../forms/hdrwizardform.ui" line="159"/>
         <source>Files Currently Loaded:</source>
         <translation>Archivos actualmente cargados:</translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="226"/>
-        <source>[2/3] Choose Settings for HDR Creation</source>
-        <translation>[2/3] Escoja parámetros de configuración del HDR</translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="246"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting HDR is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Por favor, escoja uno de los perfiles predefinidos listados a la derecha:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normalmente el primero es que ofrece mejores resultados, cambielo solo si el HDR resultante no fué lo bastante bueno.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="267"/>
@@ -165,11 +146,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/hdrwizardform_impl.cpp" line="435"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="412"/>
-        <source>HDR creation model:</source>
-        <translation>Modelo de creación del HDR:</translation>
     </message>
     <message>
         <location filename="../src/hdrwizardform_impl.cpp" line="446"/>
@@ -256,11 +232,6 @@ valores de pixels&lt;/p&gt;</translation>
         <translation>Cargar...</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="839"/>
-        <source>HDR creation equation:</source>
-        <translation>Ecuación de creación del HDR:</translation>
-    </message>
-    <message>
         <location filename="../forms/hdrwizardform.ui" line="851"/>
         <source>Choose Model:</source>
         <translation>Escoja modelo:</translation>
@@ -274,17 +245,6 @@ valores de pixels&lt;/p&gt;</translation>
         <location filename="../forms/hdrwizardform.ui" line="888"/>
         <source>[3/3] Procedure Completed!</source>
         <translation>[3/3] Creación completa!</translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="900"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:19pt;&quot;&gt;HDR Image created...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:19pt;&quot;&gt;Imagen HDR creada...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="961"/>
@@ -345,16 +305,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/hdrwizardform_impl.cpp" line="175"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Done!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Hecho!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="191"/>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an HDR. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values for each one of your images.&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui no ha encontrado datos &lt;i&gt;EXIF&lt;/i&gt; en la secuencia de imágenes:
- &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;Ahora puedes proceder a la creación de un HDR. Para esto debes insertar &lt;b&gt;manualmente&lt;/b&gt; el EV (valor de exposición) ó la diferencia de f-stop entre cada una de las imágenes.&lt;hr&gt;Si quieres que Qtpfsgui haga esto de forma &lt;b&gt;automática&lt;/b&gt;, tienes que cargar imágenes que tengan al menos la siguiente información EXIF:
-&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&lt;/li&gt;&lt;li&gt;Diafragma (f-stop)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;NOTA&lt;/b&gt;: La perdida de información EXIF suele producirse por la manipulación ó procesado de las imágenes.&lt;br&gt;Puedes realizar copias de la &lt;b&gt;información EXIF&lt;/b&gt; entre imágenes utilizando en el menú &lt;i&gt;&lt;b&gt;&quot;Herramientas -&gt; Copiar datos EXIF&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
         <location filename="../src/hdrwizardform_impl.cpp" line="192"/>
@@ -420,6 +370,46 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <location filename="../src/hdrwizardform_impl.cpp" line="267"/>
         <source>&amp;Finish</source>
         <translation>&amp;Finalizar</translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="226"/>
+        <source>[2/3] Choose Settings for Hdr Creation</source>
+        <translation>[2/3] Escoja parámetros de configuración del Hdr</translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="246"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Por favor, escoja uno de los perfiles predefinidos listados a la derecha:&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normalmente el primero es que ofrece mejores resultados, cambielo solo si el Hdr resultante no fué lo bastante bueno.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="412"/>
+        <source>Hdr creation model:</source>
+        <translation>Modelo de creación del Hdr:</translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="839"/>
+        <source>Hdr creation equation:</source>
+        <translation>Ecuación de creación del Hdr:</translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="900"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:19pt;&quot;&gt;Hdr Image created...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:19pt;&quot;&gt;Imagen Hdr creada...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/hdrwizardform_impl.cpp" line="191"/>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+for the following images:
+ &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values for each one of your images.&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui no ha encontrado datos &lt;i&gt;EXIF&lt;/i&gt; en la secuencia de imágenes: &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;Ahora puedes proceder a la creación de un Hdr. Para esto debes insertar &lt;b&gt;manualmente&lt;/b&gt; el EV (valor de exposición) ó la diferencia de f-stop entre cada una de las imágenes.&lt;hr&gt;Si quieres que Qtpfsgui haga esto de forma &lt;b&gt;automática&lt;/b&gt;, tienes que cargar imágenes que tengan al menos la siguiente información EXIF:&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&lt;/li&gt;&lt;li&gt;Diafragma (f-stop)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;NOTA&lt;/b&gt;: La perdida de información EXIF suele producirse por la manipulación ó procesado de las imágenes.&lt;br&gt;Puedes realizar copias de la &lt;b&gt;información EXIF&lt;/b&gt; entre imágenes utilizando en el menú &lt;i&gt;&lt;b&gt;&quot;Herramientas -&gt; Copiar datos EXIF&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
 </context>
 <context>
@@ -524,27 +514,22 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Imagen</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="54"/>
+        <location filename="../forms/maingui.ui" line="77"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="61"/>
-        <source>HDR &amp;Histogram</source>
-        <translation>H&amp;istograma HDR</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="78"/>
         <source>&amp;Tools</source>
         <translation>&amp;Herramientas</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="87"/>
+        <location filename="../forms/maingui.ui" line="70"/>
         <source>&amp;Windows</source>
         <translation>V&amp;entanas</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="94"/>
+        <location filename="../forms/maingui.ui" line="54"/>
         <source>&amp;Help</source>
         <translation>A&amp;yuda</translation>
     </message>
@@ -564,11 +549,6 @@ p, li { white-space: pre-wrap; }
         <translation>Nuevo HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="142"/>
-        <source>Create an HDR from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation>Crea un HDR a partir de un grupo de imágenes JPEGs, RAW ó TIFF de 8/16 bits.</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="153"/>
         <source>&amp;Open Hdr...</source>
         <translation>&amp;Abrir HDR...</translation>
@@ -577,11 +557,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="156"/>
         <source>Open Hdr....</source>
         <translation>Abrir HDR...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="165"/>
-        <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation>Carga una imagen HDR (formatos OpenEXR, Radiance RGBE, PFS stream, RAW o TIFF).</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="168"/>
@@ -599,11 +574,6 @@ p, li { white-space: pre-wrap; }
         <translation>Guarda HDR como...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="191"/>
-        <source>saves the HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation>Guarda la imagen HDR ( formatos OpenEXR, Radiance RGBE, PFS stream, o 32bit o LogLuv TIFF)</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="194"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
@@ -612,11 +582,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="211"/>
         <source>&amp;Tonemap the Hdr...</source>
         <translation>Mapear &amp;Tonos del HDR...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="223"/>
-        <source>Tonemap the HDR into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation>Mapea los tonos de un HDR a un formato LDR común (ejem:JPEG o PNG)</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="226"/>
@@ -649,11 +614,6 @@ p, li { white-space: pre-wrap; }
         <translation>Rotar en sentido anti-horario</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="269"/>
-        <source>Rotate Counterclockwise the HDR</source>
-        <translation>Gira el HDR en el sentido contrario de las agujas del reloj</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="272"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
@@ -664,7 +624,7 @@ p, li { white-space: pre-wrap; }
         <translation>Rotar en sentido &amp;horario</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="295"/>
+        <location filename="../forms/maingui.ui" line="286"/>
         <source>Rotate ClockWise</source>
         <translation>Gira el HDR en el sentido de las aguas del reloj</translation>
     </message>
@@ -759,11 +719,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Restaurar zoom</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="407"/>
-        <source>View HDR at Normal Size</source>
-        <translation>Ver HDR a tamaño normal (100%)</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="410"/>
         <source>O</source>
         <translation>O</translation>
@@ -804,11 +759,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Ajustar a la ventana</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="470"/>
-        <source>Shrink the HDR to fit its containing window</source>
-        <translation>Ajuste para mostrar la imagen completa en la ventana que la contiene</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="473"/>
         <source>W</source>
         <translation>W</translation>
@@ -837,16 +787,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="507"/>
         <source>&amp;Resize the HDR...</source>
         <translation>&amp;Redimensionar HDR...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="510"/>
-        <source>Resize the HDR</source>
-        <translation>Reescala el HDR</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="519"/>
-        <source>Resize (shrink or expand) the HDR</source>
-        <translation>Reescalar (aumentar o reducir) la imagen HDR</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="522"/>
@@ -909,11 +849,6 @@ p, li { white-space: pre-wrap; }
         <translation>Cascada</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="93"/>
-        <source>Ready.... Now open an HDR or create one!</source>
-        <translation>Hecho... Ahora puede abrir un HDR o crearlo!</translation>
-    </message>
-    <message>
         <location filename="../forms/maingui.ui" line="145"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
@@ -922,11 +857,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="214"/>
         <source>Tonemap the Hdr</source>
         <translation>Mapear tonos del HDR</translation>
-    </message>
-    <message>
-        <location filename="../src/maingui_impl.cpp" line="109"/>
-        <source>All HDR formats </source>
-        <translation>Todos los formatos HDR</translation>
     </message>
     <message>
         <location filename="../src/maingui_impl.cpp" line="235"/>
@@ -939,29 +869,14 @@ p, li { white-space: pre-wrap; }
         <translation>El archivo no es legible (comprueba su existencia, permisos, ....)</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="184"/>
-        <source>All HDR formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
-        <translation>Todos los formatos HDR (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
-    </message>
-    <message>
-        <location filename="../src/maingui_impl.cpp" line="187"/>
-        <source>All HDR formats (*.hdr *.pic *.tiff *.tif *.pfs)</source>
-        <translation>Todos los formatos HDR (*.hdr *.pic *.tiff *.tif *.pfs)</translation>
-    </message>
-    <message>
         <location filename="../src/maingui_impl.cpp" line="302"/>
         <source>Error...</source>
         <translation>Error...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="531"/>
+        <location filename="../src/maingui_impl.cpp" line="538"/>
         <source>Unsaved changes...</source>
         <translation>Modificaciones no guardadas...</translation>
-    </message>
-    <message>
-        <location filename="../src/maingui_impl.cpp" line="531"/>
-        <source>There is at least one HDR with unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
-        <translation>Hay al menos un HDR con modificaciones no guardadas&lt;br&gt;Si abandona ahora, estos cambios se perderán.</translation>
     </message>
     <message>
         <location filename="../src/maingui_impl.cpp" line="163"/>
@@ -974,11 +889,6 @@ p, li { white-space: pre-wrap; }
         <translation>Guardar HDR como...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="288"/>
-        <source>Save the hdr before tone mapping.</source>
-        <translation>Guarde el HDR antes de proceder con el mapeado de tonos.</translation>
-    </message>
-    <message>
         <location filename="../src/maingui_impl.cpp" line="235"/>
         <source>Qtpfsgui supports only &lt;br&gt;Radiance rgbe (hdr), PFS, hdr tiff and OpenEXR (linux only) &lt;br&gt;files up until now.</source>
         <translation>Qtpfsgui solo soporta archivos del tipo&lt;br&gt;Radiance rgbe (hdr), PFS, hdr tiff y OpenEXR (solo Linux).</translation>
@@ -989,9 +899,94 @@ p, li { white-space: pre-wrap; }
         <translation>Qtpfsgui necesita almacenar en caché los resultados usando un archivo temporal, pero el directorio actulamente seleccionado no es válido&lt;br&gt;Por favor escoge una ruta válida en Herramientas -&gt; Configurar Qtpfsgui...-&gt;Mapear tonos.</translation>
     </message>
     <message>
+        <location filename="../forms/maingui.ui" line="84"/>
+        <source>Hdr &amp;Histogram</source>
+        <translation>H&amp;istograma Hdr</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="142"/>
+        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
+        <translation>Crea un Hdr a partir de un grupo de imágenes JPEGs, RAW ó TIFF de 8/16 bits.</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="165"/>
+        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
+        <translation>Carga una imagen Hdr (formatos OpenEXR, Radiance RGBE, PFS stream, RAW o TIFF).</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="223"/>
+        <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
+        <translation>Mapea los tonos de un Hdr a un formato LDR común (ejem:JPEG o PNG)</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="269"/>
+        <source>Rotate Counterclockwise the Hdr</source>
+        <translation>Gira el Hdr en el sentido contrario de las agujas del reloj</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="295"/>
+        <source>Rotate ClockWise the Hdr</source>
+        <translation>Gira el Hdr en el sentido de las aguas del reloj</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="407"/>
+        <source>View Hdr at Normal Size</source>
+        <translation>Ver Hdr a tamaño normal (100%)</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="470"/>
+        <source>Shrink the Hdr to fit its containing window</source>
+        <translation>Ajuste para mostrar la imagen completa en la ventana que la contiene</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="510"/>
+        <source>Resize the Hdr</source>
+        <translation>Reescala el Hdr</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="519"/>
+        <source>Resize (shrink or expand) the Hdr</source>
+        <translation>Reescalar (aumentar o reducir) la imagen Hdr</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="93"/>
+        <source>Ready.... Now open an Hdr or create one!</source>
+        <translation>Hecho... Ahora puede abrir un Hdr o crearlo!</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="109"/>
+        <source>All Hdr formats </source>
+        <translation>Todos los formatos Hdr </translation>
+    </message>
+    <message>
         <location filename="../src/maingui_impl.cpp" line="120"/>
-        <source>Load an HDR file...</source>
-        <translation>Cargar un archivo HDR...</translation>
+        <source>Load an Hdr file...</source>
+        <translation>Cargar un archivo Hdr...</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="184"/>
+        <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
+        <translation>Todos los formatos Hdr (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="187"/>
+        <source>All Hdr formats (*.hdr *.pic *.tiff *.tif *.pfs)</source>
+        <translation>Todos los formatos Hdr (*.hdr *.pic *.tiff *.tif *.pfs)</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="288"/>
+        <source>Save the Hdr before tone mapping.</source>
+        <translation>Guarde el Hdr antes de proceder con el mapeado de tonos.</translation>
+    </message>
+    <message>
+        <location filename="../src/maingui_impl.cpp" line="538"/>
+        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
+        <translation>Hay al menos un Hdr con modificaciones no guardadas&lt;br&gt;Si abandona ahora, estos cambios se perderán.</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="191"/>
+        <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
+        <translation>Guarda la imagen Hdr ( formatos OpenEXR, Radiance RGBE, PFS stream, o 32bit o LogLuv TIFF)</translation>
     </message>
 </context>
 <context>
@@ -1015,11 +1010,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/options.ui" line="105"/>
         <source>Tiff options</source>
         <translation>Opciones TIFF</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="113"/>
-        <source>HDR Visualization</source>
-        <translation>Ver HDR</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="149"/>
@@ -1163,65 +1153,17 @@ p, li { white-space: pre-wrap; }
         <translation>AHD</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="528"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;TIFF Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones TIFF&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="545"/>
-        <source>HDR Tiff</source>
-        <translation>HDR Tiff</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="557"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the TIFF-HDR format that qtpfsgui will use to save an HDR image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv TIFF&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float TIFF&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Escoja el formato TIFF-HDR que Qtpfsgui utilizará para guardar la imagenn HDR.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv TIFF&lt;/span&gt; es el formato más apropiado para la mayor parte de los casos porque almacena los datos hdr en un cantidad de espacio razonable (en terminos de espacio en disco).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliza el formato &lt;span style=&quot; font-weight:600;&quot;&gt;Float TIFF&lt;/span&gt; solo si deseas abrir el archivo en otra aplicación que no soporte el formato LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="576"/>
-        <source>LogLuv TIFF (float, 16bit)</source>
-        <translation>LogLuv TIFF (float, 16bit)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="586"/>
-        <source>Float TIFF (float, 32bit)</source>
-        <translation>Float TIFF (float, 32bit)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="619"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HDR Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones de visualización de HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="633"/>
+        <location filename="../forms/options.ui" line="636"/>
         <source>Colors</source>
         <translation>Colores</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="653"/>
+        <location filename="../forms/options.ui" line="656"/>
         <source>Show Negative Numbers as:</source>
         <translation>Mostrar numeros negativos como:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="690"/>
+        <location filename="../forms/options.ui" line="693"/>
         <source>Show nan and +-Inf values as:</source>
         <translation>Mostrar nan y valores +-Inf como:</translation>
     </message>
@@ -1231,14 +1173,67 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Cargar...</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="769"/>
+        <location filename="../forms/options.ui" line="772"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="779"/>
+        <location filename="../forms/options.ui" line="782"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="113"/>
+        <source>Hdr Visualization</source>
+        <translation>Ver Hdr</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="545"/>
+        <source>Hdr Tiff</source>
+        <translation>Hdr Tiff</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="576"/>
+        <source>LogLuv Tiff (float, 16bit)</source>
+        <translation>LogLuv TIFF (float, 16bit)</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="586"/>
+        <source>Float Tiff (float, 32bit)</source>
+        <translation>Float TIFF (float, 32bit)</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="619"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones de visualización de Hdr&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="528"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones Tiff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="557"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Qtpfsgui will use to save an HDR image.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Escoja el formato Tiff-Hdr que Qtpfsgui utilizará para guardar la imagenn HDR.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; es el formato más apropiado para la mayor parte de los casos porque almacena los datos hdr en un cantidad de espacio razonable (en terminos de espacio en disco).&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliza el formato &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; solo si deseas abrir el archivo en otra aplicación que no soporte el formato LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1255,11 +1250,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/resizedialog.ui" line="13"/>
         <source>Scale Image</source>
         <translation>Reescalar imagen</translation>
-    </message>
-    <message>
-        <location filename="../forms/resizedialog.ui" line="31"/>
-        <source>HDR Image Size</source>
-        <translation>Dimensiones de imagen HDR</translation>
     </message>
     <message>
         <location filename="../forms/resizedialog.ui" line="65"/>
@@ -1300,6 +1290,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/resizedialog.ui" line="236"/>
         <source>&amp;Scale</source>
         <translation>R&amp;eescalar</translation>
+    </message>
+    <message>
+        <location filename="../forms/resizedialog.ui" line="31"/>
+        <source>Hdr Image Size</source>
+        <translation>Dimensiones de imagen Hdr</translation>
     </message>
 </context>
 <context>
