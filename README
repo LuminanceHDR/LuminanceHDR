@@ -91,6 +91,13 @@ As for the other dependencies, OpenEXR is required at runtime as well.
 -------------------------------------------------------------------
 The build system is based on Qt's qmake.
 The build description is contained in the project.pro file.
+
+If you want Qtpfsgui to use a language different from english you should run:
+> lrelease project.pro
+as a first step.
+This steps creates a "qm" file for each one "ts" file in the i18n directory.
+If you want to run Qtpfsgui without the internationalization feature
+you can skip this step and continue with the steps described below.
 Running
 > qmake
 from the directory where there is project.pro creates the Makefile.
@@ -99,10 +106,7 @@ If something goes wrong drop me an email.
 Then you can run
 > make
 to compile.
-If you want Qtpfsgui to use a language different from english you should also run:
-> lrelease project.pro
-to create a "qm" file for each "ts" file in the i18n directory.
-In linux you can also run
+In Linux you can also run
 # make install
 as root to install the qtpfsgui executable in /usr/local/bin.
 This last step also installs the icon, the desktop file, the html documentation and the "qm" translation file.
