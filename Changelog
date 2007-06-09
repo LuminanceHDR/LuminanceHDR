@@ -1,7 +1,13 @@
 Changes:
-27-05-2007 v1.8.9
+09-06-2007 v1.8.9
+* fixed serious bug related to the creation of an hdr image.
 * fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
 * The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
+* fixed fullsize bug in tonemapping panel
+* fixed some textual inconsistencies.
+* Added displaying options for the main toolbar.
+* fixed in the README the instructions related to internationalization.
+* Fixed another segfault (non-const constructor for QImage) at the end of the hdr creation wizard.
 
 15-05-2007 v1.8.8
 * Fixed bug causing crash in windows.

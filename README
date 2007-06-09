@@ -198,12 +198,14 @@ unexpected effects like changing color saturation.
 5. Changes
 -------------------------------------------------------------------
 v1.8.9
+* fixed serious bug related to the creation of an hdr image.
 * fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
 * The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
-
-v1.8.8
-* initial support for internationalization, see http://qtpfsgui.sourceforge.net/i18n.html
-* fixes some crashes in the windows version.
+* fixed fullsize bug in tonemapping panel
+* fixed some textual inconsistencies.
+* Added displaying options for the main toolbar.
+* fixed in the README the instructions related to internationalization.
+* Fixed another segfault (non-const constructor for QImage) at the end of the hdr creation wizard.
 
 ***WARNING***
 Starting Qtpfsgui 1.8.2, Windows users have to download the new
