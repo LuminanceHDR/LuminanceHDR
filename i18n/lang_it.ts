@@ -133,7 +133,7 @@ l&apos;immagine corrente</translation>
         <translation>Funzione dei pesi:</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="424"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="419"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
@@ -143,12 +143,12 @@ l&apos;immagine corrente</translation>
         <translation>Curva di risposta:</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="435"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="430"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="446"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="441"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -158,7 +158,7 @@ l&apos;immagine corrente</translation>
         <translation>Anti-ghosting(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="433"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="428"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
@@ -198,12 +198,12 @@ dei risultati soddisfacenti)</translation>
         <translation>Pesi:</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="428"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="423"/>
         <source>Gaussian</source>
         <translation>Gaussiana</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="426"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="421"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -237,7 +237,7 @@ dei pixel&lt;/p&gt;</translation>
         <translation>Scegli Modello:</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="448"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="443"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
@@ -252,7 +252,7 @@ dei pixel&lt;/p&gt;</translation>
         <translation>&lt; &amp;Indietro</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="281"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="276"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Avanti &gt;</translation>
     </message>
@@ -272,102 +272,102 @@ dei pixel&lt;/p&gt;</translation>
         <translation>Calibra per trovare la curva di risposta della macchina (algoritmo robertson02)</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="98"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="93"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</source>
         <translation>Tutti i formati (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="99"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="94"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="100"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="95"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>Immagini TIFF (*.tiff *.tif);;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="101"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="96"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</source>
         <translation>Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="146"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="141"/>
         <source>Tiff error</source>
         <translation>Errore Tiff</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="146"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="141"/>
         <source>the file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff</source>
         <translation>il file&lt;br&gt;%1&lt;br&gt; non e&apos; un tiff ne&apos; da 8 ne&apos; da 16 bit</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="175"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="170"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Done!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Operazione conclusa!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="192"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="187"/>
         <source>EXIF data not found</source>
         <translation>Dati EXIF non trovati</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="550"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="549"/>
         <source>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;%1 values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;Per procedere devi impostare manualmente i valori di esposizione.&lt;br&gt;Mancano ancora %1 valori.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="374"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="369"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="417"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="412"/>
         <source>(*) Weights: </source>
         <translation>(*) Pesi: </translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="417"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="412"/>
         <source> - Response curve: </source>
         <translation> - Curva di risposta: </translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="417"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="412"/>
         <source> - Model: </source>
         <translation> - Modello: </translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="437"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="432"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="439"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="434"/>
         <source>From Calibration</source>
         <translation>Via calibrazione</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="441"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="436"/>
         <source>From File</source>
         <translation>Da File</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="548"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="546"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All values have been set!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tutti i valori sono stati inseriti!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="372"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="367"/>
         <source>Load a camera response curve file</source>
         <translation>Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="102"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="97"/>
         <source>Select the input images</source>
         <translation>Carica le immagini iniziali</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="267"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="262"/>
         <source>&amp;Finish</source>
         <translation>&amp;Termina</translation>
     </message>
@@ -411,7 +411,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:19pt;&quot;&gt;Immagine Hdr creata...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/hdrwizardform_impl.cpp" line="191"/>
+        <location filename="../src/hdrwizardform_impl.cpp" line="186"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values for each one of your images.&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1037,12 +1037,12 @@ p, li { white-space: pre-wrap; }
         <translation>Opzioni di Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="97"/>
+        <location filename="../forms/options.ui" line="77"/>
         <source>RAW Import</source>
         <translation>Importazione RAW</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="149"/>
+        <location filename="../forms/options.ui" line="129"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1053,187 +1053,187 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni di Tone Mapping&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="166"/>
+        <location filename="../forms/options.ui" line="146"/>
         <source>Cache</source>
         <translation>Cache</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="178"/>
+        <location filename="../forms/options.ui" line="158"/>
         <source>Choose the directory where Qtpfsgui will store the temporary data to.</source>
         <translation>Scegli la directory dove vuoi che Qtpfsgui salvi i dati temporanei.</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="252"/>
+        <location filename="../forms/options.ui" line="232"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni caricamento Raw&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="266"/>
+        <location filename="../forms/options.ui" line="246"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qtpfsgui uses &lt;span style=&quot; font-weight:600;&quot;&gt;dcraw&lt;/span&gt;&apos;s code to load raw files.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please send me your thoughts in case you think&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;that these dcraw&apos;s default parameters are not ok.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qtpfsgui utilizza il codice di&lt;span style=&quot; font-weight:600;&quot;&gt;dcraw&lt;/span&gt; per caricare i file raw.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="276"/>
+        <location filename="../forms/options.ui" line="256"/>
         <source>White balance</source>
         <translation>Bilanciamento del bianco</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="288"/>
+        <location filename="../forms/options.ui" line="268"/>
         <source>dcraw&apos;s -w option &lt;br&gt;default value is &lt;b&gt;true&lt;/b&gt;</source>
         <translation>opzione -w di dcraw&lt;br&gt;il valore di default e&apos;&lt;b&gt;true&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="291"/>
+        <location filename="../forms/options.ui" line="271"/>
         <source>Use color balance specified by the camera</source>
         <translation>Usa il bilanciamento di colore specificato dalla macchina fotografica</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="301"/>
+        <location filename="../forms/options.ui" line="281"/>
         <source>dcraw&apos;s -a option&lt;br&gt;default value is &lt;b&gt;false&lt;/b&gt;</source>
         <translation>opzione -a di dcraw&lt;br&gt;il valore di default e&apos;&lt;b&gt;false&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="304"/>
+        <location filename="../forms/options.ui" line="284"/>
         <source>Automatic color balance</source>
         <translation>Bilanciamento del colore automatico</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="311"/>
+        <location filename="../forms/options.ui" line="291"/>
         <source>dcraw&apos;s -f option:&lt;br&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD. &lt;br&gt;default value is &lt;b&gt;false&lt;/b&gt;</source>
         <translation>opzione -f di dcraw&lt;br&gt;Da utilizzare in caso il risultato sia insoddisfacente con VNG o AHD&lt;br&gt;il valore di default e&apos;&lt;b&gt;false&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="314"/>
+        <location filename="../forms/options.ui" line="294"/>
         <source>Interpolate RGB as four colors</source>
         <translation>Interpola RGB con quattro colori</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="324"/>
+        <location filename="../forms/options.ui" line="304"/>
         <source>Highlights</source>
         <translation>Highlights</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="362"/>
+        <location filename="../forms/options.ui" line="342"/>
         <source>dcraw&apos;s -H option&lt;br&gt;read dcraw&apos;s man page for explanations &lt;br&gt; default value is &lt;b&gt;0&lt;/b&gt;</source>
         <translation>opzione -H di cdraw&lt;br&gt;leggete la pagina ma di dcraw per scpiegazioni&lt;br&gt; il valore di default e&apos; &lt;b&gt;0&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="339"/>
+        <location filename="../forms/options.ui" line="319"/>
         <source>Highlights recovery mode:</source>
         <translation>Modalita&apos; di recupero highlights:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="375"/>
+        <location filename="../forms/options.ui" line="355"/>
         <source>Color space</source>
         <translation>Spazio di colore</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="387"/>
+        <location filename="../forms/options.ui" line="367"/>
         <source>Raw conversion output color space:</source>
         <translation>Spazio di colore d&apos;uscita per la conversione Raw:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="414"/>
+        <location filename="../forms/options.ui" line="394"/>
         <source>Raw color</source>
         <translation>Colore Raw</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="419"/>
+        <location filename="../forms/options.ui" line="399"/>
         <source>sRGB</source>
         <translation>sRGB</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="424"/>
+        <location filename="../forms/options.ui" line="404"/>
         <source>Adobe RGB</source>
         <translation>Adobe RGB</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="429"/>
+        <location filename="../forms/options.ui" line="409"/>
         <source>Wide Gamut RGB</source>
         <translation>Wide Gamut RGB</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="434"/>
+        <location filename="../forms/options.ui" line="414"/>
         <source>ProPhoto RGB</source>
         <translation>ProPhoto RGB</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="445"/>
+        <location filename="../forms/options.ui" line="425"/>
         <source>Quality</source>
         <translation>Qualita&apos;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="457"/>
+        <location filename="../forms/options.ui" line="437"/>
         <source>Conversion quality:</source>
         <translation>Qualita&apos; di conversione:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="484"/>
+        <location filename="../forms/options.ui" line="464"/>
         <source>Bilinear</source>
         <translation>Bilineare</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="489"/>
+        <location filename="../forms/options.ui" line="469"/>
         <source>VNG</source>
         <translation>VNG</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="494"/>
+        <location filename="../forms/options.ui" line="474"/>
         <source>AHD</source>
         <translation>AHD</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="636"/>
+        <location filename="../forms/options.ui" line="616"/>
         <source>Colors</source>
         <translation>Colori</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="656"/>
+        <location filename="../forms/options.ui" line="636"/>
         <source>Show Negative Numbers as:</source>
         <translation>Mostra i numeri negativi come:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="693"/>
+        <location filename="../forms/options.ui" line="673"/>
         <source>Show nan and +-Inf values as:</source>
         <translation>Mostra nan e inf come:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="217"/>
+        <location filename="../forms/options.ui" line="197"/>
         <source>&amp;Load...</source>
         <translation>&amp;Carica...</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="772"/>
+        <location filename="../forms/options.ui" line="752"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="782"/>
+        <location filename="../forms/options.ui" line="762"/>
         <source>&amp;Cancel</source>
         <translation>A&amp;nnulla</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="113"/>
+        <location filename="../forms/options.ui" line="93"/>
         <source>Hdr Visualization</source>
         <translation>Visualizzazione Hdr</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="545"/>
+        <location filename="../forms/options.ui" line="525"/>
         <source>Hdr Tiff</source>
         <translation>Hdr Tiff</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="576"/>
+        <location filename="../forms/options.ui" line="556"/>
         <source>LogLuv Tiff (float, 16bit)</source>
         <translation>LogLuv Tiff (float, 16bit)</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="586"/>
+        <location filename="../forms/options.ui" line="566"/>
         <source>Float Tiff (float, 32bit)</source>
         <translation>Float Tiff (float, 32bit)</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="619"/>
+        <location filename="../forms/options.ui" line="599"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1241,7 +1241,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni per la visualizzazione Hdr&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="528"/>
+        <location filename="../forms/options.ui" line="508"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1249,17 +1249,17 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni Tiff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="89"/>
+        <location filename="../forms/options.ui" line="69"/>
         <source>Tone Mapping</source>
         <translation>Tone Mapping</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="105"/>
+        <location filename="../forms/options.ui" line="85"/>
         <source>Tiff Options</source>
         <translation>Opzioni Tiff</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="557"/>
+        <location filename="../forms/options.ui" line="537"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1423,7 +1423,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="316"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Beta&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="362"/>
@@ -1707,6 +1707,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingoptions.ui" line="1877"/>
         <source>Apply Settings File</source>
         <translation>Applica il file di opzioni</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="316"/>
+        <source>Beta</source>
+        <translation>Beta</translation>
     </message>
 </context>
 <context>
