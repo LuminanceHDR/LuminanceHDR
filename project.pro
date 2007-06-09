@@ -268,7 +268,7 @@ HEADERS += src/libpfs/array2d.h \
            src/gamma_and_levels.h \
            src/tonemappingdialog_impl.h \
            src/tonemapping_widget.h \
-           src/tonemapper_thread.h \
+           src/threads/tonemapper_thread.h \
            src/options_impl.h \
            src/transplant_impl.h \
            src/resizedialog_impl.h \
@@ -302,7 +302,7 @@ SOURCES += src/libpfs/pfs.cpp \
            src/gamma_and_levels.cpp \
            src/tonemappingdialog_impl.cpp \
            src/tonemapping_widget.cpp \
-           src/tonemapper_thread.cpp \
+           src/threads/tonemapper_thread.cpp \
            src/options_impl.cpp \
            src/transplant_impl.cpp \
            src/resizedialog_impl.cpp \

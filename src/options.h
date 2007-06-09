@@ -24,6 +24,7 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
+#define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
 
 #define GROUP_DCRAW "DCRAW_Options"
 #define KEY_AUTOWB "auto_white_balance"

@@ -68,8 +68,11 @@ private slots:
 	void options_called();
 	void transplant_called();
 	void reEnableHdrViewer();
-// 	void align_called();
 	void fileExit();
+	void Text_Under_Icons();
+	void Icons_Only();
+	void Text_Alongside_Icons();
+	void Text_Only();
 
 	void openRecentFile();
 

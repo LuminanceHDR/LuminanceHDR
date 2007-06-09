@@ -119,10 +119,10 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text" >
-    <string>Tune &amp;Histogram</string>
+    <string>Adjust &amp;Levels</string>
    </property>
    <property name="iconText" >
-    <string>Tune Histogram</string>
+    <string>Adjust Levels</string>
    </property>
    <property name="toolTip" >
     <string>Tune the histogram for the current LDR</string>

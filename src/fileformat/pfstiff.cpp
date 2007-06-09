@@ -228,7 +228,7 @@ QImage* TiffReader::readIntoQImage() {
 #if QT_VERSION <= 0x040200
 	QImage *toreturn=new QImage(data,width,height,QImage::Format_RGB32);
 #else
-	QImage *toreturn=new QImage(const_cast<const uchar *>(data),width,height,QImage::Format_RGB32);
+	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
 #endif
 	return toreturn;
 }

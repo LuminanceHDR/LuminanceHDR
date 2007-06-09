@@ -30,7 +30,7 @@
 #include "tonemapping_widget.h"
 #include "options.h"
 #include "config.h"
-#include "tonemapper_thread.h"
+#include "threads/tonemapper_thread.h"
 
 extern int xsize;
 extern float pregamma;

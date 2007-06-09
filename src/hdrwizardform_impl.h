@@ -62,6 +62,7 @@ private:
 	Exiv2::ExifKey *fnum, *fnum2;
 	bool input_is_ldr;
 	bool ldr_tiff;
+	bool need_to_transform_indices;
 
 	QList<QImage*> ImagePtrList;  //ldr input
 	Array2DList listhdrR,listhdrG,listhdrB; //hdr input

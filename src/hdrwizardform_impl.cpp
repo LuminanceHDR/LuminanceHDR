@@ -72,14 +72,8 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	responses_in_gui[1]=LINEAR;
 	responses_in_gui[2]=LOG10;
 	responses_in_gui[3]=FROM_ROBERTSON;
-// 	fromQStringToResponse["Gamma"]=GAMMA;
-// 	fromQStringToResponse["Linear"]=LINEAR;
-// 	fromQStringToResponse["Log"]=LOG10;
-// 	fromQStringToResponse["Calibration"]=FROM_ROBERTSON;
 	models_in_gui[0]=ROBERTSON;
 	models_in_gui[1]=DEBEVEC;
-// 	fromQStringToModel["Robertson"]=ROBERTSON;
-// 	fromQStringToModel["Debevec"]=DEBEVEC;
 
 	fnum=new Exiv2::ExifKey("Exif.Photo.FNumber");
 	fnum2=new Exiv2::ExifKey("Exif.Photo.ApertureValue");
@@ -91,6 +85,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	RecentDirInputLDRs=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
 	chosen_config=predef_confs[0];
 	fillEVcombobox();
+	need_to_transform_indices=false;
 }
 
 void HdrWizardForm::loadfiles() {
@@ -507,6 +502,9 @@ void HdrWizardForm::fillEVcombobox() {
 }
 
 void HdrWizardForm::transform_indices_into_values() {
+	if (!need_to_transform_indices)
+		return;
+
 //for precise values I cannot parse back what I put in the combobox, I have to recompute the values. In other words 4/3 != 1.3
 	for (int i=0; i<numberinputfiles; i++) {
 		int ni=(int)expotimes[i]-(6*4);
@@ -546,6 +544,7 @@ void HdrWizardForm::EVcomboBoxactivated(int i) {
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>"));
+		need_to_transform_indices=true;
 	} else {
 		confirmloadlabel->setText(QString(tr("<center><font color=\"#FF9500\"><h3><b>To proceed you need to manually set the exposure values.<br>%1 values still required.</b></h3></font></center>")).arg(files_unspecified));
 	}

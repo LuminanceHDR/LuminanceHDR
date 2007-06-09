@@ -46,6 +46,6 @@
  */
 void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta);
 
-pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_beta,float _opt_saturation);
+pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa, float _opt_beta, float _opt_saturation);
 
 #endif

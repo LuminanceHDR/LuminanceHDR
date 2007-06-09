@@ -41,12 +41,18 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
 MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
-	connect(this->fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
+	//main toolbar setup
+	QActionGroup *toolBarOptsGroup = new QActionGroup(this);
+	toolBarOptsGroup->addAction(actionText_Under_Icons);
+	toolBarOptsGroup->addAction(actionIcons_Only);
+	toolBarOptsGroup->addAction(actionText_Alongside_Icons);
+	toolBarOptsGroup->addAction(actionText_Only);
+	menuToolbars->addAction(toolBar->toggleViewAction());
+
 	workspace = new QWorkspace(this);
 	workspace->setScrollBarsEnabled( TRUE );
 	setCentralWidget(workspace);
 
-	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
 	qtpfsgui_options=new qtpfsgui_opts();
 	load_options(qtpfsgui_options);
 
@@ -76,7 +82,12 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 	connect(actionTile,SIGNAL(triggered()),workspace,SLOT(tile()));
 	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
-// 	connect(actionAlign_Images,SIGNAL(triggered()),this,SLOT(align_called()));
+	connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
+
+	connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
+	connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
+	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
+	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 
         for (int i = 0; i < MaxRecentFiles; ++i) {
             recentFileActs[i] = new QAction(this);
@@ -140,7 +151,7 @@ if( ! opened.isEmpty() ) {
 	HdrViewer *newhdr;
 	pfs::Frame* hdrpfsframe = NULL;
 	QString extension=qfi.suffix().toUpper();
-	bool rawinput=(extension!="PFS")&&(extension!="EXR")&&(extension!="HDR")&&(!extension.startsWith("TIF"));
+	bool rawinput = (extension!="PFS") && (extension!="EXR") && (extension!="HDR") && (!extension.startsWith("TIF"));
 #ifndef _WIN32
 	if (extension=="EXR") {
 		hdrpfsframe = readEXRfile(qfi.filePath().toUtf8().constData());
@@ -193,7 +204,6 @@ void MainGui::fileSaveAs()
 	QFileDialog *fd = new QFileDialog(this);
 	fd->setWindowTitle(tr("Save the HDR..."));
 	fd->setDirectory(RecentDirHDRSetting);
-// 	fd->selectFile(...);
 	fd->setFileMode(QFileDialog::AnyFile);
 	fd->setFilters(filetypes);
 	fd->setAcceptMode(QFileDialog::AcceptSave);
@@ -459,13 +469,32 @@ void MainGui::transplant_called() {
 	transplant->exec();
 }
 
-// void MainGui::align_called() {
-// 	AlignDialog *aligndialog=new AlignDialog(this);
-// 	aligndialog->setAttribute(Qt::WA_DeleteOnClose);
-// 	aligndialog->exec();
-// }
-
 void MainGui::load_options(qtpfsgui_opts *dest) {
+	//load from settings the path where hdrs have been previously opened/loaded
+	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+
+	//load from settings the main toolbar visualization mode
+	if (!settings.contains(KEY_TOOLBAR_MODE))
+		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	switch (settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+	case Qt::ToolButtonIconOnly:
+		Icons_Only();
+		actionIcons_Only->setChecked(true);
+	break;
+	case Qt::ToolButtonTextOnly:
+		Text_Only();
+		actionText_Only->setChecked(true);
+	break;
+	case Qt::ToolButtonTextBesideIcon:
+		Text_Alongside_Icons();
+		actionText_Alongside_Icons->setChecked(true);
+	break;
+	case Qt::ToolButtonTextUnderIcon:
+		Text_Under_Icons();
+		actionText_Under_Icons->setChecked(true);
+	break;
+	}
+
 	settings.beginGroup(GROUP_DCRAW);
 		if (!settings.contains(KEY_AUTOWB))
 			settings.setValue(KEY_AUTOWB,false);
@@ -530,15 +559,34 @@ void MainGui::fileExit() {
 		if (((HdrViewer*)p)->NeedsSaving)
 			closeok=false;
 	}
-#if QT_VERSION <= 0x040200
 	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>If you quit now, these changes will be lost."),
+#if QT_VERSION <= 0x040200
 			QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton)
 		== QMessageBox::Ignore))
 #else
-	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>If you quit now, these changes will be lost."),
 			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
 		== QMessageBox::Discard))
 #endif
 		emit close();
+}
+
+void MainGui::Text_Under_Icons() {
+toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+}
+
+void MainGui::Icons_Only() {
+toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+}
+
+void MainGui::Text_Alongside_Icons() {
+toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+}
+
+void MainGui::Text_Only() {
+toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 

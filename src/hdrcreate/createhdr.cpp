@@ -82,8 +82,8 @@ va_end(arg_pointer); /* Clean up. */
 int M = (int) powf(2.0f,opt_bpp);
 // weighting function representing confidence in pixel values
 float* w = new float[M];
-int minResponse=M;
-int maxResponse=0;
+int minResponse=0;
+int maxResponse=M;
 
 
     if (antighosting) {
@@ -146,26 +146,26 @@ int maxResponse=0;
 
 
     //0) examine input to get minResponse and maxResponse
-if (ldrinput) {
-	for( int i=0 ; i<listldr->size() ; i++ ) {
-		uchar * ithimage=((listldr->at(i))->bits());
-		for( int j=0 ; j<width*height ; j++ ) {
-			int maxval = (int) max3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
-			int minval = (int) min3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
-			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
-			minResponse = (minResponse<minval) ? minResponse : minval;
-		}
-	}
-} else {
-	for( size_t i=0 ; i<listhdrR->size() ; i++ ) {
-		for( int j=0 ; j<width*height ; j++ ) {
-			int maxval = (int) max3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
-			int minval = (int) min3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
-			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
-			minResponse = (minResponse<minval) ? minResponse : minval;
-		}
-	}
-}
+// if (ldrinput) {
+// 	for( int i=0 ; i<listldr->size() ; i++ ) {
+// 		uchar * ithimage=((listldr->at(i))->bits());
+// 		for( int j=0 ; j<width*height ; j++ ) {
+// 			int maxval = (int) max3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
+// 			int minval = (int) min3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
+// 			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
+// 			minResponse = (minResponse<minval) ? minResponse : minval;
+// 		}
+// 	}
+// } else {
+// 	for( size_t i=0 ; i<listhdrR->size() ; i++ ) {
+// 		for( int j=0 ; j<width*height ; j++ ) {
+// 			int maxval = (int) max3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
+// 			int minval = (int) min3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
+// 			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
+// 			minResponse = (minResponse<minval) ? minResponse : minval;
+// 		}
+// 	}
+// }
 
 // qDebug("maxResponse=%d",maxResponse);
 // qDebug("minResponse=%d",minResponse);
@@ -174,7 +174,7 @@ if (ldrinput) {
     switch( opt_weight )
     {
     case TRIANGULAR:
-	weights_triangle(w, M, minResponse, maxResponse);
+	weights_triangle(w, M/*, minResponse, maxResponse*/);
 	break;
     case GAUSSIAN:
 	weightsGauss( w, M, minResponse, maxResponse, opt_gauss );

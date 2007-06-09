@@ -504,489 +504,519 @@ p, li { white-space: pre-wrap; }
         <translation>Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="33"/>
+        <location filename="../forms/maingui.ui" line="40"/>
         <source>&amp;File</source>
         <translation>&amp;Archivo</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="43"/>
+        <location filename="../forms/maingui.ui" line="50"/>
         <source>&amp;Image</source>
         <translation>&amp;Imagen</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="77"/>
+        <location filename="../forms/maingui.ui" line="76"/>
         <source>&amp;View</source>
         <translation>&amp;Ver</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="61"/>
+        <location filename="../forms/maingui.ui" line="68"/>
         <source>&amp;Tools</source>
         <translation>&amp;Herramientas</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="70"/>
+        <location filename="../forms/maingui.ui" line="61"/>
         <source>&amp;Windows</source>
         <translation>V&amp;entanas</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="54"/>
+        <location filename="../forms/maingui.ui" line="33"/>
         <source>&amp;Help</source>
         <translation>A&amp;yuda</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="109"/>
+        <location filename="../forms/maingui.ui" line="120"/>
         <source>Common operations</source>
         <translation>Operaciones comunes</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="130"/>
+        <location filename="../forms/maingui.ui" line="144"/>
         <source>&amp;New Hdr...</source>
         <translation>&amp;Nuevo HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="133"/>
+        <location filename="../forms/maingui.ui" line="147"/>
         <source>New Hdr...</source>
         <translation>Nuevo HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="153"/>
+        <location filename="../forms/maingui.ui" line="167"/>
         <source>&amp;Open Hdr...</source>
         <translation>&amp;Abrir HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="156"/>
+        <location filename="../forms/maingui.ui" line="170"/>
         <source>Open Hdr....</source>
         <translation>Abrir HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="168"/>
+        <location filename="../forms/maingui.ui" line="182"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="179"/>
+        <location filename="../forms/maingui.ui" line="193"/>
         <source>&amp;Save Hdr as...</source>
         <translation>&amp;Guardar HDR como...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="182"/>
+        <location filename="../forms/maingui.ui" line="196"/>
         <source>Save Hdr as...</source>
         <translation>Guarda HDR como...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="194"/>
+        <location filename="../forms/maingui.ui" line="208"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="211"/>
+        <location filename="../forms/maingui.ui" line="225"/>
         <source>&amp;Tonemap the Hdr...</source>
         <translation>Mapear &amp;Tonos del HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="226"/>
+        <location filename="../forms/maingui.ui" line="240"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="234"/>
+        <location filename="../forms/maingui.ui" line="248"/>
         <source>&amp;Exit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="243"/>
+        <location filename="../forms/maingui.ui" line="257"/>
         <source>Exit</source>
         <translation>Abandona el programa</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="246"/>
+        <location filename="../forms/maingui.ui" line="260"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="257"/>
+        <location filename="../forms/maingui.ui" line="271"/>
         <source>Rotate C&amp;ounterClockWise</source>
         <translation>Rotar en sentido &amp;anti-horario</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="260"/>
+        <location filename="../forms/maingui.ui" line="274"/>
         <source>Rotate CounterClockWise</source>
         <translation>Rotar en sentido anti-horario</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="272"/>
+        <location filename="../forms/maingui.ui" line="286"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="283"/>
+        <location filename="../forms/maingui.ui" line="297"/>
         <source>Rotate C&amp;lockWise</source>
         <translation>Rotar en sentido &amp;horario</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="286"/>
+        <location filename="../forms/maingui.ui" line="300"/>
         <source>Rotate ClockWise</source>
         <translation>Gira el HDR en el sentido de las aguas del reloj</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="298"/>
+        <location filename="../forms/maingui.ui" line="312"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="306"/>
+        <location filename="../forms/maingui.ui" line="320"/>
         <source>Low Dynamic Range</source>
         <translation>Rango dinámico bajo</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="309"/>
+        <location filename="../forms/maingui.ui" line="323"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="317"/>
+        <location filename="../forms/maingui.ui" line="331"/>
         <source>Fit to Dynamic Range</source>
         <translation>Ajusta al rango dinámico</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="320"/>
+        <location filename="../forms/maingui.ui" line="334"/>
         <source>\</source>
         <translation>\</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="328"/>
+        <location filename="../forms/maingui.ui" line="342"/>
         <source>Shrink Dynamic Range</source>
         <translation>Reducir rango dinámico</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="331"/>
+        <location filename="../forms/maingui.ui" line="345"/>
         <source>[</source>
         <translation>[</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="339"/>
+        <location filename="../forms/maingui.ui" line="353"/>
         <source>Extend Dynamic Range</source>
         <translation>Extender rango dinámico</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="342"/>
+        <location filename="../forms/maingui.ui" line="356"/>
         <source>]</source>
         <translation>]</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="350"/>
+        <location filename="../forms/maingui.ui" line="364"/>
         <source>Decrease Exposure</source>
         <translation>Reducir exposición</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="353"/>
+        <location filename="../forms/maingui.ui" line="367"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="361"/>
+        <location filename="../forms/maingui.ui" line="375"/>
         <source>&amp;Increase Exposure</source>
         <translation>&amp;Aumentar exposición</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="364"/>
+        <location filename="../forms/maingui.ui" line="378"/>
         <source>9</source>
         <translation>9</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="372"/>
+        <location filename="../forms/maingui.ui" line="386"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Documentación...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="375"/>
+        <location filename="../forms/maingui.ui" line="389"/>
         <source>About...</source>
         <translation>Acerca de...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="384"/>
+        <location filename="../forms/maingui.ui" line="398"/>
         <source>Show Qtpfsgui Help</source>
         <translation>Mostrar ayuda de Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="387"/>
+        <location filename="../forms/maingui.ui" line="401"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="398"/>
+        <location filename="../forms/maingui.ui" line="412"/>
         <source>&amp;Normal Size</source>
         <translation>&amp;Restaurar zoom</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="410"/>
+        <location filename="../forms/maingui.ui" line="424"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="421"/>
+        <location filename="../forms/maingui.ui" line="435"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Aumentar zoom</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="427"/>
+        <location filename="../forms/maingui.ui" line="441"/>
         <source>Zoom In</source>
         <translation>Aumentar ampliacion</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="430"/>
+        <location filename="../forms/maingui.ui" line="444"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="441"/>
+        <location filename="../forms/maingui.ui" line="455"/>
         <source>Zoom &amp;Out</source>
         <translation>R&amp;educir zoom</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="447"/>
+        <location filename="../forms/maingui.ui" line="461"/>
         <source>Zoom Out</source>
         <translation>Reducir ampliación</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="450"/>
+        <location filename="../forms/maingui.ui" line="464"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="464"/>
+        <location filename="../forms/maingui.ui" line="478"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Ajustar a la ventana</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="473"/>
+        <location filename="../forms/maingui.ui" line="487"/>
         <source>W</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="481"/>
-        <source>&amp;Configure Qtpfsgui...</source>
-        <translation>&amp;Configurar Qtpfsgui...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="484"/>
+        <location filename="../forms/maingui.ui" line="498"/>
         <source>Qtpfsgui Options</source>
         <translation>Opciones Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="493"/>
+        <location filename="../forms/maingui.ui" line="507"/>
         <source>Set the various options of Qtpfsgui.</source>
         <translation>Permite configurar varias opciones de Qtpfsgui.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="496"/>
+        <location filename="../forms/maingui.ui" line="510"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="507"/>
-        <source>&amp;Resize the HDR...</source>
-        <translation>&amp;Redimensionar HDR...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="522"/>
+        <location filename="../forms/maingui.ui" line="536"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="530"/>
+        <location filename="../forms/maingui.ui" line="544"/>
         <source>Copy &amp;Exif Data...</source>
         <translation>Copiar info &amp;EXIF...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="533"/>
+        <location filename="../forms/maingui.ui" line="547"/>
         <source>Copy Exif Data</source>
         <translation>Copiar datos EXIF</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="536"/>
+        <location filename="../forms/maingui.ui" line="550"/>
         <source>Copy (i.e. transplant) Exif Data</source>
         <translation>Copia la información EXIF contenida en la imagen (para clonar a otra imagen)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="542"/>
+        <location filename="../forms/maingui.ui" line="556"/>
         <source>Copy (i.e. transplant) Exif Data between two set of files</source>
         <translation>Copia (para clonar) los datos EXIF entre dos conjuntos de archivos</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="545"/>
+        <location filename="../forms/maingui.ui" line="559"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="553"/>
+        <location filename="../forms/maingui.ui" line="567"/>
         <source>&amp;Align Images...</source>
         <translation>&amp;Alinear imágenes...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="562"/>
+        <location filename="../forms/maingui.ui" line="576"/>
         <source>WORK IN PROGRESS</source>
         <translation>TAREA EN PROCESO</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="567"/>
+        <location filename="../forms/maingui.ui" line="581"/>
         <source>&amp;About Qt</source>
         <translation>Acerca de &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="572"/>
+        <location filename="../forms/maingui.ui" line="586"/>
         <source>&amp;Tile</source>
         <translation>&amp;Mosaico</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="577"/>
+        <location filename="../forms/maingui.ui" line="591"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascada</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="583"/>
+        <location filename="../forms/maingui.ui" line="597"/>
         <source>Cascade</source>
         <translation>Cascada</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="145"/>
+        <location filename="../forms/maingui.ui" line="159"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="214"/>
+        <location filename="../forms/maingui.ui" line="228"/>
         <source>Tonemap the Hdr</source>
         <translation>Mapear tonos del HDR</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="235"/>
+        <location filename="../src/maingui_impl.cpp" line="245"/>
         <source>Aborting...</source>
         <translation>Cancelando tarea...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="137"/>
+        <location filename="../src/maingui_impl.cpp" line="148"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>El archivo no es legible (comprueba su existencia, permisos, ....)</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="302"/>
+        <location filename="../src/maingui_impl.cpp" line="312"/>
         <source>Error...</source>
         <translation>Error...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="538"/>
+        <location filename="../src/maingui_impl.cpp" line="562"/>
         <source>Unsaved changes...</source>
         <translation>Modificaciones no guardadas...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="163"/>
+        <location filename="../src/maingui_impl.cpp" line="174"/>
         <source>Qtpfsgui supports only &lt;br&gt;Radiance rgbe (hdr), PFS, raw, hdr tiff and OpenEXR (linux only) &lt;br&gt;files up until now.</source>
         <translation>Qtpfsgui solo soporta&lt;br&gt;Radiance rgbe (hdr), PFS, raw, hdr tiff y OpenEXR (solo Linux).</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="288"/>
+        <location filename="../src/maingui_impl.cpp" line="298"/>
         <source>Save the HDR...</source>
         <translation>Guardar HDR como...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="235"/>
+        <location filename="../src/maingui_impl.cpp" line="245"/>
         <source>Qtpfsgui supports only &lt;br&gt;Radiance rgbe (hdr), PFS, hdr tiff and OpenEXR (linux only) &lt;br&gt;files up until now.</source>
         <translation>Qtpfsgui solo soporta archivos del tipo&lt;br&gt;Radiance rgbe (hdr), PFS, hdr tiff y OpenEXR (solo Linux).</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="302"/>
+        <location filename="../src/maingui_impl.cpp" line="312"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Configure Qtpfsgui... -&gt; Tone mapping.</source>
         <translation>Qtpfsgui necesita almacenar en caché los resultados usando un archivo temporal, pero el directorio actulamente seleccionado no es válido&lt;br&gt;Por favor escoge una ruta válida en Herramientas -&gt; Configurar Qtpfsgui...-&gt;Mapear tonos.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="84"/>
+        <location filename="../forms/maingui.ui" line="83"/>
         <source>Hdr &amp;Histogram</source>
         <translation>H&amp;istograma Hdr</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="142"/>
+        <location filename="../forms/maingui.ui" line="156"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
         <translation>Crea un Hdr a partir de un grupo de imágenes JPEGs, RAW ó TIFF de 8/16 bits.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="165"/>
+        <location filename="../forms/maingui.ui" line="179"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
         <translation>Carga una imagen Hdr (formatos OpenEXR, Radiance RGBE, PFS stream, RAW o TIFF).</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="223"/>
+        <location filename="../forms/maingui.ui" line="237"/>
         <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
         <translation>Mapea los tonos de un Hdr a un formato LDR común (ejem:JPEG o PNG)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="269"/>
+        <location filename="../forms/maingui.ui" line="283"/>
         <source>Rotate Counterclockwise the Hdr</source>
         <translation>Gira el Hdr en el sentido contrario de las agujas del reloj</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="295"/>
+        <location filename="../forms/maingui.ui" line="309"/>
         <source>Rotate ClockWise the Hdr</source>
         <translation>Gira el Hdr en el sentido de las aguas del reloj</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="407"/>
+        <location filename="../forms/maingui.ui" line="421"/>
         <source>View Hdr at Normal Size</source>
         <translation>Ver Hdr a tamaño normal (100%)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="470"/>
+        <location filename="../forms/maingui.ui" line="484"/>
         <source>Shrink the Hdr to fit its containing window</source>
         <translation>Ajuste para mostrar la imagen completa en la ventana que la contiene</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="510"/>
+        <location filename="../forms/maingui.ui" line="524"/>
         <source>Resize the Hdr</source>
         <translation>Reescala el Hdr</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="519"/>
+        <location filename="../forms/maingui.ui" line="533"/>
         <source>Resize (shrink or expand) the Hdr</source>
         <translation>Reescalar (aumentar o reducir) la imagen Hdr</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="93"/>
+        <location filename="../src/maingui_impl.cpp" line="104"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Hecho... Ahora puede abrir un Hdr o crearlo!</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="109"/>
+        <location filename="../src/maingui_impl.cpp" line="120"/>
         <source>All Hdr formats </source>
         <translation>Todos los formatos Hdr </translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="120"/>
+        <location filename="../src/maingui_impl.cpp" line="131"/>
         <source>Load an Hdr file...</source>
         <translation>Cargar un archivo Hdr...</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="184"/>
+        <location filename="../src/maingui_impl.cpp" line="195"/>
         <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
         <translation>Todos los formatos Hdr (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="187"/>
+        <location filename="../src/maingui_impl.cpp" line="198"/>
         <source>All Hdr formats (*.hdr *.pic *.tiff *.tif *.pfs)</source>
         <translation>Todos los formatos Hdr (*.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="288"/>
+        <location filename="../src/maingui_impl.cpp" line="298"/>
         <source>Save the Hdr before tone mapping.</source>
         <translation>Guarde el Hdr antes de proceder con el mapeado de tonos.</translation>
     </message>
     <message>
-        <location filename="../src/maingui_impl.cpp" line="538"/>
+        <location filename="../src/maingui_impl.cpp" line="562"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
         <translation>Hay al menos un Hdr con modificaciones no guardadas&lt;br&gt;Si abandona ahora, estos cambios se perderán.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="191"/>
+        <location filename="../forms/maingui.ui" line="205"/>
         <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
         <translation>Guarda la imagen Hdr ( formatos OpenEXR, Radiance RGBE, PFS stream, o 32bit o LogLuv TIFF)</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="602"/>
+        <source>Toolbars</source>
+        <translation>Barra de Herramientas</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="495"/>
+        <source>&amp;Preferences...</source>
+        <translation>&amp;Preferencias...</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="521"/>
+        <source>&amp;Resize the Hdr...</source>
+        <translation>&amp;Reescala el Hdr...</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="610"/>
+        <source>Text &amp;Under Icons</source>
+        <translation>Texto &amp;Bajo los Iconos</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="618"/>
+        <source>&amp;Icons Only</source>
+        <translation>Solo &amp;Iconos</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="626"/>
+        <source>&amp;Text Only</source>
+        <translation>Solo &amp;Texto</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="634"/>
+        <source>Text &amp;Alongside Icons</source>
+        <translation>Texto &amp;Junto a los Iconos</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="94"/>
+        <source>&amp;Toolbars</source>
+        <translation>&amp;Barra de Herramientas</translation>
     </message>
 </context>
 <context>
@@ -997,19 +1027,9 @@ p, li { white-space: pre-wrap; }
         <translation>Opciones de Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="89"/>
-        <source>Tone mapping</source>
-        <translation>Mapear tonos</translation>
-    </message>
-    <message>
         <location filename="../forms/options.ui" line="97"/>
         <source>RAW Import</source>
         <translation>Importar RAW</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="105"/>
-        <source>Tiff options</source>
-        <translation>Opciones TIFF</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="149"/>
@@ -1225,15 +1245,31 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones Tiff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
+        <location filename="../forms/options.ui" line="89"/>
+        <source>Tone Mapping</source>
+        <translation>Tone Mapping</translation>
+    </message>
+    <message>
+        <location filename="../forms/options.ui" line="105"/>
+        <source>Tiff Options</source>
+        <translation>Opciones Tiff</translation>
+    </message>
+    <message>
         <location filename="../forms/options.ui" line="557"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Qtpfsgui will use to save an HDR image.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Qtpfsgui will use to save an Hdr image.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Escoja el formato Tiff-Hdr que Qtpfsgui utilizará para guardar la imagenn HDR.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; es el formato más apropiado para la mayor parte de los casos porque almacena los datos hdr en un cantidad de espacio razonable (en terminos de espacio en disco).&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliza el formato &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; solo si deseas abrir el archivo en otra aplicación que no soporte el formato LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Escoja el formato Tiff-Hdr que Qtpfsgui utilizará para guardar la imagenn Hdr.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; es el formato más apropiado para la mayor parte de los casos porque almacena los datos hdr en un cantidad de espacio razonable (en terminos de espacio en disco).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliza el formato &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; solo si deseas abrir el archivo en otra aplicación que no soporte el formato LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1758,11 +1794,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Cerrar dialogo</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="125"/>
-        <source>Tune Histogram</source>
-        <translation>Histograma</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingdialog.ui" line="134"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Tonear el histograma del actual LDR</translation>
@@ -1798,11 +1829,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Ajustar a ventana</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="122"/>
-        <source>Tune &amp;Histogram</source>
-        <translation>&amp;Histograma de tonos</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingdialog.ui" line="186"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
@@ -1826,6 +1852,16 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/tonemappingdialog_impl.cpp" line="140"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation>Error guardando&lt;b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="122"/>
+        <source>Adjust &amp;Levels</source>
+        <translation>Ajustar &amp;Niveles</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="125"/>
+        <source>Adjust Levels</source>
+        <translation>Ajustar Niveles</translation>
     </message>
 </context>
 <context>

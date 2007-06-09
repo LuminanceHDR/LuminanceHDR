@@ -85,18 +85,26 @@ void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
     }
 }
 
-void weights_triangle( float* w, int M, int Mmin, int Mmax )
+void weights_triangle( float* w, int M/*, int Mmin, int Mmax*/ )
 {
-  for( int m=0 ; m<M ; m++ )
-    if( m<Mmin || m>Mmax )
-      w[m] = 0.0f;
-    else
-    {
-	if ( m<int(Mmin+ (Mmax-Mmin)/2.0f +1) )
-		w[m]=(m-Mmin)/float(Mmin+(Mmax-Mmin)/2.0f);
-	else
-		w[m]=( -m+Mmin+((Mmax-Mmin)) )/float(Mmin+(Mmax-Mmin)/2.0f);
-    }
+	for(int i=0;i<int(float(M)/2.0f);i++) {
+	  w[i]=i/ (float(M)/2.0f);
+	  if (w[i]<0.06f)w[i]=0;
+	}
+	for(int i=int(float(M)/2.0f);i<M;i++) {
+	  w[i]=(M-1-i)/(float(M)/2.0f);
+	  if (w[i]<0.06f)w[i]=0;
+	}
+//   for( int m=0 ; m<M ; m++ )
+//     if( m<Mmin || m>Mmax )
+//       w[m] = 0.0f;
+//     else
+//     {
+// 	if ( m<int(Mmin+ (Mmax-Mmin)/2.0f +1) )
+// 		w[m]=(m-Mmin)/float(Mmin+(Mmax-Mmin)/2.0f);
+// 	else
+// 		w[m]=( -m+Mmin+((Mmax-Mmin)) )/float(Mmin+(Mmax-Mmin)/2.0f);
+//     }
 
 // 	  if (w[i]<0.06f)w[i]=0;
 }

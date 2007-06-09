@@ -28,6 +28,13 @@
      <height>29</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="helpAction" />
+    <addaction name="actionAbout_Qt" />
+   </widget>
    <widget class="QMenu" name="menuFile" >
     <property name="title" >
      <string>&amp;File</string>
@@ -49,12 +56,12 @@
     <addaction name="separator" />
     <addaction name="TonemapAction" />
    </widget>
-   <widget class="QMenu" name="menuHelp" >
+   <widget class="QMenu" name="menuWindows" >
     <property name="title" >
-     <string>&amp;Help</string>
+     <string>&amp;Windows</string>
     </property>
-    <addaction name="helpAction" />
-    <addaction name="actionAbout_Qt" />
+    <addaction name="actionTile" />
+    <addaction name="actionCascade" />
    </widget>
    <widget class="QMenu" name="menuSettings" >
     <property name="title" >
@@ -63,14 +70,6 @@
     <addaction name="OptionsAction" />
     <addaction name="separator" />
     <addaction name="Transplant_Exif_Data_action" />
-    <addaction name="actionAlign_Images" />
-   </widget>
-   <widget class="QMenu" name="menuWindows" >
-    <property name="title" >
-     <string>&amp;Windows</string>
-    </property>
-    <addaction name="actionTile" />
-    <addaction name="actionCascade" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -90,11 +89,23 @@
      <addaction name="Decrease_exposure" />
      <addaction name="Increase_exposure" />
     </widget>
-    <addaction name="menuHDR_Histogram" />
+    <widget class="QMenu" name="menuToolbars" >
+     <property name="title" >
+      <string>&amp;Toolbars</string>
+     </property>
+     <addaction name="actionText_Under_Icons" />
+     <addaction name="actionIcons_Only" />
+     <addaction name="actionText_Alongside_Icons" />
+     <addaction name="actionText_Only" />
+     <addaction name="separator" />
+    </widget>
     <addaction name="fitToWindowAct" />
     <addaction name="normalSizeAct" />
     <addaction name="zoomInAct" />
     <addaction name="zoomOutAct" />
+    <addaction name="menuHDR_Histogram" />
+    <addaction name="separator" />
+    <addaction name="menuToolbars" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -110,6 +121,9 @@
    </property>
    <property name="orientation" >
     <enum>Qt::Horizontal</enum>
+   </property>
+   <property name="toolButtonStyle" >
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
    <attribute name="toolBarArea" >
     <number>4</number>
@@ -478,7 +492,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/options.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Configure Qtpfsgui...</string>
+    <string>&amp;Preferences...</string>
    </property>
    <property name="iconText" >
     <string>Qtpfsgui Options</string>
@@ -504,7 +518,7 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/scale.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Resize the HDR...</string>
+    <string>&amp;Resize the Hdr...</string>
    </property>
    <property name="iconText" >
     <string>Resize the Hdr</string>
@@ -581,6 +595,43 @@
    </property>
    <property name="toolTip" >
     <string>Cascade</string>
+   </property>
+  </action>
+  <action name="actionToolbars" >
+   <property name="text" >
+    <string>Toolbars</string>
+   </property>
+  </action>
+  <action name="actionText_Under_Icons" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Text &amp;Under Icons</string>
+   </property>
+  </action>
+  <action name="actionIcons_Only" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>&amp;Icons Only</string>
+   </property>
+  </action>
+  <action name="actionText_Only" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>&amp;Text Only</string>
+   </property>
+  </action>
+  <action name="actionText_Alongside_Icons" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Text &amp;Alongside Icons</string>
    </property>
   </action>
  </widget>

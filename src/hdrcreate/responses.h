@@ -66,7 +66,7 @@ void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax );
  * @param w [out] weights (array size of M)
  * @param M number of camera output levels
  */
-void weights_triangle( float* w, int M, int Mmin, int Mmax );
+void weights_triangle( float* w, int M/*, int Mmin, int Mmax */);
 
 /**
  * @brief Weighting function with gaussian distribution
