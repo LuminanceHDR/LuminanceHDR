@@ -26,7 +26,10 @@
 
 #include <QThread>
 #include <QReadWriteLock>
-#include "tonemapping_widget.h"
+#include <QImage>
+#include "../options.h"
+#include "../libpfs/pfs.h"
+class QProgressBar;
 
 class TonemapperThread : public QThread {
 Q_OBJECT
