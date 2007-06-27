@@ -19,6 +19,8 @@ message( "and then run galternatives with:" )
 message( "sudo galternatives" )
 message( "In fedora you can simply invoke qmake with its full qt4 path:" )
 message( "/usr/lib/qt4/bin/qmake" )
+message( "In Ubuntu you can invoke Qt4's qmake with:" )
+message( "qmake-qt4" )
 message( "If you, on the other had, think that this message is wrong and indeed you HAVE Qt4, send an email to grota@users.sourceforge.net saying so." )
 error( "fatal error, bailing out." )
 } else {
@@ -171,7 +173,7 @@ icon.files       = images/qtpfsgui.png
 icon.path        = $${PREFIX}/share/icons/hicolor/48x48/apps
 htmls.files      = html
 htmls.path       = $${PREFIX}/share/qtpfsgui
-i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm
+i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm i18n/lang_tr.qm
 i18n.path        = $$I18NDIR
 
 INSTALLS        += target menu icon htmls i18n
@@ -188,12 +190,12 @@ message ("********************************************************************")
 
 MAJOR_MINOR_QT_VERSION = $$[QT_VERSION]
 MAJOR_MINOR_QT_VERSION ~= s/(4\..)\../\1
-contains(MAJOR_MINOR_QT_VERSION,4.2) {
-DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
-#message("Detected Qt4.2")
-} else {
+contains(MAJOR_MINOR_QT_VERSION,4.1) {
 DEFINES += I18NDIR=\"$$I18NDIR\"
 #message("Detected Qt4.1")
+} else {
+DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
+#message("Detected Qt4.2")
 }
 #################################################################################################
 #CONFIG += debug
@@ -350,7 +352,8 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_fr.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
-               i18n/lang_pl.ts
+               i18n/lang_pl.ts \
+               i18n/lang_tr.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
