@@ -1,4 +1,4 @@
-This is the README file for Qtpfsgui v1.8.9
+This is the README file for Qtpfsgui v1.8.10
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.9 of Qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.10 of Qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -44,7 +44,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.9.
+Read section 5 (Changes) to read the changes for version 1.8.10.
 Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a distro.
 
 The code is in part based on the existing opensource packages:
@@ -101,7 +101,7 @@ you can skip this step and continue with the steps described below.
 Running
 > qmake
 from the directory where there is project.pro creates the Makefile.
-Qtpfsgui should be able to detect if your system has all the dependencies at the "qmake" step.
+Qtpfsgui should be able to detect if your system has all the required dependencies at the "qmake" step.
 If something goes wrong drop me an email.
 Then you can run
 > make
@@ -115,7 +115,6 @@ This last step is usually required in order for Qtpfsgui to locate the "qm" file
 WARNING:
 In linux you have to make sure to install qt4 and qt4-devel, since most distros install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``galternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
 
-
 Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X.X has solved the issue.
 Some people have experienced some problems using shells different than bash/sh.
 
@@ -128,6 +127,9 @@ You may need to run update-desktop-database in case Qtpfsgui's entry doesn't sho
 In case you need it you can also specify a path where the "translation messages" (qm files) will be installed to. You can do that specifying the I18NDIR variable like this:
 qmake I18NDIR=/choose/your/path
 The default is I18NDIR=$${PREFIX}/share/qtpfsgui/i18n
+Running:
+> qmake ENABLE_DEBUG="yes"
+creates a Makefile that builds Qtpfsgui with debug statements enabled.
 
 The Windows EXE was obtained on Windows XP using MinGW and MSYS.
 In linux you have to compile the code and you need the packages mentioned in Chapter 2 (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
@@ -195,17 +197,16 @@ depending on the chosen tonemapping operator it can yield
 unexpected effects like changing color saturation.
 
 
+
 5. Changes
 -------------------------------------------------------------------
-v1.8.9
-* fixed serious bug related to the creation of an hdr image.
-* fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
-* The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
-* fixed fullsize bug in tonemapping panel
-* fixed some textual inconsistencies.
-* Added displaying options for the main toolbar.
-* fixed in the README the instructions related to internationalization.
-* Fixed another segfault (non-const constructor for QImage) at the end of the hdr creation wizard.
+v1.8.10
+* added initial implementation of batch functionality
+* fixed compiling issues with Qt 4.3
+* restructured source tree
+* included pfstools patch for XYZ<->sRGB color space transformation
+* implemented small usability patch when user has to specify the EV manually
+* loading HDRs is a threaded operation now
 
 ***WARNING***
 Starting Qtpfsgui 1.8.2, Windows users have to download the new
@@ -214,6 +215,7 @@ http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
 If you already have "V3" you don't need to download it again.
 
 Read the Changelog file for previous versions' details.
+
 
 
 6. Contact and Links
