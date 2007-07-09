@@ -1,0 +1,52 @@
+/**
+ * This file is a part of Qtpfsgui package.
+ * ---------------------------------------------------------------------- 
+ * Copyright (C) 2006,2007 Giuseppe Rota
+ * 
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * ---------------------------------------------------------------------- 
+ *
+ * @author Giuseppe Rota <grota@users.sourceforge.net>
+ */
+
+#ifndef IOTHREAD_H
+#define IOTHREAD_H
+
+#include <QThread>
+// #include "../hdrviewer.h"
+#include "../options.h"
+
+namespace pfs {
+class Frame;
+}
+
+class LoadHdrThread : public QThread {
+Q_OBJECT
+
+public:
+	LoadHdrThread(QString filename, QString RecentDirHDRSetting, qtpfsgui_opts *opts);
+	~LoadHdrThread();
+signals:
+// 	void loaded_correctly(QString);
+	void updateRecentDirHDRSetting(QString);
+	void hdr_ready(pfs::Frame*, QString fname);
+	void load_failed(QString fname);
+protected:
+	void run();
+private:
+	QString fname,RecentDirHDRSetting;
+	qtpfsgui_opts *qtpfsgui_options;
+};
+#endif

@@ -26,18 +26,35 @@
 #include <QTranslator>
 // #include <QDir>
 // #include <QDebug>
-#include "maingui_impl.h"
-// #define QUOTEME( x ) #x
+// #include <QLibraryInfo>
+// #include <QPluginLoader>
+#include "MainWindow/maingui_impl.h"
+
+#ifdef WIN32
+#include <QMessageBox>
+#endif
 
 int main( int argc, char ** argv )
 {
 	QApplication a( argc, argv );
 // 	qDebug() << "QDir::currentPath()=" << QDir::currentPath();
 // 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
+
+#ifdef WIN32
+	bool found_DLL=false;
+	foreach (QString path, a.libraryPaths()) {
+		if (QFile::exists(path+"/imageformats/qjpeg1.dll"))
+			found_DLL=true;
+	}
+	if (!found_DLL) {
+		QMessageBox::critical(0,QObject::tr("Aborting..."),QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
+		return 1;
+	}
+#endif
 	QString locale = QLocale::system().name();
 	QTranslator translator;
+	qDebug( "Looking for i18n files in: " I18NDIR );
 	translator.load(QString("lang_") + locale, I18NDIR);
-// 	qDebug( I18NDIR );
 	a.installTranslator(&translator);
 	MainGui w;
 	a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
