@@ -56,21 +56,6 @@
     <addaction name="separator" />
     <addaction name="TonemapAction" />
    </widget>
-   <widget class="QMenu" name="menuWindows" >
-    <property name="title" >
-     <string>&amp;Windows</string>
-    </property>
-    <addaction name="actionTile" />
-    <addaction name="actionCascade" />
-   </widget>
-   <widget class="QMenu" name="menuSettings" >
-    <property name="title" >
-     <string>&amp;Tools</string>
-    </property>
-    <addaction name="OptionsAction" />
-    <addaction name="separator" />
-    <addaction name="Transplant_Exif_Data_action" />
-   </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
      <string>&amp;View</string>
@@ -106,6 +91,22 @@
     <addaction name="menuHDR_Histogram" />
     <addaction name="separator" />
     <addaction name="menuToolbars" />
+   </widget>
+   <widget class="QMenu" name="menuSettings" >
+    <property name="title" >
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="OptionsAction" />
+    <addaction name="separator" />
+    <addaction name="Transplant_Exif_Data_action" />
+    <addaction name="actionBatch_Tone_Mapping" />
+   </widget>
+   <widget class="QMenu" name="menuWindows" >
+    <property name="title" >
+     <string>&amp;Windows</string>
+    </property>
+    <addaction name="actionTile" />
+    <addaction name="actionCascade" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -634,10 +635,18 @@
     <string>Text &amp;Alongside Icons</string>
    </property>
   </action>
+  <action name="actionBatch_Tone_Mapping" >
+   <property name="text" >
+    <string>&amp;Batch Tone Mapping...</string>
+   </property>
+   <property name="shortcut" >
+    <string>CTRL+B</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../icons.qrc" />
-  <include location="icons.qrc" />
+  <include location="../icons.qrc" />
  </resources>
  <connections/>
 </ui>
