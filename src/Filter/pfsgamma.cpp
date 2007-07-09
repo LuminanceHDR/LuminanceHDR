@@ -26,12 +26,8 @@
  * $Id: pfsgamma.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-// #include <iostream>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <QFile>
 #include <cmath>
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 
 void applyGamma( pfs::Array2D *arraydest, const float exponent);
 

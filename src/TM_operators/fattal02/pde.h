@@ -31,7 +31,7 @@
 #ifndef _FMG_PDE_H_
 #define _FMG_PDE_H_
 
-#include "../libpfs/array2d.h"
+#include "../../Libpfs/array2d.h"
 
 /// limit of iterations for successive overrelaxation
 #define SOR_MAXITS 5001

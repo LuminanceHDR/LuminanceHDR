@@ -29,7 +29,7 @@
 #define _RGBEIO_H_
 
 #include <stdio.h>
-#include "../libpfs/array2d.h"
+#include "../Libpfs/array2d.h"
 
 
 class RGBEReader 

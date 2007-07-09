@@ -27,7 +27,7 @@
  * $Id: histogram.h,v 1.2 2005/09/02 13:10:35 rafm Exp $
  */
 
-#include "libpfs/array2d.h"
+#include "../Libpfs/array2d.h"
 
 class Histogram
 {

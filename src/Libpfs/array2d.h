@@ -41,6 +41,8 @@
 #include <windows.h>
 #endif
 
+#include <iostream>
+
 namespace pfs
 {
 

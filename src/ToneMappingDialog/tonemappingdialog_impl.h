@@ -28,7 +28,7 @@
 #include <QWorkspace>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
-#include "libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include "tonemapping_widget.h"
 
 class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
@@ -46,7 +46,7 @@ private:
 	QWorkspace* workspace;
 	QSettings settings;
 	QString recentPathSaveLDR, prefixname;
-	void writeExifData(const QString);
+// 	void writeExifData(const QString);
 
 private slots:
 	void addMDIresult(const QImage&,tonemapping_options*);

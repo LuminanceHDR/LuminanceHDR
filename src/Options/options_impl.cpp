@@ -30,7 +30,6 @@ QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings
 	from_options_to_gui(); //update the gui in order to show the options
 	connect(negative_color_button,SIGNAL(clicked()),this,SLOT(negative_clicked()));
 	connect(infnan_color_button,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
-	connect(OptionListWidget,SIGNAL(currentRowChanged(int)),stackedWidget,SLOT(setCurrentIndex(int)));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
 }
@@ -100,6 +99,14 @@ void QtpfsguiOptions::ok_clicked() {
 			opts->tempfilespath=lineEditTempPath->text();
 			settings->setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
+		if (imageformat_comboBox->currentText() != opts->batch_ldr_format) {
+			opts->batch_ldr_format=imageformat_comboBox->currentText();
+			settings->setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
+		}
+		if (thread_spinBox->value() != opts->num_batch_threads) {
+			opts->num_batch_threads=thread_spinBox->value();
+			settings->setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
+		}
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TIFF);
@@ -113,17 +120,28 @@ void QtpfsguiOptions::ok_clicked() {
 }
 
 void QtpfsguiOptions::from_options_to_gui() {
+	lineEditTempPath->setText(opts->tempfilespath);
+	if (opts->batch_ldr_format=="JPEG")
+		imageformat_comboBox->setCurrentIndex(0);
+	else if (opts->batch_ldr_format=="PNG")
+		imageformat_comboBox->setCurrentIndex(1);
+	else if (opts->batch_ldr_format=="PPM")
+		imageformat_comboBox->setCurrentIndex(2);
+	else if (opts->batch_ldr_format=="PBM")
+		imageformat_comboBox->setCurrentIndex(3);
+	else if (opts->batch_ldr_format=="BMP")
+		imageformat_comboBox->setCurrentIndex(4);
+	thread_spinBox->setValue(opts->num_batch_threads);
 	checkBox_autowb->setChecked(opts->dcraw_options.auto_wb);
 	checkBox_camwb->setChecked(opts->dcraw_options.camera_wb);
 	checkBox_4colors->setChecked(opts->dcraw_options.four_colors);
 	spinBox_highlights->setValue(opts->dcraw_options.highlights);
 	comboBox_outcolspace->setCurrentIndex(opts->dcraw_options.output_color_space);
 	comboBox_quality->setCurrentIndex(opts->dcraw_options.quality);
-	change_color_of(negative_color_button,&negcolor);
-	change_color_of(infnan_color_button,&infnancolor);
 	radioButtonLogLuv->setChecked(opts->saveLogLuvTiff);
 	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
-	lineEditTempPath->setText(opts->tempfilespath);
+	change_color_of(negative_color_button,&negcolor);
+	change_color_of(infnan_color_button,&infnancolor);
 }
 
 QtpfsguiOptions::~QtpfsguiOptions() {

@@ -25,7 +25,7 @@
 #ifndef IMAGELDRVIEWER_H
 #define IMAGELDRVIEWER_H
 
-#include "smart_scroll_area.h"
+#include "../smart_scroll_area.h"
 #include "tonemapping_widget.h"
 
 class LdrViewer : public QWidget {

@@ -37,7 +37,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 // extern "C" {
 void print_parameter_settings ();

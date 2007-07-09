@@ -32,7 +32,7 @@
 #include <fftw3.h>
 #include <math.h>
 
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 using namespace std;
 

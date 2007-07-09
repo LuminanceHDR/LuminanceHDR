@@ -31,7 +31,7 @@
 
 #ifndef _tmo_fattal02_h_
 #define _tmo_fattal02_h_
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 /**
  * @brief Gradient Domain High Dynamic Range Compression

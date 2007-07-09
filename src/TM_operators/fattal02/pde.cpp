@@ -37,7 +37,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../libpfs/array2d.h"
+#include "../../Libpfs/array2d.h"
 #include "pde.h"
 
 using namespace std;

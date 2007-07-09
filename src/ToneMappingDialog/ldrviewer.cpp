@@ -94,7 +94,7 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 			}
 			postfix+=QString("local_%1").arg(opts->operator_options.ashikhminoptions.lct);
 			caption+=QString("Local=%1").arg(opts->operator_options.ashikhminoptions.lct);
-			exif_comment+=QString("Local Contrast value: %1\n").arg(opts->operator_options.ashikhminoptions.lct);;
+			exif_comment+=QString("Local Contrast value: %1\n").arg(opts->operator_options.ashikhminoptions.lct);
 		}
 		}
 		break;

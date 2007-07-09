@@ -35,7 +35,7 @@
 #include <stdlib.h>
 #include <math.h>
 // #include <QFile>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 using namespace std;
 

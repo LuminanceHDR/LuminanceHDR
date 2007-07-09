@@ -28,7 +28,7 @@
 #ifndef PYRAMID_ASHIKHMIN_H
 #define PYRAMID_ASHIKHMIN_H
 
-#include "../libpfs/array2d.h"
+#include "../../Libpfs/array2d.h"
 
 class Pyramid { // each level of a Gaussian pyramid
  public:

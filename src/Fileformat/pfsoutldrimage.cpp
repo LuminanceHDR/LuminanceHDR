@@ -25,16 +25,10 @@
  */
 
 #include <iostream>
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include <QImage>
 
-#ifndef _WIN32
-#if (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
-#include <machine/endian.h>
-#else
-#include <endian.h>
-#endif
-#endif
+#include <QSysInfo>
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
 {
@@ -44,7 +38,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 
-#include "../threads/tonemapper_thread.h"
+#include "../Threads/tonemapper_thread.h"
 QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
 
@@ -62,19 +56,17 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
 	for( int y = 0; y < height; y++ ) { // For each row of the image
 		for( int x = 0; x < width; x++ ) {
-// 			if ((*X)(x,y)>1.f||(*X)(x,y)<-1e-6||(*Y)(x,y)>1.f||(*Y)(x,y)<-1e-6||(*Z)(x,y)>1.f||(*Z)(x,y)<-1e-6)
-// 			  qDebug("out of bounds, X=%f Y=%f, Z=%f",(*X)(x,y),(*Y)(x,y),(*Z)(x,y));
-#if ( (BYTE_ORDER == LITTLE_ENDIAN) || (defined(_WIN32)) )
+			if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
 			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
 			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
 			*(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
 			*(data + 3 + (y*width+x)*4) = 0xff;
-#elif ( BYTE_ORDER == BIG_ENDIAN )
+			} else {
 			*(data + 3 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
 			*(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
 			*(data + 1 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
 			*(data + 0 + (y*width+x)*4) = 0xff;
-#endif
+			}
 		}
 	}
 //special treament for qt 4.2.1... removing "const" doesn't seem to work.

@@ -36,7 +36,7 @@
 #include <math.h>
 
 #include <QFile>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 #include "tmo_fattal02.h"
 
 using namespace std;

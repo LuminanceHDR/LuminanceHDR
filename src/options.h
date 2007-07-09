@@ -40,6 +40,8 @@
 
 #define GROUP_TONEMAPPING "Tonemapping_Options"
 #define KEY_TEMP_RESULT_PATH "TemporaryFilesPath"
+#define KEY_BATCH_LDR_FORMAT "Batch_LDR_Format"
+#define KEY_NUM_BATCH_THREADS "Num_Batch_Threads"
 
 #define GROUP_TIFF "TIFF_Options"
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
@@ -66,11 +68,18 @@ struct dcraw_opts {
 };
 
 struct qtpfsgui_opts {
-	dcraw_opts dcraw_options; //options for RAW import functionality, thanks to dcraw
-	unsigned int naninfcolor, negcolor; //color used to draw the NAN/INF or the negative colors
-// 	bool keepsize; //keep size of ToneMapping result when changing operator tab
-	bool saveLogLuvTiff; //if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
+	//options for RAW import functionality, thanks to dcraw
+	dcraw_opts dcraw_options;
+	//color used to draw the NAN/INF or the negative colors
+	unsigned int naninfcolor, negcolor;
+	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
+	bool saveLogLuvTiff;
+	//path to save temporary cached pfs files.
 	QString tempfilespath;
+	//number of threads to use for the batch feature.
+	int num_batch_threads;
+	//Image format used to save LDRs in batch mode.
+	QString batch_ldr_format;
 };
 
 

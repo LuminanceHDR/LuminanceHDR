@@ -28,8 +28,8 @@
 #ifndef _tmo_drago03_h_
 #define _tmo_drago03_h_
 
-#include "../libpfs/array2d.h"
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/array2d.h"
+#include "../../Libpfs/pfs.h"
 
 /**
  * @brief Frederic Drago Logmapping Algorithm

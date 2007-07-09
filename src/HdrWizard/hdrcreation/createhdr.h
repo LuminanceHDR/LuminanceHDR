@@ -27,7 +27,7 @@
 #include <QString>
 #include <QList>
 #include <QImage>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 #include <stdarg.h>
 
 #include "responses.h"

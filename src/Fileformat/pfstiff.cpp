@@ -26,14 +26,7 @@
  */
 
 #include <cmath>
-
-#ifndef _WIN32
-#if (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
-#include <machine/endian.h>
-#else
-#include <endian.h>
-#endif
-#endif
+#include <QSysInfo>
 
 #include "pfstiff.h"
 
@@ -208,17 +201,17 @@ QImage* TiffReader::readIntoQImage() {
 	for(uint y = 0; y < height; y++) {
 		TIFFReadScanline(tif, bp, y);
 		for( uint x=0; x<width; x++ ) {
-#if ( (BYTE_ORDER == LITTLE_ENDIAN) || (defined(_WIN32)) )
-			*(data + 0 + (y*width+x)*4) = bp[x*nSamples+2] ;
-			*(data + 1 + (y*width+x)*4) = bp[x*nSamples+1] ;
-			*(data + 2 + (y*width+x)*4) = bp[x*nSamples] ;
-			*(data + 3 + (y*width+x)*4) = 0xff;
-#elif ( BYTE_ORDER == BIG_ENDIAN )
-			*(data + 3 + (y*width+x)*4) = bp[x*nSamples+2];
-			*(data + 2 + (y*width+x)*4) = bp[x*nSamples+1];
-			*(data + 1 + (y*width+x)*4) = bp[x*nSamples];
-			*(data + 0 + (y*width+x)*4) = 0xff;
-#endif
+			if (QSysInfo::ByteOrder==QSysInfo::LittleEndian) {
+				*(data + 0 + (y*width+x)*4) = bp[x*nSamples+2] ;
+				*(data + 1 + (y*width+x)*4) = bp[x*nSamples+1] ;
+				*(data + 2 + (y*width+x)*4) = bp[x*nSamples] ;
+				*(data + 3 + (y*width+x)*4) = 0xff;
+			} else {
+				*(data + 3 + (y*width+x)*4) = bp[x*nSamples+2];
+				*(data + 2 + (y*width+x)*4) = bp[x*nSamples+1];
+				*(data + 1 + (y*width+x)*4) = bp[x*nSamples];
+				*(data + 0 + (y*width+x)*4) = 0xff;
+			}
 		}
 	}
 	//--- free buffers and close files
@@ -251,33 +244,6 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
 	TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
 	TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
-
-// int TiffWriter::write16bitTiff() { //write 16bit Tiff from pfs::Frame
-// 	TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
-// 	TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
-// 	TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
-// 
-// 	tsize_t strip_size = TIFFStripSize (tif);
-// 	tstrip_t strips_num = TIFFNumberOfStrips (tif);
-// 	unsigned short* strip_buf=(unsigned short**)_TIFFmalloc(strip_size); //enough space for a strip
-// 	if (!strip_buf)
-// 		throw pfs::Exception("TIFF: error allocating buffer.");
-// 
-// 	for (unsigned int s=0; s<strips_num; s++) {
-// 		for (unsigned int col=0; col<width; col++) {
-// 			strip_buf[3*col+0]=(unsigned short)(*R)(col,s);
-// 			strip_buf[3*col+1]=(unsigned short)(*G)(col,s);
-// 			strip_buf[3*col+2]=(unsigned short)(*B)(col,s);
-// 		}
-// 		if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0) {
-// 			qDebug("error writing strip");
-// 			return -1;
-// 		}
-// 	}
-// 	_TIFFfree(strip_buf);
-// 	TIFFClose(tif);
-// 	return 0;
-// }
 
 int TiffWriter::writeFloatTiff() { //write 32 bit float Tiff from pfs::Frame
 	TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?

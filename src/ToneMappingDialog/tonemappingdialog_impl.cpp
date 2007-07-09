@@ -26,12 +26,11 @@
 #include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <image.hpp>
-#include <exif.hpp>
 #include "tonemappingdialog_impl.h"
 #include "ldrviewer.h"
-#include "options.h"
-#include "config.h"
+#include "../options.h"
+#include "../Exif/exif_operations.h"
+#include "../config.h"
 
 TonemappingWindow::~TonemappingWindow() {}
 
@@ -98,7 +97,7 @@ void TonemappingWindow::saveLDR() {
 	filetypes += tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)");
 	filetypes += "JPEG (*.jpg *.jpeg)";
 	filetypes += "PNG (*.png)";
-	filetypes += "PPM PBM  (*.ppm *.pbm)";
+	filetypes += "PPM PBM (*.ppm *.pbm)";
 	filetypes += "BMP (*.bmp)";
 	QFileDialog *fd = new QFileDialog(this);
 	fd->setWindowTitle(tr("Save the LDR to..."));
@@ -142,7 +141,8 @@ void TonemappingWindow::saveLDR() {
 			} else { //save is succesful
 				if (format=="jpeg" || format=="jpg") {
 					//time to write the exif data...
-					writeExifData(outfname);
+					LdrViewer* currentLDR = ((LdrViewer*)(workspace->activeWindow()));
+					ExifOperations::writeExifData( outfname.toStdString(), currentLDR->getExifComment().toStdString() );
 				}
 			}
 		}
@@ -183,16 +183,5 @@ void TonemappingWindow::close_all() {
 	}
 }
 
-void TonemappingWindow::writeExifData(const QString filename) {
-	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
-	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename.toStdString());
-	image->readMetadata();
-	Exiv2::ExifData &exifData = image->exifData();
-	exifData["Exif.Image.Software"]="Created with opensource tool Qtpfsgui, http://qtpfsgui.sourceforge.net";
-	exifData["Exif.Image.ImageDescription"]=currentLDR->getExifComment().toStdString();
-	exifData["Exif.Photo.UserComment"]=QString("charset=\"Ascii\" "+ currentLDR->getExifComment()).toStdString();
-	image->setExifData(exifData);
-	image->writeMetadata();
-}
 
 

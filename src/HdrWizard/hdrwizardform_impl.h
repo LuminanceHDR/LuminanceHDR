@@ -30,8 +30,8 @@
 #include <image.hpp>
 #include <exif.hpp>
 #include "../generated_uic/ui_hdrwizardform.h"
-#include "hdrcreate/createhdr.h"
-#include "options.h"
+#include "hdrcreation/createhdr.h"
+#include "../options.h"
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 {
@@ -46,9 +46,6 @@ public:
 private:
 	QString curvefilename;
 	config_triple chosen_config;
-// 	QMap<QString,TResponse> fromQStringToResponse;
-// 	QMap<QString,TModel>    fromQStringToModel;
-// 	QMap<QString,TWeight>   fromQStringToWeight;
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
@@ -57,18 +54,15 @@ private:
 	void clearlists();
 	int numberinputfiles; //it is also the lenght of the array below
 	float *expotimes;
-	Exiv2::ExifKey *expotime, *expotime2;
-	Exiv2::ExifKey *iso;
-	Exiv2::ExifKey *fnum, *fnum2;
 	bool input_is_ldr;
 	bool ldr_tiff;
 	bool need_to_transform_indices;
+	bool enable_usability_jump_hack;
 
 	QList<QImage*> ImagePtrList;  //ldr input
 	Array2DList listhdrR,listhdrG,listhdrB; //hdr input
 	dcraw_opts *opts;
 
-	float obtain_expotime( QString );
 	void fillEVcombobox();
 	void transform_indices_into_values();
 	pfs::Frame* PfsFrameHDR;
@@ -90,6 +84,7 @@ private slots:
 	void update_current_config_calibrate();
 	void setLoadFilename(const QString&);
 	void EVcomboBoxactivated(int);
+	void highlighted(int);
 	void fileselected(int);
 };
 #endif

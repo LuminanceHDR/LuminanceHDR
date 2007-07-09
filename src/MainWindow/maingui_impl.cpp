@@ -26,15 +26,15 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include "maingui_impl.h"
-#include "fileformat/pfstiff.h"
-#include "tonemappingdialog_impl.h"
+#include "../Fileformat/pfstiff.h"
+#include "../ToneMappingDialog/tonemappingdialog_impl.h"
 #include "../generated_uic/ui_help_about.h"
-#include "config.h"
-#include "transplant_impl.h"
-// #include "align_impl.h"
+#include "../TransplantExif/transplant_impl.h"
+#include "../Batch/batch_dialog_impl.h"
+#include "../Threads/io_threads.h"
+#include "hdrviewer.h"
+#include "../config.h"
 
-pfs::Frame* readEXRfile  (const char * filename);
-pfs::Frame* readRGBEfile (const char * filename);
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
@@ -66,6 +66,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
+	connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 	connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_ldr_exposure()));
 	connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_fit_exposure()));
 	connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_shrink_exposure()));
@@ -118,7 +119,7 @@ void MainGui::fileNewViaWizard() {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.hdr *.pic *.tiff *.tif *.pfs *.exr *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw" ;
+	filetypes += "(*.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw" ;
 #ifndef _WIN32
 	filetypes += " *.exr);;OpenEXR (*.exr" ;
 #endif
@@ -126,65 +127,28 @@ void MainGui::fileOpen() {
 	filetypes += "TIFF Images (*.tiff *.tif);;";
 	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;";
 	filetypes += "PFS Stream (*.pfs)";
-	QString opened = QFileDialog::getOpenFileName(
+	QString filename = QFileDialog::getOpenFileName(
 			this,
 			tr("Load an Hdr file..."),
 			RecentDirHDRSetting,
 			filetypes );
-	if (loadFile(opened))
-		setCurrentFile(opened);
+	setupLoadThread(filename);
 }
 
-bool MainGui::loadFile(QString opened) {
-if( ! opened.isEmpty() ) {
-	QFileInfo qfi(opened);
-	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirHDRSetting != qfi.path() ) {
-		// update internal field variable
-		RecentDirHDRSetting=qfi.path();
-		settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
-	}
-	if (!qfi.isReadable()) {
-	    QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"), QMessageBox::Ok,QMessageBox::NoButton);
-	    return false;
-	}
-	HdrViewer *newhdr;
-	pfs::Frame* hdrpfsframe = NULL;
-	QString extension=qfi.suffix().toUpper();
-	bool rawinput = (extension!="PFS") && (extension!="EXR") && (extension!="HDR") && (!extension.startsWith("TIF"));
-#ifndef _WIN32
-	if (extension=="EXR") {
-		hdrpfsframe = readEXRfile(qfi.filePath().toUtf8().constData());
-	} else
-#endif
-	       if (extension=="HDR") {
-		hdrpfsframe = readRGBEfile(qfi.filePath().toUtf8().constData());
-	} else if (extension=="PFS") {
-		pfs::DOMIO pfsio;
-		hdrpfsframe=pfsio.readFrame(qfi.filePath());
-		hdrpfsframe->convertXYZChannelsToRGB();
-	} else if (extension.startsWith("TIF")) {
-		TiffReader reader(qfi.filePath().toUtf8().constData());
-		hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
-	} 
-	else if (rawinput) {
-		hdrpfsframe = readRAWfile(qfi.filePath().toUtf8().constData(), &(qtpfsgui_options->dcraw_options));
-	}
-	else {
-		QMessageBox::warning(this,tr("Aborting..."),tr("Qtpfsgui supports only <br>Radiance rgbe (hdr), PFS, raw, hdr tiff and OpenEXR (linux only) <br>files up until now."),
-				 QMessageBox::Ok,QMessageBox::NoButton);
-		return false;
-	}
-	assert(hdrpfsframe!=NULL);
-	newhdr=new HdrViewer(this,qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor, false);
-	newhdr->updateHDR(hdrpfsframe);
-	newhdr->filename=opened;
-	newhdr->setWindowTitle(opened);
+void MainGui::addHdrViewer(pfs::Frame* hdr_pfs_frame, QString fname) {
+	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+	newhdr->updateHDR(hdr_pfs_frame);
+	newhdr->filename=fname;
+	newhdr->setWindowTitle(fname);
 	workspace->addWindow(newhdr);
 	newhdr->show();
-	return true;
+	setCurrentFile(fname);
 }
-return false;
+
+void MainGui::updateRecentDirHDRSetting(QString newvalue) {
+	// update internal field variable
+	RecentDirHDRSetting=newvalue;
+	settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 }
 
 void MainGui::fileSaveAs()
@@ -256,8 +220,7 @@ void MainGui::fileSaveAs()
 	delete fd;
 }
 
-void MainGui::updateActions( QWidget * w )
-{
+void MainGui::updateActions( QWidget * w ) {
 	TonemapAction->setEnabled(w!=NULL);
 	fileSaveAsAction->setEnabled(w!=NULL);
 	rotateccw->setEnabled(w!=NULL);
@@ -304,8 +267,8 @@ void MainGui::tonemap_requested() {
 	QFileInfo test(qtpfsgui_options->tempfilespath);
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		this->setDisabled(true);
-		TonemappingWindow *tmodialog=new TonemappingWindow(this,currenthdr->getHDRPfsFrame(),qtpfsgui_options->tempfilespath, currenthdr->filename);
-		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableHdrViewer()));
+		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), qtpfsgui_options->tempfilespath, currenthdr->filename);
+		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
 	} else {
@@ -314,7 +277,7 @@ void MainGui::tonemap_requested() {
 	}
 }
 
-void MainGui::reEnableHdrViewer() {
+void MainGui::reEnableMainWin() {
 	this->setEnabled(true);
 }
 
@@ -326,7 +289,7 @@ void MainGui::rotatecw_requested() {
 	dispatchrotate(true);
 }
 
-void MainGui::dispatchrotate( bool clockwise) {
+void MainGui::dispatchrotate(bool clockwise) {
 	assert(currenthdr!=NULL);
 	rotateccw->setEnabled(false);
 	rotatecw->setEnabled(false);
@@ -430,13 +393,26 @@ void MainGui::updateRecentFileActions() {
 void MainGui::openRecentFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	if (action) {
-		if (! loadFile(action->data().toString()) ) {
-			QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
-			files.removeAll(action->data().toString());
-			settings.setValue(KEY_RECENT_FILES, files);
-			updateRecentFileActions();
-		}
+		setupLoadThread(action->data().toString());
 	}
+}
+
+void MainGui::setupLoadThread(QString fname) {
+// 	QProgressBar *newprogressbar=new QProgressBar(statusBar());
+	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting, qtpfsgui_options);
+	connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
+	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
+	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrViewer(pfs::Frame*,QString)));
+	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
+	loadthread->start();
+}
+
+void MainGui::load_failed(QString fname) {
+	QMessageBox::critical(0,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"), QMessageBox::Ok,QMessageBox::NoButton);
+	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+	files.removeAll(fname);
+	settings.setValue(KEY_RECENT_FILES, files);
+	updateRecentFileActions();
 }
 
 void MainGui::setCurrentFile(const QString &fileName) {
@@ -535,6 +511,12 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 		if (!settings.contains(KEY_TEMP_RESULT_PATH))
 			settings.setValue(KEY_TEMP_RESULT_PATH, QDir::currentPath());
 		dest->tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
+		if (!settings.contains(KEY_BATCH_LDR_FORMAT))
+			settings.setValue(KEY_BATCH_LDR_FORMAT, "JPEG");
+		dest->batch_ldr_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
+		if (!settings.contains(KEY_NUM_BATCH_THREADS))
+			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
+		dest->num_batch_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
@@ -571,22 +553,27 @@ void MainGui::fileExit() {
 }
 
 void MainGui::Text_Under_Icons() {
-toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void MainGui::Icons_Only() {
-toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+	toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
 }
 
 void MainGui::Text_Alongside_Icons() {
-toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+	toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void MainGui::Text_Only() {
-toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+	toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 
+void MainGui::batch_requested() {
+	BatchTMDialog *batchdialog=new BatchTMDialog(this, qtpfsgui_options);
+	batchdialog->exec();
+	delete batchdialog;
+}

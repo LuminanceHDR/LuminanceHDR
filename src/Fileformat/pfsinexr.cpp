@@ -25,14 +25,13 @@
  * @author Giuseppe Rota  <grota@users.sourceforge.net>
  */
 
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include <ImfHeader.h>
 #include <ImfChannelList.h>
 #include <ImfInputFile.h>
 #include <ImfRgbaFile.h>
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
-// #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 using namespace Imf;

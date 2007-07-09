@@ -27,8 +27,8 @@
 #include <QSettings>
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "gang.h"
-#include "libpfs/pfs.h"
-#include "options.h"
+#include "../Libpfs/pfs.h"
+#include "../options.h"
 
 class QStatusBar;
 class QProgressBar;

@@ -26,16 +26,16 @@
 #include <QDir>
 #include <QSettings>
 #include <QMessageBox>
-#include <cmath>
 #include <QTextStream>
 #if defined(__FreeBSD__) && __FreeBSD__ < 6
 extern "C" {
-#include "arch/freebsd/s_exp2f.c"
+#include "../arch/freebsd/s_exp2f.c"
 }
 #endif
 #include "hdrwizardform_impl.h"
-#include "fileformat/pfsindcraw.h"
-#include "fileformat/pfstiff.h"
+#include "../Fileformat/pfsindcraw.h"
+#include "../Fileformat/pfstiff.h"
+#include "../Exif/exif_operations.h"
 
 const config_triple predef_confs[6]= {
 {TRIANGULAR, GAMMA, DEBEVEC,""},
@@ -65,14 +65,14 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	connect(coboxRespCurve_Antighost,SIGNAL(activated(int)),this,SLOT(update_current_antighost_curve(int)));
 	connect(radio_usecalibrate_02,SIGNAL(toggled(bool)),this,SLOT(update_current_config_calibrate()));
 	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)), this, SLOT(setLoadFilename(const QString&)));
+
 	connect(EVcomboBox, SIGNAL(activated(int)), this, SLOT(EVcomboBoxactivated(int)));
+	connect(EVcomboBox, SIGNAL(highlighted(int)), this, SLOT(highlighted(int)));
+
 	connect(listShowFiles, SIGNAL(currentRowChanged(int)), this, SLOT(fileselected(int)));
 	weights_in_gui[0]=TRIANGULAR;
 	weights_in_gui[1]=GAUSSIAN;
 	weights_in_gui[2]=PLATEAU;
-// 	fromQStringToWeight["Triangular"]=TRIANGULAR;
-// 	fromQStringToWeight["Gaussian"]=GAUSSIAN;
-// 	fromQStringToWeight["Plateau"]=PLATEAU;
 	responses_in_gui[0]=GAMMA;
 	responses_in_gui[1]=LINEAR;
 	responses_in_gui[2]=LOG10;
@@ -80,17 +80,18 @@ HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curv
 	models_in_gui[0]=ROBERTSON;
 	models_in_gui[1]=DEBEVEC;
 
-	fnum=new Exiv2::ExifKey("Exif.Photo.FNumber");
-	fnum2=new Exiv2::ExifKey("Exif.Photo.ApertureValue");
-	iso=new Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings");
-	expotime=new Exiv2::ExifKey("Exif.Photo.ExposureTime");
-	expotime2=new Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue");
-
 	QSettings settings("Qtpfsgui", "Qtpfsgui");
 	RecentDirInputLDRs=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
 	chosen_config=predef_confs[0];
 	fillEVcombobox();
 	need_to_transform_indices=false;
+	enable_usability_jump_hack=true;
+}
+
+void HdrWizardForm::highlighted(int) {
+	if (enable_usability_jump_hack)
+		(EVcomboBox->view())->scrollTo((EVcomboBox->model())->index(29,0));
+	enable_usability_jump_hack=false;
 }
 
 void HdrWizardForm::loadfiles() {
@@ -118,7 +119,7 @@ void HdrWizardForm::loadfiles() {
 	QStringList::Iterator it = files.begin();
 	while( it != files.end() ) {
 		QFileInfo qfi(*it);
-		expotimes[index_expotimes]=obtain_expotime(qfi.filePath()); //fill array of exposure times, -1 is error
+		expotimes[index_expotimes]=ExifOperations::obtain_expotime(qfi.filePath().toStdString()); //fill array of exposure times, -1 is error
 		listShowFiles->addItem(qfi.fileName()); //fill graphical list
 		QString extension=qfi.suffix().toUpper(); //get filename extension
 		//now go and fill the list of image data (real payload)
@@ -312,60 +313,6 @@ void HdrWizardForm::backpressed() {
 		pagestack->setCurrentIndex(pagestack->currentIndex()-1);
 }
 
-float HdrWizardForm::obtain_expotime( QString filename ) {
-try {
-	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename.toStdString());
-	image->readMetadata();
-	Exiv2::ExifData &exifData = image->exifData();
-	if (exifData.empty())
-		return -1;
-
-	Exiv2::ExifData::const_iterator iexpo = exifData.findKey(*expotime);
-	Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(*expotime2);
-	Exiv2::ExifData::const_iterator iiso  = exifData.findKey(*iso);
-	Exiv2::ExifData::const_iterator ifnum = exifData.findKey(*fnum);
-	Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(*fnum2);
-	float expo=-1; float iso=-1; float fnum=-1;
-
-	if (iexpo != exifData.end()) {
-		expo=iexpo->toFloat();
-	} else if (iexpo2 != exifData.end()) {
-		long num=1, div=1;
-		double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
-		if (tmp > 1) {
-			div = static_cast<long>(tmp + 0.5);
-		}
-		else {
-			num = static_cast<long>(1/tmp + 0.5);
-		}
-		expo=static_cast<float>(num)/static_cast<float>(div);
-	}
-
-	if (ifnum != exifData.end()) {
-		fnum=ifnum->toFloat();
-	} else if (ifnum2 != exifData.end()) {
-		fnum=static_cast<float>(std::exp(std::log(2.0) * ifnum2->toFloat() / 2));
-	}
-	if (fnum==0)
-		return -1;
-
-	if (iiso == exifData.end()) {
-		iso=100.0;
-	} else {
-		iso=iiso->toFloat();
-	}
-
-	if (expo!=-1 && iso!=-1 && fnum!=-1) {
-// 		std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
-		return ( (expo * iso) / (fnum*fnum*12.07488f) ); //this is PFM :)
-	} else {
-		return -1;
-	}
-} catch (Exiv2::AnyError& e) {
-	return -1;
-}
-}
-
 void HdrWizardForm::load_response_curve_from_file() {
 	curvefilename = QFileDialog::getOpenFileName(
 			this,
@@ -509,7 +456,7 @@ void HdrWizardForm::fillEVcombobox() {
 void HdrWizardForm::transform_indices_into_values() {
 	if (!need_to_transform_indices)
 		return;
-
+	qDebug("HdrWizardForm:: actually transforming indices into values");
 //for precise values I cannot parse back what I put in the combobox, I have to recompute the values. In other words 4/3 != 1.3
 	for (int i=0; i<numberinputfiles; i++) {
 		int ni=(int)expotimes[i]-(6*4);
@@ -534,6 +481,7 @@ void HdrWizardForm::transform_indices_into_values() {
 }
 
 void HdrWizardForm::EVcomboBoxactivated(int i) {
+	enable_usability_jump_hack=true;
 	assert(listShowFiles->count()==numberinputfiles);
 	//for the time being expotimes contains the indices into the combobox (from 0 to 48)
 	expotimes[listShowFiles->currentRow()]=i;
@@ -559,16 +507,10 @@ void HdrWizardForm::fileselected(int i) {
 	assert(listShowFiles->count()==numberinputfiles);
 	//right now expotimes contains the indices into the combobox (from 0 to 48)
 	EVcomboBox->setCurrentIndex((int)expotimes[i]); //works with -1 (value not set) as well.
-// 	qDebug("selected %d, moving to index=%f",i,expotimes[i]);
 }
 
 HdrWizardForm::~HdrWizardForm() {
 	// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.
-	if (fnum)      delete fnum;
-	if (fnum2)     delete fnum2;
-	if (iso)       delete iso;
-	if (expotime)  delete expotime;
-	if (expotime2) delete expotime2;
 	if (expotimes) delete [] expotimes;
 	clearlists();
 }

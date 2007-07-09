@@ -35,7 +35,7 @@
 #include <cstdlib>
 #include <QFile>
 #include <math.h>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 #include "tmo_reinhard02.h"
 
 // using namespace std;

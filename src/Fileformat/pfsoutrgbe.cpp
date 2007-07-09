@@ -25,7 +25,7 @@
  * @author Giuseppe Rota  <grota@users.sourceforge.net>
  */
 
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 
 #include "rgbeio.h"
 void writeRGBEfile (pfs::Frame * inputpfshdr,const char* outfilename) {

@@ -63,7 +63,7 @@ void TonemapperThread::swap(pfs::Frame *frame, QString filename) {
 
 void TonemapperThread::run() {
 // 	dumpOpts();
-	qDebug("::::::begin thread, size=%d, gamma=%f",xsize, pregamma);
+// 	qDebug("::::::begin thread, size=%d, gamma=%f",xsize, pregamma);
 	lock.lockForRead();
 	if (opt.xsize==originalxsize && opt.pregamma==1.0f) {
 		//original goes into tone mapping
@@ -72,7 +72,6 @@ void TonemapperThread::run() {
 		status=from_tm;
 		colorspaceconversion=true;
 		emit setMaximumSteps(2);
-		emit setCurrentProgress(1);
 	} else if (opt.xsize==xsize && opt.pregamma==1.0f) {
 		//resized goes into tone mapping
 		qDebug("::::::resized goes into tone mapping");
@@ -80,36 +79,32 @@ void TonemapperThread::run() {
 		status=from_tm;
 		colorspaceconversion=true;
 		emit setMaximumSteps(2);
-		emit setCurrentProgress(1);
 	} else if ( (opt.xsize==xsize && opt.pregamma==pregamma) || (opt.xsize==originalxsize && xsize==-1 && opt.pregamma==pregamma) ) {
 		//after_pregamma goes into tone mapping
 		qDebug("::::::after_pregamma goes into tone mapping");
 		fetch("/after_pregamma.pfs");
 		status=from_tm;
 		emit setMaximumSteps(2);
-		emit setCurrentProgress(1);
 	} else if (opt.xsize==xsize) {
 		//resized goes into pregamma
 		qDebug("::::::resized goes into pregamma");
 		fetch("/after_resize.pfs");
 		status=from_pregamma;
 		emit setMaximumSteps(3);
-		emit setCurrentProgress(1);
 	} else if (opt.xsize==originalxsize) {
 		//original goes into pregamma
 		qDebug("::::::original goes into pregamma");
 		fetch("/original.pfs");
 		status=from_pregamma;
 		emit setMaximumSteps(3);
-		emit setCurrentProgress(1);
 	} else {
 		//original goes into resize
 		qDebug("::::::original goes into resize");
 		fetch("/original.pfs");
 		status=from_resize;
 		emit setMaximumSteps(4);
-		emit setCurrentProgress(1);
 	}
+	emit setCurrentProgress(1);
 	lock.unlock();
 
 
@@ -125,7 +120,7 @@ void TonemapperThread::run() {
 		delete workingframe;
 		workingframe=resized;
 		status=from_pregamma;
-		emit setCurrentProgress(bar->value()+1);
+		if (bar) emit setCurrentProgress(bar->value()+1);
 	}
 	if (status==from_pregamma) {
 		qDebug("executing pregamma step");
@@ -139,7 +134,7 @@ void TonemapperThread::run() {
 			xsize=opt.xsize;
 		lock.unlock();
 		status=from_tm;
-		emit setCurrentProgress(bar->value()+1);
+		if (bar) emit setCurrentProgress(bar->value()+1);
 	}
 	if (status==from_tm) {
 		qDebug("executing tone mapping step");
@@ -198,13 +193,13 @@ void TonemapperThread::run() {
 			opt.operator_options.reinhard04options.saturation);
 		break;
 		}
-	emit setCurrentProgress(bar->value()+1);
+	if (bar) emit setCurrentProgress(bar->value()+1);
 	assert(result!=NULL);
 	delete workingframe;
 	const QImage& res=fromLDRPFStoQImage(result);
 	delete result;
 	emit ImageComputed(res,&opt);
-	emit removeProgressBar(bar);
+	if (bar) emit removeProgressBar(bar);
 	}
 }
 

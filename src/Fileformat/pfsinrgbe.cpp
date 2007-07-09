@@ -26,7 +26,7 @@
  */
 
 #include "rgbeio.h"
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include <stdlib.h>
 
 pfs::Frame* readRGBEfile (const char * filename) {

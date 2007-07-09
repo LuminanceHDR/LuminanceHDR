@@ -33,7 +33,7 @@
 #include <math.h>
 #include <QFile>
 #include "tmo_ashikhmin02.h"
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 using namespace std;
 

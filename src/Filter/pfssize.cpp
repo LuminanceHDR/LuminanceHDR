@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include <sstream>
 #include <QFile>
 

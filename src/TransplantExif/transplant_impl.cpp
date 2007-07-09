@@ -29,7 +29,8 @@
 #include <iostream>
 #include "transplant_impl.h"
 #include "../generated_uic/ui_help_about.h"
-#include "options.h"
+#include "../Exif/exif_operations.h"
+#include "../options.h"
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
@@ -246,12 +247,6 @@ void TransplantExifDialog::transplant_requested() {
 		return;
 	}
 
-// 	//check if number of jpeg file in left and right lists is the same
-// 	if (leftlist->count()!=rightlist->count()) {
-// 		QMessageBox::critical(this,"different number of files", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font> Different number of files in the left and right columns."));
-// 		return;
-// 	}
-
 	progressBar->setMaximum(leftlist->count());
 	//initialize string iterators to the beginning of the lists.
 	QStringList::const_iterator i_source = from.constBegin();
@@ -290,41 +285,12 @@ void TransplantExifDialog::transplant_requested() {
 	i_dest = to.constBegin();
 	//for all the input files
 	for (; i_source != from.constEnd(); ++i_source, ++i_dest) {
-// 		std::cerr << "processing file: " << (*i_source).toStdString() << " and " << (*i_dest).toStdString() << std::endl;
-		//get source and destination exif data
-		Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open((*i_source).toStdString());
-		Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open((*i_dest).toStdString());
-		sourceimage->readMetadata();
-		//FIXME this one below can throw an exception: low priority
-		destimage->readMetadata(); //doesn't matter if it is empty
-		Exiv2::ExifData &src_exifData = sourceimage->exifData();
-		Exiv2::ExifData &dest_exifData = destimage->exifData(); //doesn't matter if it is empty
-		Exiv2::ExifData::const_iterator end_src = src_exifData.end(); //end delimiter for this source image data
-		//for all the tags in the source exif data
-		for (Exiv2::ExifData::const_iterator i = src_exifData.begin(); i != end_src; ++i) {
-			//check if current source key exists in destination file
-			Exiv2::ExifData::iterator maybe_exists = dest_exifData.findKey( Exiv2::ExifKey(i->key()) );
-// 			//if exists AND we are told not to overwrite
-			if (maybe_exists != dest_exifData.end() && checkBox_dont_overwrite->isChecked()) {
-				continue;
-			} else {
-				//here we copy the value
-				//we create a new tag in the destination file, the tag has the key of the source
-				Exiv2::Exifdatum& dest_tag = dest_exifData[i->key()];
-				//now the tag has also the value of the source
-				dest_tag.setValue(&(i->value()));
-			}
-		}
-// 		try {
-		destimage->writeMetadata();
-// 		} catch (Exiv2::Error &e) { //TODO on error continue and provide log
-// 			std::cerr << e.what();
-// 		}
+		ExifOperations::copyExifData((*i_source).toStdString(), (*i_dest).toStdString(), checkBox_dont_overwrite->isChecked());
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
 	done=true;
 	Done_label->setText(tr("<center><font color=\"#008400\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>"));
-	TransplantButton->setText("Done.");
+	TransplantButton->setText(tr("Done."));
 	moveup_left_button->setDisabled(true);
 	moveup_right_button->setDisabled(true);
 	movedown_left_button->setDisabled(true);

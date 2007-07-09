@@ -64,7 +64,6 @@ static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Ar
 // sRGB conversion functions
 //-----------------------------------------------------------
 
-static const float displayLuminanceLevel = 80.f; // cd/m^2
 
 static inline float clamp( const float v, const float min, const float max )
 {
@@ -84,19 +83,9 @@ static void transformSRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const A
     r = clamp( r, 0, 1 );
     g = clamp( g, 0, 1 );
     b = clamp( b, 0, 1 );
-    if( r <= 0.04045 && g <= 0.04045 && b <= 0.04045 ) {
-      x = r / 12.92f * displayLuminanceLevel;
-      y = g / 12.92f * displayLuminanceLevel;
-      z = b / 12.92f * displayLuminanceLevel;
-    } else {
-      x = powf( (r + 0.055f) / 1.055f, 2.4f ) * displayLuminanceLevel;
-      y = powf( (g + 0.055f) / 1.055f, 2.4f ) * displayLuminanceLevel;
-      z = powf( (b + 0.055f) / 1.055f, 2.4f ) * displayLuminanceLevel;
-    }
-    //!! TODO: ldr XYZ values are in 0:1 range, discuss this !!!
-    x /= displayLuminanceLevel;
-    y /= displayLuminanceLevel;
-    z /= displayLuminanceLevel;
+    x = (r <= 0.04045 ? r / 12.92f : powf( (r + 0.055f) / 1.055f, 2.4f )  );
+    y = (g <= 0.04045 ? g / 12.92f : powf( (g + 0.055f) / 1.055f, 2.4f )  );
+    z = (b <= 0.04045 ? b / 12.92f : powf( (b + 0.055f) / 1.055f, 2.4f )  );
   }
   multiplyByMatrix( outC1, outC2, outC3, outC1, outC2, outC3, rgb2xyzD65Mat );
 }
@@ -111,24 +100,13 @@ static void transformXYZ2SRGB( const Array2D *inC1, const Array2D *inC2,
     float r = (*inC1)(index), g = (*inC2)(index), b = (*inC3)(index);
     float &o_r = (*outC1)(index), &o_g = (*outC2)(index), &o_b = (*outC3)(index);
 
-//!! TODO: ldr XYZ values are in 0:1 range, discuss this !!!
-//     r /= displayLuminanceLevel;
-//     g /= displayLuminanceLevel;
-//     b /= displayLuminanceLevel;
-
     r = clamp( r, 0, 1 );
     g = clamp( g, 0, 1 );
     b = clamp( b, 0, 1 );
     
-    if( r <= 0.0031308 && g <= 0.0031308 && b <= 0.0031308 ) {
-      r *= 12.92f;
-      g *= 12.92f;
-      b *= 12.92f;
-    } else {
-      r = 1.055f * powf( r, 1./2.4 ) - 0.055;
-      g = 1.055f * powf( g, 1./2.4 ) - 0.055;
-      b = 1.055f * powf( b, 1./2.4 ) - 0.055;      
-    }
+    o_r = (r <= 0.0031308 ? r *= 12.92f : 1.055f * powf( r, 1./2.4 ) - 0.055);
+    o_g = (g <= 0.0031308 ? g *= 12.92f : 1.055f * powf( g, 1./2.4 ) - 0.055);
+    o_b = (b <= 0.0031308 ? b *= 12.92f : 1.055f * powf( b, 1./2.4 ) - 0.055);
     
     o_r = r;
     o_g = g;

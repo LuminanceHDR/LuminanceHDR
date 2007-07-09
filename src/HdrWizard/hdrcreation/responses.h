@@ -34,7 +34,7 @@
 #include <stdio.h>
 
 #include <vector>
-#include "../libpfs/array2d.h"
+#include "../../Libpfs/array2d.h"
 
 /**
  * @brief Container for images taken with different exposures

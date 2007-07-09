@@ -28,9 +28,9 @@
 #include <QStatusBar>
 #include <QProgressBar>
 #include "tonemapping_widget.h"
-#include "options.h"
-#include "config.h"
-#include "threads/tonemapper_thread.h"
+#include "../options.h"
+#include "../config.h"
+#include "../Threads/tonemapper_thread.h"
 
 extern int xsize;
 extern float pregamma;
@@ -171,8 +171,6 @@ void TMWidget::apply_clicked() {
 	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], cachepath, newprogressbar);
 
 	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-
-// 	connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
 
 	qRegisterMetaType<QImage>("QImage");
 	connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
@@ -361,7 +359,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 
 void TMWidget::fromTxt2Gui() {
 	QFile file(TMOSettingsFilename);
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
 		QMessageBox::critical(this,tr("Aborting..."),tr("File is not readable (check permissions, path...)"),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		return;

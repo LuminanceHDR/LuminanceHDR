@@ -28,13 +28,11 @@
 #include <QWorkspace>
 #include <QStringList>
 #include <QSettings>
-#include "hdrwizardform_impl.h"
-#include "../generated_uic/ui_maingui.h"
-#include "fileformat/pfsindcraw.h"
-#include "options_impl.h"
-#include "resizedialog_impl.h"
-#include "hdrviewer.h"
-
+#include "../HdrWizard/hdrwizardform_impl.h"
+#include "../../generated_uic/ui_maingui.h"
+#include "../Options/options_impl.h"
+#include "../Resize/resizedialog_impl.h"
+class HdrViewer;
 
 class MainGui : public QMainWindow, private Ui::MainGui
 {
@@ -48,12 +46,12 @@ public  slots:
 private slots:
 	void fileNewViaWizard();
 	void fileOpen();//for File->Open, it then calls loadFile()
-	bool loadFile(QString);//both for File->Open and for RecentFile
 	void fileSaveAs();
 	void tonemap_requested();
 	void rotateccw_requested();
 	void rotatecw_requested();
 	void resize_requested();
+	void batch_requested();
 	void current_mdiwindow_increase_exposure();
 	void current_mdiwindow_decrease_exposure();
 	void current_mdiwindow_extend_exposure();
@@ -67,7 +65,7 @@ private slots:
 	void helpAbout();
 	void options_called();
 	void transplant_called();
-	void reEnableHdrViewer();
+	void reEnableMainWin();
 	void fileExit();
 	void Text_Under_Icons();
 	void Icons_Only();
@@ -75,14 +73,18 @@ private slots:
 	void Text_Only();
 
 	void openRecentFile();
+	void setCurrentFile(const QString &fileName);
+	void addHdrViewer(pfs::Frame*, QString fname);
+	void updateRecentDirHDRSetting(QString);
+	void load_failed(QString);
 
 	void updateActions( QWidget * w );
 
 private:
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
-	void setCurrentFile(const QString &fileName);
 	void load_options(qtpfsgui_opts *);
+	void setupLoadThread(QString);
 	QWorkspace* workspace;
 	HdrWizardForm *wizard;
         enum { MaxRecentFiles = 5 };

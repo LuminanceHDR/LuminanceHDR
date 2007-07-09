@@ -29,10 +29,10 @@
 #include <QLabel>
 #include <QToolBar>
 #include <QResizeEvent>
-#include "smart_scroll_area.h"
+#include "../smart_scroll_area.h"
 #include "luminancerange_widget.h"
-#include "libpfs/array2d.h"
-#include "libpfs/pfs.h"
+#include "../Libpfs/array2d.h"
+#include "../Libpfs/pfs.h"
 
 enum LumMappingMethod {
   MAP_LINEAR,

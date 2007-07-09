@@ -29,8 +29,8 @@
 #define PFSTIFF_H
 
 #include <tiffio.h>
-#include "../libpfs/array2d.h"
-#include "../libpfs/pfs.h"
+#include "../Libpfs/array2d.h"
+#include "../Libpfs/pfs.h"
 #include <QImage>
 
 

@@ -35,7 +35,7 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include "../libpfs/pfs.h"
+#include "../../Libpfs/pfs.h"
 
 #ifdef HAVE_FFTW
 #include "fastbilateral.h"
