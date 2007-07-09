@@ -28,6 +28,11 @@
 #include <QMessageBox>
 #include <cmath>
 #include <QTextStream>
+#if defined(__FreeBSD__) && __FreeBSD__ < 6
+extern "C" {
+#include "arch/freebsd/s_exp2f.c"
+}
+#endif
 #include "hdrwizardform_impl.h"
 #include "fileformat/pfsindcraw.h"
 #include "fileformat/pfstiff.h"

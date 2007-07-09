@@ -28,7 +28,7 @@
 #include <cmath>
 
 #ifndef _WIN32
-#if defined(__MACH__) && defined(__APPLE__)
+#if (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
 #include <machine/endian.h>
 #else
 #include <endian.h>
@@ -225,7 +225,10 @@ QImage* TiffReader::readIntoQImage() {
 	_TIFFfree(bp);
 	TIFFClose(tif);
 
-#if QT_VERSION <= 0x040200
+//special treament for qt 4.2.1... removing "const" doesn't seem to work.
+#if QT_VERSION == 0x040201
+	QImage *toreturn=new QImage(const_cast<const uchar *>(data), width, height, QImage::Format_RGB32);
+#elif QT_VERSION <= 0x040200
 	QImage *toreturn=new QImage(data,width,height,QImage::Format_RGB32);
 #else
 	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
@@ -233,11 +236,11 @@ QImage* TiffReader::readIntoQImage() {
 	return toreturn;
 }
 
-TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif(NULL) {
+TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL) {
 	f->getRGBChannels(R,G,B);
 	width=R->getWidth();
 	height=R->getHeight();
-	qDebug("width=%d, heigh=%d",width,height);
+// 	qDebug("width=%d, heigh=%d",width,height);
 	tif = TIFFOpen(filename, "w");
 	if( !tif )
 		throw pfs::Exception("TIFF: could not open file for reading.");

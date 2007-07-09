@@ -29,7 +29,7 @@
 #include <QImage>
 
 #ifndef _WIN32
-#if defined(__MACH__) && defined(__APPLE__)
+#if (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
 #include <machine/endian.h>
 #else
 #include <endian.h>
@@ -77,7 +77,10 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 #endif
 		}
 	}
-#if QT_VERSION <= 0x040200
+//special treament for qt 4.2.1... removing "const" doesn't seem to work.
+#if QT_VERSION == 0x040201
+	QImage toreturn(const_cast<const uchar *>(data),width,height,QImage::Format_RGB32);
+#elif QT_VERSION <= 0x040200
 	QImage toreturn(data,width,height,QImage::Format_RGB32);
 #else
 	QImage toreturn(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
