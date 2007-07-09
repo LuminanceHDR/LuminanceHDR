@@ -1,5 +1,6 @@
 TEMPLATE = app
 CONFIG += release qt thread
+DEFINES += QT_NO_DEBUG_OUTPUT
 
 unix {
 ########################################### QT ###########################################
@@ -165,6 +166,9 @@ isEmpty(PREFIX) {
 isEmpty(I18NDIR) {
 	I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
 }
+!isEmpty(ENABLE_DEBUG) {
+DEFINES -= QT_NO_DEBUG_OUTPUT
+}
 
 target.path      = $${PREFIX}/bin
 menu.files       = qtpfsgui.desktop
@@ -261,90 +265,97 @@ FORMS = forms/maingui.ui \
         forms/options.ui \
         forms/transplantexifdialog.ui \
         forms/resizedialog.ui \
-        forms/gamma_and_levels.ui
+        forms/gamma_and_levels.ui \
+        forms/batch_dialog.ui
 
-HEADERS += src/libpfs/array2d.h \
-           src/libpfs/pfs.h \
-           src/maingui_impl.h \
-           src/hdrwizardform_impl.h \
-           src/gamma_and_levels.h \
-           src/tonemappingdialog_impl.h \
-           src/tonemapping_widget.h \
-           src/threads/tonemapper_thread.h \
-           src/options_impl.h \
-           src/transplant_impl.h \
-           src/resizedialog_impl.h \
-           src/hdrcreate/createhdr.h \
-           src/hdrcreate/robertson02.h \
-           src/hdrcreate/responses.h   \
-           src/hdrcreate/icip06.h \
-           src/hdrcreate/debevec.h \
-           src/ldrviewer.h \
-           src/hdrviewer.h \
+HEADERS += src/Libpfs/array2d.h \
+           src/Libpfs/pfs.h \
+           src/MainWindow/maingui_impl.h \
+           src/MainWindow/hdrviewer.h \
+           src/MainWindow/luminancerange_widget.h \
+           src/MainWindow/histogram.h \
+           src/HdrWizard/hdrwizardform_impl.h \
+           src/ToneMappingDialog/gamma_and_levels.h \
+           src/ToneMappingDialog/tonemappingdialog_impl.h \
+           src/ToneMappingDialog/tonemapping_widget.h \
+           src/Threads/tonemapper_thread.h \
+           src/Threads/io_threads.h \
+           src/Options/options_impl.h \
+           src/TransplantExif/transplant_impl.h \
+           src/Resize/resizedialog_impl.h \
+           src/HdrWizard/hdrcreation/createhdr.h \
+           src/HdrWizard/hdrcreation/robertson02.h \
+           src/HdrWizard/hdrcreation/responses.h   \
+           src/HdrWizard/hdrcreation/icip06.h \
+           src/HdrWizard/hdrcreation/debevec.h \
+           src/ToneMappingDialog/ldrviewer.h \
            src/smart_scroll_area.h \
-           src/luminancerange_widget.h \
-           src/histogram.h \
-           src/gang.h \
-           src/fileformat/rgbeio.h \
-           src/fileformat/pfstiff.h \
-           src/ashikhmin02/pyramid.h \
-           src/ashikhmin02/tmo_ashikhmin02.h \
-           src/drago03/tmo_drago03.h \
-           src/durand02/tmo_durand02.h \
-           src/durand02/fastbilateral.h \
-           src/fattal02/tmo_fattal02.h \
-           src/fattal02/pde.h \
-           src/pattanaik00/tmo_pattanaik00.h \
-           src/reinhard02/tmo_reinhard02.h
+           src/ToneMappingDialog/gang.h \
+           src/Fileformat/rgbeio.h \
+           src/Fileformat/pfstiff.h \
+           src/TM_operators/ashikhmin02/pyramid.h \
+           src/TM_operators/ashikhmin02/tmo_ashikhmin02.h \
+           src/TM_operators/drago03/tmo_drago03.h \
+           src/TM_operators/durand02/tmo_durand02.h \
+           src/TM_operators/durand02/fastbilateral.h \
+           src/TM_operators/fattal02/tmo_fattal02.h \
+           src/TM_operators/fattal02/pde.h \
+           src/TM_operators/pattanaik00/tmo_pattanaik00.h \
+           src/TM_operators/reinhard02/tmo_reinhard02.h \
+           src/Batch/batch_dialog_impl.h \
+           src/Exif/exif_operations.h
 
-SOURCES += src/libpfs/pfs.cpp \
-           src/libpfs/colorspace.cpp \
+SOURCES += src/Libpfs/pfs.cpp \
+           src/Libpfs/colorspace.cpp \
            src/main.cpp \
-           src/maingui_impl.cpp \
-           src/gamma_and_levels.cpp \
-           src/tonemappingdialog_impl.cpp \
-           src/tonemapping_widget.cpp \
-           src/threads/tonemapper_thread.cpp \
-           src/options_impl.cpp \
-           src/transplant_impl.cpp \
-           src/resizedialog_impl.cpp \
-           src/hdrwizardform_impl.cpp \
-           src/hdrcreate/createhdr.cpp \
-           src/hdrcreate/robertson02.cpp  \
-           src/hdrcreate/responses.cpp  \
-           src/hdrcreate/icip06.cpp \
-           src/hdrcreate/debevec.cpp \
-           src/ldrviewer.cpp \
-           src/hdrviewer.cpp \
+           src/MainWindow/maingui_impl.cpp \
+           src/MainWindow/hdrviewer.cpp \
+           src/MainWindow/luminancerange_widget.cpp \
+           src/MainWindow/histogram.cpp \
+           src/HdrWizard/hdrwizardform_impl.cpp \
+           src/ToneMappingDialog/gamma_and_levels.cpp \
+           src/ToneMappingDialog/tonemappingdialog_impl.cpp \
+           src/ToneMappingDialog/tonemapping_widget.cpp \
+           src/Threads/tonemapper_thread.cpp \
+           src/Threads/io_threads.cpp \
+           src/Options/options_impl.cpp \
+           src/TransplantExif/transplant_impl.cpp \
+           src/Resize/resizedialog_impl.cpp \
+           src/HdrWizard/hdrcreation/createhdr.cpp \
+           src/HdrWizard/hdrcreation/robertson02.cpp  \
+           src/HdrWizard/hdrcreation/responses.cpp  \
+           src/HdrWizard/hdrcreation/icip06.cpp \
+           src/HdrWizard/hdrcreation/debevec.cpp \
+           src/ToneMappingDialog/ldrviewer.cpp \
            src/smart_scroll_area.cpp \
-           src/luminancerange_widget.cpp \
-           src/histogram.cpp \
-           src/gang.cpp \
-           src/filter/pfsrotate.cpp \
-           src/filter/pfssize.cpp \
-           src/filter/pfsgamma.cpp \
-           src/fileformat/pfsinrgbe.cpp \
-           src/fileformat/pfsoutrgbe.cpp \
-           src/fileformat/rgbeio.cpp \
-           src/fileformat/pfsoutldrimage.cpp \
-           src/fileformat/pfsindcraw.cpp \
-           src/fileformat/pfstiff.cpp \
-           src/ashikhmin02/pfstmo_ashikhmin02.cpp \
-           src/ashikhmin02/tmo_ashikhmin02.cpp \
-           src/drago03/pfstmo_drago03.cpp \
-           src/drago03/tmo_drago03.cpp \
-           src/durand02/pfstmo_durand02.cpp \
-           src/durand02/tmo_durand02.cpp \
-           src/durand02/fastbilateral.cpp \
-           src/fattal02/pfstmo_fattal02.cpp \
-           src/fattal02/tmo_fattal02.cpp \
-           src/fattal02/pde.cpp \
-           src/reinhard04/pfstmo_reinhard04.cpp \
-           src/pattanaik00/tmo_pattanaik00.cpp \
-           src/pattanaik00/pfstmo_pattanaik00.cpp \
-           src/reinhard02/pfstmo_reinhard02.cpp \
-           src/reinhard02/tmo_reinhard02.cpp \
-           src/reinhard02/approx.cpp
+           src/ToneMappingDialog/gang.cpp \
+           src/Filter/pfsrotate.cpp \
+           src/Filter/pfssize.cpp \
+           src/Filter/pfsgamma.cpp \
+           src/Fileformat/pfsinrgbe.cpp \
+           src/Fileformat/pfsoutrgbe.cpp \
+           src/Fileformat/rgbeio.cpp \
+           src/Fileformat/pfsoutldrimage.cpp \
+           src/Fileformat/pfsindcraw.cpp \
+           src/Fileformat/pfstiff.cpp \
+           src/TM_operators/ashikhmin02/pfstmo_ashikhmin02.cpp \
+           src/TM_operators/ashikhmin02/tmo_ashikhmin02.cpp \
+           src/TM_operators/drago03/pfstmo_drago03.cpp \
+           src/TM_operators/drago03/tmo_drago03.cpp \
+           src/TM_operators/durand02/pfstmo_durand02.cpp \
+           src/TM_operators/durand02/tmo_durand02.cpp \
+           src/TM_operators/durand02/fastbilateral.cpp \
+           src/TM_operators/fattal02/pfstmo_fattal02.cpp \
+           src/TM_operators/fattal02/tmo_fattal02.cpp \
+           src/TM_operators/fattal02/pde.cpp \
+           src/TM_operators/reinhard04/pfstmo_reinhard04.cpp \
+           src/TM_operators/pattanaik00/tmo_pattanaik00.cpp \
+           src/TM_operators/pattanaik00/pfstmo_pattanaik00.cpp \
+           src/TM_operators/reinhard02/pfstmo_reinhard02.cpp \
+           src/TM_operators/reinhard02/tmo_reinhard02.cpp \
+           src/TM_operators/reinhard02/approx.cpp \
+           src/Batch/batch_dialog_impl.cpp \
+           src/Exif/exif_operations.cpp
 
 RESOURCES = icons.qrc
 
@@ -353,7 +364,8 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
                i18n/lang_pl.ts \
-               i18n/lang_tr.ts
+               i18n/lang_tr.ts \
+               i18n/lang_cs.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
@@ -367,8 +379,8 @@ TRANSLATIONS = i18n/lang_it.ts \
 #        forms/aligndialog.ui \
 
 unix {
-SOURCES += src/fileformat/pfsinexr.cpp \
-           src/fileformat/pfsoutexr.cpp
+SOURCES += src/Fileformat/pfsinexr.cpp \
+           src/Fileformat/pfsoutexr.cpp
 }
 
 TARGET = qtpfsgui
