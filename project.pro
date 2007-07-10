@@ -227,10 +227,10 @@ CONFIG += windows
 #CONFIG += debug
 #CONFIG += console
 
-#OpenEXR not available yet in win32
-#LIBS += -lIlmImf -lImath -lHalf -lIex
-#LIBS += -LC:\devcppprojects\temp
-#INCLUDEPATH += C:\cygwin\usr\local\include\OpenEXR
+#OpenEXR available in win32
+LIBS += -lIlmImf -lImath -lHalf -lIex
+LIBS += -LC:\msys\1.0\local\lib
+INCLUDEPATH += C:\msys\1.0\local\include\OpenEXR
 
 #exiv2
 INCLUDEPATH += C:\msys\1.0\local\include\exiv2
@@ -248,8 +248,8 @@ LIBS += -LC:\comp_prj\libjpeg
 INCLUDEPATH += C:\comp_prj\libjpeg\include
 
 #tiff
-INCLUDEPATH += C:\Programmi\GnuWin32\include
-LIBS += -LC:\Programmi\GnuWin32\lib -llibtiff
+INCLUDEPATH += "C:\Program Files\GnuWin32\include"
+LIBS += "-LC:\Program Files\GnuWin32\lib" -llibtiff
 
 DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
 RC_FILE = images/qtpfsgui_ico.rc
@@ -355,7 +355,9 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/reinhard02/tmo_reinhard02.cpp \
            src/TM_operators/reinhard02/approx.cpp \
            src/Batch/batch_dialog_impl.cpp \
-           src/Exif/exif_operations.cpp
+           src/Exif/exif_operations.cpp \
+           src/Fileformat/pfsinexr.cpp \
+           src/Fileformat/pfsoutexr.cpp
 
 RESOURCES = icons.qrc
 
@@ -377,11 +379,6 @@ TRANSLATIONS = i18n/lang_it.ts \
 #           src/align_impl.h \
 #           src/show_image.h \
 #        forms/aligndialog.ui \
-
-unix {
-SOURCES += src/Fileformat/pfsinexr.cpp \
-           src/Fileformat/pfsoutexr.cpp
-}
 
 TARGET = qtpfsgui
 

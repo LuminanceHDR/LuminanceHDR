@@ -119,11 +119,9 @@ void MainGui::fileNewViaWizard() {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw" ;
-#ifndef _WIN32
-	filetypes += " *.exr);;OpenEXR (*.exr" ;
-#endif
-	filetypes += ");;Radiance RGBE (*.hdr *.pic);;";
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;" ;
+	filetypes += "OpenEXR (*.exr);;" ;
+	filetypes += "Radiance RGBE (*.hdr *.pic);;";
 	filetypes += "TIFF Images (*.tiff *.tif);;";
 	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;";
 	filetypes += "PFS Stream (*.pfs)";
@@ -155,12 +153,8 @@ void MainGui::fileSaveAs()
 {
 	assert(currenthdr!=NULL);
 	QStringList filetypes;
-#ifndef _WIN32
 	filetypes += tr("All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
 	filetypes += "OpenEXR (*.exr)";
-#else
-	filetypes += tr("All Hdr formats (*.hdr *.pic *.tiff *.tif *.pfs)");
-#endif
 	filetypes += "Radiance RGBE (*.hdr *.pic)";
 	filetypes += "HDR TIFF (*.tiff *.tif)";
 	filetypes += "PFS Stream (*.pfs)";
@@ -172,11 +166,7 @@ void MainGui::fileSaveAs()
 	fd->setFilters(filetypes);
 	fd->setAcceptMode(QFileDialog::AcceptSave);
 	fd->setConfirmOverwrite(true);
-#ifdef _WIN32
-	fd->setDefaultSuffix("hdr");
-#else
 	fd->setDefaultSuffix("exr");
-#endif
 	if (fd->exec()) {
 		QString fname=(fd->selectedFiles()).at(0);
 		if(!fname.isEmpty()) {
@@ -187,12 +177,10 @@ void MainGui::fileSaveAs()
 				RecentDirHDRSetting=qfi.path();
 				settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 			}
-#ifndef _WIN32
+
 			if (qfi.suffix().toUpper()=="EXR") {
 				writeEXRfile  (currenthdr->getHDRPfsFrame(),qfi.filePath().toUtf8().constData());
-			} else 
-#endif
-				if (qfi.suffix().toUpper()=="HDR") {
+			} else if (qfi.suffix().toUpper()=="HDR") {
 				writeRGBEfile (currenthdr->getHDRPfsFrame(), qfi.filePath().toUtf8().constData());
 			} else if (qfi.suffix().toUpper().startsWith("TIF")) {
 				TiffWriter tiffwriter(qfi.filePath().toUtf8().constData(), currenthdr->getHDRPfsFrame());

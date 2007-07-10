@@ -32,6 +32,7 @@
 #include <ImfRgbaFile.h>
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
+#include <ImfPixelType.h>
 #include <iostream>
 #include <stdlib.h>
 using namespace Imf;
@@ -74,7 +75,7 @@ pfs::Frame *readEXRfile (const char *filename) {
 //         frame->createXYZChannels( X, Y, Z );
 
         frameBuffer.insert( "R",	  // name
-          Slice( FLOAT,			  // type
+          Slice( Imf::FLOAT,			  // type
             (char *)X->getRawData(),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride
@@ -82,7 +83,7 @@ pfs::Frame *readEXRfile (const char *filename) {
             0.0));			  // fillValue
 
         frameBuffer.insert( "G",	  // name
-          Slice( FLOAT,			  // type
+          Slice( Imf::FLOAT,			  // type
             (char *)Y->getRawData(),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride
@@ -90,7 +91,7 @@ pfs::Frame *readEXRfile (const char *filename) {
             0.0));			  // fillValue
 
         frameBuffer.insert( "B",	  // name
-          Slice( FLOAT,			  // type
+          Slice( Imf::FLOAT,			  // type
             (char *)Z->getRawData(),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride

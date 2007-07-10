@@ -25,9 +25,6 @@
 #include <QLocale>
 #include <QTranslator>
 // #include <QDir>
-// #include <QDebug>
-// #include <QLibraryInfo>
-// #include <QPluginLoader>
 #include "MainWindow/maingui_impl.h"
 
 #ifdef WIN32
@@ -43,7 +40,7 @@ int main( int argc, char ** argv )
 #ifdef WIN32
 	bool found_DLL=false;
 	foreach (QString path, a.libraryPaths()) {
-		if (QFile::exists(path+"/imageformats/qjpeg1.dll"))
+		if (QFile::exists(path+"/imageformats/qjpeg4.dll"))
 			found_DLL=true;
 	}
 	if (!found_DLL) {
@@ -53,7 +50,7 @@ int main( int argc, char ** argv )
 #endif
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	qDebug( "Looking for i18n files in: " I18NDIR );
+// 	qDebug( "Looking for i18n files in: " I18NDIR );
 	translator.load(QString("lang_") + locale, I18NDIR);
 	a.installTranslator(&translator);
 	MainGui w;

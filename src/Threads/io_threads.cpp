@@ -55,12 +55,9 @@ void LoadHdrThread::run() {
 		QString extension = qfi.suffix().toUpper();
 		bool rawinput = (rawextensions.indexOf(extension)!=-1);
 		try {
-#ifndef _WIN32
 			if (extension=="EXR") {
 				hdrpfsframe = readEXRfile(qfi.filePath().toUtf8().constData());
-			} else
-#endif
-			if (extension=="HDR") {
+			} else if (extension=="HDR") {
 				hdrpfsframe = readRGBEfile(qfi.filePath().toUtf8().constData());
 			} else if (extension=="PFS") {
 				pfs::DOMIO pfsio;
