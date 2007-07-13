@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
-    <height>580</height>
+    <width>682</width>
+    <height>496</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -22,52 +22,6 @@
    <property name="spacing" >
     <number>5</number>
    </property>
-   <item>
-    <layout class="QHBoxLayout" >
-     <property name="margin" >
-      <number>0</number>
-     </property>
-     <property name="spacing" >
-      <number>6</number>
-     </property>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3" >
-       <property name="text" >
-        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:13pt; font-weight:600;">Batch Tone Mapping&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
    <item>
     <layout class="QHBoxLayout" >
      <property name="margin" >
@@ -342,7 +296,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QPushButton" name="out_folder_Button" >
         <property name="text" >
-         <string>Select Output &amp;Folder...</string>
+         <string>Select &amp;Output Folder...</string>
         </property>
        </widget>
       </item>
@@ -372,7 +326,7 @@ p, li { white-space: pre-wrap; }
        <widget class="QListView" name="Log_Widget" >
         <property name="sizePolicy" >
          <sizepolicy>
-          <hsizetype>7</hsizetype>
+          <hsizetype>5</hsizetype>
           <vsizetype>4</vsizetype>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
@@ -387,11 +341,14 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" >
          <string>Batch operations report.</string>
         </property>
-        <property name="selectionMode" >
-         <enum>QAbstractItemView::NoSelection</enum>
+        <property name="editTriggers" >
+         <set>QAbstractItemView::NoEditTriggers</set>
         </property>
-        <property name="selectionBehavior" >
-         <enum>QAbstractItemView::SelectRows</enum>
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::ContiguousSelection</enum>
+        </property>
+        <property name="resizeMode" >
+         <enum>QListView::Adjust</enum>
         </property>
         <property name="wordWrap" >
          <bool>true</bool>
@@ -407,54 +364,64 @@ p, li { white-space: pre-wrap; }
          <number>6</number>
         </property>
         <item>
-         <widget class="QLabel" name="label" >
+         <widget class="QLabel" name="filterLabel1" >
           <property name="text" >
-           <string>Filter Messages:</string>
+           <string>&amp;Show only:</string>
           </property>
           <property name="buddy" >
-           <cstring>comboBox</cstring>
+           <cstring>filterComboBox</cstring>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox" >
+         <widget class="QComboBox" name="filterComboBox" >
           <property name="toolTip" >
            <string>Filter messages based on severity.</string>
           </property>
           <item>
            <property name="text" >
-            <string>Warnings and Errors</string>
+            <string>All messages</string>
            </property>
           </item>
           <item>
            <property name="text" >
-            <string>Errors</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>Warnings</string>
-           </property>
-          </item>
-          <item>
-           <property name="text" >
-            <string>All</string>
+            <string>Errors only</string>
            </property>
           </item>
          </widget>
         </item>
         <item>
-         <spacer>
+         <widget class="Line" name="line" >
           <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Vertical</enum>
           </property>
-          <property name="sizeHint" >
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="filterLabel2" >
+          <property name="text" >
+           <string>&amp;Filter Log messages:</string>
           </property>
-         </spacer>
+          <property name="buddy" >
+           <cstring>filterLineEdit</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="filterLineEdit" />
+        </item>
+        <item>
+         <widget class="QToolButton" name="clearTextToolButton" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="toolTip" >
+           <string>Clear filter text</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -530,7 +497,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>add_TMopts_Button</tabstop>
   <tabstop>remove_TMOpts_Button</tabstop>
   <tabstop>out_folder_Button</tabstop>
-  <tabstop>comboBox</tabstop>
+  <tabstop>filterComboBox</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
   <tabstop>listWidget_HDRs</tabstop>
@@ -548,12 +515,28 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>463</x>
-     <y>576</y>
+     <x>597</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel" >
      <x>327</x>
-     <y>524</y>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clearTextToolButton</sender>
+   <signal>clicked()</signal>
+   <receiver>filterLineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>660</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>611</x>
+     <y>417</y>
     </hint>
    </hints>
   </connection>

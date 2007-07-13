@@ -43,31 +43,34 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), star
 	desired_number_of_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 	desired_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
 	settings.endGroup();
-	qDebug("BATCH: using %d threads",desired_number_of_threads);
-	qDebug("BATCH: saving with fileformat: %s",desired_format.toAscii().constData());
 
 	connect(add_dir_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_dir_HDRs()));
 	connect(add_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_HDRs()));
 	connect(add_dir_TMopts_Button, SIGNAL(clicked()), this, SLOT(add_dir_TMopts()));
 	connect(add_TMopts_Button, SIGNAL(clicked()), this, SLOT(add_TMopts()));
 	connect(out_folder_Button, SIGNAL(clicked()), this, SLOT(out_folder_clicked()));
-// 	connect(out_fname_prefix_widget, SIGNAL(textChanged(const QString&)), this, SLOT(check_enable_start()));
 	connect(remove_HDRs_Button, SIGNAL(clicked()), this, SLOT(remove_HDRs()));
 	connect(remove_TMOpts_Button, SIGNAL(clicked()), this, SLOT(remove_TMOpts()));
 	connect(BatchGoButton, SIGNAL(clicked()), this, SLOT(start_called()));
+	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
 	
-// 	connect(comboBox, SIGNAL(activated(int)), this, SLOT(comboBox_Activated(int)));
-// 	full_Log_Model=new QStringListModel();
-// 	log_filter=new QSortFilterProxyModel(this);
-// 	log_filter->setSourceModel(full_Log_Model);
-// 	Log_Widget->setModel(log_filter);
-// 	Log_Widget->setModel(full_Log_Model);
-// 	connect(, SIGNAL(), this, SLOT());
+	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
+	full_Log_Model=new QStringListModel();
+	log_filter=new QSortFilterProxyModel(this);
+	log_filter->setDynamicSortFilter(true);
+	log_filter->setSourceModel(full_Log_Model);
+	Log_Widget->setModel(log_filter);
+
+	qDebug("BATCH: using %d threads",desired_number_of_threads);
+	qDebug("BATCH: saving using fileformat: %s",desired_format.toAscii().constData());
+	add_log_message(QString("Using %1 thread(s)").arg(desired_number_of_threads));
+	add_log_message("Saving using fileformat: "+desired_format);
 }
 
 BatchTMDialog::~BatchTMDialog() {
 	QFile::remove(qtpfsgui_options->tempfilespath+"/original.pfs");
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
+	QApplication::restoreOverrideCursor();
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
 }
@@ -103,6 +106,8 @@ void BatchTMDialog::add_dir_TMopts() {
 		chosendir.setFilter(QDir::Files);
 		chosendir.setNameFilters(filters);
 		QStringList onlytxts=chosendir.entryList();
+		//hack to prepend to this list the path as prefix.
+		onlytxts.replaceInStrings(QRegExp("(.+)"), chosendir.path()+"/\\1");
 		add_view_model_TM_OPTs(onlytxts);
 	}
 }
@@ -115,9 +120,10 @@ void BatchTMDialog::add_TMopts() {
 tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 	QFile file(fname);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
+		add_log_message("ERROR: cannot load Tone Mapping Setting file: "+fname);
 		return NULL;
 	}
-	
+
 	tonemapping_options *toreturn=new tonemapping_options;
 	//specifying -2 as size, and passing -2 as the original size in the thread constructor below, we basically bypass the resize step in the thread.
 	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
@@ -136,6 +142,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 		value=line.section('=',1,1); //get the value
 		if (field=="TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
+				add_log_message("ERROR: cannot parse Tone Mapping Setting file: "+fname);
 				delete toreturn;
 				return NULL;
 			}
@@ -204,6 +211,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 		} else if (field=="PREGAMMA") {
 			toreturn->pregamma=value.toFloat();
 		} else {
+			add_log_message("ERROR: cannot parse Tone Mapping Setting file: "+fname);
 			delete toreturn;
 			return NULL;
 		}
@@ -240,7 +248,6 @@ void BatchTMDialog::add_view_model_HDRs(QStringList list) {
 void BatchTMDialog::add_view_model_TM_OPTs(QStringList list) {
 	QStringList::ConstIterator it = list.begin();
 	while( it != list.end() ) {
-//		qDebug("processing "+(*it).toAscii());
 		tonemapping_options *i_th_tm_opt=parse_tm_opt_file(*it);
 		if (i_th_tm_opt!=NULL) {
 			//add to model
@@ -249,10 +256,6 @@ void BatchTMDialog::add_view_model_TM_OPTs(QStringList list) {
 			QFileInfo *qfi=new QFileInfo(*it);
 			listWidget_TMopts->addItem(qfi->fileName()); //fill graphical list
 			delete qfi;
-		} else {
-			//FIXME
-// 			Log_Widget->addItem(QString("WARNING: Error while parsing file: "+*it));
-// 			full_log << QString("WARNING: Error while parsing file: "+*it);
 		}
 		++it;
 	}
@@ -304,20 +307,7 @@ void BatchTMDialog::remove_TMOpts() {
 		tm_opt_list.removeAt(start_right);
 	}
 	start_right=stop_right=-1;
-// 	for (QList<QPair<tonemapping_options*,bool> >::const_iterator i = tm_opt_list.constBegin(); i != tm_opt_list.constEnd(); ++i)
-// 		qDebug("val=%d",((*i).first));
 }
-
-// void BatchTMDialog::comboBox_Activated(int i) {
-// 	switch (i) {
-// 	case 2:
-// 	qDebug("warning activated");
-// 	break;
-// 	case 3:
-// 	qDebug("all activated");
-// 	break;
-// 	}
-// }
 
 //function used for ordering based on the value of pregamma
 //somehow I was not able to embed this in the BatchTMDialog class :)
@@ -330,11 +320,11 @@ void BatchTMDialog::start_called() {
 		accept();
 		return;
 	}
-	qDebug("VVVVVValue=%d",overallProgressBar->value());
 	overallProgressBar->setMaximum(listWidget_HDRs->count()*listWidget_TMopts->count());
 	overallProgressBar->setValue(0);
 	cancelbutton->setDisabled(true);
 	BatchGoButton->setDisabled(true);
+	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 	BatchGoButton->setText(tr("Processing..."));
 	qSort(tm_opt_list.begin(), tm_opt_list.end(), order_based_on_pregamma);
 	//start the process: load the HDR.
@@ -348,19 +338,20 @@ void BatchTMDialog::conditional_loadthread() {
 		connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_HDR_failed(QString)));
 		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(finished_loading_hdr(pfs::Frame*,QString)));
-// 		qDebug("HDR launching thread...");
 		loadthread->start();
 	} else {
 		done=true;
-		BatchGoButton->setText(tr("Done"));
+		QApplication::restoreOverrideCursor();
+		BatchGoButton->setText(tr("&Done"));
 		BatchGoButton->setEnabled(true);
 		qDebug("BATCH: conditional_loadthread: FINISHED ALL HDR");
 	}
 }
 
-void BatchTMDialog::load_HDR_failed(QString message) {
-	qDebug("BATCH: Failed loading HDR file: %s", message.toAscii().constData());
-	//TODO add to log;
+void BatchTMDialog::load_HDR_failed(QString fname) {
+	add_log_message("ERROR: Failed loading HDR file: "+fname);
+	qDebug("BATCH: Failed loading HDR file: %s", fname.toAscii().constData());
+	overallProgressBar->setValue(overallProgressBar->value()+listWidget_TMopts->count());
 	conditional_loadthread();
 }
 
@@ -368,6 +359,7 @@ extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
 	qDebug("BATCH: LOADED HDR, now swapping it to ./original.pfs");
+	add_log_message("Starting to tone map HDR file: "+filename);
 	pfsio.writeFrame(loaded_hdr, qtpfsgui_options->tempfilespath+"/original.pfs");
 	pregamma=-1;
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
@@ -394,6 +386,8 @@ void BatchTMDialog::conditional_TMthread() {
 		if (overallProgressBar->value()==overallProgressBar->maximum()) {
 			BatchGoButton->setText(tr("Done"));
 			BatchGoButton->setEnabled(true);
+			add_log_message("All tasks completed.");
+			QApplication::restoreOverrideCursor();
 			done=true;
 		}
 		return;
@@ -403,9 +397,7 @@ void BatchTMDialog::conditional_TMthread() {
 	if (first_not_started!=-1) {
 		while (running_threads < desired_number_of_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
-
 			tm_opt_list[first_not_started].second=true;
-
 			TonemapperThread *thread = new TonemapperThread(-2, qtpfsgui_options->tempfilespath, NULL);
 
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
@@ -424,6 +416,7 @@ void BatchTMDialog::conditional_TMthread() {
 			return;
 		}
 		qDebug("BATCH: conditional_TMthread: all TM_opts completed, resetting list to false and load (conditionally) a new hdr");
+		add_log_message(QString("Done tone mapping the current HDR."));
 		//re-set all of them to false
 		for (int j = 0; j < tm_opt_list.size(); j++) {
 			tm_opt_list[j].second=false;
@@ -519,14 +512,41 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 		}
 		break;
 	}
+	add_log_message("\tSaving LDR file: "+current_hdr_fname+postfix+"."+desired_format);
 	if (!newimage.save(current_hdr_fname+postfix+"."+desired_format, desired_format.toAscii().constData(), 100)) {
-		qDebug("BATCH: newResult: save to %s failed, format %s",(current_hdr_fname+postfix+"."+desired_format).toAscii().constData(), desired_format.toAscii().constData());
-		//TODO add to LOG
+		qDebug("BATCH: newResult: Cannot save to %s",(current_hdr_fname+postfix+"."+desired_format).toAscii().constData());
+		add_log_message("ERROR: Cannot save to file: "+current_hdr_fname+postfix+"."+desired_format);
 	}
-// 	qDebug("VVVVVVV from %d",overallProgressBar->value());
 	overallProgressBar->setValue(overallProgressBar->value()+1);
 	conditional_TMthread();
 }
 
-// void BatchTMDialog::() {
-// }
+void BatchTMDialog::add_log_message(const QString& message) {
+	full_Log_Model->insertRows(full_Log_Model->rowCount(),1);
+	full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
+	Log_Widget->scrollToBottom();
+}
+
+void BatchTMDialog::filterChanged(const QString& newtext) {
+	bool no_text=newtext.isEmpty();
+	filterComboBox->setEnabled(no_text);
+	filterLabel1->setEnabled(no_text);
+	clearTextToolButton->setEnabled(!no_text);
+	if (no_text)
+		filterComboBoxActivated(filterComboBox->currentIndex());
+	else
+		log_filter->setFilterRegExp(QRegExp(newtext, Qt::CaseInsensitive, QRegExp::RegExp));
+}
+
+void BatchTMDialog::filterComboBoxActivated(int index) {
+	QString regexp;
+	switch (index) {
+	case 0:
+		regexp=".*";
+		break;
+	case 1:
+		regexp="error";
+		break;
+	}
+	log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));
+}

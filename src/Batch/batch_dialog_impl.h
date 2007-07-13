@@ -55,7 +55,8 @@ private slots:
 	void load_HDR_failed(QString);
 	void finished_loading_hdr(pfs::Frame*,QString);
 	void newResult(const QImage&,tonemapping_options*);
-// 	void comboBox_Activated(int);
+	void filterChanged(const QString&);
+	void filterComboBoxActivated(int);
 protected:
 // 	void closeEvent(QCloseEvent *);
 private:
@@ -87,9 +88,11 @@ private:
 	QString desired_format;
 	//set to true once we are done processing.
 	bool done;
-
-// 	QSortFilterProxyModel *log_filter;
-// 	QStringListModel *full_Log_Model;
-// 	QStringList full_log;
+	//fuction that adds a log message to the model
+	void add_log_message(const QString &);
+	//the class that performs regexp filtering
+	QSortFilterProxyModel *log_filter;
+	//the model that holds the data
+	QStringListModel *full_Log_Model;
 };
 #endif
