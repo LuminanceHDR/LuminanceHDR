@@ -67,6 +67,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), star
 
 BatchTMDialog::~BatchTMDialog() {
 	QFile::remove(qtpfsgui_options->tempfilespath+"/original.pfs");
+	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
 }
@@ -372,7 +373,7 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	pfsio.freeFrame(loaded_hdr);
 	QFileInfo qfi(filename);
-	current_hdr_fname=out_folder_widgets->text() + qfi.completeBaseName();
+	current_hdr_fname=out_folder_widgets->text() + "/" + qfi.completeBaseName();
 	//now start processing the list of tone mapping settings
 	conditional_TMthread();
 }

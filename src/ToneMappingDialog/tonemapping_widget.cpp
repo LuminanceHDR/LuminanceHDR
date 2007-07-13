@@ -277,14 +277,17 @@ void TMWidget::savesettings() {
 			tr("Qtpfsgui tonemapping settings text file (*.txt)"));
 	if( ! fname.isEmpty() ) {
 		QFileInfo qfi(fname);
+		if (qfi.suffix().toUpper() != "TXT") {
+			fname+=".txt";
+		}
 		// update internal field variable
 		RecentPathLoadSaveTmoSettings=qfi.path();
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-		if (RecentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString()) {
+		if (RecentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString()) {
 			settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, RecentPathLoadSaveTmoSettings);
 		}
 		//enable graphical elements
-		lineEditTMOsetting->setText(qfi.fileName());
+		lineEditTMOsetting->setText(QFileInfo(fname).fileName());
 		lineEditTMOsetting->setEnabled(TRUE);
 		label_applyTMOSetting->setEnabled(TRUE);
 		button_fromTxt2Gui->setEnabled(TRUE);
