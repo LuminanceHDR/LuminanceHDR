@@ -166,9 +166,6 @@ isEmpty(PREFIX) {
 isEmpty(I18NDIR) {
 	I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
 }
-!isEmpty(ENABLE_DEBUG) {
-DEFINES -= QT_NO_DEBUG_OUTPUT
-}
 
 target.path      = $${PREFIX}/bin
 menu.files       = qtpfsgui.desktop
@@ -183,7 +180,13 @@ i18n.path        = $$I18NDIR
 INSTALLS        += target menu icon htmls i18n
 message ( "" )
 message ("********************************************************************")
-message ("Qtpfsgui's PREFIX=$$PREFIX")
+message ("Installation PREFIX=$$PREFIX")
+isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
+message ("Debug statements DISABLED")
+} else {
+DEFINES -= QT_NO_DEBUG_OUTPUT
+message ("Debug statements ENABLED")
+}
 message ("Here's what will be installed:")
 message ("qtpfsgui ==> $$target.path")
 message ("qtpfsgui.desktop ==> $$menu.path")
