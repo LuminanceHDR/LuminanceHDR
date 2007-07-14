@@ -366,8 +366,7 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
                i18n/lang_pl.ts \
-               i18n/lang_tr.ts \
-               i18n/lang_cs.ts
+               i18n/lang_tr.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
