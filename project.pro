@@ -220,7 +220,9 @@ CONFIG += x86 ppc
 LIBS += -L$$(LOCALSOFT)/lib
 
 #I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
-I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
+#I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
+#maybe we need parenthesis and/or backslashes somewhere.
+I18NDIR=QCoreApplication::applicationDirPath()+"/../Resources/i18n"
 DEFINES += I18NDIR=\"$$I18NDIR\"
 }
 
