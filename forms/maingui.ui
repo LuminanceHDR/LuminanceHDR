@@ -548,13 +548,13 @@
     <string>Copy Exif Data</string>
    </property>
    <property name="toolTip" >
-    <string>Copy (i.e. transplant) Exif Data</string>
+    <string>Copy Exif Data between two set of files</string>
    </property>
    <property name="statusTip" >
-    <string>Copy (i.e. transplant) Exif Data between two set of files</string>
+    <string>Copy Exif Data between two set of files</string>
    </property>
    <property name="whatsThis" >
-    <string>Copy (i.e. transplant) Exif Data between two set of files</string>
+    <string>Copy Exif Data between two set of files</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+E</string>
@@ -640,12 +640,11 @@
     <string>&amp;Batch Tone Mapping...</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+B</string>
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>
  <resources>
-  <include location="../icons.qrc" />
   <include location="../icons.qrc" />
  </resources>
  <connections/>
