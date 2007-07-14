@@ -1,4 +1,18 @@
 Changes:
+14-07-2007 v.1.8.10
+* OpenEXR file format available in win32 as well
+* Initial implementation of batch functionality
+* Added arch-dependend source files for FreeBSD
+* Fixed segfault for qt 4.2.1
+* Loading HDRs is a threaded operation now
+* Added build option to enable/disable debug statements (see README).
+* Usability patch when user has to specify the EV manually
+* Added turkish translation
+* Restructured source tree
+* Added run-time check for correct dll placement.
+* Included pfstools patch for XYZ<->sRGB color space transformation
+* Using qt4 endiannes detection
+
 09-06-2007 v1.8.9
 * fixed serious bug related to the creation of an hdr image.
 * fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.

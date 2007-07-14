@@ -65,7 +65,7 @@ Qtpfsgui has 6 dependencies (5 in windows):
 5) libtiff (http://www.remotesensing.org/libtiff)
 6) OpenEXR (www.openexr.com, *Linux only*)
 
-On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V3'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
+On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V4'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V4.zip
 On linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
 
 1) Qt4 is required because it's the framework the graphical interface was built on.
@@ -130,6 +130,7 @@ The default is I18NDIR=$${PREFIX}/share/qtpfsgui/i18n
 Running:
 > qmake ENABLE_DEBUG="yes"
 creates a Makefile that builds Qtpfsgui with debug statements enabled.
+By default the debug statements are disabled.
 
 The Windows EXE was obtained on Windows XP using MinGW and MSYS.
 In linux you have to compile the code and you need the packages mentioned in Chapter 2 (and the ``devel'' or ``dev'' ones, depending on the distro's naming convention).
@@ -201,18 +202,24 @@ unexpected effects like changing color saturation.
 5. Changes
 -------------------------------------------------------------------
 v1.8.10
-* added initial implementation of batch functionality
-* fixed compiling issues with Qt 4.3
-* restructured source tree
-* included pfstools patch for XYZ<->sRGB color space transformation
-* implemented small usability patch when user has to specify the EV manually
-* loading HDRs is a threaded operation now
+* OpenEXR file format available in win32 as well
+* Initial implementation of batch functionality
+* Added arch-dependend source files for FreeBSD
+* Fixed segfault for qt 4.2.1
+* Loading HDRs is a threaded operation now
+* Added build option to enable/disable debug statements (see README).
+* Usability patch when user has to specify the EV manually
+* Added turkish translation
+* Restructured source tree
+* Added run-time check for correct dll placement.
+* Included pfstools patch for XYZ<->sRGB color space transformation
+* Using qt4 endiannes detection
 
 ***WARNING***
-Starting Qtpfsgui 1.8.2, Windows users have to download the new
-``Windows DLL Package V3'', make sure to get it at:
-http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V3.zip
-If you already have "V3" you don't need to download it again.
+Starting Qtpfsgui 1.8.10, Windows users have to download the new
+``Windows DLL Package V4'', make sure to get it at:
+http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V4.zip
+If you already have "V4" you don't need to download it again.
 
 Read the Changelog file for previous versions' details.
 
