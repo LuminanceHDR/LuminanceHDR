@@ -9,7 +9,7 @@
 
 
 <dl>
-<A name="name"><dt><strong>Q: What is the meaning of the name qtpfsgui?</strong></dt></A>
+<A name="name"><dt><strong>Q: What is the meaning of the name Qtpfsgui?</strong></dt></A>
 <dd>A: The name can be decomposed in 3 parts: Qt-pfs-gui.
 	<ol>
 	<li><strong>Qt</strong>: the program uses Qt4 (www.trolltech.com) to show its graphical widgets.</li>
@@ -18,18 +18,14 @@
 	</ol>
 </dd>
 
-<A name="tmop"><dt><strong>Q: What is the meaning of the various settings for tonemapping operator X?</strong></dt></A>
-<dd>A: To answer precisely this question one would have to explain the inner workings of TMO X, in terms of the original research paper.<br>
+<A name="tmop"><dt><strong>Q: What is the meaning of the various settings for tone mapping operator X?</strong></dt></A>
+<dd>A: To answer precisely this question one would have to explain the inner workings of the tone mapping operator X, in terms of the original research paper.<br>
 At the end of the day all that matters (to some people, at least) is to fiddle with the settings until you obtain a nice result.
 </dd>
 
 <br>
-<A name="exiftiff"><dt><strong>Q: Why can't qtpfsgui transfer the exif tags to TIFF files?</strong></dt></A>
-<dd>A: Because the library qtpfsgui uses to perform this task (exiv2) doesn't support writing to tiff files yet. It's in the working, though.</dd>
-
-<br>
-<A name="immediatechange"><dt><strong>Q: Can we have the tonemapping dialog apply its settings as soon as the user changes a value? In other words, can we avoid having an "apply" button?</strong></dt></A>
-<dd>A: Given how the tone mapping panel is implemented right now, this possibility has been discarded.</dd>
+<A name="exiftiff"><dt><strong>Q: Why can't Qtpfsgui transfer the exif tags to TIFF files?</strong></dt></A>
+<dd>A: Because the library Qtpfsgui uses to perform this task (exiv2) doesn't support writing to tiff files yet. It's in the working, though.</dd>
 
 <br>
 <A name="jpegorraw"><dt><strong>Q: Should I store JPEG or RAW files for HDR?</strong></dt></A>
@@ -42,10 +38,14 @@ At the end of the day all that matters (to some people, at least) is to fiddle w
 	<li>OpenEXR: Industrial Light and Magic format, widespread use, best compression ratios. www.openexr.com</li>
 	<li>LogLuv TIFF: see http://en.wikipedia.org/wiki/Logluv_TIFF and http://www.anyhere.com/gward/pixformat/tiffluv.html</li>
 	<li>Radiance RGBE: see http://en.wikipedia.org/wiki/Radiance_%28software%29#HDR_image_format</li>
-	<li>PFS: This format stores the binary internal (float) representation of images. It is very size demanding, and it supported only by pfstools/pfscalibration/pfstmo and qtpfsgui. On the other hand it is a lossless format and supports metadata (tags).</li>
+	<li>PFS: This format stores the binary internal (float) representation of images. It is very size demanding, and it supported only by pfstools/pfscalibration/pfstmo and Qtpfsgui. On the other hand it is a lossless format and supports metadata (tags).</li>
 	<li>Float TIFF (aka 32 bit TIFF): very size demanding (similar to pfs above).</li>
 	</ul>
 </dd>
+
+<br>
+<A name="immediatechange"><dt><strong>Q: Can we have the tonemapping dialog apply its settings as soon as the user changes a value? In other words, can we avoid having an "apply" button?</strong></dt></A>
+<dd>A: Given how the tone mapping panel is implemented right now, this possibility has been discarded.</dd>
 
 </dl>
 </body>
