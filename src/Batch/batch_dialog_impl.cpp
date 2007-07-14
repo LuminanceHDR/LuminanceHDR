@@ -63,8 +63,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), star
 
 	qDebug("BATCH: using %d threads",desired_number_of_threads);
 	qDebug("BATCH: saving using fileformat: %s",desired_format.toAscii().constData());
-	add_log_message(QString(tr("Using %1 thread(s)")).arg(desired_number_of_threads));
-	add_log_message(tr("Saving using fileformat: ")+desired_format);
+	add_log_message(QString("Using %1 thread(s)").arg(desired_number_of_threads));
+	add_log_message("Saving using fileformat: "+desired_format);
 }
 
 BatchTMDialog::~BatchTMDialog() {
@@ -120,7 +120,7 @@ void BatchTMDialog::add_TMopts() {
 tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 	QFile file(fname);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
-		add_log_message(tr("ERROR: cannot load Tone Mapping Setting file: ")+fname);
+		add_log_message("ERROR: cannot load Tone Mapping Setting file: "+fname);
 		return NULL;
 	}
 
@@ -142,7 +142,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 		value=line.section('=',1,1); //get the value
 		if (field=="TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
-				add_log_message(tr("ERROR: cannot parse Tone Mapping Setting file: ")+fname);
+				add_log_message("ERROR: cannot parse Tone Mapping Setting file: "+fname);
 				delete toreturn;
 				return NULL;
 			}
@@ -211,7 +211,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 		} else if (field=="PREGAMMA") {
 			toreturn->pregamma=value.toFloat();
 		} else {
-			add_log_message(tr("ERROR: cannot parse Tone Mapping Setting file: ")+fname);
+			add_log_message("ERROR: cannot parse Tone Mapping Setting file: "+fname);
 			delete toreturn;
 			return NULL;
 		}
@@ -349,7 +349,7 @@ void BatchTMDialog::conditional_loadthread() {
 }
 
 void BatchTMDialog::load_HDR_failed(QString fname) {
-	add_log_message(tr("ERROR: Failed loading HDR file: ")+fname);
+	add_log_message("ERROR: Failed loading HDR file: "+fname);
 	qDebug("BATCH: Failed loading HDR file: %s", fname.toAscii().constData());
 	overallProgressBar->setValue(overallProgressBar->value()+listWidget_TMopts->count());
 	conditional_loadthread();
@@ -359,7 +359,7 @@ extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
 	qDebug("BATCH: LOADED HDR, now swapping it to ./original.pfs");
-	add_log_message(tr("Starting to tone map HDR file: ")+filename);
+	add_log_message("Starting to tone map HDR file: "+filename);
 	pfsio.writeFrame(loaded_hdr, qtpfsgui_options->tempfilespath+"/original.pfs");
 	pregamma=-1;
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
@@ -386,7 +386,7 @@ void BatchTMDialog::conditional_TMthread() {
 		if (overallProgressBar->value()==overallProgressBar->maximum()) {
 			BatchGoButton->setText(tr("Done"));
 			BatchGoButton->setEnabled(true);
-			add_log_message(tr("All tasks completed."));
+			add_log_message("All tasks completed.");
 			QApplication::restoreOverrideCursor();
 			done=true;
 		}
@@ -416,7 +416,7 @@ void BatchTMDialog::conditional_TMthread() {
 			return;
 		}
 		qDebug("BATCH: conditional_TMthread: all TM_opts completed, resetting list to false and load (conditionally) a new hdr");
-		add_log_message(tr("Done tone mapping the current HDR."));
+		add_log_message(QString("Done tone mapping the current HDR."));
 		//re-set all of them to false
 		for (int j = 0; j < tm_opt_list.size(); j++) {
 			tm_opt_list[j].second=false;
@@ -512,10 +512,10 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 		}
 		break;
 	}
-	add_log_message(tr("\tSaving LDR file: ")+current_hdr_fname+postfix+"."+desired_format);
+	add_log_message("\tSaving LDR file: "+current_hdr_fname+postfix+"."+desired_format);
 	if (!newimage.save(current_hdr_fname+postfix+"."+desired_format, desired_format.toAscii().constData(), 100)) {
 		qDebug("BATCH: newResult: Cannot save to %s",(current_hdr_fname+postfix+"."+desired_format).toAscii().constData());
-		add_log_message(tr("ERROR: Cannot save to file: ")+current_hdr_fname+postfix+"."+desired_format);
+		add_log_message("ERROR: Cannot save to file: "+current_hdr_fname+postfix+"."+desired_format);
 	}
 	overallProgressBar->setValue(overallProgressBar->value()+1);
 	conditional_TMthread();
