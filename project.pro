@@ -258,6 +258,7 @@ LIBS += "-LC:\Program Files\GnuWin32\lib" -llibtiff
 
 DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
 RC_FILE = images/qtpfsgui_ico.rc
+
 }
 
 #INCLUDEPATH += src/libpfs src/fileformat src/hdrcreate src/ashikhmin02 src/drago03 src/durand02 src/fattal02 src/pattanaik00 src/reinhard02
