@@ -52,7 +52,9 @@ The code is in part based on the existing opensource packages:
 "qpfstmo", by Nicholas Phillips.
 "dcraw", by Dave Coffin.
 Without their contribution all of this would have not been possible.
-
+The two FreeBSD related files contained in the arch/freebsd directory are part
+of the msun library and are licensed using a very liberal license that can
+be found at the beginning of those two files.
 
 
 2. Dependencies
