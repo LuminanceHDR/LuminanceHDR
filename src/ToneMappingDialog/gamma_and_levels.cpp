@@ -46,19 +46,15 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(par
 
 	histogram=new HistogramLDR(this,data);
 	gb1=new GrayBar(inputStuffFrame);
-	connect(gb1,SIGNAL(black_changed(int)),black_in_spinbox,SLOT(setValue(int)));
-	connect(gb1,SIGNAL(gamma_changed(double)),gamma_spinbox,SLOT(setValue(double)));
-	connect(gb1,SIGNAL(white_changed(int)),white_in_spinbox,SLOT(setValue(int)));
+
 	connect(black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
 	connect(gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
 	connect(white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
-	connect(ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
 
 	connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
 	connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
 	connect(gb1,SIGNAL(white_changed(int)),this,SLOT(updateWhiteIn(int)));
 	connect(gb1,SIGNAL(default_gamma_black_white()),this,SLOT(defaultGammaBlackWhiteIn()));
-	connect(ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
 
 	qvl->addWidget(histogram);
 	qvl->addWidget(gb1);
@@ -68,16 +64,17 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(par
 	qvl2->setMargin(0);
 	qvl2->setSpacing(1);
 	gb2=new GrayBar(out_levels,true);
-	connect(gb2,SIGNAL(black_changed(int)),black_out_spinbox,SLOT(setValue(int)));
-	connect(gb2,SIGNAL(white_changed(int)),white_out_spinbox,SLOT(setValue(int)));
 	connect(black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
 	connect(white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
 
 	connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
 	connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
-	connect(gb1,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
+	connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
 
+	connect(ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
 	connect(ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
+	connect(ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
+
 	qvl2->addWidget(gb2);
 	out_levels->setLayout(qvl2);
 }
@@ -89,12 +86,14 @@ GammaAndLevels::~GammaAndLevels() {
 }
 
 void GammaAndLevels::defaultGammaBlackWhiteIn() {
+	qDebug("this::defaultGammaBlackWhiteIn");
 	blackin=0;
 	gamma=1.0f;
 	whitein=255;
 }
 
 void GammaAndLevels::defaultBlackWhiteOut() {
+	qDebug("this::defaultBlackWhiteOut");
 	blackout=0;
 	whiteout=255;
 }
@@ -104,38 +103,40 @@ void GammaAndLevels::closeEvent(QCloseEvent *) {
 }
 
 void GammaAndLevels::updateBlackIn(int v) {
-// 	qDebug("updateBlackIn");
+	qDebug("this::updateBlackIn");
 	black_in_spinbox->setValue(v);
 	blackin=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateGamma(double v) {
-// 	qDebug("updateGamma");
+	qDebug("this::updateGamma");
+	gb1->dont_emit=true;
 	gamma_spinbox->setValue(v);
 	gamma=v;
 	refreshLUT();
+	gb1->dont_emit=false;
 }
 void GammaAndLevels::updateWhiteIn(int v) {
-// 	qDebug("updateWhiteIn");
+	qDebug("this::updateWhiteIn");
 	white_in_spinbox->setValue(v);
 	whitein=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateBlackOut(int v) {
-// 	qDebug("updateBlackOut");
+	qDebug("this::updateBlackOut");
 	black_out_spinbox->setValue(v);
 	blackout=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteOut(int v) {
-// 	qDebug("updateWhiteOut");
+	qDebug("this::updateWhiteOut");
 	white_out_spinbox->setValue(v);
 	whiteout=v;
 	refreshLUT();
 }
 
 void GammaAndLevels::resetValues() {
-// 	qDebug("resetValues");
+	qDebug("this::resetValues");
 	blackin=0;
 	gamma=1.0f;
 	whitein=255;
@@ -152,6 +153,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 void GammaAndLevels::refreshLUT() {
+	qDebug("this::refreshLUT");
 	//values in 0..1 range
 	float bin=(float)blackin/255.0f;
 	float win=(float)whitein/255.0f;
@@ -221,7 +223,7 @@ HistogramLDR::~HistogramLDR() {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-GrayBar::GrayBar(QWidget *parent, bool two_handles) : QWidget(parent)/*, firstresize(true)*/ {
+GrayBar::GrayBar(QWidget *parent, bool two_handles) : QWidget(parent), dont_emit(false) {
 	twohandles=two_handles;
 	dragging=DRAGNONE;
 // 	qDebug("width=%d, height=%d",width(),height());
@@ -336,6 +338,7 @@ GrayBar::draggingT GrayBar::findHandle(int x, int y) {
 }
 
 void GrayBar::resizeEvent ( QResizeEvent * ) {
+	qDebug("GrayBar::resizeEvent");
 	resetvalues();
 //this one below does not work, we resetvalues for the time being.
 // 	float factor=(float)(e->size().width())/(float)(e->oldSize().width());
@@ -406,38 +409,56 @@ void GrayBar::paintEvent( QPaintEvent * ) {
 }
 
 void GrayBar::resetvalues() {
+	qDebug("GrayBar::resetvalues");
 	blackpos=0;
 	gammapos=width()/2;
 	blackgrayratio=0.5f;
 	whitepos=width();
 
-	if (!twohandles)
-		emit default_gamma_black_white();
-	else
+	if (twohandles)
 		emit default_black_white();
+	else
+		emit default_gamma_black_white();
 	update();
 }
 
 void GrayBar::changeBlack(int v) {
+	if ((int)(255*((float)(blackpos)/(float)(width()))) == v)
+		return;
+	qDebug("GrayBar::changeBlack");
 	blackpos=(int) (v*width()/255.0f) < whitepos ? (int) (v*width()/255.0f) : blackpos;
 	gammapos=blackpos+(int)(blackgrayratio*(whitepos-blackpos));
 	update();
+	emit black_changed(v);
 }
 
 void GrayBar::changeGamma(double v) {
+
 	float mediumpos = (float)blackpos+ ((float)whitepos-(float)blackpos)/2.0f;
 	if (v<1.0f) {
 		gammapos=(int)( mediumpos-((float)(whitepos)-mediumpos)*log10f(v) );
 	} else {
 		gammapos=(int)( mediumpos-(mediumpos-(float)(blackpos))*log10f(v) );
 	}
+	qDebug("GrayBar::changeGamma %f",v);
 	blackgrayratio=(float)(gammapos-blackpos)/(float)(whitepos-blackpos);
 	update();
+	if (dont_emit) {
+		dont_emit=false;
+		return;
+	}
+// 	qDebug("setting dont_emit false");
+// 	dont_emit=false;
+	emit gamma_changed (v);
 }
 
 void GrayBar::changeWhite(int v) {
+	if ((int)(255*((float)(whitepos)/(float)(width()))) == v)
+		return;
+	qDebug("GrayBar::changeWhite, %d", v);
 	whitepos=(int) (v*width()/255.0f) > blackpos ? (int) (v*width()/255.0f) : whitepos;
 	gammapos=whitepos-(int)((1.0f-blackgrayratio)*(whitepos-blackpos));
 	update();
+	emit white_changed(v);
 }
 

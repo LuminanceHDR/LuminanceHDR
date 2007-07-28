@@ -46,7 +46,10 @@
      <item>
       <widget class="QLabel" name="label" >
        <property name="text" >
-        <string>Result size:</string>
+        <string>&amp;Result size:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>sizeComboBox</cstring>
        </property>
       </widget>
      </item>
@@ -59,6 +62,22 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="insertPolicy" >
+        <enum>QComboBox::NoInsert</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="addCustomSizeButton" >
+       <property name="cursor" >
+        <cursor>13</cursor>
+       </property>
+       <property name="toolTip" >
+        <string>Add a custom size: type a width value and then press Enter.</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
        </property>
       </widget>
      </item>
@@ -78,12 +97,15 @@
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="lower_settings" >
+    <widget class="QGroupBox" name="pregammaGroup" >
      <property name="minimumSize" >
       <size>
        <width>111</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="toolTip" >
+      <string>Gamma applied before tone mapping</string>
      </property>
      <property name="title" >
       <string>Pre Gamma</string>
@@ -172,8 +194,8 @@
         </item>
         <item>
          <widget class="QSlider" name="pregammaSlider" >
-          <property name="toolTip" >
-           <string>Gamma applied before tone mapping</string>
+          <property name="cursor" >
+           <cursor>13</cursor>
           </property>
           <property name="orientation" >
            <enum>Qt::Horizontal</enum>
@@ -273,6 +295,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="alphaSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="maximum" >
             <number>999</number>
            </property>
@@ -319,6 +344,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="betaSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="maximum" >
             <number>999</number>
            </property>
@@ -365,6 +393,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="saturation2Slider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -384,6 +415,59 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
         </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_20" >
+           <property name="text" >
+            <string>Noise Reduction</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="noiseSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>1000</number>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="noisedsb" >
+           <property name="decimals" >
+            <number>3</number>
+           </property>
+           <property name="maximum" >
+            <double>1.000000000000000</double>
+           </property>
+           <property name="singleStep" >
+            <double>0.001000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="oldFattalCheckBox" >
+         <property name="text" >
+          <string>"Old" Fattal (pre 1.8.4)</string>
+         </property>
+        </widget>
        </item>
        <item>
         <spacer>
@@ -576,6 +660,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="contrastSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -704,6 +791,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="spatialSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -741,6 +831,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="rangeSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -778,6 +871,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="baseSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -894,6 +990,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="biasSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1016,6 +1115,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="multiplierSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1080,6 +1182,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="coneSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1117,6 +1222,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="rodSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1243,6 +1351,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="keySlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1280,6 +1391,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="phiSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1322,6 +1436,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="range2Slider" >
            <property name="enabled" >
             <bool>false</bool>
+           </property>
+           <property name="cursor" >
+            <cursor>13</cursor>
            </property>
            <property name="minimum" >
             <number>2</number>
@@ -1381,6 +1498,9 @@ p, li { white-space: pre-wrap; }
            <property name="enabled" >
             <bool>false</bool>
            </property>
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1429,6 +1549,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="upperSlider" >
            <property name="enabled" >
             <bool>false</bool>
+           </property>
+           <property name="cursor" >
+            <cursor>13</cursor>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -1516,7 +1639,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_7" >
       <attribute name="title" >
-       <string>Reinhard '04</string>
+       <string>Reinhard '05</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -1555,6 +1678,9 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QSlider" name="brightnessSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1587,29 +1713,84 @@ p, li { white-space: pre-wrap; }
           <number>6</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_saturation" >
+          <widget class="QLabel" name="label_saturation_2" >
            <property name="text" >
-            <string>Saturation</string>
+            <string>Chromatic Adaptation</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QSlider" name="saturationSlider" >
+          <widget class="QSlider" name="chromaticAdaptSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>300</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDoubleSpinBox" name="saturationdsb" >
+          <widget class="QDoubleSpinBox" name="chromaticAdaptdsb" >
            <property name="maximum" >
-            <double>1.200000000000000</double>
+            <double>1.300000000000000</double>
+           </property>
+           <property name="minimum" >
+            <double>-1.700000000000000</double>
            </property>
            <property name="singleStep" >
-            <double>0.300000000000000</double>
+            <double>0.100000000000000</double>
            </property>
            <property name="value" >
-            <double>0.990000000000000</double>
+            <double>0.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_saturation" >
+           <property name="text" >
+            <string>Light Adaptation</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="lightAdaptSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>200</number>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="lightAdaptdsb" >
+           <property name="maximum" >
+            <double>1.000000000000000</double>
+           </property>
+           <property name="minimum" >
+            <double>-1.000000000000000</double>
+           </property>
+           <property name="singleStep" >
+            <double>0.100000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1708,7 +1889,7 @@ p, li { white-space: pre-wrap; }
         <string>Use current parameters above (pregamma and tone mapping operator) to compute a LDR image</string>
        </property>
        <property name="text" >
-        <string>Apply</string>
+        <string>&amp;Apply</string>
        </property>
        <property name="icon" >
         <iconset resource="../icons.qrc" >:/new/prefix1/images/apply.png</iconset>
@@ -1776,7 +1957,7 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_4" >
+    <widget class="QGroupBox" name="groupSaveLoadTMOsetting" >
      <property name="sizePolicy" >
       <sizepolicy>
        <hsizetype>5</hsizetype>
@@ -1809,7 +1990,7 @@ p, li { white-space: pre-wrap; }
          <string>Save current parameters (pregamma and TMO) to a text file</string>
         </property>
         <property name="text" >
-         <string>Save...</string>
+         <string>&amp;Save...</string>
         </property>
        </widget>
       </item>
@@ -1900,12 +2081,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>76</x>
-     <y>185</y>
+     <x>80</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1916,12 +2097,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>185</y>
+     <x>79</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1932,12 +2113,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>185</y>
+     <x>79</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1948,12 +2129,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>185</y>
+     <x>79</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1964,12 +2145,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1980,12 +2161,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -1996,12 +2177,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2012,12 +2193,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2028,12 +2209,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2044,12 +2225,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>94</x>
-     <y>185</y>
+     <x>98</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2060,12 +2241,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2076,12 +2257,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>94</x>
-     <y>185</y>
+     <x>98</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2092,12 +2273,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2108,12 +2289,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>73</x>
-     <y>185</y>
+     <x>77</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2124,12 +2305,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2140,12 +2321,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>94</x>
-     <y>185</y>
+     <x>98</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2156,12 +2337,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2172,12 +2353,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>94</x>
-     <y>185</y>
+     <x>98</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2188,12 +2369,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2204,12 +2385,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>185</y>
+     <x>79</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2220,12 +2401,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2236,12 +2417,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2252,12 +2433,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2268,12 +2449,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>92</x>
-     <y>185</y>
+     <x>96</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2284,12 +2465,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2300,12 +2481,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -2316,12 +2497,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>185</y>
+     <x>95</x>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>110</x>
-     <y>185</y>
+     <x>101</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>

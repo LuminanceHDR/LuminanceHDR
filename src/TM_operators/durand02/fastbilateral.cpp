@@ -246,6 +246,7 @@ void fastBilateralFilter( const pfs::Array2D *I,
       (*jG)(i) = exp( -(dI*dI) / (sigma_r*sigma_r) );
       (*jH)(i) = (*jG)(i) * (*I)(i);
     }
+
     convolveArray(jG, sigma_s, jK);
     convolveArray(jH, sigma_s, jH);
 

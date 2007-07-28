@@ -44,6 +44,15 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	connect(addright,		SIGNAL(clicked()),this,SLOT(append_right()));
 	connect(TransplantButton,	SIGNAL(clicked()),this,SLOT(transplant_requested()));
 	connect(HelpButton,		SIGNAL(clicked()),this,SLOT(help_requested()));
+
+	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
+	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
+	full_Log_Model=new QStringListModel();
+	log_filter=new QSortFilterProxyModel(this);
+	log_filter->setDynamicSortFilter(true);
+	log_filter->setSourceModel(full_Log_Model);
+	Log_Widget->setModel(log_filter);
+
 	RecentDirEXIFfrom=settings.value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
 	RecentDirEXIFto=settings.value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
 }
@@ -168,6 +177,7 @@ void TransplantExifDialog::remove_left() {
 		from.removeAt(start_left);
 	}
 	start_left=stop_left=-1;
+	TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
 // 	for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
 // 		qDebug((*i).toAscii());
 }
@@ -181,6 +191,7 @@ void TransplantExifDialog::remove_right() {
 		to.removeAt(start_right);
 	}
 	start_right=stop_right=-1;
+	TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
 // 	for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
 // 		qDebug((*i).toAscii());
 }
@@ -204,10 +215,7 @@ void TransplantExifDialog::append_left() {
 			delete qfi;
 		}
 		from+=files; // add the new files to the "model"
-		if (leftlist->count()==rightlist->count() && rightlist->count()!=0)
-			TransplantButton->setEnabled(TRUE);
-		else
-			TransplantButton->setEnabled(FALSE);
+		TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
 // 		for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
 // 			qDebug((*i).toAscii());
 	}
@@ -232,10 +240,7 @@ void TransplantExifDialog::append_right() {
 			delete qfi;
 		}
 		to+=files; // add the new files to the "model"
-		if (leftlist->count()==rightlist->count() && rightlist->count()!=0)
-			TransplantButton->setEnabled(TRUE);
-		else
-			TransplantButton->setEnabled(FALSE);
+		TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
 // 		for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
 // 			qDebug((*i).toAscii());
 	}
@@ -251,45 +256,23 @@ void TransplantExifDialog::transplant_requested() {
 	//initialize string iterators to the beginning of the lists.
 	QStringList::const_iterator i_source = from.constBegin();
 	QStringList::const_iterator i_dest = to.constBegin();
-	//NOW CHECK THAT **ALL** THE SOURCE FILES HAVE THE EXIF DATA, AND THAT **ALL** THE SOURCE AND DEST FILES ARE EXIV2-COMPATIBLE
-	for (; i_source != from.constEnd(); ++i_source) {
-		try {
-			//these 2 below throw an exception if file is not supported by exiv2
-			Exiv2::Image::AutoPtr sourceimage = Exiv2::ImageFactory::open((*i_source).toStdString());
-			Exiv2::Image::AutoPtr destimage = Exiv2::ImageFactory::open((*i_dest).toStdString());
- 			//Callers must check the size of individual metadata types before accessing the data. FIXME how do I check the size?
- 			//readMetadata can throw an exception, if opening or reading of the file fails or the image data is not valid (does not look like data of the specific image type).
-			sourceimage->readMetadata();
-			Exiv2::ExifData &src_exifData = sourceimage->exifData();
-			// if source file has no EXIF data, abort
-			if (src_exifData.empty()) {
-				QMessageBox::critical(this,"No exif data found", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font>No exif-copy has been made... the file <font color=\"#FF9500\"><i><b>%1</b</i></font> does not contain exif data.").arg(*i_source));
-				return;
-			}
-		} catch (Exiv2::AnyError& e) {
-			QMessageBox::critical(this,"File not supported", QString("<font color=\"#FF0000\"><h3><b>ERROR:</b></h3></font>%1").arg( QString::fromStdString(e.what()) ));
-			return;
-		}
-	}
-
-// 	qDebug("FROM");
-// 	for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
-// 	qDebug("TO");
-// 	for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
-
-	//HERE'S THE BEEF! :=)
-	//initialize string iterators to the beginning of the lists.
-	i_source = from.constBegin();
-	i_dest = to.constBegin();
+	
+	int index=0;
 	//for all the input files
 	for (; i_source != from.constEnd(); ++i_source, ++i_dest) {
-		ExifOperations::copyExifData((*i_source).toStdString(), (*i_dest).toStdString(), checkBox_dont_overwrite->isChecked());
+		try {
+			add_log_message(*i_source + "-->" + *i_dest);
+			ExifOperations::copyExifData((*i_source).toStdString(), (*i_dest).toStdString(), checkBox_dont_overwrite->isChecked());
+			rightlist->item(index)->setBackground(QBrush("#a0ff87"));
+		} catch (Exiv2::AnyError& e) {
+			add_log_message("ERROR:" + QString::fromStdString(e.what()) );
+			rightlist->item(index)->setBackground(QBrush("#ff743d"));
+		}
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
+		index++;
 	}
+
 	done=true;
-	Done_label->setText(tr("<center><font color=\"#008400\"><h3><b>All the exif tags have been successfully copied!</b></h3></font></center>"));
 	TransplantButton->setText(tr("Done."));
 	moveup_left_button->setDisabled(true);
 	moveup_right_button->setDisabled(true);
@@ -300,6 +283,36 @@ void TransplantExifDialog::transplant_requested() {
 	addleft->setDisabled(true);
 	addright->setDisabled(true);
 	cancelbutton->setDisabled(true);
+}
+
+void TransplantExifDialog::add_log_message(const QString& message) {
+	full_Log_Model->insertRows(full_Log_Model->rowCount(),1);
+	full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
+	Log_Widget->scrollToBottom();
+}
+
+void TransplantExifDialog::filterChanged(const QString& newtext) {
+	bool no_text=newtext.isEmpty();
+	filterComboBox->setEnabled(no_text);
+	filterLabel1->setEnabled(no_text);
+	clearTextToolButton->setEnabled(!no_text);
+	if (no_text)
+		filterComboBoxActivated(filterComboBox->currentIndex());
+	else
+		log_filter->setFilterRegExp(QRegExp(newtext, Qt::CaseInsensitive, QRegExp::RegExp));
+}
+
+void TransplantExifDialog::filterComboBoxActivated(int index) {
+	QString regexp;
+	switch (index) {
+	case 0:
+		regexp=".*";
+		break;
+	case 1:
+		regexp="error";
+		break;
+	}
+	log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));
 }
 
 

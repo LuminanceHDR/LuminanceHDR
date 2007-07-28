@@ -27,11 +27,11 @@ pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 void applyGammaFrame( pfs::Frame*, const float);
 pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
 pfs::Frame* pfstmo_drago03 (pfs::Frame *, float);
-pfs::Frame* pfstmo_fattal02 (pfs::Frame*,float,float,float);
+pfs::Frame* pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
 pfs::Frame* pfstmo_durand02 (pfs::Frame*,float,float,float);
 pfs::Frame* pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
 pfs::Frame* pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
-pfs::Frame* pfstmo_reinhard04 (pfs::Frame *,float,float);
+pfs::Frame* pfstmo_reinhard04 (pfs::Frame *,float,float,float);
 
 // width of the pfs:frame written on disk during resize operation, cannot be the 100% size: originalxsize, because i don't resize to 100% and write to disk.
 int xsize=-1; //-1 means nothing has been computed yet
@@ -149,7 +149,9 @@ void TonemapperThread::run() {
 			result=pfstmo_fattal02(workingframe,
 			opt.operator_options.fattaloptions.alpha,
 			opt.operator_options.fattaloptions.beta,
-			opt.operator_options.fattaloptions.color);
+			opt.operator_options.fattaloptions.color,
+			opt.operator_options.fattaloptions.noiseredux,
+			opt.operator_options.fattaloptions.newfattal);
 			lock.unlock();
 		break;
 		case ashikhmin:
@@ -190,7 +192,8 @@ void TonemapperThread::run() {
 		case reinhard04:
 			result=pfstmo_reinhard04(workingframe,
 			opt.operator_options.reinhard04options.brightness,
-			opt.operator_options.reinhard04options.saturation);
+			opt.operator_options.reinhard04options.chromaticAdaptation,
+			opt.operator_options.reinhard04options.lightAdaptation);
 		break;
 		}
 	if (bar) emit setCurrentProgress(bar->value()+1);

@@ -54,7 +54,6 @@ private:
 	void clearlists();
 	int numberinputfiles; //it is also the lenght of the array below
 	float *expotimes;
-	bool input_is_ldr;
 	bool ldr_tiff;
 	bool need_to_transform_indices;
 	bool enable_usability_jump_hack;

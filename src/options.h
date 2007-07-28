@@ -106,6 +106,8 @@ struct tonemapping_options {
 			float alpha;
 			float beta;
 			float color;
+			float noiseredux;
+			bool newfattal;
 		} fattaloptions;
 		struct {
 			bool autolum;
@@ -124,7 +126,8 @@ struct tonemapping_options {
 		} reinhard02options;
 		struct {
 			float brightness;
-			float saturation;
+			float chromaticAdaptation;
+			float lightAdaptation;
 		} reinhard04options;
 	} operator_options;
 };

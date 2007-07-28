@@ -42,14 +42,15 @@
 using namespace std;
 
 
-pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_beta,float _opt_saturation) {
+pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_beta,float _opt_saturation, float _opt_noise, bool newfattal) {
 	assert(inpfsframe!=NULL);
 	
 	pfs::DOMIO pfsio;
-	//--- default tone mapping parameters;
+	//--- get tone mapping parameters;
 	float opt_alfa = _opt_alfa;
 	float opt_beta = _opt_beta;
 	float opt_saturation=_opt_saturation;
+	float opt_noise=_opt_noise;
 	
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);
@@ -66,7 +67,7 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_b
 	int h = Y->getRows();
 	
 	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
-	tmo_fattal02(Y, L, opt_alfa, opt_beta);
+	tmo_fattal02(Y, L, opt_alfa, opt_beta, opt_noise, newfattal);
 	
 	for( int x=0 ; x<w ; x++ )
 		for( int y=0 ; y<h ; y++ )

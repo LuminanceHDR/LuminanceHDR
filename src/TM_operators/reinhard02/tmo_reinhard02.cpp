@@ -123,7 +123,6 @@ public:
 
 static TemporalSmoothVariable<double> avg_luminance, max_luminance;
 
-// extern "C" {
 
 /*
  * Kaiser-Bessel stuff
@@ -197,8 +196,7 @@ void tonemap_image ()
 {
   double Lmax2;
   int    x, y;
-  int    scale;
-  int prefscale;
+  int    scale, prefscale;
 
   if (white < 1e20)
     Lmax2 = white * white;
@@ -211,28 +209,23 @@ void tonemap_image ()
     Lmax2 *= Lmax2;
   }
 
-  for (y = 0; y < cvts.ymax; y++) {
+  for (y = 0; y < cvts.ymax; y++)
     for (x = 0; x < cvts.xmax; x++)
     {
       if (use_scales)
       {
 	prefscale = range - 1;
-	for (scale = 0; scale < range - 1; scale++) {
-	  if (scale>=PyramidHeight) {
-	  	prefscale = scale;
-	  	break;
-	  }
-	  if (fabs(ACTIVITY(x,y,scale)) > threshold) {
+	for (scale = 0; scale < range - 1; scale++)
+	  if ( scale >= PyramidHeight || fabs (ACTIVITY(x,y,scale)) > threshold) 
+	  {
 	    prefscale = scale;
 	    break;
 	  }
-	}
 	image[y][x][0] /= 1. + V1(x,y,prefscale);
       }
       else
 	image[y][x][0] = image[y][x][0] * (1. + (image[y][x][0] / Lmax2)) / (1. + image[y][x][0]);
       // image[y][x][0] /= (1. + image[y][x][0]);
-    }
     }
 }
 

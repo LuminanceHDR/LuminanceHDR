@@ -245,13 +245,6 @@ void MainGui::updateActions( QWidget * w ) {
 
 void MainGui::tonemap_requested() {
 	assert(currenthdr!=NULL);
-	if (currenthdr->NeedsSaving) {
-		QMessageBox::warning(this,tr("Save the HDR..."),tr("Save the Hdr before tone mapping."),
-		QMessageBox::Ok,QMessageBox::NoButton);
-		fileSaveAs();
-		if (currenthdr->NeedsSaving)
-			return;
-	}
 	QFileInfo test(qtpfsgui_options->tempfilespath);
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		this->setDisabled(true);

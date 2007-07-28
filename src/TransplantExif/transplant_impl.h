@@ -26,6 +26,8 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QSortFilterProxyModel>
+#include <QStringListModel>
 #include "../generated_uic/ui_transplantexifdialog.h"
 
 class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog {
@@ -41,6 +43,12 @@ private:
 	QSettings settings;
 	QString RecentDirEXIFfrom;
 	QString RecentDirEXIFto;
+	//fuction that adds a log message to the model
+	void add_log_message(const QString &);
+	//the class that performs regexp filtering
+	QSortFilterProxyModel *log_filter;
+	//the model that holds the data
+	QStringListModel *full_Log_Model;
 private slots:
 	void transplant_requested();
 	void help_requested();
@@ -52,5 +60,7 @@ private slots:
 	void remove_right();
 	void append_left();
 	void append_right();
+	void filterChanged(const QString&);
+	void filterComboBoxActivated(int);
 };
 #endif

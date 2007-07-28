@@ -32,6 +32,7 @@ public:
 	GrayBar(QWidget *parent, bool two_handles=false);
 	QSize sizeHint () const;
 	QSize minimumSizeHint () const;
+	bool dont_emit;
 protected:
 	void paintEvent( QPaintEvent * );
 	void resizeEvent ( QResizeEvent * event );
@@ -39,10 +40,10 @@ protected:
 	void mousePressEvent ( QMouseEvent * event );
 	void mouseReleaseEvent ( QMouseEvent * event );
 private:
+	//graphical coordinate, 0-width(), NOT 0-255
 	int blackpos,gammapos,whitepos;
 	float blackgrayratio;
 	bool twohandles;
-// 	bool firstresize;
 	enum draggingT {DRAGNONE,DRAGBLACK,DRAGGRAY,DRAGWHITE} dragging;
 	draggingT findHandle(int x, int y);
 public slots:

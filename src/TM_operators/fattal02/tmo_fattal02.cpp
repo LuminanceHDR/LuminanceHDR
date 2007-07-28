@@ -196,7 +196,7 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
 
 void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[], 
   float avgGrad[], int nlevels,
-  float alfa, float beta)
+  float alfa, float beta, float noise, bool newfattal)
 {
   int width = gradients[nlevels-1]->getCols();
   int height = gradients[nlevels-1]->getRows();
@@ -204,8 +204,10 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   pfs::Array2D** fi = new pfs::Array2D*[nlevels];
 
   fi[nlevels-1] = new pfs::Array2DImpl(width,height);
-  for (int j=0; j<width*height; j++)
-  	(*fi[nlevels-1])(j)=1.0f;
+  if (newfattal)
+  for( k=0 ; k<width*height ; k++ )
+    (*fi[nlevels-1])(k) = 1.0f;
+
   for( k=nlevels-1 ; k>=0 ; k-- )
   {
     width = gradients[k]->getCols();
@@ -219,8 +221,12 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 
         float value=1.0;
         if( grad>1e-4 )
-          value = a/grad * pow(grad/a, beta);
-        (*fi[k])(x,y) *= value;
+          value = a/(grad+noise) * pow((grad+noise)/a, beta);
+
+        if (newfattal)
+        	(*fi[k])(x,y) *= value;
+        else
+        	(*fi[k])(x,y) = value;
       }
 		
     // create next level
@@ -233,7 +239,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
     else
       fi[0] = FI;               // highest level -> result
 
-    if( k>0 )
+    if( k>0 && newfattal)
     {
       upSample(fi[k], fi[k-1]);		// upsample to next level
       gaussianBlur(fi[k-1],fi[k-1]);
@@ -249,25 +255,10 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 
 void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum);
-// void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
-//   float maxPrct, float& maxLum)
-// {
-//   int size = I->getRows() * I->getCols();
-//   std::vector<float> vI;
-// 
-//   for( int i=0 ; i<size ; i++ )
-//     if( (*I)(i)!=0.0f )
-//       vI.push_back((*I)(i));
-//       
-//   std::sort(vI.begin(), vI.end());
-// 
-//   minLum = vI.at( int(minPrct*vI.size()) );
-//   maxLum = vI.at( int(maxPrct*vI.size()) );
-// }
 
 //--------------------------------------------------------------------
 
-void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta)
+void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float noise, bool newfattal)
 {
   const int MSIZE = 32;         // minimum size of gaussian pyramid
 	
@@ -312,7 +303,7 @@ void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta)
 
   // calculate fi matrix
   pfs::Array2D* FI = new pfs::Array2DImpl(width, height);
-  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta);
+  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise, newfattal);
 
 //  dumpPFS( "FI.pfs", FI, "Y" );
 

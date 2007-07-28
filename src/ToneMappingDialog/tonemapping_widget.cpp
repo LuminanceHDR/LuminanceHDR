@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QStatusBar>
 #include <QProgressBar>
+#include <QKeyEvent>
 #include "tonemapping_widget.h"
 #include "../options.h"
 #include "../config.h"
@@ -35,7 +36,7 @@
 extern int xsize;
 extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), sb(_sb) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
 
 	// ashikhmin02
@@ -52,10 +53,11 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	// fattal02
 	alphaGang = 	new Gang(alphaSlider, alphadsb,		1e-3,	2,	1e-1, true);
 	betaGang = 	new Gang(betaSlider, betadsb,		0.6,	1.0,	0.8);
-	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, 0,	3,	1);
+	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, 0,3,	1);
+	noiseGang =	new Gang(noiseSlider, noisedsb, 	0, 	1, 	0);
 	
 	// pattanaik00
-	multiplierGang = new Gang(multiplierSlider, multiplierdsb,	1e-3,	50, 1,    true);
+	multiplierGang = new Gang(multiplierSlider, multiplierdsb, 1e-3,50, 1, true);
 	coneGang = 	new Gang(coneSlider, conedsb,		0,	1,   0.5);
 	rodGang = 	new Gang(rodSlider, roddsb,		0,	1,   0.5);
 	
@@ -68,7 +70,8 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	
 	// reinhard04
 	brightnessGang =new Gang(brightnessSlider, brightnessdsb,	-35,	10, -10);
-	saturationGang =new Gang(saturationSlider, saturationdsb,	 0,	1.2, 0.99);
+	chromaticGang  =new Gang(chromaticAdaptSlider, chromaticAdaptdsb, -1.7,	1.3, 1);
+	lightGang      =new Gang(lightAdaptSlider, lightAdaptdsb,         -1,	1, 0);
 	
 	// pregamma
 	pregammagang  = new Gang(pregammaSlider,  pregammadsb,  0, 3, 1);
@@ -82,10 +85,11 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	connect(reinhard04Default,  SIGNAL(clicked()),this,SLOT(reinhard04Reset()));
 	connect(pregammadefault,    SIGNAL(clicked()),this,SLOT(preGammaReset()));
 
-	connect(applyButton, SIGNAL(clicked()), this, SLOT(apply_clicked()));
-	connect(loadsettingsbutton,SIGNAL(clicked()),this, SLOT(loadsettings()));
-	connect(savesettingsbutton,SIGNAL(clicked()),this, SLOT(savesettings()));
-	connect(button_fromTxt2Gui,SIGNAL(clicked()),this, SLOT(fromTxt2Gui()));
+	connect(applyButton,       SIGNAL(clicked()), this, SLOT(apply_clicked()));
+	connect(loadsettingsbutton,SIGNAL(clicked()), this, SLOT(loadsettings()));
+	connect(savesettingsbutton,SIGNAL(clicked()), this, SLOT(savesettings()));
+	connect(button_fromTxt2Gui,SIGNAL(clicked()), this, SLOT(fromTxt2Gui()));
+	connect(addCustomSizeButton, SIGNAL(clicked()), this, SLOT(addCustomSize()));
 
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 
@@ -103,10 +107,9 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 		sizes.push_back(3*(x/2));
 	}
 	sizes.push_back(width);
-	sizeComboBox->clear();
-	float r = ( (float)height )/( (float) width);
+	HeightWidthRatio = ( (float)height )/( (float) width);
 	for(int i = 0; i < sizes.size(); i++) {
-		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(r*sizes[i]) ));
+		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
 	}
 
 	//swap original frame to hd
@@ -116,7 +119,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 }
 
 TMWidget::~TMWidget() {
-delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete saturationGang; delete pregammagang;
+delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
 	//fetch original frame from hd
 	pfs::DOMIO pfsio;
 	OriginalPfsFrame=pfsio.readFrame(cachepath+"/original.pfs");
@@ -141,6 +144,8 @@ void TMWidget::fattalReset(){
 alphaGang->setDefault();
 betaGang->setDefault();
 saturation2Gang->setDefault();
+noiseGang->setDefault();
+oldFattalCheckBox->setChecked(false);
 }
 void TMWidget::pattanaikReset(){
 multiplierGang->setDefault();
@@ -156,7 +161,8 @@ upperGang->setDefault();
 }
 void TMWidget::reinhard04Reset(){
 brightnessGang->setDefault();
-saturationGang->setDefault();
+chromaticGang->setDefault();
+lightGang->setDefault();
 }
 void TMWidget::preGammaReset(){
 pregammagang->setDefault();
@@ -194,6 +200,8 @@ void TMWidget::FillToneMappingOptions() {
 		ToneMappingOptions.operator_options.fattaloptions.alpha=alphaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.beta=betaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
+		ToneMappingOptions.operator_options.fattaloptions.noiseredux=noiseGang->v();
+		ToneMappingOptions.operator_options.fattaloptions.newfattal=!oldFattalCheckBox->isChecked();
 	break;
 	case 1:
 		ToneMappingOptions.tmoperator=ashikhmin;
@@ -231,7 +239,8 @@ void TMWidget::FillToneMappingOptions() {
 	case 6:
 		ToneMappingOptions.tmoperator=reinhard04;
 		ToneMappingOptions.operator_options.reinhard04options.brightness=brightnessGang->v();
-		ToneMappingOptions.operator_options.reinhard04options.saturation=saturationGang->v();
+		ToneMappingOptions.operator_options.reinhard04options.chromaticAdaptation=chromaticGang->v();
+		ToneMappingOptions.operator_options.reinhard04options.lightAdaptation=lightGang->v();
 	break;
 	
 	}
@@ -323,7 +332,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 		break;
 	case 2:
 		out << "TMO=" << "Durand02" << endl;
-		out << "SPACIAL=" << spatialGang->v() << endl;
+		out << "SPATIAL=" << spatialGang->v() << endl;
 		out << "RANGE=" << rangeGang->v() << endl;
 		out << "BASE=" << baseGang->v() << endl;
 		break;
@@ -332,6 +341,8 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "ALPHA=" << alphaGang->v() << endl;
 		out << "BETA=" << betaGang->v() << endl;
 		out << "COLOR=" << saturation2Gang->v() << endl;
+		out << "NOISE=" << noiseGang->v() << endl;
+		out << "OLDFATTAL=" << (oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
 		break;
 	case 4:
 		out << "TMO=" << "Pattanaik00" << endl;
@@ -353,7 +364,8 @@ void TMWidget::fromGui2Txt(QString destination) {
 	case 6:
 		out << "TMO=" << "Reinhard04" << endl;
 		out << "BRIGHTNESS=" << brightnessGang->v() << endl;
-		out << "SATURATION=" << saturationGang->v() << endl;
+		out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
+		out << "LIGHTADAPTATION=" << lightGang->v() << endl;
 		break;
 	}
 	out << "PREGAMMA=" << pregammagang->v() << endl;
@@ -409,7 +421,7 @@ void TMWidget::fromTxt2Gui() {
 			contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
 		} else if (field=="BIAS") {
 			biasSlider->setValue(biasGang->v2p(value.toFloat()));
-		} else if (field=="SPACIAL") {
+		} else if (field=="SPATIAL") {
 			spatialSlider->setValue(spatialGang->v2p(value.toFloat()));
 		} else if (field=="RANGE") {
 			rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
@@ -421,6 +433,10 @@ void TMWidget::fromTxt2Gui() {
 			betaSlider->setValue(betaGang->v2p(value.toFloat()));
 		} else if (field=="COLOR") {
 			saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
+		} else if (field=="NOISE") {
+			noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
+		} else if (field=="OLDFATTAL") {
+			 oldFattalCheckBox->setChecked(value=="YES");
 		} else if (field=="MULTIPLIER") {
 			multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
 		} else if (field=="LOCAL") {
@@ -445,8 +461,10 @@ void TMWidget::fromTxt2Gui() {
 			upperSlider->setValue(upperGang->v2p(value.toFloat()));
 		} else if (field=="BRIGHTNESS") {
 			brightnessSlider->setValue(brightnessGang->v2p(value.toFloat()));
-		} else if (field=="SATURATION") {
-			saturationSlider->setValue(saturationGang->v2p(value.toFloat()));
+		} else if (field=="CHROMATICADAPTATION") {
+			chromaticAdaptSlider->setValue(chromaticGang->v2p(value.toFloat()));
+		} else if (field=="LIGHTADAPTATION") {
+			lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
 		} else if (field=="PREGAMMA") {
 			pregammaSlider->setValue(pregammagang->v2p(value.toFloat()));
 		}
@@ -457,4 +475,36 @@ void TMWidget::fromTxt2Gui() {
 void TMWidget::removeProgressBar(QProgressBar* pb) {
 	sb->removeWidget(pb);
 	delete pb;
+}
+
+void TMWidget::keyPressEvent(QKeyEvent* event) {
+	if (!adding_custom_size)
+		return;
+	if (event->key() == Qt::Key_Enter || event->key()==Qt::Key_Return) {
+		int value=(sizeComboBox->lineEdit()->text()).toInt();
+		if (value>0) {
+			sizes.push_front(value);
+		}
+		sizeComboBox->setEditable(false);
+		pregammaGroup->setDisabled(false);
+		operators_tabWidget->setDisabled(false);
+		applyButton->setDisabled(false);
+		groupSaveLoadTMOsetting->setDisabled(false);
+		addCustomSizeButton->setDisabled(false);
+		adding_custom_size=false;
+		for(int i = 0; i < sizes.size(); i++) {
+			sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
+		}
+	}
+}
+
+void TMWidget::addCustomSize(){
+	sizeComboBox->clear();
+	sizeComboBox->setEditable(true);
+	pregammaGroup->setDisabled(true);
+	operators_tabWidget->setDisabled(true);
+	applyButton->setDisabled(true);
+	groupSaveLoadTMOsetting->setDisabled(true);
+	addCustomSizeButton->setDisabled(true);
+	adding_custom_size=true;
 }

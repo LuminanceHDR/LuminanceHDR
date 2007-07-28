@@ -48,31 +48,44 @@ using namespace std;
  * @param Y luminance channel
  */
 void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
-  pfs::Array2D* Y, float f, float w )
+  pfs::Array2D* Y, float br, float ca, float la )
 {
   float max_lum = (*Y)(0);
   float min_lum = (*Y)(0);
   float world_lum = 0.0;
+  float Cav[] = { 0.0f, 0.0f, 0.0f};
+  float Lav = 0.0f;
   int im_width = Y->getCols();
   int im_height = Y->getRows();
   int im_size = im_width * im_height;
 
   for( int i=1 ; i<im_size ; i++ )
   {
-    double lum = (*Y)(i);
+    float lum = (*Y)(i);
     max_lum = (max_lum > lum) ? max_lum : lum;
     min_lum = (min_lum < lum) ? min_lum : lum;
     world_lum += log(2.3e-5+lum);
+    Cav[0] += (*R)(i);
+    Cav[1] += (*G)(i);
+    Cav[2] += (*B)(i);
+    Lav += lum;
   }
-  world_lum = exp(world_lum/im_size);
+  world_lum /= im_size;
+  Cav[0] /= im_size;
+  Cav[1] /= im_size;
+  Cav[2] /= im_size;
+  Lav /= im_size;
 
   //--- tone map image
   max_lum = log( max_lum );
   min_lum = log( min_lum );
 
-  float k = (max_lum - log(world_lum)) / (max_lum - min_lum);
+  // image key
+  float k = (max_lum - world_lum) / (max_lum - min_lum);
+  // image contrast based on key value
   float m = 0.3f+0.7f*pow(k,1.4f);
-  f = exp(-f);
+  // image brightness
+  float f = exp(-br);
 
   float max_col = 0.0f;
   float min_col = 1.0f;
@@ -96,10 +109,16 @@ void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
 
           if( col!=0.0f)
           {
-            float Ia = w*l + (1.0f-w)*col;
+            // local light adaptation
+            float Il = ca * col + (1-ca)*l;
+            // global light adaptation
+            float Ig = ca*Cav[c] + (1-ca)*Lav;
+            // interpolated light adaptation
+            float Ia = la*Il + (1-la)*Ig;
+            // photoreceptor equation
             col /= col + pow(f*Ia, m);
           }
-
+        
           max_col = (col>max_col) ? col : max_col;
           min_col = (col<min_col) ? col : min_col;
 
@@ -123,11 +142,12 @@ void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
     }
 }
 
-pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float sat ) {
+pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float chromadapt, float lightadapt ) {
 	assert(inputpfsframe!=NULL);
 	//--- default tone mapping parameters;
 	float brightness = br;
-	float saturation = sat;
+	float chromatic_adaptation = chromadapt;
+	float light_adaptation = lightadapt;
 
 	pfs::DOMIO pfsio;
 	pfs::Channel *X, *Y, *Z;
@@ -141,7 +161,7 @@ pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float sat ) 
 	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
 
 	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Xo, Yo, Zo ); //in:xyz ---> out:rgb (skip copyArray)
-	tmo_reinhard04( Xo, Yo, Zo, Y, brightness, saturation );
+	tmo_reinhard04( Xo, Yo, Zo, Y, brightness, chromatic_adaptation, light_adaptation );
 	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo ); //out:rgb ---> out:xyz
 
 	return outframe;

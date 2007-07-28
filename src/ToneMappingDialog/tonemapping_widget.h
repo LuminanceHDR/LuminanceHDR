@@ -42,7 +42,7 @@ signals:
 	void newResult(const QImage&,tonemapping_options*);
 private:
 	QVector<int> sizes;
-	Gang  *contrastGang,*biasGang,*spatialGang,*rangeGang,*baseGang,*alphaGang,*betaGang,*saturation2Gang,*multiplierGang,*coneGang,*rodGang,*keyGang,*phiGang,*range2Gang,*lowerGang,*upperGang,*brightnessGang,*saturationGang,*pregammagang;
+	Gang  *contrastGang,*biasGang,*spatialGang,*rangeGang,*baseGang,*alphaGang,*betaGang,*saturation2Gang,*noiseGang,*multiplierGang,*coneGang,*rodGang,*keyGang,*phiGang,*range2Gang,*lowerGang,*upperGang,*brightnessGang,*chromaticGang,*lightGang,*pregammagang;
 	tonemapping_options ToneMappingOptions;
 	pfs::Frame* &OriginalPfsFrame;
 	void FillToneMappingOptions();
@@ -50,6 +50,10 @@ private:
 	QSettings settings;
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
 	QStatusBar *sb;
+	bool adding_custom_size;
+	float HeightWidthRatio;
+protected:
+	void keyPressEvent(QKeyEvent* event);
 private slots:
 	void preGammaReset();
 	void ashikhminReset();
@@ -63,7 +67,10 @@ private slots:
 	void removeProgressBar(QProgressBar*);
 	void savesettings();
 	void loadsettings();
-	void fromTxt2Gui(); //i.e. APPLY tmo settings from text file
+	//APPLY tmo settings from text file
+	void fromTxt2Gui();
+	//user wants a custom size.
+	void addCustomSize();
 };
 
 #endif

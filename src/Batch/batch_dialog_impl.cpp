@@ -142,7 +142,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 		value=line.section('=',1,1); //get the value
 		if (field=="TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
-				add_log_message(tr("ERROR: cannot parse Tone Mapping Setting file: ")+fname);
+				add_log_message(tr("ERROR: File too old, cannot parse Tone Mapping Setting file: ")+fname);
 				delete toreturn;
 				return NULL;
 			}
@@ -170,7 +170,7 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 			toreturn->operator_options.ashikhminoptions.lct=value.toFloat();
 		} else if (field=="BIAS") {
 			toreturn->operator_options.dragooptions.bias=value.toFloat();
-		} else if (field=="SPACIAL") {
+		} else if (field=="SPATIAL") {
 			toreturn->operator_options.durandoptions.spatial=value.toFloat();
 		} else if (field=="RANGE") {
 			toreturn->operator_options.durandoptions.range=value.toFloat();
@@ -182,12 +182,16 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 			toreturn->operator_options.fattaloptions.beta=value.toFloat();
 		} else if (field=="COLOR") {
 			toreturn->operator_options.fattaloptions.color=value.toFloat();
+		} else if (field=="NOISE") {
+			toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
+		} else if (field=="NEWFATTAL") {
+			toreturn->operator_options.fattaloptions.newfattal= (value == "YES");
 		} else if (field=="MULTIPLIER") {
 			toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
 		} else if (field=="LOCAL") {
-			toreturn->operator_options.pattanaikoptions.local= (value=="YES") ? true : false;
+			toreturn->operator_options.pattanaikoptions.local= (value=="YES");
 		} else if (field=="AUTOLUMINANCE") {
-			toreturn->operator_options.pattanaikoptions.autolum= (value=="YES") ? true : false;
+			toreturn->operator_options.pattanaikoptions.autolum= (value=="YES");
 		} else if (field=="CONE") {
 			toreturn->operator_options.pattanaikoptions.cone=value.toFloat();
 		} else if (field=="ROD") {
@@ -206,8 +210,10 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 			toreturn->operator_options.reinhard02options.upper=value.toInt();
 		} else if (field=="BRIGHTNESS") {
 			toreturn->operator_options.reinhard04options.brightness=value.toFloat();
-		} else if (field=="SATURATION") {
-			toreturn->operator_options.reinhard04options.saturation=value.toFloat();
+		} else if (field=="CHROMATICADAPTATION") {
+			toreturn->operator_options.reinhard04options.chromaticAdaptation=value.toFloat();
+		} else if (field=="LIGHTADAPTATION") {
+			toreturn->operator_options.reinhard04options.lightAdaptation=value.toFloat();
 		} else if (field=="PREGAMMA") {
 			toreturn->pregamma=value.toFloat();
 		} else {
@@ -432,13 +438,17 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 	QString postfix=QString("_pregamma_%1_").arg(opts->pregamma);
 	switch (opts->tmoperator) {
 	case fattal: {
+		if (!opts->operator_options.fattaloptions.newfattal)
+			postfix+="v1_";
 		postfix+="fattal_";
 		float alpha=opts->operator_options.fattaloptions.alpha;
 		float beta=opts->operator_options.fattaloptions.beta;
 		float saturation2=opts->operator_options.fattaloptions.color;
+		float noiseredux=opts->operator_options.fattaloptions.noiseredux;
 		postfix+=QString("alpha_%1_").arg(alpha);
 		postfix+=QString("beta_%1_").arg(beta);
-		postfix+=QString("saturation_%1").arg(saturation2);
+		postfix+=QString("saturation_%1_").arg(saturation2);
+		postfix+=QString("noiseredux_%1").arg(noiseredux);
 		}
 		break;
 	case ashikhmin: {
@@ -465,7 +475,7 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 		float range=opts->operator_options.durandoptions.range;
 		float base=opts->operator_options.durandoptions.base;
 		postfix+="durand_";
-		postfix+=QString("spacial_%1_").arg(spatial);
+		postfix+=QString("spatial_%1_").arg(spatial);
 		postfix+=QString("range_%1_").arg(range);
 		postfix+=QString("base_%1").arg(base);
 		}
@@ -505,10 +515,12 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 		break;
 	case reinhard04: {
 		float brightness=opts->operator_options.reinhard04options.brightness;
-		float saturation=opts->operator_options.reinhard04options.saturation;
+		float chromaticAdaptation= opts->operator_options.reinhard04options.chromaticAdaptation;
+		float lightAdaptation=opts->operator_options.reinhard04options.lightAdaptation;
 		postfix+="reinhard04_";
 		postfix+=QString("brightness_%1_").arg(brightness);
-		postfix+=QString("saturation_%1").arg(saturation);
+		postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
+		postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
 		}
 		break;
 	}

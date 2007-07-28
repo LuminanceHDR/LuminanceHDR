@@ -205,12 +205,12 @@ QImage* TiffReader::readIntoQImage() {
 				*(data + 0 + (y*width+x)*4) = bp[x*nSamples+2] ;
 				*(data + 1 + (y*width+x)*4) = bp[x*nSamples+1] ;
 				*(data + 2 + (y*width+x)*4) = bp[x*nSamples] ;
-				*(data + 3 + (y*width+x)*4) = 0xff;
+				*(data + 3 + (y*width+x)*4) = bp[x*nSamples+3];
 			} else {
 				*(data + 3 + (y*width+x)*4) = bp[x*nSamples+2];
 				*(data + 2 + (y*width+x)*4) = bp[x*nSamples+1];
 				*(data + 1 + (y*width+x)*4) = bp[x*nSamples];
-				*(data + 0 + (y*width+x)*4) = 0xff;
+				*(data + 0 + (y*width+x)*4) = bp[x*nSamples+3];
 			}
 		}
 	}
@@ -220,11 +220,11 @@ QImage* TiffReader::readIntoQImage() {
 
 //special treament for qt 4.2.1... removing "const" doesn't seem to work.
 #if QT_VERSION == 0x040201
-	QImage *toreturn=new QImage(const_cast<const uchar *>(data), width, height, QImage::Format_RGB32);
+	QImage *toreturn=new QImage(const_cast<const uchar *>(data), width, height, QImage::Format_ARGB32);
 #elif QT_VERSION <= 0x040200
-	QImage *toreturn=new QImage(data,width,height,QImage::Format_RGB32);
+	QImage *toreturn=new QImage(data,width,height,QImage::Format_ARGB32);
 #else
-	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
+	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
 #endif
 	return toreturn;
 }

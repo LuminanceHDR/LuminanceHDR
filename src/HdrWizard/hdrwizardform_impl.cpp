@@ -47,7 +47,7 @@ const config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), input_is_ldr(true), ldr_tiff(false), opts(options) {
+HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), ldr_tiff(false), opts(options) {
 	setupUi(this);
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
@@ -125,12 +125,10 @@ void HdrWizardForm::loadfiles() {
 		//now go and fill the list of image data (real payload)
 		if (extension.startsWith("JP")) { //check for extension: if JPEG:
 			ImagePtrList.append( new QImage(qfi.filePath()) ); // fill with image data
-			input_is_ldr=true;
 		} else if(extension.startsWith("TIF")) { //if tiff
 			TiffReader reader(qfi.filePath().toUtf8().constData());
 			if (reader.is8bitTiff()) { //if 8bit (tiff) treat as ldr
 				ImagePtrList.append( reader.readIntoQImage() );
-				input_is_ldr=true;
 				ldr_tiff=true;
 			} else if (reader.is16bitTiff()) { //if 16bit (tiff) treat as hdr
 				pfs::Frame *framepointer=reader.readIntoPfsFrame();
@@ -139,7 +137,6 @@ void HdrWizardForm::loadfiles() {
 				listhdrR.push_back(R);
 				listhdrG.push_back(G);
 				listhdrB.push_back(B);
-				input_is_ldr=false;
 			} else {
 				listShowFiles->clear();
 				clearlists();
@@ -154,7 +151,6 @@ void HdrWizardForm::loadfiles() {
 			listhdrR.push_back(R);
 			listhdrG.push_back(G);
 			listhdrB.push_back(B);
-			input_is_ldr=false;
 		}
 		++it;
 		index_expotimes++;
@@ -270,10 +266,10 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 		backbutton->setEnabled(FALSE);
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//CREATE THE HDR
-		if (input_is_ldr)
-			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&ImagePtrList);
+		if (ImagePtrList.size() != 0)
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),true,&ImagePtrList);
 		else
-			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),input_is_ldr,&listhdrR,&listhdrG,&listhdrB);
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),false,&listhdrR,&listhdrG,&listhdrB);
 		QApplication::restoreOverrideCursor();
 		Next_Finishbutton->setEnabled(TRUE);
 		Next_Finishbutton->setFocus();
@@ -289,7 +285,10 @@ void HdrWizardForm::update_current_antighost_curve(int fromgui) {
 void HdrWizardForm::nextpressed() {
 	switch (pagestack->currentIndex()) {
 	case 0:
-		transform_indices_into_values();
+		if (need_to_transform_indices)
+			transform_indices_into_values();
+// 		adjustSize();
+// 		showNormal();
 		break;
 	case 1:
 		if(!checkBoxCallCustom->isChecked()) {
@@ -398,30 +397,6 @@ QString HdrWizardForm::getQStringFromConfig( int type ) {
 return "";
 }
 
-void HdrWizardForm::clearlists() {
-	if (ImagePtrList.size() != 0) {
-// 		qDebug("cleaning LDR exposures list");
-		if (ldr_tiff) {
-			foreach(QImage *p,ImagePtrList) {
-// 				qDebug("while cleaning ldr tiffs, %ld",p->bits());
-				delete [] p->bits();
-// 				qDebug("cleaned");
-			}
-		}
-		qDeleteAll(ImagePtrList);
-// 		qDebug("cleaned ImagePtrList");
-		ImagePtrList.clear();
-	}
-	if (listhdrR.size()!=0 && listhdrG.size()!=0 && listhdrB.size()!=0) {
-// 		qDebug("cleaning HDR exposures list");
-		Array2DList::iterator itR=listhdrR.begin(), itG=listhdrG.begin(), itB=listhdrB.begin();
-		for (; itR!=listhdrR.end(); itR++,itG++,itB++ ){
-			delete *itR; delete *itG; delete *itB;
-		}
-		listhdrR.clear(); listhdrG.clear(); listhdrB.clear();
-	}
-}
-
 void HdrWizardForm::fillEVcombobox() {
 	for (int i=-6*4;i<=6*4;i++){
 		float ev_value=-100;
@@ -454,9 +429,7 @@ void HdrWizardForm::fillEVcombobox() {
 }
 
 void HdrWizardForm::transform_indices_into_values() {
-	if (!need_to_transform_indices)
-		return;
-	qDebug("HdrWizardForm:: actually transforming indices into values");
+	qDebug("HdrWizardForm:: transforming indices into values");
 //for precise values I cannot parse back what I put in the combobox, I have to recompute the values. In other words 4/3 != 1.3
 	for (int i=0; i<numberinputfiles; i++) {
 		int ni=(int)expotimes[i]-(6*4);
@@ -515,3 +488,26 @@ HdrWizardForm::~HdrWizardForm() {
 	clearlists();
 }
 
+void HdrWizardForm::clearlists() {
+	if (ImagePtrList.size() != 0) {
+// 		qDebug("cleaning LDR exposures list");
+		if (ldr_tiff) {
+			foreach(QImage *p,ImagePtrList) {
+// 				qDebug("while cleaning ldr tiffs, %ld",p->bits());
+				delete [] p->bits();
+// 				qDebug("cleaned");
+			}
+		}
+		qDeleteAll(ImagePtrList);
+// 		qDebug("cleaned ImagePtrList");
+		ImagePtrList.clear();
+	}
+	if (listhdrR.size()!=0 && listhdrG.size()!=0 && listhdrB.size()!=0) {
+// 		qDebug("cleaning HDR exposures list");
+		Array2DList::iterator itR=listhdrR.begin(), itG=listhdrG.begin(), itB=listhdrB.begin();
+		for (; itR!=listhdrR.end(); itR++,itG++,itB++ ){
+			delete *itR; delete *itG; delete *itB;
+		}
+		listhdrR.clear(); listhdrG.clear(); listhdrB.clear();
+	}
+}

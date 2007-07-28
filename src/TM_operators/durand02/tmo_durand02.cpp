@@ -152,12 +152,8 @@ void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum,
 			vI.push_back((*I)(i));
 	
 	std::sort(vI.begin(), vI.end());
-// 	if (vI.size()!=0) {
-		minLum = vI.at( int(minPrct*vI.size()) );
-		maxLum = vI.at( int(maxPrct*vI.size()) );
-// 	} else {
-// 		minLum=0; maxLum=0;
-// 	}
+	minLum = vI.at( int(minPrct*vI.size()) );
+	maxLum = vI.at( int(maxPrct*vI.size()) );
 }
 
 

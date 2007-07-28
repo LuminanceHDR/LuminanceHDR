@@ -24,6 +24,7 @@
 #include <QVBoxLayout>
 #include "ldrviewer.h"
 #include "gamma_and_levels.h"
+#include "../config.h"
 
 LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : QWidget(parent),origimage(o) {
 // 	origimage=QImage(o);
@@ -52,7 +53,7 @@ LdrViewer::~LdrViewer() {
 void LdrViewer::parseOptions(tonemapping_options *opts) {
 	postfix=QString("pregamma_%1_").arg(opts->pregamma);
 	caption=QString("PreGamma=%1 ~ ").arg(opts->pregamma);
-	exif_comment="Qtpfsgui tonemapping parameters:\n";
+	exif_comment="Qtpfsgui "QTPFSGUIVERSION" tonemapping parameters:\n";
 	exif_comment+="Operator: ";
 	
 	switch (opts->tmoperator) {
@@ -60,6 +61,12 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		float alpha=opts->operator_options.fattaloptions.alpha;
 		float beta=opts->operator_options.fattaloptions.beta;
 		float saturation2=opts->operator_options.fattaloptions.color;
+		float noiseredux=opts->operator_options.fattaloptions.noiseredux;
+		if (!opts->operator_options.fattaloptions.newfattal) {
+			caption+="V1_";
+			postfix+="v1_";
+			exif_comment+="V1_";
+		}
 		caption+="Fattal: ~ ";
 		postfix+="fattal_";
 		exif_comment+="Fattal\nParameters:\n";
@@ -69,9 +76,12 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		postfix+=QString("beta_%1_").arg(beta);
 		caption+=QString("Beta=%1 ~ ").arg(beta);
 		exif_comment+=QString("Beta: %1\n").arg(beta);
-		postfix+=QString("saturation_%1").arg(saturation2);
-		caption+=QString("Saturation=%1").arg(saturation2);
+		postfix+=QString("saturation_%1_").arg(saturation2);
+		caption+=QString("Saturation=%1 ~ ").arg(saturation2);
 		exif_comment+=QString("Color Saturation: %1 \n").arg(saturation2);
+		postfix+=QString("noiseredux_%1").arg(noiseredux);
+		caption+=QString("NoiseRedux=%1").arg(noiseredux);
+		exif_comment+=QString("Noise Reduction: %1 \n").arg(noiseredux);
 		}
 		break;
 	case ashikhmin: {
@@ -114,9 +124,9 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		caption+="Durand: ~ ";
 		postfix+="durand_";
 		exif_comment+="Durand\nParameters:\n";
-		postfix+=QString("spacial_%1_").arg(spatial);
-		caption+=QString("Spacial=%1 ~ ").arg(spatial);
-		exif_comment+=QString("Spacial Kernel Sigma: %1\n").arg(spatial);
+		postfix+=QString("spatial_%1_").arg(spatial);
+		caption+=QString("Spatial=%1 ~ ").arg(spatial);
+		exif_comment+=QString("Spatial Kernel Sigma: %1\n").arg(spatial);
 		postfix+=QString("range_%1_").arg(range);
 		caption+=QString("Range=%1 ~ ").arg(range);
 		exif_comment+=QString("Range Kernel Sigma: %1\n").arg(range);
@@ -185,17 +195,21 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 		}
 		break;
 	case reinhard04: {
-		float brightness=opts->operator_options.reinhard04options.brightness;
-		float saturation=opts->operator_options.reinhard04options.saturation;
+		float brightness = opts->operator_options.reinhard04options.brightness;
+		float chromaticAdaptation = opts->operator_options.reinhard04options.chromaticAdaptation;
+		float lightAdaptation = opts->operator_options.reinhard04options.lightAdaptation;
 		caption+="Reinhard04: ~ ";
 		postfix+="reinhard04_";
 		exif_comment+="Reinhard04\nParameters:\n";
 		postfix+=QString("brightness_%1_").arg(brightness);
 		caption+=QString("Brightness=%1 ~ ").arg(brightness);
 		exif_comment+=QString("Brightness: %1\n").arg(brightness);
-		postfix+=QString("saturation_%1").arg(saturation);
-		caption+=QString("Saturation=%1").arg(saturation);
-		exif_comment+=QString("Saturation: %1\n").arg(saturation);
+		postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
+		caption+=QString("Chromatic Adaptation=%1 ~ ").arg(chromaticAdaptation);
+		exif_comment+=QString("Chromatic Adaptation: %1\n").arg(chromaticAdaptation);
+		postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
+		caption+=QString("Light Adaptation=%1").arg(lightAdaptation);
+		exif_comment+=QString("Light Adaptation: %1\n").arg(lightAdaptation);
 		}
 		break;
 	}
@@ -238,7 +252,7 @@ void LdrViewer::LevelsRequested(bool a) {
 }
 
 void LdrViewer::updatePreview(unsigned char *LUT) {
-// 	qDebug("LdrViewer::updatePreview");
+	qDebug("LDRVIEWER::UPDATEPREVIEW\n");
 	for (int x=0; x<origimage.width(); x++) {
 		for (int y=0; y<origimage.height(); y++) {
 			QRgb rgb=origimage.pixel(x,y);
