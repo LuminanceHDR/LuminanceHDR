@@ -1,5 +1,19 @@
 Changes:
-14-07-2007 v.1.8.10
+31-07-2007 v1.8.11
+* added custom size result
+* added new operator: mantiuk06
+* fattal: added checkbox to enable "old" (pre 1.8.4) behaviour
+* fattal: added noise reduction patch (pfstmo 1.1)
+* reinhard04: renamed to reinhard05 (following pfstmo's rename)
+* reinhard04: synched with pfstmo 1.1 (chromatic & light adaptation)
+* exif copy tool: added log, cleaned the code (more robust).
+* saving hdr before tone mapping is not required anymore
+* gamma and levels: fixed bug: changing the numerical value is the same as dragging the triangles.
+* qtpfsgui version added to exif data.
+* added pfstmo's gcc switches.
+* small bugs & typos.
+
+14-07-2007 v1.8.10
 * OpenEXR file format available in win32 as well
 * Initial implementation of batch functionality
 * Added arch-dependend source files for FreeBSD

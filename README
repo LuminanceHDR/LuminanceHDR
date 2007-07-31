@@ -1,4 +1,4 @@
-This is the README file for Qtpfsgui v1.8.10
+This is the README file for Qtpfsgui v1.8.11
 -------------------------------------------------------------------
 Copyright (C) 2006,2007 Giuseppe Rota, <grota@users.sourceforge.net>
 Webpage:       http://qtpfsgui.sourceforge.net
@@ -19,7 +19,7 @@ Contents
 
 1. What it is
 ---------------------------------------------------------------------
-This is version 1.8.10 of Qtpfsgui, a Qt4 graphical user interface that
+This is version 1.8.11 of Qtpfsgui, a Qt4 graphical user interface that
 provides a workflow for HDR imaging.
 
 Supported HDR formats:
@@ -44,7 +44,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.10.
+Read section 5 (Changes) to read the changes for version 1.8.11.
 Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a distro.
 
 The code is in part based on the existing opensource packages:
@@ -203,19 +203,19 @@ unexpected effects like changing color saturation.
 
 5. Changes
 -------------------------------------------------------------------
-v1.8.10
-* OpenEXR file format available in win32 as well
-* Initial implementation of batch functionality
-* Added arch-dependend source files for FreeBSD
-* Fixed segfault for qt 4.2.1
-* Loading HDRs is a threaded operation now
-* Added build option to enable/disable debug statements (see README).
-* Usability patch when user has to specify the EV manually
-* Added turkish translation
-* Restructured source tree
-* Added run-time check for correct dll placement.
-* Included pfstools patch for XYZ<->sRGB color space transformation
-* Using qt4 endiannes detection
+v1.8.11
+* added custom size result
+* added new operator: mantiuk06
+* fattal: added checkbox to enable "old" (pre 1.8.4) behaviour
+* fattal: added noise reduction patch (pfstmo 1.1)
+* reinhard04: renamed to reinhard05 (following pfstmo's rename)
+* reinhard04: synched with pfstmo 1.1 (chromatic & light adaptation)
+* exif copy tool: added log, cleaned the code (more robust).
+* saving hdr before tone mapping is not required anymore
+* gamma and levels: fixed bug: changing the numerical value is the same as dragging the triangles.
+* qtpfsgui version added to exif data.
+* added pfstmo's gcc switches.
+* small bugs & typos.
 
 ***WARNING***
 Starting Qtpfsgui 1.8.10, Windows users have to download the new

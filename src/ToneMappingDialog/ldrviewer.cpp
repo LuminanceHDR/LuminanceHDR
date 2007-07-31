@@ -27,7 +27,6 @@
 #include "../config.h"
 
 LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : QWidget(parent),origimage(o) {
-// 	origimage=QImage(o);
 	currentimage=&origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
@@ -42,6 +41,7 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 
 	parseOptions(opts);
 	setWindowTitle(caption);
+	setToolTip(caption);
 }
 
 LdrViewer::~LdrViewer() {
@@ -57,6 +57,27 @@ void LdrViewer::parseOptions(tonemapping_options *opts) {
 	exif_comment+="Operator: ";
 	
 	switch (opts->tmoperator) {
+	case mantiuk: {
+		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
+		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
+		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
+		caption+="Mantiuk: ~ ";
+		postfix+="mantiuk_";
+		exif_comment+="Mantiuk\nParameters:\n";
+		if (contrast_eq) {
+			postfix+="contrast_equalization_";
+			caption+="Contrast Equalization ~ ";
+			exif_comment+="Contrast Equalization\n";
+		} else {
+			postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
+			caption+=QString("Contrast=%1 ~ ").arg(contrastfactor);
+			exif_comment+=QString("Contrast Mapping factor: %1\n").arg(contrastfactor);
+		}
+		postfix+=QString("saturation_factor_%1").arg(saturationfactor);
+		caption+=QString("Saturation=%1").arg(saturationfactor);
+		exif_comment+=QString("Saturation Factor: %1 \n").arg(saturationfactor);
+		}
+		break;
 	case fattal: {
 		float alpha=opts->operator_options.fattaloptions.alpha;
 		float beta=opts->operator_options.fattaloptions.beta;

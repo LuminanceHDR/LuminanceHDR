@@ -1,6 +1,8 @@
 TEMPLATE = app
 CONFIG += release qt thread
 DEFINES += QT_NO_DEBUG_OUTPUT
+QMAKE_CXXFLAGS += -O3 -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe
+QMAKE_CXXFLAGS_RELEASE-=-O2
 
 unix {
 ########################################### QT ###########################################
@@ -308,6 +310,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/TM_operators/fattal02/pde.h \
            src/TM_operators/pattanaik00/tmo_pattanaik00.h \
            src/TM_operators/reinhard02/tmo_reinhard02.h \
+           src/TM_operators/mantiuk06/contrast_domain.h \
            src/Batch/batch_dialog_impl.h \
            src/Exif/exif_operations.h
 
@@ -360,6 +363,8 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/reinhard02/pfstmo_reinhard02.cpp \
            src/TM_operators/reinhard02/tmo_reinhard02.cpp \
            src/TM_operators/reinhard02/approx.cpp \
+           src/TM_operators/mantiuk06/contrast_domain.cpp \
+           src/TM_operators/mantiuk06/pfstmo_mantiuk06.cpp \
            src/Batch/batch_dialog_impl.cpp \
            src/Exif/exif_operations.cpp \
            src/Fileformat/pfsinexr.cpp \

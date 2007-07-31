@@ -254,7 +254,194 @@
      <property name="currentIndex" >
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab_4" >
+     <widget class="QWidget" name="tab_mantiuk" >
+      <attribute name="title" >
+       <string>Mantiuk</string>
+      </attribute>
+      <layout class="QVBoxLayout" >
+       <property name="margin" >
+        <number>9</number>
+       </property>
+       <property name="spacing" >
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_desc_fattal02_2" >
+         <property name="text" >
+          <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span>&lt;br />Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p>&lt;/body>&lt;/html></string>
+         </property>
+         <property name="wordWrap" >
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="ContrastEqualizCheckBox" >
+         <property name="text" >
+          <string>Contrast Equalization</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_23" >
+           <property name="text" >
+            <string>Contrast Factor</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="contrastFactorSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>1999</number>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="contrastFactordsb" >
+           <property name="decimals" >
+            <number>3</number>
+           </property>
+           <property name="maximum" >
+            <double>2.000000000000000</double>
+           </property>
+           <property name="minimum" >
+            <double>0.001000000000000</double>
+           </property>
+           <property name="singleStep" >
+            <double>0.200000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.300000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_22" >
+           <property name="text" >
+            <string>Saturation Factor</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="saturationFactorSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>2000</number>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="saturationFactordsb" >
+           <property name="decimals" >
+            <number>3</number>
+           </property>
+           <property name="maximum" >
+            <double>2.000000000000000</double>
+           </property>
+           <property name="minimum" >
+            <double>0.000000000000000</double>
+           </property>
+           <property name="singleStep" >
+            <double>0.200000000000000</double>
+           </property>
+           <property name="value" >
+            <double>0.800000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer>
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" >
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="MantiukDefault" >
+           <property name="toolTip" >
+            <string>Restore operator's default values.</string>
+           </property>
+           <property name="text" >
+            <string/>
+           </property>
+           <property name="icon" >
+            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_10" >
+           <property name="text" >
+            <string>Default Values for operator</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>2</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_fattal" >
       <attribute name="title" >
        <string>Fattal</string>
       </attribute>
@@ -299,7 +486,7 @@ p, li { white-space: pre-wrap; }
             <cursor>13</cursor>
            </property>
            <property name="maximum" >
-            <number>999</number>
+            <number>1000</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -348,7 +535,7 @@ p, li { white-space: pre-wrap; }
             <cursor>13</cursor>
            </property>
            <property name="maximum" >
-            <number>999</number>
+            <number>400</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -395,6 +582,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="saturation2Slider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>300</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -527,7 +717,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab" >
+     <widget class="QWidget" name="tab_ashikhmin" >
       <attribute name="title" >
        <string>Ashikhmin</string>
       </attribute>
@@ -663,6 +853,9 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>100</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -750,7 +943,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3" >
+     <widget class="QWidget" name="tab_durand" >
       <attribute name="title" >
        <string>Durand</string>
       </attribute>
@@ -794,6 +987,9 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>6000</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -834,6 +1030,9 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>1000</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -873,6 +1072,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="baseSlider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>1000</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -949,7 +1151,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2" >
+     <widget class="QWidget" name="tab_drago" >
       <attribute name="title" >
        <string>Drago</string>
       </attribute>
@@ -992,6 +1194,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="biasSlider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>50</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -1074,7 +1279,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_5" >
+     <widget class="QWidget" name="tab_pattanaik" >
       <attribute name="title" >
        <string>Pattanaik</string>
       </attribute>
@@ -1117,6 +1322,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="multiplierSlider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>1000</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -1185,6 +1393,9 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>100</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1224,6 +1435,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="rodSlider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>100</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -1303,7 +1517,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_6" >
+     <widget class="QWidget" name="tab_reinhard02" >
       <attribute name="title" >
        <string>Reinhard '02</string>
       </attribute>
@@ -1354,6 +1568,9 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>100</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1393,6 +1610,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QSlider" name="phiSlider" >
            <property name="cursor" >
             <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>5000</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -1462,6 +1682,9 @@ p, li { white-space: pre-wrap; }
            <property name="enabled" >
             <bool>false</bool>
            </property>
+           <property name="decimals" >
+            <number>0</number>
+           </property>
            <property name="maximum" >
             <double>15.000000000000000</double>
            </property>
@@ -1501,6 +1724,12 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="minimum" >
+            <number>0</number>
+           </property>
+           <property name="maximum" >
+            <number>99</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1510,6 +1739,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QDoubleSpinBox" name="lowerdsb" >
            <property name="enabled" >
             <bool>false</bool>
+           </property>
+           <property name="decimals" >
+            <number>0</number>
            </property>
            <property name="maximum" >
             <double>100.000000000000000</double>
@@ -1553,6 +1785,12 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="minimum" >
+            <number>0</number>
+           </property>
+           <property name="maximum" >
+            <number>99</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1562,6 +1800,9 @@ p, li { white-space: pre-wrap; }
           <widget class="QDoubleSpinBox" name="upperdsb" >
            <property name="enabled" >
             <bool>false</bool>
+           </property>
+           <property name="decimals" >
+            <number>0</number>
            </property>
            <property name="maximum" >
             <double>100.000000000000000</double>
@@ -1637,7 +1878,7 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_7" >
+     <widget class="QWidget" name="tab_reinhard05" >
       <attribute name="title" >
        <string>Reinhard '05</string>
       </attribute>
@@ -1681,6 +1922,15 @@ p, li { white-space: pre-wrap; }
            <property name="cursor" >
             <cursor>13</cursor>
            </property>
+           <property name="maximum" >
+            <number>4500</number>
+           </property>
+           <property name="singleStep" >
+            <number>100</number>
+           </property>
+           <property name="pageStep" >
+            <number>400</number>
+           </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1695,7 +1945,7 @@ p, li { white-space: pre-wrap; }
             <double>-35.000000000000000</double>
            </property>
            <property name="singleStep" >
-            <double>5.000000000000000</double>
+            <double>0.010000000000000</double>
            </property>
            <property name="value" >
             <double>-10.000000000000000</double>
@@ -2081,12 +2331,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>80</x>
-     <y>167</y>
+     <x>75</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>148</x>
+     <y>225</y>
     </hint>
    </hints>
   </connection>
@@ -2097,12 +2347,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>79</x>
-     <y>167</y>
+     <x>75</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>213</x>
+     <y>225</y>
     </hint>
    </hints>
   </connection>
@@ -2113,12 +2363,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>79</x>
-     <y>167</y>
+     <x>75</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>277</x>
+     <y>257</y>
     </hint>
    </hints>
   </connection>
@@ -2129,12 +2379,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>79</x>
-     <y>167</y>
+     <x>75</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>115</x>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -2385,12 +2635,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>79</x>
-     <y>167</y>
+     <x>75</x>
+     <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -2503,6 +2753,54 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel" >
      <x>101</x>
      <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ContrastEqualizCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_23</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>116</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>50</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ContrastEqualizCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>contrastFactorSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>156</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>168</x>
+     <y>252</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ContrastEqualizCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>contrastFactordsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>317</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>358</x>
+     <y>243</y>
     </hint>
    </hints>
   </connection>

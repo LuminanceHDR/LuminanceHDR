@@ -27,8 +27,6 @@
  * $Id: pfstmo_ashikhmin02.cpp,v 1.5 2004/12/15 10:11:03 krawczyk Exp $
  */
 
-#include <iostream>
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <QFile>

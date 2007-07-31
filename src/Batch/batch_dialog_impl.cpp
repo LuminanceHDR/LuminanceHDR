@@ -161,7 +161,15 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 				toreturn->tmoperator=reinhard02;
 			} else if (value == "Reinhard04") {
 				toreturn->tmoperator=reinhard04;
+			} else if (value == "Mantiuk06") {
+				toreturn->tmoperator=mantiuk;
 			}
+		} else if (field=="CONTRASTFACTOR") {
+			toreturn->operator_options.mantiukoptions.contrastfactor=value.toFloat();
+		} else if (field=="SATURATIONFACTOR") {
+			toreturn->operator_options.mantiukoptions.saturationfactor=value.toFloat();
+		} else if (field=="CONTRASTEQUALIZATION") {
+			toreturn->operator_options.mantiukoptions.contrastequalization=(value == "YES");
 		} else if (field=="SIMPLE") {
 			toreturn->operator_options.ashikhminoptions.simple= (value == "YES") ? true : false;
 		} else if (field=="EQUATION") {
@@ -437,6 +445,19 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 	running_threads--;
 	QString postfix=QString("_pregamma_%1_").arg(opts->pregamma);
 	switch (opts->tmoperator) {
+	case mantiuk: {
+		postfix+="mantiuk_";
+		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
+		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
+		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
+		if (contrast_eq) {
+			postfix+="contrast_equalization_";
+		} else {
+			postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
+		}
+		postfix+=QString("saturation_factor_%1").arg(saturationfactor);
+		}
+		break;
 	case fattal: {
 		if (!opts->operator_options.fattaloptions.newfattal)
 			postfix+="v1_";

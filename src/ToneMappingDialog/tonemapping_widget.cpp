@@ -39,6 +39,10 @@ extern float pregamma;
 TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
 
+	// mantiuk06
+	contrastfactorGang = new Gang(contrastFactorSlider, contrastFactordsb,0.001,2,0.3);
+	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,0,2,0.8);
+
 	// ashikhmin02
 	contrastGang = 	new Gang(contrastSlider, contrastdsb,	0,	1,	0.5);
 	
@@ -83,6 +87,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	connect(pattanaik00Default, SIGNAL(clicked()),this,SLOT(pattanaikReset()));
 	connect(reinhard02Default,  SIGNAL(clicked()),this,SLOT(reinhard02Reset()));
 	connect(reinhard04Default,  SIGNAL(clicked()),this,SLOT(reinhard04Reset()));
+	connect(MantiukDefault,     SIGNAL(clicked()),this,SLOT(mantiukReset()));
 	connect(pregammadefault,    SIGNAL(clicked()),this,SLOT(preGammaReset()));
 
 	connect(applyButton,       SIGNAL(clicked()), this, SLOT(apply_clicked()));
@@ -119,7 +124,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 }
 
 TMWidget::~TMWidget() {
-delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
+delete contrastfactorGang; delete saturationfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
 	//fetch original frame from hd
 	pfs::DOMIO pfsio;
 	OriginalPfsFrame=pfsio.readFrame(cachepath+"/original.pfs");
@@ -128,6 +133,11 @@ delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; dele
 	QFile::remove(cachepath+"/original.pfs");
 	QFile::remove(cachepath+"/after_resize.pfs");
 	QFile::remove(cachepath+"/after_pregamma.pfs");
+}
+
+void TMWidget::mantiukReset() {
+contrastfactorGang->setDefault();
+saturationfactorGang->setDefault();
 }
 void TMWidget::ashikhminReset() {
 contrastGang->setDefault();
@@ -194,40 +204,40 @@ void TMWidget::FillToneMappingOptions() {
 	ToneMappingOptions.xsize=sizes[sizeComboBox->currentIndex()];
 	ToneMappingOptions.pregamma=pregammagang->v();
 
-	switch (operators_tabWidget->currentIndex ()) {
-	case 0:
+	QWidget *current_page=operators_tabWidget->currentWidget();
+	if (current_page==tab_mantiuk) {
+		ToneMappingOptions.tmoperator=mantiuk;
+		ToneMappingOptions.operator_options.mantiukoptions.contrastfactor=contrastfactorGang->v();
+		ToneMappingOptions.operator_options.mantiukoptions.saturationfactor=saturationfactorGang->v();
+		ToneMappingOptions.operator_options.mantiukoptions.contrastequalization=ContrastEqualizCheckBox->isChecked();
+	} else if (current_page==tab_fattal) {
 		ToneMappingOptions.tmoperator=fattal;
 		ToneMappingOptions.operator_options.fattaloptions.alpha=alphaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.beta=betaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
 		ToneMappingOptions.operator_options.fattaloptions.noiseredux=noiseGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.newfattal=!oldFattalCheckBox->isChecked();
-	break;
-	case 1:
+	} else if (current_page==tab_ashikhmin) {
 		ToneMappingOptions.tmoperator=ashikhmin;
 		ToneMappingOptions.operator_options.ashikhminoptions.simple=simpleCheckBox->isChecked();
 		ToneMappingOptions.operator_options.ashikhminoptions.eq2=eq2RadioButton->isChecked();
 		ToneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
-	break;
-	case 2:
+	} else if (current_page==tab_durand) {
 		ToneMappingOptions.tmoperator=durand;
 		ToneMappingOptions.operator_options.durandoptions.spatial=spatialGang->v();
 		ToneMappingOptions.operator_options.durandoptions.range=rangeGang->v();
 		ToneMappingOptions.operator_options.durandoptions.base=baseGang->v();
-	break;
-	case 3:
+	} else if (current_page==tab_drago) {
 		ToneMappingOptions.tmoperator=drago;
 		ToneMappingOptions.operator_options.dragooptions.bias=biasGang->v();
-	break;
-	case 4:
+	} else if (current_page==tab_pattanaik) {
 		ToneMappingOptions.tmoperator=pattanaik;
 		ToneMappingOptions.operator_options.pattanaikoptions.autolum=autoYcheckbox->isChecked();
 		ToneMappingOptions.operator_options.pattanaikoptions.local=pattalocal->isChecked();
 		ToneMappingOptions.operator_options.pattanaikoptions.cone=coneGang->v();
 		ToneMappingOptions.operator_options.pattanaikoptions.rod=rodGang->v();
 		ToneMappingOptions.operator_options.pattanaikoptions.multiplier=multiplierGang->v();
-	break;
-	case 5:
+	} else if (current_page==tab_reinhard02) {
 		ToneMappingOptions.tmoperator=reinhard02;
 		ToneMappingOptions.operator_options.reinhard02options.scales=usescalescheckbox->isChecked();
 		ToneMappingOptions.operator_options.reinhard02options.key=keyGang->v();
@@ -235,14 +245,11 @@ void TMWidget::FillToneMappingOptions() {
 		ToneMappingOptions.operator_options.reinhard02options.range=(int)range2Gang->v();
 		ToneMappingOptions.operator_options.reinhard02options.lower=(int)lowerGang->v();
 		ToneMappingOptions.operator_options.reinhard02options.upper=(int)upperGang->v();
-	break;
-	case 6:
+	} else if (current_page==tab_reinhard05) {
 		ToneMappingOptions.tmoperator=reinhard04;
 		ToneMappingOptions.operator_options.reinhard04options.brightness=brightnessGang->v();
 		ToneMappingOptions.operator_options.reinhard04options.chromaticAdaptation=chromaticGang->v();
 		ToneMappingOptions.operator_options.reinhard04options.lightAdaptation=lightGang->v();
-	break;
-	
 	}
 }
 
@@ -319,40 +326,41 @@ void TMWidget::fromGui2Txt(QString destination) {
 	out << "# Editing this file by hand is risky, worst case scenario is Qtpfsgui crashing." << endl;
 	out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
 	out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
-	switch (operators_tabWidget->currentIndex()) {
-	case 1:
-		out << "TMO=" << "Ashikhmin02" << endl;
-		out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
-		out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
-		out << "CONTRAST=" << contrastGang->v() << endl;
-		break;
-	case 3:
-		out << "TMO=" << "Drago03" << endl;
-		out << "BIAS=" << biasGang->v() << endl;
-		break;
-	case 2:
-		out << "TMO=" << "Durand02" << endl;
-		out << "SPATIAL=" << spatialGang->v() << endl;
-		out << "RANGE=" << rangeGang->v() << endl;
-		out << "BASE=" << baseGang->v() << endl;
-		break;
-	case 0:
+
+	QWidget *current_page=operators_tabWidget->currentWidget();
+	if (current_page==tab_mantiuk) {
+		out << "TMO=" << "Mantiuk06" << endl;
+		out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
+		out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
+		out << "CONTRASTEQUALIZATION=" << (ContrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
+	} else if (current_page==tab_fattal) {
 		out << "TMO=" << "Fattal02" << endl;
 		out << "ALPHA=" << alphaGang->v() << endl;
 		out << "BETA=" << betaGang->v() << endl;
 		out << "COLOR=" << saturation2Gang->v() << endl;
 		out << "NOISE=" << noiseGang->v() << endl;
 		out << "OLDFATTAL=" << (oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
-		break;
-	case 4:
+	} else if (current_page==tab_ashikhmin) {
+		out << "TMO=" << "Ashikhmin02" << endl;
+		out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
+		out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
+		out << "CONTRAST=" << contrastGang->v() << endl;
+	} else if (current_page==tab_durand) {
+		out << "TMO=" << "Durand02" << endl;
+		out << "SPATIAL=" << spatialGang->v() << endl;
+		out << "RANGE=" << rangeGang->v() << endl;
+		out << "BASE=" << baseGang->v() << endl;
+	} else if (current_page==tab_drago) {
+		out << "TMO=" << "Drago03" << endl;
+		out << "BIAS=" << biasGang->v() << endl;
+	} else if (current_page==tab_pattanaik) {
 		out << "TMO=" << "Pattanaik00" << endl;
 		out << "MULTIPLIER=" << multiplierGang->v() << endl;
 		out << "LOCAL=" << (pattalocal->isChecked() ? "YES" : "NO") << endl;
 		out << "AUTOLUMINANCE=" << (autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
 		out << "CONE=" << coneGang->v() << endl;
 		out << "ROD=" << rodGang->v() << endl;
-		break;
-	case 5:
+	} else if (current_page==tab_reinhard02) {
 		out << "TMO=" << "Reinhard02" << endl;
 		out << "KEY=" << keyGang->v() << endl;
 		out << "PHI=" << phiGang->v() << endl;
@@ -360,13 +368,11 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "RANGE=" << range2Gang->v() << endl;
 		out << "LOWER=" << lowerGang->v() << endl;
 		out << "UPPER=" << upperGang->v() << endl;
-		break;
-	case 6:
+	} else if (current_page==tab_reinhard05) {
 		out << "TMO=" << "Reinhard04" << endl;
 		out << "BRIGHTNESS=" << brightnessGang->v() << endl;
 		out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
 		out << "LIGHTADAPTATION=" << lightGang->v() << endl;
-		break;
 	}
 	out << "PREGAMMA=" << pregammagang->v() << endl;
 	file.close();
@@ -398,25 +404,33 @@ void TMWidget::fromTxt2Gui() {
 			}
 		} else if (field=="TMO") {
 			if (value=="Ashikhmin02") {
-				operators_tabWidget->setCurrentIndex(1);
+				operators_tabWidget->setCurrentWidget(tab_ashikhmin);
+			} else if (value == "Mantiuk06") {
+				operators_tabWidget->setCurrentWidget(tab_mantiuk);
 			} else if (value == "Drago03") {
-				operators_tabWidget->setCurrentIndex(3);
+				operators_tabWidget->setCurrentWidget(tab_drago);
 			} else if (value == "Durand02") {
-				operators_tabWidget->setCurrentIndex(2);
+				operators_tabWidget->setCurrentWidget(tab_durand);
 			} else if (value == "Fattal02") {
-				operators_tabWidget->setCurrentIndex(0);
+				operators_tabWidget->setCurrentWidget(tab_fattal);
 			} else if (value == "Pattanaik00") {
-				operators_tabWidget->setCurrentIndex(4);
+				operators_tabWidget->setCurrentWidget(tab_pattanaik);
 			} else if (value == "Reinhard02") {
-				operators_tabWidget->setCurrentIndex(5);
+				operators_tabWidget->setCurrentWidget(tab_reinhard02);
 			} else if (value == "Reinhard04") {
-				operators_tabWidget->setCurrentIndex(6);
+				operators_tabWidget->setCurrentWidget(tab_reinhard05);
 			}
+		} else if (field=="CONTRASTFACTOR") {
+			contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
+		} else if (field=="SATURATIONFACTOR") {
+			saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
+		} else if (field=="CONTRASTEQUALIZATION") {
+			ContrastEqualizCheckBox->setChecked((value=="YES"));
 		} else if (field=="SIMPLE") {
-			(value == "YES") ? simpleCheckBox->setCheckState(Qt::Checked) : simpleCheckBox->setCheckState(Qt::Unchecked);
+			simpleCheckBox->setChecked((value=="YES"));
 		} else if (field=="EQUATION") {
-			(value=="2") ? eq2RadioButton->setChecked(true) : eq2RadioButton->setChecked(false);
-			(value=="4") ? eq4RadioButton->setChecked(true) : eq4RadioButton->setChecked(false);
+			eq2RadioButton->setChecked((value=="2"));
+			eq4RadioButton->setChecked((value=="4"));
 		} else if (field=="CONTRAST") {
 			contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
 		} else if (field=="BIAS") {

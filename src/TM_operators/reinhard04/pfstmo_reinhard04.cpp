@@ -162,7 +162,7 @@ pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float chroma
 
 	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Xo, Yo, Zo ); //in:xyz ---> out:rgb (skip copyArray)
 	tmo_reinhard04( Xo, Yo, Zo, Y, brightness, chromatic_adaptation, light_adaptation );
-	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo ); //out:rgb ---> out:xyz
+	pfs::transformColorSpace( pfs::CS_SRGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo ); //out:rgb ---> out:xyz
 
 	return outframe;
 }

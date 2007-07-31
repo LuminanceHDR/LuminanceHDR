@@ -49,7 +49,8 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 
 	//we are modifying the input buffer here!!!
 	//but it should be ok since this is the endpoint
-	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
+	//keep SRGB for compatibility with pfstmo...
+	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_SRGB, X,Y,Z );
 
 	int width = X->getCols();
 	int height =  X->getRows();

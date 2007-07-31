@@ -83,7 +83,7 @@ struct qtpfsgui_opts {
 };
 
 
-enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard04};
+enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard04,mantiuk};
 struct tonemapping_options {
 	int xsize;
 	float pregamma;
@@ -129,6 +129,11 @@ struct tonemapping_options {
 			float chromaticAdaptation;
 			float lightAdaptation;
 		} reinhard04options;
+		struct {
+			float contrastfactor;
+			float saturationfactor;
+			bool contrastequalization;
+		} mantiukoptions;
 	} operator_options;
 };
 

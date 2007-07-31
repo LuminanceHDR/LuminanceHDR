@@ -42,7 +42,9 @@ signals:
 	void newResult(const QImage&,tonemapping_options*);
 private:
 	QVector<int> sizes;
-	Gang  *contrastGang,*biasGang,*spatialGang,*rangeGang,*baseGang,*alphaGang,*betaGang,*saturation2Gang,*noiseGang,*multiplierGang,*coneGang,*rodGang,*keyGang,*phiGang,*range2Gang,*lowerGang,*upperGang,*brightnessGang,*chromaticGang,*lightGang,*pregammagang;
+
+	Gang *contrastfactorGang, *saturationfactorGang, *contrastGang, *biasGang, *spatialGang, *rangeGang, *baseGang, *alphaGang, *betaGang, *saturation2Gang, *noiseGang, *multiplierGang, *coneGang, *rodGang, *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *brightnessGang, *chromaticGang, *lightGang, *pregammagang;
+
 	tonemapping_options ToneMappingOptions;
 	pfs::Frame* &OriginalPfsFrame;
 	void FillToneMappingOptions();
@@ -63,6 +65,7 @@ private slots:
 	void pattanaikReset();
 	void reinhard02Reset();
 	void reinhard04Reset();
+	void mantiukReset();
 	void apply_clicked();
 	void removeProgressBar(QProgressBar*);
 	void savesettings();
