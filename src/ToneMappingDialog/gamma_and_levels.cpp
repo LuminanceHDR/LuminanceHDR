@@ -114,7 +114,6 @@ void GammaAndLevels::updateGamma(double v) {
 	gamma_spinbox->setValue(v);
 	gamma=v;
 	refreshLUT();
-	gb1->dont_emit=false;
 }
 void GammaAndLevels::updateWhiteIn(int v) {
 	qDebug("this::updateWhiteIn");
@@ -142,6 +141,12 @@ void GammaAndLevels::resetValues() {
 	whitein=255;
 	blackout=0;
 	whiteout=255;
+	gb1->dont_emit=true;
+	black_in_spinbox->setValue(0);
+	gamma_spinbox->setValue(1);
+	white_in_spinbox->setValue(255);
+	black_out_spinbox->setValue(0);
+	white_out_spinbox->setValue(255);
 	refreshLUT();
 }
 
@@ -447,8 +452,6 @@ void GrayBar::changeGamma(double v) {
 		dont_emit=false;
 		return;
 	}
-// 	qDebug("setting dont_emit false");
-// 	dont_emit=false;
 	emit gamma_changed (v);
 }
 
