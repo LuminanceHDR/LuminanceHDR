@@ -57,5 +57,6 @@ private slots:
 	void current_ldr_fit_to_win(bool);
 	void close_all();
 	void saveLDR();
+	void enterWhatsThis();
 };
 #endif

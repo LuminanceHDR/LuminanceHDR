@@ -521,4 +521,5 @@ void TMWidget::addCustomSize(){
 	groupSaveLoadTMOsetting->setDisabled(true);
 	addCustomSizeButton->setDisabled(true);
 	adding_custom_size=true;
+	sizeComboBox->lineEdit()->setFocus();
 }

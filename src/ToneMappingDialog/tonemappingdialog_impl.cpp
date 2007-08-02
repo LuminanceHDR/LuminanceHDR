@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QWhatsThis>
 #include "tonemappingdialog_impl.h"
 #include "ldrviewer.h"
 #include "../options.h"
@@ -36,6 +37,24 @@ TonemappingWindow::~TonemappingWindow() {}
 
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString cachepath, QString _file) : QMainWindow(parent), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
+	switch (settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+	case Qt::ToolButtonIconOnly:
+		toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+		break;
+	case Qt::ToolButtonTextOnly:
+		toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+		break;
+	case Qt::ToolButtonTextBesideIcon:
+		toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+		break;
+	case Qt::ToolButtonTextUnderIcon:
+		toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+		break;
+	}
 
 	prefixname=QFileInfo(_file).completeBaseName();
 	setWindowTitle(tr("Tone mapping Window: ")+ prefixname);
@@ -62,6 +81,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
 	connect(actionClose_All,SIGNAL(triggered()),this,SLOT(close_all()));
 	connect(actionSave, SIGNAL(triggered()),this, SLOT(saveLDR()));
+	connect(documentationAction,SIGNAL(triggered()),parent,SLOT(openDocumentation()));
+	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
 	this->showMaximized();
 }
@@ -183,5 +204,7 @@ void TonemappingWindow::close_all() {
 	}
 }
 
-
+void TonemappingWindow::enterWhatsThis() {
+	QWhatsThis::enterWhatsThisMode();
+}
 

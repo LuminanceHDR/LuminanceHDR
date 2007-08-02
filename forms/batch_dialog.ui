@@ -61,7 +61,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Add all the HDRs in a directory to the list.</string>
+             <string>Add all the HDRs in a directory to the list</string>
             </property>
             <property name="text" >
              <string>Add &amp;Directory</string>
@@ -85,7 +85,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Add single HDR files to the list.</string>
+             <string>Add single HDR files to the list</string>
             </property>
             <property name="text" >
              <string>&amp;Add Files</string>
@@ -109,7 +109,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Remove single HDR files to the list.</string>
+             <string>Remove single HDR files to the list</string>
             </property>
             <property name="text" >
              <string>&amp;Remove Files</string>
@@ -184,7 +184,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Add all the Tone Mapping Setting files in a directory to the list.</string>
+             <string>Add all the Tone Mapping Setting files in a directory to the list</string>
             </property>
             <property name="text" >
              <string>Add D&amp;irectory</string>
@@ -208,7 +208,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Add single Tone Mapping Setting files to the list.</string>
+             <string>Add single Tone Mapping Setting files to the list</string>
             </property>
             <property name="text" >
              <string>Add Fi&amp;les</string>
@@ -232,7 +232,7 @@
              </sizepolicy>
             </property>
             <property name="toolTip" >
-             <string>Remove single Tone Mapping Setting files to the list.</string>
+             <string>Remove single Tone Mapping Setting files to the list</string>
             </property>
             <property name="text" >
              <string>R&amp;emove Files</string>
@@ -263,7 +263,7 @@
         <item>
          <widget class="QListWidget" name="listWidget_TMopts" >
           <property name="toolTip" >
-           <string>List of Tone Mapping Setting files that will be used to tone map each HDR.</string>
+           <string>List of Tone Mapping Setting files that will be used to tone map each HDR</string>
           </property>
           <property name="selectionMode" >
            <enum>QAbstractItemView::ContiguousSelection</enum>
@@ -281,7 +281,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_4" >
      <property name="toolTip" >
-      <string>Specify output folder for the tone mapped files.</string>
+      <string>Specify output folder for the tone mapped files</string>
      </property>
      <property name="title" >
       <string>Output</string>
@@ -339,7 +339,7 @@
          </size>
         </property>
         <property name="toolTip" >
-         <string>Batch operations report.</string>
+         <string>Batch operations report</string>
         </property>
         <property name="editTriggers" >
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -376,7 +376,7 @@
         <item>
          <widget class="QComboBox" name="filterComboBox" >
           <property name="toolTip" >
-           <string>Filter messages based on severity.</string>
+           <string>Filter messages based on severity</string>
           </property>
           <item>
            <property name="text" >
@@ -386,6 +386,11 @@
           <item>
            <property name="text" >
             <string>Errors only</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Success messages</string>
            </property>
           </item>
          </widget>
@@ -431,7 +436,7 @@
    <item>
     <widget class="QProgressBar" name="overallProgressBar" >
      <property name="toolTip" >
-      <string>Overall completion progress.</string>
+      <string>Overall completion progress</string>
      </property>
      <property name="orientation" >
       <enum>Qt::Horizontal</enum>
@@ -475,7 +480,7 @@
         <bool>false</bool>
        </property>
        <property name="toolTip" >
-        <string>Start batch tone mapping.</string>
+        <string>Start batch tone mapping</string>
        </property>
        <property name="text" >
         <string>&amp;Start!</string>

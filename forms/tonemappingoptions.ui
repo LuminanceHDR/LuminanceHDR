@@ -63,6 +63,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="toolTip" >
+        <string>The size of the resulting LDR image.</string>
+       </property>
+       <property name="whatsThis" >
+        <string>Here you can choose the size of the resulting LDR image.</string>
+       </property>
        <property name="insertPolicy" >
         <enum>QComboBox::NoInsert</enum>
        </property>
@@ -74,7 +80,10 @@
         <cursor>13</cursor>
        </property>
        <property name="toolTip" >
-        <string>Add a custom size: type a width value and then press Enter.</string>
+        <string>Custom LDR size</string>
+       </property>
+       <property name="whatsThis" >
+        <string>Clicking this button you will be able to insert a &lt;i>width&lt;/i> value for the size of the resulting LDR image.&lt;br>After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
        </property>
        <property name="icon" >
         <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
@@ -106,6 +115,9 @@
      </property>
      <property name="toolTip" >
       <string>Gamma applied before tone mapping</string>
+     </property>
+     <property name="whatsThis" >
+      <string>Here you can apply a gamma correction to the HDR.&lt;br>The gamma correction will applied before tone mapping.</string>
      </property>
      <property name="title" >
       <string>Pre Gamma</string>
@@ -141,7 +153,10 @@
         <item>
          <widget class="QLabel" name="label_34" >
           <property name="text" >
-           <string>Pre Tone mapping gamma adjustment</string>
+           <string>Pre Tone mapping &amp;gamma adjustment</string>
+          </property>
+          <property name="buddy" >
+           <cstring>pregammaSlider</cstring>
           </property>
          </widget>
         </item>
@@ -179,7 +194,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip" >
-           <string>Restore pregamma's default value (1).</string>
+           <string>Restore pregamma's default value (1)</string>
           </property>
           <property name="text" >
            <string/>
@@ -251,12 +266,15 @@
    </item>
    <item>
     <widget class="QTabWidget" name="operators_tabWidget" >
+     <property name="whatsThis" >
+      <string>Here you can choose the tone mapping operator and its settings.</string>
+     </property>
      <property name="currentIndex" >
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab_mantiuk" >
       <attribute name="title" >
-       <string>Mantiuk</string>
+       <string>&amp;Mantiuk</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -407,7 +425,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="MantiukDefault" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -443,7 +461,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_fattal" >
       <attribute name="title" >
-       <string>Fattal</string>
+       <string>Fa&amp;ttal</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -683,7 +701,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="fattal02Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -719,7 +737,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_ashikhmin" >
       <attribute name="title" >
-       <string>Ashikhmin</string>
+       <string>&amp;Ashikhmin</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -906,7 +924,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="ashikhmin02Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -945,7 +963,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_durand" >
       <attribute name="title" >
-       <string>Durand</string>
+       <string>&amp;Durand</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -1117,7 +1135,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="durand02Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -1153,7 +1171,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_drago" >
       <attribute name="title" >
-       <string>Drago</string>
+       <string>&amp;Drago</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -1245,7 +1263,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="drago03Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -1281,7 +1299,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_pattanaik" >
       <attribute name="title" >
-       <string>Pattanaik</string>
+       <string>&amp;Pattanaik</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -1483,7 +1501,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="pattanaik00Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -1519,7 +1537,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_reinhard02" >
       <attribute name="title" >
-       <string>Reinhard '02</string>
+       <string>Reinhard '0&amp;2</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -1844,7 +1862,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="reinhard02Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -1880,7 +1898,7 @@ p, li { white-space: pre-wrap; }
      </widget>
      <widget class="QWidget" name="tab_reinhard05" >
       <attribute name="title" >
-       <string>Reinhard '05</string>
+       <string>Reinhard '0&amp;5</string>
       </attribute>
       <layout class="QVBoxLayout" >
        <property name="margin" >
@@ -2070,7 +2088,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QPushButton" name="reinhard04Default" >
            <property name="toolTip" >
-            <string>Restore operator's default values.</string>
+            <string>Restore operator's default values</string>
            </property>
            <property name="text" >
             <string/>
@@ -2131,12 +2149,15 @@ p, li { white-space: pre-wrap; }
       <widget class="QToolButton" name="applyButton" >
        <property name="minimumSize" >
         <size>
-         <width>66</width>
+         <width>56</width>
          <height>0</height>
         </size>
        </property>
        <property name="toolTip" >
-        <string>Use current parameters above (pregamma and tone mapping operator) to compute a LDR image</string>
+        <string>Start tone mapping (CTRL+A).</string>
+       </property>
+       <property name="whatsThis" >
+        <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
        </property>
        <property name="text" >
         <string>&amp;Apply</string>
@@ -2146,8 +2167,8 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="iconSize" >
         <size>
-         <width>44</width>
-         <height>44</height>
+         <width>32</width>
+         <height>32</height>
         </size>
        </property>
        <property name="shortcut" >
@@ -2216,8 +2237,14 @@ p, li { white-space: pre-wrap; }
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip" >
+      <string>Tone Mapping settings file section</string>
+     </property>
+     <property name="whatsThis" >
+      <string>Here you can load and save a tone mapping settings file.&lt;br>You can also apply the contents of the currently loaded settings file.</string>
+     </property>
      <property name="title" >
-      <string>Tonemapping settings</string>
+      <string>Tonemapping settings file</string>
      </property>
      <layout class="QHBoxLayout" >
       <property name="margin" >
@@ -2237,7 +2264,10 @@ p, li { white-space: pre-wrap; }
          </sizepolicy>
         </property>
         <property name="toolTip" >
-         <string>Save current parameters (pregamma and TMO) to a text file</string>
+         <string>Save current parameters to a text file</string>
+        </property>
+        <property name="whatsThis" >
+         <string>Save current parameters (pregamma and TMO) to a text file.</string>
         </property>
         <property name="text" >
          <string>&amp;Save...</string>
@@ -2257,8 +2287,11 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" >
          <string>Load an existing text file containing pregamma and TMO settings</string>
         </property>
+        <property name="whatsThis" >
+         <string>Load an existing text file containing pregamma and TMO settings.</string>
+        </property>
         <property name="text" >
-         <string>Load...</string>
+         <string>&amp;Load...</string>
         </property>
        </widget>
       </item>
@@ -2284,6 +2317,9 @@ p, li { white-space: pre-wrap; }
         <property name="toolTip" >
          <string>The tone mapping settings file in use</string>
         </property>
+        <property name="whatsThis" >
+         <string>The tone mapping settings file in use.</string>
+        </property>
         <property name="readOnly" >
          <bool>true</bool>
         </property>
@@ -2295,7 +2331,10 @@ p, li { white-space: pre-wrap; }
          <bool>false</bool>
         </property>
         <property name="text" >
-         <string>Apply file</string>
+         <string>Apply fil&amp;e</string>
+        </property>
+        <property name="buddy" >
+         <cstring>button_fromTxt2Gui</cstring>
         </property>
        </widget>
       </item>
@@ -2306,6 +2345,9 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="toolTip" >
          <string>Apply Settings File</string>
+        </property>
+        <property name="whatsThis" >
+         <string>Use tone mapping file to generate an LDR.</string>
         </property>
         <property name="icon" >
          <iconset resource="../icons.qrc" >:/new/prefix1/images/orange_apply.png</iconset>
@@ -2367,7 +2409,7 @@ p, li { white-space: pre-wrap; }
      <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>277</x>
+     <x>275</x>
      <y>257</y>
     </hint>
    </hints>
@@ -2383,7 +2425,7 @@ p, li { white-space: pre-wrap; }
      <y>218</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>115</x>
+     <x>113</x>
      <y>262</y>
     </hint>
    </hints>
@@ -2395,12 +2437,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -2411,12 +2453,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>177</x>
+     <y>358</y>
     </hint>
    </hints>
   </connection>
@@ -2427,12 +2469,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>186</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>
@@ -2443,12 +2485,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>186</x>
+     <y>321</y>
     </hint>
    </hints>
   </connection>
@@ -2459,12 +2501,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>177</x>
+     <y>358</y>
     </hint>
    </hints>
   </connection>
@@ -2475,12 +2517,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>167</y>
+     <x>87</x>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
@@ -2491,12 +2533,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>193</x>
+     <y>348</y>
     </hint>
    </hints>
   </connection>
@@ -2507,12 +2549,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>167</y>
+     <x>89</x>
+     <y>390</y>
     </hint>
    </hints>
   </connection>
@@ -2523,12 +2565,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>195</x>
+     <y>385</y>
     </hint>
    </hints>
   </connection>
@@ -2539,12 +2581,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>77</x>
-     <y>167</y>
+     <x>53</x>
+     <y>316</y>
     </hint>
    </hints>
   </connection>
@@ -2555,12 +2597,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>159</x>
+     <y>311</y>
     </hint>
    </hints>
   </connection>
@@ -2571,12 +2613,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>167</y>
+     <x>80</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>
@@ -2587,12 +2629,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>71</x>
+     <y>363</y>
     </hint>
    </hints>
   </connection>
@@ -2603,12 +2645,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>167</y>
+     <x>80</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>
@@ -2619,12 +2661,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>71</x>
+     <y>363</y>
     </hint>
    </hints>
   </connection>
@@ -2651,12 +2693,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>
@@ -2667,12 +2709,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>363</y>
     </hint>
    </hints>
   </connection>
@@ -2683,12 +2725,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>326</y>
     </hint>
    </hints>
   </connection>
@@ -2699,12 +2741,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>167</y>
+     <x>106</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>363</y>
     </hint>
    </hints>
   </connection>
@@ -2715,12 +2757,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>316</y>
     </hint>
    </hints>
   </connection>
@@ -2731,12 +2773,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
@@ -2747,12 +2789,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>167</y>
+     <x>104</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>167</y>
+     <x>385</x>
+     <y>390</y>
     </hint>
    </hints>
   </connection>

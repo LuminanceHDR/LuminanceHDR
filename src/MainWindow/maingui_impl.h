@@ -62,7 +62,8 @@ private slots:
 	void current_mdiwindow_zoomout();
 	void current_mdiwindow_fit_to_win(bool checked);
 	void current_mdiwindow_original_size();
-	void helpAbout();
+	void openDocumentation();
+	void enterWhatsThis();
 	void options_called();
 	void transplant_called();
 	void reEnableMainWin();

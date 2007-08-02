@@ -192,8 +192,8 @@ tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
 			toreturn->operator_options.fattaloptions.color=value.toFloat();
 		} else if (field=="NOISE") {
 			toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
-		} else if (field=="NEWFATTAL") {
-			toreturn->operator_options.fattaloptions.newfattal= (value == "YES");
+		} else if (field=="OLDFATTAL") {
+			toreturn->operator_options.fattaloptions.newfattal= (value == "NO");
 		} else if (field=="MULTIPLIER") {
 			toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
 		} else if (field=="LOCAL") {
@@ -545,10 +545,11 @@ void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) 
 		}
 		break;
 	}
-	add_log_message(tr("\tSaving LDR file: ")+current_hdr_fname+postfix+"."+desired_format);
 	if (!newimage.save(current_hdr_fname+postfix+"."+desired_format, desired_format.toAscii().constData(), 100)) {
 		qDebug("BATCH: newResult: Cannot save to %s",(current_hdr_fname+postfix+"."+desired_format).toAscii().constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+current_hdr_fname+postfix+"."+desired_format);
+	} else {
+		add_log_message(tr("Successfully saved LDR file: ")+current_hdr_fname+postfix+"."+desired_format);
 	}
 	overallProgressBar->setValue(overallProgressBar->value()+1);
 	conditional_TMthread();
@@ -579,6 +580,9 @@ void BatchTMDialog::filterComboBoxActivated(int index) {
 		break;
 	case 1:
 		regexp="error";
+		break;
+	case 2:
+		regexp="successful";
 		break;
 	}
 	log_filter->setFilterRegExp(QRegExp(regexp, Qt::CaseInsensitive, QRegExp::RegExp));

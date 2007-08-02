@@ -273,7 +273,7 @@ void TransplantExifDialog::transplant_requested() {
 	}
 
 	done=true;
-	TransplantButton->setText(tr("Done."));
+	TransplantButton->setText(tr("&Done."));
 	moveup_left_button->setDisabled(true);
 	moveup_right_button->setDisabled(true);
 	movedown_left_button->setDisabled(true);

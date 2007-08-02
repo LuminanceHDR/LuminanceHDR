@@ -304,7 +304,7 @@
          </size>
         </property>
         <property name="toolTip" >
-         <string>Exif operations report.</string>
+         <string>Exif operations report</string>
         </property>
         <property name="editTriggers" >
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -341,7 +341,7 @@
         <item>
          <widget class="QComboBox" name="filterComboBox" >
           <property name="toolTip" >
-           <string>Filter messages based on severity.</string>
+           <string>Filter messages based on severity</string>
           </property>
           <item>
            <property name="text" >
@@ -447,7 +447,7 @@
      <item>
       <widget class="QPushButton" name="cancelbutton" >
        <property name="text" >
-        <string>Cancel</string>
+        <string>&amp;Cancel</string>
        </property>
       </widget>
      </item>
@@ -457,7 +457,7 @@
         <bool>false</bool>
        </property>
        <property name="text" >
-        <string>Start!</string>
+        <string>&amp;Start!</string>
        </property>
       </widget>
      </item>

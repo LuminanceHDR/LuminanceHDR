@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1733</width>
+    <width>1209</width>
     <height>822</height>
    </rect>
   </property>
@@ -18,10 +18,17 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1733</width>
+     <width>1209</width>
      <height>29</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="documentationAction" />
+    <addaction name="actionWhat_s_This" />
+   </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
      <string>&amp;View</string>
@@ -35,6 +42,7 @@
     <property name="title" >
      <string>&amp;File</string>
     </property>
+    <addaction name="actionFix_Histogram" />
     <addaction name="actionSave" />
     <addaction name="actionClose_All" />
     <addaction name="separator" />
@@ -42,6 +50,7 @@
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuView" />
+   <addaction name="menuHelp" />
   </widget>
   <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
@@ -55,12 +64,14 @@
     <number>4</number>
    </attribute>
    <addaction name="actionViewTMdock" />
-   <addaction name="actionFinishTM" />
    <addaction name="separator" />
    <addaction name="actionFix_Histogram" />
    <addaction name="actionSave" />
    <addaction name="separator" />
    <addaction name="actionClose_All" />
+   <addaction name="separator" />
+   <addaction name="actionFinishTM" />
+   <addaction name="actionWhat_s_This" />
   </widget>
   <action name="actionFinishTM" >
    <property name="icon" >
@@ -81,6 +92,9 @@
    <property name="whatsThis" >
     <string>Close Tone Mapping Dialog</string>
    </property>
+   <property name="shortcut" >
+    <string>CTRL+Q</string>
+   </property>
   </action>
   <action name="actionViewTMdock" >
    <property name="checkable" >
@@ -93,19 +107,19 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
    </property>
    <property name="text" >
-    <string>Tone mapping Panel</string>
+    <string>Tone Mapping Panel</string>
    </property>
    <property name="iconText" >
-    <string>Tone mapping Panel</string>
+    <string>Tone Mapping Panel</string>
    </property>
    <property name="toolTip" >
-    <string>Show/Hide Tone mapping Panel</string>
+    <string>Show/Hide the Tone mapping Panel</string>
    </property>
    <property name="statusTip" >
-    <string>Show/Hide Tone mapping Panel</string>
+    <string>Show/Hide the Tone mapping Panel</string>
    </property>
    <property name="whatsThis" >
-    <string>Show/Hide Tone mapping Panel</string>
+    <string>Show/Hide the Tone mapping Panel</string>
    </property>
   </action>
   <action name="actionFix_Histogram" >
@@ -119,10 +133,10 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text" >
-    <string>Adjust &amp;Levels</string>
+    <string>Adjust &amp;Levels...</string>
    </property>
    <property name="iconText" >
-    <string>Adjust Levels</string>
+    <string>Adjust Levels...</string>
    </property>
    <property name="toolTip" >
     <string>Tune the histogram for the current LDR</string>
@@ -132,6 +146,9 @@
    </property>
    <property name="whatsThis" >
     <string>Tune the histogram for the current LDR</string>
+   </property>
+   <property name="shortcut" >
+    <string>CTRL+L</string>
    </property>
   </action>
   <action name="actionSave" >
@@ -142,19 +159,19 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Save</string>
+    <string>&amp;Save as...</string>
    </property>
    <property name="iconText" >
-    <string>Save</string>
+    <string>Save As...</string>
    </property>
    <property name="toolTip" >
-    <string>Save currently selected LDR</string>
+    <string>Save the currently selected LDR</string>
    </property>
    <property name="statusTip" >
-    <string>Save currently selected LDR</string>
+    <string>Save the currently selected LDR</string>
    </property>
    <property name="whatsThis" >
-    <string>Save currently selected LDR</string>
+    <string>Save the currently selected LDR</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+S</string>
@@ -202,13 +219,22 @@
    <property name="whatsThis" >
     <string>Layout all LDRs as thumbnails.</string>
    </property>
+   <property name="shortcut" >
+    <string>CTRL+T</string>
+   </property>
   </action>
   <action name="actionCascade" >
    <property name="text" >
     <string>&amp;Cascade</string>
    </property>
    <property name="statusTip" >
-    <string/>
+    <string>Cascade all LDRs in the workspace</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Cascade all LDRs in the workspace</string>
+   </property>
+   <property name="shortcut" >
+    <string>CTRL+D</string>
    </property>
   </action>
   <action name="actionFit_to_Window" >
@@ -219,7 +245,7 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Fit to Window</string>
@@ -232,6 +258,28 @@
    </property>
    <property name="shortcut" >
     <string>W</string>
+   </property>
+  </action>
+  <action name="actionWhat_s_This" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+   </property>
+   <property name="text" >
+    <string>What's This?</string>
+   </property>
+   <property name="shortcut" >
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="documentationAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Documentation...</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

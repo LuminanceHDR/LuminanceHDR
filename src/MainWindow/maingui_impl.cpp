@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QWhatsThis>
 #include "maingui_impl.h"
 #include "../Fileformat/pfstiff.h"
 #include "../ToneMappingDialog/tonemappingdialog_impl.h"
@@ -77,7 +78,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_zoomout()));
 	connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdiwindow_fit_to_win(bool)));
 	connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_original_size()));
-	connect(helpAction,SIGNAL(triggered()),this,SLOT(helpAbout()));
+	connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
+	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
@@ -343,7 +345,7 @@ void MainGui::current_mdiwindow_original_size() {
 	zoomOutAct->setEnabled(true);
 }
 
-void MainGui::helpAbout() {
+void MainGui::openDocumentation() {
 	QDialog *help=new QDialog();
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
@@ -353,6 +355,10 @@ void MainGui::helpAbout() {
 	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html" << docDir << "/Applications/qtpfsgui.app/Contents/Resources/html");
 	ui.tb->setSource(QUrl("index.html"));
 	help->show();
+}
+
+void MainGui::enterWhatsThis() {
+	QWhatsThis::enterWhatsThisMode();
 }
 
 void MainGui::updateRecentFileActions() {

@@ -94,6 +94,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip" >
+           <string>Switch between pixels or percentage</string>
+          </property>
           <item>
            <property name="text" >
             <string>Pixels</string>
@@ -173,6 +176,9 @@
         </item>
         <item>
          <widget class="QLabel" name="sizepreview" >
+          <property name="toolTip" >
+           <string>Result size</string>
+          </property>
           <property name="frameShape" >
            <enum>QFrame::StyledPanel</enum>
           </property>

@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>1210</width>
-    <height>619</height>
+    <height>622</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -171,6 +171,12 @@
       <widget class="QPushButton" name="okButton" >
        <property name="text" >
         <string>&amp;Close</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
+       </property>
+       <property name="shortcut" >
+        <string>CTRL+Q</string>
        </property>
        <property name="default" >
         <bool>true</bool>

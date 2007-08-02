@@ -30,5 +30,6 @@
         <file>images/viewmag_dec.png</file>
         <file>images/viewmag_inc.png</file>
         <file>images/viewmagfit.png</file>
+        <file>images/whatsthis.png</file>
     </qresource>
 </RCC>

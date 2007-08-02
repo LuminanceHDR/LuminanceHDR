@@ -388,7 +388,7 @@ TRANSLATIONS = i18n/lang_it.ts \
 #           src/show_image.cpp \
 #           src/align_impl.h \
 #           src/show_image.h \
-#        forms/aligndialog.ui \
+#        forms/aligndialog.ui
 
 TARGET = qtpfsgui
 

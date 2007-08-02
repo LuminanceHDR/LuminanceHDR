@@ -126,7 +126,7 @@ for current image</string>
                </font>
               </property>
               <property name="toolTip" >
-               <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image.</string>
+               <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image</string>
               </property>
              </widget>
             </item>

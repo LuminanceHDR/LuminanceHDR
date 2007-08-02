@@ -28,13 +28,6 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
-     <string>&amp;Help</string>
-    </property>
-    <addaction name="helpAction" />
-    <addaction name="actionAbout_Qt" />
-   </widget>
    <widget class="QMenu" name="menuFile" >
     <property name="title" >
      <string>&amp;File</string>
@@ -108,6 +101,15 @@
     <addaction name="actionTile" />
     <addaction name="actionCascade" />
    </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="documentationAction" />
+    <addaction name="actionWhat_s_This" />
+    <addaction name="separator" />
+    <addaction name="actionAbout_Qt" />
+   </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
    <addaction name="menuView" />
@@ -148,7 +150,7 @@
     <string>New Hdr...</string>
    </property>
    <property name="toolTip" >
-    <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
+    <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</string>
    </property>
    <property name="statusTip" >
     <string>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</string>
@@ -171,7 +173,7 @@
     <string>Open Hdr....</string>
    </property>
    <property name="toolTip" >
-    <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
+    <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</string>
    </property>
    <property name="statusTip" >
     <string>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</string>
@@ -379,7 +381,7 @@
     <string>9</string>
    </property>
   </action>
-  <action name="helpAction" >
+  <action name="documentationAction" >
    <property name="icon" >
     <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
    </property>
@@ -499,7 +501,7 @@
     <string>Qtpfsgui Options</string>
    </property>
    <property name="toolTip" >
-    <string>Set the various options of Qtpfsgui.</string>
+    <string>Set the various options of Qtpfsgui</string>
    </property>
    <property name="statusTip" >
     <string>Set the various options of Qtpfsgui.</string>
@@ -641,6 +643,17 @@
    </property>
    <property name="shortcut" >
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionWhat_s_This" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+   </property>
+   <property name="text" >
+    <string>What's This?</string>
+   </property>
+   <property name="shortcut" >
+    <string>SHIFT+F1</string>
    </property>
   </action>
  </widget>
