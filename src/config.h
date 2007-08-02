@@ -27,4 +27,35 @@
 #define QTPFSGUIVERSION "1.8.11"
 #define TMOSETTINGSVERSION "0.3"
 
+#define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
+
+#define GROUP_DCRAW "DCRAW_Options"
+#define KEY_AUTOWB "auto_white_balance"
+#define KEY_CAMERAWB "camera_white_balance"
+#define KEY_HIGHLIGHTS "highlights_recovery_mode"
+#define KEY_QUALITY "quality_mode"
+#define KEY_4COLORS "use_4colors_interpolation"
+#define KEY_OUTCOLOR "output_color_space"
+
+#define GROUP_HDRVISUALIZATION "HDR_visualization"
+#define KEY_NANINFCOLOR "nan_inf_color"
+#define KEY_NEGCOLOR "neg_color"
+
+#define GROUP_TONEMAPPING "Tonemapping_Options"
+#define KEY_TEMP_RESULT_PATH "TemporaryFilesPath"
+#define KEY_BATCH_LDR_FORMAT "Batch_LDR_Format"
+#define KEY_NUM_BATCH_THREADS "Num_Batch_Threads"
+
+#define GROUP_TIFF "TIFF_Options"
+#define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
+
+//--------------------PATHS & co. ----------------
+#define KEY_RECENT_PATH_LOAD_SAVE_HDR "RecentDirHDRSetting"
+#define KEY_RECENT_FILES "recentFileList"
+#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "RecentDirTMOSetting"
+#define KEY_RECENT_PATH_SAVE_LDR "RecentDirLDRSetting"
+#define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "RecentDirInputLDRs"
+#define KEY_RECENT_PATH_EXIF_FROM "recent_path_exif_from"
+#define KEY_RECENT_PATH_EXIF_TO "recent_path_exif_to"
+
 #endif

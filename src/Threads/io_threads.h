@@ -25,7 +25,6 @@
 #define IOTHREAD_H
 
 #include <QThread>
-// #include "../hdrviewer.h"
 #include "../options.h"
 
 namespace pfs {

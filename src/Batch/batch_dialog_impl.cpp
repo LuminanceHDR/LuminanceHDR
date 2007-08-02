@@ -22,20 +22,19 @@
  */
 
 #include <QFileDialog>
-#include <QSettings>
 #include <QTextStream>
 #include "batch_dialog_impl.h"
 #include "../config.h"
 #include "../Libpfs/pfs.h"
 #include "../Threads/io_threads.h"
 #include "../Threads/tonemapper_thread.h"
+#include "../Exif/exif_operations.h"
 
 
-BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
+BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), settings("Qtpfsgui", "Qtpfsgui"), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
 	setupUi(this);
 	assert(opts!=NULL);
 
-	QSettings settings("Qtpfsgui", "Qtpfsgui");
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
@@ -118,119 +117,12 @@ void BatchTMDialog::add_TMopts() {
 }
 
 tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
-	QFile file(fname);
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
-		add_log_message(tr("ERROR: cannot load Tone Mapping Setting file: ")+fname);
+	try {
+		return TMOptionsOperations::parseFile(fname);
+	} catch (QString &e) {
+		add_log_message(e);
 		return NULL;
 	}
-
-	tonemapping_options *toreturn=new tonemapping_options;
-	//specifying -2 as size, and passing -2 as the original size in the thread constructor below, we basically bypass the resize step in the thread.
-	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
-	toreturn->xsize=-2;
-
-	QTextStream in(&file);
-	QString field,value;
-
-	while (!in.atEnd()) {
-		QString line = in.readLine();
-		//skip comments
-		if (line.startsWith('#'))
-			continue;
-
-		field=line.section('=',0,0); //get the field
-		value=line.section('=',1,1); //get the value
-		if (field=="TMOSETTINGSVERSION") {
-			if (value != TMOSETTINGSVERSION) {
-				add_log_message(tr("ERROR: File too old, cannot parse Tone Mapping Setting file: ")+fname);
-				delete toreturn;
-				return NULL;
-			}
-		} else if (field=="TMO") {
-			if (value=="Ashikhmin02") {
-				toreturn->tmoperator=ashikhmin;
-			} else if (value == "Drago03") {
-				toreturn->tmoperator=drago;
-			} else if (value == "Durand02") {
-				toreturn->tmoperator=durand;
-			} else if (value == "Fattal02") {
-				toreturn->tmoperator=fattal;
-			} else if (value == "Pattanaik00") {
-				toreturn->tmoperator=pattanaik;
-			} else if (value == "Reinhard02") {
-				toreturn->tmoperator=reinhard02;
-			} else if (value == "Reinhard04") {
-				toreturn->tmoperator=reinhard04;
-			} else if (value == "Mantiuk06") {
-				toreturn->tmoperator=mantiuk;
-			}
-		} else if (field=="CONTRASTFACTOR") {
-			toreturn->operator_options.mantiukoptions.contrastfactor=value.toFloat();
-		} else if (field=="SATURATIONFACTOR") {
-			toreturn->operator_options.mantiukoptions.saturationfactor=value.toFloat();
-		} else if (field=="CONTRASTEQUALIZATION") {
-			toreturn->operator_options.mantiukoptions.contrastequalization=(value == "YES");
-		} else if (field=="SIMPLE") {
-			toreturn->operator_options.ashikhminoptions.simple= (value == "YES") ? true : false;
-		} else if (field=="EQUATION") {
-			toreturn->operator_options.ashikhminoptions.eq2= (value=="2") ? true : false;
-		} else if (field=="CONTRAST") {
-			toreturn->operator_options.ashikhminoptions.lct=value.toFloat();
-		} else if (field=="BIAS") {
-			toreturn->operator_options.dragooptions.bias=value.toFloat();
-		} else if (field=="SPATIAL") {
-			toreturn->operator_options.durandoptions.spatial=value.toFloat();
-		} else if (field=="RANGE") {
-			toreturn->operator_options.durandoptions.range=value.toFloat();
-		} else if (field=="BASE") {
-			toreturn->operator_options.durandoptions.base=value.toFloat();
-		} else if (field=="ALPHA") {
-			toreturn->operator_options.fattaloptions.alpha=value.toFloat();
-		} else if (field=="BETA") {
-			toreturn->operator_options.fattaloptions.beta=value.toFloat();
-		} else if (field=="COLOR") {
-			toreturn->operator_options.fattaloptions.color=value.toFloat();
-		} else if (field=="NOISE") {
-			toreturn->operator_options.fattaloptions.noiseredux=value.toFloat();
-		} else if (field=="OLDFATTAL") {
-			toreturn->operator_options.fattaloptions.newfattal= (value == "NO");
-		} else if (field=="MULTIPLIER") {
-			toreturn->operator_options.pattanaikoptions.multiplier=value.toFloat();
-		} else if (field=="LOCAL") {
-			toreturn->operator_options.pattanaikoptions.local= (value=="YES");
-		} else if (field=="AUTOLUMINANCE") {
-			toreturn->operator_options.pattanaikoptions.autolum= (value=="YES");
-		} else if (field=="CONE") {
-			toreturn->operator_options.pattanaikoptions.cone=value.toFloat();
-		} else if (field=="ROD") {
-			toreturn->operator_options.pattanaikoptions.rod=value.toFloat();
-		} else if (field=="KEY") {
-			toreturn->operator_options.reinhard02options.key=value.toFloat();
-		} else if (field=="PHI") {
-			toreturn->operator_options.reinhard02options.phi=value.toFloat();
-		} else if (field=="SCALES") {
-			toreturn->operator_options.reinhard02options.scales= (value=="YES") ? true : false;
-		} else if (field=="RANGE") {
-			toreturn->operator_options.reinhard02options.range=value.toInt();
-		} else if (field=="LOWER") {
-			toreturn->operator_options.reinhard02options.lower=value.toInt();
-		} else if (field=="UPPER") {
-			toreturn->operator_options.reinhard02options.upper=value.toInt();
-		} else if (field=="BRIGHTNESS") {
-			toreturn->operator_options.reinhard04options.brightness=value.toFloat();
-		} else if (field=="CHROMATICADAPTATION") {
-			toreturn->operator_options.reinhard04options.chromaticAdaptation=value.toFloat();
-		} else if (field=="LIGHTADAPTATION") {
-			toreturn->operator_options.reinhard04options.lightAdaptation=value.toFloat();
-		} else if (field=="PREGAMMA") {
-			toreturn->pregamma=value.toFloat();
-		} else {
-			add_log_message(tr("ERROR: cannot parse Tone Mapping Setting file: ")+fname);
-			delete toreturn;
-			return NULL;
-		}
-	}
-	return toreturn;
 }
 
 void BatchTMDialog::check_enable_start() {
@@ -240,6 +132,10 @@ void BatchTMDialog::check_enable_start() {
 
 void BatchTMDialog::out_folder_clicked() {
 	QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), recentPathSaveLDR);
+
+	settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dirname);
+	recentPathSaveLDR=dirname;
+
 	QFileInfo test(dirname);
 	if (test.isWritable() && test.exists() && test.isDir() && !dirname.isEmpty()) {
 		out_folder_widgets->setText(dirname);
@@ -338,6 +234,13 @@ void BatchTMDialog::start_called() {
 	overallProgressBar->setValue(0);
 	cancelbutton->setDisabled(true);
 	BatchGoButton->setDisabled(true);
+	out_folder_Button->setDisabled(true);
+	add_dir_HDRs_Button->setDisabled(true);
+	add_HDRs_Button->setDisabled(true);
+	remove_HDRs_Button->setDisabled(true);
+	add_dir_TMopts_Button->setDisabled(true);
+	add_TMopts_Button->setDisabled(true);
+	remove_TMOpts_Button->setDisabled(true);
 	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 	BatchGoButton->setText(tr("Processing..."));
 	qSort(tm_opt_list.begin(), tm_opt_list.end(), order_based_on_pregamma);
@@ -398,7 +301,7 @@ void BatchTMDialog::conditional_TMthread() {
 	if (first_not_started==-1 && HDRs_list.isEmpty()) {
 		qDebug("BATCH: conditional_TMthread: We are done, bailing out.");
 		if (overallProgressBar->value()==overallProgressBar->maximum()) {
-			BatchGoButton->setText(tr("Done"));
+			BatchGoButton->setText(tr("&Done"));
 			BatchGoButton->setEnabled(true);
 			add_log_message(tr("All tasks completed."));
 			QApplication::restoreOverrideCursor();
@@ -440,116 +343,18 @@ void BatchTMDialog::conditional_TMthread() {
 	
 }
 
-void BatchTMDialog::newResult(const QImage& newimage,tonemapping_options* opts) {
+void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts) {
 	qDebug("BATCH: newResult: Thread ended, it had pregamma=%g, save prefix is %s", opts->pregamma, current_hdr_fname.toAscii().constData());
 	running_threads--;
-	QString postfix=QString("_pregamma_%1_").arg(opts->pregamma);
-	switch (opts->tmoperator) {
-	case mantiuk: {
-		postfix+="mantiuk_";
-		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
-		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
-		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
-		if (contrast_eq) {
-			postfix+="contrast_equalization_";
-		} else {
-			postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
-		}
-		postfix+=QString("saturation_factor_%1").arg(saturationfactor);
-		}
-		break;
-	case fattal: {
-		if (!opts->operator_options.fattaloptions.newfattal)
-			postfix+="v1_";
-		postfix+="fattal_";
-		float alpha=opts->operator_options.fattaloptions.alpha;
-		float beta=opts->operator_options.fattaloptions.beta;
-		float saturation2=opts->operator_options.fattaloptions.color;
-		float noiseredux=opts->operator_options.fattaloptions.noiseredux;
-		postfix+=QString("alpha_%1_").arg(alpha);
-		postfix+=QString("beta_%1_").arg(beta);
-		postfix+=QString("saturation_%1_").arg(saturation2);
-		postfix+=QString("noiseredux_%1").arg(noiseredux);
-		}
-		break;
-	case ashikhmin: {
-		postfix+="ashikhmin_";
-		if (opts->operator_options.ashikhminoptions.simple) {
-			postfix+="-simple";
-		} else {
-			if (opts->operator_options.ashikhminoptions.eq2) {
-				postfix+="-eq2_";
-			} else {
-				postfix+="-eq4_";
-			}
-			postfix+=QString("local_%1").arg(opts->operator_options.ashikhminoptions.lct);
-		}
-		}
-		break;
-	case drago: {
-		postfix+="drago_";
-		postfix+=QString("bias_%1").arg(opts->operator_options.dragooptions.bias);
-		}
-		break;
-	case durand: {
-		float spatial=opts->operator_options.durandoptions.spatial;
-		float range=opts->operator_options.durandoptions.range;
-		float base=opts->operator_options.durandoptions.base;
-		postfix+="durand_";
-		postfix+=QString("spatial_%1_").arg(spatial);
-		postfix+=QString("range_%1_").arg(range);
-		postfix+=QString("base_%1").arg(base);
-		}
-		break;
-	case pattanaik: {
-		float multiplier=opts->operator_options.pattanaikoptions.multiplier;
-		float cone=opts->operator_options.pattanaikoptions.cone;
-		float rod=opts->operator_options.pattanaikoptions.rod;
-		postfix+="pattanaik00_";
-		postfix+=QString("mul_%1_").arg(multiplier);
-		if (opts->operator_options.pattanaikoptions.local) {
-			postfix+="local";
-		} else if (opts->operator_options.pattanaikoptions.autolum) {
-			postfix+="autolum";
-		} else {
-			postfix+=QString("cone_%1_").arg(cone);
-			postfix+=QString("rod_%1_").arg(rod);
-		}
-		}
-		break;
-	case reinhard02: {
-		float key=opts->operator_options.reinhard02options.key;
-		float phi=opts->operator_options.reinhard02options.phi;
-		int range=opts->operator_options.reinhard02options.range;
-		int lower=opts->operator_options.reinhard02options.lower;
-		int upper=opts->operator_options.reinhard02options.upper;
-		postfix+="reinhard02_";
-		postfix+=QString("key_%1_").arg(key);
-		postfix+=QString("phi_%1").arg(phi);
-		if (opts->operator_options.reinhard02options.scales) {
-			postfix+=QString("_scales_");
-			postfix+=QString("range_%1_").arg(range);
-			postfix+=QString("lower%1_").arg(lower);
-			postfix+=QString("upper%1").arg(upper);
-		}
-		}
-		break;
-	case reinhard04: {
-		float brightness=opts->operator_options.reinhard04options.brightness;
-		float chromaticAdaptation= opts->operator_options.reinhard04options.chromaticAdaptation;
-		float lightAdaptation=opts->operator_options.reinhard04options.lightAdaptation;
-		postfix+="reinhard04_";
-		postfix+=QString("brightness_%1_").arg(brightness);
-		postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
-		postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
-		}
-		break;
-	}
-	if (!newimage.save(current_hdr_fname+postfix+"."+desired_format, desired_format.toAscii().constData(), 100)) {
-		qDebug("BATCH: newResult: Cannot save to %s",(current_hdr_fname+postfix+"."+desired_format).toAscii().constData());
-		add_log_message(tr("ERROR: Cannot save to file: ")+current_hdr_fname+postfix+"."+desired_format);
+	TMOptionsOperations operations(opts);
+	QString postfix=operations.getPostfix();
+	QString fname=current_hdr_fname+"_"+postfix+"."+desired_format;
+	if (!newimage.save(fname, desired_format.toAscii().constData(), 100)) {
+		qDebug("BATCH: newResult: Cannot save to %s",fname.toAscii().constData());
+		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
-		add_log_message(tr("Successfully saved LDR file: ")+current_hdr_fname+postfix+"."+desired_format);
+		ExifOperations::writeExifData(fname.toStdString(),operations.getExifComment().toStdString());
+		add_log_message(tr("Successfully saved LDR file: ")+fname);
 	}
 	overallProgressBar->setValue(overallProgressBar->value()+1);
 	conditional_TMthread();

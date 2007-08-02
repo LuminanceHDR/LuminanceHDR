@@ -21,9 +21,10 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "options_impl.h"
 #include <QColorDialog>
 #include <QFileDialog>
+#include "options_impl.h"
+#include "../config.h"
 
 QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings *s) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor), settings(s) {
 	setupUi(this);

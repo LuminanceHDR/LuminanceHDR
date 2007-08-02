@@ -30,7 +30,7 @@
 #include "transplant_impl.h"
 #include "../generated_uic/ui_help_about.h"
 #include "../Exif/exif_operations.h"
-#include "../options.h"
+#include "../config.h"
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);

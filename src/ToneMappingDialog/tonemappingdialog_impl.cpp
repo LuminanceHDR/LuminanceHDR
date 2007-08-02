@@ -29,7 +29,6 @@
 #include <QWhatsThis>
 #include "tonemappingdialog_impl.h"
 #include "ldrviewer.h"
-#include "../options.h"
 #include "../Exif/exif_operations.h"
 #include "../config.h"
 

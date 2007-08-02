@@ -38,7 +38,7 @@ class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 Q_OBJECT
 
 public:
-	HdrWizardForm(QWidget *parent, dcraw_opts *options);
+	HdrWizardForm(QWidget *parent, qtpfsgui_opts *options);
 	~HdrWizardForm();
 	pfs::Frame* getPfsFrameHDR();
 	QString getCaptionTEXT();

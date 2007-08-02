@@ -29,7 +29,6 @@
 #include <QProgressBar>
 #include <QKeyEvent>
 #include "tonemapping_widget.h"
-#include "../options.h"
 #include "../config.h"
 #include "../Threads/tonemapper_thread.h"
 

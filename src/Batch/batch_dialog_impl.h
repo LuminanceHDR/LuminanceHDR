@@ -26,6 +26,7 @@
 
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
+#include <QSettings>
 #include "../../generated_uic/ui_batch_dialog.h"
 #include "../options.h"
 namespace pfs {
@@ -60,6 +61,7 @@ private slots:
 protected:
 // 	void closeEvent(QCloseEvent *);
 private:
+	QSettings settings;
 	//selection start/stop left/right.
 	int start_left,stop_left,start_right,stop_right;
 	// number of threads currently running in parallel.

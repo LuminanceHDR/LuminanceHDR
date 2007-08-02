@@ -32,10 +32,12 @@ extern "C" {
 #include "../arch/freebsd/s_exp2f.c"
 }
 #endif
+
 #include "hdrwizardform_impl.h"
-#include "../Fileformat/pfsindcraw.h"
 #include "../Fileformat/pfstiff.h"
 #include "../Exif/exif_operations.h"
+#include "../Fileformat/pfsindcraw.h"
+#include "../config.h"
 
 const config_triple predef_confs[6]= {
 {TRIANGULAR, GAMMA, DEBEVEC,""},
@@ -47,7 +49,7 @@ const config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, dcraw_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), ldr_tiff(false), opts(options) {
+HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), ldr_tiff(false), opts(&(options->dcraw_options)) {
 	setupUi(this);
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));

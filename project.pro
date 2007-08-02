@@ -278,6 +278,7 @@ FORMS = forms/maingui.ui \
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
+           src/options.h \
            src/MainWindow/maingui_impl.h \
            src/MainWindow/hdrviewer.h \
            src/MainWindow/luminancerange_widget.h \
@@ -317,6 +318,7 @@ HEADERS += src/Libpfs/array2d.h \
 SOURCES += src/Libpfs/pfs.cpp \
            src/Libpfs/colorspace.cpp \
            src/main.cpp \
+           src/options.cpp \
            src/MainWindow/maingui_impl.cpp \
            src/MainWindow/hdrviewer.cpp \
            src/MainWindow/luminancerange_widget.cpp \

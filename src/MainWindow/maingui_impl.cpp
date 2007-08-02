@@ -108,7 +108,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 }
 
 void MainGui::fileNewViaWizard() {
-	wizard=new HdrWizardForm (this,&(qtpfsgui_options->dcraw_options));
+	wizard=new HdrWizardForm (this,qtpfsgui_options);
 	if (wizard->exec() == QDialog::Accepted) {
 		HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
 		newmdi->updateHDR(wizard->getPfsFrameHDR());
