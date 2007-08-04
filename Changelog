@@ -1,4 +1,14 @@
 Changes:
+02-08-2007 v1.8.12
+* changed order of tone mapping tabs.
+* fixed tone mapping settings file parsing bug (fattal).
+* fixed "shortcuts assert" crash.
+* improved batch dialog behavior (disable widget during tone mapping).
+* fixed some small graphical glitches (removed dot from tooltips).
+* added "what's this" descriptions & actions.
+* modified icon apply.
+* some code refactoring.
+
 31-07-2007 v1.8.11
 * added custom size result
 * added new operator: mantiuk06

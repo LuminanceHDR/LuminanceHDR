@@ -26,8 +26,13 @@
 SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), fittingwin(false) {
 	setBackgroundRole(QPalette::Light);
 	imageLabel->setBackgroundRole(QPalette::Base);
+	//the label ignores the pixmap's size
 	imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+	//the label will scale the image to fill all available space (to its -the label's- size)
 	imageLabel->setScaledContents(true);
+	//false (the default), the scroll area honors the size of its widget.
+	//Regardless of this property, you can programmatically resize the widget using widget()->resize()
+	//indeed, when I zoom in/out I call imageLabel->resize(...)
 	setWidgetResizable(false);
 	setWidget(imageLabel);
 }
@@ -47,6 +52,7 @@ void SmartScrollArea::fitToWindow(bool checked) {
 		scaleImage(1);
 }
 void SmartScrollArea::normalSize() {
+	//use the image size for the label
 	imageLabel->adjustSize();
 	scaleFactor = 1.0;
 }

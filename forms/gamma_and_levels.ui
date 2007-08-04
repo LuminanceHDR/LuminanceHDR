@@ -1,6 +1,9 @@
 <ui version="4.0" >
  <class>LevelsDialog</class>
  <widget class="QDialog" name="LevelsDialog" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -14,6 +17,9 @@
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
+  </property>
+  <property name="modal" >
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >

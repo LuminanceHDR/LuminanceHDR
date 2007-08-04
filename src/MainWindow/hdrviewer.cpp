@@ -140,10 +140,7 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     //zoom at original size, 100%
     //make the label use the image dimensions
     imageLabel->adjustSize();
-//     update();
     imageLabel->update();
-//     repaint();
-//     imageLabel->repaint();
 }
 
 

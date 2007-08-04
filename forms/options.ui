@@ -97,7 +97,7 @@
        </item>
        <item>
         <property name="text" >
-         <string>Tiff Options</string>
+         <string>Hdr Tiff</string>
         </property>
         <property name="icon" >
          <iconset resource="../icons.qrc" >:/new/prefix1/images/raw_import.png</iconset>

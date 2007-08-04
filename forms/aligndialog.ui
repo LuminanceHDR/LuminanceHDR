@@ -1,22 +1,25 @@
 <ui version="4.0" >
- <author></author>
- <comment></comment>
- <exportmacro></exportmacro>
  <class>AlignDialog</class>
  <widget class="QDialog" name="AlignDialog" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
-    <height>587</height>
+    <width>1139</width>
+    <height>657</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Align Images</string>
+   <string>Alignment Dialog</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+  </property>
+  <property name="modal" >
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
@@ -26,30 +29,247 @@
     <number>6</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="MainTabWidget" >
-     <widget class="QWidget" name="ImagesListTab" >
-      <attribute name="title" >
-       <string>1. Images List</string>
-      </attribute>
-      <attribute name="toolTip" >
-       <string>In this tab you will find the list of initial and unaligned images</string>
-      </attribute>
-      <layout class="QHBoxLayout" >
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>9</number>
+        <number>0</number>
        </property>
        <property name="spacing" >
         <number>6</number>
        </property>
        <item>
-        <widget class="QFrame" name="frame_table" >
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
+        <widget class="QGroupBox" name="histogramGroupBox" >
+         <property name="minimumSize" >
+          <size>
+           <width>0</width>
+           <height>100</height>
+          </size>
          </property>
-         <property name="frameShadow" >
-          <enum>QFrame::Raised</enum>
+         <property name="title" >
+          <string>Hi&amp;stogram</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="listsGroupBox" >
+         <property name="title" >
+          <string>&amp;Images</string>
          </property>
          <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>9</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label" >
+              <property name="text" >
+               <string>&amp;Movable</string>
+              </property>
+              <property name="buddy" >
+               <cstring>movableListWidget</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_2" >
+              <property name="text" >
+               <string>&amp;Reference</string>
+              </property>
+              <property name="buddy" >
+               <cstring>movableListWidget_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer>
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" >
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>10</number>
+              </property>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="prevLeftButton" >
+                <property name="arrowType" >
+                 <enum>Qt::UpArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="nextLeftButton" >
+                <property name="arrowType" >
+                 <enum>Qt::DownArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QListWidget" name="movableListWidget" />
+            </item>
+            <item>
+             <widget class="Line" name="line" >
+              <property name="orientation" >
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QListWidget" name="movableListWidget_2" />
+            </item>
+            <item>
+             <layout class="QVBoxLayout" >
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>26</width>
+                  <height>41</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="prevRightButton" >
+                <property name="arrowType" >
+                 <enum>Qt::UpArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="nextRightButton" >
+                <property name="arrowType" >
+                 <enum>Qt::DownArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer>
+                <property name="orientation" >
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" >
+                 <size>
+                  <width>26</width>
+                  <height>41</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="correctionsGroupBox" >
+         <property name="title" >
+          <string>C&amp;orrections</string>
+         </property>
+         <layout class="QHBoxLayout" >
           <property name="margin" >
            <number>0</number>
           </property>
@@ -57,628 +277,183 @@
            <number>6</number>
           </property>
           <item>
-           <widget class="QTableWidget" name="TableWidget" >
-            <property name="selectionMode" >
-             <enum>QAbstractItemView::ContiguousSelection</enum>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
             </property>
-            <property name="selectionBehavior" >
-             <enum>QAbstractItemView::SelectRows</enum>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
             </property>
-            <property name="rowCount" >
-             <number>0</number>
-            </property>
-            <column>
-             <property name="text" >
-              <string>Filename</string>
-             </property>
-            </column>
-            <column>
-             <property name="text" >
-              <string># Control Points</string>
-             </property>
-            </column>
-            <column>
-             <property name="text" >
-              <string>Master</string>
-             </property>
-            </column>
-           </widget>
+           </spacer>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_controls" >
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow" >
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
-          </property>
-          <property name="spacing" >
-           <number>0</number>
-          </property>
           <item>
-           <layout class="QVBoxLayout" >
+           <layout class="QGridLayout" >
             <property name="margin" >
              <number>0</number>
             </property>
             <property name="spacing" >
-             <number>7</number>
+             <number>6</number>
             </property>
-            <item>
-             <widget class="QGroupBox" name="List_groupBox" >
-              <property name="title" >
-               <string>List</string>
+            <item row="0" column="0" >
+             <widget class="QLabel" name="label_3" >
+              <property name="text" >
+               <string>&amp;Horizontal:</string>
               </property>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>6</number>
-               </property>
-               <property name="spacing" >
-                <number>11</number>
-               </property>
-               <item>
-                <layout class="QHBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QToolButton" name="moveup_button" >
-                   <property name="text" >
-                    <string>...</string>
-                   </property>
-                   <property name="icon" >
-                    <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="moveup_label" >
-                   <property name="text" >
-                    <string>Move selected images up</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QToolButton" name="movedown_button" >
-                   <property name="text" >
-                    <string>...</string>
-                   </property>
-                   <property name="icon" >
-                    <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="movedown_label" >
-                   <property name="text" >
-                    <string>Move selected images down</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QToolButton" name="remove_button" >
-                   <property name="text" >
-                    <string>...</string>
-                   </property>
-                   <property name="icon" >
-                    <iconset resource="../icons.qrc" >:/new/prefix1/images/remove.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="remove_label" >
-                   <property name="text" >
-                    <string>Remove selected images</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>6</number>
-                 </property>
-                 <item>
-                  <widget class="QToolButton" name="append_button" >
-                   <property name="text" >
-                    <string>...</string>
-                   </property>
-                   <property name="icon" >
-                    <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="append_label" >
-                   <property name="text" >
-                    <string>Append new images</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="Line" name="line" >
-                 <property name="orientation" >
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="Current_Images_Del_CP_Button" >
-                 <property name="toolTip" >
-                  <string>For the current image(s)</string>
-                 </property>
-                 <property name="text" >
-                  <string>Delete all CPs</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="buddy" >
+               <cstring>vertShiftSB</cstring>
+              </property>
              </widget>
             </item>
-            <item>
-             <widget class="QGroupBox" name="Current_Image_groupBox" >
-              <property name="title" >
-               <string>Current Image</string>
+            <item row="1" column="0" >
+             <widget class="QLabel" name="label_4" >
+              <property name="layoutDirection" >
+               <enum>Qt::LeftToRight</enum>
               </property>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>6</number>
-               </property>
-               <property name="spacing" >
-                <number>11</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="Current_Image_setMaster_Button" >
-                 <property name="text" >
-                  <string>Set Master</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              <property name="text" >
+               <string>&amp;Vertical:</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buddy" >
+               <cstring>vertShiftSB</cstring>
+              </property>
              </widget>
             </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
+            <item row="0" column="1" >
+             <widget class="QSpinBox" name="horizShiftSB" />
+            </item>
+            <item row="1" column="1" >
+             <widget class="QSpinBox" name="vertShiftSB" />
             </item>
            </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" >
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <property name="spacing" >
+             <number>6</number>
+            </property>
+            <item row="0" column="1" >
+             <widget class="QToolButton" name="upToolButton" >
+              <property name="arrowType" >
+               <enum>Qt::UpArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" >
+             <widget class="QToolButton" name="downToolButton" >
+              <property name="arrowType" >
+               <enum>Qt::DownArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2" >
+             <widget class="QToolButton" name="rightToolButton" >
+              <property name="arrowType" >
+               <enum>Qt::RightArrow</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" >
+             <widget class="QToolButton" name="leftToolButton" >
+              <property name="arrowType" >
+               <enum>Qt::LeftArrow</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="CP_Tab" >
-      <attribute name="title" >
-       <string>2. Control Points</string>
-      </attribute>
-      <attribute name="toolTip" >
-       <string>In this list you will be able to set, modify and remove the control points between a pair of images</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
+     </item>
+     <item>
+      <widget class="QFrame" name="diffImageFrame" >
+       <property name="minimumSize" >
+        <size>
+         <width>800</width>
+         <height>600</height>
+        </size>
        </property>
-       <property name="spacing" >
-        <number>6</number>
+       <property name="frameShape" >
+        <enum>QFrame::StyledPanel</enum>
        </property>
-       <item>
-        <widget class="QSplitter" name="splitter" >
-         <property name="orientation" >
-          <enum>Qt::Vertical</enum>
-         </property>
-         <widget class="QFrame" name="Upper_frame_CP" >
-          <property name="sizePolicy" >
-           <sizepolicy>
-            <hsizetype>5</hsizetype>
-            <vsizetype>3</vsizetype>
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="frameShape" >
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <layout class="QHBoxLayout" >
-           <property name="margin" >
-            <number>9</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
-           <item>
-            <layout class="QHBoxLayout" >
-             <property name="margin" >
-              <number>0</number>
-             </property>
-             <property name="spacing" >
-              <number>6</number>
-             </property>
-             <item>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>0</number>
-               </property>
-               <property name="spacing" >
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QToolButton" name="slide_left_button" >
-                 <property name="text" >
-                  <string>go left</string>
-                 </property>
-                 <property name="icon" >
-                  <iconset resource="../icons.qrc" >:/new/prefix1/images/back.png</iconset>
-                 </property>
-                 <property name="toolButtonStyle" >
-                  <enum>Qt::ToolButtonTextUnderIcon</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>20</width>
-                   <height>111</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QTabWidget" name="left_tabs" >
-               <widget class="QWidget" name="tab_0_l" >
-                <attribute name="title" >
-                 <string>Image 1</string>
-                </attribute>
-                <layout class="QVBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QFrame" name="inner_frame_intab0_l" >
-                   <property name="frameShape" >
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow" >
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" >
-             <property name="margin" >
-              <number>0</number>
-             </property>
-             <property name="spacing" >
-              <number>6</number>
-             </property>
-             <item>
-              <widget class="QTabWidget" name="right_tabs" >
-               <widget class="QWidget" name="tab_0_r" >
-                <attribute name="title" >
-                 <string>Image 1</string>
-                </attribute>
-                <layout class="QVBoxLayout" >
-                 <property name="margin" >
-                  <number>0</number>
-                 </property>
-                 <property name="spacing" >
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QFrame" name="inner_frame_intab0_r" >
-                   <property name="frameShape" >
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow" >
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
-             </item>
-             <item>
-              <layout class="QVBoxLayout" >
-               <property name="margin" >
-                <number>0</number>
-               </property>
-               <property name="spacing" >
-                <number>6</number>
-               </property>
-               <item>
-                <widget class="QToolButton" name="slide_right_button" >
-                 <property name="text" >
-                  <string>go right</string>
-                 </property>
-                 <property name="icon" >
-                  <iconset resource="../icons.qrc" >:/new/prefix1/images/forward.png</iconset>
-                 </property>
-                 <property name="toolButtonStyle" >
-                  <enum>Qt::ToolButtonTextUnderIcon</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer>
-                 <property name="orientation" >
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" >
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QFrame" name="frame_CP_below" >
-          <property name="maximumSize" >
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="frameShape" >
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow" >
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QHBoxLayout" >
-           <property name="margin" >
-            <number>9</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QTableWidget" name="Details_CP_table" >
-             <property name="selectionMode" >
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior" >
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <column>
-              <property name="text" >
-               <string>Number</string>
-              </property>
-             </column>
-             <column>
-              <property name="text" >
-               <string>Left X</string>
-              </property>
-             </column>
-             <column>
-              <property name="text" >
-               <string>Left Y</string>
-              </property>
-             </column>
-             <column>
-              <property name="text" >
-               <string>Right X</string>
-              </property>
-             </column>
-             <column>
-              <property name="text" >
-               <string>Right Y</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" >
-             <property name="margin" >
-              <number>0</number>
-             </property>
-             <property name="spacing" >
-              <number>6</number>
-             </property>
-             <item>
-              <widget class="QToolButton" name="Remove_Current_pair_button" >
-               <property name="text" >
-                <string>Remove CP(s)</string>
-               </property>
-               <property name="icon" >
-                <iconset resource="../icons.qrc" >:/new/prefix1/images/remove.png</iconset>
-               </property>
-               <property name="toolButtonStyle" >
-                <enum>Qt::ToolButtonTextUnderIcon</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer>
-               <property name="orientation" >
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" >
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="Align_tab" >
-      <attribute name="title" >
-       <string>3. Align</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
+       <property name="frameShadow" >
+        <enum>QFrame::Sunken</enum>
        </property>
-       <property name="spacing" >
-        <number>6</number>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>1</number>
+     </property>
+     <property name="spacing" >
+      <number>9</number>
+     </property>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
        </property>
-       <item>
-        <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>0</number>
-         </property>
-         <property name="spacing" >
-          <number>6</number>
-         </property>
-         <item>
-          <layout class="QVBoxLayout" >
-           <property name="margin" >
-            <number>0</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="processed_files_label" >
-             <property name="text" >
-              <string>Processed Files</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QListWidget" name="processed_files_list" />
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" >
-           <property name="margin" >
-            <number>0</number>
-           </property>
-           <property name="spacing" >
-            <number>6</number>
-           </property>
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="Align_button" >
-             <property name="text" >
-              <string>Align!</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation" >
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" >
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QProgressBar" name="progressBar" >
-         <property name="value" >
-          <number>0</number>
-         </property>
-         <property name="alignment" >
-          <set>Qt::AlignHCenter</set>
-         </property>
-         <property name="orientation" >
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+       <property name="sizeHint" >
+        <size>
+         <width>141</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="backbutton" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>&lt; &amp;Back</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Next_Finishbutton" >
+       <property name="text" >
+        <string>&amp;Next ></string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelbutton" >
+       <property name="text" >
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
- <pixmapfunction></pixmapfunction>
  <resources>
   <include location="../icons.qrc" />
  </resources>

@@ -153,7 +153,8 @@ void MainGui::updateRecentDirHDRSetting(QString newvalue) {
 
 void MainGui::fileSaveAs()
 {
-	assert(currenthdr!=NULL);
+	if (currenthdr==NULL)
+		return;
 	QStringList filetypes;
 	filetypes += tr("All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
 	filetypes += "OpenEXR (*.exr)";
@@ -246,7 +247,8 @@ void MainGui::updateActions( QWidget * w ) {
 }
 
 void MainGui::tonemap_requested() {
-	assert(currenthdr!=NULL);
+	if(currenthdr==NULL)
+		return;
 	QFileInfo test(qtpfsgui_options->tempfilespath);
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		this->setDisabled(true);
@@ -255,7 +257,7 @@ void MainGui::tonemap_requested() {
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
 	} else {
-		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Configure Qtpfsgui... -> Tone mapping."),
+		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 	}
 }
@@ -273,7 +275,8 @@ void MainGui::rotatecw_requested() {
 }
 
 void MainGui::dispatchrotate(bool clockwise) {
-	assert(currenthdr!=NULL);
+	if(currenthdr==NULL)
+		return;
 	rotateccw->setEnabled(false);
 	rotatecw->setEnabled(false);
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
@@ -290,7 +293,8 @@ void MainGui::dispatchrotate(bool clockwise) {
 }
 
 void MainGui::resize_requested() {
-	assert(currenthdr!=NULL);
+	if (currenthdr==NULL)
+		return;
 	ResizeDialog *resizedialog=new ResizeDialog(this,currenthdr->getHDRPfsFrame());
 	if (resizedialog->exec() == QDialog::Accepted) {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );

@@ -99,7 +99,10 @@ void TonemappingWindow::current_ldr_fit_to_win(bool checked) {
 
 void TonemappingWindow::LevelsRequested(bool checked) {
 	if (checked) {
-		((LdrViewer*)(workspace->activeWindow()))->LevelsRequested(checked);
+		LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+		if (currentLDR==NULL)
+			return;
+		currentLDR->LevelsRequested(checked);
 		actionFix_Histogram->setDisabled(true);
 	}
 }
@@ -113,6 +116,8 @@ void TonemappingWindow::levels_closed() {
 
 void TonemappingWindow::saveLDR() {
 	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+	if (currentLDR==NULL)
+		return;
 	QStringList filetypes;
 	filetypes += tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)");
 	filetypes += "JPEG (*.jpg *.jpeg)";

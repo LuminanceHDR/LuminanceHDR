@@ -88,8 +88,7 @@ void LdrViewer::LevelsRequested(bool a) {
 	connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
 	//restore original on "cancel"
 	connect(levels,SIGNAL(rejected()),this,SLOT(restoreoriginal()));
-	levels->setModal(true);
-	levels->show();
+	levels->exec();
 }
 
 void LdrViewer::updatePreview(unsigned char *LUT) {
