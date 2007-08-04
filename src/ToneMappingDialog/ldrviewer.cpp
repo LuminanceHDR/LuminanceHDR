@@ -45,9 +45,9 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 }
 
 LdrViewer::~LdrViewer() {
-	//TODO evaluate possible delete QImage*
 	delete imageLabel;
 	delete scrollArea;
+	delete [] origimage.bits();
 }
 
 void LdrViewer::parseOptions(tonemapping_options *opts) {
