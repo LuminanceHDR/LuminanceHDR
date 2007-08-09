@@ -93,7 +93,7 @@
     <string>Close Tone Mapping Dialog</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+Q</string>
+    <string>Ctrl+Q</string>
    </property>
   </action>
   <action name="actionViewTMdock" >
@@ -148,7 +148,7 @@
     <string>Tune the histogram for the current LDR</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+L</string>
+    <string>Ctrl+L</string>
    </property>
   </action>
   <action name="actionSave" >
@@ -220,7 +220,7 @@
     <string>Layout all LDRs as thumbnails.</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+T</string>
+    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="actionCascade" >
@@ -234,7 +234,7 @@
     <string>Cascade all LDRs in the workspace</string>
    </property>
    <property name="shortcut" >
-    <string>CTRL+D</string>
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="actionFit_to_Window" >
@@ -266,6 +266,12 @@
    </property>
    <property name="text" >
     <string>What's This?</string>
+   </property>
+   <property name="toolTip" >
+    <string>Get information about the graphical elements</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Use this button to get information about the graphical elements</string>
    </property>
    <property name="shortcut" >
     <string>Shift+F1</string>

@@ -26,12 +26,13 @@
 
 #include <QDialog>
 #include <QString>
-// #include <QMap>
+#include <QSettings>
 #include <image.hpp>
 #include <exif.hpp>
 #include "../generated_uic/ui_hdrwizardform.h"
 #include "hdrcreation/createhdr.h"
 #include "../options.h"
+#include <QProcess>
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 {
@@ -49,22 +50,26 @@ private:
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
-	QString RecentDirInputLDRs;
 	QString getQStringFromConfig( int type );
 	void clearlists();
 	int numberinputfiles; //it is also the lenght of the array below
 	float *expotimes;
-	bool ldr_tiff;
+// 	bool ldr_tiff;
 	bool need_to_transform_indices;
 	bool enable_usability_jump_hack;
 
 	QList<QImage*> ImagePtrList;  //ldr input
+	QList<bool> ldr_tiff_input;  //ldr input
 	Array2DList listhdrR,listhdrG,listhdrB; //hdr input
-	dcraw_opts *opts;
+	qtpfsgui_opts *opts;
+	QSettings settings;
+	QStringList fileStringList;
+	QProcess *ais;
+	pfs::Frame* PfsFrameHDR;
 
 	void fillEVcombobox();
 	void transform_indices_into_values();
-	pfs::Frame* PfsFrameHDR;
+	bool check_same_size(int&,int&,int,int);
 
 private slots:
 	void nextpressed();
@@ -85,5 +90,7 @@ private slots:
 	void EVcomboBoxactivated(int);
 	void highlighted(int);
 	void fileselected(int);
+	void ais_failed(QProcess::ProcessError);
+	void ais_finished(int,QProcess::ExitStatus);
 };
 #endif

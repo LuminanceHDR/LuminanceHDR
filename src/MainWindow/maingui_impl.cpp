@@ -26,10 +26,12 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QWhatsThis>
+#include <QSignalMapper>
 #include "maingui_impl.h"
 #include "../Fileformat/pfstiff.h"
 #include "../ToneMappingDialog/tonemappingdialog_impl.h"
-#include "../generated_uic/ui_help_about.h"
+#include "../generated_uic/ui_documentation.h"
+#include "../generated_uic/ui_about.h"
 #include "../TransplantExif/transplant_impl.h"
 #include "../Batch/batch_dialog_impl.h"
 #include "../Threads/io_threads.h"
@@ -58,8 +60,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	load_options(qtpfsgui_options);
 
 	setWindowTitle("Qtpfsgui v"QTPFSGUIVERSION);
-// 	qDebug("Qtpfsgui v"QTPFSGUIVERSION);
-	connect(workspace, SIGNAL(windowActivated(QWidget*)), this, SLOT(updateActions(QWidget *)) );
+
+	connect(workspace,SIGNAL(windowActivated(QWidget*)),this,SLOT(updateActions(QWidget*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
@@ -68,30 +70,37 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
 	connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
-	connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_ldr_exposure()));
-	connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_fit_exposure()));
-	connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_shrink_exposure()));
-	connect(Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdiwindow_extend_exposure()));
-	connect(Decrease_exposure,SIGNAL(triggered()),this,SLOT(current_mdiwindow_decrease_exposure()));
-	connect(Increase_exposure,SIGNAL(triggered()),this,SLOT(current_mdiwindow_increase_exposure()));
-	connect(zoomInAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_zoomin()));
-	connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_zoomout()));
-	connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdiwindow_fit_to_win(bool)));
-	connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdiwindow_original_size()));
+	connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_ldr_exp()));
+	connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_fit_exp()));
+	connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_shrink_exp()));
+	connect(Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_extend_exp()));
+	connect(Decrease_exposure,SIGNAL(triggered()),this,SLOT(current_mdi_decrease_exp()));
+	connect(Increase_exposure,SIGNAL(triggered()),this,SLOT(current_mdi_increase_exp()));
+	connect(zoomInAct,SIGNAL(triggered()),this,SLOT(current_mdi_zoomin()));
+	connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(current_mdi_zoomout()));
+	connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdi_fit_to_win(bool)));
+	connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdi_original_size()));
 	connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 	connect(actionTile,SIGNAL(triggered()),workspace,SLOT(tile()));
 	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
 	connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
+	connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
+	//QSignalMapper?
 	connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
 	connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
 	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 
+	windowMapper = new QSignalMapper(this);
+	connect(windowMapper,SIGNAL(mapped(QWidget*)),workspace,SLOT(setActiveWindow(QWidget*)));
+
+	//recent files
         for (int i = 0; i < MaxRecentFiles; ++i) {
             recentFileActs[i] = new QAction(this);
             recentFileActs[i]->setVisible(false);
@@ -108,15 +117,18 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 }
 
 void MainGui::fileNewViaWizard() {
-	wizard=new HdrWizardForm (this,qtpfsgui_options);
-	if (wizard->exec() == QDialog::Accepted) {
-		HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
-		newmdi->updateHDR(wizard->getPfsFrameHDR());
-		workspace->addWindow(newmdi);
-		newmdi->setWindowTitle(wizard->getCaptionTEXT());
-		newmdi->show();
+	HdrWizardForm *wizard;
+	if (testTempDir(qtpfsgui_options->tempfilespath)) {
+		wizard=new HdrWizardForm (this,qtpfsgui_options);
+		if (wizard->exec() == QDialog::Accepted) {
+			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
+			newmdi->updateHDR(wizard->getPfsFrameHDR());
+			workspace->addWindow(newmdi);
+			newmdi->setWindowTitle(wizard->getCaptionTEXT());
+			newmdi->show();
+		}
+		delete wizard;
 	}
-	delete wizard;
 }
 
 void MainGui::fileOpen() {
@@ -175,11 +187,9 @@ void MainGui::fileSaveAs()
 		if(!fname.isEmpty()) {
 			QFileInfo qfi(fname);
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-			if (RecentDirHDRSetting != qfi.path() ) {
+			if (RecentDirHDRSetting != qfi.path() )
 				// update internal field variable
-				RecentDirHDRSetting=qfi.path();
-				settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
-			}
+				updateRecentDirHDRSetting(qfi.path());
 
 			if (qfi.suffix().toUpper()=="EXR") {
 				writeEXRfile  (currenthdr->getHDRPfsFrame(),qfi.filePath().toUtf8().constData());
@@ -249,16 +259,23 @@ void MainGui::updateActions( QWidget * w ) {
 void MainGui::tonemap_requested() {
 	if(currenthdr==NULL)
 		return;
-	QFileInfo test(qtpfsgui_options->tempfilespath);
-	if (test.isWritable() && test.exists() && test.isDir()) {
+	if (testTempDir(qtpfsgui_options->tempfilespath)) {
 		this->setDisabled(true);
 		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), qtpfsgui_options->tempfilespath, currenthdr->filename);
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+	}
+}
+
+bool MainGui::testTempDir(QString dirname) {
+	QFileInfo test(dirname);
+	if (test.isWritable() && test.exists() && test.isDir()) {
+		return true;
 	} else {
-		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone mapping."),
+		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone Mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
+		return false;
 	}
 }
 
@@ -309,41 +326,41 @@ void MainGui::resize_requested() {
 	delete resizedialog;
 }
 
-void MainGui::current_mdiwindow_decrease_exposure() {
+void MainGui::current_mdi_decrease_exp() {
 	currenthdr->lumRange->decreaseExposure();
 }
-void MainGui::current_mdiwindow_extend_exposure() {
+void MainGui::current_mdi_extend_exp() {
 	currenthdr->lumRange->extendRange();
 }
-void MainGui::current_mdiwindow_fit_exposure() {
+void MainGui::current_mdi_fit_exp() {
 	currenthdr->lumRange->fitToDynamicRange();
 }
-void MainGui::current_mdiwindow_increase_exposure() {
+void MainGui::current_mdi_increase_exp() {
 	currenthdr->lumRange->increaseExposure();
 }
-void MainGui::current_mdiwindow_shrink_exposure() {
+void MainGui::current_mdi_shrink_exp() {
 	currenthdr->lumRange->shrinkRange();
 }
-void MainGui::current_mdiwindow_ldr_exposure() {
+void MainGui::current_mdi_ldr_exp() {
 	currenthdr->lumRange->lowDynamicRange();
 }
-void MainGui::current_mdiwindow_zoomin() {
+void MainGui::current_mdi_zoomin() {
 	currenthdr->zoomIn();
 	zoomOutAct->setEnabled(true);
 	zoomInAct->setEnabled(currenthdr->getScaleFactor() < 3.0);
 }
-void MainGui::current_mdiwindow_zoomout() {
+void MainGui::current_mdi_zoomout() {
 	currenthdr->zoomOut();
 	zoomInAct->setEnabled(true);
 	zoomOutAct->setEnabled(currenthdr->getScaleFactor() > 0.222);
 }
-void MainGui::current_mdiwindow_fit_to_win(bool checked) {
+void MainGui::current_mdi_fit_to_win(bool checked) {
 	currenthdr->fitToWindow(checked);
 	zoomInAct->setEnabled(!checked);
 	zoomOutAct->setEnabled(!checked);
 	normalSizeAct->setEnabled(!checked);
 }
-void MainGui::current_mdiwindow_original_size() {
+void MainGui::current_mdi_original_size() {
 	currenthdr->normalSize();
 	zoomInAct->setEnabled(true);
 	zoomOutAct->setEnabled(true);
@@ -365,6 +382,17 @@ void MainGui::enterWhatsThis() {
 	QWhatsThis::enterWhatsThisMode();
 }
 
+void MainGui::setCurrentFile(const QString &fileName) {
+	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+	files.removeAll(fileName);
+	files.prepend(fileName);
+	while (files.size() > MaxRecentFiles)
+		files.removeLast();
+
+	settings.setValue(KEY_RECENT_FILES, files);
+	updateRecentFileActions();
+}
+
 void MainGui::updateRecentFileActions() {
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	
@@ -383,13 +411,11 @@ void MainGui::updateRecentFileActions() {
 
 void MainGui::openRecentFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
-	if (action) {
+	if (action)
 		setupLoadThread(action->data().toString());
-	}
 }
 
 void MainGui::setupLoadThread(QString fname) {
-// 	QProgressBar *newprogressbar=new QProgressBar(statusBar());
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting, qtpfsgui_options);
 	connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
@@ -402,17 +428,6 @@ void MainGui::load_failed(QString fname) {
 	QMessageBox::critical(0,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"), QMessageBox::Ok,QMessageBox::NoButton);
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	files.removeAll(fname);
-	settings.setValue(KEY_RECENT_FILES, files);
-	updateRecentFileActions();
-}
-
-void MainGui::setCurrentFile(const QString &fileName) {
-	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
-	files.removeAll(fileName);
-	files.prepend(fileName);
-	while (files.size() > MaxRecentFiles)
-		files.removeLast();
-
 	settings.setValue(KEY_RECENT_FILES, files);
 	updateRecentFileActions();
 }
@@ -522,7 +537,6 @@ MainGui::~MainGui() {
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		delete recentFileActs[i];
 	}
-	//separatorRecentFiles should not be required
 }
 
 void MainGui::fileExit() {
@@ -561,6 +575,36 @@ void MainGui::Text_Alongside_Icons() {
 void MainGui::Text_Only() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
 	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+}
+
+void MainGui::aboutQtpfsgui() {
+	QDialog *about=new QDialog();
+	about->setAttribute(Qt::WA_DeleteOnClose);
+	Ui::AboutQtpfsgui ui;
+	ui.setupUi(about);
+	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
+	QString docDir = QCoreApplication::applicationDirPath();
+	docDir.append("/../Resources");
+	ui.GPLbox->setSearchPaths(QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << "./" << docDir << "/Applications/qtpfsgui.app/Contents/Resources");
+	ui.GPLbox->setSource(QUrl("COPYING"));
+	about->show();
+}
+
+void MainGui::updateWindowMenu() {
+	menuWindows->clear();
+	QList<QWidget *> windows = workspace->windowList();
+	for (int i = 0; i < windows.size(); ++i) {
+		HdrViewer *child = qobject_cast<HdrViewer *>(windows.at(i));
+		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->filename.isEmpty())? "Untitled":child->filename).fileName());
+		QAction *action  = menuWindows->addAction(text);
+		action->setCheckable(true);
+		action->setChecked(child==currenthdr);
+		connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+		windowMapper->setMapping(action, child);
+	}
+	menuWindows->addSeparator();
+	menuWindows->addAction(actionTile);
+	menuWindows->addAction(actionCascade);
 }
 
 void MainGui::batch_requested() {

@@ -72,11 +72,11 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	}
 //special treament for qt 4.2.1... removing "const" doesn't seem to work.
 #if QT_VERSION == 0x040201
-	QImage toreturn(const_cast<const uchar *>(data),width,height,QImage::Format_RGB32);
+	QImage toreturn(const_cast<const uchar *>(data),width,height,QImage::Format_ARGB32);
 #elif QT_VERSION <= 0x040200
-	QImage toreturn(data,width,height,QImage::Format_RGB32);
+	QImage toreturn(data,width,height,QImage::Format_ARGB32);
 #else
-	QImage toreturn(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
+	QImage toreturn(const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
 #endif
 	return toreturn;
 }

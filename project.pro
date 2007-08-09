@@ -178,8 +178,10 @@ htmls.files      = html
 htmls.path       = $${PREFIX}/share/qtpfsgui
 i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm i18n/lang_tr.qm
 i18n.path        = $$I18NDIR
+docs.files       = README COPYING AUTHORS INSTALL Changelog
+docs.path        = $${PREFIX}/share/qtpfsgui
 
-INSTALLS        += target menu icon htmls i18n
+INSTALLS        += target menu icon htmls i18n docs
 message ( "" )
 message ("********************************************************************")
 message ("Installation PREFIX=$$PREFIX")
@@ -190,11 +192,11 @@ DEFINES -= QT_NO_DEBUG_OUTPUT
 message ("Debug statements ENABLED")
 }
 message ("Here's what will be installed:")
-message ("qtpfsgui ==> $$target.path")
+message ("qtpfsgui         ==> $$target.path")
 message ("qtpfsgui.desktop ==> $$menu.path")
-message ("qtpfsgui.png ==> $$icon.path")
-message ("html directory ==> $$htmls.path")
-message ("i18n messages ==> $$i18n.path")
+message ("qtpfsgui.png     ==> $$icon.path")
+message ("html and docs    ==> $$htmls.path")
+message ("i18n messages    ==> $$i18n.path")
 message ("********************************************************************")
 
 MAJOR_MINOR_QT_VERSION = $$[QT_VERSION]
@@ -269,11 +271,13 @@ FORMS = forms/maingui.ui \
         forms/hdrwizardform.ui \
         forms/tonemappingdialog.ui \
         forms/tonemappingoptions.ui \
-        forms/help_about.ui \
+        forms/documentation.ui \
+        forms/about.ui \
         forms/options.ui \
         forms/transplantexifdialog.ui \
         forms/resizedialog.ui \
         forms/gamma_and_levels.ui \
+        forms/aligndialog.ui \
         forms/batch_dialog.ui
 
 HEADERS += src/Libpfs/array2d.h \
@@ -283,23 +287,25 @@ HEADERS += src/Libpfs/array2d.h \
            src/MainWindow/hdrviewer.h \
            src/MainWindow/luminancerange_widget.h \
            src/MainWindow/histogram.h \
-           src/HdrWizard/hdrwizardform_impl.h \
            src/ToneMappingDialog/gamma_and_levels.h \
            src/ToneMappingDialog/tonemappingdialog_impl.h \
            src/ToneMappingDialog/tonemapping_widget.h \
+           src/ToneMappingDialog/ldrviewer.h \
+           src/ToneMappingDialog/gang.h \
            src/Threads/tonemapper_thread.h \
            src/Threads/io_threads.h \
            src/Options/options_impl.h \
            src/TransplantExif/transplant_impl.h \
            src/Resize/resizedialog_impl.h \
+           src/HdrWizard/hdrwizardform_impl.h \
            src/HdrWizard/hdrcreation/createhdr.h \
            src/HdrWizard/hdrcreation/robertson02.h \
            src/HdrWizard/hdrcreation/responses.h   \
            src/HdrWizard/hdrcreation/icip06.h \
            src/HdrWizard/hdrcreation/debevec.h \
-           src/ToneMappingDialog/ldrviewer.h \
+           src/HdrWizard/Alignment/alignmentdialog_impl.h \
+           src/HdrWizard/Alignment/mtb_alignment.h \
            src/smart_scroll_area.h \
-           src/ToneMappingDialog/gang.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
            src/TM_operators/ashikhmin02/pyramid.h \
@@ -323,32 +329,36 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/MainWindow/hdrviewer.cpp \
            src/MainWindow/luminancerange_widget.cpp \
            src/MainWindow/histogram.cpp \
-           src/HdrWizard/hdrwizardform_impl.cpp \
            src/ToneMappingDialog/gamma_and_levels.cpp \
            src/ToneMappingDialog/tonemappingdialog_impl.cpp \
            src/ToneMappingDialog/tonemapping_widget.cpp \
+           src/ToneMappingDialog/ldrviewer.cpp \
+           src/ToneMappingDialog/gang.cpp \
            src/Threads/tonemapper_thread.cpp \
            src/Threads/io_threads.cpp \
            src/Options/options_impl.cpp \
            src/TransplantExif/transplant_impl.cpp \
            src/Resize/resizedialog_impl.cpp \
+           src/HdrWizard/hdrwizardform_impl.cpp \
            src/HdrWizard/hdrcreation/createhdr.cpp \
            src/HdrWizard/hdrcreation/robertson02.cpp  \
            src/HdrWizard/hdrcreation/responses.cpp  \
            src/HdrWizard/hdrcreation/icip06.cpp \
            src/HdrWizard/hdrcreation/debevec.cpp \
-           src/ToneMappingDialog/ldrviewer.cpp \
+           src/HdrWizard/Alignment/alignmentdialog_impl.cpp \
+           src/HdrWizard/Alignment/mtb_alignment.cpp \
            src/smart_scroll_area.cpp \
-           src/ToneMappingDialog/gang.cpp \
            src/Filter/pfsrotate.cpp \
            src/Filter/pfssize.cpp \
            src/Filter/pfsgamma.cpp \
            src/Fileformat/pfsinrgbe.cpp \
            src/Fileformat/pfsoutrgbe.cpp \
-           src/Fileformat/rgbeio.cpp \
            src/Fileformat/pfsoutldrimage.cpp \
+           src/Fileformat/rgbeio.cpp \
            src/Fileformat/pfsindcraw.cpp \
            src/Fileformat/pfstiff.cpp \
+           src/Fileformat/pfsinexr.cpp \
+           src/Fileformat/pfsoutexr.cpp \
            src/TM_operators/ashikhmin02/pfstmo_ashikhmin02.cpp \
            src/TM_operators/ashikhmin02/tmo_ashikhmin02.cpp \
            src/TM_operators/drago03/pfstmo_drago03.cpp \
@@ -368,9 +378,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/mantiuk06/contrast_domain.cpp \
            src/TM_operators/mantiuk06/pfstmo_mantiuk06.cpp \
            src/Batch/batch_dialog_impl.cpp \
-           src/Exif/exif_operations.cpp \
-           src/Fileformat/pfsinexr.cpp \
-           src/Fileformat/pfsoutexr.cpp
+           src/Exif/exif_operations.cpp
 
 RESOURCES = icons.qrc
 
@@ -379,7 +387,8 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
                i18n/lang_pl.ts \
-               i18n/lang_tr.ts
+               i18n/lang_tr.ts \
+               i18n/lang_cs.ts
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
@@ -389,8 +398,7 @@ TRANSLATIONS = i18n/lang_it.ts \
 #           src/align_impl.cpp \
 #           src/show_image.cpp \
 #           src/align_impl.h \
-#           src/show_image.h \
-#        forms/aligndialog.ui
+#           src/show_image.h
 
 TARGET = qtpfsgui
 

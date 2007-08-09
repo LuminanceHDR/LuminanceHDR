@@ -1,3 +1,5 @@
+If I forgot to add someone to this list please let me know.
+
 Main author and maintainer:
 Giuseppe Rota <grota@sourceforge.net>
 
@@ -7,6 +9,7 @@ Mandus (Mac OS X packager, Norwegian translator)
 Mustafa GÜNAY (Turkish translator)
 Douglas E. Warner (fc6 packager and bug reports)
 Ralph Kaeppeli (German Translator)
+Jan Gemela (Cezk translator)
 Ignacy Gawedzki (tiff ldr bugfixes and suggestion)
 Bertrand Petit (FreeBSD patch)
 Sloan Poe (found and fixed bug regarding legacy actions signal)
@@ -15,4 +18,3 @@ Arne Hagenah (various suggestions)
 Frank Boehme (various suggestions)
 Erik Ouchterlony
 Antoine Latter
-I'm sure I've forgot many others, in that case please contact me.

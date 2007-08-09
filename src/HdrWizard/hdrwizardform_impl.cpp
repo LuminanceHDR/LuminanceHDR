@@ -24,9 +24,10 @@
 #include <QStringList>
 #include <QFileDialog>
 #include <QDir>
-#include <QSettings>
 #include <QMessageBox>
+#include <QProcess>
 #include <QTextStream>
+
 #if defined(__FreeBSD__) && __FreeBSD__ < 6
 extern "C" {
 #include "../arch/freebsd/s_exp2f.c"
@@ -37,6 +38,8 @@ extern "C" {
 #include "../Fileformat/pfstiff.h"
 #include "../Exif/exif_operations.h"
 #include "../Fileformat/pfsindcraw.h"
+#include "Alignment/alignmentdialog_impl.h"
+#include "Alignment/mtb_alignment.h"
 #include "../config.h"
 
 const config_triple predef_confs[6]= {
@@ -49,7 +52,7 @@ const config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), ldr_tiff(false), opts(&(options->dcraw_options)) {
+HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), /*ldr_tiff(false),*/ opts(options), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
@@ -79,11 +82,9 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), c
 	responses_in_gui[1]=LINEAR;
 	responses_in_gui[2]=LOG10;
 	responses_in_gui[3]=FROM_ROBERTSON;
-	models_in_gui[0]=ROBERTSON;
-	models_in_gui[1]=DEBEVEC;
+	models_in_gui[0]=DEBEVEC;
+	models_in_gui[1]=ROBERTSON;
 
-	QSettings settings("Qtpfsgui", "Qtpfsgui");
-	RecentDirInputLDRs=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
 	chosen_config=predef_confs[0];
 	fillEVcombobox();
 	need_to_transform_indices=false;
@@ -102,10 +103,12 @@ void HdrWizardForm::loadfiles() {
     filetypes += tr("JPEG (*.jpeg *.jpg);;");
     filetypes += tr("TIFF Images (*.tiff *.tif);;");
     filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)");
+    QString RecentDirInputLDRs = settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
     if (!files.isEmpty() ) {
+	//QStringList passed to alignment dialog
+	fileStringList=files;
 	QFileInfo qfi(files.at(0));
-	QSettings settings("Qtpfsgui", "Qtpfsgui");
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
 	if (RecentDirInputLDRs != qfi.path()) {
 		// update internal field variable
@@ -118,62 +121,97 @@ void HdrWizardForm::loadfiles() {
 	progressBar->setValue(0);
 	expotimes=new float[numberinputfiles];
 	int index_expotimes=0;
-	QStringList::Iterator it = files.begin();
-	while( it != files.end() ) {
-		QFileInfo qfi(*it);
-		expotimes[index_expotimes]=ExifOperations::obtain_expotime(qfi.filePath().toStdString()); //fill array of exposure times, -1 is error
+	QStringList::Iterator files_stringlistiterator = files.begin();
+	
+	int previous_sizex=-1; int previous_sizey=-1;
+	int current_sizex=-1; int current_sizey=-1;
+	while( files_stringlistiterator != files.end() ) {
+		QFileInfo qfi(*files_stringlistiterator);
+
+		//fill array of exposure times, -1 is error
+		expotimes[index_expotimes]=ExifOperations::obtain_expotime(qfi.filePath().toStdString());
+
 		listShowFiles->addItem(qfi.fileName()); //fill graphical list
 		QString extension=qfi.suffix().toUpper(); //get filename extension
+
 		//now go and fill the list of image data (real payload)
-		if (extension.startsWith("JP")) { //check for extension: if JPEG:
-			ImagePtrList.append( new QImage(qfi.filePath()) ); // fill with image data
-		} else if(extension.startsWith("TIF")) { //if tiff
+		// check for extension: if JPEG:
+		if (extension.startsWith("JP")) {
+			QImage *newimage=new QImage(qfi.filePath());
+			current_sizex=newimage->width();
+			current_sizey=newimage->height();
+			// fill with image data
+			ImagePtrList.append( newimage );
+			ldr_tiff_input.append(false);
+		//if tiff
+		} else if(extension.startsWith("TIF")) {
 			TiffReader reader(qfi.filePath().toUtf8().constData());
-			if (reader.is8bitTiff()) { //if 8bit (tiff) treat as ldr
-				ImagePtrList.append( reader.readIntoQImage() );
-				ldr_tiff=true;
-			} else if (reader.is16bitTiff()) { //if 16bit (tiff) treat as hdr
+			//if 8bit ldr tiff
+			if (reader.is8bitTiff()) {
+				QImage *newimage=reader.readIntoQImage();
+				current_sizex=newimage->width();
+				current_sizey=newimage->height();
+				ImagePtrList.append( newimage );
+				ldr_tiff_input.append(true);
+			//if 16bit (tiff) treat as hdr
+			} else if (reader.is16bitTiff()) {
 				pfs::Frame *framepointer=reader.readIntoPfsFrame();
 				pfs::Channel *R, *G, *B;
 				framepointer->getRGBChannels( R, G, B );
 				listhdrR.push_back(R);
 				listhdrG.push_back(G);
 				listhdrB.push_back(B);
+				current_sizex=R->getWidth();
+				current_sizey=R->getHeight();
+			//error if unknown tiff type
 			} else {
 				listShowFiles->clear();
+				progressBar->setValue(0);
 				clearlists();
-				delete expotimes;
-				QMessageBox::critical(this,tr("Tiff error"), QString(tr("the file<br>%1<br> is not a 8 bit or 16 bit tiff")).arg(qfi.fileName()));
+				delete expotimes; expotimes=NULL;
+				QMessageBox::critical(this,tr("Tiff error"), QString(tr("The file<br>%1<br> is not a 8 bit or 16 bit tiff")).arg(qfi.fileName()));
 				return;
 			}
-		} else { //not a jpeg of tiff_LDR file, so it's raw input (hdr)
-			pfs::Frame *framepointer=readRAWfile(qfi.filePath().toUtf8().constData(), opts);
+		//not a jpeg of tiff file, so it's raw input (hdr)
+		} else {
+			pfs::Frame *framepointer=readRAWfile(qfi.filePath().toUtf8().constData(), & opts->dcraw_options);
 			pfs::Channel *R, *G, *B;
 			framepointer->getRGBChannels( R, G, B );
 			listhdrR.push_back(R);
 			listhdrG.push_back(G);
 			listhdrB.push_back(B);
+			current_sizex=R->getWidth();
+			current_sizey=R->getHeight();
 		}
-		++it;
+		//check if the image has the same size as the one before
+		if (!check_same_size(previous_sizex,previous_sizey,current_sizex,current_sizey)) {
+			QMessageBox::critical(this,tr("Error..."), QString(tr("All the images must have the same size.")));
+			listShowFiles->clear();
+			progressBar->setValue(0);
+			clearlists();
+			delete expotimes; expotimes=NULL;
+			return;
+		}
+		files_stringlistiterator++;
 		index_expotimes++;
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
 
-// 	check if at least one image doesn't contain (the needed) exif tags
+	//check if at least one image doesn't contain (the required) exif tags
 	bool all_ok=true;
 	QStringList files_lacking_exif;
 	for (int i=0; i<numberinputfiles; i++) {
 		if (expotimes[i]==-1) {
-			files_lacking_exif+="<li><font color=\"#FF9500\"><i><b>"+ listShowFiles->item(i)->text()+ "</b></i></font></li>\n";
+			files_lacking_exif+="<li><font color=\"#FF0000\"><i><b>"+ listShowFiles->item(i)->text()+ "</b></i></font></li>\n";
 			all_ok=false;
 		}
 	}
 
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
-		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Done!</b></h3></font></center>"));
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
 	} else {
-//if we didn't find the exif data for at least one image, we need to set all the values to -1, so that the user has to fill *all* the values by hand.
+		//if we didn't find the exif data for at least one image, we need to set all the values to -1, so that the user has to fill *all* the values by hand.
 		for (int j=0;j<numberinputfiles;j++) {
 			expotimes[j]=-1;
 		}
@@ -189,14 +227,30 @@ Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following i
 <hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
 You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(files_lacking_exif.join(""));
 		QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
-		confirmloadlabel->setText(QString(tr("<center><font color=\"#FF9500\"><h3><b>To proceed you need to manually set the exposure values.<br>%1 values still required.</b></h3></font></center>")).arg(numberinputfiles));
+		confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(numberinputfiles));
 	}
 	loadsetButton->setEnabled(FALSE);
+	if (ImagePtrList.size() >= 2) {
+		alignCheckBox->setEnabled(true);
+		alignGroupBox->setEnabled(true);
+	}
     }
 }
 
-void HdrWizardForm::custom_toggled(bool checked) {
-	if (!checked) {
+bool HdrWizardForm::check_same_size(int &px,int &py,int cx,int cy) {
+	if (px==-1||py==-1) {
+		px=cx; py=cy;
+		return true;
+	} else {
+		if (px==cx && py==cy)
+			return true;
+		else
+			return false;
+	}
+}
+
+void HdrWizardForm::custom_toggled(bool want_custom) {
+	if (!want_custom) {
 		if (!checkBoxAntighosting->isChecked()) {
 			label_RespCurve_Antighost->setDisabled(TRUE);
 			coboxRespCurve_Antighost->setDisabled(TRUE);
@@ -213,7 +267,10 @@ void HdrWizardForm::custom_toggled(bool checked) {
 			label_model->setDisabled(TRUE);
 			lineEdit_showmodel->setDisabled(TRUE);
 		}
-	update_currentconfig(comboBox_PredefConfigs->currentIndex());
+		update_currentconfig(comboBox_PredefConfigs->currentIndex());
+		Next_Finishbutton->setText(tr("&Finish"));
+	} else {
+		Next_Finishbutton->setText(tr("&Next >"));
 	}
 }
 
@@ -252,66 +309,88 @@ void HdrWizardForm::update_current_config_file_or_notfile( bool checkedfile ) {
 }
 
 void HdrWizardForm::currentPageChangedInto(int newindex) {
-/*	if      (newindex==0) { //initial page
-		//can't end up here, I guess.
-	}
-	else*/ if (newindex==1) { //predefined configs page
-		backbutton->setEnabled(FALSE);
+	//predefined configs page
+	if (newindex==1) {
+		Next_Finishbutton->setText(tr("&Finish"));
+		//when at least 2 LDR inputs
+		if (ImagePtrList.size()>=2) {
+			//manual alignment always done.
+			//here ImagePtrList CAN already contain the pre-aligned LDR images.
+			this->setDisabled(true);
+			AlignmentDialog *alignmentdialog= new AlignmentDialog(0,ImagePtrList,ldr_tiff_input,fileStringList,(Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
+			if (alignmentdialog->exec() == QDialog::Accepted) {
+				this->setDisabled(false);
+			} else {
+				reject();
+			}
+			delete alignmentdialog;
+		}
 	}
 	else if (newindex==2) { //custom config
 		update_currentconfig(0);
 		backbutton->setEnabled(TRUE);
-	}
-	else if (newindex==3) { //ending page
 		Next_Finishbutton->setText(tr("&Finish"));
-		Next_Finishbutton->setEnabled(FALSE);
-		backbutton->setEnabled(FALSE);
-		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+		return;
+	}
+}
+
+void HdrWizardForm::nextpressed() {
+	int currentpage=pagestack->currentIndex();
+	switch (currentpage) {
+	case 0:
+		if (need_to_transform_indices)
+			transform_indices_into_values();
+		//now align, if requested
+		if (alignCheckBox->isChecked()) {
+			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+			confirmloadlabel->setText(tr("<center><h3><b>Aligning...</b></h3></center>"));
+			Next_Finishbutton->setDisabled(TRUE);
+			switch (alignmentEngineCB->currentIndex()) {
+				case 0: //Hugin's align_image_stack
+				ais=new QProcess(0);
+				ais->setWorkingDirectory(opts->tempfilespath);
+				connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
+				connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+				ais->start("align_image_stack",QStringList() << QString("-a") << fileStringList);
+				break;
+				case 1:
+				mtb_alignment(ImagePtrList,ldr_tiff_input);
+				Next_Finishbutton->setEnabled(TRUE);
+				QApplication::restoreOverrideCursor();
+				pagestack->setCurrentIndex(1);
+				break;
+			}
+			return;
+		}
+		pagestack->setCurrentIndex(1);
+		break;
+	case 1:
+		if(!checkBoxCallCustom->isChecked()) {
+			currentpage=2;
+		} else {
+			pagestack->setCurrentIndex(2);
+			break;
+		}
+	case 2:
+		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		//CREATE THE HDR
 		if (ImagePtrList.size() != 0)
 			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),true,&ImagePtrList);
 		else
 			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),false,&listhdrR,&listhdrG,&listhdrB);
 		QApplication::restoreOverrideCursor();
-		Next_Finishbutton->setEnabled(TRUE);
-		Next_Finishbutton->setFocus();
+		accept();
 		return;
 	}
-	Next_Finishbutton->setText(tr("&Next >"));
 }
 
 void HdrWizardForm::update_current_antighost_curve(int fromgui) {
 	update_current_config_gamma_lin_log(fromgui);
 }
 
-void HdrWizardForm::nextpressed() {
-	switch (pagestack->currentIndex()) {
-	case 0:
-		if (need_to_transform_indices)
-			transform_indices_into_values();
-// 		adjustSize();
-// 		showNormal();
-		break;
-	case 1:
-		if(!checkBoxCallCustom->isChecked()) {
-			pagestack->setCurrentIndex(3);
-			return;
-		}
-		break;
-	case 2:
-		break;
-	case 3:	
-		accept();
-		return;
-	}
-	pagestack->setCurrentIndex(pagestack->currentIndex()+1);
-}
-
 void HdrWizardForm::backpressed() {
-	if (pagestack->currentIndex()==3 && !checkBoxCallCustom->isChecked())
+	if (pagestack->currentIndex()==2 && !checkBoxCallCustom->isChecked())
 		pagestack->setCurrentIndex(1);
-	else
-		pagestack->setCurrentIndex(pagestack->currentIndex()-1);
 }
 
 void HdrWizardForm::load_response_curve_from_file() {
@@ -474,7 +553,7 @@ void HdrWizardForm::EVcomboBoxactivated(int i) {
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>"));
 		need_to_transform_indices=true;
 	} else {
-		confirmloadlabel->setText(QString(tr("<center><font color=\"#FF9500\"><h3><b>To proceed you need to manually set the exposure values.<br>%1 values still required.</b></h3></font></center>")).arg(files_unspecified));
+		confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(files_unspecified) );
 	}
 }
 
@@ -485,6 +564,7 @@ void HdrWizardForm::fileselected(int i) {
 }
 
 HdrWizardForm::~HdrWizardForm() {
+	qDebug("~HdrWizardForm");
 	// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.
 	if (expotimes) delete [] expotimes;
 	clearlists();
@@ -492,17 +572,16 @@ HdrWizardForm::~HdrWizardForm() {
 
 void HdrWizardForm::clearlists() {
 	if (ImagePtrList.size() != 0) {
-// 		qDebug("cleaning LDR exposures list");
-		if (ldr_tiff) {
-			foreach(QImage *p,ImagePtrList) {
-// 				qDebug("while cleaning ldr tiffs, %ld",p->bits());
-				delete [] p->bits();
-// 				qDebug("cleaned");
+		qDebug("HdrWizardForm::clearlists: cleaning LDR exposures list");
+		for(int i=0;i<ImagePtrList.size();i++) {
+			if (ldr_tiff_input[i]) {
+				qDebug("HdrWizardForm::clearlists: freeing ldr tiffs' payload.");
+				delete [] ImagePtrList[i]->bits();
 			}
 		}
 		qDeleteAll(ImagePtrList);
-// 		qDebug("cleaned ImagePtrList");
 		ImagePtrList.clear();
+		ldr_tiff_input.clear();
 	}
 	if (listhdrR.size()!=0 && listhdrG.size()!=0 && listhdrB.size()!=0) {
 // 		qDebug("cleaning HDR exposures list");
@@ -513,3 +592,46 @@ void HdrWizardForm::clearlists() {
 		listhdrR.clear(); listhdrG.clear(); listhdrB.clear();
 	}
 }
+
+void HdrWizardForm::ais_finished(int exitcode, QProcess::ExitStatus) {
+	if (exitcode==QProcess::CrashExit) {
+		ais_failed(QProcess::Crashed);
+		return;
+	}
+	if (exitcode==0 && pagestack->currentIndex()==0) {
+		qDebug("align_image_stack successfully terminated");
+		clearlists();
+		for (int i=0;i<numberinputfiles;i++) {
+			//align_image_stack can only output tiff files
+			const char* fname=QString(opts->tempfilespath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif").toUtf8().constData();
+			qDebug("Loading back file name=%s", fname);
+			TiffReader reader(fname);
+			ImagePtrList.append( reader.readIntoQImage() );
+		}
+		QApplication::restoreOverrideCursor();
+		Next_Finishbutton->setEnabled(TRUE);
+		pagestack->setCurrentIndex(1);
+	}
+}
+
+void HdrWizardForm::ais_failed(QProcess::ProcessError e) {
+	switch (e) {
+	case QProcess::FailedToStart:
+		QMessageBox::warning(this,tr("Error..."),tr("Failed to start the external process \"<em>align_image_stack</em>\". Read the webpage <a href=\"http://qtpfsgui.wiki.sourceforge.net/align_image_stack\">http://qtpfsgui.wiki.sourceforge.net/align_image_stack</a> for more information."));
+	break;
+	case QProcess::Crashed:
+		QMessageBox::warning(this,tr("Error..."),tr("The external process \"<em>align_image_stack</em>\" crashed..."));
+	break;
+	case QProcess::Timedout:
+	case QProcess::ReadError:
+	case QProcess::WriteError:
+	case QProcess::UnknownError:
+		QMessageBox::warning(this,tr("Error..."),tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" process..."));
+	break;
+	}
+	QApplication::restoreOverrideCursor();
+	Next_Finishbutton->setEnabled(TRUE);
+	if (pagestack->currentIndex()==0)
+		pagestack->setCurrentIndex(1);
+}
+

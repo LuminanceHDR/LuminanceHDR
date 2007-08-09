@@ -44,7 +44,8 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(par
 	qvl->setMargin(0);
 	qvl->setSpacing(1);
 
-	histogram=new HistogramLDR(this,data);
+	histogram=new HistogramLDR(this);
+	histogram->setData(data);
 	gb1=new GrayBar(inputStuffFrame);
 
 	connect(black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
@@ -172,12 +173,22 @@ void GammaAndLevels::refreshLUT() {
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-HistogramLDR::HistogramLDR(QWidget *parent, const QImage data, int accuracy) : QWidget(parent), accuracy(accuracy){
+HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), accuracy(accuracy){
 	P = new float[256];
 
 	//initialize to 0
 	for( int i = 0; i < 256; i++ )
 		P[i]=0;
+	
+}
+
+void HistogramLDR::setData(const QImage &data) {
+
+	if (data.isNull()) {
+		for( int i = 0; i < 256; i++ )
+			P[i] = 0;
+		return;
+	}
 
 	//increment bins
 	for (int i=0; i<data.width()*data.height(); i+=accuracy) {
@@ -195,33 +206,20 @@ HistogramLDR::HistogramLDR(QWidget *parent, const QImage data, int accuracy) : Q
 	//normalize to make maxvalue=1
 	for( int i = 0; i < 256; i++ )
 		P[i] /= max;
-	
 }
+
 void HistogramLDR::paintEvent( QPaintEvent * ) {
 	QPainter painter(this);
 	for (int i=0; i<256; i++) {
 		painter.fillRect( i*(int)((float)(this->width())/256.f), this->height()-(int)(P[i]*(height()-2)), (int)( (float)(this->width())/256.f ), (int)(P[i]*(height()-2)), QBrush(Qt::black) );
 	}
 }
-// int HistogramLDR::getClipFromBlack() {
-// 	for (int i=0;i<=255;i++) {
-// 		if (P[i]!=0)
-// 			return i;
-// 	}
-// 	return 255;
-// }
-// int HistogramLDR::getClipFromWhite() {
-// 	for (int i=255;i>=0;i--) {
-// 		if (P[i]!=0)
-// 			return i;
-// 	}
-// 	return 0;
-// }
+
 QSize HistogramLDR::sizeHint () const {
-	return QSize( 500, 30 );
+	return QSize( 257, 40 );
 }
 QSize HistogramLDR::minimumSizeHint () const {
-	return QSize( 400, 20 );
+	return QSize( 257, 40 );
 }
 HistogramLDR::~HistogramLDR() {
 	delete [] P;

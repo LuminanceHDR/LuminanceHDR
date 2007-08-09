@@ -28,7 +28,7 @@
 #include <exif.hpp>
 #include <iostream>
 #include "transplant_impl.h"
-#include "../generated_uic/ui_help_about.h"
+#include "../generated_uic/ui_documentation.h"
 #include "../Exif/exif_operations.h"
 #include "../config.h"
 

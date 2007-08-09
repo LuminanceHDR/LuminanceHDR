@@ -33,6 +33,7 @@
 #include "../Options/options_impl.h"
 #include "../Resize/resizedialog_impl.h"
 class HdrViewer;
+class QSignalMapper;
 
 class MainGui : public QMainWindow, private Ui::MainGui
 {
@@ -52,16 +53,16 @@ private slots:
 	void rotatecw_requested();
 	void resize_requested();
 	void batch_requested();
-	void current_mdiwindow_increase_exposure();
-	void current_mdiwindow_decrease_exposure();
-	void current_mdiwindow_extend_exposure();
-	void current_mdiwindow_shrink_exposure();
-	void current_mdiwindow_fit_exposure();
-	void current_mdiwindow_ldr_exposure();
-	void current_mdiwindow_zoomin();
-	void current_mdiwindow_zoomout();
-	void current_mdiwindow_fit_to_win(bool checked);
-	void current_mdiwindow_original_size();
+	void current_mdi_increase_exp();
+	void current_mdi_decrease_exp();
+	void current_mdi_extend_exp();
+	void current_mdi_shrink_exp();
+	void current_mdi_fit_exp();
+	void current_mdi_ldr_exp();
+	void current_mdi_zoomin();
+	void current_mdi_zoomout();
+	void current_mdi_fit_to_win(bool checked);
+	void current_mdi_original_size();
 	void openDocumentation();
 	void enterWhatsThis();
 	void options_called();
@@ -72,12 +73,14 @@ private slots:
 	void Icons_Only();
 	void Text_Alongside_Icons();
 	void Text_Only();
+	void updateWindowMenu();
 
 	void openRecentFile();
 	void setCurrentFile(const QString &fileName);
 	void addHdrViewer(pfs::Frame*, QString fname);
 	void updateRecentDirHDRSetting(QString);
 	void load_failed(QString);
+	void aboutQtpfsgui();
 
 	void updateActions( QWidget * w );
 
@@ -86,8 +89,9 @@ private:
 	void updateRecentFileActions();
 	void load_options(qtpfsgui_opts *);
 	void setupLoadThread(QString);
+	bool testTempDir(QString);
 	QWorkspace* workspace;
-	HdrWizardForm *wizard;
+	QSignalMapper *windowMapper;
         enum { MaxRecentFiles = 5 };
         QAction *recentFileActs[MaxRecentFiles];
         QAction *separatorRecentFiles;

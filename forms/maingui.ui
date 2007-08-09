@@ -38,6 +38,25 @@
     <addaction name="separator" />
     <addaction name="fileExitAction" />
    </widget>
+   <widget class="QMenu" name="menuSettings" >
+    <property name="title" >
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="OptionsAction" />
+    <addaction name="separator" />
+    <addaction name="Transplant_Exif_Data_action" />
+    <addaction name="actionBatch_Tone_Mapping" />
+   </widget>
+   <widget class="QMenu" name="menuHelp" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="documentationAction" />
+    <addaction name="actionWhat_s_This" />
+    <addaction name="separator" />
+    <addaction name="actionAbout_Qtpfsgui" />
+    <addaction name="actionAbout_Qt" />
+   </widget>
    <widget class="QMenu" name="menuImage" >
     <property name="title" >
      <string>&amp;Image</string>
@@ -85,30 +104,10 @@
     <addaction name="separator" />
     <addaction name="menuToolbars" />
    </widget>
-   <widget class="QMenu" name="menuSettings" >
-    <property name="title" >
-     <string>&amp;Tools</string>
-    </property>
-    <addaction name="OptionsAction" />
-    <addaction name="separator" />
-    <addaction name="Transplant_Exif_Data_action" />
-    <addaction name="actionBatch_Tone_Mapping" />
-   </widget>
    <widget class="QMenu" name="menuWindows" >
     <property name="title" >
      <string>&amp;Windows</string>
     </property>
-    <addaction name="actionTile" />
-    <addaction name="actionCascade" />
-   </widget>
-   <widget class="QMenu" name="menuHelp" >
-    <property name="title" >
-     <string>&amp;Help</string>
-    </property>
-    <addaction name="documentationAction" />
-    <addaction name="actionWhat_s_This" />
-    <addaction name="separator" />
-    <addaction name="actionAbout_Qt" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -650,10 +649,18 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
    </property>
    <property name="text" >
-    <string>What's This?</string>
+    <string>&amp;What's This?</string>
+   </property>
+   <property name="toolTip" >
+    <string>Get information about the graphical elements</string>
    </property>
    <property name="shortcut" >
-    <string>SHIFT+F1</string>
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qtpfsgui" >
+   <property name="text" >
+    <string>About &amp;Qtpfsgui</string>
    </property>
   </action>
  </widget>

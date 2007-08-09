@@ -5,22 +5,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>511</width>
-    <height>456</height>
+    <width>423</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle" >
    <string>Hdr creation Wizard</string>
   </property>
   <property name="windowIcon" >
-   <iconset/>
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="spacing" >
-    <number>6</number>
+    <number>3</number>
    </property>
    <item>
     <widget class="QStackedWidget" name="pagestack" >
@@ -41,7 +41,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox" >
          <property name="title" >
-          <string>[1/3] Load Input Images</string>
+          <string>[1/2] Load Input Images</string>
          </property>
          <layout class="QGridLayout" >
           <property name="margin" >
@@ -59,19 +59,6 @@
              <number>6</number>
             </property>
             <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QLabel" name="label" >
               <property name="text" >
                <string>Click the button below to load the input images</string>
@@ -82,6 +69,9 @@
               <property name="wordWrap" >
                <bool>true</bool>
               </property>
+              <property name="buddy" >
+               <cstring>loadsetButton</cstring>
+              </property>
              </widget>
             </item>
             <item>
@@ -90,12 +80,12 @@
                <string>Load Input Images</string>
               </property>
               <property name="text" >
-               <string>&amp;Load images...</string>
+               <string>&amp;Load Images...</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="Line" name="line_4" >
+             <widget class="Line" name="line_5" >
               <property name="orientation" >
                <enum>Qt::Horizontal</enum>
               </property>
@@ -107,11 +97,14 @@
                <bool>false</bool>
               </property>
               <property name="text" >
-               <string>Exposure value
+               <string>&amp;Exposure value
 for current image</string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buddy" >
+               <cstring>EVcomboBox</cstring>
               </property>
              </widget>
             </item>
@@ -128,6 +121,72 @@ for current image</string>
               <property name="toolTip" >
                <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image</string>
               </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line_4" >
+              <property name="orientation" >
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="alignGroupBox" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize" >
+               <size>
+                <width>225</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="title" >
+               <string>Alignment</string>
+              </property>
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>6</number>
+               </property>
+               <property name="spacing" >
+                <number>3</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="alignCheckBox" >
+                 <property name="enabled" >
+                  <bool>false</bool>
+                 </property>
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>4</hsizetype>
+                   <vsizetype>0</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text" >
+                  <string>Auto &amp;Align Images</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="alignmentEngineCB" >
+                 <property name="enabled" >
+                  <bool>false</bool>
+                 </property>
+                 <item>
+                  <property name="text" >
+                   <string>hugin's align_image_stack</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text" >
+                   <string>Median Threshold Bitmap</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -156,10 +215,13 @@ for current image</string>
             <item>
              <widget class="QLabel" name="label_2" >
               <property name="text" >
-               <string>Files Currently Loaded:</string>
+               <string>&amp;Files Currently Loaded:</string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignCenter</set>
+              </property>
+              <property name="buddy" >
+               <cstring>listShowFiles</cstring>
               </property>
              </widget>
             </item>
@@ -223,7 +285,7 @@ for current image</string>
        <item>
         <widget class="QGroupBox" name="groupBox_2" >
          <property name="title" >
-          <string>[2/3] Choose Settings for Hdr Creation</string>
+          <string>[2/2] Choose Settings for Hdr Creation</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
@@ -623,7 +685,7 @@ above do not yield good results)</string>
        <item>
         <widget class="QGroupBox" name="groupBox_3" >
          <property name="title" >
-          <string>[2/3] Choose Custom Configuration</string>
+          <string>[2/2] Choose Custom Configuration</string>
          </property>
          <layout class="QVBoxLayout" >
           <property name="margin" >
@@ -708,6 +770,14 @@ pixel values&lt;/p></string>
                </property>
                <item>
                 <widget class="QRadioButton" name="radioButton_use_Predefined" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>5</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text" >
                   <string>Predefined response curves:</string>
                  </property>
@@ -718,6 +788,14 @@ pixel values&lt;/p></string>
                </item>
                <item>
                 <widget class="QComboBox" name="comboBox_gamma_lin_log" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>5</hsizetype>
+                   <vsizetype>5</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <item>
                   <property name="text" >
                    <string>Gamma</string>
@@ -760,6 +838,14 @@ pixel values&lt;/p></string>
                </property>
                <item>
                 <widget class="QCheckBox" name="checkbox_load_from_file" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>5</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text" >
                   <string>Load response function file</string>
                  </property>
@@ -874,54 +960,6 @@ pixel values&lt;/p></string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="confirmcreated" >
-      <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>3</number>
-       </property>
-       <property name="spacing" >
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QGroupBox" name="groupBox_7" >
-         <property name="title" >
-          <string>[3/3] Procedure Completed!</string>
-         </property>
-         <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>8</number>
-          </property>
-          <property name="spacing" >
-           <number>3</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_8" >
-            <property name="text" >
-             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:19pt;">Hdr Image created...&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
    <item>
@@ -996,8 +1034,8 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>508</x>
-     <y>453</y>
+     <x>420</x>
+     <y>428</y>
     </hint>
     <hint type="destinationlabel" >
      <x>309</x>
@@ -1012,12 +1050,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>112</x>
-     <y>319</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>157</y>
+     <x>120</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -1028,12 +1066,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>184</x>
-     <y>303</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>403</x>
-     <y>155</y>
+     <x>413</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -1044,12 +1082,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>265</x>
-     <y>324</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>66</x>
-     <y>184</y>
+     <x>86</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1060,12 +1098,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>280</x>
-     <y>317</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>403</x>
-     <y>182</y>
+     <x>415</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1076,12 +1114,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>72</x>
-     <y>318</y>
+     <x>91</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>75</x>
-     <y>211</y>
+     <x>115</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
@@ -1092,12 +1130,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>282</x>
-     <y>324</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>403</x>
-     <y>209</y>
+     <x>415</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
@@ -1108,12 +1146,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>173</x>
-     <y>315</y>
+     <x>129</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>391</x>
-     <y>231</y>
+     <x>212</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -1124,12 +1162,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>182</x>
-     <y>200</y>
+     <x>130</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>391</x>
-     <y>231</y>
+     <x>212</x>
+     <y>229</y>
     </hint>
    </hints>
   </connection>
@@ -1140,12 +1178,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>155</x>
-     <y>200</y>
+     <x>130</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>234</y>
+     <x>100</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>
@@ -1156,12 +1194,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>155</x>
-     <y>303</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>403</x>
-     <y>90</y>
+     <x>369</x>
+     <y>95</y>
     </hint>
    </hints>
   </connection>
@@ -1172,12 +1210,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>135</x>
-     <y>321</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>134</x>
-     <y>104</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1188,12 +1226,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>339</x>
-     <y>200</y>
+     <x>130</x>
+     <y>196</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>308</x>
-     <y>169</y>
+     <x>311</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1204,12 +1242,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>204</x>
-     <y>308</y>
+     <x>129</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>98</x>
-     <y>234</y>
+     <x>100</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>
@@ -1220,12 +1258,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>204</x>
-     <y>308</y>
+     <x>129</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>219</x>
-     <y>200</y>
+     <x>130</x>
+     <y>196</y>
     </hint>
    </hints>
   </connection>
@@ -1236,12 +1274,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>204</x>
-     <y>308</y>
+     <x>129</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>308</x>
-     <y>169</y>
+     <x>311</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1252,12 +1290,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>36</x>
-     <y>238</y>
+     <x>76</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>317</x>
-     <y>173</y>
+     <x>415</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1268,12 +1306,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>115</x>
-     <y>238</y>
+     <x>119</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>221</x>
-     <y>227</y>
+     <x>309</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
@@ -1284,12 +1322,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>60</x>
-     <y>238</y>
+     <x>100</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>325</x>
-     <y>84</y>
+     <x>369</x>
+     <y>95</y>
     </hint>
    </hints>
   </connection>
@@ -1300,12 +1338,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>35</x>
-     <y>238</y>
+     <x>75</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>28</x>
-     <y>157</y>
+     <x>50</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -1316,12 +1354,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>28</x>
-     <y>238</y>
+     <x>68</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>115</x>
-     <y>211</y>
+     <x>119</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
@@ -1332,12 +1370,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>49</x>
-     <y>316</y>
+     <x>68</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>293</x>
-     <y>239</y>
+     <x>309</x>
+     <y>266</y>
     </hint>
    </hints>
   </connection>
@@ -1348,12 +1386,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>16</x>
-     <y>238</y>
+     <x>56</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>304</x>
-     <y>201</y>
+     <x>415</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
@@ -1364,12 +1402,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>35</x>
-     <y>238</y>
+     <x>75</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>306</x>
-     <y>147</y>
+     <x>413</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -1380,12 +1418,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>238</y>
+     <x>119</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>326</x>
-     <y>229</y>
+     <x>419</x>
+     <y>265</y>
     </hint>
    </hints>
   </connection>
@@ -1396,12 +1434,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>26</x>
-     <y>312</y>
+     <x>64</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>26</x>
-     <y>238</y>
+     <x>66</x>
+     <y>265</y>
     </hint>
    </hints>
   </connection>
@@ -1412,12 +1450,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>62</x>
-     <y>238</y>
+     <x>102</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>79</x>
-     <y>117</y>
+     <x>85</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1428,12 +1466,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>121</x>
-     <y>238</y>
+     <x>119</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>108</x>
-     <y>173</y>
+     <x>117</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1444,12 +1482,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>38</x>
-     <y>319</y>
+     <x>57</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>403</x>
-     <y>238</y>
+     <x>419</x>
+     <y>265</y>
     </hint>
    </hints>
   </connection>
@@ -1460,12 +1498,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>64</x>
-     <y>235</y>
+     <x>104</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>198</x>
-     <y>266</y>
+     <x>249</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
@@ -1476,12 +1514,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>64</x>
-     <y>235</y>
+     <x>104</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>376</x>
-     <y>262</y>
+     <x>419</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
@@ -1492,12 +1530,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>207</x>
-     <y>305</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>198</x>
-     <y>266</y>
+     <x>249</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
@@ -1508,12 +1546,28 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>207</x>
-     <y>305</y>
+     <x>118</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>376</x>
-     <y>262</y>
+     <x>419</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>alignCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>alignmentEngineCB</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>263</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>259</x>
+     <y>245</y>
     </hint>
    </hints>
   </connection>

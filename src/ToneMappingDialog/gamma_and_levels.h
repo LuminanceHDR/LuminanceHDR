@@ -67,12 +67,11 @@ private:
 	float *P;
 	int accuracy;
 public:
-	HistogramLDR(QWidget *parent, const QImage input_image, int accuracy=1);
+	HistogramLDR(QWidget *parent, int accuracy=1);
 	~HistogramLDR();
-// 	int getClipFromBlack();
-// 	int getClipFromWhite();
 	QSize sizeHint () const;
 	QSize minimumSizeHint () const;
+	void setData(const QImage &data);
 protected:
 	void paintEvent( QPaintEvent * );
 // 	void resizeEvent ( QResizeEvent * );

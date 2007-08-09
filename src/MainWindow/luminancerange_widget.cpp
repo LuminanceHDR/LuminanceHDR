@@ -104,6 +104,7 @@ void LuminanceRangeWidget::paintEvent( QPaintEvent */*pe */)
       delete histogram;
       // Build histogram from at least 5000 pixels
       int accuracy = histogramImage->getRows()*histogramImage->getCols()/5000;
+//       int accuracy =1;
       if( accuracy < 1 ) accuracy = 1;
       histogram = new Histogram( fRect.width(), accuracy );
       histogram->computeLog( histogramImage, minValue, maxValue );

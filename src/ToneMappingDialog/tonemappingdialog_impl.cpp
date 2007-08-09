@@ -36,24 +36,7 @@ TonemappingWindow::~TonemappingWindow() {}
 
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString cachepath, QString _file) : QMainWindow(parent), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
-	switch (settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
-	case Qt::ToolButtonIconOnly:
-		toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
-		break;
-	case Qt::ToolButtonTextOnly:
-		toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
-		break;
-	case Qt::ToolButtonTextBesideIcon:
-		toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
-		break;
-	case Qt::ToolButtonTextUnderIcon:
-		toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-		break;
-	}
+	toolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
 	prefixname=QFileInfo(_file).completeBaseName();
 	setWindowTitle(tr("Tone mapping Window: ")+ prefixname);
