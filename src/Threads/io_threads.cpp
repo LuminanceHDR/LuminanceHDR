@@ -76,6 +76,29 @@ void LoadHdrThread::run() {
 				emit load_failed(fname);
 				return;
 			}
+#if 0
+			pfs::Channel *R,*G,*B;
+			hdrpfsframe->getRGBChannels( R, G, B );
+			float maxYval=-1; float minYval=1e6;
+			float maxRval=-1; float minRval=1e6;
+			float maxGval=-1; float minGval=1e6;
+			float maxBval=-1; float minBval=1e6;
+			for (int i=0; i<hdrpfsframe->getHeight()*hdrpfsframe->getWidth(); i++) {
+				float yval = 0.212656f*(*R)(i)+0.715158f*(*G)(i)+0.072186f*(*B)(i);
+				maxYval = (yval>maxYval) ? yval : maxYval;
+				minYval = (yval<minYval) ? yval : minYval;
+				maxRval = ((*R)(i)>maxRval) ? (*R)(i) : maxRval;
+				minRval = ((*R)(i)<minRval) ? (*R)(i) : minRval;
+				maxGval = ((*G)(i)>maxGval) ? (*G)(i) : maxGval;
+				minGval = ((*G)(i)<minGval) ? (*G)(i) : minGval;
+				maxBval = ((*B)(i)>maxBval) ? (*B)(i) : maxBval;
+				minBval = ((*B)(i)<minBval) ? (*B)(i) : minBval;
+			}
+			qDebug("minYval=%f, maxYval=%f",minYval,maxYval);
+			qDebug("minRval=%f, maxRval=%f",minRval,maxRval);
+			qDebug("minGval=%f, maxGval=%f",minGval,maxGval);
+			qDebug("minBval=%f, maxBval=%f",minBval,maxBval);
+#endif
 		} catch (...) {
 			qDebug("TH: catched exception");
 			emit load_failed(fname);
