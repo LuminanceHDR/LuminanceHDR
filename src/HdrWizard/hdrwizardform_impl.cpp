@@ -344,11 +344,15 @@ void HdrWizardForm::nextpressed() {
 		if (alignCheckBox->isChecked()) {
 			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 			confirmloadlabel->setText(tr("<center><h3><b>Aligning...</b></h3></center>"));
+			QStringList env;
 			Next_Finishbutton->setDisabled(TRUE);
 			switch (alignmentEngineCB->currentIndex()) {
 				case 0: //Hugin's align_image_stack
 				ais=new QProcess(0);
 				ais->setWorkingDirectory(opts->tempfilespath);
+				env = QProcess::systemEnvironment();
+				env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1;"+QCoreApplication::applicationDirPath());
+				ais->setEnvironment(env);
 				connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 				connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 				ais->start("align_image_stack",QStringList() << QString("-a") << fileStringList);
@@ -607,7 +611,9 @@ void HdrWizardForm::ais_finished(int exitcode, QProcess::ExitStatus) {
 			qDebug("Loading back file name=%s", fname);
 			TiffReader reader(fname);
 			ImagePtrList.append( reader.readIntoQImage() );
+			QFile::remove(fname);
 		}
+		QFile::remove(QString(opts->tempfilespath + "/hugin_debug_optim_results.txt"));
 		QApplication::restoreOverrideCursor();
 		Next_Finishbutton->setEnabled(TRUE);
 		pagestack->setCurrentIndex(1);
