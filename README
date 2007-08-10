@@ -44,7 +44,7 @@ of the same scene taken at different exposure setting.
 Raw image formats are supported -and treated as HDRs- via dcraw's code.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for version 1.8.11.
+Read section 5 (Changes) to read the changes for version 1.8.12.
 Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a distro.
 
 The code is in part based on the existing opensource packages:
@@ -97,7 +97,7 @@ The build description is contained in the project.pro file.
 If you want Qtpfsgui to use a language different from english you should run:
 > lrelease project.pro
 as a first step.
-This steps creates a "qm" file for each one "ts" file in the i18n directory.
+This steps creates a "qm" file for each one of the "ts" file sin the i18n directory.
 If you want to run Qtpfsgui without the internationalization feature
 you can skip this step and continue with the steps described below.
 Running
@@ -204,14 +204,23 @@ unexpected effects like changing color saturation.
 5. Changes
 -------------------------------------------------------------------
 v1.8.12
-* changed order of tone mapping tabs.
-* fixed tone mapping settings file parsing bug (fattal).
-* fixed "shortcuts assert" crash.
-* improved batch dialog behavior (disable widget during tone mapping).
-* fixed some small graphical glitches (removed dot from tooltips).
-* added "what's this" descriptions & actions.
-* modified icon apply.
-* some code refactoring.
+* 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
+* New manual alignment dialog (for small position refinements after the automatic alignment step, for example).
+* Now checking that images have all the same size while creating the hdr.
+* Removed last page in the hdr creation wizard.
+* Showing hdr list in windows menu item.
+* Added an "About Qtpfsgui" info dialog in the main window.
+* (linux) Installing doc (README AUTHORS COPYING ...) files as well in the make install step.
+* Now is possible to load jpeg and tiff in the same set.
+* Added czech translation
+* Changed order of tone mapping tabs.
+* Fixed tone mapping settings file parsing bug (fattal).
+* Fixed "shortcuts assert" crash.
+* Improved batch dialog behavior (disable widget during tone mapping).
+* Fixed some small graphical glitches (removed dot from tooltips).
+* Added "what's this" descriptions & actions.
+* fixed potential buffer overflow security bug.
+* Modified icon apply.
 
 ***WARNING***
 Starting Qtpfsgui 1.8.10, Windows users have to download the new

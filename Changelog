@@ -1,13 +1,22 @@
 Changes:
 02-08-2007 v1.8.12
-* changed order of tone mapping tabs.
-* fixed tone mapping settings file parsing bug (fattal).
-* fixed "shortcuts assert" crash.
-* improved batch dialog behavior (disable widget during tone mapping).
-* fixed some small graphical glitches (removed dot from tooltips).
-* added "what's this" descriptions & actions.
-* modified icon apply.
-* some code refactoring.
+* 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
+* New manual alignment dialog (for small position refinements after the automatic alignment step, for example).
+* Now checking that images have all the same size while creating the hdr.
+* Removed last page in the hdr creation wizard.
+* Showing hdr list in windows menu item.
+* Added an "About Qtpfsgui" info dialog in the main window.
+* (linux) Installing doc (README AUTHORS COPYING ...) files as well in the make install step.
+* Now is possible to load jpeg and tiff in the same set.
+* Added czech translation
+* Changed order of tone mapping tabs.
+* Fixed tone mapping settings file parsing bug (fattal).
+* Fixed "shortcuts assert" crash.
+* Improved batch dialog behavior (disable widget during tone mapping).
+* Fixed some small graphical glitches (removed dot from tooltips).
+* Added "what's this" descriptions & actions.
+* fixed potential buffer overflow security bug.
+* Modified icon apply.
 
 31-07-2007 v1.8.11
 * added custom size result
