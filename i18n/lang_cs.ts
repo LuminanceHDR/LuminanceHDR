@@ -773,7 +773,7 @@ p, li { white-space: pre-wrap; }
         <translation>Váhová funkce:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="451"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
         <source>Triangular</source>
         <translation>Trojúhelníková</translation>
     </message>
@@ -783,7 +783,7 @@ p, li { white-space: pre-wrap; }
         <translation>Křivka odezvy:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="462"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -793,7 +793,7 @@ p, li { white-space: pre-wrap; }
         <translation>Model tvorby HDR:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="473"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="477"/>
         <source>Debevec</source>
         <translation></translation>
     </message>
@@ -803,7 +803,7 @@ p, li { white-space: pre-wrap; }
         <translation>Odstranění duchů(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="460"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
         <source>Linear</source>
         <translation>Lineární</translation>
     </message>
@@ -842,12 +842,12 @@ profily nevedou k dobrému výsledku)</translation>
         <translation>Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="459"/>
         <source>Gaussian</source>
         <translation>Gausovská</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="453"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="457"/>
         <source>Plateau</source>
         <translation type="unfinished"></translation>
     </message>
@@ -890,7 +890,7 @@ pixel values&lt;/p&gt;</source>
         <translation>Vyberte model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="475"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="479"/>
         <source>Robertson</source>
         <translation></translation>
     </message>
@@ -980,7 +980,7 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <translation>EXIF data nenalezena</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="556"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="560"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
@@ -995,52 +995,52 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Vyrovnávám...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="399"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="403"/>
         <source>Load a camera response curve file</source>
         <translation>Nahrát soubor křivky odezvy fotoaparátu</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="401"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="405"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Křivka odezvy fotoaparátu (*.m);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source>(*) Weights: </source>
         <translation>(*)Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Response curve: </source>
         <translation> - Křivka odezvy: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Model: </source>
         <translation>- Model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
         <source>Logarithmic</source>
         <translation>Logaritmický</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="470"/>
         <source>From Calibration</source>
         <translation>Podle kalibrace</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="472"/>
         <source>From File</source>
         <translation>Ze souboru</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="553"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="557"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All values have been set!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Všechny hodnoty byly nastaveny!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
@@ -1096,17 +1096,17 @@ for current image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="621"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="626"/>
         <source>Failed to start the external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;. Read the webpage &lt;a href=&quot;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&quot;&gt;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&lt;/a&gt; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="624"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="629"/>
         <source>The external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; process...</source>
         <translation type="unfinished"></translation>
     </message>

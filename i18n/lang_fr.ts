@@ -715,7 +715,7 @@ pour l&apos;image actuelle</translation>
         <translation>Fonction de pesage :</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="451"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
         <source>Triangular</source>
         <translation>Triangulaire</translation>
     </message>
@@ -725,12 +725,12 @@ pour l&apos;image actuelle</translation>
         <translation>Courbe de réponse:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="462"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="473"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="477"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -740,7 +740,7 @@ pour l&apos;image actuelle</translation>
         <translation>Anti-&quot;image fantôme&quot; (beta !)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="460"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
         <source>Linear</source>
         <translation>Linéaire</translation>
     </message>
@@ -779,12 +779,12 @@ ci-dessus n&apos;ont pas produits de bons résultats)</translation>
         <translation>Poids :</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="459"/>
         <source>Gaussian</source>
         <translation>Gaussien</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="453"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="457"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -823,7 +823,7 @@ pixel possibles&lt;/p&gt;</translation>
         <translation>Choisir le modèle :</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="475"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="479"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
@@ -903,47 +903,47 @@ pixel possibles&lt;/p&gt;</translation>
         <translation>&amp;Terminer</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="399"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="403"/>
         <source>Load a camera response curve file</source>
         <translation>Charger un fichier de courbe de réponse d&apos;un appareil photo</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="401"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="405"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Coube de réponse d&apos;appareil photo (*.m);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source>(*) Weights: </source>
         <translation>Poids : </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Response curve: </source>
         <translation> - Courbe de réponse : </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Model: </source>
         <translation> - Modèle : </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
         <source>Logarithmic</source>
         <translation>Logarithmique</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="470"/>
         <source>From Calibration</source>
         <translation>Depuis réglage</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="472"/>
         <source>From File</source>
         <translation>Depuis un fichier</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="553"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="557"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All values have been set!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Toutes les valeurs ont été renseignées !&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1008,7 +1008,7 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="556"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="560"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1018,7 +1018,7 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
         <source>Error...</source>
         <translation type="unfinished">Erreur...</translation>
     </message>
@@ -1074,17 +1074,17 @@ for current image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="621"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="626"/>
         <source>Failed to start the external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;. Read the webpage &lt;a href=&quot;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&quot;&gt;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&lt;/a&gt; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="624"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="629"/>
         <source>The external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; process...</source>
         <translation type="unfinished"></translation>
     </message>

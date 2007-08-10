@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="no">
+<!DOCTYPE TS><TS version="1.1" language="nb">
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -64,41 +64,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/aligndialog.ui" line="173"/>
-        <source>&amp;Movable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="475"/>
-        <source>&amp;Horizontal:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="488"/>
-        <source>&amp;Vertical:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="520"/>
-        <source> px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="812"/>
-        <source>&lt; &amp;Back</source>
-        <translation>&lt; &amp;Geri</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="819"/>
-        <source>&amp;Next &gt;</source>
-        <translation>&amp;İleri &gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="829"/>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/aligndialog.ui" line="72"/>
         <source>Histogram of the image</source>
         <translation type="unfinished"></translation>
@@ -136,6 +101,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/aligndialog.ui" line="140"/>
         <source>Use this button to move the selection to the next image in the movable list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="173"/>
+        <source>&amp;Movable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -226,7 +196,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/aligndialog.ui" line="435"/>
         <source>&amp;Reset</source>
-        <translation>Sıfı&amp;rla</translation>
+        <translation type="unfinished">Sıfı&amp;rla</translation>
     </message>
     <message>
         <location filename="../forms/aligndialog.ui" line="442"/>
@@ -239,8 +209,23 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/aligndialog.ui" line="475"/>
+        <source>&amp;Horizontal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="488"/>
+        <source>&amp;Vertical:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../forms/aligndialog.ui" line="501"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="520"/>
+        <source> px</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -291,22 +276,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/aligndialog.ui" line="679"/>
         <source>Zoom Out</source>
-        <translation>Uzaklaştır</translation>
+        <translation type="unfinished">Uzaklaştır</translation>
     </message>
     <message>
         <location filename="../forms/aligndialog.ui" line="682"/>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Uzaklaştır</translation>
+        <translation type="unfinished">&amp;Uzaklaştır</translation>
     </message>
     <message>
         <location filename="../forms/aligndialog.ui" line="698"/>
         <source>Zoom In</source>
-        <translation>Yaklaştır</translation>
+        <translation type="unfinished">Yaklaştır</translation>
     </message>
     <message>
         <location filename="../forms/aligndialog.ui" line="701"/>
         <source>Zoom &amp;In</source>
-        <translation>Yaklaşt&amp;ır</translation>
+        <translation type="unfinished">Yaklaşt&amp;ır</translation>
     </message>
     <message>
         <location filename="../forms/aligndialog.ui" line="730"/>
@@ -333,108 +318,183 @@ p, li { white-space: pre-wrap; }
         <source>This area shows the difference between the movable and the reference image. If the same image is selected in both the movable and reference list, this area will show the image itself.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="812"/>
+        <source>&lt; &amp;Back</source>
+        <translation type="unfinished">&lt; &amp;Geri</translation>
+    </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="819"/>
+        <source>&amp;Next &gt;</source>
+        <translation type="unfinished">&amp;İleri &gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/aligndialog.ui" line="829"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
     <message>
         <location filename="../forms/batch_dialog.ui" line="13"/>
         <source>Batch Tone Mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton Haritalama Yığını</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="36"/>
         <source>Input Hdr list</source>
-        <translation type="unfinished"></translation>
+        <translation>Hdr listesini içe aktar</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="64"/>
+        <source>Add all the HDRs in a directory to the list.</source>
+        <translation type="obsolete">Dizindeki tüm HDRleri listeye ekle.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="67"/>
         <source>Add &amp;Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dizin Ekle</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="88"/>
+        <source>Add single HDR files to the list.</source>
+        <translation type="obsolete">Bir tek HDR dosyasını listeye ekle.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="91"/>
         <source>&amp;Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosy&amp;a Ekle</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="112"/>
+        <source>Remove single HDR files to the list.</source>
+        <translation type="obsolete">Bir tek HDR dosyasını listeden çıkart.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="115"/>
         <source>&amp;Remove Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyala&amp;rı çıkart</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="143"/>
         <source>List of HDRs that will be tone mapped</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton haritası oluşturulacak HDRlerin listesi</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="159"/>
         <source>Input Tone Mapping Setting list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton Haritası Ayarlar listesini içe aktar </translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="187"/>
+        <source>Add all the Tone Mapping Setting files in a directory to the list.</source>
+        <translation type="obsolete">Bir dizindeki tüm Ton Haritalama Ayarlar dosyalarını listeye ekle.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="190"/>
         <source>Add D&amp;irectory</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dizin Ekle</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="211"/>
+        <source>Add single Tone Mapping Setting files to the list.</source>
+        <translation type="obsolete">Tek Ton Haritalama Ayarlar dosyalarını listeye ekle.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="214"/>
         <source>Add Fi&amp;les</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Ek&amp;le</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="235"/>
+        <source>Remove single Tone Mapping Setting files to the list.</source>
+        <translation type="obsolete">Tek Ton Haritalama Ayarlar dosyalarını listeden çıkart.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="238"/>
         <source>R&amp;emove Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyala&amp;rı çıkart</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="266"/>
+        <source>List of Tone Mapping Setting files that will be used to tone map each HDR.</source>
+        <translation type="obsolete">Her Ton Haritası kullanılan HDR dosyası için Ton Haritalama Ayarlar dosyaları listesi.</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="284"/>
+        <source>Specify output folder for the tone mapped files.</source>
+        <translation type="obsolete">Ton haritalanmış dosyalar için belirlenmiş çıktı klasörü.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="287"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıktı</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="299"/>
         <source>Select &amp;Output Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Çıktı Klasörünü S&amp;eç...</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="316"/>
         <source>Log:</source>
-        <translation type="unfinished"></translation>
+        <translation>Günlük:</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="342"/>
+        <source>Batch operations report.</source>
+        <translation type="obsolete">Yığın operasyonu raporu.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="369"/>
         <source>&amp;Show only:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sadece göster:</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="379"/>
+        <source>Filter messages based on severity.</source>
+        <translation type="obsolete">Önemli süzgeç mesajları.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="383"/>
         <source>All messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Bütün mesajlar</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="388"/>
         <source>Errors only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece Hatalar</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="408"/>
         <source>&amp;Filter Log messages:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Süzgeç günlük mesajları:</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="424"/>
         <source>Clear filter text</source>
-        <translation type="unfinished"></translation>
+        <translation>Süzgeç metnini temizle</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="434"/>
+        <source>Overall completion progress.</source>
+        <translation type="obsolete">Tamamlama işlemleri bütünü.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="470"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İ&amp;ptal</translation>
+    </message>
+    <message>
+        <location filename="../forms/batch_dialog.ui" line="478"/>
+        <source>Start batch tone mapping.</source>
+        <translation type="obsolete">Yığın ton haritalamaya başla.</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="486"/>
         <source>&amp;Start!</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Başla!</translation>
     </message>
     <message>
         <location filename="../src/Batch/batch_dialog_impl.cpp" line="134"/>
@@ -454,7 +514,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Batch/batch_dialog_impl.cpp" line="115"/>
         <source>Load the tonemapping settings text files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton haritalama ayarları metin dosyalarını yükle...</translation>
     </message>
     <message>
         <location filename="../src/Batch/batch_dialog_impl.cpp" line="115"/>
@@ -464,12 +524,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Batch/batch_dialog_impl.cpp" line="245"/>
         <source>Processing...</source>
-        <translation type="unfinished"></translation>
+        <translation>İşleniyor...</translation>
     </message>
     <message>
         <location filename="../src/Batch/batch_dialog_impl.cpp" line="304"/>
         <source>&amp;Done</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bitti</translation>
+    </message>
+    <message>
+        <location filename="../src/Batch/batch_dialog_impl.cpp" line="387"/>
+        <source>Done</source>
+        <translation type="obsolete">Bitti</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="64"/>
@@ -663,7 +728,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Resim&amp;leri yükle...</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="144"/>
+        <location filename="../forms/hdrwizardform.ui" line="110"/>
         <source>Exposure value
 for current image</source>
         <translation type="obsolete">Bu resim için
@@ -675,7 +740,7 @@ pozlandırma değeri</translation>
         <translation type="obsolete">Buradan, şu an&lt;br&gt;seçili resimdeki pozlandırma &lt;br&gt;değerleri (EV veya duraklar bakımından) &lt;br&gt;için farklılıkları ayarlayabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="193"/>
+        <location filename="../forms/hdrwizardform.ui" line="159"/>
         <source>Files Currently Loaded:</source>
         <translation type="obsolete">Dosyalar Yüklendi:</translation>
     </message>
@@ -731,10 +796,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/hdrwizardform.ui" line="372"/>
         <source>Weighting function:</source>
-        <translation type="unfinished"></translation>
+        <translation>Derinlik işlevleri:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="451"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
         <source>Triangular</source>
         <translation>Üçgensel</translation>
     </message>
@@ -744,7 +809,7 @@ p, li { white-space: pre-wrap; }
         <translation>Yanıt Eğrisi:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="462"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
         <source>Gamma</source>
         <translation>Gama</translation>
     </message>
@@ -754,7 +819,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">HDR Oluşturma Modeli:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="473"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="477"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -764,7 +829,7 @@ p, li { white-space: pre-wrap; }
         <translation>Karşı-gölgeleme(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="460"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
         <source>Linear</source>
         <translation>Doğrusal</translation>
     </message>
@@ -793,22 +858,22 @@ above do not yield good results)</source>
 profiller, iyi sonuçlar çıkarmazlarsa kullanın)</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="660"/>
+        <location filename="../forms/hdrwizardform.ui" line="626"/>
         <source>[2/3] Choose Custom Configuration</source>
         <translation type="obsolete">[2/3] Genel Yapılandırmayı Seçin</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="708"/>
         <source>Weights:</source>
-        <translation type="unfinished"></translation>
+        <translation>Derinlik:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="455"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="459"/>
         <source>Gaussian</source>
         <translation>Gaussian</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="453"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="457"/>
         <source>Plateau</source>
         <translation>Plato</translation>
     </message>
@@ -852,12 +917,12 @@ işlevini seçiniz&lt;/p&gt;</translation>
         <translation>Model Seçin:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="475"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="479"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="946"/>
+        <location filename="../forms/hdrwizardform.ui" line="888"/>
         <source>[3/3] Procedure Completed!</source>
         <translation type="obsolete">[3/3] İşlem Tamamlandı!</translation>
     </message>
@@ -952,52 +1017,52 @@ taglarını bulamadı:
         <translation>&amp;Bitir</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="399"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="403"/>
         <source>Load a camera response curve file</source>
         <translation>Bir fotoğraf makinesi yanıt eğrisi dosyası yükle</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="401"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="405"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Fotoğraf makinesi yanıt eğrisi (*.m);;Bütün Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source>(*) Weights: </source>
-        <translation type="unfinished"></translation>
+        <translation>(*) Derinlik: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Response curve: </source>
         <translation> - Yanıt Eğrisi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="444"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="448"/>
         <source> - Model: </source>
         <translation> - Model: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="464"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
         <source>Logarithmic</source>
         <translation>Logaritmik</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="466"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="470"/>
         <source>From Calibration</source>
         <translation>Ölçeklendirmeden</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="468"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="472"/>
         <source>From File</source>
         <translation>Dosyadan</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="553"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="557"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All values have been set!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Bütün değerler ayarlandı!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="260"/>
+        <location filename="../forms/hdrwizardform.ui" line="226"/>
         <source>[2/3] Choose Settings for Hdr Creation</source>
         <translation type="obsolete">[2/3] Hdr Oluşturumu İçin Ayarları Seçin</translation>
     </message>
@@ -1021,7 +1086,7 @@ p, li { white-space: pre-wrap; }
         <translation>Hdr oluşturması eşitlemesi:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="958"/>
+        <location filename="../forms/hdrwizardform.ui" line="900"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -1037,44 +1102,9 @@ the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&
         <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui, bu resimler için ilgili &lt;i&gt;EXIF&lt;/i&gt; taglarını bulamadı:(sp)&lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;Halen Hdr oluşturma işlemini yapabilirsiniz. Bunu yapmak için, her bir resminiz için EV(pozlandırma değerleri) veya durak farklılıkları değerlerini &lt;b&gt;el&lt;/b&gt; ile girmelisiniz. &lt;hr&gt;Eğer Qtfsguinin bunu &lt;b&gt;otomatik&lt;/b&gt; olarak yapmasını istiyorsanız, en az buradaki exif verilerine sahip olan resimler yüklemelisiniz: &lt;ul&gt;&lt;li&gt;Objektif Kapağı Hızı(saniyeler)&lt;/li&gt;&lt;li&gt;Diyafram Açıklığı (f-numarası)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;İPUCU:&lt;/b&gt; EXIF verisi kaybı genellikle resimlerin ön işlemleri sırasında meydana gelir.&lt;br&gt; Menüde &lt;i&gt;&lt;b&gt;Araçlar-&gt;Exif Verisi Kopyala...&lt;/b&gt;&lt;/i&gt; üzerinden, iki resim arasındaki &lt;b&gt;exif verilerinin bire-bir kopyasını&lt;/b&gt; oluşturabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="168"/>
-        <source>Auto &amp;Align Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="179"/>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="122"/>
-        <source>Here you can set &lt;br&gt;the difference in exposure &lt;br&gt;values (in terms of EV or stops) &lt;br&gt;for the currently selected image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="212"/>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="556"/>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="346"/>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Aligning...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
-        <source>Error...</source>
-        <translation>Hata...</translation>
-    </message>
-    <message>
         <location filename="../forms/hdrwizardform.ui" line="44"/>
         <source>[1/2] Load Input Images</source>
-        <translation>[1/2] Girdi Resimlerini Yükle</translation>
+        <translation type="unfinished">[1/3] Girdi Resimlerini Yükle {1/2]?}</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="83"/>
@@ -1088,8 +1118,23 @@ for current image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/hdrwizardform.ui" line="122"/>
+        <source>Here you can set &lt;br&gt;the difference in exposure &lt;br&gt;values (in terms of EV or stops) &lt;br&gt;for the currently selected image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../forms/hdrwizardform.ui" line="145"/>
         <source>Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="168"/>
+        <source>Auto &amp;Align Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/hdrwizardform.ui" line="179"/>
+        <source>hugin&apos;s align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1105,12 +1150,12 @@ for current image</source>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="288"/>
         <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation>[2/2] Hdr Oluşturumu İçin Ayarları Seçin</translation>
+        <translation type="unfinished">[2/3] Hdr Oluşturumu İçin Ayarları Seçin {2/2]?}</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="688"/>
         <source>[2/2] Choose Custom Configuration</source>
-        <translation>[2/2] Genel Yapılandırmayı Seçin</translation>
+        <translation type="unfinished">[2/3] Genel Yapılandırmayı Seçin {2/2]?}</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="172"/>
@@ -1118,22 +1163,42 @@ for current image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
+        <source>Error...</source>
+        <translation type="unfinished">Hata...</translation>
+    </message>
+    <message>
         <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="188"/>
         <source>All the images must have the same size.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="621"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="212"/>
+        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="560"/>
+        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="346"/>
+        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Aligning...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="626"/>
         <source>Failed to start the external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;. Read the webpage &lt;a href=&quot;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&quot;&gt;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&lt;/a&gt; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="624"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="629"/>
         <source>The external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="630"/>
+        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; process...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1337,12 +1402,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="227"/>
         <source>&amp;Tonemap the Hdr...</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR &amp;ton haritası...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="230"/>
         <source>Tonemap the Hdr</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR ton haritası</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="242"/>
@@ -1707,7 +1772,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="91"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;raç Çubukları</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="158"/>
@@ -1727,7 +1792,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="239"/>
         <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaygın LDR (Örneğin JPEG yada PNG) biçimleri içinden HDR ton haritası</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="285"/>
@@ -1752,7 +1817,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="497"/>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Te&amp;rcihler...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="523"/>
@@ -1772,32 +1837,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="604"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç Çubukları</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="612"/>
         <source>Text &amp;Under Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim&amp;ge Altında Metin</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="620"/>
         <source>&amp;Icons Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sadece S&amp;imgeler</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="628"/>
         <source>&amp;Text Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sa&amp;dece Metin</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="636"/>
         <source>Text &amp;Alongside Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Simgelerin &amp;Yanına Metin</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="641"/>
         <source>&amp;Batch Tone Mapping...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ton Haritalama &amp;Yığını...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/maingui_impl.cpp" line="116"/>
@@ -1832,12 +1897,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="558"/>
         <source>Copy Exif Data between two set of files</source>
-        <translation type="unfinished"></translation>
+        <translation>İki dosya arasında Exif verisini kopyala</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="644"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Y</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="152"/>
@@ -1852,11 +1917,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="503"/>
         <source>Set the various options of Qtpfsgui</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/maingui_impl.cpp" line="276"/>
-        <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1877,6 +1937,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="663"/>
         <source>About &amp;Qtpfsgui</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/maingui_impl.cpp" line="276"/>
+        <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2132,12 +2197,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="218"/>
         <source>Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Yığın</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="238"/>
         <source>Save using this LDR image &amp;format:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;LDR görüntü biçimini kullanarak kaydet:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="249"/>
@@ -2168,7 +2233,8 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/options.ui" line="287"/>
         <source>Number of &amp;threads:
 (useful on multi-core/SMP machines)</source>
-        <translation type="unfinished"></translation>
+        <translation>İş &amp;Parçacıkları Numarası:
+(Çoklu işlemcili makineler için kullanışlıdır)</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="623"/>
@@ -2210,7 +2276,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Canlandırma Seçenekleri&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2241,7 +2310,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/main.cpp" line="47"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt JPEG Eklentisi bulunamadı..&lt;br&gt;Lütfen DLL paketini &quot;klasör isimleri kullanarak&quot; seçeneği aktif hale getirin ve çıkartın.</translation>
     </message>
 </context>
 <context>
@@ -2787,12 +2856,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1076"/>
         <source>Reinhard &apos;0&amp;2</source>
-        <translation>Reinhard &apos;0&amp;2</translation>
+        <translation type="unfinished">Reinhard &apos;0&amp;2</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1437"/>
         <source>Reinhard &apos;0&amp;5</source>
-        <translation>Reinhard &apos;0&amp;5</translation>
+        <translation type="unfinished">Reinhard &apos;0&amp;5</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1522"/>
@@ -2867,7 +2936,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2294"/>
         <source>&amp;Load...</source>
-        <translation>Yük&amp;le...</translation>
+        <translation type="unfinished">Yük&amp;le...</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2321"/>
@@ -3038,9 +3107,24 @@ p, li { white-space: pre-wrap; }
         <translation>Kaydedilemedi &lt;b&gt;</translation>
     </message>
     <message>
+        <location filename="../forms/tonemappingdialog.ui" line="122"/>
+        <source>Adjust &amp;Levels</source>
+        <translation type="obsolete">Seviye&amp;leri Uydur</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="125"/>
+        <source>Adjust Levels</source>
+        <translation type="obsolete">Seviyeleri Uydur</translation>
+    </message>
+    <message>
         <location filename="../forms/tonemappingdialog.ui" line="27"/>
         <source>&amp;Help</source>
-        <translation>&amp;Yardım</translation>
+        <translation type="unfinished">&amp;Yardım</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="96"/>
+        <source>Ctrl+Q</source>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="113"/>
@@ -3063,6 +3147,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/tonemappingdialog.ui" line="151"/>
+        <source>Ctrl+L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../forms/tonemappingdialog.ui" line="162"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished"></translation>
@@ -3078,48 +3167,23 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/tonemappingdialog.ui" line="223"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+T</translation>
+    </message>
+    <message>
         <location filename="../forms/tonemappingdialog.ui" line="234"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="268"/>
-        <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="277"/>
-        <source>Shift+F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="285"/>
-        <source>&amp;Documentation...</source>
-        <translation>Belgelen&amp;dirme...</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="288"/>
-        <source>Ctrl+H</source>
-        <translation>Ctrl+H</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="96"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="151"/>
-        <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="223"/>
-        <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingdialog.ui" line="237"/>
         <source>Ctrl+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="268"/>
+        <source>What&apos;s This?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3131,6 +3195,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingdialog.ui" line="274"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="277"/>
+        <source>Shift+F1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="285"/>
+        <source>&amp;Documentation...</source>
+        <translation type="unfinished">Belgelen&amp;dirme...</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="288"/>
+        <source>Ctrl+H</source>
+        <translation type="unfinished">Ctrl+H</translation>
     </message>
 </context>
 <context>
@@ -3216,9 +3295,14 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Bütün exif tagları, başarıyla kopyalandı!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
+        <location filename="../src/TransplantExif/transplant_impl.cpp" line="293"/>
+        <source>Done.</source>
+        <translation type="obsolete">Bitti.</translation>
+    </message>
+    <message>
         <location filename="../forms/transplantexifdialog.ui" line="281"/>
         <source>Log:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Günlük:</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="307"/>
@@ -3228,7 +3312,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="334"/>
         <source>&amp;Show only:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Sadece göster:</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="344"/>
@@ -3238,22 +3322,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="348"/>
         <source>All messages</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bütün mesajlar</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="353"/>
         <source>Errors only</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sadece Hatalar</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="368"/>
         <source>&amp;Filter Log messages:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Süzgeç günlük mesajları:</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="384"/>
         <source>Clear filter text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Süzgeç metnini temizle</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="450"/>
@@ -3263,7 +3347,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="460"/>
         <source>&amp;Start!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Başla!</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/transplant_impl.cpp" line="276"/>
