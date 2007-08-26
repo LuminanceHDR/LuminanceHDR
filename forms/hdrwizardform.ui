@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>431</height>
+    <width>573</width>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -17,7 +17,7 @@
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
-    <number>0</number>
+    <number>6</number>
    </property>
    <property name="spacing" >
     <number>3</number>
@@ -33,10 +33,10 @@
      <widget class="QWidget" name="choose_files" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="spacing" >
-        <number>0</number>
+        <number>3</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox" >
@@ -45,10 +45,10 @@
          </property>
          <layout class="QGridLayout" >
           <property name="margin" >
-           <number>8</number>
+           <number>9</number>
           </property>
           <property name="spacing" >
-           <number>3</number>
+           <number>6</number>
           </property>
           <item row="0" column="1" >
            <layout class="QVBoxLayout" >
@@ -59,68 +59,113 @@
              <number>6</number>
             </property>
             <item>
-             <widget class="QLabel" name="label" >
-              <property name="text" >
-               <string>Click the button below to load the input images</string>
+             <widget class="QFrame" name="previewFrame" >
+              <property name="sizePolicy" >
+               <sizepolicy>
+                <hsizetype>7</hsizetype>
+                <vsizetype>7</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
+              <property name="frameShape" >
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="wordWrap" >
-               <bool>true</bool>
+              <property name="frameShadow" >
+               <enum>QFrame::Sunken</enum>
               </property>
-              <property name="buddy" >
-               <cstring>loadsetButton</cstring>
-              </property>
+              <layout class="QGridLayout" >
+               <property name="margin" >
+                <number>0</number>
+               </property>
+               <property name="spacing" >
+                <number>0</number>
+               </property>
+               <item row="0" column="0" >
+                <widget class="QLabel" name="previewLabel" >
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>13</hsizetype>
+                   <vsizetype>13</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text" >
+                  <string/>
+                 </property>
+                 <property name="alignment" >
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="loadsetButton" >
-              <property name="toolTip" >
-               <string>Load Input Images</string>
-              </property>
-              <property name="text" >
-               <string>&amp;Load Images...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="Line" name="line_5" >
-              <property name="orientation" >
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_EV" >
+             <widget class="QGroupBox" name="EVgroupBox" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
-              <property name="text" >
-               <string>&amp;Exposure value
-for current image</string>
+              <property name="title" >
+               <string>&amp;Exposure value for selected image</string>
               </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buddy" >
-               <cstring>EVcomboBox</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="EVcomboBox" >
-              <property name="enabled" >
-               <bool>false</bool>
-              </property>
-              <property name="font" >
-               <font>
-                <family>Monospace</family>
-               </font>
-              </property>
-              <property name="toolTip" >
-               <string>Here you can set &lt;br>the difference in exposure &lt;br>values (in terms of EV or stops) &lt;br>for the currently selected image</string>
-              </property>
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>6</number>
+               </property>
+               <property name="spacing" >
+                <number>3</number>
+               </property>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="ImageEVdsb" >
+                   <property name="prefix" >
+                    <string>EV </string>
+                   </property>
+                   <property name="decimals" >
+                    <number>2</number>
+                   </property>
+                   <property name="maximum" >
+                    <double>12.000000000000000</double>
+                   </property>
+                   <property name="minimum" >
+                    <double>-12.000000000000000</double>
+                   </property>
+                   <property name="singleStep" >
+                    <double>0.100000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="EVSlider" >
+                   <property name="maximum" >
+                    <number>240</number>
+                   </property>
+                   <property name="value" >
+                    <number>120</number>
+                   </property>
+                   <property name="orientation" >
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition" >
+                    <enum>QSlider::TicksAbove</enum>
+                   </property>
+                   <property name="tickInterval" >
+                    <number>10</number>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -134,12 +179,6 @@ for current image</string>
              <widget class="QGroupBox" name="alignGroupBox" >
               <property name="enabled" >
                <bool>false</bool>
-              </property>
-              <property name="minimumSize" >
-               <size>
-                <width>225</width>
-                <height>0</height>
-               </size>
               </property>
               <property name="title" >
                <string>Alignment</string>
@@ -158,7 +197,7 @@ for current image</string>
                  </property>
                  <property name="sizePolicy" >
                   <sizepolicy>
-                   <hsizetype>4</hsizetype>
+                   <hsizetype>0</hsizetype>
                    <vsizetype>0</vsizetype>
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
@@ -173,6 +212,14 @@ for current image</string>
                 <widget class="QComboBox" name="alignmentEngineCB" >
                  <property name="enabled" >
                   <bool>false</bool>
+                 </property>
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>5</hsizetype>
+                   <vsizetype>0</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
                  <item>
                   <property name="text" >
@@ -189,19 +236,6 @@ for current image</string>
               </layout>
              </widget>
             </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>111</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
            </layout>
           </item>
           <item row="0" column="0" >
@@ -213,7 +247,51 @@ for current image</string>
              <number>6</number>
             </property>
             <item>
+             <widget class="QLabel" name="label" >
+              <property name="maximumSize" >
+               <size>
+                <width>222</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text" >
+               <string>Click the button below to load the input images</string>
+              </property>
+              <property name="alignment" >
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="wordWrap" >
+               <bool>true</bool>
+              </property>
+              <property name="buddy" >
+               <cstring>loadsetButton</cstring>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="loadsetButton" >
+              <property name="maximumSize" >
+               <size>
+                <width>222</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="toolTip" >
+               <string>Load Input Images</string>
+              </property>
+              <property name="text" >
+               <string>&amp;Load Images...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QLabel" name="label_2" >
+              <property name="maximumSize" >
+               <size>
+                <width>222</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="text" >
                <string>&amp;Files Currently Loaded:</string>
               </property>
@@ -221,15 +299,32 @@ for current image</string>
                <set>Qt::AlignCenter</set>
               </property>
               <property name="buddy" >
-               <cstring>listShowFiles</cstring>
+               <cstring>tableWidget</cstring>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QListWidget" name="listShowFiles" >
+             <widget class="QTableWidget" name="tableWidget" >
+              <property name="maximumSize" >
+               <size>
+                <width>222</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="editTriggers" >
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode" >
+               <enum>QAbstractItemView::SingleSelection</enum>
+              </property>
               <property name="selectionBehavior" >
                <enum>QAbstractItemView::SelectRows</enum>
               </property>
+              <property name="columnCount" >
+               <number>2</number>
+              </property>
+              <column/>
+              <column/>
              </widget>
             </item>
            </layout>
@@ -1023,7 +1118,6 @@ pixel values&lt;/p></string>
  </widget>
  <layoutdefault spacing="0" margin="0" />
  <resources>
-  <include location="icons.qrc" />
   <include location="../icons.qrc" />
  </resources>
  <connections>

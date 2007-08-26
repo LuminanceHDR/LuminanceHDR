@@ -81,6 +81,14 @@
        </item>
        <item>
         <widget class="QGroupBox" name="listsGroupBox" >
+         <property name="sizePolicy" >
+          <sizepolicy>
+           <hsizetype>0</hsizetype>
+           <vsizetype>5</vsizetype>
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximumSize" >
           <size>
            <width>391</width>
@@ -396,7 +404,7 @@
         <widget class="QGroupBox" name="correctionsGroupBox" >
          <property name="sizePolicy" >
           <sizepolicy>
-           <hsizetype>4</hsizetype>
+           <hsizetype>0</hsizetype>
            <vsizetype>5</vsizetype>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
@@ -725,6 +733,47 @@
           </spacer>
          </item>
          <item>
+          <widget class="QToolButton" name="cropButton" >
+           <property name="enabled" >
+            <bool>false</bool>
+           </property>
+           <property name="toolTip" >
+            <string>Crop the stack of images after a selection with the left mouse button has been made</string>
+           </property>
+           <property name="whatsThis" >
+            <string>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</string>
+           </property>
+           <property name="text" >
+            <string>&amp;Crop All Images</string>
+           </property>
+           <property name="icon" >
+            <iconset resource="../icons.qrc" >:/new/prefix1/images/crop.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>22</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="shortcut" >
+            <string>CTRL+X</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QToolButton" name="whatsThisButton" >
            <property name="toolTip" >
             <string>Get information about the graphical elements</string>
@@ -768,7 +817,7 @@
           <string>Difference between movable and reference image.</string>
          </property>
          <property name="whatsThis" >
-          <string>This area shows the difference between the movable and the reference image. If the same image is selected in both the movable and reference list, this area will show the image itself.</string>
+          <string>This area shows the difference between the movable and the reference image. If the same image is selected in both the movable and reference list, this area will show the image itself. Clicking and holding the left mouse button you will be able to select a crop area.</string>
          </property>
          <property name="frameShape" >
           <enum>QFrame::NoFrame</enum>
