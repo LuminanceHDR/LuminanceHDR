@@ -32,6 +32,7 @@
 #include "../generated_uic/ui_hdrwizardform.h"
 #include "hdrcreation/createhdr.h"
 #include "../options.h"
+#include "../ToneMappingDialog/gang.h"
 #include <QProcess>
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
@@ -44,6 +45,8 @@ public:
 	pfs::Frame* getPfsFrameHDR();
 	QString getCaptionTEXT();
 
+protected:
+	void resizeEvent ( QResizeEvent * );
 private:
 	QString curvefilename;
 	config_triple chosen_config;
@@ -54,9 +57,8 @@ private:
 	void clearlists();
 	int numberinputfiles; //it is also the lenght of the array below
 	float *expotimes;
-// 	bool ldr_tiff;
 	bool need_to_transform_indices;
-	bool enable_usability_jump_hack;
+	Gang *EVgang;
 
 	QList<QImage*> ImagePtrList;  //ldr input
 	QList<bool> ldr_tiff_input;  //ldr input
@@ -67,8 +69,6 @@ private:
 	QProcess *ais;
 	pfs::Frame* PfsFrameHDR;
 
-	void fillEVcombobox();
-	void transform_indices_into_values();
 	bool check_same_size(int&,int&,int,int);
 
 private slots:
@@ -87,8 +87,7 @@ private slots:
 	void custom_toggled(bool);
 	void update_current_config_calibrate();
 	void setLoadFilename(const QString&);
-	void EVcomboBoxactivated(int);
-	void highlighted(int);
+	void updateEVvalue();
 	void fileselected(int);
 	void ais_failed(QProcess::ProcessError);
 	void ais_finished(int,QProcess::ExitStatus);

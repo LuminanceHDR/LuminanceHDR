@@ -32,13 +32,13 @@
 AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input), dont_change_shift(false), dont_recompute(false) 
 {
 	setupUi(this);
+
 	assert(original_ldrlist.size()==fileStringList.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(0);
-	imageLabel = new QLabel;
+	imageLabel = new LabelWithRubberBand;
 	diffImage = new QImage(original_ldrlist[0]->size(),QImage::Format_ARGB32);
-
 	scrollArea = new SmartScrollArea(diffImageFrame,imageLabel);
 	qvl->addWidget(scrollArea);
 
@@ -61,6 +61,7 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	zoomOutButton->setToolButtonStyle(style);
 	zoomInButton->setToolButtonStyle(style);
 	whatsThisButton->setToolButtonStyle(style);
+	cropButton->setToolButtonStyle(style);
 	connect(upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
 	connect(rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
 	connect(downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
@@ -84,8 +85,10 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	connect(origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
 	connect(zoomOutButton,SIGNAL(clicked()),this,SLOT(zoomOut()));
 	connect(zoomInButton,SIGNAL(clicked()),this,SLOT(zoomIn()));
+	connect(cropButton,SIGNAL(clicked()),this,SLOT(crop_stack()));
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
+	connect(imageLabel,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
 	
 	QStringList::ConstIterator it = fileStringList.begin();
 	while( it != fileStringList.end() ) {
@@ -110,6 +113,44 @@ AlignmentDialog::~AlignmentDialog() {
 	delete histogram;
 }
 
+void AlignmentDialog::crop_stack() {
+	//zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
+	origSize();
+	QRect ca=imageLabel->getCropArea();
+	if(ca.width()<=0|| ca.height()<=0)
+		return;
+	qDebug("selezionato left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
+	//crop all the images
+	int origlistsize=original_ldrlist.size();
+	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
+		QImage *newimage=new QImage(ca.width(), ca.height(), QImage::Format_ARGB32);
+		assert(newimage!=NULL);
+		for(int row=0; row<newimage->height(); row++) {
+			QRgb *inp = (QRgb*)original_ldrlist.at(0)->scanLine(row+ca.top());
+			QRgb *outp = (QRgb*)newimage->scanLine(row);
+			for(int col=0; col<newimage->width(); col++) {
+				outp[col] = *(inp+col+ca.left());
+			}
+		}
+		if (ldr_tiff_input[0]) {
+			qDebug("::crop_stack: deleting tiff payload");
+			delete [] original_ldrlist[0]->bits();
+		}
+		delete original_ldrlist[0];
+		original_ldrlist.removeAt(0);
+		original_ldrlist.append(newimage);
+		ldr_tiff_input.removeAt(0);
+		ldr_tiff_input.append(false);
+	}
+	delete diffImage;
+	diffImage = new QImage(original_ldrlist[0]->size(),QImage::Format_ARGB32);
+	pivotImage=original_ldrlist[referenceListWidget->currentRow()];
+	movableImage=original_ldrlist[movableListWidget->currentRow()];
+	recomputeDiffImage();
+	imageLabel->adjustSize();
+	imageLabel->hideRubberBand();
+}
+
 void AlignmentDialog::nextClicked() {
 	int originalsize=original_ldrlist.size();
 	//shift the images
@@ -131,7 +172,7 @@ void AlignmentDialog::nextClicked() {
 	emit accept();
 }
 
-void AlignmentDialog::recomputeDiffImage() {
+inline void AlignmentDialog::recomputeDiffImage() {
 	qDebug("AlignmentDialog::recomputeDiffImage()");
 	QApplication::setOverrideCursor( QCursor(Qt::BusyCursor) );
 	QRgb outofbounds=qRgba(0,0,0,255);
@@ -190,30 +231,6 @@ void AlignmentDialog::recomputeDiffImage() {
 	imageLabel->setPixmap(QPixmap::fromImage(*diffImage));
 	imageLabel->update();
 	QApplication::restoreOverrideCursor();
-}
-
-QRgb AlignmentDialog::computeDiffRgba(QRgb *Mrgba, QRgb *Prgba) {
-	int ro,go,bo;
-	int Mred=  qRed(*Mrgba);
-	int Mgreen=qGreen(*Mrgba);
-	int Mblue= qBlue(*Mrgba);
-	int Malphaweight=(int)(qAlpha(*Mrgba)/255.0f);
-	int Pred  =qRed(*Prgba);
-	int Pgreen=qGreen(*Prgba);
-	int Pblue =qBlue(*Prgba);
-	int Palphaweight=(int)(qAlpha(*Prgba)/255.0f);
-
-	//when both images have alpha==0 we return an opaque black
-	if (Malphaweight==0 && Palphaweight==0)
-		return qRgba(0,0,0,255);
-	else {
-		//blend samples using alphas as weights
-		ro=qAbs(Pred*Palphaweight - Mred*Malphaweight);
-		go=qAbs(Pgreen*Palphaweight - Mgreen*Malphaweight);
-		bo=qAbs(Pblue*Palphaweight - Mblue*Malphaweight);
-		//the output image still has alpha=255 (opaque)
-		return qRgba(ro,go,bo,255);
-	}
 }
 
 void AlignmentDialog::updateMovable(int newidx) {
@@ -339,4 +356,60 @@ void AlignmentDialog::origSize() {
 	scrollArea->normalSize();
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(true);
+}
+
+///////////////////////////// LabelWithRubberBand /////////////////////////////
+LabelWithRubberBand::LabelWithRubberBand(QWidget *parent): QLabel(parent) {
+	rubberBand=new QRubberBand(QRubberBand::Rectangle,this);
+	setMouseTracking(true);
+}
+
+LabelWithRubberBand::~LabelWithRubberBand() {
+	delete rubberBand;
+}
+
+void LabelWithRubberBand::mousePressEvent(QMouseEvent *event) {
+	if (event->buttons()==Qt::LeftButton) {
+		origin = event->pos();
+		rubberBand->setGeometry(QRect(origin, QSize()));
+		rubberBand->show();
+		emit validCropArea(false);
+	}
+	event->ignore();
+}
+
+void LabelWithRubberBand::mouseMoveEvent(QMouseEvent *event) {
+	if (event->buttons()==Qt::LeftButton) {
+		rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
+		if (rubberBand->geometry().isValid())
+			emit validCropArea(true);
+	}
+	event->ignore();
+}
+
+void LabelWithRubberBand::mouseReleaseEvent(QMouseEvent */*event*/) {
+	QRect g=rubberBand->geometry();
+	g.setLeft(qMax(0,g.left()));
+	g.setRight(qMin(size().width()-1,g.right()));
+	g.setTop(qMax(g.top(),0));
+	g.setBottom(qMin(size().height()-1,g.bottom()));
+	rubberBand->setGeometry(g);
+}
+
+void LabelWithRubberBand::resizeEvent(QResizeEvent *event) {
+	//cannot use the height, because of the "hack" of the +-1 pixel
+	float newoldratioW=(float)(event->size().width())/(float)(event->oldSize().width());
+	if (newoldratioW==1)
+		return;
+	origin*=newoldratioW;
+	rubberBand->resize(rubberBand->size()*newoldratioW);
+	rubberBand->setGeometry(QRect(origin,rubberBand->size()));
+	if (rubberBand->size().width()==0||rubberBand->size().height()==0) {
+		rubberBand->hide();
+		emit validCropArea(false);
+	}
+}
+
+QRect LabelWithRubberBand::getCropArea() const {
+	return rubberBand->geometry();
 }

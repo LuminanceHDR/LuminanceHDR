@@ -70,7 +70,7 @@ void getLum(const QImage *in, QImage *out, vector<double> &cdf);
  * setbitmap allocates mem for a QImage pointer
  * it's up to the caller to "delete" the pointer to free the mem.
  *
- * \param size the image size
+ * \param size the image size \n
  * \return the pointer for which mem will be allocated
  */
 QImage* setbitmap(const QSize size);

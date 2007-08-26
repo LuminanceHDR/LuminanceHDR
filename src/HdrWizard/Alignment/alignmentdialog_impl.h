@@ -32,6 +32,29 @@ class HistogramLDR;
 //defined in mtb_alignment.cpp
 QImage* shiftQImage(const QImage *in, int dx, int dy);
 
+class LabelWithRubberBand : public QLabel
+{
+Q_OBJECT
+public:
+	LabelWithRubberBand(QWidget *parent=0);
+	~LabelWithRubberBand();
+	QRect getCropArea() const;
+	void hideRubberBand() {
+		rubberBand->hide();
+		emit validCropArea(false);
+	}
+signals:
+	void validCropArea(bool);
+protected:
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	void resizeEvent(QResizeEvent *event);
+private:
+	QRubberBand *rubberBand;
+	QPoint origin;
+};
+
 class AlignmentDialog : public QDialog, private Ui::AlignmentDialog
 {
 Q_OBJECT
@@ -39,7 +62,7 @@ public:
 	AlignmentDialog(QWidget *parent, QList<QImage*>&ldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle s);
 	~AlignmentDialog();
 private:
-	QLabel *imageLabel;
+	LabelWithRubberBand *imageLabel;
 	SmartScrollArea *scrollArea;
 	QImage *diffImage;
 	QImage *movableImage,*pivotImage;
@@ -50,8 +73,30 @@ private:
 	bool dont_change_shift,dont_recompute;
 	Qt::ToolButtonStyle style;
 	
-	void recomputeDiffImage();
-	QRgb computeDiffRgba(QRgb*,QRgb*);
+	inline void recomputeDiffImage();
+	inline QRgb computeDiffRgba(const QRgb *Mrgba, const QRgb *Prgba)const {
+		int ro,go,bo;
+		int Mred=  qRed(*Mrgba);
+		int Mgreen=qGreen(*Mrgba);
+		int Mblue= qBlue(*Mrgba);
+		int Malphaweight=(int)(qAlpha(*Mrgba)/255.0f);
+		int Pred  =qRed(*Prgba);
+		int Pgreen=qGreen(*Prgba);
+		int Pblue =qBlue(*Prgba);
+		int Palphaweight=(int)(qAlpha(*Prgba)/255.0f);
+	
+		//when both images have alpha==0 we return an opaque black
+		if (Malphaweight==0 && Palphaweight==0)
+			return qRgba(0,0,0,255);
+		else {
+			//blend samples using alphas as weights
+			ro=qAbs(Pred*Palphaweight - Mred*Malphaweight);
+			go=qAbs(Pgreen*Palphaweight - Mgreen*Malphaweight);
+			bo=qAbs(Pblue*Palphaweight - Mblue*Malphaweight);
+			//the output image still has alpha=255 (opaque)
+			return qRgba(ro,go,bo,255);
+		}
+	}
 private slots:
 	void updatePivot(int);
 	void updateMovable(int);
@@ -74,6 +119,7 @@ private slots:
 	void zoomOut();
 	void fitDiff(bool);
 	void origSize();
+	void crop_stack();
 	
 	void nextClicked();
 };

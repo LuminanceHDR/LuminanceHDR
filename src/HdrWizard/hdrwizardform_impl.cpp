@@ -52,8 +52,11 @@ const config_triple predef_confs[6]= {
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), /*ldr_tiff(false),*/ opts(options), settings("Qtpfsgui", "Qtpfsgui") {
+HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), opts(options), settings("Qtpfsgui", "Qtpfsgui"), ais(NULL) {
 	setupUi(this);
+	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Filename") << tr("Exposure"));
+	EVgang = new Gang(EVSlider, ImageEVdsb,-12,12,0);
+
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
 	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
@@ -71,10 +74,9 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), c
 	connect(radio_usecalibrate_02,SIGNAL(toggled(bool)),this,SLOT(update_current_config_calibrate()));
 	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)), this, SLOT(setLoadFilename(const QString&)));
 
-	connect(EVcomboBox, SIGNAL(activated(int)), this, SLOT(EVcomboBoxactivated(int)));
-	connect(EVcomboBox, SIGNAL(highlighted(int)), this, SLOT(highlighted(int)));
+	connect(EVgang, SIGNAL(finished()), this, SLOT(updateEVvalue()));
 
-	connect(listShowFiles, SIGNAL(currentRowChanged(int)), this, SLOT(fileselected(int)));
+	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(fileselected(int)));
 	weights_in_gui[0]=TRIANGULAR;
 	weights_in_gui[1]=GAUSSIAN;
 	weights_in_gui[2]=PLATEAU;
@@ -86,16 +88,8 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), c
 	models_in_gui[1]=ROBERTSON;
 
 	chosen_config=predef_confs[0];
-	fillEVcombobox();
-	need_to_transform_indices=false;
-	enable_usability_jump_hack=true;
 }
 
-void HdrWizardForm::highlighted(int) {
-	if (enable_usability_jump_hack)
-		(EVcomboBox->view())->scrollTo((EVcomboBox->model())->index(29,0));
-	enable_usability_jump_hack=false;
-}
 
 void HdrWizardForm::loadfiles() {
     QString filetypes;
@@ -119,6 +113,7 @@ void HdrWizardForm::loadfiles() {
 	numberinputfiles=files.count();
 	progressBar->setMaximum(numberinputfiles);
 	progressBar->setValue(0);
+	tableWidget->setRowCount(numberinputfiles);
 	expotimes=new float[numberinputfiles];
 	int index_expotimes=0;
 	QStringList::Iterator files_stringlistiterator = files.begin();
@@ -131,7 +126,21 @@ void HdrWizardForm::loadfiles() {
 		//fill array of exposure times, -1 is error
 		expotimes[index_expotimes]=ExifOperations::obtain_expotime(qfi.filePath().toStdString());
 
-		listShowFiles->addItem(qfi.fileName()); //fill graphical list
+		//fill graphical list
+		tableWidget->setItem(index_expotimes,0,new QTableWidgetItem(qfi.fileName()));
+		if (expotimes[index_expotimes]!=-1) {
+			QString EVdisplay;
+			QTextStream ts(&EVdisplay);
+			ts.setRealNumberPrecision(2);
+			ts << right << forcesign << fixed << log2f(expotimes[index_expotimes])+12.5128f << " EV";
+			QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
+			tableitem->setTextAlignment(Qt::AlignRight);
+			tableWidget->setItem(index_expotimes,1,tableitem);
+			qDebug("expotimes[%d]=%f --- EV=%f",index_expotimes,expotimes[index_expotimes],log2f(expotimes[index_expotimes])+12.5128f);
+		} else {
+			tableWidget->setItem(index_expotimes,1,new QTableWidgetItem(tr("Unknown ")));
+		}
+
 		QString extension=qfi.suffix().toUpper(); //get filename extension
 
 		//now go and fill the list of image data (real payload)
@@ -165,7 +174,7 @@ void HdrWizardForm::loadfiles() {
 				current_sizey=R->getHeight();
 			//error if unknown tiff type
 			} else {
-				listShowFiles->clear();
+				tableWidget->clear();
 				progressBar->setValue(0);
 				clearlists();
 				delete expotimes; expotimes=NULL;
@@ -186,7 +195,7 @@ void HdrWizardForm::loadfiles() {
 		//check if the image has the same size as the one before
 		if (!check_same_size(previous_sizex,previous_sizey,current_sizex,current_sizey)) {
 			QMessageBox::critical(this,tr("Error..."), QString(tr("All the images must have the same size.")));
-			listShowFiles->clear();
+			tableWidget->clear();
 			progressBar->setValue(0);
 			clearlists();
 			delete expotimes; expotimes=NULL;
@@ -202,7 +211,7 @@ void HdrWizardForm::loadfiles() {
 	QStringList files_lacking_exif;
 	for (int i=0; i<numberinputfiles; i++) {
 		if (expotimes[i]==-1) {
-			files_lacking_exif+="<li><font color=\"#FF0000\"><i><b>"+ listShowFiles->item(i)->text()+ "</b></i></font></li>\n";
+			files_lacking_exif+="<li><font color=\"#FF0000\"><i><b>"+ tableWidget->item(i,0)->text()+ "</b></i></font></li>\n";
 			all_ok=false;
 		}
 	}
@@ -215,8 +224,6 @@ void HdrWizardForm::loadfiles() {
 		for (int j=0;j<numberinputfiles;j++) {
 			expotimes[j]=-1;
 		}
-		EVcomboBox->setEnabled(TRUE);
-		label_EV->setEnabled(TRUE);
 		QString warning_message=(QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
 Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
 %1</ul>\
@@ -228,13 +235,17 @@ Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following i
 You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(files_lacking_exif.join(""));
 		QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
 		confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(numberinputfiles));
-	}
+	} //if (all_ok)
+
 	loadsetButton->setEnabled(FALSE);
 	if (ImagePtrList.size() >= 2) {
 		alignCheckBox->setEnabled(true);
 		alignGroupBox->setEnabled(true);
 	}
-    }
+	tableWidget->resizeColumnsToContents();
+	EVgroupBox->setEnabled(TRUE);
+	tableWidget->selectRow(0);
+    } //if (!files.isEmpty() )
 }
 
 bool HdrWizardForm::check_same_size(int &px,int &py,int cx,int cy) {
@@ -338,8 +349,6 @@ void HdrWizardForm::nextpressed() {
 	int currentpage=pagestack->currentIndex();
 	switch (currentpage) {
 	case 0:
-		if (need_to_transform_indices)
-			transform_indices_into_values();
 		//now align, if requested
 		if (alignCheckBox->isChecked()) {
 			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -355,8 +364,9 @@ void HdrWizardForm::nextpressed() {
 				ais->setEnvironment(env);
 				connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 				connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-				ais->start("align_image_stack",QStringList() << QString("-a") << fileStringList);
+				ais->start("align_image_stack",QStringList() << QString("-v") << QString("-a") << fileStringList);
 				break;
+
 				case 1:
 				mtb_alignment(ImagePtrList,ldr_tiff_input);
 				Next_Finishbutton->setEnabled(TRUE);
@@ -482,68 +492,19 @@ QString HdrWizardForm::getQStringFromConfig( int type ) {
 return "";
 }
 
-void HdrWizardForm::fillEVcombobox() {
-	for (int i=-6*4;i<=6*4;i++){
-		float ev_value=-100;
-		QString stop_string="";
-		switch (abs(i%4)) {
-			case 0:
-			ev_value=0;
-			stop_string=((i>0)? "+":"") + QString("%1").arg((i/4));
-			break;
-			case 1:
-			ev_value= (i>0)? +0.3 : -0.3;
-			stop_string=((i>0)? "+":"") + QString("%1/3").arg(( (i/4)*3 + ((i>0)? +1:-1) ));
-			break;
-			case 2:
-			ev_value= (i>0)? +0.5 : -0.5;
-			stop_string=((i>0)? "+":"") + QString("%1/2").arg(( (i/4)*2 + ((i>0)? +1:-1) ));
-			break;
-			case 3:
-			ev_value= (i>0)? +0.7 : -0.7;
-			stop_string=((i>0)? "+":"") + QString("%1/3").arg(( (i/4)*3 + ((i>0)? +2:-2) ));
-			break;
-		}
-		ev_value+=i/4;
-		QString result;
-		QTextStream ts(&result);
-		ts << "EV "<< qSetFieldWidth(4) << left << forcesign << ev_value << " || stops " << qSetFieldWidth(4) << forcesign << left << stop_string;
-		EVcomboBox->addItem(result);
-	}
-	EVcomboBox->setCurrentIndex(-1);
-}
-
-void HdrWizardForm::transform_indices_into_values() {
-	qDebug("HdrWizardForm:: transforming indices into values");
-//for precise values I cannot parse back what I put in the combobox, I have to recompute the values. In other words 4/3 != 1.3
-	for (int i=0; i<numberinputfiles; i++) {
-		int ni=(int)expotimes[i]-(6*4);
-		float v=-100;
-		switch (abs(ni%4)) {
-			case 0:
-				v=ni/4;
-				break;
-			case 1:
-				v=float((ni/4)*3 + ((ni>0)? +1:-1)) / 3.0f;
-				break;
-			case 2:
-				v=float((ni/4)*2 + ((ni>0)? +1:-1)) / 2.0f;
-				break;
-			case 3:
-				v=float((ni/4)*3 + ((ni>0)? +2:-2)) / 3.0f;
-				break;
-		}
-		assert(v!=-100);
-		expotimes[i]=exp2f(v);
-	}
-}
-
-void HdrWizardForm::EVcomboBoxactivated(int i) {
-	enable_usability_jump_hack=true;
-	assert(listShowFiles->count()==numberinputfiles);
-	//for the time being expotimes contains the indices into the combobox (from 0 to 48)
-	expotimes[listShowFiles->currentRow()]=i;
-// 	qDebug("setting expotimes[%d]=%d",listShowFiles->currentRow(),i);
+void HdrWizardForm::updateEVvalue() {
+	assert(tableWidget->rowCount()==numberinputfiles);
+	float expo_from_EV=exp2f(ImageEVdsb->value()-12.5128f);
+	//transform from EV value to expotime value
+	expotimes[tableWidget->currentRow()]=expo_from_EV;
+	QString EVdisplay;
+	QTextStream ts(&EVdisplay);
+	ts.setRealNumberPrecision(2);
+	ts << right << forcesign << fixed << ImageEVdsb->value() << " EV";
+	QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
+	tableitem->setTextAlignment(Qt::AlignRight);
+	tableWidget->setItem(tableWidget->currentRow(),1,tableitem);
+	qDebug("setting expotimes[%d]=%f",tableWidget->currentRow(),expotimes[tableWidget->currentRow()]);
 	bool all_ok=true;
 	int files_unspecified=0;
 	for (int i=0; i<numberinputfiles; i++) {
@@ -554,24 +515,34 @@ void HdrWizardForm::EVcomboBoxactivated(int i) {
 	}
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
-		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All values have been set!</b></h3></font></center>"));
-		need_to_transform_indices=true;
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.</b></h3></font></center>"));
 	} else {
 		confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(files_unspecified) );
 	}
 }
 
 void HdrWizardForm::fileselected(int i) {
-	assert(listShowFiles->count()==numberinputfiles);
-	//right now expotimes contains the indices into the combobox (from 0 to 48)
-	EVcomboBox->setCurrentIndex((int)expotimes[i]); //works with -1 (value not set) as well.
+	assert(tableWidget->rowCount()==numberinputfiles);
+	if (expotimes[i]!=-1)
+		ImageEVdsb->setValue(log2f(expotimes[i])+12.5128f);
+	if (ImagePtrList.size() != 0)
+		previewLabel->setPixmap(QPixmap::fromImage(ImagePtrList.at(i)->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+}
+
+void HdrWizardForm::resizeEvent ( QResizeEvent * ) {
+	if (ImagePtrList.size() != 0 && pagestack->currentIndex()==0)
+		previewLabel->setPixmap(QPixmap::fromImage(ImagePtrList.at(tableWidget->currentRow())->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 }
 
 HdrWizardForm::~HdrWizardForm() {
 	qDebug("~HdrWizardForm");
+	if (ais!=NULL && ais->state()!=QProcess::NotRunning) {
+		ais->kill();
+	}
 	// here PfsFrameHDR is not free-ed because we want to get it outside of this class via the getPfsFrameHDR() method.
 	if (expotimes) delete [] expotimes;
 	clearlists();
+	delete EVgang;
 }
 
 void HdrWizardForm::clearlists() {
@@ -612,6 +583,7 @@ void HdrWizardForm::ais_finished(int exitcode, QProcess::ExitStatus) {
 			TiffReader reader(fname);
 			ImagePtrList.append( reader.readIntoQImage() );
 			QFile::remove(fname);
+			ldr_tiff_input.append(true);
 		}
 		QFile::remove(QString(opts->tempfilespath + "/hugin_debug_optim_results.txt"));
 		QApplication::restoreOverrideCursor();
@@ -640,4 +612,5 @@ void HdrWizardForm::ais_failed(QProcess::ProcessError e) {
 	if (pagestack->currentIndex()==0)
 		pagestack->setCurrentIndex(1);
 }
+
 

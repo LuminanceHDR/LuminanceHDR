@@ -32,7 +32,7 @@ QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
 	QImage *out=new QImage(in->size(),QImage::Format_ARGB32);
 	assert(out!=NULL);
-	out->fill(0);
+	out->fill(qRgba(0,0,0,0)); //transparent black
 	for(int i = 0; i < in->height(); i++) {
 		if( (i+dy) < 0 ) continue;
 		if( (i+dy) >= in->height()) break;
@@ -75,7 +75,7 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
 		for (int j=i-1; j>=0; j--) {
 			cumulativeX+=shiftsX[j];
 			cumulativeY+=shiftsY[j];
-			qDebug("::mtb_alignment: partial cumulativeX=%d, cumulativeY=%d",cumulativeX,cumulativeY);
+// 			qDebug("::mtb_alignment: partial cumulativeX=%d, cumulativeY=%d",cumulativeX,cumulativeY);
 		}
 		qDebug("::mtb_alignment: Cumulative shift for image %d = (%d,%d)",i,cumulativeX,cumulativeY);
 		QImage *shifted=shiftQImage(ImagePtrList[1], cumulativeX, cumulativeY);
@@ -107,7 +107,7 @@ void mtbalign(const QImage *image1, const QImage *image2,
 	getLum(image2, img2lum, cdf2);
 	for(median2 = 0; median2 < 256; median2++) if( cdf2[median2] >= quantile ) break;
 	
-	qDebug("::mtb_alignment: align::medians, image 1: %d, image 2: %d",median1,median2);
+// 	qDebug("::mtb_alignment: align::medians, image 1: %d, image 2: %d",median1,median2);
 	getExpShift(img1lum, median1, img2lum, median2, noise, shift_bits, shift_x, shift_y);
 	delete img1lum; delete img2lum;
 	qDebug("::mtb_alignment: align::done, final shift is (%d,%d)",shift_x, shift_y);
@@ -158,7 +158,7 @@ void getExpShift(const QImage *img1, const int median1,
 
 	delete img1threshold; delete img1mask; delete img2threshold; delete img2mask;
 	delete img2th_shifted; delete img2mask_shifted; delete diff;
-	qDebug("::mtb_alignment: getExpShift::Level %d  shift (%d,%d)", shift_bits,shift_x, shift_y);
+// 	qDebug("::mtb_alignment: getExpShift::Level %d  shift (%d,%d)", shift_bits,shift_x, shift_y);
 	return;
 }
 
@@ -236,7 +236,6 @@ void getLum(const QImage *in, QImage *out, vector<double> &cdf)
 	for(uint i = 0; i < 256; i++)
 		graycolortable.append(qRgb(i,i,i));
 	out->setColorTable(graycolortable);
-// 	out->setColor( i, qRgb(i,i,i) );
 	
 	for(int i = 0; i < in->height(); i++) {
 		QRgb *inl = (QRgb *)in->scanLine(i);
@@ -264,9 +263,6 @@ QImage* setbitmap(const QSize size)
 	binaryColorTable.append(qRgb(0,0,0));
 	binaryColorTable.append(qRgb(255,255,255));
 	img->setColorTable(binaryColorTable);
-
-// 	img->setColor(0, qRgb(0,0,0));
-// 	img->setColor(1, qRgb(255,255,255));
 	return img;
 }
 
