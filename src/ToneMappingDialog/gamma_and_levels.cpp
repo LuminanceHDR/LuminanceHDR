@@ -87,14 +87,14 @@ GammaAndLevels::~GammaAndLevels() {
 }
 
 void GammaAndLevels::defaultGammaBlackWhiteIn() {
-	qDebug("this::defaultGammaBlackWhiteIn");
+	qDebug("GammaAndLevels::defaultGammaBlackWhiteIn");
 	blackin=0;
 	gamma=1.0f;
 	whitein=255;
 }
 
 void GammaAndLevels::defaultBlackWhiteOut() {
-	qDebug("this::defaultBlackWhiteOut");
+	qDebug("GammaAndLevels::defaultBlackWhiteOut");
 	blackout=0;
 	whiteout=255;
 }
@@ -104,39 +104,39 @@ void GammaAndLevels::closeEvent(QCloseEvent *) {
 }
 
 void GammaAndLevels::updateBlackIn(int v) {
-	qDebug("this::updateBlackIn");
+	qDebug("GammaAndLevels::updateBlackIn");
 	black_in_spinbox->setValue(v);
 	blackin=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateGamma(double v) {
-	qDebug("this::updateGamma");
+	qDebug("GammaAndLevels::updateGamma");
 	gb1->dont_emit=true;
 	gamma_spinbox->setValue(v);
 	gamma=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteIn(int v) {
-	qDebug("this::updateWhiteIn");
+	qDebug("GammaAndLevels::updateWhiteIn");
 	white_in_spinbox->setValue(v);
 	whitein=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateBlackOut(int v) {
-	qDebug("this::updateBlackOut");
+	qDebug("GammaAndLevels::updateBlackOut");
 	black_out_spinbox->setValue(v);
 	blackout=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteOut(int v) {
-	qDebug("this::updateWhiteOut");
+	qDebug("GammaAndLevels::updateWhiteOut");
 	white_out_spinbox->setValue(v);
 	whiteout=v;
 	refreshLUT();
 }
 
 void GammaAndLevels::resetValues() {
-	qDebug("this::resetValues");
+	qDebug("GammaAndLevels::resetValues");
 	blackin=0;
 	gamma=1.0f;
 	whitein=255;
@@ -169,6 +169,7 @@ void GammaAndLevels::refreshLUT() {
 		LUT[i]=clamp(blackout+value*(whiteout-blackout),0,255);
 // 		qDebug("LUT[%d]=%f char=%d",i,(blackout+value*(whiteout-blackout)),LUT[i]);
 	}
+	qDebug("GammaAndLevels::emitting LUTrefreshed");
 	emit LUTrefreshed(LUT);
 }
 //////////////////////////////////////////////////////////////////////////////////////

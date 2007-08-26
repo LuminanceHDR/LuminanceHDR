@@ -77,7 +77,10 @@ void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options* opts) 
 }
 
 void TonemappingWindow::current_ldr_fit_to_win(bool checked) {
-	((LdrViewer*)(workspace->activeWindow()))->fitToWindow(checked);
+	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+	if (currentLDR==NULL)
+		return;
+	currentLDR->fitToWindow(checked);
 }
 
 void TonemappingWindow::LevelsRequested(bool checked) {
@@ -85,8 +88,8 @@ void TonemappingWindow::LevelsRequested(bool checked) {
 		LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
 		if (currentLDR==NULL)
 			return;
-		currentLDR->LevelsRequested(checked);
 		actionFix_Histogram->setDisabled(true);
+		currentLDR->LevelsRequested(checked);
 	}
 }
 
