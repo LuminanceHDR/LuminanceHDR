@@ -102,10 +102,10 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * e) {
 
 void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 	if (e->buttons()==Qt::MidButton) {
-		QPoint diff = e->pos() - mousePos;
+		QPoint diff = (e->pos() - mousePos)/30.f;
 		if (e->modifiers()==Qt::ShiftModifier)
 			diff*=5;
-		mousePos = e->pos();
+// 		mousePos = e->pos();
 		verticalScrollBar()->setValue(verticalScrollBar()->value() + 
 	diff.y());
 		horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 
