@@ -25,12 +25,6 @@
 #include <cmath>
 #include "exif_operations.h"
 
-Exiv2::ExifKey ExifOperations::fnum ("Exif.Photo.FNumber");
-Exiv2::ExifKey ExifOperations::fnum2 ("Exif.Photo.ApertureValue");
-Exiv2::ExifKey ExifOperations::iso ("Exif.Photo.ISOSpeedRatings");
-Exiv2::ExifKey ExifOperations::expotime ("Exif.Photo.ExposureTime");
-Exiv2::ExifKey ExifOperations::expotime2 ("Exif.Photo.ShutterSpeedValue");
-
 void ExifOperations::writeExifData(const std::string& filename, const std::string& comment) {
 	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
 	image->readMetadata();
@@ -93,11 +87,11 @@ try {
 	if (exifData.empty())
 		return -1;
 
-	Exiv2::ExifData::const_iterator iexpo = exifData.findKey(expotime);
-	Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(expotime2);
-	Exiv2::ExifData::const_iterator iiso  = exifData.findKey(iso);
-	Exiv2::ExifData::const_iterator ifnum = exifData.findKey(fnum);
-	Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(fnum2);
+	Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
+	Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
+	Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
+	Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
+	Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
 	float expo=-1; float iso=-1; float fnum=-1;
 
 	if (iexpo != exifData.end()) {

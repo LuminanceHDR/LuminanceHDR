@@ -32,9 +32,7 @@ public:
 	static void copyExifData(const std::string& from, const std::string& to, bool dont_overwrite);
 	static float obtain_expotime(const std::string& filename);
 private:
-	static Exiv2::ExifKey expotime, expotime2;
-	static Exiv2::ExifKey iso;
-	static Exiv2::ExifKey fnum, fnum2;
+
 };
 
 #endif
