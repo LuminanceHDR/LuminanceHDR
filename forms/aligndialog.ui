@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1233</width>
-    <height>732</height>
+    <width>1276</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -21,7 +21,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>Manual Alignment Dialog</string>
+   <string>Editing Tools</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
@@ -29,15 +29,15 @@
   <property name="modal" >
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QGridLayout" >
    <property name="margin" >
-    <number>9</number>
-   </property>
-   <property name="spacing" >
     <number>6</number>
    </property>
-   <item>
-    <layout class="QHBoxLayout" >
+   <property name="spacing" >
+    <number>3</number>
+   </property>
+   <item row="0" column="0" >
+    <layout class="QVBoxLayout" >
      <property name="margin" >
       <number>0</number>
      </property>
@@ -45,417 +45,61 @@
       <number>6</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>0</number>
+      <widget class="QGroupBox" name="visualizationGroupBox" >
+       <property name="sizePolicy" >
+        <sizepolicy>
+         <hsizetype>0</hsizetype>
+         <vsizetype>5</vsizetype>
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="spacing" >
-        <number>6</number>
+       <property name="minimumSize" >
+        <size>
+         <width>400</width>
+         <height>100</height>
+        </size>
        </property>
-       <item>
-        <widget class="QGroupBox" name="histogramGroupBox" >
-         <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>5</hsizetype>
-           <vsizetype>5</vsizetype>
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize" >
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="toolTip" >
-          <string>Histogram of the image</string>
-         </property>
-         <property name="whatsThis" >
-          <string>When the same image is selected in both the movable and reference lists, this area will show the histogram of that image.</string>
-         </property>
-         <property name="title" >
-          <string>Histogram</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="listsGroupBox" >
-         <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>0</hsizetype>
-           <vsizetype>5</vsizetype>
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize" >
-          <size>
-           <width>391</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="title" >
-          <string>Images List</string>
-         </property>
+       <property name="maximumSize" >
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="title" >
+        <string>Visualization and Navigation</string>
+       </property>
+       <layout class="QVBoxLayout" >
+        <property name="margin" >
+         <number>6</number>
+        </property>
+        <property name="spacing" >
+         <number>3</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="histogramFrame" >
+          <property name="whatsThis" >
+           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the histogram for the currently selected image in the movable list.&lt;/p>&lt;/body>&lt;/html></string>
+          </property>
+          <property name="frameShape" >
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow" >
+           <enum>QFrame::Sunken</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QHBoxLayout" >
           <property name="margin" >
-           <number>3</number>
+           <number>0</number>
           </property>
           <property name="spacing" >
-           <number>1</number>
+           <number>6</number>
           </property>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>10</number>
-            </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QToolButton" name="prevLeftButton" >
-              <property name="toolTip" >
-               <string>Select the previous image in the movable list</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the previous image in the movable list.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="nextLeftButton" >
-              <property name="toolTip" >
-               <string>Select the next image in the movable list</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the next image in the movable list.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label" >
-              <property name="text" >
-               <string>&amp;Movable</string>
-              </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buddy" >
-               <cstring>movableListWidget</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QListWidget" name="movableListWidget" >
-              <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>7</hsizetype>
-                <vsizetype>7</vsizetype>
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize" >
-               <size>
-                <width>130</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip" >
-               <string>The movable image is the one currently selected</string>
-              </property>
-              <property name="whatsThis" >
-               <string>The image currently selected in this list can be translated up,down,left and right using the controls below</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>6</number>
-            </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QToolButton" name="prevBothButton" >
-              <property name="minimumSize" >
-               <size>
-                <width>44</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="toolTip" >
-               <string>Select the previous image in both lists</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the previous image in both lists.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="nextBothButton" >
-              <property name="minimumSize" >
-               <size>
-                <width>44</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="toolTip" >
-               <string>Select the next image in both lists</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the next image in both lists.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="label_2" >
-              <property name="text" >
-               <string>R&amp;eference</string>
-              </property>
-              <property name="alignment" >
-               <set>Qt::AlignCenter</set>
-              </property>
-              <property name="buddy" >
-               <cstring>referenceListWidget</cstring>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QListWidget" name="referenceListWidget" >
-              <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>7</hsizetype>
-                <vsizetype>7</vsizetype>
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize" >
-               <size>
-                <width>130</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="toolTip" >
-               <string>The reference image is the one currently selected</string>
-              </property>
-              <property name="whatsThis" >
-               <string>The image currently selected in this list serves as a reference position for the movable image</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>6</number>
-            </property>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>26</width>
-                <height>41</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QToolButton" name="prevRightButton" >
-              <property name="toolTip" >
-               <string>Select the previous image in the reference list</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the previous image in the reference list.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="nextRightButton" >
-              <property name="toolTip" >
-               <string>Select the next image in the reference list</string>
-              </property>
-              <property name="whatsThis" >
-               <string>Use this button to move the selection to the next image in the reference list.</string>
-              </property>
-              <property name="icon" >
-               <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer>
-              <property name="orientation" >
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" >
-               <size>
-                <width>26</width>
-                <height>41</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="correctionsGroupBox" >
-         <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>0</hsizetype>
-           <vsizetype>5</vsizetype>
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="toolTip" >
-          <string>Shift values for the currently selected movable image</string>
-         </property>
-         <property name="whatsThis" >
-          <string>Here the user can view and set the shift values for the currently selected movable image</string>
-         </property>
-         <property name="title" >
-          <string>&amp;Shifts for movable Image</string>
-         </property>
-         <layout class="QHBoxLayout" >
-          <property name="margin" >
-           <number>5</number>
-          </property>
-          <property name="spacing" >
-           <number>9</number>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" >
-            <property name="margin" >
-             <number>0</number>
-            </property>
-            <property name="spacing" >
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="resetButton" >
-              <property name="toolTip" >
-               <string>Reset the shift values for the currently selected movable image</string>
-              </property>
-              <property name="text" >
-               <string>&amp;Reset</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="resetAllButton" >
-              <property name="toolTip" >
-               <string>Reset the shift values for all the images</string>
-              </property>
-              <property name="text" >
-               <string>Reset &amp;All</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
           <item>
            <spacer>
             <property name="orientation" >
@@ -470,368 +114,809 @@
            </spacer>
           </item>
           <item>
-           <layout class="QGridLayout" >
-            <property name="margin" >
-             <number>0</number>
+           <widget class="QToolButton" name="fitButton" >
+            <property name="toolTip" >
+             <string>Fit to window</string>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="text" >
+             <string>&amp;Fit to Window</string>
             </property>
-            <item row="0" column="0" >
-             <widget class="QLabel" name="label_3" >
-              <property name="text" >
-               <string>&amp;Horizontal:</string>
-              </property>
-              <property name="buddy" >
-               <cstring>horizShiftSB</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" >
-             <widget class="QLabel" name="label_4" >
-              <property name="layoutDirection" >
-               <enum>Qt::LeftToRight</enum>
-              </property>
-              <property name="text" >
-               <string>&amp;Vertical:</string>
-              </property>
-              <property name="alignment" >
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-              <property name="buddy" >
-               <cstring>vertShiftSB</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1" >
-             <widget class="QSpinBox" name="horizShiftSB" >
-              <property name="toolTip" >
-               <string>Insert an horizontal shift value for the currently selected movable image</string>
-              </property>
-              <property name="suffix" >
-               <string> px</string>
-              </property>
-              <property name="maximum" >
-               <number>9000</number>
-              </property>
-              <property name="minimum" >
-               <number>-9000</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" >
-             <widget class="QSpinBox" name="vertShiftSB" >
-              <property name="toolTip" >
-               <string>Insert a vertical shift value for the currently selected movable image</string>
-              </property>
-              <property name="suffix" >
-               <string> px</string>
-              </property>
-              <property name="maximum" >
-               <number>9000</number>
-              </property>
-              <property name="minimum" >
-               <number>-9000</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="checkable" >
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QGridLayout" >
-            <property name="margin" >
-             <number>0</number>
+           <widget class="QToolButton" name="origSizeButton" >
+            <property name="toolTip" >
+             <string>Original size</string>
             </property>
-            <property name="spacing" >
-             <number>6</number>
+            <property name="text" >
+             <string>Norma&amp;l Size</string>
             </property>
-            <item row="0" column="1" >
-             <widget class="QToolButton" name="upToolButton" >
-              <property name="toolTip" >
-               <string>Move up of 1 pixel the currently selected movable image</string>
-              </property>
-              <property name="autoRepeat" >
-               <bool>true</bool>
-              </property>
-              <property name="arrowType" >
-               <enum>Qt::UpArrow</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" >
-             <widget class="QToolButton" name="downToolButton" >
-              <property name="toolTip" >
-               <string>Move down of 1 pixel the currently selected movable image</string>
-              </property>
-              <property name="autoRepeat" >
-               <bool>true</bool>
-              </property>
-              <property name="arrowType" >
-               <enum>Qt::DownArrow</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2" >
-             <widget class="QToolButton" name="rightToolButton" >
-              <property name="toolTip" >
-               <string>Move right of 1 pixel the currently selected movable image</string>
-              </property>
-              <property name="autoRepeat" >
-               <bool>true</bool>
-              </property>
-              <property name="arrowType" >
-               <enum>Qt::RightArrow</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" >
-             <widget class="QToolButton" name="leftToolButton" >
-              <property name="toolTip" >
-               <string>Move left of 1 pixel the currently selected movable image</string>
-              </property>
-              <property name="autoRepeat" >
-               <bool>true</bool>
-              </property>
-              <property name="arrowType" >
-               <enum>Qt::LeftArrow</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="zoomInButton" >
+            <property name="toolTip" >
+             <string>Zoom In</string>
+            </property>
+            <property name="text" >
+             <string>Zoom &amp;In</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="zoomOutButton" >
+            <property name="toolTip" >
+             <string>Zoom Out</string>
+            </property>
+            <property name="text" >
+             <string>Zoom &amp;Out</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="Line" name="line_2" >
-       <property name="orientation" >
-        <enum>Qt::Vertical</enum>
-       </property>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Preview &amp;Mode:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>blendModeCB</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="blendModeCB" >
+            <item>
+             <property name="text" >
+              <string>Difference</string>
+             </property>
+            </item>
+            <item>
+             <property name="text" >
+              <string>Overlay</string>
+             </property>
+            </item>
+            <item>
+             <property name="text" >
+              <string>Movable Only</string>
+             </property>
+            </item>
+            <item>
+             <property name="text" >
+              <string>Pivot Only</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>0</number>
+      <widget class="QGroupBox" name="listsGroupBox" >
+       <property name="sizePolicy" >
+        <sizepolicy>
+         <hsizetype>0</hsizetype>
+         <vsizetype>5</vsizetype>
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="spacing" >
-        <number>6</number>
+       <property name="maximumSize" >
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
        </property>
-       <item>
-        <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>0</number>
-         </property>
-         <property name="spacing" >
-          <number>6</number>
-         </property>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QToolButton" name="fitButton" >
-           <property name="toolTip" >
-            <string>Fit to window</string>
-           </property>
-           <property name="text" >
-            <string>&amp;Fit to Window</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="checkable" >
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="origSizeButton" >
-           <property name="toolTip" >
-            <string>Original size</string>
-           </property>
-           <property name="text" >
-            <string>Norma&amp;l Size</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="zoomOutButton" >
-           <property name="toolTip" >
-            <string>Zoom Out</string>
-           </property>
-           <property name="text" >
-            <string>Zoom &amp;Out</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="zoomInButton" >
-           <property name="toolTip" >
-            <string>Zoom In</string>
-           </property>
-           <property name="text" >
-            <string>Zoom &amp;In</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QToolButton" name="cropButton" >
-           <property name="enabled" >
-            <bool>false</bool>
-           </property>
-           <property name="toolTip" >
-            <string>Crop the stack of images after a selection with the left mouse button has been made</string>
-           </property>
-           <property name="whatsThis" >
-            <string>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</string>
-           </property>
-           <property name="text" >
-            <string>&amp;Crop All Images</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/crop.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="shortcut" >
-            <string>CTRL+X</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QToolButton" name="whatsThisButton" >
-           <property name="toolTip" >
-            <string>Get information about the graphical elements</string>
-           </property>
-           <property name="text" >
-            <string>&amp;What's this?</string>
-           </property>
-           <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
-           </property>
-           <property name="iconSize" >
-            <size>
-             <width>22</width>
-             <height>22</height>
-            </size>
-           </property>
-           <property name="shortcut" >
-            <string>Shift+F1</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QFrame" name="diffImageFrame" >
-         <property name="sizePolicy" >
-          <sizepolicy>
-           <hsizetype>3</hsizetype>
-           <vsizetype>13</vsizetype>
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize" >
-          <size>
-           <width>555</width>
-           <height>300</height>
-          </size>
-         </property>
-         <property name="toolTip" >
-          <string>Difference between movable and reference image.</string>
-         </property>
-         <property name="whatsThis" >
-          <string>This area shows the difference between the movable and the reference image. If the same image is selected in both the movable and reference list, this area will show the image itself. Clicking and holding the left mouse button you will be able to select a crop area.</string>
-         </property>
-         <property name="frameShape" >
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow" >
-          <enum>QFrame::Sunken</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       <property name="title" >
+        <string>Images List</string>
+       </property>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>3</number>
+        </property>
+        <property name="spacing" >
+         <number>1</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>10</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="prevLeftButton" >
+            <property name="toolTip" >
+             <string>Select the previous image in the movable list</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the previous image in the movable list.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="nextLeftButton" >
+            <property name="toolTip" >
+             <string>Select the next image in the movable list</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the next image in the movable list.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>&amp;Movable</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buddy" >
+             <cstring>movableListWidget</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="movableListWidget" >
+            <property name="sizePolicy" >
+             <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>7</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>130</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>The movable image is the one currently selected</string>
+            </property>
+            <property name="whatsThis" >
+             <string>The image currently selected in this list can be translated up,down,left and right using the controls below.
+This image's histogram is diplayed in the widget above.</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="prevBothButton" >
+            <property name="minimumSize" >
+             <size>
+              <width>44</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>Select the previous image in both lists</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the previous image in both lists.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="nextBothButton" >
+            <property name="minimumSize" >
+             <size>
+              <width>44</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>Select the next image in both lists</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the next image in both lists.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>R&amp;eference</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buddy" >
+             <cstring>referenceListWidget</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListWidget" name="referenceListWidget" >
+            <property name="sizePolicy" >
+             <sizepolicy>
+              <hsizetype>7</hsizetype>
+              <vsizetype>7</vsizetype>
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>130</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>The reference image is the one currently selected</string>
+            </property>
+            <property name="whatsThis" >
+             <string>The image currently selected in this list serves as a reference position for the movable image</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>26</width>
+              <height>41</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="prevRightButton" >
+            <property name="toolTip" >
+             <string>Select the previous image in the reference list</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the previous image in the reference list.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="nextRightButton" >
+            <property name="toolTip" >
+             <string>Select the next image in the reference list</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use this button to move the selection to the next image in the reference list.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>26</width>
+              <height>41</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="maximumSize" >
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="title" >
+        <string>Tools</string>
+       </property>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>6</number>
+        </property>
+        <property name="spacing" >
+         <number>3</number>
+        </property>
+        <item>
+         <widget class="QToolButton" name="cropButton" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="toolTip" >
+           <string>Crop the stack of images after a selection with the left mouse button has been made</string>
+          </property>
+          <property name="whatsThis" >
+           <string>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</string>
+          </property>
+          <property name="text" >
+           <string>&amp;Crop All Images</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../icons.qrc" >:/new/prefix1/images/crop.png</iconset>
+          </property>
+          <property name="iconSize" >
+           <size>
+            <width>22</width>
+            <height>22</height>
+           </size>
+          </property>
+          <property name="shortcut" >
+           <string>Ctrl+X</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>41</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="correctionsGroupBox" >
+       <property name="sizePolicy" >
+        <sizepolicy>
+         <hsizetype>0</hsizetype>
+         <vsizetype>5</vsizetype>
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize" >
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip" >
+        <string>Shift values for the currently selected movable image</string>
+       </property>
+       <property name="whatsThis" >
+        <string>Here the user can view and set the shift values for the currently selected movable image</string>
+       </property>
+       <property name="title" >
+        <string>&amp;Shifts for movable Image</string>
+       </property>
+       <layout class="QHBoxLayout" >
+        <property name="margin" >
+         <number>5</number>
+        </property>
+        <property name="spacing" >
+         <number>9</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="resetButton" >
+            <property name="toolTip" >
+             <string>Reset the shift values for the currently selected movable image</string>
+            </property>
+            <property name="text" >
+             <string>&amp;Reset</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="resetAllButton" >
+            <property name="toolTip" >
+             <string>Reset the shift values for all the images</string>
+            </property>
+            <property name="text" >
+             <string>Reset &amp;All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QGridLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item row="0" column="0" >
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>&amp;Horizontal:</string>
+            </property>
+            <property name="buddy" >
+             <cstring>horizShiftSB</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="label_4" >
+            <property name="layoutDirection" >
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text" >
+             <string>&amp;Vertical:</string>
+            </property>
+            <property name="alignment" >
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buddy" >
+             <cstring>vertShiftSB</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="QSpinBox" name="horizShiftSB" >
+            <property name="toolTip" >
+             <string>Insert an horizontal shift value for the currently selected movable image</string>
+            </property>
+            <property name="suffix" >
+             <string> px</string>
+            </property>
+            <property name="maximum" >
+             <number>9000</number>
+            </property>
+            <property name="minimum" >
+             <number>-9000</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="QSpinBox" name="vertShiftSB" >
+            <property name="toolTip" >
+             <string>Insert a vertical shift value for the currently selected movable image</string>
+            </property>
+            <property name="suffix" >
+             <string> px</string>
+            </property>
+            <property name="maximum" >
+             <number>9000</number>
+            </property>
+            <property name="minimum" >
+             <number>-9000</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" >
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <item row="0" column="1" >
+           <widget class="QToolButton" name="upToolButton" >
+            <property name="toolTip" >
+             <string>Move up of 1 pixel the currently selected movable image</string>
+            </property>
+            <property name="autoRepeat" >
+             <bool>true</bool>
+            </property>
+            <property name="arrowType" >
+             <enum>Qt::UpArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" >
+           <widget class="QToolButton" name="downToolButton" >
+            <property name="toolTip" >
+             <string>Move down of 1 pixel the currently selected movable image</string>
+            </property>
+            <property name="autoRepeat" >
+             <bool>true</bool>
+            </property>
+            <property name="arrowType" >
+             <enum>Qt::DownArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" >
+           <widget class="QToolButton" name="rightToolButton" >
+            <property name="toolTip" >
+             <string>Move right of 1 pixel the currently selected movable image</string>
+            </property>
+            <property name="autoRepeat" >
+             <bool>true</bool>
+            </property>
+            <property name="arrowType" >
+             <enum>Qt::RightArrow</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" >
+           <widget class="QToolButton" name="leftToolButton" >
+            <property name="toolTip" >
+             <string>Move left of 1 pixel the currently selected movable image</string>
+            </property>
+            <property name="autoRepeat" >
+             <bool>true</bool>
+            </property>
+            <property name="arrowType" >
+             <enum>Qt::LeftArrow</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </item>
-   <item>
+   <item row="0" column="2" >
+    <widget class="QFrame" name="previewImageFrame" >
+     <property name="sizePolicy" >
+      <sizepolicy>
+       <hsizetype>3</hsizetype>
+       <vsizetype>13</vsizetype>
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>555</width>
+       <height>300</height>
+      </size>
+     </property>
+     <property name="focusPolicy" >
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="whatsThis" >
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the preview (using the preview mode on the left) between the movable and the reference image.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the same image is selected in both the movable and reference list, this area will show the image itself.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="Line" name="line_2" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3" >
     <layout class="QHBoxLayout" >
      <property name="margin" >
       <number>0</number>
@@ -839,6 +924,28 @@
      <property name="spacing" >
       <number>6</number>
      </property>
+     <item>
+      <widget class="QToolButton" name="whatsThisButton" >
+       <property name="toolTip" >
+        <string>Get information about the graphical elements</string>
+       </property>
+       <property name="text" >
+        <string>&amp;What's this?</string>
+       </property>
+       <property name="icon" >
+        <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+       </property>
+       <property name="iconSize" >
+        <size>
+         <width>22</width>
+         <height>22</height>
+        </size>
+       </property>
+       <property name="shortcut" >
+        <string>Shift+F1</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer>
        <property name="orientation" >
@@ -883,6 +990,35 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>previewImageFrame</tabstop>
+  <tabstop>upToolButton</tabstop>
+  <tabstop>rightToolButton</tabstop>
+  <tabstop>downToolButton</tabstop>
+  <tabstop>leftToolButton</tabstop>
+  <tabstop>vertShiftSB</tabstop>
+  <tabstop>horizShiftSB</tabstop>
+  <tabstop>resetAllButton</tabstop>
+  <tabstop>resetButton</tabstop>
+  <tabstop>cropButton</tabstop>
+  <tabstop>nextRightButton</tabstop>
+  <tabstop>prevRightButton</tabstop>
+  <tabstop>nextBothButton</tabstop>
+  <tabstop>prevBothButton</tabstop>
+  <tabstop>nextLeftButton</tabstop>
+  <tabstop>prevLeftButton</tabstop>
+  <tabstop>referenceListWidget</tabstop>
+  <tabstop>movableListWidget</tabstop>
+  <tabstop>blendModeCB</tabstop>
+  <tabstop>zoomOutButton</tabstop>
+  <tabstop>zoomInButton</tabstop>
+  <tabstop>origSizeButton</tabstop>
+  <tabstop>fitButton</tabstop>
+  <tabstop>whatsThisButton</tabstop>
+  <tabstop>backbutton</tabstop>
+  <tabstop>Next_Finishbutton</tabstop>
+  <tabstop>cancelbutton</tabstop>
+ </tabstops>
  <resources>
   <include location="../icons.qrc" />
  </resources>

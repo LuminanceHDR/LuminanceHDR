@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
+    <width>547</width>
     <height>438</height>
    </rect>
   </property>
@@ -314,6 +314,42 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
              </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_9" >
+           <property name="title" >
+            <string>Color Space</string>
+           </property>
+           <layout class="QHBoxLayout" >
+            <property name="margin" >
+             <number>5</number>
+            </property>
+            <property name="spacing" >
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_15" >
+              <property name="text" >
+               <string>Output &amp;Color Space</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="outColorSpaceCB" >
+              <item>
+               <property name="text" >
+                <string>RGB</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>sRGB</string>
+               </property>
+              </item>
+             </widget>
             </item>
            </layout>
           </widget>
