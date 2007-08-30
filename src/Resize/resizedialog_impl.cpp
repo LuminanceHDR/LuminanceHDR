@@ -63,6 +63,10 @@ pfs::Frame* ResizeDialog::getResizedFrame() {
 }
 
 void ResizeDialog::scaledPressed() {
+	if (orig_width==resized_width) {
+		emit reject();
+		return;
+	}
 	resized=resizeFrame(original,resized_width);
 	accept();
 }
