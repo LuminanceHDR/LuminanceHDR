@@ -45,6 +45,7 @@
 #define KEY_TEMP_RESULT_PATH "TemporaryFilesPath"
 #define KEY_BATCH_LDR_FORMAT "Batch_LDR_Format"
 #define KEY_NUM_BATCH_THREADS "Num_Batch_Threads"
+#define KEY_OUTCOLORSPACE "LDR_output_ColorSpace"
 
 #define GROUP_TIFF "TIFF_Options"
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
