@@ -766,7 +766,7 @@ void ContrastDomain::matrix_log10(int n, float* m){
 // in_tab and out_tab should contain inscresing float values
 float ContrastDomain::lookup_table(int n, float* in_tab, float* out_tab, float val){
 
-  float ret;
+  float ret=-1;
   float dd;
 
   if(val < in_tab[0])
