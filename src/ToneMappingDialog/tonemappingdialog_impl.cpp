@@ -34,7 +34,7 @@
 
 TonemappingWindow::~TonemappingWindow() {}
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString cachepath, QString _file) : QMainWindow(parent), settings("Qtpfsgui", "Qtpfsgui") {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString _file) : QMainWindow(parent), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
 	toolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
@@ -52,7 +52,12 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setShown(bool)));
 
-	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, statusBar());
+	settings.beginGroup(GROUP_TONEMAPPING);
+	int desired_out_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
+	QString cachepath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
+	settings.endGroup();
+
+	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, desired_out_cs, statusBar());
 	dock->setWidget(tmwidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));

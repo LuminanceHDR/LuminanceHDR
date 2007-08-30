@@ -36,7 +36,7 @@ class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
 Q_OBJECT
 
 public:
-	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString cachepath, QString prefixname);
+	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString prefixname);
 	~TonemappingWindow();
 protected:
 	void closeEvent ( QCloseEvent * );

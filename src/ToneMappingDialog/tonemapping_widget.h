@@ -36,7 +36,7 @@ class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar* sb);
+	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, int out_ldr_cs, QStatusBar* sb);
 	~TMWidget();
 signals:
 	void newResult(const QImage&,tonemapping_options*);
@@ -51,6 +51,7 @@ private:
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QSettings settings;
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
+	int out_ldr_cs;
 	QStatusBar *sb;
 	bool adding_custom_size;
 	float HeightWidthRatio;

@@ -35,7 +35,7 @@
 extern int xsize;
 extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), sb(_sb), adding_custom_size(false) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath,  int out_ldr_cs, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), settings("Qtpfsgui", "Qtpfsgui"), cachepath(cachepath), out_ldr_cs(out_ldr_cs), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
 
 	// mantiuk06
@@ -183,7 +183,7 @@ void TMWidget::apply_clicked() {
 	QProgressBar *newprogressbar=new QProgressBar(sb);
 
 	//tone mapper thread needs to know full size of the hdr
-	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], cachepath, newprogressbar);
+	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], /*out_ldr_cs, cachepath,*/ newprogressbar);
 
 	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
