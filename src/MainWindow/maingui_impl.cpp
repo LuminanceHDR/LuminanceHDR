@@ -261,7 +261,7 @@ void MainGui::tonemap_requested() {
 		return;
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
 		this->setDisabled(true);
-		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), qtpfsgui_options->tempfilespath, currenthdr->filename);
+		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->filename);
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -523,6 +523,9 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 		if (!settings.contains(KEY_NUM_BATCH_THREADS))
 			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
 		dest->num_batch_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
+		if (!settings.contains(KEY_OUTCOLORSPACE))
+			settings.setValue(KEY_OUTCOLORSPACE, 1);
+		dest->output_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
