@@ -28,7 +28,6 @@
 #include <cmath>
 #include <cassert>
 
-
 GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(parent) {
 	setupUi(this);
 	connect(cancelButton,SIGNAL(clicked()),this,SIGNAL(closing()));
@@ -176,7 +175,7 @@ void GammaAndLevels::refreshLUT() {
 
 HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), accuracy(accuracy){
 	P = new float[256];
-
+	this->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 	//initialize to 0
 	for( int i = 0; i < 256; i++ )
 		P[i]=0;
@@ -212,15 +211,19 @@ void HistogramLDR::setData(const QImage &data) {
 void HistogramLDR::paintEvent( QPaintEvent * ) {
 	QPainter painter(this);
 	for (int i=0; i<256; i++) {
-		painter.fillRect( i*(int)((float)(this->width())/256.f), this->height()-(int)(P[i]*(height()-2)), (int)( (float)(this->width())/256.f ), (int)(P[i]*(height()-2)), QBrush(Qt::black) );
+		QRectF rf( i*(((float)(this->width()))/255.f), this->height()-(P[i]*(height()/*-2*/)), ((float)(this->width())/255.f), (P[i]*(height()/*-2*/)));
+		painter.fillRect(rf,QBrush(Qt::black) );
 	}
+// qDebug("size=(%dx%d)",width(),height());
+// qDebug("%d,%d (%dx%d)",255*(int)(((float)(this->width()))/255.f),this->height()-(int)(P[255]*(height()/*-2*/)), (int)( ((float)(this->width())/255.f) ), (int)(P[255]*(height()/*-2*/)));
+painter.drawRect(QRect(0,0,width()-1,height()-1));
 }
 
 QSize HistogramLDR::sizeHint () const {
-	return QSize( 257, 40 );
+	return QSize( 255, 40 );
 }
 QSize HistogramLDR::minimumSizeHint () const {
-	return QSize( 257, 40 );
+	return QSize( 255, 40 );
 }
 HistogramLDR::~HistogramLDR() {
 	delete [] P;
@@ -234,10 +237,10 @@ GrayBar::GrayBar(QWidget *parent, bool two_handles) : QWidget(parent), dont_emit
 }
 
 QSize GrayBar::sizeHint () const {
-	return QSize( 500, 12 );
+	return QSize( 500, 22 );
 }
 QSize GrayBar::minimumSizeHint () const {
-	return QSize( 400, 12 );
+	return QSize( 400, 22 );
 }
 
 void GrayBar::mouseMoveEvent( QMouseEvent * e ) {
