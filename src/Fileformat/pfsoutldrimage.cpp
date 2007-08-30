@@ -39,18 +39,19 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 
 
 #include "../Threads/tonemapper_thread.h"
-QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
+QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace cs) {
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels( X,Y,Z );
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
-
 	//we are modifying the input buffer here!!!
 	//but it should be ok since this is the endpoint
-	//keep SRGB for compatibility with pfstmo...
-	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_SRGB, X,Y,Z );
+
+	//keep cs=SRGB for compatibility with pfstmo...
+	//but the image is quite white, so in Qtpfsgui we keep RGB as a default colorspace
+	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, cs, X,Y,Z );
 
 	int width = X->getCols();
 	int height =  X->getRows();
