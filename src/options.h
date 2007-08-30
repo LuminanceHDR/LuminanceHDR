@@ -50,6 +50,8 @@ struct qtpfsgui_opts {
 	int num_batch_threads;
 	//Image format used to save LDRs in batch mode.
 	QString batch_ldr_format;
+	//pfs::ColorSpace used for LDR output (1=RGB,2=sRGB)
+	int output_cs;
 };
 
 
