@@ -283,6 +283,8 @@ FORMS = forms/maingui.ui \
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
            src/options.h \
+           src/smart_scroll_area.h \
+           src/panIconWidget.h \
            src/MainWindow/maingui_impl.h \
            src/MainWindow/hdrviewer.h \
            src/MainWindow/luminancerange_widget.h \
@@ -305,7 +307,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/HdrWizard/hdrcreation/debevec.h \
            src/HdrWizard/Alignment/alignmentdialog_impl.h \
            src/HdrWizard/Alignment/mtb_alignment.h \
-           src/smart_scroll_area.h \
+           src/HdrWizard/Alignment/previewWidget.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
            src/TM_operators/ashikhmin02/pyramid.h \
@@ -325,6 +327,8 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Libpfs/colorspace.cpp \
            src/main.cpp \
            src/options.cpp \
+           src/smart_scroll_area.cpp \
+           src/panIconWidget.cpp \
            src/MainWindow/maingui_impl.cpp \
            src/MainWindow/hdrviewer.cpp \
            src/MainWindow/luminancerange_widget.cpp \
@@ -347,7 +351,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/HdrWizard/hdrcreation/debevec.cpp \
            src/HdrWizard/Alignment/alignmentdialog_impl.cpp \
            src/HdrWizard/Alignment/mtb_alignment.cpp \
-           src/smart_scroll_area.cpp \
+           src/HdrWizard/Alignment/previewWidget.cpp \
            src/Filter/pfsrotate.cpp \
            src/Filter/pfssize.cpp \
            src/Filter/pfsgamma.cpp \
@@ -393,7 +397,7 @@ TRANSLATIONS = i18n/lang_it.ts \
 
 # Old durand, we use the fftw version now.
 #src/durand02/bilateral.h \
-#src/durand02/bilateral.cpp \
+#src/durand02/bilateral.cpp
 
 # Manual align dialog. we should call Pablo's application now.
 #           src/align_impl.cpp \
