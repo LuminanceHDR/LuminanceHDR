@@ -27,6 +27,7 @@
 #include <QThread>
 #include <QReadWriteLock>
 #include <QImage>
+#include <QSettings>
 #include "../options.h"
 #include "../Libpfs/pfs.h"
 class QProgressBar;
@@ -35,7 +36,7 @@ class TonemapperThread : public QThread {
 Q_OBJECT
 
 public:
-	TonemapperThread(int origsize, QString cachepath, QProgressBar *itsbar);
+	TonemapperThread(int origsize, /*int ldr_output_cs, QString cachepath,*/ QProgressBar *itsbar);
 	~TonemapperThread();
 	//pass by value, bit-copy should be enough (default should be available)
 	void ComputeImage(const tonemapping_options opts );
@@ -52,6 +53,9 @@ protected:
 private:
 	QProgressBar *bar;
 	int originalxsize;
+	QSettings settings;
+	int ldr_output_cs;
+	QString cachepath;
 	bool colorspaceconversion;
 	tonemapping_options opt;
 	pfs::Frame *workingframe;
@@ -59,7 +63,6 @@ private:
 	void swap(pfs::Frame *, QString );
 // 	void dumpOpts();
 	enum {from_resize,from_pregamma,from_tm} status;
-	QString cachepath;
-	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
+	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace out_cs);
 };
 #endif

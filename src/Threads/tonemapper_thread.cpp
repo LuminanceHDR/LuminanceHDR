@@ -23,6 +23,8 @@
 
 #include "tonemapper_thread.h"
 #include <QProgressBar>
+#include <QDir>
+#include "../config.h"
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 void applyGammaFrame( pfs::Frame*, const float);
 pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
@@ -42,8 +44,12 @@ float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)
 QReadWriteLock lock;
 
 
-TonemapperThread::TonemapperThread(int xorigsize, QString cachepath, QProgressBar* b) : QThread(0), bar(b), originalxsize(xorigsize), cachepath(cachepath){
+TonemapperThread::TonemapperThread(int xorigsize, /*int ldr_output_cs, QString cachepath,*/ QProgressBar* b) : QThread(0), bar(b), originalxsize(xorigsize), /*ldr_output_cs(ldr_output_cs), cachepath(cachepath),*/ settings("Qtpfsgui", "Qtpfsgui") {
 	colorspaceconversion=false;
+	settings.beginGroup(GROUP_TONEMAPPING);
+	ldr_output_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
+	cachepath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
+	settings.endGroup();
 }
 
 TonemapperThread::~TonemapperThread() {
@@ -206,7 +212,7 @@ void TonemapperThread::run() {
 	if (bar) emit setCurrentProgress(bar->value()+1);
 	assert(result!=NULL);
 	delete workingframe;
-	const QImage& res=fromLDRPFStoQImage(result);
+	const QImage& res=fromLDRPFStoQImage(result,(pfs::ColorSpace)ldr_output_cs);
 	delete result;
 	emit ImageComputed(res,&opt);
 	if (bar) emit removeProgressBar(bar);
