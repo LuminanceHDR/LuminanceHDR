@@ -25,7 +25,6 @@
 #ifndef GANG_H
 #define GANG_H
 
-// #include <qwidget.h>
 #include <QSlider>
 #include <QDoubleSpinBox>
 
