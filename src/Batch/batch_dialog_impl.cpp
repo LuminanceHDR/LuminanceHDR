@@ -41,6 +41,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), sett
 	settings.beginGroup(GROUP_TONEMAPPING);
 	desired_number_of_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 	desired_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
+	desired_out_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
 	settings.endGroup();
 
 	connect(add_dir_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_dir_HDRs()));
@@ -62,8 +63,10 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), sett
 
 	qDebug("BATCH: using %d threads",desired_number_of_threads);
 	qDebug("BATCH: saving using fileformat: %s",desired_format.toAscii().constData());
+	qDebug("BATCH: saving using color space: %s",desired_out_cs==1 ? "RGB" : "sRGB");
 	add_log_message(QString(tr("Using %1 thread(s)")).arg(desired_number_of_threads));
 	add_log_message(tr("Saving using fileformat: ")+desired_format);
+	add_log_message(tr("Saving using color space: ") + (desired_out_cs==1 ? "RGB" : "sRGB"));
 }
 
 BatchTMDialog::~BatchTMDialog() {
@@ -315,7 +318,7 @@ void BatchTMDialog::conditional_TMthread() {
 		while (running_threads < desired_number_of_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
-			TonemapperThread *thread = new TonemapperThread(-2, qtpfsgui_options->tempfilespath, NULL);
+			TonemapperThread *thread = new TonemapperThread(-2, /*qtpfsgui_options->output_cs, qtpfsgui_options->tempfilespath,*/ NULL);
 
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 			qRegisterMetaType<QImage>("QImage");

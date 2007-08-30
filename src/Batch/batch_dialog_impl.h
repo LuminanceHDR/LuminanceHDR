@@ -88,6 +88,8 @@ private:
 	int desired_number_of_threads;
 	//the image format the user chose to use in the options dialog.
 	QString desired_format;
+	//the output color space for the LDR the user chose to use in the options dialog.
+	int desired_out_cs;
 	//set to true once we are done processing.
 	bool done;
 	//fuction that adds a log message to the model
