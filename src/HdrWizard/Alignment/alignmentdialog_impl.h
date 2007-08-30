@@ -25,35 +25,14 @@
 #ifndef ALIGNMENTDIALOG_IMPL_H
 #define ALIGNMENTDIALOG_IMPL_H
 
-#include <QColor>
 #include "../generated_uic/ui_aligndialog.h"
-#include "../../smart_scroll_area.h"
+#include "previewWidget.h"
+#include "../../panIconWidget.h"
+
+
 class HistogramLDR;
 //defined in mtb_alignment.cpp
 QImage* shiftQImage(const QImage *in, int dx, int dy);
-
-class LabelWithRubberBand : public QLabel
-{
-Q_OBJECT
-public:
-	LabelWithRubberBand(QWidget *parent=0);
-	~LabelWithRubberBand();
-	QRect getCropArea() const;
-	void hideRubberBand() {
-		rubberBand->hide();
-		emit validCropArea(false);
-	}
-signals:
-	void validCropArea(bool);
-protected:
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void resizeEvent(QResizeEvent *event);
-private:
-	QRubberBand *rubberBand;
-	QPoint origin;
-};
 
 class AlignmentDialog : public QDialog, private Ui::AlignmentDialog
 {
@@ -61,43 +40,24 @@ Q_OBJECT
 public:
 	AlignmentDialog(QWidget *parent, QList<QImage*>&ldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle s);
 	~AlignmentDialog();
+protected:
+	void keyPressEvent(QKeyEvent *);
+	void keyReleaseEvent(QKeyEvent *);
 private:
-	LabelWithRubberBand *imageLabel;
-	SmartScrollArea *scrollArea;
-	QImage *diffImage;
-	QImage *movableImage,*pivotImage;
+	QScrollArea *scrollArea;
+	PreviewWidget *previewWidget;
+	int additional_shift_value;
 	QList<QImage*> &original_ldrlist;
 	QList<bool> &ldr_tiff_input;
 	QList< QPair<int,int> > HV_offsets;
 	HistogramLDR *histogram;
-	bool dont_change_shift,dont_recompute;
-	Qt::ToolButtonStyle style;
-	
-	inline void recomputeDiffImage();
-	inline QRgb computeDiffRgba(const QRgb *Mrgba, const QRgb *Prgba)const {
-		int ro,go,bo;
-		int Mred=  qRed(*Mrgba);
-		int Mgreen=qGreen(*Mrgba);
-		int Mblue= qBlue(*Mrgba);
-		int Malphaweight=(int)(qAlpha(*Mrgba)/255.0f);
-		int Pred  =qRed(*Prgba);
-		int Pgreen=qGreen(*Prgba);
-		int Pblue =qBlue(*Prgba);
-		int Palphaweight=(int)(qAlpha(*Prgba)/255.0f);
-	
-		//when both images have alpha==0 we return an opaque black
-		if (Malphaweight==0 && Palphaweight==0)
-			return qRgba(0,0,0,255);
-		else {
-			//blend samples using alphas as weights
-			ro=qAbs(Pred*Palphaweight - Mred*Malphaweight);
-			go=qAbs(Pgreen*Palphaweight - Mgreen*Malphaweight);
-			bo=qAbs(Pblue*Palphaweight - Mblue*Malphaweight);
-			//the output image still has alpha=255 (opaque)
-			return qRgba(ro,go,bo,255);
-		}
-	}
+	QSize previousPreviewWidgetSize;
+	PanIconWidget *panIconWidget;
+	QToolButton *cornerButton;
 private slots:
+	void slotPanIconSelectionMoved(QRect, bool);
+	void slotPanIconHidden();
+	void slotCornerButtonPressed();
 	void updatePivot(int);
 	void updateMovable(int);
 	void upClicked();
@@ -117,11 +77,12 @@ private slots:
 	void enterWhatsThis();
 	void zoomIn();
 	void zoomOut();
-	void fitDiff(bool);
+	void fitPreview(bool);
 	void origSize();
 	void crop_stack();
-	
 	void nextClicked();
+// 	void panHorizontal(int);
+// 	void panVertical(int);
 };
 
 

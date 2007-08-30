@@ -22,14 +22,17 @@
  *
  */
 
-#include <QPainter>
 #include <QFileInfo>
 #include <cassert>
 #include <QWhatsThis>
 #include "alignmentdialog_impl.h"
 #include "../../ToneMappingDialog/gamma_and_levels.h"
 
-AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input), dont_change_shift(false), dont_recompute(false) 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), additional_shift_value(0), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input)
 {
 	setupUi(this);
 
@@ -37,17 +40,34 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(0);
-	imageLabel = new LabelWithRubberBand;
-	diffImage = new QImage(original_ldrlist[0]->size(),QImage::Format_ARGB32);
-	scrollArea = new SmartScrollArea(diffImageFrame,imageLabel);
-	qvl->addWidget(scrollArea);
+	
+	scrollArea = new QScrollArea(previewImageFrame);
+	previewWidget = new PreviewWidget(scrollArea,original_ldrlist[1],original_ldrlist[0]);
+	previewWidget->adjustSize();
+	previewWidget->update();
 
-	pivotImage=original_ldrlist[0]; //pivot=first image
-	movableImage=original_ldrlist[1]; //movable=second image
+	panIconWidget=NULL;
+	cornerButton=new QToolButton(this);
+	cornerButton->setToolTip("Pan the image to a region");
+	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+#if QT_VERSION >= 0x040200
+	scrollArea->setCornerWidget(cornerButton);
+#else
+	QHBoxLayout *p=(QHBoxLayout*)(visualizationGroupBox->layout()->itemAt(1));
+	connect(fitButton,SIGNAL(toggled(bool)),cornerButton,SLOT(setDisabled(bool)));
+	cornerButton->setIconSize(QSize(22,22));
+	cornerButton->setText("Pan");
+	cornerButton->setToolButtonStyle(style);
+	p->insertWidget(5,cornerButton);
+#endif
+	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+
+	scrollArea->setFocusPolicy(Qt::NoFocus);
 	scrollArea->setBackgroundRole(QPalette::Window);
+	scrollArea->setWidget(previewWidget);
 
-	diffImageFrame->setLayout(qvl);
-	scrollArea->adjustSize();
+	qvl->addWidget(scrollArea);
+	previewImageFrame->setLayout(qvl);
 
 	foreach(QString s,fileStringList) {
 		movableListWidget->addItem(QFileInfo(s).fileName());
@@ -81,74 +101,151 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	connect(nextRightButton,SIGNAL(clicked()),this,SLOT(nextRight()));
 	
 	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
-	connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitDiff(bool)));
+	connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitPreview(bool)));
 	connect(origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
 	connect(zoomOutButton,SIGNAL(clicked()),this,SLOT(zoomOut()));
 	connect(zoomInButton,SIGNAL(clicked()),this,SLOT(zoomIn()));
 	connect(cropButton,SIGNAL(clicked()),this,SLOT(crop_stack()));
+	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
-	connect(imageLabel,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
+	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
 	
 	QStringList::ConstIterator it = fileStringList.begin();
 	while( it != fileStringList.end() ) {
 		HV_offsets.append(qMakePair(0,0));
 		++it;
 	}
-	recomputeDiffImage();
-	imageLabel->adjustSize();
 	
 	histogram=new HistogramLDR(this);
-	QVBoxLayout *qvl2=new QVBoxLayout;
-	histogramGroupBox->setLayout(qvl2);
+	histogram->setData(*original_ldrlist[1]);
 	histogram->adjustSize();
-	qvl2->addWidget(histogram);
-	this->showMaximized();
+	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
+}
+
+void AlignmentDialog::slotCornerButtonPressed() {
+	panIconWidget=new PanIconWidget;
+	panIconWidget->setImage(previewWidget->getPreviewImage());
+	float zf=previewWidget->getScaleFactor();
+	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
+	float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
+	float wps_w=(float)(scrollArea->maximumViewportSize().width());
+	float wps_h=(float)(scrollArea->maximumViewportSize().height());
+	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
+	panIconWidget->setRegionSelection(r);
+	panIconWidget->setMouseFocus();
+	connect(panIconWidget, SIGNAL(signalSelectionMoved(QRect, bool)), this, SLOT(slotPanIconSelectionMoved(QRect, bool)));
+	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
+	g.setX(g.x()+ scrollArea->viewport()->size().width());
+	g.setY(g.y()+ scrollArea->viewport()->size().height());
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width(), 
+					g.y() - panIconWidget->height()));
+	
+	panIconWidget->setCursorToLocalRegionSelectionCenter();
+}
+
+void AlignmentDialog::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
+	if (mousereleased) {
+		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*previewWidget->getScaleFactor()));
+		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*previewWidget->getScaleFactor()));
+		panIconWidget->close();
+		slotPanIconHidden();
+	}
+}
+
+void AlignmentDialog::slotPanIconHidden()
+{
+    cornerButton->blockSignals(true);
+    cornerButton->animateClick();
+    cornerButton->blockSignals(false);
 }
 
 AlignmentDialog::~AlignmentDialog() {
-	delete imageLabel;
-	delete scrollArea;
-	delete diffImage;
+	delete previewWidget;
 	delete histogram;
 }
 
+void AlignmentDialog::keyPressEvent(QKeyEvent *event) {
+	int key=event->key();
+	qDebug("AlignmentDialog::keyPressEvent");
+	Qt::KeyboardModifiers mods=event->modifiers();
+	if ((mods & Qt::ShiftModifier)!=0 && (mods & Qt::ControlModifier)!=0)
+		additional_shift_value=99;
+	else if (mods & Qt::ControlModifier)
+		additional_shift_value=49;
+	else if (mods & Qt::ShiftModifier)
+		additional_shift_value=9;
+
+	if (key==Qt::Key_Up)
+		upClicked();
+	else if (key==Qt::Key_Down)
+		downClicked();
+	else if (key==Qt::Key_Right)
+		rightClicked();
+	else if (key==Qt::Key_Left)
+		leftClicked();
+	if (key==Qt::Key_Escape)
+		reject();
+}
+
+void AlignmentDialog::keyReleaseEvent ( QKeyEvent * event ) {
+	additional_shift_value=0;
+	event->ignore();
+}
+
 void AlignmentDialog::crop_stack() {
+
+	if (fitButton->isChecked()) {
+// 		fitButton->blockSignals(true);
+		fitButton->setChecked(false);
+// 		fitButton->blockSignals(false);
+	}
 	//zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
 	origSize();
-	QRect ca=imageLabel->getCropArea();
+
+	QRect ca=previewWidget->getCropArea();
 	if(ca.width()<=0|| ca.height()<=0)
 		return;
-	qDebug("selezionato left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
+
+	qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
+	//If I do this "properly" (i.e. allocating only one QImage) I end up having odd
+	//gcc runtime errors (like a double free)...
+	//It seems like it allocates the memory that was just freed, anyone knows how to get around this?
 	int origlistsize=original_ldrlist.size();
 	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
-		QImage *newimage=new QImage(ca.width(), ca.height(), QImage::Format_ARGB32);
-		assert(newimage!=NULL);
-		for(int row=0; row<newimage->height(); row++) {
-			QRgb *inp = (QRgb*)original_ldrlist.at(0)->scanLine(row+ca.top());
-			QRgb *outp = (QRgb*)newimage->scanLine(row);
-			for(int col=0; col<newimage->width(); col++) {
-				outp[col] = *(inp+col+ca.left());
-			}
-		}
+// 		QImage *newimage=new QImage(ca.size(), QImage::Format_ARGB32);
+// 		for(int row=0; row<newimage->height(); row++) {
+// 			QRgb *inp = (QRgb*)original_ldrlist.at(image_idx)->scanLine(row+ca.top());
+// 			QRgb *outp = (QRgb*)newimage->scanLine(row);
+// 			for(int col=0; col<newimage->width(); col++) {
+// 				outp[col] = *(inp+col+ca.left());
+// 			}
+// 		}
+		QImage *newimage=new QImage(original_ldrlist.at(image_idx)->copy(ca));
+		original_ldrlist.append(newimage);
+	}
+	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
 		if (ldr_tiff_input[0]) {
 			qDebug("::crop_stack: deleting tiff payload");
 			delete [] original_ldrlist[0]->bits();
 		}
-		delete original_ldrlist[0];
-		original_ldrlist.removeAt(0);
-		original_ldrlist.append(newimage);
+		delete original_ldrlist.takeAt(0);
 		ldr_tiff_input.removeAt(0);
 		ldr_tiff_input.append(false);
 	}
-	delete diffImage;
-	diffImage = new QImage(original_ldrlist[0]->size(),QImage::Format_ARGB32);
-	pivotImage=original_ldrlist[referenceListWidget->currentRow()];
-	movableImage=original_ldrlist[movableListWidget->currentRow()];
-	recomputeDiffImage();
-	imageLabel->adjustSize();
-	imageLabel->hideRubberBand();
+	//the display widget has to be recreated with the new cropped data.
+	delete previewWidget;
+	//new display widget uses current indices.
+	previewWidget=new PreviewWidget(scrollArea, original_ldrlist[movableListWidget->currentRow()], original_ldrlist[referenceListWidget->currentRow()]);
+	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
+	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
+	previousPreviewWidgetSize=original_ldrlist[0]->size();
+	//inform scrollArea of the change
+	scrollArea->setWidget(previewWidget);
+	//and start it up
+	previewWidget->update();
+	previewWidget->hideRubberBand();
 }
 
 void AlignmentDialog::nextClicked() {
@@ -172,114 +269,50 @@ void AlignmentDialog::nextClicked() {
 	emit accept();
 }
 
-inline void AlignmentDialog::recomputeDiffImage() {
-	qDebug("AlignmentDialog::recomputeDiffImage()");
-	QApplication::setOverrideCursor( QCursor(Qt::BusyCursor) );
-	QRgb outofbounds=qRgba(0,0,0,255);
-	int mx=HV_offsets[movableListWidget->currentRow()].first;
-	int my=HV_offsets[movableListWidget->currentRow()].second;
-	int px=HV_offsets[referenceListWidget->currentRow()].first;
-	int py=HV_offsets[referenceListWidget->currentRow()].second;
-	int H=diffImage->height();
-	int W=diffImage->width();
-	QRgb *MovVal=NULL;
-	QRgb *PivVal=NULL;
-	QRgb* mov_line=NULL;
-	QRgb* piv_line=NULL;
-	
-	for(int i = 0; i < H; i++) {
-		QRgb* out = (QRgb*)diffImage->scanLine(i);
-		//se con offset verticale vado in linea <0
-		//(i-MPy)<0
-		//se con offset verticale vado >= height()
-		//(i-MPy)>=height()
 
-		//if within bounds with vertical offset
-		if ( !( (i-my)<0 || (i-my)>=H) )
-			mov_line = (QRgb*)movableImage->scanLine(i-my);
-		else
-			mov_line = NULL;
-			
-		if ( !( (i-py)<0 || (i-py)>=H) )
-			piv_line = (QRgb*)pivotImage->scanLine(i-py);
-		else
-			piv_line = NULL;
-			
-
-		for(int j = 0; j < W; j++) {
-			//okkio a offset horizontal a colonna < 0
-			//(j-MPx)<0
-			//okkio a offset horizontal a colonna >= width()
-			//(j-MPx)>=width()
-
-			if (mov_line==NULL || (j-mx)<0 || (j-mx)>W)
-				MovVal=&outofbounds;
-			else
-				MovVal=&mov_line[j-mx];
-
-			if (piv_line==NULL || (j-px)<0 || (j-px)>W)
-				PivVal=&outofbounds;
-			else
-				PivVal=&piv_line[j-px];
-
-			if (pivotImage==movableImage)
-				out[j]=*MovVal;
-			else
-				out[j]=computeDiffRgba(MovVal,PivVal);
-		}
-	}
-	imageLabel->setPixmap(QPixmap::fromImage(*diffImage));
-	imageLabel->update();
-	QApplication::restoreOverrideCursor();
-}
 
 void AlignmentDialog::updateMovable(int newidx) {
-	movableImage=original_ldrlist[newidx];
-	dont_change_shift=true;
+	//inform display_widget of the change
+	previewWidget->setMovable(original_ldrlist[newidx], HV_offsets[newidx].first, HV_offsets[newidx].second);
+	//prevent a change in the spinboxes to start a useless calculation
+	horizShiftSB->blockSignals(true);
 	horizShiftSB->setValue(HV_offsets[newidx].first);
+	horizShiftSB->blockSignals(false);
+	vertShiftSB->blockSignals(true);
 	vertShiftSB->setValue(HV_offsets[newidx].second);
-	dont_change_shift=false;
-	if (!dont_recompute) {
-		recomputeDiffImage();
-		if (referenceListWidget->currentRow()==newidx) {
-			histogram->setData(*original_ldrlist[newidx]);
-			histogram->update();
-		}
-		else
-			histogram->setData(QImage());
-	}
+	vertShiftSB->blockSignals(false);
+	previewWidget->update();
+	histogram->setData(*original_ldrlist[newidx]);
+	histogram->update();
 }
 
 void AlignmentDialog::updatePivot(int newidx) {
-	pivotImage=original_ldrlist[newidx];
-	if (!dont_recompute)
-		recomputeDiffImage();
+	previewWidget->setPivot(original_ldrlist[newidx],HV_offsets[newidx].first, HV_offsets[newidx].second);
+	previewWidget->update();
 }
 
 void AlignmentDialog::upClicked() {
-	vertShiftSB->setValue(vertShiftSB->value()-1);
+	vertShiftSB->setValue(vertShiftSB->value()-1-additional_shift_value);
 }
 void AlignmentDialog::downClicked() {
-	vertShiftSB->setValue(vertShiftSB->value()+1);
+	vertShiftSB->setValue(vertShiftSB->value()+1+additional_shift_value);
 }
 void AlignmentDialog::rightClicked() {
-	horizShiftSB->setValue(horizShiftSB->value()+1);
+	horizShiftSB->setValue(horizShiftSB->value()+1+additional_shift_value);
 }
 void AlignmentDialog::leftClicked() {
-	horizShiftSB->setValue(horizShiftSB->value()-1);
+	horizShiftSB->setValue(horizShiftSB->value()-1-additional_shift_value);
 }
 
 void AlignmentDialog::vertShiftChanged(int v) {
-	if (dont_change_shift)
-		return;
 	HV_offsets[movableListWidget->currentRow()].second=v;
-	recomputeDiffImage();
+	previewWidget->updateVertShiftMovable(v);
+	previewWidget->update();
 }
 void AlignmentDialog::horizShiftChanged(int v) {
-	if (dont_change_shift)
-		return;
 	HV_offsets[movableListWidget->currentRow()].first=v;
-	recomputeDiffImage();
+	previewWidget->updateHorizShiftMovable(v);
+	previewWidget->update();
 }
 
 void AlignmentDialog::resetCurrent() {
@@ -292,10 +325,17 @@ void AlignmentDialog::resetAll() {
 		HV_offsets[i].first=0;
 		HV_offsets[i].second=0;
 	}
-	dont_change_shift=true;
+	//prevent a change in the spinboxes to start a useless calculation
+	horizShiftSB->blockSignals(true);
+	vertShiftSB->blockSignals(true);
 	resetCurrent(); //graphical update
-	dont_change_shift=false;
-	recomputeDiffImage();
+	horizShiftSB->blockSignals(false);
+	vertShiftSB->blockSignals(false);
+	previewWidget->updateHorizShiftMovable(0);
+	previewWidget->updateVertShiftMovable(0);
+	previewWidget->updateHorizShiftPivot(0);
+	previewWidget->updateVertShiftPivot(0);
+	previewWidget->update();
 }
 
 void AlignmentDialog::prevLeft() {
@@ -309,16 +349,12 @@ void AlignmentDialog::nextLeft() {
 }
 
 void AlignmentDialog::prevBoth() {
-	dont_recompute=true;
 	prevRight();
-	dont_recompute=false;
 	prevLeft();
 }
 
 void AlignmentDialog::nextBoth() {
-	dont_recompute=true;
 	nextRight();
-	dont_recompute=false;
 	nextLeft();
 }
 
@@ -337,79 +373,32 @@ void AlignmentDialog::enterWhatsThis() {
 }
 
 void AlignmentDialog::zoomIn() {
-	scrollArea->zoomIn();
+	previewWidget->resize(previewWidget->size()*1.25f);
 	zoomOutButton->setEnabled(true);
-	zoomInButton->setEnabled(scrollArea->getScaleFactor() < 3.0);
+	zoomInButton->setEnabled(previewWidget->getScaleFactor() < 3.0);
 }
 void AlignmentDialog::zoomOut() {
-	scrollArea->zoomOut();
+	previewWidget->resize(previewWidget->size()*0.8f);
 	zoomInButton->setEnabled(true);
-	zoomOutButton->setEnabled(scrollArea->getScaleFactor() > 0.222);
+	zoomOutButton->setEnabled(previewWidget->getScaleFactor() > 0.222);
 }
-void AlignmentDialog::fitDiff(bool checked) {
-	scrollArea->fitToWindow(checked);
+void AlignmentDialog::fitPreview(bool checked) {
+// 	qDebug("fitPreview");
 	zoomInButton->setEnabled(!checked);
 	zoomOutButton->setEnabled(!checked);
 	origSizeButton->setEnabled(!checked);
+	if (checked) {
+		previousPreviewWidgetSize=previewWidget->size();
+		QSize fillWinSize=original_ldrlist[0]->size();
+		fillWinSize.scale(scrollArea->maximumViewportSize(),Qt::KeepAspectRatio);
+		previewWidget->resize(fillWinSize);
+	} else {
+		previewWidget->resize(previousPreviewWidgetSize);
+	}
+// 	qDebug("end fitPreview");
 }
 void AlignmentDialog::origSize() {
-	scrollArea->normalSize();
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(true);
-}
-
-///////////////////////////// LabelWithRubberBand /////////////////////////////
-LabelWithRubberBand::LabelWithRubberBand(QWidget *parent): QLabel(parent) {
-	rubberBand=new QRubberBand(QRubberBand::Rectangle,this);
-	setMouseTracking(true);
-}
-
-LabelWithRubberBand::~LabelWithRubberBand() {
-	delete rubberBand;
-}
-
-void LabelWithRubberBand::mousePressEvent(QMouseEvent *event) {
-	if (event->buttons()==Qt::LeftButton) {
-		origin = event->pos();
-		rubberBand->setGeometry(QRect(origin, QSize()));
-		rubberBand->show();
-		emit validCropArea(false);
-	}
-	event->ignore();
-}
-
-void LabelWithRubberBand::mouseMoveEvent(QMouseEvent *event) {
-	if (event->buttons()==Qt::LeftButton) {
-		rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
-		if (rubberBand->geometry().isValid())
-			emit validCropArea(true);
-	}
-	event->ignore();
-}
-
-void LabelWithRubberBand::mouseReleaseEvent(QMouseEvent */*event*/) {
-	QRect g=rubberBand->geometry();
-	g.setLeft(qMax(0,g.left()));
-	g.setRight(qMin(size().width()-1,g.right()));
-	g.setTop(qMax(g.top(),0));
-	g.setBottom(qMin(size().height()-1,g.bottom()));
-	rubberBand->setGeometry(g);
-}
-
-void LabelWithRubberBand::resizeEvent(QResizeEvent *event) {
-	//cannot use the height, because of the "hack" of the +-1 pixel
-	float newoldratioW=(float)(event->size().width())/(float)(event->oldSize().width());
-	if (newoldratioW==1)
-		return;
-	origin*=newoldratioW;
-	rubberBand->resize(rubberBand->size()*newoldratioW);
-	rubberBand->setGeometry(QRect(origin,rubberBand->size()));
-	if (rubberBand->size().width()==0||rubberBand->size().height()==0) {
-		rubberBand->hide();
-		emit validCropArea(false);
-	}
-}
-
-QRect LabelWithRubberBand::getCropArea() const {
-	return rubberBand->geometry();
+	previewWidget->resize(original_ldrlist[0]->size());
 }
