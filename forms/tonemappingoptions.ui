@@ -202,6 +202,12 @@
           <property name="icon" >
            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
           </property>
+          <property name="iconSize" >
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
           <property name="autoDefault" >
            <bool>false</bool>
           </property>
@@ -432,6 +438,12 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -709,6 +721,12 @@ p, li { white-space: pre-wrap; }
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
            </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -836,6 +854,12 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1044,6 +1068,12 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1406,6 +1436,12 @@ p, li { white-space: pre-wrap; }
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
            </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -1632,6 +1668,12 @@ p, li { white-space: pre-wrap; }
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
            </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
@@ -1854,6 +1896,12 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
            </property>
            <property name="autoDefault" >
             <bool>false</bool>
@@ -2095,6 +2143,12 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="icon" >
             <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+           </property>
+           <property name="iconSize" >
+            <size>
+             <width>10</width>
+             <height>10</height>
+            </size>
            </property>
           </widget>
          </item>

@@ -54,7 +54,7 @@ const config_triple predef_confs[6]= {
 
 HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), loadcurvefilename(""), savecurvefilename(""), expotimes(NULL), opts(options), settings("Qtpfsgui", "Qtpfsgui"), ais(NULL) {
 	setupUi(this);
-	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure Equivalent"));
+	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure"));
 	tableWidget->resizeColumnsToContents();
 	EVgang = new Gang(EVSlider, ImageEVdsb,-8,8,0);
 
@@ -428,16 +428,25 @@ void HdrWizardForm::nextpressed() {
 			confirmloadlabel->setText(tr("<center><h3><b>Aligning...</b></h3></center>"));
 			QStringList env;
 			Next_Finishbutton->setDisabled(TRUE);
+			#ifdef WIN32
+			QString separator(";");
+			#else
+			QString separator(":");
+			#endif
 			switch (alignmentEngineCB->currentIndex()) {
 				case 0: //Hugin's align_image_stack
 				ais=new QProcess(0);
 				ais->setWorkingDirectory(opts->tempfilespath);
 				env = QProcess::systemEnvironment();
-				env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1;"+QCoreApplication::applicationDirPath());
+				env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
 				ais->setEnvironment(env);
 				connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 				connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-				ais->start("align_image_stack",QStringList() << QString("-v") << QString("-a") << fileStringList);
+				#ifdef Q_WS_MAC
+				ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack",QStringList() << QString("-a") << fileStringList);
+				#else
+				ais->start("align_image_stack",QStringList() << QString("-a") << fileStringList);
+				#endif
 				break;
 
 				case 1:

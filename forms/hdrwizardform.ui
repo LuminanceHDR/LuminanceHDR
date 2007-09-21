@@ -108,7 +108,7 @@
                <bool>false</bool>
               </property>
               <property name="title" >
-               <string>&amp;Exposure value for selected image</string>
+               <string>&amp;Exposure for selected image</string>
               </property>
               <layout class="QVBoxLayout" >
                <property name="margin" >
