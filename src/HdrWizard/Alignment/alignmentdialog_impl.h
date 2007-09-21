@@ -25,6 +25,7 @@
 #ifndef ALIGNMENTDIALOG_IMPL_H
 #define ALIGNMENTDIALOG_IMPL_H
 
+#include <QSettings>
 #include "../generated_uic/ui_aligndialog.h"
 #include "previewWidget.h"
 #include "../../panIconWidget.h"
@@ -54,10 +55,14 @@ private:
 	QSize previousPreviewWidgetSize;
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
+	QString recentPathInputLDR;
+	QSettings settings;
+	void applyShiftsToImageStack();
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();
 	void slotCornerButtonPressed();
+	void saveImagesButtonClicked();
 	void updatePivot(int);
 	void updateMovable(int);
 	void upClicked();
@@ -81,8 +86,9 @@ private slots:
 	void origSize();
 	void crop_stack();
 	void nextClicked();
-// 	void panHorizontal(int);
-// 	void panVertical(int);
+	void maskColorButtonClicked();
+	void antighostToolButtonToggled(bool);
+	void blendModeCBIndexChanged(int);
 };
 
 

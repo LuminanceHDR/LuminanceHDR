@@ -58,21 +58,22 @@ pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float contrastscalefactor, 
 
 	pfs::Frame *outframe = pfsio.createFrame( cols, rows );
 	assert(outframe!=NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
 // 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
-	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, Xo, Yo, Zo );
-	tmo_mantiuk06_contmap( cols, rows, Xo->getRawData(), Yo->getRawData(), Zo->getRawData(),
+	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, Ro, Go, Bo );
+	tmo_mantiuk06_contmap( cols, rows, Ro->getRawData(), Go->getRawData(), Bo->getRawData(),
 	inY->getRawData(), scaleFactor, saturationFactor, progress_report );
-	pfs::transformColorSpace( pfs::CS_RGB, Xo, inY, Zo, pfs::CS_XYZ, Xo, Yo, Zo );
+	pfs::transformColorSpace( pfs::CS_RGB, Ro, inY, Bo, pfs::CS_SRGB, Ro, Go, Bo );
+
 	//original implementation: we can avoid creating an additional data channel. We use one of the 3 that we already have to create for the output.
 // 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
 // 	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, R, inZ );
 // 	tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R->getRawData(), inZ->getRawData(),
 // 	inY->getRawData(), scaleFactor, saturationFactor, progress_report );
-// 	pfs::transformColorSpace( pfs::CS_RGB, inX, inY, inZ, pfs::CS_XYZ, Xo, Yo, Zo );
+// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 	
 	outframe->getTags()->setString("LUMINANCE", "RELATIVE");
 

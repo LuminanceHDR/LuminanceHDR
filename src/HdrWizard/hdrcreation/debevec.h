@@ -58,7 +58,7 @@ int debevec_applyResponse( const float *arrayofexptime,
  * @param w  array of weights
  * @param M  lenght of w
  */
-int debevec_applyResponse( const float * arrayofexptime,
+void debevec_applyResponse( const float * arrayofexptime,
 			   pfs::Array2D* xj, pfs::Array2D* yj, pfs::Array2D* zj,
 			   const float* Ir, const float* Ig, const float* Ib,
 			   const float *w, int M, const bool ldrinput, ... );

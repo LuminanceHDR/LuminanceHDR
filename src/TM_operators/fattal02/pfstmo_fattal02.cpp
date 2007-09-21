@@ -58,25 +58,26 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa,float _opt_b
 
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
 	assert(outframe != NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 	
 	// tone mapping
 	int w = Y->getCols();
 	int h = Y->getRows();
-	
+
 	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
 	tmo_fattal02(Y, L, opt_alfa, opt_beta, opt_noise, newfattal);
-	
+
+	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, Ro,Go,Bo );
 	for( int x=0 ; x<w ; x++ )
 		for( int y=0 ; y<h ; y++ )
 		{
-			(*Xo)(x,y) = powf( (*X)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
-			(*Zo)(x,y) = powf( (*Z)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
-			(*Yo)(x,y) = (*L)(x,y);
+			(*Ro)(x,y) = powf( (*Ro)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
+			(*Go)(x,y) = powf( (*Go)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
+			(*Bo)(x,y) = powf( (*Bo)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
 		}
 	delete L;
-	
+
 	return outframe;
 }

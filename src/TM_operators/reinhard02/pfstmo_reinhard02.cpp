@@ -59,9 +59,9 @@ pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, i
 
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
 	assert(outframe != NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );\
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
 	// tone mapping
 	int w = Y->getCols();
@@ -74,12 +74,12 @@ pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, i
 		for( int y=0 ; y<h ; y++ )
 		{
 			float scale = (*L)(x,y) / (*Y)(x,y);
-			(*Yo)(x,y) = (*Y)(x,y)*scale;
-			(*Xo)(x,y) = (*X)(x,y)*scale;
-			(*Zo)(x,y) = (*Z)(x,y)*scale;
+			(*Go)(x,y) = (*Y)(x,y)*scale;
+			(*Ro)(x,y) = (*X)(x,y)*scale;
+			(*Bo)(x,y) = (*Z)(x,y)*scale;
 		}
 	}
-// 	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
+	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 
 	delete L;
 

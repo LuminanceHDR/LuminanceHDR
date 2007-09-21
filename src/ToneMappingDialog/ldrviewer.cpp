@@ -42,13 +42,60 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 	parseOptions(opts);
 	setWindowTitle(caption);
 	setToolTip(caption);
+#if QT_VERSION >= 0x040200
+	cornerButton=new QToolButton(this);
+	cornerButton->setToolTip("Pan the image to a region");
+	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+	scrollArea->setCornerWidget(cornerButton);
+	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+#endif
 }
 
 LdrViewer::~LdrViewer() {
 	delete imageLabel;
+	delete cornerButton;
 	delete scrollArea;
 	delete [] origimage.bits();
 }
+
+
+void LdrViewer::slotCornerButtonPressed() {
+	panIconWidget=new PanIconWidget;
+	panIconWidget->setImage(currentimage);
+	float zf=scrollArea->getScaleFactor();
+	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
+	float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
+	float wps_w=(float)(scrollArea->maximumViewportSize().width());
+	float wps_h=(float)(scrollArea->maximumViewportSize().height());
+	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
+	panIconWidget->setRegionSelection(r);
+	panIconWidget->setMouseFocus();
+	connect(panIconWidget, SIGNAL(signalSelectionMoved(QRect, bool)), this, SLOT(slotPanIconSelectionMoved(QRect, bool)));
+	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
+	g.setX(g.x()+ scrollArea->viewport()->size().width());
+	g.setY(g.y()+ scrollArea->viewport()->size().height());
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+					g.y() - panIconWidget->height()/2));
+	
+	panIconWidget->setCursorToLocalRegionSelectionCenter();
+}
+
+void LdrViewer::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
+	if (mousereleased) {
+		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
+		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
+		panIconWidget->close();
+		slotPanIconHidden();
+	}
+}
+
+void LdrViewer::slotPanIconHidden()
+{
+    cornerButton->blockSignals(true);
+    cornerButton->animateClick();
+    cornerButton->blockSignals(false);
+}
+
 
 void LdrViewer::parseOptions(tonemapping_options *opts) {
 	TMOptionsOperations tmopts(opts);
@@ -92,7 +139,7 @@ void LdrViewer::LevelsRequested(bool a) {
 }
 
 void LdrViewer::updatePreview(unsigned char *LUT) {
-	qDebug("LDRVIEWER::UPDATEPREVIEW\n");
+	qDebug("LdrViewer::updatePreview\n");
 	for (int x=0; x<origimage.width(); x++) {
 		for (int y=0; y<origimage.height(); y++) {
 			QRgb rgb=origimage.pixel(x,y);

@@ -41,11 +41,11 @@ inline float min3( float a, float b, float c ) {
   return (c<min) ? c : min;
 }
 
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, const bool ldrinput, ...){
+pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int /*iterations*/, const bool ldrinput, ...){
 
 //only one of these two is used by casting extra parameters:
-//listldr is used when input is a list of jpegs (and LDR tiffs).
-//listhdr is used when input is a list of hdrs (raw image formats, or HDR tiffs).
+//listldr is used when input is a list of LDRs (jpegs or LDR tiffs).
+//listhdr is used when input is a list of HDRs (raw image formats, or 16 bit tiffs).
 QList<QImage*> *listldr=NULL;
 Array2DList *listhdrR=NULL;
 Array2DList *listhdrG=NULL;
@@ -78,7 +78,7 @@ if (ldrinput) {
 }
 va_end(arg_pointer); /* Clean up. */
 
-//either 256(LDRs) or 65536(hdr RAW images).
+//either 256(LDRs) or 65536 (RAW images, 16 bit tiffs).
 int M = (int) powf(2.0f,opt_bpp);
 // weighting function representing confidence in pixel values
 float* w = new float[M];
@@ -196,7 +196,7 @@ int maxResponse=M;
     {
     case FROM_FILE:
 	{
-	    FILE * respfile=fopen(chosen_config->CurveFilename.toUtf8().constData(),"r");
+	    FILE * respfile=fopen(chosen_config->LoadCurveFromFilename.toUtf8().constData(),"r");
 	    // read camera response from file
 	    bool loadR_ok = responseLoad(respfile, Ir, M);
 	    bool loadG_ok = responseLoad(respfile, Ig, M);
@@ -227,15 +227,20 @@ int maxResponse=M;
 	responseLinear( Ib, M );
 	//call robertson02_getResponse method which computes both the Ir,Ig,Ib and the output HDR (i.e. its channels Rj,Gj,Bj).
 	if (ldrinput) {
-		robertson02_getResponse( Rj, arrayofexptime, Ir, w, M, 1, true, listldr );
-		robertson02_getResponse( Gj, arrayofexptime, Ig, w, M, 2, true, listldr );
-		robertson02_getResponse( Bj, arrayofexptime, Ib, w, M, 3, true, listldr );
+		robertson02_getResponse( Rj,Gj,Bj, arrayofexptime, Ir,Ig,Ib, w, M, true, listldr );
 	} else {
-		robertson02_getResponse( Rj, arrayofexptime, Ir, w, M, 1, false, listhdrR );
-		robertson02_getResponse( Gj, arrayofexptime, Ig, w, M, 2, false, listhdrG );
-		robertson02_getResponse( Bj, arrayofexptime, Ib, w, M, 3, false, listhdrB );
+		robertson02_getResponse( Rj,Gj,Bj, arrayofexptime, Ir,Ig,Ib, w, M, false, listhdrR,listhdrG,listhdrB );
 	}
 	break;
+    }
+
+    //save response curves if required (variable not empty)
+    if (!chosen_config->SaveCurveToFilename.isEmpty()) {
+		FILE * respfile=fopen(chosen_config->SaveCurveToFilename.toUtf8().constData(),"w");
+		responseSave(respfile, Ir, M, "IR");
+		responseSave(respfile, Ig, M, "IG");
+		responseSave(respfile, Ib, M, "IB");
+		fclose(respfile);
     }
 
     //3) apply model to generate hdr.
@@ -247,31 +252,27 @@ int maxResponse=M;
 	else {
 		//apply robertson model
 		if (ldrinput) {
-			robertson02_applyResponse( Rj, arrayofexptime, Ir, w, M, 1, true, listldr );
-			robertson02_applyResponse( Gj, arrayofexptime, Ig, w, M, 2, true, listldr );
-			robertson02_applyResponse( Bj, arrayofexptime, Ib, w, M, 3, true, listldr );
+			robertson02_applyResponse( Rj,Gj,Bj, arrayofexptime, Ir,Ig,Ib, w, M, true, listldr );
 		} else {
-			robertson02_applyResponse( Rj, arrayofexptime, Ir, w, M, 1, false, listhdrR );
-			robertson02_applyResponse( Gj, arrayofexptime, Ig, w, M, 2, false, listhdrG );
-			robertson02_applyResponse( Bj, arrayofexptime, Ib, w, M, 3, false, listhdrB );
+			robertson02_applyResponse( Rj,Gj,Bj, arrayofexptime, Ir,Ig,Ib, w, M, false, listhdrR,listhdrG,listhdrB );
 		}
 	}
 	break;
     case DEBEVEC:
 	//apply debevec model
-	if (antighosting) {
-		Array2DList Ptemp,P;
-		if (ldrinput)
-			icip06_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir, Ig, Ib, w, iterations, Ptemp, P, ldrinput, listldr);
-		else
-			break; //TODO icip06 with raw data not implemented yet
-	}
-	else {
+// 	if (antighosting) {
+// 		Array2DList Ptemp,P;
+// 		if (ldrinput)
+// 			icip06_applyResponse(arrayofexptime, Rj, Gj, Bj, Ir, Ig, Ib, w, iterations, Ptemp, P, ldrinput, listldr);
+// 		else
+// 			break; //TODO icip06 with raw data not implemented yet
+// 	}
+// 	else {
 		if (ldrinput)
 			debevec_applyResponse(arrayofexptime, Rj, Gj, Bj,  Ir, Ig, Ib, w, M, true, listldr);
 		else
 			debevec_applyResponse(arrayofexptime, Rj, Gj, Bj,  Ir, Ig, Ib, w, M, false, listhdrR,listhdrG,listhdrB);
-	}
+// 	}
 	break;
     } //end switch
 

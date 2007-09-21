@@ -39,7 +39,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	toolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
 	prefixname=QFileInfo(_file).completeBaseName();
-	setWindowTitle(tr("Tone mapping Window: ")+ prefixname);
+	setWindowTitle(windowTitle() + prefixname);
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 
 	workspace = new QWorkspace(this);
@@ -53,11 +53,10 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setShown(bool)));
 
 	settings.beginGroup(GROUP_TONEMAPPING);
-	int desired_out_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
 	QString cachepath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
 	settings.endGroup();
 
-	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, desired_out_cs, statusBar());
+	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, cachepath, statusBar());
 	dock->setWidget(tmwidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));

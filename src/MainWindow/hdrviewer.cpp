@@ -22,11 +22,11 @@
  * based on Rafal Mantiuk and Grzegorz Krawczyk 's pfsview code
  */
 
-#include "hdrviewer.h"
 #include <math.h>
 #include <QApplication>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include "hdrviewer.h"
 
 inline float clamp( float val, float min, float max )
 {
@@ -124,6 +124,50 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	imageLabel = new QLabel;
 	scrollArea = new SmartScrollArea(this,imageLabel);
 	VBL_L->addWidget(scrollArea);
+#if QT_VERSION >= 0x040200
+	cornerButton=new QToolButton(this);
+	cornerButton->setToolTip("Pan the image to a region");
+	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+	scrollArea->setCornerWidget(cornerButton);
+	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+#endif
+}
+
+void HdrViewer::slotCornerButtonPressed() {
+	panIconWidget=new PanIconWidget;
+	panIconWidget->setImage(image);
+	float zf=scrollArea->getScaleFactor();
+	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
+	float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
+	float wps_w=(float)(scrollArea->maximumViewportSize().width());
+	float wps_h=(float)(scrollArea->maximumViewportSize().height());
+	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
+	panIconWidget->setRegionSelection(r);
+	panIconWidget->setMouseFocus();
+	connect(panIconWidget, SIGNAL(signalSelectionMoved(QRect, bool)), this, SLOT(slotPanIconSelectionMoved(QRect, bool)));
+	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
+	g.setX(g.x()+ scrollArea->viewport()->size().width());
+	g.setY(g.y()+ scrollArea->viewport()->size().height());
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+					g.y() - panIconWidget->height()/2));
+	
+	panIconWidget->setCursorToLocalRegionSelectionCenter();
+}
+
+void HdrViewer::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
+	if (mousereleased) {
+		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
+		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
+		panIconWidget->close();
+		slotPanIconHidden();
+	}
+}
+
+void HdrViewer::slotPanIconHidden()
+{
+    cornerButton->blockSignals(true);
+    cornerButton->animateClick();
+    cornerButton->blockSignals(false);
 }
 
 
@@ -270,6 +314,7 @@ const pfs::Array2D *HdrViewer::getPrimaryChannel() {
 HdrViewer::~HdrViewer() {
 	//do not delete workarea, it shares the same memory area of pfsFrame
 	if (imageLabel) delete imageLabel;
+	delete cornerButton;
 	if (scrollArea) delete scrollArea;
 	if (image) delete image;
 	if (pfsFrame!=NULL)
@@ -282,13 +327,13 @@ pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 
 void HdrViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
-#if QT_VERSION <= 0x040200
-		int ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>If you quit now, these changes will be lost."), QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton);
-		if (ret==QMessageBox::Ignore)
+#if QT_VERSION < 0x040200
+		int ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton);
+		if (ret==QMessageBox::Yes)
 #else
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>If you quit now, these changes will be lost."),
-		QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard);
-		if (ret==QMessageBox::Discard)
+		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"),
+		QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+		if (ret==QMessageBox::Yes)
 #endif
 			event->accept();
 		else

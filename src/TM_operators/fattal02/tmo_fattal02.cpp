@@ -258,7 +258,7 @@ void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum,
 
 //--------------------------------------------------------------------
 
-void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float noise, bool newfattal)
+void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float noise, bool newfattal)
 {
   const int MSIZE = 32;         // minimum size of gaussian pyramid
 	

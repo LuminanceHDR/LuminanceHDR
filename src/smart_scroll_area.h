@@ -47,7 +47,7 @@ public slots:
 protected:
 	void resizeEvent ( QResizeEvent * );
 	void mousePressEvent(QMouseEvent *e) {
-		mousePos = e->pos();
+		mousePos = e->globalPos();
 	}
 	void mouseMoveEvent(QMouseEvent *e);
 private:

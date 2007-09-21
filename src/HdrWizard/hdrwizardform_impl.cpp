@@ -43,36 +43,52 @@ extern "C" {
 #include "../config.h"
 
 const config_triple predef_confs[6]= {
-{TRIANGULAR, GAMMA, DEBEVEC,""},
-{TRIANGULAR, LINEAR,DEBEVEC,""},
-{PLATEAU, LINEAR,DEBEVEC,""},
-{PLATEAU, GAMMA,DEBEVEC,""},
-{GAUSSIAN, LINEAR,DEBEVEC,""},
-{GAUSSIAN, GAMMA,DEBEVEC,""},
+{TRIANGULAR, LINEAR,DEBEVEC,"",""},
+{TRIANGULAR, GAMMA, DEBEVEC,"",""},
+{PLATEAU, LINEAR,DEBEVEC,"",""},
+{PLATEAU, GAMMA,DEBEVEC,"",""},
+{GAUSSIAN, LINEAR,DEBEVEC,"",""},
+{GAUSSIAN, GAMMA,DEBEVEC,"",""},
 };
 
 
-HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), curvefilename(""), expotimes(NULL), opts(options), settings("Qtpfsgui", "Qtpfsgui"), ais(NULL) {
+HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), loadcurvefilename(""), savecurvefilename(""), expotimes(NULL), opts(options), settings("Qtpfsgui", "Qtpfsgui"), ais(NULL) {
 	setupUi(this);
-	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Filename") << tr("Exposure"));
-	EVgang = new Gang(EVSlider, ImageEVdsb,-12,12,0);
+	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure Equivalent"));
+	tableWidget->resizeColumnsToContents();
+	EVgang = new Gang(EVSlider, ImageEVdsb,-8,8,0);
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextpressed()));
-	connect(backbutton,SIGNAL(clicked()),this,SLOT(backpressed()));
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
-	connect(checkbox_load_from_file,SIGNAL(toggled(bool)),this,SLOT(update_current_config_file_or_notfile(bool)));
-	connect(comboBox_model,SIGNAL(activated(int)), this,SLOT(update_current_config_model(int)));
-	connect(comboBox_gamma_lin_log,SIGNAL(activated(int)), this,SLOT(update_current_config_gamma_lin_log(int)));
-	connect(comboBox_tri_gau_plateau,SIGNAL(activated(int)), this,SLOT(update_current_config_weights(int)));
-	connect(comboBox_PredefConfigs,SIGNAL(activated(int)), this,SLOT(update_currentconfig(int)));
-	connect(loadFileButton,SIGNAL(clicked()),this,SLOT(load_response_curve_from_file()));
+	connect(predefConfigsComboBox,SIGNAL(activated(int)),this,
+	SLOT(predefConfigsComboBoxActivated(int)));
+	connect(antighostRespCurveCombobox,SIGNAL(activated(int)),this,
+	SLOT(antighostRespCurveComboboxActivated(int)));
+	connect(customConfigCheckBox,SIGNAL(toggled(bool)),this,
+	SLOT(customConfigCheckBoxToggled(bool)));
+	connect(triGaussPlateauComboBox,SIGNAL(activated(int)),this,
+	SLOT(triGaussPlateauComboBoxActivated(int)));
+	connect(predefRespCurveRadioButton,SIGNAL(toggled(bool)),this,
+	SLOT(predefRespCurveRadioButtonToggled(bool)));
+	connect(gammaLinLogComboBox,SIGNAL(activated(int)),this,
+	SLOT(gammaLinLogComboBoxActivated(int)));
+	connect(loadRespCurveFromFileCheckbox,SIGNAL(toggled(bool)),this,
+	SLOT(loadRespCurveFromFileCheckboxToggled(bool)));
+	connect(loadRespCurveFileButton,SIGNAL(clicked()),this,
+	SLOT(loadRespCurveFileButtonClicked()));
+	connect(saveRespCurveToFileCheckbox,SIGNAL(toggled(bool)),this,
+	SLOT(saveRespCurveToFileCheckboxToggled(bool)));
+	connect(saveRespCurveFileButton,SIGNAL(clicked()),this,
+	SLOT(saveRespCurveFileButtonClicked()));
+	connect(modelComboBox,SIGNAL(activated(int)),this,
+	SLOT(modelComboBoxActivated(int)));
+
+	connect(RespCurveFileLoadedLineEdit,SIGNAL(textChanged(const QString&)),this,
+	SLOT(setLoadFilename(const QString&)));
+// 	connect(ImageEVdsb,SIGNAL(editingFinished()),this,SLOT(ImageEVdsbEditingFinished()));
+
 	connect(loadsetButton,SIGNAL(clicked()),this,SLOT(loadfiles()));
-	connect(radioButton_use_Predefined,SIGNAL(clicked()),this,SLOT(fix_gui_custom_config()));
-	connect(checkBoxCallCustom,SIGNAL(toggled(bool)),this,SLOT(custom_toggled(bool)));
-	connect(coboxRespCurve_Antighost,SIGNAL(activated(int)),this,SLOT(update_current_antighost_curve(int)));
-	connect(radio_usecalibrate_02,SIGNAL(toggled(bool)),this,SLOT(update_current_config_calibrate()));
-	connect(ShowFileloadedLineEdit,SIGNAL(textChanged(const QString&)), this, SLOT(setLoadFilename(const QString&)));
 
 	connect(EVgang, SIGNAL(finished()), this, SLOT(updateEVvalue()));
 
@@ -89,7 +105,6 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), c
 
 	chosen_config=predef_confs[0];
 }
-
 
 void HdrWizardForm::loadfiles() {
     QString filetypes;
@@ -120,6 +135,8 @@ void HdrWizardForm::loadfiles() {
 	
 	int previous_sizex=-1; int previous_sizey=-1;
 	int current_sizex=-1; int current_sizey=-1;
+	bool all_ok=true;
+	QStringList files_lacking_exif;
 	while( files_stringlistiterator != files.end() ) {
 		QFileInfo qfi(*files_stringlistiterator);
 
@@ -129,17 +146,14 @@ void HdrWizardForm::loadfiles() {
 		//fill graphical list
 		tableWidget->setItem(index_expotimes,0,new QTableWidgetItem(qfi.fileName()));
 		if (expotimes[index_expotimes]!=-1) {
-			QString EVdisplay;
-			QTextStream ts(&EVdisplay);
-			ts.setRealNumberPrecision(2);
-			ts << right << forcesign << fixed << log2f(expotimes[index_expotimes])+12.5128f << " EV";
-			QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
-			tableitem->setTextAlignment(Qt::AlignRight);
-			tableWidget->setItem(index_expotimes,1,tableitem);
-			qDebug("expotimes[%d]=%f --- EV=%f",index_expotimes,expotimes[index_expotimes],log2f(expotimes[index_expotimes])+12.5128f);
-		} else {
+			updateGraphicalEVvalue(log2f(expotimes[index_expotimes]),index_expotimes);
+			qDebug("expotimes[%d]=%f --- EV=%f",index_expotimes,expotimes[index_expotimes],log2f(expotimes[index_expotimes]));
+		} else { //expotimes[i] is -1
+			//if at least one image doesn't contain (the required) exif tags set all_ok=false
 			tableWidget->setItem(index_expotimes,1,new QTableWidgetItem(tr("Unknown ")));
-		}
+			files_lacking_exif+="<li><font color=\"#FF0000\"><i><b>"+ tableWidget->item(index_expotimes,0)->text()+ "</b></i></font></li>\n";
+			all_ok=false;
+		} //expotimes[i]==-1 ?
 
 		QString extension=qfi.suffix().toUpper(); //get filename extension
 
@@ -178,7 +192,7 @@ void HdrWizardForm::loadfiles() {
 				progressBar->setValue(0);
 				clearlists();
 				delete expotimes; expotimes=NULL;
-				QMessageBox::critical(this,tr("Tiff error"), QString(tr("The file<br>%1<br> is not a 8 bit or 16 bit tiff")).arg(qfi.fileName()));
+				QMessageBox::critical(this,tr("Tiff error"), QString(tr("The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()));
 				return;
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
@@ -206,17 +220,9 @@ void HdrWizardForm::loadfiles() {
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 	}
 
-	//check if at least one image doesn't contain (the required) exif tags
-	bool all_ok=true;
-	QStringList files_lacking_exif;
-	for (int i=0; i<numberinputfiles; i++) {
-		if (expotimes[i]==-1) {
-			files_lacking_exif+="<li><font color=\"#FF0000\"><i><b>"+ tableWidget->item(i,0)->text()+ "</b></i></font></li>\n";
-			all_ok=false;
-		}
-	}
-
 	if (all_ok) {
+		//give an offset to the EV values if they are outside of the -8..8 range. 
+		checkEVvalues();
 		Next_Finishbutton->setEnabled(TRUE);
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
 	} else {
@@ -235,12 +241,14 @@ Qtpfsgui was not able to find the relevant <i>EXIF</i> tags\nfor the following i
 You can perform a <b>one-to-one copy of the exif data</b> between two sets of images via the <i><b>\"Tools->Copy Exif Data...\"</b></i> menu item."))).arg(files_lacking_exif.join(""));
 		QMessageBox::warning(this,tr("EXIF data not found"),warning_message);
 		confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(numberinputfiles));
-	} //if (all_ok)
+	} //if (!all_ok)
 
+	//do not load any more images
 	loadsetButton->setEnabled(FALSE);
+	//choose to enable alignment or not
 	if (ImagePtrList.size() >= 2) {
-		alignCheckBox->setEnabled(true);
-		alignGroupBox->setEnabled(true);
+		alignCheckBox->setEnabled(TRUE);
+		alignGroupBox->setEnabled(TRUE);
 	}
 	tableWidget->resizeColumnsToContents();
 	EVgroupBox->setEnabled(TRUE);
@@ -260,17 +268,56 @@ bool HdrWizardForm::check_same_size(int &px,int &py,int cx,int cy) {
 	}
 }
 
-void HdrWizardForm::custom_toggled(bool want_custom) {
+void HdrWizardForm::checkEVvalues() {
+	float max=-10, min=+10;
+	for (int i=0; i<numberinputfiles;i++) {
+		float ev_val=log2f(expotimes[i]);
+		if (ev_val>max)
+			max=ev_val;
+		if (ev_val<min)
+			min=ev_val;
+	}
+	//now if values are out of bounds, add an offset to them.
+	if (max>8) {
+		for (int i=0;i<numberinputfiles;i++) {
+			float new_ev=log2f(expotimes[i])-(max-8);
+			expotimes[i]=exp2f(new_ev);
+			updateGraphicalEVvalue(new_ev,i);
+		}
+	} else if (min<-8) {
+		for (int i=0;i<numberinputfiles;i++) {
+			float new_ev=log2f(expotimes[i])-(min+8);
+			expotimes[i]=exp2f(new_ev);
+			updateGraphicalEVvalue(new_ev,i);
+		}
+	} else {
+		qDebug("not translating");
+	}
+}
+	
+void HdrWizardForm::updateGraphicalEVvalue(float EV_val, int index_in_table) {
+			QString EVdisplay;
+			QTextStream ts(&EVdisplay);
+			ts.setRealNumberPrecision(2);
+			ts << right << forcesign << fixed << EV_val << " EV";
+			QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
+			tableitem->setTextAlignment(Qt::AlignRight);
+			tableWidget->setItem(index_in_table,1,tableitem);
+}
+
+void HdrWizardForm::customConfigCheckBoxToggled(bool want_custom) {
 	if (!want_custom) {
-		if (!checkBoxAntighosting->isChecked()) {
+		if (!antighostingCheckBox->isChecked()) {
 			label_RespCurve_Antighost->setDisabled(TRUE);
-			coboxRespCurve_Antighost->setDisabled(TRUE);
+			antighostRespCurveCombobox->setDisabled(TRUE);
 			label_Iterations->setDisabled(TRUE);
 			spinBoxIterations->setDisabled(TRUE);
+			//temporary disable anti-ghosting until it's fixed
+			antighostingCheckBox->setDisabled(TRUE);
 		}
 		else {
 			label_predef_configs->setDisabled(TRUE);
-			comboBox_PredefConfigs->setDisabled(TRUE);
+			predefConfigsComboBox->setDisabled(TRUE);
 			label_weights->setDisabled(TRUE);
 			lineEdit_showWeight->setDisabled(TRUE);
 			label_resp->setDisabled(TRUE);
@@ -278,45 +325,72 @@ void HdrWizardForm::custom_toggled(bool want_custom) {
 			label_model->setDisabled(TRUE);
 			lineEdit_showmodel->setDisabled(TRUE);
 		}
-		update_currentconfig(comboBox_PredefConfigs->currentIndex());
+		predefConfigsComboBoxActivated(predefConfigsComboBox->currentIndex());
 		Next_Finishbutton->setText(tr("&Finish"));
 	} else {
 		Next_Finishbutton->setText(tr("&Next >"));
 	}
 }
 
-void HdrWizardForm::fix_gui_custom_config() {
-    //ENABLE load_curve_button and lineedit when "load from file" is checked.
-    if (!checkbox_load_from_file->isChecked()) {
-	//qDebug("not checked, disabling Load Button");
-	loadFileButton->setEnabled(false);
-	ShowFileloadedLineEdit->setEnabled(false);
-    }
-    update_current_config_file_or_notfile(checkbox_load_from_file->isChecked());
+void HdrWizardForm::predefRespCurveRadioButtonToggled(bool want_predef_resp_curve) {
+	if (want_predef_resp_curve) {
+		//ENABLE load_curve_button and lineedit when "load from file" is checked.
+		if (!loadRespCurveFromFileCheckbox->isChecked()) {
+			loadRespCurveFileButton->setEnabled(FALSE);
+			RespCurveFileLoadedLineEdit->setEnabled(FALSE);
+		}
+		loadRespCurveFromFileCheckboxToggled(loadRespCurveFromFileCheckbox->isChecked());
+	} else { //want to recover response curve via robertson02
+		//update chosen_config
+		chosen_config.response_curve=FROM_ROBERTSON;
+		//always enable
+		Next_Finishbutton->setEnabled(TRUE);
+		saveRespCurveToFileCheckboxToggled(saveRespCurveToFileCheckbox->isChecked());
+	}
 }
 
-void HdrWizardForm::update_current_config_file_or_notfile( bool checkedfile ) {
+void HdrWizardForm::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
     //if checkbox is checked AND we have a valid filename
-    if (checkedfile && curvefilename != "") {
+    if (checkedfile && loadcurvefilename != "") {
 	//update chosen config
 	chosen_config.response_curve=FROM_FILE;
-	chosen_config.CurveFilename=curvefilename;
+	chosen_config.LoadCurveFromFilename=loadcurvefilename;
 	//and ENABLE nextbutton
-	Next_Finishbutton->setEnabled(true);
+	Next_Finishbutton->setEnabled(TRUE);
     }
     //if checkbox is checked AND no valid filename
-    else  if (checkedfile && curvefilename == "") {
+    else  if (checkedfile && loadcurvefilename == "") {
 	// DISABLE nextbutton until situation is fixed
-	Next_Finishbutton->setEnabled(false);
+	Next_Finishbutton->setEnabled(FALSE);
+// 	qDebug("Load checkbox is checked AND no valid filename");
     }
     //checkbox not checked
     else {
 	// update chosen config
-	chosen_config.response_curve=responses_in_gui[comboBox_gamma_lin_log->currentIndex()];
-	chosen_config.CurveFilename="";
+	chosen_config.response_curve=responses_in_gui[gammaLinLogComboBox->currentIndex()];
+	chosen_config.LoadCurveFromFilename="";
 	//and ENABLE nextbutton
-	Next_Finishbutton->setEnabled(true);
+	Next_Finishbutton->setEnabled(TRUE);
     }
+}
+
+void HdrWizardForm::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
+	//if checkbox is checked AND we have a valid filename
+	if (checkedfile && savecurvefilename != "") {
+		chosen_config.SaveCurveToFilename=savecurvefilename;
+		Next_Finishbutton->setEnabled(TRUE);
+	}
+	//if checkbox is checked AND no valid filename
+	else  if (checkedfile && savecurvefilename == "") {
+		// DISABLE nextbutton until situation is fixed
+		Next_Finishbutton->setEnabled(FALSE);
+	}
+	//checkbox not checked
+	else {
+		chosen_config.SaveCurveToFilename="";
+		//and ENABLE nextbutton
+		Next_Finishbutton->setEnabled(TRUE);
+	}
 }
 
 void HdrWizardForm::currentPageChangedInto(int newindex) {
@@ -330,7 +404,7 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 			this->setDisabled(true);
 			AlignmentDialog *alignmentdialog= new AlignmentDialog(0,ImagePtrList,ldr_tiff_input,fileStringList,(Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 			if (alignmentdialog->exec() == QDialog::Accepted) {
-				this->setDisabled(false);
+				this->setDisabled(FALSE);
 			} else {
 				reject();
 			}
@@ -338,8 +412,7 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 		}
 	}
 	else if (newindex==2) { //custom config
-		update_currentconfig(0);
-		backbutton->setEnabled(TRUE);
+		predefConfigsComboBoxActivated(1);
 		Next_Finishbutton->setText(tr("&Finish"));
 		return;
 	}
@@ -379,7 +452,7 @@ void HdrWizardForm::nextpressed() {
 		pagestack->setCurrentIndex(1);
 		break;
 	case 1:
-		if(!checkBoxCallCustom->isChecked()) {
+		if(!customConfigCheckBox->isChecked()) {
 			currentpage=2;
 		} else {
 			pagestack->setCurrentIndex(2);
@@ -389,37 +462,44 @@ void HdrWizardForm::nextpressed() {
 		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		//CREATE THE HDR
 		if (ImagePtrList.size() != 0)
-			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),true,&ImagePtrList);
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,antighostingCheckBox->isChecked(),spinBoxIterations->value(),true,&ImagePtrList);
 		else
-			PfsFrameHDR=createHDR(expotimes,&chosen_config,checkBoxAntighosting->isChecked(),spinBoxIterations->value(),false,&listhdrR,&listhdrG,&listhdrB);
+			PfsFrameHDR=createHDR(expotimes,&chosen_config,antighostingCheckBox->isChecked(),spinBoxIterations->value(),false,&listhdrR,&listhdrG,&listhdrB);
 		QApplication::restoreOverrideCursor();
 		accept();
 		return;
 	}
 }
 
-void HdrWizardForm::update_current_antighost_curve(int fromgui) {
-	update_current_config_gamma_lin_log(fromgui);
+void HdrWizardForm::antighostRespCurveComboboxActivated(int fromgui) {
+	gammaLinLogComboBoxActivated(fromgui);
 }
 
-void HdrWizardForm::backpressed() {
-	if (pagestack->currentIndex()==2 && !checkBoxCallCustom->isChecked())
-		pagestack->setCurrentIndex(1);
-}
-
-void HdrWizardForm::load_response_curve_from_file() {
-	curvefilename = QFileDialog::getOpenFileName(
+void HdrWizardForm::loadRespCurveFileButtonClicked() {
+	loadcurvefilename = QFileDialog::getOpenFileName(
 			this,
 			tr("Load a camera response curve file"),
 			QDir::currentPath(),
 			tr("Camera response curve (*.m);;All Files (*)") );
-	if (curvefilename !="")  {
-		ShowFileloadedLineEdit->setText(curvefilename);
-		update_current_config_file_or_notfile(checkbox_load_from_file->isChecked());
+	if (!loadcurvefilename.isEmpty())  {
+		RespCurveFileLoadedLineEdit->setText(loadcurvefilename);
+		loadRespCurveFromFileCheckboxToggled(loadRespCurveFromFileCheckbox->isChecked());
 	}
 }
 
-void HdrWizardForm::update_currentconfig( int index_from_gui ) {
+void HdrWizardForm::saveRespCurveFileButtonClicked() {
+	savecurvefilename = QFileDialog::getSaveFileName(
+			this,
+			tr("Save a camera response curve file"),
+			QDir::currentPath(),
+			tr("Camera response curve (*.m);;All Files (*)") );
+	if (!savecurvefilename.isEmpty())  {
+		CurveFileNameSaveLineEdit->setText(savecurvefilename);
+		saveRespCurveToFileCheckboxToggled(saveRespCurveToFileCheckbox->isChecked());
+	}
+}
+
+void HdrWizardForm::predefConfigsComboBoxActivated( int index_from_gui ) {
 // 	qDebug("updating config to %d", index_from_gui);
 	chosen_config=predef_confs[index_from_gui];
 	lineEdit_showWeight->setText(getQStringFromConfig(1));
@@ -427,26 +507,22 @@ void HdrWizardForm::update_currentconfig( int index_from_gui ) {
 	lineEdit_showmodel->setText(getQStringFromConfig(3));
 }
 
-void HdrWizardForm::update_current_config_weights(int from_gui) {
+void HdrWizardForm::triGaussPlateauComboBoxActivated(int from_gui) {
 	chosen_config.weights=weights_in_gui[from_gui];
 }
 
-void HdrWizardForm::update_current_config_gamma_lin_log(int from_gui) {
+void HdrWizardForm::gammaLinLogComboBoxActivated(int from_gui) {
 	chosen_config.response_curve=responses_in_gui[from_gui];
 }
 
-void HdrWizardForm::update_current_config_model(int from_gui) {
+void HdrWizardForm::modelComboBoxActivated(int from_gui) {
 	chosen_config.model=models_in_gui[from_gui];
 }
 
-void HdrWizardForm::update_current_config_calibrate() {
-	chosen_config.response_curve=FROM_ROBERTSON;;
-}
-
 void HdrWizardForm::setLoadFilename( const QString & filename_from_gui) {
-	if (filename_from_gui!="") {
+	if (!filename_from_gui.isEmpty()) {
 		chosen_config.response_curve=FROM_FILE;
-		chosen_config.CurveFilename=filename_from_gui;
+		chosen_config.LoadCurveFromFilename=filename_from_gui;
 	}
 }
 
@@ -493,17 +569,12 @@ return "";
 }
 
 void HdrWizardForm::updateEVvalue() {
+	qDebug("updateEVvalue");
 	assert(tableWidget->rowCount()==numberinputfiles);
-	float expo_from_EV=exp2f(ImageEVdsb->value()-12.5128f);
+	float expo_from_EV=exp2f(ImageEVdsb->value());
 	//transform from EV value to expotime value
 	expotimes[tableWidget->currentRow()]=expo_from_EV;
-	QString EVdisplay;
-	QTextStream ts(&EVdisplay);
-	ts.setRealNumberPrecision(2);
-	ts << right << forcesign << fixed << ImageEVdsb->value() << " EV";
-	QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
-	tableitem->setTextAlignment(Qt::AlignRight);
-	tableWidget->setItem(tableWidget->currentRow(),1,tableitem);
+	updateGraphicalEVvalue(ImageEVdsb->value(),tableWidget->currentRow());
 	qDebug("setting expotimes[%d]=%f",tableWidget->currentRow(),expotimes[tableWidget->currentRow()]);
 	bool all_ok=true;
 	int files_unspecified=0;
@@ -515,6 +586,8 @@ void HdrWizardForm::updateEVvalue() {
 	}
 	if (all_ok) {
 		Next_Finishbutton->setEnabled(TRUE);
+		//give an offset to the EV values if they are outside of the -8..8 range. 
+		checkEVvalues();
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.</b></h3></font></center>"));
 	} else {
 		confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(files_unspecified) );
@@ -524,9 +597,10 @@ void HdrWizardForm::updateEVvalue() {
 void HdrWizardForm::fileselected(int i) {
 	assert(tableWidget->rowCount()==numberinputfiles);
 	if (expotimes[i]!=-1)
-		ImageEVdsb->setValue(log2f(expotimes[i])+12.5128f);
+		ImageEVdsb->setValue(log2f(expotimes[i]));
 	if (ImagePtrList.size() != 0)
 		previewLabel->setPixmap(QPixmap::fromImage(ImagePtrList.at(i)->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+	ImageEVdsb->setFocus();
 }
 
 void HdrWizardForm::resizeEvent ( QResizeEvent * ) {
@@ -535,7 +609,7 @@ void HdrWizardForm::resizeEvent ( QResizeEvent * ) {
 }
 
 HdrWizardForm::~HdrWizardForm() {
-	qDebug("~HdrWizardForm");
+// 	qDebug("~HdrWizardForm");
 	if (ais!=NULL && ais->state()!=QProcess::NotRunning) {
 		ais->kill();
 	}
@@ -595,22 +669,28 @@ void HdrWizardForm::ais_finished(int exitcode, QProcess::ExitStatus) {
 void HdrWizardForm::ais_failed(QProcess::ProcessError e) {
 	switch (e) {
 	case QProcess::FailedToStart:
-		QMessageBox::warning(this,tr("Error..."),tr("Failed to start the external process \"<em>align_image_stack</em>\". Read the webpage <a href=\"http://qtpfsgui.wiki.sourceforge.net/align_image_stack\">http://qtpfsgui.wiki.sourceforge.net/align_image_stack</a> for more information."));
+		QMessageBox::warning(this,tr("Error..."),tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Documentation... -> Hints and tips\" for more information."));
 	break;
 	case QProcess::Crashed:
-		QMessageBox::warning(this,tr("Error..."),tr("The external process \"<em>align_image_stack</em>\" crashed..."));
+		QMessageBox::warning(this,tr("Error..."),tr("The external application \"<em>align_image_stack</em>\" crashed..."));
 	break;
 	case QProcess::Timedout:
 	case QProcess::ReadError:
 	case QProcess::WriteError:
 	case QProcess::UnknownError:
-		QMessageBox::warning(this,tr("Error..."),tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" process..."));
+		QMessageBox::warning(this,tr("Error..."),tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
 	break;
 	}
 	QApplication::restoreOverrideCursor();
 	Next_Finishbutton->setEnabled(TRUE);
 	if (pagestack->currentIndex()==0)
 		pagestack->setCurrentIndex(1);
+}
+
+void HdrWizardForm::keyPressEvent(QKeyEvent *event) {
+	if (event->key() == Qt::Key_Enter || event->key()==Qt::Key_Return) {
+		tableWidget->selectRow(tableWidget->currentRow()==tableWidget->rowCount()-1 ? 0 : tableWidget->currentRow()+1);
+	}
 }
 
 

@@ -33,6 +33,9 @@
 
 BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), settings("Qtpfsgui", "Qtpfsgui"), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
 	setupUi(this);
+#if QT_VERSION >= 0x040200
+	Log_Widget->setWordWrap(true);
+#endif
 	assert(opts!=NULL);
 
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
@@ -41,7 +44,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), sett
 	settings.beginGroup(GROUP_TONEMAPPING);
 	desired_number_of_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 	desired_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
-	desired_out_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
 	settings.endGroup();
 
 	connect(add_dir_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_dir_HDRs()));
@@ -57,16 +59,16 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), sett
 	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 	full_Log_Model=new QStringListModel();
 	log_filter=new QSortFilterProxyModel(this);
+#if QT_VERSION >= 0x040200
 	log_filter->setDynamicSortFilter(true);
+#endif
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
 	qDebug("BATCH: using %d threads",desired_number_of_threads);
 	qDebug("BATCH: saving using fileformat: %s",desired_format.toAscii().constData());
-	qDebug("BATCH: saving using color space: %s",desired_out_cs==1 ? "RGB" : "sRGB");
 	add_log_message(QString(tr("Using %1 thread(s)")).arg(desired_number_of_threads));
 	add_log_message(tr("Saving using fileformat: ")+desired_format);
-	add_log_message(tr("Saving using color space: ") + (desired_out_cs==1 ? "RGB" : "sRGB"));
 }
 
 BatchTMDialog::~BatchTMDialog() {
@@ -208,6 +210,7 @@ void BatchTMDialog::remove_HDRs() {
 		HDRs_list.removeAt(start_left);
 	}
 	start_left=stop_left=-1;
+	check_enable_start();
 }
 
 void BatchTMDialog::remove_TMOpts() {
@@ -220,6 +223,7 @@ void BatchTMDialog::remove_TMOpts() {
 		tm_opt_list.removeAt(start_right);
 	}
 	start_right=stop_right=-1;
+	check_enable_start();
 }
 
 //function used for ordering based on the value of pregamma

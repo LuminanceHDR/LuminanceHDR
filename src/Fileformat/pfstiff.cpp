@@ -49,7 +49,6 @@ TiffReader::TiffReader( const char* filename ) {
   //--- image parameters
   if(!TIFFGetField(tif, TIFFTAG_COMPRESSION, &comp)) // compression type
     comp = COMPRESSION_NONE;
-  qDebug("compression=%d",comp);
 
   // type of photometric data
   if(!TIFFGetFieldDefaulted(tif, TIFFTAG_PHOTOMETRIC, &phot))
@@ -79,13 +78,18 @@ TiffReader::TiffReader( const char* filename ) {
       }
       TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
       bps = nSamples - extra_samples_per_pixel;
+      has_alpha=(extra_samples_per_pixel==1);
+//       qDebug("nSamples=%d extra_samples_per_pixel=%d",nSamples,extra_samples_per_pixel);
+//       qDebug("has alpha? %s", has_alpha ? "true" : "false");
       if (bps!=3)
       {
+	qDebug("TIFF: unsupported samples per pixel for RGB");
 	TIFFClose(tif);
 	throw pfs::Exception("TIFF: unsupported samples per pixel for RGB");
       }
       if (!TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bps) || (bps!=8 && bps!=16 && bps!=32))
       {
+	qDebug("TIFF: unsupported bits per sample for RGB");
 	TIFFClose(tif);
 	throw pfs::Exception("TIFF: unsupported bits per sample for RGB");
       }
@@ -186,7 +190,7 @@ pfs::Frame* TiffReader::readIntoPfsFrame() {
 //given for granted that users of this function call it only after checking that TypeOfData==BYTE
 QImage* TiffReader::readIntoQImage() {
 	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
-// 	qDebug("pfstiff, data=%ld",data);
+// 	qDebug("pfstiff, w=%d h=%d",width,height);
 	assert(TypeOfData==BYTE);
 
 	//--- image length
@@ -205,12 +209,18 @@ QImage* TiffReader::readIntoQImage() {
 				*(data + 0 + (y*width+x)*4) = bp[x*nSamples+2] ;
 				*(data + 1 + (y*width+x)*4) = bp[x*nSamples+1] ;
 				*(data + 2 + (y*width+x)*4) = bp[x*nSamples] ;
-				*(data + 3 + (y*width+x)*4) = bp[x*nSamples+3];
+				if (has_alpha)
+					*(data + 3 + (y*width+x)*4) = bp[x*nSamples+3];
+				else
+					*(data + 3 + (y*width+x)*4) = 0xff;
 			} else {
 				*(data + 3 + (y*width+x)*4) = bp[x*nSamples+2];
 				*(data + 2 + (y*width+x)*4) = bp[x*nSamples+1];
 				*(data + 1 + (y*width+x)*4) = bp[x*nSamples];
-				*(data + 0 + (y*width+x)*4) = bp[x*nSamples+3];
+				if (has_alpha)
+					*(data + 0 + (y*width+x)*4) = bp[x*nSamples+3];
+				else
+					*(data + 0 + (y*width+x)*4) = 0xff;
 			}
 		}
 	}
@@ -242,6 +252,20 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
 	TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
 	TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
 	TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+	TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+}
+TiffWriter::TiffWriter( const char* filename, QImage *f ) : tif((TIFF *)NULL) {
+	ldrimage=f;
+	width=f->width();
+	height=f->height();
+	tif = TIFFOpen(filename, "w");
+	if( !tif )
+		throw pfs::Exception("TIFF: could not open file for reading.");
+	TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width());
+	TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height());
+	TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+	TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, EXTRASAMPLE_ASSOCALPHA);
+	TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 4);
 	TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 
@@ -298,6 +322,35 @@ int TiffWriter::writeLogLuvTiff() { //write LogLUv Tiff from pfs::Frame
 	}
 	pfs::transformColorSpace( pfs::CS_XYZ, R,G,B, pfs::CS_RGB, R,G,B );
 
+	_TIFFfree(strip_buf);
+	TIFFClose(tif);
+	return 0;
+}
+
+int TiffWriter::write8bitTiff() {
+	TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
+	TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+	TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
+
+	tsize_t strip_size = TIFFStripSize (tif);
+	tstrip_t strips_num = TIFFNumberOfStrips (tif);
+
+	char* strip_buf=(char*)_TIFFmalloc(strip_size); //enough space for a strip
+	if (!strip_buf)
+		throw pfs::Exception("TIFF: error allocating buffer.");
+
+	for (unsigned int s=0; s<strips_num; s++) {
+		for (unsigned int col=0; col<width; col++) {
+			strip_buf[4*col+0]=qRed  (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+			strip_buf[4*col+1]=qGreen(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+			strip_buf[4*col+2]=qBlue (*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+			strip_buf[4*col+3]=qAlpha(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
+		}
+		if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0) {
+			qDebug("error writing strip");
+			return -1;
+		}
+	}
 	_TIFFfree(strip_buf);
 	TIFFClose(tif);
 	return 0;

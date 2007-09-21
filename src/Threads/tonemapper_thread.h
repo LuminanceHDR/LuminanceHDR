@@ -36,7 +36,7 @@ class TonemapperThread : public QThread {
 Q_OBJECT
 
 public:
-	TonemapperThread(int origsize, /*int ldr_output_cs, QString cachepath,*/ QProgressBar *itsbar);
+	TonemapperThread(int origsize, QProgressBar *itsbar);
 	~TonemapperThread();
 	//pass by value, bit-copy should be enough (default should be available)
 	void ComputeImage(const tonemapping_options opts );
@@ -63,6 +63,6 @@ private:
 	void swap(pfs::Frame *, QString );
 // 	void dumpOpts();
 	enum {from_resize,from_pregamma,from_tm} status;
-	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace out_cs);
+	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 };
 #endif

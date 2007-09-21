@@ -24,15 +24,18 @@
 
 #ifndef IMAGEHDRVIEWER_H
 #define IMAGEHDRVIEWER_H
+
 #include <QImage>
 #include <QComboBox>
 #include <QLabel>
 #include <QToolBar>
 #include <QResizeEvent>
+#include <QToolButton>
 #include "../smart_scroll_area.h"
 #include "luminancerange_widget.h"
 #include "../Libpfs/array2d.h"
 #include "../Libpfs/pfs.h"
+#include "../panIconWidget.h"
 
 enum LumMappingMethod {
   MAP_LINEAR,
@@ -65,6 +68,10 @@ public slots:
 	void normalSize();
 	void updateRangeWindow();
 	void setLumMappingMethod( int method );
+private slots:
+	void slotPanIconSelectionMoved(QRect, bool);
+	void slotPanIconHidden();
+	void slotCornerButtonPressed();
 protected:
 	QLabel *imageLabel;
 	SmartScrollArea *scrollArea;
@@ -74,6 +81,8 @@ protected:
 	void updateImage();
 	void closeEvent ( QCloseEvent * event );
 private:
+	PanIconWidget *panIconWidget;
+	QToolButton *cornerButton;
 	void mapFrameToImage();
 	pfs::Frame* hdrpfsframe;
 	QComboBox *mappingMethodCB;

@@ -106,7 +106,6 @@ void PanIconWidget::setRegionSelection(QRect rs) {
 
 	m_localRegionSelection.setHeight( (int)((float)rs.height() *
 					((float)m_height / (float)m_orgHeight)) );
-	//nel paint draw m_localRegionSelection
 }
 
 void PanIconWidget::mousePressEvent ( QMouseEvent * e )

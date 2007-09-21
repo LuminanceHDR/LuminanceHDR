@@ -77,14 +77,17 @@ void SmartScrollArea::scaleImage(double factor) {
 void SmartScrollArea::adjustScrollBar(QScrollBar *scrollBar, double factor) {
 	scrollBar->setValue(int(factor * scrollBar->value() + ((factor - 1) * scrollBar->pageStep()/2)));
 }
-void SmartScrollArea::resizeEvent ( QResizeEvent * e) {
+void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
+// 	qDebug("smartscrollarea::resizeEvent this->size()=(%d,%d)",this->size().width(),this->size().height());
+// 	qDebug("smartscrollarea::resizeEvent newsize()=(%d,%d)",e->size().width(),e->size().height());
+// 	qDebug("smartscrollarea::resizeEvent oldsize()=(%d,%d)",e->oldSize().width(),e->oldSize().height());
 	if (fittingwin) {
 		scaleLabelToFit();
 	} else {
 		//this seems to be a bug in qt4
 		imageLabel->resize(imageLabel->size()-QSize(0,1));
 		imageLabel->resize(imageLabel->size()+QSize(0,1));
-		
+
 // 		QScrollBar *h=horizontalScrollBar();
 // 		QScrollBar *v=verticalScrollBar();
 // 		int fixwidth=imageLabel->size().width()+v->size().width()-this->size().width();
@@ -102,13 +105,13 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * e) {
 
 void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 	if (e->buttons()==Qt::MidButton) {
-		QPoint diff = (e->pos() - mousePos)/30.f;
+		QPoint diff = (e->globalPos() - mousePos);
 		if (e->modifiers()==Qt::ShiftModifier)
 			diff*=5;
-// 		mousePos = e->pos();
 		verticalScrollBar()->setValue(verticalScrollBar()->value() + 
 	diff.y());
 		horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 
 	diff.x());
+		mousePos = e->globalPos();
 	}
 }

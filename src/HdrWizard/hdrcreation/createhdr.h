@@ -48,7 +48,8 @@
       TWeight weights;
       TResponse response_curve;
       TModel model;
-      QString CurveFilename;
+      QString LoadCurveFromFilename;
+      QString SaveCurveToFilename;
   };
 
 /**

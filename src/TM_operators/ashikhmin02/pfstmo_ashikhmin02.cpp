@@ -47,17 +47,14 @@ pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool _simple, float _lc_
 	int eq = _eq;
 	assert(eq==2||eq==4);
 
-// 	pfs::Channel *R, *G, *B;
-// 	inpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
 // 	pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Ro, Go, Bo);
 	
@@ -74,14 +71,14 @@ pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool _simple, float _lc_
 		for( int y=0 ; y<h ; y++ )
 		{
 			float scale = (*L)(x,y) / (*Y)(x,y);
-			(*Yo)(x,y) = (*Y)(x,y) * scale;
-			(*Xo)(x,y) = (*X)(x,y) * scale;
-			(*Zo)(x,y) = (*Z)(x,y) * scale;
+			(*Go)(x,y) = (*Y)(x,y) * scale;
+			(*Ro)(x,y) = (*X)(x,y) * scale;
+			(*Bo)(x,y) = (*Z)(x,y) * scale;
 		}
 
 	delete L;
 
-// 	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
+	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
 	return outframe;
 }
 

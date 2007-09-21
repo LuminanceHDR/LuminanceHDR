@@ -22,6 +22,9 @@
  *
  */
 
+#ifndef PANICONWIDGET_H
+#define PANICONWIDGET_H
+
 #include <QFrame>
 
 class PanIconWidget : public QFrame
@@ -59,7 +62,5 @@ private:
 	int      m_orgWidth;
 	int      m_orgHeight;
 	QImage  *m_image;
-//     int      m_zoomedOrgWidth;
-//     int      m_zoomedOrgHeight;
-//     double   m_zoomFactor;
 };
+#endif

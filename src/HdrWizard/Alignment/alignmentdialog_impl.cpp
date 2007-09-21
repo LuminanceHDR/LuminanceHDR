@@ -25,35 +25,60 @@
 #include <QFileInfo>
 #include <cassert>
 #include <QWhatsThis>
+#include <QColorDialog>
+#include <QFileDialog>
 #include "alignmentdialog_impl.h"
 #include "../../ToneMappingDialog/gamma_and_levels.h"
+#include "../../Fileformat/pfstiff.h"
+#include "../../config.h"
 
-
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), additional_shift_value(0), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input)
+AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), additional_shift_value(0), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input), settings("Qtpfsgui", "Qtpfsgui")
 {
 	setupUi(this);
 
+	if (original_ldrlist.at(0)->format()==QImage::Format_RGB32) {
+		int origlistsize=original_ldrlist.size();
+		for (int image_idx=0; image_idx<origlistsize; image_idx++) {
+			QImage *newimage=new QImage(original_ldrlist.at(0)->convertToFormat(QImage::Format_ARGB32));
+			original_ldrlist.append(newimage);
+			if (ldr_tiff_input[0]) {
+				qDebug("AlignmentDialog::crop_stack(), deleting tiff payload");
+				delete [] original_ldrlist[0]->bits();
+			}
+			delete original_ldrlist.takeAt(0);
+			ldr_tiff_input.removeAt(0);
+			ldr_tiff_input.append(false);
+		}
+	}
+
+	toolOptionsFrame->setVisible(false);
+	maskColorButton->setVisible(false);
+	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+#if QT_VERSION <= 0x040200
+	QPalette modified_palette(maskColorButton->palette());
+	modified_palette.setColor(QPalette::Active,QPalette::Window,maskcolor);
+	maskColorButton->setPalette( modified_palette );
+#else
+	maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue()));
+#endif
 	assert(original_ldrlist.size()==fileStringList.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(0);
 	
 	scrollArea = new QScrollArea(previewImageFrame);
-	previewWidget = new PreviewWidget(scrollArea,original_ldrlist[1],original_ldrlist[0]);
+	previewWidget = new PreviewWidget(scrollArea,original_ldrlist.at(1),original_ldrlist.at(0));
+	previewWidget->setBrushColor(maskcolor);
 	previewWidget->adjustSize();
 	previewWidget->update();
 
-	panIconWidget=NULL;
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip("Pan the image to a region");
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 #if QT_VERSION >= 0x040200
 	scrollArea->setCornerWidget(cornerButton);
 #else
-	QHBoxLayout *p=(QHBoxLayout*)(visualizationGroupBox->layout()->itemAt(1));
+	QHBoxLayout *p=(QHBoxLayout*)(visualizationGroupBox->layout()->itemAt(0));
 	connect(fitButton,SIGNAL(toggled(bool)),cornerButton,SLOT(setDisabled(bool)));
 	cornerButton->setIconSize(QSize(22,22));
 	cornerButton->setText("Pan");
@@ -82,6 +107,8 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	zoomInButton->setToolButtonStyle(style);
 	whatsThisButton->setToolButtonStyle(style);
 	cropButton->setToolButtonStyle(style);
+	saveImagesButton->setToolButtonStyle(style);
+	antighostToolButton->setToolButtonStyle(style);
 	connect(upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
 	connect(rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
 	connect(downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
@@ -106,10 +133,19 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	connect(zoomOutButton,SIGNAL(clicked()),this,SLOT(zoomOut()));
 	connect(zoomInButton,SIGNAL(clicked()),this,SLOT(zoomIn()));
 	connect(cropButton,SIGNAL(clicked()),this,SLOT(crop_stack()));
+	connect(saveImagesButton,SIGNAL(clicked()),this,SLOT(saveImagesButtonClicked()));
 	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
+	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),this,SLOT(blendModeCBIndexChanged(int)));
+	connect(antighostToolButton,SIGNAL(toggled(bool)),toolOptionsFrame,SLOT(setVisible(bool)));
+	connect(antighostToolButton,SIGNAL(toggled(bool)),previewWidget,SLOT(switchAntighostingMode(bool)));
+	connect(antighostToolButton,SIGNAL(toggled(bool)),this,SLOT(antighostToolButtonToggled(bool)));
+	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushSize(int)));
+	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushStrength(int)));
+	connect(maskColorButton,SIGNAL(clicked()),this,SLOT(maskColorButtonClicked()));
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
 	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
+	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
 	
 	QStringList::ConstIterator it = fileStringList.begin();
 	while( it != fileStringList.end() ) {
@@ -121,6 +157,8 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	histogram->setData(*original_ldrlist[1]);
 	histogram->adjustSize();
 	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
+	previewWidget->setFocus();
+	recentPathInputLDR=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
 }
 
 void AlignmentDialog::slotCornerButtonPressed() {
@@ -138,8 +176,12 @@ void AlignmentDialog::slotCornerButtonPressed() {
 	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
 	g.setX(g.x()+ scrollArea->viewport()->size().width());
 	g.setY(g.y()+ scrollArea->viewport()->size().height());
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width(), 
-					g.y() - panIconWidget->height()));
+#if QT_VERSION >= 0x040200
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+					g.y() - panIconWidget->height()/2));
+#else
+	panIconWidget->popup(cornerButton->mapToGlobal(QPoint(cornerButton->width()/2-panIconWidget->width()/2,cornerButton->height()/2-panIconWidget->height()/2)));
+#endif
 	
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
@@ -163,11 +205,11 @@ void AlignmentDialog::slotPanIconHidden()
 AlignmentDialog::~AlignmentDialog() {
 	delete previewWidget;
 	delete histogram;
+	delete cornerButton;
 }
 
 void AlignmentDialog::keyPressEvent(QKeyEvent *event) {
 	int key=event->key();
-	qDebug("AlignmentDialog::keyPressEvent");
 	Qt::KeyboardModifiers mods=event->modifiers();
 	if ((mods & Qt::ShiftModifier)!=0 && (mods & Qt::ControlModifier)!=0)
 		additional_shift_value=99;
@@ -176,13 +218,13 @@ void AlignmentDialog::keyPressEvent(QKeyEvent *event) {
 	else if (mods & Qt::ShiftModifier)
 		additional_shift_value=9;
 
-	if (key==Qt::Key_Up)
+	if (key==Qt::Key_W||key==Qt::Key_I)
 		upClicked();
-	else if (key==Qt::Key_Down)
+	else if (key==Qt::Key_S||key==Qt::Key_K)
 		downClicked();
-	else if (key==Qt::Key_Right)
+	else if (key==Qt::Key_D||key==Qt::Key_L)
 		rightClicked();
-	else if (key==Qt::Key_Left)
+	else if (key==Qt::Key_A||key==Qt::Key_J)
 		leftClicked();
 	if (key==Qt::Key_Escape)
 		reject();
@@ -195,77 +237,80 @@ void AlignmentDialog::keyReleaseEvent ( QKeyEvent * event ) {
 
 void AlignmentDialog::crop_stack() {
 
-	if (fitButton->isChecked()) {
-// 		fitButton->blockSignals(true);
-		fitButton->setChecked(false);
-// 		fitButton->blockSignals(false);
-	}
 	//zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
 	origSize();
 
+	applyShiftsToImageStack();
+	resetAll();
 	QRect ca=previewWidget->getCropArea();
 	if(ca.width()<=0|| ca.height()<=0)
 		return;
 
 	qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
 	//crop all the images
-	//If I do this "properly" (i.e. allocating only one QImage) I end up having odd
-	//gcc runtime errors (like a double free)...
-	//It seems like it allocates the memory that was just freed, anyone knows how to get around this?
 	int origlistsize=original_ldrlist.size();
 	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
-// 		QImage *newimage=new QImage(ca.size(), QImage::Format_ARGB32);
-// 		for(int row=0; row<newimage->height(); row++) {
-// 			QRgb *inp = (QRgb*)original_ldrlist.at(image_idx)->scanLine(row+ca.top());
-// 			QRgb *outp = (QRgb*)newimage->scanLine(row);
-// 			for(int col=0; col<newimage->width(); col++) {
-// 				outp[col] = *(inp+col+ca.left());
-// 			}
-// 		}
-		QImage *newimage=new QImage(original_ldrlist.at(image_idx)->copy(ca));
+		QImage *newimage=new QImage(original_ldrlist.at(0)->copy(ca));
 		original_ldrlist.append(newimage);
-	}
-	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
+
+
+
 		if (ldr_tiff_input[0]) {
-			qDebug("::crop_stack: deleting tiff payload");
+			qDebug("AlignmentDialog::crop_stack(), deleting tiff payload");
 			delete [] original_ldrlist[0]->bits();
 		}
 		delete original_ldrlist.takeAt(0);
 		ldr_tiff_input.removeAt(0);
 		ldr_tiff_input.append(false);
+
 	}
+
+
 	//the display widget has to be recreated with the new cropped data.
 	delete previewWidget;
 	//new display widget uses current indices.
 	previewWidget=new PreviewWidget(scrollArea, original_ldrlist[movableListWidget->currentRow()], original_ldrlist[referenceListWidget->currentRow()]);
+	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+	previewWidget->setBrushColor(maskcolor);
 	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
 	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
+	connect(antighostToolButton,SIGNAL(toggled(bool)),previewWidget,SLOT(switchAntighostingMode(bool)));
+	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushSize(int)));
+	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushStrength(int)));
+	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
 	previousPreviewWidgetSize=original_ldrlist[0]->size();
 	//inform scrollArea of the change
 	scrollArea->setWidget(previewWidget);
+
+	//restore fit
+	if (fitButton->isChecked())
+		fitPreview(true);
 	//and start it up
 	previewWidget->update();
 	previewWidget->hideRubberBand();
 }
 
-void AlignmentDialog::nextClicked() {
+void AlignmentDialog::applyShiftsToImageStack() {
 	int originalsize=original_ldrlist.size();
 	//shift the images
 	for (int i=0; i<originalsize; i++) {
 		if (HV_offsets[i].first==HV_offsets[i].second && HV_offsets[i].first==0)
 			continue;
-		qDebug("shifting image %d of (%d,%d)",i, HV_offsets[i].first, HV_offsets[i].second);
+// 		qDebug("shifting image %d of (%d,%d)",i, HV_offsets[i].first, HV_offsets[i].second);
 		QImage *shifted=shiftQImage(original_ldrlist[i], HV_offsets[i].first, HV_offsets[i].second);
 		if (ldr_tiff_input[i]) {
-			qDebug("deleting tiff payload");
+			qDebug("AlignmentDialog::nextClicked(), deleting tiff payload");
 			delete [] original_ldrlist[i]->bits();
 		}
-		delete original_ldrlist[i];
-		original_ldrlist.removeAt(i);
+		delete original_ldrlist.takeAt(i);
 		original_ldrlist.insert(i,shifted);
 		ldr_tiff_input.removeAt(i);
 		ldr_tiff_input.insert(i,false);
 	}
+}
+
+void AlignmentDialog::nextClicked() {
+	applyShiftsToImageStack();
 	emit accept();
 }
 
@@ -375,12 +420,12 @@ void AlignmentDialog::enterWhatsThis() {
 void AlignmentDialog::zoomIn() {
 	previewWidget->resize(previewWidget->size()*1.25f);
 	zoomOutButton->setEnabled(true);
-	zoomInButton->setEnabled(previewWidget->getScaleFactor() < 3.0);
+	zoomInButton->setEnabled(previewWidget->getScaleFactor() < 6.0);
 }
 void AlignmentDialog::zoomOut() {
 	previewWidget->resize(previewWidget->size()*0.8f);
 	zoomInButton->setEnabled(true);
-	zoomOutButton->setEnabled(previewWidget->getScaleFactor() > 0.222);
+	zoomOutButton->setEnabled(previewWidget->getScaleFactor() > 0.166);
 }
 void AlignmentDialog::fitPreview(bool checked) {
 // 	qDebug("fitPreview");
@@ -401,4 +446,59 @@ void AlignmentDialog::origSize() {
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(true);
 	previewWidget->resize(original_ldrlist[0]->size());
+}
+
+void AlignmentDialog::antighostToolButtonToggled(bool toggled) {
+// 	if (toggled)
+// 		blendModeCB->setCurrentIndex(4);
+	prevBothButton->setDisabled(toggled);
+	nextBothButton->setDisabled(toggled);
+	label_reference_list->setDisabled(toggled);
+	referenceListWidget->setDisabled(toggled);
+	prevRightButton->setDisabled(toggled);
+	nextRightButton->setDisabled(toggled);
+	previewWidget->update();
+}
+
+void AlignmentDialog::maskColorButtonClicked() {
+	QColor returned=QColorDialog::getColor();
+	if (returned.isValid()) {
+		previewWidget->setBrushColor(returned);
+#if QT_VERSION <= 0x040200
+		QPalette modified_palette(maskColorButton->palette());
+		modified_palette.setColor(QPalette::Active,QPalette::Window,returned);
+		maskColorButton->setPalette( modified_palette );
+#else
+		maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
+#endif
+		settings.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
+	}
+}
+
+void AlignmentDialog::blendModeCBIndexChanged(int newindex) {
+	maskColorButton->setVisible(newindex==4);
+}
+
+void AlignmentDialog::saveImagesButtonClicked() {
+	QString fnameprefix=QFileDialog::getSaveFileName(
+				this,
+				tr("Choose a directory and a prefix"),
+				recentPathInputLDR);
+	if (fnameprefix.isEmpty())
+		return;
+
+	QFileInfo qfi(fnameprefix);
+	QFileInfo test(qfi.path());
+
+	settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
+	recentPathInputLDR=qfi.path();
+
+	if (test.isWritable() && test.exists() && test.isDir()) {
+		int counter=0;
+		foreach(QImage *p, original_ldrlist) {
+			TiffWriter tiffwriter( (qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter)).toUtf8().constData(), p);
+			tiffwriter.write8bitTiff();
+			counter++;
+		}
+	}
 }

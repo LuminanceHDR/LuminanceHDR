@@ -43,8 +43,7 @@
  * @param M number of camera output levels
  * @return number of saturated pixels in the HDR image (0: all OK)
  */
-int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
-  const float* I, const float* w, const int M, const int chan, const bool ldrinput, ... );
+void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
 
 /**
  * @brief Calculate camera response using Robertson02 algorithm
@@ -56,7 +55,6 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
  * @param M max camera output (no of discrete steps)
  * @return number of saturated pixels in the HDR image (0: all OK)
  */
-int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
-  float* I, const float* w, const int M, const int chan, const bool ldrinput, ... );
+void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
 
 #endif /* #ifndef _robertson02_h_ */

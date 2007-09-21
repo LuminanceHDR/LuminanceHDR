@@ -44,7 +44,7 @@
  * @param alfa parameter alfa (refer to the paper)
  * @param beta parameter beta (refer to the paper)
  */
-void tmo_fattal02(pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float _opt_noiseredux, bool newfattal);
+void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float _opt_noiseredux, bool newfattal);
 
 pfs::Frame* pfstmo_fattal02(pfs::Frame* inpfsframe, float _opt_alfa, float _opt_beta, float _opt_saturation, float _opt_noiseredux, bool newfattal);
 

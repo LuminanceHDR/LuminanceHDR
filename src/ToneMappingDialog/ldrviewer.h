@@ -25,8 +25,10 @@
 #ifndef IMAGELDRVIEWER_H
 #define IMAGELDRVIEWER_H
 
+#include <QToolButton>
 #include "../smart_scroll_area.h"
 #include "tonemapping_widget.h"
+#include "../panIconWidget.h"
 
 class LdrViewer : public QWidget {
 	Q_OBJECT
@@ -45,7 +47,12 @@ public slots:
 private slots:
 	void updatePreview(unsigned char *);
 	void restoreoriginal();
+	void slotPanIconSelectionMoved(QRect, bool);
+	void slotPanIconHidden();
+	void slotCornerButtonPressed();
 private:
+	PanIconWidget *panIconWidget;
+	QToolButton *cornerButton;
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
 protected:

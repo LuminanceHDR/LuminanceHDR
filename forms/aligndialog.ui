@@ -54,12 +54,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="minimumSize" >
-        <size>
-         <width>400</width>
-         <height>100</height>
-        </size>
-       </property>
        <property name="maximumSize" >
         <size>
          <width>400</width>
@@ -76,22 +70,6 @@
         <property name="spacing" >
          <number>3</number>
         </property>
-        <item>
-         <widget class="QFrame" name="histogramFrame" >
-          <property name="whatsThis" >
-           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the histogram for the currently selected image in the movable list.&lt;/p>&lt;/body>&lt;/html></string>
-          </property>
-          <property name="frameShape" >
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow" >
-           <enum>QFrame::Sunken</enum>
-          </property>
-         </widget>
-        </item>
         <item>
          <layout class="QHBoxLayout" >
           <property name="margin" >
@@ -141,7 +119,7 @@ p, li { white-space: pre-wrap; }
              <string>Original size</string>
             </property>
             <property name="text" >
-             <string>Norma&amp;l Size</string>
+             <string>Origina&amp;l Size</string>
             </property>
             <property name="icon" >
              <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
@@ -242,24 +220,39 @@ p, li { white-space: pre-wrap; }
            <widget class="QComboBox" name="blendModeCB" >
             <item>
              <property name="text" >
-              <string>Difference</string>
+              <string>Difference (M-P)</string>
              </property>
             </item>
             <item>
              <property name="text" >
-              <string>Overlay</string>
+              <string>Overlay (M+P)</string>
              </property>
             </item>
             <item>
              <property name="text" >
-              <string>Movable Only</string>
+              <string>Movable Only (M)</string>
              </property>
             </item>
             <item>
              <property name="text" >
-              <string>Pivot Only</string>
+              <string>Pivot Only (P)</string>
              </property>
             </item>
+            <item>
+             <property name="text" >
+              <string>Antighosting Mask</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="maskColorButton" >
+            <property name="autoFillBackground" >
+             <bool>true</bool>
+            </property>
+            <property name="text" >
+             <string>Mask Color</string>
+            </property>
            </widget>
           </item>
           <item>
@@ -285,7 +278,7 @@ p, li { white-space: pre-wrap; }
        <property name="sizePolicy" >
         <sizepolicy>
          <hsizetype>0</hsizetype>
-         <vsizetype>5</vsizetype>
+         <vsizetype>4</vsizetype>
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -499,7 +492,7 @@ This image's histogram is diplayed in the widget above.</string>
            <number>6</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_2" >
+           <widget class="QLabel" name="label_reference_list" >
             <property name="text" >
              <string>R&amp;eference</string>
             </property>
@@ -603,7 +596,7 @@ This image's histogram is diplayed in the widget above.</string>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox" >
+      <widget class="QGroupBox" name="toolsGroupBox" >
        <property name="maximumSize" >
         <size>
          <width>400</width>
@@ -613,7 +606,7 @@ This image's histogram is diplayed in the widget above.</string>
        <property name="title" >
         <string>Tools</string>
        </property>
-       <layout class="QHBoxLayout" >
+       <layout class="QVBoxLayout" >
         <property name="margin" >
          <number>6</number>
         </property>
@@ -621,45 +614,291 @@ This image's histogram is diplayed in the widget above.</string>
          <number>3</number>
         </property>
         <item>
-         <widget class="QToolButton" name="cropButton" >
-          <property name="enabled" >
-           <bool>false</bool>
+         <layout class="QHBoxLayout" >
+          <property name="margin" >
+           <number>0</number>
           </property>
-          <property name="toolTip" >
-           <string>Crop the stack of images after a selection with the left mouse button has been made</string>
+          <property name="spacing" >
+           <number>6</number>
           </property>
-          <property name="whatsThis" >
-           <string>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</string>
-          </property>
-          <property name="text" >
-           <string>&amp;Crop All Images</string>
-          </property>
-          <property name="icon" >
-           <iconset resource="../icons.qrc" >:/new/prefix1/images/crop.png</iconset>
-          </property>
-          <property name="iconSize" >
-           <size>
-            <width>22</width>
-            <height>22</height>
-           </size>
-          </property>
-          <property name="shortcut" >
-           <string>Ctrl+X</string>
-          </property>
-         </widget>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>103</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="cropButton" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <property name="toolTip" >
+             <string>Crop the stack of images after a selection with the left mouse button has been made</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</string>
+            </property>
+            <property name="text" >
+             <string>&amp;Crop All Images</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/crop.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="shortcut" >
+             <string>Ctrl+X</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>31</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="antighostToolButton" >
+            <property name="text" >
+             <string>&amp;Anti Ghosting</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/ghost_32x32.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="checkable" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>41</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="saveImagesButton" >
+            <property name="text" >
+             <string>&amp;Save Images</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="shortcut" >
+             <string>Ctrl+S</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>71</width>
+              <height>31</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
+         <widget class="QFrame" name="toolOptionsFrame" >
+          <property name="frameShape" >
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="sizeHint" >
-           <size>
-            <width>41</width>
-            <height>20</height>
-           </size>
+          <property name="frameShadow" >
+           <enum>QFrame::Raised</enum>
           </property>
-         </spacer>
+          <layout class="QVBoxLayout" >
+           <property name="margin" >
+            <number>6</number>
+           </property>
+           <property name="spacing" >
+            <number>3</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="addMaskRadioButton" >
+               <property name="text" >
+                <string>A&amp;dd Mask</string>
+               </property>
+               <property name="checked" >
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="removeMaskRadioButton" >
+               <property name="text" >
+                <string>Remove Mas&amp;k</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" >
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" >
+             <property name="margin" >
+              <number>0</number>
+             </property>
+             <property name="spacing" >
+              <number>6</number>
+             </property>
+             <item row="0" column="1" >
+              <widget class="QSlider" name="agBrushSizeQSlider" >
+               <property name="minimum" >
+                <number>1</number>
+               </property>
+               <property name="maximum" >
+                <number>32</number>
+               </property>
+               <property name="value" >
+                <number>32</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2" >
+              <widget class="QSpinBox" name="agBrushStrengthQSpinbox" >
+               <property name="maximum" >
+                <number>255</number>
+               </property>
+               <property name="minimum" >
+                <number>1</number>
+               </property>
+               <property name="value" >
+                <number>255</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" >
+              <widget class="QLabel" name="labelBrushSize" >
+               <property name="text" >
+                <string>Size:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" >
+              <widget class="QSlider" name="agBrushStrengthQSlider" >
+               <property name="minimum" >
+                <number>1</number>
+               </property>
+               <property name="maximum" >
+                <number>255</number>
+               </property>
+               <property name="value" >
+                <number>255</number>
+               </property>
+               <property name="orientation" >
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" >
+              <widget class="QSpinBox" name="agBrushSizeQSpinbox" >
+               <property name="suffix" >
+                <string> pixels</string>
+               </property>
+               <property name="maximum" >
+                <number>32</number>
+               </property>
+               <property name="minimum" >
+                <number>1</number>
+               </property>
+               <property name="value" >
+                <number>32</number>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" >
+              <widget class="QLabel" name="labelBrushStrength" >
+               <property name="text" >
+                <string>&amp;Strength:</string>
+               </property>
+               <property name="buddy" >
+                <cstring>agBrushStrengthQSlider</cstring>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -687,7 +926,7 @@ This image's histogram is diplayed in the widget above.</string>
         <string>Here the user can view and set the shift values for the currently selected movable image</string>
        </property>
        <property name="title" >
-        <string>&amp;Shifts for movable Image</string>
+        <string>Shifts for movable Image</string>
        </property>
        <layout class="QHBoxLayout" >
         <property name="margin" >
@@ -874,41 +1113,6 @@ This image's histogram is diplayed in the widget above.</string>
      </item>
     </layout>
    </item>
-   <item row="0" column="2" >
-    <widget class="QFrame" name="previewImageFrame" >
-     <property name="sizePolicy" >
-      <sizepolicy>
-       <hsizetype>3</hsizetype>
-       <vsizetype>13</vsizetype>
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize" >
-      <size>
-       <width>555</width>
-       <height>300</height>
-      </size>
-     </property>
-     <property name="focusPolicy" >
-      <enum>Qt::StrongFocus</enum>
-     </property>
-     <property name="whatsThis" >
-      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the preview (using the preview mode on the left) between the movable and the reference image.&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the same image is selected in both the movable and reference list, this area will show the image itself.&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p>&lt;/body>&lt;/html></string>
-     </property>
-     <property name="frameShape" >
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow" >
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1" >
     <widget class="Line" name="line_2" >
      <property name="orientation" >
@@ -960,16 +1164,6 @@ p, li { white-space: pre-wrap; }
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="backbutton" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="text" >
-        <string>&lt; &amp;Back</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="Next_Finishbutton" >
        <property name="text" >
         <string>&amp;Next ></string>
@@ -987,6 +1181,41 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="0" column="2" >
+    <widget class="QFrame" name="previewImageFrame" >
+     <property name="sizePolicy" >
+      <sizepolicy>
+       <hsizetype>3</hsizetype>
+       <vsizetype>13</vsizetype>
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>555</width>
+       <height>300</height>
+      </size>
+     </property>
+     <property name="focusPolicy" >
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="whatsThis" >
+      <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the preview (using the preview mode on the left) between the movable and the reference image.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the same image is selected in both the movable and reference list, this area will show the image itself.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p>&lt;/body>&lt;/html></string>
+     </property>
+     <property name="frameShape" >
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow" >
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -1015,7 +1244,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>origSizeButton</tabstop>
   <tabstop>fitButton</tabstop>
   <tabstop>whatsThisButton</tabstop>
-  <tabstop>backbutton</tabstop>
   <tabstop>Next_Finishbutton</tabstop>
   <tabstop>cancelbutton</tabstop>
  </tabstops>
@@ -1036,6 +1264,86 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel" >
      <x>831</x>
      <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agBrushSizeQSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>agBrushSizeQSpinbox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>219</x>
+     <y>499</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>327</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agBrushSizeQSpinbox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>agBrushSizeQSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>352</x>
+     <y>489</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>146</x>
+     <y>499</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agBrushStrengthQSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>agBrushStrengthQSpinbox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>207</x>
+     <y>528</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>339</x>
+     <y>539</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>agBrushStrengthQSpinbox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>agBrushStrengthQSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>322</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>273</x>
+     <y>528</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>antighostToolButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolOptionsFrame</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>284</x>
+     <y>431</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>33</x>
+     <y>455</y>
     </hint>
    </hints>
   </connection>

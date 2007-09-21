@@ -220,10 +220,10 @@ painter.drawRect(QRect(0,0,width()-1,height()-1));
 }
 
 QSize HistogramLDR::sizeHint () const {
-	return QSize( 255, 40 );
+	return QSize( 255, 80 );
 }
 QSize HistogramLDR::minimumSizeHint () const {
-	return QSize( 255, 40 );
+	return QSize( 255, 80 );
 }
 HistogramLDR::~HistogramLDR() {
 	delete [] P;

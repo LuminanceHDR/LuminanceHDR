@@ -44,6 +44,7 @@ class TiffReader
   enum {FLOATLOGLUV, FLOAT, WORD, BYTE} TypeOfData; //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
   uint16 bps;                   /// bits per sample
   uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
+  bool has_alpha;
   double stonits;               /// scale factor to get nit values
 
 public:
@@ -68,10 +69,13 @@ class TiffWriter
 private:
   TIFF* tif;
   pfs::Channel *R,*G,*B;
+  QImage *ldrimage;
   uint32 width,height;
 public:
   TiffWriter( const char* filename, pfs::Frame *f );
+  TiffWriter( const char* filename, QImage *ldrimage );
 
+  int write8bitTiff(); //write 8bit Tiff from QImage
 //   int write16bitTiff(); //write 16bit Tiff from pfs::Frame
   int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
   int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame

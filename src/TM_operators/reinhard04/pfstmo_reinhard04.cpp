@@ -156,13 +156,13 @@ pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float chroma
 
 	pfs::Frame *outframe = pfsio.createFrame( inputpfsframe->getWidth(), inputpfsframe->getHeight() );
 	assert(outframe != NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Xo, Yo, Zo ); //in:xyz ---> out:rgb (skip copyArray)
-	tmo_reinhard04( Xo, Yo, Zo, Y, brightness, chromatic_adaptation, light_adaptation );
-	pfs::transformColorSpace( pfs::CS_SRGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo ); //out:rgb ---> out:xyz
+	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Ro, Go, Bo ); //in:xyz ---> out:rgb (skip copyArray)
+	tmo_reinhard04( Ro, Go, Bo, Y, brightness, chromatic_adaptation, light_adaptation );
+// 	pfs::transformColorSpace( pfs::CS_SRGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo ); //out:rgb ---> out:xyz
 
 	return outframe;
 }

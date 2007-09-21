@@ -46,9 +46,10 @@ public:
 	QString getCaptionTEXT();
 
 protected:
-	void resizeEvent ( QResizeEvent * );
+	void resizeEvent(QResizeEvent *);
+	void keyPressEvent(QKeyEvent *);
 private:
-	QString curvefilename;
+	QString loadcurvefilename,savecurvefilename;
 	config_triple chosen_config;
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
@@ -70,23 +71,28 @@ private:
 	pfs::Frame* PfsFrameHDR;
 
 	bool check_same_size(int&,int&,int,int);
+	void checkEVvalues();
+	void updateGraphicalEVvalue(float EV_val, int index_in_table);
 
 private slots:
 	void nextpressed();
-	void backpressed();
 	void currentPageChangedInto(int);
-	void update_current_config_file_or_notfile(bool);
-	void update_current_config_model(int);
-	void update_current_config_gamma_lin_log(int);
-	void update_current_config_weights(int);
-	void update_currentconfig(int);
-	void update_current_antighost_curve(int);
-	void load_response_curve_from_file();
+
+	void predefConfigsComboBoxActivated(int);
+	void antighostRespCurveComboboxActivated(int);
+	void customConfigCheckBoxToggled(bool);
+	void triGaussPlateauComboBoxActivated(int);
+	void predefRespCurveRadioButtonToggled(bool);
+	void gammaLinLogComboBoxActivated(int);
+	void loadRespCurveFromFileCheckboxToggled(bool);
+	void loadRespCurveFileButtonClicked();
+	void saveRespCurveToFileCheckboxToggled(bool);
+	void saveRespCurveFileButtonClicked();
+	void modelComboBoxActivated(int);
+
 	void loadfiles();
-	void fix_gui_custom_config();
-	void custom_toggled(bool);
-	void update_current_config_calibrate();
 	void setLoadFilename(const QString&);
+// 	void ImageEVdsbEditingFinished();
 	void updateEVvalue();
 	void fileselected(int);
 	void ais_failed(QProcess::ProcessError);

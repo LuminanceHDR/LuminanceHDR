@@ -77,7 +77,7 @@ void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
       // gkrawczyk: that's not really a gaussian, but equation is
       // taken from Robertson02 paper.
       float weight = exp( -sigma * (m-mid) * (m-mid) / mid2 );
-      
+
       if( weight<MIN_WEIGHT )           // ignore very low weights
         w[m] = 0.0f;
       else

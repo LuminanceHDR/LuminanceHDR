@@ -39,38 +39,37 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 
 
 #include "../Threads/tonemapper_thread.h"
-QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace cs) {
+QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
-	pfs::Channel *X, *Y, *Z;
-	inpfsframe->getXYZChannels( X,Y,Z );
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
-	//we are modifying the input buffer here!!!
-	//but it should be ok since this is the endpoint
+	pfs::Channel *R, *G, *B;
+	inpfsframe->getRGBChannels( R,G,B );
+	assert( R!=NULL && G!=NULL && B!=NULL );
 
-	//keep cs=SRGB for compatibility with pfstmo...
-	//but the image is quite white, so in Qtpfsgui we keep RGB as a default colorspace
-	pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, cs, X,Y,Z );
+	//inpfsframe's colorspace is either sRGB or RGB.
+	//sRGB is used for compatibility with pfstmo.
+	//fattal, reinhard05 and ashickmin (somewhat) prefer a RGB colorspace
 
-	int width = X->getCols();
-	int height =  X->getRows();
+	int width = R->getCols();
+	int height =  R->getRows();
 	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
 	for( int y = 0; y < height; y++ ) { // For each row of the image
 		for( int x = 0; x < width; x++ ) {
 			if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+			*(data + 0 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*G)( x, y )*255.f, 0, 255) );
+			*(data + 2 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
 			*(data + 3 + (y*width+x)*4) = 0xff;
 			} else {
-			*(data + 3 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+			*(data + 3 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
+			*(data + 2 + (y*width+x)*4) = ( clamp( (*G)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
 			*(data + 0 + (y*width+x)*4) = 0xff;
 			}
 		}
 	}
+
 //special treament for qt 4.2.1... removing "const" doesn't seem to work.
 #if QT_VERSION == 0x040201
 	QImage toreturn(const_cast<const uchar *>(data),width,height,QImage::Format_ARGB32);

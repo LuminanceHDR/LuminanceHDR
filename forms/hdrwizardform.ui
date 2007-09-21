@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
+    <width>654</width>
     <height>510</height>
    </rect>
   </property>
@@ -33,10 +33,10 @@
      <widget class="QWidget" name="choose_files" >
       <layout class="QVBoxLayout" >
        <property name="margin" >
-        <number>6</number>
+        <number>3</number>
        </property>
        <property name="spacing" >
-        <number>3</number>
+        <number>0</number>
        </property>
        <item>
         <widget class="QGroupBox" name="groupBox" >
@@ -45,10 +45,10 @@
          </property>
          <layout class="QGridLayout" >
           <property name="margin" >
-           <number>9</number>
+           <number>8</number>
           </property>
           <property name="spacing" >
-           <number>6</number>
+           <number>3</number>
           </property>
           <item row="0" column="1" >
            <layout class="QVBoxLayout" >
@@ -134,10 +134,10 @@
                     <number>2</number>
                    </property>
                    <property name="maximum" >
-                    <double>12.000000000000000</double>
+                    <double>8.000000000000000</double>
                    </property>
                    <property name="minimum" >
-                    <double>-12.000000000000000</double>
+                    <double>-8.000000000000000</double>
                    </property>
                    <property name="singleStep" >
                     <double>0.100000000000000</double>
@@ -147,10 +147,13 @@
                  <item>
                   <widget class="QSlider" name="EVSlider" >
                    <property name="maximum" >
-                    <number>240</number>
+                    <number>1600</number>
+                   </property>
+                   <property name="pageStep" >
+                    <number>100</number>
                    </property>
                    <property name="value" >
-                    <number>120</number>
+                    <number>800</number>
                    </property>
                    <property name="orientation" >
                     <enum>Qt::Horizontal</enum>
@@ -159,7 +162,7 @@
                     <enum>QSlider::TicksAbove</enum>
                    </property>
                    <property name="tickInterval" >
-                    <number>10</number>
+                    <number>100</number>
                    </property>
                   </widget>
                  </item>
@@ -248,12 +251,6 @@
             </property>
             <item>
              <widget class="QLabel" name="label" >
-              <property name="maximumSize" >
-               <size>
-                <width>222</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="text" >
                <string>Click the button below to load the input images</string>
               </property>
@@ -270,12 +267,6 @@
             </item>
             <item>
              <widget class="QPushButton" name="loadsetButton" >
-              <property name="maximumSize" >
-               <size>
-                <width>222</width>
-                <height>16777215</height>
-               </size>
-              </property>
               <property name="toolTip" >
                <string>Load Input Images</string>
               </property>
@@ -305,11 +296,13 @@
             </item>
             <item>
              <widget class="QTableWidget" name="tableWidget" >
-              <property name="maximumSize" >
-               <size>
-                <width>222</width>
-                <height>16777215</height>
-               </size>
+              <property name="sizePolicy" >
+               <sizepolicy>
+                <hsizetype>3</hsizetype>
+                <vsizetype>7</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <property name="editTriggers" >
                <set>QAbstractItemView::NoEditTriggers</set>
@@ -415,7 +408,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_PredefConfigs" >
+             <widget class="QComboBox" name="predefConfigsComboBox" >
               <property name="toolTip" >
                <string>list of default profiles</string>
               </property>
@@ -543,7 +536,7 @@ p, li { white-space: pre-wrap; }
                </sizepolicy>
               </property>
               <property name="text" >
-               <string>Gamma</string>
+               <string>Linear</string>
               </property>
               <property name="alignment" >
                <set>Qt::AlignHCenter</set>
@@ -622,7 +615,10 @@ p, li { white-space: pre-wrap; }
              <number>0</number>
             </property>
             <item>
-             <widget class="QCheckBox" name="checkBoxAntighosting" >
+             <widget class="QCheckBox" name="antighostingCheckBox" >
+              <property name="enabled" >
+               <bool>false</bool>
+              </property>
               <property name="text" >
                <string>Anti-ghosting(beta!)</string>
               </property>
@@ -652,7 +648,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="coboxRespCurve_Antighost" >
+             <widget class="QComboBox" name="antighostRespCurveCombobox" >
               <property name="enabled" >
                <bool>false</bool>
               </property>
@@ -743,7 +739,7 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBoxCallCustom" >
+           <widget class="QCheckBox" name="customConfigCheckBox" >
             <property name="text" >
              <string>Use custom configuration.
 (use this only if the default profiles
@@ -810,7 +806,7 @@ above do not yield good results)</string>
               <number>6</number>
              </property>
              <item row="0" column="1" >
-              <widget class="QComboBox" name="comboBox_tri_gau_plateau" >
+              <widget class="QComboBox" name="triGaussPlateauComboBox" >
                <item>
                 <property name="text" >
                  <string>Triangular</string>
@@ -864,7 +860,7 @@ pixel values&lt;/p></string>
                 <number>6</number>
                </property>
                <item>
-                <widget class="QRadioButton" name="radioButton_use_Predefined" >
+                <widget class="QRadioButton" name="predefRespCurveRadioButton" >
                  <property name="sizePolicy" >
                   <sizepolicy>
                    <hsizetype>1</hsizetype>
@@ -882,7 +878,7 @@ pixel values&lt;/p></string>
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_gamma_lin_log" >
+                <widget class="QComboBox" name="gammaLinLogComboBox" >
                  <property name="sizePolicy" >
                   <sizepolicy>
                    <hsizetype>5</hsizetype>
@@ -932,7 +928,7 @@ pixel values&lt;/p></string>
                 <number>6</number>
                </property>
                <item>
-                <widget class="QCheckBox" name="checkbox_load_from_file" >
+                <widget class="QCheckBox" name="loadRespCurveFromFileCheckbox" >
                  <property name="sizePolicy" >
                   <sizepolicy>
                    <hsizetype>1</hsizetype>
@@ -942,7 +938,7 @@ pixel values&lt;/p></string>
                   </sizepolicy>
                  </property>
                  <property name="text" >
-                  <string>Load response function file</string>
+                  <string>Load response function from file</string>
                  </property>
                 </widget>
                </item>
@@ -955,7 +951,7 @@ pixel values&lt;/p></string>
                   <number>6</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="loadFileButton" >
+                  <widget class="QPushButton" name="loadRespCurveFileButton" >
                    <property name="enabled" >
                     <bool>false</bool>
                    </property>
@@ -965,7 +961,7 @@ pixel values&lt;/p></string>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="ShowFileloadedLineEdit" >
+                  <widget class="QLineEdit" name="RespCurveFileLoadedLineEdit" >
                    <property name="enabled" >
                     <bool>false</bool>
                    </property>
@@ -992,11 +988,69 @@ pixel values&lt;/p></string>
               </spacer>
              </item>
              <item>
-              <widget class="QRadioButton" name="radio_usecalibrate_02" >
+              <widget class="QRadioButton" name="recoverRespCurveRadio" >
                <property name="text" >
                 <string>Use calibration to find response curve (robertson02 algorithm)</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" >
+               <property name="margin" >
+                <number>0</number>
+               </property>
+               <property name="spacing" >
+                <number>6</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="saveRespCurveToFileCheckbox" >
+                 <property name="enabled" >
+                  <bool>false</bool>
+                 </property>
+                 <property name="sizePolicy" >
+                  <sizepolicy>
+                   <hsizetype>1</hsizetype>
+                   <vsizetype>5</vsizetype>
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text" >
+                  <string>Save response function to file</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" >
+                 <property name="margin" >
+                  <number>0</number>
+                 </property>
+                 <property name="spacing" >
+                  <number>6</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="saveRespCurveFileButton" >
+                   <property name="enabled" >
+                    <bool>false</bool>
+                   </property>
+                   <property name="text" >
+                    <string>Save as...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="CurveFileNameSaveLineEdit" >
+                   <property name="enabled" >
+                    <bool>false</bool>
+                   </property>
+                   <property name="readOnly" >
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </item>
              <item>
               <spacer>
@@ -1034,7 +1088,7 @@ pixel values&lt;/p></string>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="comboBox_model" >
+              <widget class="QComboBox" name="modelComboBox" >
                <item>
                 <property name="text" >
                  <string>Debevec</string>
@@ -1086,16 +1140,6 @@ pixel values&lt;/p></string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="backbutton" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="text" >
-        <string>&lt; &amp;Back</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="Next_Finishbutton" >
        <property name="enabled" >
         <bool>false</bool>
@@ -1128,8 +1172,8 @@ pixel values&lt;/p></string>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>420</x>
-     <y>428</y>
+     <x>645</x>
+     <y>501</y>
     </hint>
     <hint type="destinationlabel" >
      <x>309</x>
@@ -1138,7 +1182,7 @@ pixel values&lt;/p></string>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_weights</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1148,13 +1192,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>120</x>
-     <y>170</y>
+     <x>141</x>
+     <y>159</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_showWeight</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1164,13 +1208,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>413</x>
-     <y>170</y>
+     <x>631</x>
+     <y>159</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_resp</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1180,13 +1224,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>86</x>
-     <y>202</y>
+     <x>106</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_show_resp</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1196,13 +1240,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>415</x>
-     <y>202</y>
+     <x>633</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_model</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1212,13 +1256,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>115</x>
-     <y>232</y>
+     <x>135</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_showmodel</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1228,63 +1272,63 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>415</x>
-     <y>232</y>
+     <x>633</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radio_usecalibrate_02</sender>
+   <sender>recoverRespCurveRadio</sender>
    <signal>toggled(bool)</signal>
-   <receiver>ShowFileloadedLineEdit</receiver>
+   <receiver>RespCurveFileLoadedLineEdit</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>129</x>
-     <y>277</y>
+     <x>279</x>
+     <y>275</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>212</x>
-     <y>229</y>
+     <x>279</x>
+     <y>212</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkbox_load_from_file</sender>
+   <sender>loadRespCurveFromFileCheckbox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>ShowFileloadedLineEdit</receiver>
+   <receiver>RespCurveFileLoadedLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>130</x>
-     <y>196</y>
+     <x>424</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>212</x>
-     <y>229</y>
+     <x>424</x>
+     <y>226</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkbox_load_from_file</sender>
+   <sender>loadRespCurveFromFileCheckbox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>loadFileButton</receiver>
+   <receiver>loadRespCurveFileButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>130</x>
-     <y>196</y>
+     <x>230</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>100</x>
-     <y>230</y>
+     <x>106</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox_PredefConfigs</receiver>
+   <receiver>predefConfigsComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1292,13 +1336,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>369</x>
-     <y>95</y>
+     <x>630</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_predef_configs</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1308,31 +1352,47 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
+     <x>128</x>
+     <y>75</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>loadRespCurveFromFileCheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>gammaLinLogComboBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>526</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>273</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>recoverRespCurveRadio</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>loadRespCurveFileButton</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>232</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel" >
      <x>105</x>
-     <y>35</y>
+     <y>227</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkbox_load_from_file</sender>
+   <sender>recoverRespCurveRadio</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox_gamma_lin_log</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>130</x>
-     <y>196</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>311</x>
-     <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radio_usecalibrate_02</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>loadFileButton</receiver>
+   <receiver>loadRespCurveFromFileCheckbox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1340,15 +1400,15 @@ pixel values&lt;/p></string>
      <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>100</x>
-     <y>230</y>
+     <x>161</x>
+     <y>193</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radio_usecalibrate_02</sender>
+   <sender>recoverRespCurveRadio</sender>
    <signal>toggled(bool)</signal>
-   <receiver>checkbox_load_from_file</receiver>
+   <receiver>gammaLinLogComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1356,109 +1416,93 @@ pixel values&lt;/p></string>
      <y>277</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>130</x>
-     <y>196</y>
+     <x>301</x>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>radio_usecalibrate_02</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>comboBox_gamma_lin_log</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>129</x>
-     <y>277</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>311</x>
-     <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_show_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>76</x>
-     <y>265</y>
+     <x>96</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>415</x>
-     <y>202</y>
+     <x>633</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_RespCurve_Antighost</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>119</x>
-     <y>265</y>
+     <x>139</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>309</x>
-     <y>266</y>
+     <x>523</x>
+     <y>255</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>comboBox_PredefConfigs</receiver>
+   <receiver>predefConfigsComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>100</x>
-     <y>265</y>
+     <x>120</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>369</x>
-     <y>95</y>
+     <x>630</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_weights</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>265</y>
+     <x>95</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>50</x>
-     <y>170</y>
+     <x>72</x>
+     <y>159</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_model</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>68</x>
-     <y>265</y>
+     <x>88</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>119</x>
-     <y>232</y>
+     <x>139</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_RespCurve_Antighost</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1468,63 +1512,63 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>309</x>
-     <y>266</y>
+     <x>523</x>
+     <y>255</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_showmodel</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>56</x>
-     <y>265</y>
+     <x>76</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>415</x>
-     <y>232</y>
+     <x>633</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>lineEdit_showWeight</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>265</y>
+     <x>95</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>413</x>
-     <y>170</y>
+     <x>631</x>
+     <y>159</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>coboxRespCurve_Antighost</receiver>
+   <receiver>antighostRespCurveCombobox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>119</x>
-     <y>265</y>
+     <x>139</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>419</x>
-     <y>265</y>
+     <x>633</x>
+     <y>254</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>checkBoxAntighosting</receiver>
+   <receiver>antighostingCheckBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1532,47 +1576,47 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>66</x>
-     <y>265</y>
+     <x>86</x>
+     <y>254</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_predef_configs</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>102</x>
-     <y>265</y>
+     <x>122</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>85</x>
-     <y>35</y>
+     <x>108</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>119</x>
-     <y>265</y>
+     <x>139</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>117</x>
-     <y>202</y>
+     <x>123</x>
+     <y>191</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
-   <receiver>coboxRespCurve_Antighost</receiver>
+   <receiver>antighostRespCurveCombobox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
@@ -1580,45 +1624,45 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>419</x>
-     <y>265</y>
+     <x>633</x>
+     <y>254</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_Iterations</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>265</y>
+     <x>124</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>249</x>
-     <y>296</y>
+     <x>583</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxAntighosting</sender>
+   <sender>antighostingCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>spinBoxIterations</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>265</y>
+     <x>124</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>419</x>
-     <y>296</y>
+     <x>633</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_Iterations</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1628,13 +1672,13 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>249</x>
-     <y>296</y>
+     <x>583</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxCallCustom</sender>
+   <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>spinBoxIterations</receiver>
    <slot>setDisabled(bool)</slot>
@@ -1644,8 +1688,8 @@ pixel values&lt;/p></string>
      <y>342</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>419</x>
-     <y>296</y>
+     <x>633</x>
+     <y>285</y>
     </hint>
    </hints>
   </connection>
@@ -1656,12 +1700,60 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>263</x>
-     <y>226</y>
+     <x>431</x>
+     <y>364</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>259</x>
-     <y>245</y>
+     <x>544</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>recoverRespCurveRadio</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>saveRespCurveToFileCheckbox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>77</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>75</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveRespCurveToFileCheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>saveRespCurveFileButton</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>61</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>37</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveRespCurveToFileCheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CurveFileNameSaveLineEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>198</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>196</x>
+     <y>330</y>
     </hint>
    </hints>
   </connection>

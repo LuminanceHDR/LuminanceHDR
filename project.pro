@@ -178,7 +178,7 @@ htmls.files      = html
 htmls.path       = $${PREFIX}/share/qtpfsgui
 i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm i18n/lang_tr.qm i18n/lang_ru.qm i18n/lang_cs.qm
 i18n.path        = $$I18NDIR
-docs.files       = README COPYING AUTHORS INSTALL Changelog
+docs.files       = README LICENSE AUTHORS INSTALL Changelog
 docs.path        = $${PREFIX}/share/qtpfsgui
 
 INSTALLS        += target menu icon htmls i18n docs
@@ -231,6 +231,14 @@ DEFINES += I18NDIR=\"$$I18NDIR\"
 }
 
 win32 {
+
+isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
+message ("Debug statements DISABLED")
+} else {
+DEFINES -= QT_NO_DEBUG_OUTPUT
+message ("Debug statements ENABLED")
+}
+
 # this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 CONFIG += windows
 #CONFIG += debug

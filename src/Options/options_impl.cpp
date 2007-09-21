@@ -108,10 +108,6 @@ void QtpfsguiOptions::ok_clicked() {
 			opts->num_batch_threads=thread_spinBox->value();
 			settings->setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
 		}
-		if (outColorSpaceCB->currentIndex() != opts->output_cs - 1) {
-			opts->output_cs=outColorSpaceCB->currentIndex()+1;
-			settings->setValue(KEY_OUTCOLORSPACE,opts->output_cs);
-		}
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TIFF);
@@ -147,7 +143,6 @@ void QtpfsguiOptions::from_options_to_gui() {
 	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
 	change_color_of(negative_color_button,&negcolor);
 	change_color_of(infnan_color_button,&infnancolor);
-	outColorSpaceCB->setCurrentIndex(opts->output_cs-1);
 }
 
 QtpfsguiOptions::~QtpfsguiOptions() {

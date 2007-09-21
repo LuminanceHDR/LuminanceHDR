@@ -5,9 +5,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1209</width>
+    <width>1337</width>
     <height>822</height>
    </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Tone Mapping: </string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
@@ -18,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1209</width>
+     <width>1337</width>
      <height>29</height>
     </rect>
    </property>
@@ -78,19 +81,19 @@
     <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Close Dialog</string>
+    <string>&amp;Exit</string>
    </property>
    <property name="iconText" >
-    <string>Close Dialog</string>
+    <string>Exit</string>
    </property>
    <property name="toolTip" >
-    <string>Close Tone Mapping Dialog</string>
+    <string>Close Tone Mapping Window</string>
    </property>
    <property name="statusTip" >
-    <string>Close Tone Mapping Dialog</string>
+    <string>Close Tone Mapping Window</string>
    </property>
    <property name="whatsThis" >
-    <string>Close Tone Mapping Dialog</string>
+    <string>Close Tone Mapping Window</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+Q</string>

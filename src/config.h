@@ -28,6 +28,7 @@
 #define TMOSETTINGSVERSION "0.3"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
+#define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
 
 #define GROUP_DCRAW "DCRAW_Options"
 #define KEY_AUTOWB "auto_white_balance"
@@ -45,7 +46,6 @@
 #define KEY_TEMP_RESULT_PATH "TemporaryFilesPath"
 #define KEY_BATCH_LDR_FORMAT "Batch_LDR_Format"
 #define KEY_NUM_BATCH_THREADS "Num_Batch_Threads"
-#define KEY_OUTCOLORSPACE "LDR_output_ColorSpace"
 
 #define GROUP_TIFF "TIFF_Options"
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"

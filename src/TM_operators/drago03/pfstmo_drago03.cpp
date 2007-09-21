@@ -46,18 +46,15 @@ pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue) {
 	//--- default tone mapping parameters;
 	float biasValue = _biasValue;
 
-// 	pfs::Channel *R, *G, *B;
-// 	inputpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
 	pfs::Channel *X, *Y, *Z;
 	inputpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 
 	pfs::Frame *outframe = pfsio.createFrame( inputpfsframe->getWidth(), inputpfsframe->getHeight() );
 	assert(outframe != NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 // 	pfs::Channel *Ro, *Go, *Bo;
 // 	outframe->createRGBChannels( Ro, Go, Bo );
 // 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
@@ -77,13 +74,13 @@ pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue) {
 		for( int y=0 ; y<h ; y++ ) 
 		{
 			float scale = (*L)(x,y) / (*Y)(x,y);
-			(*Yo)(x,y) = (*Y)(x,y)*scale;
-			(*Xo)(x,y) = (*X)(x,y)*scale;
-			(*Zo)(x,y) = (*Z)(x,y)*scale;
+			(*Go)(x,y) = (*Y)(x,y)*scale;
+			(*Ro)(x,y) = (*X)(x,y)*scale;
+			(*Bo)(x,y) = (*Z)(x,y)*scale;
 		}
 
 	delete L;
-// 	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
+	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 
 	return outframe;
 }

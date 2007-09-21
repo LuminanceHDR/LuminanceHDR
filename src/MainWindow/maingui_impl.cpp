@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QWhatsThis>
 #include <QSignalMapper>
+#include <QTextStream>
 #include "maingui_impl.h"
 #include "../Fileformat/pfstiff.h"
 #include "../ToneMappingDialog/tonemappingdialog_impl.h"
@@ -59,7 +60,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	qtpfsgui_options=new qtpfsgui_opts();
 	load_options(qtpfsgui_options);
 
-	setWindowTitle("Qtpfsgui v"QTPFSGUIVERSION);
+	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
 
 	connect(workspace,SIGNAL(windowActivated(QWidget*)),this,SLOT(updateActions(QWidget*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
@@ -523,9 +524,6 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 		if (!settings.contains(KEY_NUM_BATCH_THREADS))
 			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
 		dest->num_batch_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
-		if (!settings.contains(KEY_OUTCOLORSPACE))
-			settings.setValue(KEY_OUTCOLORSPACE, 1);
-		dest->output_cs=settings.value(KEY_OUTCOLORSPACE,1).toInt();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
@@ -549,13 +547,13 @@ void MainGui::fileExit() {
 		if (((HdrViewer*)p)->NeedsSaving)
 			closeok=false;
 	}
-	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>If you quit now, these changes will be lost."),
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>Do you still want to quit?"),
 #if QT_VERSION <= 0x040200
-			QMessageBox::Ignore | QMessageBox::Default, QMessageBox::Cancel,QMessageBox::NoButton)
-		== QMessageBox::Ignore))
+			QMessageBox::Yes | QMessageBox::Default, QMessageBox::No,QMessageBox::NoButton)
+		== QMessageBox::Yes))
 #else
-			QMessageBox::Discard | QMessageBox::Cancel,QMessageBox::Discard)
-		== QMessageBox::Discard))
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+		== QMessageBox::Yes))
 #endif
 		emit close();
 }
@@ -585,11 +583,41 @@ void MainGui::aboutQtpfsgui() {
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutQtpfsgui ui;
 	ui.setupUi(about);
+#if QT_VERSION >= 0x040200
+	ui.authorsBox->setOpenExternalLinks(true);
+	ui.thanksToBox->setOpenExternalLinks(true);
+	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
+#endif
 	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
+
+	bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	ui.GPLbox->setSearchPaths(QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << "./" << docDir << "/Applications/qtpfsgui.app/Contents/Resources");
-	ui.GPLbox->setSource(QUrl("COPYING"));
+	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << "./" << docDir << "/Applications/qtpfsgui.app/Contents/Resources";
+	foreach (QString path,paths) {
+		QString fname(path+QString("/LICENSE"));
+#ifdef WIN32
+		fname+=".txt";
+#endif
+		if (QFile::exists(fname)) {
+			QFile file(fname);
+			//try opening it
+			if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+				break;
+			QTextStream ts(&file);
+			ui.GPLbox->setAcceptRichText(false);
+			ui.GPLbox->setPlainText(ts.readAll());
+			license_file_not_found=false;
+			break;
+		}
+	}
+	if (license_file_not_found) {
+#if QT_VERSION >= 0x040200
+		ui.GPLbox->setOpenExternalLinks(true);
+		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
+#endif
+		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
+	}
 	about->show();
 }
 

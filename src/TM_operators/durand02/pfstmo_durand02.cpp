@@ -63,16 +63,15 @@ pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
-// 	pfs::Channel *R, *G, *B;
-// 	inpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
 
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
 	assert( outframe != NULL );
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Xo, Yo, Zo );
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
+
+	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Ro, Go, Bo );
+
 // 	pfs::Channel *Ro, *Go, *Bo;
 // 	outframe->createRGBChannels( Ro, Go, Bo );
 // 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
@@ -80,8 +79,9 @@ pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma
 // 	pfs::copyArray(G,Go);
 // 	pfs::copyArray(B,Bo);
 	
-	tmo_durand02( Xo, Yo, Zo, sigma_s, sigma_r, baseContrast, downsample );
-	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo );
+	tmo_durand02( Ro, Go, Bo, sigma_s, sigma_r, baseContrast, downsample );
+	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
+// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo );
 	
 	return outframe;
 }

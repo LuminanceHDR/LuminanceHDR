@@ -34,6 +34,9 @@
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
+#if QT_VERSION >= 0x040200
+	Log_Widget->setWordWrap(true);
+#endif
 	connect(moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
 	connect(moveup_right_button,	SIGNAL(clicked()),this,SLOT(moveup_right()));
 	connect(movedown_left_button,	SIGNAL(clicked()),this,SLOT(movedown_left()));
@@ -49,7 +52,9 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
 	full_Log_Model=new QStringListModel();
 	log_filter=new QSortFilterProxyModel(this);
+#if QT_VERSION >= 0x040200
 	log_filter->setDynamicSortFilter(true);
+#endif
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
@@ -263,10 +268,14 @@ void TransplantExifDialog::transplant_requested() {
 		try {
 			add_log_message(*i_source + "-->" + *i_dest);
 			ExifOperations::copyExifData((*i_source).toStdString(), (*i_dest).toStdString(), checkBox_dont_overwrite->isChecked());
+#if QT_VERSION >= 0x040200
 			rightlist->item(index)->setBackground(QBrush("#a0ff87"));
+#endif
 		} catch (Exiv2::AnyError& e) {
 			add_log_message("ERROR:" + QString::fromStdString(e.what()) );
+#if QT_VERSION >= 0x040200
 			rightlist->item(index)->setBackground(QBrush("#ff743d"));
+#endif
 		}
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 		index++;

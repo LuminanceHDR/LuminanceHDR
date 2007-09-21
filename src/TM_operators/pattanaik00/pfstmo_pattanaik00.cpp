@@ -63,28 +63,28 @@ pfs::Frame* pfstmo_pattanaik00 (pfs::Frame* inpfsframe, bool _local,float _multi
 
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
 	assert(outframe!=NULL);
-	pfs::Channel *Xo, *Yo, *Zo;
-	outframe->createXYZChannels( Xo, Yo, Zo );
-	assert( Xo!=NULL && Yo!=NULL && Zo!=NULL );
-	pfs::copyArray(X,Xo);
-	pfs::copyArray(Y,Yo);
-	pfs::copyArray(Z,Zo);
+	pfs::Channel *Ro, *Go, *Bo;
+	outframe->createRGBChannels( Ro, Go, Bo );
+	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
+	pfs::copyArray(X,Ro);
+	pfs::copyArray(Y,Go);
+	pfs::copyArray(Z,Bo);
 
 	
 	// adaptation model
 	if( multiplier!=1.0f )
-		multiplyChannels( Xo, Yo, Zo, multiplier );
+		multiplyChannels( Ro, Go, Bo, multiplier );
 	
 	if( !local ) {
 		if( !autoY )
 			am->setAdaptation(Acone,Arod);
 		else
-			am->setAdaptation(Yo);
+			am->setAdaptation(Go);
 	}
 	
-	pfs::transformColorSpace( pfs::CS_XYZ, Xo, Yo, Zo, pfs::CS_RGB, Xo, Yo, Zo );
-	tmo_pattanaik00( Xo, Yo, Zo, Y, am, local );
-	pfs::transformColorSpace( pfs::CS_RGB, Xo, Yo, Zo, pfs::CS_XYZ, Xo, Yo, Zo );
+	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
+	tmo_pattanaik00( Ro, Go, Bo, Y, am, local );
+// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo );
 	
 	delete am; // delete visual adaptation model
 	
