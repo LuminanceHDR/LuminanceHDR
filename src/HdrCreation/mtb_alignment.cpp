@@ -54,7 +54,7 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
 	double quantile = 0.5;
 	int noise = 4;
 	int shift_bits = qMax((int)floor(log2(qMin(width,height)))-6 , 0);
-	qDebug("::mtb_alignment: width=%d, height=%d, shift_bits=%d",width,height,shift_bits);
+	//qDebug("::mtb_alignment: width=%d, height=%d, shift_bits=%d",width,height,shift_bits);
 
 	//these arrays contain the shifts of each image (except the 0-th) wrt the previous one
 	int *shiftsX=new int[ImagePtrList.size()-1];
@@ -65,7 +65,7 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
 		mtbalign(ImagePtrList.at(i),ImagePtrList.at(i+1), quantile, noise, shift_bits, shiftsX[i], shiftsY[i]);
 	}
 	
-	qDebug("::mtb_alignment: now shifting the images");
+	//qDebug("::mtb_alignment: now shifting the images");
 	int originalsize=ImagePtrList.size();
 	//shift the images (apply the shifts starting from the second (index=1))
 	for (int i=1; i<originalsize; i++) {
@@ -77,10 +77,9 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
 			cumulativeY+=shiftsY[j];
 // 			qDebug("::mtb_alignment: partial cumulativeX=%d, cumulativeY=%d",cumulativeX,cumulativeY);
 		}
-		qDebug("::mtb_alignment: Cumulative shift for image %d = (%d,%d)",i,cumulativeX,cumulativeY);
+		//qDebug("::mtb_alignment: Cumulative shift for image %d = (%d,%d)",i,cumulativeX,cumulativeY);
 		QImage *shifted=shiftQImage(ImagePtrList[1], cumulativeX, cumulativeY);
 		if (ldr_tiff_input[1]) {
-			qDebug("::mtb_alignment: deleting tiff payload");
 			delete [] ImagePtrList[1]->bits();
 		}
 		delete ImagePtrList[1];
@@ -110,7 +109,7 @@ void mtbalign(const QImage *image1, const QImage *image2,
 // 	qDebug("::mtb_alignment: align::medians, image 1: %d, image 2: %d",median1,median2);
 	getExpShift(img1lum, median1, img2lum, median2, noise, shift_bits, shift_x, shift_y);
 	delete img1lum; delete img2lum;
-	qDebug("::mtb_alignment: align::done, final shift is (%d,%d)",shift_x, shift_y);
+	//qDebug("::mtb_alignment: align::done, final shift is (%d,%d)",shift_x, shift_y);
 }
 
 void getExpShift(const QImage *img1, const int median1, 
