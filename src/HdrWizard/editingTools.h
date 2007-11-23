@@ -22,42 +22,43 @@
  *
  */
 
-#ifndef ALIGNMENTDIALOG_IMPL_H
-#define ALIGNMENTDIALOG_IMPL_H
+#ifndef EDITINGTOOLS_H
+#define EDITINGTOOLS_H
 
 #include <QSettings>
-#include "../generated_uic/ui_aligndialog.h"
+#include "../generated_uic/ui_editing_tools.h"
 #include "previewWidget.h"
-#include "../../panIconWidget.h"
+#include "../Common/panIconWidget.h"
+#include "../HdrCreation/HdrCreationManager.h"
 
 
 class HistogramLDR;
 //defined in mtb_alignment.cpp
 QImage* shiftQImage(const QImage *in, int dx, int dy);
 
-class AlignmentDialog : public QDialog, private Ui::AlignmentDialog
+class EditingTools : public QDialog, private Ui::EditingToolsDialog
 {
 Q_OBJECT
 public:
-	AlignmentDialog(QWidget *parent, QList<QImage*>&ldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle s);
-	~AlignmentDialog();
+	EditingTools(HdrCreationManager *, QWidget *parent=0);
+	~EditingTools();
 protected:
 	void keyPressEvent(QKeyEvent *);
 	void keyReleaseEvent(QKeyEvent *);
 private:
+	QList<QImage*> original_ldrlist;
+	QStringList filelist;
+	HdrCreationManager *hcm;
+
 	QScrollArea *scrollArea;
 	PreviewWidget *previewWidget;
 	int additional_shift_value;
-	QList<QImage*> &original_ldrlist;
-	QList<bool> &ldr_tiff_input;
 	QList< QPair<int,int> > HV_offsets;
 	HistogramLDR *histogram;
 	QSize previousPreviewWidgetSize;
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
-	QString recentPathInputLDR;
 	QSettings settings;
-	void applyShiftsToImageStack();
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();

@@ -27,33 +27,23 @@
 #include <QWhatsThis>
 #include <QColorDialog>
 #include <QFileDialog>
-#include "alignmentdialog_impl.h"
-#include "../../ToneMappingDialog/gamma_and_levels.h"
-#include "../../Fileformat/pfstiff.h"
-#include "../../config.h"
+#include "editingTools.h"
+#include "../Common/gamma_and_levels.h"
+#include "../Fileformat/pfstiff.h"
+#include "../Common/config.h"
 
-AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist, QList<bool> &ldr_tiff_input, QStringList fileStringList, Qt::ToolButtonStyle style) : QDialog(parent), additional_shift_value(0), original_ldrlist(originalldrlist), ldr_tiff_input(ldr_tiff_input), settings("Qtpfsgui", "Qtpfsgui")
+EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0), settings("Qtpfsgui", "Qtpfsgui")
 {
 	setupUi(this);
 
-	if (original_ldrlist.at(0)->format()==QImage::Format_RGB32) {
-		int origlistsize=original_ldrlist.size();
-		for (int image_idx=0; image_idx<origlistsize; image_idx++) {
-			QImage *newimage=new QImage(original_ldrlist.at(0)->convertToFormat(QImage::Format_ARGB32));
-			original_ldrlist.append(newimage);
-			if (ldr_tiff_input[0]) {
-				qDebug("AlignmentDialog::crop_stack(), deleting tiff payload");
-				delete [] original_ldrlist[0]->bits();
-			}
-			delete original_ldrlist.takeAt(0);
-			ldr_tiff_input.removeAt(0);
-			ldr_tiff_input.append(false);
-		}
-	}
+	original_ldrlist=hcm->getLDRList();
+	filelist=hcm->getFileList();
+	this->hcm=hcm;
 
 	toolOptionsFrame->setVisible(false);
 	maskColorButton->setVisible(false);
 	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
 #if QT_VERSION <= 0x040200
 	QPalette modified_palette(maskColorButton->palette());
 	modified_palette.setColor(QPalette::Active,QPalette::Window,maskcolor);
@@ -61,13 +51,13 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 #else
 	maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue()));
 #endif
-	assert(original_ldrlist.size()==fileStringList.size());
+	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(0);
 	
 	scrollArea = new QScrollArea(previewImageFrame);
-	previewWidget = new PreviewWidget(scrollArea,original_ldrlist.at(1),original_ldrlist.at(0));
+	previewWidget = new PreviewWidget(scrollArea,original_ldrlist[1],original_ldrlist[0]);
 	previewWidget->setBrushColor(maskcolor);
 	previewWidget->adjustSize();
 	previewWidget->update();
@@ -94,7 +84,7 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	qvl->addWidget(scrollArea);
 	previewImageFrame->setLayout(qvl);
 
-	foreach(QString s,fileStringList) {
+	foreach(QString s,filelist) {
 		movableListWidget->addItem(QFileInfo(s).fileName());
 		referenceListWidget->addItem(QFileInfo(s).fileName());
 	}
@@ -147,21 +137,20 @@ AlignmentDialog::AlignmentDialog(QWidget *parent, QList<QImage*>&originalldrlist
 	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
 	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
 	
-	QStringList::ConstIterator it = fileStringList.begin();
-	while( it != fileStringList.end() ) {
+	QStringList::ConstIterator it = filelist.begin();
+	while( it != filelist.end() ) {
 		HV_offsets.append(qMakePair(0,0));
 		++it;
 	}
 	
 	histogram=new HistogramLDR(this);
-	histogram->setData(*original_ldrlist[1]);
+	histogram->setData(*(original_ldrlist.at(1)));
 	histogram->adjustSize();
 	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
 	previewWidget->setFocus();
-	recentPathInputLDR=settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString();
-}
+} //end of constructor
 
-void AlignmentDialog::slotCornerButtonPressed() {
+void EditingTools::slotCornerButtonPressed() {
 	panIconWidget=new PanIconWidget;
 	panIconWidget->setImage(previewWidget->getPreviewImage());
 	float zf=previewWidget->getScaleFactor();
@@ -186,7 +175,7 @@ void AlignmentDialog::slotCornerButtonPressed() {
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
-void AlignmentDialog::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
+void EditingTools::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
 	if (mousereleased) {
 		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*previewWidget->getScaleFactor()));
 		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*previewWidget->getScaleFactor()));
@@ -195,20 +184,20 @@ void AlignmentDialog::slotPanIconSelectionMoved(QRect gotopos, bool mouserelease
 	}
 }
 
-void AlignmentDialog::slotPanIconHidden()
+void EditingTools::slotPanIconHidden()
 {
     cornerButton->blockSignals(true);
     cornerButton->animateClick();
     cornerButton->blockSignals(false);
 }
 
-AlignmentDialog::~AlignmentDialog() {
+EditingTools::~EditingTools() {
 	delete previewWidget;
 	delete histogram;
 	delete cornerButton;
 }
 
-void AlignmentDialog::keyPressEvent(QKeyEvent *event) {
+void EditingTools::keyPressEvent(QKeyEvent *event) {
 	int key=event->key();
 	Qt::KeyboardModifiers mods=event->modifiers();
 	if ((mods & Qt::ShiftModifier)!=0 && (mods & Qt::ControlModifier)!=0)
@@ -230,41 +219,24 @@ void AlignmentDialog::keyPressEvent(QKeyEvent *event) {
 		reject();
 }
 
-void AlignmentDialog::keyReleaseEvent ( QKeyEvent * event ) {
+void EditingTools::keyReleaseEvent ( QKeyEvent * event ) {
 	additional_shift_value=0;
 	event->ignore();
 }
 
-void AlignmentDialog::crop_stack() {
-
+void EditingTools::crop_stack() {
 	//zoom the image to 1:1, so that the crop area is in a one-to-one relationship with the pixel coordinates.
 	origSize();
 
-	applyShiftsToImageStack();
+	hcm->applyShiftsToImageStack(HV_offsets);
+
 	resetAll();
 	QRect ca=previewWidget->getCropArea();
 	if(ca.width()<=0|| ca.height()<=0)
 		return;
 
-	qDebug("cropping left,top=(%d,%d) %dx%d",ca.left(),ca.top(),ca.width(),ca.height());
-	//crop all the images
-	int origlistsize=original_ldrlist.size();
-	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
-		QImage *newimage=new QImage(original_ldrlist.at(0)->copy(ca));
-		original_ldrlist.append(newimage);
-
-
-
-		if (ldr_tiff_input[0]) {
-			qDebug("AlignmentDialog::crop_stack(), deleting tiff payload");
-			delete [] original_ldrlist[0]->bits();
-		}
-		delete original_ldrlist.takeAt(0);
-		ldr_tiff_input.removeAt(0);
-		ldr_tiff_input.append(false);
-
-	}
-
+	hcm->cropLDR(ca);
+	original_ldrlist=hcm->getLDRList();
 
 	//the display widget has to be recreated with the new cropped data.
 	delete previewWidget;
@@ -278,7 +250,7 @@ void AlignmentDialog::crop_stack() {
 	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushSize(int)));
 	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushStrength(int)));
 	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
-	previousPreviewWidgetSize=original_ldrlist[0]->size();
+	previousPreviewWidgetSize=original_ldrlist.at(0)->size();
 	//inform scrollArea of the change
 	scrollArea->setWidget(previewWidget);
 
@@ -290,33 +262,12 @@ void AlignmentDialog::crop_stack() {
 	previewWidget->hideRubberBand();
 }
 
-void AlignmentDialog::applyShiftsToImageStack() {
-	int originalsize=original_ldrlist.size();
-	//shift the images
-	for (int i=0; i<originalsize; i++) {
-		if (HV_offsets[i].first==HV_offsets[i].second && HV_offsets[i].first==0)
-			continue;
-// 		qDebug("shifting image %d of (%d,%d)",i, HV_offsets[i].first, HV_offsets[i].second);
-		QImage *shifted=shiftQImage(original_ldrlist[i], HV_offsets[i].first, HV_offsets[i].second);
-		if (ldr_tiff_input[i]) {
-			qDebug("AlignmentDialog::nextClicked(), deleting tiff payload");
-			delete [] original_ldrlist[i]->bits();
-		}
-		delete original_ldrlist.takeAt(i);
-		original_ldrlist.insert(i,shifted);
-		ldr_tiff_input.removeAt(i);
-		ldr_tiff_input.insert(i,false);
-	}
-}
-
-void AlignmentDialog::nextClicked() {
-	applyShiftsToImageStack();
+void EditingTools::nextClicked() {
+	hcm->applyShiftsToImageStack(HV_offsets);
 	emit accept();
 }
 
-
-
-void AlignmentDialog::updateMovable(int newidx) {
+void EditingTools::updateMovable(int newidx) {
 	//inform display_widget of the change
 	previewWidget->setMovable(original_ldrlist[newidx], HV_offsets[newidx].first, HV_offsets[newidx].second);
 	//prevent a change in the spinboxes to start a useless calculation
@@ -331,41 +282,41 @@ void AlignmentDialog::updateMovable(int newidx) {
 	histogram->update();
 }
 
-void AlignmentDialog::updatePivot(int newidx) {
+void EditingTools::updatePivot(int newidx) {
 	previewWidget->setPivot(original_ldrlist[newidx],HV_offsets[newidx].first, HV_offsets[newidx].second);
 	previewWidget->update();
 }
 
-void AlignmentDialog::upClicked() {
+void EditingTools::upClicked() {
 	vertShiftSB->setValue(vertShiftSB->value()-1-additional_shift_value);
 }
-void AlignmentDialog::downClicked() {
+void EditingTools::downClicked() {
 	vertShiftSB->setValue(vertShiftSB->value()+1+additional_shift_value);
 }
-void AlignmentDialog::rightClicked() {
+void EditingTools::rightClicked() {
 	horizShiftSB->setValue(horizShiftSB->value()+1+additional_shift_value);
 }
-void AlignmentDialog::leftClicked() {
+void EditingTools::leftClicked() {
 	horizShiftSB->setValue(horizShiftSB->value()-1-additional_shift_value);
 }
 
-void AlignmentDialog::vertShiftChanged(int v) {
+void EditingTools::vertShiftChanged(int v) {
 	HV_offsets[movableListWidget->currentRow()].second=v;
 	previewWidget->updateVertShiftMovable(v);
 	previewWidget->update();
 }
-void AlignmentDialog::horizShiftChanged(int v) {
+void EditingTools::horizShiftChanged(int v) {
 	HV_offsets[movableListWidget->currentRow()].first=v;
 	previewWidget->updateHorizShiftMovable(v);
 	previewWidget->update();
 }
 
-void AlignmentDialog::resetCurrent() {
+void EditingTools::resetCurrent() {
 	horizShiftSB->setValue(0);
 	vertShiftSB->setValue(0);
 }
 
-void AlignmentDialog::resetAll() {
+void EditingTools::resetAll() {
 	for (int i = 0; i < HV_offsets.size(); ++i) {
 		HV_offsets[i].first=0;
 		HV_offsets[i].second=0;
@@ -383,72 +334,70 @@ void AlignmentDialog::resetAll() {
 	previewWidget->update();
 }
 
-void AlignmentDialog::prevLeft() {
+void EditingTools::prevLeft() {
 	int prev=(movableListWidget->currentRow()==0) ? movableListWidget->count()-1 : movableListWidget->currentRow()-1;
 	movableListWidget->setCurrentRow(prev);
 }
 
-void AlignmentDialog::nextLeft() {
+void EditingTools::nextLeft() {
 	int next=(movableListWidget->currentRow()==movableListWidget->count()-1) ? 0 : movableListWidget->currentRow()+1;
 	movableListWidget->setCurrentRow(next);
 }
 
-void AlignmentDialog::prevBoth() {
+void EditingTools::prevBoth() {
 	prevRight();
 	prevLeft();
 }
 
-void AlignmentDialog::nextBoth() {
+void EditingTools::nextBoth() {
 	nextRight();
 	nextLeft();
 }
 
-void AlignmentDialog::prevRight() {
+void EditingTools::prevRight() {
 	int prev=(referenceListWidget->currentRow()==0) ? referenceListWidget->count()-1 : referenceListWidget->currentRow()-1;
 	referenceListWidget->setCurrentRow(prev);
 }
 
-void AlignmentDialog::nextRight() {
+void EditingTools::nextRight() {
 	int next=(referenceListWidget->currentRow()==referenceListWidget->count()-1) ? 0 : referenceListWidget->currentRow()+1;
 	referenceListWidget->setCurrentRow(next);
 }
 
-void AlignmentDialog::enterWhatsThis() {
+void EditingTools::enterWhatsThis() {
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void AlignmentDialog::zoomIn() {
+void EditingTools::zoomIn() {
 	previewWidget->resize(previewWidget->size()*1.25f);
 	zoomOutButton->setEnabled(true);
 	zoomInButton->setEnabled(previewWidget->getScaleFactor() < 6.0);
 }
-void AlignmentDialog::zoomOut() {
+void EditingTools::zoomOut() {
 	previewWidget->resize(previewWidget->size()*0.8f);
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(previewWidget->getScaleFactor() > 0.166);
 }
-void AlignmentDialog::fitPreview(bool checked) {
-// 	qDebug("fitPreview");
+void EditingTools::fitPreview(bool checked) {
 	zoomInButton->setEnabled(!checked);
 	zoomOutButton->setEnabled(!checked);
 	origSizeButton->setEnabled(!checked);
 	if (checked) {
 		previousPreviewWidgetSize=previewWidget->size();
-		QSize fillWinSize=original_ldrlist[0]->size();
+		QSize fillWinSize=original_ldrlist.at(0)->size();
 		fillWinSize.scale(scrollArea->maximumViewportSize(),Qt::KeepAspectRatio);
 		previewWidget->resize(fillWinSize);
 	} else {
 		previewWidget->resize(previousPreviewWidgetSize);
 	}
-// 	qDebug("end fitPreview");
 }
-void AlignmentDialog::origSize() {
+void EditingTools::origSize() {
 	zoomInButton->setEnabled(true);
 	zoomOutButton->setEnabled(true);
-	previewWidget->resize(original_ldrlist[0]->size());
+	previewWidget->resize(original_ldrlist.at(0)->size());
 }
 
-void AlignmentDialog::antighostToolButtonToggled(bool toggled) {
+void EditingTools::antighostToolButtonToggled(bool toggled) {
 // 	if (toggled)
 // 		blendModeCB->setCurrentIndex(4);
 	prevBothButton->setDisabled(toggled);
@@ -460,7 +409,7 @@ void AlignmentDialog::antighostToolButtonToggled(bool toggled) {
 	previewWidget->update();
 }
 
-void AlignmentDialog::maskColorButtonClicked() {
+void EditingTools::maskColorButtonClicked() {
 	QColor returned=QColorDialog::getColor();
 	if (returned.isValid()) {
 		previewWidget->setBrushColor(returned);
@@ -475,15 +424,15 @@ void AlignmentDialog::maskColorButtonClicked() {
 	}
 }
 
-void AlignmentDialog::blendModeCBIndexChanged(int newindex) {
+void EditingTools::blendModeCBIndexChanged(int newindex) {
 	maskColorButton->setVisible(newindex==4);
 }
 
-void AlignmentDialog::saveImagesButtonClicked() {
+void EditingTools::saveImagesButtonClicked() {
 	QString fnameprefix=QFileDialog::getSaveFileName(
 				this,
 				tr("Choose a directory and a prefix"),
-				recentPathInputLDR);
+				settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
 	if (fnameprefix.isEmpty())
 		return;
 
@@ -491,7 +440,6 @@ void AlignmentDialog::saveImagesButtonClicked() {
 	QFileInfo test(qfi.path());
 
 	settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
-	recentPathInputLDR=qfi.path();
 
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		int counter=0;
