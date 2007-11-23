@@ -21,9 +21,12 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "options_impl.h"
 #include <QColorDialog>
 #include <QFileDialog>
+#include <QWhatsThis>
+#include "preferencesDialog.h"
+#include "../Common/config.h"
+#include "../generated_uic/ui_documentation.h"
 
 QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings *s) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor), settings(s) {
 	setupUi(this);
@@ -32,6 +35,11 @@ QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings
 	connect(infnan_color_button,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
+	connect(helpDcrawParamsButton,SIGNAL(clicked()),this,SLOT(helpDcrawParamsButtonClicked()));
+	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
+
+	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+	whatsThisButton->setToolButtonStyle(style);
 }
 
 void QtpfsguiOptions::negative_clicked() {
@@ -57,30 +65,8 @@ void QtpfsguiOptions::change_color_of(QPushButton *button, QColor *newcolor) {
 
 void QtpfsguiOptions::ok_clicked() {
 	settings->beginGroup(GROUP_DCRAW);
-		if (checkBox_camwb->isChecked() != opts->dcraw_options.camera_wb) {
-			opts->dcraw_options.camera_wb=checkBox_camwb->isChecked();
-			settings->setValue(KEY_CAMERAWB,checkBox_camwb->isChecked());
-		}
-		if (checkBox_autowb->isChecked() != opts->dcraw_options.auto_wb) {
-			opts->dcraw_options.auto_wb=checkBox_autowb->isChecked();
-			settings->setValue(KEY_AUTOWB,checkBox_autowb->isChecked());
-		}
-		if (checkBox_4colors->isChecked() != opts->dcraw_options.four_colors) {
-			opts->dcraw_options.four_colors=checkBox_4colors->isChecked();
-			settings->setValue(KEY_4COLORS,checkBox_4colors->isChecked());
-		}
-		if (spinBox_highlights->value() != opts->dcraw_options.highlights) {
-			opts->dcraw_options.highlights=spinBox_highlights->value();
-			settings->setValue(KEY_HIGHLIGHTS,spinBox_highlights->value());
-		}
-		if (comboBox_outcolspace->currentIndex() != opts->dcraw_options.output_color_space) {
-			opts->dcraw_options.output_color_space=comboBox_outcolspace->currentIndex();
-			settings->setValue(KEY_OUTCOLOR,comboBox_outcolspace->currentIndex());
-		}
-		if (comboBox_quality->currentIndex() != opts->dcraw_options.quality) {
-			opts->dcraw_options.quality=comboBox_quality->currentIndex();
-			settings->setValue(KEY_QUALITY,comboBox_quality->currentIndex());
-		}
+		opts->dcraw_options=commandlineParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+		settings->setValue(KEY_EXTERNAL_DCRAW_OPTIONS,opts->dcraw_options);
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_HDRVISUALIZATION);
@@ -103,8 +89,8 @@ void QtpfsguiOptions::ok_clicked() {
 			opts->batch_ldr_format=imageformat_comboBox->currentText();
 			settings->setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
 		}
-		if (thread_spinBox->value() != opts->num_batch_threads) {
-			opts->num_batch_threads=thread_spinBox->value();
+		if (thread_spinBox->value() != opts->num_threads) {
+			opts->num_threads=thread_spinBox->value();
 			settings->setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
 		}
 	settings->endGroup();
@@ -131,13 +117,8 @@ void QtpfsguiOptions::from_options_to_gui() {
 		imageformat_comboBox->setCurrentIndex(3);
 	else if (opts->batch_ldr_format=="BMP")
 		imageformat_comboBox->setCurrentIndex(4);
-	thread_spinBox->setValue(opts->num_batch_threads);
-	checkBox_autowb->setChecked(opts->dcraw_options.auto_wb);
-	checkBox_camwb->setChecked(opts->dcraw_options.camera_wb);
-	checkBox_4colors->setChecked(opts->dcraw_options.four_colors);
-	spinBox_highlights->setValue(opts->dcraw_options.highlights);
-	comboBox_outcolspace->setCurrentIndex(opts->dcraw_options.output_color_space);
-	comboBox_quality->setCurrentIndex(opts->dcraw_options.quality);
+	thread_spinBox->setValue(opts->num_threads);
+	commandlineParamsLineEdit->setText(opts->dcraw_options.join(" "));
 	radioButtonLogLuv->setChecked(opts->saveLogLuvTiff);
 	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
 	change_color_of(negative_color_button,&negcolor);
@@ -156,4 +137,18 @@ void QtpfsguiOptions::updateLineEditString() {
 	if (!dir.isEmpty()) {
 		lineEditTempPath->setText(dir);
 	}
+}
+
+void QtpfsguiOptions::helpDcrawParamsButtonClicked() {
+	QDialog *help=new QDialog();
+	help->setAttribute(Qt::WA_DeleteOnClose);
+	Ui::HelpDialog ui;
+	ui.setupUi(help);
+	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	ui.tb->setSource(QUrl("dcraw.html"));
+	help->show();
+}
+
+void QtpfsguiOptions::enterWhatsThis() {
+	QWhatsThis::enterWhatsThisMode();
 }

@@ -27,7 +27,7 @@
 #include <QDialog>
 #include <QSettings>
 #include "../generated_uic/ui_options.h"
-#include "../options.h"
+#include "../Common/options.h"
 
 class QtpfsguiOptions : public QDialog, private Ui::OptionsDialog
 {
@@ -46,5 +46,7 @@ private slots:
 	void infnan_clicked();
 	void ok_clicked();
 	void updateLineEditString();
+	void helpDcrawParamsButtonClicked();
+	void enterWhatsThis();
 };
 #endif
