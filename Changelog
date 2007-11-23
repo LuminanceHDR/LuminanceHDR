@@ -1,4 +1,21 @@
 Changes:
+ v1.9.0
+* added manual anti-ghosting feature (for LDRs only).
+* the online and offline documentation has been updated.
+* removed integrated dcraw implementation.
+* fixed durand02 bug (range=0).
+* added commandline interface.
+* clicking on the tone mapper progress bar will terminate the tone mapping process.
+* reinhard04 renamed to reinhard05.
+* added hdrInputLoader, a class that loads a ldr/mdr file (input for hdr) in a threaded way
+* removed "_impl" from batch gui and exif copy classes filenames.
+* renamed aligndialog to editing_tools.
+* moved common low-level hdr creation files (and mtb implementation) in the HdrCreation dir.
+* moved config.h, gang.{h,cpp} panIconWidget.{h,cpp} smart_scroll_area.{h,cpp} to dir "Common".
+* renamed alignmentdialog_impl.{h,cpp} to editingTools
+* moved previewWidget.{h,cpp} to HdrWizard.
+* renamed options_impl.{h,cpp} -> preferencesDialog.{h,cpp}.
+
 02-08-2007 v1.8.12
 * 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
 * New manual alignment dialog (for small position refinements after the automatic alignment step, for example).
