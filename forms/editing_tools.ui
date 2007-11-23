@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>AlignmentDialog</class>
- <widget class="QDialog" name="AlignmentDialog" >
+ <class>EditingToolsDialog</class>
+ <widget class="QDialog" name="EditingToolsDialog" >
   <property name="windowModality" >
    <enum>Qt::ApplicationModal</enum>
   </property>
@@ -1254,7 +1254,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>cancelbutton</sender>
    <signal>clicked()</signal>
-   <receiver>AlignmentDialog</receiver>
+   <receiver>EditingToolsDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel" >

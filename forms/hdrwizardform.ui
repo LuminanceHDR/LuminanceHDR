@@ -134,10 +134,10 @@
                     <number>2</number>
                    </property>
                    <property name="maximum" >
-                    <double>8.000000000000000</double>
+                    <double>10.000000000000000</double>
                    </property>
                    <property name="minimum" >
-                    <double>-8.000000000000000</double>
+                    <double>-10.000000000000000</double>
                    </property>
                    <property name="singleStep" >
                     <double>0.100000000000000</double>
@@ -147,13 +147,16 @@
                  <item>
                   <widget class="QSlider" name="EVSlider" >
                    <property name="maximum" >
-                    <number>1600</number>
+                    <number>200</number>
                    </property>
                    <property name="pageStep" >
-                    <number>100</number>
+                    <number>10</number>
                    </property>
                    <property name="value" >
-                    <number>800</number>
+                    <number>100</number>
+                   </property>
+                   <property name="sliderPosition" >
+                    <number>100</number>
                    </property>
                    <property name="orientation" >
                     <enum>Qt::Horizontal</enum>
@@ -162,7 +165,7 @@
                     <enum>QSlider::TicksAbove</enum>
                    </property>
                    <property name="tickInterval" >
-                    <number>100</number>
+                    <number>10</number>
                    </property>
                   </widget>
                  </item>
@@ -261,12 +264,12 @@
                <bool>true</bool>
               </property>
               <property name="buddy" >
-               <cstring>loadsetButton</cstring>
+               <cstring>loadImagesButton</cstring>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="loadsetButton" >
+             <widget class="QPushButton" name="loadImagesButton" >
               <property name="toolTip" >
                <string>Load Input Images</string>
               </property>
@@ -1140,7 +1143,7 @@ pixel values&lt;/p></string>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="Next_Finishbutton" >
+      <widget class="QPushButton" name="NextFinishButton" >
        <property name="enabled" >
         <bool>false</bool>
        </property>
