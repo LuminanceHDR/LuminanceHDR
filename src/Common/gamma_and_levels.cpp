@@ -82,7 +82,6 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(par
 GammaAndLevels::~GammaAndLevels() {
 	delete gb1; delete gb2; delete histogram;
 	emit closing();
-// 	qDebug("~GammaAndLevels");
 }
 
 void GammaAndLevels::defaultGammaBlackWhiteIn() {
@@ -158,7 +157,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 void GammaAndLevels::refreshLUT() {
-	qDebug("this::refreshLUT");
+	qDebug("refreshLUT");
 	//values in 0..1 range
 	float bin=(float)blackin/255.0f;
 	float win=(float)whitein/255.0f;
@@ -214,8 +213,6 @@ void HistogramLDR::paintEvent( QPaintEvent * ) {
 		QRectF rf( i*(((float)(this->width()))/255.f), this->height()-(P[i]*(height()/*-2*/)), ((float)(this->width())/255.f), (P[i]*(height()/*-2*/)));
 		painter.fillRect(rf,QBrush(Qt::black) );
 	}
-// qDebug("size=(%dx%d)",width(),height());
-// qDebug("%d,%d (%dx%d)",255*(int)(((float)(this->width()))/255.f),this->height()-(int)(P[255]*(height()/*-2*/)), (int)( ((float)(this->width())/255.f) ), (int)(P[255]*(height()/*-2*/)));
 painter.drawRect(QRect(0,0,width()-1,height()-1));
 }
 
