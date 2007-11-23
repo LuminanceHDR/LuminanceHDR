@@ -26,9 +26,9 @@
 #define IMAGELDRVIEWER_H
 
 #include <QToolButton>
-#include "../smart_scroll_area.h"
+#include "../Common/smart_scroll_area.h"
+#include "../Common/panIconWidget.h"
 #include "tonemapping_widget.h"
-#include "../panIconWidget.h"
 
 class LdrViewer : public QWidget {
 	Q_OBJECT

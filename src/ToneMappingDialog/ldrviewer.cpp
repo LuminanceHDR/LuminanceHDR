@@ -23,8 +23,8 @@
  */
 #include <QVBoxLayout>
 #include "ldrviewer.h"
-#include "gamma_and_levels.h"
-#include "../config.h"
+#include "../Common/gamma_and_levels.h"
+#include "../Common/config.h"
 
 LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : QWidget(parent),origimage(o) {
 	currentimage=&origimage;
@@ -122,12 +122,9 @@ QString LdrViewer::getExifComment() {
 
 void LdrViewer::LevelsRequested(bool a) {
 	assert(a); //a is always true
-	qDebug("LdrViewer::LevelsRequested accessing currentimage");
 	//copy original data
 	previewimage=currentimage->copy();
-	qDebug("LdrViewer::LevelsRequested constructing");
 	GammaAndLevels *levels=new GammaAndLevels(0,origimage);
-	qDebug("LdrViewer::LevelsRequested constructed");
 	levels->setAttribute(Qt::WA_DeleteOnClose);
 	//when closing levels, inform the Tone Mapping dialog.
 	connect(levels,SIGNAL(closing()),this,SIGNAL(levels_closed()));
