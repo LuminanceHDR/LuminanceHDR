@@ -31,7 +31,6 @@ PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage 
 // 	this->setAttribute(Qt::WA_StaticContents);
 // 	this->setAttribute(Qt::WA_OpaquePaintEvent);
 // 	this->setAttribute(Qt::WA_NoSystemBackground);
-// 	qDebug("PreviewWidget has m=%p and p=%p",m,p);
 	mx=my=px=py=0;
 	setFocusPolicy(Qt::StrongFocus);
 	previewImage=new QImage(movableImage->size(),QImage::Format_ARGB32);
@@ -40,14 +39,7 @@ PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage 
 	blendmode=&PreviewWidget::computeDiffRgba;
 	//track mouse position to draw specific cursor when on rubberband
 	setMouseTracking(true);
-	dragging_rubberband_left=false;
-	dragging_rubberband_right=false;
-	dragging_rubberband_top=false;
-	dragging_rubberband_bottom=false;
-	dragging_rubberband_topleft=false;
-	dragging_rubberband_topright=false;
-	dragging_rubberband_bottomright=false;
-	dragging_rubberband_bottomleft=false;
+	dragging_mode=DRAGGING_NONE;
 	leftButtonMode=LB_croppingmode;
 	//set internal brush values to their default
 	brushAddMode=true;
@@ -65,7 +57,6 @@ PreviewWidget::~PreviewWidget() {
 }
 
 void PreviewWidget::paintEvent(QPaintEvent * event) {
-	qDebug("PreviewWidget::paintEvent");
 	if (pivotImage==NULL || movableImage==NULL)
 		return;
 	assert(movableImage->size()==pivotImage->size());
@@ -73,18 +64,12 @@ void PreviewWidget::paintEvent(QPaintEvent * event) {
 	QRect srcrect=QRect(paintrect.topLeft()/scaleFactor, paintrect.size()/scaleFactor);
 	QPainter p(this);
 	QRegion areatorender=QRegion(srcrect)-prev_computed;
-	qDebug("after areatorender");
 	if (!areatorender.isEmpty()) {
-// 		qDebug("not cached! O=(%d,%d) w,h=(%dx%d)=%d",areatorender.boundingRect().left(),areatorender.boundingRect().top(),areatorender.boundingRect().width(),areatorender.boundingRect().height(),areatorender.boundingRect().width()*areatorender.boundingRect().height());
 		renderPreviewImage(blendmode,areatorender.boundingRect());
 		prev_computed+=QRegion(srcrect);
-	} /*else {
-		QRect br=prev_computed.boundingRect();
-		qDebug("cached! : br= O(%d,%d) (%dx%d) src= O(%d,%d) (%dx%d)",br.left(),br.top(),br.width(),br.height(),srcrect.left(),srcrect.top(),srcrect.width(),srcrect.height());
-	}*/
+	}
 	p.drawImage(paintrect, *previewImage, srcrect);
 	if (!rubberband.isNull()) {
-// 		qDebug("paintEvent (%d,%d)->(%d,%d) w=%d h=%d",rubberband.left(),rubberband.top(),rubberband.right()+1,rubberband.bottom()+1,rubberband.width(),rubberband.height());
 		QRegion outsidearea = QRegion(0, 0, int(previewImage->size().width()*scaleFactor), int(previewImage->size().height()*scaleFactor)) - QRegion(rubberband);
 		p.setBrush(QBrush(Qt::black,Qt::Dense3Pattern));
 		p.setPen(Qt::NoPen);
@@ -98,13 +83,12 @@ void PreviewWidget::paintEvent(QPaintEvent * event) {
 QRgb outofbounds=qRgba(0,0,0,255);
 
 void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QRgb*,const QRgb*)const, const QRect rect ) {
-	qDebug("renderPreviewImage");
 	int originx=rect.x();
 	int originy=rect.y();
 	int W=rect.width();
 	int H=rect.height();
 	if (rect.isNull()) {
-// 		qDebug("requested fullsize render");
+		//requested fullsize render
 		QRegion areatorender= QRegion(QRect(0, 0, previewImage->size().width(), previewImage->size().height())) - prev_computed;
 		if (!areatorender.isEmpty()) {
 			//render only what you have to
@@ -113,10 +97,8 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 			W=areatorender.boundingRect().width();
 			H=areatorender.boundingRect().height();
 			prev_computed+=areatorender;
-		} else //{ //image already rendered fullsize
-			//qDebug("image already rendered fullsize");
+		} else //image already rendered fullsize
 			return;
-// 		}
 	}
 	//these kind of things can happen and lead to strange and nasty runtime errors!
 	//usually it's an error of 2,3 px
@@ -124,7 +106,6 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 		H=movableImage->height()-originy;
 	if ((originx+W-1)>=movableImage->width())
 		W=movableImage->width()-originx;
-	qDebug("br XY=%d,%d (%d,%d)",originx,originy,W,H);
 	const QRgb *MovVal=NULL;
 	const QRgb *PivVal=NULL;
 	QRgb* mov_line=NULL;
@@ -164,7 +145,6 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 				out[j]= (this->*rendermode)(MovVal,PivVal);
 		}
 	}
-	//qDebug("end renderPreviewImage %d",qrand());
 }
 
 void PreviewWidget::resizeEvent(QResizeEvent *event) {
@@ -181,8 +161,6 @@ void PreviewWidget::resizeEvent(QResizeEvent *event) {
 			hideRubberBand();
 		}
 	}
-// 	qDebug("PreviewWidget::resizeEvent newsize=(%d,%d) scaleFactor=%f",event->size().width(),event->size().height(),scaleFactor);
-// 	qDebug("PreviewWidget::resizeEvent movableImage=%p pivotImage=%p",movableImage,pivotImage);
 }
 
 void PreviewWidget::mousePressEvent(QMouseEvent *event) {
@@ -203,21 +181,21 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 			if (rubberband.contains(mousepos) && !rubberband.contains(mousepos,true)) {
 				int x=event->pos().x(); int y=event->pos().y();
 				if ((x==rubberband.left())&&(y==rubberband.top()))
-					dragging_rubberband_topleft=true;
+					dragging_mode=DRAGGING_TOPLEFT;
 				else if ((x==rubberband.right())&&(y==rubberband.top()))
-					dragging_rubberband_topright=true;
+					dragging_mode=DRAGGING_TOPRIGHT;
 				else if ((x==rubberband.right())&&(y==rubberband.bottom()))
-					dragging_rubberband_bottomright=true;
+					dragging_mode=DRAGGING_BOTTOMRIGHT;
 				else if ((x==rubberband.left())&&(y==rubberband.bottom()))
-					dragging_rubberband_bottomleft=true;
+					dragging_mode=DRAGGING_BOTTOMLEFT;
 				else if (x==rubberband.left())
-					dragging_rubberband_left=true;
+					dragging_mode=DRAGGING_LEFT;
 				else if (x==rubberband.right())
-					dragging_rubberband_right=true;
+					dragging_mode=DRAGGING_RIGHT;
 				else if (y==rubberband.bottom())
-					dragging_rubberband_bottom=true;
+					dragging_mode=DRAGGING_BOTTOM;
 				else if (y==rubberband.top())
-					dragging_rubberband_top=true;
+					dragging_mode=DRAGGING_TOP;
 			} else {
 				//single left-click, initialize the coordinates:
 				//topleft=bottomright=mousepos. This makes the rubberband have 0-size
@@ -225,7 +203,6 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 				rubberbandInitialCreationPoint=event->pos();
 				rubberband.setTopLeft(rubberbandInitialCreationPoint);
 				rubberband.setBottomRight(rubberbandInitialCreationPoint+QPoint(-1,-1));
-	// 			qDebug("single left-click (%d,%d)->(%d,%d) w=%d h=%d",rubberband.left(),rubberband.top(),rubberband.right()+1,rubberband.bottom()+1,rubberband.width(),rubberband.height());
 				emit validCropArea(false);
 			}
 			break;
@@ -242,25 +219,25 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 		int x=event->pos().x(); int y=event->pos().y();
 		switch (leftButtonMode) {
 			case LB_croppingmode:
-			if (dragging_rubberband_topleft) {
+			if (dragging_mode==DRAGGING_TOPLEFT) {
 				rubberband.setLeft(x);
 				rubberband.setTop(y);
-			} else if (dragging_rubberband_topright) {
+			} else if (dragging_mode==DRAGGING_TOPRIGHT) {
 				rubberband.setTop(y);
 				rubberband.setRight(x-1);
-			} else if (dragging_rubberband_bottomright) {
+			} else if (dragging_mode==DRAGGING_BOTTOMRIGHT) {
 				rubberband.setBottom(y-1);
 				rubberband.setRight(x-1);
-			} else if (dragging_rubberband_bottomleft) {
+			} else if (dragging_mode==DRAGGING_BOTTOMLEFT) {
 				rubberband.setBottom(y-1);
 				rubberband.setLeft(x);
-			} else if (dragging_rubberband_left)
+			} else if (dragging_mode==DRAGGING_LEFT)
 				rubberband.setLeft(x);
-			else if (dragging_rubberband_right)
+			else if (dragging_mode==DRAGGING_RIGHT)
 				rubberband.setRight(x-1);
-			else if (dragging_rubberband_top)
+			else if (dragging_mode==DRAGGING_TOP)
 				rubberband.setTop(y);
-			else if (dragging_rubberband_bottom)
+			else if (dragging_mode==DRAGGING_BOTTOM)
 				rubberband.setBottom(y-1);
 			else {//creating a new selection
 				rubberband=QRect(rubberbandInitialCreationPoint,event->pos());
@@ -269,7 +246,6 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 			update();
 			break;
 			case LB_antighostingmode:
-// 			qDebug("LB move in ag mode");
 			break;
 		}
 	} if (event->buttons()==Qt::NoButton) {
@@ -303,18 +279,10 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
-// 	qDebug("mouseReleaseEvent");
 	if (event->button()==Qt::LeftButton) {
 		switch (leftButtonMode) {
 			case LB_croppingmode:
-			dragging_rubberband_left=false;
-			dragging_rubberband_right=false;
-			dragging_rubberband_top=false;
-			dragging_rubberband_bottom=false;
-			dragging_rubberband_topleft=false;
-			dragging_rubberband_topright=false;
-			dragging_rubberband_bottomright=false;
-			dragging_rubberband_bottomleft=false;
+			dragging_mode=DRAGGING_NONE;
 			rubberband=rubberband.normalized();
 	
 			if (!rubberband.isNull())
@@ -381,7 +349,6 @@ void PreviewWidget::requestedBlendMode(int newindex) {
 }
 
 void PreviewWidget::setPivot(QImage *p, int _px, int _py) {
-// 	qDebug("PreviewWidget has p=%p",p);
 	pivotImage=p;
 	px=_px;
 	py=_py;
@@ -389,7 +356,6 @@ void PreviewWidget::setPivot(QImage *p, int _px, int _py) {
 }
 
 void PreviewWidget::setMovable(QImage *m, int _mx, int _my) {
-// 	qDebug("PreviewWidget has m=%p",m);
 	movableImage=m;
 	mx=_mx;
 	my=_my;
@@ -426,8 +392,6 @@ void PreviewWidget::switchAntighostingMode(bool ag) {
 		hideRubberBand();
 		leftButtonMode=LB_antighostingmode;
 		this->setCursor(*agcursor_pixmap);
-// 		prev_computed=QRegion();
-// 		update();
 	} else {
 		leftButtonMode=LB_croppingmode;
 		this->unsetCursor();
@@ -441,14 +405,12 @@ void PreviewWidget::setBrushSize (const int newsize) {
 void PreviewWidget::setBrushMode(bool removemode) {
 	requestedPixmapStrength *= -1;
 	brushAddMode=!removemode;
-// 	qDebug("requestedPixmapStrength=%d",requestedPixmapStrength );
 }
 
 void PreviewWidget::setBrushStrength (const int newstrength) {
 	requestedPixmapStrength=newstrength;
 	requestedPixmapColor.setAlpha(qMax(60,requestedPixmapStrength));
 	requestedPixmapStrength *= (!brushAddMode) ? -1 : 1;
-// 	qDebug("brush requestedPixmapStrength=%d ", requestedPixmapStrength);
 }
 
 void PreviewWidget::setBrushColor (const QColor newcolor) {
@@ -459,7 +421,6 @@ void PreviewWidget::setBrushColor (const QColor newcolor) {
 
 void PreviewWidget::enterEvent(QEvent *) {
 	if (leftButtonMode==LB_antighostingmode) {
-// 		qDebug("enter_event");
 		fillAntiGhostingCursorPixmap();
 		this->unsetCursor();
 		this->setCursor(*agcursor_pixmap);
@@ -468,7 +429,6 @@ void PreviewWidget::enterEvent(QEvent *) {
 
 void PreviewWidget::fillAntiGhostingCursorPixmap() {
 	if (requestedPixmapSize != previousPixmapSize || requestedPixmapStrength != previousPixmapStrength || requestedPixmapColor.rgb() != previousPixmapColor.rgb()) {
-// 		qDebug("recomputing");
 		if (agcursor_pixmap)
 			delete agcursor_pixmap;
 		previousPixmapSize=requestedPixmapSize;

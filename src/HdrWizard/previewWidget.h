@@ -160,14 +160,7 @@ private:
 	bool brushAddMode;//false means brush is in remove mode.
 	void fillAntiGhostingCursorPixmap();
 
-	bool dragging_rubberband_left;
-	bool dragging_rubberband_right;
-	bool dragging_rubberband_top;
-	bool dragging_rubberband_bottom;
-	bool dragging_rubberband_topleft;
-	bool dragging_rubberband_topright;
-	bool dragging_rubberband_bottomright;
-	bool dragging_rubberband_bottomleft;
+	enum dragging_mode {DRAGGING_LEFT, DRAGGING_RIGHT, DRAGGING_TOP, DRAGGING_BOTTOM, DRAGGING_TOPLEFT, DRAGGING_TOPRIGHT, DRAGGING_BOTTOMRIGHT, DRAGGING_BOTTOMLEFT, DRAGGING_NONE } dragging_mode;
 	enum {LB_croppingmode,LB_antighostingmode} leftButtonMode;
 };
 
