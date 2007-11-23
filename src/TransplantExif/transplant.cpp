@@ -27,10 +27,10 @@
 #include <image.hpp>
 #include <exif.hpp>
 #include <iostream>
-#include "transplant_impl.h"
+#include "transplant.h"
 #include "../generated_uic/ui_documentation.h"
 #include "../Exif/exif_operations.h"
-#include "../config.h"
+#include "../Common/config.h"
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
 	setupUi(this);
@@ -115,8 +115,6 @@ void TransplantExifDialog::moveup_left() {
 	from.removeAt(start_left-1);
 	start_left--;
 	stop_left--;
-// 	for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::moveup_right() {
@@ -133,8 +131,6 @@ void TransplantExifDialog::moveup_right() {
 	to.removeAt(start_right-1);
 	start_right--;
 	stop_right--;
-// 	for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::movedown_left() {
@@ -151,8 +147,6 @@ void TransplantExifDialog::movedown_left() {
 	from.removeAt(stop_left+2);
 	start_left++;
 	stop_left++;
-// 	for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::movedown_right() {
@@ -169,8 +163,6 @@ void TransplantExifDialog::movedown_right() {
 	to.removeAt(stop_right+2);
 	start_right++;
 	stop_right++;
-// 	for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::remove_left() {
@@ -183,8 +175,6 @@ void TransplantExifDialog::remove_left() {
 	}
 	start_left=stop_left=-1;
 	TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
-// 	for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::remove_right() {
@@ -197,8 +187,6 @@ void TransplantExifDialog::remove_right() {
 	}
 	start_right=stop_right=-1;
 	TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
-// 	for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
-// 		qDebug((*i).toAscii());
 }
 
 void TransplantExifDialog::append_left() {
@@ -221,8 +209,6 @@ void TransplantExifDialog::append_left() {
 		}
 		from+=files; // add the new files to the "model"
 		TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
-// 		for (QStringList::const_iterator i = from.constBegin(); i != from.constEnd(); ++i)
-// 			qDebug((*i).toAscii());
 	}
 }
 
@@ -246,8 +232,6 @@ void TransplantExifDialog::append_right() {
 		}
 		to+=files; // add the new files to the "model"
 		TransplantButton->setEnabled( leftlist->count()==rightlist->count() && rightlist->count()!=0 );
-// 		for (QStringList::const_iterator i = to.constBegin(); i != to.constEnd(); ++i)
-// 			qDebug((*i).toAscii());
 	}
 }
 
