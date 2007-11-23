@@ -29,8 +29,8 @@
 #include <QProgressBar>
 #include <QKeyEvent>
 #include "tonemapping_widget.h"
-#include "../config.h"
-#include "../Threads/tonemapper_thread.h"
+#include "../Common/config.h"
+#include "../Threads/tonemapperThread.h"
 
 extern int xsize;
 extern float pregamma;
@@ -50,7 +50,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	
 	// durand02
 	spatialGang = 	new Gang(spatialSlider, spatialdsb,	0,	60,	8);
-	rangeGang = 	new Gang(rangeSlider, rangedsb,		0,	10,	0.4);
+	rangeGang = 	new Gang(rangeSlider, rangedsb,		0.01,	10,	0.4);
 	baseGang = 	new Gang(baseSlider, basedsb,		0,	10,	5.0);
 	
 	// fattal02
@@ -71,7 +71,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	lowerGang = 	new Gang(lowerSlider, lowerdsb,		1,	100, 1);
 	upperGang = 	new Gang(upperSlider, upperdsb,		1,	100, 43);
 	
-	// reinhard04
+	// reinhard05
 	brightnessGang =new Gang(brightnessSlider, brightnessdsb,	-35,	10, -10);
 	chromaticGang  =new Gang(chromaticAdaptSlider, chromaticAdaptdsb, -1.7,	1.3, 1);
 	lightGang      =new Gang(lightAdaptSlider, lightAdaptdsb,         -1,	1, 0);
@@ -85,7 +85,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	connect(fattal02Default,    SIGNAL(clicked()),this,SLOT(fattalReset()));
 	connect(pattanaik00Default, SIGNAL(clicked()),this,SLOT(pattanaikReset()));
 	connect(reinhard02Default,  SIGNAL(clicked()),this,SLOT(reinhard02Reset()));
-	connect(reinhard04Default,  SIGNAL(clicked()),this,SLOT(reinhard04Reset()));
+	connect(reinhard05Default,  SIGNAL(clicked()),this,SLOT(reinhard05Reset()));
 	connect(MantiukDefault,     SIGNAL(clicked()),this,SLOT(mantiukReset()));
 	connect(pregammadefault,    SIGNAL(clicked()),this,SLOT(preGammaReset()));
 
@@ -115,6 +115,8 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cach
 	for(int i = 0; i < sizes.size(); i++) {
 		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
 	}
+
+	qRegisterMetaType<QImage>("QImage");
 
 	//swap original frame to hd
 	pfs::DOMIO pfsio;
@@ -168,7 +170,7 @@ range2Gang->setDefault();
 lowerGang->setDefault();
 upperGang->setDefault();
 }
-void TMWidget::reinhard04Reset(){
+void TMWidget::reinhard05Reset(){
 brightnessGang->setDefault();
 chromaticGang->setDefault();
 lightGang->setDefault();
@@ -177,25 +179,41 @@ void TMWidget::preGammaReset(){
 pregammagang->setDefault();
 }
 
+MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
+	((QStatusBar*)parent)->addWidget(this);
+	setValue(0);
+}
+
+MyProgressBar::~MyProgressBar() {
+	((QStatusBar*)parent())->removeWidget(this);
+}
+
+void MyProgressBar::mousePressEvent(QMouseEvent *event) {
+	if (event->buttons()==Qt::LeftButton) {
+		emit leftMouseButtonClicked();
+	}
+}
+
+void MyProgressBar::advanceCurrentProgress() {
+	this->setValue(this->value()+1);
+}
+
 void TMWidget::apply_clicked() {
 	FillToneMappingOptions();
 
-	QProgressBar *newprogressbar=new QProgressBar(sb);
+	MyProgressBar *newprogressbar=new MyProgressBar(sb);
 
 	//tone mapper thread needs to know full size of the hdr
-	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], newprogressbar);
+	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
 
-	connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-
-	qRegisterMetaType<QImage>("QImage");
 	connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-	connect(thread, SIGNAL(removeProgressBar(QProgressBar*)), this, SLOT(removeProgressBar(QProgressBar*)));
-	connect(thread, SIGNAL(setMaximumSteps(int)),newprogressbar,SLOT(setMaximum(int)));
-	connect(thread, SIGNAL(setCurrentProgress(int)),newprogressbar,SLOT(setValue(int)));
+	connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+	connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+	connect(thread, SIGNAL(advanceCurrentProgress()), newprogressbar, SLOT(advanceCurrentProgress()));
+	connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
 
-	sb->addWidget(newprogressbar);
 	//start thread
-	thread->ComputeImage(ToneMappingOptions);
+	thread->start();
 }
 
 void TMWidget::FillToneMappingOptions() {
@@ -245,10 +263,10 @@ void TMWidget::FillToneMappingOptions() {
 		ToneMappingOptions.operator_options.reinhard02options.lower=(int)lowerGang->v();
 		ToneMappingOptions.operator_options.reinhard02options.upper=(int)upperGang->v();
 	} else if (current_page==tab_reinhard05) {
-		ToneMappingOptions.tmoperator=reinhard04;
-		ToneMappingOptions.operator_options.reinhard04options.brightness=brightnessGang->v();
-		ToneMappingOptions.operator_options.reinhard04options.chromaticAdaptation=chromaticGang->v();
-		ToneMappingOptions.operator_options.reinhard04options.lightAdaptation=lightGang->v();
+		ToneMappingOptions.tmoperator=reinhard05;
+		ToneMappingOptions.operator_options.reinhard05options.brightness=brightnessGang->v();
+		ToneMappingOptions.operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
+		ToneMappingOptions.operator_options.reinhard05options.lightAdaptation=lightGang->v();
 	}
 }
 
@@ -368,7 +386,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "LOWER=" << lowerGang->v() << endl;
 		out << "UPPER=" << upperGang->v() << endl;
 	} else if (current_page==tab_reinhard05) {
-		out << "TMO=" << "Reinhard04" << endl;
+		out << "TMO=" << "Reinhard05" << endl;
 		out << "BRIGHTNESS=" << brightnessGang->v() << endl;
 		out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
 		out << "LIGHTADAPTATION=" << lightGang->v() << endl;
@@ -416,7 +434,7 @@ void TMWidget::fromTxt2Gui() {
 				operators_tabWidget->setCurrentWidget(tab_pattanaik);
 			} else if (value == "Reinhard02") {
 				operators_tabWidget->setCurrentWidget(tab_reinhard02);
-			} else if (value == "Reinhard04") {
+			} else if (value == "Reinhard05") {
 				operators_tabWidget->setCurrentWidget(tab_reinhard05);
 			}
 		} else if (field=="CONTRASTFACTOR") {
@@ -483,11 +501,6 @@ void TMWidget::fromTxt2Gui() {
 		}
 	}
 	apply_clicked();
-}
-
-void TMWidget::removeProgressBar(QProgressBar* pb) {
-	sb->removeWidget(pb);
-	delete pb;
 }
 
 void TMWidget::keyPressEvent(QKeyEvent* event) {

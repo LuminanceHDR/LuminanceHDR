@@ -25,13 +25,26 @@
 #define TONEMAPPINGWIDGET_H
 
 #include <QSettings>
+#include <QProgressBar>
 #include "../generated_uic/ui_tonemappingoptions.h"
-#include "gang.h"
+#include "../Common/gang.h"
+#include "../Common/options.h"
 #include "../Libpfs/pfs.h"
-#include "../options.h"
 
 class QStatusBar;
-class QProgressBar;
+class MyProgressBar : public QProgressBar {
+Q_OBJECT
+public:
+	MyProgressBar(QWidget * parent = 0 );
+	~MyProgressBar();
+public slots:
+	void advanceCurrentProgress();
+protected:
+	void mousePressEvent(QMouseEvent *event);
+signals:
+	void leftMouseButtonClicked();
+};
+
 class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
@@ -65,10 +78,9 @@ private slots:
 	void fattalReset();
 	void pattanaikReset();
 	void reinhard02Reset();
-	void reinhard04Reset();
+	void reinhard05Reset();
 	void mantiukReset();
 	void apply_clicked();
-	void removeProgressBar(QProgressBar*);
 	void savesettings();
 	void loadsettings();
 	//APPLY tmo settings from text file
