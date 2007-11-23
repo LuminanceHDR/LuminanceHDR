@@ -25,7 +25,8 @@
 #include <QLocale>
 #include <QTranslator>
 // #include <QDir>
-#include "MainWindow/maingui_impl.h"
+#include "MainWindow/mainWindow.h"
+#include "Common/commandline.h"
 
 #ifdef WIN32
 #include <QMessageBox>
@@ -33,13 +34,22 @@
 
 int main( int argc, char ** argv )
 {
-	QApplication a( argc, argv );
+	//CLI application
+	if (argc>1) {
+		QCoreApplication CLIapplication( argc, argv );
+		CommandLineInterfaceManager cli( argc, argv );
+		CLIapplication.connect(&cli, SIGNAL(finishedParsing()), &CLIapplication, SLOT(quit()));
+		return CLIapplication.exec();
+	}
+
+	//GUI application
+	QApplication application( argc, argv );
 // 	qDebug() << "QDir::currentPath()=" << QDir::currentPath();
 // 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
 
 #ifdef WIN32
 	bool found_DLL=false;
-	foreach (QString path, a.libraryPaths()) {
+	foreach (QString path, application.libraryPaths()) {
 		if (QFile::exists(path+"/imageformats/qjpeg4.dll"))
 			found_DLL=true;
 	}
@@ -52,9 +62,9 @@ int main( int argc, char ** argv )
 	QTranslator translator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
 	translator.load(QString("lang_") + locale, I18NDIR);
-	a.installTranslator(&translator);
-	MainGui w;
-	a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-	w.show();
-	return a.exec();
+	application.installTranslator(&translator);
+	MainGui maingui;
+	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
+	maingui.show();
+	return application.exec();
 }
