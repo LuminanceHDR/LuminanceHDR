@@ -27,7 +27,7 @@
 #include <QString>
 #include <QList>
 #include <QImage>
-#include "../../Libpfs/pfs.h"
+#include "../Libpfs/pfs.h"
 #include <stdarg.h>
 
 #include "responses.h"
@@ -35,22 +35,20 @@
 #include "icip06.h"
 #include "debevec.h"
 
-// extern "C" {
-  enum TWeight
-  { TRIANGULAR, GAUSSIAN, PLATEAU };
-  enum TResponse
-  { FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
-  enum TModel
-  { ROBERTSON, DEBEVEC };
+enum TWeight
+{ TRIANGULAR, GAUSSIAN, PLATEAU };
+enum TResponse
+{ FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
+enum TModel
+{ ROBERTSON, DEBEVEC };
 
-
-  struct config_triple {
-      TWeight weights;
-      TResponse response_curve;
-      TModel model;
-      QString LoadCurveFromFilename;
-      QString SaveCurveToFilename;
-  };
+struct config_triple {
+	TWeight weights;
+	TResponse response_curve;
+	TModel model;
+	QString LoadCurveFromFilename;
+	QString SaveCurveToFilename;
+};
 
 /**
  * @brief main hdr creation function.
@@ -58,5 +56,4 @@
  *
 **/
 pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
-// }
 #endif

@@ -41,6 +41,7 @@ inline float min3( float a, float b, float c ) {
   return (c<min) ? c : min;
 }
 
+
 pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int /*iterations*/, const bool ldrinput, ...){
 
 //only one of these two is used by casting extra parameters:
@@ -143,32 +144,6 @@ int maxResponse=M;
     default:
 	throw pfs::Exception("hdr generation method not set or not supported");
     }
-
-
-    //0) examine input to get minResponse and maxResponse
-// if (ldrinput) {
-// 	for( int i=0 ; i<listldr->size() ; i++ ) {
-// 		uchar * ithimage=((listldr->at(i))->bits());
-// 		for( int j=0 ; j<width*height ; j++ ) {
-// 			int maxval = (int) max3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
-// 			int minval = (int) min3(qRed(*((QRgb*)ithimage+j)),qGreen(*((QRgb*)ithimage+j)),qBlue(*((QRgb*)ithimage+j)));
-// 			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
-// 			minResponse = (minResponse<minval) ? minResponse : minval;
-// 		}
-// 	}
-// } else {
-// 	for( size_t i=0 ; i<listhdrR->size() ; i++ ) {
-// 		for( int j=0 ; j<width*height ; j++ ) {
-// 			int maxval = (int) max3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
-// 			int minval = (int) min3((*( (*listhdrR)[i] ))(j),(*( (*listhdrG)[i] ))(j),(*( (*listhdrB)[i] ))(j));
-// 			maxResponse = (maxResponse>maxval) ? maxResponse : maxval;
-// 			minResponse = (minResponse<minval) ? minResponse : minval;
-// 		}
-// 	}
-// }
-
-// qDebug("maxResponse=%d",maxResponse);
-// qDebug("minResponse=%d",minResponse);
 
     //1) fill in w based on weights preferences
     switch( opt_weight )
