@@ -42,23 +42,10 @@ using namespace std;
 pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma_r, float _baseContrast) {
   pfs::DOMIO pfsio;
 
-// #ifdef HAVE_FFTW
-//   float sigma_s = 40.0f;
-// #else
-//   float sigma_s = 8.0f;
-// #endif
-//   float sigma_r = 0.4f;
-//   float baseContrast = 5.0f;
 	float sigma_s=_sigma_s;
 	float sigma_r=_sigma_r;
 	float baseContrast=_baseContrast;
 	int downsample=1;
-
-// #ifdef HAVE_FFTW
-//  qDebug("fast bilateral filtering (fftw3)");
-// #else
-//  qDebug("conventional bilateral filtering");
-// #endif
 
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);

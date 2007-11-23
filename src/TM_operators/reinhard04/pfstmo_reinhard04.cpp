@@ -142,7 +142,7 @@ void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
     }
 }
 
-pfs::Frame * pfstmo_reinhard04(pfs::Frame *inputpfsframe, float br, float chromadapt, float lightadapt ) {
+pfs::Frame * pfstmo_reinhard05(pfs::Frame *inputpfsframe, float br, float chromadapt, float lightadapt ) {
 	assert(inputpfsframe!=NULL);
 	//--- default tone mapping parameters;
 	float brightness = br;
