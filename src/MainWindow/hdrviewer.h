@@ -31,11 +31,11 @@
 #include <QToolBar>
 #include <QResizeEvent>
 #include <QToolButton>
-#include "../smart_scroll_area.h"
+#include "../Common/smart_scroll_area.h"
+#include "../Common/panIconWidget.h"
 #include "luminancerange_widget.h"
 #include "../Libpfs/array2d.h"
 #include "../Libpfs/pfs.h"
-#include "../panIconWidget.h"
 
 enum LumMappingMethod {
   MAP_LINEAR,
