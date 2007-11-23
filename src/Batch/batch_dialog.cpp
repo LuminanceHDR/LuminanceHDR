@@ -23,11 +23,11 @@
 
 #include <QFileDialog>
 #include <QTextStream>
-#include "batch_dialog_impl.h"
-#include "../config.h"
+#include "batch_dialog.h"
+#include "../Common/config.h"
 #include "../Libpfs/pfs.h"
-#include "../Threads/io_threads.h"
-#include "../Threads/tonemapper_thread.h"
+#include "../Threads/loadHdrThread.h"
+#include "../Threads/tonemapperThread.h"
 #include "../Exif/exif_operations.h"
 
 
@@ -65,10 +65,10 @@ BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), sett
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
-	qDebug("BATCH: using %d threads",desired_number_of_threads);
-	qDebug("BATCH: saving using fileformat: %s",desired_format.toAscii().constData());
-	add_log_message(QString(tr("Using %1 thread(s)")).arg(desired_number_of_threads));
+	add_log_message(tr("Using %1 thread(s)").arg(desired_number_of_threads));
 	add_log_message(tr("Saving using fileformat: ")+desired_format);
+
+	qRegisterMetaType<QImage>("QImage");
 }
 
 BatchTMDialog::~BatchTMDialog() {
@@ -187,7 +187,6 @@ void BatchTMDialog::update_selection_interval(bool left) {
 				stop_left= (stop_left<i) ? i : stop_left;
 			}
 		}
-// 		qDebug("L %d-%d",start_left,stop_left);
 	} else {
 		start_right=listWidget_TMopts->count();
 		stop_right=-1;
@@ -197,7 +196,6 @@ void BatchTMDialog::update_selection_interval(bool left) {
 				stop_right= (stop_right<i) ? i : stop_right;
 			}
 		}
-// 		qDebug("R %d-%d",start_right,stop_right);
 	}
 }
 
@@ -272,9 +270,8 @@ void BatchTMDialog::conditional_loadthread() {
 	}
 }
 
-void BatchTMDialog::load_HDR_failed(QString fname) {
-	add_log_message(tr("ERROR: Failed loading HDR file: ")+fname);
-	qDebug("BATCH: Failed loading HDR file: %s", fname.toAscii().constData());
+void BatchTMDialog::load_HDR_failed(QString error_message) {
+	add_log_message(error_message);
 	overallProgressBar->setValue(overallProgressBar->value()+listWidget_TMopts->count());
 	conditional_loadthread();
 }
@@ -282,7 +279,6 @@ void BatchTMDialog::load_HDR_failed(QString fname) {
 extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
-	qDebug("BATCH: LOADED HDR, now swapping it to ./original.pfs");
 	add_log_message(tr("Starting to tone map HDR file: ")+filename);
 	pfsio.writeFrame(loaded_hdr, qtpfsgui_options->tempfilespath+"/original.pfs");
 	pregamma=-1;
@@ -322,13 +318,11 @@ void BatchTMDialog::conditional_TMthread() {
 		while (running_threads < desired_number_of_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
-			TonemapperThread *thread = new TonemapperThread(-2, /*qtpfsgui_options->output_cs, qtpfsgui_options->tempfilespath,*/ NULL);
+			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
 
-			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-			qRegisterMetaType<QImage>("QImage");
 			connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(newResult(const QImage&,tonemapping_options*)));
 			//start thread
-			thread->ComputeImage(*(tm_opt_list.at(first_not_started).first));
+			thread->start();
 
 			first_not_started++;
 			running_threads++;
@@ -340,7 +334,7 @@ void BatchTMDialog::conditional_TMthread() {
 			return;
 		}
 		qDebug("BATCH: conditional_TMthread: all TM_opts completed, resetting list to false and load (conditionally) a new hdr");
-		add_log_message(tr("Done tone mapping the current HDR."));
+		add_log_message(tr("Finished tone mapping the current HDR."));
 		//re-set all of them to false
 		for (int j = 0; j < tm_opt_list.size(); j++) {
 			tm_opt_list[j].second=false;
@@ -357,7 +351,7 @@ void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts)
 	QString postfix=operations.getPostfix();
 	QString fname=current_hdr_fname+"_"+postfix+"."+desired_format;
 	if (!newimage.save(fname, desired_format.toAscii().constData(), 100)) {
-		qDebug("BATCH: newResult: Cannot save to %s",fname.toAscii().constData());
+		qDebug("BATCH: newResult: Cannot save to %s",fname.toUtf8().constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
 		ExifOperations::writeExifData(fname.toStdString(),operations.getExifComment().toStdString());
@@ -368,6 +362,7 @@ void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts)
 }
 
 void BatchTMDialog::add_log_message(const QString& message) {
+	qDebug(qPrintable(message));
 	full_Log_Model->insertRows(full_Log_Model->rowCount(),1);
 	full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
 	Log_Widget->scrollToBottom();

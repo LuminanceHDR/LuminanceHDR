@@ -28,7 +28,7 @@
 #include <QSortFilterProxyModel>
 #include <QSettings>
 #include "../../generated_uic/ui_batch_dialog.h"
-#include "../options.h"
+#include "../Common/options.h"
 namespace pfs {
 class Frame;
 }
