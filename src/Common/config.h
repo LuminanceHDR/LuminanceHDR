@@ -24,19 +24,14 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define QTPFSGUIVERSION "1.8.13"
-#define TMOSETTINGSVERSION "0.3"
+#define QTPFSGUIVERSION "1.9.0"
+#define TMOSETTINGSVERSION "0.4"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
 
 #define GROUP_DCRAW "DCRAW_Options"
-#define KEY_AUTOWB "auto_white_balance"
-#define KEY_CAMERAWB "camera_white_balance"
-#define KEY_HIGHLIGHTS "highlights_recovery_mode"
-#define KEY_QUALITY "quality_mode"
-#define KEY_4COLORS "use_4colors_interpolation"
-#define KEY_OUTCOLOR "output_color_space"
+#define KEY_EXTERNAL_DCRAW_OPTIONS "ExternalDcrawOptions"
 
 #define GROUP_HDRVISUALIZATION "HDR_visualization"
 #define KEY_NANINFCOLOR "nan_inf_color"
