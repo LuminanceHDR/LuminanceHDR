@@ -69,7 +69,7 @@ TiffReader::TiffReader( const char* filename ) {
       TypeOfData = FLOATLOGLUV;
       break;
     case PHOTOMETRIC_RGB:
-      qDebug("Photometric data: RGB");
+//       qDebug("Photometric data: RGB");
      // read extra samples (# of alpha channels)
       if (TIFFGetField( tif, TIFFTAG_EXTRASAMPLES,
                         &extra_samples_per_pixel, &extra_sample_types )!=1)
@@ -246,7 +246,7 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
 // 	qDebug("width=%d, heigh=%d",width,height);
 	tif = TIFFOpen(filename, "w");
 	if( !tif )
-		throw pfs::Exception("TIFF: could not open file for reading.");
+		throw pfs::Exception("TIFF: could not open file for writing.");
 
 	TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
 	TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
@@ -254,13 +254,14 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
 	TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
 	TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
+
 TiffWriter::TiffWriter( const char* filename, QImage *f ) : tif((TIFF *)NULL) {
 	ldrimage=f;
 	width=f->width();
 	height=f->height();
 	tif = TIFFOpen(filename, "w");
 	if( !tif )
-		throw pfs::Exception("TIFF: could not open file for reading.");
+		throw pfs::Exception("TIFF: could not open file for writing.");
 	TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, f->width());
 	TIFFSetField (tif, TIFFTAG_IMAGELENGTH, f->height());
 	TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);

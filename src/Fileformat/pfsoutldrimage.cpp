@@ -38,7 +38,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 }
 
 
-#include "../Threads/tonemapper_thread.h"
+#include "../Threads/tonemapperThread.h"
 QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
 

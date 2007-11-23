@@ -157,6 +157,11 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
       // format specifier found
       format=1;
     }
+    if( strcmp(head, "#?AUTOPANO\n")==0 )
+    {
+      // format specifier found
+      format=1;
+    }
     if( head[0]=='#' ) // comment found - skip
       continue;
     if( strcmp(head, "FORMAT=32-bit_rle_rgbe\n")==0 )
