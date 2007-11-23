@@ -21,19 +21,17 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef hdrwizardform_impl_h
-#define hdrwizardform_impl_h
+#ifndef HDRWIZARDFORM_IMPL_H
+#define HDRWIZARDFORM_IMPL_H
 
 #include <QDialog>
 #include <QString>
 #include <QSettings>
-#include <image.hpp>
-#include <exif.hpp>
 #include "../generated_uic/ui_hdrwizardform.h"
-#include "hdrcreation/createhdr.h"
-#include "../options.h"
-#include "../ToneMappingDialog/gang.h"
-#include <QProcess>
+#include "../Common/options.h"
+#include "../Common/gang.h"
+#include "../Libpfs/pfs.h"
+#include "../HdrCreation/HdrCreationManager.h"
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 {
@@ -42,42 +40,40 @@ Q_OBJECT
 public:
 	HdrWizardForm(QWidget *parent, qtpfsgui_opts *options);
 	~HdrWizardForm();
-	pfs::Frame* getPfsFrameHDR();
+	pfs::Frame* getPfsFrameHDR() {return PfsFrameHDR;}
 	QString getCaptionTEXT();
 
 protected:
 	void resizeEvent(QResizeEvent *);
 	void keyPressEvent(QKeyEvent *);
 private:
+	QString getQStringFromConfig( int type );
+	Gang *EVgang;
+
+	qtpfsgui_opts *opts;
+	QSettings settings;
+	HdrCreationManager *hdrCreationManager;
+
+	//the new hdr, returned by the HdrCreationManager class
+	pfs::Frame* PfsFrameHDR;
 	QString loadcurvefilename,savecurvefilename;
-	config_triple chosen_config;
+
+	//hdr creation parameters
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
-	QString getQStringFromConfig( int type );
-	void clearlists();
-	int numberinputfiles; //it is also the lenght of the array below
-	float *expotimes;
-	bool need_to_transform_indices;
-	Gang *EVgang;
-
-	QList<QImage*> ImagePtrList;  //ldr input
-	QList<bool> ldr_tiff_input;  //ldr input
-	Array2DList listhdrR,listhdrG,listhdrB; //hdr input
-	qtpfsgui_opts *opts;
-	QSettings settings;
-	QStringList fileStringList;
-	QProcess *ais;
-	pfs::Frame* PfsFrameHDR;
-
-	bool check_same_size(int&,int&,int,int);
-	void checkEVvalues();
-	void updateGraphicalEVvalue(float EV_val, int index_in_table);
 
 private slots:
-	void nextpressed();
-	void currentPageChangedInto(int);
 
+	void fileLoaded(int index, QString fname, float expotime);
+	void finishedLoadingInputFiles(QStringList NoExifFiles);
+	void errorWhileLoading(QString errormessage);
+	
+	void updateGraphicalEVvalue(float expotime, int index_in_table);
+	void finishedAligning();
+
+	void loadImagesButtonClicked();
+	void inputHdrFileSelected(int);
 	void predefConfigsComboBoxActivated(int);
 	void antighostRespCurveComboboxActivated(int);
 	void customConfigCheckBoxToggled(bool);
@@ -89,13 +85,11 @@ private slots:
 	void saveRespCurveToFileCheckboxToggled(bool);
 	void saveRespCurveFileButtonClicked();
 	void modelComboBoxActivated(int);
+	void NextFinishButtonClicked();
+	void currentPageChangedInto(int);
+	void loadRespCurveFilename(const QString&);
+	void editingEVfinished();
 
-	void loadfiles();
-	void setLoadFilename(const QString&);
-// 	void ImageEVdsbEditingFinished();
-	void updateEVvalue();
-	void fileselected(int);
 	void ais_failed(QProcess::ProcessError);
-	void ais_finished(int,QProcess::ExitStatus);
 };
 #endif
