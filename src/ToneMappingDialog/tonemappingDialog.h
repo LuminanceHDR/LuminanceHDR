@@ -21,48 +21,40 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef TONEMAPPERTHREAD_H
-#define TONEMAPPERTHREAD_H
+#ifndef TONEMAPPINGDIALOG_IMPL_H
+#define TONEMAPPINGDIALOG_IMPL_H
 
-#include <QThread>
-#include <QReadWriteLock>
-#include <QImage>
 #include <QSettings>
-#include "../options.h"
-#include "../Libpfs/pfs.h"
-class QProgressBar;
+#include <QWorkspace>
 
-class TonemapperThread : public QThread {
+#include "../generated_uic/ui_tonemappingdialog.h"
+#include "tonemapping_widget.h"
+
+class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
+{
 Q_OBJECT
 
 public:
-	TonemapperThread(int origsize, QProgressBar *itsbar);
-	~TonemapperThread();
-	//pass by value, bit-copy should be enough (default should be available)
-	void ComputeImage(const tonemapping_options opts );
-
-signals:
-	void ImageComputed(const QImage&,tonemapping_options *);
-	void setMaximumSteps(int);
-	void setCurrentProgress(int);
-	void removeProgressBar( QProgressBar *pb );
-
+	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString prefixname);
+	~TonemappingWindow();
 protected:
-	void run();
-
+	void closeEvent ( QCloseEvent * );
+signals:
+	void closing();
 private:
-	QProgressBar *bar;
-	int originalxsize;
+	QWorkspace* workspace;
 	QSettings settings;
-	int ldr_output_cs;
-	QString cachepath;
-	bool colorspaceconversion;
-	tonemapping_options opt;
-	pfs::Frame *workingframe;
-	void fetch(QString);
-	void swap(pfs::Frame *, QString );
-// 	void dumpOpts();
-	enum {from_resize,from_pregamma,from_tm} status;
-	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
+	QString recentPathSaveLDR, prefixname;
+
+private slots:
+	void addMDIresult(const QImage&,tonemapping_options*);
+	void LevelsRequested(bool);
+	void levels_closed();
+	void updateActions(QWidget *);
+	void viewAllAsThumbnails();
+	void current_ldr_fit_to_win(bool);
+	void close_all();
+	void saveLDR();
+	void enterWhatsThis();
 };
 #endif

@@ -21,7 +21,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "resizedialog_impl.h"
+#include "resizeDialog.h"
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 
 ResizeDialog::ResizeDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent),original(orig) {
@@ -78,10 +78,8 @@ void ResizeDialog::switch_px_percentage(int px_per) {
 		widthSpinBox->setMaximum(2*orig_width);
 		heightSpinBox->setMaximum(2*orig_height);
 		from_other_spinbox=true;
-// 		qDebug("px w=%d, current=%g",      (int)(widthSpinBox->value()*(float)orig_width/100.0),widthSpinBox->value());
 		widthSpinBox->setValue((int)(widthSpinBox->value()*(float)orig_width/100.0)); //from perc to px
 		from_other_spinbox=true;
-// 		qDebug("px h=%d, current=%g",       (int)(heightSpinBox->value()*(float)orig_height/100.0),heightSpinBox->value());
 		heightSpinBox->setValue((int)(heightSpinBox->value()*(float)orig_height/100.0)); //from perc to px
 		widthSpinBox->setSuffix("");
 		widthSpinBox->setDecimals(0);
@@ -94,10 +92,8 @@ void ResizeDialog::switch_px_percentage(int px_per) {
 		widthSpinBox->setDecimals(2);
 		heightSpinBox->setDecimals(2);
 		from_other_spinbox=true;
-// 		qDebug("perc w=%g, current=%g",    100*widthSpinBox->value()/(float)orig_width,widthSpinBox->value());
 		widthSpinBox->setValue(100*widthSpinBox->value()/(float)orig_width); //from px to perc
 		from_other_spinbox=true;
-// 		qDebug("perc h=%g, current=%g",     100*heightSpinBox->value()/(float)orig_height,heightSpinBox->value());
 		heightSpinBox->setValue(100*heightSpinBox->value()/(float)orig_height); //from px to perc
 		widthSpinBox->setSuffix("%");
 		widthSpinBox->setMaximum(200);
@@ -123,12 +119,10 @@ void ResizeDialog::update_heightSpinBox() {
 		from_other_spinbox=false;
 		return;
 	}
-// 	qDebug("here1");
 	switch (px_or_percentage->currentIndex()) {
 	case 0:
 		resized_width=(int)widthSpinBox->value();
 		resized_height=rh_from_rw();
-// 		qDebug("new height=%d",resized_height);
 		from_other_spinbox=true;
 		//update directly resized_height
 		heightSpinBox->setValue(resized_height);
@@ -147,12 +141,10 @@ void ResizeDialog::update_widthSpinBox() {
 		from_other_spinbox=false;
 		return;
 	}
-// 	qDebug("here2");
 	switch (px_or_percentage->currentIndex()) {
 	case 0:
 		resized_height=(int)heightSpinBox->value();
 		resized_width=rw_from_rh();
-// 		qDebug("new width=%d",resized_width);
 		from_other_spinbox=true;
 		//update directly resized_width
 		widthSpinBox->setValue(resized_width);

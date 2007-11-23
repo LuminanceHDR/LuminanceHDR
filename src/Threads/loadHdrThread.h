@@ -25,7 +25,7 @@
 #define IOTHREAD_H
 
 #include <QThread>
-#include "../options.h"
+#include "../Common/options.h"
 
 namespace pfs {
 class Frame;
@@ -37,11 +37,11 @@ Q_OBJECT
 public:
 	LoadHdrThread(QString filename, QString RecentDirHDRSetting, qtpfsgui_opts *opts);
 	~LoadHdrThread();
+	QString getHdrFileName() {return fname;}
 signals:
-// 	void loaded_correctly(QString);
 	void updateRecentDirHDRSetting(QString);
 	void hdr_ready(pfs::Frame*, QString fname);
-	void load_failed(QString fname);
+	void load_failed(QString error_message);
 protected:
 	void run();
 private:

@@ -23,14 +23,13 @@
 
 #include <QDockWidget>
 #include <QWorkspace>
-#include <QLabel>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWhatsThis>
-#include "tonemappingdialog_impl.h"
+#include "tonemappingDialog.h"
 #include "ldrviewer.h"
 #include "../Exif/exif_operations.h"
-#include "../config.h"
+#include "../Common/config.h"
 
 TonemappingWindow::~TonemappingWindow() {}
 
@@ -98,7 +97,6 @@ void TonemappingWindow::LevelsRequested(bool checked) {
 }
 
 void TonemappingWindow::levels_closed() {
-// 	qDebug("levels_closed");
 	actionFix_Histogram->setDisabled(false);
 	actionFix_Histogram->setChecked(false);
 }

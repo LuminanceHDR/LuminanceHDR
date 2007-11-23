@@ -21,42 +21,45 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#ifndef TONEMAPPINGDIALOG_IMPL_H
-#define TONEMAPPINGDIALOG_IMPL_H
+#ifndef TONEMAPPERTHREAD_H
+#define TONEMAPPERTHREAD_H
 
+#include <QThread>
+#include <QReadWriteLock>
+#include <QImage>
 #include <QSettings>
-#include <QWorkspace>
-
-#include "../generated_uic/ui_tonemappingdialog.h"
+#include "../Common/options.h"
 #include "../Libpfs/pfs.h"
-#include "tonemapping_widget.h"
+class QProgressBar;
 
-class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
-{
+class TonemapperThread : public QThread {
 Q_OBJECT
 
 public:
-	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString prefixname);
-	~TonemappingWindow();
-protected:
-	void closeEvent ( QCloseEvent * );
+	//tonemapping_options passed by value, bit-copy should be enough
+	TonemapperThread(int origsize, const tonemapping_options opts);
+	~TonemapperThread();
+public slots:
+	void terminateRequested();
 signals:
-	void closing();
+	void ImageComputed(const QImage&, tonemapping_options *);
+	void setMaximumSteps(int);
+	void advanceCurrentProgress();
+protected:
+	void run();
 private:
-	QWorkspace* workspace;
+	int originalxsize;
 	QSettings settings;
-	QString recentPathSaveLDR, prefixname;
-// 	void writeExifData(const QString);
-
-private slots:
-	void addMDIresult(const QImage&,tonemapping_options*);
-	void LevelsRequested(bool);
-	void levels_closed();
-	void updateActions(QWidget *);
-	void viewAllAsThumbnails();
-	void current_ldr_fit_to_win(bool);
-	void close_all();
-	void saveLDR();
-	void enterWhatsThis();
+	int ldr_output_cs;
+	QString cachepath;
+	bool colorspaceconversion;
+	tonemapping_options opts;
+	pfs::Frame *workingframe;
+	void fetch(QString);
+	void swap(pfs::Frame *, QString );
+	bool forciblyTerminated;
+// 	void dumpOpts();
+	enum {from_resize,from_pregamma,from_tm} status;
+	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 };
 #endif
