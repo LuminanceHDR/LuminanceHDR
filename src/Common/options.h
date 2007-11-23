@@ -25,43 +25,37 @@
 #define OPTIONS_H
 
 #include <QString>
-
-struct dcraw_opts {
-	bool auto_wb; // "-a" Use automatic white balance. DEFAULT IS FALSE.
-	bool camera_wb; //"-w" Use camera white balance, if possible. DEFAULT IS (FALSE, but set it) TRUE.
-	int highlights; // "-H [0-9]"  Highlight mode (0=clip (default), 1=no clip, 2+=recover)
-	int quality; //"-q [0-2]"  Set the interpolation quality (default is 2, or 1 if(fuji_width))0=bilin,1=vng,2=ahd
-	bool four_colors; //"-f"  Interpolate RGGB as four colors. If true, dcraw will use VNG (quality=2)
-	int output_color_space;//-o output color space, should we always use -m 0 i.e. raw color?
-	//always 16bit
-	//always write to memory, to a pfs::Frame.
-};
+#include <QStringList>
 
 struct qtpfsgui_opts {
 	//options for RAW import functionality, thanks to dcraw
-	dcraw_opts dcraw_options;
+	QStringList dcraw_options;
 	//color used to draw the NAN/INF or the negative colors
 	unsigned int naninfcolor, negcolor;
 	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 	bool saveLogLuvTiff;
 	//path to save temporary cached pfs files.
 	QString tempfilespath;
-	//number of threads to use for the batch feature.
-	int num_batch_threads;
+	//number of threads to use (where threaded execution is enabled).
+	int num_threads;
 	//Image format used to save LDRs in batch mode.
 	QString batch_ldr_format;
 };
 
+class QtPfsGuiOptions {
+	public:
+	static void loadOptions (qtpfsgui_opts *dest);
+};
 
-enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard04,mantiuk};
+enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk};
 struct tonemapping_options {
 	int xsize;
 	float pregamma;
 	enum tmoperator tmoperator;
 	union {
 		struct {
-			bool simple;
-			bool eq2; //false means eq4
+			bool  simple;
+			bool  eq2; //false means eq4
 			float lct;
 		} ashikhminoptions;
 		struct{
@@ -77,32 +71,32 @@ struct tonemapping_options {
 			float beta;
 			float color;
 			float noiseredux;
-			bool newfattal;
+			bool  newfattal;
 		} fattaloptions;
 		struct {
-			bool autolum;
-			bool local;
+			bool  autolum;
+			bool  local;
 			float cone;
 			float rod;
 			float multiplier;
 		} pattanaikoptions;
 		struct {
-			bool scales;
+			bool  scales;
 			float key;
 			float phi;
-			int range;
-			int lower;
-			int upper;
+			int   range;
+			int   lower;
+			int   upper;
 		} reinhard02options;
 		struct {
 			float brightness;
 			float chromaticAdaptation;
 			float lightAdaptation;
-		} reinhard04options;
+		} reinhard05options;
 		struct {
 			float contrastfactor;
 			float saturationfactor;
-			bool contrastequalization;
+			bool  contrastequalization;
 		} mantiukoptions;
 	} operator_options;
 };
@@ -111,6 +105,7 @@ class TMOptionsOperations {
 public:
 	TMOptionsOperations(tonemapping_options* opts);
 	static tonemapping_options* parseFile(QString file);
+	static tonemapping_options* getDefaultTMOptions();
 	QString getPostfix();
 	QString getCaption();
 	QString getExifComment();

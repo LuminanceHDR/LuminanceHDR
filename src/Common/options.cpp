@@ -25,7 +25,46 @@
 #include <QFile>
 #include <QTextStream>
 #include <QApplication>
+#include <QSettings>
+#include <QDir>
 #include "config.h"
+
+void QtPfsGuiOptions::loadOptions(qtpfsgui_opts *dest) {
+	QSettings settings("Qtpfsgui", "Qtpfsgui");
+	settings.beginGroup(GROUP_DCRAW);
+		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
+			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");
+		dest->dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
+	settings.endGroup();
+
+	settings.beginGroup(GROUP_HDRVISUALIZATION);
+		if (!settings.contains(KEY_NANINFCOLOR))
+			settings.setValue(KEY_NANINFCOLOR,0xFF000000);
+		dest->naninfcolor=settings.value(KEY_NANINFCOLOR,0xFF000000).toUInt();
+	
+		if (!settings.contains(KEY_NEGCOLOR))
+			settings.setValue(KEY_NEGCOLOR,0xFF000000);
+		dest->negcolor=settings.value(KEY_NEGCOLOR,0xFF000000).toUInt();
+	settings.endGroup();
+
+	settings.beginGroup(GROUP_TONEMAPPING);
+		if (!settings.contains(KEY_TEMP_RESULT_PATH))
+			settings.setValue(KEY_TEMP_RESULT_PATH, QDir::currentPath());
+		dest->tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
+		if (!settings.contains(KEY_BATCH_LDR_FORMAT))
+			settings.setValue(KEY_BATCH_LDR_FORMAT, "JPEG");
+		dest->batch_ldr_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
+		if (!settings.contains(KEY_NUM_BATCH_THREADS))
+			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
+		dest->num_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
+	settings.endGroup();
+
+	settings.beginGroup(GROUP_TIFF);
+		if (!settings.contains(KEY_SAVE_LOGLUV))
+			settings.setValue(KEY_SAVE_LOGLUV,true);
+		dest->saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
+	settings.endGroup();
+}
 
 tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 	QFile file(fname);
@@ -35,7 +74,7 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 	}
 
 	tonemapping_options *toreturn=new tonemapping_options;
-	//specifying -2 as size, and passing -2 as the original size in the thread constructor below, we basically bypass the resize step in the thread.
+	//specifying -2 as size, and passing -2 as the original size in the tone mapper thread constructor (instantiated in the batchDialog class), we basically bypass the resize step in the thread.
 	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
 	toreturn->xsize=-2;
 
@@ -69,8 +108,8 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 				toreturn->tmoperator=pattanaik;
 			} else if (value == "Reinhard02") {
 				toreturn->tmoperator=reinhard02;
-			} else if (value == "Reinhard04") {
-				toreturn->tmoperator=reinhard04;
+			} else if (value == "Reinhard05") {
+				toreturn->tmoperator=reinhard05;
 			} else if (value == "Mantiuk06") {
 				toreturn->tmoperator=mantiuk;
 			}
@@ -127,11 +166,11 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 		} else if (field=="UPPER") {
 			toreturn->operator_options.reinhard02options.upper=value.toInt();
 		} else if (field=="BRIGHTNESS") {
-			toreturn->operator_options.reinhard04options.brightness=value.toFloat();
+			toreturn->operator_options.reinhard05options.brightness=value.toFloat();
 		} else if (field=="CHROMATICADAPTATION") {
-			toreturn->operator_options.reinhard04options.chromaticAdaptation=value.toFloat();
+			toreturn->operator_options.reinhard05options.chromaticAdaptation=value.toFloat();
 		} else if (field=="LIGHTADAPTATION") {
-			toreturn->operator_options.reinhard04options.lightAdaptation=value.toFloat();
+			toreturn->operator_options.reinhard05options.lightAdaptation=value.toFloat();
 		} else if (field=="PREGAMMA") {
 			toreturn->pregamma=value.toFloat();
 		} else {
@@ -140,6 +179,18 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 // 			return NULL;
 		}
 	}
+	return toreturn;
+}
+
+tonemapping_options* TMOptionsOperations::getDefaultTMOptions() {
+	tonemapping_options *toreturn=new tonemapping_options;
+	//TODO when instantiating the tonemapperThread, check this value: if -2 => create thread with originalsize=-2 (to skip resize the step as we did with the batch tone mapping), else (the user wants to resize) create thread with true originalxsize
+	toreturn->xsize=-2;
+	toreturn->pregamma=1;
+	toreturn->tmoperator=mantiuk;
+	toreturn->operator_options.mantiukoptions.contrastfactor=0.3;
+	toreturn->operator_options.mantiukoptions.contrastequalization=false;
+	toreturn->operator_options.mantiukoptions.saturationfactor=1.8;
 	return toreturn;
 }
 
@@ -238,11 +289,11 @@ QString TMOptionsOperations::getPostfix() {
 		}
 		}
 		break;
-	case reinhard04: {
-		float brightness=opts->operator_options.reinhard04options.brightness;
-		float chromaticAdaptation= opts->operator_options.reinhard04options.chromaticAdaptation;
-		float lightAdaptation=opts->operator_options.reinhard04options.lightAdaptation;
-		postfix+="reinhard04_";
+	case reinhard05: {
+		float brightness=opts->operator_options.reinhard05options.brightness;
+		float chromaticAdaptation= opts->operator_options.reinhard05options.chromaticAdaptation;
+		float lightAdaptation=opts->operator_options.reinhard05options.lightAdaptation;
+		postfix+="reinhard05_";
 		postfix+=QString("brightness_%1_").arg(brightness);
 		postfix+=QString("chromatic_adaptation_%1_").arg(chromaticAdaptation);
 		postfix+=QString("light_adaptation_%1").arg(lightAdaptation);
@@ -344,11 +395,11 @@ QString TMOptionsOperations::getCaption() {
 		}
 		}
 		break;
-	case reinhard04: {
-		float brightness=opts->operator_options.reinhard04options.brightness;
-		float chromaticAdaptation= opts->operator_options.reinhard04options.chromaticAdaptation;
-		float lightAdaptation=opts->operator_options.reinhard04options.lightAdaptation;
-		caption+="Reinhard04: ~ ";
+	case reinhard05: {
+		float brightness=opts->operator_options.reinhard05options.brightness;
+		float chromaticAdaptation= opts->operator_options.reinhard05options.chromaticAdaptation;
+		float lightAdaptation=opts->operator_options.reinhard05options.lightAdaptation;
+		caption+="Reinhard05: ~ ";
 		caption+=QString("Brightness=%1 ~ ").arg(brightness);
 		caption+=QString("Chromatic Adaptation=%1 ~ ").arg(chromaticAdaptation);
 		caption+=QString("Light Adaptation=%1").arg(lightAdaptation);
@@ -452,11 +503,11 @@ QString TMOptionsOperations::getExifComment() {
 		}
 		}
 		break;
-	case reinhard04: {
-		float brightness = opts->operator_options.reinhard04options.brightness;
-		float chromaticAdaptation = opts->operator_options.reinhard04options.chromaticAdaptation;
-		float lightAdaptation = opts->operator_options.reinhard04options.lightAdaptation;
-		exif_comment+="Reinhard04\nParameters:\n";
+	case reinhard05: {
+		float brightness = opts->operator_options.reinhard05options.brightness;
+		float chromaticAdaptation = opts->operator_options.reinhard05options.chromaticAdaptation;
+		float lightAdaptation = opts->operator_options.reinhard05options.lightAdaptation;
+		exif_comment+="Reinhard05\nParameters:\n";
 		exif_comment+=QString("Brightness: %1\n").arg(brightness);
 		exif_comment+=QString("Chromatic Adaptation: %1\n").arg(chromaticAdaptation);
 		exif_comment+=QString("Light Adaptation: %1\n").arg(lightAdaptation);
