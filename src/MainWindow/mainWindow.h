@@ -28,10 +28,10 @@
 #include <QWorkspace>
 #include <QStringList>
 #include <QSettings>
-#include "../HdrWizard/hdrwizardform_impl.h"
+#include "../HdrWizard/newHdrWizard.h"
 #include "../../generated_uic/ui_maingui.h"
-#include "../Options/options_impl.h"
-#include "../Resize/resizedialog_impl.h"
+#include "../Preferences/preferencesDialog.h"
+#include "../Resize/resizeDialog.h"
 class HdrViewer;
 class QSignalMapper;
 

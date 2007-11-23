@@ -28,16 +28,16 @@
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>
-#include "maingui_impl.h"
+#include "mainWindow.h"
 #include "../Fileformat/pfstiff.h"
-#include "../ToneMappingDialog/tonemappingdialog_impl.h"
+#include "../ToneMappingDialog/tonemappingDialog.h"
 #include "../generated_uic/ui_documentation.h"
 #include "../generated_uic/ui_about.h"
-#include "../TransplantExif/transplant_impl.h"
-#include "../Batch/batch_dialog_impl.h"
-#include "../Threads/io_threads.h"
+#include "../TransplantExif/transplant.h"
+#include "../Batch/batch_dialog.h"
+#include "../Threads/loadHdrThread.h"
+#include "../Common/config.h"
 #include "hdrviewer.h"
-#include "../config.h"
 
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
@@ -208,7 +208,7 @@ void MainGui::fileSaveAs()
 				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),qfi.filePath());
 				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
-				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only <br>Radiance rgbe (hdr), PFS, hdr tiff and OpenEXR (linux only) <br>files up until now."),
+				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports  <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR <br>files."),
 				QMessageBox::Ok,QMessageBox::NoButton);
 				delete fd;
 				return;
@@ -218,7 +218,7 @@ void MainGui::fileSaveAs()
 			currenthdr->filename=fname;
 			currenthdr->setWindowTitle(fname);
 		}
-	}
+	} //if (fd->exec())
 	delete fd;
 }
 
@@ -418,16 +418,18 @@ void MainGui::openRecentFile() {
 
 void MainGui::setupLoadThread(QString fname) {
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting, qtpfsgui_options);
-	connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
 	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrViewer(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 	loadthread->start();
 }
 
-void MainGui::load_failed(QString fname) {
-	QMessageBox::critical(0,tr("Aborting..."),tr("File is not readable (check existence, permissions,...)"), QMessageBox::Ok,QMessageBox::NoButton);
+void MainGui::load_failed(QString error_message) {
+	QMessageBox::critical(0,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+	LoadHdrThread *lht=(LoadHdrThread *)(sender());
+	QString fname=lht->getHdrFileName();
+	delete lht;
 	files.removeAll(fname);
 	settings.setValue(KEY_RECENT_FILES, files);
 	updateRecentFileActions();
@@ -478,59 +480,7 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 	break;
 	}
 
-	settings.beginGroup(GROUP_DCRAW);
-		if (!settings.contains(KEY_AUTOWB))
-			settings.setValue(KEY_AUTOWB,false);
-		dest->dcraw_options.auto_wb=settings.value(KEY_AUTOWB,false).toBool();
-
-		if (!settings.contains(KEY_CAMERAWB))
-			settings.setValue(KEY_CAMERAWB,true);
-		dest->dcraw_options.camera_wb=settings.value(KEY_CAMERAWB,true).toBool();
-
-		if (!settings.contains(KEY_HIGHLIGHTS))
-			settings.setValue(KEY_HIGHLIGHTS,0);
-		dest->dcraw_options.highlights=settings.value(KEY_HIGHLIGHTS,0).toInt();
-
-		if (!settings.contains(KEY_QUALITY))
-			settings.setValue(KEY_QUALITY,2);
-		dest->dcraw_options.quality=settings.value(KEY_QUALITY,2).toInt();
-
-		if (!settings.contains(KEY_4COLORS))
-			settings.setValue(KEY_4COLORS,false);
-		dest->dcraw_options.four_colors=settings.value(KEY_4COLORS,false).toBool();
-
-		if (!settings.contains(KEY_OUTCOLOR))
-			settings.setValue(KEY_OUTCOLOR,4);
-		dest->dcraw_options.output_color_space=settings.value(KEY_OUTCOLOR,4).toInt();
-	settings.endGroup();
-
-	settings.beginGroup(GROUP_HDRVISUALIZATION);
-		if (!settings.contains(KEY_NANINFCOLOR))
-			settings.setValue(KEY_NANINFCOLOR,0xFF000000);
-		dest->naninfcolor=settings.value(KEY_NANINFCOLOR,0xFF000000).toUInt();
-	
-		if (!settings.contains(KEY_NEGCOLOR))
-			settings.setValue(KEY_NEGCOLOR,0xFF000000);
-		dest->negcolor=settings.value(KEY_NEGCOLOR,0xFF000000).toUInt();
-	settings.endGroup();
-
-	settings.beginGroup(GROUP_TONEMAPPING);
-		if (!settings.contains(KEY_TEMP_RESULT_PATH))
-			settings.setValue(KEY_TEMP_RESULT_PATH, QDir::currentPath());
-		dest->tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
-		if (!settings.contains(KEY_BATCH_LDR_FORMAT))
-			settings.setValue(KEY_BATCH_LDR_FORMAT, "JPEG");
-		dest->batch_ldr_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
-		if (!settings.contains(KEY_NUM_BATCH_THREADS))
-			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
-		dest->num_batch_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
-	settings.endGroup();
-
-	settings.beginGroup(GROUP_TIFF);
-		if (!settings.contains(KEY_SAVE_LOGLUV))
-			settings.setValue(KEY_SAVE_LOGLUV,true);
-		dest->saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
-	settings.endGroup();
+	QtPfsGuiOptions::loadOptions(dest);
 }
 
 MainGui::~MainGui() {
