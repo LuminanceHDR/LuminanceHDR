@@ -146,7 +146,7 @@ void QtpfsguiOptions::helpDcrawParamsButtonClicked() {
 	ui.setupUi(help);
 	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
 	ui.tb->setSource(QUrl("dcraw.html"));
-	help->show();
+	help->exec();
 }
 
 void QtpfsguiOptions::enterWhatsThis() {
