@@ -208,7 +208,7 @@ void MainGui::fileSaveAs()
 				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),qfi.filePath());
 				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
-				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports  <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR <br>files."),
+				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),
 				QMessageBox::Ok,QMessageBox::NoButton);
 				delete fd;
 				return;
@@ -566,7 +566,7 @@ void MainGui::aboutQtpfsgui() {
 		ui.GPLbox->setOpenExternalLinks(true);
 		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
 #endif
-		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
+		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
 	}
 	about->show();
 }

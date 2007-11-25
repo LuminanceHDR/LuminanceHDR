@@ -220,17 +220,17 @@
            <widget class="QComboBox" name="blendModeCB" >
             <item>
              <property name="text" >
-              <string>Difference (M-P)</string>
+              <string>Difference (E-P)</string>
              </property>
             </item>
             <item>
              <property name="text" >
-              <string>Overlay (M+P)</string>
+              <string>Overlay (E+P)</string>
              </property>
             </item>
             <item>
              <property name="text" >
-              <string>Movable Only (M)</string>
+              <string>Editable Only (E)</string>
              </property>
             </item>
             <item>
@@ -305,74 +305,12 @@
            <number>0</number>
           </property>
           <property name="spacing" >
-           <number>10</number>
-          </property>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="prevLeftButton" >
-            <property name="toolTip" >
-             <string>Select the previous image in the movable list</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Use this button to move the selection to the previous image in the movable list.</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="nextLeftButton" >
-            <property name="toolTip" >
-             <string>Select the next image in the movable list</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Use this button to move the selection to the next image in the movable list.</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
-          </property>
-          <property name="spacing" >
            <number>6</number>
           </property>
           <item>
            <widget class="QLabel" name="label" >
             <property name="text" >
-             <string>&amp;Movable</string>
+             <string>Ed&amp;itable</string>
             </property>
             <property name="alignment" >
              <set>Qt::AlignCenter</set>
@@ -399,7 +337,10 @@
              </size>
             </property>
             <property name="toolTip" >
-             <string>The movable image is the one currently selected</string>
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p>&lt;/body>&lt;/html></string>
             </property>
             <property name="whatsThis" >
              <string>The image currently selected in this list can be translated up,down,left and right using the controls below.
@@ -524,71 +465,12 @@ This image's histogram is diplayed in the widget above.</string>
              <string>The reference image is the one currently selected</string>
             </property>
             <property name="whatsThis" >
-             <string>The image currently selected in this list serves as a reference position for the movable image</string>
+             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">The image currently selected in this list serves as a reference position for the editable image&lt;/p>&lt;/body>&lt;/html></string>
             </property>
            </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" >
-          <property name="margin" >
-           <number>0</number>
-          </property>
-          <property name="spacing" >
-           <number>6</number>
-          </property>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>26</width>
-              <height>41</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="prevRightButton" >
-            <property name="toolTip" >
-             <string>Select the previous image in the reference list</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Use this button to move the selection to the previous image in the reference list.</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >:/new/prefix1/images/uparrow.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="nextRightButton" >
-            <property name="toolTip" >
-             <string>Select the next image in the reference list</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Use this button to move the selection to the next image in the reference list.</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >:/new/prefix1/images/downarrow.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" >
-             <size>
-              <width>26</width>
-              <height>41</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </item>
@@ -920,13 +802,19 @@ This image's histogram is diplayed in the widget above.</string>
         </size>
        </property>
        <property name="toolTip" >
-        <string>Shift values for the currently selected movable image</string>
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Shift values for the currently selected editable image&lt;/p>&lt;/body>&lt;/html></string>
        </property>
        <property name="whatsThis" >
-        <string>Here the user can view and set the shift values for the currently selected movable image</string>
+        <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Here the user can view and set the shift values for the currently selected editable image&lt;/p>&lt;/body>&lt;/html></string>
        </property>
        <property name="title" >
-        <string>Shifts for movable Image</string>
+        <string>Shift values for editable image</string>
        </property>
        <layout class="QHBoxLayout" >
         <property name="margin" >
@@ -1205,8 +1093,8 @@ This image's histogram is diplayed in the widget above.</string>
       <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the preview (using the preview mode on the left) between the movable and the reference image.&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the same image is selected in both the movable and reference list, this area will show the image itself.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p>
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p>&lt;/body>&lt;/html></string>
      </property>
      <property name="frameShape" >
@@ -1230,12 +1118,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>resetAllButton</tabstop>
   <tabstop>resetButton</tabstop>
   <tabstop>cropButton</tabstop>
-  <tabstop>nextRightButton</tabstop>
-  <tabstop>prevRightButton</tabstop>
   <tabstop>nextBothButton</tabstop>
   <tabstop>prevBothButton</tabstop>
-  <tabstop>nextLeftButton</tabstop>
-  <tabstop>prevLeftButton</tabstop>
   <tabstop>referenceListWidget</tabstop>
   <tabstop>movableListWidget</tabstop>
   <tabstop>blendModeCB</tabstop>

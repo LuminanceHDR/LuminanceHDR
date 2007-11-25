@@ -110,12 +110,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	connect(movableListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updateMovable(int)));
 	connect(referenceListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updatePivot(int)));
-	connect(prevLeftButton,SIGNAL(clicked()),this,SLOT(prevLeft()));
-	connect(nextLeftButton,SIGNAL(clicked()),this,SLOT(nextLeft()));
 	connect(prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
 	connect(nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
-	connect(prevRightButton,SIGNAL(clicked()),this,SLOT(prevRight()));
-	connect(nextRightButton,SIGNAL(clicked()),this,SLOT(nextRight()));
 	
 	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
 	connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitPreview(bool)));
@@ -404,8 +400,6 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
 	nextBothButton->setDisabled(toggled);
 	label_reference_list->setDisabled(toggled);
 	referenceListWidget->setDisabled(toggled);
-	prevRightButton->setDisabled(toggled);
-	nextRightButton->setDisabled(toggled);
 	previewWidget->update();
 }
 

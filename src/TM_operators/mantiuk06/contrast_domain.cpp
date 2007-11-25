@@ -29,7 +29,7 @@
  * 
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
  *
- * $Id: contrast_domain.cpp,v 1.5 2007/06/16 19:23:08 rafm Exp $
+ * $Id: contrast_domain.cpp,v 1.6 2007/10/17 10:03:21 rafm Exp $
  */
 
 
@@ -37,6 +37,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+//#include <sys/time.h>
 
 #include "contrast_domain.h"
 
@@ -117,6 +119,7 @@ public:
   float matrix_median(int n, float* m);
   void pyramid_gradient_multiply(PYRAMID* pyramid, float val);
 
+  void dump_matrix_to_file(int width, int height, float* m, const char *file_name);
   void matrix_show(char* text, int rows, int cols, float* data);
   void pyramid_show(PYRAMID* pyramid);
 
@@ -193,17 +196,18 @@ inline float min( float a, float b )
 // upsampled matrix is twice bigger in each direction than data[]
 // res should be a pointer to allocated memory for bigger matrix
 // nearest neighborhood method - should be changed!
+// cols and rows are the dimmensions of the output matrix
 void ContrastDomain::matrix_upsample(int cols, int rows, float* in, float* out){
 
-  float dx = (float)cols / (float)(cols*2);
-  float dy = (float)rows / (float)(rows*2);
+  const int inRows = (rows)/2;
+  const int inCols = (cols)/2;
 
-  const int outRows = rows * 2;
-  const int outCols = cols * 2;
+  const int outRows = rows;
+  const int outCols = cols;
 
-  const float inRows = rows;
-  const float inCols = cols;
-
+  const float dx = (float)inCols / ((float)outCols);
+  const float dy = (float)inRows / ((float)outRows);
+  
   const float filterSize = 1;
   
   float sx, sy;
@@ -233,17 +237,54 @@ void ContrastDomain::matrix_upsample(int cols, int rows, float* in, float* out){
   return;
 }
 
+
+// void ContrastDomain::matrix_upsample(int cols, int rows, float* in, float* out)
+// {
+//   const int inRows = rows/2;
+//   const int inCols = cols/2;
+
+//   const int outRows = rows;
+//   const int outCols = cols;
+  
+//   int sx, sy;
+//   int x, y;
+//   for( y = 0, sy = 0; sy < inRows; y+=2, sy++ ) {
+//     float *inLine = in + sy*inCols;
+//     float *outLine = out + y*outCols;
+//     for( x = 0, sx = 0; sx < inCols; x += 2, sx++ ) {
+//       float &v = inLine[sx];
+//       outLine[x] = v;
+//       outLine[x+1] = v;
+//       outLine[x+outCols] = v;
+//       outLine[x+outCols+1] = v;
+//     }
+//   }
+//   // odd output size
+//   if( outCols & 1 ) 
+//     for( y = 0; y < (outRows& ~1); y++ )
+//       out[y*outCols+outCols-1] = out[y*outCols+outCols-2];
+  
+//   if( outRows & 1 ) 
+//     for( x = 0; x < outCols; x++ ) {
+//       out[outCols*(outCols-1)+x] = out[outCols*(outCols-1)+x];
+  
+
+//   return;
+// }
+
+
 // downsample the matrix
 void ContrastDomain::matrix_downsample(int cols, int rows, float* data, float* res){
 
-  const float inRows = rows;
-  const float inCols = cols;
+      //=================
+  const int inRows = rows;
+  const int inCols = cols;
 
-  const int outRows = rows / 2;
-  const int outCols = cols / 2;
+  const int outRows = (rows) / 2;
+  const int outCols = (cols) / 2;
 
-  const float dx = (float)inCols / (float)outCols;
-  const float dy = (float)inRows / (float)outRows;
+  const float dx = (float)inCols / ((float)outCols);
+  const float dy = (float)inRows / ((float)outRows);
 
   const float filterSize = 0.5;
   
@@ -265,6 +306,39 @@ void ContrastDomain::matrix_downsample(int cols, int rows, float* data, float* r
 	
   return;
 }
+
+// void ContrastDomain::matrix_downsample(int cols, int rows, float* data, float* res){
+
+//   const float inRows = rows;
+//   const float inCols = cols;
+
+//   const int outRows = rows / 2;
+//   const int outCols = cols / 2;
+
+//   const float dx = (float)inCols / (float)outCols;
+//   const float dy = (float)inRows / (float)outRows;
+
+//   const float filterSize = 0.5;
+  
+//   float sx, sy;
+//   int x, y;
+  
+//   for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
+//     for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+
+//       float pixVal = 0;
+//       float w = 0;
+//       for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
+//         for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
+//           pixVal += data[(int)ix + (int)iy * (int)inCols];
+//           w += 1;
+//         }     
+//       res[x + y * outCols] = pixVal/w;      
+//     }	
+	
+//   return;
+// }
+
 
 // return = a + b
 float* ContrastDomain::matrix_add(int n, float* a, float* b){
@@ -384,19 +458,26 @@ void ContrastDomain::pyramid_calculate_divergence(PYRAMID* pyramid){
 // calculate sum of divergences in the pyramid
 //	divergences for a particular levels should be calculated earlier 
 //	and set in PYRAMID_LEVEL::divG
-void ContrastDomain::pyramid_calculate_divergence_sum_in(PYRAMID* pyramid, float* divG_sum){
+void ContrastDomain::pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum){
 	
   if(pyramid->next != NULL)	
-    pyramid_calculate_divergence_sum_in((PYRAMID*)pyramid->next, divG_sum);
+    pyramid_calculate_divergence_sum((PYRAMID*)pyramid->next, divG_sum);
 
   PYRAMID_LEVEL* pl = pyramid->level;
-	
-  matrix_add(pl->rows * pl->cols, pl->divG, divG_sum);
-	
+  
   float* temp = matrix_alloc(pl->rows*pl->cols);
-  matrix_copy(pl->rows*pl->cols, divG_sum, temp);
+  if(pyramid->next != NULL)
+    matrix_upsample(pl->cols, pl->rows, divG_sum, temp );
+  else
+    matrix_zero(pl->rows * pl->cols, temp);
+  
+  matrix_add(pl->rows * pl->cols, pl->divG, temp);
 
-  matrix_upsample(pl->cols, pl->rows, temp, divG_sum);
+//   char name[256];
+//   sprintf( name, "Up_%d.pfs", pl->cols );
+//   dump_matrix_to_file( pl->cols, pl->rows, temp, name );  
+  
+  matrix_copy(pl->rows*pl->cols, temp, divG_sum);
 	
   matrix_free(temp);
 
@@ -406,18 +487,18 @@ void ContrastDomain::pyramid_calculate_divergence_sum_in(PYRAMID* pyramid, float
 
 // calculate the sum of divergences for the all pyramid level
 // the smaller divergence map is upsamled and added to the divergence map for the higher level of pyramid
-void ContrastDomain::pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum){
+// void ContrastDomain::pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum){
 	
-  PYRAMID_LEVEL* pl = pyramid->level;
-  matrix_zero(pl->rows * pl->cols, divG_sum);
+//   PYRAMID_LEVEL* pl = pyramid->level;
+// //  matrix_zero(pl->rows * pl->cols, divG_sum);
 	
-  if(pyramid->next != NULL)	
-    pyramid_calculate_divergence_sum_in((PYRAMID*)pyramid->next, divG_sum);
+// //  if(pyramid->next != NULL)	
+//   pyramid_calculate_divergence_sum_in((PYRAMID*)pyramid, divG_sum);
 
-  matrix_add(pl->rows * pl->cols, pl->divG, divG_sum);
+// //  matrix_add(pl->rows * pl->cols, pl->divG, divG_sum);
 		
-  return;
-}
+//   return;
+// }
 
 // calculate scale factors (Cx,Cy) for gradients (Gx,Gy)
 // C is equal to EDGE_WEIGHT for gradients smaller than GFIXATE or 1.0 otherwise
@@ -429,11 +510,17 @@ float* ContrastDomain::calculate_scale_factor(int n, float* G){
   float* C = matrix_alloc(n);
 
   for(int i=0; i<n; i++){
-
-    if(fabs(G[i]) < GFIXATE)
-      C[i] = EDGE_WEIGHT;
-    else	
-      C[i] = 1.0;
+    
+//    const float detectT = 0.001;
+//    const float g = max( detectT, fabs(G[i]) );    
+//    const float a = 0.038737;
+//    const float b = 0.537756;
+//    C[i] = a*pow(g,b);
+    
+     if(fabs(G[i]) < GFIXATE)
+       C[i] = EDGE_WEIGHT;
+     else	
+       C[i] = 1.0;
   }
 
   return C;
@@ -553,8 +640,8 @@ PYRAMID * ContrastDomain::pyramid_allocate(int cols, int rows){
     if(p == NULL)
       p = pyramid;
 		
-    rows /= 2;
-    cols /= 2;		
+    rows = (rows)/2;
+    cols = (cols)/2;		
     if(rows < PYRAMID_MIN_PIXELS || cols < PYRAMID_MIN_PIXELS)
       break;
   }
@@ -588,6 +675,23 @@ void ContrastDomain::calculate_gradient(int cols, int rows, float* lum, float* G
   return;
 }
 
+#define PFSEOL "\x0a"
+void ContrastDomain::dump_matrix_to_file(int width, int height, float* m, const char *file_name){
+
+  FILE *fh = fopen( file_name, "wb" );
+  assert( fh != NULL );
+  
+  fprintf( fh, "PFS1" PFSEOL "%d %d" PFSEOL "1" PFSEOL "0" PFSEOL
+    "%s" PFSEOL "0" PFSEOL "ENDH", width, height, "Y");
+
+  for( int y = 0; y < height; y++ )
+    for( int x = 0; x < width; x++ ) {
+      int idx = x + y*width;
+      fwrite( &(m[idx]), sizeof( float ), 1, fh );
+    }
+  
+  fclose( fh );
+}  
 
 // calculate gradients for the pyramid
 void ContrastDomain::pyramid_calculate_gradient(PYRAMID* pyramid, float* lum){
@@ -600,21 +704,30 @@ void ContrastDomain::pyramid_calculate_gradient(PYRAMID* pyramid, float* lum){
   calculate_gradient(pl->cols, pl->rows, lum_temp, pl->Gx, pl->Gy);	
 
   PYRAMID* pp = (PYRAMID*)pyramid->next;
+  PYRAMID* prev_pp = pyramid;
   float* temp;
 
-  while(1){
-    if(pp == NULL)
-      break;
+//   int l = 1;
+  while( pp != NULL ){
+    
     pl = pp->level;
 			
     temp = matrix_alloc(pl->rows * pl->cols);			
-    matrix_downsample(pl->cols*2, pl->rows*2, lum_temp, temp);	
+    matrix_downsample(prev_pp->level->cols, prev_pp->level->rows, lum_temp, temp);
+
+//     fprintf( stderr, "%d x %d -> %d x %d\n", pl->cols, pl->rows,
+//       prev_pp->level->cols, prev_pp->level->rows );
+    
+//      char name[40];
+//      sprintf( name, "ds_%d.pfs", l++ );
+//      dump_matrix_to_file( pl->cols, pl->rows, temp, name );    
 		
     calculate_gradient(pl->cols, pl->rows, temp, pl->Gx, pl->Gy);
 		
     matrix_free(lum_temp);
     lum_temp = temp;	
-			
+
+    prev_pp = pp;
     pp = (PYRAMID*)pp->next;	
   }
   matrix_free(lum_temp);
@@ -627,7 +740,7 @@ void ContrastDomain::pyramid_calculate_gradient(PYRAMID* pyramid, float* lum){
 void ContrastDomain::solveX(int n, float* b, float* x){
 
   matrix_copy(n, b, x); // x = b
-  matrix_multiply_const(n, x, -0.25);
+  matrix_multiply_const(n, x, -0.25);  
 }
 
 // divG_sum = A * x = sum(divG(x))
@@ -665,13 +778,15 @@ float* ContrastDomain::linbcg(PYRAMID* pyramid, float* b){
 	
   float* x = matrix_alloc(n); // allocate x matrix filled with zeros
   matrix_zero(n, x); // x = 0
-	
+  
   multiplyA(pyramid_tmp, pyramid, x, r); // r = A*x = divergence(x)
 
   matrix_substract(n, b, r); // r = b - r
 
   matrix_copy(n, r, rr); // rr = r
-	
+
+  multiplyA(pyramid_tmp, pyramid, r, rr); // rr = A*r 
+  
   float bnrm;
 	
   bnrm = sqrt(matrix_DotProduct(n, b, b));
@@ -679,7 +794,7 @@ float* ContrastDomain::linbcg(PYRAMID* pyramid, float* b){
   solveX(n, r, z); // z = ~A(-1) * r = -0.25 * r
 	
 #define TOL 0.01
-#define ITMAX 40
+#define ITMAX 30
   int iter = 0;
 
   float bknum=0;
@@ -720,7 +835,8 @@ float* ContrastDomain::linbcg(PYRAMID* pyramid, float* b){
     akden = matrix_DotProduct(n, z, pp);  // alfa denominator
 		
     ak = bknum / akden; // alfa = ...
-		
+
+    // This may need transpossing - possible bug
     multiplyA(pyramid_tmp, pyramid, pp, zz); // zz = A*pp = divergence(pp)
 
     // values for the next iterration
@@ -766,7 +882,7 @@ void ContrastDomain::matrix_log10(int n, float* m){
 // in_tab and out_tab should contain inscresing float values
 float ContrastDomain::lookup_table(int n, float* in_tab, float* out_tab, float val){
 
-  float ret=-1;
+  float ret = out_tab[0];
   float dd;
 
   if(val < in_tab[0])
@@ -911,14 +1027,30 @@ float ContrastDomain::matrix_median(int n, float* m){
 
 // transform gradients to luminance
 float* ContrastDomain::transform_to_luminance(PYRAMID* pp){
-
+  
   pyramid_calculate_scale_factor(pp); // calculate (Cx,Cy)
   pyramid_scale_gradient(pp); // scale small gradients by (Cx,Cy);
   pyramid_calculate_divergence(pp); // calculate divergence for the pyramid
+//  dump_matrix_to_file( pp->next->level->cols, pp->next->level->rows, pp->next->level->Gx, "Gx.pfs" );
 	
   float* b = matrix_alloc(pp->level->cols * pp->level->rows);
   pyramid_calculate_divergence_sum(pp, b); // calculate the sum od divergences (equal to b)
-	
+
+//  dump_matrix_to_file( pp->level->cols, pp->level->rows, b, "B.pfs" );
+
+//   PYRAMID *pi = pp;
+//   int i = 1;
+//   while( pi != NULL ) {
+//     PYRAMID_LEVEL* pl = pi->level;
+//     char name[256];
+//     sprintf( name, "Cx_%d.pfs", i );
+//     dump_matrix_to_file( pl->cols, pl->rows, pl->Cx, name );
+//     sprintf( name, "Cy_%d.pfs", i );
+//     dump_matrix_to_file( pl->cols, pl->rows, pl->Cx, name );
+//     pi = pi->next;
+//     i++;
+//   }
+ 
   float* x = linbcg(pp, b); // calculate luminances from gradients
 	
   matrix_free(b);
@@ -1008,9 +1140,10 @@ void ContrastDomain::tone_mapping(int c, int r, float* R, float* G, float* B, fl
 	
   PYRAMID* pp = pyramid_allocate(c,r); // create pyramid
   pyramid_calculate_gradient(pp,Y); // calculate gradiens for pyramid
-	
-  pyramid_transform_to_R(pp); // transform gradients to R
 
+//  dump_matrix_to_file( pp->next->level->cols, pp->next->level->rows, pp->next->level->Gx, "Gx2.pfs" );
+  
+  pyramid_transform_to_R(pp); // transform gradients to R  
 
   if( contrastFactor != 0 ) {
     // Contrast mapping
@@ -1021,18 +1154,15 @@ void ContrastDomain::tone_mapping(int c, int r, float* R, float* G, float* B, fl
   }
 	
   pyramid_transform_to_G(pp); // transform R to gradients
-	
+  
   float* x = transform_to_luminance(pp); // transform gradients to luminance Y
 	
-// 	for (int i=0;i<rows*cols;i++) {
-// 		fprintf(stderr,"v=%f\n", (*Yo)(i));
-// 	}
   float* temp = matrix_alloc(n);
 	
   matrix_copy(n, x, temp); // copy x to temp
   qsort(temp, n, sizeof(float), sort_median); // sort temp in ascending order
 	
-  float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) / 2.0; // calculate median
+//   float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) / 2.0; // calculate median
   // c and r should be even
   float CUT_MARGIN = 0.1;
 	
@@ -1045,20 +1175,10 @@ void ContrastDomain::tone_mapping(int c, int r, float* R, float* G, float* B, fl
   float p_max = temp[(int)floor(trim)] * delta + temp[(int)ceil(trim)] * (1-delta);	
 	
   matrix_free(temp);
-	
 
-  float d;
-  if( (p_max - median) > (median - p_min) )
-    d = p_max - median;
-  else 
-    d = median - p_min;
-	
-  float l_max = median + d;
-  float l_min = median - d;
-        
-  for(int j=0;j<n;j++){
-	
-    x[j] = (x[j] - l_min) / (l_max - l_min) * 2.5 - 2.5; // x scaled to <-2.5,0> range
+  const float disp_dyn_range = 2.3;
+  for(int j=0;j<n;j++) {	
+    x[j] = (x[j] - p_min) / (p_max - p_min) * disp_dyn_range - disp_dyn_range; // x scaled to <-2.5,0> range
   }
 	
   for(int j=0;j<n;j++){	
@@ -1084,6 +1204,3 @@ void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, fl
   ContrastDomain contrast;	
   contrast.tone_mapping( cols, rows, R, G, B, Y, contrastFactor, saturationFactor, progress_report );  
 }
-
-
-

@@ -349,8 +349,7 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
 }
 
 void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
-	QString fullmessage=QString("The following error has been encountered: %1").arg(errormessage);
-	error(qPrintable(fullmessage));
+	error(qPrintable(errormessage));
 	exit(1);
 }
 void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError) {
@@ -442,7 +441,7 @@ void CommandLineInterfaceManager::printHelp(char * progname) {
 		weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m \n\
 		(Default is triangular,linear,debevec) \n\
 	-l --load HDR_FILE     Load an HDR instead of creating a new one. \n \
-	-s --save HDR_FILE     Save to a HDR file format.CREATE_HDR_MODE \n \
+	-s --save HDR_FILE     Save to a HDR file format. \n \
 	-g --gamma VALUE       Gamma value to use during tone mapping. \n \
 	-r --resize VALUE      Width want to resize your HDR to (resized before gamma and tone mapping) \n \
 	-t --tmo               Tone mapping operator. Possible values: \n\

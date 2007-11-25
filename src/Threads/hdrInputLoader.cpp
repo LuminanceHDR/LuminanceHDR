@@ -69,14 +69,14 @@ void hdrInputLoader::run() {
 			}
 			//error if other tiff type
 			else {
-				emit loadFailed(QString(tr("The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()),image_idx);
+				emit loadFailed(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.").arg(qfi.fileName()),image_idx);
 				return;
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
 			if (!dcrawOpts.contains("-T")) {
 			qDebug("TH: dcraw, -T parameter missing.");
-			emit loadFailed(tr("Tiff ouput for raw files currently disabled. Please add the \"-T\" option to the advanced dcraw parameters in the options panel."),image_idx);
+			emit loadFailed(tr("ERROR: Tiff output for raw files currently disabled. Please add the \"-T\" option to the raw conversion parameters in the options panel."),image_idx);
 			return;
 			}
 
@@ -102,13 +102,13 @@ void hdrInputLoader::run() {
 
 			//blocking, timeout of 10 sec
 			if(!rawconversion->waitForStarted(10000)) {
-				emit loadFailed(tr("Cannot start dcraw on file: %1").arg(qfi.fileName()),image_idx);
+				emit loadFailed(tr("ERROR: Cannot start dcraw on file: %1").arg(qfi.fileName()),image_idx);
 				return;
 			}
 			
 			//blocking, timeout of 5mins
 			if(!rawconversion->waitForFinished(300000)) {
-				emit loadFailed(tr("Error or timeout occured while executing dcraw on file: %1").arg(qfi.fileName()),image_idx);
+				emit loadFailed(tr("ERROR: Error or timeout occured while executing dcraw on file: %1").arg(qfi.fileName()),image_idx);
 				return;
 			}
 
@@ -131,7 +131,7 @@ void hdrInputLoader::run() {
 			}
 			//error if other tiff type
 			else {
-				emit loadFailed(QString(tr("The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()),image_idx);
+				emit loadFailed(QString(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()),image_idx);
 				return;
 			}
 			//now do not remove tiff file, it might be required by align_image_stack
@@ -139,7 +139,7 @@ void hdrInputLoader::run() {
 	}
 	catch (...) {
 		qDebug("LIT: catched exception");
-		emit loadFailed(QString(tr("Failed Loading file: %1")).arg(fname),image_idx);
+		emit loadFailed(QString(tr("ERROR: Failed Loading file: %1")).arg(fname),image_idx);
 		return;
 	}
 }

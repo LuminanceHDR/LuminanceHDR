@@ -171,7 +171,7 @@ void HdrWizardForm::errorWhileLoading(QString error) {
 	tableWidget->clear();
 	tableWidget->setRowCount(0);
 	progressBar->setValue(0);
-	QMessageBox::critical(this,tr("Loading Error"), QString(tr("The following error has been encountered: %1")).arg(error));
+	QMessageBox::critical(this,tr("Loading Error"), error);
 	hdrCreationManager->clearlists(true);
 }
 
