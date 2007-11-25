@@ -144,7 +144,8 @@ TRANSLATIONS = i18n/lang_it.ts \
                i18n/lang_pl.ts \
                i18n/lang_tr.ts \
                i18n/lang_cs.ts \
-               i18n/lang_ru.ts
+               i18n/lang_ru.ts \
+               i18n/lang_id.ts
 
 
 unix {
