@@ -1,0 +1,6 @@
+To create a Windows EXE Setup file, you have to 
+
+1) Install (have installed) the NSIS compiler
+2) Modify the .iss file with a text editor and replace the paths under the [Files] section
+   with the corresponding paths on your system. Note, that this path has to contain a 
+   directory with all the unziped files (exe + dlls)
