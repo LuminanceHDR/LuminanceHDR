@@ -1,7 +1,7 @@
 Changes:
  v1.9.0
 * added manual anti-ghosting feature (for LDRs only).
-* the online and offline documentation has been updated.
+* the online and offline documentation has been slightly updated (not complete, though).
 * removed integrated dcraw implementation.
 * fixed durand02 bug (range=0).
 * added commandline interface.
@@ -15,6 +15,7 @@ Changes:
 * renamed alignmentdialog_impl.{h,cpp} to editingTools
 * moved previewWidget.{h,cpp} to HdrWizard.
 * renamed options_impl.{h,cpp} -> preferencesDialog.{h,cpp}.
+* fix for gcc 4.3
 
 02-08-2007 v1.8.12
 * 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
