@@ -27,6 +27,7 @@
  * $Id: pfs.cpp,v 1.9 2006/10/26 14:57:54 gkrawczyk Exp $
  */
 #include <map>
+#include <stdlib.h>
 
 #include "pfs.h"
 
