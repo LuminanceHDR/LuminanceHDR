@@ -116,6 +116,7 @@ void HdrWizardForm::loadImagesButtonClicked() {
 		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 
+	tableWidget->setEnabled(false);
 	tableWidget->setRowCount(files.count());
 	progressBar->setMaximum(files.count());
 	progressBar->setValue(0);
@@ -159,6 +160,7 @@ void HdrWizardForm::finishedLoadingInputFiles(QStringList filesLackingExif) {
 	//enable user EV input
 	EVgroupBox->setEnabled(TRUE);
 	tableWidget->selectRow(0);
+	tableWidget->setEnabled(true);
 
 	//align_image_stack & mtb don't yet work with 16bit data
 	if (tableWidget->rowCount()>=2 && hdrCreationManager->inputImageType()==HdrCreationManager::LDR_INPUT_TYPE) {
@@ -170,6 +172,7 @@ void HdrWizardForm::finishedLoadingInputFiles(QStringList filesLackingExif) {
 void HdrWizardForm::errorWhileLoading(QString error) {
 	tableWidget->clear();
 	tableWidget->setRowCount(0);
+	tableWidget->setEnabled(true);
 	progressBar->setValue(0);
 	QMessageBox::critical(this,tr("Loading Error"), error);
 	hdrCreationManager->clearlists(true);
