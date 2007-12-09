@@ -23,7 +23,7 @@
     <message>
         <location filename="../forms/about.ui" line="108"/>
         <source>A&amp;uthors</source>
-        <translation type="unfinished">A&amp;utores</translation>
+        <translation>A&amp;utores</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="171"/>
@@ -2718,7 +2718,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2298"/>
         <source>Tone Mapping settings file section</source>
-        <translation type="unfinished">Area de gestión de archivos de configuración</translation>
+        <translation>Area de gestión de archivos de configuración</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2301"/>
