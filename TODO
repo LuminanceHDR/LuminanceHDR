@@ -1,7 +1,5 @@
 * 360 copy borders
-* test win32 with canon 350D raw
-* test (win32) exif problem with Nikon D50's NEFs (David Marin gmail)
 * displaying progress bar when loading HDR images (we need to ``moc`` each facility...)
 * check for latest version, file online on sf (via setup.exe -on win32 only-?)
-* medium term: modular and external execution of dcraw and Pablo's alignment tool (waiting for win32 snapshot)
 * long term: TEST/IMPROVE the antighosting algorithm (waiting Hugin's GSoC)
+* see http://qtpfsgui.wiki.sourceforge.net/TODO for a complete list.
