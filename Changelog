@@ -1,8 +1,9 @@
 Changes:
  v1.9.0
 * added manual anti-ghosting feature (for LDRs only).
+* fixed mantiuk glitch.
 * the online and offline documentation has been slightly updated (not complete, though).
-* removed integrated dcraw implementation.
+* removed integrated dcraw implementation (now calling external executable).
 * fixed durand02 bug (range=0).
 * added commandline interface.
 * clicking on the tone mapper progress bar will terminate the tone mapping process.
