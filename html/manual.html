@@ -15,7 +15,7 @@
 	</ol>
 <li><A href="#usingqtpfsgui">Using Qtpfsgui</A></li>
 	<ol>
-	<li><A href="#mainwindow">The main Window</A></li>
+	<li><A href="#mainwindow">The main window</A></li>
 		<ol>
 		<li><A href="#menubar">The menubar</A></li>
 		<li><A href="#toolbar">The toolbar</A></li>
@@ -24,21 +24,21 @@
 		<li><A href="#hdroperations">Operations on an HDR</A></li>
 		</ol>
 	<li><A href="#createhdr">The Creation of an HDR</A></li>
-	<li><A href="#resizedialog">The Resize dialog</A></li>
-	<li><A href="#tonemappingdialog">The Tone mapping dialog</A></li>
+	<li><A href="#resizedialog">The Resize tool</A></li>
+	<li><A href="#tonemappingdialog">Interactive Tone mapping</A></li>
 		<ol>
 		<li><A href="#parameters">The tone mapping operators and their parameters</A></li>
 		<li><A href="#settingsfile">The tone mapping settings file</A></li>
 		</ol>
-	<li><A href="#batch_tm">The Batch Tone Mapping dialog</A></li>
-	<li><A href="#optionsdialog">The Options dialog</A></li>
+	<li><A href="#batch_tm">Batch Tone Mapping</A></li>
+	<li><A href="#optionsdialog">Preferences</A></li>
 		<ol>
 		<li><A href="#optrawimport">RAW Import</A></li>
 		<li><A href="#optvisualization">HDR Visualization</A></li>
 		<li><A href="#opttm">Tone mapping</A></li>
 		<li><A href="#opttiff">Tiff Options</A></li>
 		</ol>
-	<li><A href="#copyexif">The Copy Exif Data dialog</A></li>
+	<li><A href="#copyexif">Copy Exif Data</A></li>
 	</ol>
 <li><A href="#menuref">The menu reference</A></li>
 </ol>
@@ -51,36 +51,42 @@ Qtpfsgui is an open source graphical user interface application that provides a 
 <dt>HDR</dt>
 <dd>Stands for "High Dynamic Range". An HDR image is an image which presents more than 8 bit per color channel. Most CRTs, LCDs and printers only have a limited dynamic range, and can display only LDR images (see below). Thus various methods of "converting" HDR images into a viewable format have been developed, generally called "tone mapping".</dd>
 <dt>LDR</dt>
-<dd>Stands for "Low Dynamic Range". The most common image formats, such as JPEG,PNG,GIF,... have 8 bits per color channel, LDR is just another umbrella definition.</dd>
+<dd>Stands for "Low Dynamic Range". The most common image formats, such as JPEG, PNG, GIF, ... have 8 bits per color channel, LDR is just another umbrella definition.</dd>
 <dt>Tone map</dt>
-<dd>Tone mapping is the method of converting an HDR into a LDR. Various algorithms exist, and in this context they are also known as "tone mapping operators", or (in this manual) simply as "operator". Each operator is represented in the tone mapping dialog as a "tab".</dd>
+<dd>Tone mapping is the method of converting an HDR into a LDR. Various algorithms exist for this purpose, and in this context they are also known as "tone mapping operators", or in this manual simply as "operator". Each operator is represented in the interactive tone mapping window as a "tab".</dd>
 <dt>TMO</dt>
 <dd>Shorthand for "Tone Mapping Operator".</dd>
 <dt>RAW</dt>
 <dd>Another umbrella definition for several (mininally processed) image formats. Raw files can have 12 or 14 bits per color channel, but noise usually cuts down the available dynamic range to something like 1000:1, roughly 10 bits. For all intents and purposes they are HDR files.</dd>
+<dt>Antighosting</dt>
+<dd>The HDR creation process involves merging a stack of images. An object changing position in the image set creates a strange effect in which the object is partially visible (like a ghost) in the final HDR. This problem can be corrected by automatic or manual procedures.</dd>
 </dl>
 
 <A name="features"><h3>Summary of features</h3></A>
 Current supported features include:
 <ol>
-<li>Create an HDR from a set of files: either JPEG or RAW or TIFF.</li>
-<li>Tone map a HDR image to get a LDR image.</li>
+<li>Create an HDR from a set of files.</li>
+<li>Tone map an HDR image to get a LDR image.</li>
 <li>Save and load HDR images.</li>
 <li>Rotate and resize HDR images.</li>
 <li>Copy exif data between sets of images.</li>
 </ol>
-The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wizard: in order to create an HDR the user can load either a set of JPEG files, or a set of RAW files, or a set of TIFF files (8bit or 16bit).<br>
+The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wizard: in order to create an HDR the user can either load a set of JPEG files, a set of RAW files, or a set of TIFF files (8bit or 16bit).<br>
+Raw files are processed with dcraw in order to obtain a (8 or 16 bit) tiff file. For more information read <A href="dcraw.html">this page</A>.<br>
 The pictures must have been taken at the same scene, with different exposure settings (change the exposure time and/or aperture, and use a tripod if you have one). The newly created HDR will be available in the workspace as soon as the HDR creation wizard has ended.<br>
+The input files can be aligned via two alignment engines: align_image_stack and MTB.<br>
+The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. Qtpfsgui provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
+Read the chapter <A href="#createhdr">about the creation of an hdr</A> for more information about the alignment engines and the interactive anti-ghosting tool.<br>
 To tone map an HDR file to get an LDR image <strong>(second feature)</strong> you can press the "Tonemap the HDR" button.<br>
-Via the "File -> Open Hdr..." dialog you can choose to load in the workspace an HDR image image file, and the "File->Save Hdr as..." item lets you save the currently selected hdr image to a HDR image file format <strong>(third feature)</strong>.<br>
+Via the "File -> Open Hdr..." wizard you can choose to load in the workspace an HDR image image file, and the "File->Save Hdr as..." item lets you save the currently selected hdr image to a HDR image file format <strong>(third feature)</strong>.<br>
 Users can also rotate and resize <strong>(fourth feature)</strong> the currently selected hdr image via the "Image" menu item, see below.
 In order to create an HDR image Qtpfsgui requires to have a set of images with exif data in it. Qtpfsgui requires this information to get the exposure settings for an image in the set. When Qtpfsgui doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Qtpfsgui provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(fifth feature)</strong>.
 
 
 <A name="usingqtpfsgui"><h2>Using Qtpfsgui</h2></A>
-This chapter describes the most important elements of Qtpfsgui: the Main window, the Resize dialog, the Tone Mapping dialog, the Copy Exif data dialog and the Options dialog.
+This chapter describes the most important elements of Qtpfsgui: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactiv tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
 
-<A name="mainwindow"><h3>The main Window</h3></A>
+<A name="mainwindow"><h3>The main window</h3></A>
 Here's the main window that you can see once the program has launched.<br>
 <img src="images/mainwin.jpeg" width="850" height="501">
 
@@ -126,35 +132,44 @@ As soon as at least one HDR image has been loaded in the workspace you can:
 <li>Rotate it (Image->Rotate CounterClockWise or Image->Rotate ClockWise): Rotating an HDR modifies the HDR itself.</li>
 <li><A href="#resizedialog">Resize it</A>, i.e. scale it (Image -> Resize the Hdr...): Resizing an HDR modifies the HDR itself.</li>
 <li>Save it (File->Save Hdr as...): This is useful when you have just created an HDR from a set of JPEGs (or RAWs or TIFFs) via the "File->New Hdr..." wizard.</li>
-<li><A href="#tonemappingdialog">Tone map it</A> (Image->Tonemap the Hdr...): Tone mapping an HDR involves showing another dialog, called "Tone mapping Dialog" which uses the HDR as a source to create an LDR.</li>
+<li><A href="#tonemappingdialog">Tone map it</A> (Image->Tonemap the Hdr...): Tone mapping an HDR involves showing another window, called "Interactive Tone Mapping window" which uses the HDR as a source to create an LDR.</li>
 </ul><br>
 
 
 <A name="createhdr"><h3>The Creation of an HDR</h3></A>
 You can access the wizard that will guide you through the process of creating a new HDR image via the "File -> New Hdr..." menu item.<br>
 On the first page the wizard will asks you to select the set of images (of the same scene, but taken at different exposures) that are going to contribute to the final hdr (supported input: jpeg, raw and tiff -8 and 16 bit-).<br>
-Even if Qtpfsgui doesn't find the required exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for each one of your images in the set.<br>
-On the second page the wizard will also ask you which kind of configuration you want to use to create the hdr from the source images: usually the first choice leads to good results, so feel free to accept the default "Config 1" option by pressing next.<br>
+Even if Qtpfsgui doesn't find the required exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for the images in your the set.<br>
+The first page of the wizard enables the user to apply an automatic alignment step to the images in the set. It is possible to use one of two alignment options (or "engines"): align_image_stack and MTB.<br>
+The first option is usually a good choice (MTB works only on LDR images and has a simpler model that does not take into account rotation).<br>
+If your image set consists of LDR images (JPEG, 8 bit TIFF, or RAW files converted to tiff without the -4 switch) the second step of the wizard will show you a window that can be used to perform some "pre merging" editing activities.<br>
+The first feature will enable the user to add to each image in the set additional horizontal/vertical offsets.<br>
+The user is able to shift each image in set by one pixel by first selecting an image in the left (editable) list and then clicking one of the arrow buttons in the bottom-left panel. The same effect can also be obtained by using one of the WSAD or IKJL key combinations. Pressing Shift will shift by ten pixels, pressing control will shift by 50 pixels and pressing both Shift and Control will shift by 100 pixels.<br>
+By dragging a rectangle with the mouse, the user can also select a crop area for all the images in the set. Clicking the "Crop All Images" button will effectively crop the images in the set.<br>
+This window contains also the interactive anti-ghosting feature.<br>
+The user switches to anti-ghosting mode by pressing the "Anti Ghosting" button. It is then possible to draw a mask over the regions of the images that contain moving objects.<br>
+The user can select the size of the brush, its strength and whether the brush is adding or removing the mask.<br>
+The same window contains a button that enables the user to save the set of images after all the cropping has taken place and with all the anti-ghosting masks and shifts applied. The images will be saved in TIFF format, and the mask is saved as a 0-valued alpha channel in the image set.<br>
+The following page of the wizard will also ask you which kind of configuration you want to use to create the hdr from the source images: usually the first choice leads to good results, so feel free to accept the default "Config 1" option by pressing next.<br>
 If you think that the results can be improved you can try one of the other predefined configurations.<br>
 If you want to fiddle with settings you can check the "custom" option and another page of the wizard will show up with a complete set of configurations. It is worth mentioning that you should use the custom option as a last resort because the predefined configurations (which are a sub-set of the all possible configurations you can have in the custom configuration panel) are known to yield good results.<br>
-The "anti-ghosting" feature is still beta (even buggy) and very CPU demanding, use it with few and small input exposures.
 
 
 
 
-<A name="resizedialog"><h3>The Resize dialog</h3></A>
-You can access this dialog via the "Image -> Resize the Hdr..." menu item.<br>
+
+<A name="resizedialog"><h3>The Resize tool</h3></A>
+You can access this feature via the "Image -> Resize the Hdr..." menu item.<br>
 <img src="images/resize.jpeg" width="850" height="493">
 
 <br>
-<A name="tonemappingdialog"><h3>The Tone mapping dialog</h3></A>
-Via the Tone mapping Dialog the user is able to get an LDR from an HDR.<br>
+<A name="tonemappingdialog"><h3>Interactive Tone Mapping</h3></A>
+With this tool the user is able to get an LDR from an HDR.<br>
 <img src="images/tonemapdialog.jpeg" width="850" height="501"><br>
-The most important item in the Tone mapping Dialog is the "Tone mapping Panel" (shown on the left). You can toggle its visibility via the first button in the toolbar. The "Tone mapping Panel" is actually a dockbar, so you can make it float or dock it in the left or right areas of the window.<br>
+The most important item in the Tone mapping window is the "Tone mapping Panel" (shown on the left). You can toggle its visibility via the first button in the toolbar. The "Tone mapping Panel" is actually a dockbar, so you can make it float or dock it in the left or right areas of the window.<br>
 At the top you can change (via a combobox) the size of the resulting image. It is usually a good idea to work on a smaller scale image while trying out the TMOs, because some of them can be very cpu-intensive.<br>
-<em>Operators may behave differently depending on the chosen size.	</em><br>
-The tone mapping step works like this (as a pipe, some people would say):<br>
-pre-gamma --> tone mapping operator
+<em>Operators may behave differently depending on the chosen size.</em><br>
+The tone mapping step first applies to the HDR the gamma value specified by the pregamma value, then the tone mapping operator is applied.<br>
 <ul>
 <li>Pregamma changes the gamma in the HDR before the tone mapping: depending on the chosen tone mapping operator this can yield unexpected effects, like color saturation.</li>
 <li>The tone mapping operator transforms an HDR into a LDR.</li>
@@ -177,27 +192,22 @@ This is useful if you find that are often using some specific operator (and preg
 The "Load..." button lets you specify the file tone mapping settings filename that you want to load.<br>
 The "Apply settings" button applies the settings contained in the tone mapping settings file that has been loaded. This is useful when, after playing around with the values, you want to get back to the file's values.<br><br>
 
-<A name="batch_tm"><h3>The Batch Tone Mapping Dialog</h3></A>
-This dialog lets you tone map a batch of M hdr files using N tone mapping setting files. After the process you'll get M*N LDR results.<br>
+<A name="batch_tm"><h3>Batch Tone Mapping</h3></A>
+This window lets you tone map a batch of M hdr files using N tone mapping setting files. After the process you'll get M*N LDR results.<br>
 The top-left list contains the input hdrs, the top-right list contains the input tone mapping setting files.<br>
 You have to specify an output directory where the output LDR files will be saved to.<br>
-You can also always see what's happening in the Log panel at the bottom. You can filter the visualization of the log messages using the drop-down menu on the bottom-left and the text-field at the bottom-right of the dialog.<br>
+You can also always see what's happening in the Log panel at the bottom. You can filter the visualization of the log messages using the drop-down menu on the bottom-left and the text-field at the bottom-right of the window.<br>
 <IMG src="images/batch-1.jpg" width="692" height="525">
 
 
-<A name="optionsdialog"><h3>The Options Dialog</h3></A>
-This dialog lets you configure the global behavior of Qtpfsgui. You can access this dialog via the "Tools -> Preferences..." menu item.<br><br>
+<A name="optionsdialog"><h3>Preferences</h3></A>
+This window lets you configure the global behavior of Qtpfsgui. You can access this tool via the "Tools -> Preferences..." menu item.<br><br>
 
 <A name="optrawimport"><h4>RAW Import</h4></A>
-Qtpfsgui uses dcraw's code (internally, no external process is called) to import RAW files.
-This decision of embedding dcraw has been recently revised, and in the future we will call dcraw as an external process.<br>
-<img src="images/snap-qt4_3.jpeg" width="400" height="317"><br>
-Highlights recovery mode: 0, Clip all highlights to solid white. 1, Leave highlights unclipped in various shades of pink. 2-9 Reconstruct highlights. Low numbers favor whites, high numbers favor colors. Try -H 5 as a compromise.<br>
-The rest of the options should be almost self explanatory, in case they are not, read the dcraw's manpage.
+Qtpfsgui uses dcraw to convert RAW files. For more information please refer to <A href="dcraw.html">the specific page</A>.<br><br>
 
-<br>
 <A name="optvisualization"><h4>HDR Visualization</h4></A>
-Click on the buttons to pop-up a dialog that lets you choose which color to use for the nan/inf and for the negative values.<br>
+Click on the buttons to pop-up a window that lets you choose which color to use for the nan/inf and for the negative values.<br>
 <img src="images/snap-qt4_4.jpeg" width="400" height="317"><br>
 
 <br>
@@ -216,10 +226,10 @@ The Float TIFF format has to be used only if you want to load your tiff in anoth
 
 
 
-<A name="copyexif"><h3>The Copy Exif Data dialog</h3></A>
-You can access this dialog via the "Tools -> Copy Exif Data..." menu item.<br>
+<A name="copyexif"><h3>Copy Exif Data</h3></A>
+You can access this window via the "Tools -> Copy Exif Data..." menu item.<br>
 <img src="images/copy_exif.jpeg" width="850" height="500"><br>
-With this dialog you will be able to copy the exif data contained in a set of files (the sources) into another set of files (the destinations).<br>
+With this window you will be able to copy the exif data contained in a set of files (the sources) into another set of files (the destinations).<br>
 This is a one-to-one data copy, i.e. the first file in the destination list gets the exif data from the first file in the sources list and so on.<br>
 This is useful if you lost your original exif data after processing your images.
 
@@ -229,9 +239,9 @@ In this section you can find a complete reference describing what all the items 
 <dt>File -> New Hdr...</dt>
 <dd>launches a wizard that enables you to create an HDR starting from either a set of JPEGs or a set of RAWs, or a set of 8 or 16 bit TIFF files.</dd>
 <dt>File -> Open Hdr...</dt>
-<dd>launches a dialog that lets you load in the workspace either an existing HDR image file format (OpenEXR, Radiance RGBE, PFS stream) or a RAW file or also a TIFF file.</dd>
+<dd>launches a window that lets you load in the workspace either an existing HDR image file format (OpenEXR, Radiance RGBE, PFS stream) or a RAW file or also a TIFF file.</dd>
 <dt>File -> Save Hdr as...</dt>
-<dd>launches a dialog that lets you save the HDR image currently selected in the workspace to a HDR image file format (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF).</dd>
+<dd>launches a window that lets you save the HDR image currently selected in the workspace to a HDR image file format (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF).</dd>
 <dt>File -> Exit</dt>
 <dd>Exits the program</dd>
 <hr>
@@ -240,9 +250,9 @@ In this section you can find a complete reference describing what all the items 
 <dt>Image -> Rotate ClockWise</dt>
 <dd>modifies the HDR image currently selected in the workspace by rotating it clockwise.</dd>
 <dt>Image -> Resize the Hdr...</dt>
-<dd>launches a dialog that lets you resize the HDR image currently selected in the workspace.</dd>
+<dd>launches a window that lets you resize the HDR image currently selected in the workspace.</dd>
 <dt>Image -> Tonemap the Hdr...</dt>
-<dd>launches a dialog that lets you tone map the HDR image currently selected in the workspace.</dd>
+<dd>launches a window that lets you tone map the HDR image currently selected in the workspace.</dd>
 <hr>
 <dt>View -> HDR Histogram -> Fit to dynamic range</dt>
 <dd>sets the boundaries of the blue "histogram selection" rectangle to the leftmost and rightmost values of the histogram.</dd>
@@ -258,12 +268,12 @@ In this section you can find a complete reference describing what all the items 
 <dd>moves the boundaries of the blue "histogram selection" rectangle right.</dd>
 <hr>
 <dt>Tools -> Preferences...</dt>
-<dd>launches a dialog that lets you configure the global behaviour of Qtpfsgui.</dd>
+<dd>launches a window that lets you configure the global behaviour of Qtpfsgui.</dd>
 <dt>Tools -> Copy Exif Data...</dt>
-<dd>launches a dialog that lets you copy (a one-to-one copy) the exif tags in a set of images into another set.</dd>
+<dd>launches a window that lets you copy (a one-to-one copy) the exif tags in a set of images into another set.</dd>
 <hr>
 <dt>Help -> Documentation...</dt>
-<dd>Launches the help dialog containing this documentation.</dd>
+<dd>Launches the help window containing this documentation.</dd>
 </dl>
 
 
