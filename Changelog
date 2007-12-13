@@ -2,7 +2,7 @@ Changes:
  v1.9.0
 * added manual anti-ghosting feature (for LDRs only).
 * fixed mantiuk glitch.
-* the online and offline documentation has been slightly updated (not complete, though).
+* the online and offline documentation has been updated.
 * removed integrated dcraw implementation (now calling external executable).
 * fixed durand02 bug (range=0).
 * added commandline interface.
@@ -16,6 +16,7 @@ Changes:
 * renamed alignmentdialog_impl.{h,cpp} to editingTools
 * moved previewWidget.{h,cpp} to HdrWizard.
 * renamed options_impl.{h,cpp} -> preferencesDialog.{h,cpp}.
+* integrated pfstools 1.6.3 changes.
 * fix for gcc 4.3
 
 02-08-2007 v1.8.12
