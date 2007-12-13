@@ -60,9 +60,13 @@ pfs::Frame *readEXRfile (const char *filename) {
     InputFile file( filename );
 
     FrameBuffer frameBuffer;
-    Box2i dw = file.header().dataWindow();
+    Box2i dw = file.header().displayWindow();
+    Box2i dtw = file.header().dataWindow();
     int width  = dw.max.x - dw.min.x + 1;
     int height = dw.max.y - dw.min.y + 1;
+    if( dtw.min.x < dw.min.x && dtw.max.x > dw.max.x ||
+      dtw.min.y < dw.min.y && dtw.max.y > dw.max.y )
+      throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
     pfs::Frame *frame = pfsio.createFrame( width, height );
     const ChannelList &channels = file.header().channels();
     pfs::Channel *X, *Y, *Z;
@@ -76,7 +80,7 @@ pfs::Frame *readEXRfile (const char *filename) {
 
         frameBuffer.insert( "R",	  // name
           Slice( Imf::FLOAT,			  // type
-            (char *)X->getRawData(),
+            (char*)(X->getRawData()),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride
             1, 1,			  // x/y sampling
@@ -84,7 +88,7 @@ pfs::Frame *readEXRfile (const char *filename) {
 
         frameBuffer.insert( "G",	  // name
           Slice( Imf::FLOAT,			  // type
-            (char *)Y->getRawData(),
+            (char*)(Y->getRawData()),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride
             1, 1,			  // x/y sampling
@@ -92,7 +96,7 @@ pfs::Frame *readEXRfile (const char *filename) {
 
         frameBuffer.insert( "B",	  // name
           Slice( Imf::FLOAT,			  // type
-            (char *)Z->getRawData(),
+            (char*)(Z->getRawData()),
             sizeof(float),	  // xStride
             sizeof(float) * width,// yStride
             1, 1,			  // x/y sampling

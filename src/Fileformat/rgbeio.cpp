@@ -187,8 +187,8 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
 
   // image size
   char xbuf[4], ybuf[4];
-  int rez = fscanf(file, "%3s %d %3s %d\n", ybuf, &height, xbuf, &width);
-  if( rez!=4 )
+  if( fgets(head,sizeof(head)/sizeof(head[0]),file) == 0
+      || sscanf(head,"%s %d %s %d",ybuf,&height,xbuf,&width) != 4 )
   {
     throw pfs::Exception( "RGBE: unknown image size" );
   }
@@ -255,7 +255,7 @@ void readRadiance( FILE *file, int width, int height, float exposure,
     // read rle header
     Trgbe header[4];
     fread(header, sizeof(header), 1, file);
-    if( header[0] != 2 || header[1] != 2 )
+    if( header[0] != 2 || header[1] != 2 || (header[2]<<8) + header[3] != width )
     {
       //--- simple scanline (not rle)
       size_t rez = fread(scanline+4, sizeof(Trgbe), 4*width-4, file);
@@ -287,12 +287,6 @@ void readRadiance( FILE *file, int width, int height, float exposure,
     else
     {
       //--- rle scanline
-
-      int width2 = (header[2]<<8) + header[3];
-      if( width2!=width )
-      {
-        throw pfs::Exception( "RGBE: widths of scanline and image are different." );
-      }
 
       //--- each channel is encoded separately
       for( int ch=0 ; ch<4 ; ch++ )
