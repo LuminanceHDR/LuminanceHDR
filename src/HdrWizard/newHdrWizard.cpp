@@ -58,6 +58,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), o
 	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 
 	connect(NextFinishButton,SIGNAL(clicked()),this,SLOT(NextFinishButtonClicked()));
+	connect(cancelButton,SIGNAL(clicked()),this,SLOT(cancelButtonClicked()));
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
 	connect(predefConfigsComboBox,SIGNAL(activated(int)),this,
@@ -518,4 +519,7 @@ void HdrWizardForm::keyPressEvent(QKeyEvent *event) {
 	}
 }
 
-
+void HdrWizardForm::cancelButtonClicked() {
+	hdrCreationManager->removeTempFiles();
+	reject();
+}

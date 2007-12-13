@@ -1153,7 +1153,7 @@ pixel values&lt;/p></string>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="cancelbutton" >
+      <widget class="QPushButton" name="cancelButton" >
        <property name="text" >
         <string>&amp;Cancel</string>
        </property>
@@ -1169,34 +1169,18 @@ pixel values&lt;/p></string>
  </resources>
  <connections>
   <connection>
-   <sender>cancelbutton</sender>
-   <signal>clicked()</signal>
-   <receiver>HdrWizardForm</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>645</x>
-     <y>501</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>309</x>
-     <y>391</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>customConfigCheckBox</sender>
    <signal>toggled(bool)</signal>
    <receiver>label_weights</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>141</x>
-     <y>159</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1207,12 +1191,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>631</x>
-     <y>159</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1223,12 +1207,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>106</x>
-     <y>191</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1239,12 +1223,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>191</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1255,12 +1239,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>91</x>
-     <y>342</y>
+     <x>97</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>135</x>
-     <y>221</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1271,12 +1255,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>221</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1287,12 +1271,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>279</x>
-     <y>275</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>279</x>
-     <y>212</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1303,12 +1287,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>424</x>
-     <y>193</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>424</x>
-     <y>226</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1319,12 +1303,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>230</x>
-     <y>193</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>106</x>
-     <y>208</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1335,12 +1319,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>630</x>
-     <y>92</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1351,12 +1335,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>128</x>
-     <y>75</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1367,12 +1351,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>526</x>
-     <y>193</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>273</x>
-     <y>141</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1383,12 +1367,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>232</x>
-     <y>272</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
      <x>105</x>
-     <y>227</y>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1399,12 +1383,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>129</x>
-     <y>277</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>161</x>
-     <y>193</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1415,12 +1399,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>129</x>
-     <y>277</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>301</x>
-     <y>158</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1431,12 +1415,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>96</x>
-     <y>254</y>
+     <x>102</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>191</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1447,12 +1431,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>139</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>523</x>
-     <y>255</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1463,12 +1447,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>120</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>630</x>
-     <y>92</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1479,12 +1463,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>254</y>
+     <x>101</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>72</x>
-     <y>159</y>
+     <x>78</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1495,12 +1479,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>88</x>
-     <y>254</y>
+     <x>94</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>139</x>
-     <y>221</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1511,12 +1495,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>68</x>
-     <y>342</y>
+     <x>74</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>523</x>
-     <y>255</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1527,12 +1511,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>76</x>
-     <y>254</y>
+     <x>82</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>221</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1543,12 +1527,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>95</x>
-     <y>254</y>
+     <x>101</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>631</x>
-     <y>159</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1559,12 +1543,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>139</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>254</y>
+     <x>115</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1575,12 +1559,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>64</x>
-     <y>342</y>
+     <x>70</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>86</x>
-     <y>254</y>
+     <x>92</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1591,12 +1575,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>122</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>108</x>
-     <y>75</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1607,12 +1591,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>139</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>123</x>
-     <y>191</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1623,12 +1607,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>57</x>
-     <y>342</y>
+     <x>63</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>254</y>
+     <x>115</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1639,12 +1623,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>124</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>583</x>
-     <y>285</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1655,12 +1639,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>124</x>
-     <y>254</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>285</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1671,12 +1655,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>583</x>
-     <y>285</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1687,12 +1671,12 @@ pixel values&lt;/p></string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>118</x>
-     <y>342</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>633</x>
-     <y>285</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1719,12 +1703,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>77</x>
-     <y>280</y>
+     <x>83</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>75</x>
-     <y>309</y>
+     <x>81</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1735,12 +1719,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>61</x>
-     <y>306</y>
+     <x>67</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>37</x>
-     <y>335</y>
+     <x>43</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
@@ -1751,12 +1735,12 @@ pixel values&lt;/p></string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>198</x>
-     <y>306</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>196</x>
-     <y>330</y>
+     <x>105</x>
+     <y>35</y>
     </hint>
    </hints>
   </connection>
