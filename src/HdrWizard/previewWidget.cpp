@@ -207,7 +207,10 @@ void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 			}
 			break;
 			case LB_antighostingmode:
-			timerid=this->startTimer(0);
+			if (scaleFactor!=1)
+				break;
+			else
+				timerid=this->startTimer(0);
 			break;
 		}
 	}
@@ -268,6 +271,7 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 		} else
 			QApplication::restoreOverrideCursor();
 	} else if (event->buttons()==Qt::MidButton) {
+		//moving mouse with middle button pans the preview
 		QPoint diff = (event->globalPos() - mousePos);
 		if (event->modifiers()==Qt::ShiftModifier)
 			diff*=5;
@@ -295,7 +299,8 @@ void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
 			update();
 			break;
 			case LB_antighostingmode:
-			this->killTimer(timerid);
+			if (scaleFactor==1)
+				this->killTimer(timerid);
 			break;
 		}
 	}
@@ -306,6 +311,8 @@ void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 void PreviewWidget::timerEvent(QTimerEvent *) {
 	assert(leftButtonMode!=LB_croppingmode);
+	if (scaleFactor!=1)
+		return;
 
 	QPoint relativeToWidget=mapFromGlobal(QCursor::pos());
 
