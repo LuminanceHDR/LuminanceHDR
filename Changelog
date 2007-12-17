@@ -18,6 +18,7 @@ Changes:
 * renamed options_impl.{h,cpp} -> preferencesDialog.{h,cpp}.
 * integrated pfstools 1.6.3 changes.
 * fix for gcc 4.3
+* added Indonesian translation
 
 02-08-2007 v1.8.12
 * 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
