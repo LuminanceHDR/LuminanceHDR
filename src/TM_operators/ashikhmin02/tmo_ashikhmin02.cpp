@@ -218,7 +218,7 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
 	(*L)(x,y) =  (*tm)(x,y) + C((*tm)(x,y))/C((*la)(x,y)) * ((*Y)(x,y)-(*la)(x,y));
 	break;
       default:
-	exit(0);
+	return 0;
       }
 
       //!! FIX:
