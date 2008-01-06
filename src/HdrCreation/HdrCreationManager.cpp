@@ -244,9 +244,9 @@ void HdrCreationManager::align_with_ais() {
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
 	
 	#ifdef Q_WS_MAC
-	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", QStringList() << QString("-a") << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", QStringList() << QString("-a") << "aligned_" << (filesToRemove.empty() ? fileList : filesToRemove) );
 	#else
-	ais->start("align_image_stack", QStringList() << QString("-a") << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start("align_image_stack", QStringList() << QString("-a") << "aligned_" << (filesToRemove.empty() ? fileList : filesToRemove) );
 	#endif
 }
 
