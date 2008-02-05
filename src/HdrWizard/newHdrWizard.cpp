@@ -58,7 +58,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), o
 	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 
 	connect(NextFinishButton,SIGNAL(clicked()),this,SLOT(NextFinishButtonClicked()));
-	connect(cancelButton,SIGNAL(clicked()),this,SLOT(cancelButtonClicked()));
+	connect(cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
 	connect(predefConfigsComboBox,SIGNAL(activated(int)),this,
@@ -95,14 +95,16 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), o
 	connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(finishedAligning()));
 	connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
 
+	connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
+
 }
 
 void HdrWizardForm::loadImagesButtonClicked() {
     QString filetypes;
-    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;");
+    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;");
     filetypes += tr("JPEG (*.jpeg *.jpg);;");
     filetypes += tr("TIFF Images (*.tiff *.tif);;");
-    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)");
+    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)");
 
     QString RecentDirInputLDRs = settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
 
@@ -517,9 +519,4 @@ void HdrWizardForm::keyPressEvent(QKeyEvent *event) {
 	} else if (event->key() == Qt::Key_Escape) {
 		emit reject();
 	}
-}
-
-void HdrWizardForm::cancelButtonClicked() {
-	hdrCreationManager->removeTempFiles();
-	reject();
 }

@@ -134,11 +134,11 @@ void MainGui::fileNewViaWizard() {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;" ;
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;" ;
 	filetypes += "OpenEXR (*.exr);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic);;";
 	filetypes += "TIFF Images (*.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;";
 	filetypes += "PFS Stream (*.pfs)";
 	QString filename = QFileDialog::getOpenFileName(
 			this,
@@ -543,7 +543,7 @@ void MainGui::aboutQtpfsgui() {
 	bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << "./" << docDir << "/Applications/qtpfsgui.app/Contents/Resources";
+	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << docDir << "/Applications/qtpfsgui.app/Contents/Resources" << "./";
 	foreach (QString path,paths) {
 		QString fname(path+QString("/LICENSE"));
 #ifdef WIN32

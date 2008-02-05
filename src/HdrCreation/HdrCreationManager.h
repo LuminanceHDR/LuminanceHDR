@@ -52,8 +52,6 @@ public:
 	void loadInputFiles();
 	//clear lists used internally
 	void clearlists(bool deleteExpotimeAsWell);
-	//remove temp 8or16 bit tiff files created by dcraw upon raw input.
-	void removeTempFiles();
 
 	pfs::Frame* createHdr(bool ag, int iterations);
 
@@ -82,6 +80,9 @@ public:
 	void makeSureLDRsHaveAlpha();
 	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
 	void cropLDR (QRect ca);
+public slots:
+	//remove temp 8or16 bit tiff files created by dcraw upon raw input.
+	void removeTempFiles();
 signals:
 	void finishedLoadingInputFiles(QStringList filesLackingExif);
 	void errorWhileLoading(QString message); //also for !valid size

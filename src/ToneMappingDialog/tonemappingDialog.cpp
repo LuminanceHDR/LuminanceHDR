@@ -155,7 +155,8 @@ void TonemappingWindow::saveLDR() {
 				if (format=="jpeg" || format=="jpg") {
 					//time to write the exif data...
 					LdrViewer* currentLDR = ((LdrViewer*)(workspace->activeWindow()));
-					ExifOperations::writeExifData( outfname.toStdString(), currentLDR->getExifComment().toStdString() );
+					//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+					ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), currentLDR->getExifComment().toStdString() );
 				}
 			}
 		}

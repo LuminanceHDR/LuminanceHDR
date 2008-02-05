@@ -286,7 +286,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus) {
 
 void HdrCreationManager::removeTempFiles() {
 	foreach (QString tempfname, filesToRemove) {
-		//qDebug("removing temp file: %s",qPrintable(tempfname));
+// 		qDebug("removing temp file: %s",qPrintable(tempfname));
 		QFile::remove(tempfname);
 	}
 }

@@ -86,7 +86,6 @@ private slots:
 	void saveRespCurveFileButtonClicked();
 	void modelComboBoxActivated(int);
 	void NextFinishButtonClicked();
-	void cancelButtonClicked();
 	void currentPageChangedInto(int);
 	void loadRespCurveFilename(const QString&);
 	void editingEVfinished();

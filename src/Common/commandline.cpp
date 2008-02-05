@@ -405,7 +405,8 @@ void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonem
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
 	} else {
 		TMOptionsOperations operations(tmopts);
-		ExifOperations::writeExifData(saveLdrFilename.toStdString(),operations.getExifComment().toStdString());
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
 	}
 	emit finishedParsing();
 }

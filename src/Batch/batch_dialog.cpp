@@ -83,7 +83,7 @@ void BatchTMDialog::add_dir_HDRs() {
 	QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), RecentDirHDRSetting);
 	if (!dirname.isEmpty()) {
 		QStringList filters;
-		filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw";
+		filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.sr2";
 		QDir chosendir(dirname);
 		chosendir.setFilter(QDir::Files);
 		chosendir.setNameFilters(filters);
@@ -96,7 +96,7 @@ void BatchTMDialog::add_dir_HDRs() {
 
 void BatchTMDialog::add_HDRs() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)" ;
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)" ;
 	QStringList onlyhdrs=QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirHDRSetting, filetypes);
 	add_view_model_HDRs(onlyhdrs);
 }
@@ -354,7 +354,8 @@ void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts)
 		qDebug("BATCH: newResult: Cannot save to %s",fname.toUtf8().constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
-		ExifOperations::writeExifData(fname.toStdString(),operations.getExifComment().toStdString());
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		ExifOperations::writeExifData(QFile::encodeName(fname).constData(),operations.getExifComment().toStdString());
 		add_log_message(tr("Successfully saved LDR file: ")+fname);
 	}
 	overallProgressBar->setValue(overallProgressBar->value()+1);
