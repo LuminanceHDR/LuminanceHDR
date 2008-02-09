@@ -57,7 +57,7 @@ Qtpfsgui is an open source graphical user interface application that provides a 
 <dt>TMO</dt>
 <dd>Shorthand for "Tone Mapping Operator".</dd>
 <dt>RAW</dt>
-<dd>Another umbrella definition for several (mininally processed) image formats. Raw files can have 12 or 14 bits per color channel, but noise usually cuts down the available dynamic range to something like 1000:1, roughly 10 bits. For all intents and purposes they are HDR files.</dd>
+<dd>Another umbrella definition for several (minimally processed) image formats. Raw files can have 12 or 14 bits per color channel, but noise usually cuts down the available dynamic range to something like 1000:1, roughly 10 bits. For all intents and purposes they are HDR files.</dd>
 <dt>Antighosting</dt>
 <dd>The HDR creation process involves merging a stack of images. An object changing position in the image set creates a strange effect in which the object is partially visible (like a ghost) in the final HDR. This problem can be corrected by automatic or manual procedures.</dd>
 </dl>
@@ -84,7 +84,7 @@ In order to create an HDR image Qtpfsgui requires to have a set of images with e
 
 
 <A name="usingqtpfsgui"><h2>Using Qtpfsgui</h2></A>
-This chapter describes the most important elements of Qtpfsgui: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactiv tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
+This chapter describes the most important elements of Qtpfsgui: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
 
 <A name="mainwindow"><h3>The main window</h3></A>
 Here's the main window that you can see once the program has launched.<br>
@@ -138,7 +138,7 @@ As soon as at least one HDR image has been loaded in the workspace you can:
 
 <A name="createhdr"><h3>The Creation of an HDR</h3></A>
 You can access the wizard that will guide you through the process of creating a new HDR image via the "File -> New Hdr..." menu item.<br>
-On the first page the wizard will asks you to select the set of images (of the same scene, but taken at different exposures) that are going to contribute to the final hdr (supported input: jpeg, raw and tiff -8 and 16 bit-).<br>
+On the first page the wizard will ask you to select the set of images (of the same scene, but taken at different exposures) that are going to contribute to the final hdr (supported input: jpeg, raw and tiff -8 and 16 bit-).<br>
 Even if Qtpfsgui doesn't find the required exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for the images in your the set.<br>
 The first page of the wizard enables the user to apply an automatic alignment step to the images in the set. It is possible to use one of two alignment options (or "engines"): align_image_stack and MTB.<br>
 The first option is usually a good choice (MTB works only on LDR images and has a simpler model that does not take into account rotation).<br>
