@@ -25,10 +25,10 @@
 #ifndef EDITINGTOOLS_H
 #define EDITINGTOOLS_H
 
-#include <QSettings>
 #include "../generated_uic/ui_editing_tools.h"
 #include "previewWidget.h"
 #include "../Common/panIconWidget.h"
+#include "../Common/global.h"
 #include "../HdrCreation/HdrCreationManager.h"
 
 
@@ -58,7 +58,6 @@ private:
 	QSize previousPreviewWidgetSize;
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
-	QSettings settings;
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();

@@ -31,7 +31,7 @@
 #include "../Exif/exif_operations.h"
 
 
-BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), settings("Qtpfsgui", "Qtpfsgui"), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
+BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
 	setupUi(this);
 #if QT_VERSION >= 0x040200
 	Log_Widget->setWordWrap(true);

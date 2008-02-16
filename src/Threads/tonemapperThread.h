@@ -27,8 +27,8 @@
 #include <QThread>
 #include <QReadWriteLock>
 #include <QImage>
-#include <QSettings>
 #include "../Common/options.h"
+#include "../Common/global.h"
 #include "../Libpfs/pfs.h"
 class QProgressBar;
 
@@ -49,7 +49,6 @@ protected:
 	void run();
 private:
 	int originalxsize;
-	QSettings settings;
 	int ldr_output_cs;
 	QString cachepath;
 	bool colorspaceconversion;

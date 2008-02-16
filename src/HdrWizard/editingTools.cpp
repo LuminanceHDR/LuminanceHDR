@@ -32,7 +32,7 @@
 #include "../Fileformat/pfstiff.h"
 #include "../Common/config.h"
 
-EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0), settings("Qtpfsgui", "Qtpfsgui")
+EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0)
 {
 	setupUi(this);
 

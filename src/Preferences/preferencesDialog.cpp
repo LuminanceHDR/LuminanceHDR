@@ -28,7 +28,7 @@
 #include "../Common/config.h"
 #include "../generated_uic/ui_documentation.h"
 
-QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings *s) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor), settings(s) {
+QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor) {
 	setupUi(this);
 	from_options_to_gui(); //update the gui in order to show the options
 	connect(negative_color_button,SIGNAL(clicked()),this,SLOT(negative_clicked()));
@@ -38,7 +38,7 @@ QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts, QSettings
 	connect(helpDcrawParamsButton,SIGNAL(clicked()),this,SLOT(helpDcrawParamsButtonClicked()));
 	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
 
-	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
 	whatsThisButton->setToolButtonStyle(style);
 }
 
@@ -64,43 +64,43 @@ void QtpfsguiOptions::change_color_of(QPushButton *button, QColor *newcolor) {
 }
 
 void QtpfsguiOptions::ok_clicked() {
-	settings->beginGroup(GROUP_DCRAW);
+	settings.beginGroup(GROUP_DCRAW);
 		opts->dcraw_options=commandlineParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
-		settings->setValue(KEY_EXTERNAL_DCRAW_OPTIONS,opts->dcraw_options);
-	settings->endGroup();
+		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,opts->dcraw_options);
+	settings.endGroup();
 
-	settings->beginGroup(GROUP_HDRVISUALIZATION);
+	settings.beginGroup(GROUP_HDRVISUALIZATION);
 		if(negcolor.rgba() != opts->negcolor) {
 			opts->negcolor=negcolor.rgba();
-			settings->setValue(KEY_NEGCOLOR,negcolor.rgba());
+			settings.setValue(KEY_NEGCOLOR,negcolor.rgba());
 		}
 		if(infnancolor.rgba() != opts->naninfcolor) {
 			opts->naninfcolor=infnancolor.rgba();
-			settings->setValue(KEY_NANINFCOLOR,infnancolor.rgba());
+			settings.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
 		}
-	settings->endGroup();
+	settings.endGroup();
 
-	settings->beginGroup(GROUP_TONEMAPPING);
+	settings.beginGroup(GROUP_TONEMAPPING);
 		if (lineEditTempPath->text() != opts->tempfilespath) {
 			opts->tempfilespath=lineEditTempPath->text();
-			settings->setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
+			settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
 		if (imageformat_comboBox->currentText() != opts->batch_ldr_format) {
 			opts->batch_ldr_format=imageformat_comboBox->currentText();
-			settings->setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
+			settings.setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
 		}
 		if (thread_spinBox->value() != opts->num_threads) {
 			opts->num_threads=thread_spinBox->value();
-			settings->setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
+			settings.setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
 		}
-	settings->endGroup();
+	settings.endGroup();
 
-	settings->beginGroup(GROUP_TIFF);
+	settings.beginGroup(GROUP_TIFF);
 		if (radioButtonLogLuv->isChecked() != opts->saveLogLuvTiff) {
 			opts->saveLogLuvTiff=radioButtonLogLuv->isChecked();
-			settings->setValue(KEY_SAVE_LOGLUV,radioButtonLogLuv->isChecked());
+			settings.setValue(KEY_SAVE_LOGLUV,radioButtonLogLuv->isChecked());
 		}
-	settings->endGroup();
+	settings.endGroup();
 
 	accept();
 }

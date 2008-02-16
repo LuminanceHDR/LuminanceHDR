@@ -30,9 +30,10 @@
 #include "transplant.h"
 #include "../generated_uic/ui_documentation.h"
 #include "../Exif/exif_operations.h"
+#include "../Common/global.h"
 #include "../Common/config.h"
 
-TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false), settings("Qtpfsgui", "Qtpfsgui") {
+TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false) {
 	setupUi(this);
 #if QT_VERSION >= 0x040200
 	Log_Widget->setWordWrap(true);

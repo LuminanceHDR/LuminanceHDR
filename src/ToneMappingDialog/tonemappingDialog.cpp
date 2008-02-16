@@ -33,7 +33,7 @@
 
 TonemappingWindow::~TonemappingWindow() {}
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString _file) : QMainWindow(parent), settings("Qtpfsgui", "Qtpfsgui") {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFrame, QString _file) : QMainWindow(parent) {
 	setupUi(this);
 	toolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
@@ -106,62 +106,15 @@ void TonemappingWindow::saveLDR() {
 	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
 	if (currentLDR==NULL)
 		return;
-	QStringList filetypes;
-	filetypes += tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)");
-	filetypes += "JPEG (*.jpg *.jpeg)";
-	filetypes += "PNG (*.png)";
-	filetypes += "PPM PBM (*.ppm *.pbm)";
-	filetypes += "BMP (*.bmp)";
-	QFileDialog *fd = new QFileDialog(this);
-	fd->setWindowTitle(tr("Save the LDR to..."));
-	fd->setDirectory( recentPathSaveLDR );
-	fd->selectFile(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg");
-	fd->setFileMode(QFileDialog::AnyFile);
-	fd->setFilters(filetypes);
-	fd->setAcceptMode(QFileDialog::AcceptSave);
-	fd->setConfirmOverwrite(true);
-	if (fd->exec()) {
-		QString outfname=(fd->selectedFiles()).at(0);
-		if(!outfname.isEmpty()) {
-			QFileInfo qfi(outfname);
-			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-			if (recentPathSaveLDR != qfi.path()) {
-				// update internal field variable
-				recentPathSaveLDR=qfi.path();
-				//save settings
-				settings.setValue(KEY_RECENT_PATH_SAVE_LDR, recentPathSaveLDR);
-			}
-			QString format=qfi.suffix();
-			if (qfi.suffix().isEmpty()) {
-				QString usedfilter=fd->selectedFilter();
-				if (usedfilter.startsWith("PNG")) {
-					format="png";
-					outfname+=".png";
-				} else if (usedfilter.startsWith("JPEG")) {
-					format="jpeg";
-					outfname+=".jpg";
-				} else if (usedfilter.startsWith("PPM")) {
-					format="ppm";
-					outfname+=".ppm";
-				} else if (usedfilter.startsWith("BMP")) {
-					format="bmp";
-					outfname+=".bmp";
-				}
-			}
-			if(!((currentLDR->getQImage())->save(outfname,format.toAscii().constData(),100))) {
-				QMessageBox::warning(this,"",tr("Failed to save <b>") + outfname + "</b>",
-						QMessageBox::Ok, QMessageBox::NoButton);
-			} else { //save is succesful
-				if (format=="jpeg" || format=="jpg") {
-					//time to write the exif data...
-					LdrViewer* currentLDR = ((LdrViewer*)(workspace->activeWindow()));
-					//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
-					ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), currentLDR->getExifComment().toStdString() );
-				}
-			}
-		}
+
+	QString outfname = saveLDRImage(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg",currentLDR->getQImage());
+	
+	//if save is succesful
+	if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
+		//time to write the exif data...
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), currentLDR->getExifComment().toStdString() );
 	}
-	delete fd;
 }
 
 void TonemappingWindow::updateActions(QWidget *w) {

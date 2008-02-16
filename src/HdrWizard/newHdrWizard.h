@@ -26,10 +26,10 @@
 
 #include <QDialog>
 #include <QString>
-#include <QSettings>
 #include "../generated_uic/ui_hdrwizardform.h"
 #include "../Common/options.h"
 #include "../Common/gang.h"
+#include "../Common/global.h"
 #include "../Libpfs/pfs.h"
 #include "../HdrCreation/HdrCreationManager.h"
 
@@ -51,7 +51,6 @@ private:
 	Gang *EVgang;
 
 	qtpfsgui_opts *opts;
-	QSettings settings;
 	HdrCreationManager *hdrCreationManager;
 
 	//the new hdr, returned by the HdrCreationManager class

@@ -38,7 +38,7 @@ extern "C" {
 #include "editingTools.h"
 #include "../Common/config.h"
 
-HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), opts(options), settings("Qtpfsgui", "Qtpfsgui"), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
+HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), opts(options), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
 
 	weights_in_gui[0]=TRIANGULAR;

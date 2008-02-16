@@ -24,10 +24,10 @@
 #ifndef TONEMAPPINGWIDGET_H
 #define TONEMAPPINGWIDGET_H
 
-#include <QSettings>
 #include <QProgressBar>
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "../Common/gang.h"
+#include "../Common/global.h"
 #include "../Common/options.h"
 #include "../Libpfs/pfs.h"
 
@@ -62,7 +62,6 @@ private:
 	pfs::Frame* &OriginalPfsFrame;
 	void FillToneMappingOptions();
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
-	QSettings settings;
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
 	int out_ldr_cs;
 	QStatusBar *sb;

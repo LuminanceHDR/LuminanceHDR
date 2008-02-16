@@ -25,7 +25,6 @@
 #define TRANSPLANT_IMPL_H
 
 #include <QDialog>
-#include <QSettings>
 #include <QSortFilterProxyModel>
 #include <QStringListModel>
 #include "../generated_uic/ui_transplantexifdialog.h"
@@ -40,7 +39,6 @@ private:
 	QStringList from,to;
 	bool done;
 	void updateinterval(bool);
-	QSettings settings;
 	QString RecentDirEXIFfrom;
 	QString RecentDirEXIFto;
 	//fuction that adds a log message to the model

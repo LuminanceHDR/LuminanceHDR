@@ -43,7 +43,7 @@ float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)
 QReadWriteLock lock;
 
 
-TonemapperThread::TonemapperThread(int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), settings("Qtpfsgui", "Qtpfsgui"), opts(opts) {
+TonemapperThread::TonemapperThread(int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
 	colorspaceconversion=false;
 	settings.beginGroup(GROUP_TONEMAPPING);
 	cachepath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();

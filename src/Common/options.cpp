@@ -25,12 +25,11 @@
 #include <QFile>
 #include <QTextStream>
 #include <QApplication>
-#include <QSettings>
 #include <QDir>
+#include "global.h"
 #include "config.h"
 
 void QtPfsGuiOptions::loadOptions(qtpfsgui_opts *dest) {
-	QSettings settings("Qtpfsgui", "Qtpfsgui");
 	settings.beginGroup(GROUP_DCRAW);
 		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
 			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");

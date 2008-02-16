@@ -25,22 +25,21 @@
 #define OPTIONS_IMPL_H
 
 #include <QDialog>
-#include <QSettings>
 #include "../generated_uic/ui_options.h"
 #include "../Common/options.h"
+#include "../Common/global.h"
 
 class QtpfsguiOptions : public QDialog, private Ui::OptionsDialog
 {
 Q_OBJECT
 public:
-	QtpfsguiOptions(QWidget *parent, qtpfsgui_opts *orig_opts, QSettings *s);
+	QtpfsguiOptions(QWidget *parent, qtpfsgui_opts *orig_opts);
 	~QtpfsguiOptions();
 private:
 	void change_color_of(QPushButton *,QColor *);
 	void from_options_to_gui();
 	qtpfsgui_opts *opts;
 	QColor infnancolor, negcolor;
-	QSettings *settings;
 private slots:
 	void negative_clicked();
 	void infnan_clicked();

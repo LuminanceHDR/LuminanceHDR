@@ -22,11 +22,11 @@
  */
 
 #include <getopt.h>
-#include <QSettings>
 #include "options.h"
 #include "config.h"
 #include "../HdrCreation/createhdr.h"
 #include "commandline.h"
+#include "global.h"
 #include "../Threads/loadHdrThread.h"
 #include "../Threads/tonemapperThread.h"
 #include "../Exif/exif_operations.h"
@@ -305,7 +305,6 @@ void CommandLineInterfaceManager::parseArgs() {
 	}
 
 	if (operation_mode==CREATE_HDR_MODE) {
-		QSettings settings("Qtpfsgui", "Qtpfsgui");
 		QString temppath = settings.value(KEY_TEMP_RESULT_PATH, QDir::currentPath()).toString();
 		int numthreads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 		QStringList rawopts=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS,"-T").toStringList();
