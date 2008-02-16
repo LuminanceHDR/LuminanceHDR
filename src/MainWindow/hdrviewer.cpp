@@ -26,6 +26,8 @@
 #include <QApplication>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QFileInfo>
+#include "../Common/global.h"
 #include "hdrviewer.h"
 
 inline float clamp( float val, float min, float max )
@@ -44,8 +46,7 @@ inline int clamp( int val, int min, int max )
 }
 
 
-static float getInverseMapping( LumMappingMethod mappingMethod,
-				float v, float minValue, float maxValue ) {
+static float getInverseMapping( LumMappingMethod mappingMethod, float v, float minValue, float maxValue ) {
     switch( mappingMethod ) {
     case MAP_GAMMA1_4:
 	return powf( v, 1.4 )*(maxValue-minValue) + minValue;
@@ -180,7 +181,6 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     lumRange->setHistogramImage(getPrimaryChannel());
     lumRange->fitToDynamicRange();
     //fitToDynamicRange() already takes care -indirectly- to call updateImage()
-//     updateImage();
     //zoom at original size, 100%
     //make the label use the image dimensions
     imageLabel->adjustSize();
@@ -341,4 +341,9 @@ void HdrViewer::closeEvent ( QCloseEvent * event ) {
 	} else {
 		event->accept();
 	}
+}
+
+void HdrViewer::saveHdrPreview() {
+	qDebug("filename=%s",qPrintable(filename));
+	saveLDRImage(QFileInfo(filename).completeBaseName()+"_preview"+".jpg",image);
 }

@@ -61,6 +61,7 @@ public:
 	void updateHDR(pfs::Frame*);
 	pfs::Frame* &getHDRPfsFrame();
 	void update_colors(unsigned int negcol, unsigned int naninfcol);
+	void saveHdrPreview();
 public slots:
 	void zoomIn();
 	void zoomOut();
