@@ -1,10 +1,13 @@
-Added sr2 to the list of legal raw extensions
-Fixed bug in exif code leading to crash when having utf8 characters in the path and/or filename. This bug used to occur in all exif related code: getting EV values in the new hdr wizard, writing exif comments in jpeg images (batch, cli, and interactive tm), and copying exif values between files.
-Fixed bug that left a temporary tiff file from raw conversion when pressing ESC in the new hdr wizard.
-bug 1888249 (sf tracker): fixed typos in manual
+Changes 1.9.1:
+* Global: Now there's only one QSettings object and a saveLdr function.
+* Users can now save the preview of a HDR.
+* Added panoramic functionality (GUI dialog and pfs-backend)
+* Added sr2 to the list of legal raw extensions
+* Fixed bug in exif code leading to crash when having utf8 characters in the path and/or filename. This bug used to occur in all exif related code: getting EV values in the new hdr wizard, writing exif comments in jpeg images (batch, cli, and interactive tm), and copying exif values between files.
+* Fixed bug that left a temporary tiff file from raw conversion when pressing ESC in the new hdr wizard.
+* bug 1888249 (sf tracker): fixed typos in manual
 
-Changes:
- v1.9.0
+Changes 1.9.0:
 * added manual anti-ghosting feature (for LDRs only).
 * fixed mantiuk glitch.
 * the online and offline documentation has been updated.
