@@ -22,11 +22,13 @@ FORMS = forms/maingui.ui \
         forms/transplantexifdialog.ui \
         forms/resizedialog.ui \
         forms/gamma_and_levels.ui \
+        forms/projectionsDialog.ui \
         forms/editing_tools.ui \
         forms/batch_dialog.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
+           src/Common/global.h \
            src/Common/options.h \
            src/Common/smart_scroll_area.h \
            src/Common/panIconWidget.h \
@@ -46,6 +48,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Preferences/preferencesDialog.h \
            src/TransplantExif/transplant.h \
            src/Resize/resizeDialog.h \
+           src/Projection/projectiveDialog.h \
            src/HdrCreation/HdrCreationManager.h \
            src/HdrCreation/mtb_alignment.h \
            src/HdrCreation/createhdr.h \
@@ -56,6 +59,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/HdrWizard/editingTools.h \
            src/HdrWizard/previewWidget.h \
            src/HdrWizard/newHdrWizard.h \
+           src/Filter/pfspanoramic.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
            src/TM_operators/ashikhmin02/pyramid.h \
@@ -73,6 +77,7 @@ HEADERS += src/Libpfs/array2d.h \
 
 SOURCES += src/Libpfs/pfs.cpp \
            src/Libpfs/colorspace.cpp \
+           src/Common/global.cpp \
            src/main.cpp \
            src/Common/options.cpp \
            src/Common/smart_scroll_area.cpp \
@@ -93,6 +98,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Preferences/preferencesDialog.cpp \
            src/TransplantExif/transplant.cpp \
            src/Resize/resizeDialog.cpp \
+           src/Projection/projectiveDialog.cpp \
            src/HdrCreation/HdrCreationManager.cpp \
            src/HdrCreation/mtb_alignment.cpp \
            src/HdrCreation/createhdr.cpp \
@@ -106,6 +112,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Filter/pfsrotate.cpp \
            src/Filter/pfssize.cpp \
            src/Filter/pfsgamma.cpp \
+           src/Filter/pfspanoramic.cpp \
            src/Fileformat/pfsinrgbe.cpp \
            src/Fileformat/pfsoutrgbe.cpp \
            src/Fileformat/pfsoutldrimage.cpp \
