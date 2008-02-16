@@ -28,16 +28,6 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
-     <string>&amp;File</string>
-    </property>
-    <addaction name="fileNewAction" />
-    <addaction name="fileOpenAction" />
-    <addaction name="fileSaveAsAction" />
-    <addaction name="separator" />
-    <addaction name="fileExitAction" />
-   </widget>
    <widget class="QMenu" name="menuSettings" >
     <property name="title" >
      <string>&amp;Tools</string>
@@ -57,16 +47,10 @@
     <addaction name="actionAbout_Qtpfsgui" />
     <addaction name="actionAbout_Qt" />
    </widget>
-   <widget class="QMenu" name="menuImage" >
+   <widget class="QMenu" name="menuWindows" >
     <property name="title" >
-     <string>&amp;Image</string>
+     <string>&amp;Windows</string>
     </property>
-    <addaction name="rotateccw" />
-    <addaction name="rotatecw" />
-    <addaction name="separator" />
-    <addaction name="actionResizeHDR" />
-    <addaction name="separator" />
-    <addaction name="TonemapAction" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -104,10 +88,28 @@
     <addaction name="separator" />
     <addaction name="menuToolbars" />
    </widget>
-   <widget class="QMenu" name="menuWindows" >
+   <widget class="QMenu" name="menuFile" >
     <property name="title" >
-     <string>&amp;Windows</string>
+     <string>&amp;File</string>
     </property>
+    <addaction name="fileNewAction" />
+    <addaction name="fileOpenAction" />
+    <addaction name="fileSaveAsAction" />
+    <addaction name="actionSave_Hdr_Preview" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="menuImage" >
+    <property name="title" >
+     <string>&amp;Image</string>
+    </property>
+    <addaction name="rotateccw" />
+    <addaction name="rotatecw" />
+    <addaction name="separator" />
+    <addaction name="action_Projective_Transformation" />
+    <addaction name="actionResizeHDR" />
+    <addaction name="separator" />
+    <addaction name="TonemapAction" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -661,6 +663,40 @@
   <action name="actionAbout_Qtpfsgui" >
    <property name="text" >
     <string>About &amp;Qtpfsgui</string>
+   </property>
+  </action>
+  <action name="actionSave_Hdr_Preview" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Save Hdr &amp;Preview...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save the current Hdr Preview to a Ldr file.</string>
+   </property>
+   <property name="statusTip" >
+    <string>Save the current Hdr Preview to a Ldr file.</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Save the current Hdr Preview to a Ldr file.</string>
+   </property>
+  </action>
+  <action name="action_Projective_Transformation" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>&amp;Projective Transformation...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Apply a projective transformation to the current Hdr.</string>
+   </property>
+   <property name="statusTip" >
+    <string>Apply a projective transformation to the current Hdr.</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Apply a projective transformation to the current Hdr.</string>
    </property>
   </action>
  </widget>
