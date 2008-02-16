@@ -38,12 +38,13 @@
 #include "../Threads/loadHdrThread.h"
 #include "../Common/config.h"
 #include "hdrviewer.h"
+#include "../Common/global.h"
 
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfsgui", "Qtpfsgui") {
+MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
 	//main toolbar setup
 	QActionGroup *toolBarOptsGroup = new QActionGroup(this);
@@ -70,6 +71,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
+	connect(action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
 	connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 	connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_ldr_exp()));
 	connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_fit_exp()));
@@ -91,6 +93,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
 	connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
 	connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+	connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
 
 	//QSignalMapper?
 	connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
@@ -102,13 +105,12 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL), settings("Qtpfs
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),workspace,SLOT(setActiveWindow(QWidget*)));
 
 	//recent files
-        for (int i = 0; i < MaxRecentFiles; ++i) {
-            recentFileActs[i] = new QAction(this);
-            recentFileActs[i]->setVisible(false);
-            connect(recentFileActs[i], SIGNAL(triggered()),
-                    this, SLOT(openRecentFile()));
-        }
-        separatorRecentFiles = menuFile->addSeparator();
+	for (int i = 0; i < MaxRecentFiles; ++i) {
+		recentFileActs[i] = new QAction(this);
+		recentFileActs[i]->setVisible(false);
+		connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+	}
+	separatorRecentFiles = menuFile->addSeparator();
 	for (int i = 0; i < MaxRecentFiles; ++i)
 		menuFile->addAction(recentFileActs[i]);
 	updateRecentFileActions();
@@ -131,6 +133,7 @@ void MainGui::fileNewViaWizard() {
 		delete wizard;
 	}
 }
+
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
@@ -222,7 +225,15 @@ void MainGui::fileSaveAs()
 	delete fd;
 }
 
+void MainGui::saveHdrPreview() {
+	if(currenthdr==NULL)
+		return;
+	currenthdr->saveHdrPreview();
+}
+
 void MainGui::updateActions( QWidget * w ) {
+	action_Projective_Transformation->setEnabled(w!=NULL);
+	actionSave_Hdr_Preview->setEnabled(w!=NULL);
 	TonemapAction->setEnabled(w!=NULL);
 	fileSaveAsAction->setEnabled(w!=NULL);
 	rotateccw->setEnabled(w!=NULL);
@@ -325,6 +336,23 @@ void MainGui::resize_requested() {
 		QApplication::restoreOverrideCursor();
 	}
 	delete resizedialog;
+}
+
+void MainGui::projectiveTransf_requested() {
+	if (currenthdr==NULL)
+		return;
+	projectiveTransformDialog *projTranfsDialog=new projectiveTransformDialog(this,currenthdr->getHDRPfsFrame());
+	if (projTranfsDialog->exec() == QDialog::Accepted) {
+		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
+		currenthdr->updateHDR(projTranfsDialog->getTranformedFrame());
+		if (! currenthdr->NeedsSaving) {
+			currenthdr->NeedsSaving=true;
+			currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
+		}
+		QApplication::restoreOverrideCursor();
+	}
+	delete projTranfsDialog;
 }
 
 void MainGui::current_mdi_decrease_exp() {
@@ -438,7 +466,7 @@ void MainGui::load_failed(QString error_message) {
 void MainGui::options_called() {
 	unsigned int negcol=qtpfsgui_options->negcolor;
 	unsigned int naninfcol=qtpfsgui_options->naninfcolor;
-	QtpfsguiOptions *opts=new QtpfsguiOptions(this,qtpfsgui_options,&settings);
+	QtpfsguiOptions *opts=new QtpfsguiOptions(this,qtpfsgui_options);
 	opts->setAttribute(Qt::WA_DeleteOnClose);
 	if (opts->exec() == QDialog::Accepted && (negcol!=qtpfsgui_options->negcolor || naninfcol!=qtpfsgui_options->naninfcolor) ) {
 		QWidgetList allhdrs=workspace->windowList();

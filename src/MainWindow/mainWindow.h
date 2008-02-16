@@ -27,11 +27,11 @@
 #include <QMainWindow>
 #include <QWorkspace>
 #include <QStringList>
-#include <QSettings>
 #include "../HdrWizard/newHdrWizard.h"
 #include "../../generated_uic/ui_maingui.h"
 #include "../Preferences/preferencesDialog.h"
 #include "../Resize/resizeDialog.h"
+#include "../Projection/projectiveDialog.h"
 class HdrViewer;
 class QSignalMapper;
 
@@ -48,10 +48,12 @@ private slots:
 	void fileNewViaWizard();
 	void fileOpen();//for File->Open, it then calls loadFile()
 	void fileSaveAs();
+	void saveHdrPreview();
 	void tonemap_requested();
 	void rotateccw_requested();
 	void rotatecw_requested();
 	void resize_requested();
+	void projectiveTransf_requested();
 	void batch_requested();
 	void current_mdi_increase_exp();
 	void current_mdi_decrease_exp();
@@ -92,10 +94,9 @@ private:
 	bool testTempDir(QString);
 	QWorkspace* workspace;
 	QSignalMapper *windowMapper;
-        enum { MaxRecentFiles = 5 };
-        QAction *recentFileActs[MaxRecentFiles];
-        QAction *separatorRecentFiles;
-	QSettings settings;
+	enum { MaxRecentFiles = 5 };
+	QAction *recentFileActs[MaxRecentFiles];
+	QAction *separatorRecentFiles;
 	QString RecentDirHDRSetting;
 	qtpfsgui_opts *qtpfsgui_options;
 };
