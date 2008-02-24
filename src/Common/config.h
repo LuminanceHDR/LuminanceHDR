@@ -24,7 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define QTPFSGUIVERSION "1.9.0"
+#define QTPFSGUIVERSION "1.9.1"
 #define TMOSETTINGSVERSION "0.4"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
