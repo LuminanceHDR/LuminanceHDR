@@ -27,6 +27,7 @@
 #include <QPair>
 #include "createhdr.h"
 #include "../Common/options.h"
+#include "../arch/freebsd/math.h"
 
 const config_triple predef_confs[6]= {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},

@@ -21,7 +21,6 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include <math.h>
 #include <stdio.h>
 #include "createhdr.h"
 

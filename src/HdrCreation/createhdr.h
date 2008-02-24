@@ -28,6 +28,7 @@
 #include <QList>
 #include <QImage>
 #include "../Libpfs/pfs.h"
+#include <cmath>
 #include <stdarg.h>
 
 #include "responses.h"
