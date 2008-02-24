@@ -31,6 +31,7 @@
 #include "../Common/gang.h"
 #include "../Common/global.h"
 #include "../Libpfs/pfs.h"
+#include "../arch/freebsd/math.h"
 #include "../HdrCreation/HdrCreationManager.h"
 
 class HdrWizardForm : public QDialog, private Ui::HdrWizardForm

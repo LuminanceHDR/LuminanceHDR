@@ -28,11 +28,7 @@
 #include <QProcess>
 #include <QTextStream>
 
-#if defined(__FreeBSD__) && __FreeBSD__ < 6
-extern "C" {
-#include "../arch/freebsd/s_exp2f.c"
-}
-#endif
+#include "../arch/freebsd/math.h"
 
 #include "newHdrWizard.h"
 #include "editingTools.h"
