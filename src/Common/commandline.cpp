@@ -36,12 +36,18 @@
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-#ifdef WIN32
+#if defined(__FreeBSD__) || defined(WIN32)
 #define error(Z) { fprintf(stderr,Z); exit(1); }
 #else
 #include <error.h>
 #define error(Z) error(1,0,Z);
 #endif
+
+///string is a QString with a %1 in it
+#define VERBOSEPRINT( string , argument ) \
+if (verbose) { \
+	fprintf(stdout, qPrintable(tr( string ).arg( argument )) ); \
+}
 
 
 static struct option cmdLineOptions[] = {
@@ -288,18 +294,20 @@ void CommandLineInterfaceManager::parseArgs() {
 	}
 	for (int index = optind; index < argc; index++) {
 		inputFiles << QString(argv[index]);
-		qDebug("Input file %s", argv[index]);
+		VERBOSEPRINT("Input file %1", argv[index]);
 	}
 
 	if (!ev.isEmpty() && ev.count()!=inputFiles.count())
 		error(qPrintable(tr("Error: The number of EV values specified is different from the number of input files.")));
 
 	//now validate operation mode.
-	if (inputFiles.size()!=0 && loadHdrFilename.isEmpty())
+	if (inputFiles.size()!=0 && loadHdrFilename.isEmpty()) {
 		operation_mode=CREATE_HDR_MODE;
-	else if (!loadHdrFilename.isEmpty() && inputFiles.size()==0 )
+		VERBOSEPRINT("Running in HDR-creation mode.", "");
+	} else if (!loadHdrFilename.isEmpty() && inputFiles.size()==0 ) {
 		operation_mode=LOAD_HDR_MODE;
-	else {
+		VERBOSEPRINT("Running in Load-HDR mode.", "");
+	} else {
 		printHelp(argv[0]);
 		error("Wrong combination of parameters.");
 	}
@@ -308,6 +316,11 @@ void CommandLineInterfaceManager::parseArgs() {
 		QString temppath = settings.value(KEY_TEMP_RESULT_PATH, QDir::currentPath()).toString();
 		int numthreads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 		QStringList rawopts=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS,"-T").toStringList();
+		if (verbose) {
+			VERBOSEPRINT("Temporary directory: %1",temppath);
+			VERBOSEPRINT("Dcraw parameters: %1",rawopts.join(" ") );
+			VERBOSEPRINT("Using %1 threads.", numthreads);
+		}
 		hdrCreationManager = new HdrCreationManager(numthreads, temppath, rawopts);
 		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 		connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
@@ -322,20 +335,23 @@ void CommandLineInterfaceManager::parseArgs() {
 		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(loadFinished(pfs::Frame*,QString)));
 		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(errorWhileLoading(QString)));
 		loadthread->start();
+		VERBOSEPRINT("Loading file %1.",loadHdrFilename);
 	}
 }
 
-void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString /*fname*/) {
+void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString fname) {
+	VERBOSEPRINT("Successfully loaded file %1.",fname);
 	HDR=hdr;
 	saveHDR();
 }
 
 void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif) {
 	if (filesLackingExif.size()!=0) {
-		if (!ev.isEmpty())
+		if (!ev.isEmpty()) {
 			for(int i=0; i<ev.size(); i++)
 				hdrCreationManager->setEV(ev.at(i),i);
-		else
+			VERBOSEPRINT("EV values have been assigned.","");
+		} else
 			error(qPrintable(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.")));
 	}
 	hdrCreationManager->checkEVvalues();
@@ -352,12 +368,15 @@ void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
 	exit(1);
 }
 void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError) {
-	errorWhileLoading("Failed executing align_image_stack");
+	errorWhileLoading(tr("Failed executing align_image_stack"));
 }
 
 void CommandLineInterfaceManager::createHDR() {
+	VERBOSEPRINT("Removing Temp files.","");
 	hdrCreationManager->removeTempFiles();
+	VERBOSEPRINT("Creating the HDR.","");
 	HDR=hdrCreationManager->createHdr(false,1);
+	VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 	saveHDR();
 }
 
@@ -380,7 +399,7 @@ void CommandLineInterfaceManager::saveHDR() {
 			pfsio.writeFrame(HDR,qfi.filePath());
 			HDR->convertXYZChannelsToRGB();
 		} else {
-			error("Error, please specify a supported HDR file formats.");
+			error("Error, please specify a supported HDR file format.");
 		}
 	}
 
@@ -389,6 +408,7 @@ void CommandLineInterfaceManager::saveHDR() {
 
 void  CommandLineInterfaceManager::startTonemap() {
 	if (!saveLdrFilename.isEmpty()) {
+		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
 		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
 		int origxsize= (tmopts->xsize==-2) ? -2 : HDR->getWidth();
 		TonemapperThread *thread = new TonemapperThread(origxsize, *tmopts);
@@ -459,6 +479,6 @@ void CommandLineInterfaceManager::printHelp(char * progname) {
 		(Default is contrast=0.3:equalization=false:saturation=1.8)\n \
 	-o --output LDR_FILE   File name you want to save your tone mapped LDR to.\n \
 	\n\
-You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new one.\n").arg(progname).arg(progname);
+You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n").arg(progname).arg(progname);
 	fprintf(stderr,qPrintable(help));
 }
