@@ -180,37 +180,37 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Inizio!</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="139"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="141"/>
         <source>Choose a directory</source>
         <translation>Seleziona una directory</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="98"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="100"/>
         <source>All Hdr formats </source>
         <translation>Tutti i formati Hdr </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="100"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="102"/>
         <source>Select the input images</source>
         <translation>Carica le immagini iniziali</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="120"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="122"/>
         <source>Load the tonemapping settings text files...</source>
         <translation>Carica dei file di impostazioni di tone mapping...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="120"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="122"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>File di impostazioni di tone mapping di Qtpfsgui (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="250"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="252"/>
         <source>Processing...</source>
         <translation>Sto processando...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="307"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="309"/>
         <source>&amp;Done</source>
         <translation>&amp;Fatto</translation>
     </message>
@@ -280,37 +280,37 @@ p, li { white-space: pre-wrap; }
         <translation>Inizia il batch tone mapping</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="68"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="70"/>
         <source>Using %1 thread(s)</source>
         <translation>Si utilizzano %1 thread(s)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="69"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="71"/>
         <source>Saving using fileformat: </source>
         <translation>Formato di uscita: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="282"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="284"/>
         <source>Starting to tone map HDR file: </source>
         <translation>Inizio tone mapping file: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="309"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="311"/>
         <source>All tasks completed.</source>
         <translation>Tutti i task sono stati completati.</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="355"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="357"/>
         <source>ERROR: Cannot save to file: </source>
         <translation>ERRORE: Non e&apos; stato salvato correttamente il file: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="359"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="361"/>
         <source>Successfully saved LDR file: </source>
         <translation>Salvato correttamente il file LDR: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="337"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="339"/>
         <source>Finished tone mapping the current HDR.</source>
         <translation>Terminato il tone mapping dell&apos;HDR corrente.</translation>
     </message>
@@ -318,82 +318,82 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="105"/>
+        <location filename="../src/Common/commandline.cpp" line="104"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Errore: opzione di allineamento non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="119"/>
+        <location filename="../src/Common/commandline.cpp" line="118"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>Errore: formato di creazione HDR non riconosciuto</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="144"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Errore: curva di risposta specificata non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="153"/>
+        <location filename="../src/Common/commandline.cpp" line="152"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Errore: modello per la creazione dell&apos;HDR sconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="160"/>
+        <location filename="../src/Common/commandline.cpp" line="159"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>Errore: formato per la creazione dell&apos;HDR sconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="196"/>
+        <location filename="../src/Common/commandline.cpp" line="195"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Errore: L&apos;operatore di tone mapping specificato non e&apos; stato riconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="205"/>
+        <location filename="../src/Common/commandline.cpp" line="204"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>Errore: Il formato dell&apos;opzione di tone mapping specificato non e&apos; stato riconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="282"/>
+        <location filename="../src/Common/commandline.cpp" line="281"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>Errore: Opzione di tone mapping non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="290"/>
+        <location filename="../src/Common/commandline.cpp" line="289"/>
         <source>Error: Unknown option %1.</source>
         <translation>Errore: Opzione sconosciutaL: %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="292"/>
+        <location filename="../src/Common/commandline.cpp" line="291"/>
         <source>Error: Missing argument for %1.</source>
         <translation>Errore: Argomento mancante per %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="301"/>
+        <location filename="../src/Common/commandline.cpp" line="300"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Errore: Il numero di valori EV specificati e&apos; differente dal numero di file di input.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="355"/>
+        <location filename="../src/Common/commandline.cpp" line="351"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Errore: Dati Exif mancanti nelle immagini e valori EV non specificati manualmente.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="424"/>
+        <location filename="../src/Common/commandline.cpp" line="429"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation>ERRORE: Impossibile salvare il file %1</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="437"/>
+        <location filename="../src/Common/commandline.cpp" line="442"/>
         <source>Cannot convert %1 to a float</source>
         <translation>Impossibile convertire %1 in un valore floating point</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="447"/>
+        <location filename="../src/Common/commandline.cpp" line="452"/>
         <source>Cannot convert %1 to an integer</source>
         <translation>Impossibile convertire %1 in un valore intero</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="129"/>
+        <location filename="../src/Common/commandline.cpp" line="128"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Errore: Funzione peso specificata sconosciuta.</translation>
     </message>
@@ -433,12 +433,12 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
         <translation type="obsolete">Utilizzo: %1 [OPZIONI]... [FILE_DI_INPUT]... <byte value="x9"/>Interfaccia a linea di comando a %2. <byte value="x9"/>-h --help              Mostra questo messaggio. <byte value="x9"/>-v --verbose           Modalita&apos; di esecuzione verbosa.<byte value="x9"/>-a --align AIS|MTB     Modalita&apos; di allineamento da utilizzare nella creazione dell&apos;HDR (default: nessun allineamento). <byte value="x9"/>-e --ev EV1,EV2,...    Specifica valori numerici EV (tanti quanti FILE_DI_INPUT). <byte value="x9"/>-c --config            Configurazione per la creazione di un HDR. Valori possibili: <byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m <byte value="x9"/>(Il default e&apos; triangular,linear,debevec) <byte value="x9"/>-l --load HDR_FILE     Carica un file HDR invece di crearne uno nuovo.  <byte value="x9"/>-s --save HDR_FILE     Salva in un file HDR.  <byte value="x9"/>-g --gamma VALUE       Valore gamma da utilizzare nel tone mapping.  <byte value="x9"/>-r --resize VALUE      Larghezza per il ridimensionamento dell&apos;HDR (ridimensionato prima del gamma e tone mapping)  <byte value="x9"/>-t --tmo               Operatore di tone mapping. Valori possibili: <byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk <byte value="x9"/>(Default is mantiuk) <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Possible values: <byte value="x9"/>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)<byte value="x9"/>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)<byte value="x9"/>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)<byte value="x9"/>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)<byte value="x9"/>bias=VALUE (for drago)<byte value="x9"/>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)<byte value="x9"/>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)<byte value="x9"/>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)<byte value="x9"/>(Il default e&apos; contrast=0.3:equalization=false:saturation=1.8) <byte value="x9"/>-o --output LDR_FILE   Nome del file dell&apos;immagine LDR. <byte value="x9"/>E&apos; obbligatorio o specificare un file HDR esistente (attraverso l&apos;opzione -l) o specificare FILE_DI_INPUT per crearne una nuova.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="371"/>
+        <location filename="../src/Common/commandline.cpp" line="367"/>
         <source>Failed executing align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="482"/>
+        <location filename="../src/Common/commandline.cpp" line="488"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
  <byte value="x9"/>Commandline interface to %2.
 
@@ -448,15 +448,15 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
  <byte value="x9"/>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).
  <byte value="x9"/>-c --config            HDR creation config. Possible values: 
 <byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m 
-<byte value="x9"/><byte value="x9"/>(Default is triangular,linear,debevec) 
+<byte value="x9"/><byte value="x9"/>(Default is weight=triangular:response_curve=linear:model=debevec) 
 <byte value="x9"/>-l --load HDR_FILE     Load an HDR instead of creating a new one. 
- <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. 
- <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. 
- <byte value="x9"/>-r --resize VALUE      Width want to resize your HDR to (resized before gamma and tone mapping) 
- <byte value="x9"/>-t --tmo               Tone mapping operator. Possible values: 
+ <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) 
+ <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) 
+ <byte value="x9"/>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) 
+ <byte value="x9"/>-t --tmo               Tone mapping operator. Legal values are: 
 <byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk
  <byte value="x9"/><byte value="x9"/>(Default is mantiuk)
- <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Possible values: 
+ <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Legal values are: 
 <byte value="x9"/><byte value="x9"/>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)
 <byte value="x9"/><byte value="x9"/>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)
 <byte value="x9"/><byte value="x9"/>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)
@@ -465,8 +465,9 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
 <byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)
 <byte value="x9"/><byte value="x9"/>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)
 <byte value="x9"/><byte value="x9"/>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)
-<byte value="x9"/><byte value="x9"/>(Default is contrast=0.3:equalization=false:saturation=1.8)
+<byte value="x9"/><byte value="x9"/>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)
  <byte value="x9"/>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.
+ <byte value="x9"/>                       (No tonemapping is performed unless -o is specified).
  <byte value="x9"/>
 You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
@@ -954,7 +955,7 @@ p, li { white-space: pre-wrap; }
         <translation>Funzione dei pesi:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="445"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
@@ -964,12 +965,12 @@ p, li { white-space: pre-wrap; }
         <translation>Curva di risposta:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="456"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="467"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -979,7 +980,7 @@ p, li { white-space: pre-wrap; }
         <translation>Anti-ghosting(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="454"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
@@ -1014,12 +1015,12 @@ dei risultati soddisfacenti)</translation>
         <translation>Pesi:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="448"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="449"/>
         <source>Gaussian</source>
         <translation>Gaussiana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="447"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -1048,12 +1049,12 @@ dei pixel&lt;/p&gt;</translation>
         <translation>Scegli Modello:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="468"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="469"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="247"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Avanti &gt;</translation>
     </message>
@@ -1078,12 +1079,12 @@ dei pixel&lt;/p&gt;</translation>
         <translation type="obsolete">Tutti i formati (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>Immagini TIFF (*.tiff *.tif);;</translation>
     </message>
@@ -1093,57 +1094,57 @@ dei pixel&lt;/p&gt;</translation>
         <translation type="obsolete">Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="153"/>
         <source>EXIF data not found</source>
         <translation>Dati EXIF non trovati</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="404"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source>(*) Weights: </source>
         <translation>(*) Pesi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source> - Response curve: </source>
         <translation> - Curva di risposta: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source> - Model: </source>
         <translation> - Modello: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="458"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="460"/>
         <source>From Calibration</source>
         <translation>Via calibrazione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="462"/>
         <source>From File</source>
         <translation>Da File</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="389"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="390"/>
         <source>Load a camera response curve file</source>
         <translation>Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="108"/>
         <source>Select the input images</source>
         <translation>Carica le immagini iniziali</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="377"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="378"/>
         <source>&amp;Finish</source>
         <translation>&amp;Termina</translation>
     </message>
@@ -1181,17 +1182,17 @@ p, li { white-space: pre-wrap; }
         <translation>align_image_stack</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="141"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="142"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Immagini Caricate.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="484"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="485"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;Per procedere devi impostare manualmente i valori di esposizione.&lt;br&gt;Mancano ancora %1 valori.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="215"/>
         <source>Error...</source>
         <translation>Errore...</translation>
     </message>
@@ -1266,7 +1267,7 @@ p, li { white-space: pre-wrap; }
         <translation>Esposizione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1276,52 +1277,52 @@ the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt
 i seguenti tag exif al loro interno: <byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi)&lt;/li&gt;<byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;CONSIGLIO:&lt;/b&gt; I dati EXIF vengono persi solitamente dopo una fase di processing.&lt;br&gt;<byte value="x9"/>Puoi eseguire una &lt;b&gt;copia uno-ad-uno dei dati exif&lt;/b&gt; tra due set di immagini con lo strumento che si trova in&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia i dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="177"/>
         <source>Loading Error</source>
         <translation>Errore di caricamento</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="193"/>
         <source>Unknown </source>
         <translation>Sconosciuto </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="206"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Impossibile eseguire l&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Leggere &quot;Aiuto -&gt; Documentazione... -&gt; Hints and tips&quot; per maggiori informazioni.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="209"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>L&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; e&apos; andata in crash...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="215"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Un errore sconosciuto e&apos; stato rilevato nell&apos;esecuzione di &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="319"/>
         <source>Aligning...</source>
         <translation>Sto Allineando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="402"/>
         <source>Save a camera response curve file</source>
         <translation>Salva la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="483"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tutti i valori EV sono stati inseriti!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="104"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1418,32 +1419,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LoadHdrThread</name>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="47"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="48"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation>ERRORE: Il seguente file non e&apos; accessibile: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="102"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="103"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERRORE: impossibile eseguire dcraw sul file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="109"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="110"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERRORE: Errore o timeout nell&apos;eseguire dcraw sul file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="121"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="122"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERRORE: Il file %1 ha una estensione non supportata.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="151"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="152"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERRORE: impossibile caricare il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="76"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="77"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
         <translation>ERRORE: La conversione da raw a tiff e&apos; disabilitata. Aggiungere l&apos;opzione &quot;-T&quot; nella sezione di conversione raw nel pannello delle Opzioni.</translation>
     </message>
@@ -1801,7 +1802,7 @@ p, li { white-space: pre-wrap; }
         <translation>Errore...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="525"/>
         <source>Unsaved changes...</source>
         <translation>Modifiche non salvate...</translation>
     </message>
@@ -1981,12 +1982,12 @@ p, li { white-space: pre-wrap; }
         <translation>Informazioni su &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="525"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Uno degli Hdr presenta modifiche non salvate.&lt;br&gt;Sei sicuro di voler uscire?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="594"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Il documento della licenza non e&apos; stato trovato, lo si puo&apos; trovare online seguendo %2questo link%3</translation>
@@ -2228,6 +2229,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>PreferenceDialog</name>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="139"/>
+        <source>Choose a directory</source>
+        <translation type="unfinished">Seleziona una directory</translation>
+    </message>
+</context>
+<context>
     <name>ProjectionsDialog</name>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="13"/>
@@ -2323,17 +2332,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="71"/>
+        <location filename="../src/Common/options.cpp" line="91"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>ERRORE: Non riesco a caricare il file di impostazioni di tone mapping: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="94"/>
+        <location filename="../src/Common/options.cpp" line="114"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>ERRORE: FIle troppo vecchio, non riesco a caricare il file di impostazioni di tone mapping: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="177"/>
+        <location filename="../src/Common/options.cpp" line="197"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>ERRORE: Non riesco a caricare il file di impostazioni di tone mapping: </translation>
     </message>
@@ -2341,27 +2350,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="65"/>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="65"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Non e&apos; stato possibile trovare il plugin JPEG di Qt...&lt;br&gt; Scompatta il pacchetto delle DLL con l&apos;opzione &quot;utilizza i nomi di cartelle&quot; attivata.</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="38"/>
+        <location filename="../src/Common/global.cpp" line="39"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
         <translation type="unfinished">Tutti i formati LDR (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="44"/>
+        <location filename="../src/Common/global.cpp" line="45"/>
         <source>Save the LDR to...</source>
         <translation type="unfinished">Salva l&apos;LDR come...</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="75"/>
+        <location filename="../src/Common/global.cpp" line="76"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Errore nel salvare &lt;b&gt;</translation>
     </message>
@@ -2371,7 +2380,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="134"/>
         <source>Choose a directory</source>
-        <translation>Seleziona una directory</translation>
+        <translation type="obsolete">Seleziona una directory</translation>
     </message>
 </context>
 <context>
@@ -2440,42 +2449,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="277"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="279"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Carica un file di impostazioni di tone mapping...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="310"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="312"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>File di impostazioni di tone mapping di Qtpfsgui (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="418"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="283"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="285"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Il File non e&apos; accessibile (controllarne l&apos;esistenza, i permessi,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="308"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="310"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Salve il file di impostazioni di tone mapping in...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="337"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="339"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Errore di accesso in scrittura al file (controllarne i permessi, il percorso,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="403"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Errore di accesso in lettura al file (controllarne i permessi, il percorso,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="418"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Errore, il formato del file di impostazioni di tone mapping e&apos; cambiato. Questo (vecchio) file non puo&apos; essere usato con questa versione di Qtpfsgui. E&apos; necessario crearne uno nuovo.</translation>
     </message>

@@ -245,72 +245,72 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Začít!</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="68"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="70"/>
         <source>Using %1 thread(s)</source>
         <translation>Používám %1 vlákno(a)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="69"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="71"/>
         <source>Saving using fileformat: </source>
         <translation>Ukládám ve formátu:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="139"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="141"/>
         <source>Choose a directory</source>
         <translation>Vybrat adresář</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="98"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="100"/>
         <source>All Hdr formats </source>
         <translation>Všechny HDR formáty</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="100"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="102"/>
         <source>Select the input images</source>
         <translation>Vybrat vstupní obrázky</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="120"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="122"/>
         <source>Load the tonemapping settings text files...</source>
         <translation>Nahrát soubory nastavení přemapování...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="120"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="122"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui soubory nastavení přemapování (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="250"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="252"/>
         <source>Processing...</source>
         <translation>Zpracovávám...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="307"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="309"/>
         <source>&amp;Done</source>
         <translation>&amp;Hotovo</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="282"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="284"/>
         <source>Starting to tone map HDR file: </source>
         <translation>Začít přemapovávat HDR soubor:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="309"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="311"/>
         <source>All tasks completed.</source>
         <translation>Všechny úkoly hotovy.</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="355"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="357"/>
         <source>ERROR: Cannot save to file: </source>
         <translation>CHYBA: Nemohu uložit do souboru:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="359"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="361"/>
         <source>Successfully saved LDR file: </source>
         <translation>LDR soubor úspěšně uložen:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="337"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="339"/>
         <source>Finished tone mapping the current HDR.</source>
         <translation>Přemapování aktuálního HDR dokončeno.</translation>
     </message>
@@ -318,82 +318,82 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="105"/>
+        <location filename="../src/Common/commandline.cpp" line="104"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>CHYBA: Nástroj zarovnání nerozpoznán.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="119"/>
+        <location filename="../src/Common/commandline.cpp" line="118"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>CHYBA: Špatný formát tvorby HDR</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="144"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>CHYBA: Určena neznámá křivka odezvy.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="153"/>
+        <location filename="../src/Common/commandline.cpp" line="152"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>CHYBA: Určen neznámý model tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="160"/>
+        <location filename="../src/Common/commandline.cpp" line="159"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>CHYBA: Určen neznámý formát tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="196"/>
+        <location filename="../src/Common/commandline.cpp" line="195"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>CHYBA: Určen neznámý operátor přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="205"/>
+        <location filename="../src/Common/commandline.cpp" line="204"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>CHYBA: Špatný formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="282"/>
+        <location filename="../src/Common/commandline.cpp" line="281"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>CHYBA: Neznámý formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="290"/>
+        <location filename="../src/Common/commandline.cpp" line="289"/>
         <source>Error: Unknown option %1.</source>
         <translation>CHYBA: Neznámá volby %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="292"/>
+        <location filename="../src/Common/commandline.cpp" line="291"/>
         <source>Error: Missing argument for %1.</source>
         <translation>CHYBA: Chybí argument pro %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="301"/>
+        <location filename="../src/Common/commandline.cpp" line="300"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>CHYBA: Počet zadaných hodnot kroků EV se neshoduje s počtem vstupních souborů.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="355"/>
+        <location filename="../src/Common/commandline.cpp" line="351"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Chyba: V obrázcích chybí exif data a ani v příkazové řádce nejsou určeny hodnoty EV.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="424"/>
+        <location filename="../src/Common/commandline.cpp" line="429"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation>CHYBA: Nemohu uložit do souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="437"/>
+        <location filename="../src/Common/commandline.cpp" line="442"/>
         <source>Cannot convert %1 to a float</source>
         <translation>Nemohu konvertovat %1 do plovoucí rádové čárky</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="447"/>
+        <location filename="../src/Common/commandline.cpp" line="452"/>
         <source>Cannot convert %1 to an integer</source>
         <translation>Nemohu konvertovat %1 do celých čísel</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="129"/>
+        <location filename="../src/Common/commandline.cpp" line="128"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Chyba: Určena neznámá váhová funkce.</translation>
     </message>
@@ -433,12 +433,12 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
         <translation type="obsolete">Použití: %1 [VOLBY]... [VSTUPNÍ SOUBORY]...  <byte value="x9"/>Rozhraní příkazové řádky k %2.  <byte value="x9"/>-h --help              Zobrazí tuto nápovědu.  <byte value="x9"/>-v --verbose           Upovídanost, vytiskne více informací při zpracování.<byte value="x9"/><byte value="x9"/>-a --align AIS|MTB     Který nástroj pro vyrovnání použít při tvorbě HDR obrázku (přednastaveno bez vyrovnání).  <byte value="x9"/>-e --ev EV1,EV2,...    Urči číselně hodnoty EV (musí se shodovat s počtem vstupních souborů).  <byte value="x9"/>-c --config            Konfigurace tvorby HDR. Možné hodnoty: <byte value="x9"/><byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m <byte value="x9"/><byte value="x9"/><byte value="x9"/>(Přednastaveno je triangular,linear,debevec) <byte value="x9"/><byte value="x9"/>-l --load HDR_SOUBOR     Načtepřipravený HDR soubor, nebude tvořit nový.   <byte value="x9"/>-s --save HDR_SOUBOR     Uloží do souboru s formátem HDR.   <byte value="x9"/>-g --gamma HODNOTA       Hodnota gamma pro přemapování.   <byte value="x9"/>-r --resize HODNOTA      Nová šířka HDR (změna rozlišení proběhne před úpravou gamma a přemapováním)   <byte value="x9"/>-t --tmo               Operátor přemapování. Možné volby: <byte value="x9"/><byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk  <byte value="x9"/><byte value="x9"/>(Přednastavený je mantiuk)  <byte value="x9"/>-p --tmoptions         Volby operátoru přemapování. Možné volby: <byte value="x9"/><byte value="x9"/><byte value="x9"/>alpha=HODNOTA:beta=HODNOTA:color=HODNOTA:noise=HODNOTA:new=true|false (pro fattal)<byte value="x9"/><byte value="x9"/><byte value="x9"/>contrast=HODNOTA:saturation=HODNOTA:equalization=true|false (pro mantiuk)<byte value="x9"/><byte value="x9"/><byte value="x9"/>localcontrast=HODNOTA:eq=2|4:simple=true|false (pro ashikhmin)<byte value="x9"/><byte value="x9"/><byte value="x9"/>sigma_s=HODNOTA:sigma_r=HODNOTA:base=HODNOTA (pro durand)<byte value="x9"/><byte value="x9"/><byte value="x9"/>bias=HODNOTA (pro drago)<byte value="x9"/><byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=HODNOTA:rod=HODNOTA:multiplier=HODNOTA (pro pattanaik)<byte value="x9"/><byte value="x9"/><byte value="x9"/>scales=true|false:key=HODNOTA:phi=HODNOTA:num=HODNOTA:low=HODNOTA:high=HODNOTA (pro reinhard02)<byte value="x9"/><byte value="x9"/><byte value="x9"/>brightness=HODNOTA:chroma=HODNOTA:lightness=HODNOTA (pro reinhard05)<byte value="x9"/><byte value="x9"/><byte value="x9"/>(Přednastavené hodnoty jsou contrast=0.3:equalization=false:saturation=1.8)  <byte value="x9"/>-o --output LDR_SOUBOR   Název souboru kam uložit přemapovaný LDR soubor.  <byte value="x9"/>Musíte zpracovat buď připravený HDR soubor (pomocí volby -l) anebo vytvořit nový HDR ze zadaných VSTUPNÍCH SOUBORŮ.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="371"/>
+        <location filename="../src/Common/commandline.cpp" line="367"/>
         <source>Failed executing align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="482"/>
+        <location filename="../src/Common/commandline.cpp" line="488"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
  <byte value="x9"/>Commandline interface to %2.
 
@@ -448,15 +448,15 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
  <byte value="x9"/>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).
  <byte value="x9"/>-c --config            HDR creation config. Possible values: 
 <byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m 
-<byte value="x9"/><byte value="x9"/>(Default is triangular,linear,debevec) 
+<byte value="x9"/><byte value="x9"/>(Default is weight=triangular:response_curve=linear:model=debevec) 
 <byte value="x9"/>-l --load HDR_FILE     Load an HDR instead of creating a new one. 
- <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. 
- <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. 
- <byte value="x9"/>-r --resize VALUE      Width want to resize your HDR to (resized before gamma and tone mapping) 
- <byte value="x9"/>-t --tmo               Tone mapping operator. Possible values: 
+ <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) 
+ <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) 
+ <byte value="x9"/>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) 
+ <byte value="x9"/>-t --tmo               Tone mapping operator. Legal values are: 
 <byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk
  <byte value="x9"/><byte value="x9"/>(Default is mantiuk)
- <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Possible values: 
+ <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Legal values are: 
 <byte value="x9"/><byte value="x9"/>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)
 <byte value="x9"/><byte value="x9"/>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)
 <byte value="x9"/><byte value="x9"/>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)
@@ -465,8 +465,9 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
 <byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)
 <byte value="x9"/><byte value="x9"/>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)
 <byte value="x9"/><byte value="x9"/>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)
-<byte value="x9"/><byte value="x9"/>(Default is contrast=0.3:equalization=false:saturation=1.8)
+<byte value="x9"/><byte value="x9"/>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)
  <byte value="x9"/>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.
+ <byte value="x9"/>                       (No tonemapping is performed unless -o is specified).
  <byte value="x9"/>
 You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
@@ -982,7 +983,7 @@ p, li { white-space: pre-wrap; }
         <translation>Váhová funkce:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="445"/>
         <source>Triangular</source>
         <translation>Trojúhelníková</translation>
     </message>
@@ -992,7 +993,7 @@ p, li { white-space: pre-wrap; }
         <translation>Křivka odezvy:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="456"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1002,7 +1003,7 @@ p, li { white-space: pre-wrap; }
         <translation>Model tvorby HDR:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="467"/>
         <source>Debevec</source>
         <translation></translation>
     </message>
@@ -1012,7 +1013,7 @@ p, li { white-space: pre-wrap; }
         <translation>Odstranění duchů(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="454"/>
         <source>Linear</source>
         <translation>Lineární</translation>
     </message>
@@ -1046,12 +1047,12 @@ profily nevedou k dobrému výsledku)</translation>
         <translation>Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="448"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="449"/>
         <source>Gaussian</source>
         <translation>Gausovská</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="447"/>
         <source>Plateau</source>
         <translation>Rovina</translation>
     </message>
@@ -1089,12 +1090,12 @@ pixel values&lt;/p&gt;</source>
         <translation>Vyberte model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="468"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="469"/>
         <source>Robertson</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="247"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Vpřed &gt;</translation>
     </message>
@@ -1109,12 +1110,12 @@ pixel values&lt;/p&gt;</source>
         <translation type="obsolete">Všechny formáty (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>Obrázky TIFF (*.tiff *.tif);;</translation>
     </message>
@@ -1124,72 +1125,72 @@ pixel values&lt;/p&gt;</source>
         <translation type="obsolete">Obrázky RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="108"/>
         <source>Select the input images</source>
         <translation>Vyber vstupní obrázky</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="141"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="142"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Obrázky načteny.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="153"/>
         <source>EXIF data not found</source>
         <translation>EXIF data nenalezena</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="484"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="485"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="377"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="378"/>
         <source>&amp;Finish</source>
         <translation>&amp;Proveď</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="389"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="390"/>
         <source>Load a camera response curve file</source>
         <translation>Nahrát soubor křivky odezvy fotoaparátu</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="404"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Křivka odezvy fotoaparátu (*.m);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source>(*) Weights: </source>
         <translation>(*)Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source> - Response curve: </source>
         <translation> - Křivka odezvy: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="438"/>
         <source> - Model: </source>
         <translation>- Model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="458"/>
         <source>Logarithmic</source>
         <translation>Logaritmický</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="460"/>
         <source>From Calibration</source>
         <translation>Podle kalibrace</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="462"/>
         <source>From File</source>
         <translation>Ze souboru</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="215"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
@@ -1264,7 +1265,7 @@ pixel values&lt;/p&gt;</source>
         <translation>Expozice</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1274,52 +1275,52 @@ u následujících obrázků:
  &lt;ul&gt;<byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;Abyste mohl přistoupit k tovorbě HDR, musíte doplnit hodnoty expozice EV nebo expoziční kroky &lt;b&gt;ručně&lt;/b&gt;.<byte value="x9"/>&lt;hr&gt;Pokud chcete, aby to QtpfsguiI dělal &lt;b&gt;automaticky&lt;/b&gt;, musí zpracovávané soubory obsahovat alespoň tyto &lt;i&gt;EXIF&lt;/i&gt; data:<byte value="x9"/>&lt;ul&gt;&lt;li&gt;Rychlost závěrky v sekundách&lt;/li&gt;<byte value="x9"/>&lt;li&gt;Clonové číslo&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;TIP:&lt;/b&gt; Ztrátu  &lt;i&gt;EXIF&lt;/i&gt; dat je obvykle způsobena předúpravou obrázku.&lt;br&gt;<byte value="x9"/>Můžete provést &lt;b&gt;kopii exif dat jeden-na-jednoho&lt;/b&gt; mezi dvěma sadami obrázků pomocí položky menu &lt;i&gt;&lt;b&gt;&quot;Nástroje-&gt;Kopírovat EXIF data...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="177"/>
         <source>Loading Error</source>
         <translation>Chyba při nahrávání</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="193"/>
         <source>Unknown </source>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="206"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Nepovedlo se spustit externí aplikaci &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;K získání více informací přečtěte prosím &quot;Nápověda -&gt; Dokumentace... -&gt; &quot;Pokyny a tipy&quot;. </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="209"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>Externí aplikace &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; havarovala...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="215"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Při spouštění aplikace&quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; se vyskytla neznámá chyba...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="319"/>
         <source>Aligning...</source>
         <translation>Zarovnávám...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="402"/>
         <source>Save a camera response curve file</source>
         <translation>Ulož soubor křivky odezvy kamery</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="483"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Byly nastaveny včechny EV hodnoty.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="104"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1416,32 +1417,32 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LoadHdrThread</name>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="47"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="48"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation>CHYBA: Následující soubor nelze přečíst: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="102"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="103"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="109"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="110"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="121"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="122"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>CHYBA: Nepodporovaná přípona u souboru %1.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="151"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="152"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="76"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="77"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
         <translation>CHYBA: Výstup TIFF pro RAW subory je monentálně vypnutý. Přidejte prosím volbu &quot;-T&quot; k parametrům konverze RAW v paneu volby.</translation>
     </message>
@@ -1954,7 +1955,7 @@ p, li { white-space: pre-wrap; }
         <translation>Qtpfsgui potřebuje ukládat rozpracované soubory, ale právě zvolený adresář není platný.&lt;br&gt;Zvolte prosím platnou cestu pomocí &lt;i&gt;Nástroje-&gt;Předvolby...-&gt;Tone Mapping&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="525"/>
         <source>Unsaved changes...</source>
         <translation>Neuložené změny...</translation>
     </message>
@@ -1979,12 +1980,12 @@ p, li { white-space: pre-wrap; }
         <translation>O &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="525"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Minimálně jeden HDR nemá uloženy změny. &lt;bd&gt;Chcete přesto ukončit?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="594"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
@@ -2232,6 +2233,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>PreferenceDialog</name>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="139"/>
+        <source>Choose a directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProjectionsDialog</name>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="13"/>
@@ -2327,17 +2336,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="71"/>
+        <location filename="../src/Common/options.cpp" line="91"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>CHYBA: nemohu otevřít soubor nastavení přemapování:</translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="94"/>
+        <location filename="../src/Common/options.cpp" line="114"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>CHYBA: Příliš starý soubor, nemohu použít soubor nastavení přemapování:</translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="177"/>
+        <location filename="../src/Common/options.cpp" line="197"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>CHYBA: nemohu použít soubor nastavení přemapování:</translation>
     </message>
@@ -2345,27 +2354,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="65"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="65"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Nemohu najít Qt JPEG plugin...&lt;br&gt;Rozbalte archív s volbou &quot;zachovat strukturu adresářů&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="38"/>
+        <location filename="../src/Common/global.cpp" line="39"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
         <translation type="unfinished">Všechny LDR formáty (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="44"/>
+        <location filename="../src/Common/global.cpp" line="45"/>
         <source>Save the LDR to...</source>
         <translation type="unfinished">Uložit LDR jako...</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="75"/>
+        <location filename="../src/Common/global.cpp" line="76"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Uložení selhalo &lt;b&gt;</translation>
     </message>
@@ -2375,7 +2384,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="134"/>
         <source>Choose a directory</source>
-        <translation>Vyberte adresář</translation>
+        <translation type="obsolete">Vyberte adresář</translation>
     </message>
 </context>
 <context>
@@ -2444,42 +2453,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="277"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="279"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Nahrát soubor nastavení přemapování...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="310"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="312"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui soubor nastavení přemapování (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="418"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="283"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="285"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Soubor není čitelný (zkontrolujte zda existuje, práva,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="308"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="310"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Uložit soubor nastavení přemapování jako...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="337"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="339"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Soubor nelze zapsat (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="403"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="418"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Chyba, formát souboru nastavení přemapvání se změnil. Tento (starý) soubor nelze použít v této verzi Qtpfsgui. Vytvořte nový.</translation>
     </message>
