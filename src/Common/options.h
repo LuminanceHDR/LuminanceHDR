@@ -27,10 +27,17 @@
 #include <QString>
 #include <QStringList>
 
-struct qtpfsgui_opts {
+//Singleton class
+class QtpfsguiOptions {
+public:
+	//global point of access to singleton instance
+	static QtpfsguiOptions *getInstance();
+	//public accessor to destroy singleton
+	static void deleteInstance();
+
 	//options for RAW import functionality, thanks to dcraw
 	QStringList dcraw_options;
-	//color used to draw the NAN/INF or the negative colors
+	//colors used to draw the NAN/INF or the negative colors
 	unsigned int naninfcolor, negcolor;
 	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 	bool saveLogLuvTiff;
@@ -40,11 +47,16 @@ struct qtpfsgui_opts {
 	int num_threads;
 	//Image format used to save LDRs in batch mode.
 	QString batch_ldr_format;
-};
+private:
+	//use QSettings to load stored settings (or use defaults)
+	void loadFromQSettings ();
+	//private constructor
+	QtpfsguiOptions ();
+	//private destructor
+	~QtpfsguiOptions ();
+	//the private singleton instance
+	static QtpfsguiOptions *instance;
 
-class QtPfsGuiOptions {
-	public:
-	static void loadOptions (qtpfsgui_opts *dest);
 };
 
 enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk};

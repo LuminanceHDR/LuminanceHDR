@@ -31,12 +31,14 @@
 #include "../Exif/exif_operations.h"
 
 
-BatchTMDialog::BatchTMDialog(QWidget *p, qtpfsgui_opts *opts) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), qtpfsgui_options(opts), done(false) {
+BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), done(false) {
 	setupUi(this);
+
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
+
 #if QT_VERSION >= 0x040200
 	Log_Widget->setWordWrap(true);
 #endif
-	assert(opts!=NULL);
 
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
@@ -256,7 +258,7 @@ void BatchTMDialog::start_called() {
 void BatchTMDialog::conditional_loadthread() {
 	if (!HDRs_list.isEmpty()) {
 		qDebug("BATCH: conditional_loadthread: creating and starting load-hdr thread...");
-		LoadHdrThread *loadthread = new LoadHdrThread(HDRs_list.takeFirst(), RecentDirHDRSetting, qtpfsgui_options);
+		LoadHdrThread *loadthread = new LoadHdrThread(HDRs_list.takeFirst(), RecentDirHDRSetting);
 		connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_HDR_failed(QString)));
 		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(finished_loading_hdr(pfs::Frame*,QString)));

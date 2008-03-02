@@ -25,6 +25,7 @@
 #include <QImage>
 #include <QMessageBox>
 #include "config.h"
+#include "options.h"
 #include "global.h"
 
 QSettings settings("Qtpfsgui", "Qtpfsgui");

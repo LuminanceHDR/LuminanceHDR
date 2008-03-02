@@ -29,39 +29,59 @@
 #include "global.h"
 #include "config.h"
 
-void QtPfsGuiOptions::loadOptions(qtpfsgui_opts *dest) {
+QtpfsguiOptions *QtpfsguiOptions::instance = 0;
+
+QtpfsguiOptions *QtpfsguiOptions::getInstance() {
+	if (!instance) {
+		instance=new QtpfsguiOptions();
+	}
+	return instance;
+}
+
+QtpfsguiOptions::QtpfsguiOptions () {
+	loadFromQSettings();
+}
+
+QtpfsguiOptions::~QtpfsguiOptions() {
+}
+
+void QtpfsguiOptions::deleteInstance() {
+	delete instance; instance=0;
+}
+
+void QtpfsguiOptions::loadFromQSettings() {
 	settings.beginGroup(GROUP_DCRAW);
 		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
 			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");
-		dest->dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
+		dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
 		if (!settings.contains(KEY_NANINFCOLOR))
 			settings.setValue(KEY_NANINFCOLOR,0xFF000000);
-		dest->naninfcolor=settings.value(KEY_NANINFCOLOR,0xFF000000).toUInt();
+		naninfcolor=settings.value(KEY_NANINFCOLOR,0xFF000000).toUInt();
 	
 		if (!settings.contains(KEY_NEGCOLOR))
 			settings.setValue(KEY_NEGCOLOR,0xFF000000);
-		dest->negcolor=settings.value(KEY_NEGCOLOR,0xFF000000).toUInt();
+		negcolor=settings.value(KEY_NEGCOLOR,0xFF000000).toUInt();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TONEMAPPING);
 		if (!settings.contains(KEY_TEMP_RESULT_PATH))
 			settings.setValue(KEY_TEMP_RESULT_PATH, QDir::currentPath());
-		dest->tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
+		tempfilespath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
 		if (!settings.contains(KEY_BATCH_LDR_FORMAT))
 			settings.setValue(KEY_BATCH_LDR_FORMAT, "JPEG");
-		dest->batch_ldr_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
+		batch_ldr_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
 		if (!settings.contains(KEY_NUM_BATCH_THREADS))
 			settings.setValue(KEY_NUM_BATCH_THREADS, 1);
-		dest->num_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
+		num_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
 		if (!settings.contains(KEY_SAVE_LOGLUV))
 			settings.setValue(KEY_SAVE_LOGLUV,true);
-		dest->saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
+		saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
 	settings.endGroup();
 }
 

@@ -29,16 +29,16 @@
 #include "../Common/options.h"
 #include "../Common/global.h"
 
-class QtpfsguiOptions : public QDialog, private Ui::OptionsDialog
+class PreferenceDialog : public QDialog, private Ui::OptionsDialog
 {
 Q_OBJECT
 public:
-	QtpfsguiOptions(QWidget *parent, qtpfsgui_opts *orig_opts);
-	~QtpfsguiOptions();
+	PreferenceDialog(QWidget *parent);
+	~PreferenceDialog();
 private:
 	void change_color_of(QPushButton *,QColor *);
 	void from_options_to_gui();
-	qtpfsgui_opts *opts;
+	QtpfsguiOptions *qtpfsgui_options;
 	QColor infnancolor, negcolor;
 private slots:
 	void negative_clicked();

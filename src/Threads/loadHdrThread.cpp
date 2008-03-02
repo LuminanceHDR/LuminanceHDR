@@ -30,7 +30,8 @@
 pfs::Frame* readEXRfile  (const char * filename);
 pfs::Frame* readRGBEfile (const char * filename);
 
-LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting, qtpfsgui_opts *opts) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), qtpfsgui_options(opts) {
+LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting) {
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
 }
 
 LoadHdrThread::~LoadHdrThread() {

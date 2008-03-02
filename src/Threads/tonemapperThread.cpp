@@ -45,9 +45,7 @@ QReadWriteLock lock;
 
 TonemapperThread::TonemapperThread(int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
 	colorspaceconversion=false;
-	settings.beginGroup(GROUP_TONEMAPPING);
-	cachepath=settings.value(KEY_TEMP_RESULT_PATH,QDir::currentPath()).toString();
-	settings.endGroup();
+	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
 	connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
 	setTerminationEnabled(true);

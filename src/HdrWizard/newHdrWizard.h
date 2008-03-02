@@ -39,7 +39,7 @@ class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 Q_OBJECT
 
 public:
-	HdrWizardForm(QWidget *parent, qtpfsgui_opts *options);
+	HdrWizardForm(QWidget *parent);
 	~HdrWizardForm();
 	pfs::Frame* getPfsFrameHDR() {return PfsFrameHDR;}
 	QString getCaptionTEXT();
@@ -51,7 +51,6 @@ private:
 	QString getQStringFromConfig( int type );
 	Gang *EVgang;
 
-	qtpfsgui_opts *opts;
 	HdrCreationManager *hdrCreationManager;
 
 	//the new hdr, returned by the HdrCreationManager class

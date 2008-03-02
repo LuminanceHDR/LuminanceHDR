@@ -34,7 +34,7 @@
 #include "editingTools.h"
 #include "../Common/config.h"
 
-HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), opts(options), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
+HdrWizardForm::HdrWizardForm(QWidget *p) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
 
 	weights_in_gui[0]=TRIANGULAR;
@@ -83,6 +83,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, qtpfsgui_opts *options) : QDialog(p), o
 	SLOT(loadRespCurveFilename(const QString&)));
 	connect(loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
 
+	QtpfsguiOptions *opts=QtpfsguiOptions::getInstance();
 	hdrCreationManager = new HdrCreationManager ( opts->num_threads, opts->tempfilespath, opts->dcraw_options );
 	connect(hdrCreationManager, SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
 	connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));

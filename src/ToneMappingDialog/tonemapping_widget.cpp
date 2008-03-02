@@ -35,8 +35,10 @@
 extern int xsize;
 extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), cachepath(cachepath), sb(_sb), adding_custom_size(false) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
+
+	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
 	// mantiuk06
 	contrastfactorGang = new Gang(contrastFactorSlider, contrastFactordsb,0.001,2,0.3);

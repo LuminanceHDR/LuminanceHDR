@@ -49,7 +49,7 @@ class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QString cachepath, QStatusBar* sb);
+	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar* sb);
 	~TMWidget();
 signals:
 	void newResult(const QImage&,tonemapping_options*);

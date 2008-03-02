@@ -28,8 +28,13 @@
 #include "../Common/config.h"
 #include "../generated_uic/ui_documentation.h"
 
-QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts) : QDialog(p), opts(orig_opts), infnancolor(opts->naninfcolor), negcolor(opts->negcolor) {
+PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 	setupUi(this);
+
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	negcolor=qtpfsgui_options->negcolor;
+	infnancolor=qtpfsgui_options->naninfcolor;
+
 	from_options_to_gui(); //update the gui in order to show the options
 	connect(negative_color_button,SIGNAL(clicked()),this,SLOT(negative_clicked()));
 	connect(infnan_color_button,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
@@ -42,16 +47,16 @@ QtpfsguiOptions::QtpfsguiOptions(QWidget *p, qtpfsgui_opts *orig_opts) : QDialog
 	whatsThisButton->setToolButtonStyle(style);
 }
 
-void QtpfsguiOptions::negative_clicked() {
+void PreferenceDialog::negative_clicked() {
 	negcolor = QColorDialog::getColor(negcolor, this);
 	change_color_of(negative_color_button,&negcolor);
 }
-void QtpfsguiOptions::infnan_clicked() {
+void PreferenceDialog::infnan_clicked() {
 	infnancolor = QColorDialog::getColor(infnancolor, this);
 	change_color_of(infnan_color_button,&infnancolor);
 }
 
-void QtpfsguiOptions::change_color_of(QPushButton *button, QColor *newcolor) {
+void PreferenceDialog::change_color_of(QPushButton *button, QColor *newcolor) {
 	if (newcolor->isValid()) {
 #if QT_VERSION <= 0x040200
 		QPalette modified_palette(button->palette());
@@ -63,41 +68,41 @@ void QtpfsguiOptions::change_color_of(QPushButton *button, QColor *newcolor) {
 	}
 }
 
-void QtpfsguiOptions::ok_clicked() {
+void PreferenceDialog::ok_clicked() {
 	settings.beginGroup(GROUP_DCRAW);
-		opts->dcraw_options=commandlineParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
-		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,opts->dcraw_options);
+		qtpfsgui_options->dcraw_options=commandlineParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,qtpfsgui_options->dcraw_options);
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
-		if(negcolor.rgba() != opts->negcolor) {
-			opts->negcolor=negcolor.rgba();
+		if(negcolor.rgba() != qtpfsgui_options->negcolor) {
+			qtpfsgui_options->negcolor=negcolor.rgba();
 			settings.setValue(KEY_NEGCOLOR,negcolor.rgba());
 		}
-		if(infnancolor.rgba() != opts->naninfcolor) {
-			opts->naninfcolor=infnancolor.rgba();
+		if(infnancolor.rgba() != qtpfsgui_options->naninfcolor) {
+			qtpfsgui_options->naninfcolor=infnancolor.rgba();
 			settings.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
 		}
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TONEMAPPING);
-		if (lineEditTempPath->text() != opts->tempfilespath) {
-			opts->tempfilespath=lineEditTempPath->text();
+		if (lineEditTempPath->text() != qtpfsgui_options->tempfilespath) {
+			qtpfsgui_options->tempfilespath=lineEditTempPath->text();
 			settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
-		if (imageformat_comboBox->currentText() != opts->batch_ldr_format) {
-			opts->batch_ldr_format=imageformat_comboBox->currentText();
+		if (imageformat_comboBox->currentText() != qtpfsgui_options->batch_ldr_format) {
+			qtpfsgui_options->batch_ldr_format=imageformat_comboBox->currentText();
 			settings.setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
 		}
-		if (thread_spinBox->value() != opts->num_threads) {
-			opts->num_threads=thread_spinBox->value();
+		if (thread_spinBox->value() != qtpfsgui_options->num_threads) {
+			qtpfsgui_options->num_threads=thread_spinBox->value();
 			settings.setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
 		}
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
-		if (radioButtonLogLuv->isChecked() != opts->saveLogLuvTiff) {
-			opts->saveLogLuvTiff=radioButtonLogLuv->isChecked();
+		if (radioButtonLogLuv->isChecked() != qtpfsgui_options->saveLogLuvTiff) {
+			qtpfsgui_options->saveLogLuvTiff=radioButtonLogLuv->isChecked();
 			settings.setValue(KEY_SAVE_LOGLUV,radioButtonLogLuv->isChecked());
 		}
 	settings.endGroup();
@@ -105,30 +110,30 @@ void QtpfsguiOptions::ok_clicked() {
 	accept();
 }
 
-void QtpfsguiOptions::from_options_to_gui() {
-	lineEditTempPath->setText(opts->tempfilespath);
-	if (opts->batch_ldr_format=="JPEG")
+void PreferenceDialog::from_options_to_gui() {
+	lineEditTempPath->setText(qtpfsgui_options->tempfilespath);
+	if (qtpfsgui_options->batch_ldr_format=="JPEG")
 		imageformat_comboBox->setCurrentIndex(0);
-	else if (opts->batch_ldr_format=="PNG")
+	else if (qtpfsgui_options->batch_ldr_format=="PNG")
 		imageformat_comboBox->setCurrentIndex(1);
-	else if (opts->batch_ldr_format=="PPM")
+	else if (qtpfsgui_options->batch_ldr_format=="PPM")
 		imageformat_comboBox->setCurrentIndex(2);
-	else if (opts->batch_ldr_format=="PBM")
+	else if (qtpfsgui_options->batch_ldr_format=="PBM")
 		imageformat_comboBox->setCurrentIndex(3);
-	else if (opts->batch_ldr_format=="BMP")
+	else if (qtpfsgui_options->batch_ldr_format=="BMP")
 		imageformat_comboBox->setCurrentIndex(4);
-	thread_spinBox->setValue(opts->num_threads);
-	commandlineParamsLineEdit->setText(opts->dcraw_options.join(" "));
-	radioButtonLogLuv->setChecked(opts->saveLogLuvTiff);
-	radioButtonFloatTiff->setChecked(!opts->saveLogLuvTiff);
+	thread_spinBox->setValue(qtpfsgui_options->num_threads);
+	commandlineParamsLineEdit->setText(qtpfsgui_options->dcraw_options.join(" "));
+	radioButtonLogLuv->setChecked(qtpfsgui_options->saveLogLuvTiff);
+	radioButtonFloatTiff->setChecked(!qtpfsgui_options->saveLogLuvTiff);
 	change_color_of(negative_color_button,&negcolor);
 	change_color_of(infnan_color_button,&infnancolor);
 }
 
-QtpfsguiOptions::~QtpfsguiOptions() {
+PreferenceDialog::~PreferenceDialog() {
 }
 
-void QtpfsguiOptions::updateLineEditString() {
+void PreferenceDialog::updateLineEditString() {
 	QString dir=QFileDialog::getExistingDirectory(
 	this,
 	tr("Choose a directory"),
@@ -139,7 +144,7 @@ void QtpfsguiOptions::updateLineEditString() {
 	}
 }
 
-void QtpfsguiOptions::helpDcrawParamsButtonClicked() {
+void PreferenceDialog::helpDcrawParamsButtonClicked() {
 	QDialog *help=new QDialog();
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
@@ -149,6 +154,6 @@ void QtpfsguiOptions::helpDcrawParamsButtonClicked() {
 	help->exec();
 }
 
-void QtpfsguiOptions::enterWhatsThis() {
+void PreferenceDialog::enterWhatsThis() {
 	QWhatsThis::enterWhatsThisMode();
 }

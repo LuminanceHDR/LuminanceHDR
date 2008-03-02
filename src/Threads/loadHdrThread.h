@@ -35,7 +35,7 @@ class LoadHdrThread : public QThread {
 Q_OBJECT
 
 public:
-	LoadHdrThread(QString filename, QString RecentDirHDRSetting, qtpfsgui_opts *opts);
+	LoadHdrThread(QString filename, QString RecentDirHDRSetting);
 	~LoadHdrThread();
 	QString getHdrFileName() {return fname;}
 signals:
@@ -46,6 +46,6 @@ protected:
 	void run();
 private:
 	QString fname,RecentDirHDRSetting;
-	qtpfsgui_opts *qtpfsgui_options;
+	QtpfsguiOptions *qtpfsgui_options;
 };
 #endif

@@ -34,16 +34,19 @@
 
 int main( int argc, char ** argv )
 {
+	int rc=-1;
 #ifndef Q_WS_MAC
 	//CLI application
 	// Do not try to run the CLI app on Mac -
-	// TODO: the problem is that some args are supplied when
-	// running as a gui-app, which does not work!
+	// FIXME: the problem is that some args are supplied when
+	// running as a gui-app in Mac OS X, this messes up things.
 	if (argc>1) {
 		QCoreApplication CLIapplication( argc, argv );
 		CommandLineInterfaceManager cli( argc, argv );
 		CLIapplication.connect(&cli, SIGNAL(finishedParsing()), &CLIapplication, SLOT(quit()));
-		return CLIapplication.exec();
+		rc=CLIapplication.exec();
+		QtpfsguiOptions::deleteInstance();
+		return rc;
 	}
 #endif
 
@@ -71,5 +74,7 @@ int main( int argc, char ** argv )
 	MainGui maingui;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
 	maingui.show();
-	return application.exec();
+	rc=application.exec();
+	QtpfsguiOptions::deleteInstance();
+	return rc;
 }

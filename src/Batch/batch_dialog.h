@@ -38,7 +38,7 @@ class BatchTMDialog : public QDialog, public Ui::BatchTMDialog
 Q_OBJECT
 
 public:
-	BatchTMDialog(QWidget *parent=0, qtpfsgui_opts *opts=NULL);
+	BatchTMDialog(QWidget *parent=0);
 	~BatchTMDialog();
 // protected:
 private slots:
@@ -66,7 +66,7 @@ private:
 	// number of threads currently running in parallel.
 	int running_threads;
 	//required for the cache path and for the dcraw opts required by the hdr-load thread.
-	qtpfsgui_opts *qtpfsgui_options;
+	QtpfsguiOptions *qtpfsgui_options;
 	//the filename for the hdr we are currently working on, used when a LDR result comes up.
 	QString current_hdr_fname;
 	//Application-wide settings, loaded via QSettings.

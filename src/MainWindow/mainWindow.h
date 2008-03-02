@@ -67,7 +67,7 @@ private slots:
 	void current_mdi_original_size();
 	void openDocumentation();
 	void enterWhatsThis();
-	void options_called();
+	void preferences_called();
 	void transplant_called();
 	void reEnableMainWin();
 	void fileExit();
@@ -89,7 +89,7 @@ private slots:
 private:
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
-	void load_options(qtpfsgui_opts *);
+	void load_options();
 	void setupLoadThread(QString);
 	bool testTempDir(QString);
 	QWorkspace* workspace;
@@ -98,7 +98,7 @@ private:
 	QAction *recentFileActs[MaxRecentFiles];
 	QAction *separatorRecentFiles;
 	QString RecentDirHDRSetting;
-	qtpfsgui_opts *qtpfsgui_options;
+	QtpfsguiOptions *qtpfsgui_options;
 };
 
 

@@ -57,7 +57,7 @@ private:
 	HdrCreationManager *hdrCreationManager;
 	QString saveHdrFilename;
 	QString saveLdrFilename;
-	qtpfsgui_opts *qtpfsgui_options;
+	QtpfsguiOptions *qtpfsgui_options;
 	pfs::Frame *HDR;
 	void saveHDR();
 	void printHelp(char *progname);

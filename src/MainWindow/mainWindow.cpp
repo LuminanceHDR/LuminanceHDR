@@ -58,8 +58,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	workspace->setScrollBarsEnabled( TRUE );
 	setCentralWidget(workspace);
 
-	qtpfsgui_options=new qtpfsgui_opts();
-	load_options(qtpfsgui_options);
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	load_options();
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
 
@@ -87,7 +87,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
-	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(options_called()));
+	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 	connect(actionTile,SIGNAL(triggered()),workspace,SLOT(tile()));
 	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
@@ -122,7 +122,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 void MainGui::fileNewViaWizard() {
 	HdrWizardForm *wizard;
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
-		wizard=new HdrWizardForm (this,qtpfsgui_options);
+		wizard=new HdrWizardForm (this);
 		if (wizard->exec() == QDialog::Accepted) {
 			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
@@ -445,7 +445,7 @@ void MainGui::openRecentFile() {
 }
 
 void MainGui::setupLoadThread(QString fname) {
-	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting, qtpfsgui_options);
+	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
 	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrViewer(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
@@ -463,10 +463,10 @@ void MainGui::load_failed(QString error_message) {
 	updateRecentFileActions();
 }
 
-void MainGui::options_called() {
+void MainGui::preferences_called() {
 	unsigned int negcol=qtpfsgui_options->negcolor;
 	unsigned int naninfcol=qtpfsgui_options->naninfcolor;
-	QtpfsguiOptions *opts=new QtpfsguiOptions(this,qtpfsgui_options);
+	PreferenceDialog *opts=new PreferenceDialog(this);
 	opts->setAttribute(Qt::WA_DeleteOnClose);
 	if (opts->exec() == QDialog::Accepted && (negcol!=qtpfsgui_options->negcolor || naninfcol!=qtpfsgui_options->naninfcolor) ) {
 		QWidgetList allhdrs=workspace->windowList();
@@ -482,7 +482,7 @@ void MainGui::transplant_called() {
 	transplant->exec();
 }
 
-void MainGui::load_options(qtpfsgui_opts *dest) {
+void MainGui::load_options() {
 	//load from settings the path where hdrs have been previously opened/loaded
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
 
@@ -507,12 +507,9 @@ void MainGui::load_options(qtpfsgui_opts *dest) {
 		actionText_Under_Icons->setChecked(true);
 	break;
 	}
-
-	QtPfsGuiOptions::loadOptions(dest);
 }
 
 MainGui::~MainGui() {
-	delete qtpfsgui_options;
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		delete recentFileActs[i];
 	}
@@ -617,7 +614,7 @@ void MainGui::updateWindowMenu() {
 }
 
 void MainGui::batch_requested() {
-	BatchTMDialog *batchdialog=new BatchTMDialog(this, qtpfsgui_options);
+	BatchTMDialog *batchdialog=new BatchTMDialog(this);
 	batchdialog->exec();
 	delete batchdialog;
 }
