@@ -34,13 +34,18 @@
 
 int main( int argc, char ** argv )
 {
+#ifndef Q_WS_MAC
 	//CLI application
+	// Do not try to run the CLI app on Mac -
+	// TODO: the problem is that some args are supplied when
+	// running as a gui-app, which does not work!
 	if (argc>1) {
 		QCoreApplication CLIapplication( argc, argv );
 		CommandLineInterfaceManager cli( argc, argv );
 		CLIapplication.connect(&cli, SIGNAL(finishedParsing()), &CLIapplication, SLOT(quit()));
 		return CLIapplication.exec();
 	}
+#endif
 
 	//GUI application
 	QApplication application( argc, argv );
