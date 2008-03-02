@@ -24,6 +24,7 @@
 		<li><A href="#hdroperations">Operations on an HDR</A></li>
 		</ol>
 	<li><A href="#createhdr">The Creation of an HDR</A></li>
+	<li><A href="#projectivetransf">Projective transformations</A></li>
 	<li><A href="#resizedialog">The Resize tool</A></li>
 	<li><A href="#tonemappingdialog">Interactive Tone mapping</A></li>
 		<ol>
@@ -69,6 +70,7 @@ Current supported features include:
 <li>Tone map an HDR image to get a LDR image.</li>
 <li>Save and load HDR images.</li>
 <li>Rotate and resize HDR images.</li>
+<li>Apply projective transformations to HDR images.</li>
 <li>Copy exif data between sets of images.</li>
 </ol>
 The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wizard: in order to create an HDR the user can either load a set of JPEG files, a set of RAW files, or a set of TIFF files (8bit or 16bit).<br>
@@ -79,8 +81,9 @@ The set of images can contain moving objects. This can result in an (unwanted) e
 Read the chapter <A href="#createhdr">about the creation of an hdr</A> for more information about the alignment engines and the interactive anti-ghosting tool.<br>
 To tone map an HDR file to get an LDR image <strong>(second feature)</strong> you can press the "Tonemap the HDR" button.<br>
 Via the "File -> Open Hdr..." wizard you can choose to load in the workspace an HDR image image file, and the "File->Save Hdr as..." item lets you save the currently selected hdr image to a HDR image file format <strong>(third feature)</strong>.<br>
-Users can also rotate and resize <strong>(fourth feature)</strong> the currently selected hdr image via the "Image" menu item, see below.
-In order to create an HDR image Qtpfsgui requires to have a set of images with exif data in it. Qtpfsgui requires this information to get the exposure settings for an image in the set. When Qtpfsgui doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Qtpfsgui provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(fifth feature)</strong>.
+Users can also rotate and resize <strong>(fourth feature)</strong> the currently selected hdr image via the "Image" menu item, see below.<br>
+It is also possible to apply panoramic (projective) transformation to a Hdr image via the "Image" menu item <strong>(fifth feature)</strong>.<br>
+In order to create an HDR image Qtpfsgui requires to have a set of images with exif data in it. Qtpfsgui requires this information to get the exposure settings for an image in the set. When Qtpfsgui doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Qtpfsgui provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(sixth feature)</strong>.
 
 
 <A name="usingqtpfsgui"><h2>Using Qtpfsgui</h2></A>
@@ -132,6 +135,7 @@ As soon as at least one HDR image has been loaded in the workspace you can:
 <li>Rotate it (Image->Rotate CounterClockWise or Image->Rotate ClockWise): Rotating an HDR modifies the HDR itself.</li>
 <li><A href="#resizedialog">Resize it</A>, i.e. scale it (Image -> Resize the Hdr...): Resizing an HDR modifies the HDR itself.</li>
 <li>Save it (File->Save Hdr as...): This is useful when you have just created an HDR from a set of JPEGs (or RAWs or TIFFs) via the "File->New Hdr..." wizard.</li>
+<li><A href="#projectivetransf">Apply projective transformations</A> (Image->Projective Transformation...): This operation modifies the current HDR.</li>
 <li><A href="#tonemappingdialog">Tone map it</A> (Image->Tonemap the Hdr...): Tone mapping an HDR involves showing another window, called "Interactive Tone Mapping window" which uses the HDR as a source to create an LDR.</li>
 </ul><br>
 
@@ -156,7 +160,11 @@ If you want to fiddle with settings you can check the "custom" option and anothe
 
 
 
-
+<A name="projectivetransf"><h3>Projective Transformations</h3></A>
+You can access this feature via the "Image -> Projective Transformation..." menu item.<br>
+With this tool the user is able to apply projective transformations to a Hdr image. This is useful if you shoot mirrorball Hdrs and you want to unwrap them, for example.<br>
+The Angular projection accepts an Angle parameter which defines how  many  degrees  from the  viewing  direction the projection should cover.<br>
+<IMG src="images/projectiveTransformationDialog.jpeg" width="525" height="348">
 
 <A name="resizedialog"><h3>The Resize tool</h3></A>
 You can access this feature via the "Image -> Resize the Hdr..." menu item.<br>
@@ -249,6 +257,8 @@ In this section you can find a complete reference describing what all the items 
 <dd>modifies the HDR image currently selected in the workspace by rotating it counterclockwise.</dd>
 <dt>Image -> Rotate ClockWise</dt>
 <dd>modifies the HDR image currently selected in the workspace by rotating it clockwise.</dd>
+<dt>Image -> Projective Transformation...</dt>
+<dd>launches a window that lets you apply a projective (aka panoramic) transformation to the HDR image currently selected in the workspace.</dd>
 <dt>Image -> Resize the Hdr...</dt>
 <dd>launches a window that lets you resize the HDR image currently selected in the workspace.</dd>
 <dt>Image -> Tonemap the Hdr...</dt>
