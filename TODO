@@ -1,5 +1,3 @@
-* 360 copy borders
 * displaying progress bar when loading HDR images (we need to ``moc`` each facility...)
-* check for latest version, file online on sf (via setup.exe -on win32 only-?)
 * long term: TEST/IMPROVE the antighosting algorithm (waiting Hugin's GSoC)
 * see http://qtpfsgui.wiki.sourceforge.net/TODO for a complete list.
