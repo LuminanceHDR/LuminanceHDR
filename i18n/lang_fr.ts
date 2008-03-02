@@ -2824,7 +2824,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="372"/>
         <source>Saturation Factor</source>
-        <translation>Facteur de saturaiton</translation>
+        <translation>Facteur de saturation</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2142"/>
