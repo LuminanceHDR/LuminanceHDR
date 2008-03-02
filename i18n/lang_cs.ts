@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="fo">
+<!DOCTYPE TS><TS version="1.1">
 <context>
     <name>AboutQtpfsgui</name>
     <message>
         <location filename="../forms/about.ui" line="13"/>
         <source>About Qtpfsgui</source>
-        <translation type="unfinished"></translation>
+        <translation>O Qtpfsgui</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="78"/>
@@ -17,30 +17,35 @@
         <source>&lt;html&gt;&lt;center&gt;Qtpfsgui - Hdr Imaging Workflow Application&lt;br&gt;
 (c) 2006-2007, Giuseppe Rota&lt;br&gt;
 &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;center&gt;Qtpfsgui - Apikace ke zpracování HDR&lt;br&gt;
+(c) 2006-2007, Giuseppe Rota&lt;br&gt;
+&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="108"/>
         <source>A&amp;uthors</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;utoři</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="171"/>
         <source>&amp;Thanks To</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Poděkování</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../forms/about.ui" line="223"/>
+        <location filename="" line="7471221"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prosím&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;dejte mi vědět,&lt;/span&gt;&lt;/a&gt; pokud jsem v seznamu někoho vynechal.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="234"/>
         <source>&amp;License Agreement</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Licenční ujednání</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../forms/about.ui" line="160"/>
@@ -48,16 +53,27 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prosím&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;dejte mi vědět,&lt;/span&gt;&lt;/a&gt; jesti jsem v seznamu někoho vynechal.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="323"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="52"/>
         <source>Qtpfsgui </source>
+        <translation>Qtpfsgui</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../forms/about.ui" line="223"/>
+        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Peter Linnell&lt;br /&gt;   Opensuse 10.2 and 10.3 packager.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -289,100 +305,100 @@ p, li { white-space: pre-wrap; }
         <translation>CHYBA: Nemohu uložit do souboru:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="358"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="359"/>
         <source>Successfully saved LDR file: </source>
         <translation>LDR soubor úspěšně uložen:</translation>
     </message>
     <message>
         <location filename="../src/Batch/batch_dialog.cpp" line="337"/>
         <source>Finished tone mapping the current HDR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Přemapování aktuálního HDR dokončeno.</translation>
     </message>
 </context>
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="99"/>
+        <location filename="../src/Common/commandline.cpp" line="105"/>
         <source>Error: Alignment engine not recognized.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nástroj zarovnání nerozpoznán.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="113"/>
+        <location filename="../src/Common/commandline.cpp" line="119"/>
         <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Špatný formát tvorby HDR</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="138"/>
+        <location filename="../src/Common/commandline.cpp" line="144"/>
         <source>Error: Unknown response curve specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Určena neznámá křivka odezvy.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="147"/>
+        <location filename="../src/Common/commandline.cpp" line="153"/>
         <source>Error: Unknown HDR creation model specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Určen neznámý model tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="154"/>
+        <location filename="../src/Common/commandline.cpp" line="160"/>
         <source>Error: Unknown HDR creation format specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Určen neznámý formát tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="190"/>
+        <location filename="../src/Common/commandline.cpp" line="196"/>
         <source>Error: Unknown tone mapping operator specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Určen neznámý operátor přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="199"/>
+        <location filename="../src/Common/commandline.cpp" line="205"/>
         <source>Error: Wrong tone mapping option format.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Špatný formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="276"/>
+        <location filename="../src/Common/commandline.cpp" line="282"/>
         <source>Error: Unknown tone mapping option specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Neznámý formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="284"/>
+        <location filename="../src/Common/commandline.cpp" line="290"/>
         <source>Error: Unknown option %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Neznámá volby %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="286"/>
+        <location filename="../src/Common/commandline.cpp" line="292"/>
         <source>Error: Missing argument for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Chybí argument pro %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="295"/>
+        <location filename="../src/Common/commandline.cpp" line="301"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Počet zadaných hodnot kroků EV se neshoduje s počtem vstupních souborů.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="340"/>
+        <location filename="../src/Common/commandline.cpp" line="355"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: V obrázcích chybí exif data a ani v příkazové řádce nejsou určeny hodnoty EV.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="405"/>
+        <location filename="../src/Common/commandline.cpp" line="424"/>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nemohu uložit do souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="417"/>
+        <location filename="../src/Common/commandline.cpp" line="437"/>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu konvertovat %1 do plovoucí rádové čárky</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="427"/>
+        <location filename="../src/Common/commandline.cpp" line="447"/>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemohu konvertovat %1 do celých čísel</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="123"/>
+        <location filename="../src/Common/commandline.cpp" line="129"/>
         <source>Error: Unknown weight function specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Určena neznámá váhová funkce.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="462"/>
+        <location filename="" line="7471221"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
  <byte value="x9"/>Commandline interface to %2.
 
@@ -414,6 +430,46 @@ p, li { white-space: pre-wrap; }
  <byte value="x9"/>
 You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new one.
 </source>
+        <translation type="obsolete">Použití: %1 [VOLBY]... [VSTUPNÍ SOUBORY]...  <byte value="x9"/>Rozhraní příkazové řádky k %2.  <byte value="x9"/>-h --help              Zobrazí tuto nápovědu.  <byte value="x9"/>-v --verbose           Upovídanost, vytiskne více informací při zpracování.<byte value="x9"/><byte value="x9"/>-a --align AIS|MTB     Který nástroj pro vyrovnání použít při tvorbě HDR obrázku (přednastaveno bez vyrovnání).  <byte value="x9"/>-e --ev EV1,EV2,...    Urči číselně hodnoty EV (musí se shodovat s počtem vstupních souborů).  <byte value="x9"/>-c --config            Konfigurace tvorby HDR. Možné hodnoty: <byte value="x9"/><byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m <byte value="x9"/><byte value="x9"/><byte value="x9"/>(Přednastaveno je triangular,linear,debevec) <byte value="x9"/><byte value="x9"/>-l --load HDR_SOUBOR     Načtepřipravený HDR soubor, nebude tvořit nový.   <byte value="x9"/>-s --save HDR_SOUBOR     Uloží do souboru s formátem HDR.   <byte value="x9"/>-g --gamma HODNOTA       Hodnota gamma pro přemapování.   <byte value="x9"/>-r --resize HODNOTA      Nová šířka HDR (změna rozlišení proběhne před úpravou gamma a přemapováním)   <byte value="x9"/>-t --tmo               Operátor přemapování. Možné volby: <byte value="x9"/><byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk  <byte value="x9"/><byte value="x9"/>(Přednastavený je mantiuk)  <byte value="x9"/>-p --tmoptions         Volby operátoru přemapování. Možné volby: <byte value="x9"/><byte value="x9"/><byte value="x9"/>alpha=HODNOTA:beta=HODNOTA:color=HODNOTA:noise=HODNOTA:new=true|false (pro fattal)<byte value="x9"/><byte value="x9"/><byte value="x9"/>contrast=HODNOTA:saturation=HODNOTA:equalization=true|false (pro mantiuk)<byte value="x9"/><byte value="x9"/><byte value="x9"/>localcontrast=HODNOTA:eq=2|4:simple=true|false (pro ashikhmin)<byte value="x9"/><byte value="x9"/><byte value="x9"/>sigma_s=HODNOTA:sigma_r=HODNOTA:base=HODNOTA (pro durand)<byte value="x9"/><byte value="x9"/><byte value="x9"/>bias=HODNOTA (pro drago)<byte value="x9"/><byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=HODNOTA:rod=HODNOTA:multiplier=HODNOTA (pro pattanaik)<byte value="x9"/><byte value="x9"/><byte value="x9"/>scales=true|false:key=HODNOTA:phi=HODNOTA:num=HODNOTA:low=HODNOTA:high=HODNOTA (pro reinhard02)<byte value="x9"/><byte value="x9"/><byte value="x9"/>brightness=HODNOTA:chroma=HODNOTA:lightness=HODNOTA (pro reinhard05)<byte value="x9"/><byte value="x9"/><byte value="x9"/>(Přednastavené hodnoty jsou contrast=0.3:equalization=false:saturation=1.8)  <byte value="x9"/>-o --output LDR_SOUBOR   Název souboru kam uložit přemapovaný LDR soubor.  <byte value="x9"/>Musíte zpracovat buď připravený HDR soubor (pomocí volby -l) anebo vytvořit nový HDR ze zadaných VSTUPNÍCH SOUBORŮ.</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="371"/>
+        <source>Failed executing align_image_stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="482"/>
+        <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
+ <byte value="x9"/>Commandline interface to %2.
+
+ <byte value="x9"/>-h --help              Display this help.
+ <byte value="x9"/>-v --verbose           Print more messages during execution.
+<byte value="x9"/>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).
+ <byte value="x9"/>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).
+ <byte value="x9"/>-c --config            HDR creation config. Possible values: 
+<byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m 
+<byte value="x9"/><byte value="x9"/>(Default is triangular,linear,debevec) 
+<byte value="x9"/>-l --load HDR_FILE     Load an HDR instead of creating a new one. 
+ <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. 
+ <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. 
+ <byte value="x9"/>-r --resize VALUE      Width want to resize your HDR to (resized before gamma and tone mapping) 
+ <byte value="x9"/>-t --tmo               Tone mapping operator. Possible values: 
+<byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk
+ <byte value="x9"/><byte value="x9"/>(Default is mantiuk)
+ <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Possible values: 
+<byte value="x9"/><byte value="x9"/>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)
+<byte value="x9"/><byte value="x9"/>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)
+<byte value="x9"/><byte value="x9"/>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)
+<byte value="x9"/><byte value="x9"/>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)
+<byte value="x9"/><byte value="x9"/>bias=VALUE (for drago)
+<byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)
+<byte value="x9"/><byte value="x9"/>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)
+<byte value="x9"/><byte value="x9"/>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)
+<byte value="x9"/><byte value="x9"/>(Default is contrast=0.3:equalization=false:saturation=1.8)
+ <byte value="x9"/>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.
+ <byte value="x9"/>
+You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -422,7 +478,7 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
     <message>
         <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
         <source>Choose a directory and a prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyverte adresář a prefix</translation>
     </message>
 </context>
 <context>
@@ -430,288 +486,289 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
     <message>
         <location filename="../forms/editing_tools.ui" line="24"/>
         <source>Editing Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Editační nástroje</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="64"/>
         <source>Visualization and Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizace a navigace</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="97"/>
         <source>Fit to window</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyplnit okno</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="100"/>
         <source>&amp;Fit to Window</source>
-        <translation type="unfinished">&amp;Vyplnit okno</translation>
+        <translation>&amp;Vyplnit okno</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="119"/>
         <source>Original size</source>
-        <translation type="unfinished"></translation>
+        <translation>Původní velikost</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="122"/>
         <source>Origina&amp;l Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Původní ve&amp;likost</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="138"/>
         <source>Zoom In</source>
-        <translation type="unfinished">Přiblížit</translation>
+        <translation>Přiblížit</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="141"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Při&amp;blížit</translation>
+        <translation>Při&amp;blížit</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="157"/>
         <source>Zoom Out</source>
-        <translation type="unfinished">Oddálit</translation>
+        <translation>Oddálit</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="160"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Od&amp;dálit</translation>
+        <translation>Od&amp;dálit</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="212"/>
         <source>Preview &amp;Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mód náhledu:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="238"/>
         <source>Pivot Only (P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pouze pivot (P)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="243"/>
         <source>Antighosting Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska potlačení duchů</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="254"/>
         <source>Mask Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska barvy</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="293"/>
         <source>Images List</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam obrázků</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="346"/>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomocí ovladačů níže lze právě vybraným obrázkem ze seznamu pohybovat nahoru, dolů, vlevo i vpravo.
+Histogram tohoto obrázku je zobrazen výše.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="383"/>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte předchozí obrázek z obou seznamů</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="386"/>
         <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte toto tlačítko pro posunutí výběru v obou seznamech na předchozí obrázek.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="402"/>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte následující obrázek z obou seznamech</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="405"/>
         <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte toto tlačítko pro posunutí výběru v obou seznamech na následující obrázek.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="438"/>
         <source>R&amp;eference</source>
-        <translation type="unfinished"></translation>
+        <translation>R&amp;eferenční</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="465"/>
         <source>The reference image is the one currently selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Právě vybraný obrázek je referenční</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="489"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Nástroje</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="525"/>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
-        <translation type="unfinished"></translation>
+        <translation>Ořízni obrázky na velikost vybranou levým myšítkem</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="528"/>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknutí na toto tlačítko ořízne všechny obrázky na rozměr, který je vybrán pomocí levého tlačítka myše (kliknout a táhnout pro výběr požadovaného rozměru, pak kliknout na toto tlačítko).</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="531"/>
         <source>&amp;Crop All Images</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ořízni všechny obrázky</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="543"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="563"/>
         <source>&amp;Anti Ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranění &amp;duchů</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="595"/>
         <source>&amp;Save Images</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ulož obrázky</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="607"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="665"/>
         <source>A&amp;dd Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Při&amp;dat masku</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="675"/>
         <source>Remove Mas&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Odebrat mas&amp;ku</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="734"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozměr:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="757"/>
         <source> pixels</source>
-        <translation type="unfinished"></translation>
+        <translation> body</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="773"/>
         <source>&amp;Strength:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Síla:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="837"/>
         <source>Reset the shift values for the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovat hodnoty posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="840"/>
         <source>&amp;Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vynulovat</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="847"/>
         <source>Reset the shift values for all the images</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovat hodnoty posunutí pro všechny obrázky</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="850"/>
         <source>Reset &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovat vš&amp;e</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="880"/>
         <source>&amp;Horizontal:</source>
-        <translation type="unfinished">&amp;Horizontální:</translation>
+        <translation>&amp;Horizontální:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="893"/>
         <source>&amp;Vertical:</source>
-        <translation type="unfinished">&amp;Vertikální:</translation>
+        <translation>&amp;Vertikální:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="906"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Volžit hodnotu horizontálního posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="925"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="922"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Volžit hodnotu vertikálního posunutí pro vybraný pohyblivý obrázek</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="948"/>
         <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel nahoru</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="961"/>
         <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel dolů</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="974"/>
         <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel doprava</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="987"/>
         <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunout vybraný pohyblivý obrázek o 1 pixel doleva</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1022"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Získat informace o grafických položkách</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1025"/>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Co je toto?</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1037"/>
         <source>Shift+F1</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1057"/>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Vpřed &gt;</translation>
+        <translation>&amp;Vpřed &gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1067"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Storno</translation>
+        <translation>&amp;Storno</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="223"/>
         <source>Difference (E-P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozdíl (E-P)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="228"/>
         <source>Overlay (E+P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Překrytí (E+P)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="233"/>
         <source>Editable Only (E)</source>
-        <translation type="unfinished"></translation>
+        <translation>Editovatelný (E)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="313"/>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished"></translation>
+        <translation>Edi&amp;tovatelný</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="340"/>
@@ -719,7 +776,10 @@ This image&apos;s histogram is diplayed in the widget above.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vybraný obrázek lze posunovat nebo na něho lze aplikovat masku proti duchům.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="468"/>
@@ -727,7 +787,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The image currently selected in this list serves as a reference position for the editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Označený obrázek v tomto seznamu udává základní polohu pro editovatelné obrázky&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="805"/>
@@ -735,7 +798,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hodnoty posunutí vybraného editovatelného obrázku&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="811"/>
@@ -743,12 +809,15 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zde můžete vidět i vložit hodnoty posunutí vybraného editovatelného obrázku&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="817"/>
         <source>Shift values for editable image</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnoty posunutí editovatelného obrázku</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1093"/>
@@ -758,7 +827,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zde je vidět náhled (za použití módu náhled vlevo) rozdílu mezi referenčním a editovatelným obrázkem.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pokud je vybrán stejný obrázek v sezamu editovatelných i referenčních obrázků, bude zde zobrazen pouze on.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Oblast výřezu lze vybrat kliknutím a tažením levým myšítkem.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -766,53 +840,53 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="126"/>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrázek %1 je oproti předchozím pouze v 8bitovém formátu (LDR).</translation>
     </message>
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="133"/>
         <source>The image %1 has an invalid size.</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrázek %1 má neplatné rozměry.</translation>
     </message>
 </context>
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="96"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="97"/>
         <source>Viewing Settings Toolbar</source>
         <translation>Zobrazení voleb nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="105"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="106"/>
         <source>Linear</source>
         <translation>Lineárně</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="106"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="107"/>
         <source>Gamma 1.4</source>
         <translation>Gamma 1.4</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="107"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="108"/>
         <source>Gamma 1.8</source>
         <translation>Gamma 1.8</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="108"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="109"/>
         <source>Gamma 2.2</source>
         <translation>Gamma 2.2</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="109"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="110"/>
         <source>Gamma 2.6</source>
         <translation>Gamma 2.6</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="110"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="111"/>
         <source>Logarithmic</source>
         <translation>Logaritmicky</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="115"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="116"/>
         <source>Histogram:</source>
         <translation>Histogram:</translation>
     </message>
@@ -824,7 +898,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento HDR není uložen.&lt;br&gt;Opravdu ho chcete zavřít?</translation>
     </message>
 </context>
 <context>
@@ -908,7 +982,7 @@ p, li { white-space: pre-wrap; }
         <translation>Váhová funkce:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="442"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
         <source>Triangular</source>
         <translation>Trojúhelníková</translation>
     </message>
@@ -918,7 +992,7 @@ p, li { white-space: pre-wrap; }
         <translation>Křivka odezvy:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -928,7 +1002,7 @@ p, li { white-space: pre-wrap; }
         <translation>Model tvorby HDR:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="464"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
         <source>Debevec</source>
         <translation></translation>
     </message>
@@ -938,7 +1012,7 @@ p, li { white-space: pre-wrap; }
         <translation>Odstranění duchů(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="451"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
         <source>Linear</source>
         <translation>Lineární</translation>
     </message>
@@ -950,7 +1024,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/hdrwizardform.ui" line="681"/>
         <source>Calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalibrace</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="715"/>
@@ -972,14 +1046,14 @@ profily nevedou k dobrému výsledku)</translation>
         <translation>Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="448"/>
         <source>Gaussian</source>
         <translation>Gausovská</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
         <source>Plateau</source>
-        <translation type="unfinished"></translation>
+        <translation>Rovina</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="833"/>
@@ -1015,12 +1089,12 @@ pixel values&lt;/p&gt;</source>
         <translation>Vyberte model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="468"/>
         <source>Robertson</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="244"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="246"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Vpřed &gt;</translation>
     </message>
@@ -1030,27 +1104,27 @@ pixel values&lt;/p&gt;</source>
         <translation>&amp;Storno</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
+        <location filename="" line="7471221"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</source>
-        <translation>Všechny formáty (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
+        <translation type="obsolete">Všechny formáty (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>Obrázky TIFF (*.tiff *.tif);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="104"/>
+        <location filename="" line="7471221"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</source>
-        <translation>Obrázky RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
+        <translation type="obsolete">Obrázky RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="108"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
         <source>Select the input images</source>
         <translation>Vyber vstupní obrázky</translation>
     </message>
@@ -1065,57 +1139,57 @@ pixel values&lt;/p&gt;</source>
         <translation>EXIF data nenalezena</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="484"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="375"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="377"/>
         <source>&amp;Finish</source>
         <translation>&amp;Proveď</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="387"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="389"/>
         <source>Load a camera response curve file</source>
         <translation>Nahrát soubor křivky odezvy fotoaparátu</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Křivka odezvy fotoaparátu (*.m);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="435"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
         <source>(*) Weights: </source>
         <translation>(*)Váha:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="435"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
         <source> - Response curve: </source>
         <translation> - Křivka odezvy: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="435"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
         <source> - Model: </source>
         <translation>- Model:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
         <source>Logarithmic</source>
         <translation>Logaritmický</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
         <source>From Calibration</source>
         <translation>Podle kalibrace</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="461"/>
         <source>From File</source>
         <translation>Ze souboru</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="212"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
@@ -1132,7 +1206,7 @@ pixel values&lt;/p&gt;</source>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="190"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarovnání</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="237"/>
@@ -1142,7 +1216,7 @@ pixel values&lt;/p&gt;</source>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="290"/>
         <source>&amp;Files Currently Loaded:</source>
-        <translation type="unfinished"></translation>
+        <translation>Právě načtené &amp;Soubory:</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="379"/>
@@ -1157,37 +1231,37 @@ pixel values&lt;/p&gt;</source>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="111"/>
         <source>&amp;Exposure for selected image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Expozice vybraného obrázku</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="131"/>
         <source>EV </source>
-        <translation type="unfinished"></translation>
+        <translation>EV</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="944"/>
         <source>Load response function from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst křivku odezvy ze souboru</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="1022"/>
         <source>Save response function to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit křivku odezvy do souboru</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="1040"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="54"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
         <source>Image Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Jméno souboru</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="54"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
         <source>Exposure</source>
-        <translation type="unfinished"></translation>
+        <translation>Expozice</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
@@ -1195,46 +1269,58 @@ pixel values&lt;/p&gt;</source>
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;<byte value="x9"/><byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;<byte value="x9"/><byte value="x9"/>You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;VAROVÁNÍ:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/>Qtpfsgui nenalezl náležité  &lt;i&gt;EXIF&lt;/i&gt; data
+u následujících obrázků:
+ &lt;ul&gt;<byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;Abyste mohl přistoupit k tovorbě HDR, musíte doplnit hodnoty expozice EV nebo expoziční kroky &lt;b&gt;ručně&lt;/b&gt;.<byte value="x9"/>&lt;hr&gt;Pokud chcete, aby to QtpfsguiI dělal &lt;b&gt;automaticky&lt;/b&gt;, musí zpracovávané soubory obsahovat alespoň tyto &lt;i&gt;EXIF&lt;/i&gt; data:<byte value="x9"/>&lt;ul&gt;&lt;li&gt;Rychlost závěrky v sekundách&lt;/li&gt;<byte value="x9"/>&lt;li&gt;Clonové číslo&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;TIP:&lt;/b&gt; Ztrátu  &lt;i&gt;EXIF&lt;/i&gt; dat je obvykle způsobena předúpravou obrázku.&lt;br&gt;<byte value="x9"/>Můžete provést &lt;b&gt;kopii exif dat jeden-na-jednoho&lt;/b&gt; mezi dvěma sadami obrázků pomocí položky menu &lt;i&gt;&lt;b&gt;&quot;Nástroje-&gt;Kopírovat EXIF data...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="174"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
         <source>Loading Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="190"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
         <source>Unknown </source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="203"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepovedlo se spustit externí aplikaci &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;K získání více informací přečtěte prosím &quot;Nápověda -&gt; Dokumentace... -&gt; &quot;Pokyny a tipy&quot;. </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="206"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="unfinished"></translation>
+        <translation>Externí aplikace &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; havarovala...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="212"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="unfinished"></translation>
+        <translation>Při spouštění aplikace&quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; se vyskytla neznámá chyba...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="316"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
         <source>Aligning...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarovnávám...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="399"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
         <source>Save a camera response curve file</source>
+        <translation>Ulož soubor křivky odezvy kamery</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Byly nastaveny včechny EV hodnoty.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="480"/>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1332,32 +1418,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="47"/>
         <source>ERROR: The following file is not readable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Následující soubor nelze přečíst: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="102"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="109"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="121"/>
         <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nepodporovaná přípona u souboru %1.</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="151"/>
         <source>ERROR: Failed loading file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="76"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Výstup TIFF pro RAW subory je monentálně vypnutý. Přidejte prosím volbu &quot;-T&quot; k parametrům konverze RAW v paneu volby.</translation>
     </message>
 </context>
 <context>
@@ -1368,544 +1454,564 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="33"/>
+        <location filename="../forms/maingui.ui" line="93"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="62"/>
+        <location filename="../forms/maingui.ui" line="104"/>
         <source>&amp;Image</source>
         <translation>O&amp;brázek</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="73"/>
+        <location filename="../forms/maingui.ui" line="57"/>
         <source>&amp;View</source>
         <translation>&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="80"/>
+        <location filename="../forms/maingui.ui" line="64"/>
         <source>Hdr &amp;Histogram</source>
         <translation>Hdr &amp;histogram</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="91"/>
+        <location filename="../forms/maingui.ui" line="75"/>
         <source>&amp;Toolbars</source>
         <translation>Liš&amp;ty nástrojů</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="43"/>
+        <location filename="../forms/maingui.ui" line="33"/>
         <source>&amp;Tools</source>
         <translation>Nás&amp;troje</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="109"/>
+        <location filename="../forms/maingui.ui" line="52"/>
         <source>&amp;Windows</source>
         <translation>O&amp;kna</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="52"/>
+        <location filename="../forms/maingui.ui" line="42"/>
         <source>&amp;Help</source>
         <translation>Nápově&amp;da</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="122"/>
+        <location filename="../forms/maingui.ui" line="124"/>
         <source>Common operations</source>
         <translation>Běžné operace</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="146"/>
+        <location filename="../forms/maingui.ui" line="148"/>
         <source>&amp;New Hdr...</source>
         <translation>&amp;Nový HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="149"/>
+        <location filename="../forms/maingui.ui" line="151"/>
         <source>New Hdr...</source>
         <translation>Nový HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="152"/>
+        <location filename="../forms/maingui.ui" line="154"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
         <translation>Vytvořit nový HDR ze série souborů JPEG, RAW nebo TIFF (8 nebo 16 bitů)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="158"/>
+        <location filename="../forms/maingui.ui" line="160"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
         <translation>Vytvořit nový HDR ze série souborů JPEG, RAW nebo TIFF (8 nebo 16 bitů).</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="161"/>
+        <location filename="../forms/maingui.ui" line="163"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="169"/>
+        <location filename="../forms/maingui.ui" line="171"/>
         <source>&amp;Open Hdr...</source>
         <translation>&amp;Otevřít HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="172"/>
+        <location filename="../forms/maingui.ui" line="174"/>
         <source>Open Hdr....</source>
         <translation>Otevřít HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="175"/>
+        <location filename="../forms/maingui.ui" line="177"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation>Otevřít existující HDR soubor (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="181"/>
+        <location filename="../forms/maingui.ui" line="183"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
         <translation>Otevřít existující HDR soubor (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="184"/>
+        <location filename="../forms/maingui.ui" line="186"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="195"/>
+        <location filename="../forms/maingui.ui" line="197"/>
         <source>&amp;Save Hdr as...</source>
         <translation>&amp;Uložit HDR jako...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="198"/>
+        <location filename="../forms/maingui.ui" line="200"/>
         <source>Save Hdr as...</source>
         <translation>Uložit HDR jako...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="207"/>
+        <location filename="../forms/maingui.ui" line="209"/>
         <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
         <translation>Uložit HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="210"/>
+        <location filename="../forms/maingui.ui" line="212"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="227"/>
+        <location filename="../forms/maingui.ui" line="229"/>
         <source>&amp;Tonemap the Hdr...</source>
         <translation>Pře&amp;mapovat HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="230"/>
+        <location filename="../forms/maingui.ui" line="232"/>
         <source>Tonemap the Hdr</source>
         <translation>Přemapovat HDR</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="239"/>
+        <location filename="../forms/maingui.ui" line="241"/>
         <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
         <translation>Přemapovat HDR do běžného LDR formátu (např. JPEG nebo PNG)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="242"/>
+        <location filename="../forms/maingui.ui" line="244"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="250"/>
+        <location filename="../forms/maingui.ui" line="252"/>
         <source>&amp;Exit</source>
         <translation>&amp;Konec</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="259"/>
+        <location filename="../forms/maingui.ui" line="261"/>
         <source>Exit</source>
         <translation>Konec</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="262"/>
+        <location filename="../forms/maingui.ui" line="264"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="273"/>
+        <location filename="../forms/maingui.ui" line="275"/>
         <source>Rotate C&amp;ounterClockWise</source>
         <translation>Otočit do&amp;leva</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="276"/>
+        <location filename="../forms/maingui.ui" line="278"/>
         <source>Rotate CounterClockWise</source>
         <translation>Otočit doleva</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="285"/>
+        <location filename="../forms/maingui.ui" line="287"/>
         <source>Rotate Counterclockwise the Hdr</source>
         <translation>Otočit HDR doleva</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="288"/>
+        <location filename="../forms/maingui.ui" line="290"/>
         <source>&lt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="299"/>
+        <location filename="../forms/maingui.ui" line="301"/>
         <source>Rotate C&amp;lockWise</source>
         <translation>Otočit do&amp;prava</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="302"/>
+        <location filename="../forms/maingui.ui" line="304"/>
         <source>Rotate ClockWise</source>
         <translation>Otočit doprava</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="311"/>
+        <location filename="../forms/maingui.ui" line="313"/>
         <source>Rotate ClockWise the Hdr</source>
         <translation>Otočit HDR doprava</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="314"/>
+        <location filename="../forms/maingui.ui" line="316"/>
         <source>&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="322"/>
+        <location filename="../forms/maingui.ui" line="324"/>
         <source>Low Dynamic Range</source>
         <translation>Nízký dynamický rozsah</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="325"/>
+        <location filename="../forms/maingui.ui" line="327"/>
         <source>L</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="333"/>
+        <location filename="../forms/maingui.ui" line="335"/>
         <source>Fit to Dynamic Range</source>
         <translation>Přizpůsobit dynamickému rozsahu</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="336"/>
+        <location filename="../forms/maingui.ui" line="338"/>
         <source>\</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="344"/>
+        <location filename="../forms/maingui.ui" line="346"/>
         <source>Shrink Dynamic Range</source>
         <translation>Snížit dynamický rozrah</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="347"/>
+        <location filename="../forms/maingui.ui" line="349"/>
         <source>[</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="355"/>
+        <location filename="../forms/maingui.ui" line="357"/>
         <source>Extend Dynamic Range</source>
         <translation>Rozšířit dynamický rozrah</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="358"/>
+        <location filename="../forms/maingui.ui" line="360"/>
         <source>]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="366"/>
+        <location filename="../forms/maingui.ui" line="368"/>
         <source>Decrease Exposure</source>
         <translation>Snížit expozici</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="369"/>
+        <location filename="../forms/maingui.ui" line="371"/>
         <source>0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="377"/>
+        <location filename="../forms/maingui.ui" line="379"/>
         <source>&amp;Increase Exposure</source>
         <translation>Z&amp;výšit expozici</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="380"/>
+        <location filename="../forms/maingui.ui" line="382"/>
         <source>9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="388"/>
+        <location filename="../forms/maingui.ui" line="390"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Dokumentace...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="391"/>
+        <location filename="../forms/maingui.ui" line="393"/>
         <source>About...</source>
         <translation>O...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="400"/>
+        <location filename="../forms/maingui.ui" line="402"/>
         <source>Show Qtpfsgui Help</source>
         <translation>Ukazat nápovědu Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="403"/>
+        <location filename="../forms/maingui.ui" line="405"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="414"/>
+        <location filename="../forms/maingui.ui" line="416"/>
         <source>&amp;Normal Size</source>
         <translation>&amp;Původní velikost</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="423"/>
+        <location filename="../forms/maingui.ui" line="425"/>
         <source>View Hdr at Normal Size</source>
         <translation>Zorazit HDR v původní velikosti</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="426"/>
+        <location filename="../forms/maingui.ui" line="428"/>
         <source>O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="437"/>
+        <location filename="../forms/maingui.ui" line="439"/>
         <source>Zoom &amp;In</source>
         <translation>Při&amp;blížit</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="443"/>
+        <location filename="../forms/maingui.ui" line="445"/>
         <source>Zoom In</source>
         <translation>Přiblížit</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="446"/>
+        <location filename="../forms/maingui.ui" line="448"/>
         <source>+</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="457"/>
+        <location filename="../forms/maingui.ui" line="459"/>
         <source>Zoom &amp;Out</source>
         <translation>Od&amp;dálit</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="463"/>
+        <location filename="../forms/maingui.ui" line="465"/>
         <source>Zoom Out</source>
         <translation>Oddálit</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="466"/>
+        <location filename="../forms/maingui.ui" line="468"/>
         <source>-</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="480"/>
+        <location filename="../forms/maingui.ui" line="482"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Vyplnit okno</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="486"/>
+        <location filename="../forms/maingui.ui" line="488"/>
         <source>Shrink the Hdr to fit its containing window</source>
         <translation>Změnit velikost HDR aby vyplnil okno</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="489"/>
+        <location filename="../forms/maingui.ui" line="491"/>
         <source>W</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="497"/>
+        <location filename="../forms/maingui.ui" line="499"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Předvolby...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="500"/>
+        <location filename="../forms/maingui.ui" line="502"/>
         <source>Qtpfsgui Options</source>
         <translation>Volby Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="503"/>
+        <location filename="../forms/maingui.ui" line="505"/>
         <source>Set the various options of Qtpfsgui</source>
         <translation>Nastavit různé volby pro Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="509"/>
+        <location filename="../forms/maingui.ui" line="511"/>
         <source>Set the various options of Qtpfsgui.</source>
         <translation>Nastavit různé volby pro Qtpfsgui.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="512"/>
+        <location filename="../forms/maingui.ui" line="514"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="523"/>
+        <location filename="../forms/maingui.ui" line="525"/>
         <source>&amp;Resize the Hdr...</source>
         <translation>&amp;Změnit velikost HDR...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="526"/>
+        <location filename="../forms/maingui.ui" line="528"/>
         <source>Resize the Hdr</source>
         <translation>Změnit velikost HDR</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="535"/>
+        <location filename="../forms/maingui.ui" line="537"/>
         <source>Resize (shrink or expand) the Hdr</source>
         <translation>Změnit velikost HDR (zvětšit nebo zmenšit)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="538"/>
+        <location filename="../forms/maingui.ui" line="540"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="546"/>
+        <location filename="../forms/maingui.ui" line="548"/>
         <source>Copy &amp;Exif Data...</source>
         <translation>Kopírovat &amp;Exif Data...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="549"/>
+        <location filename="../forms/maingui.ui" line="551"/>
         <source>Copy Exif Data</source>
         <translation>Kopírovat Exif Data</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="558"/>
+        <location filename="../forms/maingui.ui" line="560"/>
         <source>Copy Exif Data between two set of files</source>
         <translation>Kopírovat Exif Data mezi dvěma sériemi souborů</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="561"/>
+        <location filename="../forms/maingui.ui" line="563"/>
         <source>Ctrl+E</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="569"/>
+        <location filename="../forms/maingui.ui" line="571"/>
         <source>&amp;Align Images...</source>
         <translation>&amp;Vyrovnat obrázky...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="578"/>
+        <location filename="../forms/maingui.ui" line="580"/>
         <source>WORK IN PROGRESS</source>
         <translation>PRÁCE PROBÍHÁ</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="583"/>
+        <location filename="../forms/maingui.ui" line="585"/>
         <source>&amp;About Qt</source>
         <translation>&amp;O Qt</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="588"/>
+        <location filename="../forms/maingui.ui" line="590"/>
         <source>&amp;Tile</source>
         <translation>&amp;Vedle sebe</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="593"/>
+        <location filename="../forms/maingui.ui" line="595"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Kaskáda</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="599"/>
+        <location filename="../forms/maingui.ui" line="601"/>
         <source>Cascade</source>
         <translation>Kaskáda</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="604"/>
+        <location filename="../forms/maingui.ui" line="606"/>
         <source>Toolbars</source>
         <translation>Lišty nástrojů</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="612"/>
+        <location filename="../forms/maingui.ui" line="614"/>
         <source>Text &amp;Under Icons</source>
         <translation>Text &amp;pod ikonami</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="620"/>
+        <location filename="../forms/maingui.ui" line="622"/>
         <source>&amp;Icons Only</source>
         <translation>Jen &amp;ikony</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="628"/>
+        <location filename="../forms/maingui.ui" line="630"/>
         <source>&amp;Text Only</source>
         <translation>Jen &amp;text</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="636"/>
+        <location filename="../forms/maingui.ui" line="638"/>
         <source>Text &amp;Alongside Icons</source>
         <translation>Text &amp;vedle ikon</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="641"/>
+        <location filename="../forms/maingui.ui" line="643"/>
         <source>&amp;Batch Tone Mapping...</source>
         <translation>Hromadné přemapování (&amp;Batch Tone Mapping)...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="644"/>
+        <location filename="../forms/maingui.ui" line="646"/>
         <source>Ctrl+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="117"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="119"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Připraven.... Teď otevřete nebo vytvořte HDR!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="136"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="139"/>
         <source>All Hdr formats </source>
         <translation>Všechny HDR formáty</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="145"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="148"/>
         <source>Load an Hdr file...</source>
         <translation>Otevřít HDR soubor...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="172"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="175"/>
         <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
         <translation>Všechny HDR formáty (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="179"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
         <source>Save the HDR...</source>
         <translation>Uložit HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="428"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="456"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="277"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="288"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="277"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="288"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui potřebuje ukládat rozpracované soubory, ale právě zvolený adresář není platný.&lt;br&gt;Zvolte prosím platnou cestu pomocí &lt;i&gt;Nástroje-&gt;Předvolby...-&gt;Tone Mapping&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="500"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
         <source>Unsaved changes...</source>
         <translation>Neuložené změny...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="652"/>
+        <location filename="../forms/maingui.ui" line="654"/>
         <source>&amp;What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Co je toto?</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="655"/>
+        <location filename="../forms/maingui.ui" line="657"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Získej informace o grafických prvcích</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="658"/>
+        <location filename="../forms/maingui.ui" line="660"/>
         <source>Shift+F1</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="663"/>
+        <location filename="../forms/maingui.ui" line="665"/>
         <source>About &amp;Qtpfsgui</source>
-        <translation type="unfinished"></translation>
+        <translation>O &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="500"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimálně jeden HDR nemá uloženy změny. &lt;bd&gt;Chcete přesto ukončit?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="569"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
+        <translation>%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="214"/>
+        <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
+        <translation>Qtpfsgui podporuje pouze násedující formáty: &lt;br&gt;RadianceRGBE (hdr), PFS, TIFF-hdr a OpenEXR.</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="673"/>
+        <source>Save Hdr &amp;Preview...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="211"/>
-        <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
+        <location filename="../forms/maingui.ui" line="682"/>
+        <source>Save the current Hdr Preview to a Ldr file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="690"/>
+        <source>&amp;Projective Transformation...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="699"/>
+        <source>Apply a projective transformation to the current Hdr.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2086,7 +2192,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="361"/>
         <source>Raw convertion parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametry RAW koncerze:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="368"/>
@@ -2094,48 +2200,144 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro více informací kliněte na tačítko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="389"/>
         <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro získání více informací o parametrech RAW konverze klikněte zde</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="392"/>
         <source>&amp;About Raw Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;O RAW parametrech</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="674"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Získej informace o grafických prvcích</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="677"/>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Co je toto?</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="689"/>
         <source>Shift+F1</source>
+        <translation>Shift+F1</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectionsDialog</name>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="13"/>
+        <source>Projective Transformation</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="25"/>
+        <source>Projections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="53"/>
+        <source>Source Projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="102"/>
+        <source>Polar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="107"/>
+        <source>Angular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="112"/>
+        <source>Cylindrical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="117"/>
+        <source>Mirror Ball</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="94"/>
+        <source>Destination Projection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="153"/>
+        <source>Angles:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../forms/projectionsDialog.ui" line="464"/>
+        <source>°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="193"/>
+        <source>Bilinear Interpolation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="216"/>
+        <source>Oversample factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="238"/>
+        <source>Rotation (degrees)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="258"/>
+        <source>Yaw:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="347"/>
+        <source>Pitch:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="436"/>
+        <source>Roll:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="541"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">&amp;Storno</translation>
+    </message>
+    <message>
+        <location filename="../forms/projectionsDialog.ui" line="548"/>
+        <source>&amp;OK</source>
+        <translation type="unfinished">&amp;OK</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="72"/>
+        <location filename="../src/Common/options.cpp" line="71"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>CHYBA: nemohu otevřít soubor nastavení přemapování:</translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="95"/>
+        <location filename="../src/Common/options.cpp" line="94"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>CHYBA: Příliš starý soubor, nemohu použít soubor nastavení přemapování:</translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="178"/>
+        <location filename="../src/Common/options.cpp" line="177"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>CHYBA: nemohu použít soubor nastavení přemapování:</translation>
     </message>
@@ -2151,6 +2353,21 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/main.cpp" line="57"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Nemohu najít Qt JPEG plugin...&lt;br&gt;Rozbalte archív s volbou &quot;zachovat strukturu adresářů&quot;.</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="38"/>
+        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
+        <translation type="unfinished">Všechny LDR formáty (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="44"/>
+        <source>Save the LDR to...</source>
+        <translation type="unfinished">Uložit LDR jako...</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="75"/>
+        <source>Failed to save &lt;b&gt;</source>
+        <translation type="unfinished">Uložení selhalo &lt;b&gt;</translation>
     </message>
 </context>
 <context>
@@ -2842,19 +3059,19 @@ p, li { white-space: pre-wrap; }
         <translation>Panel přemapování (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="110"/>
+        <location filename="" line="7471221"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation>Všechny LDR formáty (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+        <translation type="obsolete">Všechny LDR formáty (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="116"/>
+        <location filename="" line="7471221"/>
         <source>Save the LDR to...</source>
-        <translation>Uložit LDR jako...</translation>
+        <translation type="obsolete">Uložit LDR jako...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="152"/>
+        <location filename="" line="7471221"/>
         <source>Failed to save &lt;b&gt;</source>
-        <translation>Uložení selhalo &lt;b&gt;</translation>
+        <translation type="obsolete">Uložení selhalo &lt;b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="99"/>
@@ -2864,7 +3081,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="154"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+L</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="226"/>
@@ -2874,37 +3091,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="240"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="274"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Získej informace o grafických prvcích</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="277"/>
         <source>Use this button to get information about the graphical elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte toto tačítko k získání informací o grafických prvcích</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="13"/>
         <source>Tone Mapping: </source>
-        <translation type="unfinished"></translation>
+        <translation>Přemapování:</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="84"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished">&amp;Konec</translation>
+        <translation>&amp;Konec</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="87"/>
         <source>Exit</source>
-        <translation type="unfinished">Konec</translation>
+        <translation>Konec</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="96"/>
         <source>Close Tone Mapping Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavřít okno přemapování</translation>
     </message>
 </context>
 <context>
@@ -3005,52 +3222,57 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Start!</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="193"/>
+        <location filename="" line="7471221"/>
         <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</source>
-        <translation>Všechny podporované fotmáty (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
+        <translation type="obsolete">Všechny podporované fotmáty (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="217"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="218"/>
         <source>Select the input images</source>
         <translation>Vyber vstupní obrázky</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="216"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="217"/>
         <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
         <translation>Všechny podporované formáty (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="269"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="271"/>
         <source>&amp;Done.</source>
         <translation>&amp;Zpracuj.</translation>
+    </message>
+    <message>
+        <location filename="../src/TransplantExif/transplant.cpp" line="194"/>
+        <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>hdrInputLoader</name>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="79"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="80"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Výstup TIFF pro RAW subory je monentálně vypnutý. Přidejte prosím volbu &quot;-T&quot; k parametrům konverze RAW v paneu volby.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="134"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="135"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Soubor &lt;br&gt;%1&lt;br&gt; není 8 nebo 16 bitový TIFF.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="105"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="111"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="112"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="142"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="143"/>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
 </context>
 </TS>
