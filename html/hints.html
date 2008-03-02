@@ -22,7 +22,13 @@ For more information please read the page about <A href="dcraw.html">Raw Convers
 Just remember to save the result as a 16-bits file, or you'll lose some dynamic range in the process.</p>
 
 <A name="postproc"><h2>Post-processing of the LDR</h2></A>
-<p>If you don't like the result of a specific tone mapping operator, please keep in mind that after the tone mapping step you can still use tools like GIMP to post process the resulting image. For example, you can still fix the brightness, change the gamma or the levels, and so on.
+<p>
+<ol>
+<li>If you don't like the result of a specific tone mapping operator, please keep in mind that after the tone mapping step you can still use tools like GIMP to post process the resulting image. For example, you can still fix the brightness, change the gamma or the levels, and so on.</li>
+<li>Some users have reported [1] pleasant results combining in GIMP 2 LDRs: one obtained with Fattal and the other one with Drago. Drago for the first layer and Fattal for the second in overlay mode (70% can be a good starting point). This is not a silver bullet technique, these values can be thought as a starting point, you can then go on tweaking the opacity value and the tone mapping parameters, your mileage may vary.</li>
+<li>You can also put the Fattal image down as the master and then layer the Drago image on top in overlay mode with c.50% opacity [1].<br>
+[1] http://www.flickr.com/groups/qtpfsgui/discuss/72157600715644855/</li>
+</ol>
 </p>
 
 <A name="align_image_stack"><h2>Align_image_stack</h2></A>
