@@ -44,9 +44,9 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 #endif
 
 ///string is a QString with a %1 in it
-#define VERBOSEPRINT( string , argument ) \
+#define VERBOSEPRINT( string, argument ) \
 if (verbose) { \
-	fprintf(stdout, qPrintable(tr( string ).arg( argument )) ); \
+	fprintf(stdout, qPrintable(tr( string "\n" ).arg( argument )) ); \
 }
 
 
@@ -69,8 +69,7 @@ static struct option cmdLineOptions[] = {
 CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv) : argc(argc), argv(argv) {
 	hdrCreationManager=NULL;
 	align_mode=NO_ALIGN;
-	qtpfsgui_options=new qtpfsgui_opts();
-	QtPfsGuiOptions::loadOptions(qtpfsgui_options);
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	connect(this,SIGNAL(startParsing()),this,SLOT(parseArgs()),Qt::QueuedConnection);
 	emit startParsing();
 }
@@ -294,7 +293,7 @@ void CommandLineInterfaceManager::parseArgs() {
 	}
 	for (int index = optind; index < argc; index++) {
 		inputFiles << QString(argv[index]);
-		VERBOSEPRINT("Input file %1", argv[index]);
+		VERBOSEPRINT("Input file %1" , argv[index]);
 	}
 
 	if (!ev.isEmpty() && ev.count()!=inputFiles.count())
@@ -303,25 +302,22 @@ void CommandLineInterfaceManager::parseArgs() {
 	//now validate operation mode.
 	if (inputFiles.size()!=0 && loadHdrFilename.isEmpty()) {
 		operation_mode=CREATE_HDR_MODE;
-		VERBOSEPRINT("Running in HDR-creation mode.", "");
+		VERBOSEPRINT("Running in HDR-creation mode. %1" , "");
 	} else if (!loadHdrFilename.isEmpty() && inputFiles.size()==0 ) {
 		operation_mode=LOAD_HDR_MODE;
-		VERBOSEPRINT("Running in Load-HDR mode.", "");
+		VERBOSEPRINT("Running in Load-HDR mode. %1" , "");
 	} else {
 		printHelp(argv[0]);
 		error("Wrong combination of parameters.");
 	}
 
 	if (operation_mode==CREATE_HDR_MODE) {
-		QString temppath = settings.value(KEY_TEMP_RESULT_PATH, QDir::currentPath()).toString();
-		int numthreads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
-		QStringList rawopts=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS,"-T").toStringList();
 		if (verbose) {
-			VERBOSEPRINT("Temporary directory: %1",temppath);
-			VERBOSEPRINT("Dcraw parameters: %1",rawopts.join(" ") );
-			VERBOSEPRINT("Using %1 threads.", numthreads);
+			VERBOSEPRINT("Temporary directory: %1",qtpfsgui_options->tempfilespath);
+			VERBOSEPRINT("Dcraw parameters: %1",qtpfsgui_options->dcraw_options.join(" ") );
+			VERBOSEPRINT("Using %1 threads.", qtpfsgui_options->num_threads);
 		}
-		hdrCreationManager = new HdrCreationManager(numthreads, temppath, rawopts);
+		hdrCreationManager = new HdrCreationManager(qtpfsgui_options->num_threads, qtpfsgui_options->tempfilespath, qtpfsgui_options->dcraw_options);
 		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 		connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
 		connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(createHDR()));
@@ -330,7 +326,7 @@ void CommandLineInterfaceManager::parseArgs() {
 		hdrCreationManager->loadInputFiles();
 	}
 	else {
-		LoadHdrThread *loadthread = new LoadHdrThread(loadHdrFilename, "", qtpfsgui_options);
+		LoadHdrThread *loadthread = new LoadHdrThread(loadHdrFilename, "");
 		connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(loadFinished(pfs::Frame*,QString)));
 		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(errorWhileLoading(QString)));
@@ -350,7 +346,7 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
 		if (!ev.isEmpty()) {
 			for(int i=0; i<ev.size(); i++)
 				hdrCreationManager->setEV(ev.at(i),i);
-			VERBOSEPRINT("EV values have been assigned.","");
+			VERBOSEPRINT("EV values have been assigned. %1","");
 		} else
 			error(qPrintable(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.")));
 	}
@@ -372,16 +368,15 @@ void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError) {
 }
 
 void CommandLineInterfaceManager::createHDR() {
-	VERBOSEPRINT("Removing Temp files.","");
 	hdrCreationManager->removeTempFiles();
-	VERBOSEPRINT("Creating the HDR.","");
+	VERBOSEPRINT("Creating (in memory) the HDR. %1","");
 	HDR=hdrCreationManager->createHdr(false,1);
-	VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 	saveHDR();
 }
 
 void CommandLineInterfaceManager::saveHDR() {
 	if (!saveHdrFilename.isEmpty()) {
+		VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 		QFileInfo qfi(saveHdrFilename);
 		if (qfi.suffix().toUpper()=="EXR") {
 			writeEXRfile(HDR,qfi.filePath().toUtf8().constData());
@@ -401,6 +396,8 @@ void CommandLineInterfaceManager::saveHDR() {
 		} else {
 			error("Error, please specify a supported HDR file format.");
 		}
+	} else {
+		VERBOSEPRINT("NOT Saving HDR image to file. %1","");
 	}
 
 	startTonemap();
@@ -413,12 +410,20 @@ void  CommandLineInterfaceManager::startTonemap() {
 		int origxsize= (tmopts->xsize==-2) ? -2 : HDR->getWidth();
 		TonemapperThread *thread = new TonemapperThread(origxsize, *tmopts);
 		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
+		pfs::DOMIO pfsio;
+		pfsio.writeFrame(HDR, qtpfsgui_options->tempfilespath+"/original.pfs");
+		pfsio.freeFrame(HDR);
+		thread->start();
 	} else {
+		VERBOSEPRINT("Tonemapping NOT requested. %1","");
 		emit finishedParsing();
 	}
 }
 
 void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonemapping_options*) {
+	QFile::remove(qtpfsgui_options->tempfilespath+"/original.pfs");
+	QFile::remove(qtpfsgui_options->tempfilespath+"/after_resize.pfs");
+	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	QFileInfo qfi(saveLdrFilename);
 	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100)) {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
@@ -459,15 +464,15 @@ void CommandLineInterfaceManager::printHelp(char * progname) {
 	-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).\n \
 	-c --config            HDR creation config. Possible values: \n\
 		weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m \n\
-		(Default is triangular,linear,debevec) \n\
+		(Default is weight=triangular:response_curve=linear:model=debevec) \n\
 	-l --load HDR_FILE     Load an HDR instead of creating a new one. \n \
-	-s --save HDR_FILE     Save to a HDR file format. \n \
-	-g --gamma VALUE       Gamma value to use during tone mapping. \n \
-	-r --resize VALUE      Width want to resize your HDR to (resized before gamma and tone mapping) \n \
-	-t --tmo               Tone mapping operator. Possible values: \n\
+	-s --save HDR_FILE     Save to a HDR file format. (default: don't save) \n \
+	-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) \n \
+	-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) \n \
+	-t --tmo               Tone mapping operator. Legal values are: \n\
 		ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk\n \
 		(Default is mantiuk)\n \
-	-p --tmoptions         Tone mapping operator options. Possible values: \n\
+	-p --tmoptions         Tone mapping operator options. Legal values are: \n\
 		alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)\n\
 		contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)\n\
 		localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)\n\
@@ -476,8 +481,9 @@ void CommandLineInterfaceManager::printHelp(char * progname) {
 		local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)\n\
 		scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)\n\
 		brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)\n\
-		(Default is contrast=0.3:equalization=false:saturation=1.8)\n \
+		(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)\n \
 	-o --output LDR_FILE   File name you want to save your tone mapped LDR to.\n \
+	                       (No tonemapping is performed unless -o is specified).\n \
 	\n\
 You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n").arg(progname).arg(progname);
 	fprintf(stderr,qPrintable(help));
