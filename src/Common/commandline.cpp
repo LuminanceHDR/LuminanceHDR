@@ -36,7 +36,7 @@
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-#if defined(__FreeBSD__) || defined(WIN32)
+#if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC)
 #define error(Z) { fprintf(stderr,Z); exit(1); }
 #else
 #include <error.h>
