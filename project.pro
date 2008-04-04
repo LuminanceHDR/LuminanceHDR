@@ -291,7 +291,15 @@ isEmpty(PREFIX) {
         PREFIX = /usr/local
 }
 isEmpty(I18NDIR) {
-	I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
+	mac {
+		#I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
+		#I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
+		#maybe we need parenthesis and/or backslashes somewhere.
+		#I18NDIR=QCoreApplication::applicationDirPath()+"/../Resources/i18n"
+		I18NDIR=QCoreApplication::applicationDirPath\\\(\\\)+"/../Resources/i18n"
+	} else {
+		I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
+	}
 }
 
 target.path      = $${PREFIX}/bin
@@ -343,16 +351,38 @@ ICON = images/qtpfsgui.icns
 #TODO we have to complete this.
 LIBS+=-lIlmThread
 
-# Enable universal (require a universal Qt)
-CONFIG += x86 ppc
+# Enable universal (requires a universal Qt)? Default = non-universal
+# If you wish to build a Universal Binary please un-comment the following line
+#CONFIG += x86 ppc
+
+# Warn user what type of binary is being built and what the possible implications are
+contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
+	message ("Building an OS X Universal Binary:")
+	message ("Please ensure all dependencies and Qt are also Universal")
+	message ("********************************************************************")
+} else {
+	# Test what architecture we are on (Intel or PPC)
+	# 'arch' returns "i386" on Intel-Tiger is this true on Intel-Leopard?
+	# What does 'arch' return on PPC machines? Presumably "ppc"?
+	MAC_ARCH = $$system(arch)
+	contains(MAC_ARCH, i386) {
+		message ("This is an Intel Mac - Building an Intel specific OS X binary")
+		message ("Please refer to the documentation if you require a Universal Binary")
+		message ("********************************************************************")
+		# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
+		CONFIG += x86
+	} else {
+		message ("This is a PPC Mac - Building a PPC specific OS X binary")
+		message ("Please refer to the documentation if you require a Universal Binary")
+		message ("********************************************************************")
+		# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
+		CONFIG += ppc
+	}
+}
+
 # Add some extra PATHS in LIBS:
 LIBS += -L$$(LOCALSOFT)/lib
 
-#I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
-#I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
-#maybe we need parenthesis and/or backslashes somewhere.
-I18NDIR=QCoreApplication::applicationDirPath()+"/../Resources/i18n"
-DEFINES += I18NDIR=\"$$I18NDIR\"
 }
 
 win32 {

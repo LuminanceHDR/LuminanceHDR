@@ -132,6 +132,7 @@ If you want to compile the sources in windows you need to have a compiled
 version of libexiv2 and fftw3. You also need Qt4 Opensource Edition by trolltech.
 Also check the variables in the win32{} section in project.pro: they need
 to be changed according to your setup.
+Building Qtpfsgui from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
 
 
 
