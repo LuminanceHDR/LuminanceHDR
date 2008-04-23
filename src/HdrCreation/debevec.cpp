@@ -249,14 +249,16 @@ for( int j=0 ; j<width*height ; j++ ) {
 			maxti=ti;
 		}
 
-		float w_average=mA*(w[mR]+w[mG]+w[mB])/3.0f;
-		sumR += w_average * Ir[mR] / float(ti);
-		divR += w_average;
-		sumG += w_average * Ig[mG] / float(ti);
-		divG += w_average;
-		sumB += w_average * Ib[mB] / float(ti);
-		divB += w_average;
-
+		// mA assumed to handle de-ghosting masks
+		// mA values assumed to be in [0, 255]
+		// mA=0 assummed to mean that the pixel should be excluded
+		float fmA = mA/255.f;
+		sumR += fmA * w[mR] * Ir[mR];
+		sumG += fmA * w[mG] * Ig[mG];
+		sumB += fmA * w[mB] * Ib[mB];
+		divR += fmA * w[mR] * ti;
+		divG += fmA * w[mG] * ti;
+		divB += fmA * w[mB] * ti;
 	} //END for all the exposures
 
 	if( divR==0.0f || divG==0.0f || divB==0.0f ) {
