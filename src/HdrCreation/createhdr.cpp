@@ -86,11 +86,13 @@ int minResponse=0;
 int maxResponse=M;
 
 
+    /* leave user selection for now
     if (antighosting) {
     	qDebug("antighosting, setting model debevec and weights plateau");
     	opt_weight=PLATEAU;
     	opt_model=DEBEVEC;
     }
+    */
 
     //PRINT WEIGHTS PREFERENCES
     switch( opt_weight )

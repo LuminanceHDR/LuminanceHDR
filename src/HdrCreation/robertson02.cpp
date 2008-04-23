@@ -156,6 +156,7 @@ for( int j=0 ; j<width*height ; j++ )
 		// --- anti ghosting: monotonous increase in time should result
 		// in monotonous increase in intensity; make forward and
 		// backward check, ignore value if condition not satisfied
+		// TODO: in qtpfsgui verify that the image list is indeed in decreasing exposure time order
 		int R_lower = qRed  (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
 		int R_upper = qRed  (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
 		int G_lower = qGreen(* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
@@ -164,13 +165,17 @@ for( int j=0 ; j<width*height ; j++ )
 		int B_upper = qBlue (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
 		if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
 			continue;
-	
-		sumR += mA * w[mR] * ti * Ir[mR];
-		sumG += mA * w[mG] * ti * Ig[mG];
-		sumB += mA * w[mB] * ti * Ib[mB];
-		divR += w[mR] * ti * ti;
-		divG += w[mG] * ti * ti;
-		divB += w[mB] * ti * ti;
+
+		// mA assumed to handle de-ghosting masks
+		// mA values assumed to be in [0, 255]
+		// mA=0 assummed to mean that the pixel should be excluded
+		float fmA = mA/255.f;
+		sumR += fmA * w[mR] * ti * Ir[mR];
+		sumG += fmA * w[mG] * ti * Ig[mG];
+		sumB += fmA * w[mB] * ti * Ib[mB];
+		divR += fmA * w[mR] * ti * ti;
+		divG += fmA * w[mG] * ti * ti;
+		divB += fmA * w[mB] * ti * ti;
 		}
 	} else { //HDR INPUT
 		//for all exposures
