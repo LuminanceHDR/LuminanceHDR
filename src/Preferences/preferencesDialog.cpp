@@ -24,12 +24,35 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QWhatsThis>
+#include <QMessageBox>
 #include "preferencesDialog.h"
 #include "../Common/config.h"
 #include "../generated_uic/ui_documentation.h"
 
 PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 	setupUi(this);
+
+	fromIso639ToGuiIndex["cs"]=0;
+	fromIso639ToGuiIndex["en"]=1;
+	fromIso639ToGuiIndex["fr"]=2;
+	fromIso639ToGuiIndex["de"]=3;
+	fromIso639ToGuiIndex["id"]=4;
+	fromIso639ToGuiIndex["it"]=5;
+	fromIso639ToGuiIndex["pl"]=6;
+	fromIso639ToGuiIndex["ru"]=7;
+	fromIso639ToGuiIndex["es"]=8;
+	fromIso639ToGuiIndex["tr"]=9;
+
+	fromGuiIndexToIso639[0]="cs";
+	fromGuiIndexToIso639[1]="en";
+	fromGuiIndexToIso639[2]="fr";
+	fromGuiIndexToIso639[3]="de";
+	fromGuiIndexToIso639[4]="id";
+	fromGuiIndexToIso639[5]="it";
+	fromGuiIndexToIso639[6]="pl";
+	fromGuiIndexToIso639[7]="ru";
+	fromGuiIndexToIso639[8]="es";
+	fromGuiIndexToIso639[9]="tr";
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	negcolor=qtpfsgui_options->negcolor;
@@ -68,10 +91,52 @@ void PreferenceDialog::change_color_of(QPushButton *button, QColor *newcolor) {
 	}
 }
 
+QStringList PreferenceDialog::sanitizeAISparams() {
+	bool align_opt_was_ok=false;
+	//check if we have '-a "aligned_"'
+	QStringList temp_ais_options=aisParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+	int idx_a=temp_ais_options.indexOf("-a");
+	//if we don't have -a
+	if (idx_a==-1) {
+// 		qDebug("missing, adding");
+		temp_ais_options+="-a";
+		temp_ais_options+="aligned_";
+	}
+	//if we have -a at the very end (without the prefix)
+	else if (idx_a==temp_ais_options.size()-1) {
+		temp_ais_options+="aligned_";
+// 		qDebug("-a at end, adding aligned_");
+	}
+	//if we have -a in the middle without the prefix
+	else if ( (idx_a!=-1 && temp_ais_options.at(idx_a+1) != "aligned_") ) {
+// 		qDebug("-a in the middle without the prefix after");
+		if (!temp_ais_options.at(idx_a+1).startsWith("-")) {
+// 			qDebug("next is bad prefix, removing");
+			temp_ais_options.removeAt(idx_a+1);
+		}
+// 		qDebug("now adding");
+		temp_ais_options.insert(idx_a+1,"aligned_");
+	} else {
+		align_opt_was_ok=true;
+	}
+	if (!align_opt_was_ok) {
+		QMessageBox::information(this,tr("Option -a..."),tr("Qtpfsgui requires align_image_stack to be executed with the option \"-a aligned_\". Commandline options have been corrected."));
+	}
+	return temp_ais_options;
+}
+
 void PreferenceDialog::ok_clicked() {
-	settings.beginGroup(GROUP_DCRAW);
-		qtpfsgui_options->dcraw_options=commandlineParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+	if (qtpfsgui_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
+		QMessageBox::information(this,tr("Please restart..."),tr("Please restart Qtpfsgui to use the new language (%1).").arg(languageComboBox->currentText()));
+	qtpfsgui_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
+	settings.setValue(KEY_GUI_LANG,qtpfsgui_options->gui_lang);
+
+	settings.beginGroup(GROUP_EXTERNALTOOLS);
+		qtpfsgui_options->dcraw_options=dcrawParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
 		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,qtpfsgui_options->dcraw_options);
+		
+		qtpfsgui_options->align_image_stack_options=sanitizeAISparams();
+		settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,qtpfsgui_options->align_image_stack_options);
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
@@ -111,6 +176,11 @@ void PreferenceDialog::ok_clicked() {
 }
 
 void PreferenceDialog::from_options_to_gui() {
+	//language: if by any chance qtpfsgui_options->gui_lang does NOT contain one of the valid 2 chars
+	//codes which are key for the fromIso639ToGuiIndex QMap, provide the default "en"
+	if (!fromIso639ToGuiIndex.contains(qtpfsgui_options->gui_lang))
+		qtpfsgui_options->gui_lang="en";
+	languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(qtpfsgui_options->gui_lang));
 	lineEditTempPath->setText(qtpfsgui_options->tempfilespath);
 	if (qtpfsgui_options->batch_ldr_format=="JPEG")
 		imageformat_comboBox->setCurrentIndex(0);
@@ -123,7 +193,8 @@ void PreferenceDialog::from_options_to_gui() {
 	else if (qtpfsgui_options->batch_ldr_format=="BMP")
 		imageformat_comboBox->setCurrentIndex(4);
 	thread_spinBox->setValue(qtpfsgui_options->num_threads);
-	commandlineParamsLineEdit->setText(qtpfsgui_options->dcraw_options.join(" "));
+	dcrawParamsLineEdit->setText(qtpfsgui_options->dcraw_options.join(" "));
+	aisParamsLineEdit->setText(qtpfsgui_options->align_image_stack_options.join(" "));
 	radioButtonLogLuv->setChecked(qtpfsgui_options->saveLogLuvTiff);
 	radioButtonFloatTiff->setChecked(!qtpfsgui_options->saveLogLuvTiff);
 	change_color_of(negative_color_button,&negcolor);

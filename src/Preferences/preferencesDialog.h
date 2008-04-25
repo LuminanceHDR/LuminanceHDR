@@ -25,6 +25,7 @@
 #define OPTIONS_IMPL_H
 
 #include <QDialog>
+#include <QMap>
 #include "../generated_uic/ui_options.h"
 #include "../Common/options.h"
 #include "../Common/global.h"
@@ -40,6 +41,9 @@ private:
 	void from_options_to_gui();
 	QtpfsguiOptions *qtpfsgui_options;
 	QColor infnancolor, negcolor;
+	QMap<QString, int> fromIso639ToGuiIndex;
+	QMap<int, QString> fromGuiIndexToIso639;
+	QStringList sanitizeAISparams();
 private slots:
 	void negative_clicked();
 	void infnan_clicked();
