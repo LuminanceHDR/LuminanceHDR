@@ -83,10 +83,6 @@ private:
 	void add_view_model_TM_OPTs(QStringList);
 	//Parses a TM_opts file (return NULL on error).
 	tonemapping_options* parse_tm_opt_file(QString filename);
-	//the values the user chose in the options dialog.
-	int desired_number_of_threads;
-	//the image format the user chose to use in the options dialog.
-	QString desired_format;
 	//set to true once we are done processing.
 	bool done;
 	//fuction that adds a log message to the model

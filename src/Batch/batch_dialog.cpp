@@ -43,10 +43,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
-	settings.beginGroup(GROUP_TONEMAPPING);
-	desired_number_of_threads=settings.value(KEY_NUM_BATCH_THREADS,1).toInt();
-	desired_format=settings.value(KEY_BATCH_LDR_FORMAT,"JPEG").toString();
-	settings.endGroup();
 
 	connect(add_dir_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_dir_HDRs()));
 	connect(add_HDRs_Button, SIGNAL(clicked()), this, SLOT(add_HDRs()));
@@ -67,8 +63,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
-	add_log_message(tr("Using %1 thread(s)").arg(desired_number_of_threads));
-	add_log_message(tr("Saving using fileformat: ")+desired_format);
+	add_log_message(tr("Using %1 thread(s)").arg(qtpfsgui_options->num_threads));
+	add_log_message(tr("Saving using fileformat: ")+qtpfsgui_options->batch_ldr_format);
 
 	qRegisterMetaType<QImage>("QImage");
 }
@@ -317,7 +313,7 @@ void BatchTMDialog::conditional_TMthread() {
 
 	//if the TM_opts list has still to get processed,
 	if (first_not_started!=-1) {
-		while (running_threads < desired_number_of_threads && first_not_started < tm_opt_list.size()) {
+		while (running_threads < qtpfsgui_options->num_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
 			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
@@ -351,8 +347,8 @@ void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts)
 	running_threads--;
 	TMOptionsOperations operations(opts);
 	QString postfix=operations.getPostfix();
-	QString fname=current_hdr_fname+"_"+postfix+"."+desired_format;
-	if (!newimage.save(fname, desired_format.toAscii().constData(), 100)) {
+	QString fname=current_hdr_fname+"_"+postfix+"."+qtpfsgui_options->batch_ldr_format;
+	if (!newimage.save(fname, qtpfsgui_options->batch_ldr_format.toAscii().constData(), 100)) {
 		qDebug("BATCH: newResult: Cannot save to %s",fname.toUtf8().constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
