@@ -41,7 +41,7 @@ void hdrInputLoader::run() {
 
 		//get exposure time, -1 is error
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
-		float expotime = ExifOperations::obtain_expotime( QFile::encodeName(qfi.filePath()).constData() );
+		float expotime = ExifOperations::obtain_avg_lum( QFile::encodeName(qfi.filePath()).constData() );
 
 		QString extension=qfi.suffix().toUpper(); //get filename extension
 		//now go and fill the list of image data (real payload)

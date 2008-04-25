@@ -30,7 +30,7 @@ class ExifOperations {
 public:
 	static void writeExifData(const std::string& filename, const std::string& comment);
 	static void copyExifData(const std::string& from, const std::string& to, bool dont_overwrite);
-	static float obtain_expotime(const std::string& filename);
+	static float obtain_avg_lum(const std::string& filename);
 private:
 
 };
