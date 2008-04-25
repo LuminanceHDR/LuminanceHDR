@@ -66,10 +66,9 @@ int main( int argc, char ** argv )
 		return 1;
 	}
 #endif
-	QString locale = QLocale::system().name();
 	QTranslator translator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
-	translator.load(QString("lang_") + locale, I18NDIR);
+	translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, I18NDIR);
 	application.installTranslator(&translator);
 	MainGui maingui;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
