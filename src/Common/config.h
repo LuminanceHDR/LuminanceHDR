@@ -24,14 +24,16 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define QTPFSGUIVERSION "1.9.1"
-#define TMOSETTINGSVERSION "0.4"
+#define QTPFSGUIVERSION "1.9.2"
+#define TMOSETTINGSVERSION "0.5"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
+#define KEY_GUI_LANG "UserInterfaceLanguage"
 
-#define GROUP_DCRAW "DCRAW_Options"
+#define GROUP_EXTERNALTOOLS "External_Tools_Options"
 #define KEY_EXTERNAL_DCRAW_OPTIONS "ExternalDcrawOptions"
+#define KEY_EXTERNAL_AIS_OPTIONS "ExternalAlignImageStackOptions"
 
 #define GROUP_HDRVISUALIZATION "HDR_visualization"
 #define KEY_NANINFCOLOR "nan_inf_color"
@@ -46,12 +48,12 @@
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
 
 //--------------------PATHS & co. ----------------
-#define KEY_RECENT_PATH_LOAD_SAVE_HDR "RecentDirHDRSetting"
-#define KEY_RECENT_FILES "recentFileList"
-#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "RecentDirTMOSetting"
-#define KEY_RECENT_PATH_SAVE_LDR "RecentDirLDRSetting"
-#define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "RecentDirInputLDRs"
-#define KEY_RECENT_PATH_EXIF_FROM "recent_path_exif_from"
-#define KEY_RECENT_PATH_EXIF_TO "recent_path_exif_to"
+#define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"
+#define KEY_RECENT_FILES "Recent_files_list"
+#define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
+#define KEY_RECENT_PATH_SAVE_LDR "Recent_path_save_ldr"
+#define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "Recent_path_input_for_hdr"
+#define KEY_RECENT_PATH_EXIF_FROM "Recent_path_exif_from"
+#define KEY_RECENT_PATH_EXIF_TO "Recent_path_exif_to"
 
 #endif
