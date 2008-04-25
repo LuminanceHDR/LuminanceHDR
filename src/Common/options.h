@@ -35,8 +35,10 @@ public:
 	//public accessor to destroy singleton
 	static void deleteInstance();
 
-	//options for RAW import functionality, thanks to dcraw
+	//commandline options for RAW import functionality, thanks to dcraw
 	QStringList dcraw_options;
+	//commandline options for align_image_stack
+	QStringList align_image_stack_options;
 	//colors used to draw the NAN/INF or the negative colors
 	unsigned int naninfcolor, negcolor;
 	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
@@ -47,8 +49,10 @@ public:
 	int num_threads;
 	//Image format used to save LDRs in batch mode.
 	QString batch_ldr_format;
+	//2-chars ISO 639 language code for Qtpfsgui's user interface.
+	QString gui_lang;
 private:
-	//use QSettings to load stored settings (or use defaults)
+	//use QSettings to load stored settings (or use hardcoded defaults on very first run)
 	void loadFromQSettings ();
 	//private constructor
 	QtpfsguiOptions ();

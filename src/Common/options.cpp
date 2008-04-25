@@ -26,6 +26,7 @@
 #include <QTextStream>
 #include <QApplication>
 #include <QDir>
+#include <QLocale>
 #include "global.h"
 #include "config.h"
 
@@ -50,10 +51,18 @@ void QtpfsguiOptions::deleteInstance() {
 }
 
 void QtpfsguiOptions::loadFromQSettings() {
-	settings.beginGroup(GROUP_DCRAW);
+	//write system default language the first time around (discard "_country")
+	if (!settings.contains(KEY_GUI_LANG))
+		settings.setValue(KEY_GUI_LANG,QLocale::system().name().left(2));
+	gui_lang = settings.value(KEY_GUI_LANG,QLocale::system().name().left(2)).toString();
+
+	settings.beginGroup(GROUP_EXTERNALTOOLS);
 		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
 			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");
 		dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
+		if (!settings.contains(KEY_EXTERNAL_AIS_OPTIONS))
+			settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,"-a aligned_");
+		align_image_stack_options=settings.value(KEY_EXTERNAL_AIS_OPTIONS).toStringList();
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
@@ -207,7 +216,7 @@ tonemapping_options* TMOptionsOperations::getDefaultTMOptions() {
 	toreturn->xsize=-2;
 	toreturn->pregamma=1;
 	toreturn->tmoperator=mantiuk;
-	toreturn->operator_options.mantiukoptions.contrastfactor=0.3;
+	toreturn->operator_options.mantiukoptions.contrastfactor=0.1;
 	toreturn->operator_options.mantiukoptions.contrastequalization=false;
 	toreturn->operator_options.mantiukoptions.saturationfactor=1.8;
 	return toreturn;
@@ -225,7 +234,7 @@ QString TMOptionsOperations::getPostfix() {
 		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
 		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
 		if (contrast_eq) {
-			postfix+="contrast_equalization_";
+			postfix+=QString("contrast_equalization_%1_").arg(contrastfactor);
 		} else {
 			postfix+=QString("contrast_mapping_%1_").arg(contrastfactor);
 		}
@@ -331,7 +340,7 @@ QString TMOptionsOperations::getCaption() {
 		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
 		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
 		if (contrast_eq) {
-			caption+="Contrast Equalization ~ ";
+			caption+=QString("Contrast Equalization=%1 ~ ").arg(contrastfactor);
 		} else {
 			caption+=QString("Contrast=%1 ~ ").arg(contrastfactor);
 		}
@@ -438,7 +447,7 @@ QString TMOptionsOperations::getExifComment() {
 		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
 		exif_comment+="Mantiuk\nParameters:\n";
 		if (contrast_eq) {
-			exif_comment+="Contrast Equalization\n";
+			exif_comment+=QString("Contrast Equalization factor: %1\n").arg(contrastfactor);
 		} else {
 			exif_comment+=QString("Contrast Mapping factor: %1\n").arg(contrastfactor);
 		}
