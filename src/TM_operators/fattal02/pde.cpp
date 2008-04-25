@@ -53,9 +53,9 @@ using namespace std;
 #define V_CYCLE 2 /* number of v-cycles  */
 
 // precision
-#define EPS 1.0e-12
+#define EPS 1.0e-8
 
-void linbcg(unsigned long n, float b[], float x[], int itol, float tol,
+void linbcg(unsigned int n, float b[], float x[], int itol, float tol,
   int itmax, int *iter, float *err);
 
 inline float max( float a, float b )
@@ -105,13 +105,13 @@ void restrict( const pfs::Array2D *in, pfs::Array2D *out )
   const float dx = (float)in->getCols() / (float)out->getCols();
   const float dy = (float)in->getRows() / (float)out->getRows();
 
-  const float filterSize = 0.5;
+  const float filterSize = 0.5f;
   
   float sx, sy;
   int x, y;
   
-  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+  for( y = 0, sy = dy/2-0.5f; y < outRows; y++, sy += dy )
+    for( x = 0, sx = dx/2-0.5f; x < outCols; x++, sx += dx ) {
 
       float pixVal = 0;
       float w = 0;
@@ -185,8 +185,8 @@ void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
       
       for( float ix = max( 0, ceilf( sx-filterSize ) ); ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
         for( float iy = max( 0, ceilf( sy-filterSize ) ); iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
-          float fx = fabs( sx - ix );
-          float fy = fabs( sy - iy );
+          float fx = fabsf( sx - ix );
+          float fy = fabsf( sy - iy );
 
           const float fval = (1-fx)*(1-fy);
           
@@ -328,7 +328,7 @@ void smooth( pfs::Array2DImpl *U, pfs::Array2DImpl *F )
 //   int x,y,i;
 //   int shx;	shift x
   
-//   float h = 1.0f/sqrt(sx*sy*1.0f);
+//   float h = 1.0f/sqrtf(sx*sy*1.0f);
 //   float h2 = h*h;
 
 //   h2 = 1;
@@ -361,7 +361,7 @@ void calculate_defect( pfs::Array2D *D, pfs::Array2D *U, pfs::Array2D *F )
   int sx = F->getCols();
   int sy = F->getRows();
 
-  float h = 1.0f/sqrt(sx*sy*1.0f);
+  float h = 1.0f/sqrtf(sx*sy*1.0f);
   float h2i = 1.0/(h*h);
 
   h2i = 1;
@@ -568,7 +568,7 @@ void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
 //		 norm has been reduced by a factor EPS.
   for (j = 0; j < xmax; j++)
     for (l = 0; l < ymax; l++) {
-      anormf += fabs( (*F)(j,l) );
+      anormf += fabsf( (*F)(j,l) );
       (*U)(j,l)=0.0f;
     }
 
@@ -594,7 +594,7 @@ void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
           
 	  resid = (*U)(jp1,l) + (*U)(jm1,l) + (*U)(j,lp1) + (*U)(j,lm1)
             - 4.0* (*U)(j,l) - (*F)(j,l);
-	  anorm += fabs(resid);
+	  anorm += fabsf(resid);
 	  (*U)(j,l) -= omega * resid / -4.0;
 	}
 	lsw = 1 - lsw;
@@ -617,7 +617,7 @@ void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
 
 //#define EPS 1.0e-14
 
-void asolve(unsigned long /*n*/, float b[], float x[], int/* itrnsp*/)
+void asolve(unsigned int /*n*/, float b[], float x[], int/* itrnsp*/)
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -625,7 +625,7 @@ void asolve(unsigned long /*n*/, float b[], float x[], int/* itrnsp*/)
       }
 }
 
-void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
+void atimes(unsigned int /*n*/, float x[], float res[], int /*itrnsp*/)
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
@@ -653,21 +653,21 @@ void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
     - 2*x[idx(rows-1,cols-1)];  
 }
 
-float snrm(unsigned long n, float sx[], int itol)
+float snrm(unsigned int n, float sx[], int itol)
 {
-	unsigned long i,isamax;
+	unsigned int i,isamax;
 	float ans;
 
 	if (itol <= 3) {
 		ans = 0.0;
 		for (i=1;i<=n;i++) ans += sx[i]*sx[i];
-		return sqrt(ans);
+		return sqrtf(ans);
 	} else {
 		isamax=1;
 		for (i=1;i<=n;i++) {
-			if (fabs(sx[i]) > fabs(sx[isamax])) isamax=i;
+			if (fabsf(sx[i]) > fabsf(sx[isamax])) isamax=i;
 		}
-		return fabs(sx[isamax]);
+		return fabsf(sx[isamax]);
 	}
 }
 
@@ -675,9 +675,9 @@ float snrm(unsigned long n, float sx[], int itol)
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
+void linbcg(unsigned int n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
 {	
-	unsigned long j;
+	unsigned int j;
 	float ak,akden,bk,bkden,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
@@ -743,9 +743,9 @@ void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itma
 			*err=snrm(n,r,itol)/bnrm;
 		} else if (itol == 3 || itol == 4) {
 			znrm=snrm(n,z,itol);
-			if (fabs(zm1nrm-znrm) > EPS*znrm) {
-				dxnrm=fabs(ak)*snrm(n,p,itol);
-				*err=znrm/fabs(zm1nrm-znrm)*dxnrm;
+			if (fabsf(zm1nrm-znrm) > EPS*znrm) {
+				dxnrm=fabsf(ak)*snrm(n,p,itol);
+				*err=znrm/fabsf(zm1nrm-znrm)*dxnrm;
 			} else {
 				*err=znrm/bnrm;
 				continue;

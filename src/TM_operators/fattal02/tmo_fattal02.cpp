@@ -133,7 +133,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 {
   int width = H->getCols();
   int height = H->getRows();
-  float divider = pow( 2.0f, k+1 );
+  float divider = powf( 2.0f, k+1 );
   float avgGrad = 0.0f;
 
   for( int y=0 ; y<height ; y++ )
@@ -151,7 +151,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
         
       gy = ((*H)(x,s)-(*H)(x,n)) / divider;
       
-      (*G)(x,y) = sqrt(gx*gx+gy*gy);
+      (*G)(x,y) = sqrtf(gx*gx+gy*gy);
       avgGrad += (*G)(x,y);
     }
   }
@@ -219,9 +219,10 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
         float grad = (*gradients[k])(x,y);
         float a = alfa * avgGrad[k];
 
-        float value=1.0;
-        if( grad>1e-4 )
-          value = a/(grad+noise) * pow((grad+noise)/a, beta);
+        float value=1.0f;
+        if( grad>1e-4f )
+          value = powf((grad+noise)/a, beta-1.0f);
+          //value = a/(grad+noise) * powf((grad+noise)/a, beta);
 
         if (newfattal)
         	(*fi[k])(x,y) *= value;
@@ -277,7 +278,7 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
   }
   pfs::Array2D* H = new pfs::Array2DImpl(width, height);
   for( i=0 ; i<size ; i++ )
-    (*H)(i) = log( 100.0f*(*Y)(i)/maxLum + 1e-4 );
+    (*H)(i) = logf( 100.0f*(*Y)(i)/maxLum + 1e-4 );
 
 //   DEBUG_STR << "tmo_fattal02: calculating attenuation matrix" << endl;
   
@@ -347,7 +348,7 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
 
   for( y=0 ; y<height ; y++ )
     for( x=0 ; x<width ; x++ )
-      (*L)(x,y) = exp( (*U)(x,y) ) - 1e-4;
+      (*L)(x,y) = expf( (*U)(x,y) ) - 1e-4f;
 	
   // remove percentile of min and max values and renormalize
   findMaxMinPercentile(L, 0.001f, minLum, 0.995f, maxLum);
@@ -357,7 +358,7 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
     {
       (*L)(x,y) = ((*L)(x,y)-minLum) / maxLum;
       if( (*L)(x,y)<=0.0f )
-        (*L)(x,y) = 1e-4;
+        (*L)(x,y) = 1e-4f;
     }
 
   // clean up
