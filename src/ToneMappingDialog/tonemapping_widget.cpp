@@ -41,7 +41,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
 	// mantiuk06
-	contrastfactorGang = new Gang(contrastFactorSlider, contrastFactordsb,0.001,2,0.3);
+	contrastfactorGang = new Gang(contrastFactorSlider, contrastFactordsb,0.001,10,0.1);
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,0,2,0.8);
 
 	// ashikhmin02
