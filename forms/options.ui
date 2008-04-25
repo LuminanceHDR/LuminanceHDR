@@ -89,7 +89,15 @@
        </item>
        <item>
         <property name="text" >
-         <string>RAW Import</string>
+         <string>Language</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >:/new/prefix1/images/language-selector.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>External Tools</string>
         </property>
         <property name="icon" >
          <iconset resource="../icons.qrc" >:/new/prefix1/images/raw_import.png</iconset>
@@ -143,7 +151,7 @@
            <property name="text" >
             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
 &lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Tone Mapping Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
@@ -305,11 +313,11 @@ p, li { white-space: pre-wrap; }
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="maximum" >
-                 <number>10</number>
-                </property>
                 <property name="minimum" >
                  <number>1</number>
+                </property>
+                <property name="maximum" >
+                 <number>10</number>
                 </property>
                </widget>
               </item>
@@ -333,7 +341,7 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page_raw" >
+       <widget class="QWidget" name="languagePage" >
         <layout class="QVBoxLayout" >
          <property name="margin" >
           <number>0</number>
@@ -342,6 +350,93 @@ p, li { white-space: pre-wrap; }
           <number>3</number>
          </property>
          <item>
+          <widget class="QLabel" name="label_7" >
+           <property name="text" >
+            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">User Interface&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_5" >
+           <property name="title" >
+            <string>Language:</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <item>
+             <widget class="QComboBox" name="languageComboBox" >
+              <item>
+               <property name="text" >
+                <string>Czech</string>
+           </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>English</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>French</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>German</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Indonesian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Italian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Polish</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Russian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Spanish</string>
+               </property>
+              </item>
+              <item>
+               <property name="text" >
+                <string>Turkish</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" >
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="externalToolsPage" >
+        <layout class="QVBoxLayout" >
+         <item>
           <widget class="QLabel" name="label" >
            <property name="text" >
             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Raw Import Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
@@ -349,21 +444,13 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="Line" name="line_3" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
+          <widget class="QGroupBox" name="groupBox_3" >
+           <property name="title" >
+            <string>dcraw commandline parameters:</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="rawParamsLabel" >
-           <property name="text" >
-            <string>Raw convertion parameters:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="commandlineParamsLineEdit" >
+           <layout class="QVBoxLayout" >
+            <item>
+             <widget class="QLineEdit" name="dcrawParamsLineEdit" >
            <property name="toolTip" >
             <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -411,6 +498,45 @@ p, li { white-space: pre-wrap; }
            </item>
           </layout>
          </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_3" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_6" >
+           <property name="text" >
+            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Alignment Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_4" >
+           <property name="title" >
+            <string>align_image_stack commandline parameters:</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <item>
+             <widget class="QLineEdit" name="aisParamsLineEdit" >
+              <property name="toolTip" >
+               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Click the help button below for more information&lt;/p>&lt;/body>&lt;/html></string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item>
           <spacer>
            <property name="orientation" >
@@ -418,8 +544,8 @@ p, li { white-space: pre-wrap; }
            </property>
            <property name="sizeHint" >
             <size>
-             <width>20</width>
-             <height>40</height>
+             <width>121</width>
+             <height>51</height>
             </size>
            </property>
           </spacer>
