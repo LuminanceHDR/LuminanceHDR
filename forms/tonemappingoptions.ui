@@ -330,7 +330,7 @@ p, li { white-space: pre-wrap; }
             <cursor>13</cursor>
            </property>
            <property name="maximum" >
-            <number>1999</number>
+            <number>9999</number>
            </property>
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
@@ -342,17 +342,17 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>3</number>
            </property>
-           <property name="maximum" >
-            <double>2.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.001000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>10.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.200000000000000</double>
            </property>
            <property name="value" >
-            <double>0.300000000000000</double>
+            <double>0.100000000000000</double>
            </property>
           </widget>
          </item>
@@ -391,11 +391,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>3</number>
            </property>
-           <property name="maximum" >
-            <double>2.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>2.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.200000000000000</double>
@@ -528,11 +528,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>3</number>
            </property>
-           <property name="maximum" >
-            <double>2.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.001000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>2.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.200000000000000</double>
@@ -577,11 +577,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>3</number>
            </property>
-           <property name="maximum" >
-            <double>1.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.600000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>1.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>2.000000000000000</double>
@@ -807,11 +807,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="biasdsb" >
-           <property name="maximum" >
-            <double>1.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.500000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>1.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.040000000000000</double>
@@ -984,11 +984,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="rangedsb" >
-           <property name="maximum" >
-            <double>10.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.010000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>10.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.200000000000000</double>
@@ -1272,11 +1272,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>0</number>
            </property>
-           <property name="maximum" >
-            <double>15.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>2.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>15.000000000000000</double>
            </property>
            <property name="value" >
             <double>8.000000000000000</double>
@@ -1330,11 +1330,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>0</number>
            </property>
-           <property name="maximum" >
-            <double>100.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>1.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>100.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>10.000000000000000</double>
@@ -1391,11 +1391,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>0</number>
            </property>
-           <property name="maximum" >
-            <double>100.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>1.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>100.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>10.000000000000000</double>
@@ -1531,11 +1531,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="brightnessdsb" >
-           <property name="maximum" >
-            <double>10.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>-35.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>10.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.010000000000000</double>
@@ -1577,11 +1577,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="chromaticAdaptdsb" >
-           <property name="maximum" >
-            <double>1.300000000000000</double>
-           </property>
            <property name="minimum" >
             <double>-1.700000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>1.300000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.100000000000000</double>
@@ -1623,11 +1623,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="lightAdaptdsb" >
-           <property name="maximum" >
-            <double>1.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>-1.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>1.000000000000000</double>
            </property>
            <property name="singleStep" >
             <double>0.100000000000000</double>
@@ -1992,11 +1992,11 @@ p, li { white-space: pre-wrap; }
            <property name="decimals" >
             <number>3</number>
            </property>
-           <property name="maximum" >
-            <double>50.000000000000000</double>
-           </property>
            <property name="minimum" >
             <double>0.001000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>50.000000000000000</double>
            </property>
            <property name="value" >
             <double>1.000000000000000</double>
@@ -2430,12 +2430,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>218</y>
+     <x>77</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>148</x>
-     <y>225</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2446,12 +2446,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>218</y>
+     <x>77</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>213</x>
-     <y>225</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2462,12 +2462,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>218</y>
+     <x>77</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>275</x>
-     <y>257</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2478,12 +2478,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>218</y>
+     <x>77</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>113</x>
-     <y>262</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2494,12 +2494,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2510,12 +2510,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>177</x>
-     <y>358</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2526,12 +2526,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>186</x>
-     <y>321</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2542,12 +2542,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>186</x>
-     <y>321</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2558,12 +2558,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>177</x>
-     <y>358</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2574,12 +2574,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>87</x>
-     <y>353</y>
+     <x>89</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2590,12 +2590,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>193</x>
-     <y>348</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2606,12 +2606,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>89</x>
-     <y>390</y>
+     <x>91</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2622,12 +2622,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>195</x>
-     <y>385</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2638,12 +2638,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>53</x>
-     <y>316</y>
+     <x>55</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2654,12 +2654,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>159</x>
-     <y>311</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2670,12 +2670,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>80</x>
-     <y>326</y>
+     <x>82</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2686,12 +2686,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>71</x>
-     <y>363</y>
+     <x>73</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2702,12 +2702,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>80</x>
-     <y>326</y>
+     <x>82</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2718,12 +2718,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>71</x>
-     <y>363</y>
+     <x>73</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2734,12 +2734,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>75</x>
-     <y>218</y>
+     <x>77</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>262</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2750,12 +2750,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>326</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2766,12 +2766,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>263</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>363</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2782,12 +2782,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>326</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2798,12 +2798,12 @@ p, li { white-space: pre-wrap; }
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>106</x>
-     <y>291</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>363</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2814,12 +2814,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>316</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2830,12 +2830,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>353</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
@@ -2846,60 +2846,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>104</x>
-     <y>208</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>385</x>
-     <y>390</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ContrastEqualizCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_23</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>116</x>
-     <y>210</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>50</x>
-     <y>244</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ContrastEqualizCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>contrastFactorSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>156</x>
-     <y>213</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>168</x>
-     <y>252</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ContrastEqualizCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>contrastFactordsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>317</x>
-     <y>207</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>358</x>
-     <y>243</y>
+     <x>101</x>
+     <y>166</y>
     </hint>
    </hints>
   </connection>
