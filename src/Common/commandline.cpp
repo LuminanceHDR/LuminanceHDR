@@ -317,7 +317,7 @@ void CommandLineInterfaceManager::parseArgs() {
 			VERBOSEPRINT("Dcraw parameters: %1",qtpfsgui_options->dcraw_options.join(" ") );
 			VERBOSEPRINT("Using %1 threads.", qtpfsgui_options->num_threads);
 		}
-		hdrCreationManager = new HdrCreationManager(qtpfsgui_options->num_threads, qtpfsgui_options->tempfilespath, qtpfsgui_options->dcraw_options);
+		hdrCreationManager = new HdrCreationManager();
 		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 		connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
 		connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(createHDR()));

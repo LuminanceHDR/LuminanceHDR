@@ -29,7 +29,8 @@
 #include "mtb_alignment.h"
 #include "../Threads/hdrInputLoader.h"
 
-HdrCreationManager::HdrCreationManager(const int reqThreads, const QString tempFilesPath, QStringList dcraw_options) : requiredThreads(reqThreads), tempFilesPath(tempFilesPath), dcraw_options(dcraw_options) {
+HdrCreationManager::HdrCreationManager() {
+	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	expotimes=NULL;
 	ais=NULL;
 	chosen_config=predef_confs[0];
@@ -90,10 +91,10 @@ void HdrCreationManager::loadInputFiles() {
 		return;
 	} //if all files already started processing
 	else { //if we still have to start processing some file
-		while (runningThreads<requiredThreads && firstNotStarted<startedProcessing.size()) {
+		while (runningThreads<qtpfsgui_options->num_threads && firstNotStarted<startedProcessing.size()) {
 			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted]=true;
-			hdrInputLoader *thread=new hdrInputLoader(fileList[firstNotStarted],firstNotStarted,dcraw_options);
+			hdrInputLoader *thread=new hdrInputLoader(fileList[firstNotStarted],firstNotStarted,qtpfsgui_options->dcraw_options);
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 			connect(thread, SIGNAL(loadFailed(QString,int)), this, SLOT(loadFailed(QString,int)));
 			connect(thread, SIGNAL(ldrReady(QImage *, int, float, QString, bool)), this, SLOT(ldrReady(QImage *, int, float, QString, bool)));
@@ -231,7 +232,7 @@ void HdrCreationManager::align_with_mtb() {
 
 void HdrCreationManager::align_with_ais() {
 	ais=new QProcess(0);
-	ais->setWorkingDirectory(tempFilesPath);
+	ais->setWorkingDirectory(qtpfsgui_options->tempfilespath);
 	QStringList env = QProcess::systemEnvironment();
 	#ifdef WIN32
 	QString separator(";");
@@ -244,9 +245,9 @@ void HdrCreationManager::align_with_ais() {
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
 	
 	#ifdef Q_WS_MAC
-	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", QStringList() << QString("-a") << "aligned_" << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", qtpfsgui_options->align_image_stack_options << (filesToRemove.empty() ? fileList : filesToRemove) );
 	#else
-	ais->start("align_image_stack", QStringList() << QString("-a") << "aligned_" << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start("align_image_stack", qtpfsgui_options->align_image_stack_options << (filesToRemove.empty() ? fileList : filesToRemove) );
 	#endif
 }
 
@@ -260,7 +261,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus) {
 		clearlists(false);
 		for (int i=0;i<fileList.size();i++) {
 			//align_image_stack can only output tiff files
-			const char* fname=QString(tempFilesPath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif").toUtf8().constData();
+			const char* fname=QString(qtpfsgui_options->tempfilespath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif").toUtf8().constData();
 			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname);
 			//if 8bit ldr tiff
@@ -279,7 +280,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus) {
 			}
 			QFile::remove(fname);
 		}
-		QFile::remove(QString(tempFilesPath + "/hugin_debug_optim_results.txt"));
+		QFile::remove(QString(qtpfsgui_options->tempfilespath + "/hugin_debug_optim_results.txt"));
 		emit finishedAligning();
 	}
 }

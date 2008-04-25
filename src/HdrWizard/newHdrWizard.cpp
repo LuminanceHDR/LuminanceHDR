@@ -83,8 +83,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p) : QDialog(p), hdrCreationManager(NULL),
 	SLOT(loadRespCurveFilename(const QString&)));
 	connect(loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
 
-	QtpfsguiOptions *opts=QtpfsguiOptions::getInstance();
-	hdrCreationManager = new HdrCreationManager ( opts->num_threads, opts->tempfilespath, opts->dcraw_options );
+	hdrCreationManager = new HdrCreationManager();
 	connect(hdrCreationManager, SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
 	connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 	connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));

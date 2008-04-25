@@ -41,7 +41,7 @@ const config_triple predef_confs[6]= {
 class HdrCreationManager : public QObject {
 Q_OBJECT
 public:
-	HdrCreationManager(const int reqThreads, const QString tempFilesPath, QStringList dcraw_options);
+	HdrCreationManager();
 	~HdrCreationManager();
 
 	//LDR is a  8 bit format (jpeg, 8bit tiff, raw->8bit tiff)
@@ -76,7 +76,7 @@ public:
 	//operates on expotimes array:
 	//if the correspondent EV value span is >10EV or <-10EV,
 	//add an offset to the expotimes array to make it stay inside boundaries (-10..+10).
-	//the EV values cannot cover more than 20EV values (-10..+10)
+	//the EV values cannot cover more than 20EV values
 	void checkEVvalues();
 	void makeSureLDRsHaveAlpha();
 	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
@@ -115,8 +115,6 @@ private:
 	//This variable prevents "incoming" threads to do anything.
 	bool loadingError;
 
-	//number of threads the user want to run at any given time
-	const int requiredThreads;
 	//number of running threads at any given time
 	int runningThreads;
 	//cumulative number of successfully loaded files
@@ -124,10 +122,7 @@ private:
 	//once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
 	void newResult(int index, float expotime, QString);
 
-	//used by align_image_stack to save the output tiff
-	const QString tempFilesPath;
-	//raw camera images loading options.
-	QStringList dcraw_options;
+	QtpfsguiOptions *qtpfsgui_options;
 
 	//align_image_stack
 	QProcess *ais;
