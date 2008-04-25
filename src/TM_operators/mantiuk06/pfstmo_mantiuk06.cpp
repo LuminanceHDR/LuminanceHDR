@@ -27,8 +27,10 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
+ * @author Rafal Mantiuk, <mantiuk@gmail.com>
+ * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
  *
- * $Id: pfstmo_mantiuk06.cpp,v 1.5 2007/06/16 19:23:08 rafm Exp $
+ * $Id: pfstmo_mantiuk06.cpp,v 1.7 2008/02/29 16:46:28 rafm Exp $
  */
 
 #include "../../Libpfs/pfs.h"
@@ -41,15 +43,19 @@ void progress_report( int progress )
       fprintf( stderr, "\n" );
 }
 
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float contrastscalefactor, float saturationfactor, bool constrast_equalization ) {
+pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float scalefactor, float saturationfactor, bool constrast_equalization ) {
 
 	assert(inpfsframe!=NULL);
 	//get tone mapping parameters;
-	float scaleFactor = contrastscalefactor;
+	float scaleFactor = scalefactor;
 	float saturationFactor = saturationfactor;
 	if (constrast_equalization)
-		scaleFactor=0;
+		scaleFactor=-scaleFactor;
 	pfs::DOMIO pfsio;
+	//Ed Brambley's contribution:
+	const bool bcg = false; //use biconjucate gradients?
+	const int itmax = 200;
+	const float tol = 1e-3;
 
 	pfs::Channel *inX, *inY, *inZ;
 	inpfsframe->getXYZChannels(inX, inY, inZ);
@@ -65,16 +71,9 @@ pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float contrastscalefactor, 
 // 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
 	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, Ro, Go, Bo );
 	tmo_mantiuk06_contmap( cols, rows, Ro->getRawData(), Go->getRawData(), Bo->getRawData(),
-	inY->getRawData(), scaleFactor, saturationFactor, progress_report );
-	pfs::transformColorSpace( pfs::CS_RGB, Ro, inY, Bo, pfs::CS_SRGB, Ro, Go, Bo );
+	inY->getRawData(), scaleFactor, saturationFactor, bcg, itmax, tol, &progress_report );
+	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 
-	//original implementation: we can avoid creating an additional data channel. We use one of the 3 that we already have to create for the output.
-// 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
-// 	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, R, inZ );
-// 	tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R->getRawData(), inZ->getRawData(),
-// 	inY->getRawData(), scaleFactor, saturationFactor, progress_report );
-// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
-	
 	outframe->getTags()->setString("LUMINANCE", "RELATIVE");
 
 // 	delete R;

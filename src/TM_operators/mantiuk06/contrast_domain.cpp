@@ -1,5 +1,5 @@
 /**
- * @brief Contrast mapping TMO
+ * @Brief Contrast mapping TMO
  *
  * From:
  * 
@@ -28,114 +28,85 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
+ * @author Rafal Mantiuk, <mantiuk@gmail.com>
+ * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
+ *  (more information on the changes:
+ *  http://www.damtp.cam.ac.uk/user/ejb48/hdr/index.html)
  *
- * $Id: contrast_domain.cpp,v 1.6 2007/10/17 10:03:21 rafm Exp $
+ * $Id: contrast_domain.cpp,v 1.9 2008/02/29 16:46:28 rafm Exp $
  */
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-//#include <sys/time.h>
-
 #include "contrast_domain.h"
 
-typedef struct {
-  int rows, cols;
+typedef struct pyramid_s {
+  int rows;
+  int cols;
   float* Gx;
   float* Gy;
-  float* Cx;
-  float* Cy;
-  float* divG;
-  float* M;  // Gradient modules, needed only for contrast equalization
-}
-PYRAMID_LEVEL;
-
-struct PYRAMID{
-  PYRAMID_LEVEL* level;
-  PYRAMID* next;
-};
+  struct pyramid_s* next;
+  struct pyramid_s* prev;
+} pyramid_t;
 
 
-extern float W_table[];
-extern float R_table[];
 extern float xyz2rgbD65Mat[3][3];
 extern float rgb2xyzD65Mat[3][3];
 
 #define PYRAMID_MIN_PIXELS 3
 #define LOOKUP_W_TO_R 107
 
-class ContrastDomain {
 
-  int alloc_mem;
-  progress_callback progress_cb;
-  
-public:
+static void contrast_equalization( pyramid_t *pp, const float contrastFactor );
 
-  ContrastDomain( ) {
-    alloc_mem = 0;
-  }
+static void transform_to_luminance(pyramid_t* pyramid, float* const x, progress_callback progress_cb, const bool bcg, const int itmax, const float tol);
+static void matrix_add(const int n, const float* const a, float* const b);
+static void matrix_subtract(const int n, const float* const a, float* const b);
+static void matrix_copy(const int n, const float* const a, float* const b);
+static void matrix_multiply_const(const int n, float* const a, const float val);
+static void matrix_divide(const int n, const float* const a, float* const b);
+static float* matrix_alloc(const int size);
+static void matrix_free(float* m);
+static float matrix_DotProduct(const int n, const float* const a, const float* const b);
+static void matrix_zero(const int n, float* const m);
+static void calculate_and_add_divergence(const int rows, const int cols, const float* const Gx, const float* const Gy, float* const divG);
+//static void pyramid_calculate_divergence(pyramid_t* pyramid);
+static void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum);
+static void calculate_scale_factor(const int n, const float* const G, float* const C);
+static void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC);
+static void scale_gradient(const int n, float* const G, const float* const C);
+static void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC);
+static void pyramid_free(pyramid_t* pyramid);
+static pyramid_t* pyramid_allocate(const int cols, const int rows);
+static void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy);
+static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum);
+static void solveX(const int n, const float* const b, float* const x);
+static void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
+static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb);
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb);
+static float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val);
+static void transform_to_R(const int n, float* const G);
+static void pyramid_transform_to_R(pyramid_t* pyramid);
+static void transform_to_G(const int n, float* const R);
+static void pyramid_transform_to_G(pyramid_t* pyramid);
+static void pyramid_gradient_multiply(pyramid_t* pyramid, const float val);
 
-  void tone_mapping(int, int, float* R, float* G, float* B, float* Y, float contrastFactor, float saturationFactor, progress_callback );
-  void contrast_equalization( PYRAMID *pp );
-
-  float* transform_to_luminance(PYRAMID* pyramid);
-  void matrix_upsample(int rows, int cols, float* data, float* res);
-  void matrix_downsample(int rows, int cols, float* data, float* res);
-  float* matrix_add(int n, float* a, float* b);
-  float* matrix_substract(int n, float* a, float* b);
-  float* matrix_copy(int n, float* a, float* b);
-  void matrix_multiply_const(int n, float* a, float val);
-  void matrix_divide(int n, float* a, float* b);
-  float* matrix_alloc(int size);
-  void matrix_free(float* m);
-  float matrix_DotProduct(int n, float* a, float* b);
-  void matrix_zero(int n, float* m);
-  void calculate_divergence(int rows, int cols, float* Gx, float* Gy, float* divG);
-  void pyramid_calculate_divergence(PYRAMID* pyramid);
-  void pyramid_calculate_divergence_sum_in(PYRAMID* pyramid, float* divG_sum);
-  void pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum);
-  float* calculate_scale_factor(int n, float* G);
-  void pyramid_calculate_scale_factor(PYRAMID* pyramid);
-  void scale_gradient(int n, float* G, float* C);
-  void pyramid_scale_gradient(PYRAMID* pyramid);
-  void pyramid_scale_gradient(PYRAMID* pyramid, PYRAMID* pC);
-  void pyramid_free(PYRAMID* pyramid);
-  PYRAMID* pyramid_allocate(int cols, int rows);
-  void calculate_gradient(int cols, int rows, float* lum, float* Gx, float* Gy);
-  void pyramid_calculate_gradient(PYRAMID* pyramid, float* lum);
-  //PYRAMID* pyramid_create(int lrows, int lcols, float* llum);
-  void solveX(int n, float* b, float* x);
-  void multiplyA(PYRAMID* px, PYRAMID* pyramid, float* x, float* divG_sum);
-  float* linbcg(PYRAMID* pyramid, float* b);
-  void matrix_log10(int n, float* m);
-  float lookup_table(int n, float* in_tab, float* out_tab, float val);
-  void transform_to_R(int n, float* G);
-  void pyramid_transform_to_R(PYRAMID* pyramid);
-  void transform_to_G(int n, float* R);
-  void pyramid_transform_to_G(PYRAMID* pyramid);
-  float matrix_median(int n, float* m);
-  void pyramid_gradient_multiply(PYRAMID* pyramid, float val);
-
-  void dump_matrix_to_file(int width, int height, float* m, const char *file_name);
-  void matrix_show(char* text, int rows, int cols, float* data);
-  void pyramid_show(PYRAMID* pyramid);
-
-};
+//static void dump_matrix_to_file(const int width, const int height, const float* const m, const char * const file_name);
+static void matrix_show(const char* const text, int rows, int cols, const float* const data);
+//static void pyramid_show(pyramid_t* pyramid);
 
 
-//#define DEBUG
-
-float W_table[] = {0.000000,0.010000,0.021180,0.031830,0.042628,0.053819,0.065556,0.077960,0.091140,0.105203,0.120255,0.136410,0.153788,0.172518,0.192739,0.214605,0.238282,0.263952,0.291817,0.322099,0.355040,0.390911,0.430009,0.472663,0.519238,0.570138,0.625811,0.686754,0.753519,0.826720,0.907041,0.995242,1.092169,1.198767,1.316090,1.445315,1.587756,1.744884,1.918345,2.109983,2.321863,2.556306,2.815914,3.103613,3.422694,3.776862,4.170291,4.607686,5.094361,5.636316,6.240338,6.914106,7.666321,8.506849,9.446889,10.499164,11.678143,13.000302,14.484414,16.151900,18.027221,20.138345,22.517282,25.200713,28.230715,31.655611,35.530967,39.920749,44.898685,50.549857,56.972578,64.280589,72.605654,82.100619,92.943020,105.339358,119.530154,135.795960,154.464484,175.919088,200.608905,229.060934,261.894494,299.838552,343.752526,394.651294,453.735325,522.427053,602.414859,695.706358,804.693100,932.229271,1081.727632,1257.276717,1463.784297,1707.153398,1994.498731,2334.413424,2737.298517,3215.770944,3785.169959,4464.187290,5275.653272,6247.520102,7414.094945,8817.590551,10510.080619};
-float R_table[] = {0.000000,0.009434,0.018868,0.028302,0.037736,0.047170,0.056604,0.066038,0.075472,0.084906,0.094340,0.103774,0.113208,0.122642,0.132075,0.141509,0.150943,0.160377,0.169811,0.179245,0.188679,0.198113,0.207547,0.216981,0.226415,0.235849,0.245283,0.254717,0.264151,0.273585,0.283019,0.292453,0.301887,0.311321,0.320755,0.330189,0.339623,0.349057,0.358491,0.367925,0.377358,0.386792,0.396226,0.405660,0.415094,0.424528,0.433962,0.443396,0.452830,0.462264,0.471698,0.481132,0.490566,0.500000,0.509434,0.518868,0.528302,0.537736,0.547170,0.556604,0.566038,0.575472,0.584906,0.594340,0.603774,0.613208,0.622642,0.632075,0.641509,0.650943,0.660377,0.669811,0.679245,0.688679,0.698113,0.707547,0.716981,0.726415,0.735849,0.745283,0.754717,0.764151,0.773585,0.783019,0.792453,0.801887,0.811321,0.820755,0.830189,0.839623,0.849057,0.858491,0.867925,0.877358,0.886792,0.896226,0.905660,0.915094,0.924528,0.933962,0.943396,0.952830,0.962264,0.971698,0.981132,0.990566,1.000000};
+static float W_table[] = {0.000000,0.010000,0.021180,0.031830,0.042628,0.053819,0.065556,0.077960,0.091140,0.105203,0.120255,0.136410,0.153788,0.172518,0.192739,0.214605,0.238282,0.263952,0.291817,0.322099,0.355040,0.390911,0.430009,0.472663,0.519238,0.570138,0.625811,0.686754,0.753519,0.826720,0.907041,0.995242,1.092169,1.198767,1.316090,1.445315,1.587756,1.744884,1.918345,2.109983,2.321863,2.556306,2.815914,3.103613,3.422694,3.776862,4.170291,4.607686,5.094361,5.636316,6.240338,6.914106,7.666321,8.506849,9.446889,10.499164,11.678143,13.000302,14.484414,16.151900,18.027221,20.138345,22.517282,25.200713,28.230715,31.655611,35.530967,39.920749,44.898685,50.549857,56.972578,64.280589,72.605654,82.100619,92.943020,105.339358,119.530154,135.795960,154.464484,175.919088,200.608905,229.060934,261.894494,299.838552,343.752526,394.651294,453.735325,522.427053,602.414859,695.706358,804.693100,932.229271,1081.727632,1257.276717,1463.784297,1707.153398,1994.498731,2334.413424,2737.298517,3215.770944,3785.169959,4464.187290,5275.653272,6247.520102,7414.094945,8817.590551,10510.080619};
+static float R_table[] = {0.000000,0.009434,0.018868,0.028302,0.037736,0.047170,0.056604,0.066038,0.075472,0.084906,0.094340,0.103774,0.113208,0.122642,0.132075,0.141509,0.150943,0.160377,0.169811,0.179245,0.188679,0.198113,0.207547,0.216981,0.226415,0.235849,0.245283,0.254717,0.264151,0.273585,0.283019,0.292453,0.301887,0.311321,0.320755,0.330189,0.339623,0.349057,0.358491,0.367925,0.377358,0.386792,0.396226,0.405660,0.415094,0.424528,0.433962,0.443396,0.452830,0.462264,0.471698,0.481132,0.490566,0.500000,0.509434,0.518868,0.528302,0.537736,0.547170,0.556604,0.566038,0.575472,0.584906,0.594340,0.603774,0.613208,0.622642,0.632075,0.641509,0.650943,0.660377,0.669811,0.679245,0.688679,0.698113,0.707547,0.716981,0.726415,0.735849,0.745283,0.754717,0.764151,0.773585,0.783019,0.792453,0.801887,0.811321,0.820755,0.830189,0.839623,0.849057,0.858491,0.867925,0.877358,0.886792,0.896226,0.905660,0.915094,0.924528,0.933962,0.943396,0.952830,0.962264,0.971698,0.981132,0.990566,1.000000};
 
 
 // display matrix in the console (debugging)
-void ContrastDomain::matrix_show(char* text, int cols, int rows, float* data){
-
-  int _cols = cols;
+static void matrix_show(const char* const text, int cols, int rows, const float* const data)
+{
+  const int _cols = cols;
 
   if(rows > 8)
     rows = 8;
@@ -151,514 +122,423 @@ void ContrastDomain::matrix_show(char* text, int cols, int rows, float* data){
   }
 }
 
+#if 0
 // display pyramid in the console (debugging)
-void ContrastDomain::pyramid_show(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)	
-    pyramid_show((PYRAMID*)pyramid->next);
-	
-  PYRAMID_LEVEL* pl = pyramid->level;
+static void pyramid_show(pyramid_t* pyramid)
+{
   char ss[30];
-	
-  printf("\n----- PYRAMID level %d,%d\n", pl->cols, pl->rows);
-	
-  sprintf(ss, "Gx %p ", pl->Gx);
-  if(pl->Gx != NULL)
-    matrix_show(ss,pl->cols, pl->rows, pl->Gx);
-  sprintf(ss, "Gy %p ", pl->Gy);	
-  if(pl->Gy != NULL)
-    matrix_show(ss,pl->cols, pl->rows, pl->Gy);
-  sprintf(ss, "Cx %p ", pl->Cx);	
-  if(pl->Cx != NULL)
-    matrix_show(ss,pl->cols, pl->rows, pl->Cx);
-  sprintf(ss, "Cy %p ", pl->Cy);	
-  if(pl->Cy != NULL)	
-    matrix_show(ss,pl->cols, pl->rows, pl->Cy);
-  if(pl->divG != NULL)	
-    matrix_show("divG",pl->cols, pl->rows, pl->divG);	
 
-  return;
+  while (pyramid->next != NULL)
+    pyramid = pyramid->next;
+
+  while (pyramid != NULL)
+    {
+      printf("\n----- pyramid_t level %d,%d\n", pyramid->cols, pyramid->rows);
+	
+      sprintf(ss, "Gx %p ", pyramid->Gx);
+      if(pyramid->Gx != NULL)
+	matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gx);
+      sprintf(ss, "Gy %p ", pyramid->Gy);	
+      if(pyramid->Gy != NULL)
+	matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gy);
+
+      pyramid = pyramid->prev;
+    }
 }
+#endif
 
 
 
-inline float max( float a, float b )
+static inline float max( float a, float b )
 {
   return a > b ? a : b;
 }
 
-inline float min( float a, float b )
+static inline float min( float a, float b )
 {
   return a < b ? a : b;
 }
 
+
 // upsample the matrix
 // upsampled matrix is twice bigger in each direction than data[]
 // res should be a pointer to allocated memory for bigger matrix
-// nearest neighborhood method - should be changed!
 // cols and rows are the dimmensions of the output matrix
-void ContrastDomain::matrix_upsample(int cols, int rows, float* in, float* out){
+static void matrix_upsample(const int outCols, const int outRows, const float* const in, float* const out)
+{
+  const int inRows = outRows/2;
+  const int inCols = outCols/2;
 
-  const int inRows = (rows)/2;
-  const int inCols = (cols)/2;
-
-  const int outRows = rows;
-  const int outCols = cols;
+  // Transpose of experimental downsampling matrix (theoretically the correct thing to do)
 
   const float dx = (float)inCols / ((float)outCols);
   const float dy = (float)inRows / ((float)outRows);
-  
-  const float filterSize = 1;
-  
-  float sx, sy;
-  int x, y;
-  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+  const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
+  // const float factor = 1.0f; // Theoretically, this should be the best.
 
-      float pixVal = 0;
-      float weight = 0;
-      
-      for( float ix = max( 0, ceilf( sx-filterSize ) ); 
-           ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
-        for( float iy = max( 0, ceilf( sy-filterSize ) ); 
-             iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
-		
-          float fx = fabs( sx - ix );
-          float fy = fabs( sy - iy );
+  for (int y = 0; y < outRows; y++)
+    {
+      const float sy = y * dy;
+      const int iy1 = (  y   * inRows) / outRows;
+      const int iy2 = ((y+1) * inRows) / outRows;
 
-          const float fval = (1-fx)*(1-fy);
-          
-          pixVal += in[ (int)ix + (int)inCols * (int)iy ] * fval;
-          weight += fval;
-        }
-      
-      out[x + outCols * y] = pixVal / weight;
-    } 	
-  return;
+      for (int x = 0; x < outCols; x++)
+	{
+	  const float sx = x * dx;
+	  const int ix1 = (  x   * inCols) / outCols;
+	  const int ix2 = ((x+1) * inCols) / outCols;
+
+	  out[x + y*outCols] = (
+	    ((ix1+1) - sx)*((iy1+1 - sy)) * in[ix1 + iy1*inCols] +
+	    ((ix1+1) - sx)*(sy+dy - (iy1+1)) * in[ix1 + iy2*inCols] +
+	    (sx+dx - (ix1+1))*((iy1+1 - sy)) * in[ix2 + iy1*inCols] +
+	    (sx+dx - (ix1+1))*(sy+dx - (iy1+1)) * in[ix2 + iy2*inCols])*factor;
+	}
+    }
 }
-
-
-// void ContrastDomain::matrix_upsample(int cols, int rows, float* in, float* out)
-// {
-//   const int inRows = rows/2;
-//   const int inCols = cols/2;
-
-//   const int outRows = rows;
-//   const int outCols = cols;
-  
-//   int sx, sy;
-//   int x, y;
-//   for( y = 0, sy = 0; sy < inRows; y+=2, sy++ ) {
-//     float *inLine = in + sy*inCols;
-//     float *outLine = out + y*outCols;
-//     for( x = 0, sx = 0; sx < inCols; x += 2, sx++ ) {
-//       float &v = inLine[sx];
-//       outLine[x] = v;
-//       outLine[x+1] = v;
-//       outLine[x+outCols] = v;
-//       outLine[x+outCols+1] = v;
-//     }
-//   }
-//   // odd output size
-//   if( outCols & 1 ) 
-//     for( y = 0; y < (outRows& ~1); y++ )
-//       out[y*outCols+outCols-1] = out[y*outCols+outCols-2];
-  
-//   if( outRows & 1 ) 
-//     for( x = 0; x < outCols; x++ ) {
-//       out[outCols*(outCols-1)+x] = out[outCols*(outCols-1)+x];
-  
-
-//   return;
-// }
 
 
 // downsample the matrix
-void ContrastDomain::matrix_downsample(int cols, int rows, float* data, float* res){
-
-      //=================
-  const int inRows = rows;
-  const int inCols = cols;
-
-  const int outRows = (rows) / 2;
-  const int outCols = (cols) / 2;
+static void matrix_downsample(const int inCols, const int inRows, const float* const data, float* const res)
+{
+  const int outRows = inRows / 2;
+  const int outCols = inCols / 2;
 
   const float dx = (float)inCols / ((float)outCols);
   const float dy = (float)inRows / ((float)outRows);
 
-  const float filterSize = 0.5;
-  
-  float sx, sy;
-  int x, y;
-  
-  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+  // New downsampling by Ed Brambley:
+  // Experimental downsampling that assumes pixels are square and
+  // integrates over each new pixel to find the average value of the
+  // underlying pixels.
+  //
+  // Consider the original pixels laid out, and the new (larger)
+  // pixels layed out over the top of them.  Then the new value for
+  // the larger pixels is just the integral over that pixel of what
+  // shows through; i.e., the values of the pixels underneath
+  // multiplied by how much of that pixel is showing.
+  //
+  // (ix1, iy1) is the coordinate of the top left visible pixel.
+  // (ix2, iy2) is the coordinate of the bottom right visible pixel.
+  // (fx1, fy1) is the fraction of the top left pixel showing.
+  // (fx2, fy2) is the fraction of the bottom right pixel showing.
 
-      float pixVal = 0;
-      float w = 0;
-      for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
-        for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
-          pixVal += data[(int)ix + (int)iy * (int)inCols];
-          w += 1;
-        }     
-      res[x + y * outCols] = pixVal/w;      
-    }	
-	
-  return;
+  const float normalize = 1.0f/(dx*dy);
+  for (int y = 0; y < outRows; y++)
+    {
+      const int iy1 = (  y   * inRows) / outRows;
+      const int iy2 = ((y+1) * inRows) / outRows;
+      const float fy1 = (iy1+1) - y * dy;
+      const float fy2 = (y+1) * dy - iy2;
+
+      for (int x = 0; x < outCols; x++)
+	{
+	  const int ix1 = (  x   * inCols) / outCols;
+	  const int ix2 = ((x+1) * inCols) / outCols;
+	  const float fx1 = (ix1+1) - x * dx;
+	  const float fx2 = (x+1) * dx - ix2;
+	  
+	  float pixVal = 0.0f;
+	  float factorx, factory;
+	  for (int i = iy1; i <= iy2 && i < inRows; i++)
+	    {
+	      if (i == iy1)
+		factory = fy1;  // We're just getting the bottom edge of this pixel
+	      else if (i == iy2)
+		factory = fy2;  // We're just gettting the top edge of this pixel
+	      else
+		factory = 1.0f; // We've got the full height of this pixel
+	      for (int j = ix1; j <= ix2 && j < inCols; j++)
+		{
+		  if (j == ix1)
+		    factorx = fx1;  // We've just got the right edge of this pixel
+		  else if (j == ix2)
+		    factorx = fx2; // We've just got the left edge of this pixel
+		  else
+		    factorx = 1.0f; // We've got the full width of this pixel
+
+		  pixVal += data[j + i*inCols] * factorx * factory;
+		}
+	    }
+
+	  res[x + y * outCols] = pixVal * normalize;  // Normalize by the area of the new pixel
+	}
+    }
 }
 
-// void ContrastDomain::matrix_downsample(int cols, int rows, float* data, float* res){
-
-//   const float inRows = rows;
-//   const float inCols = cols;
-
-//   const int outRows = rows / 2;
-//   const int outCols = cols / 2;
-
-//   const float dx = (float)inCols / (float)outCols;
-//   const float dy = (float)inRows / (float)outRows;
-
-//   const float filterSize = 0.5;
-  
-//   float sx, sy;
-//   int x, y;
-  
-//   for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-//     for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
-
-//       float pixVal = 0;
-//       float w = 0;
-//       for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
-//         for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
-//           pixVal += data[(int)ix + (int)iy * (int)inCols];
-//           w += 1;
-//         }     
-//       res[x + y * outCols] = pixVal/w;      
-//     }	
-	
-//   return;
-// }
-
-
 // return = a + b
-float* ContrastDomain::matrix_add(int n, float* a, float* b){
-  for(int i=0; i<n; i++){
-    b[i] = b[i] + a[i];
-  }
-  return b;
+static inline void matrix_add(const int n, const float* const a, float* const b)
+{
+  for(int i=0; i<n; i++)
+    b[i] += a[i];
 }
 
 // return = a - b
-float* ContrastDomain::matrix_substract(int n, float* a, float* b){
-  for(int i=0; i<n; i++){
+static inline void matrix_subtract(const int n, const float* const a, float* const b)
+{
+  for(int i=0; i<n; i++)
     b[i] = a[i] - b[i];
-  }
-  return b;
 }
 
 // copy matix a to b, return = a 
-float* ContrastDomain::matrix_copy(int n, float* a, float* b){
-  for(int i=0; i<n; i++){
-    b[i] = a[i];
-  }
-  return b;
+static inline void matrix_copy(const int n, const float* const a, float* const b)
+{
+  memcpy(b, a, sizeof(float)*n);
 }
 
 // multiply matrix a by scalar val
-void ContrastDomain::matrix_multiply_const(int n, float* a, float val){
-  for(int i=0; i<n; i++){
-    a[i] = a[i] * val;
-  }
-  return;
+static inline void matrix_multiply_const(const int n, float* const a, const float val)
+{
+  for(int i=0; i<n; i++)
+    a[i] *= val;
 }
 
 // b = a[i] / b[i]
-void ContrastDomain::matrix_divide(int n, float* a, float* b){
-  for(int i=0; i<n; i++){
+static inline void matrix_divide(const int n, const float* const a, float* const b)
+{
+  for(int i=0; i<n; i++)
     b[i] = a[i] / b[i];
-  }
-  return;
 }
 
 
 // alloc memory for the float table
-float* ContrastDomain::matrix_alloc(int size){
+static inline float* matrix_alloc(int size){
 
   float* m = (float*)malloc(sizeof(float)*size);
   if(m == NULL){
     fprintf(stderr, "ERROR: malloc in matrix_alloc() (size:%d)", size);
     exit(155);
   }
-  alloc_mem += sizeof(float)*size;
+
   return m;
 }
 
 // free memory for matrix
-void ContrastDomain::matrix_free(float* m){
+static inline void matrix_free(float* m){
   if(m != NULL)
     free(m);
 }
 
 // multiply vector by vector (each vector should have one dimension equal to 1)
-float ContrastDomain::matrix_DotProduct(int n, float* a, float* b){
+static inline float matrix_DotProduct(const int n, const float* const a, const float* const b){
   float val = 0;
   for(int j=0;j<n;j++)
-    val += (a[j] * b[j]);
+    val += a[j] * b[j];
   return val;
 }
 
 // set zeros for matrix elements
-void ContrastDomain::matrix_zero(int n, float* m){
-  for(int j=0;j<n;j++)
-    m[j] = 0;
-  return;
+static inline void matrix_zero(int n, float* m)
+{
+  bzero(m, n*sizeof(float));
 }
 
 // calculate divergence of two gradient maps (Gx and Gy)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
-void ContrastDomain::calculate_divergence(int cols, int rows, float* Gx, float* Gy, float* divG){
-
+static inline void calculate_and_add_divergence(const int cols, const int rows, const float* const Gx, const float* const Gy, float* const divG)
+{
   float divGx, divGy;
 	
-  for(int ky=0; ky<rows; ky++){
-    for(int kx=0; kx<cols; kx++){
-			
-      if(kx == 0)
-        divGx = Gx[kx + ky*cols];
-      else	
-        divGx = Gx[kx + ky*cols] - Gx[(kx-1) + ky*cols];
-			
-      if(ky == 0)
-        divGy = Gy[kx + ky*cols];
-      else	
-        divGy = Gy[kx + ky*cols] - Gy[kx + (ky-1)*cols];			
+  for(int ky=0; ky<rows; ky++)
+    for(int kx=0; kx<cols; kx++)
+      {
+	const int idx = kx + ky*cols;
+	
+	if(kx == 0)
+	  divGx = Gx[idx];
+	else	
+	  divGx = Gx[idx] - Gx[idx-1];
+	
+	if(ky == 0)
+	  divGy = Gy[idx];
+	else	
+	  divGy = Gy[idx] - Gy[idx - cols];			
 		
-			
-      divG[kx+ky*cols] = divGx + divGy;			
+	divG[idx] += divGx + divGy;			
     }
-  }
-  return;
 }
-
-// calculate divergence for the pyramid
-//  calculated divergence is put into PYRAMID_LEVEL::divG
-void ContrastDomain::pyramid_calculate_divergence(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_calculate_divergence((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-			
-  calculate_divergence(pl->cols, pl->rows, pl->Gx, pl->Gy, pl->divG);
-	
-  return;
-}
-
-
-// calculate sum of divergences in the pyramid
-//	divergences for a particular levels should be calculated earlier 
-//	and set in PYRAMID_LEVEL::divG
-void ContrastDomain::pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum){
-	
-  if(pyramid->next != NULL)	
-    pyramid_calculate_divergence_sum((PYRAMID*)pyramid->next, divG_sum);
-
-  PYRAMID_LEVEL* pl = pyramid->level;
-  
-  float* temp = matrix_alloc(pl->rows*pl->cols);
-  if(pyramid->next != NULL)
-    matrix_upsample(pl->cols, pl->rows, divG_sum, temp );
-  else
-    matrix_zero(pl->rows * pl->cols, temp);
-  
-  matrix_add(pl->rows * pl->cols, pl->divG, temp);
-
-//   char name[256];
-//   sprintf( name, "Up_%d.pfs", pl->cols );
-//   dump_matrix_to_file( pl->cols, pl->rows, temp, name );  
-  
-  matrix_copy(pl->rows*pl->cols, temp, divG_sum);
-	
-  matrix_free(temp);
-
-  return;
-}
-
 
 // calculate the sum of divergences for the all pyramid level
 // the smaller divergence map is upsamled and added to the divergence map for the higher level of pyramid
-// void ContrastDomain::pyramid_calculate_divergence_sum(PYRAMID* pyramid, float* divG_sum){
-	
-//   PYRAMID_LEVEL* pl = pyramid->level;
-// //  matrix_zero(pl->rows * pl->cols, divG_sum);
-	
-// //  if(pyramid->next != NULL)	
-//   pyramid_calculate_divergence_sum_in((PYRAMID*)pyramid, divG_sum);
+// temp is a temporary matrix of size (cols, rows), assumed to already be allocated
+static void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum)
+{
+  float* temp = matrix_alloc(pyramid->rows*pyramid->cols);
 
-// //  matrix_add(pl->rows * pl->cols, pl->divG, divG_sum);
-		
-//   return;
-// }
+  // Find the coarsest pyramid, and the number of pyramid levels
+  int levels = 1;
+  while (pyramid->next != NULL)
+    {
+      levels++;
+      pyramid = pyramid->next;
+    }
+
+  // For every level, we swap temp and divG_sum.  So, if there are an odd number of levels...
+  if (levels % 2)
+    {
+      float* const dummy = divG_sum;
+      divG_sum = temp;
+      temp = dummy;
+    }
+	
+  // Add them all together
+  while (pyramid != NULL)
+    {
+      // Upsample or zero as needed
+      if (pyramid->next != NULL)
+	matrix_upsample(pyramid->cols, pyramid->rows, divG_sum, temp);
+      else
+	matrix_zero(pyramid->rows * pyramid->cols, temp);
+
+      // Add in the (freshly calculated) divergences
+      calculate_and_add_divergence(pyramid->cols, pyramid->rows, pyramid->Gx, pyramid->Gy, temp);
+
+//   char name[256];
+//   sprintf( name, "Up_%d.pfs", pyramid->cols );
+//   dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );  
+
+      // matrix_copy(pyramid->rows*pyramid->cols, temp, divG_sum);
+
+      // Rather than copying, just switch round the pointers: we know we get them the right way round at the end.
+      float* const dummy = divG_sum;
+      divG_sum = temp;
+      temp = dummy;
+
+      pyramid = pyramid->prev;
+    }
+
+  matrix_free(temp);
+}
 
 // calculate scale factors (Cx,Cy) for gradients (Gx,Gy)
 // C is equal to EDGE_WEIGHT for gradients smaller than GFIXATE or 1.0 otherwise
-float* ContrastDomain::calculate_scale_factor(int n, float* G){
-
-  float GFIXATE = 0.1;
-  float EDGE_WEIGHT = 0.01;
+static inline void calculate_scale_factor(const int n, const float* const G, float* const C)
+{
+//  float GFIXATE = 0.1f;
+//  float EDGE_WEIGHT = 0.01f;
+  const float detectT = 0.001f;
+  const float a = 0.038737;
+  const float b = 0.537756;
 	
-  float* C = matrix_alloc(n);
-
-  for(int i=0; i<n; i++){
-    
-//    const float detectT = 0.001;
-//    const float g = max( detectT, fabs(G[i]) );    
-//    const float a = 0.038737;
-//    const float b = 0.537756;
-//    C[i] = a*pow(g,b);
-    
-     if(fabs(G[i]) < GFIXATE)
-       C[i] = EDGE_WEIGHT;
-     else	
-       C[i] = 1.0;
-  }
-
-  return C;
+  for(int i=0; i<n; i++)
+    {
+#if 1
+      const float g = max( detectT, fabsf(G[i]) );    
+      C[i] = 1.0f / (a*powf(g,b));
+#else
+      if(fabsf(G[i]) < GFIXATE)
+	C[i] = 1.0f / EDGE_WEIGHT;
+      else	
+	C[i] = 1.0f;
+#endif
+    }
 }
 
 // calculate scale factor for the whole pyramid
-void ContrastDomain::pyramid_calculate_scale_factor(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_calculate_scale_factor((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-			
-  pl->Cx = calculate_scale_factor(pl->rows*pl->cols, pl->Gx);	
-  pl->Cy = calculate_scale_factor(pl->rows*pl->cols, pl->Gy);	
-
-  return;
+static void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
+{
+  while (pyramid != NULL)
+    {
+      const int size = pyramid->rows * pyramid->cols;
+      calculate_scale_factor(size, pyramid->Gx, pC->Gx);
+      calculate_scale_factor(size, pyramid->Gy, pC->Gy);
+      pyramid = pyramid->next;
+      pC = pC->next;
+    }
 }
 
 // Scale gradient (Gx and Gy) by C (Cx and Cy)
 // G = G / C
-void ContrastDomain::scale_gradient(int n, float* G, float* C){
-
+static inline void scale_gradient(const int n, float* const G, const float* const C)
+{
   for(int i=0; i<n; i++)
-    G[i] = G[i] / C[i];
-  return;
-}
-
-// scale gradients for the whole pyramid
-void ContrastDomain::pyramid_scale_gradient(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_scale_gradient((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-  scale_gradient(pl->rows*pl->cols, pl->Gx, pl->Cx);	
-  scale_gradient(pl->rows*pl->cols, pl->Gy, pl->Cy);	
-
-  return;
+    G[i] *= C[i];
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy) from the other pyramid
-void ContrastDomain::pyramid_scale_gradient(PYRAMID* pyramid, PYRAMID* pC){
-
-  if(pyramid->next != NULL)
-    pyramid_scale_gradient((PYRAMID*)pyramid->next, (PYRAMID*)pC->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-  PYRAMID_LEVEL* plC = pC->level;
-	
-  scale_gradient(pl->rows*pl->cols, pl->Gx, plC->Cx);	
-  scale_gradient(pl->rows*pl->cols, pl->Gy, plC->Cy);	
-
-  return;
+static void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC)
+{
+  while (pyramid != NULL)
+    {
+      const int size = pyramid->rows * pyramid->cols;
+      scale_gradient(size, pyramid->Gx, pC->Gx);	
+      scale_gradient(size, pyramid->Gy, pC->Gy);
+      pyramid = pyramid->next;
+      pC = pC->next;
+    }
 }
 
 
 // free memory allocated for the pyramid
-void ContrastDomain::pyramid_free(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_free((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-
-  if(pl->Gx != NULL)
-    free(pl->Gx);
-  if(pl->Gy != NULL)
-    free(pl->Gy);
-  if(pl->Cx != NULL)
-    free(pl->Cx);
-  if(pl->Cy != NULL)
-    free(pl->Cy);
-  if(pl->divG != NULL)
-    free(pl->divG);	
-		
-  free(pl);
-  free(pyramid);
-			
-  return;
+static void pyramid_free(pyramid_t* pyramid)
+{
+  while (pyramid)
+    {
+      if(pyramid->Gx != NULL)
+	{
+	  free(pyramid->Gx);
+	  pyramid->Gx = NULL;
+	}
+      if(pyramid->Gy != NULL)
+	{
+	  free(pyramid->Gy);
+	  pyramid->Gy = NULL;
+	}
+      pyramid_t* const next = pyramid->next;
+      pyramid->prev = NULL;
+      pyramid->next = NULL;
+      free(pyramid);
+      pyramid = next;
+    }			
 }
 
 
 // allocate memory for the pyramid
-PYRAMID * ContrastDomain::pyramid_allocate(int cols, int rows){
+static pyramid_t * pyramid_allocate(int cols, int rows)
+{
+  pyramid_t* level = NULL;
+  pyramid_t* pyramid = NULL;
+  pyramid_t* prev = NULL;
 
-  PYRAMID_LEVEL* level = NULL;
-  int size;
-  PYRAMID* pyramid = NULL;
-  PYRAMID* pyramid_higher = NULL;
-	
-  PYRAMID* p = NULL;
-  pyramid_higher = NULL;
-		
-  while(1){
-	
-    level = (PYRAMID_LEVEL*)malloc(sizeof(PYRAMID_LEVEL));
-    if(level == NULL)
-      exit(155);
-    memset( level, 0, sizeof(PYRAMID_LEVEL) );
-		
-    level->rows = rows;
-    level->cols = cols;
-    size = level->rows * level->cols;
-    level->Gx = matrix_alloc(size);
-    level->Gy = matrix_alloc(size);
-    level->divG = matrix_alloc(size);
-	
-    pyramid = (PYRAMID*)malloc(sizeof(PYRAMID));
-    pyramid->level = level;
-    pyramid->next = NULL;
-
-    if(pyramid_higher != NULL)
-      pyramid_higher->next = pyramid;			
-    pyramid_higher = pyramid;
-		
-    if(p == NULL)
-      p = pyramid;
-		
-    rows = (rows)/2;
-    cols = (cols)/2;		
-    if(rows < PYRAMID_MIN_PIXELS || cols < PYRAMID_MIN_PIXELS)
-      break;
+  while(rows >= PYRAMID_MIN_PIXELS && cols >= PYRAMID_MIN_PIXELS)
+    {
+      level = (pyramid_t *) malloc(sizeof(pyramid_t));
+      if(level == NULL)
+	{
+	  fprintf(stderr, "ERROR: malloc in pyramid_alloc() (size:%d)", sizeof(pyramid_t));
+	  exit(155);
+	}
+      memset( level, 0, sizeof(pyramid_t) );
+      
+      level->rows = rows;
+      level->cols = cols;
+      const int size = level->rows * level->cols;
+      level->Gx = matrix_alloc(size);
+      level->Gy = matrix_alloc(size);
+      
+      level->prev = prev;
+      if(prev != NULL)
+	prev->next = level;
+      prev = level;
+      
+      if(pyramid == NULL)
+	pyramid = level;
+      
+      rows /= 2;
+      cols /= 2;		
   }
 	
-  return p;
+  return pyramid;
 }
 
 
 // calculate gradients
-void ContrastDomain::calculate_gradient(int cols, int rows, float* lum, float* Gx, float* Gy){
-
-  int idx;
-	
+static inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
+{
   for(int ky=0; ky<rows; ky++){
     for(int kx=0; kx<cols; kx++){
 			
-      idx = kx + ky*cols;
+      const int idx = kx + ky*cols;
 			
       if(kx == (cols - 1))
         Gx[idx] = 0;
@@ -671,15 +551,14 @@ void ContrastDomain::calculate_gradient(int cols, int rows, float* lum, float* G
         Gy[idx] = lum[idx + cols] - lum[idx];
     }
   }
-
-  return;
 }
 
+#if 0
 #define PFSEOL "\x0a"
-void ContrastDomain::dump_matrix_to_file(int width, int height, float* m, const char *file_name){
-
+static void dump_matrix_to_file(const int width, const int height, const float* const m, const char * const file_name)
+{
   FILE *fh = fopen( file_name, "wb" );
-  assert( fh != NULL );
+  // assert( fh != NULL );
   
   fprintf( fh, "PFS1" PFSEOL "%d %d" PFSEOL "1" PFSEOL "0" PFSEOL
     "%s" PFSEOL "0" PFSEOL "ENDH", width, height, "Y");
@@ -692,261 +571,315 @@ void ContrastDomain::dump_matrix_to_file(int width, int height, float* m, const 
   
   fclose( fh );
 }  
+#endif
 
 // calculate gradients for the pyramid
-void ContrastDomain::pyramid_calculate_gradient(PYRAMID* pyramid, float* lum){
+// lum_temp gets overwritten!
+static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
+{
+  float* temp = matrix_alloc((pyramid->rows/2)*(pyramid->cols/2));
+  float* const temp_saved = temp;
 
-  PYRAMID_LEVEL* pl = pyramid->level;
+  calculate_gradient(pyramid->cols, pyramid->rows, lum_temp, pyramid->Gx, pyramid->Gy);	
 
-  float* lum_temp = matrix_alloc(pl->rows * pl->cols);	
-  matrix_copy(pl->rows*pl->cols,lum,lum_temp);
+  pyramid = pyramid->next;
 
-  calculate_gradient(pl->cols, pl->rows, lum_temp, pl->Gx, pl->Gy);	
-
-  PYRAMID* pp = (PYRAMID*)pyramid->next;
-  PYRAMID* prev_pp = pyramid;
-  float* temp;
-
-//   int l = 1;
-  while( pp != NULL ){
-    
-    pl = pp->level;
-			
-    temp = matrix_alloc(pl->rows * pl->cols);			
-    matrix_downsample(prev_pp->level->cols, prev_pp->level->rows, lum_temp, temp);
-
-//     fprintf( stderr, "%d x %d -> %d x %d\n", pl->cols, pl->rows,
-//       prev_pp->level->cols, prev_pp->level->rows );
+  //  int l = 1;
+  while(pyramid)
+    {
+      matrix_downsample(pyramid->prev->cols, pyramid->prev->rows, lum_temp, temp);
+		
+//     fprintf( stderr, "%d x %d -> %d x %d\n", pyramid->cols, pyramid->rows,
+//       prev_pp->cols, prev_pp->rows );
     
 //      char name[40];
 //      sprintf( name, "ds_%d.pfs", l++ );
-//      dump_matrix_to_file( pl->cols, pl->rows, temp, name );    
+//      dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );    
 		
-    calculate_gradient(pl->cols, pl->rows, temp, pl->Gx, pl->Gy);
+      calculate_gradient(pyramid->cols, pyramid->rows, temp, pyramid->Gx, pyramid->Gy);
 		
-    matrix_free(lum_temp);
-    lum_temp = temp;	
-
-    prev_pp = pp;
-    pp = (PYRAMID*)pp->next;	
+      float* const dummy = lum_temp;
+      lum_temp = temp;	
+      temp = dummy;
+			
+      pyramid = pyramid->next;
   }
-  matrix_free(lum_temp);
 
-  return;
+  matrix_free(temp_saved);
 }
 
 
 // x = -0.25 * b
-void ContrastDomain::solveX(int n, float* b, float* x){
-
+static inline void solveX(const int n, const float* const b, float* const x)
+{
   matrix_copy(n, b, x); // x = b
-  matrix_multiply_const(n, x, -0.25);  
+  matrix_multiply_const(n, x, -0.25f);
 }
 
 // divG_sum = A * x = sum(divG(x))
 // memory for the temporary pyramid px should be allocated
-void ContrastDomain::multiplyA(PYRAMID* px, PYRAMID* pyramid, float* x, float* divG_sum){
-
-  pyramid_calculate_gradient(px, x);
-	
-  pyramid_scale_gradient(px, pyramid); // scale gradients by Cx,Cy from main pyramid
-	
-  pyramid_calculate_divergence(px); // calculate divergences for all pyramid levels
-
+static inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float* const divG_sum)
+{
+  matrix_copy(pC->rows*pC->cols, x, divG_sum); // use divG_sum as a temp variable
+  pyramid_calculate_gradient(px, divG_sum);
+  pyramid_scale_gradient(px, pC); // scale gradients by Cx,Cy from main pyramid
   pyramid_calculate_divergence_sum(px, divG_sum); // calculate the sum of divergences
-
-  return;
 } 
 
 
 // bi-conjugate linear equation solver
-float* ContrastDomain::linbcg(PYRAMID* pyramid, float* b){
-
-  int rows = pyramid->level->rows;
-  int cols = pyramid->level->cols;
-  int n = rows*cols;
+// overwrites pyramid!
+static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb)
+{
+  const int rows = pyramid->rows;
+  const int cols = pyramid->cols;
+  const int n = rows*cols;
+  const float tol2 = tol*tol;
 	
-  float* z = matrix_alloc(n);
-  float* zz = matrix_alloc(n);
-  float* p = matrix_alloc(n);
-  float* pp = matrix_alloc(n);
-  float* r = matrix_alloc(n);
-  float* rr = matrix_alloc(n);	
+  float* const z = matrix_alloc(n);
+  float* const zz = matrix_alloc(n);
+  float* const p = matrix_alloc(n);
+  float* const pp = matrix_alloc(n);
+  float* const r = b; // save memory by overwriting b
+  float* const rr = matrix_alloc(n);	
 	
-  PYRAMID* pyramid_tmp = 
-    pyramid_allocate(pyramid->level->cols, pyramid->level->rows);
-	
-  float* x = matrix_alloc(n); // allocate x matrix filled with zeros
   matrix_zero(n, x); // x = 0
+	
+  // multiplyA(pyramid, pC, x, r); // r = A*x = divergence(x)
+  // matrix_zero(n, r);
+
+  // matrix_substract(n, b, r); // r = b - r
+  // matrix_copy(n, b, r);  // Not needed, as r == b anyway.
+
+  // matrix_copy(n, r, rr); // rr = r
+  multiplyA(pyramid, pC, r, rr); // rr = A*r
   
-  multiplyA(pyramid_tmp, pyramid, x, r); // r = A*x = divergence(x)
-
-  matrix_substract(n, b, r); // r = b - r
-
-  matrix_copy(n, r, rr); // rr = r
-
-  multiplyA(pyramid_tmp, pyramid, r, rr); // rr = A*r 
-  
-  float bnrm;
+  const float bnrm2 = matrix_DotProduct(n, b, b);
 	
-  bnrm = sqrt(matrix_DotProduct(n, b, b));
-	
-  solveX(n, r, z); // z = ~A(-1) * r = -0.25 * r
-	
-#define TOL 0.01
-#define ITMAX 30
-  int iter = 0;
-
-  float bknum=0;
-  int j;
-  float bk=0;
   float bkden = 0;
-  float akden = 0;
-  float ak = 0;
-  float err = 0;
-	
-  while(iter <= ITMAX){
+  float err2 = bnrm2;
 
-    if( progress_cb != NULL )
-      progress_cb( iter*100/ITMAX );    
-          
-    iter++;
+  int iter = 0;
+  int num_backwards = 0;
+  const int num_backwards_ceiling = (itmax / 10 < 3 ? 3 : itmax / 10);
+  for (; iter < itmax; iter++)
+    {
+      if( progress_cb != NULL )
+	progress_cb( (int) (logf(bnrm2/err2)*100.0f/(-logf(tol2))));    
+      
+      solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
+      solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
 		
-    solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
+      const float bknum = matrix_DotProduct(n, z, rr);
 		
-    bknum = matrix_DotProduct(n, z, rr);
+      if(iter == 0)
+	{
+	  matrix_copy(n, z, p);
+	  matrix_copy(n, zz, pp); 
+	}
+      else
+	{
+	  const float bk = bknum / bkden; // beta = ...
+	  for (int i = 0; i < n; i++)
+	    {
+	      p[i] = z[i] + bk * p[i];
+	      pp[i] = zz[i] + bk * pp[i];
+	    }
+	}
 		
-    if(iter == 1){
-      matrix_copy(n, z, p);
-      matrix_copy(n, zz, pp); 
+      bkden = bknum; // numerato becomes the dominator for the next iteration
+      
+      multiplyA(pyramid, pC, p, z); // z = A*p = divergence(p)
+      multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
+      
+      const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
+      for(int i = 0 ; i < n ; i++ )
+	{
+	  x[i] = x[i] + ak * p[i];	// x = x + alfa * p
+	  r[i] = r[i] - ak * z[i];		// r = r - alfa * z
+	  rr[i] = rr[i] - ak * zz[i];	//rr = rr - alfa * zz
+	}
+      
+      const float old_err2 = err2;
+      err2 = matrix_DotProduct(n, r, r);
+
+      // Have we gone unstable?
+      if (err2 > old_err2)
+	num_backwards++;
+      else
+	num_backwards = 0;
+
+      // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(err2/bnrm2));
+      if(err2/bnrm2 < tol2 || num_backwards > num_backwards_ceiling)
+	break;
     }
-    else{
-      bk = bknum / bkden; // beta = ...
-      matrix_multiply_const(n, p, bk); // p = bk * p
-      matrix_add(n, z, p); // p = p + z
-      matrix_multiply_const(n, pp, bk); // pp = bk * pp
-      matrix_add(n, zz, pp); // pp = pp + zz
+  if (err2/bnrm2 > tol2)
+    {
+      // Not converged
+      if (iter == itmax)
+	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
+      else
+	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
     }
-		
-    bkden = bknum; // numerato becomes the dominator for the next iteration
-
-    multiplyA(pyramid_tmp, pyramid, p, z); // z = A*p = divergence(p)
-		
-    akden = matrix_DotProduct(n, z, pp);  // alfa denominator
-		
-    ak = bknum / akden; // alfa = ...
-
-    // This may need transpossing - possible bug
-    multiplyA(pyramid_tmp, pyramid, pp, zz); // zz = A*pp = divergence(pp)
-
-    // values for the next iterration
-    for(j=0;j<n;j++){
-      x[j] = x[j] + ak * p[j];	// x = x + alfa * p
-      r[j] = r[j] - ak * z[j];		// r = r - alfa * z
-      rr[j] = rr[j] - ak * zz[j];	//rr = rr - alfa * zz
-    }
-	
-    solveX(n, r, z); // z = ~A(-1) * r
-		
-    err = sqrt(matrix_DotProduct(n, r, r));
-
-    //fprintf(stderr, "iter:%d err:%f\n", iter, err);
-    if(err <= TOL)
-      break;
-  }
-
-  if( iter <= ITMAX && progress_cb != NULL )
-    progress_cb( 100 );    
+  else if (progress_cb != NULL)
+    progress_cb(100);
+    
   
   matrix_free(p);
   matrix_free(pp);
   matrix_free(z);
   matrix_free(zz);
-  matrix_free(r);
+  // matrix_free(r);  // Not needed, as r == b
   matrix_free(rr);
+}
 
-  pyramid_free(pyramid_tmp);
+
+// conjugate linear equation solver
+// overwrites pyramid!
+// overwrites b!
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const r /* == b */, float* const x, const int itmax, const float tol, progress_callback progress_cb)
+{
+  const int rows = pyramid->rows;
+  const int cols = pyramid->cols;
+  const int n = rows*cols;
+  const float tol2 = tol*tol;
 	
-  return x;
+  // float* r = matrix_alloc(n); // Unnecessary, as r == b
+  float* p = matrix_alloc(n);
+  float* Ap = matrix_alloc(n);	
+	
+  // x = 0
+  matrix_zero(n, x);
+	
+  // r = b - Ax
+  // multiplyA(pyramid, pC, x, r);
+  // matrix_subtract(n, b, r);
+  // matrix_copy(n, b, r); // Unnecessary, as r == b
+
+  // bnrm2 = ||b||
+  const float bnrm2 = matrix_DotProduct(n, r, r);
+	
+  // p = r
+  matrix_copy(n, r, p);
+
+  // rdotr = r.r
+  float rdotr = bnrm2;
+
+  int iter = 0;
+  int num_backwards = 0;
+  const int num_backwards_ceiling = (itmax / 10 < 3 ? 3 : itmax / 10);
+  for (; iter < itmax; iter++)
+    {
+      if( progress_cb != NULL )
+	progress_cb( (int) (logf(bnrm2/rdotr)*100.0f/(-logf(tol2))));    
+      
+      // Ap = A p
+      multiplyA(pyramid, pC, p, Ap);
+      
+      // alpha = r.r / (p . Ap)
+      const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
+      
+      // x = x + alpha p
+      // r = r - alpha Ap
+      for (int i = 0; i < n; i++)
+	{
+	  x[i] += alpha *  p[i];
+	  r[i] -= alpha * Ap[i];
+	}
+            
+      // rdotr = r.r
+      const float old_rdotr = rdotr;
+      rdotr = matrix_DotProduct(n, r, r);
+      
+      // Have we gone unstable?
+      if (rdotr > old_rdotr)
+	num_backwards++;
+      else
+	num_backwards = 0;
+
+      // Exit if we're done
+      // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
+      if(rdotr/bnrm2 < tol2 || num_backwards > num_backwards_ceiling)
+	break;
+      
+      // p = r + beta p
+      const float beta = rdotr/old_rdotr;
+      for (int i = 0; i < n; i++)
+	p[i] = r[i] + beta*p[i];
+    }
+  if (rdotr/bnrm2 > tol2)
+    {
+      // Not converged
+      if (iter == itmax)
+	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
+      else
+	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
+    }
+  else if (progress_cb != NULL)
+    progress_cb(100);
+    
+  matrix_free(p);
+  matrix_free(Ap);
+  // matrix_free(r); // Unnecessary, as r == b
 }
 
-// rescale matrix from linear to logarithmic scale
-void ContrastDomain::matrix_log10(int n, float* m){
 
-  for(int j=0;j<n;j++)
-    m[j] = log10f(m[j]);
-		
-  return;
-}
-
-// in_tab and out_tab should contain inscresing float values
-float ContrastDomain::lookup_table(int n, float* in_tab, float* out_tab, float val){
-
-  float ret = out_tab[0];
-  float dd;
-
+// in_tab and out_tab should contain inccreasing float values
+static inline float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val)
+{
   if(val < in_tab[0])
-    ret = out_tab[0];
-  else
-    if(val > in_tab[n-1])
-      ret = out_tab[n-1];		
-    else
-      for(int j=0;j<(n-1);j++){
-	
-        if(in_tab[j] == val)
-          ret = out_tab[j];
-        else
-          if( val > in_tab[j] && val < in_tab[j+1]){
-            dd = (val - in_tab[j]) / (in_tab[j+1] - in_tab[j]);
-            ret = out_tab[j] + (out_tab[j+1] - out_tab[j]) * dd;
-          }
+    return out_tab[0];
+
+  for (int j = 1; j < n; j++)
+    if(val < in_tab[j])
+      {
+	const float dd = (val - in_tab[j-1]) / (in_tab[j] - in_tab[j-1]);
+	return out_tab[j-1] + (out_tab[j] - out_tab[j-1]) * dd;
       }
-	
-  return ret;
+
+  return out_tab[n-1];
 }
 
 
 // transform gradient (Gx,Gy) to R
-void ContrastDomain::transform_to_R(int n, float* G){
-
+static inline void transform_to_R(const int n, float* const G)
+{
   int sign;
   float absG;
-  for(int j=0;j<n;j++){
-	
-    // G to W
-    absG = fabs(G[j]);
-    if(G[j] < 0)
-      sign = -1;
-    else
-      sign = 1;	
-    G[j] = (powf(10.0, absG) - 1.0) * (float)sign;
+  for(int j=0;j<n;j++)
+    {
+      // G to W
+      absG = fabsf(G[j]);
+      if(G[j] < 0)
+	sign = -1;
+      else
+	sign = 1;	
+      G[j] = (exp10f(absG) - 1.0f) * sign;
 		
-    // W to RESP
-    if(G[j] < 0)
-      sign = -1;
-    else
-      sign = 1;	
-					
-    G[j] = (float)sign * lookup_table(LOOKUP_W_TO_R, W_table, R_table, fabs(G[j]));
-  }
-  return;
+      // W to RESP
+      if(G[j] < 0)
+	sign = -1;
+      else
+	sign = 1;	
+      
+      G[j] = sign * lookup_table(LOOKUP_W_TO_R, W_table, R_table, fabsf(G[j]));
+    }
 }
 
 // transform gradient (Gx,Gy) to R for the whole pyramid
-void ContrastDomain::pyramid_transform_to_R(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_transform_to_R((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-  transform_to_R(pl->rows*pl->cols, pl->Gx);	
-  transform_to_R(pl->rows*pl->cols, pl->Gy);	
-
-  return;
+static inline void pyramid_transform_to_R(pyramid_t* pyramid)
+{
+  while (pyramid != NULL)
+    {
+      const int size = pyramid->rows * pyramid->cols;
+      transform_to_R(size, pyramid->Gx);	
+      transform_to_R(size, pyramid->Gy);	
+      pyramid = pyramid->next;
+    }
 }
 
 // transform from R to G
-void ContrastDomain::transform_to_G(int n, float* R){
+static inline void transform_to_G(const int n, float* const R){
 
   int sign;
   for(int j=0;j<n;j++){
@@ -956,251 +889,230 @@ void ContrastDomain::transform_to_G(int n, float* R){
       sign = -1;
     else
       sign = 1;			
-    R[j] = sign * lookup_table(LOOKUP_W_TO_R, R_table, W_table, fabs(R[j]));
+    R[j] = sign * lookup_table(LOOKUP_W_TO_R, R_table, W_table, fabsf(R[j]));
 	
     // W to G
     if(R[j] < 0)
       sign = -1;
     else
       sign = 1;	
-    R[j] = log10f(fabs(R[j]) + 1.0) * sign;
+    R[j] = log10f(fabsf(R[j]) + 1.0f) * sign;
 		
   }
-  return;
 }
 
-// transform from R to G for teh pyramid
-void ContrastDomain::pyramid_transform_to_G(PYRAMID* pyramid){
-
-  if(pyramid->next != NULL)
-    pyramid_transform_to_G((PYRAMID*)pyramid->next);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-  transform_to_G(pl->rows*pl->cols, pl->Gx);	
-  transform_to_G(pl->rows*pl->cols, pl->Gy);	
-
-  return;
+// transform from R to G for the pyramid
+static inline void pyramid_transform_to_G(pyramid_t* pyramid)
+{
+  while (pyramid != NULL)
+    {
+      transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gx);	
+      transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gy);	
+      pyramid = pyramid->next;
+    }
 }
 
 // multiply gradient (Gx,Gy) values by float scalar value for the whole pyramid
-void ContrastDomain::pyramid_gradient_multiply(PYRAMID* pyramid, float val){
-
-  if(pyramid->next != NULL)
-    pyramid_gradient_multiply((PYRAMID*)pyramid->next, val);
-		
-  PYRAMID_LEVEL* pl = pyramid->level;
-  matrix_multiply_const(pl->rows*pl->cols, pl->Gx, val);	
-  matrix_multiply_const(pl->rows*pl->cols, pl->Gy, val);	
-		
-  return;
+static inline void pyramid_gradient_multiply(pyramid_t* pyramid, const float val)
+{
+  while (pyramid != NULL)
+    {
+      matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gx, val);	
+      matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gy, val);	
+      pyramid = pyramid->next;
+    }
 }
 
-int sort_median(const void* v1, const void* v2){
 
-  float* f1 = (float*)v1;
-  float* f2 = (float*)v2;
-
-  if(f1[0] < f2[0])
+static int sort_float(const void* const v1, const void* const v2)
+{
+  if (*((float*)v1) < *((float*)v2))
     return -1;
-  else
-    if(f1[0] == f2[0])
-      return 0;
-    else
-      return 1;
+
+  if(*((float*)v1) > *((float*)v2))
+    return 1;
+
+  return 0;
 }
-
-float ContrastDomain::matrix_median(int n, float* m){
-
-  float* temp = matrix_alloc(n);
-  matrix_copy(n, m, temp);
-	
-  qsort(temp, n, sizeof(float), sort_median);
-
-  float val = (temp[(int)(n/2)] + temp[(int)(n/2+1)]) / 2.0;
-
-  matrix_free(temp);
-
-  return val;
-}
-
 
 
 // transform gradients to luminance
-float* ContrastDomain::transform_to_luminance(PYRAMID* pp){
+static void transform_to_luminance(pyramid_t* pp, float* const x, progress_callback progress_cb, const bool bcg, const int itmax, const float tol)
+{
+  pyramid_t* pC = pyramid_allocate(pp->cols, pp->rows);
+  pyramid_calculate_scale_factor(pp, pC); // calculate (Cx,Cy)
+  pyramid_scale_gradient(pp, pC); // scale small gradients by (Cx,Cy);
+
+  float* b = matrix_alloc(pp->cols * pp->rows);
+  pyramid_calculate_divergence_sum(pp, b); // calculate the sum of divergences (equal to b)
   
-  pyramid_calculate_scale_factor(pp); // calculate (Cx,Cy)
-  pyramid_scale_gradient(pp); // scale small gradients by (Cx,Cy);
-  pyramid_calculate_divergence(pp); // calculate divergence for the pyramid
-//  dump_matrix_to_file( pp->next->level->cols, pp->next->level->rows, pp->next->level->Gx, "Gx.pfs" );
-	
-  float* b = matrix_alloc(pp->level->cols * pp->level->rows);
-  pyramid_calculate_divergence_sum(pp, b); // calculate the sum od divergences (equal to b)
-
-//  dump_matrix_to_file( pp->level->cols, pp->level->rows, b, "B.pfs" );
-
-//   PYRAMID *pi = pp;
-//   int i = 1;
-//   while( pi != NULL ) {
-//     PYRAMID_LEVEL* pl = pi->level;
-//     char name[256];
-//     sprintf( name, "Cx_%d.pfs", i );
-//     dump_matrix_to_file( pl->cols, pl->rows, pl->Cx, name );
-//     sprintf( name, "Cy_%d.pfs", i );
-//     dump_matrix_to_file( pl->cols, pl->rows, pl->Cx, name );
-//     pi = pi->next;
-//     i++;
-//   }
- 
-  float* x = linbcg(pp, b); // calculate luminances from gradients
-	
+  // calculate luminances from gradients
+  if (bcg)
+    linbcg(pp, pC, b, x, itmax, tol, progress_cb);
+  else
+    lincg(pp, pC, b, x, itmax, tol, progress_cb);
+  
   matrix_free(b);
-	
-  return x;
+  pyramid_free(pC);
 }
 
 
-void ContrastDomain::contrast_equalization( PYRAMID *pp )
+struct hist_data
 {
-    // Histogram parameters
-    const int hist_size = 2048;
-    const float x_min = -2;
-    const float x_max = 4;
-    
-    // Build histogram
-    float hist[hist_size];
-    memset( hist, 0, sizeof( hist ) );
-    PYRAMID *l = pp;
-    while( l != NULL ) {
-      PYRAMID_LEVEL *lev = l->level;
-      const int pixels = lev->rows*lev->cols;
-      lev->M = (float*)malloc(sizeof(float)*pixels);
-      for( int c = 0; c < pixels; c++ ) {
-        lev->M[c] = log10( sqrt( lev->Gx[c]*lev->Gx[c] + lev->Gy[c]*lev->Gy[c] ) );
-        int bin = (int)((lev->M[c]-x_min)/(x_max-x_min)*hist_size+0.5);
-        if( bin < 0 ) bin = 0;
-        else if( bin >= hist_size ) bin = hist_size;
-        hist[bin]++;
-      } 
+  float size;
+  float cdf;
+  int index;
+};
+
+static int hist_data_order(const void* const v1, const void* const v2)
+{
+  if (((struct hist_data*) v1)->size < ((struct hist_data*) v2)->size)
+    return -1;
+  
+  if (((struct hist_data*) v1)->size > ((struct hist_data*) v2)->size)
+    return 1;
+
+  return 0;
+}
+
+
+static int hist_data_index(const void* const v1, const void* const v2)
+{
+  return ((struct hist_data*) v1)->index - ((struct hist_data*) v2)->index;
+}
+
+
+static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
+{
+  // Count sizes
+  int total_pixels = 0;
+  pyramid_t* l = pp;
+  while (l != NULL)
+    {
+      total_pixels += l->rows * l->cols;
       l = l->next;
     }
 
-    // Compute cummulative histogram
-    hist[0] = 0;
-    for( int i = 1; i < hist_size; i++ )
-      hist[i] = hist[i-1] + hist[i];
-
-    // Renormalize cummulative histogram
-    float norm = hist[hist_size-1]*0.8;
-    for( int i = 1; i < hist_size; i++ )
-      hist[i] /= norm;
+  // Allocate memory
+  struct hist_data* hist = (struct hist_data*) malloc(sizeof(struct hist_data) * total_pixels);
+  if (hist == NULL)
+    {
+      fprintf(stderr, "ERROR: malloc in contrast_equalization() (size:%d)", sizeof(struct hist_data) * total_pixels);
+      exit(155);
+    }
     
-    //Remap gradient magnitudes
-    l = pp;
-    while( l != NULL ) {
-      PYRAMID_LEVEL *lev = l->level;
-      const int pixels = lev->rows*lev->cols;
-      for( int c = 0; c < pixels; c++ ) {
-        int bin = (int)((lev->M[c]-x_min)/(x_max-x_min)*hist_size+0.5);
-        if( bin < 0 ) bin = 0;
-        else if( bin >= hist_size ) bin = hist_size;
-        float scale = hist[bin]/pow(10,lev->M[c]);
-        lev->Gx[c] *= scale;
-        lev->Gy[c] *= scale;        
-      } 
-      free( lev->M );
-      lev->M = NULL;
+  // Build histogram info
+  l = pp;
+  int index = 0;
+  while( l != NULL )
+    {
+      const int pixels = l->rows*l->cols;
+      for(int c = 0; c < pixels; c++ , index++)
+	{
+	  hist[index].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
+	  hist[index].index = index;
+	} 
       l = l->next;
     }
+  
+  // Generate histogram
+  qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_order);
+
+  // Calculate cdf
+  const float norm = 1.0f / (float) total_pixels;
+  for (int i = 0; i < total_pixels; i++)
+    hist[i].cdf = ((float) i) * norm;
+
+  // Recalculate in terms of indexes
+  qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_index);
+
+  //Remap gradient magnitudes
+  l = pp;
+  index = 0;
+  while( l != NULL ) {
+    const int pixels = l->rows*l->cols;
+    
+    for( int c = 0; c < pixels; c++ , index++ )
+      {
+	const float scale = contrastFactor * hist[index].cdf/hist[index].size;
+	l->Gx[c] *= scale;
+	l->Gy[c] *= scale;        
+      } 
+    l = l->next;
+  }
+
+  free(hist);
 }
 
 
 // tone mapping
-void ContrastDomain::tone_mapping(int c, int r, float* R, float* G, float* B, float* Y, float contrastFactor, float saturationFactor, progress_callback progress_cb ){
-
-  this->progress_cb = progress_cb;
+void tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, const bool bcg, const int itmax, const float tol, progress_callback progress_cb)
+{
   
-  int n = c*r;
-
+  const int n = c*r;
+  
   const float clip_min = 1e-5;
   
-  for(int j=0;j<n;j++){
-
+  for (int j = 0; j < n; j++)
+    {
     // clipping
     if( R[j] < clip_min ) R[j] = clip_min;
     if( G[j] < clip_min ) G[j] = clip_min;
     if( B[j] < clip_min ) B[j] = clip_min;
     if( Y[j] < clip_min ) Y[j] = clip_min;    
-	
-    R[j] = R[j] / Y[j];
-    G[j] = G[j] / Y[j];
-    B[j] = B[j] / Y[j];
-  }
-	
-  matrix_log10(n, Y); // transform Y to logaritmic scale
-	
-  PYRAMID* pp = pyramid_allocate(c,r); // create pyramid
-  pyramid_calculate_gradient(pp,Y); // calculate gradiens for pyramid
 
-//  dump_matrix_to_file( pp->next->level->cols, pp->next->level->rows, pp->next->level->Gx, "Gx2.pfs" );
-  
-  pyramid_transform_to_R(pp); // transform gradients to R  
+    R[j] /= Y[j];
+    G[j] /= Y[j];
+    B[j] /= Y[j];
+    }
+	
+  for(int j=0;j<n;j++)
+    Y[j] = log10f(Y[j]);
+	
+  pyramid_t* pp = pyramid_allocate(c,r); // create pyramid
+  pyramid_calculate_gradient(pp,Y); // calculate gradients for pyramid, destroys Y
+  pyramid_transform_to_R(pp); // transform gradients to R
 
-  if( contrastFactor != 0 ) {
-    // Contrast mapping
-    pyramid_gradient_multiply(pp, contrastFactor); // scale gradient
-  } else {
-    // Contrast equalization
-    contrast_equalization( pp );
-  }
+  /* Contrast map */
+  if( contrastFactor > 0.0f )
+    pyramid_gradient_multiply(pp, contrastFactor); // Contrast mapping
+  else
+    contrast_equalization(pp, -contrastFactor); // Contrast equalization
 	
   pyramid_transform_to_G(pp); // transform R to gradients
-  
-  float* x = transform_to_luminance(pp); // transform gradients to luminance Y
-	
+  transform_to_luminance(pp, Y, progress_cb, bcg, itmax, tol); // transform gradients to luminance Y
+  pyramid_free(pp);
+
+  /* Renormalize luminance */
   float* temp = matrix_alloc(n);
 	
-  matrix_copy(n, x, temp); // copy x to temp
-  qsort(temp, n, sizeof(float), sort_median); // sort temp in ascending order
+  matrix_copy(n, Y, temp); // copy Y to temp
+  qsort(temp, n, sizeof(float), sort_float); // sort temp in ascending order
 	
-//   float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) / 2.0; // calculate median
-  // c and r should be even
-  float CUT_MARGIN = 0.1;
+  // const float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) * 0.5f; // calculate median
+  const float CUT_MARGIN = 0.1f;
 	
-  float trim = (n-1) * CUT_MARGIN * 0.01;
-  float delta = trim - floor(trim);
-  float p_min = temp[(int)floor(trim)] * delta + temp[(int)ceil(trim)] * (1-delta);	
+  float trim = (n-1) * CUT_MARGIN * 0.01f;
+  float delta = trim - floorf(trim);
+  const float l_min = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
 
-  trim = (n-1) * (100.0 - CUT_MARGIN) * 0.01;
-  delta = trim - floor(trim);
-  float p_max = temp[(int)floor(trim)] * delta + temp[(int)ceil(trim)] * (1-delta);	
+  trim = (n-1) * (100.0f - CUT_MARGIN) * 0.01f;
+  delta = trim - floorf(trim);
+  const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
 	
   matrix_free(temp);
-
-  const float disp_dyn_range = 2.3;
-  for(int j=0;j<n;j++) {	
-    x[j] = (x[j] - p_min) / (p_max - p_min) * disp_dyn_range - disp_dyn_range; // x scaled to <-2.5,0> range
-  }
 	
-  for(int j=0;j<n;j++){	
-    Y[j] = powf(10, x[j]);  // transform from logaritmic to linear scale (x <0,10>)
-  }
-		
-  for(int j=0;j<n;j++){		// transform Y to (R,G,B)
-    R[j] = powf( R[j], saturationFactor) * Y[j];
-    G[j] = powf( G[j], saturationFactor) * Y[j];
-    B[j] = powf( B[j], saturationFactor) * Y[j];
-  }
-  
-  matrix_free(x);			
-  pyramid_free(pp);
+  const float disp_dyn_range = 2.3f;
+  for(int j=0;j<n;j++)
+    Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
+                                                                               // 
+  /* Transform to linear scale RGB */
+  for(int j=0;j<n;j++)
+    {
+      Y[j] = exp10f(Y[j]);
+      R[j] = powf( R[j], saturationFactor) * Y[j];
+      G[j] = powf( G[j], saturationFactor) * Y[j];
+      B[j] = powf( B[j], saturationFactor) * Y[j];
+    }
 }
 
-
-
-void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
-  float contrastFactor, float saturationFactor, progress_callback progress_report )
-{
-
-  ContrastDomain contrast;	
-  contrast.tone_mapping( cols, rows, R, G, B, Y, contrastFactor, saturationFactor, progress_report );  
-}

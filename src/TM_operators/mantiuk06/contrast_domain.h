@@ -51,7 +51,11 @@ typedef void(*progress_callback)(int progress);
  * @param Y luminance channel
  * @param contrastFactor contrast scaling factor (in 0-1 range)
  * @param saturationFactor color desaturation (in 0-1 range)
+ * @param bcg true if to use BiConjugate Gradients, false if to use Conjugate Gradients
+ * @param itmax maximum number of iterations for convergence (typically 50)
+ * @param tol tolerence to get within for convergence (typically 1e-3)
  * @param progress_cb callback function that reports progress
  */
 void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
-  float contrastFactor, float saturationFactor, progress_callback progress_cb );
+			    float contrastFactor, float saturationFactor, bool bcg,
+			    int itmax = 200, float tol = 1e-3, progress_callback progress_cb  = NULL);
