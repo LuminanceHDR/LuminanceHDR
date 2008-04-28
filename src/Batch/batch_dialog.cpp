@@ -278,7 +278,7 @@ extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
 	add_log_message(tr("Starting to tone map HDR file: ")+filename);
-	pfsio.writeFrame(loaded_hdr, qtpfsgui_options->tempfilespath+"/original.pfs");
+	pfsio.writeFrame(loaded_hdr, QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData());
 	pregamma=-1;
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	pfsio.freeFrame(loaded_hdr);
@@ -349,10 +349,10 @@ void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts)
 	QString postfix=operations.getPostfix();
 	QString fname=current_hdr_fname+"_"+postfix+"."+qtpfsgui_options->batch_ldr_format;
 	if (!newimage.save(fname, qtpfsgui_options->batch_ldr_format.toAscii().constData(), 100)) {
-		qDebug("BATCH: newResult: Cannot save to %s",fname.toUtf8().constData());
+		qDebug("BATCH: newResult: Cannot save to %s",QFile::encodeName(fname).constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData(QFile::encodeName(fname).constData(),operations.getExifComment().toStdString());
 		add_log_message(tr("Successfully saved LDR file: ")+fname);
 	}

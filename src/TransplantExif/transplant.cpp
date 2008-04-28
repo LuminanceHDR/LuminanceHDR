@@ -252,7 +252,7 @@ void TransplantExifDialog::transplant_requested() {
 	for (; i_source != from.constEnd(); ++i_source, ++i_dest) {
 		try {
 			add_log_message(*i_source + "-->" + *i_dest);
-			//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+			//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 			ExifOperations::copyExifData(QFile::encodeName((*i_source)).constData(), QFile::encodeName((*i_dest)).constData(), checkBox_dont_overwrite->isChecked());
 #if QT_VERSION >= 0x040200
 			rightlist->item(index)->setBackground(QBrush("#a0ff87"));

@@ -115,7 +115,9 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 		menuFile->addAction(recentFileActs[i]);
 	updateRecentFileActions();
 
-	this->showMaximized();
+	//this->showMaximized();
+	
+	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
 }
 
@@ -190,17 +192,18 @@ void MainGui::fileSaveAs()
 		QString fname=(fd->selectedFiles()).at(0);
 		if(!fname.isEmpty()) {
 			QFileInfo qfi(fname);
+			const char* encodedName=QFile::encodeName(qfi.filePath()).constData();
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
 			if (RecentDirHDRSetting != qfi.path() )
 				// update internal field variable
 				updateRecentDirHDRSetting(qfi.path());
 
 			if (qfi.suffix().toUpper()=="EXR") {
-				writeEXRfile  (currenthdr->getHDRPfsFrame(),qfi.filePath().toUtf8().constData());
+				writeEXRfile  (currenthdr->getHDRPfsFrame(),encodedName);
 			} else if (qfi.suffix().toUpper()=="HDR") {
-				writeRGBEfile (currenthdr->getHDRPfsFrame(), qfi.filePath().toUtf8().constData());
+				writeRGBEfile (currenthdr->getHDRPfsFrame(), encodedName);
 			} else if (qfi.suffix().toUpper().startsWith("TIF")) {
-				TiffWriter tiffwriter(qfi.filePath().toUtf8().constData(), currenthdr->getHDRPfsFrame());
+				TiffWriter tiffwriter(encodedName, currenthdr->getHDRPfsFrame());
 				if (qtpfsgui_options->saveLogLuvTiff)
 					tiffwriter.writeLogLuvTiff();
 				else
@@ -208,7 +211,7 @@ void MainGui::fileSaveAs()
 			} else if (qfi.suffix().toUpper()=="PFS") {
 				pfs::DOMIO pfsio;
 				(currenthdr->getHDRPfsFrame())->convertRGBChannelsToXYZ();
-				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),qfi.filePath());
+				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),encodedName);
 				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
 			} else {
 				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),

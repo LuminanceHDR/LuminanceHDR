@@ -40,7 +40,7 @@ void hdrInputLoader::run() {
 		QFileInfo qfi(fname);
 
 		//get exposure time, -1 is error
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		float expotime = ExifOperations::obtain_avg_lum( QFile::encodeName(qfi.filePath()).constData() );
 
 		QString extension=qfi.suffix().toUpper(); //get filename extension
@@ -55,7 +55,7 @@ void hdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-			TiffReader reader(qfi.filePath().toUtf8().constData());
+			TiffReader reader(QFile::encodeName(qfi.filePath()).constData());
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				QImage *newimage=reader.readIntoQImage();
@@ -115,7 +115,7 @@ void hdrInputLoader::run() {
 
 			QString outfname = QString(qfi.path() + "/"+qfi.completeBaseName()+".tiff");
 			qDebug("TH: Loading back file name=%s", qPrintable(outfname));
-			TiffReader reader(outfname.toUtf8().constData());
+			TiffReader reader(QFile::encodeName(outfname).constData());
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				qDebug("raw -> 8bit tiff");

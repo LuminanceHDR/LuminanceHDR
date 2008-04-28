@@ -58,16 +58,17 @@ void LoadHdrThread::run() {
 	QString extension = qfi.suffix().toUpper();
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
 	try {
+		const char* encodedFileName=QFile::encodeName(qfi.filePath()).constData();
 		if (extension=="EXR") {
-			hdrpfsframe = readEXRfile(qfi.filePath().toUtf8().constData());
+			hdrpfsframe = readEXRfile(encodedFileName);
 		} else if (extension=="HDR") {
-			hdrpfsframe = readRGBEfile(qfi.filePath().toUtf8().constData());
+			hdrpfsframe = readRGBEfile(encodedFileName);
 		} else if (extension=="PFS") {
 			pfs::DOMIO pfsio;
-			hdrpfsframe=pfsio.readFrame(qfi.filePath());
+			hdrpfsframe=pfsio.readFrame(encodedFileName);
 			hdrpfsframe->convertXYZChannelsToRGB();
 		} else if (extension.startsWith("TIF")) {
-			TiffReader reader(qfi.filePath().toUtf8().constData());
+			TiffReader reader(encodedFileName);
 			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 		}
 		else if (rawinput) {
@@ -113,7 +114,7 @@ void LoadHdrThread::run() {
 
 			QString outfname = QString(qfi.path() + "/"+qfi.completeBaseName()+".tiff");
 			qDebug("TH: Loading back file name=%s", qPrintable(outfname));
-			TiffReader reader(outfname.toUtf8().constData());
+			TiffReader reader(QFile::encodeName(outfname).constData());
 			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 			QFile::remove(outfname);
 		} //raw file detected

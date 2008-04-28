@@ -60,13 +60,13 @@ TonemapperThread::~TonemapperThread() {
 
 void TonemapperThread::fetch(QString filename) {
 	pfs::DOMIO pfsio;
-	workingframe=pfsio.readFrame(cachepath+filename);
+	workingframe=pfsio.readFrame(QFile::encodeName(cachepath+filename).constData());
 }
 
 void TonemapperThread::swap(pfs::Frame *frame, QString filename) {
 	//swap frame to hd
 	pfs::DOMIO pfsio;
-	pfsio.writeFrame(frame,cachepath+filename);
+	pfsio.writeFrame(frame, QFile::encodeName(cachepath+filename).constData());
 }
 
 void TonemapperThread::run() {

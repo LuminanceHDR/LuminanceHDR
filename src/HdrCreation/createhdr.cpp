@@ -172,7 +172,7 @@ int maxResponse=M;
     {
     case FROM_FILE:
 	{
-	    FILE * respfile=fopen(chosen_config->LoadCurveFromFilename.toUtf8().constData(),"r");
+	    FILE * respfile=fopen(chosen_config->LoadCurveFromFilename,"r");
 	    // read camera response from file
 	    bool loadR_ok = responseLoad(respfile, Ir, M);
 	    bool loadG_ok = responseLoad(respfile, Ig, M);
@@ -211,8 +211,8 @@ int maxResponse=M;
     }
 
     //save response curves if required (variable not empty)
-    if (!chosen_config->SaveCurveToFilename.isEmpty()) {
-		FILE * respfile=fopen(chosen_config->SaveCurveToFilename.toUtf8().constData(),"w");
+    if (strlen(chosen_config->SaveCurveToFilename)!=0) {
+		FILE * respfile=fopen(chosen_config->SaveCurveToFilename,"w");
 		responseSave(respfile, Ir, M, "IR");
 		responseSave(respfile, Ig, M, "IG");
 		responseSave(respfile, Ib, M, "IB");

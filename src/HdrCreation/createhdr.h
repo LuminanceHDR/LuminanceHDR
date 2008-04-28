@@ -47,8 +47,8 @@ struct config_triple {
 	TWeight weights;
 	TResponse response_curve;
 	TModel model;
-	QString LoadCurveFromFilename;
-	QString SaveCurveToFilename;
+	const char* LoadCurveFromFilename;
+	const char* SaveCurveToFilename;
 };
 
 /**

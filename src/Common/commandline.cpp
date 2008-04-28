@@ -153,7 +153,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				    }
 
 				    else if (keyandvalue.at(0)== "curve_filename")
-				      hdrcreationconfig.LoadCurveFromFilename=keyandvalue.at(1);
+				      hdrcreationconfig.LoadCurveFromFilename=QFile::encodeName(keyandvalue.at(1)).constData();
 
 				    else
 				      error(qPrintable(tr("Error: Unknown HDR creation format specified.")));
@@ -378,12 +378,13 @@ void CommandLineInterfaceManager::saveHDR() {
 	if (!saveHdrFilename.isEmpty()) {
 		VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 		QFileInfo qfi(saveHdrFilename);
+		const char* encodedName=QFile::encodeName(qfi.filePath()).constData();
 		if (qfi.suffix().toUpper()=="EXR") {
-			writeEXRfile(HDR,qfi.filePath().toUtf8().constData());
+			writeEXRfile(HDR,encodedName);
 		} else if (qfi.suffix().toUpper()=="HDR") {
-			writeRGBEfile(HDR, qfi.filePath().toUtf8().constData());
+			writeRGBEfile(HDR, encodedName);
 		} else if (qfi.suffix().toUpper().startsWith("TIF")) {
-			TiffWriter tiffwriter(qfi.filePath().toUtf8().constData(), HDR);
+			TiffWriter tiffwriter(encodedName, HDR);
 			if (qtpfsgui_options->saveLogLuvTiff)
 				tiffwriter.writeLogLuvTiff();
 			else
@@ -391,7 +392,7 @@ void CommandLineInterfaceManager::saveHDR() {
 		} else if (qfi.suffix().toUpper()=="PFS") {
 			pfs::DOMIO pfsio;
 			HDR->convertRGBChannelsToXYZ();
-			pfsio.writeFrame(HDR,qfi.filePath());
+			pfsio.writeFrame(HDR,encodedName);
 			HDR->convertXYZChannelsToRGB();
 		} else {
 			error("Error, please specify a supported HDR file format.");
@@ -411,7 +412,7 @@ void  CommandLineInterfaceManager::startTonemap() {
 		TonemapperThread *thread = new TonemapperThread(origxsize, *tmopts);
 		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
 		pfs::DOMIO pfsio;
-		pfsio.writeFrame(HDR, qtpfsgui_options->tempfilespath+"/original.pfs");
+		pfsio.writeFrame(HDR, QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData());
 		pfsio.freeFrame(HDR);
 		thread->start();
 	} else {
@@ -429,7 +430,7 @@ void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonem
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
 	} else {
 		TMOptionsOperations operations(tmopts);
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with utf8 characters.
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
 	}
 	emit finishedParsing();

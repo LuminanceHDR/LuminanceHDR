@@ -122,7 +122,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 
 	//swap original frame to hd
 	pfs::DOMIO pfsio;
-	pfsio.writeFrame(OriginalPfsFrame, cachepath+"/original.pfs");
+	pfsio.writeFrame(OriginalPfsFrame, QFile::encodeName(cachepath+"/original.pfs").constData());
 	pfsio.freeFrame(OriginalPfsFrame);
 }
 
@@ -130,7 +130,7 @@ TMWidget::~TMWidget() {
 delete contrastfactorGang; delete saturationfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
 	//fetch original frame from hd
 	pfs::DOMIO pfsio;
-	OriginalPfsFrame=pfsio.readFrame(cachepath+"/original.pfs");
+	OriginalPfsFrame=pfsio.readFrame( QFile::encodeName(cachepath+"/original.pfs").constData());
 	xsize=-1;
 	pregamma=-1;
 	QFile::remove(cachepath+"/original.pfs");
