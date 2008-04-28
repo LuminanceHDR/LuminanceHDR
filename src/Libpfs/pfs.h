@@ -39,10 +39,9 @@
 #ifndef PFS_H
 #define PFS_H
 
+#include <stdio.h> 	 
+#include <string.h>
 #include "array2d.h"
-#include <QDataStream>
-#include <QString>
-#include <QFile>
 
 struct option;
 
@@ -443,7 +442,7 @@ public:
 	* @return Frame object that contains PFS frame read from
 	* the stream. NULL if there are no more frames.
 	*/
-	Frame *readFrame( QString filepath );
+	Frame *readFrame( const char* inputFileName );
 	
 	/**
 	* Writes Frame object to outputStream in PFS format.
@@ -452,7 +451,7 @@ public:
 	* must be created with readFrame or createFrame method.
 	* @param outputStream write frame to that stream
 	*/
-	void writeFrame( Frame *frame, QString filepath );
+	void writeFrame( Frame *frame, const char* outputFileName );
 	
 	/**
 	* Deallocated memory allocated with createFrame or readFrame. Must
