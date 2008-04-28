@@ -30,7 +30,7 @@
 #include "../Common/options.h"
 #include "../Common/global.h"
 
-class PreferenceDialog : public QDialog, private Ui::OptionsDialog
+class PreferenceDialog : public QDialog, private Ui::PreferencesDialog
 {
 Q_OBJECT
 public:

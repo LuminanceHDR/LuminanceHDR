@@ -59,8 +59,8 @@ PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 	infnancolor=qtpfsgui_options->naninfcolor;
 
 	from_options_to_gui(); //update the gui in order to show the options
-	connect(negative_color_button,SIGNAL(clicked()),this,SLOT(negative_clicked()));
-	connect(infnan_color_button,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
+	connect(negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
+	connect(ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
 	connect(helpDcrawParamsButton,SIGNAL(clicked()),this,SLOT(helpDcrawParamsButtonClicked()));
@@ -72,11 +72,11 @@ PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 
 void PreferenceDialog::negative_clicked() {
 	negcolor = QColorDialog::getColor(negcolor, this);
-	change_color_of(negative_color_button,&negcolor);
+	change_color_of(negativeColorButton,&negcolor);
 }
 void PreferenceDialog::infnan_clicked() {
 	infnancolor = QColorDialog::getColor(infnancolor, this);
-	change_color_of(infnan_color_button,&infnancolor);
+	change_color_of(ifnanColorButton,&infnancolor);
 }
 
 void PreferenceDialog::change_color_of(QPushButton *button, QColor *newcolor) {
@@ -155,20 +155,20 @@ void PreferenceDialog::ok_clicked() {
 			qtpfsgui_options->tempfilespath=lineEditTempPath->text();
 			settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
-		if (imageformat_comboBox->currentText() != qtpfsgui_options->batch_ldr_format) {
-			qtpfsgui_options->batch_ldr_format=imageformat_comboBox->currentText();
-			settings.setValue(KEY_BATCH_LDR_FORMAT,imageformat_comboBox->currentText());
+		if (batchLdrFormatComboBox->currentText() != qtpfsgui_options->batch_ldr_format) {
+			qtpfsgui_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
+			settings.setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
 		}
-		if (thread_spinBox->value() != qtpfsgui_options->num_threads) {
-			qtpfsgui_options->num_threads=thread_spinBox->value();
-			settings.setValue(KEY_NUM_BATCH_THREADS,thread_spinBox->value());
+		if (numThreadspinBox->value() != qtpfsgui_options->num_threads) {
+			qtpfsgui_options->num_threads=numThreadspinBox->value();
+			settings.setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
 		}
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
-		if (radioButtonLogLuv->isChecked() != qtpfsgui_options->saveLogLuvTiff) {
-			qtpfsgui_options->saveLogLuvTiff=radioButtonLogLuv->isChecked();
-			settings.setValue(KEY_SAVE_LOGLUV,radioButtonLogLuv->isChecked());
+		if (logLuvRadioButton->isChecked() != qtpfsgui_options->saveLogLuvTiff) {
+			qtpfsgui_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
+			settings.setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
 		}
 	settings.endGroup();
 
@@ -183,22 +183,22 @@ void PreferenceDialog::from_options_to_gui() {
 	languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(qtpfsgui_options->gui_lang));
 	lineEditTempPath->setText(qtpfsgui_options->tempfilespath);
 	if (qtpfsgui_options->batch_ldr_format=="JPEG")
-		imageformat_comboBox->setCurrentIndex(0);
+		batchLdrFormatComboBox->setCurrentIndex(0);
 	else if (qtpfsgui_options->batch_ldr_format=="PNG")
-		imageformat_comboBox->setCurrentIndex(1);
+		batchLdrFormatComboBox->setCurrentIndex(1);
 	else if (qtpfsgui_options->batch_ldr_format=="PPM")
-		imageformat_comboBox->setCurrentIndex(2);
+		batchLdrFormatComboBox->setCurrentIndex(2);
 	else if (qtpfsgui_options->batch_ldr_format=="PBM")
-		imageformat_comboBox->setCurrentIndex(3);
+		batchLdrFormatComboBox->setCurrentIndex(3);
 	else if (qtpfsgui_options->batch_ldr_format=="BMP")
-		imageformat_comboBox->setCurrentIndex(4);
-	thread_spinBox->setValue(qtpfsgui_options->num_threads);
+		batchLdrFormatComboBox->setCurrentIndex(4);
+	numThreadspinBox->setValue(qtpfsgui_options->num_threads);
 	dcrawParamsLineEdit->setText(qtpfsgui_options->dcraw_options.join(" "));
 	aisParamsLineEdit->setText(qtpfsgui_options->align_image_stack_options.join(" "));
-	radioButtonLogLuv->setChecked(qtpfsgui_options->saveLogLuvTiff);
-	radioButtonFloatTiff->setChecked(!qtpfsgui_options->saveLogLuvTiff);
-	change_color_of(negative_color_button,&negcolor);
-	change_color_of(infnan_color_button,&infnancolor);
+	logLuvRadioButton->setChecked(qtpfsgui_options->saveLogLuvTiff);
+	floatTiffRadioButton->setChecked(!qtpfsgui_options->saveLogLuvTiff);
+	change_color_of(negativeColorButton,&negcolor);
+	change_color_of(ifnanColorButton,&infnancolor);
 }
 
 PreferenceDialog::~PreferenceDialog() {
