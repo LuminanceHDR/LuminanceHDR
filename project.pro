@@ -397,22 +397,22 @@ message ("Debug statements ENABLED")
 # this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 CONFIG += windows
 #CONFIG += debug
-#CONFIG += console
+CONFIG += console
 
 #OpenEXR available in win32
 LIBS += -lIlmImf -lImath -lHalf -lIex
-LIBS += -LC:\msys\1.0\local\lib
-INCLUDEPATH += C:\msys\1.0\local\include\OpenEXR
+#LIBS += -LC:\msys\1.0\local\lib
+INCLUDEPATH += ../DEPs/include/OpenEXR
 
 #exiv2
-INCLUDEPATH += C:\msys\1.0\local\include\exiv2
-LIBS            += -lexiv2 -LC:\msys\1.0\local\lib
+INCLUDEPATH += ../DEPs/include/exiv2
+LIBS            += -lexiv2 -L../DEPs/lib
 
 #fftw3
 LIBS += -lfftw3f-3 -lm
 DEFINES += HAVE_FFTW
-INCLUDEPATH += C:\comp_prj\fftw3
-LIBS += -LC:\comp_prj\fftw3
+INCLUDEPATH += ../DEPs/include
+LIBS += -L../DEPs/lib
 
 #dcraw
 #LIBS += -ljpeg62 -lWs2_32
