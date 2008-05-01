@@ -197,6 +197,7 @@ unexpected effects like changing color saturation.
 5. Changes
 -------------------------------------------------------------------
 v1.9.2
+* Integrated pfstmo 1.2 changes (Ed Brambley's optimization to Mantiuk)
 * Fixed other bugs with non-ascii characters in paths/filenames.
 * Added support for align_image_stack commandline parameters and user language selection.
 * Global: added 2 new fields in the singleton qtpfsgui class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user interface.

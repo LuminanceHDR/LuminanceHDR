@@ -1,5 +1,10 @@
 Changes 1.9.2:
 * Fixed other bugs with non-ascii characters in paths/filenames.
+* Integrated pfstmo 1.2 changes:
+	fixed some serious bugs in the solver and subsampling procedure the artifacts found in some odd-sized images should be gone (this was actually the mantiuk change in qtpfsgui 1.9.0, thanks to Rafal).
+	faster up-/down-sampling functions make the algorithm 25% faster. Thanks to Ed Brambley.
+	performance improvements from Ed Brambley: lower memory consumption, faster solver, better convergence, additional scale parameter for the contrast equalization method.
+	(change in mantiuk parameters => new tmo file version + small changes in Fattal by Ed Brambley)
 * Added support for align_image_stack commandline parameters and user language selection.
 * Global: added 2 new fields in the singleton qtpfsgui class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user interface.
 * Improved comments with references for the algorithm that reads exif data to obtain average global luminance (and EV).
