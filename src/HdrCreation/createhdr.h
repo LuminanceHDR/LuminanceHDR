@@ -43,6 +43,7 @@ enum TResponse
 enum TModel
 { ROBERTSON, DEBEVEC };
 
+//TODO locate where variables of this type get destroied and free() LoadCurveFromFilename
 struct config_triple {
 	TWeight weights;
 	TResponse response_curve;

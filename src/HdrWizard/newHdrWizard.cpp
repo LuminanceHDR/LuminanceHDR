@@ -269,7 +269,7 @@ void HdrWizardForm::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
     if (checkedfile && loadcurvefilename != "") {
 	//update chosen config
 	hdrCreationManager->chosen_config.response_curve=FROM_FILE;
-	hdrCreationManager->chosen_config.LoadCurveFromFilename=QFile::encodeName(loadcurvefilename).constData();
+	hdrCreationManager->chosen_config.LoadCurveFromFilename=strdup(QFile::encodeName(loadcurvefilename).constData());
 	//and ENABLE nextbutton
 	NextFinishButton->setEnabled(TRUE);
     }
@@ -292,7 +292,7 @@ void HdrWizardForm::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
 void HdrWizardForm::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
 	//if checkbox is checked AND we have a valid filename
 	if (checkedfile && savecurvefilename != "") {
-		hdrCreationManager->chosen_config.SaveCurveToFilename=QFile::encodeName(savecurvefilename).constData();
+		hdrCreationManager->chosen_config.SaveCurveToFilename=strdup(QFile::encodeName(savecurvefilename).constData());
 		NextFinishButton->setEnabled(TRUE);
 	}
 	//if checkbox is checked AND no valid filename
@@ -429,7 +429,7 @@ void HdrWizardForm::modelComboBoxActivated(int from_gui) {
 void HdrWizardForm::loadRespCurveFilename( const QString & filename_from_gui) {
 	if (!filename_from_gui.isEmpty()) {
 		hdrCreationManager->chosen_config.response_curve=FROM_FILE;
-		hdrCreationManager->chosen_config.LoadCurveFromFilename=QFile::encodeName(filename_from_gui).constData();
+		hdrCreationManager->chosen_config.LoadCurveFromFilename=strdup(QFile::encodeName(filename_from_gui).constData());
 	}
 }
 

@@ -153,7 +153,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				    }
 
 				    else if (keyandvalue.at(0)== "curve_filename")
-				      hdrcreationconfig.LoadCurveFromFilename=QFile::encodeName(keyandvalue.at(1)).constData();
+				      hdrcreationconfig.LoadCurveFromFilename=strdup(QFile::encodeName(keyandvalue.at(1)).constData());
 
 				    else
 				      error(qPrintable(tr("Error: Unknown HDR creation format specified.")));
