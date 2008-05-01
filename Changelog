@@ -1,3 +1,9 @@
+Changes 1.9.2:
+* Fixed other bugs with non-ascii characters in paths/filenames.
+* Added support for align_image_stack commandline parameters and user language selection.
+* Global: added 2 new fields in the singleton qtpfsgui class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user interface.
+* Improved comments with references for the algorithm that reads exif data to obtain average global luminance (and EV).
+
 Changes 1.9.1:
 * Global: Now there's only one QSettings object and a saveLdr function (also cleaned QtpfsguiOptions interface: singleton)
 * Users can now save the preview of a HDR.
