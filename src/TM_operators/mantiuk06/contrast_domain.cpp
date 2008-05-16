@@ -41,7 +41,7 @@
 #include <string.h>
 #include <math.h>
 
-#ifdef WIN32
+#ifndef Q_WS_X11
 #define exp10f( x ) exp( x * log (10))
 #endif
 
