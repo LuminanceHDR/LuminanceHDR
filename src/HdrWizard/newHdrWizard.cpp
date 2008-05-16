@@ -161,8 +161,8 @@ void HdrWizardForm::finishedLoadingInputFiles(QStringList filesLackingExif) {
 	tableWidget->selectRow(0);
 	tableWidget->setEnabled(true);
 
-	//align_image_stack & mtb don't yet work with 16bit data
-	if (tableWidget->rowCount()>=2 && hdrCreationManager->inputImageType()==HdrCreationManager::LDR_INPUT_TYPE) {
+	//FIXME mtb doesn't work with 16bit data yet (and probably ever)
+	if (tableWidget->rowCount()>=2) {
 		alignCheckBox->setEnabled(TRUE);
 		alignGroupBox->setEnabled(TRUE);
 	}
