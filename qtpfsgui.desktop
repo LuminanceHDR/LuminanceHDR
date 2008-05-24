@@ -11,6 +11,7 @@ Comment=Qtpfsgui is a graphical user interface used to create and tonemap HDR im
 Comment[en_US]=Qtpfsgui is a graphical user interface used to create and tonemap HDR images
 Comment[ru]=Qtpfsgui — программа для создания HDR-снимков и расчёта тонов
 Comment[it]=Qtpfsgui e' una interfaccia grafica usata per creare ed eseguire il tonemapping di immagini HDR
+Comment[hu_HU]=Ez a program nagy megvilágítástartományú (HDR) képek előállítására és megtekintésére szolgál.
 Exec=qtpfsgui
 Icon=qtpfsgui.png
 MimeType=
