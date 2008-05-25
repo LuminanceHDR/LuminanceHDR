@@ -42,6 +42,7 @@ PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 	fromIso639ToGuiIndex["ru"]=7;
 	fromIso639ToGuiIndex["es"]=8;
 	fromIso639ToGuiIndex["tr"]=9;
+	fromIso639ToGuiIndex["hu"]=10;
 
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="en";
@@ -53,6 +54,7 @@ PreferenceDialog::PreferenceDialog(QWidget *p) : QDialog(p) {
 	fromGuiIndexToIso639[7]="ru";
 	fromGuiIndexToIso639[8]="es";
 	fromGuiIndexToIso639[9]="tr";
+	fromGuiIndexToIso639[10]="hu";
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	negcolor=qtpfsgui_options->negcolor;

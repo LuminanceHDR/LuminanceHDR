@@ -143,16 +143,18 @@ SOURCES += src/Libpfs/pfs.cpp \
 
 RESOURCES = icons.qrc
 
-TRANSLATIONS = i18n/lang_it.ts \
-               i18n/lang_fr.ts \
+TRANSLATIONS = i18n/lang_cs.ts \
                i18n/lang_de.ts \
                i18n/lang_es.ts \
+               i18n/lang_fr.ts \
+               i18n/lang_hu.ts \
+               i18n/lang_id.ts \
+               i18n/lang_it.ts \
                i18n/lang_pl.ts \
-               i18n/lang_tr.ts \
-               i18n/lang_cs.ts \
                i18n/lang_ru.ts \
-               i18n/lang_id.ts
-
+               i18n/lang_tr.ts
+               #i18n/lang_xx.ts
+               
 
 unix {
 ########################################### QT ###########################################
