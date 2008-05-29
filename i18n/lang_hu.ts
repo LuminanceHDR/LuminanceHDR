@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="hu_HU">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -69,7 +70,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg, &lt;/span&gt;&lt;/a&gt; ha valakit kifelejtettem volna.&lt;br /&gt;&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Főfejlesztő.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algoritmusa.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Orosz fordítás; felhasználhatósági javítások, .desktop fájl.&lt;br /&gt;&lt;br /&gt;Mandus&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X csomagolás, norvég fordítás.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Török fordítás.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   Francia fordítás és Ubuntu csomagolás.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanyol fordítás.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   Német fordítás.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Cseh fordítás.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Lengyel fordítás.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD karbantartás.&lt;br /&gt;&lt;br /&gt;Gaál Péter&lt;br /&gt;   Magyar fordítás.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../forms/about.ui" line="223"/>
@@ -77,12 +81,15 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Peter Linnell&lt;br /&gt;   Opensuse 10.2 and 10.3 packager.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg&lt;/span&gt;&lt;/a&gt;, ha kifelejtettem volna valakit.&lt;br /&gt;&lt;br /&gt;Az egész &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt; közösségnek.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelónak&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt;-ért és másért.&lt;br /&gt;&lt;br /&gt;Douglas E. Warnernek&lt;br /&gt;   az FC6 csomagolásáért és a hibajelentésekért.&lt;br /&gt;&lt;br /&gt;Rauch Christiannak&lt;br /&gt;   az openSUSE 10.2 csomagolásáért.&lt;br /&gt;&lt;br /&gt;Rene Zbindennek&lt;br /&gt;   a Gentoo Linux ebuildjéért.&lt;br /&gt;&lt;br /&gt;Arne Hagenáhnak&lt;br /&gt;   különböző javaslataiért.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzkinek&lt;br /&gt;   Tiff ldr javításaiért és javaslataiért.&lt;br /&gt;&lt;br /&gt;Dave Coffinnak&lt;br /&gt;   a dcraw-ért.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlonynak&lt;br /&gt;Antoine Latternek&lt;br /&gt;Frank Boehmének&lt;br /&gt;Sloan Poenak&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="323"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -608,7 +615,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Batch/batch_dialog.cpp" line="335"/>
         <source>Finished tone mapping the current HDR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Árnyalatnövelés ezen a fájlon befejezve.</translation>
     </message>
 </context>
 <context>
@@ -616,87 +623,87 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="104"/>
         <source>Error: Alignment engine not recognized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen igazítómű.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="118"/>
         <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Hamis HDR előállítási típus</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="128"/>
         <source>Error: Unknown weight function specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen súlyfüggvény.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown response curve specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen válaszgörbe.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="152"/>
         <source>Error: Unknown HDR creation model specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen HDR előállítási típus.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="159"/>
         <source>Error: Unknown HDR creation format specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Helytelen HDR előállítási típus.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="195"/>
         <source>Error: Unknown tone mapping operator specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen árnyalatnövelési művelet.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="204"/>
         <source>Error: Wrong tone mapping option format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Helytelen árnyalatnövelési beállítás.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="281"/>
         <source>Error: Unknown tone mapping option specified.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen árnyalatnövelési beállitás.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="289"/>
         <source>Error: Unknown option %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Ismeretlen beállítás (%1).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="291"/>
         <source>Error: Missing argument for %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: %1 értéke hiányzik.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="300"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: A megvilágítási értékek száma különbözik a feldolgozandó képek számától.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="351"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba: Az EXIF adatok hiányoznak a képekből és nincs megadva megvilágítási érték a parancssorban, ezért megszakítva.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="367"/>
         <source>Failed executing align_image_stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült elvégezni hugin align_image_stack-jét</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="430"/>
         <source>ERROR: Cannot save to file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Nem lehet menteni: %1</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="443"/>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet %1-t floattá változtatni</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="453"/>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet %1-t egész számra változtatni</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="489"/>
@@ -740,7 +747,7 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
     <message>
         <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
         <source>Choose a directory and a prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon egy mappát és egy kezdetet</translation>
     </message>
 </context>
 <context>
@@ -748,97 +755,97 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
     <message>
         <location filename="../forms/editing_tools.ui" line="24"/>
         <source>Editing Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztőeszközök</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="64"/>
         <source>Visualization and Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nézet és tájékozódás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="97"/>
         <source>Fit to window</source>
-        <translation type="unfinished">Ablakhoz igazítani</translation>
+        <translation>Ablakhoz igazítás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="100"/>
         <source>&amp;Fit to Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ablakhoz igazítás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="119"/>
         <source>Original size</source>
-        <translation type="unfinished">Eredeti méret</translation>
+        <translation>Eredeti méret</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="122"/>
         <source>Origina&amp;l Size</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eredeti méret</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="138"/>
         <source>Zoom In</source>
-        <translation type="unfinished">Nagyítás</translation>
+        <translation>Nagyítás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="141"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">&amp;Nagyítás</translation>
+        <translation>&amp;Nagyítás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="157"/>
         <source>Zoom Out</source>
-        <translation type="unfinished">Kicsinyítés</translation>
+        <translation>Kicsinyítés</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="160"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">&amp;Kicsinyítés</translation>
+        <translation>&amp;Kicsinyítés</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="212"/>
         <source>Preview &amp;Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Előné&amp;zet:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="223"/>
         <source>Difference (E-P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Különbség (Sz-F)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="228"/>
         <source>Overlay (E+P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Átfedés (Sz+P)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="233"/>
         <source>Editable Only (E)</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak szerkesztés (Sz)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="238"/>
         <source>Pivot Only (P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak forgatás (F)</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="243"/>
         <source>Antighosting Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Szellemképcsökkentő maszk</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="254"/>
         <source>Mask Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Színmaszk</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="293"/>
         <source>Images List</source>
-        <translation type="unfinished">Képlista</translation>
+        <translation>Képlista</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="313"/>
         <source>Ed&amp;itable</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Szerkeszthető</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="340"/>
@@ -846,43 +853,47 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A kijelölt képet el lehet tolni és rá lehet festeni egy szellemképcsökkentő maszkot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="346"/>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
-        <translation type="unfinished"></translation>
+        <translation>A itt kijelölt képet a lenti gombokkal el lehet mozdítani felfelé, lefelé, balra és jobbra.
+Ennek a képnek a fenti ablakocskában lehet látni a hisztogrammját.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="383"/>
         <source>Select the previous image in both lists</source>
-        <translation type="unfinished">Válassza ki az előző képet mind a két listán</translation>
+        <translation>Válassza ki az előző képet mind a két listán</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="386"/>
         <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation type="unfinished">Ezzel a gombbal lehet megváltoztatni mindkét listán az előző kép kijelölését.</translation>
+        <translation>Ezzel a gombbal lehet megváltoztatni mindkét listán az előző kép kijelölését.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="402"/>
         <source>Select the next image in both lists</source>
-        <translation type="unfinished">Válassza ki a következő képet mind a két listán</translation>
+        <translation>Válassza ki a következő képet mind a két listán</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="405"/>
         <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation type="unfinished">Ezzel a gombbal lehet megváltoztatni mind a két listán a következő kép kijelölését.</translation>
+        <translation>Ezzel a gombbal lehet megváltoztatni mind a két listán a következő kép kijelölését.</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="438"/>
         <source>R&amp;eference</source>
-        <translation type="unfinished">Mo&amp;zdulatlan</translation>
+        <translation>Mo&amp;zdulatlan</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="465"/>
         <source>The reference image is the one currently selected</source>
-        <translation type="unfinished">A mozdulatlan kép az, amelyik éppen ki van jelölve</translation>
+        <translation>A mozdulatlan kép az, amelyik éppen ki van jelölve</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="468"/>
@@ -890,72 +901,75 @@ This image&apos;s histogram is diplayed in the widget above.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The image currently selected in this list serves as a reference position for the editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Az itt kijelölt kép a szerkesztett kép origójául szolgál&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="489"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszközök</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="525"/>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
-        <translation type="unfinished"></translation>
+        <translation>Az egér bal gombjával megtörtént kijelölés után kiszabni a képeket</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="528"/>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezzel a gombbal ki lehet szabni a képeket az egérrel való kijelölés után (ami a nyomva tartott bal gombbal működik).</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="531"/>
         <source>&amp;Crop All Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden képet ki&amp;szabni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="543"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="563"/>
         <source>&amp;Anti Ghosting</source>
-        <translation type="unfinished"></translation>
+        <translation>Szellemkép&amp;csökkentés</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="595"/>
         <source>&amp;Save Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Képeket &amp;menteni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="607"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="665"/>
         <source>A&amp;dd Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Masz&amp;k hozzáadása</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="675"/>
         <source>Remove Mas&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Maszk el&amp;távolítása</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="734"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Méret:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="757"/>
         <source> pixels</source>
-        <translation type="unfinished"></translation>
+        <translation> képpont</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="773"/>
         <source>&amp;Strength:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vastagság:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="805"/>
@@ -963,7 +977,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A szerkesztésre kijelölt kép eltolási értékei&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="811"/>
@@ -971,102 +988,105 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Itt lehet beállítani a szerkesztésre kijelölt kép eltolási értékeit&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="817"/>
         <source>Shift values for editable image</source>
-        <translation type="unfinished"></translation>
+        <translation>A szerkesztett kép eltolási értékei</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="837"/>
         <source>Reset the shift values for the currently selected movable image</source>
-        <translation type="unfinished">A kijelölt kép eltolási értékeit nullázni</translation>
+        <translation>A kijelölt mozgó kép eltolási értékeit nullázni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="840"/>
         <source>&amp;Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nullázás</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="847"/>
         <source>Reset the shift values for all the images</source>
-        <translation type="unfinished">Minden kép eltolási értékét nullázni</translation>
+        <translation>Minden kép eltolási értékét nullázni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="850"/>
         <source>Reset &amp;All</source>
-        <translation type="unfinished">&amp;Mindet nulláz</translation>
+        <translation>&amp;Mindet nulláz</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="880"/>
         <source>&amp;Horizontal:</source>
-        <translation type="unfinished">&amp;Vízszintesen:</translation>
+        <translation>&amp;Vízszintesen:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="893"/>
         <source>&amp;Vertical:</source>
-        <translation type="unfinished">&amp;Függőlegesen:</translation>
+        <translation>&amp;Függőlegesen:</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="906"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy adott értékkel vízszintesen eltolni</translation>
+        <translation>A mozgó képet egy adott értékkel vízszintesen eltolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="925"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> kp</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="922"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy adott értékkel függőlegesen eltolni</translation>
+        <translation>A mozgó képet egy adott értékkel függőlegesen eltolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="948"/>
         <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy képponttal felfelé tolni</translation>
+        <translation>A mozgó képet egy képponttal felfelé tolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="961"/>
         <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy képponttal lefelé tolni</translation>
+        <translation>A mozgó képet egy képponttal lefelé tolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="974"/>
         <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy képponttal jobbra tolni</translation>
+        <translation>A mozgó képet egy képponttal jobbra tolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="987"/>
         <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation type="unfinished">A mozgó képet egy képponttal balra tolni</translation>
+        <translation>A mozgó képet egy képponttal balra tolni</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1022"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished">Rákérdezni, mi micsoda</translation>
+        <translation>Rákérdezni, mi micsoda</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1025"/>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished">Ez &amp;mi?</translation>
+        <translation>Ez &amp;mi?</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1037"/>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1057"/>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Előre</translation>
+        <translation>&amp;Előre &gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1067"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">Mé&amp;gsem</translation>
+        <translation>Mé&amp;gsem</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="1093"/>
@@ -1076,7 +1096,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ebben a mezőben látható a (bal oldalt beállított) előnézet.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ha ugyanaz a kép lett kiválasztva eredetinek és szerkesztettniek is, akkor természetesen ez a kép lesz itt látható.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A bal egérgomb nyomvatartásával ki lehet szabni a képet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1084,12 +1109,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="127"/>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) %1 kép csak 8 bites (vagyis LDR), miközben az előzőek nem azok voltak.</translation>
     </message>
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="134"/>
         <source>The image %1 has an invalid size.</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) %1 képnek érvénytelen a mérete.</translation>
     </message>
 </context>
 <context>
@@ -1147,7 +1172,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Biztos, hogy be akarja zárni az ablakot?</translation>
     </message>
 </context>
 <context>
@@ -1554,47 +1579,47 @@ for current image</source>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="111"/>
         <source>&amp;Exposure for selected image</source>
-        <translation type="unfinished"></translation>
+        <translation>A kijelölt kép meg&amp;világítása</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="131"/>
         <source>EV </source>
-        <translation type="unfinished"></translation>
+        <translation>EV </translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="944"/>
         <source>Load response function from file</source>
-        <translation type="unfinished"></translation>
+        <translation>Válaszfüggvény fájl betöltése</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="1022"/>
         <source>Save response function to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Válaszfüggvény fájl mentése</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="1040"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés másként...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
         <source>Image Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Képfájl neve</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
         <source>Exposure</source>
-        <translation type="unfinished"></translation>
+        <translation>Megvilágítás</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden fájltípus (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyers képek (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw*.sr2)</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
@@ -1602,47 +1627,49 @@ for current image</source>
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;<byte value="x9"/><byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;<byte value="x9"/><byte value="x9"/>You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui nem talált megfelelő &lt;i&gt;EXIF&lt;/i&gt; címkét
+a következő képekben: &lt;ul&gt;<byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;Ennek ellenére lehet folytatni a HDR kép előállítását. Csak annyit kell tenni, hogy &lt;b&gt;kézzel&lt;/b&gt; be kell táplálni minden képhez a megvilágítási értéket vagy a fényrekesz különbségét.<byte value="x9"/>&lt;hr&gt;Ha a Qtfsguival akarja ezt &lt;b&gt;automatikusan csinálni&lt;/b&gt;, akkor a betöltendő képeknek legalább
+a következő EXIF adatokat kell tartalmazniuk: <byte value="x9"/>&lt;ul&gt;&lt;li&gt;sebesség&lt;/li&gt;<byte value="x9"/>&lt;li&gt;rekesz&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;UTALÁS:&lt;/b&gt; Az EXIF adatok általában a megelőző feldolgozás folyamán vesznek el.&lt;br&gt;<byte value="x9"/>EXIF címkéket &lt;b&gt;egy az egyben&lt;/b&gt; át lehet másolni két képgyűjtemény között az &lt;i&gt;&lt;b&gt;&quot;Eszközök-&gt;EXIF adatok másolása...&quot;&lt;/b&gt;&lt;/i&gt; menüpont alatt.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
         <source>Loading Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba megnyitás közben</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
         <source>Unknown </source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem indult el ez a külső program: &quot;align_image_stack&quot;.&lt;br&gt;Kérem olvassa el a &quot;Súgó -&gt; Dokumentáció... -&gt; Hints and tips&quot; fejezetét.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="unfinished"></translation>
+        <translation>Az &quot;align_image_stack&quot; külső folyamat bedöglött...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ismeretlen hiba történt a &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; folyamatban...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
         <source>Aligning...</source>
-        <translation type="unfinished"></translation>
+        <translation>Igazítás...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
         <source>Save a camera response curve file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fényképezőgép válaszgörbéjének a mentése</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Minden megvilágítási érték rögzítve&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
 </context>
 <context>
@@ -1739,32 +1766,33 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="48"/>
         <source>ERROR: The following file is not readable: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A következő fájl olvashatatlan: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="78"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+ A Tiff jelenleg nem egy megengedett nyers képtípus. Ehhez meg kéne adni a &quot;-T&quot; kapcsolót a nyers képek beállításaiban.</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="104"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: dcraw visszautasítja ezt a fájlt: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="111"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Lejárt az idő, miközben dcraw működött egy fájlon: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="123"/>
         <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: A(z) %1 fájl típusa nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="153"/>
         <source>ERROR: Failed loading file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Nem lehet megnyitni: %1</translation>
     </message>
 </context>
 <context>
@@ -2292,7 +2320,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="291"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
-        <translation>Qtpfsgui egy gyorsítótárban őrzi az idiglenes fájljait, de a kijelölt mappa nem érvényes.&lt;br&gt;Válasszon egy másik útvonalat az Eszközök -&gt; Beállítások... -&gt; árnyalatnövelés menüpont segítségével.</translation>
+        <translation>Qtpfsgui egy gyorsítótárban őrzi az ideiglenes fájljait, de a kijelölt mappa nem érvényes.&lt;br&gt;Válasszon egy másik útvonalat az Eszközök -&gt; Beállítások... -&gt; árnyalatnövelés menüpont segítségével.</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="654"/>
@@ -2317,38 +2345,38 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="673"/>
         <source>Save Hdr &amp;Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR &amp;előnézet mentése...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="682"/>
         <source>Save the current Hdr Preview to a Ldr file.</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR előnézetet LDR képként menteni.</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="690"/>
         <source>&amp;Projective Transformation...</source>
-        <translation type="unfinished"></translation>
+        <translation>Át&amp;vetítés...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="699"/>
         <source>Apply a projective transformation to the current Hdr.</source>
-        <translation type="unfinished"></translation>
+        <translation>A jelenlegi HDR képet átvetíteni.</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="217"/>
         <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr) fájltípusokat támogatja.</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Kilépni ennek ellenére?</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
     </message>
 </context>
 <context>
@@ -2646,27 +2674,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
         <source>Option -a...</source>
-        <translation type="unfinished"></translation>
+        <translation>Az -a kapcsoló...</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
         <source>Qtpfsgui requires align_image_stack to be executed with the option &quot;-a aligned_&quot;. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Qtpfsgui megköveteli az &quot;-a&quot; kapcsoló (aligned) használatát az align_image_stackkel. A parancssor ehhez megfelelően lett módosítva.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
         <source>Please restart...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérem újraindítani...</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
         <source>Please restart Qtpfsgui to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Újra kéne indítani Qtpfsgui-t az új nyelv (%1) használata végett.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="212"/>
         <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Válasszon egy mappát</translation>
     </message>
 </context>
 <context>
@@ -2674,32 +2702,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="13"/>
         <source>Qtpfsgui Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Qtpfsgui beállítások</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="100"/>
         <source>Tone Mapping</source>
-        <translation type="unfinished">LDR</translation>
+        <translation>LDR</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="108"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="116"/>
         <source>External Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Programok</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="741"/>
         <source>Hdr Tiff</source>
-        <translation type="unfinished">HDR Tiff</translation>
+        <translation>HDR Tiff</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="132"/>
         <source>Hdr Visualization</source>
-        <translation type="unfinished">HDR nézet</translation>
+        <translation>HDR nézet</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="177"/>
@@ -2707,134 +2735,137 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tone Mapping Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Árnyalatnövelési beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="194"/>
         <source>Cache</source>
-        <translation type="unfinished">Gyorsítótár</translation>
+        <translation>Gyorsítótár</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="215"/>
         <source>Choose the directory where Qtpfsgui will store the temporary data to.</source>
-        <translation type="unfinished">Válasszon egy mappát az időleges fájlok részére.</translation>
+        <translation>Válasszon egy mappát az időleges fájlok részére.</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="255"/>
         <source>&amp;Load...</source>
-        <translation type="unfinished">&amp;Megnyitás...</translation>
+        <translation>&amp;Megnyitás...</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="267"/>
         <source>Batch</source>
-        <translation type="unfinished">Köteges feldolgozás</translation>
+        <translation>Köteges feldolgozás</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="305"/>
         <source>Save using this LDR image &amp;format:</source>
-        <translation type="unfinished">Normális megvilágítástartományú (LDR) képek mentéséhez használt &amp;fájltípus:</translation>
+        <translation>Normális megvilágítástartományú (LDR)&lt;br&gt;képek mentéséhez használt &amp;fájltípus:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="316"/>
         <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="321"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="326"/>
         <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
+        <translation>PPM</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="331"/>
         <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
+        <translation>PBM</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="336"/>
         <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="363"/>
         <source>Number of &amp;threads:
 (useful on multi-core/SMP machines)</source>
-        <translation type="unfinished">&amp;Huzamok száma:
+        <translation>&amp;Huzamok száma:
 (hasznos többmagos (SMP) processzorok esetében)</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="430"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;User Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Kezelés&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="437"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyelv:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="459"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>cseh</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="464"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>angol</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="469"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>francia</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="474"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>német</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="479"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>indonéziai</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="484"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>olasz</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="489"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>lengyel</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="494"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>orosz</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="499"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>spanyol</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="504"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>török</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="552"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Nyers fájlok import beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Nyers fájlok import beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="559"/>
         <source>dcraw commandline parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation>A dcraw parancssora:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="679"/>
@@ -2842,17 +2873,20 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;További kérdések tisztázásához az alábbi súgó gombra kattintani&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="610"/>
         <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Itt található a nyers képek feldolgozásához szükséges parancskapcsolók leírása</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="613"/>
         <source>&amp;About Raw Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nyerskép kapcsolók</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="648"/>
@@ -2860,12 +2894,15 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Alignment Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Igazítási beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="658"/>
         <source>align_image_stack commandline parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Az align_image_stack parancssora:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="724"/>
@@ -2873,7 +2910,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2887,7 +2924,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Válasszon ki egy nagy megvilágítástartományú Tiff fájltípust a HDR képek mentésére.&lt;/p&gt;
@@ -2898,12 +2935,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="781"/>
         <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="unfinished">LogLuv Tiff (16 bites float)</translation>
+        <translation>LogLuv Tiff (16 bites float)</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="791"/>
         <source>Float Tiff (float, 32bit)</source>
-        <translation type="unfinished">Float Tiff (32 bites float)</translation>
+        <translation>Float Tiff (32 bites float)</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="833"/>
@@ -2911,7 +2948,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HDR nézet beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -2919,47 +2956,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="850"/>
         <source>Colors</source>
-        <translation type="unfinished">Színek</translation>
+        <translation>Színek</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="888"/>
         <source>Show Negative Numbers as:</source>
-        <translation type="unfinished">Negatív számok:</translation>
+        <translation>Negatív számok jelölése:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="934"/>
         <source>Show nan and +/-Inf values as:</source>
-        <translation type="unfinished"></translation>
+        <translation>Meghatározatlan (NaN) és &lt;br&gt;végtelen (+Inf) értékek jelölése:</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="1012"/>
         <source>Get information about the graphical elements</source>
-        <translation type="unfinished">Rákérdezni, mi micsoda</translation>
+        <translation>Rákérdezni, mi micsoda</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="1015"/>
         <source>&amp;What&apos;s this?</source>
-        <translation type="unfinished">Ez &amp;mi?</translation>
+        <translation>Ez &amp;mi?</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="1027"/>
         <source>Shift+F1</source>
-        <translation type="unfinished">Shift+F1</translation>
+        <translation>Shift+F1</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="1047"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">Mé&amp;gsem</translation>
+        <translation>Mé&amp;gsem</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="1054"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="509"/>
         <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <translation>magyar</translation>
     </message>
 </context>
 <context>
@@ -2967,92 +3004,92 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="13"/>
         <source>Projective Transformation</source>
-        <translation type="unfinished"></translation>
+        <translation>Átvetítés</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="25"/>
         <source>Projections</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetítések</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="53"/>
         <source>Source Projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Az eredeti képen:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="102"/>
         <source>Polar</source>
-        <translation type="unfinished"></translation>
+        <translation>sarki</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="107"/>
         <source>Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>szöges</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="112"/>
         <source>Cylindrical</source>
-        <translation type="unfinished"></translation>
+        <translation>hengeres</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="117"/>
         <source>Mirror Ball</source>
-        <translation type="unfinished"></translation>
+        <translation>tükörgömbös</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="94"/>
         <source>Destination Projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Az eredő képen:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="153"/>
         <source>Angles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szögek:</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../forms/projectionsDialog.ui" line="464"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="193"/>
         <source>Bilinear Interpolation</source>
-        <translation type="unfinished"></translation>
+        <translation>bilineáris interpoláció</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="216"/>
         <source>Oversample factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mintavételi tényező:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="238"/>
         <source>Rotation (degrees)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordítás (fokban)</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="258"/>
         <source>Yaw:</source>
-        <translation type="unfinished"></translation>
+        <translation>Elfordulás (x):</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="347"/>
         <source>Pitch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Emelkedés (y):</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="436"/>
         <source>Roll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forgás (z):</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="541"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">Mé&amp;gsem</translation>
+        <translation>Mé&amp;gsem</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="548"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -3088,17 +3125,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/global.cpp" line="39"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation type="unfinished">Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+        <translation>Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
         <source>Save the LDR to...</source>
-        <translation type="unfinished">LDR kép mentése...</translation>
+        <translation>LDR kép mentése...</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="76"/>
         <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Mentés nem sikerült &lt;br&gt;</translation>
+        <translation>Mentés nem sikerült &lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -3880,22 +3917,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="13"/>
         <source>Tone Mapping: </source>
-        <translation type="unfinished"></translation>
+        <translation>Árnyalatnövelés: </translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="84"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished">Ki&amp;lépés</translation>
+        <translation>Ki&amp;lépés</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="87"/>
         <source>Exit</source>
-        <translation type="unfinished">Kilépés</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="96"/>
         <source>Close Tone Mapping Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Árnyalatnövelési ablak bezárása</translation>
     </message>
 </context>
 <context>
@@ -4018,7 +4055,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="194"/>
         <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden támogatott fájltípus (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw*.sr2)</translation>
     </message>
 </context>
 <context>
@@ -4026,27 +4063,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="135"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="unfinished"></translation>
+        <translation>A kép &lt;br&gt;(%1)&lt;br&gt; nem egy 8 vagy 16 bites Tiff fájl.</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="80"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="unfinished"></translation>
+        <translation> A Tiff jelenleg nem egy megengedett nyers képtípus. Ehhez meg kéne adni a &quot;-T&quot; kapcsolót a nyers képek beállításaiban.</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: dcraw visszautasítja ezt a fájlt: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="112"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Lejárt az idő vagy más hiba történt, miközben dcraw működött egy fájlon: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="143"/>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>HIBA: Nem lehet megnyitni: %1</translation>
     </message>
 </context>
 </TS>
