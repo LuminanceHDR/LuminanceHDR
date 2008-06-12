@@ -62,9 +62,9 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 			*(data + 2 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
 			*(data + 3 + (y*width+x)*4) = 0xff;
 			} else {
-			*(data + 3 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
+			*(data + 3 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
 			*(data + 2 + (y*width+x)*4) = ( clamp( (*G)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
 			*(data + 0 + (y*width+x)*4) = 0xff;
 			}
 		}
