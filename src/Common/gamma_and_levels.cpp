@@ -189,12 +189,21 @@ void HistogramLDR::setData(const QImage &data) {
 		return;
 	}
 
-	//increment bins
-	for (int i=0; i<data.width()*data.height(); i+=accuracy) {
-		int v=qGray(*((QRgb*)(data.bits())+i));
-		assert(v>=0 && v<=255);
-		P[v] += 1;
-	}
+// 	if (data.format()==QImage::Format_Indexed8) {
+// 		//increment bins
+// 		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
+// 			const unsigned char v=*((const unsigned char*)(data.bits())+i);
+// 			P[v] += 1;
+// 		}
+// 		
+// 	} else {
+		//increment bins
+		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
+			int v=qGray(*((QRgb*)(data.bits())+i));
+			assert(v>=0 && v<=255);
+			P[v] += 1;
+		}
+// 	}
 
 	//find max
 	float max=-1;
