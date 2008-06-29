@@ -61,7 +61,7 @@ void QtpfsguiOptions::loadFromQSettings() {
 			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");
 		dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
 		if (!settings.contains(KEY_EXTERNAL_AIS_OPTIONS))
-			settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,"-a aligned_");
+			settings.setValue(KEY_EXTERNAL_AIS_OPTIONS, QStringList() << "-a" << "aligned_");
 		align_image_stack_options=settings.value(KEY_EXTERNAL_AIS_OPTIONS).toStringList();
 	settings.endGroup();
 
