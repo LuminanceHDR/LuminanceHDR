@@ -60,7 +60,8 @@ void QtpfsguiOptions::loadFromQSettings() {
 		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
 			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,"-T");
 		dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
-		if (!settings.contains(KEY_EXTERNAL_AIS_OPTIONS))
+		//bug 2001032, remove spurious default QString "-a aligned_" value set by ver 1.9.2
+		if (!settings.contains(KEY_EXTERNAL_AIS_OPTIONS) || settings.value(KEY_EXTERNAL_AIS_OPTIONS).toString()=="-a aligned_")
 			settings.setValue(KEY_EXTERNAL_AIS_OPTIONS, QStringList() << "-a" << "aligned_");
 		align_image_stack_options=settings.value(KEY_EXTERNAL_AIS_OPTIONS).toStringList();
 	settings.endGroup();

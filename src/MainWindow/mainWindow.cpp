@@ -192,7 +192,8 @@ void MainGui::fileSaveAs()
 		QString fname=(fd->selectedFiles()).at(0);
 		if(!fname.isEmpty()) {
 			QFileInfo qfi(fname);
-			const char* encodedName=QFile::encodeName(qfi.filePath()).constData();
+			QString absoluteFileName=qfi.absoluteFilePath();
+			char* encodedName=strdup(QFile::encodeName(absoluteFileName).constData());
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
 			if (RecentDirHDRSetting != qfi.path() )
 				// update internal field variable
@@ -219,10 +220,11 @@ void MainGui::fileSaveAs()
 				delete fd;
 				return;
 			}
-			setCurrentFile(fname);
+			free(encodedName);
+			setCurrentFile(absoluteFileName);
 			currenthdr->NeedsSaving=false;
-			currenthdr->filename=fname;
-			currenthdr->setWindowTitle(fname);
+			currenthdr->filename=absoluteFileName;
+			currenthdr->setWindowTitle(absoluteFileName);
 		}
 	} //if (fd->exec())
 	delete fd;

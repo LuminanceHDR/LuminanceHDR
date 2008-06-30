@@ -378,7 +378,7 @@ void CommandLineInterfaceManager::saveHDR() {
 	if (!saveHdrFilename.isEmpty()) {
 		VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 		QFileInfo qfi(saveHdrFilename);
-		const char* encodedName=QFile::encodeName(qfi.filePath()).constData();
+		const char* encodedName=strdup(QFile::encodeName(qfi.filePath()).constData());
 		if (qfi.suffix().toUpper()=="EXR") {
 			writeEXRfile(HDR,encodedName);
 		} else if (qfi.suffix().toUpper()=="HDR") {
@@ -397,6 +397,7 @@ void CommandLineInterfaceManager::saveHDR() {
 		} else {
 			error("Error, please specify a supported HDR file format.");
 		}
+		free(encodedName);
 	} else {
 		VERBOSEPRINT("NOT Saving HDR image to file. %1","");
 	}
