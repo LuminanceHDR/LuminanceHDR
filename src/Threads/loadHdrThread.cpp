@@ -58,7 +58,7 @@ void LoadHdrThread::run() {
 	QString extension = qfi.suffix().toUpper();
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
 	try {
-		const char* encodedFileName=QFile::encodeName(qfi.filePath()).constData();
+		char* encodedFileName=strdup(QFile::encodeName(qfi.filePath()).constData());
 		if (extension=="EXR") {
 			hdrpfsframe = readEXRfile(encodedFileName);
 		} else if (extension=="HDR") {
@@ -123,6 +123,7 @@ void LoadHdrThread::run() {
 			emit load_failed(tr("ERROR: File %1 has unsupported extension.").arg(fname));
 			return;
 		}
+		free(encodedFileName);
 #if 0
 		pfs::Channel *R,*G,*B;
 		hdrpfsframe->getRGBChannels( R, G, B );
