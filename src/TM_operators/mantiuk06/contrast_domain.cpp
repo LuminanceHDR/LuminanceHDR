@@ -42,7 +42,7 @@
 #include <math.h>
 
 #ifndef Q_WS_X11
-#define exp10f( x ) exp( x * log (10))
+#define exp10f( x ) exp( (x) * log (10))
 #endif
 
 #include "contrast_domain.h"
