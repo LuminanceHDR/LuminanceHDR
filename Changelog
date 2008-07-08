@@ -1,3 +1,6 @@
+Changes 1.9.3:
+* New: Added Hungarian language
+
 Changes 1.9.2:
 * Fixed other bugs with non-ascii characters in paths/filenames.
 * Integrated pfstmo 1.2 changes:
