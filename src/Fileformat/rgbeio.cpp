@@ -188,7 +188,7 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
   // image size
   char xbuf[4], ybuf[4];
   if( fgets(head,sizeof(head)/sizeof(head[0]),file) == 0
-      || sscanf(head,"%s %d %s %d",ybuf,&height,xbuf,&width) != 4 )
+      || sscanf(head,"%3s %d %3s %d",ybuf,&height,xbuf,&width) != 4 )
   {
     throw pfs::Exception( "RGBE: unknown image size" );
   }
