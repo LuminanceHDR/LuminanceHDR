@@ -73,11 +73,6 @@ void LoadHdrThread::run() {
 		}
 		else if (rawinput) {
 			qDebug("TH: raw file");
-			if (!qtpfsgui_options->dcraw_options.contains("-T")) {
-			qDebug("TH: dcraw, -T parameter missing.");
-			emit load_failed(tr("ERROR: Tiff output for raw files currently disabled. Please add the \"-T\" option to the raw conversion parameters in the options panel."));
-			return;
-			}
 			QProcess *rawconversion = new QProcess(0);
 			rawconversion->setWorkingDirectory(qtpfsgui_options->tempfilespath);
 			#ifdef WIN32

@@ -75,12 +75,6 @@ void hdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			if (!dcrawOpts.contains("-T")) {
-			qDebug("TH: dcraw, -T parameter missing.");
-			emit loadFailed(tr("ERROR: Tiff output for raw files currently disabled. Please add the \"-T\" option to the raw conversion parameters in the options panel."),image_idx);
-			return;
-			}
-
 			QProcess *rawconversion = new QProcess(0);
 
 			#ifdef WIN32

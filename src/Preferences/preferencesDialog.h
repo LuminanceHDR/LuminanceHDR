@@ -44,6 +44,7 @@ private:
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
 	QStringList sanitizeAISparams();
+	QStringList sanitizeDCRAWparams();
 private slots:
 	void negative_clicked();
 	void infnan_clicked();

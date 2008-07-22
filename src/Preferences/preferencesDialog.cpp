@@ -93,6 +93,23 @@ void PreferenceDialog::change_color_of(QPushButton *button, QColor *newcolor) {
 	}
 }
 
+QStringList PreferenceDialog::sanitizeDCRAWparams() {
+	bool dcraw_opt_was_ok=false;
+	QStringList temp_dcraw_options=dcrawParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+	int idx_T=temp_dcraw_options.indexOf("-T");
+	//if we don't have -T
+	if (idx_T==-1) {
+		temp_dcraw_options+="-T";
+	} else {
+		dcraw_opt_was_ok=true;
+	}
+	if (!dcraw_opt_was_ok) {
+		QMessageBox::information(this,tr("Option -T..."),tr("Qtpfsgui requires dcraw to be executed with the \"-T\" option. Commandline options have been corrected."));
+	}
+	return temp_dcraw_options;
+	
+}
+
 QStringList PreferenceDialog::sanitizeAISparams() {
 	bool align_opt_was_ok=false;
 	//check if we have '-a "aligned_"'
@@ -122,7 +139,7 @@ QStringList PreferenceDialog::sanitizeAISparams() {
 		align_opt_was_ok=true;
 	}
 	if (!align_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -a..."),tr("Qtpfsgui requires align_image_stack to be executed with the option \"-a aligned_\". Commandline options have been corrected."));
+		QMessageBox::information(this,tr("Option -a..."),tr("Qtpfsgui requires align_image_stack to be executed with the \"-a aligned_\" option. Commandline options have been corrected."));
 	}
 	return temp_ais_options;
 }
@@ -134,7 +151,7 @@ void PreferenceDialog::ok_clicked() {
 	settings.setValue(KEY_GUI_LANG,qtpfsgui_options->gui_lang);
 
 	settings.beginGroup(GROUP_EXTERNALTOOLS);
-		qtpfsgui_options->dcraw_options=dcrawParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+		qtpfsgui_options->dcraw_options=sanitizeDCRAWparams();
 		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,qtpfsgui_options->dcraw_options);
 		
 		qtpfsgui_options->align_image_stack_options=sanitizeAISparams();
