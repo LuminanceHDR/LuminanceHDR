@@ -23,6 +23,7 @@
 
 #include "debevec.h"
 
+#if 0
 //anti-saturation shouldn't be needed
 int debevec_applyResponse( const float * arrayofexptime,
 			pfs::Array2D* xj, const float* I1,
@@ -106,7 +107,7 @@ va_end(arg_pointer); /* Clean up. */
 	}
 	return saturated_pixels;
 }
-
+#endif
 
 
 void debevec_applyResponse( const float * arrayofexptime,

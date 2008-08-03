@@ -38,11 +38,13 @@
  * @param I3 response curve for channel 3, to be found with robertson02
  * @param P  width*height*#exposures array of weights
  */
+/*
 int debevec_applyResponse( const float *arrayofexptime,
 			pfs::Array2D* xj, const float* I1,
 			pfs::Array2D* yj, const float* I2,
 			pfs::Array2D* zj, const float* I3,
 			const Array2DList &P, const bool ldrinput, ... );
+*/
 
 /**
  * @brief Create HDR image by applying response curve to given images using Debevec model, checking for under/over exposed pixel values.

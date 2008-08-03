@@ -54,7 +54,6 @@ HEADERS += src/Libpfs/array2d.h \
            src/HdrCreation/createhdr.h \
            src/HdrCreation/robertson02.h \
            src/HdrCreation/responses.h   \
-           src/HdrCreation/icip06.h \
            src/HdrCreation/debevec.h \
            src/HdrWizard/editingTools.h \
            src/HdrWizard/previewWidget.h \
@@ -104,7 +103,6 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/HdrCreation/createhdr.cpp \
            src/HdrCreation/robertson02.cpp  \
            src/HdrCreation/responses.cpp  \
-           src/HdrCreation/icip06.cpp \
            src/HdrCreation/debevec.cpp \
            src/HdrWizard/newHdrWizard.cpp \
            src/HdrWizard/editingTools.cpp \
