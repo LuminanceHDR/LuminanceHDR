@@ -502,7 +502,7 @@ void TMWidget::fromTxt2Gui() {
 			pregammaSlider->setValue(pregammagang->v2p(value.toFloat()));
 		}
 	}
-	apply_clicked();
+// 	apply_clicked();
 }
 
 void TMWidget::keyPressEvent(QKeyEvent* event) {
