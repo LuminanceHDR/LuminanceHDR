@@ -376,17 +376,17 @@ p, li { white-space: pre-wrap; }
         <translation>Error: Datos EXIF no encontrados en la imagen y valor EV no indicado en la linea de comandos. Rescatando.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="430"/>
+        <location filename="../src/Common/commandline.cpp" line="431"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation>Error: No puedo guardar el archivo %1</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="443"/>
+        <location filename="../src/Common/commandline.cpp" line="444"/>
         <source>Cannot convert %1 to a float</source>
         <translation>No puedo convertir %1 a flotante</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="453"/>
+        <location filename="../src/Common/commandline.cpp" line="454"/>
         <source>Cannot convert %1 to an integer</source>
         <translation>No puedo convertir %1 a entero</translation>
     </message>
@@ -465,7 +465,7 @@ Puedes cargar un archivo HDR existente (via opción -l) o bien indicar INPUTFILE
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="489"/>
+        <location filename="../src/Common/commandline.cpp" line="490"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
  <byte value="x9"/>Commandline interface to %2.
 
@@ -1448,29 +1448,29 @@ p, li { white-space: pre-wrap; }
         <translation>ERROR: El siguiente archivo no es legible: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="104"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="99"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERROR: No se puede iniciar dcraw para el archivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="111"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="106"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERROR: Fallo ó tiempo de espera agotado mientras se ejecutaba dcraw al archivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="123"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="118"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERROR: El archivo %1 tiene una extensión no soportada.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="153"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="149"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERROR: Fallo cargando el archivo: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="78"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation>ERROR: La salida TIFF para archivos RAW está actualmente deshabilitada. Por favor, añada la opción &quot;-T&quot; a los parametros de conversión en el panel de opciones. </translation>
+        <translation type="obsolete">ERROR: La salida TIFF para archivos RAW está actualmente deshabilitada. Por favor, añada la opción &quot;-T&quot; a los parametros de conversión en el panel de opciones. </translation>
     </message>
 </context>
 <context>
@@ -1816,17 +1816,17 @@ p, li { white-space: pre-wrap; }
         <translation>Tonear el HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="461"/>
         <source>Aborting...</source>
         <translation>Cancelando tarea...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="291"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
         <source>Error...</source>
         <translation>Error...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
         <source>Unsaved changes...</source>
         <translation>Modificaciones no guardadas...</translation>
     </message>
@@ -1981,7 +1981,7 @@ p, li { white-space: pre-wrap; }
         <translation>Establece varias opciones de Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="291"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui necesita almacenar estos resultados en archivos temporales, pero el directorio actualmente seleccionado para esto no es válido.&lt;br&gt;Por favor, escoja una ruta válida en Herramientas-&gt;Preferencias....-&gt; Toneado.</translation>
     </message>
@@ -2006,18 +2006,18 @@ p, li { white-space: pre-wrap; }
         <translation>A&amp;cerca de Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Hay al menos un archivo HDR con cambios no guaradados.&lt;br&gt;¿Seguro que desea salir?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="599"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="217"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="218"/>
         <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
         <translation>Qtpfsgui soporta los siguientes formatos: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr y OpenEXR.</translation>
     </message>
@@ -2261,28 +2261,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreferenceDialog</name>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="212"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="229"/>
         <source>Choose a directory</source>
         <translation type="unfinished">Seleccione un directorio</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
         <source>Option -a...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
-        <source>Qtpfsgui requires align_image_stack to be executed with the option &quot;-a aligned_&quot;. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
         <source>Please restart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
         <source>Please restart Qtpfsgui to use the new language (%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <source>Option -T...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2678,17 +2688,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="100"/>
+        <location filename="../src/Common/options.cpp" line="101"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>ERROR: no puedo cargar archivo de configuración de toneado: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="123"/>
+        <location filename="../src/Common/options.cpp" line="124"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: Archivo demasiado antiguo, no puedo interpretar los datos de configuración  para tonear: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="206"/>
+        <location filename="../src/Common/options.cpp" line="207"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: no se puede interpretar archivo de configuración de toneado: </translation>
     </message>
@@ -3627,25 +3637,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="80"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation>ERROR: La salida TIFF para archivos RAW está actualmente deshabilitad. Por favor añada la opción &quot;-T&quot; a los parametros de conversión en el panle de opciones.</translation>
+        <translation type="obsolete">ERROR: La salida TIFF para archivos RAW está actualmente deshabilitad. Por favor añada la opción &quot;-T&quot; a los parametros de conversión en el panle de opciones.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="135"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="129"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
         <translation>ERROR: El archivo &lt;br&gt;%1&lt;br&gt;no es un tiff de 8 ó 16 bits.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="100"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERROR: No puedo iniciar dcraw para el archivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="112"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERROR: Error o tiempo de espera agotado mientras se ejecutaba dcraw al archivo: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="143"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="137"/>
         <source>ERROR: Failed Loading file: %1</source>
         <translation>ERROR: Fallo al cargar: %1</translation>
     </message>

@@ -383,17 +383,17 @@ p, li { white-space: pre-wrap; }
         <translation>Error: kehilangan Exif data pada image dan nilai EV tidak spesifik pada commandline, bailing out.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="430"/>
+        <location filename="../src/Common/commandline.cpp" line="431"/>
         <source>ERROR: Cannot save to file: %1</source>
         <translation>Error: Tidak dapat menyimpan ke file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="443"/>
+        <location filename="../src/Common/commandline.cpp" line="444"/>
         <source>Cannot convert %1 to a float</source>
         <translation>Tidak dapat mengkonversi %1 ke float</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="453"/>
+        <location filename="../src/Common/commandline.cpp" line="454"/>
         <source>Cannot convert %1 to an integer</source>
         <translation>Tidak dapat mengkonversi %1 ke sebuah integer</translation>
     </message>
@@ -466,7 +466,7 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="489"/>
+        <location filename="../src/Common/commandline.cpp" line="490"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
  <byte value="x9"/>Commandline interface to %2.
 
@@ -1449,25 +1449,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="78"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation>ERROR: keluaran Tiff file raw telah di-disable. Silahkan tambah opsi &quot;-T&quot; pada parameter konversi raw dalam opsi panel.</translation>
+        <translation type="obsolete">ERROR: keluaran Tiff file raw telah di-disable. Silahkan tambah opsi &quot;-T&quot; pada parameter konversi raw dalam opsi panel.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="104"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="99"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERROR: Tidak dapat memulai dcraw pada file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="111"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="106"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERROR: Error atau terjadi timeout ketika mengeksekusi dcraw pada file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="123"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="118"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERROR: File %1 mempunyai extensi yang tidak didukung.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="153"/>
+        <location filename="../src/Threads/loadHdrThread.cpp" line="149"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERROR: Gagal memuat file: %1</translation>
     </message>
@@ -1985,37 +1985,37 @@ p, li { white-space: pre-wrap; }
         <translation>Simpan HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="461"/>
         <source>Aborting...</source>
         <translation>Membatalkan...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="217"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="218"/>
         <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
         <translation>Qtpfsgui hanya mendukung format berikut: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr dan OpenEXR.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="291"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
         <source>Error...</source>
         <translation>Error...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="291"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui butuh cache untuk hasilnya sebagai file temporary, tapi direktori yang ter-select tidak valid.&lt;br&gt;Silahkan pilih path yang valid pada Tools -&gt; Preferences... -&gt; Tone Mapping.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
         <source>Unsaved changes...</source>
         <translation>Perubahan tidak dapat disimpan...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="528"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Sedikitnya ada satu HDR yang mempunyai perubahan belum disimpan.&lt;br&gt;Anda masih ingin keluar?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="597"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="599"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Lisensi document tidak ditemukan, anda dapat mencarinya secara online: %2disini%3</translation>
@@ -2260,28 +2260,38 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreferenceDialog</name>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="212"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="229"/>
         <source>Choose a directory</source>
         <translation type="unfinished">Pilih direktori</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
         <source>Option -a...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
-        <source>Qtpfsgui requires align_image_stack to be executed with the option &quot;-a aligned_&quot;. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
         <source>Please restart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="132"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
         <source>Please restart Qtpfsgui to use the new language (%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <source>Option -T...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2677,17 +2687,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="100"/>
+        <location filename="../src/Common/options.cpp" line="101"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>ERROR: Tidak dapat memuat file Setting Tone Mapping: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="123"/>
+        <location filename="../src/Common/options.cpp" line="124"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: File terlalu lama, cannot parse Tone Mapping Setting file: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="206"/>
+        <location filename="../src/Common/options.cpp" line="207"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: cannot parse Tone Mapping Setting file: </translation>
     </message>
@@ -3624,27 +3634,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>hdrInputLoader</name>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="135"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="129"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
         <translation>ERROR: File&lt;br&gt;%1&lt;br&gt; bukan 8 bit atau 16 bit tiff.</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="80"/>
         <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation>ERROR: keluaran Tiff file raw currently disabled. Silahkan tambah opsi &quot;-T&quot; pada parameter konversi raw dalam opsi panel.</translation>
+        <translation type="obsolete">ERROR: keluaran Tiff file raw currently disabled. Silahkan tambah opsi &quot;-T&quot; pada parameter konversi raw dalam opsi panel.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="100"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERROR: Tidak dapat memulai dcraw pada file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="112"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="106"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERROR: Error atau terjadi timeout ketika mengeksekusi dcraw pada file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="143"/>
+        <location filename="../src/Threads/hdrInputLoader.cpp" line="137"/>
         <source>ERROR: Failed Loading file: %1</source>
         <translation>ERROR: Gagal memuat file: %1</translation>
     </message>
