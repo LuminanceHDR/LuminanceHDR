@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -46,38 +46,38 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 
 	// ashikhmin02
 	contrastGang = 	new Gang(contrastSlider, contrastdsb,	0,	1,	0.5);
-	
+
 	// drago03
 	biasGang = 	new Gang(biasSlider, biasdsb,		0.5,	1,	0.85);
-	
+
 	// durand02
 	spatialGang = 	new Gang(spatialSlider, spatialdsb,	0,	60,	8);
 	rangeGang = 	new Gang(rangeSlider, rangedsb,		0.01,	10,	0.4);
 	baseGang = 	new Gang(baseSlider, basedsb,		0,	10,	5.0);
-	
+
 	// fattal02
 	alphaGang = 	new Gang(alphaSlider, alphadsb,		1e-3,	2,	1e-1, true);
 	betaGang = 	new Gang(betaSlider, betadsb,		0.6,	1.0,	0.8);
 	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, 0,3,	1);
 	noiseGang =	new Gang(noiseSlider, noisedsb, 	0, 	1, 	0);
-	
+
 	// pattanaik00
 	multiplierGang = new Gang(multiplierSlider, multiplierdsb, 1e-3,50, 1, true);
 	coneGang = 	new Gang(coneSlider, conedsb,		0,	1,   0.5);
 	rodGang = 	new Gang(rodSlider, roddsb,		0,	1,   0.5);
-	
+
 	// reinhard02
 	keyGang = 	new Gang(keySlider, keydsb,		0,	1,   0.18);
 	phiGang = 	new Gang(phiSlider, phidsb,		0,	50,  1);
 	range2Gang = 	new Gang(range2Slider, range2dsb,	2, 	15,  8);
 	lowerGang = 	new Gang(lowerSlider, lowerdsb,		1,	100, 1);
 	upperGang = 	new Gang(upperSlider, upperdsb,		1,	100, 43);
-	
+
 	// reinhard05
 	brightnessGang =new Gang(brightnessSlider, brightnessdsb,	-35,	10, -10);
 	chromaticGang  =new Gang(chromaticAdaptSlider, chromaticAdaptdsb, -1.7,	1.3, 1);
 	lightGang      =new Gang(lightAdaptSlider, lightAdaptdsb,         -1,	1, 0);
-	
+
 	// pregamma
 	pregammagang  = new Gang(pregammaSlider,  pregammadsb,  0, 3, 1);
 
@@ -184,15 +184,30 @@ pregammagang->setDefault();
 MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
 	((QStatusBar*)parent)->addWidget(this);
 	setValue(0);
+	removed = false;
 }
 
 MyProgressBar::~MyProgressBar() {
 	((QStatusBar*)parent())->removeWidget(this);
+	removed = true;
 }
 
 void MyProgressBar::mousePressEvent(QMouseEvent *event) {
 	if (event->buttons()==Qt::LeftButton) {
-		emit leftMouseButtonClicked();
+
+		// TODO: Simplifiy when minimal QT requirements are set...
+		#if QT_VERSION < 0x040200
+				int ret=QMessageBox::warning(this,tr("Aborting..."),tr("Do you really want to abort the tonemapping process?"), QMessageBox::No | QMessageBox::Default, QMessageBox::Yes, QMessageBox::NoButton);
+		#else
+				QMessageBox::StandardButton ret=QMessageBox::warning(0,tr("Aborting..."),tr("Do you really want to abort the tonemapping process?"),
+				QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+		#endif
+
+		if (ret != QMessageBox::Yes)
+			return;
+
+		if (!removed) // when already finished in the meanwhile
+			emit leftMouseButtonClicked();
 	}
 }
 
