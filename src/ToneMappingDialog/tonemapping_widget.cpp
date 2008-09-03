@@ -43,6 +43,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 	// mantiuk06
 	contrastfactorGang = new Gang(contrastFactorSlider, contrastFactordsb,0.001,10,0.1);
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,0,2,0.8);
+	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,1,99,1.0);
 
 	// ashikhmin02
 	contrastGang = 	new Gang(contrastSlider, contrastdsb,	0,	1,	0.5);
@@ -127,7 +128,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 }
 
 TMWidget::~TMWidget() {
-delete contrastfactorGang; delete saturationfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
+delete contrastfactorGang; delete saturationfactorGang; delete detailfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
 	//fetch original frame from hd
 	pfs::DOMIO pfsio;
 	OriginalPfsFrame=pfsio.readFrame( QFile::encodeName(cachepath+"/original.pfs").constData());
@@ -141,6 +142,7 @@ delete contrastfactorGang; delete saturationfactorGang; delete contrastGang; del
 void TMWidget::mantiukReset() {
 contrastfactorGang->setDefault();
 saturationfactorGang->setDefault();
+detailfactorGang->setDefault();
 }
 void TMWidget::ashikhminReset() {
 contrastGang->setDefault();
@@ -243,6 +245,7 @@ void TMWidget::FillToneMappingOptions() {
 		ToneMappingOptions.tmoperator=mantiuk;
 		ToneMappingOptions.operator_options.mantiukoptions.contrastfactor=contrastfactorGang->v();
 		ToneMappingOptions.operator_options.mantiukoptions.saturationfactor=saturationfactorGang->v();
+		ToneMappingOptions.operator_options.mantiukoptions.detailfactor=detailfactorGang->v();
 		ToneMappingOptions.operator_options.mantiukoptions.contrastequalization=ContrastEqualizCheckBox->isChecked();
 	} else if (current_page==tab_fattal) {
 		ToneMappingOptions.tmoperator=fattal;
@@ -366,6 +369,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "TMO=" << "Mantiuk06" << endl;
 		out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
 		out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
+		out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
 		out << "CONTRASTEQUALIZATION=" << (ContrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
 	} else if (current_page==tab_fattal) {
 		out << "TMO=" << "Fattal02" << endl;
@@ -458,6 +462,8 @@ void TMWidget::fromTxt2Gui() {
 			contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
 		} else if (field=="SATURATIONFACTOR") {
 			saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
+		} else if (field=="DETAILFACTOR") {
+			detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
 		} else if (field=="CONTRASTEQUALIZATION") {
 			ContrastEqualizCheckBox->setChecked((value=="YES"));
 		} else if (field=="SIMPLE") {

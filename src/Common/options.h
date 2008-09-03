@@ -112,6 +112,7 @@ struct tonemapping_options {
 		struct {
 			float contrastfactor;
 			float saturationfactor;
+			float detailfactor;
 			bool  contrastequalization;
 		} mantiukoptions;
 	} operator_options;

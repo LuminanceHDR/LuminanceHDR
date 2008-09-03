@@ -57,5 +57,5 @@ typedef void(*progress_callback)(int progress);
  * @param progress_cb callback function that reports progress
  */
 void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
-			    float contrastFactor, float saturationFactor, bool bcg,
+			    float contrastFactor, float saturationFactor, float detailFactor, bool bcg,
 			    int itmax = 200, float tol = 1e-3, progress_callback progress_cb  = NULL);

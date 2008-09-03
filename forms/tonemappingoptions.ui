@@ -408,6 +408,55 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
+        <layout class="QHBoxLayout" >
+         <property name="margin" >
+          <number>2</number>
+         </property>
+         <property name="spacing" >
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_desc_df" >
+           <property name="text" >
+            <string>Detail Factor</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="detailFactorSlider" >
+           <property name="cursor" >
+            <cursor>13</cursor>
+           </property>
+           <property name="maximum" >
+            <number>990</number>
+           </property>
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QDoubleSpinBox" name="detailFactordsb" >
+           <property name="decimals" >
+            <number>1</number>
+           </property>
+           <property name="minimum" >
+            <double>1.000000000000000</double>
+           </property>
+           <property name="maximum" >
+            <double>99.000000000000000</double>
+           </property>
+           <property name="singleStep" >
+            <double>1.000000000000000</double>
+           </property>
+           <property name="value" >
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer>
          <property name="orientation" >
           <enum>Qt::Vertical</enum>

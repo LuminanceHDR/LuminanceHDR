@@ -58,7 +58,7 @@ signals:
 private:
 	QVector<int> sizes;
 
-	Gang *contrastfactorGang, *saturationfactorGang, *contrastGang, *biasGang, *spatialGang, *rangeGang, *baseGang, *alphaGang, *betaGang, *saturation2Gang, *noiseGang, *multiplierGang, *coneGang, *rodGang, *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *brightnessGang, *chromaticGang, *lightGang, *pregammagang;
+	Gang *contrastfactorGang, *saturationfactorGang, *detailfactorGang, *contrastGang, *biasGang, *spatialGang, *rangeGang, *baseGang, *alphaGang, *betaGang, *saturation2Gang, *noiseGang, *multiplierGang, *coneGang, *rodGang, *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *brightnessGang, *chromaticGang, *lightGang, *pregammagang;
 
 	tonemapping_options ToneMappingOptions;
 	pfs::Frame* &OriginalPfsFrame;

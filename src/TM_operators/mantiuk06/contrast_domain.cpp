@@ -32,6 +32,8 @@
  * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
  *  (more information on the changes:
  *  http://www.damtp.cam.ac.uk/user/ejb48/hdr/index.html)
+ * Updated 2008/07/26 by Dejan Beric <dejan.beric@live.com>
+ *  Added the detail Factor slider which offers more control over contrast in details
  *
  * $Id: contrast_domain.cpp,v 1.9 2008/02/29 16:46:28 rafm Exp $
  */
@@ -105,7 +107,7 @@ static void matrix_show(const char* const text, int rows, int cols, const float*
 
 static float W_table[] = {0.000000,0.010000,0.021180,0.031830,0.042628,0.053819,0.065556,0.077960,0.091140,0.105203,0.120255,0.136410,0.153788,0.172518,0.192739,0.214605,0.238282,0.263952,0.291817,0.322099,0.355040,0.390911,0.430009,0.472663,0.519238,0.570138,0.625811,0.686754,0.753519,0.826720,0.907041,0.995242,1.092169,1.198767,1.316090,1.445315,1.587756,1.744884,1.918345,2.109983,2.321863,2.556306,2.815914,3.103613,3.422694,3.776862,4.170291,4.607686,5.094361,5.636316,6.240338,6.914106,7.666321,8.506849,9.446889,10.499164,11.678143,13.000302,14.484414,16.151900,18.027221,20.138345,22.517282,25.200713,28.230715,31.655611,35.530967,39.920749,44.898685,50.549857,56.972578,64.280589,72.605654,82.100619,92.943020,105.339358,119.530154,135.795960,154.464484,175.919088,200.608905,229.060934,261.894494,299.838552,343.752526,394.651294,453.735325,522.427053,602.414859,695.706358,804.693100,932.229271,1081.727632,1257.276717,1463.784297,1707.153398,1994.498731,2334.413424,2737.298517,3215.770944,3785.169959,4464.187290,5275.653272,6247.520102,7414.094945,8817.590551,10510.080619};
 static float R_table[] = {0.000000,0.009434,0.018868,0.028302,0.037736,0.047170,0.056604,0.066038,0.075472,0.084906,0.094340,0.103774,0.113208,0.122642,0.132075,0.141509,0.150943,0.160377,0.169811,0.179245,0.188679,0.198113,0.207547,0.216981,0.226415,0.235849,0.245283,0.254717,0.264151,0.273585,0.283019,0.292453,0.301887,0.311321,0.320755,0.330189,0.339623,0.349057,0.358491,0.367925,0.377358,0.386792,0.396226,0.405660,0.415094,0.424528,0.433962,0.443396,0.452830,0.462264,0.471698,0.481132,0.490566,0.500000,0.509434,0.518868,0.528302,0.537736,0.547170,0.556604,0.566038,0.575472,0.584906,0.594340,0.603774,0.613208,0.622642,0.632075,0.641509,0.650943,0.660377,0.669811,0.679245,0.688679,0.698113,0.707547,0.716981,0.726415,0.735849,0.745283,0.754717,0.764151,0.773585,0.783019,0.792453,0.801887,0.811321,0.820755,0.830189,0.839623,0.849057,0.858491,0.867925,0.877358,0.886792,0.896226,0.905660,0.915094,0.924528,0.933962,0.943396,0.952830,0.962264,0.971698,0.981132,0.990566,1.000000};
-
+float detailFactor=1.0;
 
 // display matrix in the console (debugging)
 static void matrix_show(const char* const text, int cols, int rows, const float* const data)
@@ -851,6 +853,7 @@ static inline void transform_to_R(const int n, float* const G)
 {
   int sign;
   float absG;
+  const float log10=2.3025850929940456840179914546844*detailFactor;
   for(int j=0;j<n;j++)
     {
       // G to W
@@ -859,7 +862,7 @@ static inline void transform_to_R(const int n, float* const G)
 	sign = -1;
       else
 	sign = 1;	
-      G[j] = (exp10f(absG) - 1.0f) * sign;
+      G[j] = (exp(absG * log10)-1.0f) * sign;
 		
       // W to RESP
       if(G[j] < 0)
@@ -887,6 +890,7 @@ static inline void pyramid_transform_to_R(pyramid_t* pyramid)
 static inline void transform_to_G(const int n, float* const R){
 
   int sign;
+  const float log10=2.3025850929940456840179914546844*detailFactor;//here we are actually changing the base of logarithm
   for(int j=0;j<n;j++){
 	
     // RESP to W
@@ -901,7 +905,7 @@ static inline void transform_to_G(const int n, float* const R){
       sign = -1;
     else
       sign = 1;	
-    R[j] = log10f(fabsf(R[j]) + 1.0f) * sign;
+    R[j] = log(fabsf(R[j]) + 1.0f) / log10 * sign;
 		
   }
 }
@@ -1051,10 +1055,11 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
 
 
 // tone mapping
-void tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, const bool bcg, const int itmax, const float tol, progress_callback progress_cb)
+void tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, const float detailfactor, const bool bcg, const int itmax, const float tol, progress_callback progress_cb)
 {
   
   const int n = c*r;
+  detailFactor=detailfactor;
   
   const float clip_min = 1e-5;
   

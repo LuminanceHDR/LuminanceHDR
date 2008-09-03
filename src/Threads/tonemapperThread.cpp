@@ -33,7 +33,7 @@ pfs::Frame* pfstmo_durand02 (pfs::Frame*,float,float,float);
 pfs::Frame* pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
 pfs::Frame* pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
 pfs::Frame* pfstmo_reinhard05 (pfs::Frame *,float,float,float);
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame*,float,float,bool);
+pfs::Frame* pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool);
 
 // width of the pfs:frame written on disk during resize operation, cannot be the 100% size: originalxsize, because i don't resize to 100% and write to disk.
 int xsize=-1; //-1 means nothing has been computed yet
@@ -153,6 +153,7 @@ void TonemapperThread::run() {
 			result=pfstmo_mantiuk06(workingframe,
 			opts.operator_options.mantiukoptions.contrastfactor,
 			opts.operator_options.mantiukoptions.saturationfactor,
+			opts.operator_options.mantiukoptions.detailfactor,
 			opts.operator_options.mantiukoptions.contrastequalization);
 		break;
 		case fattal:

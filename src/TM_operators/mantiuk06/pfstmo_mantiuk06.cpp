@@ -29,6 +29,8 @@
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
+ * Updated 2008/07/26 by Dejan Beric <dejan.beric@dmsgroup.co.yu>
+ *  Added the detail Factor slider which offers more control over contrast in details
  *
  * $Id: pfstmo_mantiuk06.cpp,v 1.7 2008/02/29 16:46:28 rafm Exp $
  */
@@ -43,12 +45,14 @@ void progress_report( int progress )
       fprintf( stderr, "\n" );
 }
 
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float scalefactor, float saturationfactor, bool constrast_equalization ) {
+pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float scalefactor, float saturationfactor,float detailfactor, bool constrast_equalization ) {
 
 	assert(inpfsframe!=NULL);
 	//get tone mapping parameters;
 	float scaleFactor = scalefactor;
 	float saturationFactor = saturationfactor;
+	//Dejan Beric'c contribution:
+	float detailFactor = detailfactor;
 	if (constrast_equalization)
 		scaleFactor=-scaleFactor;
 	pfs::DOMIO pfsio;
@@ -71,7 +75,7 @@ pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float scalefactor, float sa
 // 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
 	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, Ro, Go, Bo );
 	tmo_mantiuk06_contmap( cols, rows, Ro->getRawData(), Go->getRawData(), Bo->getRawData(),
-	inY->getRawData(), scaleFactor, saturationFactor, bcg, itmax, tol, &progress_report );
+	inY->getRawData(), scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, &progress_report );
 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 
 	outframe->getTags()->setString("LUMINANCE", "RELATIVE");
