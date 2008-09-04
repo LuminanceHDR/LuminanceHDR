@@ -186,31 +186,15 @@ pregammagang->setDefault();
 MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
 	((QStatusBar*)parent)->addWidget(this);
 	setValue(0);
-	removed = false;
 }
 
 MyProgressBar::~MyProgressBar() {
 	((QStatusBar*)parent())->removeWidget(this);
-	removed = true;
 }
 
 void MyProgressBar::mousePressEvent(QMouseEvent *event) {
-	if (event->buttons()==Qt::LeftButton) {
-
-		// TODO: Simplifiy when minimal QT requirements are set...
-		#if QT_VERSION < 0x040200
-				int ret=QMessageBox::warning(this,tr("Aborting..."),tr("Do you really want to abort the tonemapping process?"), QMessageBox::No | QMessageBox::Default, QMessageBox::Yes, QMessageBox::NoButton);
-		#else
-				QMessageBox::StandardButton ret=QMessageBox::warning(0,tr("Aborting..."),tr("Do you really want to abort the tonemapping process?"),
-				QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
-		#endif
-
-		if (ret != QMessageBox::Yes)
-			return;
-
-		if (!removed) // when already finished in the meanwhile
-			emit leftMouseButtonClicked();
-	}
+	if (event->buttons()==Qt::LeftButton)
+		emit leftMouseButtonClicked();
 }
 
 void MyProgressBar::advanceCurrentProgress() {
