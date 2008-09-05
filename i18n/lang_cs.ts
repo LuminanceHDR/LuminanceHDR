@@ -438,39 +438,149 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/Common/commandline.cpp" line="462"/>
+        <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="463"/>
+        <source>Commandline interface to %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="464"/>
+        <source>-h --help              Display this help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="465"/>
+        <source>-v --verbose           Print more messages during execution.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="466"/>
+        <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="467"/>
+        <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="468"/>
+        <source>-c --config            HDR creation config. Possible values: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="471"/>
+        <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="472"/>
+        <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="473"/>
+        <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="474"/>
+        <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="475"/>
+        <source>-t --tmo               Tone mapping operator. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="478"/>
+        <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="488"/>
+        <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="489"/>
+        <source>                       (No tonemapping is performed unless -o is specified).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/Common/commandline.cpp" line="490"/>
-        <source>Usage: %1 [OPTIONS]... [INPUTFILES]...
- <byte value="x9"/>Commandline interface to %2.
-
- <byte value="x9"/>-h --help              Display this help.
- <byte value="x9"/>-v --verbose           Print more messages during execution.
-<byte value="x9"/>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).
- <byte value="x9"/>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).
- <byte value="x9"/>-c --config            HDR creation config. Possible values: 
-<byte value="x9"/><byte value="x9"/>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m 
-<byte value="x9"/><byte value="x9"/>(Default is weight=triangular:response_curve=linear:model=debevec) 
-<byte value="x9"/>-l --load HDR_FILE     Load an HDR instead of creating a new one. 
- <byte value="x9"/>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) 
- <byte value="x9"/>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) 
- <byte value="x9"/>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) 
- <byte value="x9"/>-t --tmo               Tone mapping operator. Legal values are: 
-<byte value="x9"/><byte value="x9"/>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk
- <byte value="x9"/><byte value="x9"/>(Default is mantiuk)
- <byte value="x9"/>-p --tmoptions         Tone mapping operator options. Legal values are: 
-<byte value="x9"/><byte value="x9"/>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)
-<byte value="x9"/><byte value="x9"/>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)
-<byte value="x9"/><byte value="x9"/>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)
-<byte value="x9"/><byte value="x9"/>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)
-<byte value="x9"/><byte value="x9"/>bias=VALUE (for drago)
-<byte value="x9"/><byte value="x9"/>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)
-<byte value="x9"/><byte value="x9"/>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)
-<byte value="x9"/><byte value="x9"/>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)
-<byte value="x9"/><byte value="x9"/>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)
- <byte value="x9"/>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.
- <byte value="x9"/>                       (No tonemapping is performed unless -o is specified).
- <byte value="x9"/>
-You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
+        <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="469"/>
+        <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="470"/>
+        <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="476"/>
+        <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="477"/>
+        <source>(Default is mantiuk)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="479"/>
+        <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="480"/>
+        <source>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="481"/>
+        <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="482"/>
+        <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="483"/>
+        <source>bias=VALUE (for drago)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="484"/>
+        <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="485"/>
+        <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="486"/>
+        <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="487"/>
+        <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2672,7 +2782,7 @@ p, li { white-space: pre-wrap; }
         <translation>CHYBA: Příliš starý soubor, nemohu použít soubor nastavení přemapování:</translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="207"/>
+        <location filename="../src/Common/options.cpp" line="209"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>CHYBA: nemohu použít soubor nastavení přemapování:</translation>
     </message>
@@ -2779,42 +2889,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="279"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="281"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Nahrát soubor nastavení přemapování...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="312"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="314"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui soubor nastavení přemapování (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="423"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="285"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="287"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Soubor není čitelný (zkontrolujte zda existuje, práva,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="310"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="312"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Uložit soubor nastavení přemapování jako...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="339"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="341"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Soubor nelze zapsat (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="403"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="406"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="420"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="423"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Chyba, formát souboru nastavení přemapvání se změnil. Tento (starý) soubor nelze použít v této verzi Qtpfsgui. Vytvořte nový.</translation>
     </message>
@@ -2910,22 +3020,22 @@ p, li { white-space: pre-wrap; }
         <translation>Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2142"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2191"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Obnovit původní hodnoty operátoru</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2161"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2210"/>
         <source>Default Values for operator</source>
         <translation>Původní hodnoty operátoru</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="476"/>
+        <location filename="../forms/tonemappingoptions.ui" line="525"/>
         <source>Fa&amp;ttal</source>
         <translation>Fa&amp;ttal</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="488"/>
+        <location filename="../forms/tonemappingoptions.ui" line="537"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2933,37 +3043,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="509"/>
+        <location filename="../forms/tonemappingoptions.ui" line="558"/>
         <source>Alpha</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="558"/>
+        <location filename="../forms/tonemappingoptions.ui" line="607"/>
         <source>Beta</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="607"/>
+        <location filename="../forms/tonemappingoptions.ui" line="656"/>
         <source>Color Saturation</source>
         <translation>Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="650"/>
+        <location filename="../forms/tonemappingoptions.ui" line="699"/>
         <source>Noise Reduction</source>
         <translation>Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="688"/>
+        <location filename="../forms/tonemappingoptions.ui" line="737"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
         <translation>&quot;Starý&quot; Fattal (před 1.8.4)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="758"/>
+        <location filename="../forms/tonemappingoptions.ui" line="807"/>
         <source>&amp;Drago</source>
         <translation>&amp;Drago</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="770"/>
+        <location filename="../forms/tonemappingoptions.ui" line="819"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2971,17 +3081,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="791"/>
+        <location filename="../forms/tonemappingoptions.ui" line="840"/>
         <source>Bias</source>
         <translation>Síla&lt;br&gt;(Bias)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="892"/>
+        <location filename="../forms/tonemappingoptions.ui" line="941"/>
         <source>&amp;Durand</source>
         <translation>&amp;Durand</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="904"/>
+        <location filename="../forms/tonemappingoptions.ui" line="953"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2989,27 +3099,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="925"/>
+        <location filename="../forms/tonemappingoptions.ui" line="974"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="968"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1017"/>
         <source>Range Kernel Sigma</source>
         <translation>Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1014"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1063"/>
         <source>Base Contrast</source>
         <translation>Základní kontrast&lt;br&gt;(Base Contrast)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1109"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1158"/>
         <source>Reinhard &apos;0&amp;2</source>
         <translation>Reinhard &apos;0&amp;2</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1121"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1170"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3017,42 +3127,42 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1134"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1183"/>
         <source>Use Scales</source>
         <translation>Použít stupnice (Use Scales)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1149"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1198"/>
         <source>Key Value</source>
         <translation>Klíčová hodnota&lt;br&gt;(Key Value)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1192"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1241"/>
         <source>Phi</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1238"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1287"/>
         <source>Range</source>
         <translation>Rozsah&lt;br&gt;(Range)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1302"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1351"/>
         <source>Lower Scale</source>
         <translation>Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1363"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1412"/>
         <source>Upper Scale</source>
         <translation>Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1476"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1525"/>
         <source>Reinhard &apos;0&amp;5</source>
         <translation>Reinhard &apos;0&amp;5</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1488"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1537"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3060,27 +3170,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1509"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1558"/>
         <source>Brightness</source>
         <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1561"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1610"/>
         <source>Chromatic Adaptation</source>
         <translation>Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1607"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1656"/>
         <source>Light Adaptation</source>
         <translation>Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1708"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1757"/>
         <source>&amp;Ashikhmin</source>
         <translation>&amp;Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1720"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1769"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3088,37 +3198,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1741"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1790"/>
         <source>Simple</source>
         <translation>Jednoduchý</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1762"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1811"/>
         <source>Equation Number</source>
         <translation>Číslo rovnice (Equation Number)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1782"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1831"/>
         <source>Eqn 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1800"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1849"/>
         <source>Eqn 4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1833"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1882"/>
         <source>Local Contrast Threshold</source>
         <translation>Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1940"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1989"/>
         <source>&amp;Pattanaik</source>
         <translation>&amp;Pattanaik</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1952"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2001"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3126,119 +3236,124 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1973"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2022"/>
         <source>Multiplier</source>
         <translation>Násobitel&lt;br&gt;(Multiplier)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2019"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2068"/>
         <source>Local Tone Mapping</source>
         <translation>Lokální přemapování (Local Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2026"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2075"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2043"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2092"/>
         <source>Cone Level</source>
         <translation>Úroveň Cone&lt;br&gt;(Cone Level)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2086"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2135"/>
         <source>Rod Level</source>
         <translation>Úroveň Rod&lt;br&gt;(Rod Level)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2214"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2263"/>
         <source>Start tone mapping (CTRL+A).</source>
         <translation>Začít přemapování (CTRL+P).</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2217"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2266"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
         <translation>Použít parametry výše k přemapování na LDR obrázek (pregamma a operátory přemapování).</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2220"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2269"/>
         <source>&amp;Apply</source>
         <translation>&amp;Použít</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2232"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2281"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2298"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2347"/>
         <source>Tone Mapping settings file section</source>
         <translation>Oddíl souboru nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2301"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2350"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Zde můžete nahrát a uložit soubor nastavení přemapování.&lt;br&gt;Taky můžete použít obsah právě nahraného souboru nastavení.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2304"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2353"/>
         <source>Tonemapping settings file</source>
         <translation>Soubor nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2324"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2373"/>
         <source>Save current parameters to a text file</source>
         <translation>Uložit parametry do souboru</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2327"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2376"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Uložit parametry (pregamma a TMO) do souboru.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2330"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2379"/>
         <source>&amp;Save...</source>
         <translation>&amp;Uložit...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2345"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2394"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Nahrát soubor s parametry pregamma a TMO</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2348"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2397"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Nahrát soubor s parametry pregamma a TMO.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2351"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2400"/>
         <source>&amp;Load...</source>
         <translation>&amp;Nahrát...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2375"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2424"/>
         <source>The tone mapping settings file in use</source>
         <translation>Použitý soubor nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2378"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2427"/>
         <source>The tone mapping settings file in use.</source>
         <translation>Použitý soubor nastavení přemapování.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2391"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2440"/>
         <source>Apply fil&amp;e</source>
         <translation>&amp;Použít soubor</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2404"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2453"/>
         <source>Apply Settings File</source>
         <translation>Použít soubor nastavení</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2407"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2456"/>
         <source>Use tone mapping file to generate an LDR.</source>
         <translation>Použít soubor nastavení přemapování k vytvoření LDR obrázku.</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="421"/>
+        <source>Detail Factor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

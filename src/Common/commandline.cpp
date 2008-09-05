@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -458,35 +458,35 @@ int CommandLineInterfaceManager::toIntWithErrMsg(const QString &str) {
 }
 
 void CommandLineInterfaceManager::printHelp(char * progname) {
-	QString help=tr("Usage: %1 [OPTIONS]... [INPUTFILES]...\n \
-	Commandline interface to %2.\n\n \
-	-h --help              Display this help.\n \
-	-v --verbose           Print more messages during execution.\n\
-	-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).\n \
-	-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).\n \
-	-c --config            HDR creation config. Possible values: \n\
-		weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m \n\
-		(Default is weight=triangular:response_curve=linear:model=debevec) \n\
-	-l --load HDR_FILE     Load an HDR instead of creating a new one. \n \
-	-s --save HDR_FILE     Save to a HDR file format. (default: don't save) \n \
-	-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) \n \
-	-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) \n \
-	-t --tmo               Tone mapping operator. Legal values are: \n\
-		ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk\n \
-		(Default is mantiuk)\n \
-	-p --tmoptions         Tone mapping operator options. Legal values are: \n\
-		alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)\n\
-		contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)\n\
-		localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)\n\
-		sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)\n\
-		bias=VALUE (for drago)\n\
-		local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)\n\
-		scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)\n\
-		brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)\n\
-		(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)\n \
-	-o --output LDR_FILE   File name you want to save your tone mapped LDR to.\n \
-	                       (No tonemapping is performed unless -o is specified).\n \
-	\n\
-You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n").arg(progname).arg(progname);
+	QString help=
+tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
+"\t" + tr("Commandline interface to %1.").arg(progname) + "\n\n" +
+"\t" + tr("-h --help              Display this help.") + "\n" +
+"\t" + tr("-v --verbose           Print more messages during execution.") + "\n" +
+"\t" + tr("-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).") + "\n" +
+"\t" + tr("-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).") + "\n" +
+"\t" + tr("-c --config            HDR creation config. Possible values: ") + "\n" +
+"\t\t" + tr("weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m") + "\n" +
+"\t\t" + tr("(Default is weight=triangular:response_curve=linear:model=debevec) ") + "\n" +
+"\t" + tr("-l --load HDR_FILE     Load an HDR instead of creating a new one. ") + "\n" +
+"\t" + tr("-s --save HDR_FILE     Save to a HDR file format. (default: don't save) ") + "\n" +
+"\t" + tr("-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) ") + "\n" +
+"\t" + tr("-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) ") + "\n" +
+"\t" + tr("-t --tmo               Tone mapping operator. Legal values are: ") + "\n" +
+"\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk") + "\n" +
+"\t\t" + tr("(Default is mantiuk)") + "\n" +
+"\t" + tr("-p --tmoptions         Tone mapping operator options. Legal values are: ") + "\n" +
+"\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
+"\t\t" + tr("contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)") + "\n" +
+"\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
+"\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
+"\t\t" + tr("bias=VALUE (for drago)") + "\n" +
+"\t\t" + tr("local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)") + "\n" +
+"\t\t" + tr("scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)") + "\n" +
+"\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
+"\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
+"\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
+"\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
+tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
 	fprintf(stderr,qPrintable(help));
 }
