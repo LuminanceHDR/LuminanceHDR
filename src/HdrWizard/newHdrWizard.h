@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -39,7 +39,7 @@ class HdrWizardForm : public QDialog, private Ui::HdrWizardForm
 Q_OBJECT
 
 public:
-	HdrWizardForm(QWidget *parent);
+	HdrWizardForm(QWidget *parent, QStringList files);
 	~HdrWizardForm();
 	pfs::Frame* getPfsFrameHDR() {return PfsFrameHDR;}
 	QString getCaptionTEXT();
@@ -47,8 +47,13 @@ public:
 protected:
 	void resizeEvent(QResizeEvent *);
 	void keyPressEvent(QKeyEvent *);
+	virtual void dragEnterEvent(QDragEnterEvent *);
+	virtual void dropEvent(QDropEvent *);
+
 private:
 	QString getQStringFromConfig( int type );
+	void loadInputFiles(QStringList files, int count);
+
 	Gang *EVgang;
 
 	HdrCreationManager *hdrCreationManager;
@@ -67,7 +72,7 @@ private slots:
 	void fileLoaded(int index, QString fname, float expotime);
 	void finishedLoadingInputFiles(QStringList NoExifFiles);
 	void errorWhileLoading(QString errormessage);
-	
+
 	void updateGraphicalEVvalue(float expotime, int index_in_table);
 	void finishedAligning();
 

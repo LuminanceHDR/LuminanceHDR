@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -24,6 +24,7 @@
 #include <QStringList>
 #include <QFileDialog>
 #include <QDir>
+#include <QUrl>
 #include <QMessageBox>
 #include <QProcess>
 #include <QTextStream>
@@ -34,8 +35,9 @@
 #include "editingTools.h"
 #include "../Common/config.h"
 
-HdrWizardForm::HdrWizardForm(QWidget *p) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
+HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
+	setAcceptDrops(true);
 
 	weights_in_gui[0]=TRIANGULAR;
 	weights_in_gui[1]=GAUSSIAN;
@@ -93,10 +95,14 @@ HdrWizardForm::HdrWizardForm(QWidget *p) : QDialog(p), hdrCreationManager(NULL),
 
 	connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
 
+	if (files.size()) {
+		loadInputFiles(files, files.size());
+	}
 }
 
 void HdrWizardForm::loadImagesButtonClicked() {
     QString filetypes;
+    // when changing these filetypes, also change in DnDOption - for Drag and Drop
     filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;");
     filetypes += tr("JPEG (*.jpeg *.jpg);;");
     filetypes += tr("TIFF Images (*.tiff *.tif);;");
@@ -115,14 +121,37 @@ void HdrWizardForm::loadImagesButtonClicked() {
 		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 
+	loadInputFiles(files, files.count());
+    } //if (!files.isEmpty())
+}
+
+void HdrWizardForm::dragEnterEvent(QDragEnterEvent *event) {
+	if (loadImagesButton->isEnabled())
+		event->acceptProposedAction();
+}
+
+void HdrWizardForm::dropEvent(QDropEvent *event) {
+
+	if (event->mimeData()->hasUrls()) {
+		QList<QUrl> list =  event->mimeData()->urls();
+		QStringList files;
+		for (int i = 0; i < list.size(); ++i) {
+			files.append(list.at(i).toLocalFile());
+		}
+		// The file(-content) check is done later on by cdraw and others
+		loadInputFiles(files, list.size());
+	}
+	event->acceptProposedAction();
+}
+
+void HdrWizardForm::loadInputFiles(QStringList files, int count) {
 	tableWidget->setEnabled(false);
-	tableWidget->setRowCount(files.count());
-	progressBar->setMaximum(files.count());
+	tableWidget->setRowCount(count);
+	progressBar->setMaximum(count);
 	progressBar->setValue(0);
 
 	hdrCreationManager->setFileList(files);
 	hdrCreationManager->loadInputFiles();
-    } //if (!files.isEmpty())
 }
 
 void HdrWizardForm::fileLoaded(int index, QString fname, float expotime) {
@@ -320,6 +349,7 @@ void HdrWizardForm::NextFinishButtonClicked() {
 			alignGroupBox->setDisabled(TRUE);
 			EVgroupBox->setDisabled(TRUE);
 			tableWidget->setDisabled(TRUE);
+			this->repaint();
 			switch (alignmentEngineCB->currentIndex()) {
 				case 0: //Hugin's align_image_stack
 				hdrCreationManager->align_with_ais();
@@ -477,7 +507,7 @@ void HdrWizardForm::editingEVfinished() {
 	hdrCreationManager->setEV(ImageEVdsb->value(),tableWidget->currentRow());
 	if (hdrCreationManager->getFilesLackingExif().size()==0) {
 		NextFinishButton->setEnabled(TRUE);
-		//give an offset to the EV values if they are outside of the -10..10 range. 
+		//give an offset to the EV values if they are outside of the -10..10 range.
 		hdrCreationManager->checkEVvalues();
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.</b></h3></font></center>"));
 	} else {

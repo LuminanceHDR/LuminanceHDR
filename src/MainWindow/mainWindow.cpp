@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>
@@ -36,6 +37,7 @@
 #include "../TransplantExif/transplant.h"
 #include "../Batch/batch_dialog.h"
 #include "../Threads/loadHdrThread.h"
+#include "DndOption.h"
 #include "../Common/config.h"
 #include "hdrviewer.h"
 #include "../Common/global.h"
@@ -46,6 +48,8 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
 MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
+	setAcceptDrops(true);
+
 	//main toolbar setup
 	QActionGroup *toolBarOptsGroup = new QActionGroup(this);
 	toolBarOptsGroup->addAction(actionText_Under_Icons);
@@ -56,6 +60,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	workspace = new QWorkspace(this);
 	workspace->setScrollBarsEnabled( TRUE );
+	workspace->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
 	setCentralWidget(workspace);
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
@@ -116,15 +121,15 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	updateRecentFileActions();
 
 	//this->showMaximized();
-	
+
 	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
 }
 
-void MainGui::fileNewViaWizard() {
+void MainGui::fileNewViaWizard(QStringList files) {
 	HdrWizardForm *wizard;
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
-		wizard=new HdrWizardForm (this);
+		wizard=new HdrWizardForm (this, files);
 		if (wizard->exec() == QDialog::Accepted) {
 			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
@@ -429,10 +434,10 @@ void MainGui::setCurrentFile(const QString &fileName) {
 
 void MainGui::updateRecentFileActions() {
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
-	
+
 	int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 	separatorRecentFiles->setVisible(numRecentFiles > 0);
-	
+
 	for (int i = 0; i < numRecentFiles; ++i) {
 		QString text = QString("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
 		recentFileActs[i]->setText(text);
@@ -512,6 +517,38 @@ void MainGui::load_options() {
 		actionText_Under_Icons->setChecked(true);
 	break;
 	}
+}
+
+void MainGui::dragEnterEvent(QDragEnterEvent *event) {
+	event->acceptProposedAction();
+}
+
+void MainGui::dropEvent(QDropEvent *event) {
+
+	if (event->mimeData()->hasUrls()) {
+		QList<QUrl> list =  event->mimeData()->urls();
+		QStringList files;
+		for (int i = 0; i < list.size(); ++i) {
+			files.append(list.at(i).toLocalFile());
+		}
+
+		DndOptionDialog dndOption(this, files);
+		dndOption.exec();
+
+		switch (dndOption.result) {
+		case 1: // create new using LDRS
+			fileNewViaWizard(files);
+			break;
+		case 2: // openHDRs
+			foreach (QString file, files) {
+				setupLoadThread(file);
+			}
+			break;
+		}
+		// The file(-content) check is done later on by cdraw and others
+		//loadInputFiles(files, list.size());
+	}
+	event->acceptProposedAction();
 }
 
 MainGui::~MainGui() {
