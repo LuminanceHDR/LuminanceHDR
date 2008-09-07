@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
+#include <QUrl>
 #include "config.h"
 #include "options.h"
 #include "global.h"
@@ -80,4 +81,28 @@ QString saveLDRImage(const QString initialFileName, const QImage* image) {
 	} //if (fd->exec())
 	delete fd;
 	return outfname;
+}
+
+bool matchesLdrFilename(QString file) {
+	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
+	return exp.exactMatch(file);
+}
+
+bool matchesHdrFilename(QString file) {
+	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
+	return exp.exactMatch(file);
+}
+
+bool matchesValidHDRorLDRfilename(QString file) {
+	return matchesLdrFilename(file) || matchesHdrFilename(file);
+}
+
+QStringList convertUrlListToFilenameList(QList<QUrl> urls) {
+	QStringList files;
+	for (int i = 0; i < urls.size(); ++i) {
+		QString localFile = urls.at(i).toLocalFile();
+		if (matchesValidHDRorLDRfilename(localFile))
+			files.append(localFile);
+	}
+	return files;
 }

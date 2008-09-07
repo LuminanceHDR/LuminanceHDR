@@ -41,8 +41,6 @@ protected slots:
 public:
 	int result; // 1=newHDR, 2=openHDR
 private:
-	bool matchesLdrFilename(QString file);
-	bool matchesHdrFilename(QString file);
 	Ui::DnDOption ui;
 
 };

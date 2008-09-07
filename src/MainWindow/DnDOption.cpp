@@ -21,6 +21,7 @@
  */
 
 #include "DnDOption.h"
+#include "../Common/global.h"
 #include <QRegExp>
 
 DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
@@ -53,15 +54,4 @@ void DnDOptionDialog::on_btnCreateNewHDR_clicked() {
 void DnDOptionDialog::on_btnOpenHDR_clicked() {
 	result = 2;
 	QDialog::accept();
-}
-
-// TODO: Extract to global class as a global function
-bool DnDOptionDialog::matchesLdrFilename(QString file) {
-	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
-	return exp.exactMatch(file);
-}
-
-bool DnDOptionDialog::matchesHdrFilename(QString file) {
-	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
-	return exp.exactMatch(file);
 }

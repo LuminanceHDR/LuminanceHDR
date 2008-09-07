@@ -526,27 +526,22 @@ void MainGui::dragEnterEvent(QDragEnterEvent *event) {
 void MainGui::dropEvent(QDropEvent *event) {
 
 	if (event->mimeData()->hasUrls()) {
-		QList<QUrl> list =  event->mimeData()->urls();
-		QStringList files;
-		for (int i = 0; i < list.size(); ++i) {
-			files.append(list.at(i).toLocalFile());
-		}
+		QStringList files = convertUrlListToFilenameList(event->mimeData()->urls());
+		if (files.size() > 0) {
+			DnDOptionDialog dndOption(this, files);
+			dndOption.exec();
 
-		DnDOptionDialog dndOption(this, files);
-		dndOption.exec();
-
-		switch (dndOption.result) {
-		case 1: // create new using LDRS
-			fileNewViaWizard(files);
-			break;
-		case 2: // openHDRs
-			foreach (QString file, files) {
-				setupLoadThread(file);
+			switch (dndOption.result) {
+			case 1: // create new using LDRS
+				fileNewViaWizard(files);
+				break;
+			case 2: // openHDRs
+				foreach (QString file, files) {
+					setupLoadThread(file);
+				}
+				break;
 			}
-			break;
 		}
-		// The file(-content) check is done later on by cdraw and others
-		//loadInputFiles(files, list.size());
 	}
 	event->acceptProposedAction();
 }

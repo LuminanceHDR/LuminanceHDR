@@ -133,13 +133,9 @@ void HdrWizardForm::dragEnterEvent(QDragEnterEvent *event) {
 void HdrWizardForm::dropEvent(QDropEvent *event) {
 
 	if (event->mimeData()->hasUrls()) {
-		QList<QUrl> list =  event->mimeData()->urls();
-		QStringList files;
-		for (int i = 0; i < list.size(); ++i) {
-			files.append(list.at(i).toLocalFile());
-		}
-		// The file(-content) check is done later on by cdraw and others
-		loadInputFiles(files, list.size());
+		QStringList files = convertUrlListToFilenameList(event->mimeData()->urls());
+		if (files.size() > 0)
+			loadInputFiles(files, files.size());
 	}
 	event->acceptProposedAction();
 }
