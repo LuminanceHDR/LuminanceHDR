@@ -37,7 +37,7 @@
 #include "../TransplantExif/transplant.h"
 #include "../Batch/batch_dialog.h"
 #include "../Threads/loadHdrThread.h"
-#include "DndOption.h"
+#include "DnDOption.h"
 #include "../Common/config.h"
 #include "hdrviewer.h"
 #include "../Common/global.h"
@@ -532,7 +532,7 @@ void MainGui::dropEvent(QDropEvent *event) {
 			files.append(list.at(i).toLocalFile());
 		}
 
-		DndOptionDialog dndOption(this, files);
+		DnDOptionDialog dndOption(this, files);
 		dndOption.exec();
 
 		switch (dndOption.result) {

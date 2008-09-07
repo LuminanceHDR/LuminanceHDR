@@ -27,12 +27,12 @@
 #include <QStringList>
 #include "../../generated_uic/ui_dndoption.h"
 
-class DndOptionDialog : public QDialog
+class DnDOptionDialog : public QDialog
 {
 Q_OBJECT
 public:
-	DndOptionDialog(QWidget *parent, QStringList files);
-	~DndOptionDialog();
+	DnDOptionDialog(QWidget *parent, QStringList files);
+	~DnDOptionDialog();
 
 protected slots:
 	void on_btnCancel_clicked();

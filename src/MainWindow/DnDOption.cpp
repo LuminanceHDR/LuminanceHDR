@@ -20,10 +20,10 @@
  * @author Daniel Kaneider
  */
 
-#include "DndOption.h"
+#include "DnDOption.h"
 #include <QRegExp>
 
-DndOptionDialog::DndOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
+DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
 	ui.setupUi(this);
 	result = -1;
 	bool areAllHDRs = true;
@@ -38,30 +38,30 @@ DndOptionDialog::DndOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
 		QDialog::accept();
 }
 
-DndOptionDialog::~DndOptionDialog() {
+DnDOptionDialog::~DnDOptionDialog() {
 }
 
-void DndOptionDialog::on_btnCancel_clicked() {
+void DnDOptionDialog::on_btnCancel_clicked() {
 	QDialog::accept();
 }
 
-void DndOptionDialog::on_btnCreateNewHDR_clicked() {
+void DnDOptionDialog::on_btnCreateNewHDR_clicked() {
 	result = 1;
 	QDialog::accept();
 }
 
-void DndOptionDialog::on_btnOpenHDR_clicked() {
+void DnDOptionDialog::on_btnOpenHDR_clicked() {
 	result = 2;
 	QDialog::accept();
 }
 
 // TODO: Extract to global class as a global function
-bool DndOptionDialog::matchesLdrFilename(QString file) {
+bool DnDOptionDialog::matchesLdrFilename(QString file) {
 	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool DndOptionDialog::matchesHdrFilename(QString file) {
+bool DnDOptionDialog::matchesHdrFilename(QString file) {
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
