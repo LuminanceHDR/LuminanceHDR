@@ -178,61 +178,63 @@ void MainGui::fileSaveAs()
 {
 	if (currenthdr==NULL)
 		return;
-	QStringList filetypes;
-	filetypes += tr("All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)");
-	filetypes += "OpenEXR (*.exr)";
-	filetypes += "Radiance RGBE (*.hdr *.pic)";
-	filetypes += "HDR TIFF (*.tiff *.tif)";
+
+	QString filetypes = tr("All Hdr formats ");
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs);;" ;
+	filetypes += "OpenEXR (*.exr);;" ;
+	filetypes += "Radiance RGBE (*.hdr *.pic);;";
+	filetypes += "HDR TIFF (*.tiff *.tif);;";
 	filetypes += "PFS Stream (*.pfs)";
 
-	QFileDialog *fd = new QFileDialog(this);
-	fd->setWindowTitle(tr("Save the HDR..."));
-	fd->setDirectory(RecentDirHDRSetting);
-	fd->setFileMode(QFileDialog::AnyFile);
-	fd->setFilters(filetypes);
-	fd->setAcceptMode(QFileDialog::AcceptSave);
-	fd->setConfirmOverwrite(true);
-	fd->setDefaultSuffix("exr");
-	if (fd->exec()) {
-		QString fname=(fd->selectedFiles()).at(0);
-		if(!fname.isEmpty()) {
-			QFileInfo qfi(fname);
-			QString absoluteFileName=qfi.absoluteFilePath();
-			char* encodedName=strdup(QFile::encodeName(absoluteFileName).constData());
-			// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-			if (RecentDirHDRSetting != qfi.path() )
-				// update internal field variable
-				updateRecentDirHDRSetting(qfi.path());
+	QString fname = QFileDialog::getSaveFileName(
+			this,
+			tr("Save the HDR..."),
+			RecentDirHDRSetting,
+			filetypes
+	);
 
-			if (qfi.suffix().toUpper()=="EXR") {
-				writeEXRfile  (currenthdr->getHDRPfsFrame(),encodedName);
-			} else if (qfi.suffix().toUpper()=="HDR") {
-				writeRGBEfile (currenthdr->getHDRPfsFrame(), encodedName);
-			} else if (qfi.suffix().toUpper().startsWith("TIF")) {
-				TiffWriter tiffwriter(encodedName, currenthdr->getHDRPfsFrame());
-				if (qtpfsgui_options->saveLogLuvTiff)
-					tiffwriter.writeLogLuvTiff();
-				else
-					tiffwriter.writeFloatTiff();
-			} else if (qfi.suffix().toUpper()=="PFS") {
-				pfs::DOMIO pfsio;
-				(currenthdr->getHDRPfsFrame())->convertRGBChannelsToXYZ();
-				pfsio.writeFrame(currenthdr->getHDRPfsFrame(),encodedName);
-				(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
-			} else {
-				QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),
-				QMessageBox::Ok,QMessageBox::NoButton);
-				delete fd;
-				return;
-			}
+	if(!fname.isEmpty()) {
+		QFileInfo qfi(fname);
+		QString absoluteFileName=qfi.absoluteFilePath();
+		char* encodedName=strdup(QFile::encodeName(absoluteFileName).constData());
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+		if (RecentDirHDRSetting != qfi.path() )
+			// update internal field variable
+			updateRecentDirHDRSetting(qfi.path());
+
+		if (qfi.suffix().toUpper()=="EXR") {
+			writeEXRfile  (currenthdr->getHDRPfsFrame(),encodedName);
+		} else if (qfi.suffix().toUpper()=="HDR") {
+			writeRGBEfile (currenthdr->getHDRPfsFrame(), encodedName);
+		} else if (qfi.suffix().toUpper().startsWith("TIF")) {
+			TiffWriter tiffwriter(encodedName, currenthdr->getHDRPfsFrame());
+			if (qtpfsgui_options->saveLogLuvTiff)
+				tiffwriter.writeLogLuvTiff();
+			else
+				tiffwriter.writeFloatTiff();
+		} else if (qfi.suffix().toUpper()=="PFS") {
+			pfs::DOMIO pfsio;
+			(currenthdr->getHDRPfsFrame())->convertRGBChannelsToXYZ();
+			pfsio.writeFrame(currenthdr->getHDRPfsFrame(),encodedName);
+			(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
+		} else {
+			// TODO: [QT 4.5] This is not needed for windows (bug will be fixed in QT 4.5..?)
+
+			// Default as EXR
 			free(encodedName);
-			setCurrentFile(absoluteFileName);
-			currenthdr->NeedsSaving=false;
-			currenthdr->filename=absoluteFileName;
-			currenthdr->setWindowTitle(absoluteFileName);
+			absoluteFileName = absoluteFileName + ".exr";
+			encodedName = strdup(QFile::encodeName(absoluteFileName).constData());
+			writeEXRfile  (currenthdr->getHDRPfsFrame(),encodedName);
+//			QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),
+//			QMessageBox::Ok,QMessageBox::NoButton);
+//			return;
 		}
-	} //if (fd->exec())
-	delete fd;
+		free(encodedName);
+		setCurrentFile(absoluteFileName);
+		currenthdr->NeedsSaving=false;
+		currenthdr->filename=absoluteFileName;
+		currenthdr->setWindowTitle(absoluteFileName);
+	}
 }
 
 void MainGui::saveHdrPreview() {

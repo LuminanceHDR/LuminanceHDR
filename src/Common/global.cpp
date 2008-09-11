@@ -35,51 +35,34 @@ QSettings settings("Qtpfsgui", "Qtpfsgui");
  * \return "" when fail, out file name when successful
  */
 QString saveLDRImage(const QString initialFileName, const QImage* image) {
-	QString outfname="";
-	QStringList filetypes;
-	filetypes += QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)");
-	filetypes += "JPEG (*.jpg *.jpeg)";
-	filetypes += "PNG (*.png)";
-	filetypes += "PPM PBM (*.ppm *.pbm)";
+	QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;");
+	filetypes += "JPEG (*.jpg *.jpeg);;" ;
+	filetypes += "PNG (*.png);;" ;
+	filetypes += "PPM PBM (*.ppm *.pbm);;";
 	filetypes += "BMP (*.bmp)";
-	QFileDialog *fd = new QFileDialog;
-	fd->setWindowTitle(QObject::tr("Save the LDR to..."));
-	fd->setDirectory( settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString() );
-	fd->selectFile(initialFileName);
-	fd->setFileMode(QFileDialog::AnyFile);
-	fd->setFilters(filetypes);
-	fd->setAcceptMode(QFileDialog::AcceptSave);
-	fd->setConfirmOverwrite(true);
-	if (fd->exec()) {
-		outfname=(fd->selectedFiles()).at(0);
-		if(!outfname.isEmpty()) {
-			QFileInfo qfi(outfname);
-			//save settings
-			settings.setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
-			QString format=qfi.suffix();
-			if (qfi.suffix().isEmpty()) {
-				QString usedfilter=fd->selectedFilter();
-				if (usedfilter.startsWith("PNG")) {
-					format="png";
-					outfname+=".png";
-				} else if (usedfilter.startsWith("JPEG")) {
-					format="jpeg";
-					outfname+=".jpg";
-				} else if (usedfilter.startsWith("PPM")) {
-					format="ppm";
-					outfname+=".ppm";
-				} else if (usedfilter.startsWith("BMP")) {
-					format="bmp";
-					outfname+=".bmp";
-				}
-			}
-			if(!(image->save(outfname,format.toAscii().constData(),100))) {
-				QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
-				return "";
-			}
-		} //if(!outfname.isEmpty())
-	} //if (fd->exec())
-	delete fd;
+
+	QString outfname = QFileDialog::getSaveFileName(
+			0,
+			QObject::tr("Save the LDR to..."),
+			QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
+			filetypes
+	);
+
+	if(!outfname.isEmpty()) {
+		QFileInfo qfi(outfname);
+		//save settings
+		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
+		QString format=qfi.suffix();
+		if (qfi.suffix().isEmpty()) {
+			// default as png
+			format="png";
+			outfname+=".png";
+		}
+		if(!(image->save(outfname,format.toAscii().constData(),100))) {
+			QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
+			return "";
+		}
+	} //if(!outfname.isEmpty())
 	return outfname;
 }
 

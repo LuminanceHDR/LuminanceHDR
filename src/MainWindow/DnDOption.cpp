@@ -37,6 +37,8 @@ DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
 	ui.btnOpenHDR->setEnabled(areAllHDRs);
 	if (!(areAllHDRs || areAllLDRs))
 		QDialog::accept();
+	else
+		activateWindow();
 }
 
 DnDOptionDialog::~DnDOptionDialog() {
