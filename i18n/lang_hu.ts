@@ -852,6 +852,34 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>DnDOption</name>
+    <message>
+        <location filename="../forms/dndoption.ui" line="22"/>
+        <source>Drag and drop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="44"/>
+        <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="72"/>
+        <source>Open as existing HDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="87"/>
+        <source>Create a new HDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="105"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditingTools</name>
     <message>
         <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
@@ -1342,7 +1370,7 @@ p, li { white-space: pre-wrap; }
         <translation>Súlyozó függvény:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="470"/>
         <source>Triangular</source>
         <translation>Háromszögelő</translation>
     </message>
@@ -1352,12 +1380,12 @@ p, li { white-space: pre-wrap; }
         <translation>Válaszgörbe:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="481"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="492"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -1367,7 +1395,7 @@ p, li { white-space: pre-wrap; }
         <translation>Szellemképcsökkentő (kísérleti!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="479"/>
         <source>Linear</source>
         <translation>Egyenes arányú</translation>
     </message>
@@ -1401,12 +1429,12 @@ profilok nem vezetnek jó eredményre)</translation>
         <translation>Súlyok:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="448"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="474"/>
         <source>Gaussian</source>
         <translation>Gauß</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="472"/>
         <source>Plateau</source>
         <translation>Fennsík</translation>
     </message>
@@ -1445,7 +1473,7 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation>Válassza ki a típust:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="468"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="494"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
@@ -1455,7 +1483,7 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="obsolete">&lt; Vissz&amp;a</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="271"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Előre</translation>
     </message>
@@ -1470,12 +1498,12 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="obsolete">Minden fájltípus (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="108"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>TIFF képek (*.tiff *.tif);;</translation>
     </message>
@@ -1485,7 +1513,7 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="obsolete">Nyers képek (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="113"/>
         <source>Select the input images</source>
         <translation>Feldolgozandó képek kiválasztása</translation>
     </message>
@@ -1495,52 +1523,52 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="obsolete">Tiff hiba</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="177"/>
         <source>EXIF data not found</source>
         <translation>Nincsenek EXIF adatok</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="377"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
         <source>&amp;Finish</source>
         <translation>&amp;Befejezés</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="389"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="415"/>
         <source>Load a camera response curve file</source>
         <translation>Fényképezőgép válaszgörbéjének a betöltése</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="429"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Fényképezőgép válaszgörbéje (*.m);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source>(*) Weights: </source>
         <translation>(*) Súlyok: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source> - Response curve: </source>
         <translation> - Válaszgörbe: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source> - Model: </source>
         <translation> - Típus: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="483"/>
         <source>Logarithmic</source>
         <translation>Logaritmikus</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="485"/>
         <source>From Calibration</source>
         <translation>A kalibrálásból eredő</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="487"/>
         <source>From File</source>
         <translation>Fájlból</translation>
     </message>
@@ -1599,12 +1627,12 @@ a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt
         <translation type="obsolete">Itt lehet beállítani a&lt;br&gt;kijelölt kép&lt;br&gt;megvilágítási különbségét&lt;br&gt;(EV-ben vagy rekeszértékben)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="141"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="166"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Betöltött képek.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="484"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="510"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;A továbbiakhoz kézzel meg kell adni a megvilágítási értékeket.&lt;br&gt;Ebből kell még &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; darab.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
@@ -1614,7 +1642,7 @@ a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt
         <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Igazítás...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="239"/>
         <source>Error...</source>
         <translation>Hiba...</translation>
     </message>
@@ -1711,27 +1739,27 @@ for current image</source>
         <translation>Mentés másként...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="52"/>
         <source>Image Filename</source>
         <translation>Képfájl neve</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="52"/>
         <source>Exposure</source>
         <translation>Megvilágítás</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="106"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
         <translation>Minden fájltípus (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="109"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation>Nyers képek (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw*.sr2)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1741,42 +1769,42 @@ a következő képekben: &lt;ul&gt;<byte value="x9"/>%1&lt;/ul&gt;<byte value="x
 a következő EXIF adatokat kell tartalmazniuk: <byte value="x9"/>&lt;ul&gt;&lt;li&gt;sebesség&lt;/li&gt;<byte value="x9"/>&lt;li&gt;rekesz&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;UTALÁS:&lt;/b&gt; Az EXIF adatok általában a megelőző feldolgozás folyamán vesznek el.&lt;br&gt;<byte value="x9"/>EXIF címkéket &lt;b&gt;egy az egyben&lt;/b&gt; át lehet másolni két képgyűjtemény között az &lt;i&gt;&lt;b&gt;&quot;Eszközök-&gt;EXIF adatok másolása...&quot;&lt;/b&gt;&lt;/i&gt; menüpont alatt.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="201"/>
         <source>Loading Error</source>
         <translation>Hiba megnyitás közben</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="217"/>
         <source>Unknown </source>
         <translation>Ismeretlen </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="230"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Nem indult el ez a külső program: &quot;align_image_stack&quot;.&lt;br&gt;Kérem olvassa el a &quot;Súgó -&gt; Dokumentáció... -&gt; Hints and tips&quot; fejezetét.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="233"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>Az &quot;align_image_stack&quot; külső folyamat bedöglött...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="239"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Ismeretlen hiba történt a &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; folyamatban...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="343"/>
         <source>Aligning...</source>
         <translation>Igazítás...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="427"/>
         <source>Save a camera response curve file</source>
         <translation>Fényképezőgép válaszgörbéjének a mentése</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="508"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Minden megvilágítási érték rögzítve&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -2247,7 +2275,7 @@ p, li { white-space: pre-wrap; }
         <translation>Egymás mögé</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="461"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
         <source>Aborting...</source>
         <translation>Megszakítás...</translation>
     </message>
@@ -2257,7 +2285,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">A fájl olvashatatlan (ellenőrizze, hogy van-e ilyen fájl, ill. hogy a jogai engedélyezik-e)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
         <source>Save the HDR...</source>
         <translation>HDR kép mentése...</translation>
     </message>
@@ -2267,12 +2295,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr; csak linuxon) &lt;br&gt;fájltípusokat támogatja.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
         <source>Error...</source>
         <translation>Hiba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
         <source>Unsaved changes...</source>
         <translation>Fennálló változtatások...</translation>
     </message>
@@ -2327,24 +2355,24 @@ p, li { white-space: pre-wrap; }
         <translation>HDR képet átméretezni (kicsinyíteni vagy nagyítani)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="121"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Kész... Most lehet készíteni vagy meg lehet nyitni egy HDR képet!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="141"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
         <source>All Hdr formats </source>
         <translation>Mindennemű HDR fájltípus </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="150"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
         <source>Load an Hdr file...</source>
         <translation>HDR kép megnyitása...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="177"/>
         <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
-        <translation>Minden HDR fájltípus (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
+        <translation type="obsolete">Minden HDR fájltípus (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/maingui_impl.cpp" line="549"/>
@@ -2427,7 +2455,7 @@ p, li { white-space: pre-wrap; }
         <translation>Qtpfsgui beállítását elvégezni</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui egy gyorsítótárban őrzi az ideiglenes fájljait, de a kijelölt mappa nem érvényes.&lt;br&gt;Válasszon egy másik útvonalat az Eszközök -&gt; Beállítások... -&gt; árnyalatnövelés menüpont segítségével.</translation>
     </message>
@@ -2474,15 +2502,15 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="218"/>
         <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
-        <translation>Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr) fájltípusokat támogatja.</translation>
+        <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr) fájltípusokat támogatja.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Kilépni ennek ellenére?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="599"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
@@ -3249,17 +3277,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/global.cpp" line="39"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation>Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+        <translation type="obsolete">Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="45"/>
+        <location filename="../src/Common/global.cpp" line="46"/>
         <source>Save the LDR to...</source>
         <translation>LDR kép mentése...</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="76"/>
+        <location filename="../src/Common/global.cpp" line="62"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation>Mentés nem sikerült &lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="38"/>
+        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

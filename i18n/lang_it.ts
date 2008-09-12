@@ -585,6 +585,34 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
     </message>
 </context>
 <context>
+    <name>DnDOption</name>
+    <message>
+        <location filename="../forms/dndoption.ui" line="22"/>
+        <source>Drag and drop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="44"/>
+        <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="72"/>
+        <source>Open as existing HDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="87"/>
+        <source>Create a new HDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="105"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditingTools</name>
     <message>
         <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
@@ -1065,7 +1093,7 @@ p, li { white-space: pre-wrap; }
         <translation>Funzione dei pesi:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="444"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="470"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
@@ -1075,12 +1103,12 @@ p, li { white-space: pre-wrap; }
         <translation>Curva di risposta:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="455"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="481"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="492"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -1090,7 +1118,7 @@ p, li { white-space: pre-wrap; }
         <translation>Anti-ghosting(beta!)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="479"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
@@ -1125,12 +1153,12 @@ dei risultati soddisfacenti)</translation>
         <translation>Pesi:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="448"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="474"/>
         <source>Gaussian</source>
         <translation>Gaussiana</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="446"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="472"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -1159,12 +1187,12 @@ dei pixel&lt;/p&gt;</translation>
         <translation>Scegli Modello:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="468"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="494"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="271"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Avanti &gt;</translation>
     </message>
@@ -1189,12 +1217,12 @@ dei pixel&lt;/p&gt;</translation>
         <translation type="obsolete">Tutti i formati (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="101"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
         <source>JPEG (*.jpeg *.jpg);;</source>
         <translation>JPEG (*.jpeg *.jpg);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="102"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="108"/>
         <source>TIFF Images (*.tiff *.tif);;</source>
         <translation>Immagini TIFF (*.tiff *.tif);;</translation>
     </message>
@@ -1204,57 +1232,57 @@ dei pixel&lt;/p&gt;</translation>
         <translation type="obsolete">Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="152"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="177"/>
         <source>EXIF data not found</source>
         <translation>Dati EXIF non trovati</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="429"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source>(*) Weights: </source>
         <translation>(*) Pesi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source> - Response curve: </source>
         <translation> - Curva di risposta: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="463"/>
         <source> - Model: </source>
         <translation> - Modello: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="457"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="483"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="485"/>
         <source>From Calibration</source>
         <translation>Via calibrazione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="487"/>
         <source>From File</source>
         <translation>Da File</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="389"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="415"/>
         <source>Load a camera response curve file</source>
         <translation>Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="113"/>
         <source>Select the input images</source>
         <translation>Carica le immagini iniziali</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="377"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="403"/>
         <source>&amp;Finish</source>
         <translation>&amp;Termina</translation>
     </message>
@@ -1292,17 +1320,17 @@ p, li { white-space: pre-wrap; }
         <translation>align_image_stack</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="141"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="166"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Immagini Caricate.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="484"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="510"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;Per procedere devi impostare manualmente i valori di esposizione.&lt;br&gt;Mancano ancora %1 valori.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="239"/>
         <source>Error...</source>
         <translation>Errore...</translation>
     </message>
@@ -1367,17 +1395,17 @@ p, li { white-space: pre-wrap; }
         <translation>Salva come...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="52"/>
         <source>Image Filename</source>
         <translation>Nome file dell&apos;immagine</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="50"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="52"/>
         <source>Exposure</source>
         <translation>Esposizione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="151"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1387,52 +1415,52 @@ the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt
 i seguenti tag exif al loro interno: <byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi)&lt;/li&gt;<byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;CONSIGLIO:&lt;/b&gt; I dati EXIF vengono persi solitamente dopo una fase di processing.&lt;br&gt;<byte value="x9"/>Puoi eseguire una &lt;b&gt;copia uno-ad-uno dei dati exif&lt;/b&gt; tra due set di immagini con lo strumento che si trova in&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia i dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="201"/>
         <source>Loading Error</source>
         <translation>Errore di caricamento</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="192"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="217"/>
         <source>Unknown </source>
         <translation>Sconosciuto </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="205"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="230"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Impossibile eseguire l&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Leggere &quot;Aiuto -&gt; Documentazione... -&gt; Hints and tips&quot; per maggiori informazioni.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="208"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="233"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>L&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; e&apos; andata in crash...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="214"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="239"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Un errore sconosciuto e&apos; stato rilevato nell&apos;esecuzione di &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="343"/>
         <source>Aligning...</source>
         <translation>Sto Allineando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="401"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="427"/>
         <source>Save a camera response curve file</source>
         <translation>Salva la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="508"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tutti i valori EV sono stati inseriti!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="100"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="106"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="103"/>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="109"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1902,22 +1930,22 @@ p, li { white-space: pre-wrap; }
         <translation>Tonemappa l&apos;Hdr</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="461"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
         <source>Error...</source>
         <translation>Errore...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
         <source>Unsaved changes...</source>
         <translation>Modifiche non salvate...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
         <source>Save the HDR...</source>
         <translation>Salva l&apos;HDR come...</translation>
     </message>
@@ -1972,24 +2000,24 @@ p, li { white-space: pre-wrap; }
         <translation>Ridimensiona (stringi o allarga) l&apos;Hdr</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="121"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Finito... Ora puoi aprire un Hdr esistente o crearne uno nuovo!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="141"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
         <source>All Hdr formats </source>
         <translation>Tutti i formati Hdr </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="150"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
         <source>Load an Hdr file...</source>
         <translation>Carica un file Hdr...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="177"/>
         <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
-        <translation>Tutti i formati Hdr (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
+        <translation type="obsolete">Tutti i formati Hdr (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="209"/>
@@ -2067,7 +2095,7 @@ p, li { white-space: pre-wrap; }
         <translation>Imposta le varie opzioni di Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="293"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui ha bisogno di memorizzare i risultati intermedi usando file temporanei, ma la directory scelta a tale scopo non e&apos; valida.&lt;br&gt;Scegliere un percorso valido in Strumenti -&gt; Opzioni... -&gt; Tone mapping.</translation>
     </message>
@@ -2092,12 +2120,12 @@ p, li { white-space: pre-wrap; }
         <translation>Informazioni su &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="530"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Uno degli Hdr presenta modifiche non salvate.&lt;br&gt;Sei sicuro di voler uscire?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="599"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Il documento della licenza non e&apos; stato trovato, lo si puo&apos; trovare online seguendo %2questo link%3</translation>
@@ -2105,7 +2133,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="218"/>
         <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
-        <translation>Qtpfsgui suppporta solo i formati &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr e OpenEXR &lt;br&gt;.</translation>
+        <translation type="obsolete">Qtpfsgui suppporta solo i formati &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr e OpenEXR &lt;br&gt;.</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="673"/>
@@ -2792,17 +2820,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/global.cpp" line="39"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation type="unfinished">Tutti i formati LDR (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+        <translation type="obsolete">Tutti i formati LDR (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="45"/>
+        <location filename="../src/Common/global.cpp" line="46"/>
         <source>Save the LDR to...</source>
         <translation type="unfinished">Salva l&apos;LDR come...</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="76"/>
+        <location filename="../src/Common/global.cpp" line="62"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Errore nel salvare &lt;b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="38"/>
+        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
