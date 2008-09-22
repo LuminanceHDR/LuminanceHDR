@@ -29,8 +29,10 @@
  * 
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
  *
- * $Id: contrast_domain.h,v 1.3 2007/06/15 10:28:42 rafm Exp $
+ * $Id: contrast_domain.h,v 1.7 2008/06/16 22:17:47 rafm Exp $
  */
+#ifndef CONTRAST_DOMAIN_H
+#define CONTRAST_DOMAIN_H
 
 #include "../../Libpfs/array2d.h"
 
@@ -59,3 +61,5 @@ typedef void(*progress_callback)(int progress);
 void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
 			    float contrastFactor, float saturationFactor, float detailFactor, bool bcg,
 			    int itmax = 200, float tol = 1e-3, progress_callback progress_cb  = NULL);
+
+#endif

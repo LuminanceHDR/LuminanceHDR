@@ -2,7 +2,9 @@ TEMPLATE = app
 CONFIG += release qt thread
 DEFINES += QT_NO_DEBUG_OUTPUT
 
-QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe
+# Assume openmp-capable g++ (>=4.2)
+QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp
+QMAKE_LFLAGS += -fopenmp
 
 TARGET = qtpfsgui
 

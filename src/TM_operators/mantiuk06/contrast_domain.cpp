@@ -32,10 +32,16 @@
  * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
  *  (more information on the changes:
  *  http://www.damtp.cam.ac.uk/user/ejb48/hdr/index.html)
+ * Updated 2008/06/25 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
+ *  bug fixes and openMP patches
+ *  more on this:
+ *  http://groups.google.com/group/pfstools/browse_thread/thread/de2378af98ec6185/0dee5304fc14e99d?hl=en#0dee5304fc14e99d
+ *  Optimization improvements by Lebed Dmytry
+ *
  * Updated 2008/07/26 by Dejan Beric <dejan.beric@live.com>
  *  Added the detail Factor slider which offers more control over contrast in details
  *
- * $Id: contrast_domain.cpp,v 1.9 2008/02/29 16:46:28 rafm Exp $
+ * $Id: contrast_domain.cpp,v 1.14 2008/08/26 17:08:49 rafm Exp $
  */
 
 #include <stdio.h>
@@ -48,6 +54,7 @@
 #endif
 
 #include "contrast_domain.h"
+#include "../tmo_config.h"
 
 typedef struct pyramid_s {
   int rows;
@@ -92,7 +99,7 @@ static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum);
 static void solveX(const int n, const float* const b, float* const x);
 static void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
 static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb);
-static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb);
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb);
 static float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val);
 static void transform_to_R(const int n, float* const G);
 static void pyramid_transform_to_R(pyramid_t* pyramid);
@@ -165,6 +172,11 @@ static inline float min( float a, float b )
   return a < b ? a : b;
 }
 
+static inline int imin( int a, int b )
+{
+  return a < b ? a : b;
+}
+
 
 // upsample the matrix
 // upsampled matrix is twice bigger in each direction than data[]
@@ -182,17 +194,18 @@ static void matrix_upsample(const int outCols, const int outRows, const float* c
   const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
   // const float factor = 1.0f; // Theoretically, this should be the best.
 
+#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
     {
       const float sy = y * dy;
-      const int iy1 = (  y   * inRows) / outRows;
-      const int iy2 = ((y+1) * inRows) / outRows;
+      const int iy1 =      (  y   * inRows) / outRows;
+      const int iy2 = imin(((y+1) * inRows) / outRows, inRows - 1);
 
       for (int x = 0; x < outCols; x++)
 	{
 	  const float sx = x * dx;
-	  const int ix1 = (  x   * inCols) / outCols;
-	  const int ix2 = ((x+1) * inCols) / outCols;
+	  const int ix1 =      (  x   * inCols) / outCols;
+	  const int ix2 = imin(((x+1) * inCols) / outCols, inCols-1);
 
 	  out[x + y*outCols] = (
 	    ((ix1+1) - sx)*((iy1+1 - sy)) * in[ix1 + iy1*inCols] +
@@ -230,6 +243,7 @@ static void matrix_downsample(const int inCols, const int inRows, const float* c
   // (fx2, fy2) is the fraction of the bottom right pixel showing.
 
   const float normalize = 1.0f/(dx*dy);
+#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
     {
       const int iy1 = (  y   * inRows) / outRows;
@@ -275,6 +289,7 @@ static void matrix_downsample(const int inCols, const int inRows, const float* c
 // return = a + b
 static inline void matrix_add(const int n, const float* const a, float* const b)
 {
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] += a[i];
 }
@@ -282,6 +297,7 @@ static inline void matrix_add(const int n, const float* const a, float* const b)
 // return = a - b
 static inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] = a[i] - b[i];
 }
@@ -295,6 +311,7 @@ static inline void matrix_copy(const int n, const float* const a, float* const b
 // multiply matrix a by scalar val
 static inline void matrix_multiply_const(const int n, float* const a, const float val)
 {
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     a[i] *= val;
 }
@@ -302,6 +319,7 @@ static inline void matrix_multiply_const(const int n, float* const a, const floa
 // b = a[i] / b[i]
 static inline void matrix_divide(const int n, const float* const a, float* const b)
 {
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] = a[i] / b[i];
 }
@@ -328,8 +346,11 @@ static inline void matrix_free(float* m){
 // multiply vector by vector (each vector should have one dimension equal to 1)
 static inline float matrix_DotProduct(const int n, const float* const a, const float* const b){
   float val = 0;
+
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     val += a[j] * b[j];
+
   return val;
 }
 
@@ -344,11 +365,12 @@ static inline void matrix_zero(int n, float* m)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
 static inline void calculate_and_add_divergence(const int cols, const int rows, const float* const Gx, const float* const Gy, float* const divG)
 {
-  float divGx, divGy;
 	
+#pragma omp parallel for schedule(static)
   for(int ky=0; ky<rows; ky++)
     for(int kx=0; kx<cols; kx++)
       {
+	float divGx, divGy;
 	const int idx = kx + ky*cols;
 	
 	if(kx == 0)
@@ -427,6 +449,7 @@ static inline void calculate_scale_factor(const int n, const float* const G, flo
   const float a = 0.038737;
   const float b = 0.537756;
 	
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     {
 #if 1
@@ -458,6 +481,7 @@ static void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 // G = G / C
 static inline void scale_gradient(const int n, float* const G, const float* const C)
 {
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     G[i] *= C[i];
 }
@@ -542,6 +566,7 @@ static pyramid_t * pyramid_allocate(int cols, int rows)
 // calculate gradients
 static inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
 {
+#pragma omp parallel for schedule(static)
   for(int ky=0; ky<rows; ky++){
     for(int kx=0; kx<cols; kx++){
 			
@@ -619,8 +644,9 @@ static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
 // x = -0.25 * b
 static inline void solveX(const int n, const float* const b, float* const x)
 {
-  matrix_copy(n, b, x); // x = b
-  matrix_multiply_const(n, x, -0.25f);
+#pragma omp parallel for schedule(static)
+  for (int i=0; i<n; i++)
+    x[i] = -0.25f * b[i];
 }
 
 // divG_sum = A * x = sum(divG(x))
@@ -647,64 +673,68 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
   float* const zz = matrix_alloc(n);
   float* const p = matrix_alloc(n);
   float* const pp = matrix_alloc(n);
-  float* const r = b; // save memory by overwriting b
+  float* const r = matrix_alloc(n);
   float* const rr = matrix_alloc(n);	
+  float* const x_save = matrix_alloc(n);
 	
-  matrix_zero(n, x); // x = 0
+  const float bnrm2 = matrix_DotProduct(n, b, b);
 	
-  // multiplyA(pyramid, pC, x, r); // r = A*x = divergence(x)
-  // matrix_zero(n, r);
-
-  // matrix_substract(n, b, r); // r = b - r
-  // matrix_copy(n, b, r);  // Not needed, as r == b anyway.
+  multiplyA(pyramid, pC, x, r); // r = A*x = divergence(x)
+  matrix_subtract(n, b, r); // r = b - r
+  float err2 = matrix_DotProduct(n, r, r); // err2 = r.r
 
   // matrix_copy(n, r, rr); // rr = r
   multiplyA(pyramid, pC, r, rr); // rr = A*r
   
-  const float bnrm2 = matrix_DotProduct(n, b, b);
-	
   float bkden = 0;
-  float err2 = bnrm2;
+  float saved_err2 = err2;
+  matrix_copy(n, x, x_save);
+
+  const float ierr2 = err2;
+  const float percent_sf = 100.0f/logf(tol2*bnrm2/ierr2);
 
   int iter = 0;
+  bool reset = true;
   int num_backwards = 0;
-  const int num_backwards_ceiling = (itmax / 10 < 3 ? 3 : itmax / 10);
+  const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
     {
       if( progress_cb != NULL )
-	progress_cb( (int) (logf(bnrm2/err2)*100.0f/(-logf(tol2))));    
-      
+	progress_cb( (int) (logf(err2/ierr2)*percent_sf));
+
       solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
       solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
-		
+
       const float bknum = matrix_DotProduct(n, z, rr);
-		
-      if(iter == 0)
+
+      if(reset)
 	{
+	  reset  = false;
 	  matrix_copy(n, z, p);
 	  matrix_copy(n, zz, pp); 
 	}
       else
 	{
 	  const float bk = bknum / bkden; // beta = ...
+#pragma omp parallel for schedule(static)
 	  for (int i = 0; i < n; i++)
 	    {
-	      p[i] = z[i] + bk * p[i];
+	      p[i]  =  z[i] + bk *  p[i];
 	      pp[i] = zz[i] + bk * pp[i];
 	    }
 	}
 		
       bkden = bknum; // numerato becomes the dominator for the next iteration
       
-      multiplyA(pyramid, pC, p, z); // z = A*p = divergence(p)
+      multiplyA(pyramid, pC,  p,  z); //  z = A* p  = divergence(p)
       multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
       
       const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
+#pragma omp parallel for schedule(static)
       for(int i = 0 ; i < n ; i++ )
 	{
-	  x[i] = x[i] + ak * p[i];	// x = x + alfa * p
-	  r[i] = r[i] - ak * z[i];		// r = r - alfa * z
-	  rr[i] = rr[i] - ak * zz[i];	//rr = rr - alfa * zz
+	  r[i]  -= ak *  z[i];	// r =  r - alfa * z
+	  rr[i] -= ak * zz[i];	//rr = rr - alfa * zz
 	}
       
       const float old_err2 = err2;
@@ -712,17 +742,65 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
 
       // Have we gone unstable?
       if (err2 > old_err2)
-	num_backwards++;
+	{
+	  // Save where we've got to if it's the best yet
+	  if (num_backwards == 0 && old_err2 < saved_err2)
+	    {
+	      saved_err2 = old_err2;
+	      matrix_copy(n, x, x_save);
+	    }
+	  
+	  num_backwards++;
+	}
       else
-	num_backwards = 0;
+	{
+	  num_backwards = 0;
+	}
+
+#pragma omp parallel for schedule(static)
+      for(int i = 0 ; i < n ; i++ )
+	x[i] += ak * p[i];	// x =  x + alfa * p
+
+      if (num_backwards > num_backwards_ceiling)
+	{
+	  // Reset
+	  reset = true;
+	  num_backwards = 0;
+	  
+	  // Recover saved value
+	  matrix_copy(n, x_save, x);
+	  
+	  // r = Ax
+	  multiplyA(pyramid, pC, x, r);
+	  
+	  // r = b - r
+	  matrix_subtract(n, b, r);
+	  
+	  // err2 = r.r
+	  err2 = matrix_DotProduct(n, r, r);
+	  saved_err2 = err2;
+
+	  // rr = A*r
+	  multiplyA(pyramid, pC, r, rr);
+	}
 
       // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(err2/bnrm2));
-      if(err2/bnrm2 < tol2 || num_backwards > num_backwards_ceiling)
+      if(err2/bnrm2 < tol2)
 	break;
     }
+
+  // Use the best version we found
+  if (err2 > saved_err2)
+    {
+      err2 = saved_err2;
+      matrix_copy(n, x_save, x);
+    }
+
   if (err2/bnrm2 > tol2)
     {
       // Not converged
+      if( progress_cb != NULL )
+	progress_cb( (int) (logf(err2/ierr2)*percent_sf));    
       if (iter == itmax)
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
       else
@@ -732,53 +810,54 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
     progress_cb(100);
     
   
+  matrix_free(x_save);
   matrix_free(p);
   matrix_free(pp);
   matrix_free(z);
   matrix_free(zz);
-  // matrix_free(r);  // Not needed, as r == b
+  matrix_free(r);
   matrix_free(rr);
 }
 
 
 // conjugate linear equation solver
 // overwrites pyramid!
-// overwrites b!
-static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const r /* == b */, float* const x, const int itmax, const float tol, progress_callback progress_cb)
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, progress_callback progress_cb)
 {
   const int rows = pyramid->rows;
   const int cols = pyramid->cols;
   const int n = rows*cols;
   const float tol2 = tol*tol;
 	
-  // float* r = matrix_alloc(n); // Unnecessary, as r == b
-  float* p = matrix_alloc(n);
-  float* Ap = matrix_alloc(n);	
-	
-  // x = 0
-  matrix_zero(n, x);
-	
-  // r = b - Ax
-  // multiplyA(pyramid, pC, x, r);
-  // matrix_subtract(n, b, r);
-  // matrix_copy(n, b, r); // Unnecessary, as r == b
+  float* const x_save = matrix_alloc(n);
+  float* const r = matrix_alloc(n);
+  float* const p = matrix_alloc(n);
+  float* const Ap = matrix_alloc(n);
 
   // bnrm2 = ||b||
-  const float bnrm2 = matrix_DotProduct(n, r, r);
+  const float bnrm2 = matrix_DotProduct(n, b, b);
+
+  // r = b - Ax
+  multiplyA(pyramid, pC, x, r);
+  matrix_subtract(n, b, r);
+  float rdotr = matrix_DotProduct(n, r, r); // rdotr = r.r
 	
   // p = r
   matrix_copy(n, r, p);
 
-  // rdotr = r.r
-  float rdotr = bnrm2;
+  // Setup initial vector
+  float saved_rdotr = rdotr;
+  matrix_copy(n, x, x_save);
 
+  const float irdotr = rdotr;
+  const float percent_sf = 100.0f/logf(tol2*bnrm2/irdotr);
   int iter = 0;
   int num_backwards = 0;
-  const int num_backwards_ceiling = (itmax / 10 < 3 ? 3 : itmax / 10);
+  const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
     {
       if( progress_cb != NULL )
-	progress_cb( (int) (logf(bnrm2/rdotr)*100.0f/(-logf(tol2))));    
+	progress_cb( (int) (logf(rdotr/irdotr)*percent_sf));
       
       // Ap = A p
       multiplyA(pyramid, pC, p, Ap);
@@ -786,37 +865,81 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const r /* == b */, 
       // alpha = r.r / (p . Ap)
       const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
       
-      // x = x + alpha p
       // r = r - alpha Ap
+#pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
-	{
-	  x[i] += alpha *  p[i];
-	  r[i] -= alpha * Ap[i];
-	}
-            
+	r[i] -= alpha * Ap[i];
+
       // rdotr = r.r
       const float old_rdotr = rdotr;
       rdotr = matrix_DotProduct(n, r, r);
       
       // Have we gone unstable?
       if (rdotr > old_rdotr)
-	num_backwards++;
+        {
+          // Save where we've got to
+          if (num_backwards == 0 && old_rdotr < saved_rdotr)
+            {
+              saved_rdotr = old_rdotr;
+              matrix_copy(n, x, x_save);
+            }
+          num_backwards++;
+        }
       else
-	num_backwards = 0;
+        {
+          num_backwards = 0;
+        }
+      // x = x + alpha p
+#pragma omp parallel for schedule(static)
+      for (int i = 0; i < n; i++)
+        x[i] += alpha * p[i];
 
       // Exit if we're done
       // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
-      if(rdotr/bnrm2 < tol2 || num_backwards > num_backwards_ceiling)
+      if(rdotr/bnrm2 < tol2)
 	break;
-      
-      // p = r + beta p
-      const float beta = rdotr/old_rdotr;
-      for (int i = 0; i < n; i++)
-	p[i] = r[i] + beta*p[i];
+
+      if (num_backwards > num_backwards_ceiling)
+	{
+	  // Reset
+	  num_backwards = 0;
+	  matrix_copy(n, x_save, x);
+
+	  // r = Ax
+	  multiplyA(pyramid, pC, x, r);
+
+	  // r = b - r
+	  matrix_subtract(n, b, r);
+
+	  // rdotr = r.r
+	  rdotr = matrix_DotProduct(n, r, r);
+	  saved_rdotr = rdotr;
+
+	  // p = r
+	  matrix_copy(n, r, p);
+	}
+      else
+	{
+	  // p = r + beta p
+	  const float beta = rdotr/old_rdotr;
+#pragma omp parallel for schedule(static)
+	  for (int i = 0; i < n; i++)
+	    p[i] = r[i] + beta*p[i];
+	}
     }
+
+  // Use the best version we found
+  if (rdotr > saved_rdotr)
+    {
+      rdotr = saved_rdotr;
+      matrix_copy(n, x_save, x);
+    }  
+
   if (rdotr/bnrm2 > tol2)
     {
       // Not converged
+      if( progress_cb != NULL )
+	progress_cb( (int) (logf(rdotr/irdotr)*percent_sf));    
       if (iter == itmax)
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
       else
@@ -825,16 +948,17 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, float* const r /* == b */, 
   else if (progress_cb != NULL)
     progress_cb(100);
     
+  matrix_free(x_save);
   matrix_free(p);
   matrix_free(Ap);
-  // matrix_free(r); // Unnecessary, as r == b
+  matrix_free(r);
 }
 
 
 // in_tab and out_tab should contain inccreasing float values
 static inline float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val)
 {
-  if(val < in_tab[0])
+  if(unlikely(val < in_tab[0]))
     return out_tab[0];
 
   for (int j = 1; j < n; j++)
@@ -851,18 +975,18 @@ static inline float lookup_table(const int n, const float* const in_tab, const f
 // transform gradient (Gx,Gy) to R
 static inline void transform_to_R(const int n, float* const G)
 {
-  int sign;
-  float absG;
   const float log10=2.3025850929940456840179914546844*detailFactor;
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     {
       // G to W
-      absG = fabsf(G[j]);
+      const float absG = fabsf(G[j]);
+      int sign;
       if(G[j] < 0)
 	sign = -1;
       else
 	sign = 1;	
-      G[j] = (exp(absG * log10)-1.0f) * sign;
+      G[j] = (powf(10,absG * log10) - 1.0f) * sign;
 		
       // W to RESP
       if(G[j] < 0)
@@ -889,11 +1013,12 @@ static inline void pyramid_transform_to_R(pyramid_t* pyramid)
 // transform from R to G
 static inline void transform_to_G(const int n, float* const R){
 
-  int sign;
   const float log10=2.3025850929940456840179914546844*detailFactor;//here we are actually changing the base of logarithm
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++){
 	
     // RESP to W
+    int sign;
     if(R[j] < 0)
       sign = -1;
     else
@@ -938,7 +1063,7 @@ static int sort_float(const void* const v1, const void* const v2)
   if (*((float*)v1) < *((float*)v2))
     return -1;
 
-  if(*((float*)v1) > *((float*)v2))
+  if(likely(*((float*)v1) > *((float*)v2)))
     return 1;
 
   return 0;
@@ -1016,11 +1141,14 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   while( l != NULL )
     {
       const int pixels = l->rows*l->cols;
-      for(int c = 0; c < pixels; c++ , index++)
+      const int offset = index;
+#pragma omp parallel for schedule(static)
+      for(int c = 0; c < pixels; c++)
 	{
-	  hist[index].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
-	  hist[index].index = index;
+	  hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
+	  hist[c+offset].index = c + offset;
 	} 
+      index += pixels;
       l = l->next;
     }
   
@@ -1029,6 +1157,7 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
 
   // Calculate cdf
   const float norm = 1.0f / (float) total_pixels;
+#pragma omp parallel for schedule(static)
   for (int i = 0; i < total_pixels; i++)
     hist[i].cdf = ((float) i) * norm;
 
@@ -1040,13 +1169,16 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   index = 0;
   while( l != NULL ) {
     const int pixels = l->rows*l->cols;
+    const int offset = index;
     
-    for( int c = 0; c < pixels; c++ , index++ )
+#pragma omp parallel for schedule(static)
+    for( int c = 0; c < pixels; c++)
       {
-	const float scale = contrastFactor * hist[index].cdf/hist[index].size;
+	const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
 	l->Gx[c] *= scale;
 	l->Gy[c] *= scale;        
       } 
+    index  += pixels;
     l = l->next;
   }
 
@@ -1061,26 +1193,36 @@ void tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* cons
   const int n = c*r;
   detailFactor=detailfactor;
   
-  const float clip_min = 1e-5;
-  
+  /* Normalize */
+  float Ymax = Y[0];
+  for (int j = 1; j < n; j++)
+    if (Y[j] > Ymax)
+      Ymax = Y[j];
+
+  const float clip_min = 1e-7f*Ymax;
+#pragma omp parallel for schedule(static)
   for (int j = 0; j < n; j++)
     {
-    // clipping
-    if( R[j] < clip_min ) R[j] = clip_min;
-    if( G[j] < clip_min ) G[j] = clip_min;
-    if( B[j] < clip_min ) B[j] = clip_min;
-    if( Y[j] < clip_min ) Y[j] = clip_min;    
-
-    R[j] /= Y[j];
-    G[j] /= Y[j];
-    B[j] /= Y[j];
+      if( unlikely(R[j] < clip_min) ) R[j] = clip_min;
+      if( unlikely(G[j] < clip_min) ) G[j] = clip_min;
+      if( unlikely(B[j] < clip_min) ) B[j] = clip_min;
+      if( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
     }
 	
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
-    Y[j] = log10f(Y[j]);
+    {
+      R[j] /= Y[j];
+      G[j] /= Y[j];
+      B[j] /= Y[j];
+      Y[j] = log10f(Y[j]);
+    }
 	
   pyramid_t* pp = pyramid_allocate(c,r); // create pyramid
-  pyramid_calculate_gradient(pp,Y); // calculate gradients for pyramid, destroys Y
+  float* tY = matrix_alloc(n);
+  matrix_copy(n, Y, tY); // copy Y to tY
+  pyramid_calculate_gradient(pp,tY); // calculate gradients for pyramid, destroys tY
+  matrix_free(tY);
   pyramid_transform_to_R(pp); // transform gradients to R
 
   /* Contrast map */
@@ -1113,13 +1255,15 @@ void tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* cons
   matrix_free(temp);
 	
   const float disp_dyn_range = 2.3f;
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
                                                                                // 
   /* Transform to linear scale RGB */
+#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     {
-      Y[j] = exp10f(Y[j]);
+      Y[j] = powf(10,Y[j]);
       R[j] = powf( R[j], saturationFactor) * Y[j];
       G[j] = powf( G[j], saturationFactor) * Y[j];
       B[j] = powf( B[j], saturationFactor) * Y[j];
