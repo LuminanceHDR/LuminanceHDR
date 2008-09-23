@@ -22,14 +22,15 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_drago03.cpp,v 1.1 2004/09/22 10:00:23 krawczyk Exp $
+ * $Id: tmo_drago03.cpp,v 1.3 2008/09/04 12:46:48 julians37 Exp $
  */
 
 #include <iostream>
 #include <math.h>
 #include <assert.h>
-#include "../../Libpfs/array2d.h"
+
 #include "tmo_drago03.h"
+#include "../pfstmo.h"
 
 /// Type of algorithm
 #define FAST 0
@@ -42,13 +43,32 @@ inline float biasFunc(float b, float x)
 
 //-------------------------------------------
 
+void calculateLuminance(unsigned int width, unsigned int height, const float *Y, float& avLum, float& maxLum)
+{
+  avLum = 0.0f;
+  maxLum = 0.0f;
 
-void tmo_drago03(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float avLum, float bias)
+  int size = width * height;
+
+  for( int i=0; i<size; i++ )
+  {
+    avLum += log( Y[i] + 1e-4 );
+    maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
+  }
+  avLum =exp( avLum/ size);
+}
+
+void tmo_drago03(unsigned int width, unsigned int height,
+                 const float* _Y, float* _L,
+                 float maxLum, float avLum, float bias)
 {
   const float LOG05 = -0.693147f; // log(0.5)
 
-  assert(Y!=NULL);
-  assert(L!=NULL);
+  assert(_Y!=NULL);
+  assert(_L!=NULL);
+
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(_Y));
+  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, _L);
 
   int nrows = Y->getRows();			// image size
   int ncols = Y->getCols();
@@ -118,5 +138,7 @@ void tmo_drago03(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float avLum, fl
     }	
 #endif // #else #ifndef FAST
 
+  delete L;
+  delete Y;
 }
 

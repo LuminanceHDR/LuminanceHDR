@@ -134,6 +134,7 @@ Also check the variables in the win32{} section in project.pro: they need
 to be changed according to your setup.
 Building Qtpfsgui from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
 
+Optimization note: the default compiler flags include SSE2 and OpenMP. SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer). OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customize the CXXFLAGS and LFLAGS before compiling.
 
 
 4. Workflow in the gui

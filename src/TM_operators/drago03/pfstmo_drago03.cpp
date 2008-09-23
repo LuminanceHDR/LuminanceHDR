@@ -26,7 +26,7 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: pfstmo_drago03.cpp,v 1.1 2004/09/22 10:00:23 krawczyk Exp $
+ * $Id: pfstmo_drago03.cpp,v 1.3 2008/09/04 12:46:48 julians37 Exp $
  */
 
 #include <iostream>
@@ -36,8 +36,6 @@
 #include <QFile>
 #include "../../Libpfs/pfs.h"
 #include "tmo_drago03.h"
-
-void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum );
 
 pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue) {
 	assert(inputpfsframe!=NULL);
@@ -60,15 +58,15 @@ pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue) {
 // 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
 // 	pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Ro, Go, Bo );
-
-	float maxLum,avLum;
-	calculateLuminance( Y, avLum, maxLum );
 	
 	int w = Y->getCols();
 	int h = Y->getRows();
 
-	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
-	tmo_drago03(Y, L, maxLum, avLum, biasValue);
+	float maxLum,avLum;
+	calculateLuminance( w, h, Y->getRawData(), avLum, maxLum );
+
+	pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
+	tmo_drago03(w, h, Y->getRawData(), L->getRawData(), maxLum, avLum, biasValue);
 
 	for( int x=0 ; x<w ; x++ )
 		for( int y=0 ; y<h ; y++ ) 
@@ -83,19 +81,4 @@ pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue) {
 	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 
 	return outframe;
-}
-
-void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum )
-{
-  avLum = 0.0f;
-  maxLum = 0.0f;
-
-  int size = Y->getCols() * Y->getRows();
-
-  for( int i=0 ; i<size; i++ )
-  {
-    avLum += log( (*Y)(i) + 1e-4 );
-    maxLum = ( (*Y)(i) > maxLum ) ? (*Y)(i) : maxLum ;
-  }
-  avLum =exp( avLum/ size);
 }

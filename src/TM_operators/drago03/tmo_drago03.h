@@ -22,13 +22,12 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_drago03.h,v 1.1 2004/09/22 10:00:23 krawczyk Exp $
+ * $Id: tmo_drago03.h,v 1.3 2008/09/04 12:46:48 julians37 Exp $
  */
 
 #ifndef _tmo_drago03_h_
 #define _tmo_drago03_h_
 
-#include "../../Libpfs/array2d.h"
 #include "../../Libpfs/pfs.h"
 
 /**
@@ -37,13 +36,25 @@
  * Implementation obtained from source code provided
  * by Frederic Drago on 16 May 2003.
  *
+ * @param width image width
+ * @param height image height
  * @param Y [in] image luminance values
  * @param L [out] tone mapped values
  * @param maxLum maximum luminance in the image
  * @param avLum logarithmic average of luminance in the image
  * @param bias bias parameter of tone mapping algorithm (eg 0.85)
  */
-void tmo_drago03(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float avLum, float bias);
+void tmo_drago03(unsigned int width, unsigned int height,
+  const float* Y, float* L,
+  float maxLum, float avLum, float bias);
+
+ 
+/**
+ * @brief Find average and maximum luminance in an image
+ * @param avLum [out] average luminance
+ * @param maxLum [out] maximum luminance
+ */
+void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum );
 
 pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue);
 #endif
