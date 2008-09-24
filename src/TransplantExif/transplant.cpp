@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -35,9 +35,7 @@
 
 TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false) {
 	setupUi(this);
-#if QT_VERSION >= 0x040200
 	Log_Widget->setWordWrap(true);
-#endif
 	connect(moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
 	connect(moveup_right_button,	SIGNAL(clicked()),this,SLOT(moveup_right()));
 	connect(movedown_left_button,	SIGNAL(clicked()),this,SLOT(movedown_left()));
@@ -53,9 +51,7 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
 	full_Log_Model=new QStringListModel();
 	log_filter=new QSortFilterProxyModel(this);
-#if QT_VERSION >= 0x040200
 	log_filter->setDynamicSortFilter(true);
-#endif
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
@@ -246,7 +242,7 @@ void TransplantExifDialog::transplant_requested() {
 	//initialize string iterators to the beginning of the lists.
 	QStringList::const_iterator i_source = from.constBegin();
 	QStringList::const_iterator i_dest = to.constBegin();
-	
+
 	int index=0;
 	//for all the input files
 	for (; i_source != from.constEnd(); ++i_source, ++i_dest) {
@@ -254,14 +250,10 @@ void TransplantExifDialog::transplant_requested() {
 			add_log_message(*i_source + "-->" + *i_dest);
 			//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 			ExifOperations::copyExifData(QFile::encodeName((*i_source)).constData(), QFile::encodeName((*i_dest)).constData(), checkBox_dont_overwrite->isChecked());
-#if QT_VERSION >= 0x040200
 			rightlist->item(index)->setBackground(QBrush("#a0ff87"));
-#endif
 		} catch (Exiv2::AnyError& e) {
 			add_log_message("ERROR:" + QString::fromStdString(e.what()) );
-#if QT_VERSION >= 0x040200
 			rightlist->item(index)->setBackground(QBrush("#ff743d"));
-#endif
 		}
 		progressBar->setValue(progressBar->value()+1); // increment progressbar
 		index++;

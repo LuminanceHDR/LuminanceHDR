@@ -562,13 +562,8 @@ void MainGui::fileExit() {
 			closeok=false;
 	}
 	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>Do you still want to quit?"),
-#if QT_VERSION <= 0x040200
-			QMessageBox::Yes | QMessageBox::Default, QMessageBox::No,QMessageBox::NoButton)
-		== QMessageBox::Yes))
-#else
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
 		== QMessageBox::Yes))
-#endif
 		emit close();
 }
 
@@ -597,11 +592,9 @@ void MainGui::aboutQtpfsgui() {
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutQtpfsgui ui;
 	ui.setupUi(about);
-#if QT_VERSION >= 0x040200
 	ui.authorsBox->setOpenExternalLinks(true);
 	ui.thanksToBox->setOpenExternalLinks(true);
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-#endif
 	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
 
 	bool license_file_not_found=true;
@@ -626,10 +619,8 @@ void MainGui::aboutQtpfsgui() {
 		}
 	}
 	if (license_file_not_found) {
-#if QT_VERSION >= 0x040200
 		ui.GPLbox->setOpenExternalLinks(true);
 		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
-#endif
 		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
 	}
 	about->show();

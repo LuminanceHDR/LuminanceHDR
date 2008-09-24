@@ -1,6 +1,6 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -36,10 +36,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 
-#if QT_VERSION >= 0x040200
 	Log_Widget->setWordWrap(true);
-#endif
-
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
@@ -53,13 +50,11 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	connect(remove_TMOpts_Button, SIGNAL(clicked()), this, SLOT(remove_TMOpts()));
 	connect(BatchGoButton, SIGNAL(clicked()), this, SLOT(start_called()));
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
-	
+
 	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 	full_Log_Model=new QStringListModel();
 	log_filter=new QSortFilterProxyModel(this);
-#if QT_VERSION >= 0x040200
 	log_filter->setDynamicSortFilter(true);
-#endif
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
@@ -339,7 +334,7 @@ void BatchTMDialog::conditional_TMthread() {
 		}
 		conditional_loadthread();
 	}
-	
+
 }
 
 void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts) {

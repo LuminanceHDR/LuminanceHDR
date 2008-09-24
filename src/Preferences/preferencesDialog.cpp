@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -83,13 +83,7 @@ void PreferenceDialog::infnan_clicked() {
 
 void PreferenceDialog::change_color_of(QPushButton *button, QColor *newcolor) {
 	if (newcolor->isValid()) {
-#if QT_VERSION <= 0x040200
-		QPalette modified_palette(button->palette());
-		modified_palette.setColor(QPalette::Active,QPalette::Button,*newcolor);
-		button->setPalette( modified_palette );
-#else
 		button->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(newcolor->red()).arg(newcolor->green()).arg(newcolor->blue()));
-#endif
 	}
 }
 
@@ -107,7 +101,7 @@ QStringList PreferenceDialog::sanitizeDCRAWparams() {
 		QMessageBox::information(this,tr("Option -T..."),tr("Qtpfsgui requires dcraw to be executed with the \"-T\" option. Commandline options have been corrected."));
 	}
 	return temp_dcraw_options;
-	
+
 }
 
 QStringList PreferenceDialog::sanitizeAISparams() {
@@ -153,7 +147,7 @@ void PreferenceDialog::ok_clicked() {
 	settings.beginGroup(GROUP_EXTERNALTOOLS);
 		qtpfsgui_options->dcraw_options=sanitizeDCRAWparams();
 		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,qtpfsgui_options->dcraw_options);
-		
+
 		qtpfsgui_options->align_image_stack_options=sanitizeAISparams();
 		settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,qtpfsgui_options->align_image_stack_options);
 	settings.endGroup();

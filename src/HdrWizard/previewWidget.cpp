@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -110,7 +110,7 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 	const QRgb *PivVal=NULL;
 	QRgb* mov_line=NULL;
 	QRgb* piv_line=NULL;
-	
+
 	//for all the rows that we have to paint
 	for(int i = originy; i < originy+H; i++) {
 		QRgb* out = (QRgb*)previewImage->scanLine(i);
@@ -120,12 +120,12 @@ void PreviewWidget::renderPreviewImage(QRgb(PreviewWidget::*rendermode)(const QR
 			mov_line = (QRgb*)(movableImage->scanLine(i-my));
 		else
 			mov_line = NULL;
-			
+
 		if ( !( (i-py)<0 || (i-py)>=pivotImage->height()) )
 			piv_line = (QRgb*)(pivotImage->scanLine(i-py));
 		else
 			piv_line = NULL;
-			
+
 		//for all the columns that we have to paint
 		for(int j = originx; j < originx+W; j++) {
 			//if within bounds considering horizontal offset
@@ -165,11 +165,7 @@ void PreviewWidget::resizeEvent(QResizeEvent *event) {
 
 void PreviewWidget::mousePressEvent(QMouseEvent *event) {
 	if (event->buttons()==Qt::MidButton) {
-#if QT_VERSION <= 0x040200
-		QApplication::setOverrideCursor( QCursor(Qt::PointingHandCursor) );
-#else
 		QApplication::setOverrideCursor( QCursor(Qt::ClosedHandCursor) );
-#endif
 		mousePos = event->globalPos();
 	}
 
@@ -288,7 +284,7 @@ void PreviewWidget::mouseReleaseEvent(QMouseEvent *event) {
 			case LB_croppingmode:
 			dragging_mode=DRAGGING_NONE;
 			rubberband=rubberband.normalized();
-	
+
 			if (!rubberband.isNull())
 				emit validCropArea(true);
 			rubberband.setLeft(qMax(0,rubberband.left()));

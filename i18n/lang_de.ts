@@ -18,7 +18,7 @@
         <source>&lt;html&gt;&lt;center&gt;Qtpfsgui - Hdr Imaging Workflow Application&lt;br&gt;
 (c) 2006-2007, Giuseppe Rota&lt;br&gt;
 &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;center&gt;Qtpfsgui - Hdr Work-Flow Programm&lt;br&gt;
+        <translation>&lt;html&gt;&lt;center&gt;Qtpfsgui - HDR Work-Flow Programm&lt;br&gt;
 (c) 2006-2007, Giuseppe Rota&lt;br&gt;
 &lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
     </message>
@@ -88,7 +88,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/batch_dialog.ui" line="36"/>
         <source>Input Hdr list</source>
-        <translation>Eingabe Hdr Liste</translation>
+        <translation>Eingangs-HDR Liste</translation>
     </message>
     <message>
         <location filename="../forms/batch_dialog.ui" line="67"/>
@@ -181,37 +181,37 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Start!</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="137"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="132"/>
         <source>Choose a directory</source>
         <translation>Verzeichnis wählen</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="96"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="91"/>
         <source>All Hdr formats </source>
-        <translation>Alle Hdr Formate </translation>
+        <translation>Alle HDR Formate</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="98"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="93"/>
         <source>Select the input images</source>
         <translation>Eingabebilder auswählen</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="118"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="113"/>
         <source>Load the tonemapping settings text files...</source>
         <translation>Farbabbildungseinstellungen Text Datei laden...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="118"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="113"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui Farbabbildungseinstellungen Text Datei (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="248"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="243"/>
         <source>Processing...</source>
         <translation>Arbeite...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="305"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="300"/>
         <source>&amp;Done</source>
         <translation>&amp;Fertig</translation>
     </message>
@@ -281,37 +281,37 @@ p, li { white-space: pre-wrap; }
         <translation>Starte Batch Farbabbildung</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="66"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="61"/>
         <source>Using %1 thread(s)</source>
         <translation>Benutze %1 Thread(s)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="67"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="62"/>
         <source>Saving using fileformat: </source>
         <translation>Speichere mit Dateiformat: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="280"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="275"/>
         <source>Starting to tone map HDR file: </source>
         <translation>Starte Farbabbildung der Datei: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="307"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="302"/>
         <source>All tasks completed.</source>
         <translation>Alle Aufgaben abgeschlossen.</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="353"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="348"/>
         <source>ERROR: Cannot save to file: </source>
         <translation>FEHLER: Datei kann nicht gespeichert werden: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="357"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="352"/>
         <source>Successfully saved LDR file: </source>
         <translation>LDR Datei wurde erfolgreich gespeichert: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="335"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="330"/>
         <source>Finished tone mapping the current HDR.</source>
         <translation>Farbabbildung des aktuellen HDR wurde abgeschlossen.</translation>
     </message>
@@ -476,7 +476,7 @@ Sie müssen entweder ein existierendes HDR laden (mittels -l Option) oder EINGAB
     <message>
         <location filename="../src/Common/commandline.cpp" line="463"/>
         <source>Commandline interface to %1.</source>
-        <translation>Kommandozeilenschnittstelle zu %1</translation>
+        <translation>Kommandozeilenschnittstelle zu %1.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="464"/>
@@ -623,30 +623,55 @@ Sie müssen entweder ein existierendes HDR laden (mittels -l Option) oder EINGAB
         <translation>Drag und Drop</translation>
     </message>
     <message>
-        <location filename="../forms/dndoption.ui" line="44"/>
+        <location filename="../forms/dndoption.ui" line="57"/>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
         <translation>&lt;b&gt;Was möchten Sie mit der Datei bzw. den Dateien machen?&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="72"/>
         <source>Open as existing HDR</source>
-        <translation>Existierendes HDR öffnen</translation>
+        <translation type="obsolete">Existierendes HDR öffnen</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="87"/>
         <source>Create a new HDR</source>
-        <translation>Neues HDR erzeugen</translation>
+        <translation type="obsolete">Neues HDR erzeugen</translation>
     </message>
     <message>
-        <location filename="../forms/dndoption.ui" line="105"/>
+        <location filename="../forms/dndoption.ui" line="111"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="71"/>
+        <source>Open</source>
+        <translation>Öffnen</translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="84"/>
+        <source>Open an existing HDR.</source>
+        <translation>Ein existierendes HDR öffnen.</translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="91"/>
+        <source>New</source>
+        <translation>Neu</translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="104"/>
+        <source>Create a new HDR, by using one or more images.</source>
+        <translation>Ein neues HDR, mit einem oder mehreren Bildern erzeugen.</translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="124"/>
+        <source>Cancel the drag and drop process and return to the main window.</source>
+        <translation>Bricht den Drag und Drop Prozess ab, um zum Hauptfenster zurück zu kehren.</translation>
     </message>
 </context>
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
+        <location filename="../src/HdrWizard/editingTools.cpp" line="403"/>
         <source>Choose a directory and a prefix</source>
         <translation>Verzeichnis und Prefix wählen</translation>
     </message>
@@ -1061,12 +1086,12 @@ p, li { white-space: pre-wrap; }
         <translation>Histogramm:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Dieses HDR hat ungespeicherte Änderungen.&lt;br&gt;Wollen Sie es wirklich schließen?</translation>
     </message>
@@ -1076,7 +1101,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/hdrwizardform.ui" line="13"/>
         <source>Hdr creation Wizard</source>
-        <translation>Hdr Erstellungs Wizard</translation>
+        <translation>HDR-Erstellungsassistent</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="258"/>
@@ -1323,17 +1348,17 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bitte wählen Sie eines der vorgefertigten Profile, die rechts aufgelistet sind:&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Das erste in der Liste führt gewöhnlich zu den besten Resultaten, ändern Sie es nur, wenn das resultierende Hdr nicht gut genug ist.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bitte wählen Sie eines der vorgefertigten Profile, die rechts aufgelistet sind:&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Das Erste in der Liste führt gewöhnlich zu den besten Resultaten, ändern Sie es nur, wenn das resultierende HDR-Bild nicht gut genug ist.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="565"/>
         <source>Hdr creation model:</source>
-        <translation>Hdr Erstellungsmodell:</translation>
+        <translation>HDR Erstellungsmodell:</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="1077"/>
         <source>Hdr creation equation:</source>
-        <translation>Hdr Erstellungsgleichung:</translation>
+        <translation>HDR Erstellungsgleichung:</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="213"/>
@@ -1388,7 +1413,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/hdrwizardform.ui" line="379"/>
         <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation>[2/2] Wählen Sie die Einstellungen für die Hdr Erstellung</translation>
+        <translation>[2/2] Wählen Sie die Einstellungen für die HDR Erstellung</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="782"/>
@@ -1650,12 +1675,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="148"/>
         <source>&amp;New Hdr...</source>
-        <translation>&amp;Neues Hdr...</translation>
+        <translation>&amp;Neues HDR...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="151"/>
         <source>New Hdr...</source>
-        <translation>Neues Hdr...</translation>
+        <translation>Neues HDR...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="163"/>
@@ -1665,12 +1690,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="171"/>
         <source>&amp;Open Hdr...</source>
-        <translation>&amp;Hdr öffnen...</translation>
+        <translation>&amp;HDR öffnen...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="174"/>
         <source>Open Hdr....</source>
-        <translation>Hdr öffnen...</translation>
+        <translation>HDR öffnen...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="186"/>
@@ -1680,12 +1705,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="197"/>
         <source>&amp;Save Hdr as...</source>
-        <translation>&amp;Hdr speichern unter...</translation>
+        <translation>&amp;HDR speichern unter...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="200"/>
         <source>Save Hdr as...</source>
-        <translation>Hdr speichern unter...</translation>
+        <translation>HDR speichern unter...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="212"/>
@@ -1695,12 +1720,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="229"/>
         <source>&amp;Tonemap the Hdr...</source>
-        <translation>&amp;Das Hdr farbabbilden...</translation>
+        <translation>&amp;Das HDR farbabbilden...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="232"/>
         <source>Tonemap the Hdr</source>
-        <translation>Das Hdr farbabbilden</translation>
+        <translation>Das HDR farbabbilden</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="244"/>
@@ -1970,67 +1995,67 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="64"/>
         <source>Hdr &amp;Histogram</source>
-        <translation>Hdr &amp;Histogramm</translation>
+        <translation>HDR &amp;Histogramm</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="160"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation>Hdr aus einer Serie von JPEG oder RAW, 8 oder 16 bit TIFF Dateien erstellen.</translation>
+        <translation>Ein HDR aus einer Serie von JPEG oder RAW, 8 oder 16 bit TIFF Dateien erstellen.</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="183"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation>Existierende Hdr Bild Datei öffnen (OpenEXR, Radiance RGBE, PFS stream, RAW oder TIFF).</translation>
+        <translation>Existierende HDR Bild Datei öffnen (OpenEXR, Radiance RGBE, PFS stream, RAW oder TIFF).</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="241"/>
         <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation>Das Hdr in ein einfaches LDR Format (d.h. JPEG oder PNG) farbabbilden</translation>
+        <translation>Das HDR in ein einfaches LDR Format (d.h. JPEG oder PNG) farbabbilden</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="287"/>
         <source>Rotate Counterclockwise the Hdr</source>
-        <translation>Hdr im GegenUhrzeigerSinn drehen</translation>
+        <translation>HDR gegen den Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="313"/>
         <source>Rotate ClockWise the Hdr</source>
-        <translation>Hdr im UhrzeigerSinn drehen</translation>
+        <translation>HDR im Uhrzeigersinn drehen</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="425"/>
         <source>View Hdr at Normal Size</source>
-        <translation>Hdr in normaler Größe betrachten</translation>
+        <translation>HDR in normaler Größe betrachten</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="488"/>
         <source>Shrink the Hdr to fit its containing window</source>
-        <translation>Hdr auf das beinhaltende Fenster verkleinern</translation>
+        <translation>HDR auf das beinhaltende Fenster verkleinern</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="528"/>
         <source>Resize the Hdr</source>
-        <translation>Hdr Größe ändern</translation>
+        <translation>HDR-Größe ändern</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="537"/>
         <source>Resize (shrink or expand) the Hdr</source>
-        <translation>Hdr Größe ändern (verkleinern oder vergrößern)</translation>
+        <translation>HDRGröße ändern (verkleinern oder vergrößern)</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
         <source>Ready.... Now open an Hdr or create one!</source>
-        <translation>Bereit.... Öffnen Sie ein Hdr oder erstellen Sie eines!</translation>
+        <translation>Fertig.... Öffnen Sie ein HDR oder erstellen Sie eines!</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
         <source>All Hdr formats </source>
-        <translation>Alle Hdr Formate </translation>
+        <translation>Alle HDR Formate</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
         <source>Load an Hdr file...</source>
-        <translation>Hdr Datei laden...</translation>
+        <translation>Eine HDR-Datei laden...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="177"/>
@@ -2040,7 +2065,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="209"/>
         <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation>Speichert das Hdr (OpenEXR, Radiance RGBE, PFS stream, oder 32bit oder LogLuv TIFF)</translation>
+        <translation>Speichert das HDR (OpenEXR, Radiance RGBE, PFS stream, oder 32bit oder LogLuv TIFF)</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="606"/>
@@ -2055,7 +2080,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="525"/>
         <source>&amp;Resize the Hdr...</source>
-        <translation>&amp;Hdr Größe ändern...</translation>
+        <translation>&amp;HDR Größe ändern...</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="614"/>
@@ -2105,7 +2130,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="177"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation>Existierende Hdr Bild Datei öffnen (OpenEXR, Radiance RGBE, PFS stream, RAW oder TIFF)</translation>
+        <translation>Existierendes HDR-Bild öffnen (OpenEXR, Radiance RGBE, PFS stream, RAW oder TIFF)</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="505"/>
@@ -2143,7 +2168,7 @@ p, li { white-space: pre-wrap; }
         <translation>Mindestens ein HDR hat ungespeicherte Änderungen. &lt;br&gt;Wollen Sie wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Lizenz wurde nicht gefunden, Sie können es online finden: %2hier%3</translation>
@@ -2384,12 +2409,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreferenceDialog</name>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="229"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="223"/>
         <source>Choose a directory</source>
         <translation>Ein Verzeichnis wählen</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Option -a...</source>
         <translation>Option -a...</translation>
     </message>
@@ -2399,29 +2424,29 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Qtpfsgui erfordert, dass align_image_stack mit der Option &quot;-a aligned_&quot; ausgeführt wird. Optionen der Kommandozeilen müssen korrigiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="143"/>
         <source>Please restart...</source>
         <translation>Bitte neu starten...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="143"/>
         <source>Please restart Qtpfsgui to use the new language (%1).</source>
         <translation>Bitte Qtpfsgui neu starten, um die neue Sprache (%1) zu verwenden.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Option -T...</source>
         <translation>Option -T...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qtpfsgui erfordert, dass align_image_stack mit der Option &quot;-a aligned_&quot; ausgeführt wird. Optionen der Kommandozeilen müssen korrigiert werden.</translation>
     </message>
 </context>
 <context>
@@ -2449,12 +2474,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/options.ui" line="741"/>
         <source>Hdr Tiff</source>
-        <translation>Hdr Tiff</translation>
+        <translation>HDR Tiff</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="132"/>
         <source>Hdr Visualization</source>
-        <translation>Hdr Visualisierung</translation>
+        <translation>HDR Visualisierung</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="177"/>
@@ -2654,9 +2679,9 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wählen Sie das Tiff-Hdr Format, das Qtpfsgui zum Speichern eines Hdr Bildes benutzen wird.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wählen Sie das Tiff-HDR Format, das Qtpfsgui zum Speichern eines HDR Bildes benutzen wird.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; ist das geeignete Format in den meisten Fällen, da es die Hdr Daten in einer angemessenen Größe speichert (d.h. Datei Größe).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; ist das geeignete Format in den meisten Fällen, da es die HDR Daten in einer angemessenen Größe speichert (d.h. Datei Größe).&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Benutzen Sie das &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; Format nur, wenn Sie ihr tiff in einer anderen Anwendung laden möchten, die das LogLuv Format nicht öffnen kann.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -2678,7 +2703,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualisierungsoptionen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HDR Visualisierungsoptionen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/options.ui" line="850"/>
@@ -2741,7 +2766,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="53"/>
         <source>Source Projection:</source>
-        <translation>Quell-Projektion:</translation>
+        <translation>Quellprojektion:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="102"/>
@@ -2840,12 +2865,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="65"/>
+        <location filename="../src/main.cpp" line="68"/>
         <source>Aborting...</source>
         <translation>Abbrechen...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="65"/>
+        <location filename="../src/main.cpp" line="68"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Kann das Qt JPEG Plugin nicht finden...&lt;br&gt;Bitte entpacken Sie das DLL Packet mit der aktivierten Option &quot;Verzeichnisnamen benutzen&quot;.</translation>
     </message>
@@ -2928,7 +2953,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/resizedialog.ui" line="31"/>
         <source>Hdr Image Size</source>
-        <translation>Hdr Bild Größe</translation>
+        <translation>HDR Bild Größe</translation>
     </message>
     <message>
         <location filename="../forms/resizedialog.ui" line="98"/>
@@ -3685,12 +3710,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Alle unterstützten Formate (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="218"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
         <source>Select the input images</source>
         <translation>Eingabebilder auswählen</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="217"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
         <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
         <translation>Alle unterstützten Formate (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
@@ -3745,12 +3770,12 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Start!</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="271"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="263"/>
         <source>&amp;Done.</source>
         <translation>&amp;Fertig.</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="194"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="190"/>
         <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation>All unterstützten Formate (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</translation>
     </message>

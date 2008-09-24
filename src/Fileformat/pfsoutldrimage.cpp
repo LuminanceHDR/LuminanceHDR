@@ -1,10 +1,10 @@
 /**
  * @brief Writing QImage from PFS stream (which is a tonemapped LDR)
- * 
+ *
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -18,8 +18,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
  */
@@ -70,13 +70,5 @@ QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 		}
 	}
 
-//special treament for qt 4.2.1... removing "const" doesn't seem to work.
-#if QT_VERSION == 0x040201
-	QImage toreturn(const_cast<const uchar *>(data),width,height,QImage::Format_ARGB32);
-#elif QT_VERSION <= 0x040200
-	QImage toreturn(data,width,height,QImage::Format_ARGB32);
-#else
-	QImage toreturn(const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
-#endif
-	return toreturn;
+	return QImage (const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
 }

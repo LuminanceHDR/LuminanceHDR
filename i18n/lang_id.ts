@@ -245,72 +245,72 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Mulai!</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="66"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="61"/>
         <source>Using %1 thread(s)</source>
         <translation>Menggunakan %1 thread(s)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="67"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="62"/>
         <source>Saving using fileformat: </source>
         <translation>Simpan menggunakan fileformat: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="137"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="132"/>
         <source>Choose a directory</source>
         <translation>Pilih direktori</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="96"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="91"/>
         <source>All Hdr formats </source>
         <translation>Semua format HDR </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="98"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="93"/>
         <source>Select the input images</source>
         <translation>Pilih gambar input</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="118"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="113"/>
         <source>Load the tonemapping settings text files...</source>
         <translation>Memuat sebuah file text setting tonemapping...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="118"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="113"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>File text setting Qtpfsgui tonemapping (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="248"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="243"/>
         <source>Processing...</source>
         <translation>Memroses...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="305"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="300"/>
         <source>&amp;Done</source>
         <translation>&amp;Selesai</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="280"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="275"/>
         <source>Starting to tone map HDR file: </source>
         <translation>Memulai file tone map HDR: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="307"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="302"/>
         <source>All tasks completed.</source>
         <translation>Seluruh task telah komplet.</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="335"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="330"/>
         <source>Finished tone mapping the current HDR.</source>
         <translation>Telah selesai tone maping HDR ini.</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="353"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="348"/>
         <source>ERROR: Cannot save to file: </source>
         <translation>ERROR: Tidak dapat menyimpan ke file:</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="357"/>
+        <location filename="../src/Batch/batch_dialog.cpp" line="352"/>
         <source>Successfully saved LDR file: </source>
         <translation>Sukses menyimpan file LDR:</translation>
     </message>
@@ -620,30 +620,45 @@ You must either load an existing HDR file (via the -l option) or specify INPUTFI
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/dndoption.ui" line="44"/>
+        <location filename="../forms/dndoption.ui" line="57"/>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/dndoption.ui" line="72"/>
-        <source>Open as existing HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/dndoption.ui" line="87"/>
-        <source>Create a new HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/dndoption.ui" line="105"/>
+        <location filename="../forms/dndoption.ui" line="111"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="71"/>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="84"/>
+        <source>Open an existing HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="91"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="104"/>
+        <source>Create a new HDR, by using one or more images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/dndoption.ui" line="124"/>
+        <source>Cancel the drag and drop process and return to the main window.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/editingTools.cpp" line="428"/>
+        <location filename="../src/HdrWizard/editingTools.cpp" line="403"/>
         <source>Choose a directory and a prefix</source>
         <translation>Pilih sebuah direktori dan sebuah prefix</translation>
     </message>
@@ -1053,12 +1068,12 @@ p, li { white-space: pre-wrap; }
         <translation>Histogram:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
         <source>Unsaved changes...</source>
         <translation>Perubahan yang tak tersimpan...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="334"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Hdr ini mempunyai perubahan yang belum disimpan.&lt;br&gt;Anda yakin untuk menutupnya?</translation>
     </message>
@@ -2153,7 +2168,7 @@ p, li { white-space: pre-wrap; }
         <translation>Sedikitnya ada satu HDR yang mempunyai perubahan belum disimpan.&lt;br&gt;Anda masih ingin keluar?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Lisensi document tidak ditemukan, anda dapat mencarinya secara online: %2disini%3</translation>
@@ -2398,37 +2413,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PreferenceDialog</name>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="229"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="223"/>
         <source>Choose a directory</source>
         <translation type="unfinished">Pilih direktori</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Option -a...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="143"/>
         <source>Please restart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="149"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="143"/>
         <source>Please restart Qtpfsgui to use the new language (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Option -T...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="107"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2843,12 +2858,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="65"/>
+        <location filename="../src/main.cpp" line="68"/>
         <source>Aborting...</source>
         <translation>Membatalkan...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="65"/>
+        <location filename="../src/main.cpp" line="68"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Tidak menemukan Plugin Qt&apos;s JPEG...&lt;br&gt;Dimohon unzip paket DLL menggunakan opsi &quot;use folder names&quot; telah diaktifkan.</translation>
     </message>
@@ -3759,22 +3774,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Format yang di support (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="218"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
         <source>Select the input images</source>
         <translation>Pilih gambar inputan</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="217"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
         <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
         <translation>Format yang telah di support (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="271"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="263"/>
         <source>&amp;Done.</source>
         <translation>&amp;Selesai.</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="194"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="190"/>
         <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
         <translation type="unfinished"></translation>
     </message>

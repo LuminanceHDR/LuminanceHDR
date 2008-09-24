@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * based on Rafal Mantiuk and Grzegorz Krawczyk 's pfsview code
@@ -125,13 +125,11 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	imageLabel = new QLabel;
 	scrollArea = new SmartScrollArea(this,imageLabel);
 	VBL_L->addWidget(scrollArea);
-#if QT_VERSION >= 0x040200
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip("Pan the image to a region");
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-#endif
 }
 
 void HdrViewer::slotCornerButtonPressed() {
@@ -149,9 +147,9 @@ void HdrViewer::slotCornerButtonPressed() {
 	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
 	g.setX(g.x()+ scrollArea->viewport()->size().width());
 	g.setY(g.y()+ scrollArea->viewport()->size().height());
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2,
 					g.y() - panIconWidget->height()/2));
-	
+
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
@@ -191,28 +189,28 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
 void HdrViewer::updateImage() {
 	assert( pfsFrame != NULL );
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	
+
 	pfs::Channel *R, *G, *B;
 	pfsFrame->getRGBChannels( R, G, B );
 	assert(R!=NULL && G!=NULL && B!=NULL);
-	
+
 	//workarea  needed in updateMapping(...) called by mapFrameToImage(...)
 	workArea[0]=R;
 	workArea[1]=G;
 	workArea[2]=B;
 	assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
-	
+
 	int zoomedWidth = workArea[0]->getCols();
 	int zoomedHeight = workArea[0]->getRows();
 	if( image != NULL )
 		delete image;
 	image = new QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
 	assert( image != NULL );
-	
+
 	assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
 	mapFrameToImage( /*workArea[0], workArea[1], workArea[2], image,
 			minValue, maxValue, mappingMethod*/ );
-	
+
 	//assign the mapped image to the label
 	imageLabel->setPixmap(QPixmap::fromImage(*image));
 	QApplication::restoreOverrideCursor();
@@ -251,7 +249,7 @@ void HdrViewer::mapFrameToImage() {
 			    clamp( pg-1, 0, 255 ),
 			    clamp( pb-1, 0, 255 ) ).rgb();
 
-	    if( !finite( (*workArea[0])(index) ) || !finite( (*workArea[1])(index) ) || !finite( (*workArea[2])(index) ) ) {   // x is NaN or Inf 
+	    if( !finite( (*workArea[0])(index) ) || !finite( (*workArea[1])(index) ) || !finite( (*workArea[2])(index) ) ) {   // x is NaN or Inf
 		pixel = naninfcol;
 	    }
 
@@ -327,14 +325,9 @@ pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 
 void HdrViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
-#if QT_VERSION < 0x040200
-		int ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Default, QMessageBox::Yes, QMessageBox::NoButton);
-		if (ret==QMessageBox::Yes)
-#else
 		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"),
 		QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
 		if (ret==QMessageBox::Yes)
-#endif
 			event->accept();
 		else
 			event->ignore();

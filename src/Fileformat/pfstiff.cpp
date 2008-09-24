@@ -1,11 +1,11 @@
 /**
  * @brief Tiff facilities
- * 
+ *
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -228,14 +228,7 @@ QImage* TiffReader::readIntoQImage() {
 	_TIFFfree(bp);
 	TIFFClose(tif);
 
-//special treament for qt 4.2.1... removing "const" doesn't seem to work.
-#if QT_VERSION == 0x040201
-	QImage *toreturn=new QImage(const_cast<const uchar *>(data), width, height, QImage::Format_ARGB32);
-#elif QT_VERSION <= 0x040200
-	QImage *toreturn=new QImage(data,width,height,QImage::Format_ARGB32);
-#else
 	QImage *toreturn=new QImage(const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
-#endif
 	return toreturn;
 }
 

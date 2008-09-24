@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
@@ -42,13 +42,11 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 	parseOptions(opts);
 	setWindowTitle(caption);
 	setToolTip(caption);
-#if QT_VERSION >= 0x040200
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip("Pan the image to a region");
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-#endif
 }
 
 LdrViewer::~LdrViewer() {
@@ -74,9 +72,9 @@ void LdrViewer::slotCornerButtonPressed() {
 	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
 	g.setX(g.x()+ scrollArea->viewport()->size().width());
 	g.setY(g.y()+ scrollArea->viewport()->size().height());
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2,
 					g.y() - panIconWidget->height()/2));
-	
+
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 

@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
@@ -44,18 +44,12 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	maskColorButton->setVisible(false);
 	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-#if QT_VERSION <= 0x040200
-	QPalette modified_palette(maskColorButton->palette());
-	modified_palette.setColor(QPalette::Active,QPalette::Window,maskcolor);
-	maskColorButton->setPalette( modified_palette );
-#else
 	maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue()));
-#endif
 	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(0);
-	
+
 	scrollArea = new QScrollArea(previewImageFrame);
 	previewWidget = new PreviewWidget(scrollArea,original_ldrlist[1],original_ldrlist[0]);
 	previewWidget->setBrushColor(maskcolor);
@@ -65,16 +59,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip("Pan the image to a region");
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-#if QT_VERSION >= 0x040200
 	scrollArea->setCornerWidget(cornerButton);
-#else
-	QHBoxLayout *p=(QHBoxLayout*)(visualizationGroupBox->layout()->itemAt(0));
-	connect(fitButton,SIGNAL(toggled(bool)),cornerButton,SLOT(setDisabled(bool)));
-	cornerButton->setIconSize(QSize(22,22));
-	cornerButton->setText("Pan");
-	cornerButton->setToolButtonStyle(style);
-	p->insertWidget(5,cornerButton);
-#endif
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 
 	scrollArea->setFocusPolicy(Qt::NoFocus);
@@ -90,7 +75,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 	movableListWidget->setCurrentRow(1);
 	referenceListWidget->setCurrentRow(0);
-	
+
 	fitButton->setToolButtonStyle(style);
 	origSizeButton->setToolButtonStyle(style);
 	zoomOutButton->setToolButtonStyle(style);
@@ -112,7 +97,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	connect(referenceListWidget,SIGNAL(currentRowChanged(int)),this,SLOT(updatePivot(int)));
 	connect(prevBothButton,SIGNAL(clicked()),this,SLOT(prevBoth()));
 	connect(nextBothButton,SIGNAL(clicked()),this,SLOT(nextBoth()));
-	
+
 	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
 	connect(fitButton,SIGNAL(toggled(bool)),this,SLOT(fitPreview(bool)));
 	connect(origSizeButton,SIGNAL(clicked()),this,SLOT(origSize()));
@@ -132,13 +117,13 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
 	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
 	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
-	
+
 	QStringList::ConstIterator it = filelist.begin();
 	while( it != filelist.end() ) {
 		HV_offsets.append(qMakePair(0,0));
 		++it;
 	}
-	
+
 	histogram=new HistogramLDR(this);
 	histogram->setData(*(original_ldrlist.at(1)));
 	histogram->adjustSize();
@@ -161,13 +146,9 @@ void EditingTools::slotCornerButtonPressed() {
 	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
 	g.setX(g.x()+ scrollArea->viewport()->size().width());
 	g.setY(g.y()+ scrollArea->viewport()->size().height());
-#if QT_VERSION >= 0x040200
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, 
+	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2,
 					g.y() - panIconWidget->height()/2));
-#else
-	panIconWidget->popup(cornerButton->mapToGlobal(QPoint(cornerButton->width()/2-panIconWidget->width()/2,cornerButton->height()/2-panIconWidget->height()/2)));
-#endif
-	
+
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
@@ -407,13 +388,7 @@ void EditingTools::maskColorButtonClicked() {
 	QColor returned=QColorDialog::getColor();
 	if (returned.isValid()) {
 		previewWidget->setBrushColor(returned);
-#if QT_VERSION <= 0x040200
-		QPalette modified_palette(maskColorButton->palette());
-		modified_palette.setColor(QPalette::Active,QPalette::Window,returned);
-		maskColorButton->setPalette( modified_palette );
-#else
 		maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
-#endif
 		settings.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
 	}
 }

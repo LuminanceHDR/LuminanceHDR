@@ -8,12 +8,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>132</height>
+    <width>421</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="sizePolicy" >
-   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+   <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -23,7 +23,7 @@
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
-    <normaloff>:/new/prefix1/images/copyexif.png</normaloff>:/new/prefix1/images/copyexif.png</iconset>
+    <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
   </property>
   <property name="styleSheet" >
    <string notr="true" >background-color:rgb(212,210,200)</string>
@@ -40,6 +40,19 @@
    </property>
    <item>
     <widget class="QLabel" name="label" >
+     <property name="maximumSize" >
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="font" >
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+       <kerning>false</kerning>
+      </font>
+     </property>
      <property name="text" >
       <string>&lt;b>What would you like to do with the file(s)?&lt;/b></string>
      </property>
@@ -53,56 +66,62 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="btnOpenHDR" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font" >
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet" >
-      <string notr="true" >QPushButton:hover { background-color: white; color:black }</string>
-     </property>
+    <widget class="QCommandLinkButton" name="btnOpenHDR" >
      <property name="text" >
-      <string>Open as existing HDR</string>
+      <string>Open</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../icons.qrc" >
+       <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+     </property>
+     <property name="iconSize" >
+      <size>
+       <width>36</width>
+       <height>36</height>
+      </size>
+     </property>
+     <property name="description" >
+      <string>Open an existing HDR.</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="btnCreateNewHDR" >
-     <property name="font" >
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet" >
-      <string notr="true" >QPushButton:hover { background-color: white; color:black }</string>
-     </property>
+    <widget class="QCommandLinkButton" name="btnCreateNewHDR" >
      <property name="text" >
-      <string>Create a new HDR</string>
+      <string>New</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../icons.qrc" >
+       <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
+     </property>
+     <property name="iconSize" >
+      <size>
+       <width>36</width>
+       <height>36</height>
+      </size>
+     </property>
+     <property name="description" >
+      <string>Create a new HDR, by using one or more images.</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="btnCancel" >
-     <property name="font" >
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="autoFillBackground" >
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet" >
-      <string notr="true" >QPushButton:hover { background-color: white; color:black }</string>
-     </property>
+    <widget class="QCommandLinkButton" name="btnCancel" >
      <property name="text" >
       <string>Cancel</string>
+     </property>
+     <property name="icon" >
+      <iconset resource="../icons.qrc" >
+       <normaloff>:/new/prefix1/images/cancel.png</normaloff>:/new/prefix1/images/cancel.png</iconset>
+     </property>
+     <property name="iconSize" >
+      <size>
+       <width>36</width>
+       <height>36</height>
+      </size>
+     </property>
+     <property name="description" >
+      <string>Cancel the drag and drop process and return to the main window.</string>
      </property>
     </widget>
    </item>
