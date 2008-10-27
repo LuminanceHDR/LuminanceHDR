@@ -1,15 +1,15 @@
 /**
- * @file pfstmo_reinhard04.cpp
- * @brief Tone map XYZ channels using Reinhard04 model
+ * @file pfstmo_reinhard05.cpp
+ * @brief Tone map XYZ channels using Reinhard05 model
  *
  * Dynamic Range Reduction Inspired by Photoreceptor Physiology.
  * E. Reinhard and K. Devlin.
- * In IEEE Transactions on Visualization and Computer Graphics, 2004.
+ * In IEEE Transactions on Visualization and Computer Graphics, 2005.
  *
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -23,11 +23,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: pfstmo_reinhard04.cpp,v 1.2 2004/09/22 10:00:30 krawczyk Exp $
+ * $Id: pfstmo_reinhard05.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
 #include <iostream>
@@ -40,14 +40,14 @@
 using namespace std;
 
 /**
- * @brief: Tone mapping algorithm [Reinhard2004]
+ * @brief: Tone mapping algorithm [Reinhard2005]
  *
  * @param R red channel
  * @param G green channel
  * @param B blue channel
  * @param Y luminance channel
  */
-void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
+void tmo_reinhard05( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
   pfs::Array2D* Y, float br, float ca, float la )
 {
   float max_lum = (*Y)(0);
@@ -118,7 +118,7 @@ void tmo_reinhard04( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
             // photoreceptor equation
             col /= col + pow(f*Ia, m);
           }
-        
+
           max_col = (col>max_col) ? col : max_col;
           min_col = (col<min_col) ? col : min_col;
 
@@ -161,7 +161,7 @@ pfs::Frame * pfstmo_reinhard05(pfs::Frame *inputpfsframe, float br, float chroma
 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
 
 	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Ro, Go, Bo ); //in:xyz ---> out:rgb (skip copyArray)
-	tmo_reinhard04( Ro, Go, Bo, Y, brightness, chromatic_adaptation, light_adaptation );
+	tmo_reinhard05( Ro, Go, Bo, Y, brightness, chromatic_adaptation, light_adaptation );
 // 	pfs::transformColorSpace( pfs::CS_SRGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo ); //out:rgb ---> out:xyz
 
 	return outframe;
