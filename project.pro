@@ -69,6 +69,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/TM_operators/ashikhmin02/tmo_ashikhmin02.h \
            src/TM_operators/drago03/tmo_drago03.h \
            src/TM_operators/durand02/tmo_durand02.h \
+           src/TM_operators/durand02/bilateral.h \
            src/TM_operators/durand02/fastbilateral.h \
            src/TM_operators/fattal02/tmo_fattal02.h \
            src/TM_operators/fattal02/pde.h \
@@ -129,6 +130,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/drago03/tmo_drago03.cpp \
            src/TM_operators/durand02/pfstmo_durand02.cpp \
            src/TM_operators/durand02/tmo_durand02.cpp \
+           src/TM_operators/durand02/bilateral.cpp \
            src/TM_operators/durand02/fastbilateral.cpp \
            src/TM_operators/fattal02/pfstmo_fattal02.cpp \
            src/TM_operators/fattal02/tmo_fattal02.cpp \

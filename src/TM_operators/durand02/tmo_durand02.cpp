@@ -29,23 +29,25 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_durand02.cpp,v 1.7 2005/12/15 15:53:37 krawczyk Exp $
+ * $Id: tmo_durand02.cpp,v 1.4 2008/09/09 18:10:49 rafm Exp $
  */
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include "../../Libpfs/pfs.h"
+#include "../pfstmo.h"
+#include "../tmo_config.h"
 
-#ifdef HAVE_FFTW
+#ifdef HAVE_FFTW3F
 #include "fastbilateral.h"
 #else
 #include "bilateral.h"
 #endif
 #define FLT_MIN 1e-6
 
-void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
+static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum,
   float maxPrct, float& maxLum);
+
 
 /*
 
@@ -64,40 +66,51 @@ R output = r*exp(log(output intensity)), etc.
 
 */
 
-void tmo_durand02(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B,
-  float sigma_s, float sigma_r, float baseContrast, int downsample  )
-{
+void tmo_durand02(unsigned int width, unsigned int height,
+  float *_R, float *_G, float *_B,
+  float sigma_s, float sigma_r, float baseContrast, int downsample/*,
+  pfstmo_progress_callback progress_cb */) 
+ {
+  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, _R);
+  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, _G);
+  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, _B);
+
   int i;
   int w = R->getCols();
   int h = R->getRows();
   int size = w*h;
-  pfs::Array2D* I = new pfs::Array2DImpl(w,h); // intensities
-  pfs::Array2D* BASE = new pfs::Array2DImpl(w,h); // base layer
-  pfs::Array2D* DETAIL = new pfs::Array2DImpl(w,h); // detail layer
+  pfstmo::Array2D* I = new pfstmo::Array2D(w,h); // intensities
+  pfstmo::Array2D* BASE = new pfstmo::Array2D(w,h); // base layer
+  pfstmo::Array2D* DETAIL = new pfstmo::Array2D(w,h); // detail layer
 
+  float min_pos = 1e10f;
   for( i=0 ; i<size ; i++ )
   {
-
-(*R)(i)= ((*R)(i)<1e-4) ? 1e-4 : (*R)(i);
-(*G)(i)= ((*G)(i)<1e-4) ? 1e-4 : (*G)(i);
-(*B)(i)= ((*B)(i)<1e-4) ? 1e-4 : (*B)(i);
-
     (*I)(i) = 1.0f/61.0f * ( 20.0f*(*R)(i) + 40.0f*(*G)(i) + (*B)(i) );
+    if( unlikely((*I)(i) < min_pos && (*I)(i) > 0) )
+      min_pos = (*I)(i);
+  }
+  
+  for( i=0 ; i<size ; i++ )
+  {
+    float L = (*I)(i);
+    if( unlikely( L <= 0 ) )
+      L = min_pos;
+    
+    (*R)(i) /= L;
+    (*G)(i) /= L;
+    (*B)(i) /= L;
 
-    (*R)(i) /= (*I)(i);
-    (*G)(i) /= (*I)(i);
-    (*B)(i) /= (*I)(i);
-
-    (*I)(i) = log(FLT_MIN+(*I)(i) );
+    (*I)(i) = log(FLT_MIN+L );
 //     if (!finite((*I)(i))) {
 //     fprintf(stderr,"nf");
 //     }
   }
 
-#ifdef HAVE_FFTW
-  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample );
+#ifdef HAVE_FFTW3F
+  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample/*, progress_cb */);
 #else
-  bilateralFilter( I, BASE, sigma_s, sigma_r );
+  bilateralFilter( I, BASE, sigma_s, sigma_r/*, progress_cb */);
 #endif
 
   //!! FIX: find minimum and maximum luminance, but skip 1% of outliers
@@ -125,14 +138,18 @@ void tmo_durand02(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B,
     //luminance
     (*I)(i) -=  4.3f+minB*compressionfactor;
 
-    (*R)(i) *= exp( (*I)(i) );
-    (*G)(i) *= exp( (*I)(i) );
-    (*B)(i) *= exp( (*I)(i) );
+    (*R)(i) *= expf( (*I)(i) );
+    (*G)(i) *= expf( (*I)(i) );
+    (*B)(i) *= expf( (*I)(i) );
   }
 
   delete I;
   delete BASE;
   delete DETAIL;
+
+  delete B;
+  delete G;
+  delete R;
 }
 
 
@@ -141,7 +158,7 @@ void tmo_durand02(pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B,
  * @brief Find minimum and maximum value skipping the extremes
  *
  */
-void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
+static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum)
 {
 	int size = I->getRows() * I->getCols();
@@ -155,5 +172,3 @@ void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum,
 	minLum = vI.at( int(minPrct*vI.size()) );
 	maxLum = vI.at( int(maxPrct*vI.size()) );
 }
-
-

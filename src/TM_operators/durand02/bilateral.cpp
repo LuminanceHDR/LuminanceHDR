@@ -24,10 +24,14 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: bilateral.cpp,v 1.2 2004/09/22 10:00:25 krawczyk Exp $
+ * $Id: bilateral.cpp,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
+
+#include "../tmo_config.h"
+
 #include <math.h>
-#include <pfs.h>
+
+#include "../pfstmo.h"
 
 inline int max( int a, int b )
 { return (a>b) ? a : b; }
@@ -38,7 +42,7 @@ inline int min( int a, int b )
 
 // support functions
 
-void gaussianKernel( pfs::Array2D *kern, float sigma )
+void gaussianKernel( pfstmo::Array2D *kern, float sigma )
 {
   for( int y = 0; y < kern->getRows(); y++ ) {
     for( int x = 0; x < kern->getCols(); x++ ) {
@@ -71,7 +75,7 @@ public:
   float getValue( float x )
     {
       x = fabs( x );
-      if( x > maxVal ) return 0;
+      if( unlikely( x > maxVal ) ) return 0;
       return gauss[ (int)(x*scaleFactor) ];
     }
 
@@ -79,27 +83,31 @@ public:
 
 
 
-void bilateralFilter( const pfs::Array2D *I,
-  pfs::Array2D *J, float sigma_s, float sigma_r)
+void bilateralFilter( const pfstmo::Array2D *I,
+  pfstmo::Array2D *J, float sigma_s, float sigma_r /*,
+  pfstmo_progress_callback progress_cb*/)
 {
-  const pfs::Array2D *X1 = I;     // intenisity data
+  const pfstmo::Array2D *X1 = I;     // intenisity data
 
-  // x +- sigma_s*2 should contain 95% elememnts in Gaussia distrib
+  // x +- sigma_s*2 should contain 95% of the Gaussian distrib
   int sKernelSize = (int)( sigma_s*4 + 0.5 ) + 1;
 
-  pfs::Array2DImpl sKernel(sKernelSize, sKernelSize);
+  pfstmo::Array2D sKernel(sKernelSize, sKernelSize);
   gaussianKernel( &sKernel, sigma_s );
   GaussLookup gauss( sigma_r, 256 );
 
   for( int y = 0; y < I->getRows(); y++ )
   {
+/*  progress_cb( y * 100 / I->getRows() ); */
+
     for( int x = 0; x < I->getCols(); x++ )
     {
       float val = 0;
       float k = 0;
       float I_s = (*X1)(x,y);	//!! previously 'I' not 'X1'
       
-      I_s = finite(I_s) ? I_s : 0.0;
+      if( unlikely( !finite( I_s ) ) )
+        I_s = 0.0f;
 
       for( int py = max( 0, y - sKernelSize/2);
 	   py < min( I->getRows(), y + sKernelSize/2); py++ )
@@ -108,13 +116,15 @@ void bilateralFilter( const pfs::Array2D *I,
 	     px < min( I->getCols(), x + sKernelSize/2); px++ )
 	{
 	  float I_p = (*X1)(px, py);	//!! previously 'I' not 'X1'
-	  I_p = finite(I_p) ? I_p : 0.0;
+           if( unlikely( !finite( I_p ) ) )
+             I_p = 0.0f;
 	  
 	  float mult = sKernel(px-x + sKernelSize/2, py-y + sKernelSize/2) *
 	      gauss.getValue( I_p - I_s );
 
 	  float Ixy = (*I)(px, py);
-	  Ixy = finite(Ixy) ? Ixy : 0.0;
+           if( unlikely( !finite( Ixy ) ) )
+             Ixy = 0.0f;
 	  
 	  val += Ixy*mult;	//!! but here we want 'I'
 	  k += mult;

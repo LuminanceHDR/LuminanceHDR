@@ -28,16 +28,19 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_durand02.h,v 1.4 2005/12/15 15:53:37 krawczyk Exp $
+ * $Id: tmo_durand02.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
 #ifndef _tmo_durand02_h_
 #define _tmo_durand02_h_
 #include "../../Libpfs/pfs.h"
+#include "../pfstmo.h"
 
 /*
  * @brief Fast bilateral filtering
  *
+ * @param width image width
+ * @param height image height
  * @param R red channel
  * @param G green channel
  * @param B blue channel
@@ -46,8 +49,10 @@
  * @param baseContrast contrast of the base layer
  * @param downsample down sampling factor for speeding up fast-bilateral (1..20)
  */
-void tmo_durand02( pfs::Array2D *R, pfs::Array2D *G, pfs::Array2D *B,
-  float sigma_s, float sigma_r, float baseContrast, int downsample );
+void tmo_durand02(unsigned int width, unsigned int height,
+  float *R, float *G, float *B,
+  float sigma_s, float sigma_r, float baseContrast, int downsample/*,
+  pfstmo_progress_callback progress_cb*/ );
 
 pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma_r, float _baseContrast);
 

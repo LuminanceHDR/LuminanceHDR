@@ -7,9 +7,9 @@
  * @author Grzegorz Krawczyk
  *
  * This file is a part of Qtpfsgui package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -23,15 +23,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * $Id: pde.h,v 1.3 2004/12/15 09:48:52 krawczyk Exp $
+ * ----------------------------------------------------------------------
+ *
+ * $Id: pde.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
 #ifndef _FMG_PDE_H_
 #define _FMG_PDE_H_
 
-#include "../../Libpfs/array2d.h"
+#include "../pfstmo.h"
 
 /// limit of iterations for successive overrelaxation
 #define SOR_MAXITS 5001
@@ -42,7 +42,7 @@
  * @param F array with divergence
  * @param U [out] sollution
  */
-void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U);
+void solve_pde_multigrid(pfstmo::Array2D *F, pfstmo::Array2D *U);
 
 /**
  * @brief solve pde using successive overrelaxation
@@ -51,7 +51,7 @@ void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U);
  * @param U [out] sollution
  * @param maxits limit of iterations
  */
-void solve_pde_sor(pfs::Array2D *F, pfs::Array2D *U, int maxits=SOR_MAXITS);
+void solve_pde_sor(pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits=SOR_MAXITS);
 
 #endif
 

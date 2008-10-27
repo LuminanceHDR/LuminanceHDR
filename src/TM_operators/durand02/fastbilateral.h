@@ -23,13 +23,14 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: fastbilateral.h,v 1.3 2005/12/15 15:53:37 krawczyk Exp $
+ * $Id: fastbilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
 
 #ifndef _fastbilateral_h_
 #define _fastbilateral_h_
 
+#include  "../pfstmo.h"
 
 /**
  * @brief Fast bilateral filtering
@@ -41,8 +42,9 @@
  * @param sigma_s sigma value for spatial kernel
  * @param sigma_r sigma value for range kernel
  */
-void fastBilateralFilter( const pfs::Array2D *I,
-  pfs::Array2D *J, float sigma_s, float sigma_r, int downsample);
+void fastBilateralFilter( const pfstmo::Array2D *I,
+  pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample,
+  pfstmo_progress_callback progress_cb );
 
 
 #endif /* #ifndef _fastbilateral_h_ */

@@ -8,9 +8,9 @@
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
  * This file is a part of Qtpfsgui package, based on pfstmo.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -24,24 +24,27 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * $Id: tmo_fattal02.cpp,v 1.4 2005/11/29 18:34:49 aefremov Exp $
+ * ----------------------------------------------------------------------
+ *
+ * $Id: tmo_fattal02.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 #include <math.h>
+
 #include <assert.h>
-#include "../../Libpfs/array2d.h"
+
+#include "../pfstmo.h"
 #include "pde.h"
 
 using namespace std;
 
 //--------------------------------------------------------------------
 
-void downSample(pfs::Array2D* A, pfs::Array2D* B)
+void downSample(pfstmo::Array2D* A, pfstmo::Array2D* B)
 {
   int width = B->getCols();
   int height = B->getRows();
@@ -56,17 +59,17 @@ void downSample(pfs::Array2D* A, pfs::Array2D* B)
       p += (*A)(2*x,2*y+1);
       p += (*A)(2*x+1,2*y+1);
       (*B)(x,y) = p / 4.0f;
-    }	
+    }
 }
-	
-void gaussianBlur( pfs::Array2D* I, pfs::Array2D* L )
+
+void gaussianBlur( pfstmo::Array2D* I, pfstmo::Array2D* L )
 {
   int width = I->getCols();
   int height = I->getRows();
 //   int size = width*height;
   int x,y;
 
-  pfs::Array2D* T = new pfs::Array2DImpl(width,height);
+  pfstmo::Array2D* T = new pfstmo::Array2D(width,height);
 
   //--- X blur
   for( y=0 ; y<height ; y++ )
@@ -99,28 +102,28 @@ void gaussianBlur( pfs::Array2D* I, pfs::Array2D* L )
   delete T;
 }
 
-void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels )
+void createGaussianPyramids( pfstmo::Array2D* H, pfstmo::Array2D** pyramids, int nlevels )
 {
   int width = H->getCols();
   int height = H->getRows();
   int size = width*height;
 
-  pyramids[0] = new pfs::Array2DImpl(width,height);
+  pyramids[0] = new pfstmo::Array2D(width,height);
   for( int i=0 ; i<size ; i++ )
     (*pyramids[0])(i) = (*H)(i);
 
-  pfs::Array2D* L = new pfs::Array2DImpl(width,height);
+  pfstmo::Array2D* L = new pfstmo::Array2D(width,height);
   gaussianBlur( pyramids[0], L );
-	
+
   for( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
-    height /= 2;		
-    pyramids[k] = new pfs::Array2DImpl(width,height);
+    height /= 2;
+    pyramids[k] = new pfstmo::Array2D(width,height);
     downSample(L, pyramids[k]);
-    
+
     delete L;
-    L = new pfs::Array2DImpl(width,height);
+    L = new pfstmo::Array2D(width,height);
     gaussianBlur( pyramids[k], L );
   }
 
@@ -129,7 +132,7 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
 
 //--------------------------------------------------------------------
 
-float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
+float calculateGradients(pfstmo::Array2D* H, pfstmo::Array2D* G, int k)
 {
   int width = H->getCols();
   int height = H->getRows();
@@ -148,9 +151,9 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
       e = (x+1 == width ? x : x+1);
 
       gx = ((*H)(w,y)-(*H)(e,y)) / divider;
-        
+
       gy = ((*H)(x,s)-(*H)(x,n)) / divider;
-      
+
       (*G)(x,y) = sqrtf(gx*gx+gy*gy);
       avgGrad += (*G)(x,y);
     }
@@ -161,7 +164,7 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 
 //--------------------------------------------------------------------
 
-void upSample(pfs::Array2D* A, pfs::Array2D* B)
+void upSample(pfstmo::Array2D* A, pfstmo::Array2D* B)
 {
   int width = B->getCols();
   int height = B->getRows();
@@ -176,7 +179,7 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
       int ay = y/2;
       ax = (ax<awidth) ? ax : awidth-1;
       ay = (ay<aheight) ? ay : aheight-1;
-      
+
       (*B)(x,y) = (*A)(ax,ay);
     }
 //--- this code below produces 'use of uninitialized value error'
@@ -191,19 +194,19 @@ void upSample(pfs::Array2D* A, pfs::Array2D* B)
 //       (*B)(2*x+1,2*y) = (*A)(x,y);
 //       (*B)(2*x,2*y+1) = (*A)(x,y);
 //       (*B)(2*x+1,2*y+1) = (*A)(x,y);
-//     }	
+//     }
 }
 
-void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[], 
+void calculateFiMatrix(pfstmo::Array2D* FI, pfstmo::Array2D* gradients[],
   float avgGrad[], int nlevels,
   float alfa, float beta, float noise, bool newfattal)
 {
   int width = gradients[nlevels-1]->getCols();
   int height = gradients[nlevels-1]->getRows();
   int k;
-  pfs::Array2D** fi = new pfs::Array2D*[nlevels];
+  pfstmo::Array2D** fi = new pfstmo::Array2D*[nlevels];
 
-  fi[nlevels-1] = new pfs::Array2DImpl(width,height);
+  fi[nlevels-1] = new pfstmo::Array2D(width,height);
   if (newfattal)
   for( k=0 ; k<width*height ; k++ )
     (*fi[nlevels-1])(k) = 1.0f;
@@ -212,7 +215,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
   {
     width = gradients[k]->getCols();
     height = gradients[k]->getRows();
-		
+
     for( int y=0 ; y<height ; y++ )
       for( int x=0 ; x<width ; x++ )
       {
@@ -229,13 +232,13 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
         else
         	(*fi[k])(x,y) = value;
       }
-		
+
     // create next level
     if( k>1 )
     {
       width = gradients[k-1]->getCols();
       height = gradients[k-1]->getRows();
-      fi[k-1] = new pfs::Array2DImpl(width,height);
+      fi[k-1] = new pfstmo::Array2D(width,height);
     }
     else
       fi[0] = FI;               // highest level -> result
@@ -246,7 +249,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
       gaussianBlur(fi[k-1],fi[k-1]);
     }
   }
-	
+
   for( k=1 ; k<nlevels ; k++ )
     delete fi[k];
   delete[] fi;
@@ -254,17 +257,32 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 
 //--------------------------------------------------------------------
 
-void findMaxMinPercentile(pfs::Array2D* I, float minPrct, float& minLum, 
-  float maxPrct, float& maxLum);
+static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum,
+  float maxPrct, float& maxLum)
+{
+  int size = I->getRows() * I->getCols();
+  std::vector<float> vI;
+
+  for( int i=0 ; i<size ; i++ )
+	if( (*I)(i)!=0.0f )
+	  vI.push_back((*I)(i));
+
+  std::sort(vI.begin(), vI.end());
+
+  minLum = vI.at( int(minPrct*vI.size()) );
+  maxLum = vI.at( int(maxPrct*vI.size()) );
+}
 
 //--------------------------------------------------------------------
 
-void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta, float noise, bool newfattal)
+void tmo_fattal02(unsigned int width, unsigned int height,
+                  const float* _Y, float* _L, float alfa, float beta, float noise, bool newfattal)
 {
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(_Y));
+  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, _L);
+
   const int MSIZE = 32;         // minimum size of gaussian pyramid
-	
-  int width = Y->getCols();   // +2 for boundaries
-  int height = Y->getRows();
+
   int size = width*height;
   int x,y,i,k;
 
@@ -276,12 +294,12 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
     minLum = ( (*Y)(i)<minLum ) ? (*Y)(i) : minLum;
     maxLum = ( (*Y)(i)>maxLum ) ? (*Y)(i) : maxLum;
   }
-  pfs::Array2D* H = new pfs::Array2DImpl(width, height);
+  pfstmo::Array2D* H = new pfstmo::Array2D(width, height);
   for( i=0 ; i<size ; i++ )
     (*H)(i) = logf( 100.0f*(*Y)(i)/maxLum + 1e-4 );
 
 //   DEBUG_STR << "tmo_fattal02: calculating attenuation matrix" << endl;
-  
+
   // create gaussian pyramids
   int mins = (width<height) ? width : height;	// smaller dimension
   int nlevels = 0;
@@ -290,27 +308,27 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
     nlevels++;
     mins /= 2;
   }
-  pfs::Array2D** pyramids = new pfs::Array2D*[nlevels];
+  pfstmo::Array2D** pyramids = new pfstmo::Array2D*[nlevels];
   createGaussianPyramids(H, pyramids, nlevels);
 
   // calculate gradients and its average values on pyramid levels
-  pfs::Array2D** gradients = new pfs::Array2D*[nlevels];
+  pfstmo::Array2D** gradients = new pfstmo::Array2D*[nlevels];
   float* avgGrad = new float[nlevels];
   for( k=0 ; k<nlevels ; k++ )
   {
-    gradients[k] = new pfs::Array2DImpl(pyramids[k]->getCols(), pyramids[k]->getRows());
+    gradients[k] = new pfstmo::Array2D(pyramids[k]->getCols(), pyramids[k]->getRows());
     avgGrad[k] = calculateGradients(pyramids[k],gradients[k], k);
   }
 
   // calculate fi matrix
-  pfs::Array2D* FI = new pfs::Array2DImpl(width, height);
+  pfstmo::Array2D* FI = new pfstmo::Array2D(width, height);
   calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise, newfattal);
 
 //  dumpPFS( "FI.pfs", FI, "Y" );
 
   // attenuate gradients
-  pfs::Array2D* Gx = new pfs::Array2DImpl(width, height);
-  pfs::Array2D* Gy = new pfs::Array2DImpl(width, height);
+  pfstmo::Array2D* Gx = new pfstmo::Array2D(width, height);
+  pfstmo::Array2D* Gy = new pfstmo::Array2D(width, height);
   for( y=0 ; y<height ; y++ )
     for( x=0 ; x<width ; x++ )
     {
@@ -318,17 +336,17 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
       s = (y+1 == height ? y : y+1);
       e = (x+1 == width ? x : x+1);
 
-      (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);        
-      (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);      
+      (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);
+      (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);
     }
 
 //   dumpPFS( "Gx.pfs", Gx, "Y" );
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
-  
+
 //   DEBUG_STR << "tmo_fattal02: compressing gradients" << endl;
-  
+
   // calculate divergence
-  pfs::Array2D* DivG = new pfs::Array2DImpl(width, height);
+  pfstmo::Array2D* DivG = new pfstmo::Array2D(width, height);
   for( y=0 ; y<height ; y++ )
     for( x=0 ; x<width ; x++ )
     {
@@ -338,18 +356,18 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
     }
 
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
-  
+
 //   DEBUG_STR << "tmo_fattal02: recovering image" << endl;
-  
+
   // solve pde and exponentiate (ie recover compressed image)
-  pfs::Array2D* U = new pfs::Array2DImpl(width, height);
+  pfstmo::Array2D* U = new pfstmo::Array2D(width, height);
   solve_pde_multigrid( DivG, U );
 //  solve_pde_sor( DivG, U );
 
   for( y=0 ; y<height ; y++ )
     for( x=0 ; x<width ; x++ )
       (*L)(x,y) = expf( (*U)(x,y) ) - 1e-4f;
-	
+
   // remove percentile of min and max values and renormalize
   findMaxMinPercentile(L, 0.001f, minLum, 0.995f, maxLum);
   maxLum -= minLum;
@@ -377,4 +395,7 @@ void tmo_fattal02(const pfs::Array2D* Y, pfs::Array2D* L, float alfa, float beta
   delete Gy;
   delete DivG;
   delete U;
+
+  delete L;
+  delete Y;
 }

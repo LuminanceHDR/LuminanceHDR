@@ -24,7 +24,7 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: bilateral.h,v 1.2 2004/09/22 10:00:25 krawczyk Exp $
+ * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
 
@@ -42,10 +42,11 @@
  * @param sigma_s sigma value for spatial kernel
  * @param sigma_r sigma value for range kernel
  *
- * $Id: bilateral.h,v 1.2 2004/09/22 10:00:25 krawczyk Exp $
+ * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
-void bilateralFilter( const pfs::Array2D *I,
-  pfs::Array2D *J, float sigma_s, float sigma_r);
+void bilateralFilter( const pfstmo::Array2D *I,
+  pfstmo::Array2D *J, float sigma_s, float sigma_r/*,
+  pfstmo_progress_callback progress_cb*/);
 
 
 #endif /* #ifndef _bilateral_h_ */

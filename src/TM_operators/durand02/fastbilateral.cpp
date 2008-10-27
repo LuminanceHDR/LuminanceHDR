@@ -23,15 +23,17 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: fastbilateral.cpp,v 1.5 2005/12/15 15:53:37 krawczyk Exp $
+ * $Id: fastbilateral.cpp,v 1.5 2008/09/09 18:10:49 rafm Exp $
  */
 
 
+#include "../tmo_config.h"
 #include <iostream>
 
 #include <fftw3.h>
 #include <math.h>
 
+#include "../pfstmo.h"
 #include "../../Libpfs/pfs.h"
 
 using namespace std;
@@ -49,64 +51,95 @@ inline float min( float a, float b )
 }
 
 
-void convolveArray( const pfs::Array2D *I, float sigma, pfs::Array2D *J )
+// TODO: use spatial convolution rather than FFT, should be much
+// faster except for a very large kernels
+class GaussianBlur
+
 {
-  int i,x,y;
+  float* source;
+  fftwf_complex* freq;
+  fftwf_plan fplan_fw;
+  fftwf_plan fplan_in;
 
-  int nx = I->getCols();
-  int ny = I->getRows();
-  int nsize = nx * ny;
-
-  int ox = nx;
-  int oy = ny/2 + 1;            // saves half of the data
-  int osize = ox * oy;
- 
-  fftwf_plan fplan;             // fft transformation plan
-  float* source = (float*) fftwf_malloc(sizeof(float) * nx * 2 * (ny/2+1) );
-  fftwf_complex* freq = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * osize);
-
-  for( x=0 ; x<nx ; x++ )
-    for( y=0 ; y<ny ; y++ )
-      source[x*ny+y] = (*I)(x,y);
-
-  fplan = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
-  fftwf_execute(fplan);
-  fftwf_destroy_plan(fplan);
-
-  // filter
-  float sig = nx/(2.0f*sigma);
-  float sig2 = 2.0f*sig*sig;
-  for( x=0 ; x<ox/2 ; x++ )
-    for( y=0 ; y<oy ; y++ )
-    {
-      float d2 = x*x + y*y;
-      float kernel = exp( -d2 / sig2 );
-
-      freq[x*oy+y][0] *= kernel;
-      freq[x*oy+y][1] *= kernel;
-      freq[(ox-x-1)*oy+y][0] *= kernel;
-      freq[(ox-x-1)*oy+y][1] *= kernel;
-    }
-
-  fplan = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);
-  fftwf_execute(fplan);
-  fftwf_destroy_plan(fplan);
-
-  for( x=0 ; x<nx ; x++ )
-    for( y=0 ; y<ny ; y++ )
-      (*J)(x,y) = source[x*ny+y] / nsize;
+  float sigma;
   
-  fftwf_free(source); 
-  fftwf_free(freq);
-}
+public:
+  GaussianBlur( int nx, int ny, float sigma ) : sigma( sigma )
+  {
+    int ox = nx;
+    int oy = ny/2 + 1;            // saves half of the data
+    const int osize = ox * oy;
+    source =  (float*)fftwf_malloc(sizeof(float) * nx * 2 * (ny/2+1) );
+    freq = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * osize);
+//    if( source == NULL || freq == NULL )
+    //TODO: throw exception
+    fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
+    fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);    
+  }
 
+  void blur( const pfstmo::Array2D *I, pfstmo::Array2D *J )
+  {
+    int i,x,y;
+
+    int nx = I->getCols();
+    int ny = I->getRows();
+    int nsize = nx * ny;
+
+    int ox = nx;
+    int oy = ny/2 + 1;            // saves half of the data
+    int osize = ox * oy;
+    
+    for( y=0 ; y<ny ; y++ )
+      for( x=0 ; x<nx ; x++ )
+        source[x*ny+y] = (*I)(x,y);
+
+    fftwf_execute(fplan_fw);
+
+    // filter
+    float sig = nx/(2.0f*sigma);
+    float sig2 = 2.0f*sig*sig;
+    for( x=0 ; x<ox/2 ; x++ )
+      for( y=0 ; y<oy ; y++ )
+      {
+        float d2 = x*x + y*y;
+        float kernel = exp( -d2 / sig2 );
+        
+        freq[x*oy+y][0] *= kernel;
+        freq[x*oy+y][1] *= kernel;
+        freq[(ox-x-1)*oy+y][0] *= kernel;
+        freq[(ox-x-1)*oy+y][1] *= kernel;
+      }
+    
+    fftwf_execute(fplan_in);
+
+    for( x=0 ; x<nx ; x++ )
+      for( y=0 ; y<ny ; y++ )
+        (*J)(x,y) = source[x*ny+y] / nsize;  
+  }
+
+  ~GaussianBlur()
+  {
+    fftwf_free(source); 
+    fftwf_free(freq);
+    fftwf_destroy_plan(fplan_fw);
+    fftwf_destroy_plan(fplan_in);
+  }
+  
+  
+};
+
+// According to the original paper, downsampling can be used to speed
+// up computation. However, downsampling cannot be mathematically
+// justified and introduces large errors (mostly excessive bluring) in
+// the result of the bilateral filter. Therefore, in this
+// implementation, downsampling is disabled.
 
 /**
  * @brief upsampling and downsampling
  *
  * original code from pfssize
  */
-void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
+void upsampleArray( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -152,40 +185,40 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
     } 
 }
 
-// void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
-// {
-//   const float inRows = in->getRows();
-//   const float inCols = in->getCols();
-// 
-//   const int outRows = out->getRows();
-//   const int outCols = out->getCols();
-// 
-//   const float dx = (float)in->getCols() / (float)out->getCols();
-//   const float dy = (float)in->getRows() / (float)out->getRows();
-// 
-//   const float filterSize = 0.5;
-//   
-//   float sx, sy;
-//   int x, y;
-//   
-//   for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-//     for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
-// 
-//       float pixVal = 0;
-//       float w = 0;
-//       for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
-//         for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
-//           pixVal += (*in)( (int)ix, (int)iy );
-//           w += 1;
-//         }     
-//       (*out)(x,y) = pixVal/w;      
-//     }
-// }
+void downsampleArray( const pfstmo::Array2D *in, pfstmo::Array2D *out )
+{
+  const float inRows = in->getRows();
+  const float inCols = in->getCols();
+
+  const int outRows = out->getRows();
+  const int outCols = out->getCols();
+
+  const float dx = (float)in->getCols() / (float)out->getCols();
+  const float dy = (float)in->getRows() / (float)out->getRows();
+
+  const float filterSize = 0.5;
+  
+  float sx, sy;
+  int x, y;
+  
+  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
+    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+
+      float pixVal = 0;
+      float w = 0;
+      for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
+        for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
+          pixVal += (*in)( (int)ix, (int)iy );
+          w += 1;
+        }     
+      (*out)(x,y) = pixVal/w;      
+    }
+}
 
 
 
 /* 
-Pseudocode from paper:
+Pseudocode from the paper:
 
 PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
   J=0 // set the output to zero
@@ -199,8 +232,9 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
     J=J+Jj .*  InterpolationWeight(I, ij )
 */
 
-void fastBilateralFilter( const pfs::Array2D *I,
-  pfs::Array2D *J, float sigma_s, float sigma_r, int downsample)
+void fastBilateralFilter( const pfstmo::Array2D *I,
+  pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample/*,
+  pfstmo_progress_callback progress_cb */)
 {
   int i;
   int w = I->getCols();
@@ -213,31 +247,38 @@ void fastBilateralFilter( const pfs::Array2D *I,
   for(i=0 ; i<size ; i++)
   {
     float v = (*I)(i);
-    if( v>maxI ) maxI = v;
-    if( v<minI ) minI = v;
+    if( unlikely( v>maxI ) ) maxI = v;
+    if( unlikely( v<minI ) ) minI = v;
     (*J)(i) = 0.0f;             // zero output
   }
 
-  pfs::Array2DImpl* JJ = new pfs::Array2DImpl(w,h);
+  pfstmo::Array2D* JJ;
+//  if( downsample != 1 )
+//    JJ = new pfstmo::Array2D(w,h);
   
-  w /= downsample;
-  h /= downsample;
+//  w /= downsample;
+//  h /= downsample;
+  
   int sizeZ = w*h;
-  pfs::Array2DImpl* Iz = new pfs::Array2DImpl(w,h);
-  downsampleArray(I,Iz);
-  sigma_s /= downsample;
+//  pfstmo::Array2D* Iz = new pfstmo::Array2D(w,h);
+//  downsampleArray(I,Iz);
+  const pfstmo::Array2D* Iz = I;
+//  sigma_s /= downsample;
   
-  pfs::Array2DImpl* jJ = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jG = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jK = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jH = new pfs::Array2DImpl(w,h);
+  pfstmo::Array2D* jJ = new pfstmo::Array2D(w,h);
+  pfstmo::Array2D* jG = new pfstmo::Array2D(w,h);
+  pfstmo::Array2D* jK = new pfstmo::Array2D(w,h);
+  pfstmo::Array2D* jH = new pfstmo::Array2D(w,h);
 
-  const int NB_SEGMENTS = 17;
+  const int NB_SEGMENTS = (int)ceil((maxI-minI)/sigma_r);
   float stepI = (maxI-minI)/NB_SEGMENTS;
+
+  GaussianBlur gaussian_blur( w, h, sigma_s );
 
   // piecewise bilateral
   for( int j=0 ; j<NB_SEGMENTS ; j++ )
   {
+//    progress_cb( j * 100 / NB_SEGMENTS );
     float jI = minI + j*stepI;        // current intensity value
     
     for( i=0 ; i<sizeZ ; i++ )
@@ -247,26 +288,60 @@ void fastBilateralFilter( const pfs::Array2D *I,
       (*jH)(i) = (*jG)(i) * (*I)(i);
     }
 
-    convolveArray(jG, sigma_s, jK);
-    convolveArray(jH, sigma_s, jH);
+    gaussian_blur.blur( jG, jK );
+    gaussian_blur.blur( jH, jH );
+    
+//    convolveArray(jG, sigma_s, jK);
+//    convolveArray(jH, sigma_s, jH);
 
     for( i=0 ; i<sizeZ ; i++ )
-      if( (*jK)(i)!=0.0f )
+      if( likely((*jK)(i)!=0.0f) )
         (*jJ)(i) = (*jH)(i) / (*jK)(i);
       else
         (*jJ)(i) = 0.0f;
 
-    upsampleArray(jJ,JJ);
+    //  if( downsample == 1 )
+      JJ = jJ;                  // No upsampling is necessary
+//    else
+//      upsampleArray(jJ,JJ);
 
-    for( i=0 ; i<size ; i++ )
-    {
-      float wi = (stepI - fabs( (*I)(i)-jI )) / stepI;
-      if( wi>0.0f )
-        (*J)(i) += (*JJ)(i)*wi;
+    if( j == 0 ) {
+      // if the first segment - to account for the range boundary
+      for( i=0 ; i<size ; i++ )
+      {
+        if( likely( (*I)(i) > jI + stepI ) )
+          continue;             // wi = 0;        
+        if( likely( (*I)(i) > jI ) ) {
+          float wi = (stepI - ((*I)(i)-jI)) / stepI;
+          (*J)(i) += (*JJ)(i)*wi;
+        } else          
+          (*J)(i) += (*JJ)(i);
+      }
+    } else if( j == NB_SEGMENTS-1 ) {
+      // if the last segment - to account for the range boundary
+      for( i=0 ; i<size ; i++ )
+      {
+        if( likely( (*I)(i) < jI - stepI ) )
+          continue;             // wi = 0;        
+        if( likely( (*I)(i) < jI ) ) {
+          float wi = (stepI - (jI-(*I)(i))) / stepI;
+          (*J)(i) += (*JJ)(i)*wi;
+        } else          
+          (*J)(i) += (*JJ)(i);
+      }
+    } else {
+      for( i=0 ; i<size ; i++ )
+      {
+        float wi = (stepI - fabs( (*I)(i)-jI )) / stepI;
+        if( unlikely( wi>0.0f ) )
+          (*J)(i) += (*JJ)(i)*wi;
+      }
     }
   }
 
-  delete JJ;
+//  delete Iz;
+//  if( downsample != 1 )
+//    delete JJ;
   delete jJ;
   delete jG;
   delete jK;

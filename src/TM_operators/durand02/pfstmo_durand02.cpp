@@ -27,14 +27,15 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: pfstmo_durand02.cpp,v 1.5 2005/12/15 15:53:37 krawczyk Exp $
+ * $Id: pfstmo_durand02.cpp,v 1.4 2008/09/09 18:10:49 rafm Exp $
  */
+
+#include "../tmo_config.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <QFile>
-#include "../../Libpfs/array2d.h"
 #include "tmo_durand02.h"
 
 using namespace std;
@@ -51,6 +52,9 @@ pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 
+        int w = Y->getCols();
+        int h = Y->getRows();
+
 	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
 	assert( outframe != NULL );
 	pfs::Channel *Ro, *Go, *Bo;
@@ -66,7 +70,7 @@ pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma
 // 	pfs::copyArray(G,Go);
 // 	pfs::copyArray(B,Bo);
 	
-	tmo_durand02( Ro, Go, Bo, sigma_s, sigma_r, baseContrast, downsample );
+	tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample/*, progress_report*/);
 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
 // 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo );
 	
