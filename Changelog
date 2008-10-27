@@ -1,4 +1,4 @@
-Changes 1.9.3:
+Changes 1.9.3 (maybe 2.0.0?):
 * Qt 4.4 is now the minimal version in order to compile qtpfsgui!!! 
 * New: Added Hungarian language
 * New: Drag and Drop support
@@ -6,6 +6,7 @@ Changes 1.9.3:
   mantiuk06: Ed Brambley's bug-fix and convergence patch
   mantiuk06: Ed Brambley's OpenMP patch
   all: Fixes and optimization - see pfstmo ChangeLog for more information
+* Renamed reinhard04 to reinhard05 (src directory and references)
 
 Changes 1.9.2:
 * Fixed other bugs with non-ascii characters in paths/filenames.

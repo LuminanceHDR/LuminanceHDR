@@ -135,7 +135,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/fattal02/pfstmo_fattal02.cpp \
            src/TM_operators/fattal02/tmo_fattal02.cpp \
            src/TM_operators/fattal02/pde.cpp \
-           src/TM_operators/reinhard04/pfstmo_reinhard04.cpp \
+           src/TM_operators/reinhard05/pfstmo_reinhard05.cpp \
            src/TM_operators/pattanaik00/tmo_pattanaik00.cpp \
            src/TM_operators/pattanaik00/pfstmo_pattanaik00.cpp \
            src/TM_operators/reinhard02/pfstmo_reinhard02.cpp \
