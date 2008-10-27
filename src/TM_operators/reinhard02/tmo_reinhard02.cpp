@@ -2,12 +2,12 @@
  * @file tmo_reinhard02.cpp
  * @brief Tone map luminance channel using Reinhard02 model
  *
- * Implementation courtesy of Erik Reinhard. 
+ * Implementation courtesy of Erik Reinhard.
  *
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003-2007 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -21,7 +21,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * Original source code note:
  * Tonemap.c  University of Utah / Erik Reinhard / October 2001
@@ -31,13 +31,13 @@
  *
  * Port to PFS tools library by Grzegorz Krawczyk <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_reinhard02.cpp,v 1.5 2005/12/05 13:03:39 mantiuk Exp $
+ * $Id: tmo_reinhard02.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "../../Libpfs/pfs.h"
+#include "../pfstmo.h"
 
 // extern "C" {
 void print_parameter_settings ();
@@ -95,12 +95,12 @@ class TemporalSmoothVariable
   {
     return 0.01 * luminance;
   }
-  
+
 public:
   TemporalSmoothVariable() : value( -1 )
   {
   }
-  
+
   void set( T new_value )
   {
     if( value == -1 )
@@ -113,11 +113,11 @@ public:
       value += delta;
     }
   }
-  
+
   T get() const
   {
     return value;
-  }  
+  }
 };
 
 
@@ -216,7 +216,7 @@ void tonemap_image ()
       {
 	prefscale = range - 1;
 	for (scale = 0; scale < range - 1; scale++)
-	  if ( scale >= PyramidHeight || fabs (ACTIVITY(x,y,scale)) > threshold) 
+	  if ( scale >= PyramidHeight || fabs (ACTIVITY(x,y,scale)) > threshold)
 	  {
 	    prefscale = scale;
 	    break;
@@ -272,7 +272,7 @@ void scale_to_midtone ()
     avg_luminance.set( log_average() );
     avg = avg_luminance.get();
   } else avg = log_average();
-  
+
   scale_factor = 1.0 / avg;
   for (y = 0; y < cvts.ymax; y++)
     for (x = 0; x < cvts.xmax; x++)
@@ -281,9 +281,9 @@ void scale_to_midtone ()
       {
 	u              = (x > hw) ? cvts.xmax - x : x;
 	v              = (y > hh) ? cvts.ymax - y : y;
-	d              = (u < v) ? u : v;	
-	factor         = (d < border_size) ? (key - low_tone) * 
-	                  kaiserbessel (border_size - d, 0, border_size) + 
+	d              = (u < v) ? u : v;
+	factor         = (d < border_size) ? (key - low_tone) *
+	                  kaiserbessel (border_size - d, 0, border_size) +
                           low_tone : key;
       }
       else
@@ -377,10 +377,15 @@ void print_parameter_settings ()
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-void tmo_reinhard02(const pfs::Array2D *Y, pfs::Array2D *L, 
-  bool use_scales, float key, float phi, 
+void tmo_reinhard02(
+  unsigned int width, unsigned int height,
+  const float *_Y, float *_L,
+  bool use_scales, float key, float phi,
   int num, int low, int high, bool temporal_coherent )
 {
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(_Y));
+  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, _L);
+
   int x,y;
   ::key = key;
   ::phi = phi;
@@ -425,6 +430,9 @@ void tmo_reinhard02(const pfs::Array2D *Y, pfs::Array2D *L,
   if( use_scales ) {
   	clean_pyramid();
   }
+
+  delete L;
+  delete Y;
 }
 
 // }

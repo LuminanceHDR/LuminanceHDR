@@ -7,9 +7,9 @@
  * In ACM Transactions on Graphics, 2002.
  *
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2003-2007 Grzegorz Krawczyk
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -23,11 +23,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
+ * $Id: pfstmo_reinhard02.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
 #include <iostream>
@@ -66,10 +67,10 @@ pfs::Frame* pfstmo_reinhard02 (pfs::Frame* inpfsframe, float _key, float _phi, i
 	// tone mapping
 	int w = Y->getCols();
 	int h = Y->getRows();
-	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
+	pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
 	assert(L!=NULL);
 
-	tmo_reinhard02( Y, L, use_scales, key, phi, num, low, high, temporal_coherent );
+	tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent );
 	for( int x=0 ; x<w ; x++ ) {
 		for( int y=0 ; y<h ; y++ )
 		{
