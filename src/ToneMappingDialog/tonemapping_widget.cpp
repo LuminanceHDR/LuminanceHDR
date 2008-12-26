@@ -27,6 +27,7 @@
 #include <QDir>
 #include <QStatusBar>
 #include <QProgressBar>
+#include <QLineEdit>
 #include <QKeyEvent>
 #include "tonemapping_widget.h"
 #include "../Common/config.h"
@@ -95,7 +96,6 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 	connect(applyButton,       SIGNAL(clicked()), this, SLOT(apply_clicked()));
 	connect(loadsettingsbutton,SIGNAL(clicked()), this, SLOT(loadsettings()));
 	connect(savesettingsbutton,SIGNAL(clicked()), this, SLOT(savesettings()));
-	connect(button_fromTxt2Gui,SIGNAL(clicked()), this, SLOT(fromTxt2Gui()));
 	connect(addCustomSizeButton, SIGNAL(clicked()), this, SLOT(addCustomSize()));
 
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
@@ -294,11 +294,6 @@ void TMWidget::loadsettings() {
 		if (RecentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString()) {
 			settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, RecentPathLoadSaveTmoSettings);
 		}
-		//enable graphical elements
-		lineEditTMOsetting->setText(qfi.fileName());
-		lineEditTMOsetting->setEnabled(TRUE);
-		label_applyTMOSetting->setEnabled(TRUE);
-		button_fromTxt2Gui->setEnabled(TRUE);
 		//update filename internal field, used by parsing function fromTxt2Gui()
 		TMOSettingsFilename=opened;
 		//call parsing function
@@ -323,13 +318,6 @@ void TMWidget::savesettings() {
 		if (RecentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString()) {
 			settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, RecentPathLoadSaveTmoSettings);
 		}
-		//enable graphical elements
-		lineEditTMOsetting->setText(QFileInfo(fname).fileName());
-		lineEditTMOsetting->setEnabled(TRUE);
-		label_applyTMOSetting->setEnabled(TRUE);
-		button_fromTxt2Gui->setEnabled(TRUE);
-		//update filename internal field, used by parsing function fromTxt2Gui()
-		TMOSettingsFilename=fname;
 		//write txt file
 		fromGui2Txt(fname);
 	}

@@ -5,275 +5,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>599</height>
+    <width>300</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+   <iconset resource="../icons.qrc" >
+    <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
   <property name="toolTip" >
    <string>Tonemapping Operators and options</string>
   </property>
   <layout class="QVBoxLayout" >
-   <property name="margin" >
-    <number>0</number>
-   </property>
    <property name="spacing" >
     <number>4</number>
    </property>
-   <item>
-    <layout class="QHBoxLayout" >
-     <property name="margin" >
-      <number>0</number>
-     </property>
-     <property name="spacing" >
-      <number>6</number>
-     </property>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label" >
-       <property name="text" >
-        <string>&amp;Result size:</string>
-       </property>
-       <property name="buddy" >
-        <cstring>sizeComboBox</cstring>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="sizeComboBox" >
-       <property name="sizePolicy" >
-        <sizepolicy>
-         <hsizetype>3</hsizetype>
-         <vsizetype>0</vsizetype>
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip" >
-        <string>The size of the resulting LDR image.</string>
-       </property>
-       <property name="whatsThis" >
-        <string>Here you can choose the size of the resulting LDR image.</string>
-       </property>
-       <property name="insertPolicy" >
-        <enum>QComboBox::NoInsert</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="addCustomSizeButton" >
-       <property name="cursor" >
-        <cursor>13</cursor>
-       </property>
-       <property name="toolTip" >
-        <string>Custom LDR size</string>
-       </property>
-       <property name="whatsThis" >
-        <string>Clicking this button you will be able to insert a &lt;i>width&lt;/i> value for the size of the resulting LDR image.&lt;br>After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
-       </property>
-       <property name="icon" >
-        <iconset resource="../icons.qrc" >:/new/prefix1/images/add.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="pregammaGroup" >
-     <property name="minimumSize" >
-      <size>
-       <width>111</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="toolTip" >
-      <string>Gamma applied before tone mapping</string>
-     </property>
-     <property name="whatsThis" >
-      <string>Here you can apply a gamma correction to the HDR.&lt;br>The gamma correction will applied before tone mapping.</string>
-     </property>
-     <property name="title" >
-      <string>Pre Gamma</string>
-     </property>
-     <layout class="QVBoxLayout" >
-      <property name="margin" >
-       <number>0</number>
-      </property>
-      <property name="spacing" >
-       <number>0</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>3</width>
-            <height>23</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_34" >
-          <property name="text" >
-           <string>Pre Tone mapping &amp;gamma adjustment</string>
-          </property>
-          <property name="buddy" >
-           <cstring>pregammaSlider</cstring>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" >
-           <size>
-            <width>3</width>
-            <height>23</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" >
-        <property name="margin" >
-         <number>0</number>
-        </property>
-        <property name="spacing" >
-         <number>6</number>
-        </property>
-        <item>
-         <widget class="QPushButton" name="pregammadefault" >
-          <property name="sizePolicy" >
-           <sizepolicy>
-            <hsizetype>0</hsizetype>
-            <vsizetype>0</vsizetype>
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip" >
-           <string>Restore pregamma's default value (1)</string>
-          </property>
-          <property name="text" >
-           <string/>
-          </property>
-          <property name="icon" >
-           <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
-          </property>
-          <property name="iconSize" >
-           <size>
-            <width>10</width>
-            <height>10</height>
-           </size>
-          </property>
-          <property name="autoDefault" >
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSlider" name="pregammaSlider" >
-          <property name="cursor" >
-           <cursor>13</cursor>
-          </property>
-          <property name="orientation" >
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="pregammadsb" >
-          <property name="decimals" >
-           <number>3</number>
-          </property>
-          <property name="maximum" >
-           <double>3.000000000000000</double>
-          </property>
-          <property name="singleStep" >
-           <double>0.100000000000000</double>
-          </property>
-          <property name="value" >
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>400</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>400</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
+   <property name="margin" >
+    <number>0</number>
+   </property>
    <item>
     <widget class="QTabWidget" name="operators_tabWidget" >
      <property name="whatsThis" >
       <string>Here you can choose the tone mapping operator and its settings.</string>
+     </property>
+     <property name="tabPosition" >
+      <enum>QTabWidget::North</enum>
+     </property>
+     <property name="tabShape" >
+      <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex" >
       <number>0</number>
@@ -283,11 +42,11 @@
        <string>&amp;Mantiuk</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_fattal02_2" >
@@ -311,11 +70,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_23" >
@@ -327,7 +86,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="contrastFactorSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>9999</number>
@@ -360,11 +119,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_22" >
@@ -376,7 +135,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="saturationFactorSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>2000</number>
@@ -409,11 +168,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_desc_df" >
@@ -425,7 +184,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="detailFactorSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>990</number>
@@ -461,21 +220,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="MantiukDefault" >
@@ -486,7 +245,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -508,7 +268,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -525,11 +285,11 @@ p, li { white-space: pre-wrap; }
        <string>Fa&amp;ttal</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_fattal02" >
@@ -546,11 +306,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_17" >
@@ -562,7 +322,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="alphaSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>1000</number>
@@ -595,11 +355,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_19" >
@@ -611,7 +371,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="betaSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>400</number>
@@ -644,11 +404,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_18" >
@@ -660,7 +420,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="saturation2Slider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>300</number>
@@ -687,11 +447,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_20" >
@@ -703,7 +463,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="noiseSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>1000</number>
@@ -743,21 +503,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>111</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="fattal02Default" >
@@ -768,7 +528,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -790,7 +551,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -807,11 +568,11 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Drago</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_drago03" >
@@ -828,11 +589,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_11" >
@@ -844,7 +605,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="biasSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>50</number>
@@ -877,21 +638,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>131</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="drago03Default" >
@@ -902,7 +663,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -924,7 +686,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -941,11 +703,11 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Durand</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_durand02" >
@@ -962,11 +724,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_spatialsigma" >
@@ -978,7 +740,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="spatialSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>6000</number>
@@ -1005,11 +767,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_rangesigma" >
@@ -1021,7 +783,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="rangeSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>1000</number>
@@ -1051,11 +813,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_basecontrast" >
@@ -1067,7 +829,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="baseSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>1000</number>
@@ -1094,21 +856,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>111</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="durand02Default" >
@@ -1119,7 +881,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -1141,7 +904,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -1158,11 +921,11 @@ p, li { white-space: pre-wrap; }
        <string>Reinhard '0&amp;2</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_reinhard02" >
@@ -1186,11 +949,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_key" >
@@ -1202,7 +965,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="keySlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>100</number>
@@ -1229,11 +992,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_phi" >
@@ -1245,7 +1008,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="phiSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>5000</number>
@@ -1272,11 +1035,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_range" >
@@ -1294,7 +1057,7 @@ p, li { white-space: pre-wrap; }
             <bool>false</bool>
            </property>
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="minimum" >
             <number>2</number>
@@ -1336,11 +1099,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_lowerscale" >
@@ -1358,7 +1121,7 @@ p, li { white-space: pre-wrap; }
             <bool>false</bool>
            </property>
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="minimum" >
             <number>0</number>
@@ -1397,11 +1160,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_upperscale" >
@@ -1419,7 +1182,7 @@ p, li { white-space: pre-wrap; }
             <bool>false</bool>
            </property>
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="minimum" >
             <number>0</number>
@@ -1461,21 +1224,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>16</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="reinhard02Default" >
@@ -1486,7 +1249,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -1508,7 +1272,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -1525,11 +1289,11 @@ p, li { white-space: pre-wrap; }
        <string>Reinhard '0&amp;5</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_reinhard05" >
@@ -1546,11 +1310,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_brightness" >
@@ -1562,7 +1326,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="brightnessSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>4500</number>
@@ -1598,11 +1362,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_saturation_2" >
@@ -1614,7 +1378,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="chromaticAdaptSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>300</number>
@@ -1644,11 +1408,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_saturation" >
@@ -1660,7 +1424,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="lightAdaptSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>200</number>
@@ -1693,21 +1457,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="reinhard05Default" >
@@ -1718,7 +1482,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -1740,7 +1505,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -1757,11 +1522,11 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Ashikhmin</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_ashikhmin02" >
@@ -1778,11 +1543,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>0</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>0</number>
          </property>
          <item>
           <widget class="QCheckBox" name="simpleCheckBox" >
@@ -1794,9 +1559,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QGroupBox" name="groupBox" >
            <property name="sizePolicy" >
-            <sizepolicy>
-             <hsizetype>0</hsizetype>
-             <vsizetype>0</vsizetype>
+            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -1811,18 +1574,16 @@ p, li { white-space: pre-wrap; }
             <string>Equation Number</string>
            </property>
            <layout class="QHBoxLayout" >
-            <property name="margin" >
+            <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="spacing" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
              <widget class="QRadioButton" name="eq2RadioButton" >
               <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>0</hsizetype>
-                <vsizetype>0</vsizetype>
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1838,9 +1599,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QRadioButton" name="eq4RadioButton" >
               <property name="sizePolicy" >
-               <sizepolicy>
-                <hsizetype>0</hsizetype>
-                <vsizetype>0</vsizetype>
+               <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -1858,7 +1617,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>22</width>
              <height>20</height>
@@ -1870,11 +1629,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_locatcontrasttreshold" >
@@ -1886,7 +1645,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="contrastSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>100</number>
@@ -1922,21 +1681,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>111</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="ashikhmin02Default" >
@@ -1947,7 +1706,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -1972,7 +1732,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>22</width>
              <height>20</height>
@@ -1989,11 +1749,11 @@ p, li { white-space: pre-wrap; }
        <string>&amp;Pattanaik</string>
       </attribute>
       <layout class="QVBoxLayout" >
-       <property name="margin" >
-        <number>9</number>
-       </property>
        <property name="spacing" >
         <number>6</number>
+       </property>
+       <property name="margin" >
+        <number>9</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_pattanaik00" >
@@ -2010,11 +1770,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_21" >
@@ -2026,7 +1786,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="multiplierSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>1000</number>
@@ -2056,11 +1816,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QVBoxLayout" >
-         <property name="margin" >
-          <number>0</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>0</number>
          </property>
          <item>
           <widget class="QCheckBox" name="pattalocal" >
@@ -2080,11 +1840,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_cone" >
@@ -2096,7 +1856,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="coneSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>100</number>
@@ -2123,11 +1883,11 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QLabel" name="label_rod" >
@@ -2139,7 +1899,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QSlider" name="rodSlider" >
            <property name="cursor" >
-            <cursor>13</cursor>
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="maximum" >
             <number>100</number>
@@ -2169,21 +1929,21 @@ p, li { white-space: pre-wrap; }
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeHint" >
+         <property name="sizeHint" stdset="0" >
           <size>
            <width>2</width>
-           <height>51</height>
+           <height>30</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" >
-         <property name="margin" >
-          <number>2</number>
-         </property>
          <property name="spacing" >
           <number>6</number>
+         </property>
+         <property name="margin" >
+          <number>2</number>
          </property>
          <item>
           <widget class="QPushButton" name="pattanaik00Default" >
@@ -2194,7 +1954,8 @@ p, li { white-space: pre-wrap; }
             <string/>
            </property>
            <property name="icon" >
-            <iconset resource="../icons.qrc" >:/new/prefix1/images/undo.png</iconset>
+            <iconset resource="../icons.qrc" >
+             <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
            </property>
            <property name="iconSize" >
             <size>
@@ -2216,7 +1977,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>2</width>
              <height>20</height>
@@ -2231,114 +1992,9 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" >
-     <property name="margin" >
-      <number>0</number>
-     </property>
-     <property name="spacing" >
-      <number>6</number>
-     </property>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QToolButton" name="applyButton" >
-       <property name="minimumSize" >
-        <size>
-         <width>56</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip" >
-        <string>Start tone mapping (CTRL+A).</string>
-       </property>
-       <property name="whatsThis" >
-        <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
-       </property>
-       <property name="text" >
-        <string>&amp;Apply</string>
-       </property>
-       <property name="icon" >
-        <iconset resource="../icons.qrc" >:/new/prefix1/images/apply.png</iconset>
-       </property>
-       <property name="iconSize" >
-        <size>
-         <width>32</width>
-         <height>32</height>
-        </size>
-       </property>
-       <property name="shortcut" >
-        <string>Ctrl+A</string>
-       </property>
-       <property name="toolButtonStyle" >
-        <enum>Qt::ToolButtonTextUnderIcon</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer>
-       <property name="orientation" >
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" >
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>400</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <spacer>
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" >
-      <size>
-       <width>400</width>
-       <height>16</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="groupSaveLoadTMOsetting" >
      <property name="sizePolicy" >
-      <sizepolicy>
-       <hsizetype>5</hsizetype>
-       <vsizetype>5</vsizetype>
+      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -2350,21 +2006,19 @@ p, li { white-space: pre-wrap; }
       <string>Here you can load and save a tone mapping settings file.&lt;br>You can also apply the contents of the currently loaded settings file.</string>
      </property>
      <property name="title" >
-      <string>Tonemapping settings file</string>
+      <string>Tonemapping settings</string>
      </property>
      <layout class="QHBoxLayout" >
-      <property name="margin" >
-       <number>0</number>
-      </property>
       <property name="spacing" >
-       <number>0</number>
+       <number>1</number>
+      </property>
+      <property name="margin" >
+       <number>1</number>
       </property>
       <item>
        <widget class="QPushButton" name="savesettingsbutton" >
         <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>5</hsizetype>
-          <vsizetype>0</vsizetype>
+         <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -2378,14 +2032,16 @@ p, li { white-space: pre-wrap; }
         <property name="text" >
          <string>&amp;Save...</string>
         </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="loadsettingsbutton" >
         <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>0</hsizetype>
-          <vsizetype>0</vsizetype>
+         <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -2399,72 +2055,276 @@ p, li { white-space: pre-wrap; }
         <property name="text" >
          <string>&amp;Load...</string>
         </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEditTMOsetting" >
-        <property name="enabled" >
-         <bool>false</bool>
+       <spacer name="horizontalSpacer" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizePolicy" >
-         <sizepolicy>
-          <hsizetype>3</hsizetype>
-          <vsizetype>0</vsizetype>
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize" >
+        <property name="sizeHint" stdset="0" >
          <size>
-          <width>122</width>
-          <height>16777215</height>
+          <width>40</width>
+          <height>20</height>
          </size>
         </property>
-        <property name="toolTip" >
-         <string>The tone mapping settings file in use</string>
-        </property>
-        <property name="whatsThis" >
-         <string>The tone mapping settings file in use.</string>
-        </property>
-        <property name="readOnly" >
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_applyTMOSetting" >
-        <property name="enabled" >
-         <bool>false</bool>
-        </property>
-        <property name="text" >
-         <string>Apply fil&amp;e</string>
-        </property>
-        <property name="buddy" >
-         <cstring>button_fromTxt2Gui</cstring>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_fromTxt2Gui" >
-        <property name="enabled" >
-         <bool>false</bool>
-        </property>
-        <property name="toolTip" >
-         <string>Apply Settings File</string>
-        </property>
-        <property name="whatsThis" >
-         <string>Use tone mapping file to generate an LDR.</string>
-        </property>
-        <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/orange_apply.png</iconset>
-        </property>
-        <property name="autoDefault" >
-         <bool>false</bool>
-        </property>
-       </widget>
+       </spacer>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="pregammaGroup" >
+     <property name="minimumSize" >
+      <size>
+       <width>111</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="toolTip" >
+      <string>Gamma applied before tone mapping</string>
+     </property>
+     <property name="whatsThis" >
+      <string>Here you can apply a gamma correction to the HDR.&lt;br>The gamma correction will applied before tone mapping.</string>
+     </property>
+     <property name="title" >
+      <string>Process</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="spacing" >
+       <number>0</number>
+      </property>
+      <property name="margin" >
+       <number>1</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" >
+        <item>
+         <widget class="QLabel" name="label" >
+          <property name="text" >
+           <string>&amp;Result size:</string>
+          </property>
+          <property name="margin" >
+           <number>1</number>
+          </property>
+          <property name="buddy" >
+           <cstring>sizeComboBox</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="sizeComboBox" >
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip" >
+           <string>The size of the resulting LDR image.</string>
+          </property>
+          <property name="whatsThis" >
+           <string>Here you can choose the size of the resulting LDR image.</string>
+          </property>
+          <property name="insertPolicy" >
+           <enum>QComboBox::NoInsert</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="addCustomSizeButton" >
+          <property name="cursor" >
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="toolTip" >
+           <string>Custom LDR size</string>
+          </property>
+          <property name="whatsThis" >
+           <string>Clicking this button you will be able to insert a &lt;i>width&lt;/i> value for the size of the resulting LDR image.&lt;br>After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../icons.qrc" >
+            <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <property name="spacing" >
+           <number>6</number>
+          </property>
+          <property name="margin" >
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_34" >
+            <property name="text" >
+             <string>Pre Gamma:</string>
+            </property>
+            <property name="margin" >
+             <number>1</number>
+            </property>
+            <property name="indent" >
+             <number>-1</number>
+            </property>
+            <property name="buddy" >
+             <cstring>pregammaSlider</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pregammadefault" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>Restore pregamma's default value (1)</string>
+            </property>
+            <property name="text" >
+             <string/>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >
+              <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>10</width>
+              <height>10</height>
+             </size>
+            </property>
+            <property name="autoDefault" >
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSlider" name="pregammaSlider" >
+            <property name="cursor" >
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="pregammadsb" >
+            <property name="decimals" >
+             <number>3</number>
+            </property>
+            <property name="maximum" >
+             <double>3.000000000000000</double>
+            </property>
+            <property name="singleStep" >
+             <double>0.100000000000000</double>
+            </property>
+            <property name="value" >
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" >
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer_2" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="applyButton" >
+          <property name="minimumSize" >
+           <size>
+            <width>56</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="toolTip" >
+           <string>Start tone mapping (CTRL+A).</string>
+          </property>
+          <property name="whatsThis" >
+           <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
+          </property>
+          <property name="text" >
+           <string>&amp;Apply</string>
+          </property>
+          <property name="icon" >
+           <iconset resource="../icons.qrc" >
+            <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
+          </property>
+          <property name="iconSize" >
+           <size>
+            <width>22</width>
+            <height>22</height>
+           </size>
+          </property>
+          <property name="shortcut" >
+           <string>Ctrl+A</string>
+          </property>
+          <property name="toolButtonStyle" >
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

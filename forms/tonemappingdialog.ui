@@ -13,7 +13,8 @@
    <string>Tone Mapping: </string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+   <iconset resource="../icons.qrc" >
+    <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" />
   <widget class="QMenuBar" name="menubar" >
@@ -22,7 +23,7 @@
      <x>0</x>
      <y>0</y>
      <width>1337</width>
-     <height>29</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp" >
@@ -57,6 +58,9 @@
   </widget>
   <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
+   <property name="windowTitle" >
+    <string>Toolbar</string>
+   </property>
    <property name="orientation" >
     <enum>Qt::Horizontal</enum>
    </property>
@@ -64,7 +68,10 @@
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
    <attribute name="toolBarArea" >
-    <number>4</number>
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
    </attribute>
    <addaction name="actionViewTMdock" />
    <addaction name="separator" />
@@ -78,7 +85,8 @@
   </widget>
   <action name="actionFinishTM" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/exit.png</normaloff>:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Exit</string>
@@ -107,7 +115,8 @@
     <bool>true</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
    </property>
    <property name="text" >
     <string>Tone Mapping Panel</string>
@@ -133,7 +142,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/histogram.png</normaloff>:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text" >
     <string>Adjust &amp;Levels...</string>
@@ -159,7 +169,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Save as...</string>
@@ -185,7 +196,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/fileclose.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/fileclose.png</normaloff>:/new/prefix1/images/fileclose.png</iconset>
    </property>
    <property name="text" >
     <string>C&amp;lose All</string>
@@ -248,7 +260,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Fit to Window</string>
@@ -265,7 +278,8 @@
   </action>
   <action name="actionWhat_s_This" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
    </property>
    <property name="text" >
     <string>What's This?</string>
@@ -282,7 +296,8 @@
   </action>
   <action name="documentationAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/help.png</normaloff>:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Documentation...</string>
