@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>616</height>
+    <height>691</height>
    </rect>
   </property>
   <property name="windowIcon" >
@@ -24,32 +24,93 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="operators_tabWidget" >
-     <property name="whatsThis" >
-      <string>Here you can choose the tone mapping operator and its settings.</string>
+    <layout class="QHBoxLayout" name="horizontalLayout_3" >
+     <property name="margin" >
+      <number>2</number>
      </property>
-     <property name="tabPosition" >
-      <enum>QTabWidget::North</enum>
+     <item>
+      <widget class="QLabel" name="lblOperators" >
+       <property name="text" >
+        <string>&lt;b>Operator:&lt;/b></string>
+       </property>
+       <property name="textFormat" >
+        <enum>Qt::RichText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cmbOperators" >
+       <property name="frame" >
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text" >
+         <string>Mantiuk</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Fattal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Drago</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Durand</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Reinhard '02</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Reinhard '05</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Ashikhmin</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Pattanaik</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget_operators" >
+     <property name="frameShape" >
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="tabShape" >
-      <enum>QTabWidget::Rounded</enum>
+     <property name="frameShadow" >
+      <enum>QFrame::Plain</enum>
      </property>
      <property name="currentIndex" >
-      <number>0</number>
+      <number>4</number>
      </property>
-     <widget class="QWidget" name="tab_mantiuk" >
-      <attribute name="title" >
-       <string>&amp;Mantiuk</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_mantiuk" >
+      <layout class="QVBoxLayout" name="verticalLayout" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_fattal02_2" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -69,7 +130,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_8" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -118,7 +179,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_9" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -167,7 +228,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_6" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -216,20 +277,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_7" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -280,19 +341,25 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_fattal" >
-      <attribute name="title" >
-       <string>Fa&amp;ttal</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_fattal" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_fattal02" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -305,7 +372,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_12" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -354,7 +421,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_11" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -403,7 +470,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_14" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -446,7 +513,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_10" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -499,20 +566,20 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_2" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_13" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -563,19 +630,19 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_drago" >
-      <attribute name="title" >
-       <string>&amp;Drago</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_drago" >
+      <layout class="QVBoxLayout" name="verticalLayout_3" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_drago03" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -588,7 +655,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_16" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -634,20 +701,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_3" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_15" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -698,19 +765,19 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_durand" >
-      <attribute name="title" >
-       <string>&amp;Durand</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_durand" >
+      <layout class="QVBoxLayout" name="verticalLayout_4" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_durand02" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -723,7 +790,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_18" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -766,7 +833,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_19" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -812,7 +879,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_20" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -852,20 +919,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_4" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>10</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_17" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -916,19 +983,19 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_reinhard02" >
-      <attribute name="title" >
-       <string>Reinhard '0&amp;2</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_reinhard02" >
+      <layout class="QVBoxLayout" name="verticalLayout_5" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_reinhard02" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -948,7 +1015,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_25" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -991,7 +1058,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_26" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1034,7 +1101,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_23" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1098,7 +1165,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_21" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1159,7 +1226,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_24" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1220,7 +1287,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_5" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
@@ -1233,7 +1300,7 @@ p, li { white-space: pre-wrap; }
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_22" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1283,20 +1350,23 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
       </layout>
+      <zorder>label_desc_reinhard02</zorder>
+      <zorder>usescalescheckbox</zorder>
+      <zorder>spacer_5</zorder>
      </widget>
-     <widget class="QWidget" name="tab_reinhard05" >
-      <attribute name="title" >
-       <string>Reinhard '0&amp;5</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_reinhard05" >
+      <layout class="QVBoxLayout" name="verticalLayout_6" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_reinhard05" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -1309,7 +1379,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_30" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1361,7 +1431,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_27" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1407,7 +1477,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_28" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1453,20 +1523,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_6" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>123</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_29" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1517,19 +1587,19 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_ashikhmin" >
-      <attribute name="title" >
-       <string>&amp;Ashikhmin</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_ashikhmin" >
+      <layout class="QVBoxLayout" name="verticalLayout_7" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_ashikhmin02" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -1542,7 +1612,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_33" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1573,7 +1643,7 @@ p, li { white-space: pre-wrap; }
            <property name="title" >
             <string>Equation Number</string>
            </property>
-           <layout class="QHBoxLayout" >
+           <layout class="QHBoxLayout" name="_34" >
             <property name="spacing" >
              <number>0</number>
             </property>
@@ -1628,7 +1698,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_32" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1677,20 +1747,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_7" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
            <width>20</width>
-           <height>30</height>
+           <height>131</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_31" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1744,19 +1814,19 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_pattanaik" >
-      <attribute name="title" >
-       <string>&amp;Pattanaik</string>
-      </attribute>
-      <layout class="QVBoxLayout" >
+     <widget class="QWidget" name="page_pattanaik" >
+      <layout class="QVBoxLayout" name="verticalLayout_8" >
        <property name="spacing" >
-        <number>6</number>
-       </property>
-       <property name="margin" >
-        <number>9</number>
+        <number>2</number>
        </property>
        <item>
         <widget class="QLabel" name="label_desc_pattanaik00" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text" >
           <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -1769,7 +1839,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_36" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1815,7 +1885,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" >
+        <layout class="QVBoxLayout" name="_38" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1839,7 +1909,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_37" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1882,7 +1952,7 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_39" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -1925,20 +1995,20 @@ p, li { white-space: pre-wrap; }
         </layout>
        </item>
        <item>
-        <spacer>
+        <spacer name="spacer_8" >
          <property name="orientation" >
           <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0" >
           <size>
-           <width>2</width>
-           <height>30</height>
+           <width>10</width>
+           <height>38</height>
           </size>
          </property>
         </spacer>
        </item>
        <item>
-        <layout class="QHBoxLayout" >
+        <layout class="QHBoxLayout" name="_35" >
          <property name="spacing" >
           <number>6</number>
          </property>
@@ -2327,440 +2397,43 @@ p, li { white-space: pre-wrap; }
     </spacer>
    </item>
   </layout>
+  <zorder>groupSaveLoadTMOsetting</zorder>
+  <zorder>pregammaGroup</zorder>
+  <zorder>stackedWidget_operators</zorder>
  </widget>
  <resources>
   <include location="../icons.qrc" />
  </resources>
  <connections>
   <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>eq2RadioButton</receiver>
-   <slot>setDisabled(bool)</slot>
+   <sender>stackedWidget_operators</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>cmbOperators</receiver>
+   <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>77</x>
-     <y>166</y>
+     <x>172</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
+     <x>185</x>
+     <y>307</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>eq4RadioButton</receiver>
-   <slot>setDisabled(bool)</slot>
+   <sender>cmbOperators</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>stackedWidget_operators</receiver>
+   <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>77</x>
-     <y>166</y>
+     <x>228</x>
+     <y>305</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>contrastSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>77</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_locatcontrasttreshold</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>77</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>autoYcheckbox</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>rodSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>coneSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>coneSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>rodSlider</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_lowerscale</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>89</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lowerSlider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_upperscale</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>91</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>upperSlider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_range</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>55</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>range2Slider</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_cone</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>82</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_rod</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>73</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_cone</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>82</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>label_rod</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>73</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>simpleCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>contrastdsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>77</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>conedsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pattalocal</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>roddsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>conedsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>autoYcheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>roddsb</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>range2dsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lowerdsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>usescalescheckbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>upperdsb</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>101</x>
-     <y>166</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>101</x>
-     <y>166</y>
+     <x>207</x>
+     <y>325</y>
     </hint>
    </hints>
   </connection>
