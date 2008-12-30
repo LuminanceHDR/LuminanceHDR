@@ -75,97 +75,97 @@ p, li { white-space: pre-wrap; }
         <translation>Batch Farbabbildung</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="36"/>
+        <location filename="../forms/batch_dialog.ui" line="37"/>
         <source>Input Hdr list</source>
         <translation>Eingangs-HDR Liste</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="67"/>
+        <location filename="../forms/batch_dialog.ui" line="66"/>
         <source>Add &amp;Directory</source>
         <translation>Verzeichnis &amp;hinzufügen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="91"/>
+        <location filename="../forms/batch_dialog.ui" line="89"/>
         <source>&amp;Add Files</source>
         <translation>&amp;Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="115"/>
+        <location filename="../forms/batch_dialog.ui" line="112"/>
         <source>&amp;Remove Files</source>
         <translation>Dateien &amp;Entfernen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="143"/>
+        <location filename="../forms/batch_dialog.ui" line="141"/>
         <source>List of HDRs that will be tone mapped</source>
         <translation>Liste von HDRs, welche Farb abgebildet werden</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="159"/>
+        <location filename="../forms/batch_dialog.ui" line="157"/>
         <source>Input Tone Mapping Setting list</source>
         <translation>Eingabe der Farbabbildung Einstellungsliste</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="190"/>
+        <location filename="../forms/batch_dialog.ui" line="186"/>
         <source>Add D&amp;irectory</source>
         <translation>&amp;Verzeichnis hinzufügen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="214"/>
+        <location filename="../forms/batch_dialog.ui" line="209"/>
         <source>Add Fi&amp;les</source>
         <translation>&amp;Dateien hinzufügen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="238"/>
+        <location filename="../forms/batch_dialog.ui" line="232"/>
         <source>R&amp;emove Files</source>
         <translation>Dateien &amp;Entfernen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="287"/>
+        <location filename="../forms/batch_dialog.ui" line="282"/>
         <source>Output</source>
         <translation>Ausgabe</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="299"/>
+        <location filename="../forms/batch_dialog.ui" line="294"/>
         <source>Select &amp;Output Folder...</source>
         <translation>Ausgabe&amp;verzeichnis wählen...</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="316"/>
+        <location filename="../forms/batch_dialog.ui" line="311"/>
         <source>Log:</source>
         <translation>Log:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="366"/>
+        <location filename="../forms/batch_dialog.ui" line="359"/>
         <source>&amp;Show only:</source>
         <translation>&amp;Zeige nur:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="380"/>
+        <location filename="../forms/batch_dialog.ui" line="373"/>
         <source>All messages</source>
         <translation>Alle Nachrichten</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="385"/>
+        <location filename="../forms/batch_dialog.ui" line="378"/>
         <source>Errors only</source>
         <translation>Nur Fehler</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="405"/>
+        <location filename="../forms/batch_dialog.ui" line="398"/>
         <source>&amp;Filter Log messages:</source>
         <translation>Log-Nachrichten &amp;filtern:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="421"/>
+        <location filename="../forms/batch_dialog.ui" line="414"/>
         <source>Clear filter text</source>
         <translation>Filter-Text zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="467"/>
+        <location filename="../forms/batch_dialog.ui" line="461"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Abbrechen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="483"/>
+        <location filename="../forms/batch_dialog.ui" line="477"/>
         <source>&amp;Start!</source>
         <translation>&amp;Start!</translation>
     </message>
@@ -205,67 +205,67 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Fertig</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="64"/>
+        <location filename="../forms/batch_dialog.ui" line="63"/>
         <source>Add all the HDRs in a directory to the list</source>
         <translation>Füge alle HDRs des Verzeichnis zur Liste hinzu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="88"/>
+        <location filename="../forms/batch_dialog.ui" line="86"/>
         <source>Add single HDR files to the list</source>
         <translation>Füge einzelne HDR Dateien zur Liste hinzu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="112"/>
+        <location filename="../forms/batch_dialog.ui" line="109"/>
         <source>Remove single HDR files to the list</source>
         <translation>Entferne einzelne HDR Dateien aus der Liste</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="187"/>
+        <location filename="../forms/batch_dialog.ui" line="183"/>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
         <translation>Füge alle Farbabbildung Einstellungsdateien im Verzeichnis zur Liste hinzu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="211"/>
+        <location filename="../forms/batch_dialog.ui" line="206"/>
         <source>Add single Tone Mapping Setting files to the list</source>
         <translation>Füge einzelne Farbabbildung Einstellungsdateien im Verzeichnis zur Liste hinzu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="235"/>
+        <location filename="../forms/batch_dialog.ui" line="229"/>
         <source>Remove single Tone Mapping Setting files to the list</source>
         <translation>Entferne einzelne Farbabbildung Einstellungsdateien von der Liste</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="266"/>
+        <location filename="../forms/batch_dialog.ui" line="261"/>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
         <translation>Liste von Farbabbildung Einstellungen, welche benutzt werden jedes einzelne HDR farb abzubilden</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="284"/>
+        <location filename="../forms/batch_dialog.ui" line="279"/>
         <source>Specify output folder for the tone mapped files</source>
         <translation>Spezifiziere das Ausgabeverzeichnis für Dateien welche farbabgebildet sind</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="342"/>
+        <location filename="../forms/batch_dialog.ui" line="335"/>
         <source>Batch operations report</source>
         <translation>Report der Batch Operationen</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="376"/>
+        <location filename="../forms/batch_dialog.ui" line="369"/>
         <source>Filter messages based on severity</source>
         <translation>Filter Nachrichten basierend auf Schweregrad</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="390"/>
+        <location filename="../forms/batch_dialog.ui" line="383"/>
         <source>Success messages</source>
         <translation>Erfolgsnachrichten</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="436"/>
+        <location filename="../forms/batch_dialog.ui" line="430"/>
         <source>Overall completion progress</source>
         <translation>Gesamter Fortschritt</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="480"/>
+        <location filename="../forms/batch_dialog.ui" line="474"/>
         <source>Start batch tone mapping</source>
         <translation>Starte Batch Farbabbildung</translation>
     </message>
@@ -2681,12 +2681,12 @@ p, li { white-space: pre-wrap; }
         <translation>Farbabbildungsoperatoren und Optionen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2089"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2159"/>
         <source>Gamma applied before tone mapping</source>
         <translation>Gamma vor der Farbabbildung anwenden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="297"/>
+        <location filename="../forms/tonemappingoptions.ui" line="364"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2694,22 +2694,22 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gradient Domain High Dynamic Range Compression&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="318"/>
+        <location filename="../forms/tonemappingoptions.ui" line="385"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="416"/>
+        <location filename="../forms/tonemappingoptions.ui" line="483"/>
         <source>Color Saturation</source>
         <translation>Farbsättigung</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1971"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2041"/>
         <source>Default Values for operator</source>
         <translation>Standardeinstellungen für Operator</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1534"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1604"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2717,32 +2717,32 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ein Farbabbildunsalgorithmus für kontrastreiche Bilder&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1555"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1625"/>
         <source>Simple</source>
         <translation>Einfach</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1574"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1644"/>
         <source>Equation Number</source>
         <translation>Ausgleichszahl</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1592"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1662"/>
         <source>Eqn 2</source>
         <translation>Eqn 2</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1608"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1678"/>
         <source>Eqn 4</source>
         <translation>Eqn 4</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1641"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1711"/>
         <source>Local Contrast Threshold</source>
         <translation>Schwellwert für lokalen Kontrast</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="715"/>
+        <location filename="../forms/tonemappingoptions.ui" line="782"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2750,22 +2750,22 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Schnelle bilaterale Filterung für die Anzeige von HDR Bildern&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="736"/>
+        <location filename="../forms/tonemappingoptions.ui" line="803"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Spatial Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="779"/>
+        <location filename="../forms/tonemappingoptions.ui" line="846"/>
         <source>Range Kernel Sigma</source>
         <translation>Range Kernel Sigma</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="825"/>
+        <location filename="../forms/tonemappingoptions.ui" line="892"/>
         <source>Base Contrast</source>
         <translation>Basis Kontrast</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="580"/>
+        <location filename="../forms/tonemappingoptions.ui" line="647"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2773,12 +2773,12 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmische Abbildung um kontrastreiche Szenen anzuzeigen&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="601"/>
+        <location filename="../forms/tonemappingoptions.ui" line="668"/>
         <source>Bias</source>
         <translation>Bias</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1761"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1831"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2786,32 +2786,32 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Zeitabhängige visuelle Adaption für realistische Bild Anzeige&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1782"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1852"/>
         <source>Multiplier</source>
         <translation>Multiplier</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1828"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1898"/>
         <source>Local Tone Mapping</source>
         <translation>Lokale Farbabbildung</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1835"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1905"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Cone und Rod basierend auf Helligkeit</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1852"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1922"/>
         <source>Cone Level</source>
         <translation>Cone Level</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1895"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1965"/>
         <source>Rod Level</source>
         <translation>Rod Level</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="933"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1000"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2819,37 +2819,37 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Photografische Farbwiedergabe für digitale Bilder&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="946"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1013"/>
         <source>Use Scales</source>
         <translation>Skalas verwenden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="961"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1028"/>
         <source>Key Value</source>
         <translation>Hauptwert</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1004"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1071"/>
         <source>Phi</source>
         <translation>Phi</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1050"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1117"/>
         <source>Range</source>
         <translation>Bereich</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1114"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1181"/>
         <source>Lower Scale</source>
         <translation>Untere Skala</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1175"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1242"/>
         <source>Upper Scale</source>
         <translation>Obere Skala</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1301"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2857,72 +2857,72 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dynamische Bereichsreduktion inspiriert von der Physiologie der Sehzelle&lt;/span&gt;&lt;br /&gt;E. Reinhard and K.Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1322"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1392"/>
         <source>Brightness</source>
         <translation>Helligkeit</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2304"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2374"/>
         <source>Ctrl+A</source>
         <translation>Strg+A</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2050"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2120"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Eine forhandene Textdatei die pre-Gamma und TMO Einstellungen enthält laden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="367"/>
+        <location filename="../forms/tonemappingoptions.ui" line="434"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2109"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2179"/>
         <source>&amp;Result size:</source>
         <translation>Ergebnis&amp;größe:</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2128"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2198"/>
         <source>The size of the resulting LDR image.</source>
         <translation>Die Größe des resultierenden LDR Bildes.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2131"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2201"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation>Hier können Sie die Größe des resultierenden LDR Bildes auswählen.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2144"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2214"/>
         <source>Custom LDR size</source>
         <translation>Benutzerdefinierte LDR Größe</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2147"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2217"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Durch klicken auf diese Schaltfläche werden können Sie eine &lt;i&gt;Breite&lt;/i&gt; für die Größe des resultierenden LDR Bildes eingeben.&lt;br&gt;Nachdem die Enter (oder Return)-Taste gedrückt wurde, wird automatisch die Höhe berechnet, und dann die neue Größe zur Liste hinzugefügt.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2092"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2162"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Hier können Sie eine Gamma Korrektur auf das HDR anwenden.&lt;br&gt;The Gamma Korrektur wird vor dem Farbabbilden angewandt.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2205"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2275"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Standardwert für Pre-Gamma setzen (1)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="29"/>
         <source>Here you can choose the tone mapping operator and its settings.</source>
-        <translation>Hier können sie den Farbabbildungs-Operator und seine Einstellungen auswählen.</translation>
+        <translation type="obsolete">Hier können sie den Farbabbildungs-Operator und seine Einstellungen auswählen.</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="42"/>
         <source>&amp;Mantiuk</source>
-        <translation>&amp;Mantiuk</translation>
+        <translation type="obsolete">&amp;Mantiuk</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="54"/>
+        <location filename="../forms/tonemappingoptions.ui" line="115"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2933,149 +2933,194 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ein wahrnehmendes Framkework für die Konstrast Verarbeitung von HDR Bildern&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="67"/>
+        <location filename="../forms/tonemappingoptions.ui" line="128"/>
         <source>Contrast Equalization</source>
         <translation>Kontrastausgleich</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="82"/>
+        <location filename="../forms/tonemappingoptions.ui" line="143"/>
         <source>Contrast Factor</source>
         <translation>Kontrast Faktor</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="131"/>
+        <location filename="../forms/tonemappingoptions.ui" line="192"/>
         <source>Saturation Factor</source>
         <translation>Sättigungsfaktor</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1951"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2021"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Standardwerte für Operatoren</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="285"/>
         <source>Fa&amp;ttal</source>
-        <translation>Fa&amp;ttal</translation>
+        <translation type="obsolete">Fa&amp;ttal</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="459"/>
+        <location filename="../forms/tonemappingoptions.ui" line="526"/>
         <source>Noise Reduction</source>
         <translation>Rauschunterdrückung</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="497"/>
+        <location filename="../forms/tonemappingoptions.ui" line="564"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
         <translation>&quot;Altes&quot; Fattal (pre 1.8.4)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="568"/>
         <source>&amp;Drago</source>
-        <translation>&amp;Drago</translation>
+        <translation type="obsolete">&amp;Drago</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="703"/>
         <source>&amp;Durand</source>
-        <translation>&amp;Durand</translation>
+        <translation type="obsolete">&amp;Durand</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="921"/>
         <source>Reinhard &apos;0&amp;2</source>
-        <translation>Reinhard &apos;0&amp;2</translation>
+        <translation type="obsolete">Reinhard &apos;0&amp;2</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1289"/>
         <source>Reinhard &apos;0&amp;5</source>
-        <translation>Reinhard &apos;0&amp;5</translation>
+        <translation type="obsolete">Reinhard &apos;0&amp;5</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1374"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1444"/>
         <source>Chromatic Adaptation</source>
         <translation>Kromatische Anpassung</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1420"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1490"/>
         <source>Light Adaptation</source>
         <translation>Lichtanpassung</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1522"/>
         <source>&amp;Ashikhmin</source>
-        <translation>&amp;Ashikhmin</translation>
+        <translation type="obsolete">&amp;Ashikhmin</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1749"/>
         <source>&amp;Pattanaik</source>
-        <translation>&amp;Pattanaik</translation>
+        <translation type="obsolete">&amp;Pattanaik</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2285"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2355"/>
         <source>Start tone mapping (CTRL+A).</source>
         <translation>Starte Farbabbildung (Strg+A).</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2288"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2358"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
         <translation>Benutze aktuelle Parameter von oben (Pre-Gamma und Farbabbildungs-Operatoren) um das LDR Bild zu berrechnen.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2291"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2361"/>
         <source>&amp;Apply</source>
         <translation>&amp;Anwenden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2003"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2073"/>
         <source>Tone Mapping settings file section</source>
         <translation>Farbabbildung Einstellungsdatei Sektion</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2006"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2076"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Hier können Sie eine Farbabbildung Einstellungsdatei laden und speichern.&lt;br&gt;Sie können auch die Inhalte der derzeig geladenen Einstellungsdatei anwenden.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2027"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2097"/>
         <source>Save current parameters to a text file</source>
         <translation>Speichert die derzeitigen Parameter in eine Textdatei</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2030"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2100"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Speichert die derzeitigen Parameter (Pre-Gamma und Farbabbildung) in eine Textdatei.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2033"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2103"/>
         <source>&amp;Save...</source>
         <translation>&amp;Speichern...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2053"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2123"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Ladet eine existierende Textdatei welche Pre-Gamma und Farbabbildungs Einstellungen beinhaltet.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2056"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2126"/>
         <source>&amp;Load...</source>
         <translation>&amp;Laden...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="180"/>
+        <location filename="../forms/tonemappingoptions.ui" line="241"/>
         <source>Detail Factor</source>
         <translation>Detail-Faktor</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2009"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2079"/>
         <source>Tonemapping settings</source>
         <translation>Einstellungen Farbabbildung</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2095"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2165"/>
         <source>Process</source>
         <translation>Vorgang</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2183"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2253"/>
         <source>Pre Gamma:</source>
         <translation>Pre Gamma:</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="34"/>
+        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Operator:&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="48"/>
+        <source>Mantiuk</source>
+        <translation>Mantiuk</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="53"/>
+        <source>Fattal</source>
+        <translation>Fattal</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="58"/>
+        <source>Drago</source>
+        <translation>Drago</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="63"/>
+        <source>Durand</source>
+        <translation>Durand</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="68"/>
+        <source>Reinhard &apos;02</source>
+        <translation>Reinhard &apos;02</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="73"/>
+        <source>Reinhard &apos;05</source>
+        <translation>Reinhard &apos;05</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="78"/>
+        <source>Ashikhmin</source>
+        <translation>Ashikhmin</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="83"/>
+        <source>Pattanaik</source>
+        <translation>Pattanaik</translation>
     </message>
 </context>
 <context>

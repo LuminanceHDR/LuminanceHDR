@@ -85,162 +85,162 @@ p, li { white-space: pre-wrap; }
         <translation>Hromadné přemapování (Batch Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="36"/>
+        <location filename="../forms/batch_dialog.ui" line="37"/>
         <source>Input Hdr list</source>
         <translation>Seznam vstupních HDR</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="64"/>
+        <location filename="../forms/batch_dialog.ui" line="63"/>
         <source>Add all the HDRs in a directory to the list</source>
         <translation>Přidat do seznamu všechny HDR v adresáři</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="67"/>
+        <location filename="../forms/batch_dialog.ui" line="66"/>
         <source>Add &amp;Directory</source>
         <translation>Přidat a&amp;dresář</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="88"/>
+        <location filename="../forms/batch_dialog.ui" line="86"/>
         <source>Add single HDR files to the list</source>
         <translation>Přidat jeden HDR do seznamu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="91"/>
+        <location filename="../forms/batch_dialog.ui" line="89"/>
         <source>&amp;Add Files</source>
         <translation>&amp;Přidat soubory</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="112"/>
+        <location filename="../forms/batch_dialog.ui" line="109"/>
         <source>Remove single HDR files to the list</source>
         <translation>Odstranit jeden HDR ze seznamu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="115"/>
+        <location filename="../forms/batch_dialog.ui" line="112"/>
         <source>&amp;Remove Files</source>
         <translation>Odst&amp;ranit soubory</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="143"/>
+        <location filename="../forms/batch_dialog.ui" line="141"/>
         <source>List of HDRs that will be tone mapped</source>
         <translation>Seznam HDR, které budou přemapovány</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="159"/>
+        <location filename="../forms/batch_dialog.ui" line="157"/>
         <source>Input Tone Mapping Setting list</source>
         <translation>Seznam vstupních nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="187"/>
+        <location filename="../forms/batch_dialog.ui" line="183"/>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
         <translation>Přidat do seznamu všechny soubory nastavení přemapování z adresáře</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="190"/>
+        <location filename="../forms/batch_dialog.ui" line="186"/>
         <source>Add D&amp;irectory</source>
         <translation>Přidat a&amp;dresář</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="211"/>
+        <location filename="../forms/batch_dialog.ui" line="206"/>
         <source>Add single Tone Mapping Setting files to the list</source>
         <translation>Přidat do seznamu jeden soubor nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="214"/>
+        <location filename="../forms/batch_dialog.ui" line="209"/>
         <source>Add Fi&amp;les</source>
         <translation>Přidat &amp;soubory</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="235"/>
+        <location filename="../forms/batch_dialog.ui" line="229"/>
         <source>Remove single Tone Mapping Setting files to the list</source>
         <translation>Odstranit ze seznamu jeden soubor nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="238"/>
+        <location filename="../forms/batch_dialog.ui" line="232"/>
         <source>R&amp;emove Files</source>
         <translation>O&amp;dstranit soubory</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="266"/>
+        <location filename="../forms/batch_dialog.ui" line="261"/>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
         <translation>Seznam souborů nastavení pro použití k přemapování každého HDR</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="284"/>
+        <location filename="../forms/batch_dialog.ui" line="279"/>
         <source>Specify output folder for the tone mapped files</source>
         <translation>Vybrat výstupní adresář pro přemapované soubory</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="287"/>
+        <location filename="../forms/batch_dialog.ui" line="282"/>
         <source>Output</source>
         <translation>Výstup</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="299"/>
+        <location filename="../forms/batch_dialog.ui" line="294"/>
         <source>Select &amp;Output Folder...</source>
         <translation>Vybrat &amp;výstupní adresář...</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="316"/>
+        <location filename="../forms/batch_dialog.ui" line="311"/>
         <source>Log:</source>
         <translation>Log:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="342"/>
+        <location filename="../forms/batch_dialog.ui" line="335"/>
         <source>Batch operations report</source>
         <translation>Zpráva hromadného zpracování</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="366"/>
+        <location filename="../forms/batch_dialog.ui" line="359"/>
         <source>&amp;Show only:</source>
         <translation>&amp;Ukaž jen:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="376"/>
+        <location filename="../forms/batch_dialog.ui" line="369"/>
         <source>Filter messages based on severity</source>
         <translation>Filtrovat zprávy podle vážnosti</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="380"/>
+        <location filename="../forms/batch_dialog.ui" line="373"/>
         <source>All messages</source>
         <translation>Všechny zprávy</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="385"/>
+        <location filename="../forms/batch_dialog.ui" line="378"/>
         <source>Errors only</source>
         <translation>Jen chyby</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="390"/>
+        <location filename="../forms/batch_dialog.ui" line="383"/>
         <source>Success messages</source>
         <translation>Zprávy o úspěchu</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="405"/>
+        <location filename="../forms/batch_dialog.ui" line="398"/>
         <source>&amp;Filter Log messages:</source>
         <translation>&amp;Filtr log zpráv:</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="421"/>
+        <location filename="../forms/batch_dialog.ui" line="414"/>
         <source>Clear filter text</source>
         <translation>Smazat text filtru</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="436"/>
+        <location filename="../forms/batch_dialog.ui" line="430"/>
         <source>Overall completion progress</source>
         <translation>Celkové zpracování dokončeno</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="467"/>
+        <location filename="../forms/batch_dialog.ui" line="461"/>
         <source>&amp;Cancel</source>
         <translation>&amp;Storno</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="480"/>
+        <location filename="../forms/batch_dialog.ui" line="474"/>
         <source>Start batch tone mapping</source>
         <translation>Začít hromadné přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/batch_dialog.ui" line="483"/>
+        <location filename="../forms/batch_dialog.ui" line="477"/>
         <source>&amp;Start!</source>
         <translation>&amp;Začít!</translation>
     </message>
@@ -2942,12 +2942,12 @@ p, li { white-space: pre-wrap; }
         <translation>Nahrát soubor nastavení přemapování...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="314"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="309"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui soubor nastavení přemapování (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="423"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="411"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
@@ -2957,22 +2957,22 @@ p, li { white-space: pre-wrap; }
         <translation>Soubor není čitelný (zkontrolujte zda existuje, práva,...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="312"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="307"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Uložit soubor nastavení přemapování jako...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="341"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="329"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Soubor nelze zapsat (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="406"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="394"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="423"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="411"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Chyba, formát souboru nastavení přemapvání se změnil. Tento (starý) soubor nelze použít v této verzi Qtpfsgui. Vytvořte nový.</translation>
     </message>
@@ -2980,72 +2980,67 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ToneMappingOptions</name>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="16"/>
+        <location filename="../forms/tonemappingoptions.ui" line="17"/>
         <source>Tonemapping Operators and options</source>
         <translation>Volby a operace přemapování (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="49"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2179"/>
         <source>&amp;Result size:</source>
         <translation>&amp;Výsledné rozlišení:</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="67"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2198"/>
         <source>The size of the resulting LDR image.</source>
         <translation>Velikost výsledného LDR obrázku.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="70"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2201"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation>Zde můžete vybrat velikost výsledného LDR obrázku.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="83"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2214"/>
         <source>Custom LDR size</source>
         <translation>Volitelná velikost LDR</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="86"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2217"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Kliknutím na toto tlačítko můžete vložit novou hodnotu &lt;i&gt;šířky&lt;/i&gt; výsledného LDR obrázku. Enter dopočítá hodnotu výšky a uloží nový rozměr do seznamu.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="117"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2159"/>
         <source>Gamma applied before tone mapping</source>
         <translation>Gamma použitá před přemapováním (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="120"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2162"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Zde můžete opravit hodnotu gamma pro HDR.&lt;br&gt;Korekce gamma bude použita před přemapováním HDR.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="123"/>
-        <source>Pre Gamma</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="156"/>
         <source>Pre Tone mapping &amp;gamma adjustment</source>
-        <translation>Doladění &amp;gamma před přemapováním</translation>
+        <translation type="obsolete">Doladění &amp;gamma před přemapováním</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="197"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2275"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Obnovit původní hodnotu pregamma (1)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="276"/>
         <source>Here you can choose the tone mapping operator and its settings.</source>
-        <translation>Zde můžete vybrat způsob přemapování a jeho nastavení.</translation>
+        <translation type="obsolete">Zde můžete vybrat způsob přemapování a jeho nastavení.</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="283"/>
         <source>&amp;Mantiuk</source>
-        <translation>&amp;Mantiuk</translation>
+        <translation type="obsolete">&amp;Mantiuk</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="295"/>
+        <location filename="../forms/tonemappingoptions.ui" line="115"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3053,37 +3048,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="308"/>
+        <location filename="../forms/tonemappingoptions.ui" line="128"/>
         <source>Contrast Equalization</source>
         <translation>Varovnání kontrastu (Contrast Equalization)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="323"/>
+        <location filename="../forms/tonemappingoptions.ui" line="143"/>
         <source>Contrast Factor</source>
         <translation>Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="372"/>
+        <location filename="../forms/tonemappingoptions.ui" line="192"/>
         <source>Saturation Factor</source>
         <translation>Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2191"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2021"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Obnovit původní hodnoty operátoru</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2210"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2041"/>
         <source>Default Values for operator</source>
         <translation>Původní hodnoty operátoru</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="525"/>
         <source>Fa&amp;ttal</source>
-        <translation>Fa&amp;ttal</translation>
+        <translation type="obsolete">Fa&amp;ttal</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="537"/>
+        <location filename="../forms/tonemappingoptions.ui" line="364"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3091,37 +3086,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="558"/>
+        <location filename="../forms/tonemappingoptions.ui" line="385"/>
         <source>Alpha</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="607"/>
+        <location filename="../forms/tonemappingoptions.ui" line="434"/>
         <source>Beta</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="656"/>
+        <location filename="../forms/tonemappingoptions.ui" line="483"/>
         <source>Color Saturation</source>
         <translation>Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="699"/>
+        <location filename="../forms/tonemappingoptions.ui" line="526"/>
         <source>Noise Reduction</source>
         <translation>Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="737"/>
+        <location filename="../forms/tonemappingoptions.ui" line="564"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
         <translation>&quot;Starý&quot; Fattal (před 1.8.4)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="807"/>
         <source>&amp;Drago</source>
-        <translation>&amp;Drago</translation>
+        <translation type="obsolete">&amp;Drago</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="819"/>
+        <location filename="../forms/tonemappingoptions.ui" line="647"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3129,17 +3124,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="840"/>
+        <location filename="../forms/tonemappingoptions.ui" line="668"/>
         <source>Bias</source>
         <translation>Síla&lt;br&gt;(Bias)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="941"/>
         <source>&amp;Durand</source>
-        <translation>&amp;Durand</translation>
+        <translation type="obsolete">&amp;Durand</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="953"/>
+        <location filename="../forms/tonemappingoptions.ui" line="782"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3147,27 +3142,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="974"/>
+        <location filename="../forms/tonemappingoptions.ui" line="803"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1017"/>
+        <location filename="../forms/tonemappingoptions.ui" line="846"/>
         <source>Range Kernel Sigma</source>
         <translation>Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1063"/>
+        <location filename="../forms/tonemappingoptions.ui" line="892"/>
         <source>Base Contrast</source>
         <translation>Základní kontrast&lt;br&gt;(Base Contrast)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1158"/>
         <source>Reinhard &apos;0&amp;2</source>
-        <translation>Reinhard &apos;0&amp;2</translation>
+        <translation type="obsolete">Reinhard &apos;0&amp;2</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1170"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1000"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3175,42 +3170,42 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1183"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1013"/>
         <source>Use Scales</source>
         <translation>Použít stupnice (Use Scales)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1198"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1028"/>
         <source>Key Value</source>
         <translation>Klíčová hodnota&lt;br&gt;(Key Value)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1241"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1071"/>
         <source>Phi</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1287"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1117"/>
         <source>Range</source>
         <translation>Rozsah&lt;br&gt;(Range)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1351"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1181"/>
         <source>Lower Scale</source>
         <translation>Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1412"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1242"/>
         <source>Upper Scale</source>
         <translation>Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1525"/>
         <source>Reinhard &apos;0&amp;5</source>
-        <translation>Reinhard &apos;0&amp;5</translation>
+        <translation type="obsolete">Reinhard &apos;0&amp;5</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1537"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1371"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3218,27 +3213,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1558"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1392"/>
         <source>Brightness</source>
         <translation>Jas&lt;br&gt;(Brightness)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1610"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1444"/>
         <source>Chromatic Adaptation</source>
         <translation>Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1656"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1490"/>
         <source>Light Adaptation</source>
         <translation>Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1757"/>
         <source>&amp;Ashikhmin</source>
-        <translation>&amp;Ashikhmin</translation>
+        <translation type="obsolete">&amp;Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1769"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1604"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3246,37 +3241,37 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1790"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1625"/>
         <source>Simple</source>
         <translation>Jednoduchý</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1811"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1644"/>
         <source>Equation Number</source>
         <translation>Číslo rovnice (Equation Number)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1831"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1662"/>
         <source>Eqn 2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1849"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1678"/>
         <source>Eqn 4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1882"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1711"/>
         <source>Local Contrast Threshold</source>
         <translation>Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="1989"/>
         <source>&amp;Pattanaik</source>
-        <translation>&amp;Pattanaik</translation>
+        <translation type="obsolete">&amp;Pattanaik</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2001"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1831"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3284,270 +3279,330 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2022"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1852"/>
         <source>Multiplier</source>
         <translation>Násobitel&lt;br&gt;(Multiplier)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2068"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1898"/>
         <source>Local Tone Mapping</source>
         <translation>Lokální přemapování (Local Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2075"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1905"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2092"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1922"/>
         <source>Cone Level</source>
         <translation>Úroveň Cone&lt;br&gt;(Cone Level)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2135"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1965"/>
         <source>Rod Level</source>
         <translation>Úroveň Rod&lt;br&gt;(Rod Level)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2263"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2355"/>
         <source>Start tone mapping (CTRL+A).</source>
         <translation>Začít přemapování (CTRL+P).</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2266"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2358"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
         <translation>Použít parametry výše k přemapování na LDR obrázek (pregamma a operátory přemapování).</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2269"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2361"/>
         <source>&amp;Apply</source>
         <translation>&amp;Použít</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2281"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2374"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2347"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2073"/>
         <source>Tone Mapping settings file section</source>
         <translation>Oddíl souboru nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2350"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2076"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Zde můžete nahrát a uložit soubor nastavení přemapování.&lt;br&gt;Taky můžete použít obsah právě nahraného souboru nastavení.</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2353"/>
         <source>Tonemapping settings file</source>
-        <translation>Soubor nastavení přemapování</translation>
+        <translation type="obsolete">Soubor nastavení přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2373"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2097"/>
         <source>Save current parameters to a text file</source>
         <translation>Uložit parametry do souboru</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2376"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2100"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Uložit parametry (pregamma a TMO) do souboru.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2379"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2103"/>
         <source>&amp;Save...</source>
         <translation>&amp;Uložit...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2394"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2120"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Nahrát soubor s parametry pregamma a TMO</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2397"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2123"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Nahrát soubor s parametry pregamma a TMO.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2400"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2126"/>
         <source>&amp;Load...</source>
         <translation>&amp;Nahrát...</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2424"/>
         <source>The tone mapping settings file in use</source>
-        <translation>Použitý soubor nastavení přemapování</translation>
+        <translation type="obsolete">Použitý soubor nastavení přemapování</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2427"/>
         <source>The tone mapping settings file in use.</source>
-        <translation>Použitý soubor nastavení přemapování.</translation>
+        <translation type="obsolete">Použitý soubor nastavení přemapování.</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2440"/>
         <source>Apply fil&amp;e</source>
-        <translation>&amp;Použít soubor</translation>
+        <translation type="obsolete">&amp;Použít soubor</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2453"/>
         <source>Apply Settings File</source>
-        <translation>Použít soubor nastavení</translation>
+        <translation type="obsolete">Použít soubor nastavení</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2456"/>
         <source>Use tone mapping file to generate an LDR.</source>
-        <translation>Použít soubor nastavení přemapování k vytvoření LDR obrázku.</translation>
+        <translation type="obsolete">Použít soubor nastavení přemapování k vytvoření LDR obrázku.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="421"/>
+        <location filename="../forms/tonemappingoptions.ui" line="241"/>
         <source>Detail Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="34"/>
+        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="48"/>
+        <source>Mantiuk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="53"/>
+        <source>Fattal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="58"/>
+        <source>Drago</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="63"/>
+        <source>Durand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="68"/>
+        <source>Reinhard &apos;02</source>
+        <translation type="unfinished">Reinhard &apos;02</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="73"/>
+        <source>Reinhard &apos;05</source>
+        <translation type="unfinished">Reinhard &apos;05</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="78"/>
+        <source>Ashikhmin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="83"/>
+        <source>Pattanaik</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="2079"/>
+        <source>Tonemapping settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="2165"/>
+        <source>Process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingoptions.ui" line="2253"/>
+        <source>Pre Gamma:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TonemappingWindow</name>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="30"/>
+        <location filename="../forms/tonemappingdialog.ui" line="31"/>
         <source>&amp;Help</source>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="37"/>
+        <location filename="../forms/tonemappingdialog.ui" line="38"/>
         <source>&amp;View</source>
         <translation>&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="46"/>
+        <location filename="../forms/tonemappingdialog.ui" line="47"/>
         <source>&amp;File</source>
         <translation>&amp;Soubor</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="116"/>
+        <location filename="../forms/tonemappingdialog.ui" line="125"/>
         <source>Tone Mapping Panel</source>
         <translation>Panel Přemapování (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="125"/>
+        <location filename="../forms/tonemappingdialog.ui" line="134"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation>Ukaž/schovej panel přemapování (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="139"/>
+        <location filename="../forms/tonemappingdialog.ui" line="149"/>
         <source>Adjust &amp;Levels...</source>
         <translation>Nastavit ú&amp;rovně...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="142"/>
+        <location filename="../forms/tonemappingdialog.ui" line="152"/>
         <source>Adjust Levels...</source>
         <translation>Nastavit úrovně...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="151"/>
+        <location filename="../forms/tonemappingdialog.ui" line="161"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Doladit histogram aktuálního LDR</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="165"/>
+        <location filename="../forms/tonemappingdialog.ui" line="176"/>
         <source>&amp;Save as...</source>
         <translation>Uložit &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="168"/>
+        <location filename="../forms/tonemappingdialog.ui" line="179"/>
         <source>Save As...</source>
         <translation>Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="177"/>
+        <location filename="../forms/tonemappingdialog.ui" line="188"/>
         <source>Save the currently selected LDR</source>
         <translation>Uložit právě vybraný LDR</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="180"/>
+        <location filename="../forms/tonemappingdialog.ui" line="191"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+J</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="191"/>
+        <location filename="../forms/tonemappingdialog.ui" line="203"/>
         <source>C&amp;lose All</source>
         <translation>Zavřít &amp;vše</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="194"/>
+        <location filename="../forms/tonemappingdialog.ui" line="206"/>
         <source>Close All</source>
         <translation>Zavřít vše</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="203"/>
+        <location filename="../forms/tonemappingdialog.ui" line="215"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>Zavřít všechny LDR na pracovní ploše</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="206"/>
+        <location filename="../forms/tonemappingdialog.ui" line="218"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="211"/>
+        <location filename="../forms/tonemappingdialog.ui" line="223"/>
         <source>As &amp;Thumbnails</source>
         <translation>Jako &amp;náhledy</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="214"/>
+        <location filename="../forms/tonemappingdialog.ui" line="226"/>
         <source>As Thumbnails</source>
         <translation>Jako náhledy</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="217"/>
+        <location filename="../forms/tonemappingdialog.ui" line="229"/>
         <source>Images as Thumbnails</source>
         <translation>Obrázky jako náhledy</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="223"/>
+        <location filename="../forms/tonemappingdialog.ui" line="235"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Uspořádat všechny LDR jako náhledy.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="231"/>
+        <location filename="../forms/tonemappingdialog.ui" line="243"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Kaskáda</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="237"/>
+        <location filename="../forms/tonemappingdialog.ui" line="249"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation>Přerovnat všechny LDR na ploše do kaskády</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="254"/>
+        <location filename="../forms/tonemappingdialog.ui" line="267"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Vyplnit okno</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="260"/>
+        <location filename="../forms/tonemappingdialog.ui" line="273"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>Vyplnit okno obsahující LDR.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="263"/>
+        <location filename="../forms/tonemappingdialog.ui" line="276"/>
         <source>W</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="271"/>
+        <location filename="../forms/tonemappingdialog.ui" line="285"/>
         <source>What&apos;s This?</source>
         <translation>Co je to?</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="280"/>
+        <location filename="../forms/tonemappingdialog.ui" line="294"/>
         <source>Shift+F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="288"/>
+        <location filename="../forms/tonemappingdialog.ui" line="303"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Dokumentace...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="291"/>
+        <location filename="../forms/tonemappingdialog.ui" line="306"/>
         <source>Ctrl+H</source>
         <translation></translation>
     </message>
@@ -3572,32 +3627,32 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Uložení selhalo &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="99"/>
+        <location filename="../forms/tonemappingdialog.ui" line="107"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="154"/>
+        <location filename="../forms/tonemappingdialog.ui" line="164"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="226"/>
+        <location filename="../forms/tonemappingdialog.ui" line="238"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="240"/>
+        <location filename="../forms/tonemappingdialog.ui" line="252"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="274"/>
+        <location filename="../forms/tonemappingdialog.ui" line="288"/>
         <source>Get information about the graphical elements</source>
         <translation>Získej informace o grafických prvcích</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="277"/>
+        <location filename="../forms/tonemappingdialog.ui" line="291"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation>Použijte toto tačítko k získání informací o grafických prvcích</translation>
     </message>
@@ -3607,19 +3662,24 @@ p, li { white-space: pre-wrap; }
         <translation>Přemapování:</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="84"/>
+        <location filename="../forms/tonemappingdialog.ui" line="92"/>
         <source>&amp;Exit</source>
         <translation>&amp;Konec</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="87"/>
+        <location filename="../forms/tonemappingdialog.ui" line="95"/>
         <source>Exit</source>
         <translation>Konec</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="96"/>
+        <location filename="../forms/tonemappingdialog.ui" line="104"/>
         <source>Close Tone Mapping Window</source>
         <translation>Zavřít okno přemapování</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="62"/>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
