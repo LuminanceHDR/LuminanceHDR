@@ -415,6 +415,9 @@ INCLUDEPATH += ../DEPs/include/OpenEXR
 INCLUDEPATH += ../DEPs/include/exiv2
 LIBS            += -lexiv2 -L../DEPs/lib
 
+#win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2)
+LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
+
 #fftw3
 LIBS += -lfftw3f-3 -lm
 DEFINES += HAVE_FFTW
