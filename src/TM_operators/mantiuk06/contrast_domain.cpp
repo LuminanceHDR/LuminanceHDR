@@ -347,7 +347,7 @@ static inline void matrix_free(float* m){
 static inline float matrix_DotProduct(const int n, const float* const a, const float* const b){
   float val = 0;
 
-#pragma omp parallel for schedule(static)
+#pragma omp parallel for reduction(+:val) schedule(static)
   for(int j=0;j<n;j++)
     val += a[j] * b[j];
 
