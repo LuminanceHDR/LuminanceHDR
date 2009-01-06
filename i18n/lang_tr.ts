@@ -2699,17 +2699,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Bütün LDR biçimleri (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="46"/>
+        <location filename="../src/Common/global.cpp" line="48"/>
         <source>Save the LDR to...</source>
         <translation type="unfinished">LDR yi buraya kopyala...</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="62"/>
+        <location filename="../src/Common/global.cpp" line="65"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Kaydedilemedi &lt;b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="38"/>
+        <location filename="../src/Common/global.cpp" line="40"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2788,42 +2788,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="281"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="271"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Bir ton haritalama ayarları metin dosyası yükle...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="309"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="299"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui ton haritalama ayarları metin dosyası (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="411"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
         <source>Aborting...</source>
         <translation>Durduruluyor...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="287"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="277"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Dosya okunabilir değil (varlığını, izinlerini.... kontrol edin)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="307"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="297"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Ton haritalama ayarları metin dosyasını şuraya kopyala...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="329"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="319"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Dosya yazılabilir değil (izinleri, yolu... kontrol edin)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="394"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="384"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Dosya okunabilir değil (izinleri, yolu... kontrol edin)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="411"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Hata, ton haritalama ayarları dosya biçimi değiştirildi. Bu (eski) dosya, Qtpfsgui&apos;nin bu sürümü ile kullanılamaz. Yeni bir tane oluşturun.</translation>
     </message>
@@ -2841,12 +2841,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Ön Gama</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2159"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2162"/>
         <source>Gamma applied before tone mapping</source>
         <translation>Tone haritalamadan önce gama uygulandı</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="364"/>
+        <location filename="../forms/tonemappingoptions.ui" line="367"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2854,22 +2854,22 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Eğim Etki Alanı Yüksek Hareket Dizisi Sıkıştırması&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, ve M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="385"/>
+        <location filename="../forms/tonemappingoptions.ui" line="388"/>
         <source>Alpha</source>
         <translation>Alfa</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="483"/>
+        <location filename="../forms/tonemappingoptions.ui" line="486"/>
         <source>Color Saturation</source>
         <translation>Renk Doygunluğu</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2041"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2044"/>
         <source>Default Values for operator</source>
         <translation>İşletici için ön tanımlı değerler</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1604"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1607"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2877,32 +2877,32 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Yüksek Karşıtlı Resimler için Bir Ton Haritalama Algoritması&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1625"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1628"/>
         <source>Simple</source>
         <translation>Sade</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1644"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1647"/>
         <source>Equation Number</source>
         <translation>Eşitleme Numarası</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1662"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1665"/>
         <source>Eqn 2</source>
         <translation>Eşt 2</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1678"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1681"/>
         <source>Eqn 4</source>
         <translation>Eşt 4</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1711"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1714"/>
         <source>Local Contrast Threshold</source>
         <translation>Yerel Karşıtlık Eşiği</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="782"/>
+        <location filename="../forms/tonemappingoptions.ui" line="785"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2910,22 +2910,22 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;HDR resimlerinin görüntülenmesi için, hızlı çift yönlü filtreleme&lt;/span&gt;&lt;br /&gt;F. Durand ve J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="803"/>
+        <location filename="../forms/tonemappingoptions.ui" line="806"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Uzaysal Çekirdek Sigması</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="846"/>
+        <location filename="../forms/tonemappingoptions.ui" line="849"/>
         <source>Range Kernel Sigma</source>
         <translation>Dizi Çekirdek Sigması</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="892"/>
+        <location filename="../forms/tonemappingoptions.ui" line="895"/>
         <source>Base Contrast</source>
         <translation>Temel Karşıtlık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="647"/>
+        <location filename="../forms/tonemappingoptions.ui" line="650"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2933,12 +2933,12 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Yüksek karşıtlık sahnelerinin görüntülemesi için uyarlamalı logaritmik haritalama&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, ve N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="668"/>
+        <location filename="../forms/tonemappingoptions.ui" line="671"/>
         <source>Bias</source>
         <translation>Sapma</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1831"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1834"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2946,32 +2946,32 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gerçekçi resim gösterimleri için, zaman bağımlı görsel uyarlama&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, ve D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1852"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1855"/>
         <source>Multiplier</source>
         <translation>Çoğullayıcı</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1898"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1901"/>
         <source>Local Tone Mapping</source>
         <translation>Yerel Ton Haritalama</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1905"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1908"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Koni ve Çubuk, Parlaklığı baz almışlardır</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1922"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1925"/>
         <source>Cone Level</source>
         <translation>Koni Seviyesi</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1965"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1968"/>
         <source>Rod Level</source>
         <translation>Çubuk Seviyesi</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1000"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1003"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -2979,37 +2979,37 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dijital Resimler İçin, Fotoğrafsal Ton Artırımı&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, ve J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1013"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1016"/>
         <source>Use Scales</source>
         <translation>Ölçekleri Kullan</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1028"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1031"/>
         <source>Key Value</source>
         <translation>Anahtar Değer</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1071"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1074"/>
         <source>Phi</source>
         <translation>Phi</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1117"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1120"/>
         <source>Range</source>
         <translation>Sıra</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1181"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1184"/>
         <source>Lower Scale</source>
         <translation>Düşük Ölçek</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1242"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1245"/>
         <source>Upper Scale</source>
         <translation>Yüksek Ölçek</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1371"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1374"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3017,17 +3017,17 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Hareketli Alan Azalması, Işığa Karşı Hassas Olan Alıcı Sinirden Esinlenmiştir. &lt;/span&gt;&lt;br /&gt;E. Reinhard ve K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1392"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1395"/>
         <source>Brightness</source>
         <translation>Parlaklık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2374"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2377"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2120"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2123"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Ön gama ve TMO ayarlarını içeren bir metin dosyası yükle</translation>
     </message>
@@ -3042,47 +3042,47 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Ayarlar Dosyasına Uygula</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="434"/>
+        <location filename="../forms/tonemappingoptions.ui" line="437"/>
         <source>Beta</source>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2179"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2182"/>
         <source>&amp;Result size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2198"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2201"/>
         <source>The size of the resulting LDR image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2201"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2204"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2214"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2217"/>
         <source>Custom LDR size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2217"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2220"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2162"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2165"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2275"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2278"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="115"/>
+        <location filename="../forms/tonemappingoptions.ui" line="118"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3090,32 +3090,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="128"/>
+        <location filename="../forms/tonemappingoptions.ui" line="131"/>
         <source>Contrast Equalization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="143"/>
+        <location filename="../forms/tonemappingoptions.ui" line="146"/>
         <source>Contrast Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="192"/>
+        <location filename="../forms/tonemappingoptions.ui" line="195"/>
         <source>Saturation Factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2021"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2024"/>
         <source>Restore operator&apos;s default values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="526"/>
+        <location filename="../forms/tonemappingoptions.ui" line="529"/>
         <source>Noise Reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="564"/>
+        <location filename="../forms/tonemappingoptions.ui" line="567"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3130,67 +3130,67 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Reinhard &apos;0&amp;5</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1444"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1447"/>
         <source>Chromatic Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1490"/>
+        <location filename="../forms/tonemappingoptions.ui" line="1493"/>
         <source>Light Adaptation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2355"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2358"/>
         <source>Start tone mapping (CTRL+A).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2358"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2361"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2361"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2364"/>
         <source>&amp;Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2073"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2076"/>
         <source>Tone Mapping settings file section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2076"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2079"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2097"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2100"/>
         <source>Save current parameters to a text file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2100"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2103"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2103"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2106"/>
         <source>&amp;Save...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2123"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2126"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2126"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2129"/>
         <source>&amp;Load...</source>
         <translation type="unfinished">Yük&amp;le...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="241"/>
+        <location filename="../forms/tonemappingoptions.ui" line="244"/>
         <source>Detail Factor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3200,57 +3200,57 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="48"/>
+        <location filename="../forms/tonemappingoptions.ui" line="51"/>
         <source>Mantiuk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="53"/>
+        <location filename="../forms/tonemappingoptions.ui" line="56"/>
         <source>Fattal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="58"/>
+        <location filename="../forms/tonemappingoptions.ui" line="61"/>
         <source>Drago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="63"/>
+        <location filename="../forms/tonemappingoptions.ui" line="66"/>
         <source>Durand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="68"/>
+        <location filename="../forms/tonemappingoptions.ui" line="71"/>
         <source>Reinhard &apos;02</source>
         <translation type="unfinished">Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="73"/>
+        <location filename="../forms/tonemappingoptions.ui" line="76"/>
         <source>Reinhard &apos;05</source>
         <translation type="unfinished">Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="78"/>
+        <location filename="../forms/tonemappingoptions.ui" line="81"/>
         <source>Ashikhmin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="83"/>
+        <location filename="../forms/tonemappingoptions.ui" line="86"/>
         <source>Pattanaik</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2079"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2082"/>
         <source>Tonemapping settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2165"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2168"/>
         <source>Process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2253"/>
+        <location filename="../forms/tonemappingoptions.ui" line="2256"/>
         <source>Pre Gamma:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3273,72 +3273,72 @@ p, li { white-space: pre-wrap; }
         <translation>Ton haritalama Paneli</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="161"/>
+        <location filename="../forms/tonemappingdialog.ui" line="163"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Şu anki LDR için histogramı ayarla</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="191"/>
+        <location filename="../forms/tonemappingdialog.ui" line="193"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="203"/>
+        <location filename="../forms/tonemappingdialog.ui" line="205"/>
         <source>C&amp;lose All</source>
         <translation>Hepsini &amp;Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="206"/>
+        <location filename="../forms/tonemappingdialog.ui" line="208"/>
         <source>Close All</source>
         <translation>Hepsini Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="215"/>
+        <location filename="../forms/tonemappingdialog.ui" line="217"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>Çalışma alanındaki bütün LDR leri Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="218"/>
+        <location filename="../forms/tonemappingdialog.ui" line="220"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="223"/>
+        <location filename="../forms/tonemappingdialog.ui" line="225"/>
         <source>As &amp;Thumbnails</source>
         <translation>Minya&amp;tür Olarak</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="226"/>
+        <location filename="../forms/tonemappingdialog.ui" line="228"/>
         <source>As Thumbnails</source>
         <translation>Minyatür Olarak</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="229"/>
+        <location filename="../forms/tonemappingdialog.ui" line="231"/>
         <source>Images as Thumbnails</source>
         <translation>Minyatür Şeklindeki Resimler</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="235"/>
+        <location filename="../forms/tonemappingdialog.ui" line="237"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Bütün LDR leri minyatür olarak düzenle.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="243"/>
+        <location filename="../forms/tonemappingdialog.ui" line="245"/>
         <source>&amp;Cascade</source>
         <translation>Ta&amp;şır</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="267"/>
+        <location filename="../forms/tonemappingdialog.ui" line="269"/>
         <source>&amp;Fit to Window</source>
         <translation>Pencere&amp;ye Uydur</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="273"/>
+        <location filename="../forms/tonemappingdialog.ui" line="275"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>Şu anki LDR yi penceresine Uydur.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="276"/>
+        <location filename="../forms/tonemappingdialog.ui" line="278"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -3363,92 +3363,92 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Yardım</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="107"/>
+        <location filename="../forms/tonemappingdialog.ui" line="109"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="125"/>
+        <location filename="../forms/tonemappingdialog.ui" line="127"/>
         <source>Tone Mapping Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="134"/>
+        <location filename="../forms/tonemappingdialog.ui" line="136"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="149"/>
+        <location filename="../forms/tonemappingdialog.ui" line="151"/>
         <source>Adjust &amp;Levels...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="152"/>
+        <location filename="../forms/tonemappingdialog.ui" line="154"/>
         <source>Adjust Levels...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="164"/>
+        <location filename="../forms/tonemappingdialog.ui" line="166"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="176"/>
+        <location filename="../forms/tonemappingdialog.ui" line="178"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="179"/>
+        <location filename="../forms/tonemappingdialog.ui" line="181"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="188"/>
+        <location filename="../forms/tonemappingdialog.ui" line="190"/>
         <source>Save the currently selected LDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="238"/>
+        <location filename="../forms/tonemappingdialog.ui" line="240"/>
         <source>Ctrl+T</source>
         <translation type="unfinished">Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="249"/>
+        <location filename="../forms/tonemappingdialog.ui" line="251"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="252"/>
+        <location filename="../forms/tonemappingdialog.ui" line="254"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="285"/>
+        <location filename="../forms/tonemappingdialog.ui" line="287"/>
         <source>What&apos;s This?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="288"/>
+        <location filename="../forms/tonemappingdialog.ui" line="290"/>
         <source>Get information about the graphical elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="291"/>
+        <location filename="../forms/tonemappingdialog.ui" line="293"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="294"/>
+        <location filename="../forms/tonemappingdialog.ui" line="296"/>
         <source>Shift+F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="303"/>
+        <location filename="../forms/tonemappingdialog.ui" line="305"/>
         <source>&amp;Documentation...</source>
         <translation type="unfinished">Belgelen&amp;dirme...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="306"/>
+        <location filename="../forms/tonemappingdialog.ui" line="308"/>
         <source>Ctrl+H</source>
         <translation type="unfinished">Ctrl+H</translation>
     </message>
@@ -3458,23 +3458,43 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="92"/>
+        <location filename="../forms/tonemappingdialog.ui" line="94"/>
         <source>&amp;Exit</source>
         <translation type="unfinished">&amp;Çık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="95"/>
+        <location filename="../forms/tonemappingdialog.ui" line="97"/>
         <source>Exit</source>
         <translation type="unfinished">Çık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="104"/>
+        <location filename="../forms/tonemappingdialog.ui" line="106"/>
         <source>Close Tone Mapping Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="62"/>
+        <location filename="../forms/tonemappingdialog.ui" line="63"/>
         <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="323"/>
+        <source>Save All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="332"/>
+        <source>Saves all LDRs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="335"/>
+        <source>Ctrl+Shift+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="151"/>
+        <source>Save files in</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3531,14 +3551,14 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Bütün Desteklenen Biçimler (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="218"/>
         <source>Select the input images</source>
         <translation>Girdi Resimlerini Seç</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
         <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
-        <translation>Bütün Desteklenen Biçimler (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
+        <translation type="obsolete">Bütün Desteklenen Biçimler (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="281"/>
@@ -3591,13 +3611,18 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Başla!</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="263"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="267"/>
         <source>&amp;Done.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="190"/>
         <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
+        <source>All Supported formats (*.jpeg *.jpg </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

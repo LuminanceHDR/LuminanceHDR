@@ -48,6 +48,7 @@
     </property>
     <addaction name="actionFix_Histogram" />
     <addaction name="actionSave" />
+    <addaction name="actionSaveAll" />
     <addaction name="actionClose_All" />
     <addaction name="separator" />
     <addaction name="actionFinishTM" />
@@ -77,6 +78,7 @@
    <addaction name="separator" />
    <addaction name="actionFix_Histogram" />
    <addaction name="actionSave" />
+   <addaction name="actionSaveAll" />
    <addaction name="separator" />
    <addaction name="actionClose_All" />
    <addaction name="separator" />
@@ -304,6 +306,33 @@
    </property>
    <property name="shortcut" >
     <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionSaveAll" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/filesaveall.png</normaloff>:/new/prefix1/images/filesaveall.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Save All</string>
+   </property>
+   <property name="iconText" >
+    <string>Save All</string>
+   </property>
+   <property name="toolTip" >
+    <string>Saves all LDRs</string>
+   </property>
+   <property name="statusTip" >
+    <string>Saves all LDRs</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Saves all LDRs</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>

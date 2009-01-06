@@ -1,8 +1,8 @@
 /**
  * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
@@ -60,8 +60,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
 	connect(actionFit_to_Window,SIGNAL(toggled(bool)),this,SLOT(current_ldr_fit_to_win(bool)));
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
-	connect(actionClose_All,SIGNAL(triggered()),this,SLOT(close_all()));
-	connect(actionSave, SIGNAL(triggered()),this, SLOT(saveLDR()));
 	connect(documentationAction,SIGNAL(triggered()),parent,SLOT(openDocumentation()));
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
@@ -98,13 +96,13 @@ void TonemappingWindow::levels_closed() {
 }
 
 
-void TonemappingWindow::saveLDR() {
+void TonemappingWindow::on_actionSave_triggered() {
 	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
 	if (currentLDR==NULL)
 		return;
 
 	QString outfname = saveLDRImage(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg",currentLDR->getQImage());
-	
+
 	//if save is succesful
 	if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
 		//time to write the exif data...
@@ -116,6 +114,7 @@ void TonemappingWindow::saveLDR() {
 void TonemappingWindow::updateActions(QWidget *w) {
 	actionFix_Histogram->setEnabled(w!=NULL);
 	actionSave->setEnabled(w!=NULL);
+	actionSaveAll->setEnabled(w!=NULL);
 	actionClose_All->setEnabled(w!=NULL);
 	actionAsThumbnails->setEnabled(w!=NULL);
 	actionFit_to_Window->setEnabled(w!=NULL);
@@ -139,10 +138,32 @@ void TonemappingWindow::viewAllAsThumbnails() {
 	}
 }
 
-void TonemappingWindow::close_all() {
+void TonemappingWindow::on_actionClose_All_triggered() {
 	QWidgetList allLDRresults=workspace->windowList();
 	foreach (QWidget *p,allLDRresults) {
 		((LdrViewer*)p)->close();
+	}
+}
+
+void TonemappingWindow::on_actionSaveAll_triggered() {
+	QString dir = QFileDialog::getExistingDirectory(
+			0,
+			tr("Save files in"),
+			settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()
+	);
+	if (!dir.isEmpty()) {
+		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
+		QWidgetList allLDRresults=workspace->windowList();
+		foreach (QWidget *p,allLDRresults) {
+			LdrViewer* ldr = ((LdrViewer*)p);
+			QString outfname = saveLDRImage(prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
+			//if save is succesful
+			if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
+				//time to write the exif data...
+				//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+				ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), ldr->getExifComment().toStdString() );
+			}
+		}
 	}
 }
 

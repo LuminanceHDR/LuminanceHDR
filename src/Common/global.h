@@ -26,7 +26,7 @@
 
 #include <QSettings>
 extern QSettings settings;
-QString saveLDRImage(const QString initialFileName, const QImage* image);
+QString saveLDRImage(const QString initialFileName, const QImage* image, bool batchMode = false);
 bool matchesLdrFilename(QString file);
 bool matchesHdrFilename(QString file);
 bool matchesValidHDRorLDRfilename(QString file);

@@ -34,19 +34,22 @@ QSettings settings("Qtpfsgui", "Qtpfsgui");
 /**
  * \return "" when fail, out file name when successful
  */
-QString saveLDRImage(const QString initialFileName, const QImage* image) {
-	QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;");
-	filetypes += "JPEG (*.jpg *.jpeg);;" ;
-	filetypes += "PNG (*.png);;" ;
-	filetypes += "PPM PBM (*.ppm *.pbm);;";
-	filetypes += "BMP (*.bmp)";
+QString saveLDRImage(const QString initialFileName, const QImage* image, bool batchMode) {
+	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
+	if (!batchMode) {
+		QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;");
+		filetypes += "JPEG (*.jpg *.jpeg);;" ;
+		filetypes += "PNG (*.png);;" ;
+		filetypes += "PPM PBM (*.ppm *.pbm);;";
+		filetypes += "BMP (*.bmp)";
 
-	QString outfname = QFileDialog::getSaveFileName(
-			0,
-			QObject::tr("Save the LDR to..."),
-			QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
-			filetypes
-	);
+		outfname = QFileDialog::getSaveFileName(
+				0,
+				QObject::tr("Save the LDR to..."),
+				QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
+				filetypes
+		);
+	}
 
 	if(!outfname.isEmpty()) {
 		QFileInfo qfi(outfname);
