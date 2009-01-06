@@ -407,31 +407,25 @@ CONFIG += windows
 CONFIG += console
 
 #OpenEXR available in win32
-LIBS += -lIlmImf -lImath -lHalf -lIex
-#LIBS += -LC:\msys\1.0\local\lib
+LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
 INCLUDEPATH += ../DEPs/include/OpenEXR
+# -lImath (no need to link against this)
 
 #exiv2
 INCLUDEPATH += ../DEPs/include/exiv2
-LIBS            += -lexiv2 -L../DEPs/lib
+LIBS        += -lexiv2 -L../DEPs/lib/exiv2
 
-#win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2)
+#win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
 LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
 
 #fftw3
-LIBS += -lfftw3f-3 -lm
+LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm
 DEFINES += HAVE_FFTW
-INCLUDEPATH += ../DEPs/include
-LIBS += -L../DEPs/lib
-
-#dcraw
-#LIBS += -ljpeg62 -lWs2_32
-#LIBS += -LC:\comp_prj\libjpeg
-#INCLUDEPATH += C:\comp_prj\libjpeg\include
+INCLUDEPATH += ../DEPs/include/fftw3
 
 #tiff
-INCLUDEPATH += "C:\Program Files\GnuWin32\include"
-LIBS += "-LC:\Program Files\GnuWin32\lib" -llibtiff
+INCLUDEPATH += ../DEPs/include/libtiff
+LIBS += -L../DEPs/lib/libtiff -ltiff
 
 DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
 RC_FILE = images/qtpfsgui_ico.rc
