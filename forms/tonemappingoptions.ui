@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>250</width>
     <height>691</height>
    </rect>
   </property>
@@ -40,6 +40,9 @@
      </item>
      <item>
       <widget class="QComboBox" name="cmbOperators" >
+       <property name="currentIndex" >
+        <number>5</number>
+       </property>
        <property name="frame" >
         <bool>true</bool>
        </property>
@@ -96,7 +99,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="currentIndex" >
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="page_mantiuk" >
       <layout class="QVBoxLayout" name="verticalLayout" >
@@ -2416,8 +2419,8 @@ p, li { white-space: pre-wrap; }
      <y>324</y>
     </hint>
     <hint type="destinationlabel" >
-     <x>185</x>
-     <y>307</y>
+     <x>297</x>
+     <y>21</y>
     </hint>
    </hints>
   </connection>
@@ -2428,12 +2431,348 @@ p, li { white-space: pre-wrap; }
    <slot>setCurrentIndex(int)</slot>
    <hints>
     <hint type="sourcelabel" >
-     <x>228</x>
-     <y>305</y>
+     <x>297</x>
+     <y>21</y>
     </hint>
     <hint type="destinationlabel" >
      <x>207</x>
      <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_range</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>34</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>30</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>range2Slider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>53</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>76</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>range2dsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>96</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>267</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_lowerscale</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>49</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>55</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lowerSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>109</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>112</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lowerdsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>158</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>249</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_upperscale</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>135</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>17</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>upperSlider</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>177</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>175</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>usescalescheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>upperdsb</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>196</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>268</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>40</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>88</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_locatcontrasttreshold</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>54</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>72</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>contrastSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>26</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>153</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simpleCheckBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>contrastdsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>45</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>273</x>
+     <y>144</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_cone</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>51</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>50</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>coneSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>94</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>103</x>
+     <y>184</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>conedsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>150</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>252</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_rod</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>174</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rodSlider</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>196</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>199</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>autoYcheckbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>roddsb</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>244</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>278</x>
+     <y>218</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoYcheckbox</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>72</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>73</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pattalocal</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoYcheckbox</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>226</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>228</x>
+     <y>163</y>
     </hint>
    </hints>
   </connection>

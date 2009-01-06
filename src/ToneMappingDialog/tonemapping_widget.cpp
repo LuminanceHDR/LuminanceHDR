@@ -83,21 +83,6 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 	// pregamma
 	pregammagang  = new Gang(pregammaSlider,  pregammadsb,  0, 3, 1);
 
-	connect(ashikhmin02Default, SIGNAL(clicked()),this,SLOT(ashikhminReset()));
-	connect(drago03Default,     SIGNAL(clicked()),this,SLOT(dragoReset()));
-	connect(durand02Default,    SIGNAL(clicked()),this,SLOT(durandReset()));
-	connect(fattal02Default,    SIGNAL(clicked()),this,SLOT(fattalReset()));
-	connect(pattanaik00Default, SIGNAL(clicked()),this,SLOT(pattanaikReset()));
-	connect(reinhard02Default,  SIGNAL(clicked()),this,SLOT(reinhard02Reset()));
-	connect(reinhard05Default,  SIGNAL(clicked()),this,SLOT(reinhard05Reset()));
-	connect(MantiukDefault,     SIGNAL(clicked()),this,SLOT(mantiukReset()));
-	connect(pregammadefault,    SIGNAL(clicked()),this,SLOT(preGammaReset()));
-
-	connect(applyButton,       SIGNAL(clicked()), this, SLOT(apply_clicked()));
-	connect(loadsettingsbutton,SIGNAL(clicked()), this, SLOT(loadsettings()));
-	connect(savesettingsbutton,SIGNAL(clicked()), this, SLOT(savesettings()));
-	connect(addCustomSizeButton, SIGNAL(clicked()), this, SLOT(addCustomSize()));
-
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 
 	// get available sizes
@@ -139,48 +124,54 @@ delete contrastfactorGang; delete saturationfactorGang; delete detailfactorGang;
 	QFile::remove(cachepath+"/after_pregamma.pfs");
 }
 
-void TMWidget::mantiukReset() {
-contrastfactorGang->setDefault();
-saturationfactorGang->setDefault();
-detailfactorGang->setDefault();
+void TMWidget::on_MantiukDefault_clicked() {
+	contrastfactorGang->setDefault();
+	saturationfactorGang->setDefault();
+	detailfactorGang->setDefault();
+	ContrastEqualizCheckBox->setChecked(false);
 }
-void TMWidget::ashikhminReset() {
-contrastGang->setDefault();
+void TMWidget::on_ashikhmin02Default_clicked() {
+	contrastGang->setDefault();
+	simpleCheckBox->setChecked(false);
+	eq2RadioButton->setChecked(true);
 }
-void TMWidget::dragoReset(){
-biasGang->setDefault();
+void TMWidget::on_drago03Default_clicked(){
+	biasGang->setDefault();
 }
-void TMWidget::durandReset(){
-spatialGang->setDefault();
-rangeGang->setDefault();
-baseGang->setDefault();
+void TMWidget::on_durand02Default_clicked(){
+	spatialGang->setDefault();
+	rangeGang->setDefault();
+	baseGang->setDefault();
 }
-void TMWidget::fattalReset(){
-alphaGang->setDefault();
-betaGang->setDefault();
-saturation2Gang->setDefault();
-noiseGang->setDefault();
-oldFattalCheckBox->setChecked(false);
+void TMWidget::on_fattal02Default_clicked(){
+	alphaGang->setDefault();
+	betaGang->setDefault();
+	saturation2Gang->setDefault();
+	noiseGang->setDefault();
+	oldFattalCheckBox->setChecked(false);
 }
-void TMWidget::pattanaikReset(){
-multiplierGang->setDefault();
-coneGang->setDefault();
-rodGang->setDefault();
+void TMWidget::on_pattanaik00Default_clicked(){
+	multiplierGang->setDefault();
+	coneGang->setDefault();
+	rodGang->setDefault();
+	pattalocal->setChecked(false);
+	autoYcheckbox->setChecked(false);
 }
-void TMWidget::reinhard02Reset(){
-keyGang->setDefault();
-phiGang->setDefault();
-range2Gang->setDefault();
-lowerGang->setDefault();
-upperGang->setDefault();
+void TMWidget::on_reinhard02Default_clicked(){
+	keyGang->setDefault();
+	phiGang->setDefault();
+	range2Gang->setDefault();
+	lowerGang->setDefault();
+	upperGang->setDefault();
+	usescalescheckbox->setChecked(false);
 }
-void TMWidget::reinhard05Reset(){
-brightnessGang->setDefault();
-chromaticGang->setDefault();
-lightGang->setDefault();
+void TMWidget::on_reinhard05Default_clicked(){
+	brightnessGang->setDefault();
+	chromaticGang->setDefault();
+	lightGang->setDefault();
 }
-void TMWidget::preGammaReset(){
-pregammagang->setDefault();
+void TMWidget::on_pregammadefault_clicked(){
+	pregammagang->setDefault();
 }
 
 MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
@@ -201,7 +192,7 @@ void MyProgressBar::advanceCurrentProgress() {
 	this->setValue(this->value()+1);
 }
 
-void TMWidget::apply_clicked() {
+void TMWidget::on_applyButton_clicked() {
 	FillToneMappingOptions();
 
 	MyProgressBar *newprogressbar=new MyProgressBar(sb);
@@ -274,8 +265,7 @@ void TMWidget::FillToneMappingOptions() {
 	}
 }
 
-
-void TMWidget::loadsettings() {
+void TMWidget::on_loadsettingsbutton_clicked() {
 	QString opened = QFileDialog::getOpenFileName(
 			this,
 			tr("Load a tonemapping settings text file..."),
@@ -301,7 +291,7 @@ void TMWidget::loadsettings() {
 	}
 }
 
-void TMWidget::savesettings() {
+void TMWidget::on_savesettingsbutton_clicked() {
 	QString fname =QFileDialog::getSaveFileName(
 			this,
 			tr("Save tonemapping settings text file to..."),
@@ -495,7 +485,7 @@ void TMWidget::fromTxt2Gui() {
 			pregammaSlider->setValue(pregammagang->v2p(value.toFloat()));
 		}
 	}
-// 	apply_clicked();
+// 	on_applyButton_clicked();
 }
 
 void TMWidget::keyPressEvent(QKeyEvent* event) {
@@ -519,7 +509,7 @@ void TMWidget::keyPressEvent(QKeyEvent* event) {
 	}
 }
 
-void TMWidget::addCustomSize(){
+void TMWidget::on_addCustomSizeButton_clicked(){
 	sizeComboBox->clear();
 	sizeComboBox->setEditable(true);
 	pregammaGroup->setDisabled(true);
