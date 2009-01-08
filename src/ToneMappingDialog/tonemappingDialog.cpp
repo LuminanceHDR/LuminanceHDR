@@ -53,7 +53,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	QDockWidget *dock = new QDockWidget(tr("Tone mapping Panel"), this);
 	dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setShown(bool)));
+	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setVisible(bool)));
 
 	TMWidget *tmwidget=new TMWidget(dock, OriginalPfsFrame, statusBar());
 	dock->setWidget(tmwidget);

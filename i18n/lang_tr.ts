@@ -3278,72 +3278,72 @@ p, li { white-space: pre-wrap; }
         <translation>Ton haritalama Paneli</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="163"/>
+        <location filename="../forms/tonemappingdialog.ui" line="169"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Şu anki LDR için histogramı ayarla</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="193"/>
+        <location filename="../forms/tonemappingdialog.ui" line="199"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="205"/>
+        <location filename="../forms/tonemappingdialog.ui" line="211"/>
         <source>C&amp;lose All</source>
         <translation>Hepsini &amp;Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="208"/>
+        <location filename="../forms/tonemappingdialog.ui" line="214"/>
         <source>Close All</source>
         <translation>Hepsini Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="217"/>
+        <location filename="../forms/tonemappingdialog.ui" line="223"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>Çalışma alanındaki bütün LDR leri Kapat</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="220"/>
+        <location filename="../forms/tonemappingdialog.ui" line="226"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="225"/>
+        <location filename="../forms/tonemappingdialog.ui" line="231"/>
         <source>As &amp;Thumbnails</source>
         <translation>Minya&amp;tür Olarak</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="228"/>
+        <location filename="../forms/tonemappingdialog.ui" line="234"/>
         <source>As Thumbnails</source>
         <translation>Minyatür Olarak</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="231"/>
+        <location filename="../forms/tonemappingdialog.ui" line="237"/>
         <source>Images as Thumbnails</source>
         <translation>Minyatür Şeklindeki Resimler</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="237"/>
+        <location filename="../forms/tonemappingdialog.ui" line="243"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Bütün LDR leri minyatür olarak düzenle.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="245"/>
+        <location filename="../forms/tonemappingdialog.ui" line="251"/>
         <source>&amp;Cascade</source>
         <translation>Ta&amp;şır</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="269"/>
+        <location filename="../forms/tonemappingdialog.ui" line="275"/>
         <source>&amp;Fit to Window</source>
         <translation>Pencere&amp;ye Uydur</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="275"/>
+        <location filename="../forms/tonemappingdialog.ui" line="281"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>Şu anki LDR yi penceresine Uydur.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="278"/>
+        <location filename="../forms/tonemappingdialog.ui" line="284"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -3368,92 +3368,92 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Yardım</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="109"/>
+        <location filename="../forms/tonemappingdialog.ui" line="115"/>
         <source>Ctrl+Q</source>
         <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="127"/>
+        <location filename="../forms/tonemappingdialog.ui" line="133"/>
         <source>Tone Mapping Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="136"/>
+        <location filename="../forms/tonemappingdialog.ui" line="142"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="151"/>
+        <location filename="../forms/tonemappingdialog.ui" line="157"/>
         <source>Adjust &amp;Levels...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="154"/>
+        <location filename="../forms/tonemappingdialog.ui" line="160"/>
         <source>Adjust Levels...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="166"/>
+        <location filename="../forms/tonemappingdialog.ui" line="172"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="178"/>
+        <location filename="../forms/tonemappingdialog.ui" line="184"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="181"/>
+        <location filename="../forms/tonemappingdialog.ui" line="187"/>
         <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="190"/>
+        <location filename="../forms/tonemappingdialog.ui" line="196"/>
         <source>Save the currently selected LDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="240"/>
+        <location filename="../forms/tonemappingdialog.ui" line="246"/>
         <source>Ctrl+T</source>
         <translation type="unfinished">Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="251"/>
+        <location filename="../forms/tonemappingdialog.ui" line="257"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="254"/>
+        <location filename="../forms/tonemappingdialog.ui" line="260"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="287"/>
+        <location filename="../forms/tonemappingdialog.ui" line="293"/>
         <source>What&apos;s This?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="290"/>
+        <location filename="../forms/tonemappingdialog.ui" line="296"/>
         <source>Get information about the graphical elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="293"/>
+        <location filename="../forms/tonemappingdialog.ui" line="299"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="296"/>
+        <location filename="../forms/tonemappingdialog.ui" line="302"/>
         <source>Shift+F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="305"/>
+        <location filename="../forms/tonemappingdialog.ui" line="311"/>
         <source>&amp;Documentation...</source>
         <translation type="unfinished">Belgelen&amp;dirme...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="308"/>
+        <location filename="../forms/tonemappingdialog.ui" line="314"/>
         <source>Ctrl+H</source>
         <translation type="unfinished">Ctrl+H</translation>
     </message>
@@ -3463,37 +3463,37 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="94"/>
+        <location filename="../forms/tonemappingdialog.ui" line="100"/>
         <source>&amp;Exit</source>
         <translation type="unfinished">&amp;Çık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="97"/>
+        <location filename="../forms/tonemappingdialog.ui" line="103"/>
         <source>Exit</source>
         <translation type="unfinished">Çık</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="106"/>
+        <location filename="../forms/tonemappingdialog.ui" line="112"/>
         <source>Close Tone Mapping Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="63"/>
+        <location filename="../forms/tonemappingdialog.ui" line="69"/>
         <source>Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="323"/>
+        <location filename="../forms/tonemappingdialog.ui" line="329"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="332"/>
+        <location filename="../forms/tonemappingdialog.ui" line="338"/>
         <source>Saves all LDRs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="335"/>
+        <location filename="../forms/tonemappingdialog.ui" line="341"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3556,7 +3556,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Bütün Desteklenen Biçimler (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="218"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="219"/>
         <source>Select the input images</source>
         <translation>Girdi Resimlerini Seç</translation>
     </message>
@@ -3616,7 +3616,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Başla!</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="267"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="268"/>
         <source>&amp;Done.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3627,7 +3627,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
-        <source>All Supported formats (*.jpeg *.jpg </source>
+        <source>All Supported formats</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -342,7 +342,7 @@
  <connections>
   <connection>
    <sender>actionFinishTM</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>TonemappingWindow</receiver>
    <slot>close()</slot>
    <hints>
