@@ -22,7 +22,8 @@
  */
 
 #include <QDockWidget>
-#include <QWorkspace>
+#include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWhatsThis>
@@ -41,10 +42,13 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	setWindowTitle(windowTitle() + prefixname);
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 
-	workspace = new QWorkspace(this);
-	workspace->setScrollBarsEnabled( TRUE );
-	connect(workspace,SIGNAL(windowActivated(QWidget*)), this, SLOT(updateActions(QWidget *)) );
-	setCentralWidget(workspace);
+	mdiArea = new QMdiArea(this);
+	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
+	mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
+	setCentralWidget(mdiArea);
 
 	QDockWidget *dock = new QDockWidget(tr("Tone mapping Panel"), this);
 	dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
@@ -57,7 +61,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));
 
 	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
-	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
+	connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
 	connect(actionFit_to_Window,SIGNAL(toggled(bool)),this,SLOT(current_ldr_fit_to_win(bool)));
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
 	connect(documentationAction,SIGNAL(triggered()),parent,SLOT(openDocumentation()));
@@ -69,12 +73,12 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* &OriginalPfsFr
 void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options* opts) {
 	LdrViewer *n=new LdrViewer(this,i,opts);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
-	workspace->addWindow(n);
+	mdiArea->addSubWindow(n);
 	n->show();
 }
 
 void TonemappingWindow::current_ldr_fit_to_win(bool checked) {
-	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+	LdrViewer* currentLDR=((LdrViewer*)(mdiArea->activeSubWindow()->widget()));
 	if (currentLDR==NULL)
 		return;
 	currentLDR->fitToWindow(checked);
@@ -82,7 +86,7 @@ void TonemappingWindow::current_ldr_fit_to_win(bool checked) {
 
 void TonemappingWindow::LevelsRequested(bool checked) {
 	if (checked) {
-		LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+		LdrViewer* currentLDR=((LdrViewer*)(mdiArea->activeSubWindow()->widget()));
 		if (currentLDR==NULL)
 			return;
 		actionFix_Histogram->setDisabled(true);
@@ -95,9 +99,8 @@ void TonemappingWindow::levels_closed() {
 	actionFix_Histogram->setChecked(false);
 }
 
-
 void TonemappingWindow::on_actionSave_triggered() {
-	LdrViewer* currentLDR=((LdrViewer*)(workspace->activeWindow()));
+	LdrViewer* currentLDR=((LdrViewer*)(mdiArea->activeSubWindow()->widget()));
 	if (currentLDR==NULL)
 		return;
 
@@ -111,7 +114,7 @@ void TonemappingWindow::on_actionSave_triggered() {
 	}
 }
 
-void TonemappingWindow::updateActions(QWidget *w) {
+void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	actionFix_Histogram->setEnabled(w!=NULL);
 	actionSave->setEnabled(w!=NULL);
 	actionSaveAll->setEnabled(w!=NULL);
@@ -120,7 +123,9 @@ void TonemappingWindow::updateActions(QWidget *w) {
 	actionFit_to_Window->setEnabled(w!=NULL);
 	actionCascade->setEnabled(w!=NULL);
 	if (w!=NULL) {
-		LdrViewer* current=(LdrViewer*)(workspace->activeWindow());
+		LdrViewer* current=(LdrViewer*)(mdiArea->activeSubWindow()->widget());
+		if (current==NULL)
+			return;
 		actionFit_to_Window->setChecked(current->getFittingWin());
 // 		actionFix_Histogram->setChecked(current->hasLevelsOpen());
 	}
@@ -131,17 +136,17 @@ void TonemappingWindow::closeEvent ( QCloseEvent * ) {
 }
 
 void TonemappingWindow::viewAllAsThumbnails() {
-	workspace->tile();
-	QWidgetList allLDRresults=workspace->windowList();
-	foreach (QWidget *p,allLDRresults) {
-		((LdrViewer*)p)->fitToWindow(true);
+	mdiArea->tileSubWindows();
+	QList<QMdiSubWindow*> allLDRresults=mdiArea->subWindowList();
+	foreach (QMdiSubWindow *p,allLDRresults) {
+		((LdrViewer*)p->widget())->fitToWindow(true);
 	}
 }
 
 void TonemappingWindow::on_actionClose_All_triggered() {
-	QWidgetList allLDRresults=workspace->windowList();
-	foreach (QWidget *p,allLDRresults) {
-		((LdrViewer*)p)->close();
+	QList<QMdiSubWindow*> allLDRresults=mdiArea->subWindowList();
+	foreach (QMdiSubWindow *p,allLDRresults) {
+		p->close();
 	}
 }
 
@@ -153,9 +158,9 @@ void TonemappingWindow::on_actionSaveAll_triggered() {
 	);
 	if (!dir.isEmpty()) {
 		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
-		QWidgetList allLDRresults=workspace->windowList();
-		foreach (QWidget *p,allLDRresults) {
-			LdrViewer* ldr = ((LdrViewer*)p);
+		QList<QMdiSubWindow*> allLDRresults=mdiArea->subWindowList();
+		foreach (QMdiSubWindow *p,allLDRresults) {
+			LdrViewer* ldr = ((LdrViewer*)p->widget());
 			QString outfname = saveLDRImage(prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
 			//if save is succesful
 			if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {

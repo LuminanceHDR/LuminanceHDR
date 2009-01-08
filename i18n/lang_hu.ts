@@ -2290,7 +2290,7 @@ p, li { white-space: pre-wrap; }
         <translation>Egymás mögé</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="477"/>
         <source>Aborting...</source>
         <translation>Megszakítás...</translation>
     </message>
@@ -2300,7 +2300,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">A fájl olvashatatlan (ellenőrizze, hogy van-e ilyen fájl, ill. hogy a jogai engedélyezik-e)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="193"/>
         <source>Save the HDR...</source>
         <translation>HDR kép mentése...</translation>
     </message>
@@ -2310,12 +2310,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr; csak linuxon) &lt;br&gt;fájltípusokat támogatja.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Error...</source>
         <translation>Hiba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>Unsaved changes...</source>
         <translation>Fennálló változtatások...</translation>
     </message>
@@ -2370,17 +2370,17 @@ p, li { white-space: pre-wrap; }
         <translation>HDR képet átméretezni (kicsinyíteni vagy nagyítani)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="128"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Kész... Most lehet készíteni vagy meg lehet nyitni egy HDR képet!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
         <source>All Hdr formats </source>
         <translation>Mindennemű HDR fájltípus </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="157"/>
         <source>Load an Hdr file...</source>
         <translation>HDR kép megnyitása...</translation>
     </message>
@@ -2470,7 +2470,7 @@ p, li { white-space: pre-wrap; }
         <translation>Qtpfsgui beállítását elvégezni</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui egy gyorsítótárban őrzi az ideiglenes fájljait, de a kijelölt mappa nem érvényes.&lt;br&gt;Válasszon egy másik útvonalat az Eszközök -&gt; Beállítások... -&gt; árnyalatnövelés menüpont segítségével.</translation>
     </message>
@@ -2520,15 +2520,20 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr) fájltípusokat támogatja.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Kilépni ennek ellenére?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3962,7 +3967,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Árnyalatnövelés bezáró ablaka</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="49"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="53"/>
         <source>Tone mapping Panel</source>
         <translation>Árnyalatnövelési panel</translation>
     </message>
@@ -4192,7 +4197,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="151"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
         <translation type="unfinished"></translation>
     </message>

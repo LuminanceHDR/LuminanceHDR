@@ -2068,17 +2068,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="128"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Připraven.... Teď otevřete nebo vytvořte HDR!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
         <source>All Hdr formats </source>
         <translation>Všechny HDR formáty</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="157"/>
         <source>Load an Hdr file...</source>
         <translation>Otevřít HDR soubor...</translation>
     </message>
@@ -2088,27 +2088,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Všechny HDR formáty (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="193"/>
         <source>Save the HDR...</source>
         <translation>Uložit HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="477"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui potřebuje ukládat rozpracované soubory, ale právě zvolený adresář není platný.&lt;br&gt;Zvolte prosím platnou cestu pomocí &lt;i&gt;Nástroje-&gt;Předvolby...-&gt;Tone Mapping&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>Unsaved changes...</source>
         <translation>Neuložené změny...</translation>
     </message>
@@ -2133,12 +2133,12 @@ p, li { white-space: pre-wrap; }
         <translation>O &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Minimálně jeden HDR nemá uloženy změny. &lt;bd&gt;Chcete přesto ukončit?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
@@ -2166,6 +2166,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="699"/>
         <source>Apply a projective transformation to the current Hdr.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
+        <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3607,7 +3612,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="49"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="53"/>
         <source>Tone mapping Panel</source>
         <translation>Panel přemapování (Tone Mapping)</translation>
     </message>
@@ -3697,7 +3702,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="151"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
         <translation type="unfinished"></translation>
     </message>

@@ -24,6 +24,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
+#include <QMdiSubWindow>
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QWhatsThis>
@@ -58,17 +59,18 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	toolBarOptsGroup->addAction(actionText_Only);
 	menuToolbars->addAction(toolBar->toggleViewAction());
 
-	workspace = new QWorkspace(this);
-	workspace->setScrollBarsEnabled( TRUE );
-	workspace->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
-	setCentralWidget(workspace);
+	mdiArea = new QMdiArea(this);
+	mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
+	setCentralWidget(mdiArea);
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	load_options();
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
 
-	connect(workspace,SIGNAL(windowActivated(QWidget*)),this,SLOT(updateActions(QWidget*)));
+	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(updateActions(QMdiSubWindow*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
@@ -94,8 +96,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-	connect(actionTile,SIGNAL(triggered()),workspace,SLOT(tile()));
-	connect(actionCascade,SIGNAL(triggered()),workspace,SLOT(cascade()));
+	connect(actionTile,SIGNAL(triggered()),mdiArea,SLOT(tileSubWindows()));
+	connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
 	connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
 	connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 	connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
@@ -107,7 +109,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 
 	windowMapper = new QSignalMapper(this);
-	connect(windowMapper,SIGNAL(mapped(QWidget*)),workspace,SLOT(setActiveWindow(QWidget*)));
+	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 
 	//recent files
 	for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -133,7 +135,7 @@ void MainGui::fileNewViaWizard(QStringList files) {
 		if (wizard->exec() == QDialog::Accepted) {
 			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
-			workspace->addWindow(newmdi);
+			mdiArea->addSubWindow(newmdi);
 			newmdi->setWindowTitle(wizard->getCaptionTEXT());
 			newmdi->show();
 		}
@@ -163,7 +165,7 @@ void MainGui::addHdrViewer(pfs::Frame* hdr_pfs_frame, QString fname) {
 	newhdr->updateHDR(hdr_pfs_frame);
 	newhdr->filename=fname;
 	newhdr->setWindowTitle(fname);
-	workspace->addWindow(newhdr);
+	mdiArea->addSubWindow(newhdr);
 	newhdr->show();
 	setCurrentFile(fname);
 }
@@ -243,7 +245,7 @@ void MainGui::saveHdrPreview() {
 	currenthdr->saveHdrPreview();
 }
 
-void MainGui::updateActions( QWidget * w ) {
+void MainGui::updateActions( QMdiSubWindow * w ) {
 	action_Projective_Transformation->setEnabled(w!=NULL);
 	actionSave_Hdr_Preview->setEnabled(w!=NULL);
 	TonemapAction->setEnabled(w!=NULL);
@@ -259,7 +261,7 @@ void MainGui::updateActions( QWidget * w ) {
 	Increase_exposure->setEnabled(w!=NULL);
 	actionResizeHDR->setEnabled(w!=NULL);
 	if (w!=NULL) {
-		currenthdr=(HdrViewer*)(workspace->activeWindow());
+		currenthdr=(HdrViewer*)(mdiArea->activeSubWindow()->widget());
 		if (currenthdr->getFittingWin()) {
 			normalSizeAct->setEnabled(false);
 			zoomInAct->setEnabled(false);
@@ -278,6 +280,13 @@ void MainGui::updateActions( QWidget * w ) {
 		zoomOutAct->setEnabled(false);
 		fitToWindowAct->setEnabled(false);
 	}
+}
+
+void MainGui::setActiveSubWindow(QWidget* w) {
+	QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
+	foreach(QMdiSubWindow *p,allhdrs)
+		if (p->widget() == w)
+			mdiArea->setActiveSubWindow(p);
 }
 
 void MainGui::tonemap_requested() {
@@ -481,9 +490,9 @@ void MainGui::preferences_called() {
 	PreferenceDialog *opts=new PreferenceDialog(this);
 	opts->setAttribute(Qt::WA_DeleteOnClose);
 	if (opts->exec() == QDialog::Accepted && (negcol!=qtpfsgui_options->negcolor || naninfcol!=qtpfsgui_options->naninfcolor) ) {
-		QWidgetList allhdrs=workspace->windowList();
-		foreach(QWidget *p,allhdrs) {
-			((HdrViewer*)p)->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
+		QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
+		foreach(QMdiSubWindow *p,allhdrs) {
+			((HdrViewer*)p->widget())->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
 		}
 	}
 }
@@ -555,10 +564,10 @@ MainGui::~MainGui() {
 }
 
 void MainGui::fileExit() {
-	QWidgetList allhdrs=workspace->windowList();
+	QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
 	bool closeok=true;
-	foreach(QWidget *p,allhdrs) {
-		if (((HdrViewer*)p)->NeedsSaving)
+	foreach(QMdiSubWindow *p,allhdrs) {
+		if (((HdrViewer*)p->widget())->NeedsSaving)
 			closeok=false;
 	}
 	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>Do you still want to quit?"),
@@ -628,10 +637,10 @@ void MainGui::aboutQtpfsgui() {
 
 void MainGui::updateWindowMenu() {
 	menuWindows->clear();
-	QList<QWidget *> windows = workspace->windowList();
+	QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
 	for (int i = 0; i < windows.size(); ++i) {
-		HdrViewer *child = qobject_cast<HdrViewer *>(windows.at(i));
-		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->filename.isEmpty())? "Untitled":child->filename).fileName());
+		HdrViewer *child = qobject_cast<HdrViewer *>(windows.at(i)->widget());
+		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->filename.isEmpty())? tr("Untitled"):child->filename).fileName());
 		QAction *action  = menuWindows->addAction(text);
 		action->setCheckable(true);
 		action->setChecked(child==currenthdr);

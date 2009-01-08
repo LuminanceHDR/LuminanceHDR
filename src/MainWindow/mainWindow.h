@@ -25,7 +25,7 @@
 #define MAINGUI_IMPL_H
 
 #include <QMainWindow>
-#include <QWorkspace>
+#include <QMdiArea>
 #include <QStringList>
 #include "../HdrWizard/newHdrWizard.h"
 #include "../../generated_uic/ui_maingui.h"
@@ -84,8 +84,8 @@ private slots:
 	void load_failed(QString);
 	void aboutQtpfsgui();
 
-	void updateActions( QWidget * w );
-
+	void updateActions( QMdiSubWindow * w );
+	void setActiveSubWindow(QWidget* w);
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
@@ -96,7 +96,7 @@ private:
 	void load_options();
 	void setupLoadThread(QString);
 	bool testTempDir(QString);
-	QWorkspace* workspace;
+	QMdiArea* mdiArea;
 	QSignalMapper *windowMapper;
 	enum { MaxRecentFiles = 5 };
 	QAction *recentFileActs[MaxRecentFiles];

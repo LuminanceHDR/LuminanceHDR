@@ -1872,22 +1872,22 @@ p, li { white-space: pre-wrap; }
         <translation>Gestapelt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="477"/>
         <source>Aborting...</source>
         <translation>Abbrechen...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="193"/>
         <source>Save the HDR...</source>
         <translation>HDR speichern...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Error...</source>
         <translation>Fehler...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen...</translation>
     </message>
@@ -1942,17 +1942,17 @@ p, li { white-space: pre-wrap; }
         <translation>HDRGröße ändern (verkleinern oder vergrößern)</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="128"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Fertig.... Öffnen Sie ein HDR oder erstellen Sie eines!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
         <source>All Hdr formats </source>
         <translation>Alle HDR Formate</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="157"/>
         <source>Load an Hdr file...</source>
         <translation>Eine HDR-Datei laden...</translation>
     </message>
@@ -2032,7 +2032,7 @@ p, li { white-space: pre-wrap; }
         <translation>Die verschiedenen Optionen von Qtpfsgui bestimmen</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui muss die Ergebnisse mittels temporärer Dateien zwischenspeichern, aber das derzeit ausgewählte Verzeichnis ist ungültig.&lt;br&gt;Bitte wählen Sie ein gültiges Verzeichnis in Extras -&gt; Einstellungen... -&gt; Farbabbildung.</translation>
     </message>
@@ -2057,12 +2057,12 @@ p, li { white-space: pre-wrap; }
         <translation>Über &amp;Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Mindestens ein HDR hat ungespeicherte Änderungen. &lt;br&gt;Wollen Sie wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Lizenz wurde nicht gefunden, Sie können es online finden: %2hier%3</translation>
@@ -2086,6 +2086,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="699"/>
         <source>Apply a projective transformation to the current Hdr.</source>
         <translation>Eine projektive Transformation auf das aktuelle HDR anwenden.</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
+        <source>Untitled</source>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
@@ -3136,7 +3141,7 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="49"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="53"/>
         <source>Tone mapping Panel</source>
         <translation>Farbabbildungseingabefeld</translation>
     </message>
@@ -3346,7 +3351,7 @@ p, li { white-space: pre-wrap; }
         <translation>Strig+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="151"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
         <translation>Dateien speichern nach</translation>
     </message>

@@ -1876,22 +1876,22 @@ p, li { white-space: pre-wrap; }
         <translation>Мозаикой</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="468"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="477"/>
         <source>Aborting...</source>
         <translation>Прерывание...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="191"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="193"/>
         <source>Save the HDR...</source>
         <translation>Сохранение HDR-снимка...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Error...</source>
         <translation>Ошибка...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>Unsaved changes...</source>
         <translation>Не все изменения сохранены</translation>
     </message>
@@ -1991,17 +1991,17 @@ p, li { white-space: pre-wrap; }
         <translation>Текст &amp;рядом со значками</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="126"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="128"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Готово... Теперь откройте готовый HDR-снимок или создайте новый!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="182"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="184"/>
         <source>All Hdr formats </source>
         <translation>Все форматы HDR </translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="155"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="157"/>
         <source>Load an Hdr file...</source>
         <translation>Загрузить файл HDR-снимка...</translation>
     </message>
@@ -2056,17 +2056,17 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;О Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="300"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui кэширует результаты расчетов во временные файлы, но выбранный сейчас для них каталог недоступен.&lt;br&gt;Выберите другой каталог в диалоге настройки («Сервис → Настроить...→ Отображение тонов»).</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="564"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>В как минимум одном HDR-снимке не сохранены изменения.&lt;br&gt;Вы действительно хотите завершить работу с программой?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="624"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>Документ с лицензией на %1 не найден, вы можете прочитать его здесь: %2here%3</translation>
@@ -2090,6 +2090,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/maingui.ui" line="699"/>
         <source>Apply a projective transformation to the current Hdr.</source>
         <translation>Выполнить проективную трансформацию текущего HDR-снимка</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3118,7 +3123,7 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="49"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="53"/>
         <source>Tone mapping Panel</source>
         <translation>Панель параметров</translation>
     </message>
@@ -3328,7 +3333,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="151"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
         <translation type="unfinished"></translation>
     </message>

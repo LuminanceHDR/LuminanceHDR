@@ -24,7 +24,7 @@
 #ifndef TONEMAPPINGDIALOG_IMPL_H
 #define TONEMAPPINGDIALOG_IMPL_H
 
-#include <QWorkspace>
+#include <QMdiArea>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "../Common/global.h"
@@ -42,14 +42,14 @@ protected:
 signals:
 	void closing();
 private:
-	QWorkspace* workspace;
+	QMdiArea* mdiArea;
 	QString recentPathSaveLDR, prefixname;
 
 private slots:
 	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
 	void levels_closed();
-	void updateActions(QWidget *);
+	void updateActions(QMdiSubWindow *);
 	void viewAllAsThumbnails();
 	void current_ldr_fit_to_win(bool);
 	void on_actionClose_All_triggered();
