@@ -25,6 +25,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QDir>
+#include <QInputDialog>
 #include <QStatusBar>
 #include <QProgressBar>
 #include <QLineEdit>
@@ -100,9 +101,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 	}
 	sizes.push_back(width);
 	HeightWidthRatio = ( (float)height )/( (float) width);
-	for(int i = 0; i < sizes.size(); i++) {
-		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
-	}
+	fillCustomSizeComboBox();
 
 	qRegisterMetaType<QImage>("QImage");
 
@@ -488,35 +487,19 @@ void TMWidget::fromTxt2Gui() {
 // 	on_applyButton_clicked();
 }
 
-void TMWidget::keyPressEvent(QKeyEvent* event) {
-	if (!adding_custom_size)
-		return;
-	if (event->key() == Qt::Key_Enter || event->key()==Qt::Key_Return) {
-		int value=(sizeComboBox->lineEdit()->text()).toInt();
-		if (value>0) {
-			sizes.push_front(value);
-		}
-		sizeComboBox->setEditable(false);
-		pregammaGroup->setDisabled(false);
-		stackedWidget_operators->setDisabled(false);
-		applyButton->setDisabled(false);
-		groupSaveLoadTMOsetting->setDisabled(false);
-		addCustomSizeButton->setDisabled(false);
-		adding_custom_size=false;
-		for(int i = 0; i < sizes.size(); i++) {
-			sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
-		}
+void TMWidget::on_addCustomSizeButton_clicked(){
+	bool ok;
+	int i = QInputDialog::getInteger(this, tr("Custom LDR size"),
+	                                      tr("Enter the width of the new size:"), 0 , 0, 2147483647, 1, &ok);
+	if (ok && i > 0) {
+		sizes.push_front(i);
+		fillCustomSizeComboBox();
 	}
 }
 
-void TMWidget::on_addCustomSizeButton_clicked(){
+void TMWidget::fillCustomSizeComboBox() {
 	sizeComboBox->clear();
-	sizeComboBox->setEditable(true);
-	pregammaGroup->setDisabled(true);
-	stackedWidget_operators->setDisabled(true);
-	applyButton->setDisabled(true);
-	groupSaveLoadTMOsetting->setDisabled(true);
-	addCustomSizeButton->setDisabled(true);
-	adding_custom_size=true;
-	sizeComboBox->lineEdit()->setFocus();
+	for(int i = 0; i < sizes.size(); i++)
+		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
 }
+

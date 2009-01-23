@@ -315,7 +315,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="118"/>
         <source>Error: Wrong HDR creation format</source>
-        <translation>Fehler: Falsches HDR Erzeugungs Format</translation>
+        <translation>Fehler: Falsches HDR Erzeugungsformat</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="143"/>
@@ -465,7 +465,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="489"/>
         <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished"></translation>
+        <translation>                       (Solange nicht -o angegeben wird, wird die Farbabbildung nicht gestartet).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="490"/>
@@ -496,22 +496,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="479"/>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
-        <translation type="unfinished"></translation>
+        <translation>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (für Fattal)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="480"/>
         <source>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)</source>
-        <translation type="unfinished"></translation>
+        <translation>contrast=VALUE:saturation=VALUE:equalization=true|false (Für Mantiuk)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="481"/>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
-        <translation type="unfinished"></translation>
+        <translation>localcontrast=VALUE:eq=2|4:simple=true|false (Für Ashikhmin)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="482"/>
         <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
-        <translation type="unfinished"></translation>
+        <translation>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (Für Durand)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="483"/>
@@ -521,22 +521,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="484"/>
         <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
-        <translation type="unfinished"></translation>
+        <translation>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (Für Pattanaik)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="485"/>
         <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
-        <translation type="unfinished"></translation>
+        <translation>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (Für Reinhard02)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="486"/>
         <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
-        <translation type="unfinished"></translation>
+        <translation>brightness=VALUE:chroma=VALUE:lightness=VALUE (Für Reinhard05)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="487"/>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Standard ist: contrast=0.3:equalization=false:saturation=1.8, siehe auch -o)</translation>
     </message>
 </context>
 <context>
@@ -1000,12 +1000,12 @@ p, li { white-space: pre-wrap; }
         <translation>Histogramm:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="329"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="329"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Dieses HDR hat ungespeicherte Änderungen.&lt;br&gt;Wollen Sie es wirklich schließen?</translation>
     </message>
@@ -2123,7 +2123,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qtpfsgui erfordert, dass dcraw mit der Option &quot;-T&quot; ausgeführt wird. Optionen der Kommandozeilen müssen korrigiert werden.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
@@ -2638,44 +2638,54 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="271"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="270"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Farbabbildungseinstellungen Text Datei laden...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="299"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="298"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Qtpfsgui Farbabbildungseinstellungen Text Datei (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="400"/>
         <source>Aborting...</source>
         <translation>Abbrechen...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="277"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="276"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Datei ist nicht lesbar (prüfen Sie Existenz, Zulassungen...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="297"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="296"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Farbabbildungseinstellungen Text Datei speichern unter...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="319"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="318"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Datei ist nicht beschreibbar (prüfen Sie Zulassungen, Pfad...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="384"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="383"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Datei ist nicht lesbar (prüfen Sie Zulassungen, Pfad...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="400"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Fehler, das Farbabbildungseinstellungen Datei Format hat geändert. Diese (alte) Datei kann mit dieser Version von Qtpfsgui nicht verwendet werden. Stellen Sie ein neues her.</translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="493"/>
+        <source>Enter the width of the new size:</source>
+        <translation>Geben Sie die Breite der neuen Größe ein:</translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="492"/>
+        <source>Custom LDR size</source>
+        <translation>Benutzerdefinierte LDR Größe</translation>
     </message>
 </context>
 <context>
@@ -3146,72 +3156,72 @@ p, li { white-space: pre-wrap; }
         <translation>Farbabbildungseingabefeld</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="169"/>
+        <location filename="../forms/tonemappingdialog.ui" line="163"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Histogramm für das aktuelle LDR anpassen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="199"/>
+        <location filename="../forms/tonemappingdialog.ui" line="193"/>
         <source>Ctrl+S</source>
         <translation>Strg+S</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="211"/>
+        <location filename="../forms/tonemappingdialog.ui" line="205"/>
         <source>C&amp;lose All</source>
         <translation>Alle s&amp;chließen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="214"/>
+        <location filename="../forms/tonemappingdialog.ui" line="208"/>
         <source>Close All</source>
         <translation>Alle schließen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="223"/>
+        <location filename="../forms/tonemappingdialog.ui" line="217"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>Alle LDR im Arbeitsbereich schließen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="226"/>
+        <location filename="../forms/tonemappingdialog.ui" line="220"/>
         <source>Ctrl+C</source>
         <translation>Strg+C</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="231"/>
+        <location filename="../forms/tonemappingdialog.ui" line="225"/>
         <source>As &amp;Thumbnails</source>
         <translation>Als &amp;Thumbnails</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="234"/>
+        <location filename="../forms/tonemappingdialog.ui" line="228"/>
         <source>As Thumbnails</source>
         <translation>Als Thumbnails</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="237"/>
+        <location filename="../forms/tonemappingdialog.ui" line="231"/>
         <source>Images as Thumbnails</source>
         <translation>Bilder als Thumbnails</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="243"/>
+        <location filename="../forms/tonemappingdialog.ui" line="237"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Alle LDR als Thumbnails darstellen.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="251"/>
+        <location filename="../forms/tonemappingdialog.ui" line="245"/>
         <source>&amp;Cascade</source>
         <translation>Ge&amp;stapelt</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="275"/>
+        <location filename="../forms/tonemappingdialog.ui" line="269"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Dem Fenster anpassen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="281"/>
+        <location filename="../forms/tonemappingdialog.ui" line="275"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>Aktuelles LDR dem Fenster anpassen.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="284"/>
+        <location filename="../forms/tonemappingdialog.ui" line="278"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -3221,92 +3231,92 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="133"/>
+        <location filename="../forms/tonemappingdialog.ui" line="127"/>
         <source>Tone Mapping Panel</source>
         <translation>Farbabbildungseingabefeld</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="142"/>
+        <location filename="../forms/tonemappingdialog.ui" line="136"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation>Zeige/Verstecke den Farbabbildungsbereich</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="157"/>
+        <location filename="../forms/tonemappingdialog.ui" line="151"/>
         <source>Adjust &amp;Levels...</source>
         <translation>&amp;Stufen anpassen...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="160"/>
+        <location filename="../forms/tonemappingdialog.ui" line="154"/>
         <source>Adjust Levels...</source>
         <translation>Stufen anpassen...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="184"/>
+        <location filename="../forms/tonemappingdialog.ui" line="178"/>
         <source>&amp;Save as...</source>
         <translation>&amp;Speichern als...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="187"/>
+        <location filename="../forms/tonemappingdialog.ui" line="181"/>
         <source>Save As...</source>
         <translation>Speichern als...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="196"/>
+        <location filename="../forms/tonemappingdialog.ui" line="190"/>
         <source>Save the currently selected LDR</source>
         <translation>Speichert das derzeit ausgewählte LDR</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="257"/>
+        <location filename="../forms/tonemappingdialog.ui" line="251"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation>Staple alle LDRs in dem Arbeitsbereich</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="293"/>
+        <location filename="../forms/tonemappingdialog.ui" line="287"/>
         <source>What&apos;s This?</source>
         <translation>Was ist das?</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="302"/>
+        <location filename="../forms/tonemappingdialog.ui" line="296"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="311"/>
+        <location filename="../forms/tonemappingdialog.ui" line="305"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Dokumentation...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="314"/>
+        <location filename="../forms/tonemappingdialog.ui" line="308"/>
         <source>Ctrl+H</source>
         <translation>Strg+H</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="115"/>
+        <location filename="../forms/tonemappingdialog.ui" line="109"/>
         <source>Ctrl+Q</source>
         <translation>Strg+Q</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="172"/>
+        <location filename="../forms/tonemappingdialog.ui" line="166"/>
         <source>Ctrl+L</source>
         <translation>Strg+L</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="246"/>
+        <location filename="../forms/tonemappingdialog.ui" line="240"/>
         <source>Ctrl+T</source>
         <translation>Strg+T</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="260"/>
+        <location filename="../forms/tonemappingdialog.ui" line="254"/>
         <source>Ctrl+D</source>
         <translation>Strg+D</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="296"/>
+        <location filename="../forms/tonemappingdialog.ui" line="290"/>
         <source>Get information about the graphical elements</source>
         <translation>Information über die grafischen Elemente holen</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="299"/>
+        <location filename="../forms/tonemappingdialog.ui" line="293"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation>Benutzen Sie dies Schaltfläche, um information über die grafischen Elemente zu bekommen</translation>
     </message>
@@ -3316,37 +3326,37 @@ p, li { white-space: pre-wrap; }
         <translation>Farbabbildung: </translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="100"/>
+        <location filename="../forms/tonemappingdialog.ui" line="94"/>
         <source>&amp;Exit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="103"/>
+        <location filename="../forms/tonemappingdialog.ui" line="97"/>
         <source>Exit</source>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="112"/>
+        <location filename="../forms/tonemappingdialog.ui" line="106"/>
         <source>Close Tone Mapping Window</source>
         <translation>Schließe das Farbabbildungsfenster</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="69"/>
+        <location filename="../forms/tonemappingdialog.ui" line="63"/>
         <source>Toolbar</source>
         <translation>Symbolleiste</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="329"/>
+        <location filename="../forms/tonemappingdialog.ui" line="323"/>
         <source>Save All</source>
         <translation>Alle speichern</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="338"/>
+        <location filename="../forms/tonemappingdialog.ui" line="332"/>
         <source>Saves all LDRs</source>
         <translation>Speichert alle LDRs</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="341"/>
+        <location filename="../forms/tonemappingdialog.ui" line="335"/>
         <source>Ctrl+Shift+S</source>
         <translation>Strig+Shift+S</translation>
     </message>

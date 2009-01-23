@@ -1312,7 +1312,7 @@ p, li { white-space: pre-wrap; }
         <translation>Hisztogramm:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="329"/>
         <source>Unsaved changes...</source>
         <translation>Fennálló változtatások...</translation>
     </message>
@@ -1322,7 +1322,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Ha az ablakot bezárja, akkor ezek el fognak veszni.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="328"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="329"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Biztos, hogy be akarja zárni az ablakot?</translation>
     </message>
@@ -3389,44 +3389,54 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="271"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="270"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Árnyalatnövelési jellemzők betöltése...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="299"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="298"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Árnyalatnövelési jellemzők (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="400"/>
         <source>Aborting...</source>
         <translation>Megszakítás...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="277"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="276"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>A fájl olvashatatlan (ellenőrizze, hogy van-e ilyen fájl, ill. hogy a jogai engedélyezik-e)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="297"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="296"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Árnyalatnövelési jellemzők mentése...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="319"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="318"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>A fájl nem írható (ellenőrizze a jogait, az útvonalat, stb.)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="384"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="383"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>A fájl olvashatatlan (ellenőrizze a jogait, az útvonalat, stb.)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="401"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="400"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Hiba: az árnyalatnövelési jellemzők szabványa megváltozott. Ezt a régi fájlt nem lehet használni a Qtpfsgui ezen verziójával. Teremtsen egy új fájlt.</translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="493"/>
+        <source>Enter the width of the new size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="492"/>
+        <source>Custom LDR size</source>
+        <translation type="unfinished">Egyéni LDR méret</translation>
     </message>
 </context>
 <context>
@@ -3972,72 +3982,72 @@ p, li { white-space: pre-wrap; }
         <translation>Árnyalatnövelési panel</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="169"/>
+        <location filename="../forms/tonemappingdialog.ui" line="163"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>A jelenlegi LDR hisztogrammját megváltoztatni</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="199"/>
+        <location filename="../forms/tonemappingdialog.ui" line="193"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="211"/>
+        <location filename="../forms/tonemappingdialog.ui" line="205"/>
         <source>C&amp;lose All</source>
         <translation>Be&amp;zár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="214"/>
+        <location filename="../forms/tonemappingdialog.ui" line="208"/>
         <source>Close All</source>
         <translation>Bezár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="223"/>
+        <location filename="../forms/tonemappingdialog.ui" line="217"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>A rajzasztalon bezár minden LDR képet</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="226"/>
+        <location filename="../forms/tonemappingdialog.ui" line="220"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="231"/>
+        <location filename="../forms/tonemappingdialog.ui" line="225"/>
         <source>As &amp;Thumbnails</source>
         <translation>Mint &amp;indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="234"/>
+        <location filename="../forms/tonemappingdialog.ui" line="228"/>
         <source>As Thumbnails</source>
         <translation>Mint indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="237"/>
+        <location filename="../forms/tonemappingdialog.ui" line="231"/>
         <source>Images as Thumbnails</source>
         <translation>Képeket mint indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="243"/>
+        <location filename="../forms/tonemappingdialog.ui" line="237"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Minden LDR képet indexképként mutatni.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="251"/>
+        <location filename="../forms/tonemappingdialog.ui" line="245"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Egymás alatt</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="275"/>
+        <location filename="../forms/tonemappingdialog.ui" line="269"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Ablakhoz igazítani</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="281"/>
+        <location filename="../forms/tonemappingdialog.ui" line="275"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>A jelenlegi LDR képet az ablakához igazítani.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="284"/>
+        <location filename="../forms/tonemappingdialog.ui" line="278"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -4067,92 +4077,92 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Súgó</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="133"/>
+        <location filename="../forms/tonemappingdialog.ui" line="127"/>
         <source>Tone Mapping Panel</source>
         <translation>Árnyalatnövelési panel</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="142"/>
+        <location filename="../forms/tonemappingdialog.ui" line="136"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation>Árnyalatnövelési panelt mutatni vagy elrejteni</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="157"/>
+        <location filename="../forms/tonemappingdialog.ui" line="151"/>
         <source>Adjust &amp;Levels...</source>
         <translation>Szinteket &amp;szabályozni...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="160"/>
+        <location filename="../forms/tonemappingdialog.ui" line="154"/>
         <source>Adjust Levels...</source>
         <translation>Szinteket szabályozni...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="184"/>
+        <location filename="../forms/tonemappingdialog.ui" line="178"/>
         <source>&amp;Save as...</source>
         <translation>Men&amp;tés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="187"/>
+        <location filename="../forms/tonemappingdialog.ui" line="181"/>
         <source>Save As...</source>
         <translation>Mentés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="196"/>
+        <location filename="../forms/tonemappingdialog.ui" line="190"/>
         <source>Save the currently selected LDR</source>
         <translation>A kijelölt LDR képet menteni</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="257"/>
+        <location filename="../forms/tonemappingdialog.ui" line="251"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation>A rajzasztalon minden LDR képet egymás alá helyezni</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="293"/>
+        <location filename="../forms/tonemappingdialog.ui" line="287"/>
         <source>What&apos;s This?</source>
         <translation>Ez mi?</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="302"/>
+        <location filename="../forms/tonemappingdialog.ui" line="296"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="311"/>
+        <location filename="../forms/tonemappingdialog.ui" line="305"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Dokumentáció...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="314"/>
+        <location filename="../forms/tonemappingdialog.ui" line="308"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="115"/>
+        <location filename="../forms/tonemappingdialog.ui" line="109"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="172"/>
+        <location filename="../forms/tonemappingdialog.ui" line="166"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="246"/>
+        <location filename="../forms/tonemappingdialog.ui" line="240"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="260"/>
+        <location filename="../forms/tonemappingdialog.ui" line="254"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="296"/>
+        <location filename="../forms/tonemappingdialog.ui" line="290"/>
         <source>Get information about the graphical elements</source>
         <translation>Rákérdezni, mi micsoda</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="299"/>
+        <location filename="../forms/tonemappingdialog.ui" line="293"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation>Ezzel a gombbal lehet rákérdezni, mi micsoda</translation>
     </message>
@@ -4162,37 +4172,37 @@ p, li { white-space: pre-wrap; }
         <translation>Árnyalatnövelés: </translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="100"/>
+        <location filename="../forms/tonemappingdialog.ui" line="94"/>
         <source>&amp;Exit</source>
         <translation>Ki&amp;lépés</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="103"/>
+        <location filename="../forms/tonemappingdialog.ui" line="97"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="112"/>
+        <location filename="../forms/tonemappingdialog.ui" line="106"/>
         <source>Close Tone Mapping Window</source>
         <translation>Árnyalatnövelési ablak bezárása</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="69"/>
+        <location filename="../forms/tonemappingdialog.ui" line="63"/>
         <source>Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="329"/>
+        <location filename="../forms/tonemappingdialog.ui" line="323"/>
         <source>Save All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="338"/>
+        <location filename="../forms/tonemappingdialog.ui" line="332"/>
         <source>Saves all LDRs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="341"/>
+        <location filename="../forms/tonemappingdialog.ui" line="335"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>

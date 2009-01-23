@@ -124,6 +124,7 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 
 	imageLabel = new QLabel;
 	scrollArea = new SmartScrollArea(this,imageLabel);
+	scrollArea->setBackgroundRole(QPalette::Shadow);
 	VBL_L->addWidget(scrollArea);
 	cornerButton=new QToolButton(this);
 	cornerButton->setToolTip("Pan the image to a region");

@@ -67,8 +67,6 @@ private:
 	QStatusBar *sb;
 	bool adding_custom_size;
 	float HeightWidthRatio;
-protected:
-	void keyPressEvent(QKeyEvent* event);
 private slots:
 	void on_pregammadefault_clicked();
 	void on_ashikhmin02Default_clicked();
@@ -86,6 +84,7 @@ private slots:
 	void fromTxt2Gui();
 	//user wants a custom size.
 	void on_addCustomSizeButton_clicked();
+	void fillCustomSizeComboBox();
 };
 
 #endif
