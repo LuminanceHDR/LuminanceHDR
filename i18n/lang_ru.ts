@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -2094,7 +2095,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Без имени</translation>
     </message>
 </context>
 <context>
@@ -2683,14 +2684,14 @@ p, li { white-space: pre-wrap; }
         <translation>Ошибка: формат файла параметров отображения тонов. Старый формат файлов в этой версии Qtpfsgui не поддерживается. Создайте новый файл с параметрами.</translation>
     </message>
     <message>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="492"/>
+        <source>Custom LDR size</source>
+        <translation>Добавить свой размер LDR-снимка</translation>
+    </message>
+    <message>
         <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="493"/>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="492"/>
-        <source>Custom LDR size</source>
-        <translation type="unfinished">Добавить свой размер LDR-снимка</translation>
     </message>
 </context>
 <context>
@@ -3330,22 +3331,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="323"/>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить все</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="332"/>
         <source>Saves all LDRs</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить все LDR-снимки</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="335"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить файлы в</translation>
     </message>
 </context>
 <context>
@@ -3468,7 +3469,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
         <source>All Supported formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Все поддерживаемые форматы</translation>
     </message>
 </context>
 <context>
