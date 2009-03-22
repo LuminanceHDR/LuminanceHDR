@@ -89,11 +89,11 @@ void weights_triangle( float* w, int M/*, int Mmin, int Mmax*/ )
 {
 	for(int i=0;i<int(float(M)/2.0f);i++) {
 	  w[i]=i/ (float(M)/2.0f);
-	  if (w[i]<0.06f)w[i]=0;
+// 	  if (w[i]<0.06f)w[i]=0;
 	}
 	for(int i=int(float(M)/2.0f);i<M;i++) {
 	  w[i]=(M-1-i)/(float(M)/2.0f);
-	  if (w[i]<0.06f)w[i]=0;
+// 	  if (w[i]<0.06f)w[i]=0;
 	}
 //   for( int m=0 ; m<M ; m++ )
 //     if( m<Mmin || m>Mmax )

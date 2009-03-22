@@ -23,93 +23,6 @@
 
 #include "debevec.h"
 
-#if 0
-//anti-saturation shouldn't be needed
-int debevec_applyResponse( const float * arrayofexptime,
-			pfs::Array2D* xj, const float* I1,
-			pfs::Array2D* yj, const float* I2,
-			pfs::Array2D* zj, const float* I3,
-			const Array2DList &P,
-			const bool ldrinput, ... ) {
-
-int N=-1;
-QList<QImage*> *list=NULL;
-// Array2DList *listhdrR=NULL;
-// Array2DList *listhdrG=NULL;
-// Array2DList *listhdrB=NULL;
-va_list arg_pointer;
-va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
-
-// if (ldrinput) {
-//TODO hdr input...
-	assert(ldrinput);
-	list=va_arg(arg_pointer,QList<QImage*>*);
-	// number of exposures
-	N = list->count();
-// } else {
-// 	listhdrR=va_arg(arg_pointer,Array2DList*);
-// 	listhdrG=va_arg(arg_pointer,Array2DList*);
-// 	listhdrB=va_arg(arg_pointer,Array2DList*);
-// 	// number of exposures
-// 	N = listhdrR->size();
-// }
-va_end(arg_pointer); /* Clean up. */
-
-	
-	// frame size
-	int width = xj->getCols();
-	int height = xj->getRows();
-	
-	// number of saturated pixels
-	int saturated_pixels = 0;
-	
-	// for all pixels
-	for( int j=0 ; j<width*height ; j++ ) {
-		float sum1 = 0.0f;
-		float sum2 = 0.0f;
-		float sum3 = 0.0f;
-		
-		float div1 = 0.0f;
-		float div2 = 0.0f;
-		float div3 = 0.0f;
-		
-		// for all exposures for each pixel
-		for( int i=0 ; i<N ; i++ ) {
-			//pick the 3 channel values
-			int m1 = qRed(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
-			int m2 = qGreen(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
-			int m3 = qBlue(* ( (QRgb*)( (list->at(i) )->bits() ) + j ) );
-			
-			float ti = arrayofexptime[i];
-			
-			sum1 += (*P[i])(j) * I1[m1] / float(ti);
-			div1 += (*P[i])(j);
-			sum2 += (*P[i])(j) * I2[m2] / float(ti);
-			div2 += (*P[i])(j);
-			sum3 += (*P[i])(j) * I3[m3] / float(ti);
-			div3 += (*P[i])(j);
-		} //END for all the exposures
-	
-		if( div1==0.0f || div2==0.0f || div3==0.0f ) {
-			saturated_pixels++;
-		}
-	
-		if( div1!=0.0f && div2!=0.0f && div3!=0.0f ) {
-			(*xj)(j) = sum1/div1;
-			(*yj)(j) = sum2/div2;
-			(*zj)(j) = sum3/div3;
-		}
-		else {
-			(*xj)(j) = 0.0f;
-			(*yj)(j) = 0.0f;
-			(*zj)(j) = 0.0f;
-		}
-	}
-	return saturated_pixels;
-}
-#endif
-
-
 void debevec_applyResponse( const float * arrayofexptime,
 			   pfs::Array2D* Rout,  pfs::Array2D* Gout,  pfs::Array2D* Bout,
 			   const float* Ir, const float* Ig, const float* Ib,
@@ -163,8 +76,8 @@ for( int i=0 ; i<N ; i++ )
 	i_lower[i]=-1;
 	i_upper[i]=-1;
 	float ti =  arrayofexptime[i];
-	float ti_upper =  arrayofexptime[0];
-	float ti_lower = arrayofexptime[0];
+	float ti_upper = +1e6;
+	float ti_lower = -1e6;
 
 	for( int j=0 ; j<N ; j++ )
 		if( i!=j )
@@ -229,8 +142,6 @@ for( int j=0 ; j<width*height ; j++ ) {
 		int G_upper = qGreen(* ( (QRgb*)( (listLDR->at(i_upper[i]) )->bits() ) + j ) );
 		int B_lower = qBlue (* ( (QRgb*)( (listLDR->at(i_lower[i]) )->bits() ) + j ) );
 		int B_upper = qBlue (* ( (QRgb*)( (listLDR->at(i_upper[i]) )->bits() ) + j ) );
-		if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
-			continue;
 
 		//if at least one of the color channel's values are in the bright "not-trusted zone" and we have min exposure time
 		if ( (mR>maxM || mG>maxM || mB>maxM) && (ti<minti) ) {
@@ -239,6 +150,7 @@ for( int j=0 ; j<width*height ; j++ ) {
 			index_for_whiteG=mG;
 			index_for_whiteB=mB;
 			minti=ti;
+// 			continue;
 		}
 	
 		//if at least one of the color channel's values are in the dim "not-trusted zone" and we have max exposure time
@@ -248,6 +160,25 @@ for( int j=0 ; j<width*height ; j++ ) {
 			index_for_blackG=mG;
 			index_for_blackB=mB;
 			maxti=ti;
+// 			continue;
+		}
+
+//The OR condition seems to be required in order not to have large areas of "invalid" color, need to investigate more.
+		if ( R_lower>mR || G_lower>mG || B_lower>mB) {
+			//update the indexes_for_whiteRGB, minti
+			index_for_whiteR=mR;
+			index_for_whiteG=mG;
+			index_for_whiteB=mB;
+			minti=ti;
+			continue;
+		}
+		if ( R_upper<mR || G_upper<mG || B_upper<mB) {
+			//update the indexes_for_blackRGB, maxti
+			index_for_blackR=mR;
+			index_for_blackG=mG;
+			index_for_blackB=mB;
+			maxti=ti;
+			continue;
 		}
 
 		// mA assumed to handle de-ghosting masks
@@ -269,7 +200,7 @@ for( int j=0 ; j<width*height ; j++ ) {
 			sumB = Ib[index_for_blackB] / float(maxti);
 			divR = divG = divB = 1.0f;
 		}
-		if (minti<+1e6f) {
+		else if (minti<+1e6f) {
 			sumR = Ir[index_for_whiteR] / float(minti);
 			sumG = Ig[index_for_whiteG] / float(minti);
 			sumB = Ib[index_for_whiteB] / float(minti);
