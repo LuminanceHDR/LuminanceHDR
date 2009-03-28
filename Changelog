@@ -1,7 +1,15 @@
-Changes 1.9.3 (maybe 2.0.0?):
-* Qt 4.4 is now the minimal version in order to compile qtpfsgui!!! 
-* New: Added Hungarian language
-* New: Drag and Drop support
+Changes 1.9.3
+* Performance improvements on MultiCore Machines
+* Integrated pfstmo 1.3.x changes, including better Mantiuk performance
+* Integration of Exiv 0.18
+* Added Hungarian language (thanks to Peter Gaal)
+* Added Indonesian language (thanks to Teddy Widhi Laksono)
+* Drag and Drop support for HDR creation/opening
+* UI improvements: new icons, cleanup of tonemapping panel
+* added detail factor option to the mantiuk06 tmo, thanks to Dejan Beric
+* Now using native file saving dialogs on Windows and Mac
+* 'Save all' feature in tonemapping dialog.
+* Many bugfixes, including the old filename problem
 * Integrated pfstmo 1.3.x changes:
   mantiuk06: Ed Brambley's bug-fix and convergence patch
   mantiuk06: Ed Brambley's OpenMP patch
