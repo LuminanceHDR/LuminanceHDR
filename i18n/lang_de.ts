@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de_CH">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -29,7 +30,7 @@
     <message>
         <location filename="../forms/about.ui" line="171"/>
         <source>&amp;Thanks To</source>
-        <translation>&amp;Danke an</translation>
+        <translation>&amp;Dank an</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="234"/>
@@ -63,7 +64,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Peter Linnell&lt;br /&gt;   Opensuse 10.2 and 10.3 packager.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bitte &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;lasst mich wissen&lt;/span&gt;&lt;/a&gt;, wenn jemand auf der Liste fehlt.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Peter Linnell&lt;br /&gt;   Opensuse 10.2 and 10.3 packager.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff LDR Bugfixes und Vorschläge.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -394,7 +398,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="462"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
-        <translation>Verwendung: %1 [OPTIONEN]... [INPUT]...</translation>
+        <translation>Verwendung: %1 [OPTIONEN]... [INPUTDATEIEN]...</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="463"/>
@@ -439,27 +443,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="473"/>
         <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished"></translation>
+        <translation>-g --gamma VALUE       Gamma-Wert für die Farbabbildung. (Standard: 1) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="474"/>
         <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished"></translation>
+        <translation>-r --resize VALUE      Die Breite, auf welche das HDR skaliert wird (geschieht vor Gamma und Farbabbildung) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="475"/>
         <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-t --tmo               Der Operator für die Farbabbildung. Möglichkeiten: </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="478"/>
         <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-p --tmoptions         Einstellungen für Farbabbildungsoperatoren. Möglichkeiten: </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="488"/>
         <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished"></translation>
+        <translation>-o --output LDR_FILE   Der Dateiname unter welchem das LDR gespeichert wird.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="489"/>
@@ -470,17 +474,18 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Common/commandline.cpp" line="490"/>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen entweder ein existierendes HDR (mittels -l Option) angeben, oder INPUTDATEIEN angeben, um ein neues HDR zu erzeugen.
+</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="469"/>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
-        <translation type="unfinished"></translation>
+        <translation>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="470"/>
         <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
-        <translation type="unfinished"></translation>
+        <translation>(Standard ist weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="476"/>
@@ -1116,7 +1121,7 @@ p, li { white-space: pre-wrap; }
         <source>Use custom configuration.
 (use this only if the default profiles
 above do not yield good results)</source>
-        <translation>Benutzen Sie eigene Einstellung.
+        <translation>Benutzen Sie eigene Einstellungen.
 (nutzen Sie das nur, wenn die vorgegebenen Profile
 oben keine guten Resultate liefern)</translation>
     </message>
@@ -1321,7 +1326,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/hdrwizardform.ui" line="782"/>
         <source>[2/2] Choose Custom Configuration</source>
-        <translation>[2/2] Wählen Sie eigene Einstellung</translation>
+        <translation>[2/2] Wählen Sie eigene Einstellungen</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="111"/>
@@ -2064,7 +2069,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainWindow/mainWindow.cpp" line="633"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation>%1 Lizenz wurde nicht gefunden, Sie können es online finden: %2hier%3</translation>
+        <translation>%1 Die Lizenz wurde nicht gefunden, Sie können sie online finden: %2hier%3</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="673"/>
@@ -2472,7 +2477,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="94"/>
         <source>Destination Projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zielprojektion:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="153"/>
@@ -2487,7 +2492,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="193"/>
         <source>Bilinear Interpolation</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilineare Interpolation</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="216"/>
@@ -2621,7 +2626,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/resizedialog.ui" line="31"/>
         <source>Hdr Image Size</source>
-        <translation>HDR Bild Größe</translation>
+        <translation>HDR Bildgröße</translation>
     </message>
     <message>
         <location filename="../forms/resizedialog.ui" line="98"/>
