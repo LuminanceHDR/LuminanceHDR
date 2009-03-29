@@ -394,9 +394,17 @@ contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
 	}
 }
 
-# Add some extra PATHS in LIBS:
+# We like to search the LOCALSOFT/lib explicitly on MacOSX
 LIBS += -L$$(LOCALSOFT)/lib
+# Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
+LIBS += -ljpeg
+# Exiv also depend on libexpat and libiconv, so same as above:
+LIBS += -lexpat 
+LIBS += -liconv
 
+# for now, we disable openMP on MacOSX - have to wait for support in next
+# Xcode!
+QMAKE_CXXFLAGS -= -fopenmp
 }
 
 win32 {
