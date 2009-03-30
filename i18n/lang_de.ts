@@ -578,7 +578,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/dndoption.ui" line="104"/>
         <source>Create a new HDR, by using one or more images.</source>
-        <translation>Ein neues HDR, mit einem oder mehreren Bildern erzeugen.</translation>
+        <translation>Ein neues HDR, aus einem oder mehreren Bildern erzeugen.</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="124"/>

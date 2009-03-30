@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="ru">
-<defaultcodec></defaultcodec>
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -480,7 +479,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="469"/>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
-        <translation type="unfinished"></translation>
+        <translation>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="470"/>
@@ -889,7 +888,10 @@ This image&apos;s histogram is diplayed in the widget above.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Выбранный сейчас снимок — тот, который вы можете перемещать и на котором вы можете рисовать маски для удаления призраков.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="468"/>
@@ -908,7 +910,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Значения смещения выбранного редактируемого снимка&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="811"/>
@@ -916,7 +921,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;ЗДесь вы можете просматривать и указывать значения смещения для выбранного редактируемого снимка&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/editing_tools.ui" line="817"/>
@@ -1639,7 +1647,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="252"/>
         <source>&amp;Exit</source>
-        <translation>Вы&amp;йти</translation>
+        <translation>В&amp;ыход</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="261"/>
@@ -2691,7 +2699,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="493"/>
         <source>Enter the width of the new size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите новую ширину:</translation>
     </message>
 </context>
 <context>
@@ -3311,7 +3319,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="94"/>
         <source>&amp;Exit</source>
-        <translation>Вы&amp;йти</translation>
+        <translation>В&amp;ыход</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="97"/>
