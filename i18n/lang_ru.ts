@@ -3410,11 +3410,6 @@ p, li { white-space: pre-wrap; }
         <translation>Выберите исходные снимки</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
-        <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
-        <translation type="obsolete">Все поддерживаемые форматы (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
-    </message>
-    <message>
         <location filename="../forms/transplantexifdialog.ui" line="281"/>
         <source>Log:</source>
         <translation>Журнал:</translation>

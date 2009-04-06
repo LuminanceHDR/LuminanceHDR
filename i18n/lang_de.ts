@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de_CH">
-<defaultcodec></defaultcodec>
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -2931,16 +2930,6 @@ p, li { white-space: pre-wrap; }
         <translation>Standardwert für Pre-Gamma setzen (1)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="29"/>
-        <source>Here you can choose the tone mapping operator and its settings.</source>
-        <translation type="obsolete">Hier können sie den Farbabbildungs-Operator und seine Einstellungen auswählen.</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="42"/>
-        <source>&amp;Mantiuk</source>
-        <translation type="obsolete">&amp;Mantiuk</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="118"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2972,11 +2961,6 @@ p, li { white-space: pre-wrap; }
         <translation>Standardwerte für Operatoren</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="285"/>
-        <source>Fa&amp;ttal</source>
-        <translation type="obsolete">Fa&amp;ttal</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="529"/>
         <source>Noise Reduction</source>
         <translation>Rauschunterdrückung</translation>
@@ -2987,26 +2971,6 @@ p, li { white-space: pre-wrap; }
         <translation>&quot;Altes&quot; Fattal (pre 1.8.4)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="568"/>
-        <source>&amp;Drago</source>
-        <translation type="obsolete">&amp;Drago</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="703"/>
-        <source>&amp;Durand</source>
-        <translation type="obsolete">&amp;Durand</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="921"/>
-        <source>Reinhard &apos;0&amp;2</source>
-        <translation type="obsolete">Reinhard &apos;0&amp;2</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1289"/>
-        <source>Reinhard &apos;0&amp;5</source>
-        <translation type="obsolete">Reinhard &apos;0&amp;5</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="1447"/>
         <source>Chromatic Adaptation</source>
         <translation>Kromatische Anpassung</translation>
@@ -3015,16 +2979,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingoptions.ui" line="1493"/>
         <source>Light Adaptation</source>
         <translation>Lichtanpassung</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1522"/>
-        <source>&amp;Ashikhmin</source>
-        <translation type="obsolete">&amp;Ashikhmin</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1749"/>
-        <source>&amp;Pattanaik</source>
-        <translation type="obsolete">&amp;Pattanaik</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2358"/>
@@ -3421,11 +3375,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TransplantExif/transplant.cpp" line="219"/>
         <source>Select the input images</source>
         <translation>Eingabebilder auswählen</translation>
-    </message>
-    <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
-        <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
-        <translation type="obsolete">Alle unterstützten Formate (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="281"/>

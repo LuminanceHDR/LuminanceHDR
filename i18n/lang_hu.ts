@@ -31,32 +31,10 @@
         <source>A&amp;uthors</source>
         <translation>&amp;Szerzők</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../forms/about.ui" line="160"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Mandus&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg, &lt;/span&gt;&lt;/a&gt; ha valakit kifelejtettem volna.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Főfejlesztő.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algoritmus.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Orosz fordítás; felhasználhatósági javítások, .desktop fájl.&lt;br /&gt;&lt;br /&gt;Mandus&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X csomagolás, norvég fordítás.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Török fordítás.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   Francia fordítás és Ubuntu csomagolás.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanyol fordítás.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   Német fordítás.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Cseh fordítás.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Lengyel fordítás.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD karbantartás.&lt;br /&gt;&lt;br /&gt;Gaál Péter&lt;br /&gt;   Magyar fordítás.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
     <message>
         <location filename="../forms/about.ui" line="171"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Köszönet</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../forms/about.ui" line="226"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg&lt;/span&gt;&lt;/a&gt;, ha kifelejtettem volna valakit.&lt;br /&gt;&lt;br /&gt;Az egész &lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt; közösségnek.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelónak&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt;-ért és másért.&lt;br /&gt;&lt;br /&gt;Douglas E. Warnernek&lt;br /&gt;   az FC6 csomagolásáért és a hibajelentésekért.&lt;br /&gt;&lt;br /&gt;Rauch Christiannak&lt;br /&gt;   az openSUSE 10.2 csomagolásáért.&lt;br /&gt;&lt;br /&gt;Rene Zbindennek&lt;br /&gt;   a Gentoo Linux ebuildjéért.&lt;br /&gt;&lt;br /&gt;Arne Hagenáhnak&lt;br /&gt;   különböző javaslataiért.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzkinek&lt;br /&gt;   Tiff ldr javításaiért és javaslataiért.&lt;br /&gt;&lt;br /&gt;Dave Coffinnak&lt;br /&gt;   a dcraw-ért.&lt;br /&gt;&lt;br /&gt;Gaál Péternek&lt;br /&gt;   a magyar fordításért.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlonynak&lt;br /&gt;Antoine Latternek&lt;br /&gt;Frank Boehmének&lt;br /&gt;Sloan Poenak&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="234"/>
@@ -89,284 +67,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/about.ui" line="323"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
-    </message>
-</context>
-<context>
-    <name>AlignmentDialog</name>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="24"/>
-        <source>Manual Alignment Dialog</source>
-        <translation type="obsolete">Kézi igazítás ablaka</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="173"/>
-        <source>&amp;Movable</source>
-        <translation type="obsolete">&amp;Mozgó</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="475"/>
-        <source>&amp;Horizontal:</source>
-        <translation type="obsolete">&amp;Vízszintesen:</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="488"/>
-        <source>&amp;Vertical:</source>
-        <translation type="obsolete">&amp;Függőlegesen:</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="520"/>
-        <source> px</source>
-        <translation type="obsolete"> px</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="812"/>
-        <source>&lt; &amp;Back</source>
-        <translation type="obsolete">&lt; Vissz&amp;a</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="819"/>
-        <source>&amp;Next &gt;</source>
-        <translation type="obsolete">&amp;Előre</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="829"/>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="72"/>
-        <source>Histogram of the image</source>
-        <translation type="obsolete">A kép hisztogrammja</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="75"/>
-        <source>When the same image is selected in both the movable and reference lists, this area will show the histogram of that image.</source>
-        <translation type="obsolete">Ha ugyanaz a kép van kiválasztva a mozgó és a mozdulatlan listán, akkor itt ennek a képnek a hisztogrammja látszik.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="78"/>
-        <source>Histogram</source>
-        <translation type="obsolete">Hisztogramm</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="91"/>
-        <source>Images List</source>
-        <translation type="obsolete">Képlista</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="124"/>
-        <source>Select the previous image in the movable list</source>
-        <translation type="obsolete">Válassza ki az előző képet a mozgó listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="127"/>
-        <source>Use this button to move the selection to the previous image in the movable list.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni a mozgó listán az előző kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="137"/>
-        <source>Select the next image in the movable list</source>
-        <translation type="obsolete">Válassza ki a következő képet a mozgó listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="140"/>
-        <source>Use this button to move the selection to the next image in the movable list.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni a mozgó listán a következő kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="200"/>
-        <source>The movable image is the one currently selected</source>
-        <translation type="obsolete">A mozgó kép az, amelyik éppen ki van jelölve</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="203"/>
-        <source>The image currently selected in this list can be translated up,down,left and right using the controls below</source>
-        <translation type="obsolete">A listán kijelölt képet az alábbi gombokkal felfele, lefele, balra vagy jobbra lehet elmozdítani</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="239"/>
-        <source>Select the previous image in both lists</source>
-        <translation type="obsolete">Válassza ki az előző képet mind a két listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="242"/>
-        <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni mindkét listán az előző kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="258"/>
-        <source>Select the next image in both lists</source>
-        <translation type="obsolete">Válassza ki a következő képet mind a két listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="261"/>
-        <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni mind a két listán a következő kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="294"/>
-        <source>R&amp;eference</source>
-        <translation type="obsolete">Mo&amp;zdulatlan</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="321"/>
-        <source>The reference image is the one currently selected</source>
-        <translation type="obsolete">A mozdulatlan kép az, amelyik éppen ki van jelölve</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="324"/>
-        <source>The image currently selected in this list serves as a reference position for the movable image</source>
-        <translation type="obsolete">A listán kijelölt kép referenciául szolgál a mozgó képnek</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="354"/>
-        <source>Select the previous image in the reference list</source>
-        <translation type="obsolete">Válassza ki az előző képet a mozdulatlan listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="357"/>
-        <source>Use this button to move the selection to the previous image in the reference list.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni a mozdulatlan listán az előző kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="367"/>
-        <source>Select the next image in the reference list</source>
-        <translation type="obsolete">Válassza ki a következő képet a mozdulatlan listán</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="370"/>
-        <source>Use this button to move the selection to the next image in the reference list.</source>
-        <translation type="obsolete">Ezzel a gombbal lehet megváltoztatni a mozdulatlan listán a következő kép kijelölését.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="406"/>
-        <source>Shift values for the currently selected movable image</source>
-        <translation type="obsolete">A kijelölt mozgó kép eltolási értékei</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="409"/>
-        <source>Here the user can view and set the shift values for the currently selected movable image</source>
-        <translation type="obsolete">Itt be lehet állítani a kijelölt mozgó kép eltolási értékeit</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="412"/>
-        <source>&amp;Shifts for movable Image</source>
-        <translation type="obsolete">A mozgó kép el&amp;tolása</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="432"/>
-        <source>Reset the shift values for the currently selected movable image</source>
-        <translation type="obsolete">A kijelölt kép eltolási értékeit nullázni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="435"/>
-        <source>&amp;Reset</source>
-        <translation type="obsolete">&amp;Nullázás</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="442"/>
-        <source>Reset the shift values for all the images</source>
-        <translation type="obsolete">Minden kép eltolási értékét nullázni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="445"/>
-        <source>Reset &amp;All</source>
-        <translation type="obsolete">&amp;Mindet nulláz</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="501"/>
-        <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy adott értékkel vízszintesen eltolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="517"/>
-        <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy adott értékkel függőlegesen eltolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="543"/>
-        <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy képponttal felfelé tolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="556"/>
-        <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy képponttal lefelé tolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="569"/>
-        <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy képponttal jobbra tolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="582"/>
-        <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation type="obsolete">A mozgó képet egy képponttal balra tolni</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="638"/>
-        <source>Fit to window</source>
-        <translation type="obsolete">Ablakhoz igazítani</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="641"/>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Ablakhoz igazítás</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="660"/>
-        <source>Original size</source>
-        <translation type="obsolete">Eredeti méret</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="663"/>
-        <source>Norma&amp;l Size</source>
-        <translation type="obsolete">&amp;Eredeti méret</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="679"/>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Kicsinyítés</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="682"/>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">&amp;Kicsinyítés</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="698"/>
-        <source>Zoom In</source>
-        <translation type="obsolete">Nagyítás</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="701"/>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">&amp;Nagyítás</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="730"/>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Rákérdezni, mi micsoda</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="733"/>
-        <source>&amp;What&apos;s this?</source>
-        <translation type="obsolete">Ez &amp;mi?</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="745"/>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="768"/>
-        <source>Difference between movable and reference image.</source>
-        <translation type="obsolete">Különbség a mozgó és a mozdulatlan kép között.</translation>
-    </message>
-    <message>
-        <location filename="../forms/aligndialog.ui" line="771"/>
-        <source>This area shows the difference between the movable and the reference image. If the same image is selected in both the movable and reference list, this area will show the image itself.</source>
-        <translation type="obsolete">Itt látható a különbség a mozgó és a mozdulatlan kép között. Ha ugyanaz a kép lett kiválasztva mindkét listán, akkor természetesen maga a kép látszik.</translation>
     </message>
 </context>
 <context>
@@ -582,11 +282,6 @@ p, li { white-space: pre-wrap; }
         <translation>Mentéshez használt fájltípus: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog_impl.cpp" line="269"/>
-        <source>ERROR: Failed loading HDR file: </source>
-        <translation type="obsolete">HIBA: HDR fájlt nem lehetett betölteni: </translation>
-    </message>
-    <message>
         <location filename="../src/Batch/batch_dialog.cpp" line="275"/>
         <source>Starting to tone map HDR file: </source>
         <translation>HDR fájl feldolgozása elkezdve: </translation>
@@ -595,11 +290,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Batch/batch_dialog.cpp" line="302"/>
         <source>All tasks completed.</source>
         <translation>Minden feladat elvágezve.</translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/batch_dialog_impl.cpp" line="336"/>
-        <source>Done tone mapping the current HDR.</source>
-        <translation type="obsolete">Árnyalatnövelés ezen a fájlon befejezve.</translation>
     </message>
     <message>
         <location filename="../src/Batch/batch_dialog.cpp" line="348"/>
@@ -707,148 +397,148 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="462"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
-        <translation type="unfinished"></translation>
+        <translation>Használat: %1 [lehetőségek]... [bemeneti fájl]...</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="463"/>
         <source>Commandline interface to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 parancssora.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="464"/>
         <source>-h --help              Display this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>-h --help(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)Ennek a használati útmutatónak a megjelenítése.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="465"/>
         <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished"></translation>
+        <translation>-v --verbose(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)Bővebb tájékoztatás a művelet közben.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="466"/>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished"></translation>
+        <translation>-a --align AIS|MTB(sp)(sp)(sp)(sp)(sp)HDR-hez használandó igazítómű (alapból: igazítás nélkül).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="467"/>
         <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished"></translation>
+        <translation>-e --ev EV1,EV2,...(sp)(sp)(sp)(sp)Adja meg a megvilágítási értékeket (a bemeneti képek számának megfelelően).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="468"/>
         <source>-c --config            HDR creation config. Possible values: </source>
-        <translation type="unfinished"></translation>
+        <translation>-c --config(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)HDR beállítások. Lehetséges értékek:</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="471"/>
         <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished"></translation>
+        <translation>-l --load HDR_FÁJL(sp)(sp)(sp)(sp)(sp)Kész HDR képet megnyitni új készítése helyett.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="472"/>
         <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished"></translation>
+        <translation>-s --save HDR_FÁJL(sp)(sp)(sp)(sp)(sp)Mentés HDR-ként. (alapból: ne ments)(sp)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="473"/>
         <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished"></translation>
+        <translation>-g --gamma ÉRTÉK(sp)(sp)(sp)(sp)(sp)(sp)(sp)Árnyalatnöveléshez felhasználandó gammakorrektúra (alapból: 1)(sp)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="474"/>
         <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished"></translation>
+        <translation>-r --resize ÉRTÉK(sp)(sp)(sp)(sp)(sp)(sp)A készítendő HDR szélessége (átméretezés gammakorrektúra és árnyalatnövelés előtt)(sp)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="475"/>
         <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-t --tmo(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)Árnyalatnövelési művelet. Megengedett változatok:</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="478"/>
         <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-p --tmoptions(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)(sp)Az árnyalatnövelési művelet opciói. Megengedett értékek:</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="488"/>
         <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished"></translation>
+        <translation>-o --output LDR_FÁJLsp)(sp)(sp)A megnövelt árnyalatú kép (LDR) mentéséhez használandó név.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="489"/>
         <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished"></translation>
+        <translation>(Nincs árnyalatnövelés, hacsak -o nincs megadva).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="490"/>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Meg kell adni vagy egy létező HDR fájlt (az -l kapcsolóval), vagy a KIINDULÁSI_FÁJLOK-at egy új HDR létrehozásához.(new line)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="469"/>
         <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
-        <translation type="unfinished"></translation>
+        <translation>weight=triangular|gaussian|plateau:response_curve=kiindulási_fájl|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=az_ön_fájlja.m</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="470"/>
         <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
-        <translation type="unfinished"></translation>
+        <translation>(Az alapbeállítás weight=triangular:response_curve=linear:model=debevec)(sp)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="476"/>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk</source>
-        <translation type="unfinished"></translation>
+        <translation>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="477"/>
         <source>(Default is mantiuk)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Az alapbeállítás mantiuk)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="479"/>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
-        <translation type="unfinished"></translation>
+        <translation>alpha=ÉRTÉK:beta=ÉRTÉK:color=ÉRTÉK:noise=ÉRTÉK:new=true|false (fattalhoz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="480"/>
         <source>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)</source>
-        <translation type="unfinished"></translation>
+        <translation>contrast=ÉRTÉK:saturation=ÉRTÉK:equalization=true|false (mantiukhoz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="481"/>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
-        <translation type="unfinished"></translation>
+        <translation>localcontrast=ÉRTÉK:eq=2|4:simple=true|false (ashikhminhez)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="482"/>
         <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
-        <translation type="unfinished"></translation>
+        <translation>sigma_s=ÉRTÉK:sigma_r=ÉRTÉK:base=ÉRTÉK (durandhoz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="483"/>
         <source>bias=VALUE (for drago)</source>
-        <translation type="unfinished"></translation>
+        <translation>bias=ÉRTÉK (dragóhoz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="484"/>
         <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
-        <translation type="unfinished"></translation>
+        <translation>local=true|false:autolum=true|false:cone=ÉRTÉK:rod=ÉRTÉK:multiplier=ÉRTÉK (pattanaikhoz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="485"/>
         <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
-        <translation type="unfinished"></translation>
+        <translation>scales=true|false:key=ÉRTÉK:phi=ÉRTÉK:num=ÉRTÉK:low=ÉRTÉK:high=ÉRTÉK (reinhard02-höz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="486"/>
         <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
-        <translation type="unfinished"></translation>
+        <translation>brightness=ÉRTÉK:chroma=ÉRTÉK:lightness=ÉRTÉK (reinhard05-höz)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="487"/>
         <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Az alapbeállítás contrast=0.3:equalization=false:saturation=1.8, lásd az -o kapcsolót is)</translation>
     </message>
 </context>
 <context>
@@ -856,42 +546,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/dndoption.ui" line="22"/>
         <source>Drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Húzd és ejtsd</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="57"/>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Mit szeretne csinálni ezzel a fájllal vagy ezekkel a fájlokkal?&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="111"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="71"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Megnyitás</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="84"/>
         <source>Open an existing HDR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Létező HDR képet megnyitni.</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="91"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Új</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="104"/>
         <source>Create a new HDR, by using one or more images.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagy megvilágítástartományú képet alkotni egy vagy több sima képből.</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="124"/>
         <source>Cancel the drag and drop process and return to the main window.</source>
-        <translation type="unfinished"></translation>
+        <translation>Megszakítani a húzd és ejtsd műveletét.</translation>
     </message>
 </context>
 <context>
@@ -1317,11 +1007,6 @@ p, li { white-space: pre-wrap; }
         <translation>Fennálló változtatások...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="289"/>
-        <source>This Hdr has unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
-        <translation type="obsolete">Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Ha az ablakot bezárja, akkor ezek el fognak veszni.</translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/hdrviewer.cpp" line="329"/>
         <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Biztos, hogy be akarja zárni az ablakot?</translation>
@@ -1468,11 +1153,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation>Adoot válaszgörbék:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="850"/>
-        <source>Load response function file</source>
-        <translation type="obsolete">Válaszfüggvény fájl betöltése</translation>
-    </message>
-    <message>
         <location filename="../forms/hdrwizardform.ui" line="962"/>
         <source>Load...</source>
         <translation>Betöltés...</translation>
@@ -1493,11 +1173,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation>Robertson</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="999"/>
-        <source>&lt; &amp;Back</source>
-        <translation type="obsolete">&lt; Vissz&amp;a</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="271"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Előre</translation>
@@ -1506,11 +1181,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <location filename="../forms/hdrwizardform.ui" line="1158"/>
         <source>&amp;Cancel</source>
         <translation>Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="102"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</source>
-        <translation type="obsolete">Minden fájltípus (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="107"/>
@@ -1523,19 +1193,9 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation>TIFF képek (*.tiff *.tif);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="105"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</source>
-        <translation type="obsolete">Nyers képek (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw)</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="113"/>
         <source>Select the input images</source>
         <translation>Feldolgozandó képek kiválasztása</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="172"/>
-        <source>Tiff error</source>
-        <translation type="obsolete">Tiff hiba</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="177"/>
@@ -1588,11 +1248,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation>Fájlból</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="557"/>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All values have been set!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Minden érték rögzítve!&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
         <location filename="../forms/hdrwizardform.ui" line="399"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1616,17 +1271,6 @@ p, li { white-space: pre-wrap; }
         <translation>HDR előállítási függvény:</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="228"/>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values for each one of your images.&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: &lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Qtpfsgui nem talált megfelelő &lt;i&gt;EXIF&lt;/i&gt; címkét
-a következő képekben:
- &lt;ul&gt;%1&lt;/ul&gt;&lt;hr&gt;Ennek ellenére lehet folytatni a HDR kép előállítását. Csak annyit kell tenni, hogy &lt;b&gt;kézzel&lt;/b&gt; be kell táplálni minden képhez a megvilágítási értéket vagy a fényrekesz különbségét.&lt;hr&gt;Ha a Qtfsguival akarja ezt &lt;b&gt;automatikusan csinálni&lt;/b&gt;, akkor a betöltendő képeknek legalább 
-a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt;/li&gt;&lt;li&gt;rekesz&lt;/li&gt;&lt;/ul&gt;&lt;hr&gt;&lt;b&gt;UTALÁS:&lt;/b&gt; Az EXIF adatok általában a megelőző feldolgozás folyamán vesznek el.&lt;br&gt;EXIF címkéket &lt;b&gt;egy az egyben&lt;/b&gt; át lehet másolni két képgyűjtemény között az &lt;i&gt;&lt;b&gt;&quot;Eszközök-&gt;EXIF adatok másolása...&quot;&lt;/b&gt;&lt;/i&gt; menüpont alatt.</translation>
-    </message>
-    <message>
         <location filename="../forms/hdrwizardform.ui" line="213"/>
         <source>Auto &amp;Align Images</source>
         <translation>Képek automatikus &amp;igazítása</translation>
@@ -1637,11 +1281,6 @@ a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt
         <translation>hugin align_image_stack-je</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="122"/>
-        <source>Here you can set &lt;br&gt;the difference in exposure &lt;br&gt;values (in terms of EV or stops) &lt;br&gt;for the currently selected image</source>
-        <translation type="obsolete">Itt lehet beállítani a&lt;br&gt;kijelölt kép&lt;br&gt;megvilágítási különbségét&lt;br&gt;(EV-ben vagy rekeszértékben)</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="166"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Betöltött képek.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
@@ -1650,11 +1289,6 @@ a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="510"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;A továbbiakhoz kézzel meg kell adni a megvilágítási értékeket.&lt;br&gt;Ebből kell még &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; darab.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="346"/>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Aligning...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Igazítás...&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="239"/>
@@ -1670,13 +1304,6 @@ a következő EXIF adatokat kell tartalmazniuk: &lt;ul&gt;&lt;li&gt;sebesség&lt
         <location filename="../forms/hdrwizardform.ui" line="277"/>
         <source>&amp;Load Images...</source>
         <translation>Képek &amp;megnyitása...</translation>
-    </message>
-    <message>
-        <location filename="../forms/hdrwizardform.ui" line="100"/>
-        <source>&amp;Exposure value
-for current image</source>
-        <translation type="obsolete">M&amp;egvilágítási érték
-(EV) ehhez a képhez</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="190"/>
@@ -1702,31 +1329,6 @@ for current image</source>
         <location filename="../forms/hdrwizardform.ui" line="782"/>
         <source>[2/2] Choose Custom Configuration</source>
         <translation>[2/2] Egyéni konfiguráció kiválasztása</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="172"/>
-        <source>The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff</source>
-        <translation type="obsolete">A kép &lt;br&gt;(%1)&lt;br&gt; nem egy 8 vagy 16 bites Tiff fájl</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="188"/>
-        <source>All the images must have the same size.</source>
-        <translation type="obsolete">Minden kép nagyságának egyeznie kell.</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="626"/>
-        <source>Failed to start the external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;. Read the webpage &lt;a href=&quot;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&quot;&gt;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&lt;/a&gt; for more information.</source>
-        <translation type="obsolete">Egy külső folyamatot nem lehetett elindítani (&lt;em&gt;align_image_stack&lt;/em&gt;). Kérem elolvasni a &lt;a href=&quot;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&quot;&gt;http://qtpfsgui.wiki.sourceforge.net/align_image_stack&lt;/a&gt; honlapot.</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="629"/>
-        <source>The external process &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="obsolete">Egy külső folyamat bedöglött (&lt;em&gt;align_image_stack&lt;/em&gt;)...</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/hdrwizardform_impl.cpp" line="635"/>
-        <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; process...</source>
-        <translation type="obsolete">Ismeretlen hiba történt a &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; folyamatban...</translation>
     </message>
     <message>
         <location filename="../forms/hdrwizardform.ui" line="111"/>
@@ -1919,12 +1521,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Threads/loadHdrThread.cpp" line="48"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation>HIBA: A következő fájl olvashatatlan: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/Threads/loadHdrThread.cpp" line="78"/>
-        <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="obsolete">
- A Tiff jelenleg nem egy megengedett nyers képtípus. Ehhez meg kéne adni a &quot;-T&quot; kapcsolót a nyers képek beállításaiban.</translation>
     </message>
     <message>
         <location filename="../src/Threads/loadHdrThread.cpp" line="99"/>
@@ -2295,19 +1891,9 @@ p, li { white-space: pre-wrap; }
         <translation>Megszakítás...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/maingui_impl.cpp" line="428"/>
-        <source>File is not readable (check existence, permissions,...)</source>
-        <translation type="obsolete">A fájl olvashatatlan (ellenőrizze, hogy van-e ilyen fájl, ill. hogy a jogai engedélyezik-e)</translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="193"/>
         <source>Save the HDR...</source>
         <translation>HDR kép mentése...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/maingui_impl.cpp" line="210"/>
-        <source>Qtpfsgui supports only &lt;br&gt;Radiance rgbe (hdr), PFS, hdr tiff and OpenEXR (linux only) &lt;br&gt;files up until now.</source>
-        <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr; csak linuxon) &lt;br&gt;fájltípusokat támogatja.</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="309"/>
@@ -2383,16 +1969,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/MainWindow/mainWindow.cpp" line="157"/>
         <source>Load an Hdr file...</source>
         <translation>HDR kép megnyitása...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="177"/>
-        <source>All Hdr formats (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</source>
-        <translation type="obsolete">Minden HDR fájltípus (*.exr *.hdr *.pic *.tiff *.tif *.pfs)</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/maingui_impl.cpp" line="549"/>
-        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;If you quit now, these changes will be lost.</source>
-        <translation type="obsolete">Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Ha kilép, akkor ezek el fognak veszni.</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="209"/>
@@ -2515,11 +2091,6 @@ p, li { white-space: pre-wrap; }
         <translation>A jelenlegi HDR képet átvetíteni.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="218"/>
-        <source>Qtpfsgui supports only the following formats: &lt;br&gt;Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR.</source>
-        <translation type="obsolete">Qtpfsgui pillanatnyilag csak a &lt;br&gt;Radiance RGBE (hdr), PFS, HDR tiff és OpenEXR (exr) fájltípusokat támogatja.</translation>
-    </message>
-    <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="573"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Kilépni ennek ellenére?</translation>
@@ -2533,297 +2104,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/MainWindow/mainWindow.cpp" line="643"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OptionsDialog</name>
-    <message>
-        <location filename="../forms/options.ui" line="13"/>
-        <source>Qtpfsgui options</source>
-        <translation type="obsolete">Qtpfsgui beállítások</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="92"/>
-        <source>RAW Import</source>
-        <translation type="obsolete">Nyers kép</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="144"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tone Mapping Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Árnyalatnövelési beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="161"/>
-        <source>Cache</source>
-        <translation type="obsolete">Gyorsítótár</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="173"/>
-        <source>Choose the directory where Qtpfsgui will store the temporary data to.</source>
-        <translation type="obsolete">Válasszon egy mappát az időleges fájlok részére.</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="206"/>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Megnyitás...</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="347"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Nyers fájlok import beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="361"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qtpfsgui uses &lt;span style=&quot; font-weight:600;&quot;&gt;dcraw&lt;/span&gt;&apos;s code to load raw files.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please send me your thoughts in case you think&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;that these dcraw&apos;s default parameters are not ok.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qtpfsgui a &lt;span style=&quot; font-weight:600;&quot;&gt;dcraw&lt;/span&gt;-t használja a nyers fájlok betöltéséhez.&lt;/p&gt;&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek tudasd velem, ha ezek &lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;a dcraw alapbeállítások nem felelnek meg.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="371"/>
-        <source>White balance</source>
-        <translation type="obsolete">Fehéregyensúly</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="383"/>
-        <source>dcraw&apos;s -w option &lt;br&gt;default value is &lt;b&gt;true&lt;/b&gt;</source>
-        <translation type="obsolete">A dcraw -w kapcsolójának &lt;br&gt;az alapértéke &lt;b&gt;&apos;használd&apos;&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="386"/>
-        <source>Use color balance specified by the camera</source>
-        <translation type="obsolete">Használd a fényképezőgép fehéregyensúlyát</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="396"/>
-        <source>dcraw&apos;s -a option&lt;br&gt;default value is &lt;b&gt;false&lt;/b&gt;</source>
-        <translation type="obsolete">A dcraw -a kapcsolójának &lt;br&gt;az alapértéke &lt;b&gt;&apos;ne használd&apos;&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="399"/>
-        <source>Automatic color balance</source>
-        <translation type="obsolete">Automatikus fehéregyensúly</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="406"/>
-        <source>dcraw&apos;s -f option:&lt;br&gt;Use this if the output shows false 2x2 meshes with VNG or mazes with AHD. &lt;br&gt;default value is &lt;b&gt;false&lt;/b&gt;</source>
-        <translation type="obsolete">A dcraw -f kapcsolóját &lt;br&gt;akkor kell használni, ha az eredmény hamis 2x2-es hálók VNG-vel vagy labirintus alakzatok AHD-vel. &lt;br&gt;Alapbeállítás: &lt;b&gt;&apos;ne használd&apos;&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="409"/>
-        <source>Interpolate RGB as four colors</source>
-        <translation type="obsolete">RGB-t négy színnel interpolálni</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="419"/>
-        <source>Highlights</source>
-        <translation type="obsolete">Világos részek</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="457"/>
-        <source>dcraw&apos;s -H option&lt;br&gt;read dcraw&apos;s man page for explanations &lt;br&gt; default value is &lt;b&gt;0&lt;/b&gt;</source>
-        <translation type="obsolete">A dcraw -H kapcsolójának (lásd hozzá a program kézikönyvét) &lt;br&gt;az alapértéke &lt;b&gt;0&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="434"/>
-        <source>Highlights recovery mode:</source>
-        <translation type="obsolete">Világos részek helyreállítása:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="470"/>
-        <source>Color space</source>
-        <translation type="obsolete">Színrendszer</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="482"/>
-        <source>Raw conversion output color space:</source>
-        <translation type="obsolete">Színrendszer a nyers képek feldolgozásához:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="509"/>
-        <source>Raw color</source>
-        <translation type="obsolete">Nyers kép</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="514"/>
-        <source>sRGB</source>
-        <translation type="obsolete">sRGB</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="519"/>
-        <source>Adobe RGB</source>
-        <translation type="obsolete">Adobe RGB</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="524"/>
-        <source>Wide Gamut RGB</source>
-        <translation type="obsolete">Széles tartományú RGB</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="529"/>
-        <source>ProPhoto RGB</source>
-        <translation type="obsolete">ProPhoto RGB</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="540"/>
-        <source>Quality</source>
-        <translation type="obsolete">Minőség</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="552"/>
-        <source>Conversion quality:</source>
-        <translation type="obsolete">Feldolgozási minőség:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="579"/>
-        <source>Bilinear</source>
-        <translation type="obsolete">Bilineáris</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="584"/>
-        <source>VNG</source>
-        <translation type="obsolete">VNG (változó számú gradiensek)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="589"/>
-        <source>AHD</source>
-        <translation type="obsolete">AHD (homogenitásra törve módosító)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="731"/>
-        <source>Colors</source>
-        <translation type="obsolete">Színek</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="751"/>
-        <source>Show Negative Numbers as:</source>
-        <translation type="obsolete">Negatív számok:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="788"/>
-        <source>Show nan and +-Inf values as:</source>
-        <translation type="obsolete">Meghatározatlan (NaN) és &lt;br&gt;végtelen (+Inf) értékek:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="867"/>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="877"/>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="108"/>
-        <source>Hdr Visualization</source>
-        <translation type="obsolete">HDR nézet</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="640"/>
-        <source>Hdr Tiff</source>
-        <translation type="obsolete">HDR Tiff</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="671"/>
-        <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="obsolete">LogLuv Tiff (16 bites float)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="681"/>
-        <source>Float Tiff (float, 32bit)</source>
-        <translation type="obsolete">Float Tiff (32 bites float)</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="714"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HDR nézet beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="623"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="84"/>
-        <source>Tone Mapping</source>
-        <translation type="obsolete">LDR</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="652"/>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Qtpfsgui will use to save an Hdr image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Válasszon ki egy nagy megvilágítástartományú Tiff fájltípust a HDR képek mentésére.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; a legtöbb esetben megfelel, mert a keletkező HDR fájl nagysága nem túl nagy.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; fájltípust csak akkor használja, ha a Tiff képet egy olyan program részére szánja, amelyik nem tudja betölteni a LogLuv fájltípust.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="218"/>
-        <source>Batch</source>
-        <translation type="obsolete">Köteges feldolgozás</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="238"/>
-        <source>Save using this LDR image &amp;format:</source>
-        <translation type="obsolete">Normális megvilágítástartományú (LDR) képek mentéséhez használt &amp;fájltípus:</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="249"/>
-        <source>JPEG</source>
-        <translation type="obsolete">JPEG</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="254"/>
-        <source>PNG</source>
-        <translation type="obsolete">PNG</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="259"/>
-        <source>PPM</source>
-        <translation type="obsolete">PPM</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="264"/>
-        <source>PBM</source>
-        <translation type="obsolete">PBM</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="269"/>
-        <source>BMP</source>
-        <translation type="obsolete">BMP</translation>
-    </message>
-    <message>
-        <location filename="../forms/options.ui" line="287"/>
-        <source>Number of &amp;threads:
-(useful on multi-core/SMP machines)</source>
-        <translation type="obsolete">&amp;Huzamok száma:
-(hasznos többmagos (SMP) processzorok esetében)</translation>
+        <translation>Névtelen</translation>
     </message>
 </context>
 <context>
@@ -2832,11 +2113,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Option -a...</source>
         <translation>Az -a kapcsoló...</translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/preferencesDialog.cpp" line="125"/>
-        <source>Qtpfsgui requires align_image_stack to be executed with the option &quot;-a aligned_&quot;. Commandline options have been corrected.</source>
-        <translation type="obsolete">A Qtpfsgui megköveteli az &quot;-a&quot; kapcsoló (aligned) használatát az align_image_stackkel. A parancssor ehhez megfelelően lett módosítva.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="143"/>
@@ -2856,17 +2132,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Option -T...</source>
-        <translation type="unfinished"></translation>
+        <translation>A -T kapcsoló...</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="101"/>
         <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Qtpfsgui megköveteli a &quot;-T&quot; kapcsoló használatát a dcraw-val. A parancssor ennek megfelelően módosítva lett.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/preferencesDialog.cpp" line="136"/>
         <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>A Qtpfsgui megköveteli az &quot;-a aligned_&quot; kapcsoló használatát az align_image_stackkel. A parancssor ennek megfelelően módosítva lett.</translation>
     </message>
 </context>
 <context>
@@ -3292,12 +2568,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/main.cpp" line="68"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/global.cpp" line="39"/>
-        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation type="obsolete">Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
+        <translation>Nem található a Qt JPEG modulja...&lt;br&gt;Csomagolja ki a DLL archívumát a mappák nevének használatával.</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="48"/>
@@ -3312,15 +2583,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/global.cpp" line="40"/>
         <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtpfsguiOptions</name>
-    <message>
-        <location filename="../src/Options/options_impl.cpp" line="154"/>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Válasszon ki egy mappát</translation>
+        <translation>Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</translation>
     </message>
 </context>
 <context>
@@ -3431,12 +2694,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="493"/>
         <source>Enter the width of the new size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Adja meg az új méret szélességét:</translation>
     </message>
     <message>
         <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="492"/>
         <source>Custom LDR size</source>
-        <translation type="unfinished">Egyéni LDR méret</translation>
+        <translation>Egyéni LDR méret</translation>
     </message>
 </context>
 <context>
@@ -3445,11 +2708,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingoptions.ui" line="17"/>
         <source>Tonemapping Operators and options</source>
         <translation>Árnyalatnövelési műveletek és beállítások</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="123"/>
-        <source>Pre Gamma</source>
-        <translation type="obsolete">Gammakorrektúra előtt</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2162"/>
@@ -3663,16 +2921,6 @@ p, li { white-space: pre-wrap; }
         <translation>Meglévő gammakorrektúra előtti és árnyalatnövelési beállitások megnyitása</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2424"/>
-        <source>The tone mapping settings file in use</source>
-        <translation type="obsolete">Felhasznált árnyalatnövelési fájl</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2453"/>
-        <source>Apply Settings File</source>
-        <translation type="obsolete">Beállítási adatokat alkalmazni</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="437"/>
         <source>Beta</source>
         <translation>Béta</translation>
@@ -3708,24 +2956,9 @@ p, li { white-space: pre-wrap; }
         <translation>Itt lehet elvégezni a HDR kép gammakorrektúráját.&lt;br&gt;A gammakorrektúra az árnyalatnövelés előtt lesz alkalmazva.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="156"/>
-        <source>Pre Tone mapping &amp;gamma adjustment</source>
-        <translation type="obsolete">Árnyalatnövelés előtti &amp;gammabeállítás</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="2278"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Visszaállítani a gammakorektúra előtti alapértelmezést (1)</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="276"/>
-        <source>Here you can choose the tone mapping operator and its settings.</source>
-        <translation type="obsolete">Itt lehet kiválasztani és beállítani az árnyalatnövelési műveletet.</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="283"/>
-        <source>&amp;Mantiuk</source>
-        <translation type="obsolete">&amp;Mantiuk</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="118"/>
@@ -3759,11 +2992,6 @@ p, li { white-space: pre-wrap; }
         <translation>Visszaállítani a művelet alapértelmezését</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="525"/>
-        <source>Fa&amp;ttal</source>
-        <translation type="obsolete">Fa&amp;ttal</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="529"/>
         <source>Noise Reduction</source>
         <translation>Zajcsökkentés</translation>
@@ -3774,26 +3002,6 @@ p, li { white-space: pre-wrap; }
         <translation>&quot;Régi&quot; Fattal (1.8.4 előtti)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="807"/>
-        <source>&amp;Drago</source>
-        <translation type="obsolete">&amp;Drago</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="941"/>
-        <source>&amp;Durand</source>
-        <translation type="obsolete">&amp;Durand</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1158"/>
-        <source>Reinhard &apos;0&amp;2</source>
-        <translation type="obsolete">Reinhard &apos;0&amp;2</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1525"/>
-        <source>Reinhard &apos;0&amp;5</source>
-        <translation type="obsolete">Reinhard &apos;0&amp;5</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="1447"/>
         <source>Chromatic Adaptation</source>
         <translation>Színmódosítás</translation>
@@ -3802,16 +3010,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingoptions.ui" line="1493"/>
         <source>Light Adaptation</source>
         <translation>Fénymódosítás</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1757"/>
-        <source>&amp;Ashikhmin</source>
-        <translation type="obsolete">&amp;Ashikhmin</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="1989"/>
-        <source>&amp;Pattanaik</source>
-        <translation type="obsolete">&amp;Pattanaik</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2358"/>
@@ -3839,11 +3037,6 @@ p, li { white-space: pre-wrap; }
         <translation>Itt lehet az árnyalatnövelési jellemzőket megnyitni vagy menteni.&lt;br&gt;A jelenlegi beállításokat is itt lehet alkalmazni.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2353"/>
-        <source>Tonemapping settings file</source>
-        <translation type="obsolete">Árnyalatnövelési fájl</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="2100"/>
         <source>Save current parameters to a text file</source>
         <translation>Beállításokat szövegfájlba menteni</translation>
@@ -3869,84 +3062,69 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Megnyitás...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2427"/>
-        <source>The tone mapping settings file in use.</source>
-        <translation type="obsolete">Felhasznált árnyalatnövelési fájl.</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2440"/>
-        <source>Apply fil&amp;e</source>
-        <translation type="obsolete">&amp;Beállítások alkalmazása</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingoptions.ui" line="2456"/>
-        <source>Use tone mapping file to generate an LDR.</source>
-        <translation type="obsolete">Árnyalatnövelési fájlt használni egy LDR előállítására.</translation>
-    </message>
-    <message>
         <location filename="../forms/tonemappingoptions.ui" line="244"/>
         <source>Detail Factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Részlettényező</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="34"/>
         <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Művelet:&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="51"/>
         <source>Mantiuk</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantiuk</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="56"/>
         <source>Fattal</source>
-        <translation type="unfinished"></translation>
+        <translation>Fattal</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="61"/>
         <source>Drago</source>
-        <translation type="unfinished"></translation>
+        <translation>Drago</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="66"/>
         <source>Durand</source>
-        <translation type="unfinished"></translation>
+        <translation>Durand</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="71"/>
         <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
+        <translation>Reinhard &apos;02</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="76"/>
         <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
+        <translation>Reinhard &apos;05</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="81"/>
         <source>Ashikhmin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ashikhmin</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="86"/>
         <source>Pattanaik</source>
-        <translation type="unfinished"></translation>
+        <translation>Pattanaik</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2082"/>
         <source>Tonemapping settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Az árnyalatnövelés beállításai</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2168"/>
         <source>Process</source>
-        <translation type="unfinished"></translation>
+        <translation>Feldolgozás</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingoptions.ui" line="2256"/>
         <source>Pre Gamma:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gammakorrektúra előtt:</translation>
     </message>
 </context>
 <context>
@@ -3960,21 +3138,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingdialog.ui" line="47"/>
         <source>&amp;File</source>
         <translation>&amp;Fájl</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="81"/>
-        <source>&amp;Close Dialog</source>
-        <translation type="obsolete">Be&amp;záró ablak</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="84"/>
-        <source>Close Dialog</source>
-        <translation type="obsolete">Bezáró ablak</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="93"/>
-        <source>Close Tone Mapping Dialog</source>
-        <translation type="obsolete">Árnyalatnövelés bezáró ablaka</translation>
     </message>
     <message>
         <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="53"/>
@@ -4050,26 +3213,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/tonemappingdialog.ui" line="278"/>
         <source>W</source>
         <translation>W</translation>
-    </message>
-    <message>
-        <location filename="../src/ToneMappingDialog/tonemappingdialog_impl.cpp" line="42"/>
-        <source>Tone mapping Window: </source>
-        <translation type="obsolete">Árnyalatnövelési ablak: </translation>
-    </message>
-    <message>
-        <location filename="../src/ToneMappingDialog/tonemappingdialog_impl.cpp" line="105"/>
-        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</source>
-        <translation type="obsolete">Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp)</translation>
-    </message>
-    <message>
-        <location filename="../src/ToneMappingDialog/tonemappingdialog_impl.cpp" line="111"/>
-        <source>Save the LDR to...</source>
-        <translation type="obsolete">LDR kép mentése...</translation>
-    </message>
-    <message>
-        <location filename="../src/ToneMappingDialog/tonemappingdialog_impl.cpp" line="147"/>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="obsolete">Mentés nem sikerült &lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="31"/>
@@ -4189,27 +3332,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="63"/>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszköztár</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="323"/>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés egyszerre</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="332"/>
         <source>Saves all LDRs</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden LDR-t elmenteni</translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="335"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="156"/>
         <source>Save files in</source>
-        <translation type="unfinished"></translation>
+        <translation>Képeket menteni itt</translation>
     </message>
 </context>
 <context>
@@ -4260,19 +3403,9 @@ p, li { white-space: pre-wrap; }
         <translation>Súgó</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant_impl.cpp" line="200"/>
-        <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</source>
-        <translation type="obsolete">Minden támogatott fájltípus (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw)</translation>
-    </message>
-    <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="219"/>
         <source>Select the input images</source>
         <translation>Feldolgozandó képek kiválasztása</translation>
-    </message>
-    <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="213"/>
-        <source>All Supported formats (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</source>
-        <translation type="obsolete">Minden támogatott fájltípus (*.jpeg *.jpg *.crw *.orf *.kdc *.dcr *.ptx *.x3f)</translation>
     </message>
     <message>
         <location filename="../forms/transplantexifdialog.ui" line="281"/>
@@ -4337,7 +3470,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TransplantExif/transplant.cpp" line="214"/>
         <source>All Supported formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden felismert fájltípus</translation>
     </message>
 </context>
 <context>
@@ -4346,11 +3479,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/Threads/hdrInputLoader.cpp" line="129"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
         <translation>A kép &lt;br&gt;(%1)&lt;br&gt; nem egy 8 vagy 16 bites Tiff fájl.</translation>
-    </message>
-    <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="80"/>
-        <source>ERROR: Tiff output for raw files currently disabled. Please add the &quot;-T&quot; option to the raw conversion parameters in the options panel.</source>
-        <translation type="obsolete"> A Tiff jelenleg nem egy megengedett nyers képtípus. Ehhez meg kéne adni a &quot;-T&quot; kapcsolót a nyers képek beállításaiban.</translation>
     </message>
     <message>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="100"/>
