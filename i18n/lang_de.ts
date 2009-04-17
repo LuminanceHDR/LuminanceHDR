@@ -2461,7 +2461,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="107"/>
         <source>Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>Winkelig</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="112"/>
@@ -2471,7 +2471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="117"/>
         <source>Mirror Ball</source>
-        <translation type="unfinished"></translation>
+        <translation>Spherischer Spiegel</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="94"/>
@@ -2496,7 +2496,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="216"/>
         <source>Oversample factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversample-Faktor:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="238"/>
@@ -2511,12 +2511,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/projectionsDialog.ui" line="347"/>
         <source>Pitch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pitch:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="436"/>
         <source>Roll:</source>
-        <translation type="unfinished"></translation>
+        <translation>Roll:</translation>
     </message>
     <message>
         <location filename="../forms/projectionsDialog.ui" line="541"/>
