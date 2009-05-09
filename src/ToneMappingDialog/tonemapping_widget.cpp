@@ -192,21 +192,37 @@ void MyProgressBar::advanceCurrentProgress() {
 }
 
 void TMWidget::on_applyButton_clicked() {
-	FillToneMappingOptions();
+	bool doTonemapping = true;
 
-	MyProgressBar *newprogressbar=new MyProgressBar(sb);
+	// Warning when using size dependent TMOs with smaller sizes
+	if (stackedWidget_operators->currentWidget() == page_fattal &&
+		(sizeComboBox->currentIndex()+1) < sizeComboBox->count())
+	{
+		doTonemapping = QMessageBox::Yes ==
+			QMessageBox::question(
+				this, "Attention",
+				tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"),
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
+			);
+	}
 
-	//tone mapper thread needs to know full size of the hdr
-	TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
+	if (doTonemapping) {
+		FillToneMappingOptions();
 
-	connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-	connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-	connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-	connect(thread, SIGNAL(advanceCurrentProgress()), newprogressbar, SLOT(advanceCurrentProgress()));
-	connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		MyProgressBar *newprogressbar=new MyProgressBar(sb);
 
-	//start thread
-	thread->start();
+		//tone mapper thread needs to know full size of the hdr
+		TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
+
+		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress()), newprogressbar, SLOT(advanceCurrentProgress()));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
 }
 
 void TMWidget::FillToneMappingOptions() {
