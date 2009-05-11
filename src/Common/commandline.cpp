@@ -342,14 +342,14 @@ void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString fname) {
 }
 
 void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif) {
-	if (filesLackingExif.size()!=0) {
-		if (!ev.isEmpty()) {
-			for(int i=0; i<ev.size(); i++)
-				hdrCreationManager->setEV(ev.at(i),i);
-			VERBOSEPRINT("EV values have been assigned. %1","");
-		} else
-			error(qPrintable(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.")));
-	}
+	if (filesLackingExif.size()!=0 && ev.isEmpty()) {else
+		error(qPrintable(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.")));
+	}	
+	if (!ev.isEmpty()) {
+		for(int i=0; i<ev.size(); i++)
+			hdrCreationManager->setEV(ev.at(i),i);
+		VERBOSEPRINT("EV values have been assigned. %1","");
+	} 
 	hdrCreationManager->checkEVvalues();
 	if (align_mode==AIS_ALIGN)
 		hdrCreationManager->align_with_ais();
