@@ -54,7 +54,7 @@ void LoadHdrThread::run() {
 	}
 	pfs::Frame* hdrpfsframe = NULL;
 	QStringList rawextensions;
-	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2";
+	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "RW2";
 	QString extension = qfi.suffix().toUpper();
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
 	try {

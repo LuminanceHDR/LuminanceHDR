@@ -103,10 +103,10 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 void HdrWizardForm::loadImagesButtonClicked() {
     QString filetypes;
     // when changing these filetypes, also change in DnDOption - for Drag and Drop
-    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;");
+    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;");
     filetypes += tr("JPEG (*.jpeg *.jpg);;");
     filetypes += tr("TIFF Images (*.tiff *.tif);;");
-    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)");
+    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2)");
 
     QString RecentDirInputLDRs = settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
 

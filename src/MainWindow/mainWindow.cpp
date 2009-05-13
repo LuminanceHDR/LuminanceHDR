@@ -146,11 +146,11 @@ void MainGui::fileNewViaWizard(QStringList files) {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;" ;
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;" ;
 	filetypes += "OpenEXR (*.exr);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic);;";
 	filetypes += "TIFF Images (*.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;";
 	filetypes += "PFS Stream (*.pfs)";
 	QString filename = QFileDialog::getOpenFileName(
 			this,
