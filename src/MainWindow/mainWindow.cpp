@@ -274,11 +274,13 @@ void MainGui::updateActions( QMdiSubWindow * w ) {
 			normalSizeAct->setEnabled(true);
 		}
 	} else {
-		currenthdr=NULL;
-		normalSizeAct->setEnabled(false);
-		zoomInAct->setEnabled(false);
-		zoomOutAct->setEnabled(false);
-		fitToWindowAct->setEnabled(false);
+		if (mdiArea->subWindowList().empty()) {
+			currenthdr=NULL;
+			normalSizeAct->setEnabled(false);
+			zoomInAct->setEnabled(false);
+			zoomOutAct->setEnabled(false);
+			fitToWindowAct->setEnabled(false);
+		}
 	}
 }
 
