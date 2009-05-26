@@ -21,6 +21,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <iostream>
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
@@ -28,6 +29,7 @@
 #include "config.h"
 #include "options.h"
 #include "global.h"
+#include "imageQualityDialog.h"
 
 QSettings settings("Qtpfsgui", "Qtpfsgui");
 
@@ -61,7 +63,18 @@ QString saveLDRImage(const QString initialFileName, const QImage* image, bool ba
 			format="png";
 			outfname+=".png";
 		}
-		if(!(image->save(outfname,format.toAscii().constData(),100))) {
+		int quality = 100;
+		if (format == "png" || format == "jpg") {
+ 			ImageQualityDialog savedFileQuality((QImage *)image, format);
+			QString winTitle("Save as ");
+			winTitle += format.toUpper();
+			savedFileQuality.setWindowTitle( winTitle );
+			savedFileQuality.exec();
+			quality = savedFileQuality.getQuality();
+		}
+		//std::cout << quality << std::endl;		
+
+		if(!(image->save(outfname,format.toAscii().constData(),quality))) {
 			QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 			return "";
 		}
