@@ -26,7 +26,9 @@
 
 #include <QMainWindow>
 #include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QStringList>
+#include <QProgressDialog>
 #include "../HdrWizard/newHdrWizard.h"
 #include "../../generated_uic/ui_maingui.h"
 #include "../Preferences/preferencesDialog.h"
@@ -42,8 +44,12 @@ Q_OBJECT
 public:
 	MainGui(QWidget *parent=0);
 	~MainGui();
-	HdrViewer* currenthdr;
-public  slots:
+	friend class MySubWindow;
+	void showSaveDialog();
+        void cancelSaveDialog(void);
+public slots: //For saveProgress Dialog
+        void setMaximum(int max);
+        void setValue(int value);
 private slots:
 	void fileNewViaWizard(QStringList files = QStringList());
 	void fileOpen();//for File->Open, it then calls loadFile()
@@ -79,7 +85,6 @@ private slots:
 
 	void openRecentFile();
 	void setCurrentFile(const QString &fileName);
-	void addHdrViewer(pfs::Frame*, QString fname);
 	void updateRecentDirHDRSetting(QString);
 	void load_failed(QString);
 	void aboutQtpfsgui();
@@ -89,7 +94,8 @@ private slots:
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
-
+	HdrViewer* currenthdr;
+ 	QProgressDialog *saveProgress;
 private:
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
@@ -105,5 +111,15 @@ private:
 	QtpfsguiOptions *qtpfsgui_options;
 };
 
+class MySubWindow : public QMdiSubWindow {
+Q_OBJECT
+public:
+        MySubWindow(MainGui * ptr, QWidget * parent = 0, Qt::WindowFlags flags = 0 );
+        ~MySubWindow();
+private slots:
+        void addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname);
+private:
+	MainGui *mainGuiPtr;
+};
 
 #endif

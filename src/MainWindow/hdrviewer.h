@@ -31,6 +31,7 @@
 #include <QToolBar>
 #include <QResizeEvent>
 #include <QToolButton>
+#include <QProgressDialog>
 #include "../Common/smart_scroll_area.h"
 #include "../Common/panIconWidget.h"
 #include "luminancerange_widget.h"
@@ -62,6 +63,8 @@ public:
 	pfs::Frame* &getHDRPfsFrame();
 	void update_colors(unsigned int negcol, unsigned int naninfcol);
 	void saveHdrPreview();
+	void showLoadDialog();
+	void cancelLoadDialog(void);
 public slots:
 	void zoomIn();
 	void zoomOut();
@@ -69,6 +72,8 @@ public slots:
 	void normalSize();
 	void updateRangeWindow();
 	void setLumMappingMethod( int method );
+	void setMaximum(int max);
+	void setValue(int value);
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();
@@ -93,5 +98,6 @@ private:
 	float minValue;
 	float maxValue;
 	unsigned int naninfcol,negcol;
+	QProgressDialog *progress;
 };
 #endif

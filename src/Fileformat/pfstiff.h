@@ -31,11 +31,13 @@
 #include <tiffio.h>
 #include "../Libpfs/array2d.h"
 #include "../Libpfs/pfs.h"
+#include <QObject>
 #include <QImage>
 
 
-class TiffReader
-{
+class TiffReader : public QObject {
+Q_OBJECT
+
   TIFF* tif;
   uint32 width, height;
 
@@ -61,11 +63,16 @@ public:
 
   pfs::Frame* readIntoPfsFrame(); //from 8,16,32,logluv TIFF to pfs::Frame
   QImage* readIntoQImage();
+
+signals: //For ProgressDialog
+  void maximumValue(int);
+  void nextstep(int);
 };
 
 
-class TiffWriter
-{
+class TiffWriter : public QObject {
+Q_OBJECT
+
 private:
   TIFF* tif;
   pfs::Channel *R,*G,*B;
@@ -79,6 +86,9 @@ public:
 //   int write16bitTiff(); //write 16bit Tiff from pfs::Frame
   int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
   int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
+signals: //For ProgressDialog
+  void maximumValue(int);
+  void nextstep(int);
 };
 
 #endif

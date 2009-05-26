@@ -30,7 +30,7 @@
 pfs::Frame* readEXRfile  (const char * filename);
 pfs::Frame* readRGBEfile (const char * filename);
 
-LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting) {
+LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), progress(NULL) {
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 }
 
@@ -54,7 +54,7 @@ void LoadHdrThread::run() {
 	}
 	pfs::Frame* hdrpfsframe = NULL;
 	QStringList rawextensions;
-	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "RW2";
+	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2";
 	QString extension = qfi.suffix().toUpper();
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
 	try {
@@ -67,8 +67,10 @@ void LoadHdrThread::run() {
 			pfs::DOMIO pfsio;
 			hdrpfsframe=pfsio.readFrame(encodedFileName);
 			hdrpfsframe->convertXYZChannelsToRGB();
-		} else if (extension.startsWith("TIF")) {
+		} else if (extension.startsWith("TIF")) {	
 			TiffReader reader(encodedFileName);
+			connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
+			connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 		}
 		else if (rawinput) {

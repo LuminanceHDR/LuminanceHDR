@@ -26,6 +26,7 @@
  */
 
 #include <cmath>
+#include <QObject>
 #include <QSysInfo>
 
 #include "pfstiff.h"
@@ -137,6 +138,8 @@ pfs::Frame* TiffReader::readIntoPfsFrame() {
   //--- image length
   uint32 imagelength;
   TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &imagelength);
+  
+  emit maximumValue( imagelength ); //for QProgressDialog
 
   //--- image scanline size
   uint32 scanlinesize = TIFFScanlineSize(tif);
@@ -146,6 +149,7 @@ pfs::Frame* TiffReader::readIntoPfsFrame() {
   const int image_width = X->getCols();
   for(uint32 row = 0; row < imagelength; row++)
   {
+    emit nextstep( row ); //for QProgressDialog
     switch(TypeOfData)
     {
       case FLOAT:
@@ -273,8 +277,11 @@ int TiffWriter::writeFloatTiff() { //write 32 bit float Tiff from pfs::Frame
 	float* strip_buf=(float*)_TIFFmalloc(strip_size); //enough space for a strip
 	if (!strip_buf)
 		throw pfs::Exception("TIFF: error allocating buffer.");
+	
+	emit maximumValue( strips_num );  // for QProgressDialog
 
 	for (unsigned int s=0; s<strips_num; s++) {
+		emit nextstep( s );  // for QProgressDialog
 		for (unsigned int col=0; col<width; col++) {
 			strip_buf[3*col+0]=(*R)(col,s);
 			strip_buf[3*col+1]=(*G)(col,s);
@@ -302,8 +309,11 @@ int TiffWriter::writeLogLuvTiff() { //write LogLUv Tiff from pfs::Frame
 	if (!strip_buf)
 		throw pfs::Exception("TIFF: error allocating buffer.");
 
+	emit maximumValue( strips_num ); // for QProgressDialog
+
 	pfs::transformColorSpace( pfs::CS_RGB, R,G,B, pfs::CS_XYZ, R,G,B );
 	for (unsigned int s=0; s<strips_num; s++) {
+		emit nextstep( s ); // for QProgressDialog
 		for (unsigned int col=0; col<width; col++) {
 			strip_buf[3*col+0]=(*R)(col,s);
 			strip_buf[3*col+1]=(*G)(col,s);

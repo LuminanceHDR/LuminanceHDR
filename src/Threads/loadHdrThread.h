@@ -25,6 +25,7 @@
 #define IOTHREAD_H
 
 #include <QThread>
+#include <QProgressDialog>
 #include "../Common/options.h"
 
 namespace pfs {
@@ -42,10 +43,13 @@ signals:
 	void updateRecentDirHDRSetting(QString);
 	void hdr_ready(pfs::Frame*, QString fname);
 	void load_failed(QString error_message);
+	void maximumValue(int value);
+	void nextstep(int step);
 protected:
 	void run();
 private:
 	QString fname,RecentDirHDRSetting;
 	QtpfsguiOptions *qtpfsgui_options;
+	QProgressDialog *progress;
 };
 #endif

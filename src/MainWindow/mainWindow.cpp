@@ -30,6 +30,7 @@
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>
+
 #include "mainWindow.h"
 #include "../Fileformat/pfstiff.h"
 #include "../ToneMappingDialog/tonemappingDialog.h"
@@ -69,7 +70,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	load_options();
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
-
+	
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(updateActions(QMdiSubWindow*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
@@ -126,7 +127,11 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
+	saveProgress = new QProgressDialog("Saving file...", "Abort", 0, 0, this);
+        saveProgress->setWindowModality(Qt::WindowModal);
+        saveProgress->setMinimumDuration(0);	
 }
+
 
 void MainGui::fileNewViaWizard(QStringList files) {
 	HdrWizardForm *wizard;
@@ -146,28 +151,21 @@ void MainGui::fileNewViaWizard(QStringList files) {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;" ;
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;" ;
 	filetypes += "OpenEXR (*.exr);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic);;";
 	filetypes += "TIFF Images (*.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;";
 	filetypes += "PFS Stream (*.pfs)";
-	QString filename = QFileDialog::getOpenFileName(
-			this,
-			tr("Load an Hdr file..."),
-			RecentDirHDRSetting,
-			filetypes );
-	setupLoadThread(filename);
-}
+	QStringList files = QFileDialog::getOpenFileNames(
+        	this,
+		tr("Load one or more Hdr files..."),
+		RecentDirHDRSetting,
+		filetypes );
 
-void MainGui::addHdrViewer(pfs::Frame* hdr_pfs_frame, QString fname) {
-	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
-	newhdr->updateHDR(hdr_pfs_frame);
-	newhdr->filename=fname;
-	newhdr->setWindowTitle(fname);
-	mdiArea->addSubWindow(newhdr);
-	newhdr->show();
-	setCurrentFile(fname);
+	foreach (QString file, files) {
+		setupLoadThread(file);
+	}
 }
 
 void MainGui::updateRecentDirHDRSetting(QString newvalue) {
@@ -189,13 +187,14 @@ void MainGui::fileSaveAs()
 	filetypes += "PFS Stream (*.pfs)";
 
 	QString fname = QFileDialog::getSaveFileName(
-			this,
-			tr("Save the HDR..."),
-			RecentDirHDRSetting,
-			filetypes
+		this,
+		tr("Save the HDR..."),
+		RecentDirHDRSetting,
+		filetypes
 	);
-
+                        
 	if(!fname.isEmpty()) {
+		showSaveDialog();
 		QFileInfo qfi(fname);
 		QString absoluteFileName=qfi.absoluteFilePath();
 		char* encodedName=strdup(QFile::encodeName(absoluteFileName).constData());
@@ -210,6 +209,8 @@ void MainGui::fileSaveAs()
 			writeRGBEfile (currenthdr->getHDRPfsFrame(), encodedName);
 		} else if (qfi.suffix().toUpper().startsWith("TIF")) {
 			TiffWriter tiffwriter(encodedName, currenthdr->getHDRPfsFrame());
+			connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SLOT(setMaximum(int)));
+			connect(&tiffwriter, SIGNAL(nextstep(int)), this, SLOT(setValue(int)));
 			if (qtpfsgui_options->saveLogLuvTiff)
 				tiffwriter.writeLogLuvTiff();
 			else
@@ -231,6 +232,7 @@ void MainGui::fileSaveAs()
 //			QMessageBox::Ok,QMessageBox::NoButton);
 //			return;
 		}
+		cancelSaveDialog();
 		free(encodedName);
 		setCurrentFile(absoluteFileName);
 		currenthdr->NeedsSaving=false;
@@ -435,14 +437,14 @@ void MainGui::enterWhatsThis() {
 }
 
 void MainGui::setCurrentFile(const QString &fileName) {
-	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
-	files.removeAll(fileName);
-	files.prepend(fileName);
-	while (files.size() > MaxRecentFiles)
-		files.removeLast();
+        QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+        files.removeAll(fileName);
+        files.prepend(fileName);
+        while (files.size() > MaxRecentFiles)
+                files.removeLast();
 
-	settings.setValue(KEY_RECENT_FILES, files);
-	updateRecentFileActions();
+        settings.setValue(KEY_RECENT_FILES, files);
+        updateRecentFileActions();
 }
 
 void MainGui::updateRecentFileActions() {
@@ -468,9 +470,18 @@ void MainGui::openRecentFile() {
 }
 
 void MainGui::setupLoadThread(QString fname) {
+	MySubWindow *subWindow = new MySubWindow(this,this);
+	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+	subWindow->setWidget(newhdr);
+        subWindow->setAttribute(Qt::WA_DeleteOnClose);
+	mdiArea->addSubWindow(subWindow);
+	newhdr->show();
+	newhdr->showLoadDialog();	
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
+	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
+	connect(loadthread, SIGNAL(nextstep(int)), newhdr, SLOT(setValue(int)));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
-	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrViewer(pfs::Frame*,QString)));
+	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 	loadthread->start();
 }
@@ -608,7 +619,7 @@ void MainGui::aboutQtpfsgui() {
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
 
-	bool license_file_not_found=true;
+        bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
 	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << docDir << "/Applications/qtpfsgui.app/Contents/Resources" << "./";
@@ -659,3 +670,42 @@ void MainGui::batch_requested() {
 	batchdialog->exec();
 	delete batchdialog;
 }
+
+void MainGui::setMaximum(int max) {
+        saveProgress->setMaximum( max - 1 );
+}
+
+void MainGui::setValue(int value) {
+        saveProgress->setValue( value );
+}
+
+void MainGui::showSaveDialog(void) {
+        saveProgress->setValue( 1 );
+}
+
+void MainGui::cancelSaveDialog(void) {
+        saveProgress->cancel();
+}
+
+
+
+//
+//------------- MySubWindow --------------------------
+//
+MySubWindow::MySubWindow(MainGui *ptr, QWidget * parent, Qt::WindowFlags flags) : QMdiSubWindow(parent, flags), mainGuiPtr(ptr) {
+}
+
+MySubWindow::~MySubWindow() {
+}
+
+void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
+	HdrViewer *ptr = (HdrViewer *) widget();
+	ptr->cancelLoadDialog();
+	ptr->updateHDR(hdr_pfs_frame);
+	ptr->filename=fname;
+	ptr->setWindowTitle(fname);
+	mainGuiPtr->setCurrentFile(fname);
+	resize(500,400);
+}
+
+

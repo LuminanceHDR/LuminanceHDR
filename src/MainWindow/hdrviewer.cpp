@@ -131,6 +131,10 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+	progress = new QProgressDialog("Loading file...", "Abort", 0, 0, this);
+     	progress->setWindowModality(Qt::WindowModal);
+     	progress->setMinimumDuration(0);
+
 }
 
 void HdrViewer::slotCornerButtonPressed() {
@@ -318,6 +322,7 @@ HdrViewer::~HdrViewer() {
 	if (image) delete image;
 	if (pfsFrame!=NULL)
 		delete pfsFrame;
+	delete progress;
 }
 
 pfs::Frame*& HdrViewer::getHDRPfsFrame() {
@@ -340,4 +345,20 @@ void HdrViewer::closeEvent ( QCloseEvent * event ) {
 void HdrViewer::saveHdrPreview() {
 	qDebug("filename=%s",qPrintable(filename));
 	saveLDRImage(QFileInfo(filename).completeBaseName()+"_preview"+".jpg",image);
+}
+
+void HdrViewer::setMaximum(int max) {
+        progress->setMaximum( max - 1 );
+}
+
+void HdrViewer::setValue(int value) {
+        progress->setValue( value );
+}
+
+void HdrViewer::showLoadDialog(void) {
+        progress->setValue( 1 );
+}
+
+void HdrViewer::cancelLoadDialog(void) {
+        progress->cancel();
 }
