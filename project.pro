@@ -27,7 +27,8 @@ FORMS = forms/maingui.ui \
         forms/gamma_and_levels.ui \
         forms/projectionsDialog.ui \
         forms/editing_tools.ui \
-        forms/batch_dialog.ui
+        forms/batch_dialog.ui \ 
+	forms/imageQualityDialog.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
@@ -38,6 +39,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Common/gamma_and_levels.h \
            src/Common/gang.h \
            src/Common/commandline.h \
+           src/Common/imageQualityDialog.h \
            src/MainWindow/mainWindow.h \
            src/MainWindow/DnDOption.h \
            src/MainWindow/hdrviewer.h \
@@ -89,6 +91,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Common/gamma_and_levels.cpp \
            src/Common/gang.cpp \
            src/Common/commandline.cpp \
+           src/Common/imageQualityDialog.cpp \
            src/MainWindow/mainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
            src/MainWindow/hdrviewer.cpp \
