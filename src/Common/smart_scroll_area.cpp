@@ -104,7 +104,7 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
 }
 
 void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
-	if (e->buttons()==Qt::MidButton) {
+	if (e->buttons()==Qt::LeftButton) { // That's better for laptop users
 		QPoint diff = (e->globalPos() - mousePos);
 		if (e->modifiers()==Qt::ShiftModifier)
 			diff*=5;
