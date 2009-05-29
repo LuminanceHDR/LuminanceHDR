@@ -66,7 +66,7 @@ QString saveLDRImage(const QString initialFileName, const QImage* image, bool ba
 		int quality = 100;
 		if (format == "png" || format == "jpg") {
  			ImageQualityDialog savedFileQuality((QImage *)image, format);
-			QString winTitle("Save as ");
+			QString winTitle(QObject::tr("Save as "));
 			winTitle += format.toUpper();
 			savedFileQuality.setWindowTitle( winTitle );
 			savedFileQuality.exec();
