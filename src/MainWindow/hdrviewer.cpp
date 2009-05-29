@@ -131,7 +131,8 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-	progress = new QProgressDialog("Loading file...", "Abort", 0, 0, this);
+	progress = new QProgressDialog(0, 0, 0, 0, this);
+     	progress->setWindowTitle("Loading file...");
      	progress->setWindowModality(Qt::WindowModal);
      	progress->setMinimumDuration(0);
 
