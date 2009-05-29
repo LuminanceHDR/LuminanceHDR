@@ -153,7 +153,7 @@
             <item>
              <widget class="QPushButton" name="getSizeButton" >
               <property name="text" >
-               <string>File Size</string>
+               <string>&amp;File Size</string>
               </property>
              </widget>
             </item>
@@ -206,9 +206,9 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="okButton" >
+        <widget class="QPushButton" name="saveButton" >
          <property name="text" >
-          <string>OK</string>
+          <string>&amp;Save</string>
          </property>
         </widget>
        </item>
@@ -231,6 +231,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>horizontalSlider</tabstop>
+  <tabstop>spinBox</tabstop>
+  <tabstop>getSizeButton</tabstop>
+  <tabstop>saveButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
