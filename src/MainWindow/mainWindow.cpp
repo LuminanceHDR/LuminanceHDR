@@ -127,7 +127,8 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
-	saveProgress = new QProgressDialog("Saving file...", "Abort", 0, 0, this);
+	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
+        saveProgress->setWindowTitle(tr("Saving file..."));
         saveProgress->setWindowModality(Qt::WindowModal);
         saveProgress->setMinimumDuration(0);	
 }
@@ -470,6 +471,7 @@ void MainGui::openRecentFile() {
 }
 
 void MainGui::setupLoadThread(QString fname) {
+	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
 	subWindow->setWidget(newhdr);
@@ -680,10 +682,12 @@ void MainGui::setValue(int value) {
 }
 
 void MainGui::showSaveDialog(void) {
-        saveProgress->setValue( 1 );
+	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+	saveProgress->setValue( 1 );
 }
 
 void MainGui::cancelSaveDialog(void) {
+	QApplication::restoreOverrideCursor();	
         saveProgress->cancel();
 }
 
@@ -706,6 +710,7 @@ void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	ptr->setWindowTitle(fname);
 	mainGuiPtr->setCurrentFile(fname);
 	resize(500,400);
+	QApplication::restoreOverrideCursor();
 }
 
 
