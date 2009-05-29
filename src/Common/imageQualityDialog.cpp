@@ -29,14 +29,14 @@
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(QImage *img, QString fmt, QWidget *parent) : QDialog(parent) {
+ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent) : QDialog(parent) {
         setupUi(this);
 	image = img;
 	format = fmt;
 	connect(getSizeButton, SIGNAL(clicked(void)), this, SLOT(calcFileSize(void)));
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
 	connect(horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
-	connect(okButton, SIGNAL(clicked(void)), this, SLOT(accept(void)));
+	connect(saveButton, SIGNAL(clicked(void)), this, SLOT(accept(void)));
 }
 
 int ImageQualityDialog::getQuality(void) {
@@ -44,14 +44,16 @@ int ImageQualityDialog::getQuality(void) {
 }
 
 void ImageQualityDialog::calcFileSize(void) {
+	setCursor(QCursor(Qt::WaitCursor));
 	int quality = spinBox->value();
         QByteArray ba;
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
         image->save(&buffer, (const char *) format.toLatin1(), quality);
 	label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
+	setCursor(QCursor(Qt::ArrowCursor));
 }
 
 void ImageQualityDialog::reset(int) {
-	label_filesize->setText("Unknown");
+	label_filesize->setText(tr("Unknown"));
 }

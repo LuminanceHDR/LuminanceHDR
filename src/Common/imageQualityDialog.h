@@ -32,7 +32,7 @@ class ImageQualityDialog : public QDialog, private Ui::ImgQualityDialog
 Q_OBJECT
 
 public:
-	ImageQualityDialog(QImage *img, QString fmt, QWidget *parent = 0);
+	ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent = 0);
 	~ImageQualityDialog();
 	int getQuality(void);
 protected slots:
