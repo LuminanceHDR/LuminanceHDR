@@ -40,6 +40,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Common/gang.h \
            src/Common/commandline.h \
            src/Common/imageQualityDialog.h \
+	   src/Common/selectableLabel.h \
            src/MainWindow/mainWindow.h \
            src/MainWindow/DnDOption.h \
            src/MainWindow/hdrviewer.h \
@@ -65,6 +66,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/HdrWizard/previewWidget.h \
            src/HdrWizard/newHdrWizard.h \
            src/Filter/pfspanoramic.h \
+           src/Filter/pfscut.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
            src/TM_operators/ashikhmin02/pyramid.h \
@@ -92,6 +94,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Common/gang.cpp \
            src/Common/commandline.cpp \
            src/Common/imageQualityDialog.cpp \
+	   src/Common/selectableLabel.cpp \
            src/MainWindow/mainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
            src/MainWindow/hdrviewer.cpp \
@@ -120,6 +123,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Filter/pfssize.cpp \
            src/Filter/pfsgamma.cpp \
            src/Filter/pfspanoramic.cpp \
+           src/Filter/pfscut.cpp \
            src/Fileformat/pfsinrgbe.cpp \
            src/Fileformat/pfsoutrgbe.cpp \
            src/Fileformat/pfsoutldrimage.cpp \
