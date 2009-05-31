@@ -33,17 +33,15 @@ ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *
         setupUi(this);
 	image = img;
 	format = fmt;
-	connect(getSizeButton, SIGNAL(clicked(void)), this, SLOT(calcFileSize(void)));
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
 	connect(horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
-	connect(saveButton, SIGNAL(clicked(void)), this, SLOT(accept(void)));
 }
 
 int ImageQualityDialog::getQuality(void) {
 	return spinBox->value();
 }
 
-void ImageQualityDialog::calcFileSize(void) {
+void ImageQualityDialog::on_getSizeButton_clicked() {
 	setCursor(QCursor(Qt::WaitCursor));
 	int quality = spinBox->value();
         QByteArray ba;

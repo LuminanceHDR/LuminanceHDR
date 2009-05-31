@@ -36,8 +36,9 @@ public:
 	~ImageQualityDialog();
 	int getQuality(void);
 protected slots:
-	void calcFileSize(void);
+	void on_getSizeButton_clicked();
 	void reset(int);
+
 protected:
 	const QImage *image;
 	QString format;

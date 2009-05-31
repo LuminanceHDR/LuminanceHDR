@@ -21,7 +21,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include <iostream>
+//#include <iostream>
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
@@ -64,16 +64,16 @@ QString saveLDRImage(const QString initialFileName, const QImage* image, bool ba
 			outfname+=".png";
 		}
 		int quality = 100;
-		if (format == "png" || format == "jpg") {
+		if ((format == "png" || format == "jpg") && !batchMode) {
  			ImageQualityDialog savedFileQuality((QImage *)image, format);
 			QString winTitle(QObject::tr("Save as "));
 			winTitle += format.toUpper();
 			savedFileQuality.setWindowTitle( winTitle );
-			savedFileQuality.exec();
+			if (savedFileQuality.exec() == QDialog::Rejected)
+				return "";
 			quality = savedFileQuality.getQuality();
 		}
-		//std::cout << quality << std::endl;		
-
+		//std::cout << quality << std::endl;
 		if(!(image->save(outfname,format.toAscii().constData(),quality))) {
 			QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 			return "";

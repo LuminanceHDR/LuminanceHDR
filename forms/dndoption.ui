@@ -68,7 +68,7 @@
    <item>
     <widget class="QCommandLinkButton" name="btnOpenHDR" >
      <property name="text" >
-      <string>Open</string>
+      <string>&amp;Open</string>
      </property>
      <property name="icon" >
       <iconset resource="../icons.qrc" >
@@ -88,7 +88,7 @@
    <item>
     <widget class="QCommandLinkButton" name="btnCreateNewHDR" >
      <property name="text" >
-      <string>New</string>
+      <string>&amp;New</string>
      </property>
      <property name="icon" >
       <iconset resource="../icons.qrc" >
@@ -108,7 +108,7 @@
    <item>
     <widget class="QCommandLinkButton" name="btnCancel" >
      <property name="text" >
-      <string>Cancel</string>
+      <string>&amp;Cancel</string>
      </property>
      <property name="icon" >
       <iconset resource="../icons.qrc" >
