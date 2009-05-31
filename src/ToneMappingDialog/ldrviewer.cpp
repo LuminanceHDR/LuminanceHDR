@@ -34,7 +34,7 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 	VBL_L->setSpacing(0);
 	VBL_L->setMargin(0);
 
-	imageLabel = new QLabel;
+	imageLabel = new SelectableLabel;
 	imageLabel->setPixmap(QPixmap::fromImage(origimage));
 	scrollArea = new SmartScrollArea(this,imageLabel);
 	VBL_L->addWidget(scrollArea);
