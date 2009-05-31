@@ -26,12 +26,14 @@
 
 #include <QScrollArea>
 #include <QScrollBar>
-#include <QLabel>
 #include <QMouseEvent>
+
+#include "selectableLabel.h"
+
 class SmartScrollArea : public QScrollArea {
 	Q_OBJECT
 public:
-	SmartScrollArea( QWidget *parent, QLabel *imagelabel );
+	SmartScrollArea( QWidget *parent, SelectableLabel *imagelabel );
 	void zoomIn();
 	void zoomOut();
 	void fitToWindow(bool checked);
@@ -43,20 +45,20 @@ public:
 	bool isFitting() {
 		return fittingwin;
 	}
-public slots:
+	QRect getSelectionRect();
+	void hideRubberBand();
 protected:
 	void resizeEvent ( QResizeEvent * );
-	void mousePressEvent(QMouseEvent *e) {
-		mousePos = e->globalPos();
-	}
-	void mouseMoveEvent(QMouseEvent *e);
+protected slots:
+	void update(QPoint diff);
 private:
-	QLabel *imageLabel;
-	QPoint mousePos;
+	SelectableLabel *imageLabel;
 	double scaleFactor;
 	bool fittingwin;
 	void scaleImage(double);
 	void adjustScrollBar(QScrollBar *scrollBar, double factor);
+signals:
+	void selectionReady();
 };
 #endif
 

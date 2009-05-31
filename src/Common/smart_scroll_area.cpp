@@ -21,9 +21,12 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "smart_scroll_area.h"
 #include <QPixmap>
-SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), fittingwin(false) {
+#include <iostream> // for debug
+
+#include "smart_scroll_area.h"
+
+SmartScrollArea::SmartScrollArea( QWidget *parent, SelectableLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), fittingwin(false) {
 	setBackgroundRole(QPalette::Light);
 	imageLabel->setBackgroundRole(QPalette::Base);
 	//the label ignores the pixmap's size
@@ -35,6 +38,8 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrol
 	//indeed, when I zoom in/out I call imageLabel->resize(...)
 	setWidgetResizable(false);
 	setWidget(imageLabel);
+	connect(imageLabel, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
+	connect(imageLabel, SIGNAL(moved(QPoint)), this, SLOT(update(QPoint)));
 }
 
 void SmartScrollArea::zoomIn() {
@@ -103,15 +108,16 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
 	}
 }
 
-void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
-	if (e->buttons()==Qt::LeftButton) { // That's better for laptop users
-		QPoint diff = (e->globalPos() - mousePos);
-		if (e->modifiers()==Qt::ShiftModifier)
-			diff*=5;
-		verticalScrollBar()->setValue(verticalScrollBar()->value() + 
-	diff.y());
-		horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 
-	diff.x());
-		mousePos = e->globalPos();
-	}
+void SmartScrollArea::update(QPoint diff) {
+
+	verticalScrollBar()->setValue(verticalScrollBar()->value() + diff.y());
+	horizontalScrollBar()->setValue(horizontalScrollBar()->value() + diff.x());
+}
+
+QRect SmartScrollArea::getSelectionRect() {
+	return imageLabel->getSelectionRect();
+}
+
+void SmartScrollArea::hideRubberBand() {
+	imageLabel->hideRubberBand();
 }
