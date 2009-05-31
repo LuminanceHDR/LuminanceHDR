@@ -13,7 +13,8 @@
    <string>Qtpfsgui</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+   <iconset resource="../icons.qrc" >
+    <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
   <property name="toolButtonStyle" >
    <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -25,7 +26,7 @@
      <x>0</x>
      <y>0</y>
      <width>683</width>
-     <height>29</height>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings" >
@@ -130,19 +131,24 @@
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
    <attribute name="toolBarArea" >
-    <number>4</number>
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
    </attribute>
    <addaction name="fileNewAction" />
    <addaction name="fileOpenAction" />
    <addaction name="fileSaveAsAction" />
    <addaction name="separator" />
    <addaction name="TonemapAction" />
+   <addaction name="cropToSelectionAction" />
    <addaction name="separator" />
    <addaction name="fileExitAction" />
   </widget>
   <action name="fileNewAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/newfile.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;New Hdr...</string>
@@ -165,7 +171,8 @@
   </action>
   <action name="fileOpenAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/fileopen.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Open Hdr...</string>
@@ -191,7 +198,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/filesave.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Save Hdr as...</string>
@@ -223,7 +231,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/tonemap.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Tonemap the Hdr...</string>
@@ -246,7 +255,8 @@
   </action>
   <action name="fileExitAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/exit.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/exit.png</normaloff>:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Exit</string>
@@ -269,7 +279,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_left.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/rotate_left.png</normaloff>:/new/prefix1/images/rotate_left.png</iconset>
    </property>
    <property name="text" >
     <string>Rotate C&amp;ounterClockWise</string>
@@ -295,7 +306,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/rotate_right.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/rotate_right.png</normaloff>:/new/prefix1/images/rotate_right.png</iconset>
    </property>
    <property name="text" >
     <string>Rotate C&amp;lockWise</string>
@@ -384,7 +396,8 @@
   </action>
   <action name="documentationAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/help.png</normaloff>:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Documentation...</string>
@@ -410,7 +423,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag1.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Normal Size</string>
@@ -433,7 +447,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_inc.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
    </property>
    <property name="text" >
     <string>Zoom &amp;In</string>
@@ -453,7 +468,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmag_dec.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
    </property>
    <property name="text" >
     <string>Zoom &amp;Out</string>
@@ -476,7 +492,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/viewmagfit.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Fit to Window</string>
@@ -493,7 +510,8 @@
   </action>
   <action name="OptionsAction" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/options.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/options.png</normaloff>:/new/prefix1/images/options.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Preferences...</string>
@@ -519,7 +537,8 @@
     <bool>false</bool>
    </property>
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/scale.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/scale.png</normaloff>:/new/prefix1/images/scale.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;Resize the Hdr...</string>
@@ -542,7 +561,8 @@
   </action>
   <action name="Transplant_Exif_Data_action" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/copyexif.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/copyexif.png</normaloff>:/new/prefix1/images/copyexif.png</iconset>
    </property>
    <property name="text" >
     <string>Copy &amp;Exif Data...</string>
@@ -648,7 +668,8 @@
   </action>
   <action name="actionWhat_s_This" >
    <property name="icon" >
-    <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
    </property>
    <property name="text" >
     <string>&amp;What's This?</string>
@@ -697,6 +718,21 @@
    </property>
    <property name="whatsThis" >
     <string>Apply a projective transformation to the current Hdr.</string>
+   </property>
+  </action>
+  <action name="cropToSelectionAction" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Crop</string>
+   </property>
+   <property name="iconText" >
+    <string>Crop to Selection</string>
+   </property>
+   <property name="toolTip" >
+    <string>Crop Image to Selection</string>
    </property>
   </action>
  </widget>
