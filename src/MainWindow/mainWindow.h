@@ -46,10 +46,12 @@ public:
 	~MainGui();
 	friend class MySubWindow;
 	void showSaveDialog();
-        void cancelSaveDialog(void);
+        void hideSaveDialog(void);
 public slots: //For saveProgress Dialog
         void setMaximum(int max);
         void setValue(int value);
+	void enableCrop(void);
+	void disableCrop(void);
 private slots:
 	void fileNewViaWizard(QStringList files = QStringList());
 	void fileOpen();//for File->Open, it then calls loadFile()
@@ -91,6 +93,8 @@ private slots:
 
 	void updateActions( QMdiSubWindow * w );
 	void setActiveSubWindow(QWidget* w);
+	void cropToSelection();
+
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);

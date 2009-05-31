@@ -43,6 +43,7 @@
 #include "../Common/config.h"
 #include "hdrviewer.h"
 #include "../Common/global.h"
+#include "../Filter/pfscut.h"
 
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
@@ -76,6 +77,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
+	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
@@ -131,6 +133,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
         saveProgress->setWindowTitle(tr("Saving file..."));
         saveProgress->setWindowModality(Qt::WindowModal);
         saveProgress->setMinimumDuration(0);	
+	cropToSelectionAction->setEnabled(false);
 }
 
 
@@ -233,7 +236,7 @@ void MainGui::fileSaveAs()
 //			QMessageBox::Ok,QMessageBox::NoButton);
 //			return;
 		}
-		cancelSaveDialog();
+		hideSaveDialog();
 		free(encodedName);
 		setCurrentFile(absoluteFileName);
 		currenthdr->NeedsSaving=false;
@@ -474,6 +477,7 @@ void MainGui::setupLoadThread(QString fname) {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+	connect(newhdr, SIGNAL(selectionReady()), this, SLOT(enableCrop()));
 	subWindow->setWidget(newhdr);
         subWindow->setAttribute(Qt::WA_DeleteOnClose);
 	mdiArea->addSubWindow(subWindow);
@@ -686,13 +690,39 @@ void MainGui::showSaveDialog(void) {
 	saveProgress->setValue( 1 );
 }
 
-void MainGui::cancelSaveDialog(void) {
+void MainGui::hideSaveDialog(void) {
 	QApplication::restoreOverrideCursor();	
         saveProgress->cancel();
 }
 
 
+void MainGui::cropToSelection(void) {
+	/////////////////////////////////////////////
+	//To test pfscut
+	//
+	QRect cropRect = currenthdr->getSelectionRect();
+	currenthdr->hideSelection();
+	int x_ul, y_ul, x_br, y_br;
+	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
+	HdrViewer *newHdrViewer = new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+        pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
+	newHdrViewer->updateHDR(cropped_frame);
+        newHdrViewer->filename=QString("Cropped Frame");
+        newHdrViewer->setWindowTitle(QString("Cropped Frame"));
+        setCurrentFile(QString("Cropped Frame"));
+	mdiArea->addSubWindow(newHdrViewer);
+	newHdrViewer->show();
+	disableCrop();
+}
 
+void MainGui::enableCrop(void) {
+	cropToSelectionAction->setEnabled(true);
+}
+
+void MainGui::disableCrop(void) {
+	cropToSelectionAction->setEnabled(false);
+}
 //
 //------------- MySubWindow --------------------------
 //
@@ -704,7 +734,7 @@ MySubWindow::~MySubWindow() {
 
 void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	HdrViewer *ptr = (HdrViewer *) widget();
-	ptr->cancelLoadDialog();
+	ptr->hideLoadDialog();
 	ptr->updateHDR(hdr_pfs_frame);
 	ptr->filename=fname;
 	ptr->setWindowTitle(fname);
