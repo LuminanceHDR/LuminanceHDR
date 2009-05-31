@@ -122,7 +122,7 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 	VBL_L->addWidget(toolBar);
 
-	imageLabel = new QLabel;
+	imageLabel = new SelectableLabel;
 	scrollArea = new SmartScrollArea(this,imageLabel);
 	scrollArea->setBackgroundRole(QPalette::Shadow);
 	VBL_L->addWidget(scrollArea);
@@ -131,11 +131,11 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+	connect(scrollArea, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
 	progress = new QProgressDialog(0, 0, 0, 0, this);
      	progress->setWindowTitle("Loading file...");
      	progress->setWindowModality(Qt::WindowModal);
      	progress->setMinimumDuration(0);
-
 }
 
 void HdrViewer::slotCornerButtonPressed() {
@@ -360,6 +360,14 @@ void HdrViewer::showLoadDialog(void) {
         progress->setValue( 1 );
 }
 
-void HdrViewer::cancelLoadDialog(void) {
+void HdrViewer::hideLoadDialog(void) {
         progress->cancel();
+}
+
+QRect HdrViewer::getSelectionRect(void) {
+        return scrollArea->getSelectionRect();
+}
+
+void HdrViewer::hideSelection(void) {
+	scrollArea->hideRubberBand();
 }
