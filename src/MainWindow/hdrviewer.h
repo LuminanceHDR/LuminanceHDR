@@ -79,10 +79,12 @@ public slots:
 	void setMaximum(int max);
 	void setValue(int value);
 	void hideSelection();
+	bool hasSelection();
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();
 	void slotCornerButtonPressed();
+	void setSelection();
 protected:
 	SelectableLabel *imageLabel;
 	SmartScrollArea *scrollArea;
@@ -104,5 +106,6 @@ private:
 	float maxValue;
 	unsigned int naninfcol,negcol;
 	QProgressDialog *progress;
+	bool selection;
 };
 #endif

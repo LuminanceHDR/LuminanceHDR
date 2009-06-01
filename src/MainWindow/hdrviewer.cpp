@@ -84,9 +84,8 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 //**********************************************************************************
 //==================================================================================
 
-HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bool ns) : QWidget(parent), NeedsSaving(ns), filename(""), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
+HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bool ns) : QWidget(parent), NeedsSaving(ns), filename(""), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg), selection(false) {
 
-	image=NULL;
 	workArea[0] = workArea[1] = workArea[2] = NULL;
 	setAttribute(Qt::WA_DeleteOnClose);
 
@@ -132,6 +131,7 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 	connect(scrollArea, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
+	connect(scrollArea, SIGNAL(selectionReady()), this, SLOT(setSelection()));
 	progress = new QProgressDialog(0, 0, 0, 0, this);
      	progress->setWindowTitle("Loading file...");
      	progress->setWindowModality(Qt::WindowModal);
@@ -368,6 +368,16 @@ QRect HdrViewer::getSelectionRect(void) {
         return scrollArea->getSelectionRect();
 }
 
+void HdrViewer::setSelection(void) {
+	selection = true;
+}
+
 void HdrViewer::hideSelection(void) {
 	scrollArea->hideRubberBand();
+	selection = false;
+	std::cout << "HdrViewer: hideSelection" << std::endl;
+}
+
+bool HdrViewer::hasSelection(void) {
+	return selection;
 }
