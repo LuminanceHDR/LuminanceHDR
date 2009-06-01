@@ -1,7 +1,7 @@
 /**
  * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2009 Franco Comida
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QPaintEvent>
+#include <QResizeEvent>
 #include <QRubberBand>
 #include <QRect>
 
@@ -49,6 +50,7 @@ protected:
         void mouseMoveEvent(QMouseEvent *e);
         void mouseReleaseEvent(QMouseEvent *e);
 	void paintEvent(QPaintEvent *e);
+	void resizeEvent(QResizeEvent *e);
 private:
         QRubberBand *rubberBand;
         QPoint mousePos, origin;

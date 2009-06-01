@@ -23,16 +23,16 @@
  */
 
 #include <QPainter> 
+#include <cmath>
 
 #include "selectableLabel.h"
-#include <iostream> // for debug
+//#include <iostream> // for debug
 
 bool inRange(int a, int b, int c) {
 	return (a >= (b - c)) && (a <= (b + c));
 }
 
 SelectableLabel::SelectableLabel(QWidget *parent) : QLabel(parent), action(NOACTION), isSelectionReady(false) {
-
 	rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
         setMouseTracking(true); // needed for moving and resizing selection
 }
@@ -159,9 +159,6 @@ void SelectableLabel::mouseMoveEvent(QMouseEvent *e) {
 		mouseX = e->x();
 		mouseY = e->y();
 		
-		//std::cout << "x1: " << x1 << " y1: " << y1 << std::endl;
-		//std::cout << "x2: " << x2 << " y2: " << y2 << std::endl;
-		//std::cout << "mouseX: " << mouseX << " mouseY: " << mouseY << std::endl;
 		QRect innerArea = rubberBand->geometry();
 		innerArea.adjust(5, 5, -5, -5);			
 		if (innerArea.contains(e->pos()))
@@ -182,6 +179,7 @@ void SelectableLabel::mouseMoveEvent(QMouseEvent *e) {
 			setCursor( QCursor(Qt::ArrowCursor) );
 		
 	}
+	repaint();
 }
 
 void SelectableLabel::mouseReleaseEvent(QMouseEvent *e) {
@@ -192,6 +190,7 @@ void SelectableLabel::mouseReleaseEvent(QMouseEvent *e) {
 		default:
 			action = NOACTION;  
 	}
+	repaint();
 }
 
 QRect SelectableLabel::getSelectionRect() {
@@ -200,8 +199,7 @@ QRect SelectableLabel::getSelectionRect() {
 
 	int x1, y1, x2, y2; // Selection Area corners
 	int img_x1, img_y1, img_x2, img_y2;
-	int w, h;
-	
+	float scaleFactor = (float) pixmap()->width() / (float) geometry().width();
 	rect().getCoords(&img_x1, &img_y1, &img_x2, &img_y2);
 	rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
 
@@ -210,43 +208,67 @@ QRect SelectableLabel::getSelectionRect() {
 	if (x2 > img_x2) x2 = img_x2;
 	if (y2 > img_y2) y2 = img_y2;
 
-	w = x2-x1+1; // width
-	h = y2-y1+1; // hight
-
-	selectionRect = QRect(x1, y1, w, h);
-
-	// TODO: Image zoomed or fitted to window
-	//std::cout << "x1: " << x1 << " y1: " << y1 << std::endl;
-	//std::cout << "x2: " << x2 << " y2: " << y2 << std::endl;
-	//std::cout << "img_x1: " << img_x1 << " img_y1: " << img_y1 << std::endl;
-	//std::cout << "img_x2: " << img_x2 << " img_y2: " << img_y2 << std::endl;
+	x1 = (int)lround( (float) x1 * scaleFactor );
+	y1 = (int)lround( (float) y1 * scaleFactor );
+	x2 = (int)lround( (float) x2 * scaleFactor );
+	y2 = (int)lround( (float) y2 * scaleFactor );
+		
+	selectionRect = QRect(x1, y1, x2-x1+1, y2-y1+1);
 
 	return selectionRect;
 }
 
 void SelectableLabel::paintEvent(QPaintEvent *e) {
 	QPainter painter(this);
+	QRect sourceRect;
 	
 	if (pixmap()==NULL) return;
 
-	painter.drawPixmap(0, 0, *pixmap());
+	painter.drawPixmap(rect(), *pixmap(), pixmap()->rect());
+
+	if (!isSelectionReady) return;
+
+	if (action == NOACTION) { 
+		int x1, y1, x2, y2; 
+		float scaleFactor = (float) pixmap()->width() / (float) geometry().width();
+		rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
 	
-	if (!isSelectionReady && action != SELECTING) return;
+		x1 = (int)lround( (float) x1 * scaleFactor );
+		y1 = (int)lround( (float) y1 * scaleFactor );
+		x2 = (int)lround( (float) x2 * scaleFactor );
+		y2 = (int)lround( (float) y2 * scaleFactor );
+		
+		sourceRect = QRect(x1, y1, x2-x1+1, y2-y1+1);
 
-	painter.setPen(Qt::NoPen);
-  	painter.setBrush(QColor(255,0,0,127));
-	painter.drawRect(rect());
-  	painter.setBrush(QColor(255,0,0,0));
-	painter.drawPixmap(rubberBand->geometry(),*pixmap(), rubberBand->geometry());
-	if (action != NOACTION) update();
+		painter.setPen(Qt::NoPen);
+  		painter.setBrush(QColor(127,127,127,127));
+		painter.drawRect(rect());
+  		painter.setBrush(QColor(255,0,0,0));
+		painter.drawPixmap(rubberBand->geometry(), *pixmap(), sourceRect);
+	}
+}
 
+void SelectableLabel::resizeEvent(QResizeEvent *e) {
+
+	int x1, y1, x2, y2;
+	float scaleFactor = (float) e->size().width() / (float) e->oldSize().width();
+	if (((1.0 - scaleFactor) < 0.01) && ((1.0 - scaleFactor) > -0.01)) return;
+	if (scaleFactor < -2.0) return;
+
+	rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
+	
+	x1 = (int)lround( (float) x1 * scaleFactor );
+	y1 = (int)lround( (float) y1 * scaleFactor );
+	x2 = (int)lround( (float) x2 * scaleFactor );
+	y2 = (int)lround( (float) y2 * scaleFactor );
+
+	rubberBand->setGeometry(x1 , y1, x2-x1+1, y2-y1+1);
 }
 
 void SelectableLabel::hideRubberBand() {
 	rubberBand->hide();
 	isSelectionReady = false;
 	action = NOACTION;
-	update();
-	//std::cout << "SelectableLabel hideRubberBand" << std::endl;
+	repaint();
 }
 
