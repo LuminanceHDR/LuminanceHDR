@@ -78,6 +78,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+	connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
@@ -279,13 +280,23 @@ void MainGui::updateActions( QMdiSubWindow * w ) {
 			fitToWindowAct->setEnabled(true);
 			normalSizeAct->setEnabled(true);
 		}
-	} else {
+		if (currenthdr->hasSelection()) {
+			cropToSelectionAction->setEnabled(true);
+			removeSelectionAction->setEnabled(true);
+		}
+		else {
+			cropToSelectionAction->setEnabled(false);
+			removeSelectionAction->setEnabled(false);
+		}
+	} 
+	else {
 		if (mdiArea->subWindowList().empty()) {
 			currenthdr=NULL;
 			normalSizeAct->setEnabled(false);
 			zoomInAct->setEnabled(false);
 			zoomOutAct->setEnabled(false);
 			fitToWindowAct->setEnabled(false);
+			cropToSelectionAction->setEnabled(false);
 		}
 	}
 }
@@ -697,11 +708,8 @@ void MainGui::hideSaveDialog(void) {
 
 
 void MainGui::cropToSelection(void) {
-	/////////////////////////////////////////////
-	//To test pfscut
-	//
+	disableCrop();
 	QRect cropRect = currenthdr->getSelectionRect();
-	currenthdr->hideSelection();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
@@ -713,16 +721,19 @@ void MainGui::cropToSelection(void) {
         setCurrentFile(QString("Cropped Frame"));
 	mdiArea->addSubWindow(newHdrViewer);
 	newHdrViewer->show();
-	disableCrop();
 }
 
 void MainGui::enableCrop(void) {
 	cropToSelectionAction->setEnabled(true);
+	removeSelectionAction->setEnabled(true);
 }
 
 void MainGui::disableCrop(void) {
+	currenthdr->hideSelection();
 	cropToSelectionAction->setEnabled(false);
+	removeSelectionAction->setEnabled(false);
 }
+
 //
 //------------- MySubWindow --------------------------
 //
