@@ -379,7 +379,6 @@ void HdrViewer::setSelection(void) {
 void HdrViewer::hideSelection(void) {
 	scrollArea->hideRubberBand();
 	selection = false;
-	std::cout << "HdrViewer: hideSelection" << std::endl;
 }
 
 bool HdrViewer::hasSelection(void) {
