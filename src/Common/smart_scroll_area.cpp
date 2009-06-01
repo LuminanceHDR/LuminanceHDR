@@ -22,7 +22,7 @@
  */
 
 #include <QPixmap>
-#include <iostream> // for debug
+//#include <iostream> // for debug
 
 #include "smart_scroll_area.h"
 
@@ -120,5 +120,4 @@ QRect SmartScrollArea::getSelectionRect() {
 
 void SmartScrollArea::hideRubberBand() {
 	imageLabel->hideRubberBand();
-	std::cout << "SmartScrollArea: hideRubberBand" << std::endl;
 }
