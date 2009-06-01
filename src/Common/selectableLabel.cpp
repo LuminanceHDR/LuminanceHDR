@@ -22,13 +22,19 @@
  *
  */
 
+#include <QPainter> 
+
 #include "selectableLabel.h"
 #include <iostream> // for debug
 
-SelectableLabel::SelectableLabel(QWidget *parent) : QLabel(parent), selecting(false), isSelectionReady(false), movingSelection(false) {
+bool inRange(int a, int b, int c) {
+	return (a >= (b - c)) && (a <= (b + c));
+}
+
+SelectableLabel::SelectableLabel(QWidget *parent) : QLabel(parent), action(NOACTION), isSelectionReady(false) {
 
 	rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-        setMouseTracking(true); // need for moving and resizing selection
+        setMouseTracking(true); // needed for moving and resizing selection
 }
 
 SelectableLabel::~SelectableLabel() {
@@ -38,69 +44,153 @@ SelectableLabel::~SelectableLabel() {
 void SelectableLabel::mousePressEvent(QMouseEvent *e) {
 	mousePos = e->globalPos();
 	if (e->modifiers()==Qt::ControlModifier) { // Selection 
-		selecting = true; // start selection
+		action = SELECTING;
+		setCursor( QCursor(Qt::CrossCursor) );
 		isSelectionReady = false;
 		origin = e->pos();
      		rubberBand->setGeometry(QRect(origin, QSize()));
      		rubberBand->show();
 	}
 	if (isSelectionReady) {
-		if (rubberBand->geometry().contains(e->pos())) {
-			movingSelection = true;	
-		}
+		int x1, y1, x2, y2;
+		int mouseX, mouseY;
+		
+		rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
+
+		mouseX = e->x();
+		mouseY = e->y();
+		
+		QRect innerArea = rubberBand->geometry();
+		innerArea.adjust(5, 5, -5, -5);			
+		
+		if (innerArea.contains(e->pos()))
+			action = MOVING;	
+		else if ( inRange(mouseX, x1, 5) && inRange(mouseY, y1, 5))
+			action = RESIZING_LEFT_TOP;
+		else if ( inRange(mouseX, x1, 5) && inRange(mouseY, y2, 5))
+			action = RESIZING_LEFT_BOTTOM;
+		else if ( inRange(mouseX, x2, 5) && inRange(mouseY, y1, 5))
+			action = RESIZING_RIGHT_TOP;
+		else if ( inRange(mouseX, x2, 5) && inRange(mouseY, y2, 5))
+			action = RESIZING_RIGHT_BOTTOM;
+		else if ( inRange(mouseX, x1, 5) )
+			action = RESIZING_LEFT;	
+		else if ( inRange(mouseX, x2, 5) )
+			action = RESIZING_RIGHT;	
+		else if ( inRange(mouseY, y1, 5) ) 		
+			action = RESIZING_TOP;	
+		else if ( inRange(mouseY, y2, 5) ) 		
+			action = RESIZING_BOTTOM;	
 	}
 }
 
 void SelectableLabel::mouseMoveEvent(QMouseEvent *e) {
+	int x1, y1, x2, y2;
+	QRect newRect;
+	rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
+	
 	if (e->buttons()==Qt::LeftButton) { // That's better for laptop users
-		if (selecting) { // Selection
-			rubberBand->setGeometry(QRect(origin, e->pos()).normalized());
-		}
-		else if(movingSelection) {
-			QPoint diff = (e->globalPos() - mousePos);
-			int x1, y1, x2, y2;
-			rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
-			rubberBand->move(QPoint(x1,y1)+diff);
-		}
-		else {
-			QPoint diff = (e->globalPos() - mousePos);
+		QPoint diff = (e->globalPos() - mousePos);
+		if (rubberBand->isHidden()) {
+			setCursor( QCursor(Qt::ArrowCursor) );
 			if (e->modifiers()==Qt::ShiftModifier)
 				diff*=5;
 			emit moved(diff);	
+			mousePos = e->globalPos();
+			return;
+		}	
+		
+		switch (action) {
+			case SELECTING: 
+				rubberBand->setGeometry(QRect(origin, e->pos()).normalized());
+				break;
+			case MOVING:
+				rubberBand->move(QPoint(x1,y1)+diff);
+				break;
+			case RESIZING_LEFT:
+				newRect = rubberBand->geometry();
+				newRect.adjust(diff.x(),0,0,0);
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_RIGHT:
+				newRect = rubberBand->geometry();
+				newRect.adjust(0,0,diff.x(),0);
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_TOP:
+				newRect = rubberBand->geometry();
+				newRect.adjust(0,diff.y(),0,0);
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_BOTTOM:
+				newRect = rubberBand->geometry();
+				newRect.adjust(0,0,0,diff.y());
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_LEFT_TOP:
+				newRect = rubberBand->geometry();
+				newRect.adjust(diff.x(),diff.y(),0,0);
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_LEFT_BOTTOM:
+				newRect = rubberBand->geometry();
+				newRect.adjust(diff.x(),0,0,diff.y());
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_RIGHT_TOP:
+				newRect = rubberBand->geometry();
+				newRect.adjust(0,diff.y(),diff.x(),0);
+				rubberBand->setGeometry(newRect);
+				break;
+			case RESIZING_RIGHT_BOTTOM:
+				newRect = rubberBand->geometry();
+				newRect.adjust(0,0,diff.x(),diff.y());
+				rubberBand->setGeometry(newRect);
+				break;
+			default:
+				if (e->modifiers()==Qt::ShiftModifier)
+					diff*=5;
+				emit moved(diff);	
 		}
 		mousePos = e->globalPos();
 	}
 	if (isSelectionReady) {
-		int x1, y1, x2, y2, mouseX, mouseY;
-		rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
+		int mouseX, mouseY;
 		mouseX = e->x();
 		mouseY = e->y();
 		
 		//std::cout << "x1: " << x1 << " y1: " << y1 << std::endl;
 		//std::cout << "x2: " << x2 << " y2: " << y2 << std::endl;
 		//std::cout << "mouseX: " << mouseX << " mouseY: " << mouseY << std::endl;
-		
-		if (rubberBand->geometry().contains(e->pos()))
+		QRect innerArea = rubberBand->geometry();
+		innerArea.adjust(5, 5, -5, -5);			
+		if (innerArea.contains(e->pos()))
 			setCursor( QCursor(Qt::OpenHandCursor) );
-		else if (( mouseX == x1) || (mouseX == x2))
+		else if ( inRange(mouseX, x1, 5) && inRange(mouseY, y1, 5))
+			setCursor( QCursor(Qt::SizeFDiagCursor) );
+		else if ( inRange(mouseX, x1, 5) && inRange(mouseY, y2, 5))
+			setCursor( QCursor(Qt::SizeBDiagCursor) );
+		else if ( inRange(mouseX, x2, 5) && inRange(mouseY, y1, 5))
+			setCursor( QCursor(Qt::SizeBDiagCursor) );
+		else if ( inRange(mouseX, x2, 5) && inRange(mouseY, y2, 5))
+			setCursor( QCursor(Qt::SizeFDiagCursor) );
+		else if ( inRange(mouseX, x1, 5) || inRange(mouseX, x2, 5))
 			setCursor( QCursor(Qt::SizeHorCursor) );
-		else if ((mouseY == y1) || (mouseY == y2)) 		
+		else if ( inRange(mouseY, y1, 5) || inRange(mouseY, y2, 5)) 		
 			setCursor( QCursor(Qt::SizeVerCursor) );
 		else
 			setCursor( QCursor(Qt::ArrowCursor) );
 		
 	}
-
 }
 
 void SelectableLabel::mouseReleaseEvent(QMouseEvent *e) {
-	if (selecting) {
-		emit selectionReady();
-		selecting = false; // end of selection  
-		isSelectionReady = true;
-	}
-	else if (movingSelection) {
-		movingSelection = false;
+	switch (action) {
+		case SELECTING:
+			emit selectionReady();
+			isSelectionReady = true;
+		default:
+			action = NOACTION;  
 	}
 }
 
@@ -132,5 +222,30 @@ QRect SelectableLabel::getSelectionRect() {
 	//std::cout << "img_x2: " << img_x2 << " img_y2: " << img_y2 << std::endl;
 
 	return selectionRect;
+}
+
+void SelectableLabel::paintEvent(QPaintEvent *e) {
+	QPainter painter(this);
+	
+	if (pixmap()==NULL) return;
+
+	painter.drawPixmap(0, 0, *pixmap());
+	
+	if (!isSelectionReady && action != SELECTING) return;
+
+	painter.setPen(Qt::NoPen);
+  	painter.setBrush(QColor(255,0,0,127));
+	painter.drawRect(geometry());
+  	painter.setBrush(QColor(255,0,0,0));
+	painter.drawPixmap(rubberBand->geometry(),*pixmap(), rubberBand->geometry());
+	update();
+
+}
+
+void SelectableLabel::hideRubberBand() {
+	rubberBand->hide();
+	isSelectionReady = false;
+	action = NOACTION;
+	std::cout << "SelectableLabel hideRubberBand" << std::endl;
 }
 

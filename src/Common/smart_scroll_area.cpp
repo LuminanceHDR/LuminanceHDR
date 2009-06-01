@@ -120,4 +120,5 @@ QRect SmartScrollArea::getSelectionRect() {
 
 void SmartScrollArea::hideRubberBand() {
 	imageLabel->hideRubberBand();
+	std::cout << "SmartScrollArea: hideRubberBand" << std::endl;
 }
