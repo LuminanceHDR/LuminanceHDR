@@ -1,7 +1,7 @@
 /**
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006,2007,2008 Giuseppe Rota
+ * Copyright (C) 2009 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 #include <QImage>
 #include <QString>
