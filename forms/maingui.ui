@@ -111,6 +111,7 @@
     <addaction name="actionResizeHDR" />
     <addaction name="separator" />
     <addaction name="TonemapAction" />
+    <addaction name="removeSelectionAction" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuImage" />
@@ -733,6 +734,14 @@
    </property>
    <property name="toolTip" >
     <string>Crop Image to Selection</string>
+   </property>
+  </action>
+  <action name="removeSelectionAction" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="text" >
+    <string>Remove &amp;Selection</string>
    </property>
   </action>
  </widget>
