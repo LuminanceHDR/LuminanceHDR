@@ -235,10 +235,10 @@ void SelectableLabel::paintEvent(QPaintEvent *e) {
 
 	painter.setPen(Qt::NoPen);
   	painter.setBrush(QColor(255,0,0,127));
-	painter.drawRect(geometry());
+	painter.drawRect(rect());
   	painter.setBrush(QColor(255,0,0,0));
 	painter.drawPixmap(rubberBand->geometry(),*pixmap(), rubberBand->geometry());
-	update();
+	if (action == SELECTING) update();
 
 }
 
@@ -246,6 +246,6 @@ void SelectableLabel::hideRubberBand() {
 	rubberBand->hide();
 	isSelectionReady = false;
 	action = NOACTION;
-	std::cout << "SelectableLabel hideRubberBand" << std::endl;
+	//std::cout << "SelectableLabel hideRubberBand" << std::endl;
 }
 
