@@ -277,12 +277,16 @@ void HdrViewer::setRangeWindow( float min, float max ) {
 	maxValue = max;
 	updateImage();
 }
+
+int HdrViewer::getLumMappingMethod() {
+	return mappingMethodCB->currentIndex();
+}
+
 void HdrViewer::setLumMappingMethod( int method ) {
 	mappingMethodCB->setCurrentIndex( method );
 	mappingMethod = (LumMappingMethod)method;
 	updateImage();
 }
-
 
 void HdrViewer::zoomIn() {
 	scrollArea->zoomIn();
