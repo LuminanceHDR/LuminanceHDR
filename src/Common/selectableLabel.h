@@ -30,9 +30,8 @@
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QRubberBand>
-#include <QRect>
 
-enum Actions { NOACTION, SELECTING, MOVING, RESIZING_LEFT, RESIZING_RIGHT, RESIZING_TOP, RESIZING_BOTTOM, RESIZING_LEFT_TOP, RESIZING_LEFT_BOTTOM, RESIZING_RIGHT_TOP, RESIZING_RIGHT_BOTTOM};	
+enum Actions { NOACTION, PANNING, START_SELECTING, SELECTING, MOVING, RESIZING_LEFT, RESIZING_RIGHT, RESIZING_TOP, RESIZING_BOTTOM, RESIZING_LEFT_TOP, RESIZING_LEFT_BOTTOM, RESIZING_RIGHT_TOP, RESIZING_RIGHT_BOTTOM};	
 
 class SelectableLabel : public QLabel
 {
@@ -41,9 +40,10 @@ public:
 	SelectableLabel(QWidget *parent=0);
 	~SelectableLabel();
 	QRect getSelectionRect();
-	void hideRubberBand();
+	void removeSelection();
 signals:
         void selectionReady();
+        void selectionRemoved();
         void moved(QPoint diff);
 protected:
         void mousePressEvent(QMouseEvent *e);
