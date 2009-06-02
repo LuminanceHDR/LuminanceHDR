@@ -39,6 +39,7 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, SelectableLabel *imagelabel )
 	setWidgetResizable(false);
 	setWidget(imageLabel);
 	connect(imageLabel, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
+	connect(imageLabel, SIGNAL(selectionRemoved()), this, SIGNAL(selectionRemoved()));
 	connect(imageLabel, SIGNAL(moved(QPoint)), this, SLOT(update(QPoint)));
 }
 
@@ -118,6 +119,6 @@ QRect SmartScrollArea::getSelectionRect() {
 	return imageLabel->getSelectionRect();
 }
 
-void SmartScrollArea::hideRubberBand() {
-	imageLabel->hideRubberBand();
+void SmartScrollArea::removeSelection() {
+	imageLabel->removeSelection();
 }

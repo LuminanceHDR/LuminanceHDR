@@ -46,7 +46,7 @@ public:
 		return fittingwin;
 	}
 	QRect getSelectionRect();
-	void hideRubberBand();
+	void removeSelection();
 protected:
 	void resizeEvent ( QResizeEvent * );
 protected slots:
@@ -59,6 +59,7 @@ private:
 	void adjustScrollBar(QScrollBar *scrollBar, double factor);
 signals:
 	void selectionReady();
+	void selectionRemoved();
 };
 #endif
 
