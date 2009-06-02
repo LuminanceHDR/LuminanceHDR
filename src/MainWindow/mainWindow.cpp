@@ -73,6 +73,32 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
 
+
+	//recent files
+	for (int i = 0; i < MaxRecentFiles; ++i) {
+		recentFileActs[i] = new QAction(this);
+		recentFileActs[i]->setVisible(false);
+		connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+	}
+	separatorRecentFiles = menuFile->addSeparator();
+	for (int i = 0; i < MaxRecentFiles; ++i)
+		menuFile->addAction(recentFileActs[i]);
+	updateRecentFileActions();
+
+	//this->showMaximized();
+
+	testTempDir(qtpfsgui_options->tempfilespath);
+	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
+	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
+        saveProgress->setWindowTitle(tr("Saving file..."));
+        saveProgress->setWindowModality(Qt::WindowModal);
+        saveProgress->setMinimumDuration(0);
+	cropToSelectionAction->setEnabled(false);
+
+	setupConnections();
+}
+
+void MainGui::setupConnections() {
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(updateActions(QMdiSubWindow*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
@@ -119,28 +145,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 
-	//recent files
-	for (int i = 0; i < MaxRecentFiles; ++i) {
-		recentFileActs[i] = new QAction(this);
-		recentFileActs[i]->setVisible(false);
-		connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
-	}
-	separatorRecentFiles = menuFile->addSeparator();
-	for (int i = 0; i < MaxRecentFiles; ++i)
-		menuFile->addAction(recentFileActs[i]);
-	updateRecentFileActions();
-
-	//this->showMaximized();
-
-	testTempDir(qtpfsgui_options->tempfilespath);
-	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
-	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
-        saveProgress->setWindowTitle(tr("Saving file..."));
-        saveProgress->setWindowModality(Qt::WindowModal);
-        saveProgress->setMinimumDuration(0);
-	cropToSelectionAction->setEnabled(false);
 }
-
 
 void MainGui::fileNewViaWizard(QStringList files) {
 	HdrWizardForm *wizard;
@@ -756,13 +761,6 @@ void MainGui::enableCrop(void) {
 void MainGui::disableCrop( const QString &sender ) { //mapped signals
 	if ( sender == "MainGui" )
 		currenthdr->removeSelection();
-	cropToSelectionAction->setEnabled(false);
-	removeSelectionAction->setEnabled(false);
-}
-
-// TODO: maybe this can be removed
-void MainGui::disableCrop( ) { //WORKAROUND, windowMapper segfault
-	currenthdr->removeSelection();
 	cropToSelectionAction->setEnabled(false);
 	removeSelectionAction->setEnabled(false);
 }

@@ -94,14 +94,13 @@ private slots:
 	void cropToSelection();
 	void enableCrop(void);
 	void disableCrop( const QString &sender); //mapped signals
-	void disableCrop(); //WORKAROUND
-
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
 	HdrViewer* currenthdr;
  	QProgressDialog *saveProgress;
 private:
+	void setupConnections();
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
 	void load_options();
