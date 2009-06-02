@@ -78,7 +78,19 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+	//
+	//
+	// if I use windowMapper !!!SEGFAULT!!!, WHY???????????
+	// 
+	// 	
+	//connect(removeSelectionAction, SIGNAL(triggered()), windowMapper, SLOT(map()));
+	//connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
+	//windowMapper->setMapping(removeSelectionAction, QString("MainGui"));
+	//
+	//
+	// UGLY WORKAROUND
 	connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
+
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
@@ -488,18 +500,26 @@ void MainGui::setupLoadThread(QString fname) {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+
 	connect(newhdr, SIGNAL(selectionReady()), this, SLOT(enableCrop()));
+	connect(newhdr, SIGNAL(selectionRemoved()), windowMapper, SLOT(map()));
+	windowMapper->setMapping(newhdr, QString("HDRViewer"));
+	connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
+
 	subWindow->setWidget(newhdr);
         subWindow->setAttribute(Qt::WA_DeleteOnClose);
 	mdiArea->addSubWindow(subWindow);
 	newhdr->show();
 	newhdr->showLoadDialog();
+
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
+
 	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
 	connect(loadthread, SIGNAL(nextstep(int)), newhdr, SLOT(setValue(int)));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
 	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
+
 	loadthread->start();
 }
 
@@ -707,7 +727,7 @@ void MainGui::hideSaveDialog(void) {
 }
 
 void MainGui::cropToSelection(void) {
-	disableCrop();
+	disableCrop("MainGui");
 	QRect cropRect = currenthdr->getSelectionRect();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
@@ -741,8 +761,15 @@ void MainGui::enableCrop(void) {
 	removeSelectionAction->setEnabled(true);
 }
 
-void MainGui::disableCrop(void) {
-	currenthdr->hideSelection();
+void MainGui::disableCrop( const QString &sender ) { //mapped signals
+	if ( sender == "MainGui" )
+		currenthdr->removeSelection();
+	cropToSelectionAction->setEnabled(false);
+	removeSelectionAction->setEnabled(false);
+}
+
+void MainGui::disableCrop( ) { //WORKAROUND, windowMapper segfault
+	currenthdr->removeSelection();
 	cropToSelectionAction->setEnabled(false);
 	removeSelectionAction->setEnabled(false);
 }

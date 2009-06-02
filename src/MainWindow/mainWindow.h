@@ -93,7 +93,8 @@ private slots:
 	void setActiveSubWindow(QWidget* w);
 	void cropToSelection();
 	void enableCrop(void);
-	void disableCrop(void);
+	void disableCrop( const QString &sender); //mapped signals
+	void disableCrop(); //WORKAROUND
 
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
