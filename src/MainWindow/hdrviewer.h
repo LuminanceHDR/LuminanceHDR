@@ -67,6 +67,7 @@ public:
 	void showLoadDialog();
 	void hideLoadDialog(void);
 	QRect getSelectionRect(void);
+	void setFlagUpdateImage(bool updateImage);
 signals:
 	void selectionReady();
 public slots:
@@ -108,5 +109,6 @@ private:
 	unsigned int naninfcol,negcol;
 	QProgressDialog *progress;
 	bool selection;
+	bool flagUpdateImage;
 };
 #endif

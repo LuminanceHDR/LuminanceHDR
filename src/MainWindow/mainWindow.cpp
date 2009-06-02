@@ -714,19 +714,24 @@ void MainGui::cropToSelection(void) {
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
 	HdrViewer *newHdrViewer = new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
         pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
+
 	newHdrViewer->updateHDR(cropped_frame);
 	newHdrViewer->filename=QString(tr("Cropped Frame"));
 	newHdrViewer->setWindowTitle(QString(tr("Cropped Frame")));
 
-	float min = currenthdr->lumRange->getRangeWindowMin();
+    newHdrViewer->setFlagUpdateImage(false); // disable updating image for performance
+
+    float min = currenthdr->lumRange->getRangeWindowMin();
 	float max = currenthdr->lumRange->getRangeWindowMax();
 	int lumMappingMode = currenthdr->getLumMappingMethod();
-
 	newHdrViewer->lumRange->setRangeWindowMinMax(min, max);
 	newHdrViewer->setLumMappingMethod(lumMappingMode);
-	newHdrViewer->updateRangeWindow();
 
-	setCurrentFile(QString(tr("Cropped Frame")));
+    newHdrViewer->setFlagUpdateImage(true); // reenabling updating image
+
+    newHdrViewer->updateRangeWindow();
+
+    connect(newHdrViewer, SIGNAL(selectionReady()), this, SLOT(enableCrop()));
 	mdiArea->addSubWindow(newHdrViewer);
 	newHdrViewer->show();
 }

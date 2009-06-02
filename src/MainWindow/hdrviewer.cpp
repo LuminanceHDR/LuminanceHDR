@@ -86,6 +86,8 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 
 HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bool ns) : QWidget(parent), NeedsSaving(ns), filename(""), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg), selection(false) {
 
+	flagUpdateImage = true;
+
 	workArea[0] = workArea[1] = workArea[2] = NULL;
 	setAttribute(Qt::WA_DeleteOnClose);
 
@@ -191,35 +193,41 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     imageLabel->update();
 }
 
+void HdrViewer::setFlagUpdateImage(bool updateImage) {
+	flagUpdateImage = updateImage;
+}
 
 void HdrViewer::updateImage() {
-	assert( pfsFrame != NULL );
-	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+	if (flagUpdateImage) {
+		assert( pfsFrame != NULL );
 
-	pfs::Channel *R, *G, *B;
-	pfsFrame->getRGBChannels( R, G, B );
-	assert(R!=NULL && G!=NULL && B!=NULL);
+		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-	//workarea  needed in updateMapping(...) called by mapFrameToImage(...)
-	workArea[0]=R;
-	workArea[1]=G;
-	workArea[2]=B;
-	assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
+		pfs::Channel *R, *G, *B;
+		pfsFrame->getRGBChannels( R, G, B );
+		assert(R!=NULL && G!=NULL && B!=NULL);
 
-	int zoomedWidth = workArea[0]->getCols();
-	int zoomedHeight = workArea[0]->getRows();
-	if( image != NULL )
-		delete image;
-	image = new QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
-	assert( image != NULL );
+		//workarea  needed in updateMapping(...) called by mapFrameToImage(...)
+		workArea[0]=R;
+		workArea[1]=G;
+		workArea[2]=B;
+		assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
 
-	assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
-	mapFrameToImage( /*workArea[0], workArea[1], workArea[2], image,
-			minValue, maxValue, mappingMethod*/ );
+		int zoomedWidth = workArea[0]->getCols();
+		int zoomedHeight = workArea[0]->getRows();
+		if( image != NULL )
+			delete image;
+		image = new QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
+		assert( image != NULL );
 
-	//assign the mapped image to the label
-	imageLabel->setPixmap(QPixmap::fromImage(*image));
-	QApplication::restoreOverrideCursor();
+		assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
+		mapFrameToImage( /*workArea[0], workArea[1], workArea[2], image,
+				minValue, maxValue, mappingMethod*/ );
+
+		//assign the mapped image to the label
+		imageLabel->setPixmap(QPixmap::fromImage(*image));
+		QApplication::restoreOverrideCursor();
+	}
 }
 
 void HdrViewer::mapFrameToImage() {
