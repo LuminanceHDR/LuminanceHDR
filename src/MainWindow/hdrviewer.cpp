@@ -133,6 +133,7 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 	connect(scrollArea, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
+	connect(scrollArea, SIGNAL(selectionRemoved()), this, SIGNAL(selectionRemoved()));
 	connect(scrollArea, SIGNAL(selectionReady()), this, SLOT(setSelection()));
 	progress = new QProgressDialog(0, 0, 0, 0, this);
      	progress->setWindowTitle("Loading file...");
@@ -384,8 +385,8 @@ void HdrViewer::setSelection(void) {
 	selection = true;
 }
 
-void HdrViewer::hideSelection(void) {
-	scrollArea->hideRubberBand();
+void HdrViewer::removeSelection(void) {
+	scrollArea->removeSelection();
 	selection = false;
 }
 

@@ -70,6 +70,7 @@ public:
 	void setFlagUpdateImage(bool updateImage);
 signals:
 	void selectionReady();
+	void selectionRemoved();
 public slots:
 	void zoomIn();
 	void zoomOut();
@@ -80,7 +81,7 @@ public slots:
 	void setLumMappingMethod( int method );
 	void setMaximum(int max);
 	void setValue(int value);
-	void hideSelection();
+	void removeSelection();
 	bool hasSelection();
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
