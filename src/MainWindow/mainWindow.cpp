@@ -52,6 +52,7 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
 	setAcceptDrops(true);
+	windowMapper = new QSignalMapper(this);
 
 	//main toolbar setup
 	QActionGroup *toolBarOptsGroup = new QActionGroup(this);
@@ -78,18 +79,10 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
-	//
-	//
-	// if I use windowMapper !!!SEGFAULT!!!, WHY???????????
-	// 
-	// 	
-	//connect(removeSelectionAction, SIGNAL(triggered()), windowMapper, SLOT(map()));
-	//connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
-	//windowMapper->setMapping(removeSelectionAction, QString("MainGui"));
-	//
-	//
-	// UGLY WORKAROUND
-	connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
+
+	connect(removeSelectionAction, SIGNAL(triggered()), windowMapper, SLOT(map()));
+	connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
+	windowMapper->setMapping(removeSelectionAction, QString("MainGui"));
 
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
@@ -124,7 +117,6 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 
-	windowMapper = new QSignalMapper(this);
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 
 	//recent files
@@ -768,6 +760,7 @@ void MainGui::disableCrop( const QString &sender ) { //mapped signals
 	removeSelectionAction->setEnabled(false);
 }
 
+// TODO: maybe this can be removed
 void MainGui::disableCrop( ) { //WORKAROUND, windowMapper segfault
 	currenthdr->removeSelection();
 	cropToSelectionAction->setEnabled(false);
