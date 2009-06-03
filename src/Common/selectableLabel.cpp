@@ -26,7 +26,7 @@
 #include <cmath>
 
 #include "selectableLabel.h"
-#include <iostream> // for debug
+//#include <iostream> // for debug
 
 bool inRange(int a, int b, int c) {
 	return (a >= (b - c)) && (a <= (b + c));
@@ -43,17 +43,18 @@ SelectableLabel::~SelectableLabel() {
 
 void SelectableLabel::mousePressEvent(QMouseEvent *e) {
 	mousePos = e->globalPos();
+
 	if (e->buttons()==Qt::MidButton) {  
 		action = PANNING;
 		setCursor( QCursor(Qt::SizeAllCursor) );
      		return;
 	}
+
 	if (e->buttons()==Qt::LeftButton) {  
 		if (!isSelectionReady) {
 			action = START_SELECTING;
 			origin = e->pos();
      			rubberBand->setGeometry(QRect(origin, QSize()));
-     			rubberBand->show();
 			return;
 		}
 	
@@ -91,7 +92,6 @@ void SelectableLabel::mousePressEvent(QMouseEvent *e) {
 			action = START_SELECTING;
 			origin = e->pos();
      			rubberBand->setGeometry(QRect(origin, QSize()));
-     			rubberBand->show();
 		     }
 	}
 }
@@ -99,11 +99,13 @@ void SelectableLabel::mousePressEvent(QMouseEvent *e) {
 void SelectableLabel::mouseMoveEvent(QMouseEvent *e) {
 	int x1, y1, x2, y2;
 	QRect newRect;
-	
 	QPoint diff = (e->globalPos() - mousePos);
+
 	rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
 	
 	switch (action) {
+		case NOACTION:
+			break; 
 		case PANNING: 
 			if (e->modifiers()==Qt::ShiftModifier)
 				diff*=5;
@@ -209,8 +211,7 @@ void SelectableLabel::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 QRect SelectableLabel::getSelectionRect() {
-
-	int x1, y1, x2, y2; // Selection Area corners
+	int x1, y1, x2, y2; 
 	int img_x1, img_y1, img_x2, img_y2;
 	float scaleFactor = (float) pixmap()->width() / (float) geometry().width();
 	rect().getCoords(&img_x1, &img_y1, &img_x2, &img_y2);
@@ -230,7 +231,6 @@ QRect SelectableLabel::getSelectionRect() {
 }
 
 void SelectableLabel::paintEvent(QPaintEvent *e) {
-
 	if (pixmap()==NULL) return;
 	QLabel::paintEvent(e);
 	QPainter painter(this);
@@ -239,21 +239,23 @@ void SelectableLabel::paintEvent(QPaintEvent *e) {
 	if (!isSelectionReady && action != SELECTING) return;
 
 	int x1, y1, x2, y2; 
-	float scaleFactor = (float) pixmap()->width() / (float) geometry().width();
+	int img_x1, img_y1, img_x2, img_y2;
+
 	rubberBand->geometry().getCoords(&x1, &y1, &x2, &y2);
-	
-	x1 = (int)lround( (float) x1 * scaleFactor );
-	y1 = (int)lround( (float) y1 * scaleFactor );
-	x2 = (int)lround( (float) x2 * scaleFactor );
-	y2 = (int)lround( (float) y2 * scaleFactor );
-		
-	sourceRect = QRect(x1, y1, x2-x1+1, y2-y1+1);
+	rect().getCoords(&img_x1, &img_y1, &img_x2, &img_y2);
 
 	painter.setPen(Qt::NoPen);
 	painter.setBrush(QColor(127,127,127,127));
-	painter.drawRect(rect());
+	painter.drawRect(0, 0, img_x2, y1);
+	painter.drawRect(0, y2, img_x2, img_y2);
+	painter.drawRect(0, y1, x1, y2-y1);
+	painter.drawRect(x2, y1, img_x2 - x2, y2-y1);
+
+	QPen pen(QColor(255,255,255,255));
+	pen.setWidth(3);
+	painter.setPen(pen);
 	painter.setBrush(QColor(255,0,0,0));
-	painter.drawPixmap(rubberBand->geometry(), *pixmap(), sourceRect);
+	painter.drawRect(rubberBand->geometry());
 }
 
 void SelectableLabel::resizeEvent(QResizeEvent *e) {
@@ -273,7 +275,6 @@ void SelectableLabel::resizeEvent(QResizeEvent *e) {
 }
 
 void SelectableLabel::removeSelection() {
-	rubberBand->hide();
 	isSelectionReady = false;
 	action = NOACTION;
 	emit selectionRemoved();
