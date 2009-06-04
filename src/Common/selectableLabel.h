@@ -38,7 +38,6 @@ class SelectableLabel : public QLabel
 Q_OBJECT
 public:
 	SelectableLabel(QWidget *parent=0);
-	~SelectableLabel();
 	QRect getSelectionRect();
 	void removeSelection();
 signals:
