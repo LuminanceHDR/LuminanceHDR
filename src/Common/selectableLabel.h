@@ -31,7 +31,7 @@
 #include <QResizeEvent>
 #include <QRubberBand>
 
-enum Actions { NOACTION, PANNING, START_SELECTING, SELECTING, MOVING, RESIZING_LEFT, RESIZING_RIGHT, RESIZING_TOP, RESIZING_BOTTOM, RESIZING_LEFT_TOP, RESIZING_LEFT_BOTTOM, RESIZING_RIGHT_TOP, RESIZING_RIGHT_BOTTOM};	
+enum Actions { NOACTION, PANNING, START_SELECTING, SELECTING, MOVING, RESIZING_LEFT, RESIZING_RIGHT, RESIZING_TOP, RESIZING_BOTTOM, RESIZING_XY};	
 
 class SelectableLabel : public QLabel
 {
@@ -56,5 +56,6 @@ private:
         QPoint mousePos, origin;
 	Actions action;
         bool isSelectionReady;
+	int sizeX;
 };
 #endif
