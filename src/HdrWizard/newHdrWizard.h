@@ -95,5 +95,6 @@ private slots:
 	void editingEVfinished();
 
 	void ais_failed(QProcess::ProcessError);
+	void setupConnections();
 };
 #endif

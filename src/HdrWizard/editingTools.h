@@ -31,6 +31,7 @@
 #include "../Common/global.h"
 #include "../HdrCreation/HdrCreationManager.h"
 
+#include "../Common/selectionTool.h"
 
 class HistogramLDR;
 //defined in mtb_alignment.cpp
@@ -58,6 +59,7 @@ private:
 	QSize previousPreviewWidgetSize;
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
+	SelectionTool *selectionTool;
 private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();
@@ -89,6 +91,8 @@ private slots:
 	void maskColorButtonClicked();
 	void antighostToolButtonToggled(bool);
 	void blendModeCBIndexChanged(int);
+	void setupConnections();
+	void updateScrollBars(QPoint diff);
 };
 
 

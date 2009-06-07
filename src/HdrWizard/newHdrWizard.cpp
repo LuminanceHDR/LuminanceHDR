@@ -52,6 +52,17 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure"));
 	tableWidget->resizeColumnsToContents();
 	EVgang = new Gang(EVSlider, ImageEVdsb,-10,10,0);
+
+	hdrCreationManager = new HdrCreationManager();
+
+	if (files.size()) {
+		loadInputFiles(files, files.size());
+	}
+	setupConnections();
+}
+
+
+void HdrWizardForm::setupConnections() {
 	connect(EVgang, SIGNAL(finished()), this, SLOT(editingEVfinished()));
 	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 
@@ -84,8 +95,6 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 	connect(RespCurveFileLoadedLineEdit,SIGNAL(textChanged(const QString&)),this,
 	SLOT(loadRespCurveFilename(const QString&)));
 	connect(loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
-
-	hdrCreationManager = new HdrCreationManager();
 	connect(hdrCreationManager, SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
 	connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 	connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
@@ -95,9 +104,6 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 
 	connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
 
-	if (files.size()) {
-		loadInputFiles(files, files.size());
-	}
 }
 
 void HdrWizardForm::loadImagesButtonClicked() {

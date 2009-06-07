@@ -51,7 +51,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	qvl->setSpacing(0);
 
 	scrollArea = new QScrollArea(previewImageFrame);
-	previewWidget = new PreviewWidget(scrollArea,original_ldrlist[1],original_ldrlist[0]);
+	previewWidget = new PreviewWidget(this,original_ldrlist[1],original_ldrlist[0]);
 	previewWidget->setBrushColor(maskcolor);
 	previewWidget->adjustSize();
 	previewWidget->update();
@@ -60,7 +60,6 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	cornerButton->setToolTip("Pan the image to a region");
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
-	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 
 	scrollArea->setFocusPolicy(Qt::NoFocus);
 	scrollArea->setBackgroundRole(QPalette::Window);
@@ -84,6 +83,28 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	cropButton->setToolButtonStyle(style);
 	saveImagesButton->setToolButtonStyle(style);
 	antighostToolButton->setToolButtonStyle(style);
+
+	QStringList::ConstIterator it = filelist.begin();
+	while( it != filelist.end() ) {
+		HV_offsets.append(qMakePair(0,0));
+		++it;
+	}
+
+	histogram=new HistogramLDR(this);
+	histogram->setData(*(original_ldrlist.at(1)));
+	histogram->adjustSize();
+	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
+	previewWidget->setFocus();
+
+	selectionTool = new SelectionTool(previewWidget);
+	selectionTool->show();
+	//selectionTool->hide();
+	
+	setupConnections();
+} //end of constructor
+
+void EditingTools::setupConnections() {
+	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 	connect(upToolButton,SIGNAL(clicked()),this,SLOT(upClicked()));
 	connect(rightToolButton,SIGNAL(clicked()),this,SLOT(rightClicked()));
 	connect(downToolButton,SIGNAL(clicked()),this,SLOT(downClicked()));
@@ -116,20 +137,11 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	connect(Next_Finishbutton,SIGNAL(clicked()),this,SLOT(nextClicked()));
 	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
+	connect(previewWidget, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
+	connect(selectionTool,SIGNAL(selectionReady(bool)),cropButton,SLOT(setEnabled(bool)));
+	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
 	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
-
-	QStringList::ConstIterator it = filelist.begin();
-	while( it != filelist.end() ) {
-		HV_offsets.append(qMakePair(0,0));
-		++it;
-	}
-
-	histogram=new HistogramLDR(this);
-	histogram->setData(*(original_ldrlist.at(1)));
-	histogram->adjustSize();
-	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
-	previewWidget->setFocus();
-} //end of constructor
+}
 
 void EditingTools::slotCornerButtonPressed() {
 	panIconWidget=new PanIconWidget;
@@ -208,29 +220,18 @@ void EditingTools::crop_stack() {
 	hcm->applyShiftsToImageStack(HV_offsets);
 
 	resetAll();
-	QRect ca=previewWidget->getCropArea();
+	//QRect ca=previewWidget->getCropArea();
+	QRect ca=selectionTool->getSelectionRect();
 	if(ca.width()<=0|| ca.height()<=0)
 		return;
 
 	hcm->cropLDR(ca);
+	selectionTool->removeSelection();
+
 	original_ldrlist=hcm->getLDRList();
 
-	//the display widget has to be recreated with the new cropped data.
-	delete previewWidget;
-	//new display widget uses current indices.
-	previewWidget=new PreviewWidget(scrollArea, original_ldrlist[movableListWidget->currentRow()], original_ldrlist[referenceListWidget->currentRow()]);
-	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
-	previewWidget->setBrushColor(maskcolor);
-	connect(blendModeCB,SIGNAL(currentIndexChanged(int)),previewWidget,SLOT(requestedBlendMode(int)));
-	connect(previewWidget,SIGNAL(validCropArea(bool)),cropButton,SLOT(setEnabled(bool)));
-	connect(antighostToolButton,SIGNAL(toggled(bool)),previewWidget,SLOT(switchAntighostingMode(bool)));
-	connect(agBrushSizeQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushSize(int)));
-	connect(agBrushStrengthQSpinbox,SIGNAL(valueChanged(int)),previewWidget,SLOT(setBrushStrength(int)));
-	connect(removeMaskRadioButton,SIGNAL(toggled(bool)),previewWidget,SLOT(setBrushMode(bool)));
-	previousPreviewWidgetSize=original_ldrlist.at(0)->size();
-	//inform scrollArea of the change
-	scrollArea->setWidget(previewWidget);
-
+	previewWidget->setMovable(original_ldrlist[movableListWidget->currentRow()]);
+	previewWidget->setPivot(original_ldrlist[referenceListWidget->currentRow()]);
 	//restore fit
 	if (fitButton->isChecked())
 		fitPreview(true);
@@ -382,6 +383,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
 	label_reference_list->setDisabled(toggled);
 	referenceListWidget->setDisabled(toggled);
 	previewWidget->update();
+	toggled ? selectionTool->hide() : selectionTool->show();
 }
 
 void EditingTools::maskColorButtonClicked() {
@@ -419,3 +421,9 @@ void EditingTools::saveImagesButtonClicked() {
 		}
 	}
 }
+
+void EditingTools::updateScrollBars(QPoint diff) {
+        scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
+        scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
+}
+

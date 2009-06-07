@@ -50,7 +50,9 @@ public:
 		return previewImage;
 	}
 	void setPivot(QImage *p, int _px, int _py);
+	void setPivot(QImage *p);
 	void setMovable(QImage *m, int _mx, int _my);
+	void setMovable(QImage *m);
 	void updateVertShiftMovable(int v);
 	void updateHorizShiftMovable(int h);
 	void updateHorizShiftPivot(int h);
@@ -66,6 +68,7 @@ public slots:
 	void setBrushMode(bool);
 signals:
 	void validCropArea(bool);
+	void moved(QPoint diff);
 protected:
 	void paintEvent( QPaintEvent * );
 	void mousePressEvent(QMouseEvent *event);
@@ -74,6 +77,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void timerEvent(QTimerEvent *event);
 	void enterEvent(QEvent *event);
+
 private:
 	//5 blending modes
 	inline QRgb computeOnlyMovable(const QRgb *Mrgba, const QRgb */*Prgba*/) const {
@@ -137,7 +141,7 @@ private:
 	/*const*/ QImage *movableImage;
 	const QImage *pivotImage;
 
-	QScrollArea *scrollArea;
+	//QScrollArea *scrollArea;
 	QRegion prev_computed;
 
 	//movable and pivot's x,y shifts

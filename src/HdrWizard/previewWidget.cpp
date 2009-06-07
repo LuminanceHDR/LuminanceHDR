@@ -26,7 +26,7 @@
 #include <QApplication>
 #include "previewWidget.h"
 
-PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage *p) : QWidget(parent), movableImage(m), pivotImage(p), scrollArea((QScrollArea*)parent), prev_computed(), agcursor_pixmap(NULL) {
+PreviewWidget::PreviewWidget(QWidget *parent, /*const*/ QImage *m, const QImage *p) : QWidget(parent), movableImage(m), pivotImage(p), prev_computed(), agcursor_pixmap(NULL) {
 // 	this->setAttribute(Qt::WA_PaintOnScreen);
 // 	this->setAttribute(Qt::WA_StaticContents);
 // 	this->setAttribute(Qt::WA_OpaquePaintEvent);
@@ -271,8 +271,9 @@ void PreviewWidget::mouseMoveEvent(QMouseEvent *event) {
 		QPoint diff = (event->globalPos() - mousePos);
 		if (event->modifiers()==Qt::ShiftModifier)
 			diff*=5;
-		scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
-		scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
+		emit moved(diff);
+		//scrollArea->verticalScrollBar()->setValue(scrollArea->verticalScrollBar()->value() + diff.y());
+		//scrollArea->horizontalScrollBar()->setValue(scrollArea->horizontalScrollBar()->value() + diff.x());
 		mousePos=event->globalPos();
 	}
 	event->ignore();
@@ -358,11 +359,23 @@ void PreviewWidget::setPivot(QImage *p, int _px, int _py) {
 	prev_computed=QRegion();
 }
 
+void PreviewWidget::setPivot(QImage *p) {
+	pivotImage = p;
+}
+
 void PreviewWidget::setMovable(QImage *m, int _mx, int _my) {
 	movableImage=m;
 	mx=_mx;
 	my=_my;
 	prev_computed=QRegion();
+}
+
+void PreviewWidget::setMovable(QImage *m) {
+	movableImage = m;
+	//TODO: check this
+	delete previewImage;
+        previewImage=new QImage(movableImage->size(),QImage::Format_ARGB32);
+	resize(movableImage->size());
 }
 
 void PreviewWidget::updateVertShiftMovable(int v) {
