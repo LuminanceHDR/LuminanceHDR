@@ -106,8 +106,7 @@ void MainGui::setupConnections() {
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
 
-	connect(removeSelectionAction, SIGNAL(triggered()), windowMapper, SLOT(map()));
-	connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
+	connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
 	windowMapper->setMapping(removeSelectionAction, QString("MainGui"));
 
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
@@ -153,6 +152,7 @@ void MainGui::fileNewViaWizard(QStringList files) {
 		wizard=new HdrWizardForm (this, files);
 		if (wizard->exec() == QDialog::Accepted) {
 			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
+			connect(newmdi, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
 			mdiArea->addSubWindow(newmdi);
 			newmdi->setWindowTitle(wizard->getCaptionTEXT());
@@ -498,10 +498,7 @@ void MainGui::setupLoadThread(QString fname) {
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
 
-	connect(newhdr, SIGNAL(selectionReady()), this, SLOT(enableCrop()));
-	connect(newhdr, SIGNAL(selectionRemoved()), windowMapper, SLOT(map()));
-	windowMapper->setMapping(newhdr, QString("HDRViewer"));
-	connect(windowMapper, SIGNAL(mapped( const QString &)), this, SLOT(disableCrop( const QString &)));
+	connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 
 	subWindow->setWidget(newhdr);
         subWindow->setAttribute(Qt::WA_DeleteOnClose);
@@ -724,7 +721,7 @@ void MainGui::hideSaveDialog(void) {
 }
 
 void MainGui::cropToSelection(void) {
-	disableCrop("MainGui");
+	disableCrop();
 	QRect cropRect = currenthdr->getSelectionRect();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
@@ -748,19 +745,24 @@ void MainGui::cropToSelection(void) {
 
     newHdrViewer->updateRangeWindow();
 
-    connect(newHdrViewer, SIGNAL(selectionReady()), this, SLOT(enableCrop()));
+    connect(newHdrViewer, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 	mdiArea->addSubWindow(newHdrViewer);
 	newHdrViewer->show();
 }
 
-void MainGui::enableCrop(void) {
-	cropToSelectionAction->setEnabled(true);
-	removeSelectionAction->setEnabled(true);
+void MainGui::enableCrop(bool isReady) {
+	if (isReady) {
+		cropToSelectionAction->setEnabled(true);
+		removeSelectionAction->setEnabled(true);
+	}
+	else {
+		cropToSelectionAction->setEnabled(false);
+		removeSelectionAction->setEnabled(false);
+	}
 }
 
-void MainGui::disableCrop( const QString &sender ) { //mapped signals
-	if ( sender == "MainGui" )
-		currenthdr->removeSelection();
+void MainGui::disableCrop() {
+	currenthdr->removeSelection();
 	cropToSelectionAction->setEnabled(false);
 	removeSelectionAction->setEnabled(false);
 }
