@@ -34,7 +34,7 @@
 #include <QProgressDialog>
 #include "../Common/smart_scroll_area.h"
 #include "../Common/panIconWidget.h"
-#include "../Common/selectableLabel.h"
+#include "../Common/selectionTool.h"
 #include "luminancerange_widget.h"
 #include "../Libpfs/array2d.h"
 #include "../Libpfs/pfs.h"
@@ -69,8 +69,7 @@ public:
 	QRect getSelectionRect(void);
 	void setFlagUpdateImage(bool updateImage);
 signals:
-	void selectionReady();
-	void selectionRemoved();
+	void selectionReady(bool isReady);
 public slots:
 	void zoomIn();
 	void zoomOut();
@@ -87,9 +86,9 @@ private slots:
 	void slotPanIconSelectionMoved(QRect, bool);
 	void slotPanIconHidden();
 	void slotCornerButtonPressed();
-	void setSelection();
+	void setSelection(bool);
 protected:
-	SelectableLabel *imageLabel;
+	QLabel *imageLabel;
 	SmartScrollArea *scrollArea;
 	QImage *image;
 	void setRangeWindow( float min, float max );
