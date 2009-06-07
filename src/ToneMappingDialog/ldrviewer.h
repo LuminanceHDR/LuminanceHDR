@@ -28,7 +28,6 @@
 #include <QToolButton>
 #include "../Common/smart_scroll_area.h"
 #include "../Common/panIconWidget.h"
-#include "../Common/selectableLabel.h"
 #include "tonemapping_widget.h"
 
 class LdrViewer : public QWidget {
@@ -57,7 +56,7 @@ private:
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
 protected:
-	SelectableLabel *imageLabel;
+	QLabel *imageLabel;
 	SmartScrollArea *scrollArea;
 	const QImage origimage;
 	const QImage *currentimage;
