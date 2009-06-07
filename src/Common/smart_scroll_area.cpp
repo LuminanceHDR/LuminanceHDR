@@ -15,18 +15,20 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  US
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
 #include <QPixmap>
-//#include <iostream> // for debug
+#include <QRubberBand>
 
 #include "smart_scroll_area.h"
 
-SmartScrollArea::SmartScrollArea( QWidget *parent, SelectableLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), fittingwin(false) {
+SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false) {
+
+
 	setBackgroundRole(QPalette::Light);
 	imageLabel->setBackgroundRole(QPalette::Base);
 	//the label ignores the pixmap's size
@@ -36,11 +38,15 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, SelectableLabel *imagelabel )
 	//false (the default), the scroll area honors the size of its widget.
 	//Regardless of this property, you can programmatically resize the widget using widget()->resize()
 	//indeed, when I zoom in/out I call imageLabel->resize(...)
-	setWidgetResizable(false);
+	setWidgetResizable(false);	
+
+	selectionTool = new SelectionTool(imageLabel); //plug a selection tool to imageLabel
 	setWidget(imageLabel);
-	connect(imageLabel, SIGNAL(selectionReady()), this, SIGNAL(selectionReady()));
-	connect(imageLabel, SIGNAL(selectionRemoved()), this, SIGNAL(selectionRemoved()));
-	connect(imageLabel, SIGNAL(moved(QPoint)), this, SLOT(update(QPoint)));
+	selectionTool->show();
+
+	connect(selectionTool, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
+	connect(selectionTool, SIGNAL(scroll(int, int, int, int)), this, SLOT(ensureVisible(int, int, int, int)));
 }
 
 void SmartScrollArea::zoomIn() {
@@ -51,11 +57,15 @@ void SmartScrollArea::zoomOut() {
 }
 void SmartScrollArea::fitToWindow(bool checked) {
 	fittingwin=checked;
-	if (checked)
+	if (checked) {
+		previousScaleFactor = scaleFactor; // save zoom factot
 		scaleLabelToFit();
-	else
+	}
+	else {
 		// restore to the previous zoom factor
+		scaleFactor = previousScaleFactor;
 		scaleImage(1);
+	}
 }
 void SmartScrollArea::normalSize() {
 	//use the image size for the label
@@ -63,15 +73,17 @@ void SmartScrollArea::normalSize() {
 	scaleFactor = 1.0;
 }
 void SmartScrollArea::scaleLabelToFit() {
-	int sa_width=this->size().width();
-	int sa_height=this->size().height();
+	int sa_width=size().width();
+	int sa_height=size().height();
 	float imageratio=float(imageLabel->pixmap()->size().width())/float(imageLabel->pixmap()->size().height());
-	float factor=1;
+	float factor = 1;
 	if (sa_width<imageratio*sa_height) {
 		factor=float(sa_width)/float(imageLabel->pixmap()->size().width());
 	} else {
 		factor=float(sa_height)/float(imageLabel->pixmap()->size().height());
 	}
+	scaleFactor = factor;
+	//imageLabel->resize(factor * imageLabel->pixmap()->size());
 	imageLabel->resize(factor * 0.99 * imageLabel->pixmap()->size());
 }
 void SmartScrollArea::scaleImage(double factor) {
@@ -109,16 +121,20 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
 	}
 }
 
-void SmartScrollArea::update(QPoint diff) {
-
+void SmartScrollArea::updateScrollBars(QPoint diff) {
 	verticalScrollBar()->setValue(verticalScrollBar()->value() + diff.y());
 	horizontalScrollBar()->setValue(horizontalScrollBar()->value() + diff.x());
 }
 
+void SmartScrollArea::ensureVisible(int x, int y, int w, int h) {
+	QScrollArea::ensureVisible(x, y, w, h);
+}
+
 QRect SmartScrollArea::getSelectionRect() {
-	return imageLabel->getSelectionRect();
+	QRect sr = selectionTool->getSelectionRect();
+	return QRect(sr.topLeft()/scaleFactor, sr.size()/scaleFactor);
 }
 
 void SmartScrollArea::removeSelection() {
-	imageLabel->removeSelection();
+	selectionTool->removeSelection();
 }
