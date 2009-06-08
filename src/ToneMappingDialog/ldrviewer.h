@@ -26,11 +26,13 @@
 #define IMAGELDRVIEWER_H
 
 #include <QToolButton>
+#include <QToolBar>
+#include "../Common/genericViewer.h"
 #include "../Common/smart_scroll_area.h"
 #include "../Common/panIconWidget.h"
 #include "tonemapping_widget.h"
 
-class LdrViewer : public QWidget {
+class LdrViewer : public GenericViewer {
 	Q_OBJECT
 public:
 	LdrViewer(QWidget *parent, const QImage&, tonemapping_options*);
@@ -51,11 +53,11 @@ private slots:
 	void slotPanIconHidden();
 	void slotCornerButtonPressed();
 private:
+	QToolBar *toolBar;
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
-protected:
 	QLabel *imageLabel;
 	SmartScrollArea *scrollArea;
 	const QImage origimage;

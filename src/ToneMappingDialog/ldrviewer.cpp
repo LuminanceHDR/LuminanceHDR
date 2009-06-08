@@ -26,7 +26,7 @@
 #include "../Common/gamma_and_levels.h"
 #include "../Common/config.h"
 
-LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : QWidget(parent),origimage(o) {
+LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts) : GenericViewer(parent),origimage(o) {
 	currentimage=&origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
@@ -34,9 +34,17 @@ LdrViewer::LdrViewer(QWidget *parent, const QImage& o, tonemapping_options *opts
 	VBL_L->setSpacing(0);
 	VBL_L->setMargin(0);
 
+	toolBar = new QToolBar(tr("Informative Toolbar"),this);
+	QLabel *informativeLabel = new QLabel( "LDR Image", toolBar );
+	toolBar->addWidget(informativeLabel);
+	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+	toolBar->resize(toolBar->size().width(), 30); // same as HdrViewer
+	VBL_L->addWidget(toolBar);
+
 	imageLabel = new QLabel;
 	imageLabel->setPixmap(QPixmap::fromImage(origimage));
 	scrollArea = new SmartScrollArea(this,imageLabel);
+	scrollArea->setBackgroundRole(QPalette::Shadow);
 	VBL_L->addWidget(scrollArea);
 
 	parseOptions(opts);
@@ -150,3 +158,4 @@ void LdrViewer::restoreoriginal() {
 	imageLabel->setPixmap(QPixmap::fromImage(origimage));
 	currentimage=&origimage;
 }
+
