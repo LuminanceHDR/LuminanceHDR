@@ -24,10 +24,12 @@
 #ifndef TONEMAPPINGDIALOG_IMPL_H
 #define TONEMAPPINGDIALOG_IMPL_H
 
+#include <QList>
 #include <QMdiArea>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "../Common/global.h"
+#include "../MainWindow/hdrviewer.h"
 #include "tonemapping_widget.h"
 
 class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
@@ -35,26 +37,34 @@ class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
 Q_OBJECT
 
 public:
-	TonemappingWindow(QWidget *parent, pfs::Frame* &f, QString prefixname);
+	TonemappingWindow(QWidget *parent, pfs::Frame *f, QString prefixname);
 	~TonemappingWindow();
 protected:
+	bool eventFilter(QObject *obj, QEvent *event);
 	void closeEvent ( QCloseEvent * );
 signals:
 	void closing();
 private:
+	pfs::Frame *originalPfsFrame;
 	QMdiArea* mdiArea;
-	QString recentPathSaveLDR, prefixname;
-
+	QString recentPathSaveLDR, prefixname, cachepath;
+	HdrViewer *originalHDR;
+	QList<QMdiSubWindow *> *allLDRs;
+	QMdiSubWindow *originalHdrSubWin;
+	QMdiSubWindow *currentLdrSubWin;
+	QtpfsguiOptions *qtpfsgui_options;
+	bool isHdrShown;
 private slots:
 	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QMdiSubWindow *);
 	void viewAllAsThumbnails();
-	void current_ldr_fit_to_win(bool);
+	void fit_current_to_win(bool);
 	void on_actionClose_All_triggered();
 	void on_actionSaveAll_triggered();
 	void on_actionSave_triggered();
 	void enterWhatsThis();
+	void showHDR(bool);
 };
 #endif
