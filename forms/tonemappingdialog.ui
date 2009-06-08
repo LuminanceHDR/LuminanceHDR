@@ -16,14 +16,16 @@
    <iconset resource="../icons.qrc" >
     <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget" />
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QGridLayout" name="gridLayout" />
+  </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
      <width>1337</width>
-     <height>19</height>
+     <height>31</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp" >
@@ -59,6 +61,9 @@
   </widget>
   <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
+   <property name="enabled" >
+    <bool>true</bool>
+   </property>
    <property name="windowTitle" >
     <string>Toolbar</string>
    </property>
@@ -80,10 +85,16 @@
    <addaction name="actionSave" />
    <addaction name="actionSaveAll" />
    <addaction name="separator" />
-   <addaction name="actionClose_All" />
+   <addaction name="actionShowHDR" />
    <addaction name="separator" />
-   <addaction name="actionFinishTM" />
+   <addaction name="actionShowPrevious" />
+   <addaction name="actionShowNext" />
+   <addaction name="separator" />
    <addaction name="actionWhat_s_This" />
+   <addaction name="separator" />
+   <addaction name="actionClose_All" />
+   <addaction name="actionFinishTM" />
+   <addaction name="separator" />
   </widget>
   <action name="actionFinishTM" >
    <property name="icon" >
@@ -333,6 +344,36 @@
    </property>
    <property name="shortcut" >
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionShowHDR" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Show the Original HDR</string>
+   </property>
+  </action>
+  <action name="actionShowNext" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/forward.png</normaloff>:/new/prefix1/images/forward.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Show Next</string>
+   </property>
+  </action>
+  <action name="actionShowPrevious" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/back.png</normaloff>:/new/prefix1/images/back.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Show Previous</string>
    </property>
   </action>
  </widget>
