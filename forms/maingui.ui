@@ -733,7 +733,15 @@
     <string>Crop to Selection</string>
    </property>
    <property name="toolTip" >
-    <string>Crop Image to Selection</string>
+    <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Crop the Image to Selection&lt;/span>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;span style=" font-weight:400;">To start selecting click inside the image area and drag the pointer to the desired position. &lt;/span>&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Once selected you can edit the selection or move it around.&lt;/p>
+&lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">To remove the selection click ouside the selected region or use &lt;span style=" font-weight:600;">Image-&amp;gt;Remove Selection &lt;/span>on the menubar.&lt;/p>&lt;/body>&lt;/html></string>
    </property>
   </action>
   <action name="removeSelectionAction" >
