@@ -32,6 +32,7 @@
 #include <QResizeEvent>
 #include <QToolButton>
 #include <QProgressDialog>
+#include "../Common/genericViewer.h"
 #include "../Common/smart_scroll_area.h"
 #include "../Common/panIconWidget.h"
 #include "../Common/selectionTool.h"
@@ -49,10 +50,10 @@ enum LumMappingMethod {
 };
 
 
-class HdrViewer : public QWidget {
+class HdrViewer : public GenericViewer {
 	Q_OBJECT
 public:
-	HdrViewer ( QWidget *parent, unsigned int negcol, unsigned int naninfcol, bool NeedsSaving );
+	HdrViewer (QWidget *parent, unsigned int negcol, unsigned int naninfcol, bool NeedsSaving, bool noCloseFlag = false );
 	~HdrViewer();
 	LuminanceRangeWidget *lumRange;
 	bool NeedsSaving;
@@ -99,7 +100,6 @@ private:
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
 	void mapFrameToImage();
-	pfs::Frame* hdrpfsframe;
 	QComboBox *mappingMethodCB;
 	pfs::Array2D *workArea[3];
 	pfs::Frame *pfsFrame;
@@ -110,5 +110,6 @@ private:
 	QProgressDialog *progress;
 	bool selection;
 	bool flagUpdateImage;
+	bool noCloseFlag;
 };
 #endif

@@ -84,7 +84,7 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 //**********************************************************************************
 //==================================================================================
 
-HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bool ns) : QWidget(parent), NeedsSaving(ns), filename(""), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg), selection(false) {
+HdrViewer::HdrViewer(QWidget *parent, unsigned int neg, unsigned int naninf, bool ns, bool ncf) : GenericViewer(parent), NeedsSaving(ns), filename(""), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg), selection(false), noCloseFlag(ncf) {
 
 	flagUpdateImage = true;
 
@@ -135,13 +135,13 @@ HdrViewer::HdrViewer( QWidget *parent, unsigned int neg, unsigned int naninf, bo
 	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SLOT(setSelection(bool)));
 	progress = new QProgressDialog(0, 0, 0, 0, this);
-     	progress->setWindowTitle("Loading file...");
+     	progress->setWindowTitle(tr("Loading file..."));
      	progress->setWindowModality(Qt::WindowModal);
      	progress->setMinimumDuration(0);
 }
 
 void HdrViewer::slotCornerButtonPressed() {
-	panIconWidget=new PanIconWidget;
+	panIconWidget=new PanIconWidget(this);
 	panIconWidget->setImage(image);
 	float zf=scrollArea->getScaleFactor();
 	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
@@ -180,9 +180,10 @@ void HdrViewer::slotPanIconHidden()
 
 void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     assert(inputframe!=NULL);
-    //delete previous pfs::Frame*.
+    pfs::DOMIO pfsio;
+    //delete previous pfs::Frame*. It must bu done calling freeFrame()
     if (pfsFrame!=NULL)
-       delete pfsFrame;
+       pfsio.freeFrame(pfsFrame);
     pfsFrame = inputframe;
     lumRange->setHistogramImage(getPrimaryChannel());
     lumRange->fitToDynamicRange();
@@ -328,14 +329,13 @@ const pfs::Array2D *HdrViewer::getPrimaryChannel() {
 }
 
 HdrViewer::~HdrViewer() {
+	pfs::DOMIO pfsio;
 	//do not delete workarea, it shares the same memory area of pfsFrame
-	if (imageLabel) delete imageLabel;
-	delete cornerButton;
-	if (scrollArea) delete scrollArea;
 	if (image) delete image;
-	if (pfsFrame!=NULL)
-		delete pfsFrame;
-	delete progress;
+	if (pfsFrame) // It must be deleted calling freeFrame()
+		pfsio.freeFrame(pfsFrame);
+	//std::cout << "HdrViewer::~HdrViewer()" << std::endl;
+	//std::cout << pfsFrame << std::endl;
 }
 
 pfs::Frame*& HdrViewer::getHDRPfsFrame() {
@@ -343,6 +343,8 @@ pfs::Frame*& HdrViewer::getHDRPfsFrame() {
 }
 
 void HdrViewer::closeEvent ( QCloseEvent * event ) {
+	//std::cout << "HdrViewer::closeEvent()" << std::endl;
+	//std::cout << pfsFrame << std::endl;
 	if (NeedsSaving) {
 		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"),
 		QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
@@ -350,6 +352,8 @@ void HdrViewer::closeEvent ( QCloseEvent * event ) {
 			event->accept();
 		else
 			event->ignore();
+	} else if (noCloseFlag) {
+		event->ignore();
 	} else {
 		event->accept();
 	}
@@ -392,3 +396,4 @@ void HdrViewer::removeSelection(void) {
 bool HdrViewer::hasSelection(void) {
 	return selection;
 }
+
