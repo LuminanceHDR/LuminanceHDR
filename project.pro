@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG += release qt thread
-DEFINES += QT_NO_DEBUG_OUTPUT
+#DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Assume openmp-capable g++ (>=4.2)
 QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp -msse2
@@ -41,6 +41,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Common/commandline.h \
            src/Common/imageQualityDialog.h \
 	   src/Common/selectionTool.h \
+	   src/Common/genericViewer.h \
            src/MainWindow/mainWindow.h \
            src/MainWindow/DnDOption.h \
            src/MainWindow/hdrviewer.h \
@@ -95,6 +96,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Common/commandline.cpp \
            src/Common/imageQualityDialog.cpp \
 	   src/Common/selectionTool.cpp \
+	   src/Common/genericViewer.cpp \
            src/MainWindow/mainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
            src/MainWindow/hdrviewer.cpp \
