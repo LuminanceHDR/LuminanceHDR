@@ -37,7 +37,7 @@
 extern int xsize;
 extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *_sb) : QWidget(parent), OriginalPfsFrame(_OriginalPfsFrame), sb(_sb), adding_custom_size(false) {
+TMWidget::TMWidget(QWidget *parent, QStatusBar *_sb) : QWidget(parent), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
 
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
@@ -86,10 +86,14 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 
+	//re-read the original frame	
+	pfs::DOMIO pfsio;
+	originalPfsFrame=pfsio.readFrame( QFile::encodeName(cachepath+"/original.pfs").constData());
+
 	// get available sizes
-	assert(OriginalPfsFrame!=NULL);
-	int height = OriginalPfsFrame->getHeight();
-	int width = OriginalPfsFrame->getWidth();
+	assert(originalPfsFrame!=NULL);
+	int height = originalPfsFrame->getHeight();
+	int width = originalPfsFrame->getWidth();
 	sizes.resize(0);
 	for(int x = 256; x <= width; x *= 2) {
 		if( x >= width )
@@ -105,19 +109,14 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar *
 
 	qRegisterMetaType<QImage>("QImage");
 
-	//swap original frame to hd
-	pfs::DOMIO pfsio;
-	pfsio.writeFrame(OriginalPfsFrame, QFile::encodeName(cachepath+"/original.pfs").constData());
-	pfsio.freeFrame(OriginalPfsFrame);
 }
 
 TMWidget::~TMWidget() {
 delete contrastfactorGang; delete saturationfactorGang; delete detailfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
-	//fetch original frame from hd
 	pfs::DOMIO pfsio;
-	OriginalPfsFrame=pfsio.readFrame( QFile::encodeName(cachepath+"/original.pfs").constData());
 	xsize=-1;
 	pregamma=-1;
+	pfsio.freeFrame(originalPfsFrame);
 	QFile::remove(cachepath+"/original.pfs");
 	QFile::remove(cachepath+"/after_resize.pfs");
 	QFile::remove(cachepath+"/after_pregamma.pfs");

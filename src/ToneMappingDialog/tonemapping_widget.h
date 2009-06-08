@@ -49,17 +49,17 @@ class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame* &_OriginalPfsFrame, QStatusBar* sb);
+	TMWidget(QWidget *parent, QStatusBar* sb);
 	~TMWidget();
 signals:
 	void newResult(const QImage&,tonemapping_options*);
 private:
 	QVector<int> sizes;
+	pfs::Frame *originalPfsFrame;
 
 	Gang *contrastfactorGang, *saturationfactorGang, *detailfactorGang, *contrastGang, *biasGang, *spatialGang, *rangeGang, *baseGang, *alphaGang, *betaGang, *saturation2Gang, *noiseGang, *multiplierGang, *coneGang, *rodGang, *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *brightnessGang, *chromaticGang, *lightGang, *pregammagang;
 
 	tonemapping_options ToneMappingOptions;
-	pfs::Frame* &OriginalPfsFrame;
 	void FillToneMappingOptions();
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
