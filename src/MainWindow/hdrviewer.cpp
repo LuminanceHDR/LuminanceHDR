@@ -96,7 +96,7 @@ HdrViewer::HdrViewer(QWidget *parent, unsigned int neg, unsigned int naninf, boo
 	VBL_L->setMargin(0);
 
 	toolBar = new QToolBar(tr("Viewing Settings Toolbar"),this);
-	QLabel *mappingMethodLabel = new QLabel( "&Mapping:", toolBar );
+	QLabel *mappingMethodLabel = new QLabel( tr("&Mapping:"), toolBar );
 	mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
 	mappingMethodCB = new QComboBox( toolBar );
 	toolBar->addWidget(mappingMethodLabel);
