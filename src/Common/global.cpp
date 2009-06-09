@@ -39,11 +39,11 @@ QSettings settings("Qtpfsgui", "Qtpfsgui");
 QString saveLDRImage(const QString initialFileName, const QImage* image, bool batchMode) {
 	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
 	if (!batchMode) {
-		QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;");
-		filetypes += "JPEG (*.jpg *.jpeg);;" ;
-		filetypes += "PNG (*.png);;" ;
-		filetypes += "PPM PBM (*.ppm *.pbm);;";
-		filetypes += "BMP (*.bmp)";
+		QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;");
+		filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
+		filetypes += "PNG (*.png *.PNG);;" ;
+		filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
+		filetypes += "BMP (*.bmp *.BMP)";
 
 		outfname = QFileDialog::getSaveFileName(
 				0,

@@ -165,12 +165,14 @@ void MainGui::fileNewViaWizard(QStringList files) {
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;" ;
-	filetypes += "OpenEXR (*.exr);;" ;
-	filetypes += "Radiance RGBE (*.hdr *.pic);;";
-	filetypes += "TIFF Images (*.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;";
-	filetypes += "PFS Stream (*.pfs)";
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
+	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;" ;
+	filetypes += "OpenEXR (*.exr *.EXR);;" ;
+	filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
+	filetypes += "TIFF Images (*.TIFF *.TIF *.tiff *.tif);;";
+	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
+	filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;";
+	filetypes += "PFS Stream (*.pfs *.PFS)";
 	QStringList files = QFileDialog::getOpenFileNames(
         	this,
 		tr("Load one or more Hdr files..."),
@@ -194,11 +196,11 @@ void MainGui::fileSaveAs()
 		return;
 
 	QString filetypes = tr("All Hdr formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs);;" ;
-	filetypes += "OpenEXR (*.exr);;" ;
-	filetypes += "Radiance RGBE (*.hdr *.pic);;";
-	filetypes += "HDR TIFF (*.tiff *.tif);;";
-	filetypes += "PFS Stream (*.pfs)";
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
+	filetypes += "OpenEXR (*.exr *.EXR);;" ;
+	filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
+	filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
+	filetypes += "PFS Stream (*.pfs *.PFS)";
 
 	QString fname = QFileDialog::getSaveFileName(
 		this,

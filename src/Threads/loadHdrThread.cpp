@@ -91,6 +91,8 @@ void LoadHdrThread::run() {
 			
 			#ifdef Q_WS_MAC
 			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw", params);
+			#elifdef Q_WS_WIN
+			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", params);
 			#else
 			rawconversion->start("dcraw", params);
 			#endif
