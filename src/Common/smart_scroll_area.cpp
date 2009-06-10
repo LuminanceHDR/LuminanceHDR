@@ -26,23 +26,24 @@
 
 #include "smart_scroll_area.h"
 
-SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel *imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false) {
+SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false) {
 
 
 	setBackgroundRole(QPalette::Light);
-	imageLabel->setBackgroundRole(QPalette::Base);
+	imageLabel.setBackgroundRole(QPalette::Base);
 	//the label ignores the pixmap's size
-	imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+	imageLabel.setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
 	//the label will scale the image to fill all available space (to its -the label's- size)
-	imageLabel->setScaledContents(true);
+	imageLabel.setScaledContents(true);
 	//false (the default), the scroll area honors the size of its widget.
 	//Regardless of this property, you can programmatically resize the widget using widget()->resize()
-	//indeed, when I zoom in/out I call imageLabel->resize(...)
+	//indeed, when I zoom in/out I call imageLabel.resize(...)
 	setWidgetResizable(false);	
+	imageLabel.adjustSize();
 
-	selectionTool = new SelectionTool(imageLabel); //plug a selection tool to imageLabel
-	setWidget(imageLabel);
-	selectionTool->show();
+	selectionTool = new SelectionTool(&imageLabel); //plug a selection tool to imageLabel
+	setWidget(&imageLabel);
+	selectionTool->hide();
 
 	connect(selectionTool, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
@@ -69,26 +70,26 @@ void SmartScrollArea::fitToWindow(bool checked) {
 }
 void SmartScrollArea::normalSize() {
 	//use the image size for the label
-	imageLabel->adjustSize();
+	imageLabel.adjustSize();
 	scaleFactor = 1.0;
 }
 void SmartScrollArea::scaleLabelToFit() {
 	int sa_width=size().width();
 	int sa_height=size().height();
-	float imageratio=float(imageLabel->pixmap()->size().width())/float(imageLabel->pixmap()->size().height());
+	float imageratio=float(imageLabel.pixmap()->size().width())/float(imageLabel.pixmap()->size().height());
 	float factor = 1;
 	if (sa_width<imageratio*sa_height) {
-		factor=float(sa_width)/float(imageLabel->pixmap()->size().width());
+		factor=float(sa_width)/float(imageLabel.pixmap()->size().width());
 	} else {
-		factor=float(sa_height)/float(imageLabel->pixmap()->size().height());
+		factor=float(sa_height)/float(imageLabel.pixmap()->size().height());
 	}
 	scaleFactor = factor;
-	//imageLabel->resize(factor * imageLabel->pixmap()->size());
-	imageLabel->resize(factor * 0.99 * imageLabel->pixmap()->size());
+	//imageLabel.resize(factor * imageLabel.pixmap()->size());
+	imageLabel.resize(factor * 0.99 * imageLabel.pixmap()->size());
 }
 void SmartScrollArea::scaleImage(double factor) {
 	scaleFactor *= factor;
-	imageLabel->resize(scaleFactor * imageLabel->pixmap()->size());
+	imageLabel.resize(scaleFactor * imageLabel.pixmap()->size());
 	adjustScrollBar(horizontalScrollBar(), factor);
 	adjustScrollBar(verticalScrollBar(), factor);
 }
@@ -103,17 +104,17 @@ void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
 		scaleLabelToFit();
 	} else {
 		//this seems to be a bug in qt4
-		imageLabel->resize(imageLabel->size()-QSize(0,1));
-		imageLabel->resize(imageLabel->size()+QSize(0,1));
+		imageLabel.resize(imageLabel.size()-QSize(0,1));
+		imageLabel.resize(imageLabel.size()+QSize(0,1));
 
 // 		QScrollBar *h=horizontalScrollBar();
 // 		QScrollBar *v=verticalScrollBar();
-// 		int fixwidth=imageLabel->size().width()+v->size().width()-this->size().width();
+// 		int fixwidth=imageLabel.size().width()+v->size().width()-this->size().width();
 // 		if (fixwidth>0)
 // 			h->setMaximum(qMax(0,fixwidth));
 // 		else
 // 			h->setMaximum(0);
-// 		int fixheight=imageLabel->size().height()-this->size().height();
+// 		int fixheight=imageLabel.size().height()-this->size().height();
 // 		if (fixheight>0)
 // 			v->setMaximum(qMax(0,fixheight));
 // 		else
@@ -133,6 +134,10 @@ void SmartScrollArea::ensureVisible(int x, int y, int w, int h) {
 QRect SmartScrollArea::getSelectionRect() {
 	QRect sr = selectionTool->getSelectionRect();
 	return QRect(sr.topLeft()/scaleFactor, sr.size()/scaleFactor);
+}
+
+void SmartScrollArea::setSelectionTool(bool toggled) {
+	toggled ? selectionTool->show() : selectionTool->hide();
 }
 
 void SmartScrollArea::removeSelection() {

@@ -25,14 +25,58 @@
 #define GENERICVIEWER_H
 
 #include <QWidget>
+#include <QVBoxLayout>
+#include <QToolBar>
+#include <QToolButton>
+
+#include "smart_scroll_area.h"
+#include "panIconWidget.h"
+#include "selectionTool.h"
 
 class GenericViewer : public QWidget 
 {
 Q_OBJECT
 public:
-	GenericViewer(QWidget *parent = 0);
-	virtual bool getFittingWin() = 0;
+	GenericViewer(QWidget *parent = 0, bool ns = false, bool ncf = false);
 public slots:
-	virtual void fitToWindow(bool checked) = 0;
+	virtual void fitToWindow(bool checked);
+        virtual void zoomIn();
+        virtual void zoomOut();
+        virtual	void normalSize();
+	virtual bool getFittingWin();
+        virtual bool hasSelection();
+	virtual void setSelectionTool(bool);
+	virtual const float getScaleFactor();
+	virtual const QRect getSelectionRect(void);
+	virtual void removeSelection();
+        virtual bool needsSaving();
+        virtual void setNeedsSaving(bool);
+	virtual const QString getFileName();
+	virtual void setFileName(const QString);
+	virtual void levelsRequested(bool) = 0; // only used by LdrViewer
+        virtual QString getFilenamePostFix() = 0; // only used by LdrViewer 
+        virtual QString getExifComment() = 0; // only used by LdrViewer
+	virtual const QImage* getQImage() = 0; // only used by LdrViewer
+protected slots:
+	virtual void slotPanIconSelectionMoved(QRect, bool);
+	virtual void slotPanIconHidden();
+	virtual void slotCornerButtonPressed();
+protected:
+	QImage image;
+        bool NeedsSaving;
+        bool noCloseFlag;
+	QLabel imageLabel;
+	QVBoxLayout *VBL_L;
+	QToolBar *toolBar;
+	QToolButton *cornerButton;
+	SmartScrollArea *scrollArea;
+	PanIconWidget *panIconWidget;
+	QString filename;
+        bool isSelectionReady;
+        bool isSelectionToolVisible;
+	virtual void closeEvent ( QCloseEvent * event );
+signals:
+	virtual void selectionReady(bool isReady);
+	virtual void levels_closed(bool isReady); // only used by LdrViewer
 };
 #endif

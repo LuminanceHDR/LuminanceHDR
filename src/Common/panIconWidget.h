@@ -33,7 +33,7 @@ Q_OBJECT
 public:
     PanIconWidget(QWidget *parent=0, Qt::WindowFlags flags=Qt::Popup);
     ~PanIconWidget();
-    void setImage(const QImage* fullsize_zoomed_image);
+    void setImage(const QImage & fullsize_zoomed_image);
     void popup(const QPoint &pos);
     void setRegionSelection(QRect regionSelection);
     void setMouseFocus(void);

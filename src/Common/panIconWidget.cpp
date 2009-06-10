@@ -40,12 +40,12 @@ PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(pa
 	setMouseTracking(true); //necessary?
 }
 
-void PanIconWidget::setImage(const QImage *fullsize) {
-	m_image = new QImage(fullsize->scaled(180,120,Qt::KeepAspectRatio));
+void PanIconWidget::setImage(const QImage &fullsize) {
+	m_image = new QImage(fullsize.scaled(180,120,Qt::KeepAspectRatio));
 	m_width           = m_image->width();
 	m_height          = m_image->height();
-	m_orgWidth        = fullsize->width();
-	m_orgHeight       = fullsize->height();
+	m_orgWidth        = fullsize.width();
+	m_orgHeight       = fullsize.height();
 	setFixedSize(m_width+2*frameWidth(), m_height+2*frameWidth());
 // 	m_rect = QRect(width()/2-m_width/2, height()/2-m_height/2, m_width, m_height);
 	//KPopupFrame::setMainWidget = resize

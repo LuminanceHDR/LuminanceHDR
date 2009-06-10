@@ -27,14 +27,9 @@
 
 #include <QImage>
 #include <QComboBox>
-#include <QLabel>
-#include <QToolBar>
 #include <QResizeEvent>
-#include <QToolButton>
 #include <QProgressDialog>
 #include "../Common/genericViewer.h"
-#include "../Common/smart_scroll_area.h"
-#include "../Common/panIconWidget.h"
 #include "../Common/selectionTool.h"
 #include "luminancerange_widget.h"
 #include "../Libpfs/array2d.h"
@@ -53,53 +48,30 @@ enum LumMappingMethod {
 class HdrViewer : public GenericViewer {
 	Q_OBJECT
 public:
-	HdrViewer (QWidget *parent, unsigned int negcol, unsigned int naninfcol, bool NeedsSaving, bool noCloseFlag = false );
+	HdrViewer (QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
 	~HdrViewer();
-	LuminanceRangeWidget *lumRange;
-	bool NeedsSaving;
-	QToolBar *toolBar;
-	QString filename;
-	double getScaleFactor();
-	bool getFittingWin();
 	void updateHDR(pfs::Frame*);
-	pfs::Frame* &getHDRPfsFrame();
-	void update_colors(unsigned int negcol, unsigned int naninfcol);
+	pfs::Frame* getHDRPfsFrame();
 	void saveHdrPreview();
 	void showLoadDialog();
 	void hideLoadDialog(void);
-	QRect getSelectionRect(void);
 	void setFlagUpdateImage(bool updateImage);
-signals:
-	void selectionReady(bool isReady);
+	LuminanceRangeWidget* lumRange();
+	void update_colors(unsigned int negcol, unsigned int naninfcol);
+	void mapFrameToImage();
+ 	void levelsRequested(bool); // do nothing but used by LdrViewer (its own implementation)
+        QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
+        QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
+	const QImage* getQImage(); // do nothing but used by LdrViewer (its own implementation)
 public slots:
-	void zoomIn();
-	void zoomOut();
-	void fitToWindow(bool checked);
-	void normalSize();
 	void updateRangeWindow();
 	int getLumMappingMethod();
 	void setLumMappingMethod( int method );
 	void setMaximum(int max);
 	void setValue(int value);
-	void removeSelection();
-	bool hasSelection();
-private slots:
-	void slotPanIconSelectionMoved(QRect, bool);
-	void slotPanIconHidden();
-	void slotCornerButtonPressed();
-	void setSelection(bool);
 protected:
-	QLabel *imageLabel;
-	SmartScrollArea *scrollArea;
 	QImage *image;
-	void setRangeWindow( float min, float max );
-	const pfs::Array2D *getPrimaryChannel();
-	void updateImage();
-	void closeEvent ( QCloseEvent * event );
-private:
-	PanIconWidget *panIconWidget;
-	QToolButton *cornerButton;
-	void mapFrameToImage();
+	LuminanceRangeWidget *m_lumRange;
 	QComboBox *mappingMethodCB;
 	pfs::Array2D *workArea[3];
 	pfs::Frame *pfsFrame;
@@ -108,8 +80,10 @@ private:
 	float maxValue;
 	unsigned int naninfcol,negcol;
 	QProgressDialog *progress;
-	bool selection;
 	bool flagUpdateImage;
-	bool noCloseFlag;
+
+	void setRangeWindow( float min, float max );
+	const pfs::Array2D *getPrimaryChannel();
+	void updateImage();
 };
 #endif

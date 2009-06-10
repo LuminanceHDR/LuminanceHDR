@@ -24,8 +24,6 @@
 
 #include <math.h>
 #include <QApplication>
-#include <QVBoxLayout>
-#include <QMessageBox>
 #include <QFileInfo>
 #include "../Common/global.h"
 #include "hdrviewer.h"
@@ -84,18 +82,13 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 //**********************************************************************************
 //==================================================================================
 
-HdrViewer::HdrViewer(QWidget *parent, unsigned int neg, unsigned int naninf, bool ns, bool ncf) : GenericViewer(parent), NeedsSaving(ns), filename(""), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg), selection(false), noCloseFlag(ncf) {
+HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf) : GenericViewer(parent, ns, ncf), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
 
 	flagUpdateImage = true;
 
 	workArea[0] = workArea[1] = workArea[2] = NULL;
 	setAttribute(Qt::WA_DeleteOnClose);
 
-	QVBoxLayout *VBL_L = new QVBoxLayout(this);
-	VBL_L->setSpacing(0);
-	VBL_L->setMargin(0);
-
-	toolBar = new QToolBar(tr("Viewing Settings Toolbar"),this);
 	QLabel *mappingMethodLabel = new QLabel( tr("&Mapping:"), toolBar );
 	mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
 	mappingMethodCB = new QComboBox( toolBar );
@@ -113,70 +106,20 @@ HdrViewer::HdrViewer(QWidget *parent, unsigned int neg, unsigned int naninf, boo
 	mappingMethodCB->addItems(methods);
 	mappingMethodCB->setCurrentIndex( 3 );
 	connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
-
 	QLabel *histlabel = new QLabel( tr("Histogram:"), toolBar );
-	lumRange = new LuminanceRangeWidget( toolBar );
+	m_lumRange = new LuminanceRangeWidget( toolBar );
 	toolBar->addWidget(histlabel);
-	toolBar->addWidget(lumRange);
+	toolBar->addWidget(m_lumRange);
 	toolBar->addSeparator();
-	connect( lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
+	connect( m_lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
 	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-	VBL_L->addWidget(toolBar);
 
-	imageLabel = new QLabel(this);
-	scrollArea = new SmartScrollArea(this,imageLabel);
-	scrollArea->setBackgroundRole(QPalette::Shadow);
-	VBL_L->addWidget(scrollArea);
-	cornerButton=new QToolButton(this);
-	cornerButton->setToolTip("Pan the image to a region");
-	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-	scrollArea->setCornerWidget(cornerButton);
-	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
-	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SLOT(setSelection(bool)));
+
 	progress = new QProgressDialog(0, 0, 0, 0, this);
      	progress->setWindowTitle(tr("Loading file..."));
      	progress->setWindowModality(Qt::WindowModal);
      	progress->setMinimumDuration(0);
 }
-
-void HdrViewer::slotCornerButtonPressed() {
-	panIconWidget=new PanIconWidget(this);
-	panIconWidget->setImage(image);
-	float zf=scrollArea->getScaleFactor();
-	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
-	float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
-	float wps_w=(float)(scrollArea->maximumViewportSize().width());
-	float wps_h=(float)(scrollArea->maximumViewportSize().height());
-	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
-	panIconWidget->setRegionSelection(r);
-	panIconWidget->setMouseFocus();
-	connect(panIconWidget, SIGNAL(signalSelectionMoved(QRect, bool)), this, SLOT(slotPanIconSelectionMoved(QRect, bool)));
-	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
-	g.setX(g.x()+ scrollArea->viewport()->size().width());
-	g.setY(g.y()+ scrollArea->viewport()->size().height());
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2,
-					g.y() - panIconWidget->height()/2));
-
-	panIconWidget->setCursorToLocalRegionSelectionCenter();
-}
-
-void HdrViewer::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
-	if (mousereleased) {
-		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
-		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
-		panIconWidget->close();
-		slotPanIconHidden();
-	}
-}
-
-void HdrViewer::slotPanIconHidden()
-{
-    cornerButton->blockSignals(true);
-    cornerButton->animateClick();
-    cornerButton->blockSignals(false);
-}
-
 
 void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     assert(inputframe!=NULL);
@@ -185,13 +128,13 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     if (pfsFrame!=NULL)
        pfsio.freeFrame(pfsFrame);
     pfsFrame = inputframe;
-    lumRange->setHistogramImage(getPrimaryChannel());
-    lumRange->fitToDynamicRange();
+    m_lumRange->setHistogramImage(getPrimaryChannel());
+    m_lumRange->fitToDynamicRange();
     //fitToDynamicRange() already takes care -indirectly- to call updateImage()
     //zoom at original size, 100%
     //make the label use the image dimensions
-    imageLabel->adjustSize();
-    imageLabel->update();
+    imageLabel.adjustSize();
+    imageLabel.update();
 }
 
 void HdrViewer::setFlagUpdateImage(bool updateImage) {
@@ -226,7 +169,7 @@ void HdrViewer::updateImage() {
 				minValue, maxValue, mappingMethod*/ );
 
 		//assign the mapped image to the label
-		imageLabel->setPixmap(QPixmap::fromImage(*image));
+		imageLabel.setPixmap(QPixmap::fromImage(*image));
 		QApplication::restoreOverrideCursor();
 	}
 }
@@ -277,8 +220,12 @@ void HdrViewer::mapFrameToImage() {
     }
 }
 
+LuminanceRangeWidget* HdrViewer::lumRange() {
+	return m_lumRange;
+}
+
 void HdrViewer::updateRangeWindow() {
- setRangeWindow( pow( 10, lumRange->getRangeWindowMin() ), pow( 10, lumRange->getRangeWindowMax() ) );
+ setRangeWindow( pow( 10, m_lumRange->getRangeWindowMin() ), pow( 10, m_lumRange->getRangeWindowMax() ) );
 }
 
 void HdrViewer::setRangeWindow( float min, float max ) {
@@ -297,24 +244,6 @@ void HdrViewer::setLumMappingMethod( int method ) {
 	updateImage();
 }
 
-void HdrViewer::zoomIn() {
-	scrollArea->zoomIn();
-}
-void HdrViewer::zoomOut() {
-	scrollArea->zoomOut();
-}
-void HdrViewer::fitToWindow(bool checked) {
-	scrollArea->fitToWindow(checked);
-}
-void HdrViewer::normalSize() {
-	scrollArea->normalSize();
-}
-double HdrViewer::getScaleFactor() {
-	return scrollArea->getScaleFactor();
-}
-bool HdrViewer::getFittingWin(){
-	return scrollArea->isFitting();
-}
 void HdrViewer::update_colors( unsigned int neg, unsigned int naninf ) {
 	naninfcol=naninf;
 	negcol=neg;
@@ -331,32 +260,13 @@ const pfs::Array2D *HdrViewer::getPrimaryChannel() {
 HdrViewer::~HdrViewer() {
 	pfs::DOMIO pfsio;
 	//do not delete workarea, it shares the same memory area of pfsFrame
-	if (image) delete image;
+	//if (image) delete image;
 	if (pfsFrame) // It must be deleted calling freeFrame()
 		pfsio.freeFrame(pfsFrame);
-	//std::cout << "HdrViewer::~HdrViewer()" << std::endl;
-	//std::cout << pfsFrame << std::endl;
 }
 
-pfs::Frame*& HdrViewer::getHDRPfsFrame() {
+pfs::Frame* HdrViewer::getHDRPfsFrame() {
 	return pfsFrame;
-}
-
-void HdrViewer::closeEvent ( QCloseEvent * event ) {
-	//std::cout << "HdrViewer::closeEvent()" << std::endl;
-	//std::cout << pfsFrame << std::endl;
-	if (NeedsSaving) {
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"),
-		QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
-		if (ret==QMessageBox::Yes)
-			event->accept();
-		else
-			event->ignore();
-	} else if (noCloseFlag) {
-		event->ignore();
-	} else {
-		event->accept();
-	}
 }
 
 void HdrViewer::saveHdrPreview() {
@@ -380,20 +290,17 @@ void HdrViewer::hideLoadDialog(void) {
         progress->cancel();
 }
 
-QRect HdrViewer::getSelectionRect(void) {
-        return scrollArea->getSelectionRect();
+void HdrViewer::levelsRequested(bool a) {} // do nothing, here to enable polymorphism
+
+QString HdrViewer::getFilenamePostFix() {
+	return QString();
 }
 
-void HdrViewer::setSelection(bool isReady) {
-	isReady ? selection = false : selection = true;
+
+const QImage* HdrViewer::getQImage() {
+	return NULL;
 }
 
-void HdrViewer::removeSelection(void) {
-	scrollArea->removeSelection();
-	selection = false;
+QString HdrViewer::getExifComment() {
+	return QString();
 }
-
-bool HdrViewer::hasSelection(void) {
-	return selection;
-}
-

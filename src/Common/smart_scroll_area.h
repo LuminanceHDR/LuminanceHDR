@@ -34,7 +34,7 @@
 class SmartScrollArea : public QScrollArea {
 	Q_OBJECT
 public:
-	SmartScrollArea( QWidget *parent, QLabel *imagelabel );
+	SmartScrollArea( QWidget *parent, QLabel &imagelabel );
 	void zoomIn();
 	void zoomOut();
 	void fitToWindow(bool checked);
@@ -47,6 +47,7 @@ public:
 		return fittingwin;
 	}
 	QRect getSelectionRect();
+	void setSelectionTool(bool toggled);
 	void removeSelection();
 protected:
 	void resizeEvent ( QResizeEvent * );
@@ -54,7 +55,7 @@ protected slots:
 	void updateScrollBars(QPoint diff);
 	void ensureVisible(int x, int y, int w, int h);
 private:
-	QLabel *imageLabel;
+	QLabel &imageLabel;
 	SelectionTool *selectionTool;
 	float scaleFactor;
 	float previousScaleFactor;
@@ -64,8 +65,6 @@ private:
 signals:
 	void selectionReady(bool);
 };
+
 #endif
-
-
-
 
