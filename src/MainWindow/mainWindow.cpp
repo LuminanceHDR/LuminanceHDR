@@ -151,11 +151,14 @@ void MainGui::fileNewViaWizard(QStringList files) {
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
 		wizard=new HdrWizardForm (this, files);
 		if (wizard->exec() == QDialog::Accepted) {
-			HdrViewer *newmdi=new HdrViewer( this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, true); //true means needs saving
+			HdrViewer *newmdi=new HdrViewer(this, true, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor); //true means needs saving
 			connect(newmdi, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
 			mdiArea->addSubWindow(newmdi);
 			newmdi->setWindowTitle(wizard->getCaptionTEXT());
+			newmdi->fitToWindow(true);
+			newmdi->setSelectionTool(true);
+			newmdi->showMaximized();
 			newmdi->show();
 		}
 		delete wizard;
@@ -251,8 +254,8 @@ void MainGui::fileSaveAs()
 		hideSaveDialog();
 		free(encodedName);
 		setCurrentFile(absoluteFileName);
-		currenthdr->NeedsSaving=false;
-		currenthdr->filename=absoluteFileName;
+		//currenthdr->setNeedsSaving(false);
+		currenthdr->setFileName(fname);
 		currenthdr->setWindowTitle(absoluteFileName);
 	}
 }
@@ -324,7 +327,7 @@ void MainGui::tonemap_requested() {
 		return;
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
 		this->setDisabled(true);
-		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->filename);
+		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
@@ -363,8 +366,8 @@ void MainGui::dispatchrotate(bool clockwise) {
 	pfs::Frame *rotated=rotateFrame(currenthdr->getHDRPfsFrame(),clockwise);
 	//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 	currenthdr->updateHDR(rotated);
-	if (! currenthdr->NeedsSaving) {
-		currenthdr->NeedsSaving=true;
+	if (! currenthdr->needsSaving()) {
+		currenthdr->setNeedsSaving(true);
 		currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
 	}
 	QApplication::restoreOverrideCursor();
@@ -380,8 +383,8 @@ void MainGui::resize_requested() {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 		currenthdr->updateHDR(resizedialog->getResizedFrame());
-		if (! currenthdr->NeedsSaving) {
-			currenthdr->NeedsSaving=true;
+		if (! currenthdr->needsSaving()) {
+			currenthdr->setNeedsSaving(true);
 			currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
 		}
 		QApplication::restoreOverrideCursor();
@@ -397,8 +400,8 @@ void MainGui::projectiveTransf_requested() {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 		currenthdr->updateHDR(projTranfsDialog->getTranformedFrame());
-		if (! currenthdr->NeedsSaving) {
-			currenthdr->NeedsSaving=true;
+		if (! currenthdr->needsSaving()) {
+			currenthdr->setNeedsSaving(true);
 			currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
 		}
 		QApplication::restoreOverrideCursor();
@@ -407,22 +410,22 @@ void MainGui::projectiveTransf_requested() {
 }
 
 void MainGui::current_mdi_decrease_exp() {
-	currenthdr->lumRange->decreaseExposure();
+	currenthdr->lumRange()->decreaseExposure();
 }
 void MainGui::current_mdi_extend_exp() {
-	currenthdr->lumRange->extendRange();
+	currenthdr->lumRange()->extendRange();
 }
 void MainGui::current_mdi_fit_exp() {
-	currenthdr->lumRange->fitToDynamicRange();
+	currenthdr->lumRange()->fitToDynamicRange();
 }
 void MainGui::current_mdi_increase_exp() {
-	currenthdr->lumRange->increaseExposure();
+	currenthdr->lumRange()->increaseExposure();
 }
 void MainGui::current_mdi_shrink_exp() {
-	currenthdr->lumRange->shrinkRange();
+	currenthdr->lumRange()->shrinkRange();
 }
 void MainGui::current_mdi_ldr_exp() {
-	currenthdr->lumRange->lowDynamicRange();
+	currenthdr->lumRange()->lowDynamicRange();
 }
 void MainGui::current_mdi_zoomin() {
 	currenthdr->zoomIn();
@@ -497,23 +500,17 @@ void MainGui::openRecentFile() {
 
 void MainGui::setupLoadThread(QString fname) {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	MySubWindow *subWindow = new MySubWindow(this,this);
-	HdrViewer *newhdr=new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
-
+	newhdr=new HdrViewer(this, false, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	newhdr->setAttribute(Qt::WA_DeleteOnClose);
 	connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
-
-	subWindow->setWidget(newhdr);
-        subWindow->setAttribute(Qt::WA_DeleteOnClose);
-	mdiArea->addSubWindow(subWindow);
-	newhdr->show();
 	newhdr->showLoadDialog();
+	newhdr->setSelectionTool(true);
 
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
-
 	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
 	connect(loadthread, SIGNAL(nextstep(int)), newhdr, SLOT(setValue(int)));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
-	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
+	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 
 	loadthread->start();
@@ -613,7 +610,7 @@ void MainGui::fileExit() {
 	QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
 	bool closeok=true;
 	foreach(QMdiSubWindow *p,allhdrs) {
-		if (((HdrViewer*)p->widget())->NeedsSaving)
+		if (((HdrViewer*)p->widget())->needsSaving())
 			closeok=false;
 	}
 	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>Do you still want to quit?"),
@@ -686,7 +683,7 @@ void MainGui::updateWindowMenu() {
 	QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
 	for (int i = 0; i < windows.size(); ++i) {
 		HdrViewer *child = qobject_cast<HdrViewer *>(windows.at(i)->widget());
-		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->filename.isEmpty())? tr("Untitled"):child->filename).fileName());
+		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
 		QAction *action  = menuWindows->addAction(text);
 		action->setCheckable(true);
 		action->setChecked(child==currenthdr);
@@ -728,19 +725,20 @@ void MainGui::cropToSelection(void) {
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
-	HdrViewer *newHdrViewer = new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false);
+	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
         pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
 	newHdrViewer->updateHDR(cropped_frame);
-	newHdrViewer->filename=QString(tr("Cropped Frame"));
+	newHdrViewer->setFileName(QString(tr("Cropped Frame")));
 	newHdrViewer->setWindowTitle(QString(tr("Cropped Frame")));
+	newHdrViewer->setSelectionTool(true);
 
     newHdrViewer->setFlagUpdateImage(false); // disable updating image for performance
 
-    float min = currenthdr->lumRange->getRangeWindowMin();
-	float max = currenthdr->lumRange->getRangeWindowMax();
+    float min = currenthdr->lumRange()->getRangeWindowMin();
+	float max = currenthdr->lumRange()->getRangeWindowMax();
 	int lumMappingMode = currenthdr->getLumMappingMethod();
-	newHdrViewer->lumRange->setRangeWindowMinMax(min, max);
+	newHdrViewer->lumRange()->setRangeWindowMinMax(min, max);
 	newHdrViewer->setLumMappingMethod(lumMappingMode);
 
     newHdrViewer->setFlagUpdateImage(true); // reenabling updating image
@@ -749,6 +747,8 @@ void MainGui::cropToSelection(void) {
 
     connect(newHdrViewer, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 	mdiArea->addSubWindow(newHdrViewer);
+	newHdrViewer->fitToWindow(true);
+	newHdrViewer->showMaximized();
 	newHdrViewer->show();
 }
 
@@ -769,24 +769,18 @@ void MainGui::disableCrop() {
 	removeSelectionAction->setEnabled(false);
 }
 
-//
-//------------- MySubWindow --------------------------
-//
-MySubWindow::MySubWindow(MainGui *ptr, QWidget * parent, Qt::WindowFlags flags) : QMdiSubWindow(parent, flags), mainGuiPtr(ptr) {
-}
-
-MySubWindow::~MySubWindow() {
-}
-
-void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
-	HdrViewer *ptr = (HdrViewer *) widget();
-	ptr->hideLoadDialog();
-	ptr->updateHDR(hdr_pfs_frame);
-	ptr->filename=fname;
-	ptr->setWindowTitle(fname);
-	mainGuiPtr->setCurrentFile(fname);
-	resize(500,400);
+void MainGui::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
+	newhdr->hideLoadDialog();
+	newhdr->updateHDR(hdr_pfs_frame);
+	newhdr->setFileName(fname);
+	newhdr->setWindowTitle(fname);
+	newhdr->normalSize();
+	newhdr->showMaximized();
+	//newhdr->resize(hdr_pfs_frame->getWidth(), hdr_pfs_frame->getHeight());
+	newhdr->fitToWindow(true);
+	mdiArea->addSubWindow(newhdr);
+	newhdr->show();
+	setCurrentFile(fname);
+	mdiArea->activeSubWindow()->showMaximized();
 	QApplication::restoreOverrideCursor();
 }
-
-
