@@ -213,7 +213,7 @@ void TMWidget::on_applyButton_clicked() {
 		//tone mapper thread needs to know full size of the hdr
 		TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
 
-		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
 		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
 		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
 		connect(thread, SIGNAL(advanceCurrentProgress()), newprogressbar, SLOT(advanceCurrentProgress()));
