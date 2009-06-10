@@ -25,41 +25,26 @@
 #ifndef IMAGELDRVIEWER_H
 #define IMAGELDRVIEWER_H
 
-#include <QToolButton>
-#include <QToolBar>
 #include "../Common/genericViewer.h"
-#include "../Common/smart_scroll_area.h"
-#include "../Common/panIconWidget.h"
 #include "tonemapping_widget.h"
 
 class LdrViewer : public GenericViewer {
 	Q_OBJECT
 public:
-	LdrViewer(QWidget *parent, const QImage&, tonemapping_options*);
+	LdrViewer(const QImage &i, QWidget *parent = 0, bool ns = false, bool ncf = false, tonemapping_options* = NULL);
 	~LdrViewer();
-	bool getFittingWin();
-	void LevelsRequested(bool);
+	void levelsRequested(bool);
 	QString getFilenamePostFix();
 	QString getExifComment();
 	const QImage* getQImage();
 signals:
 	void levels_closed();
-public slots:
-	void fitToWindow(bool checked);
 private slots:
 	void updatePreview(unsigned char *);
 	void restoreoriginal();
-	void slotPanIconSelectionMoved(QRect, bool);
-	void slotPanIconHidden();
-	void slotCornerButtonPressed();
 private:
-	QToolBar *toolBar;
-	PanIconWidget *panIconWidget;
-	QToolButton *cornerButton;
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
-	QLabel *imageLabel;
-	SmartScrollArea *scrollArea;
 	const QImage origimage;
 	const QImage *currentimage;
 	QImage previewimage;
