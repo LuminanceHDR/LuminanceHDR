@@ -37,10 +37,6 @@
 //#include <iostream> // for debug
 
 TonemappingWindow::~TonemappingWindow() {
-	delete allLDRs;
-	// originalPfsFrame: HdrViewer takes ownership of pfsFrame
-	//std::cout << "TonemappingWindow::~TonemappingWindow()" << std::endl;
-	//std::cout << originalPfsFrame << std::endl;
 }
 
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QString _file) : QMainWindow(parent) {
@@ -88,39 +84,41 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	connect(documentationAction,SIGNAL(triggered()),parent,SLOT(openDocumentation()));
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionShowHDR,SIGNAL(toggled(bool)),this,SLOT(showHDR(bool)));
-	connect(actionShowNext,SIGNAL(triggered()),mdiArea,SLOT(activateNextSubWindow() ));
-	connect(actionShowPrevious,SIGNAL(triggered()),mdiArea,SLOT(activatePreviousSubWindow() ));
-
-	// list of all LDR SubWindows
-	allLDRs = new QList<QMdiSubWindow *>;
+	connect(actionShowNext,SIGNAL(triggered()),mdiArea,SLOT(activateNextSubWindow()));
+	connect(actionShowPrevious,SIGNAL(triggered()),mdiArea,SLOT(activatePreviousSubWindow()));
 
 	// original HDR window
-	originalHDR = new HdrViewer(this, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor, false, true);
-	originalHDR->setAttribute(Qt::WA_DeleteOnClose);
+	originalHDR = new HdrViewer(this,false,true, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
 	originalHDR->updateHDR(originalPfsFrame);
-        originalHDR->filename = QString("Original HDR");
+        originalHDR->setFileName(QString("Original HDR"));
         originalHDR->setWindowTitle(QString("Original HDR"));
-        originalHDR->resize(500,400);
+	originalHDR->normalSize();
+	originalHDR->showMaximized();
+	originalHDR->fitToWindow(true);
         mdiArea->addSubWindow(originalHDR);
 	originalHdrSubWin = mdiArea->currentSubWindow();
+	originalHdrSubWin->showMaximized();
 	originalHdrSubWin->hide();
-	isHdrShown = false;
 	
 	showMaximized();
 }
 
 bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event) {
 	if (event->type() == QEvent::Close) {
-		allLDRs->removeOne(currentLdrSubWin);		
-		if (!allLDRs->isEmpty())
-			currentLdrSubWin = allLDRs->first();
-		else
-			currentLdrSubWin = NULL;
-		updateActions( currentLdrSubWin );
-		//std::cout << "MDI Closed" << std::endl;
-		//std::cout << "allLDRs size: " << allLDRs->size() << std::endl;
-		//std::cout << "allLDRs empty: " << allLDRs->isEmpty() << std::endl;
-		//std::cout << "SubWins size: " << mdiArea->subWindowList().size() << std::endl;
+		int n = mdiArea->subWindowList().size();
+		if (n == 2) { // no LDRs - mdi list size not yet updated !!!
+			actionFix_Histogram->setEnabled( false );
+			actionSave->setEnabled( false );
+			actionSaveAll->setEnabled( false );
+			actionClose_All->setEnabled( false );
+			actionShowNext->setEnabled( false );
+			actionShowPrevious->setEnabled( false );
+		}
+		else if ( (n == 3) && !originalHdrSubWin->isVisible() ) { // must be done here
+			actionShowNext->setEnabled( false );
+                        actionShowPrevious->setEnabled( false );
+		}
+		mdiArea->activateNextSubWindow();
 		return false; // propagate the event
 	} 
 	else {
@@ -129,18 +127,21 @@ bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event) {
 	}
 }
 
-void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options* opts) {
-	LdrViewer *n = new LdrViewer(this,i,opts);
+
+void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) {
+	LdrViewer *n = new LdrViewer( i, this, false, false, opts);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
+	n->setAttribute(Qt::WA_DeleteOnClose);
+	n->normalSize();	
+	n->showMaximized();
+	n->fitToWindow(true);
+	n->installEventFilter(this);
 	mdiArea->addSubWindow(n);
 	n->show();
-	n->installEventFilter(this);
 	currentLdrSubWin = mdiArea->currentSubWindow();
 	currentLdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
-	allLDRs->append(currentLdrSubWin);
+	currentLdrSubWin->showMaximized();
 	updateActions(currentLdrSubWin);
-	//std::cout << "allLDRs size: " << allLDRs->size() << std::endl;
-	//std::cout << "SubWins size: " << mdiArea->subWindowList().size() << std::endl;
 }
 
 void TonemappingWindow::fit_current_to_win(bool checked) {
@@ -152,11 +153,11 @@ void TonemappingWindow::fit_current_to_win(bool checked) {
 
 void TonemappingWindow::LevelsRequested(bool checked) {
 	if (checked) {
-		LdrViewer* currentLDR = (LdrViewer*) currentLdrSubWin->widget();
+		GenericViewer* currentLDR = (GenericViewer*) currentLdrSubWin->widget();
 		if (currentLDR==NULL)
 			return;
 		actionFix_Histogram->setDisabled(true);
-		currentLDR->LevelsRequested(checked);
+		currentLDR->levelsRequested(checked);
 	}
 }
 
@@ -166,8 +167,10 @@ void TonemappingWindow::levels_closed() {
 }
 
 void TonemappingWindow::on_actionSave_triggered() {
-	LdrViewer* currentLDR = (LdrViewer*) currentLdrSubWin->widget();
+	GenericViewer* currentLDR = (GenericViewer*) currentLdrSubWin->widget();
 	if (currentLDR==NULL)
+		return;
+	if (currentLDR == originalHDR)
 		return;
 
 	QString outfname = saveLDRImage(prefixname + "_" + currentLDR->getFilenamePostFix()+ ".jpg",currentLDR->getQImage());
@@ -181,31 +184,37 @@ void TonemappingWindow::on_actionSave_triggered() {
 }
 
 void TonemappingWindow::updateActions(QMdiSubWindow *w) {
-	bool b = !allLDRs->isEmpty();
+	int n = mdiArea->subWindowList().size();
+	bool a = (n>2); // more than 2 LDRs !!!
+	bool b = (n!=1); // no LDRs
+	bool c = originalHdrSubWin->isVisible();
+	if (w == originalHdrSubWin) {
+		actionFix_Histogram->setEnabled( false );
+		actionSave->setEnabled( false );
+		actionFit_to_Window->setChecked(originalHDR->getFittingWin());
+		actionShowNext->setEnabled( (b && c) );
+		actionShowPrevious->setEnabled( (b && c) );
+		return;
+	}
 	currentLdrSubWin = w;
 	actionFix_Histogram->setEnabled( b );
 	actionSave->setEnabled( b );
 	actionSaveAll->setEnabled( b );
 	actionClose_All->setEnabled( b );
 	actionAsThumbnails->setEnabled( b );
-	actionFit_to_Window->setEnabled( b || isHdrShown ); 
-	actionCascade->setEnabled( b || isHdrShown );
-	actionShowNext->setEnabled( b );
-	actionShowPrevious->setEnabled( b );
+	actionFit_to_Window->setEnabled( b ); 
+	actionCascade->setEnabled( b );
+	actionShowNext->setEnabled( a || (b && c) );
+	actionShowPrevious->setEnabled( a || (b && c) );
 	//TODO
 	if (w!=NULL) {
-			GenericViewer *current = (GenericViewer*) w->widget(); 
-			if (current==NULL)
-				return;
-			actionFit_to_Window->setChecked(current->getFittingWin());
-			//actionFix_Histogram->setChecked(current->hasLevelsOpen());
-		}
+		GenericViewer *current = (GenericViewer*) w->widget(); 
+		actionFit_to_Window->setChecked(current->getFittingWin());
+		//actionFix_Histogram->setChecked(current->hasLevelsOpen());
+	}
 }
 
 void TonemappingWindow::closeEvent ( QCloseEvent * ) {
-	// originalPfsFrame: HdrViewer takes ownership of pfsFrame
-	//std::cout << "TonemappingWindow::closeEvent()" << std::endl;
-	//std::cout << originalPfsFrame << std::endl;
 	emit closing();
 }
 
@@ -218,11 +227,12 @@ void TonemappingWindow::viewAllAsThumbnails() {
 }
 
 void TonemappingWindow::on_actionClose_All_triggered() {
-	//QList<QMdiSubWindow*> allLDRresults=mdiArea->subWindowList();
-	foreach (QMdiSubWindow *p, *allLDRs) {
+	QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
+	foreach (QMdiSubWindow *p, allLDRs) {
 		p->close();
 	}
 	actionClose_All->setEnabled(false);
+	updateActions(0);
 }
 
 void TonemappingWindow::on_actionSaveAll_triggered() {
@@ -233,15 +243,17 @@ void TonemappingWindow::on_actionSaveAll_triggered() {
 	);
 	if (!dir.isEmpty()) {
 		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
-		//QList<QMdiSubWindow*> allLDRresults=mdiArea->subWindowList();
-		foreach (QMdiSubWindow *p, *allLDRs) {
-			LdrViewer* ldr = (LdrViewer*) p->widget();
-			QString outfname = saveLDRImage(prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
-			//if save is succesful
-			if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
+		QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
+		foreach (QMdiSubWindow *p, allLDRs) {
+			if (p != originalHdrSubWin) { //skips the hdr
+			  GenericViewer* ldr = (GenericViewer*) p->widget();
+			  QString outfname = saveLDRImage(prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
+			  //if save is succesful
+			  if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
 				//time to write the exif data...
 				//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 				ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), ldr->getExifComment().toStdString() );
+			  }
 			}
 		}
 	}
@@ -252,10 +264,25 @@ void TonemappingWindow::enterWhatsThis() {
 }
 
 void TonemappingWindow::showHDR(bool toggled) {
-	bool b = !allLDRs->isEmpty();
-	toggled ? originalHdrSubWin->show() : originalHdrSubWin->hide();
-	mdiArea->setActiveSubWindow(originalHdrSubWin);
-	isHdrShown = toggled;
-	actionFit_to_Window->setEnabled( b || isHdrShown ); 
-	actionCascade->setEnabled( b || isHdrShown );
+	int n = mdiArea->subWindowList().size();
+	if (toggled) {
+		originalHdrSubWin->show();
+		mdiArea->setActiveSubWindow(originalHdrSubWin);
+	}
+	else { 
+		if (originalHdrSubWin == mdiArea->currentSubWindow()) {
+			originalHdrSubWin->hide();
+			mdiArea->activateNextSubWindow();
+			mdiArea->currentSubWindow()->showMaximized();
+		}
+		originalHdrSubWin->hide();
+	}
+	if (n == 1) { // no LDRs 
+		actionShowNext->setEnabled( false );
+		actionShowPrevious->setEnabled( false );
+	}
+	else if (n == 2)  { // must be done here
+		actionShowNext->setEnabled( toggled );
+		actionShowPrevious->setEnabled( toggled );
+	}
 }

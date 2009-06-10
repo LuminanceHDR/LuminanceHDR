@@ -24,7 +24,6 @@
 #ifndef TONEMAPPINGDIALOG_IMPL_H
 #define TONEMAPPINGDIALOG_IMPL_H
 
-#include <QList>
 #include <QMdiArea>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
@@ -49,11 +48,9 @@ private:
 	QMdiArea* mdiArea;
 	QString recentPathSaveLDR, prefixname, cachepath;
 	HdrViewer *originalHDR;
-	QList<QMdiSubWindow *> *allLDRs;
 	QMdiSubWindow *originalHdrSubWin;
 	QMdiSubWindow *currentLdrSubWin;
 	QtpfsguiOptions *qtpfsgui_options;
-	bool isHdrShown;
 private slots:
 	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
@@ -67,4 +64,5 @@ private slots:
 	void enterWhatsThis();
 	void showHDR(bool);
 };
+
 #endif
