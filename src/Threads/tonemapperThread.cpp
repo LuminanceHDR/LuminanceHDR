@@ -215,7 +215,7 @@ void TonemapperThread::run() {
 		delete workingframe;
 		const QImage& res=fromLDRPFStoQImage(result);
 		delete result;
-		emit ImageComputed(res,&opts);
+		emit imageComputed(res,&opts);
 	} //if (status==from_tm)
 // 	emit finished();
 }

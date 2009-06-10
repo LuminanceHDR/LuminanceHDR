@@ -42,7 +42,7 @@ public:
 public slots:
 	void terminateRequested();
 signals:
-	void ImageComputed(const QImage&, tonemapping_options *);
+	void imageComputed(const QImage&, tonemapping_options *);
 	void setMaximumSteps(int);
 	void advanceCurrentProgress();
 protected:
