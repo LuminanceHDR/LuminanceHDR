@@ -500,17 +500,21 @@ void MainGui::openRecentFile() {
 
 void MainGui::setupLoadThread(QString fname) {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+	MySubWindow *subWindow = new MySubWindow(this,this);
 	newhdr=new HdrViewer(this, false, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
 	newhdr->setAttribute(Qt::WA_DeleteOnClose);
 	connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 	newhdr->showLoadDialog();
 	newhdr->setSelectionTool(true);
+        
+	subWindow->setWidget(newhdr);
+        subWindow->setAttribute(Qt::WA_DeleteOnClose);
 
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
 	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
 	connect(loadthread, SIGNAL(nextstep(int)), newhdr, SLOT(setValue(int)));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
-	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(addHdrFrame(pfs::Frame*,QString)));
+	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 
 	loadthread->start();
@@ -769,18 +773,29 @@ void MainGui::disableCrop() {
 	removeSelectionAction->setEnabled(false);
 }
 
-void MainGui::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
-	newhdr->hideLoadDialog();
-	newhdr->updateHDR(hdr_pfs_frame);
-	newhdr->setFileName(fname);
-	newhdr->setWindowTitle(fname);
-	newhdr->normalSize();
-	newhdr->showMaximized();
-	//newhdr->resize(hdr_pfs_frame->getWidth(), hdr_pfs_frame->getHeight());
-	newhdr->fitToWindow(true);
-	mdiArea->addSubWindow(newhdr);
-	newhdr->show();
-	setCurrentFile(fname);
-	mdiArea->activeSubWindow()->showMaximized();
+//
+//------------- MySubWindow --------------------------
+//
+MySubWindow::MySubWindow(MainGui *ptr, QWidget * parent, Qt::WindowFlags flags) : QMdiSubWindow(parent, flags), mainGuiPtr(ptr) {
+}
+
+MySubWindow::~MySubWindow() {
+}
+
+void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
+	HdrViewer *ptr = (HdrViewer *) widget();
+	ptr->hideLoadDialog();
+	ptr->updateHDR(hdr_pfs_frame);
+	ptr->setFileName(fname);
+	ptr->setWindowTitle(fname);
+	ptr->normalSize();
+	ptr->fitToWindow(true);
+	resize((int) (0.66 * mainGuiPtr->mdiArea->width()),(int) (0.66 * mainGuiPtr->mdiArea->height()));
+	mainGuiPtr->mdiArea->addSubWindow(this);
+	ptr->show();
+	showMaximized();
+	mainGuiPtr->setCurrentFile(fname);
 	QApplication::restoreOverrideCursor();
 }
+
+

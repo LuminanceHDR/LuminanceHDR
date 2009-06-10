@@ -44,6 +44,7 @@ Q_OBJECT
 public:
 	MainGui(QWidget *parent=0);
 	~MainGui();
+	friend class MySubWindow;
 	void showSaveDialog();
         void hideSaveDialog(void);
 public slots: //For saveProgress Dialog
@@ -53,7 +54,6 @@ private slots:
 	void fileNewViaWizard(QStringList files = QStringList());
 	void fileOpen();//for File->Open, it then calls loadFile()
 	void fileSaveAs();
-        void addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname);
 	void saveHdrPreview();
 	void tonemap_requested();
 	void rotateccw_requested();
@@ -115,5 +115,17 @@ private:
 	QString RecentDirHDRSetting;
 	QtpfsguiOptions *qtpfsgui_options;
 };
+
+class MySubWindow : public QMdiSubWindow {
+Q_OBJECT
+public:
+        MySubWindow(MainGui * ptr, QWidget * parent = 0, Qt::WindowFlags flags = 0 );
+        ~MySubWindow();
+private slots:
+        void addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname);
+private:
+	MainGui *mainGuiPtr;
+};
+
 
 #endif
