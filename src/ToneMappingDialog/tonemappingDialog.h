@@ -25,6 +25,8 @@
 #define TONEMAPPINGDIALOG_IMPL_H
 
 #include <QMdiArea>
+#include <QDockWidget>
+#include <QMdiSubWindow>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "../Common/global.h"
@@ -39,30 +41,40 @@ public:
 	TonemappingWindow(QWidget *parent, pfs::Frame *f, QString prefixname);
 	~TonemappingWindow();
 protected:
-	bool eventFilter(QObject *obj, QEvent *event);
 	void closeEvent ( QCloseEvent * );
 signals:
 	void closing();
 private:
 	pfs::Frame *originalPfsFrame;
 	QMdiArea* mdiArea;
+	QDockWidget *dock;
+	TMWidget *tmwidget;
 	QString recentPathSaveLDR, prefixname, cachepath;
 	HdrViewer *originalHDR;
 	QMdiSubWindow *originalHdrSubWin;
-	QMdiSubWindow *currentLdrSubWin;
+	//QMdiSubWindow *currentSubWin;
 	QtpfsguiOptions *qtpfsgui_options;
+	void load_options();
 private slots:
+	void setupConnections();
 	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QMdiSubWindow *);
 	void viewAllAsThumbnails();
-	void fit_current_to_win(bool);
 	void on_actionClose_All_triggered();
 	void on_actionSaveAll_triggered();
 	void on_actionSave_triggered();
 	void enterWhatsThis();
 	void showHDR(bool);
+	void Text_Under_Icons();
+	void Icons_Only();
+	void Text_Alongside_Icons();
+	void Text_Only();
+	void current_mdi_zoomin();
+	void current_mdi_zoomout();
+	void current_mdi_fit_to_win(bool checked);
+	void current_mdi_original_size();
 };
 
 #endif
