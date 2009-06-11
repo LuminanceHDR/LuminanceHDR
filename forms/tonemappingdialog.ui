@@ -39,10 +39,27 @@
     <property name="title" >
      <string>&amp;View</string>
     </property>
-    <addaction name="actionFit_to_Window" />
+    <widget class="QMenu" name="menuToolbars" >
+     <property name="title" >
+      <string>Toolbars</string>
+     </property>
+     <addaction name="actionText_Under_Icons" />
+     <addaction name="actionIcons_Only" />
+     <addaction name="actionText_Alongside_Icons" />
+     <addaction name="actionText_Only" />
+     <addaction name="separator" />
+     <addaction name="actionViewTMdock" />
+    </widget>
+    <addaction name="actionShowHDR" />
+    <addaction name="actionShowNext" />
+    <addaction name="actionShowPrevious" />
     <addaction name="separator" />
-    <addaction name="actionAsThumbnails" />
-    <addaction name="actionCascade" />
+    <addaction name="actionFit_to_Window" />
+    <addaction name="actionNormal_Size" />
+    <addaction name="actionZoom_In" />
+    <addaction name="actionZoom_Out" />
+    <addaction name="separator" />
+    <addaction name="menuToolbars" />
    </widget>
    <widget class="QMenu" name="menuFile" >
     <property name="title" >
@@ -55,12 +72,39 @@
     <addaction name="separator" />
     <addaction name="actionFinishTM" />
    </widget>
+   <widget class="QMenu" name="menu_Windows" >
+    <property name="title" >
+     <string>&amp;Windows</string>
+    </property>
+    <addaction name="actionAsThumbnails" />
+    <addaction name="actionCascade" />
+   </widget>
    <addaction name="menuFile" />
    <addaction name="menuView" />
+   <addaction name="menu_Windows" />
    <addaction name="menuHelp" />
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
-  <widget class="QToolBar" name="toolBar" >
+  <widget class="QStatusBar" name="statusbar" >
+   <property name="sizePolicy" >
+    <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize" >
+    <size>
+     <width>0</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="maximumSize" >
+    <size>
+     <width>16777215</width>
+     <height>24</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="tmToolBar" >
    <property name="enabled" >
     <bool>true</bool>
    </property>
@@ -108,13 +152,13 @@
     <string>Exit</string>
    </property>
    <property name="toolTip" >
-    <string>Close Tone Mapping Window</string>
+    <string>Close</string>
    </property>
    <property name="statusTip" >
     <string>Close Tone Mapping Window</string>
    </property>
    <property name="whatsThis" >
-    <string>Close Tone Mapping Window</string>
+    <string>Close Tone Mapping Window </string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+Q</string>
@@ -138,7 +182,7 @@
     <string>Tone Mapping Panel</string>
    </property>
    <property name="toolTip" >
-    <string>Show/Hide the Tone mapping Panel</string>
+    <string>Tone Mapping Panel</string>
    </property>
    <property name="statusTip" >
     <string>Show/Hide the Tone mapping Panel</string>
@@ -159,13 +203,13 @@
      <normaloff>:/new/prefix1/images/histogram.png</normaloff>:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text" >
-    <string>Adjust &amp;Levels...</string>
+    <string>Adjust &amp;Levels</string>
    </property>
    <property name="iconText" >
-    <string>Adjust Levels...</string>
+    <string>Adjust Levels</string>
    </property>
    <property name="toolTip" >
-    <string>Tune the histogram for the current LDR</string>
+    <string>Adjust Levels</string>
    </property>
    <property name="statusTip" >
     <string>Tune the histogram for the current LDR</string>
@@ -192,7 +236,7 @@
     <string>Save As...</string>
    </property>
    <property name="toolTip" >
-    <string>Save the currently selected LDR</string>
+    <string>Save As...</string>
    </property>
    <property name="statusTip" >
     <string>Save the currently selected LDR</string>
@@ -219,7 +263,7 @@
     <string>Close All</string>
    </property>
    <property name="toolTip" >
-    <string>Close all the LDRs in the workspace</string>
+    <string>Close All</string>
    </property>
    <property name="statusTip" >
     <string>Close all the LDRs in the workspace</string>
@@ -269,8 +313,11 @@
    <property name="checkable" >
     <bool>true</bool>
    </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
@@ -298,7 +345,10 @@
     <string>What's This?</string>
    </property>
    <property name="toolTip" >
-    <string>Get information about the graphical elements</string>
+    <string>What's This?</string>
+   </property>
+   <property name="statusTip" >
+    <string>Use this button to get information about the graphical elements</string>
    </property>
    <property name="whatsThis" >
     <string>Use this button to get information about the graphical elements</string>
@@ -334,7 +384,7 @@
     <string>Save All</string>
    </property>
    <property name="toolTip" >
-    <string>Saves all LDRs</string>
+    <string>Save All</string>
    </property>
    <property name="statusTip" >
     <string>Saves all LDRs</string>
@@ -352,28 +402,152 @@
    </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
-     <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
+     <normaloff>:/new/prefix1/images/games-config-background.png</normaloff>:/new/prefix1/images/games-config-background.png</iconset>
    </property>
    <property name="text" >
-    <string>Show the Original HDR</string>
+    <string>HDR Image</string>
+   </property>
+   <property name="iconText" >
+    <string>HDR Image</string>
+   </property>
+   <property name="toolTip" >
+    <string>HDR Image</string>
+   </property>
+   <property name="statusTip" >
+    <string>Shows the Original High Dynamic Range Image</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Shows the Original High Dynamic Range Image</string>
    </property>
   </action>
   <action name="actionShowNext" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
      <normaloff>:/new/prefix1/images/forward.png</normaloff>:/new/prefix1/images/forward.png</iconset>
    </property>
    <property name="text" >
-    <string>Show Next</string>
+    <string>Next Image</string>
+   </property>
+   <property name="iconText" >
+    <string>Next Image</string>
+   </property>
+   <property name="toolTip" >
+    <string>Next Image</string>
+   </property>
+   <property name="statusTip" >
+    <string>Shows The Next Image</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Shows The Next Image</string>
    </property>
   </action>
   <action name="actionShowPrevious" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
      <normaloff>:/new/prefix1/images/back.png</normaloff>:/new/prefix1/images/back.png</iconset>
    </property>
    <property name="text" >
-    <string>Show Previous</string>
+    <string>Previous Image</string>
+   </property>
+   <property name="iconText" >
+    <string>Previous Image</string>
+   </property>
+   <property name="toolTip" >
+    <string>Previous Image</string>
+   </property>
+   <property name="statusTip" >
+    <string>Shows The Previous Image</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Shows The Previous Image</string>
+   </property>
+  </action>
+  <action name="actionNormal_Size" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Normal Size</string>
+   </property>
+   <property name="shortcut" >
+    <string>O</string>
+   </property>
+  </action>
+  <action name="actionZoom_In" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Zoom &amp;In</string>
+   </property>
+   <property name="shortcut" >
+    <string>+</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out" >
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Zoom &amp;Out</string>
+   </property>
+   <property name="shortcut" >
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionToolbars" >
+   <property name="text" >
+    <string>Toolbars</string>
+   </property>
+  </action>
+  <action name="actionText_Under_Icons" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Text Under Icons</string>
+   </property>
+  </action>
+  <action name="actionIcons_Only" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Only Icons</string>
+   </property>
+   <property name="iconText" >
+    <string>Icons Only</string>
+   </property>
+   <property name="toolTip" >
+    <string>Icons Only</string>
+   </property>
+  </action>
+  <action name="actionText_Alongside_Icons" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Text Alongside Icons</string>
+   </property>
+  </action>
+  <action name="actionText_Only" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="text" >
+    <string>Text Only</string>
    </property>
   </action>
  </widget>
