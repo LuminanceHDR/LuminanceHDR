@@ -40,6 +40,7 @@ extern float pregamma;
 TMWidget::TMWidget(QWidget *parent, QStatusBar *_sb) : QWidget(parent), sb(_sb), adding_custom_size(false) {
 	setupUi(this);
 
+
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
 	// mantiuk06
@@ -209,7 +210,10 @@ void TMWidget::on_applyButton_clicked() {
 		FillToneMappingOptions();
 
 		MyProgressBar *newprogressbar=new MyProgressBar(sb);
+		int w = sb->width();
+		int h = (int) (0.9 * sb->height());
 
+		newprogressbar->resize(w,h);
 		//tone mapper thread needs to know full size of the hdr
 		TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
 
