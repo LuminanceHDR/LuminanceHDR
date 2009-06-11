@@ -54,8 +54,8 @@ bool SelectionTool::eventFilter(QObject *obj, QEvent *event) {
 		return false; // propagate the event
 	} 
 	else {
-			// standard event processing
-			return QObject::eventFilter(obj, event);
+		// standard event processing
+		return QObject::eventFilter(obj, event);
 	}
 }
 //
@@ -269,7 +269,7 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
 		    (m_selectionRect.width() == 0) || 
 		    (m_selectionRect.height() == 0) )
 	   ) { 
-			m_selectionRect = m_parent->rect().intersected(m_selectionRect);
+		m_selectionRect = m_parent->rect().intersected(m_selectionRect);
 	} 
 	else {
 		if (m_action == MOVING)

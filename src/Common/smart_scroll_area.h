@@ -51,12 +51,15 @@ public:
 	void removeSelection();
 protected:
 	void resizeEvent ( QResizeEvent * );
+	void mouseMoveEvent(QMouseEvent *e);
+	void mouseReleaseEvent(QMouseEvent *e);
 protected slots:
 	void updateScrollBars(QPoint diff);
 	void ensureVisible(int x, int y, int w, int h);
 private:
 	QLabel &imageLabel;
 	SelectionTool *selectionTool;
+	QPoint m_mousePos;
 	float scaleFactor;
 	float previousScaleFactor;
 	bool fittingwin;

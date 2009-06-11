@@ -137,9 +137,32 @@ QRect SmartScrollArea::getSelectionRect() {
 }
 
 void SmartScrollArea::setSelectionTool(bool toggled) {
-	toggled ? selectionTool->show() : selectionTool->hide();
+	if (toggled) {
+    		setMouseTracking(false); 
+		selectionTool->show();
+	}
+	else {
+		setMouseTracking(true);
+		selectionTool->hide();
+	}
 }
 
 void SmartScrollArea::removeSelection() {
 	selectionTool->removeSelection();
+}
+
+void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
+	if (e->buttons()==Qt::MidButton) {
+		setCursor(QCursor(Qt::SizeAllCursor));
+		QPoint diff = (e->globalPos() - m_mousePos);
+		if (e->modifiers()==Qt::ShiftModifier)
+			diff *= 5;
+		verticalScrollBar()->setValue(verticalScrollBar()->value() + diff.y());
+		horizontalScrollBar()->setValue(horizontalScrollBar()->value() + diff.x());
+		m_mousePos = e->globalPos();
+	}
+}
+
+void SmartScrollArea::mouseReleaseEvent(QMouseEvent *e) {
+	setCursor(QCursor(Qt::ArrowCursor));
 }
