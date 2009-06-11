@@ -45,12 +45,17 @@
 #include "../Common/global.h"
 #include "../Filter/pfscut.h"
 
+#include <iostream>
+
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
 MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
+
+	restoreState( settings.value("MainGuiState").toByteArray());
+
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
 
@@ -608,6 +613,7 @@ MainGui::~MainGui() {
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		delete recentFileActs[i];
 	}
+	settings.setValue("MainGuiState", saveState());
 }
 
 void MainGui::fileExit() {
