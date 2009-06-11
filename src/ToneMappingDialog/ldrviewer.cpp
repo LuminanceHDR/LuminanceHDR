@@ -27,7 +27,7 @@
 #include "../Common/config.h"
 
 LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, tonemapping_options *opts) : GenericViewer(parent, ns, ncf), origimage(i) {
-	currentimage = &origimage;
+	image = origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
 	QLabel *informativeLabel = new QLabel( "LDR Image", toolBar );
@@ -58,8 +58,8 @@ QString LdrViewer::getFilenamePostFix() {
 	return postfix;
 }
 
-const QImage* LdrViewer::getQImage() {
-	return currentimage;
+const QImage LdrViewer::getQImage() {
+	return image;
 }
 
 QString LdrViewer::getExifComment() {
@@ -69,7 +69,7 @@ QString LdrViewer::getExifComment() {
 void LdrViewer::levelsRequested(bool a) {
 	assert(a); //a is always true
 	//copy original data
-	previewimage=currentimage->copy();
+	previewimage=image.copy();
 	GammaAndLevels *levels=new GammaAndLevels(0, origimage);
 	levels->setAttribute(Qt::WA_DeleteOnClose);
 	//when closing levels, inform the Tone Mapping dialog.
@@ -91,11 +91,11 @@ void LdrViewer::updatePreview(unsigned char *LUT) {
 		}
 	}
 	imageLabel.setPixmap(QPixmap::fromImage(previewimage));
-	currentimage=&previewimage;
+	image=previewimage;
 }
 
 void LdrViewer::restoreoriginal() {
 	imageLabel.setPixmap(QPixmap::fromImage(origimage));
-	currentimage = &origimage;
+	image = origimage;
 }
 

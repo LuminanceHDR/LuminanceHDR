@@ -36,7 +36,7 @@ public:
 	void levelsRequested(bool);
 	QString getFilenamePostFix();
 	QString getExifComment();
-	const QImage* getQImage();
+	const QImage getQImage();
 signals:
 	void levels_closed();
 private slots:
@@ -46,7 +46,7 @@ private:
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
 	const QImage origimage;
-	const QImage *currentimage;
+	//const QImage *currentimage;
 	QImage previewimage;
 };
 
