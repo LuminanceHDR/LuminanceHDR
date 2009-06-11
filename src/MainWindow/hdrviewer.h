@@ -62,7 +62,7 @@ public:
  	void levelsRequested(bool); // do nothing but used by LdrViewer (its own implementation)
         QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
         QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
-	const QImage* getQImage(); // do nothing but used by LdrViewer (its own implementation)
+	const QImage getQImage(); // do nothing but used by LdrViewer (its own implementation)
 public slots:
 	void updateRangeWindow();
 	int getLumMappingMethod();
@@ -70,7 +70,7 @@ public slots:
 	void setMaximum(int max);
 	void setValue(int value);
 protected:
-	QImage *image;
+	//QImage *image;
 	LuminanceRangeWidget *m_lumRange;
 	QComboBox *mappingMethodCB;
 	pfs::Array2D *workArea[3];

@@ -82,7 +82,7 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 //**********************************************************************************
 //==================================================================================
 
-HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf) : GenericViewer(parent, ns, ncf), image(NULL), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
+HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf) : GenericViewer(parent, ns, ncf), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
 
 	flagUpdateImage = true;
 
@@ -159,17 +159,18 @@ void HdrViewer::updateImage() {
 
 		int zoomedWidth = workArea[0]->getCols();
 		int zoomedHeight = workArea[0]->getRows();
-		if( image != NULL )
-			delete image;
-		image = new QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
-		assert( image != NULL );
+		//if( image != NULL )
+		//	delete image;
+		image = QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
+		//assert( image != NULL );
 
 		assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
-		mapFrameToImage( /*workArea[0], workArea[1], workArea[2], image,
+		mapFrameToImage( /*workArea[0], workArea[1], workArea[2], &image,
 				minValue, maxValue, mappingMethod*/ );
 
 		//assign the mapped image to the label
-		imageLabel.setPixmap(QPixmap::fromImage(*image));
+		imageLabel.setPixmap(QPixmap::fromImage(image));
+		imageLabel.adjustSize();
 		QApplication::restoreOverrideCursor();
 	}
 }
@@ -192,7 +193,7 @@ void HdrViewer::mapFrameToImage() {
     lutPixel[257] = QColor( 255, 255, 255 ).rgb();
 
     for( int r = 0; r < rows; r++, imgRow++ ) {
-	QRgb* line = (QRgb*)image->scanLine( (int)imgRow );
+	QRgb* line = (QRgb*)image.scanLine( (int)imgRow );
 	imgCol = 0;
 	for( int c = 0; c < cols; c++, index++, imgCol++ ) {
 	    QRgb pixel;
@@ -297,8 +298,8 @@ QString HdrViewer::getFilenamePostFix() {
 }
 
 
-const QImage* HdrViewer::getQImage() {
-	return NULL;
+const QImage HdrViewer::getQImage() {
+	return QImage();
 }
 
 QString HdrViewer::getExifComment() {
