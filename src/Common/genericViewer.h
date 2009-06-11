@@ -25,6 +25,7 @@
 #define GENERICVIEWER_H
 
 #include <QWidget>
+#include <QPixmap>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
@@ -39,6 +40,7 @@ Q_OBJECT
 public:
 	GenericViewer(QWidget *parent = 0, bool ns = false, bool ncf = false);
 public slots:
+	virtual void setLabelPixmap(const QPixmap pix);
 	virtual void fitToWindow(bool checked);
         virtual void zoomIn();
         virtual void zoomOut();
@@ -56,7 +58,7 @@ public slots:
 	virtual void levelsRequested(bool) = 0; // only used by LdrViewer
         virtual QString getFilenamePostFix() = 0; // only used by LdrViewer 
         virtual QString getExifComment() = 0; // only used by LdrViewer
-	virtual const QImage* getQImage() = 0; // only used by LdrViewer
+	virtual const QImage getQImage() = 0; // only used by LdrViewer
 protected slots:
 	virtual void slotPanIconSelectionMoved(QRect, bool);
 	virtual void slotPanIconHidden();

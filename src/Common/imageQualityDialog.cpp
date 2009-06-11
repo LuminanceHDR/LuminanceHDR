@@ -29,9 +29,8 @@
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent) : QDialog(parent) {
+ImageQualityDialog::ImageQualityDialog(const QImage &img, QString fmt, QWidget *parent) : QDialog(parent), image(img)  {
         setupUi(this);
-	image = img;
 	format = fmt;
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
 	connect(horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
@@ -47,7 +46,7 @@ void ImageQualityDialog::on_getSizeButton_clicked() {
         QByteArray ba;
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
-        image->save(&buffer, (const char *) format.toLatin1(), quality);
+        image.save(&buffer, (const char *) format.toLatin1(), quality);
 	label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
 	setCursor(QCursor(Qt::ArrowCursor));
 }

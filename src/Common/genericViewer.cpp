@@ -26,8 +26,6 @@
 
 GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf), isSelectionReady(false) {
 	
-	panIconWidget=new PanIconWidget(this);
-
 	VBL_L = new QVBoxLayout(this);
 	VBL_L->setSpacing(0);
 	VBL_L->setMargin(0);
@@ -45,6 +43,11 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent
 	scrollArea->setCornerWidget(cornerButton);
 	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
 	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+}
+
+void GenericViewer::setLabelPixmap(const QPixmap pix) {
+	imageLabel.setPixmap(pix);
+	imageLabel.adjustSize();
 }
 
 void GenericViewer::fitToWindow(bool checked) {
@@ -73,7 +76,7 @@ const float GenericViewer::getScaleFactor() {
 
 void GenericViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Hdr has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Imageds has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
 		if (ret==QMessageBox::Yes)
 			event->accept();
 		else
@@ -121,6 +124,7 @@ void GenericViewer::setFileName(const QString fn) {
 }
 
 void GenericViewer::slotCornerButtonPressed() {
+	panIconWidget=new PanIconWidget(this);
 	panIconWidget->setImage(image);
 	float zf=scrollArea->getScaleFactor();
 	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());

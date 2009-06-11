@@ -21,7 +21,6 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-//#include <iostream>
 #include <QFileDialog>
 #include <QImage>
 #include <QMessageBox>
@@ -36,7 +35,7 @@ QSettings settings("Qtpfsgui", "Qtpfsgui");
 /**
  * \return "" when fail, out file name when successful
  */
-QString saveLDRImage(const QString initialFileName, const QImage* image, bool batchMode) {
+QString saveLDRImage(const QString initialFileName, const QImage &image, bool batchMode) {
 	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
 	if (!batchMode) {
 		QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;");
@@ -65,7 +64,7 @@ QString saveLDRImage(const QString initialFileName, const QImage* image, bool ba
 		}
 		int quality = 100;
 		if ((format == "png" || format == "jpg") && !batchMode) {
- 			ImageQualityDialog savedFileQuality((QImage *)image, format);
+ 			ImageQualityDialog savedFileQuality(image, format);
 			QString winTitle(QObject::tr("Save as "));
 			winTitle += format.toUpper();
 			savedFileQuality.setWindowTitle( winTitle );
@@ -74,7 +73,7 @@ QString saveLDRImage(const QString initialFileName, const QImage* image, bool ba
 			quality = savedFileQuality.getQuality();
 		}
 		//std::cout << quality << std::endl;
-		if(!(image->save(outfname,format.toAscii().constData(),quality))) {
+		if(!(image.save(outfname,format.toAscii().constData(),quality))) {
 			QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 			return "";
 		}
