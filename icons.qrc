@@ -38,6 +38,6 @@
         <file>images/viewmag_inc.png</file>
         <file>images/viewmagfit.png</file>
         <file>images/whatsthis.png</file>
-	<file>images/games-config-background.png</file>
+        <file>images/games-config-background.png</file>
     </qresource>
 </RCC>
