@@ -37,13 +37,11 @@ TonemappingWindow::~TonemappingWindow() {
 	settings.setValue("TonemappingWindowState", saveState());
 }
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QString _file) : QMainWindow(parent) {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QString _file) : QMainWindow(parent), isLocked(false), lockedImage(NULL) {
 	setupUi(this);
-
 
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
-	
 
 	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
@@ -65,14 +63,15 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
 	mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-
 	setCentralWidget(mdiArea);
 
 	dock = new QDockWidget(tr("Tone mapping Panel"), this);
 	dock->setObjectName("Tone Mapping Panel"); // for save and restore docks state
-	dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-	//dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+	//dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	//menuToolbars->addAction(dock->toggleViewAction());
+	//tmToolBar->addAction(dock->toggleViewAction());
 
 	//swap original frame to hd
 	pfs::DOMIO pfsio;
@@ -94,7 +93,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
         originalHDR->setWindowTitle(QString(tr("Original HDR")));
 	originalHDR->normalSize();
 	originalHDR->showMaximized();
-	originalHDR->fitToWindow(true);
+	//originalHDR->fitToWindow(true);
 	originalHdrSubWin = new QMdiSubWindow(this);
 	originalHdrSubWin->setWidget(originalHDR);
 	originalHdrSubWin->hide();
@@ -102,7 +101,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	restoreState( settings.value("TonemappingWindowState").toByteArray());
 
 	setupConnections();
-	//showMaximized();
+	showMaximized();
 }
 
 void TonemappingWindow::setupConnections() {
@@ -112,6 +111,7 @@ void TonemappingWindow::setupConnections() {
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
+	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateImages(QMdiSubWindow *)) );
 
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setVisible(bool)));
 
@@ -129,22 +129,49 @@ void TonemappingWindow::setupConnections() {
 	connect(actionZoom_Out,SIGNAL(triggered()),this,SLOT(current_mdi_zoomout()));
 	connect(actionFit_to_Window,SIGNAL(toggled(bool)),this,SLOT(current_mdi_fit_to_win(bool)));
 	connect(actionNormal_Size,SIGNAL(triggered()),this,SLOT(current_mdi_original_size()));
+	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
+}
 
+bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event) {
+	if (event->type() == QEvent::Close) {
+		//std::cout << "TonemappingWindow::eventFilter" << std::endl;
+		QMdiSubWindow *subwin = (QMdiSubWindow *) obj;
+		if (isLocked) {
+			assert(subwin!=NULL);
+			if ((GenericViewer *) subwin->widget() == lockedImage) {
+				//std::cout << "eventFilter: found" << std::endl;
+				lockedImage = NULL;
+				isLocked = false;
+				actionLockImages->setChecked(false);
+			}
+		}
+		subwin->close();
+		return false; // propagate the event
+	} 
+	else {
+		// standard event processing
+		return QObject::eventFilter(obj, event);
+	}
 }
 
 void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) {
 	LdrViewer *n = new LdrViewer( i, this, false, false, opts);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
-	n->setAttribute(Qt::WA_DeleteOnClose);
 	n->normalSize();	
 	n->showMaximized();
-	n->fitToWindow(true);
-	mdiArea->addSubWindow(n);
+	//n->fitToWindow(true);
+	QMdiSubWindow *subwin = new QMdiSubWindow(this);
+	subwin->setAttribute(Qt::WA_DeleteOnClose);
+	subwin->installEventFilter(this);
+	connect(subwin,SIGNAL(aboutToActivate()),this,SLOT(updateImageLock()));
+	subwin->setWidget(n);
+	mdiArea->addSubWindow(subwin);
 	n->show();
 	mdiArea->activeSubWindow()->showMaximized();
 }
 
 void TonemappingWindow::LevelsRequested(bool checked) {
+	//std::cout << "TonemappingWindow::LevelsRequested" << std::endl;
 	if (checked) {
 		GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
 		if (current==NULL)
@@ -155,6 +182,7 @@ void TonemappingWindow::LevelsRequested(bool checked) {
 }
 
 void TonemappingWindow::levels_closed() {
+	//std::cout << "TonemappingWindow::levels_closed" << std::endl;
 	actionFix_Histogram->setDisabled(false);
 	actionFix_Histogram->setChecked(false);
 }
@@ -183,6 +211,7 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	bool more_than_one  = (mdi_num>1); // more than 1 Visible Image 
 	bool ldr = !(ldr_num==0); // no LDRs
 	//
+	//std::cout << "TonemappingWindow::updateActions" << std::endl;
 	//std::cout << "mdi_num: " << mdi_num << std::endl;
 	//std::cout << "isHdrVisible: " << isHdrVisible << std::endl;
 	//std::cout << "ldr_num: " << ldr_num << std::endl;
@@ -194,14 +223,15 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	actionSaveAll->setEnabled( ldr );
 	actionClose_All->setEnabled( ldr );
 	actionAsThumbnails->setEnabled( ldr );
-	actionFit_to_Window->setEnabled( ldr || isHdrVisible ); 
+	actionLockImages->setEnabled( ldr );
+	//actionFit_to_Window->setEnabled( ldr || isHdrVisible ); 
 	actionCascade->setEnabled( more_than_one );
 	actionShowNext->setEnabled( more_than_one || (ldr && isHdrVisible) );
 	actionShowPrevious->setEnabled( more_than_one || (ldr && isHdrVisible) );
 	//TODO
 	if (w!=NULL) {
 		GenericViewer *current = (GenericViewer*) w->widget(); 
-		actionFit_to_Window->setChecked(current->getFittingWin());
+		//actionFit_to_Window->setChecked(current->getFittingWin());
 		//actionFix_Histogram->setChecked(current->hasLevelsOpen());
 	}
 }
@@ -219,6 +249,7 @@ void TonemappingWindow::viewAllAsThumbnails() {
 }
 
 void TonemappingWindow::on_actionClose_All_triggered() {
+	//std::cout << "TonemappingWindow::on_actionClose_All_triggered" << std::endl;
 	QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
 	foreach (QMdiSubWindow *p, allLDRs) {
 		p->close();
@@ -261,6 +292,7 @@ void TonemappingWindow::showHDR(bool toggled) {
 	if (toggled) {
 		actionShowNext->setEnabled( toggled && (n > 1));
 		actionShowPrevious->setEnabled( toggled && (n > 1));
+		//originalHDR->fitToWindow(true);
 		mdiArea->addSubWindow(originalHdrSubWin);
 		originalHdrSubWin->showMaximized();
 
@@ -311,7 +343,7 @@ void TonemappingWindow::current_mdi_zoomout() {
 
 void TonemappingWindow::current_mdi_fit_to_win(bool checked) {
 	GenericViewer *viewer = (GenericViewer *) mdiArea->currentSubWindow()->widget();
-	viewer->fitToWindow(checked);
+	//viewer->fitToWindow(checked);
 	actionZoom_In->setEnabled(!checked);
 	actionZoom_Out->setEnabled(!checked);
 	actionNormal_Size->setEnabled(!checked);
@@ -345,5 +377,36 @@ void TonemappingWindow::load_options() {
 		Text_Under_Icons();
 		actionText_Under_Icons->setChecked(true);
 	break;
+	}
+}
+
+void TonemappingWindow::lockImages(bool toggled) {
+	isLocked = toggled;
+	lockedImage = (GenericViewer *) mdiArea->currentSubWindow()->widget();
+}
+
+void TonemappingWindow::updateImageLock() {
+	//std::cout << "TonemappingWindow::updateImageLock" << std::endl;
+	int n = mdiArea->subWindowList().size();
+	if (isLocked && (n>1))
+		lockedImage = (GenericViewer *) mdiArea->currentSubWindow()->widget();
+}
+
+void TonemappingWindow::updateImages(QMdiSubWindow *w) {
+	if (!w) return; // on closing GammaAndLevels updateImages is called with w=0
+	if (isLocked) {
+		//std::cout << "TonemappingWindow::updateImages: locked" << std::endl;
+		GenericViewer *viewer = (GenericViewer *) w->widget();
+		assert(viewer!=NULL);
+		assert(lockedImage!=NULL);
+		scaleFactor = lockedImage->getImageScaleFactor();
+		HSB_Value = lockedImage->getHorizScrollBarValue();
+		VSB_Value = lockedImage->getVertScrollBarValue();
+		viewer->normalSize();
+		//viewer->fitToWindow(false);
+		viewer->zoomToFactor(scaleFactor);	
+		viewer->setHorizScrollBarValue(HSB_Value);	
+		viewer->setVertScrollBarValue(VSB_Value);
+		//TODO: disable fitTowin action
 	}
 }

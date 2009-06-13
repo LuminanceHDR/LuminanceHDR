@@ -37,20 +37,25 @@ public:
 	SmartScrollArea( QWidget *parent, QLabel &imagelabel );
 	void zoomIn();
 	void zoomOut();
+	void zoomToFactor(float factor);
 	void fitToWindow(bool checked);
 	void normalSize();
 	void scaleLabelToFit();
-	double getScaleFactor() {
-		return scaleFactor;
-	}
-	bool isFitting() {
-		return fittingwin;
-	}
+	void scaleImage(double);
+	void scaleImage();
+	int  getHorizScrollBarValue();
+	int  getVertScrollBarValue();
+	float getScaleFactor();
+	float getImageScaleFactor();
+	void setHorizScrollBarValue(int value);
+	void setVertScrollBarValue(int value);
+	bool isFitting();
 	QRect getSelectionRect();
 	void setSelectionTool(bool toggled);
 	void removeSelection();
 protected:
 	void resizeEvent ( QResizeEvent * );
+	void mousePressEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
 protected slots:
@@ -63,7 +68,6 @@ private:
 	float scaleFactor;
 	float previousScaleFactor;
 	bool fittingwin;
-	void scaleImage(double);
 	void adjustScrollBar(QScrollBar *scrollBar, double factor);
 signals:
 	void selectionReady(bool);

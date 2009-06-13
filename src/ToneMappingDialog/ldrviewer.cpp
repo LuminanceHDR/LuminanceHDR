@@ -32,8 +32,7 @@ LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, tonema
 
 	QLabel *informativeLabel = new QLabel( "LDR Image", toolBar );
 	toolBar->addWidget(informativeLabel);
-	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-	toolBar->resize(toolBar->size().width(), 30); // same as HdrViewer
+	//toolBar->resize(toolBar->size().width(), 30); // same as HdrViewer
 
 	imageLabel.setPixmap(QPixmap::fromImage(origimage));
 

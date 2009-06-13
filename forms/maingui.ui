@@ -111,6 +111,7 @@
     <addaction name="actionResizeHDR" />
     <addaction name="separator" />
     <addaction name="TonemapAction" />
+    <addaction name="cropToSelectionAction" />
     <addaction name="removeSelectionAction" />
    </widget>
    <addaction name="menuFile" />
@@ -489,6 +490,9 @@
    <property name="checkable" >
     <bool>true</bool>
    </property>
+   <property name="checked" >
+    <bool>true</bool>
+   </property>
    <property name="enabled" >
     <bool>false</bool>
    </property>
@@ -727,7 +731,7 @@
      <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Crop</string>
+    <string>&amp;Crop to Selection</string>
    </property>
    <property name="iconText" >
     <string>Crop to Selection</string>
@@ -742,6 +746,12 @@ p, li { white-space: pre-wrap; }
 &lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;">&lt;span style=" font-weight:400;">To start selecting click inside the image area and drag the pointer to the desired position. &lt;/span>&lt;/p>
 &lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Once selected you can edit the selection or move it around.&lt;/p>
 &lt;p align="justify" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">To remove the selection click ouside the selected region or use &lt;span style=" font-weight:600;">Image-&amp;gt;Remove Selection &lt;/span>on the menubar.&lt;/p>&lt;/body>&lt;/html></string>
+   </property>
+   <property name="statusTip" >
+    <string>Crop the Image to the Selected Rectangle</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Crop the Image to the Selected Rectangle</string>
    </property>
   </action>
   <action name="removeSelectionAction" >

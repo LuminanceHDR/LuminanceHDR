@@ -31,6 +31,8 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent
 	VBL_L->setMargin(0);
 
 	toolBar = new QToolBar(tr(""),this);
+	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+	toolBar->setFixedHeight(30);
 	VBL_L->addWidget(toolBar);
 
 	scrollArea = new SmartScrollArea(this, imageLabel);
@@ -60,6 +62,10 @@ void GenericViewer::zoomIn() {
 
 void GenericViewer::zoomOut() {
 	scrollArea->zoomOut();
+}
+
+void GenericViewer::zoomToFactor(float factor) {
+	scrollArea->zoomToFactor(factor);
 }
 
 bool GenericViewer::getFittingWin() {
@@ -155,5 +161,25 @@ void GenericViewer::slotPanIconHidden() {
 	cornerButton->blockSignals(true);
 	cornerButton->animateClick();
 	cornerButton->blockSignals(false);
+}
+
+int  GenericViewer::getHorizScrollBarValue() {
+	return scrollArea->getHorizScrollBarValue();
+}
+
+int  GenericViewer::getVertScrollBarValue() {
+	return scrollArea->getVertScrollBarValue();
+}
+
+float  GenericViewer::getImageScaleFactor() {
+	return scrollArea->getImageScaleFactor();
+}
+
+void GenericViewer::setHorizScrollBarValue(int value) {
+	scrollArea->setHorizScrollBarValue(value);
+}
+
+void GenericViewer::setVertScrollBarValue(int value) {
+	scrollArea->setVertScrollBarValue(value);
 }
 

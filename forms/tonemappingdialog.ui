@@ -134,6 +134,8 @@
    <addaction name="actionShowPrevious" />
    <addaction name="actionShowNext" />
    <addaction name="separator" />
+   <addaction name="actionLockImages" />
+   <addaction name="separator" />
    <addaction name="actionWhat_s_This" />
    <addaction name="separator" />
    <addaction name="actionClose_All" />
@@ -548,6 +550,22 @@
    </property>
    <property name="text" >
     <string>Text Only</string>
+   </property>
+  </action>
+  <action name="actionLockImages" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/lock-off.png</normaloff>
+     <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Lock Images</string>
    </property>
   </action>
  </widget>

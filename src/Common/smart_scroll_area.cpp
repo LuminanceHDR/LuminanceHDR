@@ -53,9 +53,15 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrol
 void SmartScrollArea::zoomIn() {
 	scaleImage(1.25);
 }
+
 void SmartScrollArea::zoomOut() {
 	scaleImage(0.8);
 }
+
+void SmartScrollArea::zoomToFactor(float factor) {
+	scaleImage(factor/scaleFactor);
+}
+
 void SmartScrollArea::fitToWindow(bool checked) {
 	fittingwin=checked;
 	if (checked) {
@@ -68,11 +74,17 @@ void SmartScrollArea::fitToWindow(bool checked) {
 		scaleImage(1);
 	}
 }
+
+bool SmartScrollArea::isFitting() {
+	return fittingwin;
+}
+
 void SmartScrollArea::normalSize() {
 	//use the image size for the label
 	imageLabel.adjustSize();
 	scaleFactor = 1.0;
 }
+
 void SmartScrollArea::scaleLabelToFit() {
 	int sa_width=size().width();
 	int sa_height=size().height();
@@ -87,15 +99,24 @@ void SmartScrollArea::scaleLabelToFit() {
 	//imageLabel.resize(factor * imageLabel.pixmap()->size());
 	imageLabel.resize(factor * 0.99 * imageLabel.pixmap()->size());
 }
+
 void SmartScrollArea::scaleImage(double factor) {
 	scaleFactor *= factor;
 	imageLabel.resize(scaleFactor * imageLabel.pixmap()->size());
 	adjustScrollBar(horizontalScrollBar(), factor);
 	adjustScrollBar(verticalScrollBar(), factor);
 }
+
+void SmartScrollArea::scaleImage() {
+	imageLabel.resize(scaleFactor * imageLabel.pixmap()->size());
+	adjustScrollBar(horizontalScrollBar(), scaleFactor);
+	adjustScrollBar(verticalScrollBar(), scaleFactor);
+}
+
 void SmartScrollArea::adjustScrollBar(QScrollBar *scrollBar, double factor) {
 	scrollBar->setValue(int(factor * scrollBar->value() + ((factor - 1) * scrollBar->pageStep()/2)));
 }
+
 void SmartScrollArea::resizeEvent ( QResizeEvent * /*e*/) {
 // 	qDebug("smartscrollarea::resizeEvent this->size()=(%d,%d)",this->size().width(),this->size().height());
 // 	qDebug("smartscrollarea::resizeEvent newsize()=(%d,%d)",e->size().width(),e->size().height());
@@ -151,6 +172,10 @@ void SmartScrollArea::removeSelection() {
 	selectionTool->removeSelection();
 }
 
+void SmartScrollArea::mousePressEvent(QMouseEvent *e) {
+	m_mousePos = e->globalPos();
+}
+
 void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 	if (e->buttons()==Qt::MidButton) {
 		setCursor(QCursor(Qt::SizeAllCursor));
@@ -166,3 +191,31 @@ void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 void SmartScrollArea::mouseReleaseEvent(QMouseEvent *e) {
 	setCursor(QCursor(Qt::ArrowCursor));
 }
+
+int  SmartScrollArea::getHorizScrollBarValue() {
+	return horizontalScrollBar()->value();
+}
+
+int  SmartScrollArea::getVertScrollBarValue() {
+	return verticalScrollBar()->value();
+}
+
+float SmartScrollArea::getScaleFactor() {
+	return scaleFactor;
+}
+
+float SmartScrollArea::getImageScaleFactor() {
+	float scaleFactor = float(imageLabel.size().width()) / (float) (imageLabel.pixmap()->size().width());
+	return scaleFactor;
+}
+
+void SmartScrollArea::setHorizScrollBarValue(int value) {
+	horizontalScrollBar()->setValue(value);
+	//update();
+}
+
+void SmartScrollArea::setVertScrollBarValue(int value) {
+	verticalScrollBar()->setValue(value);
+	//update();
+}
+

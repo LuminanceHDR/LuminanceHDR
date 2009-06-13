@@ -124,7 +124,7 @@ HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsig
 void HdrViewer::updateHDR(pfs::Frame* inputframe) {
     assert(inputframe!=NULL);
     pfs::DOMIO pfsio;
-    //delete previous pfs::Frame*. It must bu done calling freeFrame()
+    //delete previous pfs::Frame*. It must be done calling freeFrame()
     if (pfsFrame!=NULL)
        pfsio.freeFrame(pfsFrame);
     pfsFrame = inputframe;
@@ -170,7 +170,7 @@ void HdrViewer::updateImage() {
 
 		//assign the mapped image to the label
 		imageLabel.setPixmap(QPixmap::fromImage(image));
-		imageLabel.adjustSize();
+		scrollArea->scaleImage(); //scaleFactor is stored into scrollArea (1.0 by default)
 		QApplication::restoreOverrideCursor();
 	}
 }
@@ -261,7 +261,6 @@ const pfs::Array2D *HdrViewer::getPrimaryChannel() {
 HdrViewer::~HdrViewer() {
 	pfs::DOMIO pfsio;
 	//do not delete workarea, it shares the same memory area of pfsFrame
-	//if (image) delete image;
 	if (pfsFrame) // It must be deleted calling freeFrame()
 		pfsio.freeFrame(pfsFrame);
 }
@@ -291,17 +290,22 @@ void HdrViewer::hideLoadDialog(void) {
         progress->cancel();
 }
 
-void HdrViewer::levelsRequested(bool a) {} // do nothing, here to enable polymorphism
+//==================================================================================================//
+//
+// The following methods do nothing. They are defined here to keep tonemappingDialog.cpp code simple
+//
+void HdrViewer::levelsRequested(bool a) {} 
 
-QString HdrViewer::getFilenamePostFix() {
+QString HdrViewer::getFilenamePostFix() { 
 	return QString();
 }
 
 
-const QImage HdrViewer::getQImage() {
+const QImage HdrViewer::getQImage() { 
 	return QImage();
 }
 
 QString HdrViewer::getExifComment() {
 	return QString();
 }
+//================================================================================================//

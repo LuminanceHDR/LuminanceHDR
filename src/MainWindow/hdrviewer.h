@@ -70,7 +70,6 @@ public slots:
 	void setMaximum(int max);
 	void setValue(int value);
 protected:
-	//QImage *image;
 	LuminanceRangeWidget *m_lumRange;
 	QComboBox *mappingMethodCB;
 	pfs::Array2D *workArea[3];

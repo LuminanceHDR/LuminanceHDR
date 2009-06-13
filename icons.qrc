@@ -39,5 +39,7 @@
         <file>images/viewmagfit.png</file>
         <file>images/whatsthis.png</file>
         <file>images/games-config-background.png</file>
+	<file>images/lock-on.png</file>
+	<file>images/lock-off.png</file>
     </qresource>
 </RCC>
