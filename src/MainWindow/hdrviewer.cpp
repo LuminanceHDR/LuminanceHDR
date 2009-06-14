@@ -159,10 +159,8 @@ void HdrViewer::updateImage() {
 
 		int zoomedWidth = workArea[0]->getCols();
 		int zoomedHeight = workArea[0]->getRows();
-		//if( image != NULL )
-		//	delete image;
+
 		image = QImage(zoomedWidth, zoomedHeight, QImage::Format_RGB32 );
-		//assert( image != NULL );
 
 		assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
 		mapFrameToImage( /*workArea[0], workArea[1], workArea[2], &image,

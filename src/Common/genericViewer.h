@@ -69,6 +69,7 @@ protected slots:
 	virtual void slotPanIconSelectionMoved(QRect, bool);
 	virtual void slotPanIconHidden();
 	virtual void slotCornerButtonPressed();
+	virtual void route_changed();
 protected:
 	QImage image;
         bool NeedsSaving;
@@ -85,6 +86,7 @@ protected:
 	virtual void closeEvent ( QCloseEvent * event );
 signals:
 	virtual void selectionReady(bool isReady);
+	virtual void changed(GenericViewer *v); // emitted when zoomed in/out, scrolled ....
 	virtual void levels_closed(bool isReady); // only used by LdrViewer
 };
 #endif

@@ -55,12 +55,12 @@ private:
 	QtpfsguiOptions *qtpfsgui_options;
 	void load_options();
 	bool isLocked;
-	GenericViewer *lockedImage;
+	GenericViewer *changedImage;
 	float scaleFactor;
 	int VSB_Value;
 	int HSB_Value;
 protected slots:
-	bool eventFilter(QObject *obj, QEvent *event);
+	//bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
 	void addMDIresult(const QImage&,tonemapping_options*);
 	void LevelsRequested(bool);
@@ -81,8 +81,9 @@ protected slots:
 	void current_mdi_fit_to_win(bool checked);
 	void current_mdi_original_size();
 	void lockImages(bool);
-	void updateImages(QMdiSubWindow *w);
-	void updateImageLock();
+	void updateImage(GenericViewer *viewer);
+	void dispatch(GenericViewer *);
+	//void updateImageLock();
 };
 
 #endif

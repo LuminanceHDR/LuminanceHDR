@@ -68,8 +68,10 @@ private:
 	float scaleFactor;
 	float previousScaleFactor;
 	bool fittingwin;
+	bool panning;
 	void adjustScrollBar(QScrollBar *scrollBar, double factor);
 signals:
+	void changed(); 
 	void selectionReady(bool);
 };
 

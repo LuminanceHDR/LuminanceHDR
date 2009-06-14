@@ -115,7 +115,9 @@ private:
 	QString RecentDirHDRSetting;
 	QtpfsguiOptions *qtpfsgui_options;
 };
-
+//
+//=============== MySubWindow ==========================================================
+//
 class MySubWindow : public QMdiSubWindow {
 Q_OBJECT
 public:
@@ -126,6 +128,5 @@ private slots:
 private:
 	MainGui *mainGuiPtr;
 };
-
 
 #endif

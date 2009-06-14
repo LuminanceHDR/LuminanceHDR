@@ -26,7 +26,7 @@
 
 #include "smart_scroll_area.h"
 
-SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false) {
+SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false), panning(false) {
 
 
 	setBackgroundRole(QPalette::Light);
@@ -67,11 +67,13 @@ void SmartScrollArea::fitToWindow(bool checked) {
 	if (checked) {
 		previousScaleFactor = scaleFactor; // save zoom factot
 		scaleLabelToFit();
+		emit changed();
 	}
 	else {
 		// restore to the previous zoom factor
 		scaleFactor = previousScaleFactor;
 		scaleImage(1);
+		emit changed();
 	}
 }
 
@@ -109,8 +111,8 @@ void SmartScrollArea::scaleImage(double factor) {
 
 void SmartScrollArea::scaleImage() {
 	imageLabel.resize(scaleFactor * imageLabel.pixmap()->size());
-	adjustScrollBar(horizontalScrollBar(), scaleFactor);
-	adjustScrollBar(verticalScrollBar(), scaleFactor);
+	//adjustScrollBar(horizontalScrollBar(), scaleFactor);
+	//adjustScrollBar(verticalScrollBar(), scaleFactor);
 }
 
 void SmartScrollArea::adjustScrollBar(QScrollBar *scrollBar, double factor) {
@@ -178,6 +180,7 @@ void SmartScrollArea::mousePressEvent(QMouseEvent *e) {
 
 void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 	if (e->buttons()==Qt::MidButton) {
+		panning = true;
 		setCursor(QCursor(Qt::SizeAllCursor));
 		QPoint diff = (e->globalPos() - m_mousePos);
 		if (e->modifiers()==Qt::ShiftModifier)
@@ -185,10 +188,15 @@ void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 		verticalScrollBar()->setValue(verticalScrollBar()->value() + diff.y());
 		horizontalScrollBar()->setValue(horizontalScrollBar()->value() + diff.x());
 		m_mousePos = e->globalPos();
+		emit changed();
 	}
 }
 
 void SmartScrollArea::mouseReleaseEvent(QMouseEvent *e) {
+	if (panning) {
+		panning = false;
+		emit changed();
+	}
 	setCursor(QCursor(Qt::ArrowCursor));
 }
 
@@ -211,11 +219,9 @@ float SmartScrollArea::getImageScaleFactor() {
 
 void SmartScrollArea::setHorizScrollBarValue(int value) {
 	horizontalScrollBar()->setValue(value);
-	//update();
 }
 
 void SmartScrollArea::setVertScrollBarValue(int value) {
 	verticalScrollBar()->setValue(value);
-	//update();
 }
 

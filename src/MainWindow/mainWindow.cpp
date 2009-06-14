@@ -780,7 +780,7 @@ void MainGui::disableCrop() {
 }
 
 //
-//------------- MySubWindow --------------------------
+//===================  MySubWindow Implementation ===========================================================
 //
 MySubWindow::MySubWindow(MainGui *ptr, QWidget * parent, Qt::WindowFlags flags) : QMdiSubWindow(parent, flags), mainGuiPtr(ptr) {
 }
@@ -803,5 +803,4 @@ void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	mainGuiPtr->setCurrentFile(fname);
 	QApplication::restoreOverrideCursor();
 }
-
 
