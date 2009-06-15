@@ -48,6 +48,15 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrol
 	connect(selectionTool, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 	connect(selectionTool, SIGNAL(moved(QPoint)), this, SLOT(updateScrollBars(QPoint)));
 	connect(selectionTool, SIGNAL(scroll(int, int, int, int)), this, SLOT(ensureVisible(int, int, int, int)));
+	horizontalScrollBar()->setTracking(true);
+	verticalScrollBar()->setTracking(true);
+	connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
+	connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(valueChanged(int)));
+
+}
+
+void SmartScrollArea::valueChanged(int value) {
+	emit changed();
 }
 
 void SmartScrollArea::zoomIn() {

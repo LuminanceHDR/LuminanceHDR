@@ -60,6 +60,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *e);
 protected slots:
 	void updateScrollBars(QPoint diff);
+	void valueChanged(int value);
 	void ensureVisible(int x, int y, int w, int h);
 private:
 	QLabel &imageLabel;

@@ -292,7 +292,7 @@ void HdrViewer::hideLoadDialog(void) {
 //
 // The following methods do nothing. They are defined here to keep tonemappingDialog.cpp code simple
 //
-void HdrViewer::levelsRequested(bool a) {} 
+void HdrViewer::levelsRequested(bool) {} 
 
 QString HdrViewer::getFilenamePostFix() { 
 	return QString();
