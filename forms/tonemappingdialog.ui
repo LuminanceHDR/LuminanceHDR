@@ -34,6 +34,8 @@
     </property>
     <addaction name="documentationAction" />
     <addaction name="actionWhat_s_This" />
+    <addaction name="actionAbout_Qtpfsgui" />
+    <addaction name="actionAbout_Qt" />
    </widget>
    <widget class="QMenu" name="menuView" >
     <property name="title" >
@@ -471,6 +473,9 @@
    </property>
   </action>
   <action name="actionNormal_Size" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
      <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
@@ -483,6 +488,9 @@
    </property>
   </action>
   <action name="actionZoom_In" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
      <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
@@ -495,6 +503,9 @@
    </property>
   </action>
   <action name="actionZoom_Out" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
      <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
@@ -566,6 +577,16 @@
    </property>
    <property name="text" >
     <string>Lock Images</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qtpfsgui" >
+   <property name="text" >
+    <string>About QtPfsGui</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt" >
+   <property name="text" >
+    <string>About Qt</string>
    </property>
   </action>
  </widget>
