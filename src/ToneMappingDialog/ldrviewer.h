@@ -46,7 +46,6 @@ private:
 	void parseOptions(tonemapping_options *opts);
 	QString caption,postfix,exif_comment;
 	const QImage origimage;
-	//const QImage *currentimage;
 	QImage previewimage;
 };
 

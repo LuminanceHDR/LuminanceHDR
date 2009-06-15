@@ -30,9 +30,8 @@ LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, tonema
 	image = origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
-	QLabel *informativeLabel = new QLabel( "LDR Image", toolBar );
+	QLabel *informativeLabel = new QLabel( tr("LDR Image"), toolBar );
 	toolBar->addWidget(informativeLabel);
-	//toolBar->resize(toolBar->size().width(), 30); // same as HdrViewer
 
 	imageLabel.setPixmap(QPixmap::fromImage(origimage));
 
@@ -42,7 +41,6 @@ LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, tonema
 }
 
 LdrViewer::~LdrViewer() {
-	//TODO:  shared copy issue?
 	delete [] origimage.bits();
 }
 
