@@ -97,6 +97,7 @@ private slots:
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
+	void closeEvent ( QCloseEvent * );
 	HdrViewer* currenthdr;
 	HdrViewer* newhdr; 
  	QProgressDialog *saveProgress;

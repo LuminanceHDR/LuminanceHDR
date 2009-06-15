@@ -55,6 +55,14 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
 
 	restoreState( settings.value("MainGuiState").toByteArray());
+	int x = settings.value("MainGuiPosX").toInt();
+	int y = settings.value("MainGuiPosY").toInt();
+	int w = settings.value("MainGuiWidth").toInt();
+	int h = settings.value("MainGuiHeight").toInt();
+	
+	if (w==0) w=800;
+	if (h==0) h=600;
+	setGeometry(x, y, w, h);
 
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
@@ -804,3 +812,9 @@ void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	QApplication::restoreOverrideCursor();
 }
 
+void MainGui::closeEvent ( QCloseEvent * ) {
+	settings.setValue("MainGuiPosX",x());
+	settings.setValue("MainGuiPosY",y());
+	settings.setValue("MainGuiWidth",width());
+	settings.setValue("MainGuiHeight",height());
+}
