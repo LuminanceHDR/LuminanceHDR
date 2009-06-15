@@ -24,17 +24,18 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QWhatsThis>
+#include <QTextStream>
 #include "tonemappingDialog.h"
 #include "ldrviewer.h"
 #include "../Exif/exif_operations.h"
 #include "../Common/genericViewer.h"
 #include "../Common/config.h"
 #include "../Common/gang.h"
+#include "../generated_uic/ui_about.h"
 
-#include <iostream> // for debug
+//#include <iostream> // for debug
 
 TonemappingWindow::~TonemappingWindow() {
-	settings.setValue("TonemappingWindowState", saveState());
 }
 
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QString _file) : QMainWindow(parent), isLocked(false), changedImage(NULL) {
@@ -98,10 +99,19 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	originalHdrSubWin->hide();
 	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 	
-	restoreState( settings.value("TonemappingWindowState").toByteArray());
+	restoreState( settings.value("TonemappingWindowState").toByteArray() );
+	actionViewTMdock->setChecked( settings.value("actionViewTMdockState").toBool() );
+	int x = settings.value("TonemappinWindowPosX").toInt();
+	int y = settings.value("TonemappinWindowPosY").toInt();
+	int w = settings.value("TonemappinWindowWidth").toInt();
+	int h = settings.value("TonemappinWindowHeight").toInt();
+
+	if (w==0) w=800;
+	if (h==0) h=600;
+
+	setGeometry(x, y, w, h);
 
 	setupConnections();
-	showMaximized();
 }
 
 void TonemappingWindow::setupConnections() {
@@ -114,7 +124,7 @@ void TonemappingWindow::setupConnections() {
 
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setVisible(bool)));
 	connect(dock->toggleViewAction(),SIGNAL(toggled(bool)),actionViewTMdock,SLOT(setChecked(bool)));
-	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&,tonemapping_options*)));
+	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&, tonemapping_options*)));
 
 	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
 	connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
@@ -129,6 +139,8 @@ void TonemappingWindow::setupConnections() {
 	connect(actionFit_to_Window,SIGNAL(toggled(bool)),this,SLOT(current_mdi_fit_to_win(bool)));
 	connect(actionNormal_Size,SIGNAL(triggered()),this,SLOT(current_mdi_original_size()));
 	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
+	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
 }
 
 void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) {
@@ -139,7 +151,6 @@ void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) 
 	n->fitToWindow(true);
 	QMdiSubWindow *subwin = new QMdiSubWindow(this);
 	subwin->setAttribute(Qt::WA_DeleteOnClose);
-	subwin->installEventFilter(this);
 	subwin->setWidget(n);
 	mdiArea->addSubWindow(subwin);
 	n->show();
@@ -187,6 +198,7 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	int ldr_num = (isHdrVisible ? mdi_num-1 : mdi_num); // ldr number
 	bool more_than_one  = (mdi_num>1); // more than 1 Visible Image 
 	bool ldr = !(ldr_num==0); // no LDRs
+	bool isNotHDR = (w!=originalHdrSubWin);
 	//
 	//std::cout << "TonemappingWindow::updateActions" << std::endl;
 	//std::cout << "mdi_num: " << mdi_num << std::endl;
@@ -195,25 +207,30 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	//std::cout << "more_than_one: " << more_than_one << std::endl;
 	//std::cout << "ldr: " << ldr << std::endl;
 	//
-	actionFix_Histogram->setEnabled( ldr );
-	actionSave->setEnabled( ldr );
+	actionFix_Histogram->setEnabled( isNotHDR && ldr );
+	actionSave->setEnabled( isNotHDR && ldr );
 	actionSaveAll->setEnabled( ldr );
 	actionClose_All->setEnabled( ldr );
 	actionAsThumbnails->setEnabled( ldr );
 	actionLockImages->setEnabled( ldr );
-	//actionFit_to_Window->setEnabled( ldr || isHdrVisible ); 
+	actionFit_to_Window->setEnabled( ldr || isHdrVisible ); 
 	actionCascade->setEnabled( more_than_one );
 	actionShowNext->setEnabled( more_than_one || (ldr && isHdrVisible) );
 	actionShowPrevious->setEnabled( more_than_one || (ldr && isHdrVisible) );
-	//TODO
 	if (w!=NULL) {
 		GenericViewer *current = (GenericViewer*) w->widget(); 
-		//actionFit_to_Window->setChecked(current->getFittingWin());
+		actionFit_to_Window->setChecked(current->getFittingWin());
 		//actionFix_Histogram->setChecked(current->hasLevelsOpen());
 	}
 }
 
 void TonemappingWindow::closeEvent ( QCloseEvent * ) {
+	settings.setValue("TonemappingWindowState", saveState());
+	settings.setValue("actionViewTMdockState",actionViewTMdock->isChecked());
+	settings.setValue("TonemappinWindowPosX",x());
+	settings.setValue("TonemappinWindowPosY",y());
+	settings.setValue("TonemappinWindowWidth",width());
+	settings.setValue("TonemappinWindowHeight",height());
 	emit closing();
 }
 
@@ -269,22 +286,23 @@ void TonemappingWindow::showHDR(bool toggled) {
 	if (toggled) {
 		actionShowNext->setEnabled( toggled && (n > 1));
 		actionShowPrevious->setEnabled( toggled && (n > 1));
+		originalHDR->normalSize();
 		originalHDR->fitToWindow(true);
 		mdiArea->addSubWindow(originalHdrSubWin);
 		originalHdrSubWin->showMaximized();
 		if (isLocked) { 
-			std::cout << "originalHDR: " << originalHDR << std::endl;
+			//std::cout << "originalHDR: " << originalHDR << std::endl;
 			connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-			GenericViewer *current = (GenericViewer *) mdiArea->activeSubWindow();
-			assert(current!=NULL);
+			//GenericViewer *current = (GenericViewer *) mdiArea->activeSubWindow();
+			//assert(current!=NULL);
 			//dispatch(current);
 		}
 	}
 	else { 
 		disconnect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 		originalHdrSubWin->hide();
-		actionShowNext->setEnabled( toggled && (n > 2));
-		actionShowPrevious->setEnabled( toggled && (n > 2));
+		actionShowNext->setEnabled(n > 2);
+		actionShowPrevious->setEnabled(n > 2);
 		mdiArea->removeSubWindow(originalHdrSubWin);
 		if (!mdiArea->subWindowList().isEmpty())
 			mdiArea->activeSubWindow()->showMaximized();
@@ -373,7 +391,7 @@ void TonemappingWindow::updateImage(GenericViewer *viewer) {
 	assert(viewer!=NULL);
 	assert(changedImage!=NULL);
 	if (isLocked) {
-		std::cout << "TonemappingWindow::updateImage: locked" << std::endl;
+		//std::cout << "TonemappingWindow::updateImage: locked" << std::endl;
 		scaleFactor = changedImage->getImageScaleFactor();
 		HSB_Value = changedImage->getHorizScrollBarValue();
 		VSB_Value = changedImage->getVertScrollBarValue();
@@ -398,3 +416,43 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 		}
 	}
 }
+
+void TonemappingWindow::aboutQtpfsgui() {
+	QDialog *about=new QDialog();
+	about->setAttribute(Qt::WA_DeleteOnClose);
+	Ui::AboutQtpfsgui ui;
+	ui.setupUi(about);
+	ui.authorsBox->setOpenExternalLinks(true);
+	ui.thanksToBox->setOpenExternalLinks(true);
+	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
+	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
+
+        bool license_file_not_found=true;
+	QString docDir = QCoreApplication::applicationDirPath();
+	docDir.append("/../Resources");
+	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << docDir << "/Applications/qtpfsgui.app/Contents/Resources" << "./";
+	foreach (QString path,paths) {
+		QString fname(path+QString("/LICENSE"));
+#ifdef WIN32
+		fname+=".txt";
+#endif
+		if (QFile::exists(fname)) {
+			QFile file(fname);
+			//try opening it
+			if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+				break;
+			QTextStream ts(&file);
+			ui.GPLbox->setAcceptRichText(false);
+			ui.GPLbox->setPlainText(ts.readAll());
+			license_file_not_found=false;
+			break;
+		}
+	}
+	if (license_file_not_found) {
+		ui.GPLbox->setOpenExternalLinks(true);
+		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
+		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
+	}
+	about->show();
+}
+

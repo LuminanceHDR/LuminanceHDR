@@ -62,7 +62,7 @@ private:
 protected slots:
 	//bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
-	void addMDIresult(const QImage&,tonemapping_options*);
+	void addMDIresult(const QImage&, tonemapping_options*);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QMdiSubWindow *);
@@ -83,7 +83,7 @@ protected slots:
 	void lockImages(bool);
 	void updateImage(GenericViewer *viewer);
 	void dispatch(GenericViewer *);
-	//void updateImageLock();
+	void aboutQtpfsgui();
 };
 
 #endif
