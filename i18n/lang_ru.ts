@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="ru">
-<defaultcodec></defaultcodec>
+<!DOCTYPE TS><TS version="1.1" language="ru">
 <context>
     <name>AboutQtpfsgui</name>
     <message>
@@ -43,7 +41,7 @@
         <source>&amp;License Agreement</source>
         <translation>&amp;Лицензионное соглашение</translation>
     </message>
-    <message>
+    <message encoding="UTF-8">
         <location filename="../forms/about.ui" line="160"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -59,7 +57,7 @@ p, li { white-space: pre-wrap; }
         <source>&amp;OK</source>
         <translation>&amp;ОК</translation>
     </message>
-    <message>
+    <message encoding="UTF-8">
         <location filename="../forms/about.ui" line="223"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -184,8 +182,6 @@ p, li { white-space: pre-wrap; }
         <translation>Сохранение в формат: </translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="76"/>
-        <location filename="../src/Batch/batch_dialog.cpp" line="100"/>
         <location filename="../src/Batch/batch_dialog.cpp" line="134"/>
         <source>Choose a directory</source>
         <translation>Выберите каталог</translation>
@@ -216,7 +212,6 @@ p, li { white-space: pre-wrap; }
         <translation>Выполняется обработка...</translation>
     </message>
     <message>
-        <location filename="../src/Batch/batch_dialog.cpp" line="262"/>
         <location filename="../src/Batch/batch_dialog.cpp" line="302"/>
         <source>&amp;Done</source>
         <translation>&amp;Готово</translation>
@@ -560,21 +555,9 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;b&gt;Что вы хотите сделать с этими файлами?&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Отменить</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="obsolete">Открыть</translation>
-    </message>
-    <message>
         <location filename="../forms/dndoption.ui" line="84"/>
         <source>Open an existing HDR.</source>
         <translation>Открыть существующий HDR-снимок</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">Создать</translation>
     </message>
     <message>
         <location filename="../forms/dndoption.ui" line="104"/>
@@ -825,7 +808,6 @@ This image&apos;s histogram is diplayed in the widget above.</source>
         <translation>Ввести значение горизонтального смещения текущего двигаемого снимка</translation>
     </message>
     <message>
-        <location filename="../forms/editing_tools.ui" line="909"/>
         <location filename="../forms/editing_tools.ui" line="925"/>
         <source> px</source>
         <translation> px</translation>
@@ -966,6 +948,24 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>GenericViewer</name>
+    <message>
+        <location filename="../src/Common/genericViewer.cpp" line="44"/>
+        <source>Pan the image to a region</source>
+        <translation>Перемещение по изображению</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/genericViewer.cpp" line="184"/>
+        <source>Unsaved changes...</source>
+        <translation>Изменения не сохранены</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/genericViewer.cpp" line="184"/>
+        <source>This Image has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
+        <translation>Изменения в этом снимке не сохранены.&lt;br&gt;Вы действительно хотите закрыть этот снимок?</translation>
+    </message>
+</context>
+<context>
     <name>HdrCreationManager</name>
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="127"/>
@@ -981,63 +981,49 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="98"/>
-        <source>Viewing Settings Toolbar</source>
-        <translation>Панель параметров просмотра </translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="107"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="100"/>
         <source>Linear</source>
         <translation>Линейное</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="108"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="101"/>
         <source>Gamma 1.4</source>
         <translation>Гамма 1.4</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="109"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="102"/>
         <source>Gamma 1.8</source>
         <translation>Гамма 1.8</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="110"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="103"/>
         <source>Gamma 2.2</source>
         <translation>Гамма 2.2</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="111"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="104"/>
         <source>Gamma 2.6</source>
         <translation>Гамма 2.6</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="112"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="105"/>
         <source>Logarithmic</source>
         <translation>Логарифмическое</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="117"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="109"/>
         <source>Histogram:</source>
         <translation>Гистограмма:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="349"/>
-        <source>Unsaved changes...</source>
-        <translation>Изменения не сохранены</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="349"/>
-        <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation>Изменения в этом HDR-снимке не сохранены.&lt;br&gt;Вы действительно хотите закрыт снимок?</translation>
-    </message>
-    <message>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="92"/>
         <source>&amp;Mapping:</source>
-        <translation type="obsolete">&amp;Соответствие:</translation>
+        <translation>&amp;Соответствие:</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/hdrviewer.cpp" line="138"/>
+        <location filename="../src/MainWindow/hdrviewer.cpp" line="119"/>
         <source>Loading file...</source>
-        <translation>Загружается файл...</translation>
+        <translation>Открывается файл</translation>
     </message>
 </context>
 <context>
@@ -1098,29 +1084,21 @@ p, li { white-space: pre-wrap; }
         <translation>Функция взвешивания:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="491"/>
-        <location filename="../forms/hdrwizardform.ui" line="815"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="478"/>
         <source>Triangular</source>
         <translation>Треугольная</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="514"/>
-        <location filename="../forms/hdrwizardform.ui" line="649"/>
         <location filename="../forms/hdrwizardform.ui" line="848"/>
         <source>Response Curve:</source>
         <translation>Кривая отклика:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="666"/>
-        <location filename="../forms/hdrwizardform.ui" line="895"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="489"/>
         <source>Gamma</source>
         <translation>Гамма</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="593"/>
-        <location filename="../forms/hdrwizardform.ui" line="1097"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="500"/>
         <source>Debevec</source>
         <translation>Дебевек</translation>
@@ -1131,15 +1109,11 @@ p, li { white-space: pre-wrap; }
         <translation>Удаление призраков (бета!)</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="542"/>
-        <location filename="../forms/hdrwizardform.ui" line="671"/>
-        <location filename="../forms/hdrwizardform.ui" line="900"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="487"/>
         <source>Linear</source>
         <translation>Линейная</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="676"/>
         <location filename="../forms/hdrwizardform.ui" line="905"/>
         <source>Log</source>
         <translation>Логарифмическая</translation>
@@ -1167,13 +1141,11 @@ above do not yield good results)</source>
         <translation>Взвешивание:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="820"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="482"/>
         <source>Gaussian</source>
         <translation>Гауссова</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="825"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="480"/>
         <source>Plateau</source>
         <translation>Плато</translation>
@@ -1207,13 +1179,11 @@ pixel values&lt;/p&gt;</source>
         <translation>Выберите модель:</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="1102"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="502"/>
         <source>Robertson</source>
         <translation>Робертсон</translation>
     </message>
     <message>
-        <location filename="../forms/hdrwizardform.ui" line="1151"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="279"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Вперед &gt;</translation>
@@ -1222,14 +1192,6 @@ pixel values&lt;/p&gt;</source>
         <location filename="../forms/hdrwizardform.ui" line="1158"/>
         <source>&amp;Cancel</source>
         <translation>О&amp;тменить</translation>
-    </message>
-    <message>
-        <source>JPEG (*.jpeg *.jpg);;</source>
-        <translation type="obsolete">JPEG (*.jpeg *.jpg);;</translation>
-    </message>
-    <message>
-        <source>TIFF Images (*.tiff *.tif);;</source>
-        <translation type="obsolete">Снимки в TIFF (*.tiff *.tif);;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="121"/>
@@ -1242,8 +1204,6 @@ pixel values&lt;/p&gt;</source>
         <translation>Данные Exif не найдены</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="277"/>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="393"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="411"/>
         <source>&amp;Finish</source>
         <translation>&amp;Завершить</translation>
@@ -1254,7 +1214,6 @@ pixel values&lt;/p&gt;</source>
         <translation>Загрузить файл кривой отклика камеры</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="425"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="437"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Кривая отклика камеры (*.m);;Все файлы (*)</translation>
@@ -1358,8 +1317,6 @@ p, li { white-space: pre-wrap; }
         <translation>[2/2] Укажите заказные параметры</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="238"/>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="241"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="247"/>
         <source>Error...</source>
         <translation>Ошибка...</translation>
@@ -1370,7 +1327,6 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Снимки загружены.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="186"/>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="518"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Для продолжения необходимо вручную указать экспозицию каждого исходного снимка.&lt;br&gt;Не указано значений: &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt;.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
@@ -1384,36 +1340,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="52"/>
         <source>Exposure</source>
         <translation>Экспозиция</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="112"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="113"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="114"/>
-        <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="115"/>
-        <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="116"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="117"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="225"/>
@@ -1471,15 +1397,15 @@ p, li { white-space: pre-wrap; }
         <translation>Э&amp;кспозиция выбранного снимка</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="176"/>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="184"/>
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ПРЕДУПРЕЖДЕНИЕ:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Qtpfsgui не удалось найти подходящие данные &lt;i&gt;Exif&lt;/i&gt;
+ &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
+the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;<byte value="x9"/><byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;<byte value="x9"/><byte value="x9"/>You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ПРЕДУПРЕЖДЕНИЕ:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/>Qtpfsgui не удалось найти подходящие данные &lt;i&gt;Exif&lt;/i&gt;
 для следующих снимков:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Вы по-прежнему можете создать их них HDR-снимок. Для этого вам придется &lt;b&gt;вручную&lt;/b&gt; указать значения или шаги экспозиции.	&lt;hr&gt;Если вы хотите, чтобы программа сделала это &lt;b&gt;автоматически&lt;/b&gt;, вам придется загрузить снимки, содержащие как минимум
-следующие данные Exif: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (в секундах)&lt;/li&gt;	&lt;li&gt;Aperture (число f)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;СПРАВКА:&lt;/b&gt; Потеря данных Exif обычно происходит из-за предварительной обработки снимков.&lt;br&gt;	Вы можете выполнить &lt;b&gt;попарный перенос данных Exif&lt;/b&gt; между двумя наборами снимков, воспользовавшись командой &lt;i&gt;&lt;b&gt;«Сервис → Скопировать данные Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
+ &lt;ul&gt;<byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;Вы по-прежнему можете создать их них HDR-снимок. Для этого вам придется &lt;b&gt;вручную&lt;/b&gt; указать значения или шаги экспозиции.<byte value="x9"/>&lt;hr&gt;Если вы хотите, чтобы программа сделала это &lt;b&gt;автоматически&lt;/b&gt;, вам придется загрузить снимки, содержащие как минимум
+следующие данные Exif: <byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (в секундах)&lt;/li&gt;<byte value="x9"/>&lt;li&gt;Aperture (число f)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/>&lt;hr&gt;&lt;b&gt;СПРАВКА:&lt;/b&gt; Потеря данных Exif обычно происходит из-за предварительной обработки снимков.&lt;br&gt;<byte value="x9"/>Вы можете выполнить &lt;b&gt;попарный перенос данных Exif&lt;/b&gt; между двумя наборами снимков, воспользовавшись командой &lt;i&gt;&lt;b&gt;«Сервис → Скопировать данные Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/newHdrWizard.cpp" line="209"/>
@@ -1492,20 +1418,34 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation>Выполняется выравнивание...</translation>
     </message>
     <message>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
-        <translation type="obsolete">Все форматы (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</translation>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="112"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
+        <translation>Все форматы (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
     </message>
     <message>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="obsolete">Цифровые негативы RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</translation>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="113"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;</source>
+        <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;</translation>
     </message>
     <message>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;</source>
-        <translation type="obsolete">Все форматы (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2);;</translation>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="114"/>
+        <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
+        <translation>Файлы JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2)</source>
-        <translation type="obsolete">Цифровые негативы (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2)</translation>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="115"/>
+        <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
+        <translation>Файлы TIFF (*.tiff *.tif *.TIFF *.TIF);;</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="116"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
+        <translation>Файлы Raw (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/newHdrWizard.cpp" line="117"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)</source>
+        <translation>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)</translation>
     </message>
 </context>
 <context>
@@ -1529,7 +1469,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
 <context>
     <name>ImageQualityDialog</name>
     <message>
-        <location filename="../src/Common/imageQualityDialog.cpp" line="56"/>
+        <location filename="../src/Common/imageQualityDialog.cpp" line="55"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
@@ -1537,58 +1477,42 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
 <context>
     <name>ImgQualityDialog</name>
     <message>
-        <source>Dialog</source>
-        <translation type="obsolete">Диалог</translation>
-    </message>
-    <message>
-        <location filename="../forms/imageQualityDialog.ui" line="42"/>
+        <location filename="../forms/imageQualityDialog.ui" line="43"/>
         <source>Saved File Quality</source>
         <translation>Качество сохраняемого файла</translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="52"/>
+        <location filename="../forms/imageQualityDialog.ui" line="53"/>
         <source>Quality:</source>
         <translation>Качество:</translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="89"/>
+        <location filename="../forms/imageQualityDialog.ui" line="90"/>
         <source>File size:</source>
         <translation>Размер файла:</translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="96"/>
+        <location filename="../forms/imageQualityDialog.ui" line="97"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <source>File Size</source>
-        <translation type="obsolete">Вычислить размер файла</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
-        <source>&amp;File Size</source>
-        <translation type="obsolete">&amp;Вычислить размер файла</translation>
-    </message>
-    <message>
-        <location filename="../forms/imageQualityDialog.ui" line="161"/>
+        <location filename="../forms/imageQualityDialog.ui" line="162"/>
         <source>&amp;Save</source>
         <translation>&amp;Сохранить</translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="31"/>
+        <location filename="../forms/imageQualityDialog.ui" line="32"/>
         <source>Save as</source>
         <translation>Сохранить как </translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="116"/>
+        <location filename="../forms/imageQualityDialog.ui" line="117"/>
         <source>Ca&amp;lculate</source>
         <translation>&amp;Вычислить</translation>
     </message>
     <message>
-        <location filename="../forms/imageQualityDialog.ui" line="168"/>
+        <location filename="../forms/imageQualityDialog.ui" line="169"/>
         <source>&amp;Cancel</source>
         <translation>О&amp;тменить</translation>
     </message>
@@ -1596,9 +1520,9 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
 <context>
     <name>LdrViewer</name>
     <message>
-        <location filename="../src/ToneMappingDialog/ldrviewer.cpp" line="37"/>
-        <source>Informative Toolbar</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ToneMappingDialog/ldrviewer.cpp" line="33"/>
+        <source>LDR Image</source>
+        <translation>LDR-снимок</translation>
     </message>
 </context>
 <context>
@@ -1715,7 +1639,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/maingui.ui" line="105"/>
         <source>&amp;Image</source>
-        <translation>&amp;Изображение</translation>
+        <translation>С&amp;нимок</translation>
     </message>
     <message>
         <location filename="../forms/maingui.ui" line="58"/>
@@ -1738,350 +1662,327 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="126"/>
+        <location filename="../forms/maingui.ui" line="127"/>
         <source>Common operations</source>
         <translation>Обычные операции</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="155"/>
+        <location filename="../forms/maingui.ui" line="156"/>
         <source>&amp;New Hdr...</source>
         <translation>&amp;Создать новый HDR-снимок...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="158"/>
+        <location filename="../forms/maingui.ui" line="159"/>
         <source>New Hdr...</source>
         <translation>Создать HDR-снимок...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="170"/>
+        <location filename="../forms/maingui.ui" line="171"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="179"/>
+        <location filename="../forms/maingui.ui" line="180"/>
         <source>&amp;Open Hdr...</source>
         <translation>&amp;Открыть HDR-снимок...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="182"/>
+        <location filename="../forms/maingui.ui" line="183"/>
         <source>Open Hdr....</source>
         <translation>Открыть HDR-снимок...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="194"/>
+        <location filename="../forms/maingui.ui" line="195"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="206"/>
+        <location filename="../forms/maingui.ui" line="207"/>
         <source>&amp;Save Hdr as...</source>
         <translation>Со&amp;хранить HDR-снимок как...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="209"/>
+        <location filename="../forms/maingui.ui" line="210"/>
         <source>Save Hdr as...</source>
         <translation>Сохранить HDR-снимок как...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="221"/>
+        <location filename="../forms/maingui.ui" line="222"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="239"/>
+        <location filename="../forms/maingui.ui" line="240"/>
         <source>&amp;Tonemap the Hdr...</source>
         <translation>О&amp;тобразить тона HDR-снимка...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="242"/>
+        <location filename="../forms/maingui.ui" line="243"/>
         <source>Tonemap the Hdr</source>
         <translation>Отобразить тона HDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="254"/>
+        <location filename="../forms/maingui.ui" line="255"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="263"/>
+        <location filename="../forms/maingui.ui" line="264"/>
         <source>&amp;Exit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="266"/>
-        <location filename="../forms/maingui.ui" line="269"/>
-        <location filename="../forms/maingui.ui" line="272"/>
+        <location filename="../forms/maingui.ui" line="273"/>
         <source>Exit</source>
         <translation>Завершить работу с программой</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="275"/>
+        <location filename="../forms/maingui.ui" line="276"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="287"/>
+        <location filename="../forms/maingui.ui" line="288"/>
         <source>Rotate C&amp;ounterClockWise</source>
         <translation>Повернуть &amp;против часовой стрелки</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="290"/>
+        <location filename="../forms/maingui.ui" line="291"/>
         <source>Rotate CounterClockWise</source>
         <translation>Повернуть против часовой стрелки</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="302"/>
+        <location filename="../forms/maingui.ui" line="303"/>
         <source>&lt;</source>
         <translation>&lt;</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="314"/>
+        <location filename="../forms/maingui.ui" line="315"/>
         <source>Rotate C&amp;lockWise</source>
         <translation>Повернуть по &amp;часовой стрелке</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="317"/>
+        <location filename="../forms/maingui.ui" line="318"/>
         <source>Rotate ClockWise</source>
         <translation>Повернуть по часовой стрелке</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="329"/>
+        <location filename="../forms/maingui.ui" line="330"/>
         <source>&gt;</source>
         <translation>&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="337"/>
+        <location filename="../forms/maingui.ui" line="338"/>
         <source>Low Dynamic Range</source>
         <translation>Узкий динамический диапазон</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="340"/>
+        <location filename="../forms/maingui.ui" line="341"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="348"/>
+        <location filename="../forms/maingui.ui" line="349"/>
         <source>Fit to Dynamic Range</source>
         <translation>Уместить в динамический диапазон</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="351"/>
+        <location filename="../forms/maingui.ui" line="352"/>
         <source>\</source>
         <translation>\</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="359"/>
+        <location filename="../forms/maingui.ui" line="360"/>
         <source>Shrink Dynamic Range</source>
         <translation>Сузить динамический дипазон</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="362"/>
+        <location filename="../forms/maingui.ui" line="363"/>
         <source>[</source>
         <translation>[</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="370"/>
+        <location filename="../forms/maingui.ui" line="371"/>
         <source>Extend Dynamic Range</source>
         <translation>Расширить динамический диапазон</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="373"/>
+        <location filename="../forms/maingui.ui" line="374"/>
         <source>]</source>
         <translation>]</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="381"/>
+        <location filename="../forms/maingui.ui" line="382"/>
         <source>Decrease Exposure</source>
         <translation>Уменьшить экпозицию</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="384"/>
+        <location filename="../forms/maingui.ui" line="385"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="392"/>
+        <location filename="../forms/maingui.ui" line="393"/>
         <source>&amp;Increase Exposure</source>
         <translation>&amp;Увеличить экпозицию</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="395"/>
+        <location filename="../forms/maingui.ui" line="396"/>
         <source>9</source>
         <translation>9</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="404"/>
+        <location filename="../forms/maingui.ui" line="405"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Документация...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="407"/>
+        <location filename="../forms/maingui.ui" line="408"/>
         <source>About...</source>
         <translation>О программе...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="410"/>
-        <location filename="../forms/maingui.ui" line="413"/>
-        <location filename="../forms/maingui.ui" line="416"/>
+        <location filename="../forms/maingui.ui" line="417"/>
         <source>Show Qtpfsgui Help</source>
         <translation>Показать справку по Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="419"/>
+        <location filename="../forms/maingui.ui" line="420"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="431"/>
+        <location filename="../forms/maingui.ui" line="432"/>
         <source>&amp;Normal Size</source>
         <translation>&amp;100%</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="443"/>
+        <location filename="../forms/maingui.ui" line="444"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="455"/>
+        <location filename="../forms/maingui.ui" line="456"/>
         <source>Zoom &amp;In</source>
         <translation>&amp;Приблизить</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="458"/>
-        <location filename="../forms/maingui.ui" line="461"/>
+        <location filename="../forms/maingui.ui" line="462"/>
         <source>Zoom In</source>
         <translation>Приблизить</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="464"/>
+        <location filename="../forms/maingui.ui" line="465"/>
         <source>+</source>
-        <translation></translation>
+        <translation>+</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="476"/>
+        <location filename="../forms/maingui.ui" line="477"/>
         <source>Zoom &amp;Out</source>
         <translation>О&amp;тдалить</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="479"/>
-        <location filename="../forms/maingui.ui" line="482"/>
+        <location filename="../forms/maingui.ui" line="483"/>
         <source>Zoom Out</source>
         <translation>Отдалить</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="485"/>
+        <location filename="../forms/maingui.ui" line="486"/>
         <source>-</source>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="500"/>
+        <location filename="../forms/maingui.ui" line="504"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Уместить в окне</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="509"/>
+        <location filename="../forms/maingui.ui" line="513"/>
         <source>W</source>
         <translation>W</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="521"/>
+        <location filename="../forms/maingui.ui" line="525"/>
         <source>Qtpfsgui Options</source>
         <translation>Параметры Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="527"/>
-        <location filename="../forms/maingui.ui" line="530"/>
+        <location filename="../forms/maingui.ui" line="534"/>
         <source>Set the various options of Qtpfsgui.</source>
         <translation>Изменить параметры работы Qtpfsgui.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="533"/>
+        <location filename="../forms/maingui.ui" line="537"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="560"/>
+        <location filename="../forms/maingui.ui" line="564"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="569"/>
+        <location filename="../forms/maingui.ui" line="573"/>
         <source>Copy &amp;Exif Data...</source>
         <translation>&amp;Скопировать данные Exif...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="572"/>
+        <location filename="../forms/maingui.ui" line="576"/>
         <source>Copy Exif Data</source>
         <translation>Копирование данных Exif</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="584"/>
+        <location filename="../forms/maingui.ui" line="588"/>
         <source>Ctrl+E</source>
         <translation>Ctrl+E</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="592"/>
+        <location filename="../forms/maingui.ui" line="596"/>
         <source>&amp;Align Images...</source>
         <translation>&amp;Склеить несколько изображений...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="595"/>
-        <location filename="../forms/maingui.ui" line="598"/>
-        <location filename="../forms/maingui.ui" line="601"/>
+        <location filename="../forms/maingui.ui" line="605"/>
         <source>WORK IN PROGRESS</source>
         <translation>НА СТАДИИ РАЗРАБОТКИ</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="606"/>
+        <location filename="../forms/maingui.ui" line="610"/>
         <source>&amp;About Qt</source>
         <translation>&amp;О Qt</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="611"/>
+        <location filename="../forms/maingui.ui" line="615"/>
         <source>&amp;Tile</source>
         <translation>&amp;Каскадом</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="616"/>
+        <location filename="../forms/maingui.ui" line="620"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Мозаикой</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="619"/>
-        <location filename="../forms/maingui.ui" line="622"/>
+        <location filename="../forms/maingui.ui" line="626"/>
         <source>Cascade</source>
         <translation>Мозаикой</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="736"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Crop the Image to Selection&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;To start selecting click inside the image area and drag the pointer to the desired position. &lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Once selected you can edit the selection or move it around.&lt;/p&gt;
-&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove the selection click ouside the selected region or use &lt;span style=&quot; font-weight:600;&quot;&gt;Image-&amp;gt;Remove Selection &lt;/span&gt;on the menubar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="523"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="537"/>
         <source>Aborting...</source>
         <translation>Прерывание...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="207"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="223"/>
         <source>Save the HDR...</source>
         <translation>Сохранение HDR-снимка...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="339"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="355"/>
         <source>Error...</source>
         <translation>Ошибка...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="619"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="634"/>
         <source>Unsaved changes...</source>
         <translation>Не все изменения сохранены</translation>
     </message>
@@ -2096,251 +1997,246 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Панели</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="164"/>
-        <location filename="../forms/maingui.ui" line="167"/>
+        <location filename="../forms/maingui.ui" line="168"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
         <translation>Создать HDR-снимок из серии файлов JPEG или файла RAW, 8- или 16-разрядных файлов TIFF.</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="188"/>
-        <location filename="../forms/maingui.ui" line="191"/>
+        <location filename="../forms/maingui.ui" line="192"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
         <translation>Загрузить готовый файл HDR-снимка (OpenEXR, Radiance RGBE, PFS stream, RAW или TIFF).</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="212"/>
-        <location filename="../forms/maingui.ui" line="215"/>
-        <location filename="../forms/maingui.ui" line="218"/>
+        <location filename="../forms/maingui.ui" line="219"/>
         <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
         <translation>Сохранить HDR-снимок (OpenEXR, Radiance RGBE, PFS stream или 32bit или LogLuv TIFF)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="245"/>
-        <location filename="../forms/maingui.ui" line="248"/>
-        <location filename="../forms/maingui.ui" line="251"/>
+        <location filename="../forms/maingui.ui" line="252"/>
         <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
         <translation>Выполнить отображение тонов HDR-снимка в файл LDR-формата (вроде JPEG или PNG)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="293"/>
-        <location filename="../forms/maingui.ui" line="296"/>
-        <location filename="../forms/maingui.ui" line="299"/>
+        <location filename="../forms/maingui.ui" line="300"/>
         <source>Rotate Counterclockwise the Hdr</source>
         <translation>Повернуть HDR-снимок против часовой стрелки</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="320"/>
-        <location filename="../forms/maingui.ui" line="323"/>
-        <location filename="../forms/maingui.ui" line="326"/>
+        <location filename="../forms/maingui.ui" line="327"/>
         <source>Rotate ClockWise the Hdr</source>
         <translation>Повернуть по часовой стрелке</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="434"/>
-        <location filename="../forms/maingui.ui" line="437"/>
-        <location filename="../forms/maingui.ui" line="440"/>
+        <location filename="../forms/maingui.ui" line="441"/>
         <source>View Hdr at Normal Size</source>
         <translation>Просмотреть HDR-снимок в полный размер</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="503"/>
-        <location filename="../forms/maingui.ui" line="506"/>
+        <location filename="../forms/maingui.ui" line="510"/>
         <source>Shrink the Hdr to fit its containing window</source>
         <translation>Подогнать отображаемый HDR-снимок под размер окна</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="518"/>
+        <location filename="../forms/maingui.ui" line="522"/>
         <source>&amp;Preferences...</source>
-        <translation>Н&amp;астроить...</translation>
+        <translation>&amp;Параметры</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="545"/>
+        <location filename="../forms/maingui.ui" line="549"/>
         <source>&amp;Resize the Hdr...</source>
         <translation>&amp;Изменить размер HDR-снимка...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="548"/>
+        <location filename="../forms/maingui.ui" line="552"/>
         <source>Resize the Hdr</source>
         <translation>Изменить размер HDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="551"/>
-        <location filename="../forms/maingui.ui" line="554"/>
-        <location filename="../forms/maingui.ui" line="557"/>
+        <location filename="../forms/maingui.ui" line="561"/>
         <source>Resize (shrink or expand) the Hdr</source>
         <translation>Изменить (увеличить или уменьшить) размер HDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="627"/>
+        <location filename="../forms/maingui.ui" line="631"/>
         <source>Toolbars</source>
         <translation>Панели</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="635"/>
+        <location filename="../forms/maingui.ui" line="639"/>
         <source>Text &amp;Under Icons</source>
         <translation>Текст &amp;под значками</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="643"/>
+        <location filename="../forms/maingui.ui" line="647"/>
         <source>&amp;Icons Only</source>
         <translation>Только зн&amp;ачки</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="651"/>
+        <location filename="../forms/maingui.ui" line="655"/>
         <source>&amp;Text Only</source>
         <translation>Только &amp;текст</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="659"/>
+        <location filename="../forms/maingui.ui" line="663"/>
         <source>Text &amp;Alongside Icons</source>
         <translation>Текст &amp;рядом со значками</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="91"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="104"/>
         <source>Ready.... Now open an Hdr or create one!</source>
         <translation>Готово... Теперь откройте готовый HDR-снимок или создайте новый!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="167"/>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="198"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="214"/>
         <source>All Hdr formats </source>
         <translation>Все форматы HDR </translation>
     </message>
     <message>
-        <source>Load an Hdr file...</source>
-        <translation type="obsolete">Загрузить файл HDR-снимка...</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="575"/>
-        <location filename="../forms/maingui.ui" line="578"/>
-        <location filename="../forms/maingui.ui" line="581"/>
+        <location filename="../forms/maingui.ui" line="585"/>
         <source>Copy Exif Data between two set of files</source>
         <translation>Скопировать (перенести) данные Exif из одного набора файлов в другой</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="664"/>
+        <location filename="../forms/maingui.ui" line="668"/>
         <source>&amp;Batch Tone Mapping...</source>
         <translation>&amp;Пакетное отображение тонов...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="667"/>
+        <location filename="../forms/maingui.ui" line="671"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="161"/>
+        <location filename="../forms/maingui.ui" line="162"/>
         <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
         <translation>Создать HDR-снимок из серии файлов JPEG или файла RAW, 8- или 16-разрядных файлов TIFF</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="185"/>
+        <location filename="../forms/maingui.ui" line="186"/>
         <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation>Загрузить готовый файл HDR-снимка (OpenEXR, Radiance RGBE, PFS stream, RAW или TIFF)</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="524"/>
+        <location filename="../forms/maingui.ui" line="528"/>
         <source>Set the various options of Qtpfsgui</source>
         <translation>Изменить параметры работы Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="676"/>
+        <location filename="../forms/maingui.ui" line="680"/>
         <source>&amp;What&apos;s This?</source>
         <translation>&amp;Что это?</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="679"/>
+        <location filename="../forms/maingui.ui" line="683"/>
         <source>Get information about the graphical elements</source>
         <translation>Получить информацию о графических элементах  окна</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="682"/>
+        <location filename="../forms/maingui.ui" line="686"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="687"/>
+        <location filename="../forms/maingui.ui" line="691"/>
         <source>About &amp;Qtpfsgui</source>
         <translation>&amp;О Qtpfsgui</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="339"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="355"/>
         <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation>Qtpfsgui кэширует результаты расчетов во временные файлы, но выбранный сейчас для них каталог недоступен.&lt;br&gt;Выберите другой каталог в диалоге настройки («Сервис → Настроить...→ Отображение тонов»).</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="619"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="634"/>
         <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation>В как минимум одном HDR-снимке не сохранены изменения.&lt;br&gt;Вы действительно хотите завершить работу с программой?</translation>
+        <translation>Как минимум в одном HDR-снимке не сохранены изменения.&lt;br&gt;Вы действительно хотите завершить работу с программой?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="679"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="694"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>Документ с лицензией на %1 не найден, вы можете прочитать его здесь: %2here%3</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="695"/>
+        <location filename="../forms/maingui.ui" line="699"/>
         <source>Save Hdr &amp;Preview...</source>
         <translation>Сохранить &amp;миниатюру HDR-снимка...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="698"/>
-        <location filename="../forms/maingui.ui" line="701"/>
-        <location filename="../forms/maingui.ui" line="704"/>
+        <location filename="../forms/maingui.ui" line="708"/>
         <source>Save the current Hdr Preview to a Ldr file.</source>
         <translation>Сохранить текущую миниатюру HDR-снимка в файл одного из LDR-форматов</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="712"/>
+        <location filename="../forms/maingui.ui" line="716"/>
         <source>&amp;Projective Transformation...</source>
         <translation>П&amp;роективная трансформация...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="715"/>
-        <location filename="../forms/maingui.ui" line="718"/>
-        <location filename="../forms/maingui.ui" line="721"/>
+        <location filename="../forms/maingui.ui" line="725"/>
         <source>Apply a projective transformation to the current Hdr.</source>
         <translation>Выполнить проективную трансформацию текущего HDR-снимка</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="689"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="704"/>
         <source>Untitled</source>
         <translation>Без имени</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="178"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="194"/>
         <source>Load one or more Hdr files...</source>
         <translation>Загрузить один и более снимков HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="93"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="106"/>
         <source>Saving file...</source>
         <translation>Сохраняется файл...</translation>
     </message>
     <message>
-        <location filename="../forms/maingui.ui" line="730"/>
-        <source>&amp;Crop</source>
-        <translation>От&amp;кадрировать</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="733"/>
+        <location filename="../forms/maingui.ui" line="737"/>
         <source>Crop to Selection</source>
-        <translation>Откадрировать в выделение</translation>
+        <translation>Откадрировать</translation>
     </message>
     <message>
-        <source>Crop Image to Selection</source>
-        <translation type="obsolete">Откадрировать снимок в выделение</translation>
-    </message>
-    <message>
-        <location filename="../forms/maingui.ui" line="752"/>
+        <location filename="../forms/maingui.ui" line="762"/>
         <source>Remove &amp;Selection</source>
         <translation>&amp;Снять выделение</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="735"/>
-        <location filename="../src/MainWindow/mainWindow.cpp" line="736"/>
+        <location filename="../src/MainWindow/mainWindow.cpp" line="751"/>
         <source>Cropped Frame</source>
         <translation>Откадрированный снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="740"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Crop the Image to Selection&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;To start selecting click inside the image area and drag the pointer to the desired position. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Once selected you can edit the selection or move it around.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To remove the selection click ouside the selected region or use &lt;span style=&quot; font-weight:600;&quot;&gt;Image-&amp;gt;Remove Selection &lt;/span&gt;on the menubar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Откадрировать снимок в выделение&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;&quot;&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Для начала щелкните указателем мыши в области снимка и перетащите его в сторону до желаемого положения. &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Создав таким образом выделение вы можете менять его размер и перемещать.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Для снятия выделения просто щелкните мышью вне выделенной области или используйте команду &lt;span style=&quot; font-weight:600;&quot;&gt;Снимок-&amp;gt;Снять выделение&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="734"/>
+        <source>&amp;Crop to Selection</source>
+        <translation>От&amp;кадрировать в выделение</translation>
+    </message>
+    <message>
+        <location filename="../forms/maingui.ui" line="754"/>
+        <source>Crop the Image to the Selected Rectangle</source>
+        <translation>Откадрировать снимок по прямоугольнику выделения</translation>
     </message>
 </context>
 <context>
@@ -2405,7 +2301,6 @@ p, li { white-space: pre-wrap; }
         <translation>Приложения</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="124"/>
         <location filename="../forms/options.ui" line="741"/>
         <source>Hdr Tiff</source>
         <translation>HDR TIFF</translation>
@@ -2554,7 +2449,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ключи DCRaw:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="580"/>
         <location filename="../forms/options.ui" line="679"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -2566,7 +2460,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Щелкните кнопку ниже для получения подробной информации&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="607"/>
         <location filename="../forms/options.ui" line="610"/>
         <source>Click here to get more information about the Raw convertion parameters</source>
         <translation>Щелкните здесь для получения подробной информации о параметрах проявки RAW</translation>
@@ -2657,7 +2550,6 @@ p, li { white-space: pre-wrap; }
         <translation>Показывать значения nan и +/-Inf как:</translation>
     </message>
     <message>
-        <location filename="../forms/options.ui" line="1009"/>
         <location filename="../forms/options.ui" line="1012"/>
         <source>Get information about the graphical elements</source>
         <translation>Получить информацию о графических элементах окна</translation>
@@ -2706,25 +2598,21 @@ p, li { white-space: pre-wrap; }
         <translation>Исходная проекция:</translation>
     </message>
     <message>
-        <location filename="../forms/projectionsDialog.ui" line="61"/>
         <location filename="../forms/projectionsDialog.ui" line="102"/>
         <source>Polar</source>
         <translation>Полярная</translation>
     </message>
     <message>
-        <location filename="../forms/projectionsDialog.ui" line="66"/>
         <location filename="../forms/projectionsDialog.ui" line="107"/>
         <source>Angular</source>
         <translation>Угловая</translation>
     </message>
     <message>
-        <location filename="../forms/projectionsDialog.ui" line="71"/>
         <location filename="../forms/projectionsDialog.ui" line="112"/>
         <source>Cylindrical</source>
         <translation>Цилиндрическая</translation>
     </message>
     <message>
-        <location filename="../forms/projectionsDialog.ui" line="76"/>
         <location filename="../forms/projectionsDialog.ui" line="117"/>
         <source>Mirror Ball</source>
         <translation>Зеркальный шарик</translation>
@@ -2739,10 +2627,7 @@ p, li { white-space: pre-wrap; }
         <source>Angles:</source>
         <translation>Угол:</translation>
     </message>
-    <message>
-        <location filename="../forms/projectionsDialog.ui" line="163"/>
-        <location filename="../forms/projectionsDialog.ui" line="286"/>
-        <location filename="../forms/projectionsDialog.ui" line="375"/>
+    <message encoding="UTF-8">
         <location filename="../forms/projectionsDialog.ui" line="464"/>
         <source>°</source>
         <translation>°</translation>
@@ -2819,28 +2704,24 @@ p, li { white-space: pre-wrap; }
         <translation>Не удается найти расширение поддержки JPEG в Qt...&lt;br&gt;Распакуйте архив с  файлами DLL, сохраняя имена каталогов.</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="42"/>
-        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/global.cpp" line="50"/>
+        <location filename="../src/Common/global.cpp" line="49"/>
         <source>Save the LDR to...</source>
-        <translation>Сохранить LDR-снимок в...</translation>
+        <translation>Сохранить LDR-снимок</translation>
     </message>
     <message>
-        <location filename="../src/Common/global.cpp" line="78"/>
+        <location filename="../src/Common/global.cpp" line="77"/>
         <source>Failed to save &lt;b&gt;</source>
         <translation>Не удалось сохранить &lt;b&gt;</translation>
     </message>
     <message>
-        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
-        <translation type="obsolete">Файлы всех LDR-форматов (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</translation>
-    </message>
-    <message>
-        <location filename="../src/Common/global.cpp" line="69"/>
+        <location filename="../src/Common/global.cpp" line="68"/>
         <source>Save as </source>
         <translation>Сохранить как </translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="41"/>
+        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;</source>
+        <translation>Файлы всех LDR-форматов (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;</translation>
     </message>
 </context>
 <context>
@@ -2909,61 +2790,57 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMWidget</name>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="285"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="289"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Загрузить текстовый файл с параметрами отображения тонов...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="287"/>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="313"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="317"/>
         <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
         <translation>Текстовый файл с параметрами отображения тонов (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="291"/>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="333"/>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="398"/>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="415"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="419"/>
         <source>Aborting...</source>
         <translation>Прерывание...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="291"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="295"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Файл нечитаем (проверьте, существует ли он, каковы права доступа...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="311"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="315"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Сохранить параметры отображения тонов...</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="333"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="337"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Файл незаписываем (проверьте права доступа, путь...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="398"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="402"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Файл нечитаем (проверьте права доступа, путь...)</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="415"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="419"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
         <translation>Ошибка: формат файла параметров отображения тонов. Старый формат файлов в этой версии Qtpfsgui не поддерживается. Создайте новый файл с параметрами.</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="507"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="511"/>
         <source>Custom LDR size</source>
         <translation>Добавить свой размер LDR-снимка</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="508"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="512"/>
         <source>Enter the width of the new size:</source>
         <translation>Укажите новую ширину:</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="203"/>
+        <location filename="../src/ToneMappingDialog/tonemapping_widget.cpp" line="204"/>
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
@@ -3006,13 +2883,6 @@ p, li { white-space: pre-wrap; }
         <translation>Насыщенность</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="326"/>
-        <location filename="../forms/tonemappingoptions.ui" line="615"/>
-        <location filename="../forms/tonemappingoptions.ui" line="750"/>
-        <location filename="../forms/tonemappingoptions.ui" line="968"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1336"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1572"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1799"/>
         <location filename="../forms/tonemappingoptions.ui" line="2044"/>
         <source>Default Values for operator</source>
         <translation>Вернуть исходные значения для оператора</translation>
@@ -3296,13 +3166,6 @@ p, li { white-space: pre-wrap; }
         <translation>Восстановить исходное значение гаммы (1,00)</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingoptions.ui" line="306"/>
-        <location filename="../forms/tonemappingoptions.ui" line="595"/>
-        <location filename="../forms/tonemappingoptions.ui" line="730"/>
-        <location filename="../forms/tonemappingoptions.ui" line="948"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1316"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1552"/>
-        <location filename="../forms/tonemappingoptions.ui" line="1776"/>
         <location filename="../forms/tonemappingoptions.ui" line="2024"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Восстановить исходные параметры оператора</translation>
@@ -3421,88 +3284,82 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="49"/>
+        <location filename="../forms/tonemappingdialog.ui" line="66"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="66"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="68"/>
         <source>Tone mapping Panel</source>
         <translation>Панель параметров</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="168"/>
-        <location filename="../forms/tonemappingdialog.ui" line="171"/>
-        <location filename="../forms/tonemappingdialog.ui" line="174"/>
+        <location filename="../forms/tonemappingdialog.ui" line="220"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>Скорректировать уровни активного LDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="204"/>
+        <location filename="../forms/tonemappingdialog.ui" line="250"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="216"/>
+        <location filename="../forms/tonemappingdialog.ui" line="262"/>
         <source>C&amp;lose All</source>
         <translation>Закрыть &amp;все</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="219"/>
+        <location filename="../forms/tonemappingdialog.ui" line="268"/>
         <source>Close All</source>
         <translation>Закрыть все</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="222"/>
-        <location filename="../forms/tonemappingdialog.ui" line="225"/>
-        <location filename="../forms/tonemappingdialog.ui" line="228"/>
+        <location filename="../forms/tonemappingdialog.ui" line="274"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>Закрыть все LDR-снимки в диалоге</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="231"/>
+        <location filename="../forms/tonemappingdialog.ui" line="277"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="236"/>
+        <location filename="../forms/tonemappingdialog.ui" line="282"/>
         <source>As &amp;Thumbnails</source>
         <translation>&amp;Эскизами</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="239"/>
+        <location filename="../forms/tonemappingdialog.ui" line="285"/>
         <source>As Thumbnails</source>
         <translation>Эскизами</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="242"/>
+        <location filename="../forms/tonemappingdialog.ui" line="288"/>
         <source>Images as Thumbnails</source>
         <translation>Снимки — эскизами</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="245"/>
-        <location filename="../forms/tonemappingdialog.ui" line="248"/>
+        <location filename="../forms/tonemappingdialog.ui" line="294"/>
         <source>Layout all LDRs as thumbnails.</source>
         <translation>Разместить все LDR-снимки эскизами.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="256"/>
+        <location filename="../forms/tonemappingdialog.ui" line="302"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Мозаикой</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="280"/>
+        <location filename="../forms/tonemappingdialog.ui" line="329"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Уместить в окне</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="283"/>
-        <location filename="../forms/tonemappingdialog.ui" line="286"/>
+        <location filename="../forms/tonemappingdialog.ui" line="335"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>Полностью уместить LDR-снимок в его окне.</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="289"/>
+        <location filename="../forms/tonemappingdialog.ui" line="338"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -3512,115 +3369,79 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="120"/>
+        <location filename="../forms/tonemappingdialog.ui" line="166"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="135"/>
-        <location filename="../forms/tonemappingdialog.ui" line="138"/>
+        <location filename="../forms/tonemappingdialog.ui" line="187"/>
         <source>Tone Mapping Panel</source>
         <translation>Панель параметров</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="141"/>
-        <location filename="../forms/tonemappingdialog.ui" line="144"/>
-        <location filename="../forms/tonemappingdialog.ui" line="147"/>
+        <location filename="../forms/tonemappingdialog.ui" line="193"/>
         <source>Show/Hide the Tone mapping Panel</source>
         <translation>Показать/скрыть панель с параметрами отображения тонов</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="162"/>
-        <source>Adjust &amp;Levels...</source>
-        <translation>Скорректировать &amp;уровни...</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="165"/>
-        <source>Adjust Levels...</source>
-        <translation>Скорректировать уровни...</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="177"/>
+        <location filename="../forms/tonemappingdialog.ui" line="223"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="189"/>
+        <location filename="../forms/tonemappingdialog.ui" line="235"/>
         <source>&amp;Save as...</source>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="192"/>
+        <location filename="../forms/tonemappingdialog.ui" line="241"/>
         <source>Save As...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="195"/>
-        <location filename="../forms/tonemappingdialog.ui" line="198"/>
-        <location filename="../forms/tonemappingdialog.ui" line="201"/>
+        <location filename="../forms/tonemappingdialog.ui" line="247"/>
         <source>Save the currently selected LDR</source>
         <translation>Сохранить активный LDR-снимок</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="251"/>
+        <location filename="../forms/tonemappingdialog.ui" line="297"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="259"/>
-        <location filename="../forms/tonemappingdialog.ui" line="262"/>
+        <location filename="../forms/tonemappingdialog.ui" line="308"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation>Разместить все LDR-снимки эскизами</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="265"/>
+        <location filename="../forms/tonemappingdialog.ui" line="311"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="298"/>
+        <location filename="../forms/tonemappingdialog.ui" line="350"/>
         <source>What&apos;s This?</source>
         <translation>Что это?</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="301"/>
-        <source>Get information about the graphical elements</source>
-        <translation>Получить информацию о графических элементах  окна</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="304"/>
+        <location filename="../forms/tonemappingdialog.ui" line="356"/>
         <source>Use this button to get information about the graphical elements</source>
         <translation>Используйте эту кнопку для получения информации о графических элементах окна</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="307"/>
+        <location filename="../forms/tonemappingdialog.ui" line="359"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="316"/>
+        <location filename="../forms/tonemappingdialog.ui" line="368"/>
         <source>&amp;Documentation...</source>
         <translation>&amp;Документация...</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="319"/>
+        <location filename="../forms/tonemappingdialog.ui" line="371"/>
         <source>Ctrl+H</source>
         <translation>Ctrl+H</translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="358"/>
-        <source>Show the Original HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="367"/>
-        <source>Show Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/tonemappingdialog.ui" line="376"/>
-        <source>Show Previous</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../forms/tonemappingdialog.ui" line="13"/>
@@ -3628,49 +3449,169 @@ p, li { white-space: pre-wrap; }
         <translation>Отображение тонов: </translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="105"/>
+        <location filename="../forms/tonemappingdialog.ui" line="151"/>
         <source>&amp;Exit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="108"/>
+        <location filename="../forms/tonemappingdialog.ui" line="154"/>
         <source>Exit</source>
         <translation>Закрыть диалог</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="111"/>
-        <location filename="../forms/tonemappingdialog.ui" line="114"/>
-        <location filename="../forms/tonemappingdialog.ui" line="117"/>
+        <location filename="../forms/tonemappingdialog.ui" line="160"/>
         <source>Close Tone Mapping Window</source>
         <translation>Закрыть диалог отображения тонов</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="68"/>
+        <location filename="../forms/tonemappingdialog.ui" line="112"/>
         <source>Toolbar</source>
         <translation>Панель инструментов</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="331"/>
-        <location filename="../forms/tonemappingdialog.ui" line="334"/>
+        <location filename="../forms/tonemappingdialog.ui" line="389"/>
         <source>Save All</source>
         <translation>Сохранить все</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="337"/>
-        <location filename="../forms/tonemappingdialog.ui" line="340"/>
-        <location filename="../forms/tonemappingdialog.ui" line="343"/>
+        <location filename="../forms/tonemappingdialog.ui" line="395"/>
         <source>Saves all LDRs</source>
         <translation>Сохранить все LDR-снимки</translation>
     </message>
     <message>
-        <location filename="../forms/tonemappingdialog.ui" line="346"/>
+        <location filename="../forms/tonemappingdialog.ui" line="398"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="231"/>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="242"/>
         <source>Save files in</source>
         <translation>Сохранить файлы в</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="511"/>
+        <source>Toolbars</source>
+        <translation>Панели</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="77"/>
+        <source>&amp;Windows</source>
+        <translation>&amp;Окна</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="157"/>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="163"/>
+        <source>Close Tone Mapping Window </source>
+        <translation>Закрыть диалог отображения тонов</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="208"/>
+        <source>Adjust &amp;Levels</source>
+        <translation>Скорректировать &amp;уровни...</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="214"/>
+        <source>Adjust Levels</source>
+        <translation>Скорректировать уровни</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="416"/>
+        <source>HDR Image</source>
+        <translation>HDR-снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="422"/>
+        <source>Shows the Original High Dynamic Range Image</source>
+        <translation>Показать исходный HDR-снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="440"/>
+        <source>Next Image</source>
+        <translation>Следующий снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="446"/>
+        <source>Shows The Next Image</source>
+        <translation>Показать следующий снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="464"/>
+        <source>Previous Image</source>
+        <translation>Предыдущий снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="470"/>
+        <source>Shows The Previous Image</source>
+        <translation>Показать предыдущий снимок</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="479"/>
+        <source>&amp;Normal Size</source>
+        <translation>&amp;100%</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="482"/>
+        <source>O</source>
+        <translation>O</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="491"/>
+        <source>Zoom &amp;In</source>
+        <translation>&amp;Приблизить</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="494"/>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="503"/>
+        <source>Zoom &amp;Out</source>
+        <translation>О&amp;тдалить</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="506"/>
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="522"/>
+        <source>Text Under Icons</source>
+        <translation>Текст под значками</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="530"/>
+        <source>Only Icons</source>
+        <translation>Только значки</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="536"/>
+        <source>Icons Only</source>
+        <translation>Только значки</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="544"/>
+        <source>Text Alongside Icons</source>
+        <translation>Текст рядом со значками</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="552"/>
+        <source>Text Only</source>
+        <translation>Только текст</translation>
+    </message>
+    <message>
+        <location filename="../forms/tonemappingdialog.ui" line="568"/>
+        <source>Lock Images</source>
+        <translation>Синхронизировать</translation>
+    </message>
+    <message>
+        <location filename="../src/ToneMappingDialog/tonemappingDialog.cpp" line="92"/>
+        <source>Original HDR</source>
+        <translation>Исходный HDR-снимок</translation>
     </message>
 </context>
 <context>
@@ -3681,25 +3622,21 @@ p, li { white-space: pre-wrap; }
         <translation>Копирование данных Exif</translation>
     </message>
     <message>
-        <location filename="../forms/transplantexifdialog.ui" line="58"/>
         <location filename="../forms/transplantexifdialog.ui" line="212"/>
         <source>Move up selected file(s)</source>
         <translation>Сместить выбранные файлы вверх</translation>
     </message>
     <message>
-        <location filename="../forms/transplantexifdialog.ui" line="71"/>
         <location filename="../forms/transplantexifdialog.ui" line="225"/>
         <source>Move down selected file(s)</source>
         <translation>Сместить выбранные файлы вниз</translation>
     </message>
     <message>
-        <location filename="../forms/transplantexifdialog.ui" line="84"/>
         <location filename="../forms/transplantexifdialog.ui" line="238"/>
         <source>Remove selected file(s) from the list</source>
         <translation>Удалить выбранные файлы из списка</translation>
     </message>
     <message>
-        <location filename="../forms/transplantexifdialog.ui" line="97"/>
         <location filename="../forms/transplantexifdialog.ui" line="251"/>
         <source>Append files to the list</source>
         <translation>Добавить файлы в список</translation>
@@ -3725,7 +3662,6 @@ p, li { white-space: pre-wrap; }
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="193"/>
         <location filename="../src/TransplantExif/transplant.cpp" line="221"/>
         <source>Select the input images</source>
         <translation>Выберите исходные снимки</translation>
@@ -3786,24 +3722,14 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Готово.</translation>
     </message>
     <message>
-        <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="obsolete">Все поддерживаемые форматы (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</translation>
-    </message>
-    <message>
-        <location filename="../src/TransplantExif/transplant.cpp" line="190"/>
-        <location filename="../src/TransplantExif/transplant.cpp" line="215"/>
+        <location filename="../src/TransplantExif/transplant.cpp" line="216"/>
         <source>All Supported formats</source>
         <translation>Все поддерживаемые форматы</translation>
-    </message>
-    <message>
-        <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.rw2 *.sr2)</source>
-        <translation type="obsolete">Все поддерживаемые форматы (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.rw2 *.sr2)</translation>
     </message>
 </context>
 <context>
     <name>hdrInputLoader</name>
     <message>
-        <location filename="../src/Threads/hdrInputLoader.cpp" line="73"/>
         <location filename="../src/Threads/hdrInputLoader.cpp" line="129"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
         <translation>ОШИБКА: Файл&lt;br&gt;%1&lt;br&gt; не является 8- или 16-разрядным TIFF.</translation>
