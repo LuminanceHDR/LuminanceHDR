@@ -106,6 +106,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	int w = settings.value("TonemappinWindowWidth").toInt();
 	int h = settings.value("TonemappinWindowHeight").toInt();
 
+	if (x<0) x=0;	
+	if (y<0) y=0;	
 	if (w==0) w=800;
 	if (h==0) h=600;
 
