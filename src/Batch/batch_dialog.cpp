@@ -315,7 +315,7 @@ void BatchTMDialog::conditional_TMthread() {
 			tm_opt_list[first_not_started].second=true;
 			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
 
-			connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(newResult(const QImage&,tonemapping_options*)));
+			connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SLOT(newResult(const QImage&,tonemapping_options*)));
 			//start thread
 			thread->start();
 
