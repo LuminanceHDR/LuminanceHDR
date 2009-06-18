@@ -59,9 +59,12 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	int y = settings.value("MainGuiPosY").toInt();
 	int w = settings.value("MainGuiWidth").toInt();
 	int h = settings.value("MainGuiHeight").toInt();
-	
+
+	if (x<0) x=0;	
+	if (y<0) y=0;	
 	if (w==0) w=800;
 	if (h==0) h=600;
+
 	setGeometry(x, y, w, h);
 
 	setAcceptDrops(true);
@@ -210,8 +213,9 @@ void MainGui::fileSaveAs()
 {
 	if (currenthdr==NULL)
 		return;
-
-	HdrViewer* workaround = currenthdr; //odd workaround from Sławomir Szczyrba
+	
+	// That's has already been fixed, plz confirm
+	//HdrViewer* workaround = currenthdr; //odd workaround from Sławomir Szczyrba
 
 	QString filetypes = tr("All Hdr formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
@@ -228,7 +232,7 @@ void MainGui::fileSaveAs()
 	);
 
 	if(!fname.isEmpty()) {
-		currenthdr = workaround; //odd workaround from Sławomir Szczyrba
+		//currenthdr = workaround; //odd workaround from Sławomir Szczyrba
 		showSaveDialog();
 		QFileInfo qfi(fname);
 		QString absoluteFileName=qfi.absoluteFilePath();
