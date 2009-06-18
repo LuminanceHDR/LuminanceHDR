@@ -211,6 +211,8 @@ void MainGui::fileSaveAs()
 	if (currenthdr==NULL)
 		return;
 
+	HdrViewer* workaround = currenthdr; //odd workaround from Sławomir Szczyrba
+
 	QString filetypes = tr("All Hdr formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
 	filetypes += "OpenEXR (*.exr *.EXR);;" ;
@@ -226,6 +228,7 @@ void MainGui::fileSaveAs()
 	);
 
 	if(!fname.isEmpty()) {
+		currenthdr = workaround; //odd workaround from Sławomir Szczyrba
 		showSaveDialog();
 		QFileInfo qfi(fname);
 		QString absoluteFileName=qfi.absoluteFilePath();
