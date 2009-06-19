@@ -536,6 +536,7 @@ void MainGui::setupLoadThread(QString fname) {
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
 	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
+	connect(loadthread, SIGNAL(load_failed(QString)), subWindow, SLOT(load_failed(QString)));
 
 	loadthread->start();
 }
@@ -794,6 +795,13 @@ void MainGui::disableCrop() {
 	removeSelectionAction->setEnabled(false);
 }
 
+void MainGui::closeEvent ( QCloseEvent * ) {
+	settings.setValue("MainGuiPosX",x());
+	settings.setValue("MainGuiPosY",y());
+	settings.setValue("MainGuiWidth",width());
+	settings.setValue("MainGuiHeight",height());
+}
+
 //
 //===================  MySubWindow Implementation ===========================================================
 //
@@ -809,6 +817,7 @@ void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	ptr->updateHDR(hdr_pfs_frame);
 	ptr->setFileName(fname);
 	ptr->setWindowTitle(fname);
+
 	ptr->normalSize();
 	ptr->fitToWindow(true);
 	resize((int) (0.66 * mainGuiPtr->mdiArea->width()),(int) (0.66 * mainGuiPtr->mdiArea->height()));
@@ -819,9 +828,9 @@ void MySubWindow::addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname) {
 	QApplication::restoreOverrideCursor();
 }
 
-void MainGui::closeEvent ( QCloseEvent * ) {
-	settings.setValue("MainGuiPosX",x());
-	settings.setValue("MainGuiPosY",y());
-	settings.setValue("MainGuiWidth",width());
-	settings.setValue("MainGuiHeight",height());
+void MySubWindow::load_failed(QString) {
+	HdrViewer *ptr = (HdrViewer *) widget();
+	ptr->hideLoadDialog();
+	delete ptr;
+	QApplication::restoreOverrideCursor();
 }

@@ -125,6 +125,7 @@ public:
         MySubWindow(MainGui * ptr, QWidget * parent = 0, Qt::WindowFlags flags = 0 );
         ~MySubWindow();
 private slots:
+	void load_failed(QString);
         void addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname);
 private:
 	MainGui *mainGuiPtr;
