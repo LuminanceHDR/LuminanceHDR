@@ -59,12 +59,16 @@ void hdrInputLoader::run() {
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				QImage *newimage=reader.readIntoQImage();
+				if (newimage->isNull())
+					throw "Failed Loading Image";
 				emit ldrReady(newimage, image_idx, expotime, fname, true);
 				return;
 			}
 			//if 16bit (tiff) treat as hdr
 			else if (reader.is16bitTiff()) {
 				pfs::Frame *frame=reader.readIntoPfsFrame();
+				if (frame==NULL)
+					throw "Failed Loading Image";
 				emit mdrReady(frame, image_idx, expotime, fname);
 				return;
 			}
@@ -91,6 +95,8 @@ void hdrInputLoader::run() {
 			
 			#ifdef Q_WS_MAC
 			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw", params);
+			#elifdef Q_WS_WIN
+			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", params);
 			#else
 			rawconversion->start("dcraw", params);
 			#endif
