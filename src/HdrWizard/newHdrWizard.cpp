@@ -170,7 +170,7 @@ void HdrWizardForm::fileLoaded(int index, QString fname, float expotime) {
 
 void HdrWizardForm::finishedLoadingInputFiles(QStringList filesLackingExif) {
 	if (filesLackingExif.size()==0) {
-		NextFinishButton->setEnabled(TRUE);
+		NextFinishButton->setEnabled(true);
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>Images Loaded.</b></h3></font></center>"));
 	} else {
 		QString warning_message=(QString(tr("<font color=\"#FF0000\"><h3><b>WARNING:</b></h3></font>\
@@ -186,18 +186,18 @@ void HdrWizardForm::finishedLoadingInputFiles(QStringList filesLackingExif) {
 		confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(filesLackingExif.size()));
 	}
 	//do not load any more images
-	loadImagesButton->setEnabled(FALSE);
+	loadImagesButton->setEnabled(false);
 	//graphical fix
 	tableWidget->resizeColumnsToContents();
 	//enable user EV input
-	EVgroupBox->setEnabled(TRUE);
+	EVgroupBox->setEnabled(true);
 	tableWidget->selectRow(0);
 	tableWidget->setEnabled(true);
 
 	//FIXME mtb doesn't work with 16bit data yet (and probably ever)
 	if (tableWidget->rowCount()>=2) {
-		alignCheckBox->setEnabled(TRUE);
-		alignGroupBox->setEnabled(TRUE);
+		alignCheckBox->setEnabled(true);
+		alignGroupBox->setEnabled(true);
 	}
 }
 
@@ -228,7 +228,7 @@ void HdrWizardForm::updateGraphicalEVvalue(float expotime, int index_in_table) {
 
 void HdrWizardForm::finishedAligning() {
 	QApplication::restoreOverrideCursor();
-	NextFinishButton->setEnabled(TRUE);
+	NextFinishButton->setEnabled(true);
 	pagestack->setCurrentIndex(1);
 }
 
@@ -248,7 +248,7 @@ void HdrWizardForm::ais_failed(QProcess::ProcessError e) {
 	break;
 	}
 	QApplication::restoreOverrideCursor();
-	NextFinishButton->setEnabled(TRUE);
+	NextFinishButton->setEnabled(true);
 	if (pagestack->currentIndex()==0)
 		pagestack->setCurrentIndex(1);
 }
@@ -256,22 +256,22 @@ void HdrWizardForm::ais_failed(QProcess::ProcessError e) {
 void HdrWizardForm::customConfigCheckBoxToggled(bool want_custom) {
 	if (!want_custom) {
 		if (!antighostingCheckBox->isChecked()) {
-			label_RespCurve_Antighost->setDisabled(TRUE);
-			antighostRespCurveCombobox->setDisabled(TRUE);
-			label_Iterations->setDisabled(TRUE);
-			spinBoxIterations->setDisabled(TRUE);
+			label_RespCurve_Antighost->setDisabled(true);
+			antighostRespCurveCombobox->setDisabled(true);
+			label_Iterations->setDisabled(true);
+			spinBoxIterations->setDisabled(true);
 			//temporary disable anti-ghosting until it's fixed
-			antighostingCheckBox->setDisabled(TRUE);
+			antighostingCheckBox->setDisabled(true);
 		}
 		else {
-			label_predef_configs->setDisabled(TRUE);
-			predefConfigsComboBox->setDisabled(TRUE);
-			label_weights->setDisabled(TRUE);
-			lineEdit_showWeight->setDisabled(TRUE);
-			label_resp->setDisabled(TRUE);
-			lineEdit_show_resp->setDisabled(TRUE);
-			label_model->setDisabled(TRUE);
-			lineEdit_showmodel->setDisabled(TRUE);
+			label_predef_configs->setDisabled(true);
+			predefConfigsComboBox->setDisabled(true);
+			label_weights->setDisabled(true);
+			lineEdit_showWeight->setDisabled(true);
+			label_resp->setDisabled(true);
+			lineEdit_show_resp->setDisabled(true);
+			label_model->setDisabled(true);
+			lineEdit_showmodel->setDisabled(true);
 		}
 		predefConfigsComboBoxActivated(predefConfigsComboBox->currentIndex());
 		NextFinishButton->setText(tr("&Finish"));
@@ -284,15 +284,15 @@ void HdrWizardForm::predefRespCurveRadioButtonToggled(bool want_predef_resp_curv
 	if (want_predef_resp_curve) {
 		//ENABLE load_curve_button and lineedit when "load from file" is checked.
 		if (!loadRespCurveFromFileCheckbox->isChecked()) {
-			loadRespCurveFileButton->setEnabled(FALSE);
-			RespCurveFileLoadedLineEdit->setEnabled(FALSE);
+			loadRespCurveFileButton->setEnabled(false);
+			RespCurveFileLoadedLineEdit->setEnabled(false);
 		}
 		loadRespCurveFromFileCheckboxToggled(loadRespCurveFromFileCheckbox->isChecked());
 	} else { //want to recover response curve via robertson02
 		//update hdrCreationManager->chosen_config
 		hdrCreationManager->chosen_config.response_curve=FROM_ROBERTSON;
 		//always enable
-		NextFinishButton->setEnabled(TRUE);
+		NextFinishButton->setEnabled(true);
 		saveRespCurveToFileCheckboxToggled(saveRespCurveToFileCheckbox->isChecked());
 	}
 }
@@ -304,12 +304,12 @@ void HdrWizardForm::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
 	hdrCreationManager->chosen_config.response_curve=FROM_FILE;
 	hdrCreationManager->chosen_config.LoadCurveFromFilename=strdup(QFile::encodeName(loadcurvefilename).constData());
 	//and ENABLE nextbutton
-	NextFinishButton->setEnabled(TRUE);
+	NextFinishButton->setEnabled(true);
     }
     //if checkbox is checked AND no valid filename
     else  if (checkedfile && loadcurvefilename == "") {
 	// DISABLE nextbutton until situation is fixed
-	NextFinishButton->setEnabled(FALSE);
+	NextFinishButton->setEnabled(false);
 // 	qDebug("Load checkbox is checked AND no valid filename");
     }
     //checkbox not checked
@@ -318,7 +318,7 @@ void HdrWizardForm::loadRespCurveFromFileCheckboxToggled( bool checkedfile ) {
 	hdrCreationManager->chosen_config.response_curve=responses_in_gui[gammaLinLogComboBox->currentIndex()];
 	hdrCreationManager->chosen_config.LoadCurveFromFilename="";
 	//and ENABLE nextbutton
-	NextFinishButton->setEnabled(TRUE);
+	NextFinishButton->setEnabled(true);
     }
 }
 
@@ -326,18 +326,18 @@ void HdrWizardForm::saveRespCurveToFileCheckboxToggled( bool checkedfile ) {
 	//if checkbox is checked AND we have a valid filename
 	if (checkedfile && savecurvefilename != "") {
 		hdrCreationManager->chosen_config.SaveCurveToFilename=strdup(QFile::encodeName(savecurvefilename).constData());
-		NextFinishButton->setEnabled(TRUE);
+		NextFinishButton->setEnabled(true);
 	}
 	//if checkbox is checked AND no valid filename
 	else  if (checkedfile && savecurvefilename == "") {
 		// DISABLE nextbutton until situation is fixed
-		NextFinishButton->setEnabled(FALSE);
+		NextFinishButton->setEnabled(false);
 	}
 	//checkbox not checked
 	else {
 		hdrCreationManager->chosen_config.SaveCurveToFilename="";
 		//and ENABLE nextbutton
-		NextFinishButton->setEnabled(TRUE);
+		NextFinishButton->setEnabled(true);
 	}
 }
 
@@ -349,10 +349,10 @@ void HdrWizardForm::NextFinishButtonClicked() {
 		if (alignCheckBox->isChecked()) {
 			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 			confirmloadlabel->setText("<center><h3><b>"+tr("Aligning...")+"</b></h3></center>");
-			NextFinishButton->setDisabled(TRUE);
-			alignGroupBox->setDisabled(TRUE);
-			EVgroupBox->setDisabled(TRUE);
-			tableWidget->setDisabled(TRUE);
+			NextFinishButton->setDisabled(true);
+			alignGroupBox->setDisabled(true);
+			EVgroupBox->setDisabled(true);
+			tableWidget->setDisabled(true);
 			this->repaint();
 			switch (alignmentEngineCB->currentIndex()) {
 				case 0: //Hugin's align_image_stack
@@ -394,12 +394,12 @@ void HdrWizardForm::currentPageChangedInto(int newindex) {
 		//when at least 2 LDR inputs perform Manual Alignment
 		int numldrs=hdrCreationManager->getLDRList().size();
 		if (hdrCreationManager->inputImageType()==HdrCreationManager::LDR_INPUT_TYPE && numldrs>=2) {
-			this->setDisabled(TRUE);
+			this->setDisabled(true);
 			//fix for some platforms/Qt versions: makes sure LDR images have alpha channel
 			hdrCreationManager->makeSureLDRsHaveAlpha();
 			EditingTools *editingtools= new EditingTools(hdrCreationManager);
 			if (editingtools->exec() == QDialog::Accepted) {
-				this->setDisabled(FALSE);
+				this->setDisabled(false);
 			} else {
 				emit reject();
 			}
@@ -510,7 +510,7 @@ void HdrWizardForm::editingEVfinished() {
 	//transform from EV value to expotime value
 	hdrCreationManager->setEV(ImageEVdsb->value(),tableWidget->currentRow());
 	if (hdrCreationManager->getFilesLackingExif().size()==0) {
-		NextFinishButton->setEnabled(TRUE);
+		NextFinishButton->setEnabled(true);
 		//give an offset to the EV values if they are outside of the -10..10 range.
 		hdrCreationManager->checkEVvalues();
 		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.</b></h3></font></center>"));

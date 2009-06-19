@@ -47,7 +47,6 @@ void HdrCreationManager::setFileList(QStringList &l) {
 	fileList=l;
 
 	expotimes=new float[fileList.count()];
-
 	//add default values
 	for (int i=0;i<fileList.count();i++) {
 		//time equivalents of EV values
@@ -231,7 +230,7 @@ void HdrCreationManager::align_with_mtb() {
 }
 
 void HdrCreationManager::align_with_ais() {
-	ais=new QProcess(0);
+	ais=new QProcess(this);
 	ais->setWorkingDirectory(qtpfsgui_options->tempfilespath);
 	QStringList env = QProcess::systemEnvironment();
 	#ifdef WIN32
@@ -244,19 +243,23 @@ void HdrCreationManager::align_with_ais() {
 	connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
 	
+	QStringList ais_parameters = qtpfsgui_options->align_image_stack_options;
+	ais_parameters << (filesToRemove.empty() ? fileList : filesToRemove);
+
 	#ifdef Q_WS_MAC
-	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", qtpfsgui_options->align_image_stack_options << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 	#else
-	ais->start("align_image_stack", qtpfsgui_options->align_image_stack_options << (filesToRemove.empty() ? fileList : filesToRemove) );
+	ais->start("align_image_stack", ais_parameters );
 	#endif
 }
 
-void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus) {
-	if (exitcode==QProcess::CrashExit) {
-		emit ais_failed(QProcess::Crashed);
+void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitstatus) {
+	if (exitstatus != QProcess::NormalExit) {
+		//emit ais_failed(QProcess::Crashed);
 		return;
 	}
 	if (exitcode==0) {
+		//TODO: try-catch 
 		//qDebug("HCM: align_image_stack successfully terminated");
 		clearlists(false);
 		for (int i=0;i<fileList.size();i++) {
@@ -288,7 +291,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus) {
 
 void HdrCreationManager::removeTempFiles() {
 	foreach (QString tempfname, filesToRemove) {
-// 		qDebug("removing temp file: %s",qPrintable(tempfname));
+		//qDebug("removing temp file: %s",qPrintable(tempfname));
 		QFile::remove(tempfname);
 	}
 }
