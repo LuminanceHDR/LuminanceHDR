@@ -51,7 +51,8 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 
 	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure"));
 	tableWidget->resizeColumnsToContents();
-	EVgang = new Gang(EVSlider, ImageEVdsb,-10,10,0);
+	
+	EVgang = new Gang(EVSlider, ImageEVdsb, NULL, NULL, NULL, -10,10,0);
 
 	hdrCreationManager = new HdrCreationManager();
 
@@ -164,7 +165,6 @@ void HdrWizardForm::fileLoaded(int index, QString fname, float expotime) {
 	//fill graphical list
 	QFileInfo qfi(fname);
 	tableWidget->setItem(index,0,new QTableWidgetItem(qfi.fileName()));
-
 	progressBar->setValue(progressBar->value()+1); // increment progressbar
 }
 
@@ -218,11 +218,15 @@ void HdrWizardForm::updateGraphicalEVvalue(float expotime, int index_in_table) {
 		ts.setRealNumberPrecision(2);
 		ts << right << forcesign << fixed << log2f(expotime) << " EV";
 		QTableWidgetItem *tableitem=new QTableWidgetItem(EVdisplay);
-		tableitem->setTextAlignment(Qt::AlignRight);
+		tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		tableWidget->setItem(index_in_table,1,tableitem);
 	} else {
 		//if image doesn't contain (the required) exif tags
-		tableWidget->setItem(index_in_table,1,new QTableWidgetItem(tr("Unknown ")));
+		QTableWidgetItem *tableitem=new QTableWidgetItem(QString(tr("Unknown")));
+		tableitem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+		tableitem->setBackground(QBrush(Qt::yellow));
+		tableitem->setForeground(QBrush(Qt::red));
+		tableWidget->setItem(index_in_table,1,tableitem);
 	}
 }
 
@@ -513,7 +517,7 @@ void HdrWizardForm::editingEVfinished() {
 		NextFinishButton->setEnabled(true);
 		//give an offset to the EV values if they are outside of the -10..10 range.
 		hdrCreationManager->checkEVvalues();
-		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.</b></h3></font></center>"));
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Great!!!</b></h3></font></center>"));
 	} else {
 		confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(hdrCreationManager->getFilesLackingExif().size()) );
 	}

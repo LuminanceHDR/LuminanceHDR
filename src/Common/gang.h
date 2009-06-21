@@ -27,41 +27,98 @@
 
 #include <QSlider>
 #include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QRadioButton>
+#include <QList>
+
+class TmoSettingsList;
 
 class Gang : public QObject
 {
 	Q_OBJECT
 public:
-	Gang(QSlider* s_, QDoubleSpinBox* dsb_, 
-		const float minv_, const float maxv_, 
-		const float vv, const bool logs = false);
-	
-	float v() const { return v_; };
+	Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
+		QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0, QRadioButton *rb = 0, 
+		const double minv = 0.0, const double maxv = 0.0, 
+		const double vv = 0.0, const bool logs = false);
+	~Gang();
+	friend class TmoSettings;
+	double v() const { return value; };
+	bool isCheckBox1Checked() const { return isCbx1Checked; };
+	bool isCheckBox2Checked() const { return isCbx2Checked; };
+	bool isRadioButtonChecked() const { return isRbChecked; };
+	double p2v(const int p) const;
+	int v2p(const double x) const;
 	void setDefault();
 	bool changed() const { return changed_; };
 	QString flag(const QString f) const;
 	QString fname(const QString f) const;
-	float p2v(const int p) const;
-	int v2p(const float x) const;
-public slots:
+	void setupUndo();
+	void undo();
+	void redo();
+	void updateUndoState();
+protected slots:
 	void sliderMoved(int p);
 	void sliderValueChanged(int p);
-// 	void spinboxFocusEnter();
 	void spinboxValueChanged(double);
+	void checkBox1Checked(int);
+	void checkBox2Checked(int);
+	void radioButtonChecked(bool);
 signals:
 	void finished();
+	void enableUndo(bool);
+	void enableRedo(bool);
 private:
 	QSlider *s;
 	QDoubleSpinBox *dsb;
-	float minv;
-	float maxv;
-	float defaultv;
+	QCheckBox *cbx1;
+	QCheckBox *cbx2;
+	QRadioButton *rb;
+	bool isCbx1Checked;
+	bool isCbx2Checked;
+	bool isRbChecked;
+	double minv;
+	double maxv;
+	double defaultv;
 	bool logscaling;
-	float v_;
+	double value;
 	bool value_from_text;
 	bool value_from_slider;
 	bool graphics_only;
 	bool changed_;
+	bool undoState;
+	bool redoState;
+	TmoSettingsList *tmoSettingsList;
+};
+
+//
+//==================================== Undo/Redo ===================================================
+//
+// TmoSettings stores current applied settings
+//
+class TmoSettings {
+public:
+	TmoSettings(Gang *gangPtr, double, Qt::CheckState, Qt::CheckState, bool);
+	void apply() const;
+protected:
+	Gang *gangPtr;
+	Qt::CheckState cbx1CheckState;
+	Qt::CheckState cbx2CheckState;
+	bool isRbChecked;
+	double value;
+};
+
+class TmoSettingsList : public QList<TmoSettings> {
+public:
+	TmoSettingsList();
+	~TmoSettingsList();
+	void previous();
+	void next();
+	int index();
+	void append(const TmoSettings &value);
+private:
+	int m_index;
 };
 
 #endif
+

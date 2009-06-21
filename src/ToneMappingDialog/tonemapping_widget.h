@@ -57,10 +57,48 @@ private:
 	QVector<int> sizes;
 	pfs::Frame *originalPfsFrame;
 
-	Gang *contrastfactorGang, *saturationfactorGang, *detailfactorGang, *contrastGang, *biasGang, *spatialGang, *rangeGang, *baseGang, *alphaGang, *betaGang, *saturation2Gang, *noiseGang, *multiplierGang, *coneGang, *rodGang, *keyGang, *phiGang, *range2Gang, *lowerGang, *upperGang, *brightnessGang, *chromaticGang, *lightGang, *pregammagang;
+	Gang    *contrastfactorGang, //mantiuk
+		*saturationfactorGang, 
+		*detailfactorGang, 
+		// fattal02
+		*alphaGang, 
+		*betaGang, 
+		*saturation2Gang, 
+		*noiseGang, 
+		*oldFattalGang, 
+		// ashikhmin02
+		*contrastGang, 
+		*simpleGang,
+		*eq2Gang,
+		// drago03
+		*biasGang, 
+		// durand02
+		*spatialGang, 
+		*rangeGang, 
+		*baseGang, 
+		// pattanaik00
+		*multiplierGang, 
+		*coneGang, 
+		*rodGang, 
+		*autoYGang,
+		*pattalocalGang,
+		// reinhard02
+		*keyGang, 
+		*phiGang, 
+		*range2Gang, 
+		*lowerGang, 
+		*upperGang, 
+		*usescalesGang,
+		// reinhard05
+		*brightnessGang, 
+		*chromaticGang, 
+		*lightGang, 
+		//
+		*pregammagang;
 
 	tonemapping_options ToneMappingOptions;
-	void FillToneMappingOptions();
+	void fillToneMappingOptions();
+	void setupUndo();
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
 	int out_ldr_cs;
@@ -69,15 +107,18 @@ private:
 	float HeightWidthRatio;
 private slots:
 	void on_pregammadefault_clicked();
-	void on_ashikhmin02Default_clicked();
-	void on_drago03Default_clicked();
-	void on_durand02Default_clicked();
-	void on_fattal02Default_clicked();
-	void on_pattanaik00Default_clicked();
-	void on_reinhard02Default_clicked();
-	void on_reinhard05Default_clicked();
-	void on_MantiukDefault_clicked();
+	//void on_ashikhmin02Default_clicked();
+	//void on_drago03Default_clicked();
+	//void on_durand02Default_clicked();
+	//void on_fattal02Default_clicked();
+	//void on_pattanaik00Default_clicked();
+	//void on_reinhard02Default_clicked();
+	//void on_reinhard05Default_clicked();
+	//void on_MantiukDefault_clicked();
+	void on_defaultButton_clicked();
 	void on_applyButton_clicked();
+	void on_undoButton_clicked();
+	void on_redoButton_clicked();
 	void on_savesettingsbutton_clicked();
 	void on_loadsettingsbutton_clicked();
 	//APPLY tmo settings from text file
@@ -85,6 +126,7 @@ private slots:
 	//user wants a custom size.
 	void on_addCustomSizeButton_clicked();
 	void fillCustomSizeComboBox();
+	void updateUndoState(int);
 };
 
 #endif
