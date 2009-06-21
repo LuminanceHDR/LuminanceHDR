@@ -41,5 +41,7 @@
         <file>images/games-config-background.png</file>
 	<file>images/lock-on.png</file>
 	<file>images/lock-off.png</file>
+	<file>images/edit-undo.png</file>
+	<file>images/edit-redo.png</file>
     </qresource>
 </RCC>
