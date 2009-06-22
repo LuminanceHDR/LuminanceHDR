@@ -31,8 +31,8 @@
 
 Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox, 
 		QCheckBox *chkbox1, QCheckBox *chkbox2, QRadioButton *rbutton, 
-		const double minvalue, const double maxvalue, 
-		const double vv, const bool logs) : 
+		const float minvalue, const float maxvalue, 
+		const float vv, const bool logs) : 
 		s(slider), dsb(doublespinbox), cbx1(chkbox1), cbx2(chkbox2), rb(rbutton),  
 		minv(minvalue), maxv(maxvalue), defaultv(vv), logscaling(logs),
 		undoState(false), redoState(false)
@@ -68,9 +68,9 @@ Gang::~Gang() {
 	delete tmoSettingsList;
 } 
 
-double Gang::p2v(const int p) const
+float Gang::p2v(const int p) const
 {
-	double x = (p-s->minimum())/( (double) (s->maximum() - s->minimum() ) ) ;
+	float x = (p-s->minimum())/( (float) (s->maximum() - s->minimum() ) ) ;
 	if( logscaling ) {
 		////cout << "p:  " << p << ", x:  " << x << ", " << minv*exp(log(maxv/minv)*x ) << endl;
 		return minv*exp(log(maxv/minv)*x );
@@ -78,9 +78,9 @@ double Gang::p2v(const int p) const
 	return (maxv-minv)*x + minv; 
 }
 
-int Gang::v2p(const double x) const
+int Gang::v2p(const float x) const
 {
-	double y = (x - minv)/(maxv - minv);
+	float y = (x - minv)/(maxv - minv);
 	if( logscaling ) {
 		y = (log(x)-log(minv))/(log(maxv)-log(minv));
 		////cout << "x:  " << x << ", y:  " << y << ", " << log(x) << endl;
@@ -173,8 +173,10 @@ void Gang::setDefault()
 	graphics_only = true;
 	value = defaultv;
 	value_from_slider = true;
-	if (dsb)
+	if (dsb) {
 		dsb->setValue(value);
+		value = dsb->value();
+	}
 	value_from_text = true;
 	if (s)
 		s->setValue( v2p(value) );
@@ -202,7 +204,7 @@ void Gang::setupUndo() {
 	Qt::CheckState cbx1CheckState = Qt::Unchecked;
 	Qt::CheckState cbx2CheckState = Qt::Unchecked;
 	bool isRbChecked = false;
-	double v = 0.0;
+	float v = 0.0;
 	
 	if (s)
 		v = value;
@@ -283,7 +285,7 @@ void Gang::updateUndoState() {
 //
 //===================================== Undo/Redo ============================================
 //
-TmoSettings::TmoSettings(Gang *gangPtr, double v, Qt::CheckState cbx1CS, Qt::CheckState cbx2CS, bool isRBC):
+TmoSettings::TmoSettings(Gang *gangPtr, float v, Qt::CheckState cbx1CS, Qt::CheckState cbx2CS, bool isRBC):
 	gangPtr(gangPtr)
 {
 	if (gangPtr->cbx1) {
@@ -305,8 +307,10 @@ void TmoSettings::apply() const {
 	//cout << "TmoSettings::apply()" << endl;
  	if (gangPtr->s) 
 		gangPtr->s->setValue(gangPtr->v2p(value));
-	if (gangPtr->dsb)
+	if (gangPtr->dsb) {
 		gangPtr->dsb->setValue(value);
+		gangPtr->value = gangPtr->dsb->value();	
+	}
 	if (gangPtr->cbx1)
 		gangPtr->cbx1->setCheckState(cbx1CheckState);
 	if (gangPtr->cbx2)

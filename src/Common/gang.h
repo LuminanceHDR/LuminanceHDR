@@ -39,16 +39,16 @@ class Gang : public QObject
 public:
 	Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
 		QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0, QRadioButton *rb = 0, 
-		const double minv = 0.0, const double maxv = 0.0, 
-		const double vv = 0.0, const bool logs = false);
+		const float minv = 0.0, const float maxv = 0.0, 
+		const float vv = 0.0, const bool logs = false);
 	~Gang();
 	friend class TmoSettings;
-	double v() const { return value; };
+	float v() const { return value; };
 	bool isCheckBox1Checked() const { return isCbx1Checked; };
 	bool isCheckBox2Checked() const { return isCbx2Checked; };
 	bool isRadioButtonChecked() const { return isRbChecked; };
-	double p2v(const int p) const;
-	int v2p(const double x) const;
+	float p2v(const int p) const;
+	int v2p(const float x) const;
 	void setDefault();
 	bool changed() const { return changed_; };
 	QString flag(const QString f) const;
@@ -77,11 +77,11 @@ private:
 	bool isCbx1Checked;
 	bool isCbx2Checked;
 	bool isRbChecked;
-	double minv;
-	double maxv;
-	double defaultv;
+	float minv;
+	float maxv;
+	float defaultv;
 	bool logscaling;
-	double value;
+	float value;
 	bool value_from_text;
 	bool value_from_slider;
 	bool graphics_only;
@@ -98,14 +98,14 @@ private:
 //
 class TmoSettings {
 public:
-	TmoSettings(Gang *gangPtr, double, Qt::CheckState, Qt::CheckState, bool);
+	TmoSettings(Gang *gangPtr, float, Qt::CheckState, Qt::CheckState, bool);
 	void apply() const;
 protected:
 	Gang *gangPtr;
 	Qt::CheckState cbx1CheckState;
 	Qt::CheckState cbx2CheckState;
 	bool isRbChecked;
-	double value;
+	float value;
 };
 
 class TmoSettingsList : public QList<TmoSettings> {
