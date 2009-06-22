@@ -150,11 +150,13 @@ void TonemapperThread::run() {
 		pfs::Frame *result=NULL;
 		switch (opts.tmoperator) {
 		case mantiuk:
+			lock.lockForWrite();
 			result=pfstmo_mantiuk06(workingframe,
 			opts.operator_options.mantiukoptions.contrastfactor,
 			opts.operator_options.mantiukoptions.saturationfactor,
 			opts.operator_options.mantiukoptions.detailfactor,
 			opts.operator_options.mantiukoptions.contrastequalization);
+			lock.unlock();
 		break;
 		case fattal:
 			//fattal is NOT even reentrant! (problem in PDE solving)
@@ -169,10 +171,12 @@ void TonemapperThread::run() {
 			lock.unlock();
 		break;
 		case ashikhmin:
+			lock.lockForWrite();
 			result=pfstmo_ashikhmin02(workingframe,
 			opts.operator_options.ashikhminoptions.simple,
 			opts.operator_options.ashikhminoptions.lct,
 			opts.operator_options.ashikhminoptions.eq2 ? 2 : 4);
+			lock.unlock();
 		break;
 		case durand:
 			//even durand seems to be not reentrant
@@ -184,17 +188,22 @@ void TonemapperThread::run() {
 			lock.unlock();
 		break;
 		case drago:
+			lock.lockForWrite();
 			result=pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias);
+			lock.unlock();
 		break;
 		case pattanaik:
+			lock.lockForWrite();
 			result=pfstmo_pattanaik00(workingframe,
 			opts.operator_options.pattanaikoptions.local,
 			opts.operator_options.pattanaikoptions.multiplier,
 			opts.operator_options.pattanaikoptions.cone,
 			opts.operator_options.pattanaikoptions.rod,
 			opts.operator_options.pattanaikoptions.autolum);
+			lock.unlock();
 		break;
 		case reinhard02:
+			lock.lockForWrite();
 			result=pfstmo_reinhard02(workingframe,
 			opts.operator_options.reinhard02options.key,
 			opts.operator_options.reinhard02options.phi,
@@ -202,12 +211,15 @@ void TonemapperThread::run() {
 			opts.operator_options.reinhard02options.lower,
 			opts.operator_options.reinhard02options.upper,
 			opts.operator_options.reinhard02options.scales);
+			lock.unlock();
 		break;
 		case reinhard05:
+			lock.lockForWrite();
 			result=pfstmo_reinhard05(workingframe,
 			opts.operator_options.reinhard05options.brightness,
 			opts.operator_options.reinhard05options.chromaticAdaptation,
 			opts.operator_options.reinhard05options.lightAdaptation);
+			lock.unlock();
 		break;
 		} //switch (opts.tmoperator)
 		emit advanceCurrentProgress();
