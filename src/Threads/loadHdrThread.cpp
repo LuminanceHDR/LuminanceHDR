@@ -27,6 +27,7 @@
 #include <QCoreApplication>
 #include "loadHdrThread.h"
 #include "../Fileformat/pfstiff.h"
+
 pfs::Frame* readEXRfile  (const char * filename);
 pfs::Frame* readRGBEfile (const char * filename);
 
@@ -64,9 +65,16 @@ void LoadHdrThread::run() {
 		} else if (extension=="HDR") {
 			hdrpfsframe = readRGBEfile(encodedFileName);
 		} else if (extension=="PFS") {
+			//TODO
+			const char *fname = encodedFileName;
+			FILE *fd = fopen(fname, "rb");
+			if (!fd) {
+				emit load_failed(tr("ERROR: Cannot open file: %1").arg(fname));
+				return;
+			}
 			pfs::DOMIO pfsio;
-			hdrpfsframe=pfsio.readFrame(encodedFileName);
-			hdrpfsframe->convertXYZChannelsToRGB();
+			hdrpfsframe=pfsio.readFrame( fd);
+			fclose(fd);
 		} else if (extension.startsWith("TIF")) {	
 			TiffReader reader(encodedFileName);
 			connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
@@ -115,6 +123,7 @@ void LoadHdrThread::run() {
 			qDebug("TH: Loading back file name=%s", qPrintable(outfname));
 			TiffReader reader(QFile::encodeName(outfname).constData());
 			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
+
 			QFile::remove(outfname);
 		} //raw file detected
 		else {
@@ -146,9 +155,14 @@ void LoadHdrThread::run() {
 		qDebug("minGval=%f, maxGval=%f",minGval,maxGval);
 		qDebug("minBval=%f, maxBval=%f",minBval,maxBval);
 #endif
-	if (hdrpfsframe == NULL)
-		throw "Error loading file";
-	} catch (...) {
+		if (hdrpfsframe == NULL)
+			throw "Error loading file";
+	}
+	catch(pfs::Exception e) {
+		emit load_failed(tr("ERROR: %1").arg(e.getMessage()));
+		return;
+	}
+	catch (...) {
 		qDebug("TH: catched exception");
 		emit load_failed(tr("ERROR: Failed loading file: %1").arg(fname));
 		return;

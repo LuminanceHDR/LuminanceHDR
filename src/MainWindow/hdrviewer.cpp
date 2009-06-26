@@ -144,11 +144,13 @@ void HdrViewer::setFlagUpdateImage(bool updateImage) {
 void HdrViewer::updateImage() {
 	if (flagUpdateImage) {
 		assert( pfsFrame != NULL );
+		pfs::DOMIO pfsio;
 
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
 		pfs::Channel *R, *G, *B;
-		pfsFrame->getRGBChannels( R, G, B );
+		// Channels X Y Z contain R G B data
+		pfsFrame->getXYZChannels( R, G, B );
 		assert(R!=NULL && G!=NULL && B!=NULL);
 
 		//workarea  needed in updateMapping(...) called by mapFrameToImage(...)
@@ -251,9 +253,9 @@ void HdrViewer::update_colors( unsigned int neg, unsigned int naninf ) {
 
 const pfs::Array2D *HdrViewer::getPrimaryChannel() {
     assert( pfsFrame != NULL );
-    pfs::Channel *R, *G, *B;
-    pfsFrame->getRGBChannels( R, G, B );
-    return G;
+    pfs::Channel *Y;
+    Y = pfsFrame->getChannel("Y");
+    return Y;
 }
 
 HdrViewer::~HdrViewer() {

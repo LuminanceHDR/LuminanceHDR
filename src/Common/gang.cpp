@@ -19,14 +19,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  * based on previous GPL code from qpfstmo, by Nicholas Phillips.
+ * Original Work
+ * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
-//#include <iostream>
 #include <math.h>
 #include "gang.h"
 
+//#include <iostream>
 //using namespace std;
 
 Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox, 
@@ -37,6 +41,25 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
 		minv(minvalue), maxv(maxvalue), defaultv(vv), logscaling(logs),
 		undoState(false), redoState(false)
 {
+	if (cbx1)
+		isCbx1Checked_default = cbx1->isChecked();
+	if (cbx2)
+		isCbx2Checked_default = cbx2->isChecked();
+	if (rb)
+		isRbChecked_default = rb->isChecked();
+
+	if (s) {
+		s->setMaximum((int)(100*maxvalue));
+		s->setMinimum((int)(100*minvalue));
+		s->setSingleStep((int)(maxvalue-minvalue));	
+		s->setPageStep((int)(10*(maxvalue-minvalue)));	
+	}
+	if (dsb) {
+		dsb->setMaximum((int)(100*maxvalue));
+		dsb->setMinimum((int)(100*minvalue));
+		dsb->setSingleStep((int)(maxvalue-minvalue));	
+	}
+
 	tmoSettingsList = new TmoSettingsList();
 	graphics_only = false;
 
@@ -53,10 +76,10 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
 		connect( dsb, SIGNAL(valueChanged(double)), this, SLOT(spinboxValueChanged(double)));
 
 	if (cbx1)
-		connect( cbx1, SIGNAL(stateChanged(int)), this, SLOT(checkBox1Checked(int)));
+		connect( cbx1, SIGNAL(toggled(bool)), this, SLOT(checkBox1Checked(bool)));
 	
 	if (cbx2)
-		connect( cbx2, SIGNAL(stateChanged(int)), this, SLOT(checkBox2Checked(int)));
+		connect( cbx2, SIGNAL(toggled(bool)), this, SLOT(checkBox2Checked(bool)));
 
 	if (rb)
 		connect( rb, SIGNAL(clicked(bool)), this, SLOT(radioButtonChecked(bool)));
@@ -154,16 +177,16 @@ void Gang::spinboxValueChanged(double x)
 	changed_ = true;
 }
 
-void Gang::checkBox1Checked(int) {
-	isCbx1Checked = true;
+void Gang::checkBox1Checked(bool b) {
+	isCbx1Checked = b;
 }
 
-void Gang::checkBox2Checked(int) {
-	isCbx2Checked = true;
+void Gang::checkBox2Checked(bool b) {
+	isCbx2Checked = b;
 }
 
-void Gang::radioButtonChecked(bool) {
-	isRbChecked = true;
+void Gang::radioButtonChecked(bool b) {
+	isRbChecked = b;
 }
 
 
@@ -184,6 +207,12 @@ void Gang::setDefault()
 	value_from_text = false;
 	value_from_slider = false;
 	graphics_only = false;
+	if (cbx1) 
+		isCbx1Checked = isCbx1Checked_default;
+	if  (cbx2) 
+		isCbx2Checked = isCbx2Checked_default;
+	if (rb) 
+		isRbChecked = isRbChecked_default;
 }
 
 QString Gang::flag(const QString f) const
@@ -201,21 +230,21 @@ QString Gang::fname(const QString f) const
 }
 
 void Gang::setupUndo() {
-	Qt::CheckState cbx1CheckState = Qt::Unchecked;
-	Qt::CheckState cbx2CheckState = Qt::Unchecked;
+	bool isCbx1Checked = false;
+	bool isCbx2Checked = false;
 	bool isRbChecked = false;
 	float v = 0.0;
 	
 	if (s)
 		v = value;
 	if (cbx1) 
-		cbx1CheckState = cbx1->checkState();
+		isCbx1Checked = cbx1->isChecked();
 	if  (cbx2) 
-		cbx2CheckState = cbx2->checkState();
+		isCbx2Checked = cbx2->isChecked();
 	if (rb) 
 		isRbChecked = rb->isChecked();
 	
-	TmoSettings *tmoSettings = new  TmoSettings(this, v, cbx1CheckState, cbx2CheckState, isRbChecked);
+	TmoSettings *tmoSettings = new  TmoSettings(this, v, isCbx1Checked, isCbx2Checked, isRbChecked);
 	tmoSettingsList->append(*tmoSettings);
 	if (tmoSettingsList->index() == 1) {
 		emit enableUndo(true);
@@ -285,14 +314,14 @@ void Gang::updateUndoState() {
 //
 //===================================== Undo/Redo ============================================
 //
-TmoSettings::TmoSettings(Gang *gangPtr, float v, Qt::CheckState cbx1CS, Qt::CheckState cbx2CS, bool isRBC):
+TmoSettings::TmoSettings(Gang *gangPtr, float v, bool isCbx1, bool isCbx2, bool isRBC):
 	gangPtr(gangPtr)
 {
 	if (gangPtr->cbx1) {
-		cbx1CheckState = cbx1CS;
+		isCbx1Checked = isCbx1;
 	}
 	if (gangPtr->cbx2) {
-		cbx2CheckState = cbx2CS;
+		isCbx2Checked = isCbx2;
 	}
 	if (gangPtr->rb) {
 		isRbChecked = isRBC;
@@ -312,9 +341,9 @@ void TmoSettings::apply() const {
 		gangPtr->value = gangPtr->dsb->value();	
 	}
 	if (gangPtr->cbx1)
-		gangPtr->cbx1->setCheckState(cbx1CheckState);
+		gangPtr->cbx1->setChecked(isCbx1Checked);
 	if (gangPtr->cbx2)
-		gangPtr->cbx2->setCheckState(cbx2CheckState);
+		gangPtr->cbx2->setChecked(isCbx2Checked);
 	if (gangPtr->rb)
 		gangPtr->rb->setChecked(isRbChecked);
 }

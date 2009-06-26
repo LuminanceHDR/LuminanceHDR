@@ -18,34 +18,67 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing 
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #include "tonemapperThread.h"
 #include <QDir>
 #include "../Common/config.h"
+#include "../Filter/pfscut.h"
+#include "../Common/progressHelper.h"
+
+
+static ProgressHelper durand02_ph(0),
+			mantiuk06_ph(0),
+			mantiuk08_ph(0);
+
+
+int durand02_ph_wrapper(int progress) {
+	durand02_ph.newValue(progress);
+	return 1;
+}
+
+int mantiuk06_ph_wrapper(int progress) {
+	mantiuk06_ph.newValue(progress);
+	return 1;
+}
+
+int mantiuk08_ph_wrapper(int progress) {
+	mantiuk08_ph.newValue(progress);
+	return 1;
+}
+
+typedef int(*pfstmo_progress_callback)(int progress);
+
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
-void applyGammaFrame( pfs::Frame*, const float);
-pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
+void applyGammaOnFrame( pfs::Frame*, const float);
+//pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
 pfs::Frame* pfstmo_drago03 (pfs::Frame *, float);
 pfs::Frame* pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
-pfs::Frame* pfstmo_durand02 (pfs::Frame*,float,float,float);
+pfs::Frame* pfstmo_durand02 (pfs::Frame*,float,float,float,pfstmo_progress_callback);
 pfs::Frame* pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
 pfs::Frame* pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
 pfs::Frame* pfstmo_reinhard05 (pfs::Frame *,float,float,float);
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool);
+pfs::Frame* pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
+pfs::Frame* pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
 
-// width of the pfs:frame written on disk during resize operation, cannot be the 100% size: originalxsize, because i don't resize to 100% and write to disk.
-int xsize=-1; //-1 means nothing has been computed yet
-// gamma of the pfs:frame written on disk after resize
-float pregamma=-1; //-1 means NOT VALID (size has changed/is changing)
-//pregamma!=-1 means that the pregamma frame has the xsize as width
-QReadWriteLock lock;
+QReadWriteLock lock;	
 
+TonemapperThread::TonemapperThread(pfs::Frame *frame, int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
 
-TonemapperThread::TonemapperThread(int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
-	colorspaceconversion=false;
-	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+	workingframe = pfscopy(frame);
+	// Convert to CS_XYZ: tm operator now use this colorspace
+	pfs::Channel *X, *Y, *Z;
+	workingframe->getXYZChannels( X, Y, Z );
+	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
+	
+
+	//cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+
 
 	connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
 	setTerminationEnabled(true);
@@ -53,196 +86,182 @@ TonemapperThread::TonemapperThread(int xorigsize, const tonemapping_options opts
 }
 
 TonemapperThread::~TonemapperThread() {
+	pfs::DOMIO pfsio;
 	if (!forciblyTerminated) {
 		wait();
 	}
-}
-
-void TonemapperThread::fetch(QString filename) {
-	pfs::DOMIO pfsio;
-	workingframe=pfsio.readFrame(QFile::encodeName(cachepath+filename).constData());
-}
-
-void TonemapperThread::swap(pfs::Frame *frame, QString filename) {
-	//swap frame to hd
-	pfs::DOMIO pfsio;
-	pfsio.writeFrame(frame, QFile::encodeName(cachepath+filename).constData());
+	pfsio.freeFrame(workingframe);
 }
 
 void TonemapperThread::run() {
-	qDebug("TMthread::begin thread, size=%d, gamma=%f",xsize, pregamma);
-	lock.lockForRead();
-	if (opts.xsize==originalxsize && opts.pregamma==1.0f) {
-		//original goes into tone mapping
-		qDebug("TMthread::original goes into tone mapping");
-		fetch("/original.pfs");
-		status=from_tm;
-		colorspaceconversion=true;
-		emit setMaximumSteps(2);
-	} else if (opts.xsize==xsize && opts.pregamma==1.0f) {
-		//resized goes into tone mapping
-		qDebug("TMthread::resized goes into tone mapping");
-		fetch("/after_resize.pfs");
-		status=from_tm;
-		colorspaceconversion=true;
-		emit setMaximumSteps(2);
-	} else if ( (opts.xsize==xsize && opts.pregamma==pregamma) || (opts.xsize==originalxsize && xsize==-1 && opts.pregamma==pregamma) ) {
-		//after_pregamma goes into tone mapping
-		qDebug("TMthread::after_pregamma goes into tone mapping");
-		fetch("/after_pregamma.pfs");
-		status=from_tm;
-		emit setMaximumSteps(2);
-	} else if (opts.xsize==xsize) {
-		//resized goes into pregamma
-		qDebug("TMthread::resized goes into pregamma");
-		fetch("/after_resize.pfs");
-		status=from_pregamma;
-		emit setMaximumSteps(3);
-	} else if (opts.xsize==originalxsize) {
-		//original goes into pregamma
-		qDebug("TMthread::original goes into pregamma");
-		fetch("/original.pfs");
-		status=from_pregamma;
-		emit setMaximumSteps(3);
-	} else {
-		//original goes into resize
-		qDebug("TMthread::original goes into resize");
-		fetch("/original.pfs");
-		status=from_resize;
-		emit setMaximumSteps(4);
-	}
-	emit advanceCurrentProgress();
-	lock.unlock();
+	pfs::DOMIO pfsio;
+	if (opts.pregamma != 1.0f) 
+		applyGammaOnFrame( workingframe, opts.pregamma );
 
-
-	if (status==from_resize) {
-		assert(opts.xsize!=originalxsize);
-		qDebug("TMthread:: executing resize step");
-		pfs::Frame *resized=resizeFrame(workingframe, opts.xsize);
-		lock.lockForWrite();
-		swap(resized,"/after_resize.pfs");
-		xsize=opts.xsize;
-		pregamma=-1;
-		lock.unlock();
-		delete workingframe;
-		workingframe=resized;
-		status=from_pregamma;
-		emit advanceCurrentProgress();
-	}
-	if (status==from_pregamma) {
-		qDebug("TMthread:: executing pregamma step");
-		applyGammaFrame( workingframe, opts.pregamma );
-		lock.lockForWrite();
-		swap(workingframe,"/after_pregamma.pfs");
-		pregamma=opts.pregamma;
-		if (opts.xsize==originalxsize)
-			xsize=-1;
-		else
-			xsize=opts.xsize;
-		lock.unlock();
-		status=from_tm;
-		emit advanceCurrentProgress();
-	}
-	if (status==from_tm) {
-		qDebug("TMthread:: executing tone mapping step");
-		if (colorspaceconversion)
-			workingframe->convertRGBChannelsToXYZ();
-		pfs::Frame *result=NULL;
-		switch (opts.tmoperator) {
-		case mantiuk:
+	if (opts.xsize!= originalxsize) 
+		workingframe = resizeFrame(workingframe, opts.xsize);
+	
+	qDebug("TMthread:: executing tone mapping step");
+	switch (opts.tmoperator) {
+		case mantiuk06:
 			lock.lockForWrite();
-			result=pfstmo_mantiuk06(workingframe,
-			opts.operator_options.mantiukoptions.contrastfactor,
-			opts.operator_options.mantiukoptions.saturationfactor,
-			opts.operator_options.mantiukoptions.detailfactor,
-			opts.operator_options.mantiukoptions.contrastequalization);
+			connect(&mantiuk06_ph, SIGNAL(emitValue(int)), 
+				this, SIGNAL(advanceCurrentProgress(int)));
+			emit setMaximumSteps(100);
+			pfstmo_mantiuk06(workingframe,
+			opts.operator_options.mantiuk06options.contrastfactor,
+			opts.operator_options.mantiuk06options.saturationfactor,
+			opts.operator_options.mantiuk06options.detailfactor,
+			opts.operator_options.mantiuk06options.contrastequalization,
+			mantiuk06_ph_wrapper);
+			lock.unlock();
+		break;
+		case mantiuk08:
+			lock.lockForWrite();
+			try {
+				connect(&mantiuk08_ph, SIGNAL(emitValue(int)), 
+					this, SIGNAL(advanceCurrentProgress(int)));
+				emit setMaximumSteps(100);
+				pfstmo_mantiuk08(workingframe,
+				opts.operator_options.mantiuk08options.colorsaturation,
+				opts.operator_options.mantiuk08options.contrastenhancement,
+				opts.operator_options.mantiuk08options.luminancelevel,
+				opts.operator_options.mantiuk08options.setluminance,mantiuk08_ph_wrapper);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
 		case fattal:
-			//fattal is NOT even reentrant! (problem in PDE solving)
-			//therefore I need to use a mutex here
+			emit setMaximumSteps(0);
 			lock.lockForWrite();
-			result=pfstmo_fattal02(workingframe,
-			opts.operator_options.fattaloptions.alpha,
-			opts.operator_options.fattaloptions.beta,
-			opts.operator_options.fattaloptions.color,
-			opts.operator_options.fattaloptions.noiseredux,
-			opts.operator_options.fattaloptions.newfattal);
+			try {
+				pfstmo_fattal02(workingframe,
+				opts.operator_options.fattaloptions.alpha,
+				opts.operator_options.fattaloptions.beta,
+				opts.operator_options.fattaloptions.color,
+				opts.operator_options.fattaloptions.noiseredux,
+				opts.operator_options.fattaloptions.newfattal);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
-		case ashikhmin:
-			lock.lockForWrite();
-			result=pfstmo_ashikhmin02(workingframe,
-			opts.operator_options.ashikhminoptions.simple,
-			opts.operator_options.ashikhminoptions.lct,
-			opts.operator_options.ashikhminoptions.eq2 ? 2 : 4);
-			lock.unlock();
-		break;
+		//case ashikhmin:
+		//	lock.lockForWrite();
+		//	pfstmo_ashikhmin02(workingframe,
+		//	opts.operator_options.ashikhminoptions.simple,
+		//	opts.operator_options.ashikhminoptions.lct,
+		//	opts.operator_options.ashikhminoptions.eq2 ? 2 : 4);
+		//	lock.unlock();
+		//break;
 		case durand:
-			//even durand seems to be not reentrant
+			connect(&durand02_ph, SIGNAL(emitValue(int)), 
+				this, SIGNAL(advanceCurrentProgress(int)));
+			emit setMaximumSteps(100);
 			lock.lockForWrite();
-			result=pfstmo_durand02(workingframe,
+			pfstmo_durand02(workingframe,
 			opts.operator_options.durandoptions.spatial,
 			opts.operator_options.durandoptions.range,
-			opts.operator_options.durandoptions.base);
+			opts.operator_options.durandoptions.base, durand02_ph_wrapper);
 			lock.unlock();
 		break;
 		case drago:
+			emit setMaximumSteps(0);
 			lock.lockForWrite();
-			result=pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias);
+			try {
+				pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
 		case pattanaik:
+			emit setMaximumSteps(0);
 			lock.lockForWrite();
-			result=pfstmo_pattanaik00(workingframe,
-			opts.operator_options.pattanaikoptions.local,
-			opts.operator_options.pattanaikoptions.multiplier,
-			opts.operator_options.pattanaikoptions.cone,
-			opts.operator_options.pattanaikoptions.rod,
-			opts.operator_options.pattanaikoptions.autolum);
+			try {
+				pfstmo_pattanaik00(workingframe,
+				opts.operator_options.pattanaikoptions.local,
+				opts.operator_options.pattanaikoptions.multiplier,
+				opts.operator_options.pattanaikoptions.cone,
+				opts.operator_options.pattanaikoptions.rod,
+				opts.operator_options.pattanaikoptions.autolum);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
 		case reinhard02:
+			emit setMaximumSteps(0);
 			lock.lockForWrite();
-			result=pfstmo_reinhard02(workingframe,
-			opts.operator_options.reinhard02options.key,
-			opts.operator_options.reinhard02options.phi,
-			opts.operator_options.reinhard02options.range,
-			opts.operator_options.reinhard02options.lower,
-			opts.operator_options.reinhard02options.upper,
-			opts.operator_options.reinhard02options.scales);
+			try {
+				pfstmo_reinhard02(workingframe,
+				opts.operator_options.reinhard02options.key,
+				opts.operator_options.reinhard02options.phi,
+				opts.operator_options.reinhard02options.range,
+				opts.operator_options.reinhard02options.lower,
+				opts.operator_options.reinhard02options.upper,
+				opts.operator_options.reinhard02options.scales);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
 		case reinhard05:
+			emit setMaximumSteps(0);
 			lock.lockForWrite();
-			result=pfstmo_reinhard05(workingframe,
-			opts.operator_options.reinhard05options.brightness,
-			opts.operator_options.reinhard05options.chromaticAdaptation,
-			opts.operator_options.reinhard05options.lightAdaptation);
+			try {
+				pfstmo_reinhard05(workingframe,
+				opts.operator_options.reinhard05options.brightness,
+				opts.operator_options.reinhard05options.chromaticAdaptation,
+				opts.operator_options.reinhard05options.lightAdaptation);
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit finished();
+				lock.unlock();
+				return;
+			}
 			lock.unlock();
 		break;
-		} //switch (opts.tmoperator)
-		emit advanceCurrentProgress();
-		assert(result!=NULL);
-		delete workingframe;
-		const QImage& res=fromLDRPFStoQImage(result);
-		delete result;
-		emit imageComputed(res,&opts);
-	} //if (status==from_tm)
-// 	emit finished();
+	} //switch (opts.tmoperator)
+	const QImage& res=fromLDRPFStoQImage(workingframe);
+	emit imageComputed(res,&opts);
 }
+//
+// run()
+//
 
 void TonemapperThread::terminateRequested() {
+	//TODO
+	pfs::DOMIO pfsio;
 	if (forciblyTerminated)
 		return;
-	lock.lockForWrite();
-	pregamma=-1;
-	xsize=-1;
-	lock.unlock();
 	forciblyTerminated=true;
 	//HACK oddly enough for the other operators we cannot emit finished (it segfaults)
-	if (opts.tmoperator==mantiuk || opts.tmoperator==ashikhmin || opts.tmoperator==pattanaik )
+	if (opts.tmoperator==mantiuk06 || opts.tmoperator==ashikhmin || opts.tmoperator==pattanaik )
 		emit finished();
+	pfsio.freeFrame(workingframe);
 	terminate();
 }
 

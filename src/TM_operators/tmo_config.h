@@ -1,4 +1,6 @@
 /*
+ * This file is a part of Qtpfsgui package, based on pfstmo.
+ *
  * common configuration file for tone mapping operators
  */
 

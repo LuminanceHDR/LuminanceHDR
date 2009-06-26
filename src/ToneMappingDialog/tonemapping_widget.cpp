@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ * 
  */
 
 #include <QMessageBox>
@@ -33,78 +37,92 @@
 #include "tonemapping_widget.h"
 #include "../Common/config.h"
 #include "../Threads/tonemapperThread.h"
+#include "../Filter/pfscut.h"
 
-extern int xsize;
-extern float pregamma;
+//extern int xsize;
+//extern float pregamma;
 
-TMWidget::TMWidget(QWidget *parent, QStatusBar *_sb) : QWidget(parent), sb(_sb), adding_custom_size(false) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding_custom_size(false) {
 	setupUi(this);
+
+	pfsFrame = pfscopy(frame);
 
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
 	// mantiuk06
 	contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,
-		NULL,NULL, 0.001, 10, 0.1);
+		NULL,NULL, 0.001f, 1.0f, 0.1f);
 	connect(contrastfactorGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,
-		NULL,NULL,NULL, 0, 2, 0.8);
-	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL, 1, 99, 1.0);
+		NULL,NULL,NULL, 0.0f, 1.0f, 0.8f);
+	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
 	
+	// mantiuk08
+	colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, 
+		NULL,NULL,NULL, -10.f, 10.f, 1.f);
+	connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
+	connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
+	contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB,
+		NULL,NULL,NULL, 1.f, 10.f, 1.f);
+	luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox,
+		NULL,NULL, 1.f, 99.0f, 1.f);
+
 	// fattal02
-	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL, 1e-3, 2, 1e-1, true);
+	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
 	connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.6, 1.0, 0.8);
-	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL, 0, 3, 1);
-	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL, 0, 1, 0);
+	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.2f, 2.0f, 0.9f);
+	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL, 0.f, 1.f, .8f);
+	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL, 0, 1.f, 0.f);
 	oldFattalGang =	  new Gang(NULL,NULL, oldFattalCheckBox);
 
 	// ashikhmin02
-	contrastGang = 	new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL, 0, 1, 0.5);
+	contrastGang = 	new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 	connect(contrastGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(contrastGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 	simpleGang = 	new Gang(NULL, NULL, simpleCheckBox);
 	eq2Gang = 	new Gang(NULL, NULL,NULL, NULL, eq2RadioButton);
 
 	// drago03
-	biasGang = 	new Gang(biasSlider, biasdsb,NULL,NULL,NULL, 0.5, 1, 0.85);
+	biasGang = 	new Gang(biasSlider, biasdsb,NULL,NULL,NULL, 0.f, 1.f, 0.85f);
 	connect(biasGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-	// durand02
-	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL, 0, 60, 8);
+	// durand
+	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL, 0.f, 100.f, 8.f);
 	connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	rangeGang = 	new Gang(rangeSlider, rangedsb,NULL,NULL,NULL, 0.01, 10, 0.4);
-	baseGang = 	new Gang(baseSlider, basedsb,NULL,NULL,NULL, 0, 10, 5.0);
+	rangeGang = 	new Gang(rangeSlider, rangedsb,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
+	baseGang = 	new Gang(baseSlider, basedsb,NULL,NULL,NULL, 0.f, 10.f, 5.0f);
 
 	// pattanaik00
-	multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL, 1e-3,50, 1, true);
+	multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL, 1e-3,1000.f, 1.f, true);
 	connect(multiplierGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(multiplierGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	coneGang = 	 new Gang(coneSlider, conedsb,NULL,NULL,NULL, 0, 1, 0.5);
-	rodGang = 	 new Gang(rodSlider, roddsb,NULL,NULL,NULL, 0, 1, 0.5);
+	coneGang = 	 new Gang(coneSlider, conedsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+	rodGang = 	 new Gang(rodSlider, roddsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 	autoYGang =	 new Gang(NULL,NULL, autoYcheckbox);
 	pattalocalGang = new Gang(NULL,NULL, pattalocal);
 
 	// reinhard02
-	keyGang = 	new Gang(keySlider, keydsb,NULL,NULL,NULL, 0, 1, 0.18);
+	keyGang = 	new Gang(keySlider, keydsb,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
 	connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL, 0, 50, 1);
-	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL, 2, 15, 8);
-	lowerGang = 	new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL, 1, 100, 1);
-	upperGang = 	new Gang(upperSlider, upperdsb,NULL,NULL,NULL, 1, 100, 43);
+	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL, 0.f, 50.f, 1.f);
+	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL, 1.f, 15.f, 8.f);
+	lowerGang = 	new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL, 1.f, 100.f, 1.f);
+	upperGang = 	new Gang(upperSlider, upperdsb,NULL,NULL,NULL, 1.f, 100.f, 43.f);
 	usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
 
 	// reinhard05
-	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL, -35, 10, -10);
+	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL, -8.f, 8.f, 0.f);
 	connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	chromaticGang  = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL, -1.7, 1.3, 1);
-	lightGang      = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,-1, 1, 0);
+	chromaticGang  = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL, 0.f, 1.f, 0.f);
+	lightGang      = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL, 0.f, 1.f, 1.f);
 
 	// pregamma
 	pregammagang =	new Gang(pregammaSlider, pregammadsb,NULL,NULL,NULL, 0, 3, 1);
@@ -113,14 +131,9 @@ TMWidget::TMWidget(QWidget *parent, QStatusBar *_sb) : QWidget(parent), sb(_sb),
 
 	RecentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 
-	//re-read the original frame	
-	pfs::DOMIO pfsio;
-	originalPfsFrame=pfsio.readFrame( QFile::encodeName(cachepath+"/original.pfs").constData());
-
 	// get available sizes
-	assert(originalPfsFrame!=NULL);
-	int height = originalPfsFrame->getHeight();
-	int width = originalPfsFrame->getWidth();
+	int width = pfsFrame->getWidth();
+	int height = pfsFrame->getHeight();
 	sizes.resize(0);
 	for(int x = 256; x <= width; x *= 2) {
 		if( x >= width )
@@ -138,23 +151,50 @@ TMWidget::TMWidget(QWidget *parent, QStatusBar *_sb) : QWidget(parent), sb(_sb),
 }
 
 TMWidget::~TMWidget() {
-delete contrastfactorGang; delete saturationfactorGang; delete detailfactorGang; delete contrastGang; delete biasGang; delete spatialGang; delete rangeGang; delete baseGang; delete alphaGang; delete betaGang; delete saturation2Gang; delete noiseGang; delete multiplierGang; delete coneGang; delete rodGang; delete keyGang; delete phiGang; delete range2Gang; delete lowerGang; delete upperGang; delete brightnessGang; delete chromaticGang; delete lightGang; delete pregammagang;
-	pfs::DOMIO pfsio;
-	xsize = -1;
-	pregamma = -1;
-	pfsio.freeFrame(originalPfsFrame);
-	QFile::remove(cachepath+"/original.pfs");
-	QFile::remove(cachepath+"/after_resize.pfs");
-	QFile::remove(cachepath+"/after_pregamma.pfs");
+delete contrastfactorGang; 
+delete saturationfactorGang; 
+delete detailfactorGang; 
+delete contrastGang; 
+delete colorSaturationGang;
+delete contrastEnhancementGang;
+delete luminanceLevelGang;
+delete biasGang; 
+delete spatialGang; 
+delete rangeGang; 
+delete baseGang; 
+delete alphaGang; 
+delete betaGang; 
+delete saturation2Gang; 
+delete noiseGang; 
+delete multiplierGang; 
+delete coneGang; 
+delete rodGang; 
+delete keyGang; 
+delete phiGang; 
+delete range2Gang; 
+delete lowerGang; 
+delete upperGang; 
+delete brightnessGang; 
+delete chromaticGang; 
+delete lightGang; 
+delete pregammagang;
+	//xsize = -1;
+	//pregamma = -1;
 }
 
 void TMWidget::on_defaultButton_clicked() {
 	QWidget *current_page = stackedWidget_operators->currentWidget();
-	if (current_page== page_mantiuk) {
+	if (current_page == page_mantiuk06) {
 		contrastfactorGang->setDefault();
 		saturationfactorGang->setDefault();
 		detailfactorGang->setDefault();
 		contrastEqualizCheckBox->setChecked(false);
+	}
+	else if (current_page == page_mantiuk08) {
+		colorSaturationGang->setDefault();
+		contrastEnhancementGang->setDefault();
+		luminanceLevelGang->setDefault();
+		luminanceLevelCheckBox->setChecked(false);
 	}
 	else if (current_page == page_ashikhmin) {
 		contrastGang->setDefault();
@@ -181,7 +221,7 @@ void TMWidget::on_defaultButton_clicked() {
 		coneGang->setDefault();
 		rodGang->setDefault();
 		pattalocal->setChecked(false);
-		autoYcheckbox->setChecked(false);
+		autoYcheckbox->setChecked(true);
 	}
 	else if (current_page == page_reinhard02) {
 		keyGang->setDefault();
@@ -200,8 +240,11 @@ void TMWidget::on_defaultButton_clicked() {
 
 void TMWidget::updateUndoState(int) {
 	QWidget *current_page = stackedWidget_operators->currentWidget();
-	if (current_page== page_mantiuk) {
+	if (current_page== page_mantiuk06) {
 		contrastfactorGang->updateUndoState();
+	}
+	else if (current_page== page_mantiuk08) {
+		colorSaturationGang->updateUndoState();
 	}
 	else if (current_page == page_ashikhmin) {
 		contrastGang->updateUndoState();
@@ -211,8 +254,8 @@ void TMWidget::updateUndoState(int) {
 	}
 	else if (current_page == page_durand) {
 		spatialGang->updateUndoState();
-		rangeGang->setDefault();
-		baseGang->setDefault();
+		//rangeGang->setDefault();
+		//baseGang->setDefault();
 	}
 	else if (current_page == page_fattal) {
 		alphaGang->updateUndoState();
@@ -234,12 +277,12 @@ void TMWidget::on_pregammadefault_clicked(){
 }
 
 MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
-	((QStatusBar*)parent)->addWidget(this);
+	//((QStatusBar*)parent)->addWidget(this);
 	setValue(0);
 }
 
 MyProgressBar::~MyProgressBar() {
-	((QStatusBar*)parent())->removeWidget(this);
+	//((QStatusBar*)parent())->removeWidget(this);
 }
 
 void MyProgressBar::mousePressEvent(QMouseEvent *event) {
@@ -247,8 +290,8 @@ void MyProgressBar::mousePressEvent(QMouseEvent *event) {
 		emit leftMouseButtonClicked();
 }
 
-void MyProgressBar::advanceCurrentProgress() {
-	this->setValue(this->value()+1);
+void MyProgressBar::advanceCurrentProgress(int progress) {
+	setValue(progress);
 }
 
 void TMWidget::on_applyButton_clicked() {
@@ -269,18 +312,21 @@ void TMWidget::on_applyButton_clicked() {
 		fillToneMappingOptions();
 		setupUndo();
 
-		MyProgressBar *newprogressbar=new MyProgressBar(sb);
-		int w = sb->width();
-		int h = (int) (0.9 * sb->height());
+		MyProgressBar *newprogressbar=new MyProgressBar(frame_2);
+		int w = frame_2->width();
+		//int h = (int) (0.9 * frame_2->height());
+		int h = frame_2->height();
 
 		newprogressbar->resize(w,h);
+		newprogressbar->show();
+
 		//tone mapper thread needs to know full size of the hdr
-		TonemapperThread *thread = new TonemapperThread(sizes[sizes.size()-1], ToneMappingOptions);
+		TonemapperThread *thread = new TonemapperThread(pfsFrame, sizes[sizes.size()-1], ToneMappingOptions);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
 		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
 		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress()), newprogressbar, SLOT(advanceCurrentProgress()));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
 		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
 
 		//start thread
@@ -294,40 +340,53 @@ void TMWidget::fillToneMappingOptions() {
 	ToneMappingOptions.pregamma=pregammagang->v();
 
 	QWidget *current_page=stackedWidget_operators->currentWidget();
-	if (current_page==page_mantiuk) {
-		ToneMappingOptions.tmoperator=mantiuk;
-		ToneMappingOptions.operator_options.mantiukoptions.contrastfactor=contrastfactorGang->v();
-		ToneMappingOptions.operator_options.mantiukoptions.saturationfactor=saturationfactorGang->v();
-		ToneMappingOptions.operator_options.mantiukoptions.detailfactor=detailfactorGang->v();
-		ToneMappingOptions.operator_options.mantiukoptions.contrastequalization=contrastfactorGang->isCheckBox1Checked();
-	} else if (current_page==page_fattal) {
+	if (current_page==page_mantiuk06) {
+		ToneMappingOptions.tmoperator=mantiuk06;
+		ToneMappingOptions.operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
+		ToneMappingOptions.operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
+		ToneMappingOptions.operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
+		ToneMappingOptions.operator_options.mantiuk06options.contrastequalization=contrastfactorGang->isCheckBox1Checked();
+	} 
+	if (current_page== page_mantiuk08) {
+		ToneMappingOptions.tmoperator=mantiuk08;
+		ToneMappingOptions.operator_options.mantiuk08options.colorsaturation=colorSaturationGang->v();
+		ToneMappingOptions.operator_options.mantiuk08options.contrastenhancement=contrastEnhancementGang->v();
+		ToneMappingOptions.operator_options.mantiuk08options.luminancelevel=luminanceLevelGang->v();
+		ToneMappingOptions.operator_options.mantiuk08options.setluminance=luminanceLevelGang->isCheckBox1Checked();
+	}
+	else if (current_page==page_fattal) {
 		ToneMappingOptions.tmoperator=fattal;
 		ToneMappingOptions.operator_options.fattaloptions.alpha=alphaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.beta=betaGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
 		ToneMappingOptions.operator_options.fattaloptions.noiseredux=noiseGang->v();
 		ToneMappingOptions.operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
-	} else if (current_page==page_ashikhmin) {
+	} 
+	else if (current_page==page_ashikhmin) {
 		ToneMappingOptions.tmoperator=ashikhmin;
 		ToneMappingOptions.operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
 		ToneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButtonChecked();
 		ToneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
-	} else if (current_page==page_durand) {
+	} 
+	else if (current_page==page_durand) {
 		ToneMappingOptions.tmoperator=durand;
 		ToneMappingOptions.operator_options.durandoptions.spatial=spatialGang->v();
 		ToneMappingOptions.operator_options.durandoptions.range=rangeGang->v();
 		ToneMappingOptions.operator_options.durandoptions.base=baseGang->v();
-	} else if (current_page==page_drago) {
+	} 
+	else if (current_page==page_drago) {
 		ToneMappingOptions.tmoperator=drago;
 		ToneMappingOptions.operator_options.dragooptions.bias=biasGang->v();
-	} else if (current_page==page_pattanaik) {
+	} 
+	else if (current_page==page_pattanaik) {
 		ToneMappingOptions.tmoperator=pattanaik;
 		ToneMappingOptions.operator_options.pattanaikoptions.autolum=autoYGang->isCheckBox1Checked();
-		ToneMappingOptions.operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox2Checked();
+		ToneMappingOptions.operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox1Checked();
 		ToneMappingOptions.operator_options.pattanaikoptions.cone=coneGang->v();
 		ToneMappingOptions.operator_options.pattanaikoptions.rod=rodGang->v();
 		ToneMappingOptions.operator_options.pattanaikoptions.multiplier=multiplierGang->v();
-	} else if (current_page==page_reinhard02) {
+	} 
+	else if (current_page==page_reinhard02) {
 		ToneMappingOptions.tmoperator=reinhard02;
 		ToneMappingOptions.operator_options.reinhard02options.scales=usescalesGang->isCheckBox1Checked();
 		ToneMappingOptions.operator_options.reinhard02options.key=keyGang->v();
@@ -335,7 +394,8 @@ void TMWidget::fillToneMappingOptions() {
 		ToneMappingOptions.operator_options.reinhard02options.range=(int)range2Gang->v();
 		ToneMappingOptions.operator_options.reinhard02options.lower=(int)lowerGang->v();
 		ToneMappingOptions.operator_options.reinhard02options.upper=(int)upperGang->v();
-	} else if (current_page==page_reinhard05) {
+	} 
+	else if (current_page==page_reinhard05) {
 		ToneMappingOptions.tmoperator=reinhard05;
 		ToneMappingOptions.operator_options.reinhard05options.brightness=brightnessGang->v();
 		ToneMappingOptions.operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
@@ -345,40 +405,52 @@ void TMWidget::fillToneMappingOptions() {
 
 void TMWidget::setupUndo() {
 	QWidget *current_page=stackedWidget_operators->currentWidget();
-	if (current_page==page_mantiuk) {
+	if (current_page==page_mantiuk06) {
 		contrastfactorGang->setupUndo();
 		saturationfactorGang->setupUndo();
 		detailfactorGang->setupUndo();
-	} else if (current_page==page_fattal) {
+	}
+	else if (current_page==page_mantiuk08) {
+		colorSaturationGang->setupUndo();
+		contrastEnhancementGang->setupUndo();
+		luminanceLevelGang->setupUndo();
+	}
+	else if (current_page==page_fattal) {
 		alphaGang->setupUndo();
 		betaGang->setupUndo();
 		saturation2Gang->setupUndo();
 		noiseGang->setupUndo();
 		oldFattalGang->setupUndo();
-	} else if (current_page==page_ashikhmin) {
+	} 
+	else if (current_page==page_ashikhmin) {
 		simpleGang->setupUndo();
 		eq2Gang->setupUndo();
 		contrastGang->setupUndo();
-	} else if (current_page==page_durand) {
+	} 
+	else if (current_page==page_durand) {
 		spatialGang->setupUndo();
 		rangeGang->setupUndo();
 		baseGang->setupUndo();
-	} else if (current_page==page_drago) {
+	} 
+	else if (current_page==page_drago) {
 		biasGang->setupUndo();
-	} else if (current_page==page_pattanaik) {
+	} 
+	else if (current_page==page_pattanaik) {
 		autoYGang->setupUndo();
 		pattalocalGang->setupUndo();
 		coneGang->setupUndo();
 		rodGang->setupUndo();
 		multiplierGang->setupUndo();
-	} else if (current_page==page_reinhard02) {
+	} 
+	else if (current_page==page_reinhard02) {
 		usescalesGang->setupUndo();
 		keyGang->setupUndo();
 		phiGang->setupUndo();
 		range2Gang->setupUndo();
 		lowerGang->setupUndo();
 		upperGang->setupUndo();
-	} else if (current_page==page_reinhard05) {
+	} 
+	else if (current_page==page_reinhard05) {
 		brightnessGang->setupUndo();
 		chromaticGang->setupUndo();
 		lightGang->setupUndo();
@@ -387,40 +459,52 @@ void TMWidget::setupUndo() {
 
 void TMWidget::on_undoButton_clicked() {
 	QWidget *current_page=stackedWidget_operators->currentWidget();
-	if (current_page==page_mantiuk) {
+	if (current_page==page_mantiuk06) {
 		contrastfactorGang->undo();
 		saturationfactorGang->undo();
 		detailfactorGang->undo();
-	} else if (current_page==page_fattal) {
+	}
+	else if (current_page==page_mantiuk08) {
+		colorSaturationGang->undo();
+		contrastEnhancementGang->undo();
+		luminanceLevelGang->undo();
+	}
+	else if (current_page==page_fattal) {
 		alphaGang->undo();
 		betaGang->undo();
 		saturation2Gang->undo();
 		noiseGang->undo();
 		oldFattalGang->undo();
-	} else if (current_page==page_ashikhmin) {
+	}
+	else if (current_page==page_ashikhmin) {
 		simpleGang->undo();
 		eq2Gang->undo();
 		contrastGang->undo();
-	} else if (current_page==page_durand) {
+	} 
+	else if (current_page==page_durand) {
 		spatialGang->undo();
 		rangeGang->undo();
 		baseGang->undo();
-	} else if (current_page==page_drago) {
+	} 
+	else if (current_page==page_drago) {
 		biasGang->undo();
-	} else if (current_page==page_pattanaik) {
+	} 
+	else if (current_page==page_pattanaik) {
 		autoYGang->undo();
 		pattalocalGang->undo();
 		coneGang->undo();
 		rodGang->undo();
 		multiplierGang->undo();
-	} else if (current_page==page_reinhard02) {
+	} 
+	else if (current_page==page_reinhard02) {
 		usescalesGang->undo();
 		keyGang->undo();
 		phiGang->undo();
 		range2Gang->undo();
 		lowerGang->undo();
 		upperGang->undo();
-	} else if (current_page==page_reinhard05) {
+	} 
+	else if (current_page==page_reinhard05) {
 		brightnessGang->undo();
 		chromaticGang->undo();
 		lightGang->undo();
@@ -429,40 +513,52 @@ void TMWidget::on_undoButton_clicked() {
 
 void TMWidget::on_redoButton_clicked() {
 	QWidget *current_page=stackedWidget_operators->currentWidget();
-	if (current_page==page_mantiuk) {
+	if (current_page==page_mantiuk06) {
 		contrastfactorGang->redo();
 		saturationfactorGang->redo();
 		detailfactorGang->redo();
-	} else if (current_page==page_fattal) {
+	} 
+	if (current_page==page_mantiuk08) {
+		colorSaturationGang->redo();
+		contrastEnhancementGang->redo();
+		luminanceLevelGang->redo();
+	}
+	else if (current_page==page_fattal) {
 		alphaGang->redo();
 		betaGang->redo();
 		saturation2Gang->redo();
 		noiseGang->redo();
 		oldFattalGang->redo();
-	} else if (current_page==page_ashikhmin) {
+	} 
+	else if (current_page==page_ashikhmin) {
 		simpleGang->redo();
 		eq2Gang->redo();
 		contrastGang->redo();
-	} else if (current_page==page_durand) {
+	} 
+	else if (current_page==page_durand) {
 		spatialGang->redo();
 		rangeGang->redo();
 		baseGang->redo();
-	} else if (current_page==page_drago) {
+	} 
+	else if (current_page==page_drago) {
 		biasGang->redo();
-	} else if (current_page==page_pattanaik) {
+	} 
+	else if (current_page==page_pattanaik) {
 		autoYGang->redo();
 		pattalocalGang->redo();
 		coneGang->redo();
 		rodGang->redo();
 		multiplierGang->redo();
-	} else if (current_page==page_reinhard02) {
+	} 
+	else if (current_page==page_reinhard02) {
 		usescalesGang->redo();
 		keyGang->redo();
 		phiGang->redo();
 		range2Gang->redo();
 		lowerGang->redo();
 		upperGang->redo();
-	} else if (current_page==page_reinhard05) {
+	} 
+	else if (current_page==page_reinhard05) {
 		brightnessGang->redo();
 		chromaticGang->redo();
 		lightGang->redo();
@@ -531,40 +627,53 @@ void TMWidget::fromGui2Txt(QString destination) {
 	out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
 
 	QWidget *current_page=stackedWidget_operators->currentWidget();
-	if (current_page==page_mantiuk) {
+	if (current_page==page_mantiuk06) {
 		out << "TMO=" << "Mantiuk06" << endl;
 		out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
 		out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
 		out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
 		out << "CONTRASTEQUALIZATION=" << (contrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
-	} else if (current_page==page_fattal) {
+	} 
+	if (current_page==page_mantiuk08) {
+		out << "TMO=" << "Mantiuk08" << endl;
+		out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
+		out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << endl;
+		out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << endl;
+		out << "SETLUMINAMCE=" << (luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
+	}
+	else if (current_page==page_fattal) {
 		out << "TMO=" << "Fattal02" << endl;
 		out << "ALPHA=" << alphaGang->v() << endl;
 		out << "BETA=" << betaGang->v() << endl;
 		out << "COLOR=" << saturation2Gang->v() << endl;
 		out << "NOISE=" << noiseGang->v() << endl;
 		out << "OLDFATTAL=" << (oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
-	} else if (current_page==page_ashikhmin) {
+	} 
+	else if (current_page==page_ashikhmin) {
 		out << "TMO=" << "Ashikhmin02" << endl;
 		out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
 		out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
 		out << "CONTRAST=" << contrastGang->v() << endl;
-	} else if (current_page==page_durand) {
+	} 
+	else if (current_page==page_durand) {
 		out << "TMO=" << "Durand02" << endl;
 		out << "SPATIAL=" << spatialGang->v() << endl;
 		out << "RANGE=" << rangeGang->v() << endl;
 		out << "BASE=" << baseGang->v() << endl;
-	} else if (current_page==page_drago) {
+	} 
+	else if (current_page==page_drago) {
 		out << "TMO=" << "Drago03" << endl;
 		out << "BIAS=" << biasGang->v() << endl;
-	} else if (current_page==page_pattanaik) {
+	} 
+	else if (current_page==page_pattanaik) {
 		out << "TMO=" << "Pattanaik00" << endl;
 		out << "MULTIPLIER=" << multiplierGang->v() << endl;
 		out << "LOCAL=" << (pattalocal->isChecked() ? "YES" : "NO") << endl;
 		out << "AUTOLUMINANCE=" << (autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
 		out << "CONE=" << coneGang->v() << endl;
 		out << "ROD=" << rodGang->v() << endl;
-	} else if (current_page==page_reinhard02) {
+	} 
+	else if (current_page==page_reinhard02) {
 		out << "TMO=" << "Reinhard02" << endl;
 		out << "KEY=" << keyGang->v() << endl;
 		out << "PHI=" << phiGang->v() << endl;
@@ -572,7 +681,8 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "RANGE=" << range2Gang->v() << endl;
 		out << "LOWER=" << lowerGang->v() << endl;
 		out << "UPPER=" << upperGang->v() << endl;
-	} else if (current_page==page_reinhard05) {
+	} 
+	else if (current_page==page_reinhard05) {
 		out << "TMO=" << "Reinhard05" << endl;
 		out << "BRIGHTNESS=" << brightnessGang->v() << endl;
 		out << "CHROMATICADAPTATION=" << chromaticGang->v() << endl;
@@ -610,7 +720,9 @@ void TMWidget::fromTxt2Gui() {
 			if (value=="Ashikhmin02") {
 				stackedWidget_operators->setCurrentWidget(page_ashikhmin);
 			} else if (value == "Mantiuk06") {
-				stackedWidget_operators->setCurrentWidget(page_mantiuk);
+				stackedWidget_operators->setCurrentWidget(page_mantiuk06);
+			} else if (value == "Mantiuk08") {
+				stackedWidget_operators->setCurrentWidget(page_mantiuk08);
 			} else if (value == "Drago03") {
 				stackedWidget_operators->setCurrentWidget(page_drago);
 			} else if (value == "Durand02") {
@@ -632,6 +744,12 @@ void TMWidget::fromTxt2Gui() {
 			detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
 		} else if (field=="CONTRASTEQUALIZATION") {
 			contrastEqualizCheckBox->setChecked((value=="YES"));
+		} else if (field=="COLORSATURATION") {
+			contrastFactorSlider->setValue(colorSaturationGang->v2p(value.toFloat()));
+		} else if (field=="CONTRASTENHANCEMENT") {
+			saturationFactorSlider->setValue(contrastEnhancementGang->v2p(value.toFloat()));
+		} else if (field=="LUMINANCELEVEL") {
+			detailFactorSlider->setValue(luminanceLevelGang->v2p(value.toFloat()));
 		} else if (field=="SIMPLE") {
 			simpleCheckBox->setChecked((value=="YES"));
 		} else if (field=="EQUATION") {
@@ -660,9 +778,9 @@ void TMWidget::fromTxt2Gui() {
 		} else if (field=="MULTIPLIER") {
 			multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
 		} else if (field=="LOCAL") {
-			(value=="YES") ? pattalocal->setCheckState(Qt::Checked) : pattalocal->setCheckState(Qt::Unchecked);
+			(value=="YES") ? pattalocal->setChecked(value=="YES") : pattalocal->setChecked(value=="NO");
 		} else if (field=="AUTOLUMINANCE") {
-			(value=="YES") ? autoYcheckbox->setCheckState(Qt::Checked) : autoYcheckbox->setCheckState(Qt::Unchecked);
+			(value=="YES") ? autoYcheckbox->setChecked(value=="YES") : autoYcheckbox->setChecked(value=="NO");
 		} else if (field=="CONE") {
 			coneSlider->setValue(coneGang->v2p(value.toFloat()));
 		} else if (field=="ROD") {
@@ -672,7 +790,7 @@ void TMWidget::fromTxt2Gui() {
 		} else if (field=="PHI") {
 			phiSlider->setValue(phiGang->v2p(value.toFloat()));
 		} else if (field=="SCALES") {
-			(value=="YES") ? usescalescheckbox->setCheckState(Qt::Checked) : usescalescheckbox->setCheckState(Qt::Unchecked);
+			(value=="YES") ? usescalescheckbox->setChecked(value=="YES") : usescalescheckbox->setChecked(value=="NO");
 		} else if (field=="RANGE") {
 			range2Slider->setValue(range2Gang->v2p(value.toFloat()));
 		} else if (field=="LOWER") {

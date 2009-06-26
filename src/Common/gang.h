@@ -18,8 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  * based on previous GPL code from qpfstmo
+ * Original Work
+ * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef GANG_H
@@ -61,8 +65,8 @@ protected slots:
 	void sliderMoved(int p);
 	void sliderValueChanged(int p);
 	void spinboxValueChanged(double);
-	void checkBox1Checked(int);
-	void checkBox2Checked(int);
+	void checkBox1Checked(bool);
+	void checkBox2Checked(bool);
 	void radioButtonChecked(bool);
 signals:
 	void finished();
@@ -77,6 +81,9 @@ private:
 	bool isCbx1Checked;
 	bool isCbx2Checked;
 	bool isRbChecked;
+	bool isCbx1Checked_default;
+	bool isCbx2Checked_default;
+	bool isRbChecked_default;
 	float minv;
 	float maxv;
 	float defaultv;
@@ -98,12 +105,12 @@ private:
 //
 class TmoSettings {
 public:
-	TmoSettings(Gang *gangPtr, float, Qt::CheckState, Qt::CheckState, bool);
+	TmoSettings(Gang *gangPtr, float, bool, bool, bool);
 	void apply() const;
 protected:
 	Gang *gangPtr;
-	Qt::CheckState cbx1CheckState;
-	Qt::CheckState cbx2CheckState;
+	bool isCbx1Checked;
+	bool isCbx2Checked;
 	bool isRbChecked;
 	float value;
 };

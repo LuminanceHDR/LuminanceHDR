@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #include "options.h"
@@ -140,16 +144,26 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 			} else if (value == "Reinhard05") {
 				toreturn->tmoperator=reinhard05;
 			} else if (value == "Mantiuk06") {
-				toreturn->tmoperator=mantiuk;
+				toreturn->tmoperator=mantiuk06;
+			} else if (value == "Mantiuk08") {
+				toreturn->tmoperator=mantiuk08;
 			}
 		} else if (field=="CONTRASTFACTOR") {
-			toreturn->operator_options.mantiukoptions.contrastfactor=value.toFloat();
+			toreturn->operator_options.mantiuk06options.contrastfactor=value.toFloat();
 		} else if (field=="SATURATIONFACTOR") {
-			toreturn->operator_options.mantiukoptions.saturationfactor=value.toFloat();
+			toreturn->operator_options.mantiuk06options.saturationfactor=value.toFloat();
 		} else if (field=="DETAILFACTOR") {
-			toreturn->operator_options.mantiukoptions.detailfactor=value.toFloat();
+			toreturn->operator_options.mantiuk06options.detailfactor=value.toFloat();
 		} else if (field=="CONTRASTEQUALIZATION") {
-			toreturn->operator_options.mantiukoptions.contrastequalization=(value == "YES");
+			toreturn->operator_options.mantiuk06options.contrastequalization=(value == "YES");
+		} else if (field=="COLORSATURATION") {
+			toreturn->operator_options.mantiuk08options.colorsaturation=value.toFloat();
+		} else if (field=="CONTRASTENHANCEMENT") {
+			toreturn->operator_options.mantiuk08options.contrastenhancement=value.toFloat();
+		} else if (field=="LUMINANCELEVEL") {
+			toreturn->operator_options.mantiuk08options.luminancelevel=value.toFloat();
+		} else if (field=="SETLUMINANCE") {
+			toreturn->operator_options.mantiuk08options.setluminance=(value == "YES");
 		} else if (field=="SIMPLE") {
 			toreturn->operator_options.ashikhminoptions.simple= (value == "YES") ? true : false;
 		} else if (field=="EQUATION") {
@@ -218,11 +232,11 @@ tonemapping_options* TMOptionsOperations::getDefaultTMOptions() {
 	//TODO when instantiating the tonemapperThread, check this value: if -2 => create thread with originalsize=-2 (to skip resize the step as we did with the batch tone mapping), else (the user wants to resize) create thread with true originalxsize
 	toreturn->xsize=-2;
 	toreturn->pregamma=1;
-	toreturn->tmoperator=mantiuk;
-	toreturn->operator_options.mantiukoptions.contrastfactor=0.1;
-	toreturn->operator_options.mantiukoptions.contrastequalization=false;
-	toreturn->operator_options.mantiukoptions.saturationfactor=1.8;
-	toreturn->operator_options.mantiukoptions.detailfactor=1.0;
+	toreturn->tmoperator=mantiuk06;
+	toreturn->operator_options.mantiuk06options.contrastfactor=0.1;
+	toreturn->operator_options.mantiuk06options.contrastequalization=false;
+	toreturn->operator_options.mantiuk06options.saturationfactor=0.8;
+	toreturn->operator_options.mantiuk06options.detailfactor=1.0;
 	return toreturn;
 }
 
@@ -232,12 +246,12 @@ TMOptionsOperations::TMOptionsOperations(tonemapping_options* opts) : opts(opts)
 QString TMOptionsOperations::getPostfix() {
 	QString postfix=QString("pregamma_%1_").arg(opts->pregamma);
 	switch (opts->tmoperator) {
-	case mantiuk: {
-		postfix+="mantiuk_";
-		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
-		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
-		float detailfactor=opts->operator_options.mantiukoptions.detailfactor;
-		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
+	case mantiuk06: {
+		postfix+="mantiuk06_";
+		float contrastfactor=opts->operator_options.mantiuk06options.contrastfactor;
+		float saturationfactor=opts->operator_options.mantiuk06options.saturationfactor;
+		float detailfactor=opts->operator_options.mantiuk06options.detailfactor;
+		bool contrast_eq=opts->operator_options.mantiuk06options.contrastequalization;
 		if (contrast_eq) {
 			postfix+=QString("contrast_equalization_%1_").arg(contrastfactor);
 		} else {
@@ -245,6 +259,21 @@ QString TMOptionsOperations::getPostfix() {
 		}
 		postfix+=QString("saturation_factor_%1_").arg(saturationfactor);
 		postfix+=QString("detail_factor_%1").arg(detailfactor);
+		}
+		break;
+	case mantiuk08: {
+		postfix+="mantiuk08_";
+		float colorsaturation=opts->operator_options.mantiuk08options.colorsaturation;
+		float contrastenhancement=opts->operator_options.mantiuk08options.contrastenhancement;
+		float luminancelevel=opts->operator_options.mantiuk08options.luminancelevel;
+		bool setluminance=opts->operator_options.mantiuk08options.setluminance;
+		if (setluminance) {
+			postfix+=QString("luminancelevel_%1_").arg(luminancelevel);
+		} else {
+			postfix+=QString("auto_luminance");
+		}
+		postfix+=QString("colorsaturation_%1_").arg(colorsaturation);
+		postfix+=QString("contrastenhancement_%1").arg(contrastenhancement);
 		}
 		break;
 	case fattal: {
@@ -340,12 +369,12 @@ QString TMOptionsOperations::getPostfix() {
 QString TMOptionsOperations::getCaption() {
 	QString caption=QString("PreGamma=%1 ~ ").arg(opts->pregamma);
 	switch (opts->tmoperator) {
-	case mantiuk: {
-		caption+="Mantiuk: ~ ";
-		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
-		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
-		float detailfactor=opts->operator_options.mantiukoptions.detailfactor;
-		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
+	case mantiuk06: {
+		caption+="Mantiuk06: ~ ";
+		float contrastfactor=opts->operator_options.mantiuk06options.contrastfactor;
+		float saturationfactor=opts->operator_options.mantiuk06options.saturationfactor;
+		float detailfactor=opts->operator_options.mantiuk06options.detailfactor;
+		bool contrast_eq=opts->operator_options.mantiuk06options.contrastequalization;
 		if (contrast_eq) {
 			caption+=QString("Contrast Equalization=%1 ~ ").arg(contrastfactor);
 		} else {
@@ -353,6 +382,21 @@ QString TMOptionsOperations::getCaption() {
 		}
 		caption+=QString("Saturation=%1 ~ ").arg(saturationfactor);
 		caption+=QString("Detail=%1").arg(detailfactor);
+		}
+		break;
+	case mantiuk08: {
+		caption+="Mantiuk08: ~ ";
+		float colorsaturation=opts->operator_options.mantiuk08options.colorsaturation;
+		float contrastenhancement=opts->operator_options.mantiuk08options.contrastenhancement;
+		float luminancelevel=opts->operator_options.mantiuk08options.luminancelevel;
+		bool setluminance=opts->operator_options.mantiuk08options.setluminance;
+		if (setluminance) {
+			caption+=QString("Luminance Level=%1 ~ ").arg(luminancelevel);
+		} else {
+			caption+=QString("Luminance Level=Auto ~ ");
+		}
+		caption+=QString("Color Saturation=%1 ~ ").arg(colorsaturation);
+		caption+=QString("Contrast Enhancement=%1").arg(contrastenhancement);
 		}
 		break;
 	case fattal: {
@@ -449,12 +493,12 @@ QString TMOptionsOperations::getExifComment() {
 	QString exif_comment="Qtpfsgui "QTPFSGUIVERSION" tonemapping parameters:\n";
 	exif_comment+="Operator: ";
 	switch (opts->tmoperator) {
-	case mantiuk: {
-		float contrastfactor=opts->operator_options.mantiukoptions.contrastfactor;
-		float saturationfactor=opts->operator_options.mantiukoptions.saturationfactor;
-		float detailfactor=opts->operator_options.mantiukoptions.detailfactor;
-		bool contrast_eq=opts->operator_options.mantiukoptions.contrastequalization;
-		exif_comment+="Mantiuk\nParameters:\n";
+	case mantiuk06: {
+		float contrastfactor=opts->operator_options.mantiuk06options.contrastfactor;
+		float saturationfactor=opts->operator_options.mantiuk06options.saturationfactor;
+		float detailfactor=opts->operator_options.mantiuk06options.detailfactor;
+		bool contrast_eq=opts->operator_options.mantiuk06options.contrastequalization;
+		exif_comment+="Mantiuk06\nParameters:\n";
 		if (contrast_eq) {
 			exif_comment+=QString("Contrast Equalization factor: %1\n").arg(contrastfactor);
 		} else {
@@ -462,6 +506,21 @@ QString TMOptionsOperations::getExifComment() {
 		}
 		exif_comment+=QString("Saturation Factor: %1 \n").arg(saturationfactor);
 		exif_comment+=QString("Detail Factor: %1 \n").arg(detailfactor);
+		}
+		break;
+	case mantiuk08: {
+		float colorsaturation=opts->operator_options.mantiuk08options.colorsaturation;
+		float contrastenhancement=opts->operator_options.mantiuk08options.contrastenhancement;
+		float luminancelevel=opts->operator_options.mantiuk08options.luminancelevel;
+		bool setluminance=opts->operator_options.mantiuk08options.setluminance;
+		exif_comment+="Mantiuk08\nParameters:\n";
+		if (setluminance) {
+			exif_comment+=QString("Luminance Level: %1 \n").arg(luminancelevel);
+		} else {
+			exif_comment+=QString("Luminance Level: Auto \n");
+		}
+		exif_comment+=QString("Color Saturation: %1 \n").arg(colorsaturation);
+		exif_comment+=QString("Contrast Enhancement: %1 \n").arg(contrastenhancement);
 		}
 		break;
 	case fattal: {

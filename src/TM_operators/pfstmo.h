@@ -20,7 +20,7 @@
  * 
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  *
- * $Id: pfstmo.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
+ * $Id: pfstmo.h,v 1.3 2008/09/21 10:42:47 julians37 Exp $
  */
 #ifndef PFSTMO_H
 #define PFSTMO_H
@@ -45,59 +45,86 @@
  *  PFSTMO_CB_ABORT to request to stop. In some cases tone-mapping may
  *  not stop immediately, even if PFSTMO_CB_ABORT was returned.
  */
-// ::TODO:: we have our own callback definition. Or not?
-//typedef int(*pfstmo_progress_callback)(int progress);
+typedef int(*pfstmo_progress_callback)(int progress);
 
 namespace pfstmo
 {
-  class Array2D
+  template <typename T>
+  class Array2DBase
   {
-    float* data;
+    T* data;
     unsigned int width;
     unsigned int height;
     bool dataOwned;
 
     public:
-    Array2D(unsigned int width, unsigned int height):
-    data(new float[width * height]),
+    Array2DBase(unsigned int width, unsigned int height):
+      data(new T[width * height]),
       width(width),
       height(height),
       dataOwned(true)
-      {
-      }
+    {
+    }
 
-    Array2D(unsigned int width, unsigned int height, float* data):
-    width(width),
+    Array2DBase(unsigned int width, unsigned int height, T* data):
+      width(width),
       height(height),
       data(data),
       dataOwned(false)
-      {
-      }
+    {
+    }
 
-    ~Array2D()
+    Array2DBase(const Array2DBase& other): 
+      data(other.data), 
+      width(other.width), 
+      height(other.height), 
+      dataOwned(false) 
+    {
+    }
+    
+    ~Array2DBase()
     {
       if (dataOwned) delete[] data;
     }
 
-    inline float operator () (unsigned int x, unsigned int y) const
+    Array2DBase& operator = (const Array2DBase& other)
+    {
+      if (dataOwned) delete[] data;
+      this->data = other.data;
+      this->width = other.width;
+      this->height = other.height;
+      this->dataOwned = false;
+      return *this;
+    }
+
+    void allocate(unsigned int width, unsigned int height)
+    {
+       if (dataOwned) delete[] data;
+       this->width = width;
+       this->height = height;
+       this->data = new T[width * height];
+       this->dataOwned = true;
+    }
+
+    inline T operator () (unsigned int x, unsigned int y) const
     {
       assert(x >= 0 && x < width && y >= 0 && y < height);
       return data[y * width + x];
     }
 
-    inline float& operator () (unsigned int x, unsigned int y)
+    inline T& operator () (unsigned int x, unsigned int y)
     {
       assert(x >= 0 && x < width && y >= 0 && y < height);
       return data[y * width + x];
     }
 
-    inline float operator () (unsigned int index) const
+    inline T operator () (unsigned int index) const
     {
       assert(index >= 0 && index < width * height);
       return data[index];
     }
 
-    inline float& operator () (unsigned int index)
+    inline T& operator () (unsigned int index)
     {
       assert(index >= 0 && index < width * height);
       return data[index];
@@ -113,33 +140,35 @@ namespace pfstmo
       return height;
     }
 
-    const float* getRawData() const
+    const T* getRawData() const
     {
       return data;
     }
     
-    float* getRawData()
+    T* getRawData()
     {
       return data;
     }
   };
-
-  inline void copyArray(const Array2D *from, Array2D *to)
+  
+  template <typename T>
+  void copyArray(const Array2DBase<T> *from, Array2DBase<T> *to)
   {
     assert( from->getRows() == to->getRows() );
     assert( from->getCols() == to->getCols() );
 
-    memcpy(to->getRawData(), from->getRawData(), from->getRows() * from->getCols() * sizeof(float));
+    memcpy(to->getRawData(), from->getRawData(), from->getRows() * from->getCols() * sizeof(T));
   }
  
-  inline void setArray(Array2D *array, const float value )
+  template <typename T>
+  void setArray(Array2DBase<T> *array, T value)
   {
     const int elements = array->getRows()*array->getCols();
     for( int i = 0; i < elements; i++ )
       (*array)(i) = value;
   }
 
+  typedef Array2DBase<float> Array2D;
 }
-
 
 #endif

@@ -2,39 +2,25 @@
  * @file approx.cpp
  * @brief Approximate computation of local adaptation
  *
- * Source code courtesy of Erik Reinhard
  * This file is a part of Qtpfsgui package.
- * ----------------------------------------------------------------------
- * Copyright (C) 2003-2007 Grzegorz Krawczyk
- * 
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Source code courtesy of Erik Reinhard
  *
  * Original source code:
  * approx.c  University of Utah / Erik Reinhard / October 2001
  *
+ * File taken from:
+ * http://www.cs.utah.edu/~reinhard/cdrom/source.html
+ *
+ * $Id: approx.cpp,v 1.1 2007/06/14 16:41:30 gkrawczyk Exp $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
-// extern "C" {
+// interpolated version of approximation (always use this one!) (:krawczyk)
+#define INTERPOLATED
+
 extern double **luminance; 
 int      ImageWidth, ImageHeight;
 
@@ -47,7 +33,7 @@ double V1( int x, int y, int level );
 
 int div2( const unsigned int n )
 {
-  const unsigned int q = n/2;
+  const int q = n/2;
   return(2*q < n ? q + 1 : q);
 }
 
@@ -78,14 +64,14 @@ double pyramid_lookup( int x, int y, int level )
     return(Pyramid[level][y][x]);
 }
 
-void build_pyramid( double **/*luminance*/, int image_width, int image_height )
+void build_pyramid( double **luminance, int image_width, int image_height )
 {
   int k;
   int x, y;
   int i, j;
-  int width/*, height*/;
+  int width, height;
   int max_dim;
-//   int pyramid_height;
+  int pyramid_height;
   double sum = 0;
   
   double a = 0.4;
@@ -116,7 +102,7 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
   width = 1 << (PyramidHeight - 1);
   PyramidWidth0 = width;
 
-//  fprintf(stderr, "max_dim %d   height %d     PyramidWidth0=%d\n", max_dim, PyramidHeight,PyramidWidth0);
+//  fprintf(stderr, "max_dim %d   height %d\n", max_dim, PyramidHeight);
   
   /* Allocate the outer Pyramid array */
   Pyramid = (double***) calloc(PyramidHeight, sizeof(double**));
@@ -127,9 +113,11 @@ void build_pyramid( double **/*luminance*/, int image_width, int image_height )
 
   /* Allocate and assign the Pyramid slices */
   k = 0;
-
+  
   while (width) {
+
 //    fprintf(stderr, "level %d, width = %d\n", k, width);
+    
     /* Allocate the slice */
     Pyramid[k] = (double**) calloc(width, sizeof(double*));
     if (!Pyramid[k]) {
@@ -170,9 +158,8 @@ void clean_pyramid()
   int width = PyramidWidth0;
   while(width)
   {
-    for( int y=0 ; y<width ; y++ ) {
+    for( int y=0 ; y<width ; y++ )
       free(Pyramid[k][y]);
-    }
     free(Pyramid[k]);
     k++;
     width /= 2;
@@ -180,12 +167,31 @@ void clean_pyramid()
   free(Pyramid);
 }
 
+#ifndef INTERPOLATED
+double V1( int x, int y, int level )
+  /* PRE:  */
+{
+  int n, s;
+
+  /* Level 0 is a special case, the value is just the image */
+  if (level <= 0)
+      return(luminance[y][x]);
+
+  /* Compute the size of the slice */
+  
+  x = x >> level;
+  y = y >> level;
+
+  return(Pyramid[level-1][y][x]);
+}
+#else
 double V1( int x, int y, int level )
   /* PRE:  */
 {
   int x0, y0;
   int l, size;
   double s, t;
+  
   /* Level 0 is a special case, the value is just the image */
   if (level == 0)
       return(luminance[y][x]);
@@ -198,16 +204,18 @@ double V1( int x, int y, int level )
 
   x0 = (x0 >= size ? size - 1 : x0);
   y0 = (y0 >= size ? size - 1 : y0);
-
+  
   s = (double)(x - x0*l)/(double)l;
   t = (double)(y - y0*l)/(double)l;
-
+  
   level--;
+
+  //!! FIX: a quick fix for boundary conditions
   int x01,y01;
   x01 = (x0 == size-1 ? x0 : x0+1);
   y01 = (y0 == size-1 ? y0 : y0+1);
-
+  
   return((1-s)*(1-t)*Pyramid[level][y0][x0] + s*(1-t)*Pyramid[level][y0][x01]
           + (1-s)*t*Pyramid[level][y01][x0] + s*t*Pyramid[level][y01][x01]);
 }
-// }
+#endif

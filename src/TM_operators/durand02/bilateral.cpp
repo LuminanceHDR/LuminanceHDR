@@ -2,6 +2,7 @@
  * @file bilateral.cpp
  * @brief Bilateral filtering
  *
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
@@ -27,11 +28,17 @@
  * $Id: bilateral.cpp,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
 
-#include "../tmo_config.h"
-
 #include <math.h>
 
 #include "../pfstmo.h"
+
+#ifdef BRANCH_PREDICTION
+#define likely(x)       __builtin_expect((x),1)
+#define unlikely(x)     __builtin_expect((x),0)
+#else
+#define likely(x)       (x)
+#define unlikely(x)     (x)
+#endif
 
 inline int max( int a, int b )
 { return (a>b) ? a : b; }
@@ -84,8 +91,8 @@ public:
 
 
 void bilateralFilter( const pfstmo::Array2D *I,
-  pfstmo::Array2D *J, float sigma_s, float sigma_r /*,
-  pfstmo_progress_callback progress_cb*/)
+  pfstmo::Array2D *J, float sigma_s, float sigma_r,
+  pfstmo_progress_callback progress_cb )
 {
   const pfstmo::Array2D *X1 = I;     // intenisity data
 
@@ -98,14 +105,14 @@ void bilateralFilter( const pfstmo::Array2D *I,
 
   for( int y = 0; y < I->getRows(); y++ )
   {
-/*  progress_cb( y * 100 / I->getRows() ); */
-
+    progress_cb( y * 100 / I->getRows() );
+    
     for( int x = 0; x < I->getCols(); x++ )
     {
       float val = 0;
       float k = 0;
       float I_s = (*X1)(x,y);	//!! previously 'I' not 'X1'
-      
+
       if( unlikely( !finite( I_s ) ) )
         I_s = 0.0f;
 
@@ -116,15 +123,15 @@ void bilateralFilter( const pfstmo::Array2D *I,
 	     px < min( I->getCols(), x + sKernelSize/2); px++ )
 	{
 	  float I_p = (*X1)(px, py);	//!! previously 'I' not 'X1'
-           if( unlikely( !finite( I_p ) ) )
-             I_p = 0.0f;
+          if( unlikely( !finite( I_p ) ) )
+            I_p = 0.0f;
 	  
 	  float mult = sKernel(px-x + sKernelSize/2, py-y + sKernelSize/2) *
 	      gauss.getValue( I_p - I_s );
 
 	  float Ixy = (*I)(px, py);
-           if( unlikely( !finite( Ixy ) ) )
-             Ixy = 0.0f;
+          if( unlikely( !finite( Ixy ) ) )
+            Ixy = 0.0f;          
 	  
 	  val += Ixy*mult;	//!! but here we want 'I'
 	  k += mult;

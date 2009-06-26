@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing 
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef TONEMAPPERTHREAD_H
@@ -37,28 +41,30 @@ Q_OBJECT
 
 public:
 	//tonemapping_options passed by value, bit-copy should be enough
-	TonemapperThread(int origsize, const tonemapping_options opts);
+	TonemapperThread(pfs::Frame *frame, int origsize, const tonemapping_options opts);
 	~TonemapperThread();
 public slots:
 	void terminateRequested();
 signals:
 	void imageComputed(const QImage&, tonemapping_options *);
 	void setMaximumSteps(int);
+	void advanceCurrentProgress(int);
 	void advanceCurrentProgress();
 protected:
 	void run();
 private:
+	pfs::Frame *workingframe;
 	int originalxsize;
 	int ldr_output_cs;
-	QString cachepath;
+	//QString cachepath;
 	bool colorspaceconversion;
 	tonemapping_options opts;
-	pfs::Frame *workingframe;
-	void fetch(QString);
-	void swap(pfs::Frame *, QString );
+	//void fetch(QString);
+	//void swap(pfs::Frame *, QString );
 	bool forciblyTerminated;
-// 	void dumpOpts();
-	enum {from_resize,from_pregamma,from_tm} status;
+	//void dumpOpts();
+	//enum {from_resize,from_pregamma,from_tm} status;
 	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 };
+
 #endif

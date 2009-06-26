@@ -28,8 +28,6 @@
 #ifndef _tmo_drago03_h_
 #define _tmo_drago03_h_
 
-#include "../../Libpfs/pfs.h"
-
 /**
  * @brief Frederic Drago Logmapping Algorithm
  *
@@ -48,13 +46,13 @@ void tmo_drago03(unsigned int width, unsigned int height,
   const float* Y, float* L,
   float maxLum, float avLum, float bias);
 
- 
 /**
  * @brief Find average and maximum luminance in an image
+ * 
+ * @param Y [in] image luminance values
  * @param avLum [out] average luminance
  * @param maxLum [out] maximum luminance
  */
 void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum );
 
-pfs::Frame* pfstmo_drago03(pfs::Frame *inputpfsframe, float _biasValue);
 #endif

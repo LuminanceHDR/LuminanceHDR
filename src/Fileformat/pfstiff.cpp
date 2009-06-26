@@ -28,6 +28,7 @@
 #include <cmath>
 #include <QObject>
 #include <QSysInfo>
+#include <iostream>
 
 #include "pfstiff.h"
 
@@ -112,7 +113,7 @@ TiffReader::TiffReader( const char* filename ) {
       }
       break;
     default:
-      qFatal("Unsupported photometric type: %d",phot);
+      //qFatal("Unsupported photometric type: %d",phot);
       TIFFClose(tif);
       throw pfs::Exception("TIFF: unsupported photometric type");
   }
@@ -133,7 +134,8 @@ pfs::Frame* TiffReader::readIntoPfsFrame() {
   pfs::DOMIO pfsio;
   pfs::Frame *frame = pfsio.createFrame( width, height );
   pfs::Channel *X, *Y, *Z;
-  frame->createRGBChannels( X, Y, Z );
+  //TODO
+  frame->createXYZChannels( X, Y, Z );
 
   //--- image length
   uint32 imagelength;
@@ -182,12 +184,12 @@ pfs::Frame* TiffReader::readIntoPfsFrame() {
 	break;
     }
   }
-
+  
   //--- free buffers and close files
   _TIFFfree(buf.vp);
   TIFFClose(tif);
-  if (TypeOfData==FLOATLOGLUV)
-    pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
+  //if (TypeOfData==FLOATLOGLUV)
+  //  pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
   return frame;
 }
 
@@ -237,9 +239,9 @@ QImage* TiffReader::readIntoQImage() {
 }
 
 TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL) {
-	f->getRGBChannels(R,G,B);
-	width=R->getWidth();
-	height=R->getHeight();
+	f->getXYZChannels(X,Y,Z);
+	width=X->getWidth();
+	height=Y->getHeight();
 // 	qDebug("width=%d, heigh=%d",width,height);
 	tif = TIFFOpen(filename, "w");
 	if( !tif )
@@ -283,9 +285,9 @@ int TiffWriter::writeFloatTiff() { //write 32 bit float Tiff from pfs::Frame
 	for (unsigned int s=0; s<strips_num; s++) {
 		emit nextstep( s );  // for QProgressDialog
 		for (unsigned int col=0; col<width; col++) {
-			strip_buf[3*col+0]=(*R)(col,s);
-			strip_buf[3*col+1]=(*G)(col,s);
-			strip_buf[3*col+2]=(*B)(col,s);
+			strip_buf[3*col+0]=(*X)(col,s);
+			strip_buf[3*col+1]=(*Y)(col,s);
+			strip_buf[3*col+2]=(*Z)(col,s);
 		}
 		if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0) {
 			qDebug("error writing strip");
@@ -311,20 +313,18 @@ int TiffWriter::writeLogLuvTiff() { //write LogLUv Tiff from pfs::Frame
 
 	emit maximumValue( strips_num ); // for QProgressDialog
 
-	pfs::transformColorSpace( pfs::CS_RGB, R,G,B, pfs::CS_XYZ, R,G,B );
 	for (unsigned int s=0; s<strips_num; s++) {
 		emit nextstep( s ); // for QProgressDialog
 		for (unsigned int col=0; col<width; col++) {
-			strip_buf[3*col+0]=(*R)(col,s);
-			strip_buf[3*col+1]=(*G)(col,s);
-			strip_buf[3*col+2]=(*B)(col,s);
+			strip_buf[3*col+0]=(*X)(col,s);
+			strip_buf[3*col+1]=(*Y)(col,s);
+			strip_buf[3*col+2]=(*Z)(col,s);
 		}
 		if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0) {
 			qDebug("error writing strip");
 			return -1;
 		}
 	}
-	pfs::transformColorSpace( pfs::CS_XYZ, R,G,B, pfs::CS_RGB, R,G,B );
 
 	_TIFFfree(strip_buf);
 	TIFFClose(tif);

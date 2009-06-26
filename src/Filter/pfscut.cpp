@@ -84,16 +84,16 @@ if (min==UNSP && max==UNSP && size==UNSP) {
 
 pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)
 {
-pfs::DOMIO pfsio;
+  pfs::DOMIO pfsio;
 
-//numbers of pixels to cut from each border of an image 
-int left=UNSP, right=UNSP, top=UNSP, bottom=UNSP; 
-int width=UNSP, height=UNSP; //size of an output image
-//int x_ul=UNSP, y_ul=UNSP, x_br=UNSP, y_br=UNSP;
+  //numbers of pixels to cut from each border of an image 
+  int left=UNSP, right=UNSP, top=UNSP, bottom=UNSP; 
+  int width=UNSP, height=UNSP; //size of an output image
+  //int x_ul=UNSP, y_ul=UNSP, x_br=UNSP, y_br=UNSP;
     
-int optionIndex=0;
+  int optionIndex=0;
 
-while (1) {
+  while (1) {
 
     int inWidth=inFrame->getWidth();
     int inHeight=inFrame->getHeight();
@@ -137,6 +137,13 @@ while (1) {
     
     pfs::copyTags(inFrame, outFrame);
     return outFrame;
-}
+  }
 
 }
+
+pfs::Frame *pfscopy(pfs::Frame *inFrame) {
+  int w = inFrame->getWidth();
+  int h = inFrame->getHeight();
+  return pfscut(inFrame,0,0,w-1,h-1);
+}
+	

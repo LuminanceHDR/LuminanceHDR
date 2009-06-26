@@ -275,8 +275,12 @@ extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
 	add_log_message(tr("Starting to tone map HDR file: ")+filename);
-	pfsio.writeFrame(loaded_hdr, QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData());
-	pregamma=-1;
+	//TODO
+	const char *fname = QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData();
+	FILE *fd = fopen(fname, "w");
+	pfsio.writeFrame(loaded_hdr, fd );
+	fclose(fd);
+	//pregamma=-1;
 	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	pfsio.freeFrame(loaded_hdr);
 	QFileInfo qfi(filename);
@@ -286,6 +290,7 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 }
 
 void BatchTMDialog::conditional_TMthread() {
+/*
 	int first_not_started=-1;
 	//look for the first that has not been started yet
 	for (int i = 0; i < tm_opt_list.size(); i++) {
@@ -336,7 +341,7 @@ void BatchTMDialog::conditional_TMthread() {
 		}
 		conditional_loadthread();
 	}
-
+*/
 }
 
 void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts) {

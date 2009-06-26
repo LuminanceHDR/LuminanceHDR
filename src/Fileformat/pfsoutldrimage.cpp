@@ -37,34 +37,32 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
     return (unsigned char)v;
 }
 
-
 #include "../Threads/tonemapperThread.h"
+
 QImage TonemapperThread::fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	assert(inpfsframe!=NULL);
 
-	pfs::DOMIO pfsio;
-	pfs::Channel *R, *G, *B;
-	inpfsframe->getRGBChannels( R,G,B );
-	assert( R!=NULL && G!=NULL && B!=NULL );
-
-	//inpfsframe's colorspace is either sRGB or RGB.
-	//sRGB is used for compatibility with pfstmo.
-	//fattal, reinhard05 and ashickmin (somewhat) prefer a RGB colorspace
-
-	int width = R->getCols();
-	int height =  R->getRows();
+	pfs::Channel *X, *Y, *Z;
+	inpfsframe->getXYZChannels( X, Y, Z );
+	assert( X!=NULL && Y!=NULL && Z!=NULL );
+	
+	// Back to CS_RGB for the Viewer
+	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );	
+	
+	int width = X->getCols();
+	int height =  X->getRows();
 	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
 	for( int y = 0; y < height; y++ ) { // For each row of the image
 		for( int x = 0; x < width; x++ ) {
 			if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-			*(data + 0 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*G)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
+			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
+			*(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
 			*(data + 3 + (y*width+x)*4) = 0xff;
 			} else {
-			*(data + 3 + (y*width+x)*4) = ( clamp( (*R)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*G)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*B)( x, y )*255.f, 0, 255) );
+			*(data + 3 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+			*(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
+			*(data + 1 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
 			*(data + 0 + (y*width+x)*4) = 0xff;
 			}
 		}

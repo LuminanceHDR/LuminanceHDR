@@ -117,9 +117,10 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 		//qDebug("HCM: loadingError, bailing out.");
 		return;
 	}
-
+	//newFrame is in CS_RGB but channel names remained X Y Z
 	pfs::Channel *R, *G, *B;
-	newFrame->getRGBChannels( R, G, B );
+	newFrame->getXYZChannels( R, G, B);
+
 	if (inputType==LDR_INPUT_TYPE) {
 		//qDebug("HCM: wrong format, bailing out.");
 		loadingError=true;
@@ -274,9 +275,12 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 			}
 			//if 16bit (tiff) treat as hdr
 			else if (reader.is16bitTiff()) {
+				//TODO: get a 16bit TIFF image and test it
 				pfs::Frame *newFrame=reader.readIntoPfsFrame();
 				pfs::Channel *R, *G, *B;
-				newFrame->getRGBChannels( R, G, B );
+				R = newFrame->getChannel("X");
+				G = newFrame->getChannel("Y");
+				B = newFrame->getChannel("Z");
 				listmdrR.push_back(R);
 				listmdrG.push_back(G);
 				listmdrB.push_back(B);

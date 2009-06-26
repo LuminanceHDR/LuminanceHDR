@@ -138,6 +138,10 @@ void hdrInputLoader::run() {
 			//now do not remove tiff file, it might be required by align_image_stack
 		}
 	}
+	catch(pfs::Exception e) {
+		emit loadFailed(QString(tr("ERROR: %1")).arg(e.getMessage()),image_idx);
+		return;
+	}
 	catch (...) {
 		qDebug("LIT: catched exception");
 		emit loadFailed(QString(tr("ERROR: Failed Loading file: %1")).arg(fname),image_idx);

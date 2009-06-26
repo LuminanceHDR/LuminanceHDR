@@ -162,7 +162,9 @@ int maxResponse=M;
     // create channels for output
     pfs::Frame *frameout = pfsio.createFrame( width, height );
     pfs::Channel *Rj, *Gj, *Bj;
-    frameout->createRGBChannels( Rj, Gj, Bj );
+    // Channels named X Y Z but will contain R G B data
+    frameout->createXYZChannels( Rj, Gj, Bj );
+
     // camera response functions for each channel
     float* Ir = new float[M];
     float* Ig = new float[M];
@@ -251,11 +253,11 @@ int maxResponse=M;
 // 	}
 	break;
     } //end switch
-
-	delete[] w;
-	delete[] Ir;
-	delete[] Ig;
-	delete[] Ib;
-	return frameout;
+    
+    delete[] w;
+    delete[] Ir;
+    delete[] Ig;
+    delete[] Ib;
+    return frameout;
 }
 // }//extern "C"

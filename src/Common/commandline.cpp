@@ -189,8 +189,10 @@ void CommandLineInterfaceManager::parseArgs() {
 					tmopts->tmoperator=reinhard02;
 				else if (tmoperator=="reinhard05")
 					tmopts->tmoperator=reinhard05;
-				else if (tmoperator=="mantiuk")
-					tmopts->tmoperator=mantiuk;
+				else if (tmoperator=="mantiuk06")
+					tmopts->tmoperator=mantiuk06;
+				else if (tmoperator=="mantiuk08")
+					tmopts->tmoperator=mantiuk08;
 				else
 					error(qPrintable(tr("Error: Unknown tone mapping operator specified.")));
 				}
@@ -215,13 +217,13 @@ void CommandLineInterfaceManager::parseArgs() {
 				    else if (keyandvalue.at(0)== "new")
 				      tmopts->operator_options.fattaloptions.newfattal=(keyandvalue.at(1)=="true");
 
-				    //mantiuk options
+				    //mantiuk06 options
 				    else if (keyandvalue.at(0)== "contrast")
-				      tmopts->operator_options.mantiukoptions.contrastfactor=toFloatWithErrMsg(keyandvalue.at(1));
+				      tmopts->operator_options.mantiuk06options.contrastfactor=toFloatWithErrMsg(keyandvalue.at(1));
 				    else if (keyandvalue.at(0)== "saturation")
-				      tmopts->operator_options.mantiukoptions.saturationfactor=toFloatWithErrMsg(keyandvalue.at(1));
+				      tmopts->operator_options.mantiuk06options.saturationfactor=toFloatWithErrMsg(keyandvalue.at(1));
 				    else if (keyandvalue.at(0)== "equalization")
-				      tmopts->operator_options.mantiukoptions.contrastequalization=(keyandvalue.at(1)=="true");
+				      tmopts->operator_options.mantiuk06options.contrastequalization=(keyandvalue.at(1)=="true");
 
 				    //ashikhmin options
 				    else if (keyandvalue.at(0)== "localcontrast")
@@ -390,10 +392,13 @@ void CommandLineInterfaceManager::saveHDR() {
 			else
 				tiffwriter.writeFloatTiff();
 		} else if (qfi.suffix().toUpper()=="PFS") {
+			//TODO
+			FILE *fd = fopen(encodedName, "W");
 			pfs::DOMIO pfsio;
-			HDR->convertRGBChannelsToXYZ();
-			pfsio.writeFrame(HDR,encodedName);
-			HDR->convertXYZChannelsToRGB();
+			//HDR->transformColorSpace()
+			pfsio.writeFrame(HDR, fd);
+			fclose(fd);
+			//HDR->transformColorSpace();
 		} else {
 			error("Error, please specify a supported HDR file format.");
 		}
@@ -406,20 +411,27 @@ void CommandLineInterfaceManager::saveHDR() {
 }
 
 void  CommandLineInterfaceManager::startTonemap() {
+/*
 	if (!saveLdrFilename.isEmpty()) {
 		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
 		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
 		int origxsize= (tmopts->xsize==-2) ? -2 : HDR->getWidth();
 		TonemapperThread *thread = new TonemapperThread(origxsize, *tmopts);
 		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
+		const char *filename = QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData
+();
+		//TODO
+		FILE *fd = fopen(filename, "w");
 		pfs::DOMIO pfsio;
-		pfsio.writeFrame(HDR, QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData());
+		pfsio.writeFrame(HDR, fd );
 		pfsio.freeFrame(HDR);
+		fclose(fd);
 		thread->start();
 	} else {
 		VERBOSEPRINT("Tonemapping NOT requested. %1","");
 		emit finishedParsing();
 	}
+*/
 }
 
 void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonemapping_options*) {
@@ -473,11 +485,11 @@ tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
 "\t" + tr("-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) ") + "\n" +
 "\t" + tr("-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) ") + "\n" +
 "\t" + tr("-t --tmo               Tone mapping operator. Legal values are: ") + "\n" +
-"\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk") + "\n" +
-"\t\t" + tr("(Default is mantiuk)") + "\n" +
+"\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08") + "\n" +
+"\t\t" + tr("(Default is mantiuk06)") + "\n" +
 "\t" + tr("-p --tmoptions         Tone mapping operator options. Legal values are: ") + "\n" +
 "\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
-"\t\t" + tr("contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)") + "\n" +
+"\t\t" + tr("contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk06)") + "\n" +
 "\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
 "\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
 "\t\t" + tr("bias=VALUE (for drago)") + "\n" +

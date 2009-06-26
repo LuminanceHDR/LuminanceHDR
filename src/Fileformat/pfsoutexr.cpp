@@ -45,11 +45,13 @@ bool firstFrame = true;
 half *halfR = NULL, *halfG = NULL, *halfB = NULL;
 
 pfs::Frame *frame = inpfsframe;
-// pfs::Channel *X, *Y, *Z;
-// frame->getXYZChannels( X,Y,Z );
-// pfs::transformColorSpace( pfs::CS_XYZ, X,Y,Z, pfs::CS_RGB, X,Y,Z );
 pfs::Channel *R, *G, *B;
-frame->getRGBChannels( R,G,B );
+//TODO
+// Channels are named X Y Z but contain R G B data
+frame->getXYZChannels( R,G,B );
+R = frame->getChannel( "X" );
+G = frame->getChannel( "Y" );
+B = frame->getChannel( "Z" );
 const char* luminanceTag = frame->getTags()->getString("LUMINANCE");
 
 Header header( frame->getWidth(), frame->getHeight(),
@@ -166,4 +168,8 @@ FrameBuffer frameBuffer;
       OutputFile file(outfilename, header);
       file.setFrameBuffer (frameBuffer);
       file.writePixels( frame->getHeight() );
+
+      delete[] halfR;
+      delete[] halfG;
+      delete[] halfB;  
 }

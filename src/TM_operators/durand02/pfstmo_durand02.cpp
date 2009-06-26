@@ -6,6 +6,7 @@
  * F. Durand and J. Dorsey.
  * In ACM Transactions on Graphics, 2002.
  *
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
@@ -27,52 +28,56 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: pfstmo_durand02.cpp,v 1.4 2008/09/09 18:10:49 rafm Exp $
+ * $Id: pfstmo_durand02.cpp,v 1.5 2009/02/23 19:09:41 rafm Exp $
  */
 
-#include "../tmo_config.h"
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
-#include <QFile>
+#include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 #include "tmo_durand02.h"
 
-using namespace std;
+#include <iostream>
 
-pfs::Frame* pfstmo_durand02(pfs::Frame* inpfsframe, float _sigma_s, float _sigma_r, float _baseContrast) {
-  pfs::DOMIO pfsio;
+typedef int(*pfstmo_progress_callback)(int progress);
 
-	float sigma_s=_sigma_s;
-	float sigma_r=_sigma_r;
-	float baseContrast=_baseContrast;
-	int downsample=1;
+pfs::Frame* pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, pfstmo_progress_callback progress_report)
+{
+    pfs::DOMIO pfsio;
 
-	pfs::Channel *X, *Y, *Z;
-	inpfsframe->getXYZChannels(X,Y,Z);
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
+    //--- default tone mapping parameters;
+    //#ifdef HAVE_FFTW3F
+    //  float sigma_s = 40.0f;
+    //#else
+    //float sigma_s = 8.0f;
+    //#endif
+    //float sigma_r = 0.4f;
+    //float baseContrast = 5.0f;
+    int downsample=1;
+    bool original_algorithm = false;
 
-        int w = Y->getCols();
-        int h = Y->getRows();
+    std::cout << "pfstmo_durand02" << std::endl;
+    std::cout << "sigma_s: " << sigma_s << std::endl;
+    std::cout << "sigma_r: " << sigma_r << std::endl;
+    std::cout << "base contrast: " << baseContrast << std::endl;
 
-	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
-	assert( outframe != NULL );
-	pfs::Channel *Ro, *Go, *Bo;
-	outframe->createRGBChannels( Ro, Go, Bo );
-	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
+    pfs::Channel *X, *Y, *Z;
 
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, Ro, Go, Bo );
+    frame->getXYZChannels( X, Y, Z );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    //---
 
-// 	pfs::Channel *Ro, *Go, *Bo;
-// 	outframe->createRGBChannels( Ro, Go, Bo );
-// 	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
-// 	pfs::copyArray(R,Ro);
-// 	pfs::copyArray(G,Go);
-// 	pfs::copyArray(B,Bo);
-	
-	tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample/*, progress_report*/);
-	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
-// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo );
-	
-	return outframe;
+    if( Y==NULL || X==NULL || Z==NULL)
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+        
+    // tone mapping
+    int w = Y->getCols();
+    int h = Y->getRows();
+
+    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
+    tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample, !original_algorithm, progress_report );
+    pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+
+    //---
+    return frame;
 }
+

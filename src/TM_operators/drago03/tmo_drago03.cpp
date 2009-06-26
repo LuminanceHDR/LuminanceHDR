@@ -1,6 +1,10 @@
 /**
  * @brief Frederic Drago logmapping operator
  * 
+ * Adaptive logarithmic mapping for displaying high contrast
+ * scenes. 
+ * F. Drago, K. Myszkowski, T. Annen, and N. Chiba. In Eurographics 2003.
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
@@ -22,15 +26,16 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_drago03.cpp,v 1.3 2008/09/04 12:46:48 julians37 Exp $
+ * $Id: tmo_drago03.cpp,v 1.4 2008/11/04 23:43:08 rafm Exp $
  */
 
-#include <iostream>
 #include <math.h>
-#include <assert.h>
 
 #include "tmo_drago03.h"
 #include "../pfstmo.h"
+
+#include <assert.h>
+
 
 /// Type of algorithm
 #define FAST 0
@@ -43,14 +48,14 @@ inline float biasFunc(float b, float x)
 
 //-------------------------------------------
 
-void calculateLuminance(unsigned int width, unsigned int height, const float *Y, float& avLum, float& maxLum)
+void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum )
 {
   avLum = 0.0f;
   maxLum = 0.0f;
 
   int size = width * height;
 
-  for( int i=0; i<size; i++ )
+  for( int i=0 ; i<size; i++ )
   {
     avLum += log( Y[i] + 1e-4 );
     maxLum = ( Y[i] > maxLum ) ? Y[i] : maxLum ;
@@ -58,17 +63,18 @@ void calculateLuminance(unsigned int width, unsigned int height, const float *Y,
   avLum =exp( avLum/ size);
 }
 
+
 void tmo_drago03(unsigned int width, unsigned int height,
-                 const float* _Y, float* _L,
+                 const float* nY, float* nL,
                  float maxLum, float avLum, float bias)
 {
   const float LOG05 = -0.693147f; // log(0.5)
 
-  assert(_Y!=NULL);
-  assert(_L!=NULL);
+  assert(nY!=NULL);
+  assert(nL!=NULL);
 
-  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(_Y));
-  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, _L);
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
+  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, nL);
 
   int nrows = Y->getRows();			// image size
   int ncols = Y->getCols();

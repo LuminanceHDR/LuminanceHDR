@@ -8,11 +8,12 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * Some code from Numerical Recipes in C
- *
+ * 
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
- * ----------------------------------------------------------------------
+ * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
- *
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -26,8 +27,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ----------------------------------------------------------------------
- *
+ * ---------------------------------------------------------------------- 
+ * 
  * $Id: pde.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
@@ -36,6 +37,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#include "../../Libpfs/array2d.h"
 
 #include "pde.h"
 
@@ -52,9 +55,9 @@ using namespace std;
 #define V_CYCLE 2 /* number of v-cycles  */
 
 // precision
-#define EPS 1.0e-8
+#define EPS 1.0e-12
 
-void linbcg(unsigned int n, float b[], float x[], int itol, float tol,
+void linbcg(unsigned long n, float b[], float x[], int itol, float tol,
   int itmax, int *iter, float *err);
 
 inline float max( float a, float b )
@@ -68,7 +71,7 @@ inline float min( float a, float b )
 }
 
 
-//!!: for debugging purposes
+//!! TODO: for debugging purposes
 // #define PFSEOL "\x0a"
 // static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const char *channelName )
 // {
@@ -85,7 +88,7 @@ inline float min( float a, float b )
 //     for( int x = 0; x < width; x++ ) {
 //       fwrite( &((*data)(x,y)), sizeof( float ), 1, fh );
 //     }
-
+  
 //   fclose( fh );
 // }
 
@@ -104,13 +107,13 @@ void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
   const float dx = (float)in->getCols() / (float)out->getCols();
   const float dy = (float)in->getRows() / (float)out->getRows();
 
-  const float filterSize = 0.5f;
-
+  const float filterSize = 0.5;
+  
   float sx, sy;
   int x, y;
-
-  for( y = 0, sy = dy/2-0.5f; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5f; x < outCols; x++, sx += dx ) {
+  
+  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
+    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
 
       float pixVal = 0;
       float w = 0;
@@ -118,8 +121,8 @@ void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
         for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
           pixVal += (*in)( (int)ix, (int)iy );
           w += 1;
-        }
-      (*out)(x,y) = pixVal/w;
+        }     
+      (*out)(x,y) = pixVal/w;      
     }
 }
 
@@ -127,7 +130,7 @@ void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 // void restrict( pfstmo::Array2D *F, pfstmo::Array2D *T )
 // {
 // //   DEBUG_STR << "restrict" << endl;
-
+  
 //   int sxt = T->getCols();
 //   int syt = T->getRows();
 //   int sxf = F->getCols();
@@ -162,9 +165,9 @@ void prolongate( const pfstmo::Array2D *in, pfstmo::Array2D *out )
   float dy = (float)in->getRows() / (float)out->getRows();
 
   float pad;
-
-  /*float filterSamplingX = */max( modff( dx, &pad ), 0.01f );
-  /*float filterSamplingY = */max( modff( dy, &pad ), 0.01f );
+  
+  float filterSamplingX = max( modff( dx, &pad ), 0.01f );
+  float filterSamplingY = max( modff( dy, &pad ), 0.01f );
 
   const int outRows = out->getRows();
   const int outCols = out->getCols();
@@ -181,22 +184,22 @@ void prolongate( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 
       float pixVal = 0;
       float weight = 0;
-
+      
       for( float ix = max( 0, ceilf( sx-filterSize ) ); ix <= min( floorf(sx+filterSize), inCols-1 ); ix++ )
         for( float iy = max( 0, ceilf( sy-filterSize ) ); iy <= min( floorf( sy+filterSize), inRows-1 ); iy++ ) {
-          float fx = fabsf( sx - ix );
-          float fy = fabsf( sy - iy );
+          float fx = fabs( sx - ix );
+          float fy = fabs( sy - iy );
 
           const float fval = (1-fx)*(1-fy);
-
+          
           pixVal += (*in)( (int)ix, (int)iy ) * fval;
           weight += fval;
         }
-
+      
       assert( weight != 0 );
       (*out)(x,y) = pixVal / weight;
 
-    }
+    } 
 }
 
 // to_level<from_level, from_size<to_size
@@ -214,7 +217,7 @@ void prolongate_old( pfstmo::Array2D *F, pfstmo::Array2D *T )
   for( x=0 ; x<sxf ; x++ )
     for( y=0 ; y<syf ; y++ )
     {
-      int x2 = x*2;
+      int x2 = x*2;            
       int y2 = y*2;
       if(x2<sxt && y2<syt)
         (*T)(x2,y2) = (*F)(x,y);
@@ -230,7 +233,7 @@ void prolongate_old( pfstmo::Array2D *F, pfstmo::Array2D *T )
   }
   if( syt & 1 ) {
     for( x=0 ; x<sxf ; x++ ) {
-      int x2 = x*2;
+      int x2 = x*2;            
       if(x2<sxt)
         (*T)(x2,syt-1) = (*F)(x,syf-1);
     }
@@ -267,17 +270,17 @@ void exact_sollution( pfstmo::Array2D *F, pfstmo::Array2D *U )
 
   int sx = F->getCols();
   int sy = F->getRows();
-//   int x,y;
+  int x,y;
 
   float h = 1.0/sqrt(sx*sy*1.0f);
-//   float h2 = h*h;
+  float h2 = h*h;
 
     setArray( U, 0.0f); return;   /* also works well?? */
-
+  
 //   if( sx==3 && sy==3 )
 //   {
 //     (*U)(1,1) = -h2* (*F)(1,1) / 4.0f;
-
+    
 //     // boundary points
 //     for( x=0 ; x<sx ; x++ )
 //       (*U)(x,0) = (*U)(x,sy-1) = 0.0f;
@@ -287,7 +290,7 @@ void exact_sollution( pfstmo::Array2D *F, pfstmo::Array2D *U )
 //   else
 //   {
 //     setArray( U, 0.0f); return;   /* also works well?? */
-
+  
 //     // TODO: this produces incorrect results
 // //     solve_pde_sor(F,U);
 // //     for( y=0 ; y<sy ; y++ )
@@ -307,27 +310,27 @@ inline int idx( int r, int c )
 void smooth( pfstmo::Array2D *U, pfstmo::Array2D *F )
 {
 //   DEBUG_STR << "smooth" << endl;
-
+  
   rows = U->getRows();
   cols = U->getCols();
-
+  
   const int n = rows*cols;
 
   int iter;
   float err;
-
+        
   linbcg( n, F->getRawData()-1, U->getRawData()-1, 1, 0.001, BCG_STEPS, &iter, &err);
 
 //   fprintf( stderr, "." );
 
   // Gauss relaxation is too slow
-
+  
 //   int sx = F->getCols();
 //   int sy = F->getRows();
 //   int x,y,i;
 //   int shx;	shift x
-
-//   float h = 1.0f/sqrtf(sx*sy*1.0f);
+  
+//   float h = 1.0f/sqrt(sx*sy*1.0f);
 //   float h2 = h*h;
 
 //   h2 = 1;
@@ -345,9 +348,9 @@ void smooth( pfstmo::Array2D *U, pfstmo::Array2D *F )
 //         n = (y == 0 ? 0 : y-1);
 //         s = (y+1 == sy ? y : y+1);
 //         e = (x+1 == sx ? x : x+1);
-
+        
 // 	(*U)(x,y) = .25 * ( (*U)(e,y) + (*U)(w,y) + (*U)(x,s) + (*U)(x,n)
-//           - h2 * (*F)(x,y) );
+//           - h2 * (*F)(x,y) );        
 //       }
 //     }
 //   }
@@ -360,7 +363,7 @@ void calculate_defect( pfstmo::Array2D *D, pfstmo::Array2D *U, pfstmo::Array2D *
   int sx = F->getCols();
   int sy = F->getRows();
 
-  float h = 1.0f/sqrtf(sx*sy*1.0f);
+  float h = 1.0f/sqrt(sx*sy*1.0f);
   float h2i = 1.0/(h*h);
 
   h2i = 1;
@@ -372,11 +375,11 @@ void calculate_defect( pfstmo::Array2D *D, pfstmo::Array2D *U, pfstmo::Array2D *
         n = (y == 0 ? 0 : y-1);
         s = (y+1 == sy ? y : y+1);
         e = (x+1 == sx ? x : x+1);
-
+      
         (*D)(x,y) = (*F)(x,y) -( (*U)(e,y) + (*U)(w,y) + (*U)(x,n) + (*U)(x,s)
           - 4.0 * (*U)(x,y) );
     }
-
+  
 }
 
 void add_correction( pfstmo::Array2D *U, pfstmo::Array2D *C )
@@ -395,11 +398,11 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
-
+  
   int i;	// index for simple loops
   int k;	// index for iterating through levels
   int k2;	// index for iterating through levels in V-cycles
-//   int x,y;
+  int x,y;
 
   // 1. restrict f to coarse-grid (by the way count the number of levels)
   //	  k=0: fine-grid = f
@@ -427,21 +430,18 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 
   int sx=xmax;
   int sy=ymax;
-//   DEBUG_STR << "FMG: #0 size " << sx << "x" << sy << endl;
   for( k=0 ; k<levels ; k++ )
   {
     // calculate size of next level
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
-
+    
     RHS[k+1] = new pfstmo::Array2D(sx,sy);
     IU[k+1] = new pfstmo::Array2D(sx,sy);
     VF[k+1] = new pfstmo::Array2D(sx,sy);
 
     // restrict from level k to level k+1 (coarser-grid)
     restrict( RHS[k], RHS[k+1] );
-
-//     DEBUG_STR << "FMG: #" << k+1 << " size " << sx << "x" << sy << endl;
   }
 
   // 2. find exact sollution at the coarsest-grid (k=levels)
@@ -471,13 +471,13 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
           setArray( IU[k2], 0.0f );
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
-
+        
 	for( i=0 ; i<SMOOTH_IT ; i++ )
           smooth( IU[k2], VF[k2] );
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
-		pfstmo::Array2D* D = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfstmo::Array2D* D = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
 	calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
@@ -496,7 +496,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
       {
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
-	    pfstmo::Array2D* C = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfstmo::Array2D* C = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
 	prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2
@@ -504,7 +504,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 	delete C;
 
 //        fprintf( stderr, "Level: %d --------\n", k2 );
-
+        
         // 14. post-smoothing of current sollution using target function
 	for( i=0 ; i<SMOOTH_IT ; i++ )
           smooth( IU[k2], VF[k2] );
@@ -525,10 +525,10 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 //     dumpPFS( name, RHS[k], "Y" );
 //     sprintf( name, "v_%d.pfs", k );
 //     dumpPFS( name, VF[k], "Y" );
-//   }
+//   }  
 
   pfstmo::copyArray( IU[0], U );
-
+  
   delete VF[0];
   delete IU[0];
 
@@ -542,7 +542,6 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
   delete[] IU;
   delete[] VF;
 
-//   DEBUG_STR << "FMG: solved\n";
 }
 
 
@@ -554,11 +553,10 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 
 void solve_pde_sor( pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits)
 {
-//   DEBUG_STR << "sor" << endl;
 
   int xmax = F->getCols();
   int ymax = F->getRows();
-
+  
   float rjac = 1.0 - 6.28/((xmax>ymax) ? xmax : ymax);
   int	ipass, j, jsw, l, lsw, n;
   float anorm, anormf = 0.0, omega = 1.0, resid;
@@ -567,7 +565,7 @@ void solve_pde_sor( pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits)
 //		 norm has been reduced by a factor EPS.
   for (j = 0; j < xmax; j++)
     for (l = 0; l < ymax; l++) {
-      anormf += fabsf( (*F)(j,l) );
+      anormf += fabs( (*F)(j,l) );
       (*U)(j,l)=0.0f;
     }
 
@@ -590,10 +588,10 @@ void solve_pde_sor( pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits)
           if( jm1<0 ) jm1=jp1;
           if( lp1>=ymax ) lp1=lm1;
           if( lm1<0 ) lm1=lp1;
-
+          
 	  resid = (*U)(jp1,l) + (*U)(jm1,l) + (*U)(j,lp1) + (*U)(j,lm1)
             - 4.0* (*U)(j,l) - (*F)(j,l);
-	  anorm += fabsf(resid);
+	  anorm += fabs(resid);
 	  (*U)(j,l) -= omega * resid / -4.0;
 	}
 	lsw = 1 - lsw;
@@ -602,21 +600,15 @@ void solve_pde_sor( pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits)
       omega = ( n==1 && ipass==1 ? 1.0 / (1.0 - 0.5 * rjac * rjac)
         : 1.0 / (1.0 - 0.25 * rjac * rjac * omega));
     }
-    if( !(n%100) || n==1)
-//       DEBUG_STR << "SOR:> " << n << "\tAnorm: " << anorm << "\n";
     if (anorm < EPS * anormf ) {
-//       DEBUG_STR << "SOR:> solved.\n";
       return;
     }
   }
-//   DEBUG_STR << "SOR:> MAXITS exceeded\n";
 }
-
-
 
 //#define EPS 1.0e-14
 
-void asolve(unsigned int /*n*/, float b[], float x[], int/* itrnsp*/)
+void asolve(unsigned long n, float b[], float x[], int itrnsp)
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -624,13 +616,13 @@ void asolve(unsigned int /*n*/, float b[], float x[], int/* itrnsp*/)
       }
 }
 
-void atimes(unsigned int /*n*/, float x[], float res[], int /*itrnsp*/)
+void atimes(unsigned long n, float x[], float res[], int itrnsp)
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
       res[idx(r,c)] = x[idx(r-1,c)] + x[idx(r+1,c)] +
         x[idx(r,c-1)] + x[idx(r,c+1)] - 4*x[idx(r,c)];
-    }
+    }        
 
   for( int r = 1; r < rows-1; r++ ) {
     res[idx(r,0)] = x[idx(r-1,0)] + x[idx(r+1,0)] +
@@ -638,7 +630,7 @@ void atimes(unsigned int /*n*/, float x[], float res[], int /*itrnsp*/)
     res[idx(r,cols-1)] = x[idx(r-1,cols-1)] + x[idx(r+1,cols-1)] +
         x[idx(r,cols-2)] - 3*x[idx(r,cols-1)];
   }
-
+  
   for( int c = 1; c < cols-1; c++ ) {
     res[idx(0,c)] = x[idx(1,c)] +
         x[idx(0,c-1)] + x[idx(0,c+1)] - 3*x[idx(0,c)];
@@ -649,24 +641,24 @@ void atimes(unsigned int /*n*/, float x[], float res[], int /*itrnsp*/)
   res[idx(rows-1,0)] = x[idx(rows-2,0)] + x[idx(rows-1,1)] - 2*x[idx(rows-1,0)];
   res[idx(0,cols-1)] = x[idx(1,cols-1)] + x[idx(0,cols-2)] - 2*x[idx(0,cols-1)];
   res[idx(rows-1,cols-1)] = x[idx(rows-2,cols-1)] + x[idx(rows-1,cols-2)]
-    - 2*x[idx(rows-1,cols-1)];
+    - 2*x[idx(rows-1,cols-1)];  
 }
 
-float snrm(unsigned int n, float sx[], int itol)
+float snrm(unsigned long n, float sx[], int itol)
 {
-	unsigned int i,isamax;
+	unsigned long i,isamax;
 	float ans;
 
 	if (itol <= 3) {
 		ans = 0.0;
 		for (i=1;i<=n;i++) ans += sx[i]*sx[i];
-		return sqrtf(ans);
+		return sqrt(ans);
 	} else {
 		isamax=1;
 		for (i=1;i<=n;i++) {
-			if (fabsf(sx[i]) > fabsf(sx[isamax])) isamax=i;
+			if (fabs(sx[i]) > fabs(sx[isamax])) isamax=i;
 		}
-		return fabsf(sx[isamax]);
+		return fabs(sx[isamax]);
 	}
 }
 
@@ -674,9 +666,9 @@ float snrm(unsigned int n, float sx[], int itol)
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-void linbcg(unsigned int n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
-{
-	unsigned int j;
+void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
+{	
+	unsigned long j;
 	float ak,akden,bk,bkden,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
@@ -706,7 +698,7 @@ void linbcg(unsigned int n, float b[], float x[], int itol, float tol,	int itmax
 		asolve(n,r,z,0);
 		znrm=snrm(n,z,itol);
 	} else printf("illegal itol in linbcg");
-	asolve(n,r,z,0);
+	asolve(n,r,z,0);        
 
 	while (*iter <= itmax) {
 		++(*iter);
@@ -725,7 +717,7 @@ void linbcg(unsigned int n, float b[], float x[], int itol, float tol,	int itmax
 				p[j]=bk*p[j]+z[j];
 				pp[j]=bk*pp[j]+zz[j];
 			}
-		}
+		}                
 		bkden=bknum;
 		atimes(n,p,z,0);
 		for (akden=0.0,j=1;j<=n;j++) akden += z[j]*pp[j];
@@ -742,9 +734,9 @@ void linbcg(unsigned int n, float b[], float x[], int itol, float tol,	int itmax
 			*err=snrm(n,r,itol)/bnrm;
 		} else if (itol == 3 || itol == 4) {
 			znrm=snrm(n,z,itol);
-			if (fabsf(zm1nrm-znrm) > EPS*znrm) {
-				dxnrm=fabsf(ak)*snrm(n,p,itol);
-				*err=znrm/fabsf(zm1nrm-znrm)*dxnrm;
+			if (fabs(zm1nrm-znrm) > EPS*znrm) {
+				dxnrm=fabs(ak)*snrm(n,p,itol);
+				*err=znrm/fabs(zm1nrm-znrm)*dxnrm;
 			} else {
 				*err=znrm/bnrm;
 				continue;

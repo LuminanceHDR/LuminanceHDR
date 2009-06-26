@@ -1,11 +1,10 @@
 /**
  * @brief Resize images in PFS stream
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of PFSTOOLS package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2003-2005 Rafal Mantiuk and Grzegorz Krawczyk
- * Copyright (C) 2006-2007 Giuseppe Rota
- *  original author: Alexander Efremov
+ * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk,
+ *  Alexander Efremov
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,51 +26,53 @@
  * $Id: pfsrotate.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "../Libpfs/pfs.h"
-#include <sstream>
 
 void rotateArray( const pfs::Array2D *in, pfs::Array2D *out, bool clockwise );
 
-pfs::Frame* rotateFrame( pfs::Frame* inpfsframe, bool clock_wise ) {
 
-	pfs::DOMIO pfsio;
-	bool clockwise = clock_wise;
-	int xSize = -1;
-	int ySize = -1;
-	
-	pfs::Frame *rotatedFrame = NULL;
-// 	pfs::Channel *R, *G, *B;
-// 	inpfsframe->getRGBChannels( R, G, B );
-// 	assert( R!=NULL && G!=NULL && B!=NULL );
+pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise)
+{
+  pfs::DOMIO pfsio;
 
-	xSize = inpfsframe->getHeight();
-	ySize = inpfsframe->getWidth();
-	rotatedFrame = pfsio.createFrame( xSize, ySize );
-	
-	pfs::ChannelIterator *it = inpfsframe->getChannels();
-	while( it->hasNext() ) {
-		pfs::Channel *originalCh = it->getNext();
-		pfs::Channel *newCh = rotatedFrame->createChannel( originalCh->getName() );
-		
-		rotateArray( originalCh, newCh, clockwise );
-	}
-	
-	pfs::copyTags( inpfsframe, rotatedFrame );
-	return rotatedFrame;
+  int xSize = -1;
+  int ySize = -1;
+  
+  bool firstFrame = true;
+  pfs::Frame *resizedFrame = NULL;
+  
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+
+    pfs::Channel *dX, *dY, *dZ;
+    
+    xSize = frame->getHeight();
+    ySize = frame->getWidth();
+    resizedFrame = pfsio.createFrame( xSize, ySize );
+
+    pfs::ChannelIterator *it = frame->getChannels();
+    while( it->hasNext() ) {
+      pfs::Channel *originalCh = it->getNext();
+      pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
+
+      rotateArray( originalCh, newCh, clock_wise );
+    }
+
+    pfs::copyTags( frame, resizedFrame );
+    return resizedFrame;
 }
 
 void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
 {
   int outRows = out->getRows();
   int outCols = out->getCols();
-
+  
   for( int i=0; i<outCols; i++ )
     for( int j=0; j<outRows; j++ )
       if( clockwise )
-        (*out)( i, j ) = (*in)( j, outCols - i - 1 );
+        (*out)( i, j ) = (*in)( j, outCols - i - 1 );          
       else
         (*out)( i, j ) = (*in)( outRows - j - 1, i );
 }
+

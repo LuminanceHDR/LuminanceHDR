@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef TONEMAPPINGWIDGET_H
@@ -38,7 +42,7 @@ public:
 	MyProgressBar(QWidget * parent = 0 );
 	~MyProgressBar();
 public slots:
-	void advanceCurrentProgress();
+	void advanceCurrentProgress(int);
 protected:
 	void mousePressEvent(QMouseEvent *event);
 signals:
@@ -49,17 +53,20 @@ class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, QStatusBar* sb);
+	TMWidget(QWidget *parent, pfs::Frame *pfsFrame);
 	~TMWidget();
 signals:
 	void newResult(const QImage&,tonemapping_options*);
 private:
 	QVector<int> sizes;
-	pfs::Frame *originalPfsFrame;
-
-	Gang    *contrastfactorGang, //mantiuk
+	pfs::Frame *pfsFrame;
+	Gang    *contrastfactorGang, //mantiuk06
 		*saturationfactorGang, 
 		*detailfactorGang, 
+		// mantiuk08
+		*colorSaturationGang,
+		*contrastEnhancementGang,
+		*luminanceLevelGang,
 		// fattal02
 		*alphaGang, 
 		*betaGang, 
@@ -102,9 +109,9 @@ private:
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
 	int out_ldr_cs;
-	QStatusBar *sb;
-	bool adding_custom_size;
+	QStatusBar *statusbar;
 	float HeightWidthRatio;
+	bool adding_custom_size;
 private slots:
 	void on_pregammadefault_clicked();
 	//void on_ashikhmin02Default_clicked();

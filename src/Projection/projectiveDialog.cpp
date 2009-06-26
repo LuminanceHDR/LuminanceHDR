@@ -83,9 +83,13 @@ void projectiveTransformDialog::anglesAngularDestinationProj(int v) {
 void projectiveTransformDialog::okClicked() {
 	qDebug("Projective Transformation from %s to %s", transforminfo->srcProjection->getName(), transforminfo->dstProjection->getName());
 
+	//TODO
 	pfs::DOMIO pfsio;
 	pfs::Channel *R,*G,*B;
-	original->getRGBChannels( R,G,B );
+	//original->getRGBChannels( R,G,B );
+	R = original->getChannel("R");
+	G = original->getChannel("G");
+	B = original->getChannel("B");
 	int xSize=original->getWidth();
 	int ySize=(int)(xSize / transforminfo->dstProjection->getSizeRatio());
 	transformed = pfsio.createFrame( xSize,ySize );

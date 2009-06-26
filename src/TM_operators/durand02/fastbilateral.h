@@ -2,6 +2,7 @@
  * @file fastbilateral.h
  * @brief Fast bilateral filtering
  *
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
@@ -30,7 +31,7 @@
 #ifndef _fastbilateral_h_
 #define _fastbilateral_h_
 
-#include  "../pfstmo.h"
+#include "../pfstmo.h"
 
 /**
  * @brief Fast bilateral filtering

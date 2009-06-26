@@ -1,11 +1,14 @@
 /**
- * @file bilateral.h
- * @brief Bilateral filtering
+ * @file tmo_reinhard05.cpp
+ * @brief Tone map XYZ channels using Reinhard05 model
  *
- * 
+ * Dynamic Range Reduction Inspired by Photoreceptor Physiology.
+ * E. Reinhard and K. Devlin.
+ * In IEEE Transactions on Visualization and Computer Graphics, 2005.
+ *
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2003,2004 Grzegorz Krawczyk
+ * Copyright (C) 2007 Grzegorz Krawczyk
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,32 +25,29 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  * 
- * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
+ * $Id: tmo_reinhard05.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-
-#ifndef _bilateral_h_
-#define _bilateral_h_
-
+#ifndef _tmo_reinhard05_h_
+#define _tmo_reinhard05_h_
 
 /**
- * @brief Bilateral filtering
+ * @brief: Tone mapping algorithm [Reinhard2005]
  *
- * Conventional (slow) algorithm.
- *
- * @param I [in] input array
- * @param J [out] filtered array
- * @param sigma_s sigma value for spatial kernel
- * @param sigma_r sigma value for range kernel
- *
- * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
+ * @param width image width
+ * @param height image height
+ * @param R red channel
+ * @param G green channel
+ * @param B blue channel
+ * @param Y luminance channel
+ * @param br brightness level -8:8 (def 0)
+ * @param ca amount of chromatic adaptation 0:1 (saturation, def 0)
+ * @param la amount of light adaptation 0:1 (local/global, def 1)
  */
-void bilateralFilter( const pfstmo::Array2D *I,
-  pfstmo::Array2D *J, float sigma_s, float sigma_r,
-  pfstmo_progress_callback progress_cb );
+void tmo_reinhard05(unsigned int width, unsigned int height,
+  float* R, float* G, float* B, 
+  const float* Y, float br, float ca, float la );
 
-
-#endif /* #ifndef _bilateral_h_ */
+#endif

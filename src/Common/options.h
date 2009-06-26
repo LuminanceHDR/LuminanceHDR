@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef OPTIONS_H
@@ -63,7 +67,7 @@ private:
 
 };
 
-enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk};
+enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk06,mantiuk08};
 struct tonemapping_options {
 	int xsize;
 	float pregamma;
@@ -114,7 +118,13 @@ struct tonemapping_options {
 			float saturationfactor;
 			float detailfactor;
 			bool  contrastequalization;
-		} mantiukoptions;
+		} mantiuk06options;
+		struct {
+			float colorsaturation;
+			float contrastenhancement;
+			float luminancelevel;
+			bool  setluminance;
+		} mantiuk08options;
 	} operator_options;
 };
 

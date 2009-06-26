@@ -7,7 +7,7 @@
  * In Proceedings of ACM SIGGRAPH 2000
  *
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 
@@ -27,9 +27,8 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
- * $Id: tmo_pattanaik00.h,v 1.2 2004/09/22 10:00:28 krawczyk Exp $
+ * $Id: tmo_pattanaik00.h,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
 
@@ -38,11 +37,14 @@
 
 #include "../../Libpfs/pfs.h"
 
+
 class VisualAdaptationModel;
 
 /**
  * @brief: Tone mapping algorithm [Pattanaik2000]
  *
+ * @param width image width
+ * @param height image height
  * @param R red channel
  * @param G green channel
  * @param B blue channel
@@ -50,10 +52,10 @@ class VisualAdaptationModel;
  * @param am pointer to adaptation model
  * @param local false: use global version, true: use local version
  */
-void tmo_pattanaik00( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
-  pfs::Array2D* Y, VisualAdaptationModel* am, bool local=false );
+void tmo_pattanaik00( unsigned int width, unsigned int height,
+  float* R, float* G, float* B, 
+  const float* Y, VisualAdaptationModel* am, bool local=false );
 
-pfs::Frame* pfstmo_pattanaik00 (pfs::Frame* inpfsframe, bool _local,float _multiplier, float _Acone, float _Arod, bool autoY );
 
 /**
  * @brief Time-dependent Visual Adaptation Model

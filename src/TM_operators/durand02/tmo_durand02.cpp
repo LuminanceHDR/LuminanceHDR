@@ -29,23 +29,34 @@
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_durand02.cpp,v 1.4 2008/09/09 18:10:49 rafm Exp $
+ * $Id: tmo_durand02.cpp,v 1.6 2009/02/23 19:09:41 rafm Exp $
  */
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <math.h>
+
 #include "../pfstmo.h"
-#include "../tmo_config.h"
+
+//#undef HAVE_FFTW3F
 
 #ifdef HAVE_FFTW3F
 #include "fastbilateral.h"
 #else
 #include "bilateral.h"
 #endif
-#define FLT_MIN 1e-6
 
-static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum,
+#ifdef BRANCH_PREDICTION
+#define likely(x)       __builtin_expect((x),1)
+#define unlikely(x)     __builtin_expect((x),0)
+#else
+#define likely(x)       (x)
+#define unlikely(x)     (x)
+#endif
+
+
+static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum);
 
 
@@ -67,13 +78,14 @@ R output = r*exp(log(output intensity)), etc.
 */
 
 void tmo_durand02(unsigned int width, unsigned int height,
-  float *_R, float *_G, float *_B,
-  float sigma_s, float sigma_r, float baseContrast, int downsample/*,
-  pfstmo_progress_callback progress_cb */) 
- {
-  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, _R);
-  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, _G);
-  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, _B);
+  float *nR, float *nG, float *nB,
+  float sigma_s, float sigma_r, float baseContrast, int downsample,
+  const bool color_correction,
+  pfstmo_progress_callback progress_cb ) 
+{
+  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
+  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
+  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, nB);
 
   int i;
   int w = R->getCols();
@@ -83,7 +95,7 @@ void tmo_durand02(unsigned int width, unsigned int height,
   pfstmo::Array2D* BASE = new pfstmo::Array2D(w,h); // base layer
   pfstmo::Array2D* DETAIL = new pfstmo::Array2D(w,h); // detail layer
 
-  float min_pos = 1e10f;
+  float min_pos = 1e10f; // minimum positive value (to avoid log(0))
   for( i=0 ; i<size ; i++ )
   {
     (*I)(i) = 1.0f/61.0f * ( 20.0f*(*R)(i) + 40.0f*(*G)(i) + (*B)(i) );
@@ -101,33 +113,29 @@ void tmo_durand02(unsigned int width, unsigned int height,
     (*G)(i) /= L;
     (*B)(i) /= L;
 
-    (*I)(i) = log(FLT_MIN+L );
-//     if (!finite((*I)(i))) {
-//     fprintf(stderr,"nf");
-//     }
+    (*I)(i) = logf( L );
   }
 
 #ifdef HAVE_FFTW3F
-  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample/*, progress_cb */);
+  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample, progress_cb );
 #else
-  bilateralFilter( I, BASE, sigma_s, sigma_r/*, progress_cb */);
+  bilateralFilter( I, BASE, sigma_s, sigma_r, progress_cb );
 #endif
 
   //!! FIX: find minimum and maximum luminance, but skip 1% of outliers
   float maxB,minB;
   findMaxMinPercentile(BASE, 0.01f, minB, 0.99f, maxB);
 
-//   DEBUG_STR << "Base contrast: " << "maxB=" << maxB << " minB=" << minB
-//             << " c=" << maxB-minB << std::endl;
-
   float compressionfactor = baseContrast / (maxB-minB);
 
-//   DEBUG_STR << "Base contrast (compressed): " << "maxB=" << maxB*compressionfactor
-//             << " minB=" << minB*compressionfactor
-//             << " c=" << (maxB-minB)*compressionfactor << std::endl;
+  // Color correction factor
+  const float k1 = 1.48;
+  const float k2 = 0.82;
+  const float s = ( (1 + k1)*pow(compressionfactor,k2) )/( 1 + k1*pow(compressionfactor,k2) );
   
   for( i=0 ; i<size ; i++ )
   {
+    //progress_cb(1);
     (*DETAIL)(i) = (*I)(i) - (*BASE)(i);
     (*I)(i) = (*BASE)(i) * compressionfactor + (*DETAIL)(i);
 
@@ -138,9 +146,15 @@ void tmo_durand02(unsigned int width, unsigned int height,
     //luminance
     (*I)(i) -=  4.3f+minB*compressionfactor;
 
-    (*R)(i) *= expf( (*I)(i) );
-    (*G)(i) *= expf( (*I)(i) );
-    (*B)(i) *= expf( (*I)(i) );
+    if( likely( color_correction ) ) {
+      (*R)(i) =  powf( (*R)(i), s ) *  expf( (*I)(i) );
+      (*G)(i) =  powf( (*G)(i), s ) *  expf( (*I)(i) );
+      (*B)(i) =  powf( (*B)(i), s ) *  expf( (*I)(i) );
+    } else {
+      (*R)(i) *= expf( (*I)(i) );
+      (*G)(i) *= expf( (*I)(i) );
+      (*B)(i) *= expf( (*I)(i) );
+    }
   }
 
   delete I;
@@ -150,25 +164,29 @@ void tmo_durand02(unsigned int width, unsigned int height,
   delete B;
   delete G;
   delete R;
+
+  progress_cb( 100 );
+
 }
 
 
 
 /**
- * @brief Find minimum and maximum value skipping the extremes
+ * @brief Find minimum and maximum value skipping the extreems
  *
  */
 static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum)
 {
-	int size = I->getRows() * I->getCols();
-	std::vector<float> vI;
-	
-	for( int i=0 ; i<size ; i++ )
-		if( (*I)(i)!=0.0f )
-			vI.push_back((*I)(i));
-	
-	std::sort(vI.begin(), vI.end());
-	minLum = vI.at( int(minPrct*vI.size()) );
-	maxLum = vI.at( int(maxPrct*vI.size()) );
+  int size = I->getRows() * I->getCols();
+  std::vector<float> vI;
+
+  for( int i=0 ; i<size ; i++ )
+    if( (*I)(i)!=0.0f )
+      vI.push_back((*I)(i));
+      
+  std::sort(vI.begin(), vI.end());
+
+  minLum = vI.at( int(minPrct*vI.size()) );
+  maxLum = vI.at( int(maxPrct*vI.size()) );
 }

@@ -2,6 +2,7 @@
  * @file fastbilateral.cpp
  * @brief Fast bilateral filtering
  *
+ * 
  * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
@@ -26,19 +27,24 @@
  * $Id: fastbilateral.cpp,v 1.5 2008/09/09 18:10:49 rafm Exp $
  */
 
-
-#include "../tmo_config.h"
 #include <iostream>
 
 #include <fftw3.h>
 #include <math.h>
 
 #include "../pfstmo.h"
-#include "../../Libpfs/pfs.h"
+
+#ifdef BRANCH_PREDICTION
+#define likely(x)       __builtin_expect((x),1)
+#define unlikely(x)     __builtin_expect((x),0)
+#else
+#define likely(x)       (x)
+#define unlikely(x)     (x)
+#endif
+
 
 using namespace std;
 
-void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out );
 
 inline float max( float a, float b )
 {
@@ -54,7 +60,6 @@ inline float min( float a, float b )
 // TODO: use spatial convolution rather than FFT, should be much
 // faster except for a very large kernels
 class GaussianBlur
-
 {
   float* source;
   fftwf_complex* freq;
@@ -76,6 +81,7 @@ public:
     fplan_fw = fftwf_plan_dft_r2c_2d(nx, ny, source, freq, FFTW_ESTIMATE);
     fplan_in = fftwf_plan_dft_c2r_2d(nx, ny, freq, source, FFTW_ESTIMATE);    
   }
+
 
   void blur( const pfstmo::Array2D *I, pfstmo::Array2D *J )
   {
@@ -116,7 +122,7 @@ public:
       for( y=0 ; y<ny ; y++ )
         (*J)(x,y) = source[x*ny+y] / nsize;  
   }
-
+  
   ~GaussianBlur()
   {
     fftwf_free(source); 
@@ -128,12 +134,14 @@ public:
   
 };
 
+
 // According to the original paper, downsampling can be used to speed
 // up computation. However, downsampling cannot be mathematically
 // justified and introduces large errors (mostly excessive bluring) in
 // the result of the bilateral filter. Therefore, in this
 // implementation, downsampling is disabled.
 
+#if 0
 /**
  * @brief upsampling and downsampling
  *
@@ -215,7 +223,7 @@ void downsampleArray( const pfstmo::Array2D *in, pfstmo::Array2D *out )
     }
 }
 
-
+#endif
 
 /* 
 Pseudocode from the paper:
@@ -233,8 +241,8 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
 */
 
 void fastBilateralFilter( const pfstmo::Array2D *I,
-  pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample/*,
-  pfstmo_progress_callback progress_cb */)
+  pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample,
+  pfstmo_progress_callback progress_cb )
 {
   int i;
   int w = I->getCols();
@@ -278,7 +286,7 @@ void fastBilateralFilter( const pfstmo::Array2D *I,
   // piecewise bilateral
   for( int j=0 ; j<NB_SEGMENTS ; j++ )
   {
-//    progress_cb( j * 100 / NB_SEGMENTS );
+    progress_cb( j * 100 / NB_SEGMENTS );
     float jI = minI + j*stepI;        // current intensity value
     
     for( i=0 ; i<sizeZ ; i++ )
@@ -298,8 +306,8 @@ void fastBilateralFilter( const pfstmo::Array2D *I,
       if( likely((*jK)(i)!=0.0f) )
         (*jJ)(i) = (*jH)(i) / (*jK)(i);
       else
-        (*jJ)(i) = 0.0f;
-
+        (*jJ)(i) = 0.0f;        
+      
     //  if( downsample == 1 )
       JJ = jJ;                  // No upsampling is necessary
 //    else
@@ -338,7 +346,7 @@ void fastBilateralFilter( const pfstmo::Array2D *I,
       }
     }
   }
-
+  
 //  delete Iz;
 //  if( downsample != 1 )
 //    delete JJ;
@@ -346,5 +354,4 @@ void fastBilateralFilter( const pfstmo::Array2D *I,
   delete jG;
   delete jK;
   delete jH;
-  delete Iz;
 }

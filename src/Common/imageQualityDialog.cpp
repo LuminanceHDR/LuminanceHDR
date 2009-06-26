@@ -20,6 +20,7 @@
  *
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
+
 #include <QImage>
 #include <QString>
 #include <QByteArray>

@@ -1,7 +1,7 @@
 /**
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2009 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,38 +18,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * Original Work
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef IMAGELDRVIEWER_H
-#define IMAGELDRVIEWER_H
+#include "progressHelper.h"
 
-#include "../Common/genericViewer.h"
-#include "tonemapping_widget.h"
+ProgressHelper::ProgressHelper(QObject *p): QObject(p), prev(1) {}
 
-class LdrViewer : public GenericViewer {
-	Q_OBJECT
-public:
-	LdrViewer(const QImage &i, QWidget *parent = 0, bool ns = false, bool ncf = false, tonemapping_options* = NULL);
-	~LdrViewer();
-	void levelsRequested(bool);
-	QString getFilenamePostFix();
-	QString getExifComment();
-	const QImage getQImage();
-signals:
-	void levels_closed();
-private slots:
-	void updatePreview(unsigned char *);
-	void restoreoriginal();
-private:
-	void parseOptions(tonemapping_options *opts);
-	QString caption,postfix,exif_comment;
-	const QImage origimage;
-	QImage previewimage;
-};
-
-#endif
+int ProgressHelper::newValue(int progress) {
+	emit emitValue(progress);
+	return 1;
+}

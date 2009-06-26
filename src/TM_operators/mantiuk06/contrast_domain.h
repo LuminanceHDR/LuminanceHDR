@@ -8,7 +8,7 @@
  * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
  * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
  *
- * This file is a part of Qtpfsgui package (taken from the PFSTMO package).
+ * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
  * 
@@ -28,21 +28,15 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
+ * @author Rafal Mantiuk, <mantiuk@gmail.com>
+ * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
  *
  * $Id: contrast_domain.h,v 1.7 2008/06/16 22:17:47 rafm Exp $
  */
 #ifndef CONTRAST_DOMAIN_H
 #define CONTRAST_DOMAIN_H
 
-#include "../../Libpfs/array2d.h"
-
-
-/** Progress reporting callback function:
- *    void report_progress( int progress )
- *  'progress' parameter grows from 0 to 100
- */
-typedef void(*progress_callback)(int progress);
-
+#include "../pfstmo.h"
 
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]
@@ -57,9 +51,12 @@ typedef void(*progress_callback)(int progress);
  * @param itmax maximum number of iterations for convergence (typically 50)
  * @param tol tolerence to get within for convergence (typically 1e-3)
  * @param progress_cb callback function that reports progress
+ * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
+ * it was stopped from a callback function and PFSTMO_ERROR if an
+ * error was encountered.
  */
-void tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
-			    float contrastFactor, float saturationFactor, float detailFactor, bool bcg,
-			    int itmax = 200, float tol = 1e-3, progress_callback progress_cb  = NULL);
+int tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
+			    float contrastFactor, float saturationFactor, bool bcg,
+			    int itmax = 200, float tol = 1e-3, pfstmo_progress_callback progress_cb  = NULL);
 
 #endif

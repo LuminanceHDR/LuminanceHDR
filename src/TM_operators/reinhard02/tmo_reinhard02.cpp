@@ -2,26 +2,8 @@
  * @file tmo_reinhard02.cpp
  * @brief Tone map luminance channel using Reinhard02 model
  *
- * Implementation courtesy of Erik Reinhard.
- *
  * This file is a part of Qtpfsgui package.
- * ----------------------------------------------------------------------
- * Copyright (C) 2003-2007 Grzegorz Krawczyk
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ----------------------------------------------------------------------
+ * Implementation courtesy of Erik Reinhard. 
  *
  * Original source code note:
  * Tonemap.c  University of Utah / Erik Reinhard / October 2001
@@ -31,16 +13,21 @@
  *
  * Port to PFS tools library by Grzegorz Krawczyk <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: tmo_reinhard02.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
+ * $Id: tmo_reinhard02.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
  */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
+
 #include "../pfstmo.h"
 
-// extern "C" {
-void print_parameter_settings ();
+#ifdef HAVE_ZFFT
+#include <fft.h>
+#else
+// if no zfft library compile approximate sollution
+#define APPROXIMATE
+#endif
+
 //--- from defines.h
 typedef struct {
   int     xmax, ymax;     /* image dimensions */
@@ -50,13 +37,13 @@ typedef double  COLOR[3];       /* red, green, blue (or X,Y,Z) */
 //--- end of defines.h
 
 
-// static int       width, height, scale;
+static int       width, height, scale;
 static COLOR   **image;
-// static double ***convolved_image;
+static double ***convolved_image;
 static double    sigma_0, sigma_1;
 double         **luminance;
 
-// static double    k                = 1. / (2. * 1.4142136);
+static double    k                = 1. / (2. * 1.4142136);
 static double    key              = 0.18;
 static double    threshold        = 0.05;
 static double    phi              = 8.;
@@ -70,16 +57,25 @@ static CVTS      cvts             = {0, 0};
 
 static bool temporal_coherent;
 
+#ifdef APPROXIMATE
+extern int PyramidHeight; // set by build_pyramid, defines actual pyramid size
 extern double V1 (int x, int y, int level);
 extern void build_pyramid (double **luminance, int image_width, int image_height);
 extern void clean_pyramid ();
-extern int PyramidHeight;
+#else
+
+static zomplex **filter_fft;
+static zomplex  *image_fft, *coeff;
+
+#define V1(x,y,i)        (convolved_image[i][x][y])
+
+#endif
 
 #define SIGMA_I(i)       (sigma_0 + ((double)i/(double)range)*(sigma_1 - sigma_0))
 #define S_I(i)           (exp (SIGMA_I(i)))
 #define V2(x,y,i)        (V1(x,y,i+1))
 #define ACTIVITY(x,y,i)  ((V1(x,y,i) - V2(x,y,i)) / (((key * pow (2., phi))/(S_I(i)*S_I(i))) + V1(x,y,i)))
-// }
+
 
 
 /**
@@ -95,12 +91,12 @@ class TemporalSmoothVariable
   {
     return 0.01 * luminance;
   }
-
+  
 public:
   TemporalSmoothVariable() : value( -1 )
   {
   }
-
+  
   void set( T new_value )
   {
     if( value == -1 )
@@ -113,11 +109,11 @@ public:
       value += delta;
     }
   }
-
+  
   T get() const
   {
     return value;
-  }
+  }  
 };
 
 
@@ -175,6 +171,139 @@ double kaiserbessel (double x, double y, double M)
     return 0.;
   return bessel (M_PI * alpha * sqrt (d)) / bbeta;
 }
+
+
+/*
+ * FFT functions
+ */
+#ifdef HAVE_ZFFT
+
+void initialise_fft (int width, int height)
+{
+  coeff = zfft2di (width, height, NULL);
+}
+
+void compute_fft (zomplex *array, int width, int height)
+{
+  zfft2d (-1, width, height, array, width, coeff);
+}
+
+void compute_inverse_fft (zomplex *array, int width, int height)
+{
+  zfft2d (1, width, height, array, width, coeff);
+}
+
+
+// Compute Gaussian blurred images
+void gaussian_filter (zomplex *filter, double scale, double k )
+{
+  int    x, y;
+  double x1, y1, s;
+  double a = 1. / (k * scale);
+  double c = 1. / 4.;
+
+  for (y = 0; y < cvts.ymax; y++)
+  {
+    y1 = (y >= cvts.ymax / 2) ? y - cvts.ymax : y;
+    s  = erf (a * (y1 - .5)) - erf (a * (y1 + .5));
+    for (x = 0; x < cvts.xmax; x++)
+    {
+      x1 = (x >= cvts.xmax / 2) ? x - cvts.xmax : x;
+      filter[y*cvts.xmax + x].re = s * (erf (a * (x1 - .5)) - erf (a * (x1 + .5))) * c;
+      filter[y*cvts.xmax + x].im = 0.;
+    }
+  }
+}
+
+void build_gaussian_fft ()
+{
+  int    i;
+  double length    = cvts.xmax * cvts.ymax;
+  double fft_scale = 1. / sqrt (length);
+  filter_fft      = (zomplex**) calloc (range, sizeof (zomplex*));
+
+  for (scale = 0; scale < range; scale++)
+  {
+    fprintf (stderr, "Computing FFT of Gaussian at scale %i (size %i x %i)%c", 
+	     scale, cvts.xmax, cvts.ymax, (char)13);
+    filter_fft[scale] = (zomplex*) calloc (length, sizeof (zomplex));
+    gaussian_filter (filter_fft[scale], S_I(scale), k);
+    compute_fft     (filter_fft[scale], cvts.xmax, cvts.ymax);
+    for (i = 0; i < length; i++)
+    {
+      filter_fft[scale][i].re *= fft_scale;
+      filter_fft[scale][i].im *= fft_scale;
+    }
+  }
+  fprintf (stderr, "\n");
+}
+
+void build_image_fft ()
+{
+  int    i, x, y;
+  double length    = cvts.xmax * cvts.ymax;
+  double fft_scale = 1. / sqrt (length);
+
+  fprintf (stderr, "Computing image FFT\n");
+  image_fft = (zomplex*) calloc (length, sizeof (zomplex));
+
+  for (y = 0; y < cvts.ymax; y++)
+    for (x = 0; x < cvts.xmax; x++)
+      image_fft[y*cvts.xmax + x].re = luminance[y][x];
+
+  compute_fft (image_fft, cvts.xmax, cvts.ymax);
+  for (i = 0; i < length; i++)
+  {
+    image_fft[i].re *= fft_scale;
+    image_fft[i].im *= fft_scale;
+  }
+}
+
+void convolve_filter (int scale, zomplex *convolution_fft)
+{
+  int i, x, y;
+
+  for (i = 0; i < cvts.xmax * cvts.ymax; i++)
+  {
+    convolution_fft[i].re = image_fft[i].re * filter_fft[scale][i].re -
+                            image_fft[i].im * filter_fft[scale][i].im;
+    convolution_fft[i].im = image_fft[i].re * filter_fft[scale][i].im +
+                            image_fft[i].im * filter_fft[scale][i].re;
+  }
+  compute_inverse_fft (convolution_fft, cvts.xmax, cvts.ymax);
+  i = 0;
+  for (y = 0; y < cvts.ymax; y++)
+    for (x = 0; x < cvts.xmax; x++)
+      convolved_image[scale][x][y] = convolution_fft[i++].re;
+}
+
+void compute_fourier_convolution ()
+{
+  int x;
+  zomplex *convolution_fft;
+
+  initialise_fft     (cvts.xmax, cvts.ymax);
+  build_image_fft    ();
+  build_gaussian_fft ();
+  convolved_image =  (double ***) malloc (range * sizeof (double **));
+
+  convolution_fft =  (zomplex *) calloc (cvts.xmax * cvts.ymax, sizeof (zomplex));
+  for (scale = 0; scale < range; scale++)
+  {
+    fprintf (stderr, "Computing convolved image at scale %i%c", scale, (char)13);
+    convolved_image[scale] = (double **) malloc (cvts.xmax * sizeof (double *));
+    for (x = 0; x < cvts.xmax; x++)
+      convolved_image[scale][x] = (double *) malloc (cvts.ymax * sizeof (double));
+    convolve_filter (scale, convolution_fft);
+    free (filter_fft[scale]);
+  }
+  fprintf (stderr, "\n");
+  free (convolution_fft);
+  free (image_fft);
+}
+
+#endif // #ifdef HAVE_ZFFT
+
 
 
 /*
@@ -272,7 +401,7 @@ void scale_to_midtone ()
     avg_luminance.set( log_average() );
     avg = avg_luminance.get();
   } else avg = log_average();
-
+  
   scale_factor = 1.0 / avg;
   for (y = 0; y < cvts.ymax; y++)
     for (x = 0; x < cvts.xmax; x++)
@@ -281,9 +410,9 @@ void scale_to_midtone ()
       {
 	u              = (x > hw) ? cvts.xmax - x : x;
 	v              = (y > hh) ? cvts.ymax - y : y;
-	d              = (u < v) ? u : v;
-	factor         = (d < border_size) ? (key - low_tone) *
-	                  kaiserbessel (border_size - d, 0, border_size) +
+	d              = (u < v) ? u : v;	
+	factor         = (d < border_size) ? (key - low_tone) * 
+	                  kaiserbessel (border_size - d, 0, border_size) + 
                           low_tone : key;
       }
       else
@@ -347,23 +476,8 @@ void dynamic_range ()
       if (luminance[y][x] > maxval)
 	maxval = luminance[y][x];
     }
-  fprintf (stderr, "\tRange of values  = %9.8f - %9.8f\n", minval, maxval);
-  fprintf (stderr, "\tDynamic range    = %i:1\n", (int)(maxval/minval));
 }
 
-void print_parameter_settings ()
-{
-  fprintf (stderr, "\tImage size       = %i %i\n", cvts.xmax, cvts.ymax);
-  fprintf (stderr, "\tLowest scale     = %i pixels\t\t(-low <integer>)\n", scale_low);
-  fprintf (stderr, "\tHighest scale    = %i pixels\t\t(-high <integer>)\n", scale_high);
-  fprintf (stderr, "\tNumber of scales = %i\t\t\t(-num <integer>)\n", range);
-  fprintf (stderr, "\tScale spacing    = %f\n", S_I(1) / S_I(0));
-  fprintf (stderr, "\tKey value        = %f\t\t(-key <float>)\n", key);
-  fprintf (stderr, "\tWhite value      = %f\t\t(-white <float>)\n", white);
-  fprintf (stderr, "\tPhi              = %f\t\t(-phi <float>)\n", phi);
-  fprintf (stderr, "\tThreshold        = %f\t\t(-threshold <float>)\n", threshold);
-  dynamic_range ();
-}
 
 /*
  * @brief Photographic tone-reproduction
@@ -379,14 +493,15 @@ void print_parameter_settings ()
  */
 void tmo_reinhard02(
   unsigned int width, unsigned int height,
-  const float *_Y, float *_L,
-  bool use_scales, float key, float phi,
+  const float *nY, float *nL, 
+  bool use_scales, float key, float phi, 
   int num, int low, int high, bool temporal_coherent )
 {
-  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(_Y));
-  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, _L);
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
+  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, nL);
 
   int x,y;
+
   ::key = key;
   ::phi = phi;
   ::range = num;
@@ -414,7 +529,11 @@ void tmo_reinhard02(
 
   if( use_scales )
   {
+#ifdef APPROXIMATE
     build_pyramid(luminance, cvts.xmax, cvts.ymax);
+#else
+    compute_fourier_convolution();
+#endif
   }
 
   tonemap_image();
@@ -427,12 +546,8 @@ void tmo_reinhard02(
 //  print_parameter_settings();
 
   deallocate_memory();
-  if( use_scales ) {
-  	clean_pyramid();
-  }
+  clean_pyramid();
 
   delete L;
   delete Y;
 }
-
-// }

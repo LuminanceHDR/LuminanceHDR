@@ -173,9 +173,8 @@ void MainGui::fileNewViaWizard(QStringList files) {
 			mdiArea->addSubWindow(newmdi);
 			newmdi->setWindowTitle(wizard->getCaptionTEXT());
 			newmdi->fitToWindow(true);
-			newmdi->setSelectionTool(true);
 			newmdi->showMaximized();
-			newmdi->show();
+			newmdi->setSelectionTool(true);
 		}
 		delete wizard;
 	}
@@ -255,10 +254,12 @@ void MainGui::fileSaveAs()
 			else
 				tiffwriter.writeFloatTiff();
 		} else if (qfi.suffix().toUpper()=="PFS") {
+			FILE *fd = fopen(encodedName, "w");
 			pfs::DOMIO pfsio;
-			(currenthdr->getHDRPfsFrame())->convertRGBChannelsToXYZ();
-			pfsio.writeFrame(currenthdr->getHDRPfsFrame(),encodedName);
-			(currenthdr->getHDRPfsFrame())->convertXYZChannelsToRGB();
+			//currenthdr->getHDRPfsFrame()->convertRGBChannelsToXYZ();
+			pfsio.writeFrame(currenthdr->getHDRPfsFrame(), fd);
+			//currenthdr->getHDRPfsFrame()->convertXYZChannelsToRGB();
+			fclose(fd);
 		} else {
 			// TODO: [QT 4.5] This is not needed for windows (bug will be fixed in QT 4.5..?)
 
@@ -347,10 +348,20 @@ void MainGui::tonemap_requested() {
 		return;
 	if (testTempDir(qtpfsgui_options->tempfilespath)) {
 		this->setDisabled(true);
-		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
-		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
-		tmodialog->show();
-		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+		try {
+			TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
+			connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
+			tmodialog->show();
+			tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+		}
+		catch(pfs::Exception e) {
+			QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: %1 ").arg(e.getMessage()));
+			reEnableMainWin();	
+		}
+		catch(...) {
+			QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: Filed to Tonemap Image"));
+			reEnableMainWin();	
+		}
 	}
 }
 
@@ -542,7 +553,7 @@ void MainGui::setupLoadThread(QString fname) {
 }
 
 void MainGui::load_failed(QString error_message) {
-	QMessageBox::critical(0,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
+	QMessageBox::critical(this,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	LoadHdrThread *lht=(LoadHdrThread *)(sender());
 	QString fname=lht->getHdrFileName();

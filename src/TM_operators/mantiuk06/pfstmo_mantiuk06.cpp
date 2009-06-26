@@ -1,13 +1,14 @@
 /**
  * @brief Contrast mapping TMO
  *
- *
+ * From:
+ * 
  * Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel.
  * A Perceptual Framework for Contrast Processing of High Dynamic Range Images
  * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
  * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
  *
- * This file is a part of Qtpfsgui package (reworked from the PFSTMO package).
+ * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
  * 
@@ -29,59 +30,61 @@
  * @author Radoslaw Mantiuk, <radoslaw.mantiuk@gmail.com>
  * @author Rafal Mantiuk, <mantiuk@gmail.com>
  * Updated 2007/12/17 by Ed Brambley <E.J.Brambley@damtp.cam.ac.uk>
- * Updated 2008/07/26 by Dejan Beric <dejan.beric@dmsgroup.co.yu>
- *  Added the detail Factor slider which offers more control over contrast in details
  *
- * $Id: pfstmo_mantiuk06.cpp,v 1.7 2008/02/29 16:46:28 rafm Exp $
+ * $Id: pfstmo_mantiuk06.cpp,v 1.9 2008/06/16 22:09:33 rafm Exp $
  */
 
-#include "../../Libpfs/pfs.h"
-#include "contrast_domain.h"
+#include <stdlib.h>
 #include <math.h>
-void progress_report( int progress )
+#include <fcntl.h>
+#include <iostream>
+
+#include "../../Libpfs/pfs.h"
+
+#include "contrast_domain.h"
+
+typedef int(*pfstmo_progress_callback)(int progress);
+
+pfs::Frame* pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, pfstmo_progress_callback progress_cb)
 {
-    fprintf( stderr, "\rcompleted %d%%", progress );
-    if( progress == 100 )
-      fprintf( stderr, "\n" );
+    //--- default tone mapping parameters;
+    //float scaleFactor = 0.1f;
+    //float saturationFactor = 0.8f;
+    //bool cont_map = false, cont_eq = false
+    bool cont_map = false;
+    bool bcg = true;
+    int itmax = 200;
+    float tol = 1e-3;
+
+    if (!cont_eq)
+	cont_map = true;
+    else 
+	scaleFactor = -scaleFactor;
+
+   std::cout << "pfstmo_mantiuk06" << std::endl;
+   std::cout << "cont_map: " << cont_map << std::endl;
+   std::cout << "cont_eq: " << cont_eq << std::endl;
+   std::cout << "scaleFactor: " << scaleFactor << std::endl;
+   std::cout << "saturationFactor: " << saturationFactor << std::endl;
+   std::cout << "detailFactor: " << detailFactor << std::endl;
+
+    pfs::DOMIO pfsio;
+
+    pfs::Channel *inX, *inY, *inZ;
+	
+    frame->getXYZChannels(inX, inY, inZ);
+    int cols = frame->getWidth();
+    int rows = frame->getHeight();
+
+    pfs::Array2DImpl R( cols, rows );
+  
+    pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ );
+
+    tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
+      scaleFactor, saturationFactor, bcg, itmax, tol, progress_cb);	
+
+    pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+
+    return frame;
 }
-
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame* inpfsframe, float scalefactor, float saturationfactor,float detailfactor, bool constrast_equalization ) {
-
-	assert(inpfsframe!=NULL);
-	//get tone mapping parameters;
-	float scaleFactor = scalefactor;
-	float saturationFactor = saturationfactor;
-	//Dejan Beric'c contribution:
-	float detailFactor = detailfactor;
-	if (constrast_equalization)
-		scaleFactor=-scaleFactor;
-	pfs::DOMIO pfsio;
-	//Ed Brambley's contribution:
-	const bool bcg = false; //use biconjucate gradients?
-	const int itmax = 200;
-	const float tol = 1e-3;
-
-	pfs::Channel *inX, *inY, *inZ;
-	inpfsframe->getXYZChannels(inX, inY, inZ);
-	int cols = inpfsframe->getWidth();
-	int rows = inpfsframe->getHeight();
-
-	pfs::Frame *outframe = pfsio.createFrame( cols, rows );
-	assert(outframe!=NULL);
-	pfs::Channel *Ro, *Go, *Bo;
-	outframe->createRGBChannels( Ro, Go, Bo );
-	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
-
-// 	pfs::Array2DImpl *R=new pfs::Array2DImpl( cols, rows );
-	pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, Ro, Go, Bo );
-	tmo_mantiuk06_contmap( cols, rows, Ro->getRawData(), Go->getRawData(), Bo->getRawData(),
-	inY->getRawData(), scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, &progress_report );
-	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_SRGB, Ro, Go, Bo );
-
-	outframe->getTags()->setString("LUMINANCE", "RELATIVE");
-
-// 	delete R;
-	return outframe;
-}
-
-

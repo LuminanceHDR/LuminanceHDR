@@ -75,7 +75,7 @@ Q_OBJECT
 
 private:
   TIFF* tif;
-  pfs::Channel *R,*G,*B;
+  pfs::Channel *X,*Y,*Z;
   QImage *ldrimage;
   uint32 width,height;
 public:

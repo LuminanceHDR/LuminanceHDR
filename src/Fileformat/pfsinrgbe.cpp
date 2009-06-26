@@ -35,10 +35,8 @@ pfs::Frame* readRGBEfile (const char * filename) {
 	RGBEReader reader( inputRGBEfile );
 	pfs::Frame *frame = pfsio.createFrame( reader.getWidth(), reader.getHeight() );
 	pfs::Channel  *X, *Y, *Z;
-	frame->createRGBChannels( X,Y,Z );
-// 	frame->createXYZChannels( X,Y,Z );
-	reader.readImage( X,Y,Z );
-// 	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+	frame->createXYZChannels( X, Y, Z);
+	reader.readImage( X, Y, Z);
 	frame->getTags()->setString("LUMINANCE", "RELATIVE");
 	frame->getTags()->setString( "FILE_NAME", filename );
 	fclose(inputRGBEfile);

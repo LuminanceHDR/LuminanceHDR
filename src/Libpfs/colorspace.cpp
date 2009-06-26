@@ -1,7 +1,7 @@
 /**
  * @brief PFS library - color space transformations
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of PFSTOOLS package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * 
@@ -22,7 +22,7 @@
  * 
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
- * $Id: colorspace.cpp,v 1.4 2006/09/21 21:42:54 rafm Exp $
+ * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
 #include <math.h>
@@ -46,6 +46,28 @@ static const float xyz2rgbD65Mat[3][3] =
   { -0.969257,  1.875995,  0.041555 },
   {  0.055636, -0.203996,  1.057069 } };
 
+// //--- precise values for matrix convertion (above float precission)
+// static const float rgb2xyzD65Mat[3][3] =
+// { { 0.412424,  0.357579, 0.180464 },
+//   { 0.212656,  0.715158, 0.0721856 },
+//   { 0.0193324, 0.119193, 0.950444 } };
+
+// static const float xyz2rgbD65Mat[3][3] =
+// { {  3.24071,   -1.53726,  -0.498571 },
+//   { -0.969258,   1.87599,   0.0415557 },
+//   {  0.0556352, -0.203996,  1.05707 } };
+
+// //--- original values which lead to mean sq error of above 3 for green channel
+// static const float rgb2xyzD65Mat[3][3] =
+// { { 0.4124f, 0.3576f, 0.1805f },
+//   { 0.2126f, 0.7152f, 0.0722f },
+//   { 0.0193f, 0.1192f, 0.9505f } };
+
+// static const float xyz2rgbD65Mat[3][3] =
+// { { 3.2406f, -1.5372f, -0.4986f },
+//   { -0.9689f, 1.8758f,  0.0415f },
+//   { 0.0557f, -0.2040f,  1.0570f } };
+
 
 static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
   Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
@@ -63,7 +85,6 @@ static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Ar
 //-----------------------------------------------------------
 // sRGB conversion functions
 //-----------------------------------------------------------
-
 
 static inline float clamp( const float v, const float min, const float max )
 {
@@ -99,15 +120,14 @@ static void transformXYZ2SRGB( const Array2D *inC1, const Array2D *inC2,
   for( int index = 0; index < imgSize ; index++ ) {
     float r = (*inC1)(index), g = (*inC2)(index), b = (*inC3)(index);
     float &o_r = (*outC1)(index), &o_g = (*outC2)(index), &o_b = (*outC3)(index);
-
+    
     r = clamp( r, 0, 1 );
     g = clamp( g, 0, 1 );
     b = clamp( b, 0, 1 );
-    
+
     o_r = (r <= 0.0031308 ? r *= 12.92f : 1.055f * powf( r, 1./2.4 ) - 0.055);
     o_g = (g <= 0.0031308 ? g *= 12.92f : 1.055f * powf( g, 1./2.4 ) - 0.055);
-    o_b = (b <= 0.0031308 ? b *= 12.92f : 1.055f * powf( b, 1./2.4 ) - 0.055);
-    
+    o_b = (b <= 0.0031308 ? b *= 12.92f : 1.055f * powf( b, 1./2.4 ) - 0.055);    
   }
 }
 
@@ -265,7 +285,7 @@ void transformColorSpace( ColorSpace inCS,
   } 
 
   if( !found ) {
-    // TODO: All tranforms should be supported
+    // TODO: All transforms should be supported
     throw Exception( "Not supported color tranform" );
   } else {
     // Reverse path

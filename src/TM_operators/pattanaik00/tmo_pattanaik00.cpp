@@ -7,7 +7,7 @@
  * In Proceedings of ACM SIGGRAPH 2000
  *
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 
@@ -27,20 +27,21 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
- * $Id: tmo_pattanaik00.cpp,v 1.5 2004/12/14 15:34:04 krawczyk Exp $
+ * $Id: tmo_pattanaik00.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
  */
 
+
 #include <math.h>
-#include "../../Libpfs/pfs.h"
+
 #include "tmo_pattanaik00.h"
+#include "../pfstmo.h"
 
 
 /// sensitivity of human visual system
 float n = 0.73f;
 
-void calculateLocalAdaptation(pfs::Array2D* Y, int x, int y, float& Acone, float& Arod);
+void calculateLocalAdaptation(const pfstmo::Array2D* Y, int x, int y, float& Acone, float& Arod);
 float sigma_response_rod(float I);
 float sigma_response_cone(float I);
 float model_response(float I, float sigma);
@@ -48,10 +49,16 @@ float model_response(float I, float sigma);
 
 
 // tone mapping operator code
-void tmo_pattanaik00( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B, 
-  pfs::Array2D* Y, VisualAdaptationModel* am, bool local )
+void tmo_pattanaik00( unsigned int width, unsigned int height,
+  float* nR, float* nG, float* nB, 
+  const float* nY, VisualAdaptationModel* am, bool local )
 {  
   ///--- initialization of parameters
+
+  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
+  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
+  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
+  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, nB);
 
   /// cones level of adaptation
   float Acone = am->getAcone();
@@ -162,6 +169,7 @@ void tmo_pattanaik00( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
         calculateLocalAdaptation(Y,x,y,Acone,Arod);
         Bcone = 2e6/(2e6+Acone);
         Brod = 0.04f/(0.04f+Arod);
+        
         sigma_cone = sigma_response_cone(Acone);
         sigma_rod = sigma_response_rod(Arod);
       }
@@ -175,7 +183,7 @@ void tmo_pattanaik00( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
 	Rrod /= Rlum;
 	Rcone /= Rlum;
       }
-
+      
       float Scolor = (Bcone*pow(sigma_cone,n)*n*pow(l,n))
 	/ pow( pow(l,n)+pow(sigma_cone,n), 2 );
       Scolor /= S_d;
@@ -196,7 +204,11 @@ void tmo_pattanaik00( pfs::Array2D* R, pfs::Array2D* G, pfs::Array2D* B,
       (*G)(x,y) = (g<1.0f) ? ((g>0.0f) ? g : 0.0f) : 1.0f;
       (*B)(x,y) = (b<1.0f) ? ((b>0.0f) ? b : 0.0f) : 1.0f;
     }
-
+      
+  delete B;
+  delete G;
+  delete R;
+  delete Y;
 }
 
 ///////////////////////////////////////////////////////////
@@ -251,7 +263,7 @@ float model_response(float I, float sigma)
  * @param Acone [out] calculated adaptation for cones
  * @param Arod [out] calculated adaptation for rods
  */
-void calculateLocalAdaptation(pfs::Array2D* Y, int x, int y, float& Acone, float& Arod)
+void calculateLocalAdaptation(const pfstmo::Array2D* Y, int x, int y, float& Acone, float& Arod)
 {
   int width = Y->getCols();
   int height = Y->getRows();
@@ -265,7 +277,7 @@ void calculateLocalAdaptation(pfs::Array2D* Y, int x, int y, float& Acone, float
   for( int kx = -kernel_size ; kx <= kernel_size ; kx++ )
     for( int ky = -kernel_size ; ky <= kernel_size ; ky++ )
       if( (kx*kx+ky*ky)<=(kernel_size*kernel_size) &&
-        (x+kx)>0 && (x+kx)<width && (y+ky)>0 && (y+ky)<height )
+        x+kx>0 && x+kx<width && y+ky>0 && y+ky<height )
       {
 	float L = (*Y)(x+kx,y+ky);
 	float w = exp( -pow(fabs(log(L)/LOG5-logLc),6.0) );

@@ -7,9 +7,9 @@
  * In Proceedings of ACM SIGGRAPH 2000
  *
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Qtpfsgui package, based on pfstmo.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2003-2007 Grzegorz Krawczyk
+ * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,68 +27,83 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
- * $Id: pfstmo_pattanaik00.cpp,v 1.3 2004/12/14 15:12:16 krawczyk Exp $
+ * $Id: pfstmo_pattanaik00.cpp,v 1.3 2008/09/04 12:46:49 julians37 Exp $
  */
 
-
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
 #include "../../Libpfs/pfs.h"
-#include "tmo_pattanaik00.h"
-#include <QFile>
 
-using namespace std;
+#include "tmo_pattanaik00.h"
+
+#include <iostream>
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult );
 
-pfs::Frame* pfstmo_pattanaik00 (pfs::Frame* inpfsframe, bool _local,float _multiplier, float _Acone, float _Arod, bool autoY ) {
-	assert(inpfsframe!=NULL);
 
-	pfs::DOMIO pfsio;
-	//--- get tone mapping parameters;
-	bool local = _local;
-	float multiplier = _multiplier;
-	float Acone = _Acone;
-	float Arod  = _Arod;
-	
-	VisualAdaptationModel* am = new VisualAdaptationModel();
-	
-	pfs::Channel *X, *Y, *Z;
-	inpfsframe->getXYZChannels(X,Y,Z);
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
+pfs::Frame* pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum)
+{
+    pfs::DOMIO pfsio;
 
-	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
-	assert(outframe!=NULL);
-	pfs::Channel *Ro, *Go, *Bo;
-	outframe->createRGBChannels( Ro, Go, Bo );
-	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
-	pfs::copyArray(X,Ro);
-	pfs::copyArray(Y,Go);
-	pfs::copyArray(Z,Bo);
+    //--- default tone mapping parameters;
+    bool timedependence = false;
+    //bool local = false;
+    //float multiplier = 1.0f;
+    //Acone = -1.0f;
+    //Arod  = -1.0f;
+    float fps = 16.0f; //not used
+   
+    std::cout << "pfstmo_pattanaik00" << std::endl;
+    std::cout << "local: " << local << std::endl;
+    std::cout << "multiplier: " << multiplier << std::endl;
+    std::cout << "Acone: " << Acone << std::endl;
+    std::cout << "Arod: " << Arod << std::endl;
+    std::cout << "autolum: " << autolum << std::endl;
 
-	
-	// adaptation model
-	if( multiplier!=1.0f )
-		multiplyChannels( Ro, Go, Bo, multiplier );
-	
-	if( !local ) {
-		if( !autoY )
-			am->setAdaptation(Acone,Arod);
-		else
-			am->setAdaptation(Go);
-	}
-	
-	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
-	tmo_pattanaik00( Ro, Go, Bo, Y, am, local );
-// 	pfs::transformColorSpace( pfs::CS_RGB, Ro, Go, Bo, pfs::CS_XYZ, Ro, Go, Bo );
-	
-	delete am; // delete visual adaptation model
-	
-	return outframe;
+    VisualAdaptationModel* am = new VisualAdaptationModel();
+
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    //---
+
+    if( Y==NULL || X==NULL || Z==NULL)
+      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+        
+    // adaptation model
+    if( multiplier!=1.0f )
+      multiplyChannels( X, Y, Z, multiplier );
+
+    if( !local )
+    {
+      if( !timedependence )
+      {
+        if( !autolum )
+          am->setAdaptation(Acone,Arod);
+        else
+          am->setAdaptation(Y);
+      }
+      else
+        am->calculateAdaptation(Y, 1.0f/fps);
+    }
+    // tone mapping
+    int w = Y->getCols();
+    int h = Y->getRows();
+    pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
+
+    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, R, G, B );
+    tmo_pattanaik00( w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), am, local );
+    pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, X, Y, Z );
+
+    delete R;
+    delete G;
+    delete B;
+    delete am; // delete visual adaptation model
+
+    //---
+    return frame;        
 }
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult )

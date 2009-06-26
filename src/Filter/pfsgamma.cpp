@@ -1,11 +1,10 @@
 /**
  * @brief Apply gamma correction the the pfs stream
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of PFSTOOLS package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2003-2005 Rafal Mantiuk and Grzegorz Krawczyk
- * Copyright (C) 2006-2007 Giuseppe Rota
- *
+ * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -23,43 +22,75 @@
  *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
- * $Id: pfsgamma.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
+ * $Id: pfsgamma.cpp,v 1.3 2008/07/29 16:14:29 rafm Exp $
  */
 
-#include <cmath>
+#include <iostream>
+#include <math.h>
 #include "../Libpfs/pfs.h"
 
-void applyGamma( pfs::Array2D *arraydest, const float exponent);
+#define PROG_NAME "pfsgamma"
 
-//input is rgb, output will be xyz, because next step will be tone mapping, which
-//requires a frame with channels in xyz format
-void applyGammaFrame( pfs::Frame* inpfsframe, const float _gamma) {
+void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier );
 
-	assert(inpfsframe!=NULL);
-	pfs::DOMIO pfsio;
-	float gamma = _gamma;
+pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
+{
+  pfs::DOMIO pfsio;
 
-	pfs::Channel *R, *G, *B;
-	inpfsframe->getRGBChannels( R, G, B );
-	assert( R!=NULL && G!=NULL && B!=NULL );
+  float multiplier = 1.0f;
 
-	if (gamma!=1.0f) {
-		applyGamma( R, 1.0f/gamma );
-		applyGamma( G, 1.0f/gamma );
-		applyGamma( B, 1.0f/gamma );
-	}
-	//convertRGBChannelsToXYZ renames the Channels performing color-space conversion
-	inpfsframe->convertRGBChannelsToXYZ();
-	inpfsframe->getTags()->setString("LUMINANCE", "DISPLAY");
+  const char *lum_type = frame->getTags()->getString("LUMINANCE");
+  if( lum_type ) {
+    if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
+         std::cerr << PROG_NAME " warning: applying gamma correction to a display referred image" << std::endl;
+  if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
+     std::cerr << PROG_NAME " warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
+  if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
+     std::cerr << PROG_NAME " warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
+   }
+   
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+
+    if( X != NULL ) {           // Color, XYZ
+      
+      pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
+      // At this point (X,Y,Z) = (R,G,B)
+        
+      applyGamma( X, 1/gamma, multiplier );
+      applyGamma( Y, 1/gamma, multiplier );
+      applyGamma( Z, 1/gamma, multiplier );
+
+      pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+      // At this point (X,Y,Z) = (X,Y,Z)
+      
+    } else if( (Y = frame->getChannel( "Y" )) != NULL ) {
+      // Luminance only
+
+      applyGamma( Y, 1/gamma, multiplier );
+      
+    } 
+    //TODO
+	//else
+	// throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+
+    //if( opt_setgamma && gamma > 1.0f )
+      frame->getTags()->setString("LUMINANCE", "DISPLAY");
+    //else if( opt_setgamma && gamma < 1.0f )
+    //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    
+    return frame;        
 }
 
-void applyGamma( pfs::Array2D *arraydest, const float exponent ) {
-	int imgSize = arraydest->getRows()*arraydest->getCols();
-	for( int index = 0; index < imgSize ; index++ ) {
-		float &v = (*arraydest)(index);
-		if( v < 0.0f )
-		  v = 0.0f;
-		else
-		  v = powf( v, exponent );
-	}
+
+void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier )
+{
+  int imgSize = array->getRows()*array->getCols();
+  for( int index = 0; index < imgSize ; index++ ) {    
+    float &v = (*array)(index);
+    if( v < 0 ) v = 0;
+    v = powf( v*multiplier, exponent );
+  }    
 }
+
+
