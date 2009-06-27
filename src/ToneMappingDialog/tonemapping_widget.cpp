@@ -39,13 +39,10 @@
 #include "../Threads/tonemapperThread.h"
 #include "../Filter/pfscut.h"
 
-//extern int xsize;
-//extern float pregamma;
-
 TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding_custom_size(false) {
 	setupUi(this);
 
-	pfsFrame = pfscopy(frame);
+	pfsFrame = frame;
 
 	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
 
@@ -74,7 +71,8 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
 	connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.2f, 2.0f, 0.9f);
+
+	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.2f, 2.f, 0.9f);
 	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL, 0.f, 1.f, .8f);
 	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL, 0, 1.f, 0.f);
 	oldFattalGang =	  new Gang(NULL,NULL, oldFattalCheckBox);
@@ -138,12 +136,12 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	for(int x = 256; x <= width; x *= 2) {
 		if( x >= width )
 			break;
-		sizes.push_back(x);
+		sizes.push_front(x);
 		if( 3*(x/2) >= width )
 			break;
-		sizes.push_back(3*(x/2));
+		sizes.push_front(3*(x/2));
 	}
-	sizes.push_back(width);
+	sizes.push_front(width);
 	HeightWidthRatio = ( (float)height )/( (float) width);
 	fillCustomSizeComboBox();
 
@@ -178,8 +176,6 @@ delete brightnessGang;
 delete chromaticGang; 
 delete lightGang; 
 delete pregammagang;
-	//xsize = -1;
-	//pregamma = -1;
 }
 
 void TMWidget::on_defaultButton_clicked() {
@@ -298,7 +294,7 @@ void TMWidget::on_applyButton_clicked() {
 	bool doTonemapping = true;
 	// Warning when using size dependent TMOs with smaller sizes
 	if (stackedWidget_operators->currentWidget() == page_fattal &&
-		(sizeComboBox->currentIndex()+1) < sizeComboBox->count())
+		(sizeComboBox->currentIndex() != 0 ))
 	{
 		doTonemapping = QMessageBox::Yes ==
 			QMessageBox::question(
@@ -321,7 +317,7 @@ void TMWidget::on_applyButton_clicked() {
 		newprogressbar->show();
 
 		//tone mapper thread needs to know full size of the hdr
-		TonemapperThread *thread = new TonemapperThread(pfsFrame, sizes[sizes.size()-1], ToneMappingOptions);
+		TonemapperThread *thread = new TonemapperThread(pfsFrame, sizes[0], ToneMappingOptions);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
 		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
