@@ -100,7 +100,7 @@
         <enum>QFrame::Plain</enum>
        </property>
        <property name="currentIndex" >
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="page_mantiuk06" >
         <layout class="QVBoxLayout" name="verticalLayout" >
@@ -170,7 +170,7 @@ p, li { white-space: pre-wrap; }
               <double>0.001000000000000</double>
              </property>
              <property name="maximum" >
-              <double>10.000000000000000</double>
+              <double>1.000000000000000</double>
              </property>
              <property name="singleStep" >
               <double>0.200000000000000</double>
@@ -512,10 +512,10 @@ p, li { white-space: pre-wrap; }
               <number>5</number>
              </property>
              <property name="minimum" >
-              <double>0.001000000000000</double>
+              <double>0.000010000000000</double>
              </property>
              <property name="maximum" >
-              <double>2.000000000000000</double>
+              <double>1000.000000000000000</double>
              </property>
              <property name="singleStep" >
               <double>0.200000000000000</double>
@@ -548,7 +548,7 @@ p, li { white-space: pre-wrap; }
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="maximum" >
-              <number>400</number>
+              <number>100</number>
              </property>
              <property name="orientation" >
               <enum>Qt::Horizontal</enum>
@@ -561,16 +561,16 @@ p, li { white-space: pre-wrap; }
               <number>3</number>
              </property>
              <property name="minimum" >
-              <double>0.600000000000000</double>
+              <double>0.000000000000000</double>
              </property>
              <property name="maximum" >
-              <double>1.000000000000000</double>
+              <double>100.000000000000000</double>
              </property>
              <property name="singleStep" >
-              <double>0.050000000000000</double>
+              <double>1.000000000000000</double>
              </property>
              <property name="value" >
-              <double>0.800000000000000</double>
+              <double>10.000000000000000</double>
              </property>
             </widget>
            </item>
