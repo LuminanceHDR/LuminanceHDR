@@ -31,7 +31,6 @@
 #include "../Filter/pfscut.h"
 #include "../Common/progressHelper.h"
 
-
 static ProgressHelper durand02_ph(0),
 			mantiuk06_ph(0),
 			mantiuk08_ph(0);
@@ -68,17 +67,18 @@ pfs::Frame* pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_
 
 QReadWriteLock lock;	
 
+int TonemapperThread::counter = 0;
+
 TonemapperThread::TonemapperThread(pfs::Frame *frame, int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
 
 	workingframe = pfscopy(frame);
+
+	counter++;
+	
 	// Convert to CS_XYZ: tm operator now use this colorspace
 	pfs::Channel *X, *Y, *Z;
 	workingframe->getXYZChannels( X, Y, Z );
 	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
-	
-
-	//cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
-
 
 	connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
 	setTerminationEnabled(true);
@@ -86,28 +86,31 @@ TonemapperThread::TonemapperThread(pfs::Frame *frame, int xorigsize, const tonem
 }
 
 TonemapperThread::~TonemapperThread() {
-	pfs::DOMIO pfsio;
 	if (!forciblyTerminated) {
 		wait();
 	}
-	pfsio.freeFrame(workingframe);
 }
 
 void TonemapperThread::run() {
 	pfs::DOMIO pfsio;
-	if (opts.pregamma != 1.0f) 
+	if (opts.pregamma != 1.0f) { 
 		applyGammaOnFrame( workingframe, opts.pregamma );
+	}
 
-	if (opts.xsize!= originalxsize) 
-		workingframe = resizeFrame(workingframe, opts.xsize);
+	if (opts.xsize != originalxsize) {
+		pfs::Frame *resized = resizeFrame(workingframe, opts.xsize);
+		pfsio.freeFrame(workingframe);
+		workingframe = resized;
+	}
 	
 	qDebug("TMthread:: executing tone mapping step");
 	switch (opts.tmoperator) {
 		case mantiuk06:
-			lock.lockForWrite();
 			connect(&mantiuk06_ph, SIGNAL(emitValue(int)), 
 				this, SIGNAL(advanceCurrentProgress(int)));
 			emit setMaximumSteps(100);
+			// pfstmo_mantiuk06 not reentrant
+			lock.lockForWrite();
 			pfstmo_mantiuk06(workingframe,
 			opts.operator_options.mantiuk06options.contrastfactor,
 			opts.operator_options.mantiuk06options.saturationfactor,
@@ -117,7 +120,6 @@ void TonemapperThread::run() {
 			lock.unlock();
 		break;
 		case mantiuk08:
-			lock.lockForWrite();
 			try {
 				connect(&mantiuk08_ph, SIGNAL(emitValue(int)), 
 					this, SIGNAL(advanceCurrentProgress(int)));
@@ -131,29 +133,28 @@ void TonemapperThread::run() {
 			catch(...) {
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 		case fattal:
 			emit setMaximumSteps(0);
-			lock.lockForWrite();
 			try {
+				// pfstmo_fattal02 not reentrant
+				lock.lockForWrite();
 				pfstmo_fattal02(workingframe,
 				opts.operator_options.fattaloptions.alpha,
 				opts.operator_options.fattaloptions.beta,
 				opts.operator_options.fattaloptions.color,
 				opts.operator_options.fattaloptions.noiseredux,
 				opts.operator_options.fattaloptions.newfattal);
+				lock.unlock();
 			}
 			catch(...) {
+				lock.unlock();
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 		//case ashikhmin:
 		//	lock.lockForWrite();
@@ -167,6 +168,7 @@ void TonemapperThread::run() {
 			connect(&durand02_ph, SIGNAL(emitValue(int)), 
 				this, SIGNAL(advanceCurrentProgress(int)));
 			emit setMaximumSteps(100);
+			// pfstmo_durand02 not reentrant
 			lock.lockForWrite();
 			pfstmo_durand02(workingframe,
 			opts.operator_options.durandoptions.spatial,
@@ -176,21 +178,18 @@ void TonemapperThread::run() {
 		break;
 		case drago:
 			emit setMaximumSteps(0);
-			lock.lockForWrite();
 			try {
 				pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias);
 			}
 			catch(...) {
+				lock.unlock();
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 		case pattanaik:
 			emit setMaximumSteps(0);
-			lock.lockForWrite();
 			try {
 				pfstmo_pattanaik00(workingframe,
 				opts.operator_options.pattanaikoptions.local,
@@ -202,14 +201,11 @@ void TonemapperThread::run() {
 			catch(...) {
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 		case reinhard02:
 			emit setMaximumSteps(0);
-			lock.lockForWrite();
 			try {
 				pfstmo_reinhard02(workingframe,
 				opts.operator_options.reinhard02options.key,
@@ -222,14 +218,11 @@ void TonemapperThread::run() {
 			catch(...) {
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 		case reinhard05:
 			emit setMaximumSteps(0);
-			lock.lockForWrite();
 			try {
 				pfstmo_reinhard05(workingframe,
 				opts.operator_options.reinhard05options.brightness,
@@ -239,14 +232,13 @@ void TonemapperThread::run() {
 			catch(...) {
 				pfsio.freeFrame(workingframe);
 				emit finished();
-				lock.unlock();
 				return;
 			}
-			lock.unlock();
 		break;
 	} //switch (opts.tmoperator)
-	const QImage& res=fromLDRPFStoQImage(workingframe);
-	emit imageComputed(res,&opts);
+	const QImage& res = fromLDRPFStoQImage(workingframe);
+	pfsio.freeFrame(workingframe);
+	emit imageComputed(res, &opts);
 }
 //
 // run()

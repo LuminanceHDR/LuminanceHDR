@@ -65,6 +65,7 @@ private:
 	//void dumpOpts();
 	//enum {from_resize,from_pregamma,from_tm} status;
 	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
+	static int counter;
 };
 
 #endif
