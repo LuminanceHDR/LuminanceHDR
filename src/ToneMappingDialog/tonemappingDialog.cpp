@@ -38,9 +38,6 @@
 #include "../generated_uic/ui_about.h"
 #include "../Filter/pfscut.h"
 
-
-#include <iostream>
-
 TonemappingWindow::~TonemappingWindow() {
 }
 
@@ -84,9 +81,9 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	
 	// original HDR window
-        pfs::Frame *originalPfsFrame = pfscopy(pfsFrame);
-        //pfs::Frame *originalPfsFrame = pfsFrame;
+        pfs::Frame *originalPfsFrame = pfsFrame;
 	originalHDR = new HdrViewer(this,false,true, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	originalHDR->setFreePfsFrameOnExit(false); // avoid another copy in memory
 	originalHDR->updateHDR(originalPfsFrame);
         originalHDR->setFileName(QString(tr("Original HDR")));
         originalHDR->setWindowTitle(QString(tr("Original HDR")));
