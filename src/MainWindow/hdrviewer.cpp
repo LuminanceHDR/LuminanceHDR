@@ -85,6 +85,7 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize ) {
 HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf) : GenericViewer(parent, ns, ncf), pfsFrame(NULL), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg) {
 
 	flagUpdateImage = true;
+	flagFreeOnExit = true;
 
 	workArea[0] = workArea[1] = workArea[2] = NULL;
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -261,7 +262,7 @@ const pfs::Array2D *HdrViewer::getPrimaryChannel() {
 HdrViewer::~HdrViewer() {
 	pfs::DOMIO pfsio;
 	//do not delete workarea, it shares the same memory area of pfsFrame
-	if (pfsFrame) // It must be deleted calling freeFrame()
+	if (pfsFrame && flagFreeOnExit) // It must be deleted calling freeFrame()
 		pfsio.freeFrame(pfsFrame);
 }
 
@@ -290,6 +291,11 @@ void HdrViewer::hideLoadDialog(void) {
         progress->cancel();
 }
 
+void HdrViewer::setFreePfsFrameOnExit(bool b) { 
+	flagFreeOnExit = b;
+}
+
+//
 //==================================================================================================//
 //
 // The following methods do nothing. They are defined here to keep tonemappingDialog.cpp code simple

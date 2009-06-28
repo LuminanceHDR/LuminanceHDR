@@ -63,6 +63,7 @@ public:
         QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
         QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
 	const QImage getQImage(); // do nothing but used by LdrViewer (its own implementation)
+	void setFreePfsFrameOnExit(bool b); 
 public slots:
 	void updateRangeWindow();
 	int getLumMappingMethod();
@@ -80,6 +81,7 @@ protected:
 	unsigned int naninfcol,negcol;
 	QProgressDialog *progress;
 	bool flagUpdateImage;
+	bool flagFreeOnExit;
 
 	void setRangeWindow( float min, float max );
 	const pfs::Array2D *getPrimaryChannel();
