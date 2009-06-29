@@ -50,6 +50,7 @@ signals:
 	void setMaximumSteps(int);
 	void advanceCurrentProgress(int);
 	void advanceCurrentProgress();
+	void tmo_error(const char *);
 protected:
 	void run();
 private:

@@ -56,14 +56,14 @@ typedef int(*pfstmo_progress_callback)(int progress);
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 void applyGammaOnFrame( pfs::Frame*, const float);
 //pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
-pfs::Frame* pfstmo_drago03 (pfs::Frame *, float);
-pfs::Frame* pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
-pfs::Frame* pfstmo_durand02 (pfs::Frame*,float,float,float,pfstmo_progress_callback);
-pfs::Frame* pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
-pfs::Frame* pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
-pfs::Frame* pfstmo_reinhard05 (pfs::Frame *,float,float,float);
-pfs::Frame* pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
-pfs::Frame* pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
+void pfstmo_drago03 (pfs::Frame *, float);
+void pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
+void pfstmo_durand02 (pfs::Frame*,float,float,float,pfstmo_progress_callback);
+void pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
+void pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
+void pfstmo_reinhard05 (pfs::Frame *,float,float,float);
+void pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
+void pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
 
 QReadWriteLock lock;	
 
@@ -130,9 +130,14 @@ void TonemapperThread::run() {
 				opts.operator_options.mantiuk08options.luminancelevel,
 				opts.operator_options.mantiuk08options.setluminance,mantiuk08_ph_wrapper);
 			}
+			catch(pfs::Exception e) {
+				pfsio.freeFrame(workingframe);
+				emit tmo_error(e.getMessage());
+				return;
+			}
 			catch(...) {
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
@@ -149,10 +154,16 @@ void TonemapperThread::run() {
 				opts.operator_options.fattaloptions.newfattal);
 				lock.unlock();
 			}
+			catch(pfs::Exception e) {
+				lock.unlock();
+				pfsio.freeFrame(workingframe);
+				emit tmo_error(e.getMessage());
+				return;
+			}
 			catch(...) {
 				lock.unlock();
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
@@ -181,10 +192,14 @@ void TonemapperThread::run() {
 			try {
 				pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias);
 			}
-			catch(...) {
-				lock.unlock();
+			catch(pfs::Exception e) {
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error(e.getMessage());
+				return;
+			}
+			catch(...) {
+				pfsio.freeFrame(workingframe);
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
@@ -198,9 +213,14 @@ void TonemapperThread::run() {
 				opts.operator_options.pattanaikoptions.rod,
 				opts.operator_options.pattanaikoptions.autolum);
 			}
+			catch(pfs::Exception e) {
+				pfsio.freeFrame(workingframe);
+				emit tmo_error(e.getMessage());
+				return;
+			}
 			catch(...) {
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
@@ -215,9 +235,14 @@ void TonemapperThread::run() {
 				opts.operator_options.reinhard02options.upper,
 				opts.operator_options.reinhard02options.scales);
 			}
+			catch(pfs::Exception e) {
+				pfsio.freeFrame(workingframe);
+				emit tmo_error(e.getMessage());
+				return;
+			}
 			catch(...) {
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
@@ -229,14 +254,27 @@ void TonemapperThread::run() {
 				opts.operator_options.reinhard05options.chromaticAdaptation,
 				opts.operator_options.reinhard05options.lightAdaptation);
 			}
+			catch(pfs::Exception e) {
+				pfsio.freeFrame(workingframe);
+				emit tmo_error(e.getMessage());
+				return;
+			}
 			catch(...) {
 				pfsio.freeFrame(workingframe);
-				emit finished();
+				emit tmo_error("Failed to tonemap image");
 				return;
 			}
 		break;
 	} //switch (opts.tmoperator)
 	const QImage& res = fromLDRPFStoQImage(workingframe);
+	
+	FILE *fd = fopen("/home/franco/Download/HDR/TEST/q.pfs", "wb");
+	pfs::Channel *X, *Y, *Z;
+	workingframe->getXYZChannels(X, Y, Z);
+	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
+	pfsio.writeFrame( workingframe, fd );
+	fclose( fd );
+	
 	pfsio.freeFrame(workingframe);
 	emit imageComputed(res, &opts);
 }
