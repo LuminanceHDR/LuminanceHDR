@@ -1,12 +1,15 @@
 TEMPLATE = app
 CONFIG += release qt thread
-#DEFINES += QT_NO_DEBUG_OUTPUT
+DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Assume openmp-capable g++ (>=4.2)
 QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp -msse2
 QMAKE_LFLAGS += -fopenmp
 
 TARGET = qtpfsgui
+
+LIBS            += -lgsl -lgslcblas
+
 
 MOC_DIR = generated_moc
 OBJECTS_DIR = generated_obj
@@ -42,6 +45,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Common/imageQualityDialog.h \
 	   src/Common/selectionTool.h \
 	   src/Common/genericViewer.h \
+	   src/Common/progressHelper.h \
            src/MainWindow/mainWindow.h \
            src/MainWindow/DnDOption.h \
            src/MainWindow/hdrviewer.h \
@@ -70,8 +74,6 @@ HEADERS += src/Libpfs/array2d.h \
            src/Filter/pfscut.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
-           src/TM_operators/ashikhmin02/pyramid.h \
-           src/TM_operators/ashikhmin02/tmo_ashikhmin02.h \
            src/TM_operators/drago03/tmo_drago03.h \
            src/TM_operators/durand02/tmo_durand02.h \
            src/TM_operators/durand02/bilateral.h \
@@ -79,8 +81,14 @@ HEADERS += src/Libpfs/array2d.h \
            src/TM_operators/fattal02/tmo_fattal02.h \
            src/TM_operators/fattal02/pde.h \
            src/TM_operators/pattanaik00/tmo_pattanaik00.h \
+           src/TM_operators/reinhard05/tmo_reinhard05.h \
            src/TM_operators/reinhard02/tmo_reinhard02.h \
            src/TM_operators/mantiuk06/contrast_domain.h \
+           src/TM_operators/mantiuk08/display_adaptive_tmo.h \
+           src/TM_operators/mantiuk08/display_function.h \
+           src/TM_operators/mantiuk08/display_size.h \
+           src/TM_operators/mantiuk08/cqp/gsl_cqp.h \
+           src/TM_operators/mantiuk08/cqp/initial_point.h \
            src/Batch/batch_dialog.h \
            src/Exif/exif_operations.h
 
@@ -97,6 +105,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Common/imageQualityDialog.cpp \
 	   src/Common/selectionTool.cpp \
 	   src/Common/genericViewer.cpp \
+	   src/Common/progressHelper.cpp \
            src/MainWindow/mainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
            src/MainWindow/hdrviewer.cpp \
@@ -133,8 +142,6 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Fileformat/pfstiff.cpp \
            src/Fileformat/pfsinexr.cpp \
            src/Fileformat/pfsoutexr.cpp \
-           src/TM_operators/ashikhmin02/pfstmo_ashikhmin02.cpp \
-           src/TM_operators/ashikhmin02/tmo_ashikhmin02.cpp \
            src/TM_operators/drago03/pfstmo_drago03.cpp \
            src/TM_operators/drago03/tmo_drago03.cpp \
            src/TM_operators/durand02/pfstmo_durand02.cpp \
@@ -145,6 +152,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/fattal02/tmo_fattal02.cpp \
            src/TM_operators/fattal02/pde.cpp \
            src/TM_operators/reinhard05/pfstmo_reinhard05.cpp \
+           src/TM_operators/reinhard05/tmo_reinhard05.cpp \
            src/TM_operators/pattanaik00/tmo_pattanaik00.cpp \
            src/TM_operators/pattanaik00/pfstmo_pattanaik00.cpp \
            src/TM_operators/reinhard02/pfstmo_reinhard02.cpp \
@@ -152,6 +160,13 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/reinhard02/approx.cpp \
            src/TM_operators/mantiuk06/contrast_domain.cpp \
            src/TM_operators/mantiuk06/pfstmo_mantiuk06.cpp \
+           src/TM_operators/mantiuk08/pfstmo_mantiuk08.cpp \
+           src/TM_operators/mantiuk08/display_adaptive_tmo.cpp \
+           src/TM_operators/mantiuk08/display_function.cpp \
+           src/TM_operators/mantiuk08/display_size.cpp \
+           src/TM_operators/mantiuk08/cqp/cqpminimizer.c \
+	   src/TM_operators/mantiuk08/cqp/initial_point.c \
+           src/TM_operators/mantiuk08/cqp/mg_pdip.c \
            src/Batch/batch_dialog.cpp \
            src/Exif/exif_operations.cpp
 
