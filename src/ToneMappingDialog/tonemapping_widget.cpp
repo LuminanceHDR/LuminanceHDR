@@ -58,21 +58,21 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	
 	// mantiuk08
 	colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, 
-		NULL,NULL,NULL, -10.f, 10.f, 1.f);
+		NULL,NULL,NULL, 0.f, 2.f, 1.f);
 	connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB,
-		NULL,NULL,NULL, 1.f, 10.f, 1.f);
+		NULL,NULL,NULL, .01f, 10.f, 1.f);
 	luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox,
-		NULL,NULL, 1.f, 99.0f, 1.f);
+		NULL,NULL, 1.f, 100.0f, 1.f);
 
 	// fattal02
 	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
 	connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.2f, 2.f, 0.9f);
+	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.1f, 2.f, 0.9f);
 	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL, 0.f, 1.f, .8f);
 	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL, 0, 1.f, 0.f);
 	oldFattalGang =	  new Gang(NULL,NULL, oldFattalCheckBox);
@@ -90,7 +90,7 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	// durand
-	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL, 0.f, 100.f, 8.f);
+	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL, 0.f, 100.f, 2.f);
 	connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 	rangeGang = 	new Gang(rangeSlider, rangedsb,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
@@ -109,8 +109,8 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	keyGang = 	new Gang(keySlider, keydsb,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
 	connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL, 0.f, 50.f, 1.f);
-	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL, 1.f, 15.f, 8.f);
+	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL, 0.f, 100.f, 1.f);
+	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL, 1.f, 32.f, 8.f);
 	lowerGang = 	new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL, 1.f, 100.f, 1.f);
 	upperGang = 	new Gang(upperSlider, upperdsb,NULL,NULL,NULL, 1.f, 100.f, 43.f);
 	usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
@@ -250,8 +250,6 @@ void TMWidget::updateUndoState(int) {
 	}
 	else if (current_page == page_durand) {
 		spatialGang->updateUndoState();
-		//rangeGang->setDefault();
-		//baseGang->setDefault();
 	}
 	else if (current_page == page_fattal) {
 		alphaGang->updateUndoState();
@@ -272,23 +270,6 @@ void TMWidget::on_pregammadefault_clicked(){
 	pregammagang->setDefault();
 }
 
-MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
-	//((QStatusBar*)parent)->addWidget(this);
-	setValue(0);
-}
-
-MyProgressBar::~MyProgressBar() {
-	//((QStatusBar*)parent())->removeWidget(this);
-}
-
-void MyProgressBar::mousePressEvent(QMouseEvent *event) {
-	if (event->buttons()==Qt::LeftButton)
-		emit leftMouseButtonClicked();
-}
-
-void MyProgressBar::advanceCurrentProgress(int progress) {
-	setValue(progress);
-}
 
 void TMWidget::on_applyButton_clicked() {
 	bool doTonemapping = true;
@@ -323,6 +304,7 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
 		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
 		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
 
 		//start thread
@@ -635,7 +617,7 @@ void TMWidget::fromGui2Txt(QString destination) {
 		out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
 		out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << endl;
 		out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << endl;
-		out << "SETLUMINAMCE=" << (luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
+		out << "SETLUMINANCE=" << (luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
 	}
 	else if (current_page==page_fattal) {
 		out << "TMO=" << "Fattal02" << endl;
@@ -803,7 +785,6 @@ void TMWidget::fromTxt2Gui() {
 			pregammaSlider->setValue(pregammagang->v2p(value.toFloat()));
 		}
 	}
-// 	on_applyButton_clicked();
 }
 
 void TMWidget::on_addCustomSizeButton_clicked(){
@@ -822,3 +803,27 @@ void TMWidget::fillCustomSizeComboBox() {
 		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(HeightWidthRatio*sizes[i]) ));
 }
 
+void TMWidget::showErrorMessage(const char *e) {
+		QMessageBox::critical(this,tr("Qtpfsgui"),tr("Error: %1").arg(e),
+					QMessageBox::Ok,QMessageBox::NoButton);
+
+}
+
+//
+//=============================================================================
+//
+MyProgressBar::MyProgressBar(QWidget *parent) : QProgressBar(parent) {
+	setValue(0);
+}
+
+MyProgressBar::~MyProgressBar() {
+}
+
+void MyProgressBar::mousePressEvent(QMouseEvent *event) {
+	if (event->buttons()==Qt::LeftButton)
+		emit leftMouseButtonClicked();
+}
+
+void MyProgressBar::advanceCurrentProgress(int progress) {
+	setValue(progress);
+}
