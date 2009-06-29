@@ -37,7 +37,7 @@
 
 #include <iostream>
 
-pfs::Frame* pfstmo_drago03(pfs::Frame *frame, float biasValue) {
+void pfstmo_drago03(pfs::Frame *frame, float biasValue) {
     std::cout << "pfstmo_drago03" << std::endl;
     std::cout << "bias: " << biasValue << std::endl;
 
@@ -70,8 +70,5 @@ pfs::Frame* pfstmo_drago03(pfs::Frame *frame, float biasValue) {
       }
 
     delete L;
-
-    //---
-    return frame;
 }
 

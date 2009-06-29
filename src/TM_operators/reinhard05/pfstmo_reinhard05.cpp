@@ -39,7 +39,7 @@
 #include "tmo_reinhard05.h"
 
 
-pfs::Frame * pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation)
+void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation)
 {
     pfs::DOMIO pfsio;
 
@@ -71,7 +71,4 @@ pfs::Frame * pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chroma
     delete R;
     delete G;
     delete B;
-
-    //---
-    return  frame;        
 }

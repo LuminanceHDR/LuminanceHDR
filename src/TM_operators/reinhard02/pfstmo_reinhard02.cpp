@@ -37,7 +37,7 @@
 
 #include "tmo_reinhard02.h"
 
-pfs::Frame* pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales )
+void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales )
 {
     pfs::DOMIO pfsio;
 
@@ -75,7 +75,4 @@ pfs::Frame* pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num,
       }
 
     delete L;
-
-    //---
-    return frame;        
 }

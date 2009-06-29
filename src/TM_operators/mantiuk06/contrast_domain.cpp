@@ -355,7 +355,8 @@ static inline float matrix_DotProduct(const int n, const float* const a, const f
 // set zeros for matrix elements
 static inline void matrix_zero(int n, float* m)
 {
-  bzero(m, n*sizeof(float));
+  //bzero(m, n*sizeof(float));
+  memset(m, 0, n*sizeof(float));
 }
 
 // calculate divergence of two gradient maps (Gx and Gy)

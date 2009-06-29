@@ -40,7 +40,7 @@
 
 typedef int(*pfstmo_progress_callback)(int progress);
 
-pfs::Frame* pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, pfstmo_progress_callback progress_report)
+void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, pfstmo_progress_callback progress_report)
 {
     pfs::DOMIO pfsio;
 
@@ -76,8 +76,5 @@ pfs::Frame* pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, flo
     pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
     tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample, !original_algorithm, progress_report );
     pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
-
-    //---
-    return frame;
 }
 

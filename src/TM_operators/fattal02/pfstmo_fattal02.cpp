@@ -40,7 +40,7 @@
 
 #include <iostream>
 
-pfs::Frame* pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal)
+void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal)
 {
     pfs::DOMIO pfsio;
 
@@ -85,8 +85,4 @@ pfs::Frame* pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, 
       }
 
     delete L;
-    if( Y==NULL || X==NULL || Z==NULL)
-      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-    //---
-    return frame;        
 }

@@ -41,7 +41,7 @@
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult );
 
 
-pfs::Frame* pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum)
+void pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum)
 {
     pfs::DOMIO pfsio;
 
@@ -101,9 +101,6 @@ pfs::Frame* pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, 
     delete G;
     delete B;
     delete am; // delete visual adaptation model
-
-    //---
-    return frame;        
 }
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult )
