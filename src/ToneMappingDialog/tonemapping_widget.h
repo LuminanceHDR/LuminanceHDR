@@ -134,6 +134,7 @@ private slots:
 	void on_addCustomSizeButton_clicked();
 	void fillCustomSizeComboBox();
 	void updateUndoState(int);
+	void showErrorMessage(const char *);
 };
 
 #endif
