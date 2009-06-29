@@ -268,12 +268,12 @@ void TonemapperThread::run() {
 	} //switch (opts.tmoperator)
 	const QImage& res = fromLDRPFStoQImage(workingframe);
 	
-	FILE *fd = fopen("/home/franco/Download/HDR/TEST/q.pfs", "wb");
-	pfs::Channel *X, *Y, *Z;
-	workingframe->getXYZChannels(X, Y, Z);
-	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
-	pfsio.writeFrame( workingframe, fd );
-	fclose( fd );
+	//FILE *fd = fopen("/home/franco/Download/HDR/TEST/q.pfs", "wb");
+	//pfs::Channel *X, *Y, *Z;
+	//workingframe->getXYZChannels(X, Y, Z);
+	//pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
+	//pfsio.writeFrame( workingframe, fd );
+	//fclose( fd );
 	
 	pfsio.freeFrame(workingframe);
 	emit imageComputed(res, &opts);
