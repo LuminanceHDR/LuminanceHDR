@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
@@ -55,15 +55,15 @@ typedef int(*pfstmo_progress_callback)(int progress);
 
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 void applyGammaOnFrame( pfs::Frame*, const float);
-//pfs::Frame* pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
+void pfstmo_ashikhmin02 (pfs::Frame*,bool,float,int);
 void pfstmo_drago03 (pfs::Frame *, float);
-void pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
 void pfstmo_durand02 (pfs::Frame*,float,float,float,pfstmo_progress_callback);
+void pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool);
+void pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
+void pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
 void pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool);
 void pfstmo_reinhard02 (pfs::Frame*,float,float,int,int,int,bool);
 void pfstmo_reinhard05 (pfs::Frame *,float,float,float);
-void pfstmo_mantiuk06(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
-void pfstmo_mantiuk08(pfs::Frame*,float,float,float,bool,pfstmo_progress_callback);
 
 QReadWriteLock lock;	
 
@@ -167,14 +167,15 @@ void TonemapperThread::run() {
 				return;
 			}
 		break;
-		//case ashikhmin:
-		//	lock.lockForWrite();
-		//	pfstmo_ashikhmin02(workingframe,
-		//	opts.operator_options.ashikhminoptions.simple,
-		//	opts.operator_options.ashikhminoptions.lct,
-		//	opts.operator_options.ashikhminoptions.eq2 ? 2 : 4);
-		//	lock.unlock();
-		//break;
+		case ashikhmin:
+			emit setMaximumSteps(0);
+			lock.lockForWrite();
+			pfstmo_ashikhmin02(workingframe,
+			opts.operator_options.ashikhminoptions.simple,
+			opts.operator_options.ashikhminoptions.lct,
+			opts.operator_options.ashikhminoptions.eq2 ? 2 : 4);
+			lock.unlock();
+		break;
 		case durand:
 			connect(&durand02_ph, SIGNAL(emitValue(int)), 
 				this, SIGNAL(advanceCurrentProgress(int)));
@@ -267,13 +268,6 @@ void TonemapperThread::run() {
 		break;
 	} //switch (opts.tmoperator)
 	const QImage& res = fromLDRPFStoQImage(workingframe);
-	
-	//FILE *fd = fopen("/home/franco/Download/HDR/TEST/q.pfs", "wb");
-	//pfs::Channel *X, *Y, *Z;
-	//workingframe->getXYZChannels(X, Y, Z);
-	//pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
-	//pfsio.writeFrame( workingframe, fd );
-	//fclose( fd );
 	
 	pfsio.freeFrame(workingframe);
 	emit imageComputed(res, &opts);
