@@ -80,6 +80,8 @@ HEADERS += src/Libpfs/array2d.h \
            src/TM_operators/durand02/fastbilateral.h \
            src/TM_operators/fattal02/tmo_fattal02.h \
            src/TM_operators/fattal02/pde.h \
+           src/TM_operators/ashikhmin02/tmo_ashikhmin02.h \
+           src/TM_operators/ashikhmin02/pyramid.h \
            src/TM_operators/pattanaik00/tmo_pattanaik00.h \
            src/TM_operators/reinhard05/tmo_reinhard05.h \
            src/TM_operators/reinhard02/tmo_reinhard02.h \
@@ -151,6 +153,8 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/fattal02/pfstmo_fattal02.cpp \
            src/TM_operators/fattal02/tmo_fattal02.cpp \
            src/TM_operators/fattal02/pde.cpp \
+           src/TM_operators/ashikhmin02/pfstmo_ashikhmin02.cpp \
+           src/TM_operators/ashikhmin02/tmo_ashikhmin02.cpp \
            src/TM_operators/reinhard05/pfstmo_reinhard05.cpp \
            src/TM_operators/reinhard05/tmo_reinhard05.cpp \
            src/TM_operators/pattanaik00/tmo_pattanaik00.cpp \
@@ -287,7 +291,7 @@ isEmpty(FFTW3DIR) {
 }
 INCLUDEPATH *= $$FFTW3DIR
 LIBS += -lfftw3f -lm
-DEFINES += HAVE_FFTW
+DEFINES += HAVE_FFTW3F
 
 ########################################### LIBTIFF ###########################################
 #required, since we want to read hdr/ldr tiff files.
@@ -459,7 +463,7 @@ LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
 
 #fftw3
 LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm
-DEFINES += HAVE_FFTW
+DEFINES += HAVE_FFTW3F
 INCLUDEPATH += ../DEPs/include/fftw3
 
 #tiff
