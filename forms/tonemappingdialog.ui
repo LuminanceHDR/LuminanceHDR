@@ -280,6 +280,12 @@
    </property>
   </action>
   <action name="actionAsThumbnails" >
+   <property name="checkable" >
+    <bool>false</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="text" >
     <string>As &amp;Thumbnails</string>
    </property>
@@ -300,6 +306,9 @@
    </property>
   </action>
   <action name="actionCascade" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
    <property name="text" >
     <string>&amp;Cascade</string>
    </property>
@@ -568,7 +577,7 @@
     <bool>true</bool>
    </property>
    <property name="enabled" >
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon" >
     <iconset resource="../icons.qrc" >
