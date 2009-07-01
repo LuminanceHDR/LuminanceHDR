@@ -57,15 +57,15 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	restoreState( settings.value("MainGuiState").toByteArray());
 	int x = settings.value("MainGuiPosX").toInt();
 	int y = settings.value("MainGuiPosY").toInt();
-	int w = settings.value("MainGuiWidth").toInt();
-	int h = settings.value("MainGuiHeight").toInt();
+	int width = settings.value("MainGuiWidth").toInt();
+	int height = settings.value("MainGuiHeight").toInt();
 
 	if (x<0) x=0;	
 	if (y<0) y=0;	
-	if (w==0) w=800;
-	if (h==0) h=600;
+	if (width==0) width=800;
+	if (height==0) height=600;
 
-	setGeometry(x, y, w, h);
+	setGeometry(x, y, width, height);
 
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
@@ -676,7 +676,7 @@ void MainGui::Text_Only() {
 }
 
 void MainGui::aboutQtpfsgui() {
-	QDialog *about=new QDialog();
+	QDialog *about=new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutQtpfsgui ui;
 	ui.setupUi(about);
@@ -806,8 +806,8 @@ void MainGui::disableCrop() {
 }
 
 void MainGui::closeEvent ( QCloseEvent * ) {
-	settings.setValue("MainGuiPosX",x());
-	settings.setValue("MainGuiPosY",y());
+	settings.setValue("MainGuiPosX",geometry().x());
+	settings.setValue("MainGuiPosY",geometry().y());
 	settings.setValue("MainGuiWidth",width());
 	settings.setValue("MainGuiHeight",height());
 }
