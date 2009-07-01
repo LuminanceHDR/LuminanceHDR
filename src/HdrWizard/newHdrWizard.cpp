@@ -52,7 +52,7 @@ HdrWizardForm::HdrWizardForm(QWidget *p, QStringList files) : QDialog(p), hdrCre
 	tableWidget->setHorizontalHeaderLabels(QStringList()<< tr("Image Filename") << tr("Exposure"));
 	tableWidget->resizeColumnsToContents();
 	
-	EVgang = new Gang(EVSlider, ImageEVdsb, NULL, NULL, NULL, -10,10,0);
+	EVgang = new Gang(EVSlider, ImageEVdsb, NULL, NULL, NULL,NULL, -10,10,0);
 
 	hdrCreationManager = new HdrCreationManager();
 
