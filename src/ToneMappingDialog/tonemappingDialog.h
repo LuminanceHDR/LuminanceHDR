@@ -87,6 +87,7 @@ protected slots:
 	void lockImages(bool);
 	void updateImage(GenericViewer *viewer);
 	void dispatch(GenericViewer *);
+	void openDocumentation(); 
 	void aboutQtpfsgui();
 };
 

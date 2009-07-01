@@ -35,6 +35,7 @@
 #include "../Common/genericViewer.h"
 #include "../Common/config.h"
 #include "../Common/gang.h"
+#include "../generated_uic/ui_documentation.h"
 #include "../generated_uic/ui_about.h"
 #include "../Filter/pfscut.h"
 
@@ -105,8 +106,9 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	if (y<0) y=0;	
 	if (width==0) width=800;
 	if (height==0) height=600;
-
+	
 	setGeometry(x, y, width, height);
+
 	setupConnections();
 }
 
@@ -125,7 +127,7 @@ void TonemappingWindow::setupConnections() {
 	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
 	connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
-	connect(documentationAction,SIGNAL(triggered()),parent(),SLOT(openDocumentation()));
+	connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionShowHDR,SIGNAL(toggled(bool)),this,SLOT(showHDR(bool)));
 	connect(actionShowNext,SIGNAL(triggered()),mdiArea,SLOT(activateNextSubWindow()));
@@ -218,8 +220,8 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 void TonemappingWindow::closeEvent ( QCloseEvent * ) {
 	settings.setValue("TonemappingWindowState", saveState());
 	settings.setValue("actionViewTMdockState",actionViewTMdock->isChecked());
-	settings.setValue("TonemappinWindowPosX",x());
-	settings.setValue("TonemappinWindowPosY",y());
+	settings.setValue("TonemappinWindowPosX",geometry().x());
+	settings.setValue("TonemappinWindowPosY",geometry().y());
 	settings.setValue("TonemappinWindowWidth",width());
 	settings.setValue("TonemappinWindowHeight",height());
 	emit closing();
@@ -425,8 +427,20 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 	}
 }
 
+void TonemappingWindow::openDocumentation() {
+	QDialog *help=new QDialog(this);
+	help->setAttribute(Qt::WA_DeleteOnClose);
+	Ui::HelpDialog ui;
+	ui.setupUi(help);
+	QString docDir = QCoreApplication::applicationDirPath();
+	docDir.append("/../Resources/html");
+	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html" << docDir << "/Applications/qtpfsgui.app/Contents/Resources/html");
+	ui.tb->setSource(QUrl("index.html"));
+	help->show();
+}
+
 void TonemappingWindow::aboutQtpfsgui() {
-	QDialog *about=new QDialog();
+	QDialog *about=new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutQtpfsgui ui;
 	ui.setupUi(about);
