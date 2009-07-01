@@ -30,14 +30,14 @@
 #include <math.h>
 #include "gang.h"
 
-//#include <iostream>
-//using namespace std;
+#include <iostream>
+using namespace std;
 
 Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox, 
-		QCheckBox *chkbox1, QCheckBox *chkbox2, QRadioButton *rbutton, 
+		QCheckBox *chkbox1, QCheckBox *chkbox2, QRadioButton *rb1, QRadioButton *rb2,
 		const float minvalue, const float maxvalue, 
 		const float vv, const bool logs) : 
-		s(slider), dsb(doublespinbox), cbx1(chkbox1), cbx2(chkbox2), rb(rbutton),  
+		s(slider), dsb(doublespinbox), cbx1(chkbox1), cbx2(chkbox2), rb1(rb1), rb2(rb2),
 		minv(minvalue), maxv(maxvalue), defaultv(vv), logscaling(logs),
 		undoState(false), redoState(false)
 {
@@ -45,20 +45,10 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
 		isCbx1Checked_default = cbx1->isChecked();
 	if (cbx2)
 		isCbx2Checked_default = cbx2->isChecked();
-	if (rb)
-		isRbChecked_default = rb->isChecked();
-
-	if (s) {
-		s->setMaximum((int)(100*maxvalue));
-		s->setMinimum((int)(100*minvalue));
-		s->setSingleStep((int)(maxvalue-minvalue));	
-		s->setPageStep((int)(10*(maxvalue-minvalue)));	
-	}
-	if (dsb) {
-		dsb->setMaximum((int)(100*maxvalue));
-		dsb->setMinimum((int)(100*minvalue));
-		dsb->setSingleStep((int)(maxvalue-minvalue));	
-	}
+	if (rb1)
+		isRb1Checked_default = rb1->isChecked();
+	if (rb2)
+		isRb2Checked_default = rb2->isChecked();
 
 	tmoSettingsList = new TmoSettingsList();
 	graphics_only = false;
@@ -81,8 +71,11 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
 	if (cbx2)
 		connect( cbx2, SIGNAL(toggled(bool)), this, SLOT(checkBox2Checked(bool)));
 
-	if (rb)
-		connect( rb, SIGNAL(clicked(bool)), this, SLOT(radioButtonChecked(bool)));
+	if (rb1)
+		connect( rb1, SIGNAL(clicked(bool)), this, SLOT(radioButton1Checked(bool)));
+
+	if (rb2)
+		connect( rb2, SIGNAL(clicked(bool)), this, SLOT(radioButton2Checked(bool)));
 	
 	setDefault();
 }
@@ -95,7 +88,7 @@ float Gang::p2v(const int p) const
 {
 	float x = (p-s->minimum())/( (float) (s->maximum() - s->minimum() ) ) ;
 	if( logscaling ) {
-		////cout << "p:  " << p << ", x:  " << x << ", " << minv*exp(log(maxv/minv)*x ) << endl;
+		//cout << "p:  " << p << ", x:  " << x << ", " << minv*exp(log(maxv/minv)*x ) << endl;
 		return minv*exp(log(maxv/minv)*x );
 	}
 	return (maxv-minv)*x + minv; 
@@ -106,17 +99,17 @@ int Gang::v2p(const float x) const
 	float y = (x - minv)/(maxv - minv);
 	if( logscaling ) {
 		y = (log(x)-log(minv))/(log(maxv)-log(minv));
-		////cout << "x:  " << x << ", y:  " << y << ", " << log(x) << endl;
+		//cout << "x:  " << x << ", y:  " << y << ", " << log(x) << endl;
 	}
 	return  (int) ( (s->maximum() - s->minimum() )*y + s->minimum() );
 }
 
 void Gang::sliderMoved(int p)
 {
-// 	qDebug("Slider moved");
+	//qDebug("Slider moved");
 	if( value_from_text ) {
 		value_from_text = false;
-// 		qDebug("bailing out");
+	//qDebug("bailing out");
 		return;
 	}
 	value_from_slider = true;
@@ -127,10 +120,10 @@ void Gang::sliderMoved(int p)
 }
 void Gang::sliderValueChanged(int p)
 {
-// 	qDebug("Slider changed");
+	//qDebug("Slider changed");
 	if( value_from_text ) {
 		value_from_text = false;
-// 		qDebug("bailing out");
+	//qDebug("bailing out");
 		if (!graphics_only)
 			emit finished();
 		return;
@@ -165,10 +158,10 @@ void Gang::sliderValueChanged(int p)
 
 void Gang::spinboxValueChanged(double x)
 {
-// 	qDebug("Spinbox value_changed");
+	//qDebug("Spinbox value_changed");
 	if( value_from_slider ) {
 		value_from_slider = false;
-// 		qDebug("bailing out");
+	//qDebug("bailing out");
 		return;
 	}
 	value = x;
@@ -185,10 +178,19 @@ void Gang::checkBox2Checked(bool b) {
 	isCbx2Checked = b;
 }
 
-void Gang::radioButtonChecked(bool b) {
-	isRbChecked = b;
+void Gang::radioButton1Checked(bool b) {
+	isRb1Checked = b;
+	isRb2Checked = !b;
+	cout << "isRb1Checked: " << b << endl;
+	cout << "isRb2Checked: " << !b << endl;
 }
 
+void Gang::radioButton2Checked(bool b) {
+	isRb2Checked = b;
+	isRb1Checked = !b;
+	cout << "isRb1Checked: " << !b << endl;
+	cout << "isRb2Checked: " << b << endl;
+}
 
 void Gang::setDefault()
 {
@@ -211,8 +213,18 @@ void Gang::setDefault()
 		isCbx1Checked = isCbx1Checked_default;
 	if  (cbx2) 
 		isCbx2Checked = isCbx2Checked_default;
-	if (rb) 
-		isRbChecked = isRbChecked_default;
+	if (rb1) 
+		isRb1Checked = isRb1Checked_default;
+	if (rb2) 
+		isRb2Checked = isRb2Checked_default;
+
+	cout << "Gang::setDefault()" << endl;
+	cout << "v: " << value << endl;
+	cout << "cbx1: " << isCbx1Checked << endl;
+	cout << "cbx2: " << isCbx2Checked << endl;
+	cout << "rb1: " << isRb1Checked << endl;
+	cout << "rb2: " << isRb2Checked << endl;
+	cout << "/Gang::setDefault()" << endl;
 }
 
 QString Gang::flag(const QString f) const
@@ -232,7 +244,8 @@ QString Gang::fname(const QString f) const
 void Gang::setupUndo() {
 	bool isCbx1Checked = false;
 	bool isCbx2Checked = false;
-	bool isRbChecked = false;
+	bool isRb1Checked = false;
+	bool isRb2Checked = false;
 	float v = 0.0;
 	
 	if (s)
@@ -241,10 +254,13 @@ void Gang::setupUndo() {
 		isCbx1Checked = cbx1->isChecked();
 	if  (cbx2) 
 		isCbx2Checked = cbx2->isChecked();
-	if (rb) 
-		isRbChecked = rb->isChecked();
+	if (rb1) 
+		isRb1Checked = rb1->isChecked();
+	if (rb2) 
+		isRb2Checked = rb2->isChecked();
 	
-	TmoSettings *tmoSettings = new  TmoSettings(this, v, isCbx1Checked, isCbx2Checked, isRbChecked);
+	TmoSettings *tmoSettings = new  TmoSettings(this, v, isCbx1Checked, isCbx2Checked, 
+			isRb1Checked, isRb2Checked);
 	tmoSettingsList->append(*tmoSettings);
 	if (tmoSettingsList->index() == 1) {
 		emit enableUndo(true);
@@ -255,15 +271,14 @@ void Gang::setupUndo() {
 		redoState = false;
 	}
 
-	//cout << "Gang::setupUndo(): size: " << tmoSettingsList->size() << endl;
-	//cout << "Gang::setupUndo(): index: " << tmoSettingsList->index() << endl;
-
-	////cout << "Gang::setupUndo()" << endl;
-	////cout << "v: " << v << endl;
-	////cout << "cbx1: " << (int)cbx1CheckState << endl;
-	////cout << "cbx2: " << (int)cbx2CheckState << endl;
-	////cout << "rb: " << isRbChecked << endl;
-	////cout << "count: " << undoStack->count() << endl;
+	//cout << "Gang::setupUndo()" << endl;
+	//cout << "size: " << tmoSettingsList->size() << endl;
+	//cout << "index: " << tmoSettingsList->index() << endl;
+	//cout << "v: " << v << endl;
+	//cout << "cbx1: " << isCbx1Checked << endl;
+	//cout << "cbx2: " << isCbx2Checked << endl;
+	//cout << "rb: " << isRbChecked << endl;
+	//cout << "/Gang::setupUndo()" << endl;
 }
 
 void Gang::undo() {
@@ -285,6 +300,7 @@ void Gang::undo() {
 }
 
 void Gang::redo() {
+	//cout << "Gang::redo()" << endl;
 	//cout << "Gang::redo(): size: " << tmoSettingsList->size() << endl;
 	//cout << "Gang::redo(): index: " << tmoSettingsList->index() << endl;
 	if (tmoSettingsList->index() == 0) {
@@ -304,9 +320,10 @@ void Gang::redo() {
 }
 
 void Gang::updateUndoState() {
-	//cout << "Gang::undoState(int)" << endl;
-	//cout << "Gang::undoState(int): undoState: " << undoState << endl;
-	//cout << "Gang::undoState(int): redoState: " << redoState << endl;
+	//cout << "Gang::updateUndoState()" << endl;
+	//cout << "undoState: " << undoState << endl;
+	//cout << "redoState: " << redoState << endl;
+	//cout << "/Gang::updateUndoState()" << endl;
 	emit enableUndo(undoState);
 	emit enableRedo(redoState);
 }
@@ -314,7 +331,7 @@ void Gang::updateUndoState() {
 //
 //===================================== Undo/Redo ============================================
 //
-TmoSettings::TmoSettings(Gang *gangPtr, float v, bool isCbx1, bool isCbx2, bool isRBC):
+TmoSettings::TmoSettings(Gang *gangPtr, float v, bool isCbx1, bool isCbx2, bool isRB1C, bool isRB2C):
 	gangPtr(gangPtr)
 {
 	if (gangPtr->cbx1) {
@@ -323,8 +340,12 @@ TmoSettings::TmoSettings(Gang *gangPtr, float v, bool isCbx1, bool isCbx2, bool 
 	if (gangPtr->cbx2) {
 		isCbx2Checked = isCbx2;
 	}
-	if (gangPtr->rb) {
-		isRbChecked = isRBC;
+	if (gangPtr->rb1) {
+		isRb1Checked = isRB1C;
+
+	}
+	if (gangPtr->rb2) {
+		isRb2Checked = isRB2C;
 
 	}
 	if (gangPtr->s) {
@@ -344,8 +365,10 @@ void TmoSettings::apply() const {
 		gangPtr->cbx1->setChecked(isCbx1Checked);
 	if (gangPtr->cbx2)
 		gangPtr->cbx2->setChecked(isCbx2Checked);
-	if (gangPtr->rb)
-		gangPtr->rb->setChecked(isRbChecked);
+	if (gangPtr->rb1)
+		gangPtr->rb1->setChecked(isRb1Checked);
+	if (gangPtr->rb2)
+		gangPtr->rb2->setChecked(isRb2Checked);
 }
 
 //

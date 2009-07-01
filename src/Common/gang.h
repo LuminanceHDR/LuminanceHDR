@@ -42,7 +42,7 @@ class Gang : public QObject
 	Q_OBJECT
 public:
 	Gang(QSlider* s = 0, QDoubleSpinBox* dsb = 0,
-		QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0, QRadioButton *rb = 0, 
+		QCheckBox *cbx1 = 0, QCheckBox *cbx2 = 0, QRadioButton *rb1 = 0, QRadioButton *rb2 = 0,
 		const float minv = 0.0, const float maxv = 0.0, 
 		const float vv = 0.0, const bool logs = false);
 	~Gang();
@@ -50,7 +50,8 @@ public:
 	float v() const { return value; };
 	bool isCheckBox1Checked() const { return isCbx1Checked; };
 	bool isCheckBox2Checked() const { return isCbx2Checked; };
-	bool isRadioButtonChecked() const { return isRbChecked; };
+	bool isRadioButton1Checked() const { return isRb1Checked; };
+	bool isRadioButton2Checked() const { return isRb2Checked; };
 	float p2v(const int p) const;
 	int v2p(const float x) const;
 	void setDefault();
@@ -67,7 +68,8 @@ protected slots:
 	void spinboxValueChanged(double);
 	void checkBox1Checked(bool);
 	void checkBox2Checked(bool);
-	void radioButtonChecked(bool);
+	void radioButton1Checked(bool);
+	void radioButton2Checked(bool);
 signals:
 	void finished();
 	void enableUndo(bool);
@@ -77,13 +79,16 @@ private:
 	QDoubleSpinBox *dsb;
 	QCheckBox *cbx1;
 	QCheckBox *cbx2;
-	QRadioButton *rb;
+	QRadioButton *rb1;
+	QRadioButton *rb2;
 	bool isCbx1Checked;
 	bool isCbx2Checked;
-	bool isRbChecked;
+	bool isRb1Checked;
+	bool isRb2Checked;
 	bool isCbx1Checked_default;
 	bool isCbx2Checked_default;
-	bool isRbChecked_default;
+	bool isRb1Checked_default;
+	bool isRb2Checked_default;
 	float minv;
 	float maxv;
 	float defaultv;
@@ -105,13 +110,14 @@ private:
 //
 class TmoSettings {
 public:
-	TmoSettings(Gang *gangPtr, float, bool, bool, bool);
+	TmoSettings(Gang *gangPtr, float, bool, bool, bool, bool);
 	void apply() const;
 protected:
 	Gang *gangPtr;
 	bool isCbx1Checked;
 	bool isCbx2Checked;
-	bool isRbChecked;
+	bool isRb1Checked;
+	bool isRb2Checked;
 	float value;
 };
 
