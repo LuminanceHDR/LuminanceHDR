@@ -33,31 +33,28 @@
 #include "tmo_ashikhmin02.h"
 #include "../../Libpfs/pfs.h"
 
+#include <iostream>
 using namespace std;
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);
 
-pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool _simple, float _lc_value, int _eq) {
+void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq) {
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
+	
 	//--- default tone mapping parameters;
-	bool simple_flag=_simple;
-	float lc_value = _lc_value;
-	int eq = _eq;
-	assert(eq==2||eq==4);
+
+	cout << "pfstmo_ashikhmin02" << endl;
+	cout << "simple: " << simple_flag << endl;
+	cout << "lc_value: " << lc_value << endl;
+	cout << "eq: " << eq << endl;
 
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 
-	pfs::Frame *outframe = pfsio.createFrame( inpfsframe->getWidth(), inpfsframe->getHeight() );
-	pfs::Channel *Ro, *Go, *Bo;
-	outframe->createRGBChannels( Ro, Go, Bo );
-	assert( Ro!=NULL && Go!=NULL && Bo!=NULL );
-
-// 	pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Ro, Go, Bo);
-	
+	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
 	float maxLum,avLum,minLum;
 	calculateLuminance( Y, avLum, maxLum, minLum);
 	
@@ -71,15 +68,14 @@ pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool _simple, float _lc_
 		for( int y=0 ; y<h ; y++ )
 		{
 			float scale = (*L)(x,y) / (*Y)(x,y);
-			(*Go)(x,y) = (*Y)(x,y) * scale;
-			(*Ro)(x,y) = (*X)(x,y) * scale;
-			(*Bo)(x,y) = (*Z)(x,y) * scale;
+			(*Y)(x,y) = (*Y)(x,y) * scale;
+			(*X)(x,y) = (*X)(x,y) * scale;
+			(*Z)(x,y) = (*Z)(x,y) * scale;
 		}
 
 	delete L;
 
-	pfs::transformColorSpace( pfs::CS_XYZ, Ro, Go, Bo, pfs::CS_RGB, Ro, Go, Bo );
-	return outframe;
+	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
 }
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum)

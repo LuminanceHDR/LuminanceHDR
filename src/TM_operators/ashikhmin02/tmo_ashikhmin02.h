@@ -44,5 +44,5 @@
  */
 int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float avLum, bool simple_flag, float lc_value, int eq);
 
-pfs::Frame* pfstmo_ashikhmin02(pfs::Frame* inhdrframe, bool simple, float lc_value, int eq);
+void pfstmo_ashikhmin02(pfs::Frame* inhdrframe, bool simple, float lc_value, int eq);
 #endif
