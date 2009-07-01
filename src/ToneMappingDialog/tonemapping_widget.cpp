@@ -48,82 +48,82 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 
 	// mantiuk06
 	contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,
-		NULL,NULL, 0.001f, 1.0f, 0.1f);
+		NULL,NULL, NULL, 0.001f, 1.0f, 0.1f);
 	connect(contrastfactorGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,
-		NULL,NULL,NULL, 0.0f, 1.0f, 0.8f);
-	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
+		NULL,NULL,NULL,NULL, 0.0f, 1.0f, 0.8f);
+	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
 	
 	// mantiuk08
 	colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, 
-		NULL,NULL,NULL, 0.f, 2.f, 1.f);
+		NULL,NULL,NULL,NULL, 0.f, 2.f, 1.f);
 	connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB,
-		NULL,NULL,NULL, .01f, 10.f, 1.f);
+		NULL,NULL,NULL,NULL, .01f, 10.f, 1.f);
 	luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox,
-		NULL,NULL, 1.f, 100.0f, 1.f);
+		NULL,NULL,NULL, 1.f, 100.0f, 1.f);
 
 	// fattal02
-	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
+	alphaGang = 	  new Gang(alphaSlider, alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
 	connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL, 0.1f, 2.f, 0.9f);
-	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL, 0.f, 1.f, .8f);
-	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL, 0, 1.f, 0.f);
+	betaGang = 	  new Gang(betaSlider, betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, 0.9f);
+	saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, .8f);
+	noiseGang =	  new Gang(noiseSlider, noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, 0.f);
 	oldFattalGang =	  new Gang(NULL,NULL, oldFattalCheckBox);
 
 	// ashikhmin02
-	contrastGang = 	new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+	contrastGang = 	new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 	connect(contrastGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(contrastGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 	simpleGang = 	new Gang(NULL, NULL, simpleCheckBox);
-	eq2Gang = 	new Gang(NULL, NULL,NULL, NULL, eq2RadioButton);
+	eq2Gang = 	new Gang(NULL, NULL,NULL, NULL, eq2RadioButton, eq4RadioButton);
 
 	// drago03
-	biasGang = 	new Gang(biasSlider, biasdsb,NULL,NULL,NULL, 0.f, 1.f, 0.85f);
+	biasGang = 	new Gang(biasSlider, biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.85f);
 	connect(biasGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	// durand
-	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL, 0.f, 100.f, 2.f);
+	spatialGang = 	new Gang(spatialSlider, spatialdsb,NULL,NULL,NULL,NULL, 0.f, 100.f, 2.f);
 	connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	rangeGang = 	new Gang(rangeSlider, rangedsb,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
-	baseGang = 	new Gang(baseSlider, basedsb,NULL,NULL,NULL, 0.f, 10.f, 5.0f);
+	rangeGang = 	new Gang(rangeSlider, rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
+	baseGang = 	new Gang(baseSlider, basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, 5.0f);
 
 	// pattanaik00
-	multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL, 1e-3,1000.f, 1.f, true);
+	multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, 1.f, true);
 	connect(multiplierGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(multiplierGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	coneGang = 	 new Gang(coneSlider, conedsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
-	rodGang = 	 new Gang(rodSlider, roddsb,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+	coneGang = 	 new Gang(coneSlider, conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+	rodGang = 	 new Gang(rodSlider, roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 	autoYGang =	 new Gang(NULL,NULL, autoYcheckbox);
 	pattalocalGang = new Gang(NULL,NULL, pattalocal);
 
 	// reinhard02
-	keyGang = 	new Gang(keySlider, keydsb,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
+	keyGang = 	new Gang(keySlider, keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
 	connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL, 0.f, 100.f, 1.f);
-	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL, 1.f, 32.f, 8.f);
-	lowerGang = 	new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL, 1.f, 100.f, 1.f);
-	upperGang = 	new Gang(upperSlider, upperdsb,NULL,NULL,NULL, 1.f, 100.f, 43.f);
+	phiGang = 	new Gang(phiSlider, phidsb,NULL,NULL,NULL,NULL, 0.f, 100.f, 1.f);
+	range2Gang = 	new Gang(range2Slider, range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, 8.f);
+	lowerGang = 	new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, 1.f);
+	upperGang = 	new Gang(upperSlider, upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, 43.f);
 	usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
 
 	// reinhard05
-	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL, -8.f, 8.f, 0.f);
+	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -8.f, 8.f, 0.f);
 	connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
-	chromaticGang  = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL, 0.f, 1.f, 0.f);
-	lightGang      = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL, 0.f, 1.f, 1.f);
+	chromaticGang  = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.f);
+	lightGang      = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 1.f);
 
 	// pregamma
-	pregammagang =	new Gang(pregammaSlider, pregammadsb,NULL,NULL,NULL, 0, 3, 1);
+	pregammagang =	new Gang(pregammaSlider, pregammadsb,NULL,NULL,NULL,NULL, 0, 3, 1);
 
 	connect(stackedWidget_operators, SIGNAL(currentChanged (int)), this, SLOT(updateUndoState(int)));
 
@@ -343,7 +343,7 @@ void TMWidget::fillToneMappingOptions() {
 	else if (current_page==page_ashikhmin) {
 		ToneMappingOptions.tmoperator=ashikhmin;
 		ToneMappingOptions.operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
-		ToneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButtonChecked();
+		ToneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
 		ToneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
 	} 
 	else if (current_page==page_durand) {
