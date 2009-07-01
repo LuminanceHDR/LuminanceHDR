@@ -45,7 +45,7 @@ public slots:
         virtual void zoomIn();
         virtual void zoomOut();
         virtual	void normalSize();
-	virtual bool getFittingWin();
+	virtual bool isFittedToWindow();
         virtual bool hasSelection();
 	virtual void setSelectionTool(bool);
 	virtual const float getScaleFactor();

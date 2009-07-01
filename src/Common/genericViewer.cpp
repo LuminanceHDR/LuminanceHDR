@@ -82,8 +82,8 @@ void GenericViewer::normalSize() {
 	emit changed(this);
 }
 
-bool GenericViewer::getFittingWin() {
-	return scrollArea->isFitting();
+bool GenericViewer::isFittedToWindow() {
+	return scrollArea->isFittedToWindow();
 }
 
 const float GenericViewer::getScaleFactor() {
