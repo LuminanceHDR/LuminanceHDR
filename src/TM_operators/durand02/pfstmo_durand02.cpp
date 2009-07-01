@@ -56,6 +56,9 @@ void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float base
     bool original_algorithm = false;
 
     std::cout << "pfstmo_durand02" << std::endl;
+    #ifdef HAVE_FFTW3F
+      std::cout << "using fftw3f" << std::endl;
+    #endif
     std::cout << "sigma_s: " << sigma_s << std::endl;
     std::cout << "sigma_r: " << sigma_r << std::endl;
     std::cout << "base contrast: " << baseContrast << std::endl;
