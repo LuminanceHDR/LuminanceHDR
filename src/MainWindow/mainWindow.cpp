@@ -89,7 +89,6 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
 
-
 	//recent files
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		recentFileActs[i] = new QAction(this);
@@ -100,8 +99,6 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	for (int i = 0; i < MaxRecentFiles; ++i)
 		menuFile->addAction(recentFileActs[i]);
 	updateRecentFileActions();
-
-	//this->showMaximized();
 
 	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
@@ -304,7 +301,7 @@ void MainGui::updateActions( QMdiSubWindow * w ) {
 	actionResizeHDR->setEnabled(w!=NULL);
 	if (w!=NULL) {
 		currenthdr=(HdrViewer*)(mdiArea->activeSubWindow()->widget());
-		if (currenthdr->getFittingWin()) {
+		if (currenthdr->isFittedToWindow()) {
 			normalSizeAct->setEnabled(false);
 			zoomInAct->setEnabled(false);
 			zoomOutAct->setEnabled(false);
@@ -352,6 +349,7 @@ void MainGui::tonemap_requested() {
 			TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
 			connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 			tmodialog->show();
+			hide();
 			tmodialog->setAttribute(Qt::WA_DeleteOnClose);
 		}
 		catch(pfs::Exception e) {
@@ -377,7 +375,8 @@ bool MainGui::testTempDir(QString dirname) {
 }
 
 void MainGui::reEnableMainWin() {
-	this->setEnabled(true);
+	setEnabled(true);
+	show();
 }
 
 void MainGui::rotateccw_requested() {
@@ -481,7 +480,7 @@ void MainGui::current_mdi_original_size() {
 }
 
 void MainGui::openDocumentation() {
-	QDialog *help=new QDialog();
+	QDialog *help=new QDialog(this);
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
