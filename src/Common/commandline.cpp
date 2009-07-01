@@ -225,6 +225,15 @@ void CommandLineInterfaceManager::parseArgs() {
 				    else if (keyandvalue.at(0)== "equalization")
 				      tmopts->operator_options.mantiuk06options.contrastequalization=(keyandvalue.at(1)=="true");
 
+				    //mantiuk08 options
+				    else if (keyandvalue.at(0)== "colorsaturation")
+				      tmopts->operator_options.mantiuk08options.colorsaturation=toFloatWithErrMsg(keyandvalue.at(1));
+				    else if (keyandvalue.at(0)== "contrastenhancement")
+				      tmopts->operator_options.mantiuk08options.contrastenhancement=toFloatWithErrMsg(keyandvalue.at(1));
+				    else if (keyandvalue.at(0)== "luminancelevel")
+				      tmopts->operator_options.mantiuk08options.luminancelevel=toFloatWithErrMsg(keyandvalue.at(1));
+				    else if (keyandvalue.at(0)== "setluminance")
+				      tmopts->operator_options.mantiuk08options.setluminance=(keyandvalue.at(1)=="true");
 				    //ashikhmin options
 				    else if (keyandvalue.at(0)== "localcontrast")
 				      tmopts->operator_options.ashikhminoptions.lct=toFloatWithErrMsg(keyandvalue.at(1));
@@ -393,12 +402,10 @@ void CommandLineInterfaceManager::saveHDR() {
 				tiffwriter.writeFloatTiff();
 		} else if (qfi.suffix().toUpper()=="PFS") {
 			//TODO
-			FILE *fd = fopen(encodedName, "W");
+			FILE *fd = fopen(encodedName, "wb");
 			pfs::DOMIO pfsio;
-			//HDR->transformColorSpace()
 			pfsio.writeFrame(HDR, fd);
 			fclose(fd);
-			//HDR->transformColorSpace();
 		} else {
 			error("Error, please specify a supported HDR file format.");
 		}
@@ -411,33 +418,25 @@ void CommandLineInterfaceManager::saveHDR() {
 }
 
 void  CommandLineInterfaceManager::startTonemap() {
-/*
 	if (!saveLdrFilename.isEmpty()) {
 		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
 		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
-		int origxsize= (tmopts->xsize==-2) ? -2 : HDR->getWidth();
-		TonemapperThread *thread = new TonemapperThread(origxsize, *tmopts);
-		connect(thread, SIGNAL(ImageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
-		const char *filename = QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData
-();
 		//TODO
-		FILE *fd = fopen(filename, "w");
-		pfs::DOMIO pfsio;
-		pfsio.writeFrame(HDR, fd );
-		pfsio.freeFrame(HDR);
-		fclose(fd);
+		pfs::Channel *X, *Y, *Z;
+		HDR->getXYZChannels(X, Y, Z);
+		pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
+		int origxsize= (tmopts->xsize == -2) ? -2 : HDR->getWidth();
+		TonemapperThread *thread = new TonemapperThread(HDR, origxsize, *tmopts);
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
+		
 		thread->start();
 	} else {
 		VERBOSEPRINT("Tonemapping NOT requested. %1","");
 		emit finishedParsing();
 	}
-*/
 }
 
 void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonemapping_options*) {
-	QFile::remove(qtpfsgui_options->tempfilespath+"/original.pfs");
-	QFile::remove(qtpfsgui_options->tempfilespath+"/after_resize.pfs");
-	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
 	QFileInfo qfi(saveLdrFilename);
 	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100)) {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
