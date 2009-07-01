@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <algorithm>
+#include <memory>
 #include <iostream>
 #include <assert.h>
 
