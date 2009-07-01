@@ -53,7 +53,7 @@ public:
 	float getImageScaleFactor();
 	void setHorizScrollBarValue(int value);
 	void setVertScrollBarValue(int value);
-	bool isFitting();
+	bool isFittedToWindow();
 	QRect getSelectionRect();
 	void setSelectionTool(bool toggled);
 	void removeSelection();

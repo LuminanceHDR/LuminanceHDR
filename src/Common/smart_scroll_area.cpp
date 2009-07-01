@@ -80,17 +80,21 @@ void SmartScrollArea::fitToWindow(bool checked) {
 	if (checked) {
 		previousScaleFactor = scaleFactor; // save zoom factot
 		scaleLabelToFit();
+		setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 		emit changed();
 	}
 	else {
 		// restore to the previous zoom factor
 		scaleFactor = previousScaleFactor;
+		setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+		setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 		scaleImage(1);
 		emit changed();
 	}
 }
 
-bool SmartScrollArea::isFitting() {
+bool SmartScrollArea::isFittedToWindow() {
 	return fittingwin;
 }
 
@@ -111,8 +115,7 @@ void SmartScrollArea::scaleLabelToFit() {
 		factor=float(sa_height)/float(imageLabel.pixmap()->size().height());
 	}
 	scaleFactor = factor;
-	//imageLabel.resize(factor * imageLabel.pixmap()->size());
-	imageLabel.resize(factor * 0.99 * imageLabel.pixmap()->size());
+	imageLabel.resize(factor * imageLabel.pixmap()->size());
 }
 
 void SmartScrollArea::scaleImage(double factor) {
@@ -124,8 +127,6 @@ void SmartScrollArea::scaleImage(double factor) {
 
 void SmartScrollArea::scaleImage() {
 	imageLabel.resize(scaleFactor * imageLabel.pixmap()->size());
-	//adjustScrollBar(horizontalScrollBar(), scaleFactor);
-	//adjustScrollBar(verticalScrollBar(), scaleFactor);
 }
 
 void SmartScrollArea::adjustScrollBar(QScrollBar *scrollBar, double factor) {
