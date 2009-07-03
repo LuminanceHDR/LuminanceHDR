@@ -181,15 +181,15 @@ void Gang::checkBox2Checked(bool b) {
 void Gang::radioButton1Checked(bool b) {
 	isRb1Checked = b;
 	isRb2Checked = !b;
-	cout << "isRb1Checked: " << b << endl;
-	cout << "isRb2Checked: " << !b << endl;
+	//cout << "isRb1Checked: " << b << endl;
+	//cout << "isRb2Checked: " << !b << endl;
 }
 
 void Gang::radioButton2Checked(bool b) {
 	isRb2Checked = b;
 	isRb1Checked = !b;
-	cout << "isRb1Checked: " << !b << endl;
-	cout << "isRb2Checked: " << b << endl;
+	//cout << "isRb1Checked: " << !b << endl;
+	//cout << "isRb2Checked: " << b << endl;
 }
 
 void Gang::setDefault()
@@ -218,13 +218,13 @@ void Gang::setDefault()
 	if (rb2) 
 		isRb2Checked = isRb2Checked_default;
 
-	cout << "Gang::setDefault()" << endl;
-	cout << "v: " << value << endl;
-	cout << "cbx1: " << isCbx1Checked << endl;
-	cout << "cbx2: " << isCbx2Checked << endl;
-	cout << "rb1: " << isRb1Checked << endl;
-	cout << "rb2: " << isRb2Checked << endl;
-	cout << "/Gang::setDefault()" << endl;
+	//cout << "Gang::setDefault()" << endl;
+	//cout << "v: " << value << endl;
+	//cout << "cbx1: " << isCbx1Checked << endl;
+	//cout << "cbx2: " << isCbx2Checked << endl;
+	//cout << "rb1: " << isRb1Checked << endl;
+	//cout << "rb2: " << isRb2Checked << endl;
+	//cout << "/Gang::setDefault()" << endl;
 }
 
 QString Gang::flag(const QString f) const

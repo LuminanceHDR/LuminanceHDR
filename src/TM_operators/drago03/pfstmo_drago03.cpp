@@ -32,12 +32,13 @@
 
 #include <math.h>
 #include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 
 #include "tmo_drago03.h"
 
 #include <iostream>
 
-void pfstmo_drago03(pfs::Frame *frame, float biasValue) {
+void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph) {
     std::cout << "pfstmo_drago03" << std::endl;
     std::cout << "bias: " << biasValue << std::endl;
 
@@ -58,7 +59,7 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue) {
     calculateLuminance( w, h, Y->getRawData(), avLum, maxLum );
 
     pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
-    tmo_drago03(w, h, Y->getRawData(), L->getRawData(), maxLum, avLum, biasValue);
+    tmo_drago03(w, h, Y->getRawData(), L->getRawData(), maxLum, avLum, biasValue, ph);
 		
     for( int x=0 ; x<w ; x++ )
       for( int y=0 ; y<h ; y++ )
@@ -68,6 +69,9 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue) {
         (*X)(x,y) *= scale;
         (*Z)(x,y) *= scale;
       }
+
+	if (!ph->isTerminationRequested())
+	ph->newValue( 100 );
 
     delete L;
 }

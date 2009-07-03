@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
@@ -36,10 +36,20 @@
 #include <QKeyEvent>
 #include "tonemapping_widget.h"
 #include "../Common/config.h"
-#include "../Threads/tonemapperThread.h"
+//#include "../Threads/tonemapperThread.h"
+#include "../Threads/ashikhmin02Thread.h"
+#include "../Threads/drago03Thread.h"
+#include "../Threads/durand02Thread.h"
+#include "../Threads/fattal02Thread.h"
+#include "../Threads/mantiuk06Thread.h"
+#include "../Threads/mantiuk08Thread.h"
+#include "../Threads/pattanaik00Thread.h"
+#include "../Threads/reinhard02Thread.h"
+#include "../Threads/reinhard05Thread.h"
 #include "../Filter/pfscut.h"
 
-TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding_custom_size(false) {
+TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame, ThreadManager *tm) : QWidget(parent), 
+	adding_custom_size(false), threadManager(tm) {
 	setupUi(this);
 
 	pfsFrame = frame;
@@ -144,6 +154,10 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame) : QWidget(parent), adding
 	sizes.push_front(width);
 	HeightWidthRatio = ( (float)height )/( (float) width);
 	fillCustomSizeComboBox();
+
+
+
+//	threadManager->resize(500,400);
 
 	qRegisterMetaType<QImage>("QImage");
 }
@@ -273,9 +287,9 @@ void TMWidget::on_pregammadefault_clicked(){
 
 void TMWidget::on_applyButton_clicked() {
 	bool doTonemapping = true;
+	QWidget *current_page = stackedWidget_operators->currentWidget();
 	// Warning when using size dependent TMOs with smaller sizes
-	if (stackedWidget_operators->currentWidget() == page_fattal &&
-		(sizeComboBox->currentIndex() != 0 ))
+	if (current_page == page_fattal && (sizeComboBox->currentIndex() != 0 ))
 	{
 		doTonemapping = QMessageBox::Yes ==
 			QMessageBox::question(
@@ -285,23 +299,175 @@ void TMWidget::on_applyButton_clicked() {
 			);
 	}
 
-	if (doTonemapping) {
-		fillToneMappingOptions();
-		setupUndo();
+	if (!doTonemapping) 
+		return;
 
-		MyProgressBar *newprogressbar=new MyProgressBar(frame_2);
-		int w = frame_2->width();
-		//int h = (int) (0.9 * frame_2->height());
-		int h = frame_2->height();
+	fillToneMappingOptions();
+	setupUndo();
 
-		newprogressbar->resize(w,h);
-		newprogressbar->show();
+	if (current_page== page_mantiuk06) {
+		Mantiuk06Thread *thread = new Mantiuk06Thread(pfsFrame, sizes[0], ToneMappingOptions);
+		
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Mantiuk '06");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+		
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
 
-		//tone mapper thread needs to know full size of the hdr
-		TonemapperThread *thread = new TonemapperThread(pfsFrame, sizes[0], ToneMappingOptions);
+		//start thread
+		thread->start();
+	}
+	else if (current_page== page_mantiuk08) {
+		Mantiuk08Thread *thread = new Mantiuk08Thread(pfsFrame, sizes[0], ToneMappingOptions);
+		
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Mantiuk '08");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+		
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_ashikhmin) {
+		Ashikhmin02Thread *thread = new Ashikhmin02Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Ashikhmin '02");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_drago) {
+		Drago03Thread *thread = new Drago03Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Drago '03");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_durand) {
+		Durand02Thread *thread = new Durand02Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Durand '02");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_fattal) {
+		Fattal02Thread *thread = new Fattal02Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Fattal '02");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_pattanaik) {
+		Pattanaik00Thread *thread = new Pattanaik00Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Pattanaik '00");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_reinhard02) {
+		Reinhard02Thread *thread = new Reinhard02Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Reinhard '02");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
+		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+
+		//start thread
+		thread->start();
+	}
+	else if (current_page == page_reinhard05) {
+		Reinhard05Thread *thread = new Reinhard05Thread(pfsFrame, sizes[0], ToneMappingOptions);
+
+		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		QLabel *label = new QLabel("Reinhard '05");
+		label->resize(100,36);
+		threadManager->addWidget(label);
+		threadManager->addWidget(newprogressbar);
+
+		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
+		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
 		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
 		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));

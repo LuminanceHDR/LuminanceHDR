@@ -51,7 +51,7 @@ float model_response(float I, float sigma);
 // tone mapping operator code
 void tmo_pattanaik00( unsigned int width, unsigned int height,
   float* nR, float* nG, float* nB, 
-  const float* nY, VisualAdaptationModel* am, bool local )
+  const float* nY, VisualAdaptationModel* am, bool local, ProgressHelper *ph )
 {  
   ///--- initialization of parameters
 
@@ -156,7 +156,10 @@ void tmo_pattanaik00( unsigned int width, unsigned int height,
 
   int im_width = Y->getCols();
   int im_height = Y->getRows();
-  for( int x=0 ; x<im_width ; x++ )
+  for( int x=0 ; x<im_width ; x++ ) {
+	ph->newValue(100*x/im_width);
+	if (ph->isTerminationRequested())
+		break;
     for( int y=0 ; y<im_height ; y++ )
     {
       float l = (*Y)(x,y);
@@ -204,7 +207,7 @@ void tmo_pattanaik00( unsigned int width, unsigned int height,
       (*G)(x,y) = (g<1.0f) ? ((g>0.0f) ? g : 0.0f) : 1.0f;
       (*B)(x,y) = (b<1.0f) ? ((b>0.0f) ? b : 0.0f) : 1.0f;
     }
-      
+  }    
   delete B;
   delete G;
   delete R;

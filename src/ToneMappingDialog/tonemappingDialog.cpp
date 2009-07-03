@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
@@ -76,9 +76,12 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	dock->setObjectName("Tone Mapping Panel"); // for save and restore docks state
 	//dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-	dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
 
-	tmwidget = new TMWidget(dock, pfsFrame);
+	threadManager = new ThreadManager(this);
+	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
+
+	tmwidget = new TMWidget(dock, pfsFrame, threadManager);
 	dock->setWidget(tmwidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	
@@ -96,18 +99,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 	
 	restoreState( settings.value("TonemappingWindowState").toByteArray() );
+	restoreGeometry(settings.value("TonemappingWindowGeometry").toByteArray());
 	actionViewTMdock->setChecked( settings.value("actionViewTMdockState").toBool() );
-	int x = settings.value("TonemappinWindowPosX").toInt();
-	int y = settings.value("TonemappinWindowPosY").toInt();
-	int width = settings.value("TonemappinWindowWidth").toInt();
-	int height = settings.value("TonemappinWindowHeight").toInt();
-
-	if (x<0) x=0;	
-	if (y<0) y=0;	
-	if (width==0) width=800;
-	if (height==0) height=600;
-	
-	setGeometry(x, y, width, height);
 
 	setupConnections();
 }
@@ -121,7 +114,7 @@ void TonemappingWindow::setupConnections() {
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
 
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setVisible(bool)));
-	connect(dock->toggleViewAction(),SIGNAL(toggled(bool)),actionViewTMdock,SLOT(setChecked(bool)));
+	//connect(dock->toggleViewAction(),SIGNAL(toggled(bool)),actionViewTMdock,SLOT(setChecked(bool)));
 	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&, tonemapping_options*)));
 
 	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
@@ -217,13 +210,11 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	}
 }
 
-void TonemappingWindow::closeEvent ( QCloseEvent * ) {
+void TonemappingWindow::closeEvent ( QCloseEvent *event ) {
 	settings.setValue("TonemappingWindowState", saveState());
+	settings.setValue("TonemappingWindowGeometry", saveGeometry());
 	settings.setValue("actionViewTMdockState",actionViewTMdock->isChecked());
-	settings.setValue("TonemappinWindowPosX",geometry().x());
-	settings.setValue("TonemappinWindowPosY",geometry().y());
-	settings.setValue("TonemappinWindowWidth",width());
-	settings.setValue("TonemappinWindowHeight",height());
+	QWidget::closeEvent(event);
 	emit closing();
 }
 

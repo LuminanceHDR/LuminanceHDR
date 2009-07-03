@@ -81,7 +81,7 @@ void tmo_durand02(unsigned int width, unsigned int height,
   float *nR, float *nG, float *nB,
   float sigma_s, float sigma_r, float baseContrast, int downsample,
   const bool color_correction,
-  pfstmo_progress_callback progress_cb ) 
+  ProgressHelper *ph) 
 {
   pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
   pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
@@ -117,9 +117,9 @@ void tmo_durand02(unsigned int width, unsigned int height,
   }
 
 #ifdef HAVE_FFTW3F
-  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample, progress_cb );
+  fastBilateralFilter( I, BASE, sigma_s, sigma_r, downsample, ph );
 #else
-  bilateralFilter( I, BASE, sigma_s, sigma_r, progress_cb );
+  bilateralFilter( I, BASE, sigma_s, sigma_r, ph );
 #endif
 
   //!! FIX: find minimum and maximum luminance, but skip 1% of outliers
@@ -135,7 +135,6 @@ void tmo_durand02(unsigned int width, unsigned int height,
   
   for( i=0 ; i<size ; i++ )
   {
-    //progress_cb(1);
     (*DETAIL)(i) = (*I)(i) - (*BASE)(i);
     (*I)(i) = (*BASE)(i) * compressionfactor + (*DETAIL)(i);
 
@@ -165,8 +164,7 @@ void tmo_durand02(unsigned int width, unsigned int height,
   delete G;
   delete R;
 
-  progress_cb( 100 );
-
+  ph->newValue( 100 );
 }
 
 

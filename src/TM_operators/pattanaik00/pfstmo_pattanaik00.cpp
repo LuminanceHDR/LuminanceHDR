@@ -41,7 +41,8 @@
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult );
 
 
-void pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum)
+void pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum,
+		ProgressHelper *ph)
 {
     pfs::DOMIO pfsio;
 
@@ -94,8 +95,11 @@ void pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float A
     pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
 
     pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, R, G, B );
-    tmo_pattanaik00( w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), am, local );
+    tmo_pattanaik00( w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), am, local, ph );
     pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, X, Y, Z );
+
+	if (!ph->isTerminationRequested())
+		ph->newValue(100);
 
     delete R;
     delete G;

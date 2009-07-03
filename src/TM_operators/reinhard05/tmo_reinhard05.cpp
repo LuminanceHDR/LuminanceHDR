@@ -41,7 +41,7 @@
 
 void tmo_reinhard05(unsigned int width, unsigned int height,
   float* nR, float* nG, float* nB, 
-  const float* nY, float br, float ca, float la )
+  const float* nY, float br, float ca, float la, ProgressHelper *ph )
 {
   const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
   pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
@@ -89,7 +89,10 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
   float min_col = 1.0f;
 
   int x,y;
-  for( x=0 ; x<im_width ; x++ )
+  for( x=0 ; x<im_width ; x++ ) {
+    ph->newValue(100*x/im_width);
+	if (ph->isTerminationRequested())
+		break;
     for( y=0 ; y<im_height ; y++ )
     {
       float l = (*Y)(x,y);
@@ -129,16 +132,19 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
         }
       }
     }
-
+  }
   //--- normalize intensities
-  for( x=0 ; x<im_width ; x++ )
+  for( x=0 ; x<im_width ; x++ ) {
+    ph->newValue(100*x/im_width);
+	if (ph->isTerminationRequested())
+		break;
     for( y=0 ; y<im_height ; y++ )
     {
       (*R)(x,y) = ((*R)(x,y)-min_col)/(max_col-min_col);
       (*G)(x,y) = ((*G)(x,y)-min_col)/(max_col-min_col);
       (*B)(x,y) = ((*B)(x,y)-min_col)/(max_col-min_col);
     }
-
+  }
   delete B;
   delete G;
   delete R;

@@ -37,6 +37,7 @@
 #define CONTRAST_DOMAIN_H
 
 #include "../pfstmo.h"
+#include "../../Common/progressHelper.h"
 
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]
@@ -57,6 +58,6 @@
  */
 int tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
 			    float contrastFactor, float saturationFactor, bool bcg,
-			    int itmax = 200, float tol = 1e-3, pfstmo_progress_callback progress_cb  = NULL);
+			    int itmax = 200, float tol = 1e-3, ProgressHelper *ph = NULL);
 
 #endif

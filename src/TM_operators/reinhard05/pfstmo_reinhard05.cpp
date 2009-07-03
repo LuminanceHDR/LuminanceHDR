@@ -39,7 +39,8 @@
 #include "tmo_reinhard05.h"
 
 
-void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation)
+void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation,
+		ProgressHelper *ph)
 {
     pfs::DOMIO pfsio;
 
@@ -65,8 +66,11 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
 
     pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, R, G, B );
 
-    tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation );
+    tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
     pfs::transformColorSpace( pfs::CS_SRGB, R, G, B, pfs::CS_XYZ, X, Y, Z );
+
+	if (!ph->isTerminationRequested())
+		ph->newValue( 100 );
 
     delete R;
     delete G;

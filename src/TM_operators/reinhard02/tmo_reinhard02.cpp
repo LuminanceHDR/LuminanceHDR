@@ -20,6 +20,7 @@
 #include <math.h>
 
 #include "../pfstmo.h"
+#include "../../Common/progressHelper.h"
 
 #ifdef HAVE_ZFFT
 #include <fft.h>
@@ -495,8 +496,9 @@ void tmo_reinhard02(
   unsigned int width, unsigned int height,
   const float *nY, float *nL, 
   bool use_scales, float key, float phi, 
-  int num, int low, int high, bool temporal_coherent )
+  int num, int low, int high, bool temporal_coherent, ProgressHelper *ph )
 {
+  ph->newValue( 0 );
   const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
   pfstmo::Array2D* L = new pfstmo::Array2D(width, height, nL);
 
@@ -519,13 +521,24 @@ void tmo_reinhard02(
   compute_bessel();
   allocate_memory ();
 
+  ph->newValue( 10 );
+  if (ph->isTerminationRequested())
+	  goto end;
+
   // reading image
   for( y=0 ; y<cvts.ymax ; y++ )
     for( x=0 ; x<cvts.xmax ; x++ )
       image[y][x][0] = (*Y)(x,y);
 
+
   copy_luminance();
+  ph->newValue( 20 );
+  if (ph->isTerminationRequested())
+	  goto end;
   scale_to_midtone();
+  ph->newValue( 30 );
+  if (ph->isTerminationRequested())
+	  goto end;
 
   if( use_scales )
   {
@@ -535,9 +548,15 @@ void tmo_reinhard02(
     compute_fourier_convolution();
 #endif
   }
+  ph->newValue( 50 );
+  if (ph->isTerminationRequested())
+	  goto end;
 
   tonemap_image();
 
+  ph->newValue( 85 );
+  if (ph->isTerminationRequested())
+	  goto end;
   // saving image
   for( y=0 ; y<cvts.ymax ; y++ )
     for( x=0 ; x<cvts.xmax ; x++ )
@@ -545,9 +564,15 @@ void tmo_reinhard02(
 
 //  print_parameter_settings();
 
+  ph->newValue( 95 );
+  if (ph->isTerminationRequested())
+	  goto end;
   deallocate_memory();
   clean_pyramid();
 
+  ph->newValue( 100 );
+  
+  end:
   delete L;
   delete Y;
 }

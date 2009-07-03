@@ -157,7 +157,7 @@ void Normalize(pfs::Array2D* lum_map, int nrows, int ncols) {
 
 ////////////////////////////////////////////////////////
 
-int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq)
+int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum, float /*avLum*/, bool simple_flag, float lc_value, int eq, ProgressHelper *ph)
 {
   assert(Y!=NULL);
   assert(L!=NULL);
@@ -192,6 +192,9 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   // LAL calculation
   pfs::Array2D* la = new pfs::Array2DImpl(ncols, nrows);
   for(int y=0; y<nrows; y++) {
+	ph->newValue(100*y/nrows);
+	if (ph->isTerminationRequested())
+		break;
     for(int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
       if((*la)(x,y) == 0.0)
@@ -202,12 +205,18 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
 
   // TM function
   pfs::Array2D* tm = new pfs::Array2DImpl(ncols, nrows);
-  for(int y=0; y<nrows; y++)
+  for(int y=0; y<nrows; y++) {
+	ph->newValue(100*y/nrows);
+	if (ph->isTerminationRequested())
+		break;
     for(int x=0; x<ncols; x++)
       (*tm)(x,y) = TM((*la)(x,y), maxLum, minLum);
-
+  }
   // final computation for each pixel
-  for(int y=0; y<nrows; y++)
+  for(int y=0; y<nrows; y++) {
+	ph->newValue(100*y/nrows);
+	if (ph->isTerminationRequested())
+		break;
     for(int x=0; x<ncols; x++)
     {
       switch (eq) {
@@ -225,7 +234,7 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
       // to keep output values in range 0.01 - 1
       //(*L)(x,y) /= 100.0f;
     }
-
+  }
   Normalize(L, nrows, ncols);
 
   // cleaning

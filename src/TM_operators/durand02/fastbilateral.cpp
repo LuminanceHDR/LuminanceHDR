@@ -33,6 +33,7 @@
 #include <math.h>
 
 #include "../pfstmo.h"
+#include "fastbilateral.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -242,7 +243,7 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
 
 void fastBilateralFilter( const pfstmo::Array2D *I,
   pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample,
-  pfstmo_progress_callback progress_cb )
+  ProgressHelper *ph )
 {
   int i;
   int w = I->getCols();
@@ -286,7 +287,10 @@ void fastBilateralFilter( const pfstmo::Array2D *I,
   // piecewise bilateral
   for( int j=0 ; j<NB_SEGMENTS ; j++ )
   {
-    progress_cb( j * 100 / NB_SEGMENTS );
+    ph->newValue( j * 100 / NB_SEGMENTS );
+	if (ph->isTerminationRequested())
+		break;
+
     float jI = minI + j*stepI;        // current intensity value
     
     for( i=0 ; i<sizeZ ; i++ )

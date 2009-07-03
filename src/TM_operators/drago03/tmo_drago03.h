@@ -42,9 +42,11 @@
  * @param avLum logarithmic average of luminance in the image
  * @param bias bias parameter of tone mapping algorithm (eg 0.85)
  */
+#include "../../Common/progressHelper.h"
+
 void tmo_drago03(unsigned int width, unsigned int height,
   const float* Y, float* L,
-  float maxLum, float avLum, float bias);
+  float maxLum, float avLum, float bias, ProgressHelper *ph);
 
 /**
  * @brief Find average and maximum luminance in an image

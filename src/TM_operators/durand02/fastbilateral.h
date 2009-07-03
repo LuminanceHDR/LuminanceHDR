@@ -32,6 +32,7 @@
 #define _fastbilateral_h_
 
 #include "../pfstmo.h"
+#include "../../Common/progressHelper.h"
 
 /**
  * @brief Fast bilateral filtering
@@ -45,7 +46,7 @@
  */
 void fastBilateralFilter( const pfstmo::Array2D *I,
   pfstmo::Array2D *J, float sigma_s, float sigma_r, int downsample,
-  pfstmo_progress_callback progress_cb );
+  ProgressHelper *ph );
 
 
 #endif /* #ifndef _fastbilateral_h_ */

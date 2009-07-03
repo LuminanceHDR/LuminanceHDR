@@ -138,6 +138,8 @@
    <addaction name="separator" />
    <addaction name="actionLockImages" />
    <addaction name="separator" />
+   <addaction name="actionThreadManager" />
+   <addaction name="separator" />
    <addaction name="actionWhat_s_This" />
    <addaction name="separator" />
    <addaction name="actionClose_All" />
@@ -596,6 +598,18 @@
   <action name="actionAbout_Qt" >
    <property name="text" >
     <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionThreadManager" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="../icons.qrc" >
+     <normaloff>:/new/prefix1/images/system-run.png</normaloff>:/new/prefix1/images/system-run.png</iconset>
+   </property>
+   <property name="text" >
+    <string>ThreadManager</string>
    </property>
   </action>
  </widget>

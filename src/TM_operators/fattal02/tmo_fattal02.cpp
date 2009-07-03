@@ -40,6 +40,7 @@
 #include <assert.h>
 
 #include "../pfstmo.h"
+#include "../../Common/progressHelper.h"
 #include "pde.h"
 
 using namespace std;
@@ -295,7 +296,9 @@ static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLu
 //--------------------------------------------------------------------
 
 void tmo_fattal02(unsigned int width, unsigned int height,
-                  const float* nY, float* nL, float alfa, float beta, float noise)
+                  const float* nY, float* nL, 
+				  float alfa, float beta, float noise, 
+				  ProgressHelper *ph)
 {
   const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
   pfstmo::Array2D* L = new pfstmo::Array2D(width, height, nL);
@@ -346,7 +349,10 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   // attenuate gradients
   pfstmo::Array2D* Gx = new pfstmo::Array2D(width, height);
   pfstmo::Array2D* Gy = new pfstmo::Array2D(width, height);
-  for( y=0 ; y<height ; y++ )
+  for( y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
+	if (ph->isTerminationRequested())
+	  break; 
     for( x=0 ; x<width ; x++ )
     {
       int s, e;
@@ -356,19 +362,23 @@ void tmo_fattal02(unsigned int width, unsigned int height,
       (*Gx)(x,y) = ((*H)(e,y)-(*H)(x,y)) * (*FI)(x,y);        
       (*Gy)(x,y) = ((*H)(x,s)-(*H)(x,y)) * (*FI)(x,y);      
     }
-
+  }
 //   dumpPFS( "Gx.pfs", Gx, "Y" );
 //   dumpPFS( "Gy.pfs", Gy, "Y" );
   
   // calculate divergence
   pfstmo::Array2D* DivG = new pfstmo::Array2D(width, height);
-  for( y=0 ; y<height ; y++ )
+  for( y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
+	if (ph->isTerminationRequested())
+	  break; 
     for( x=0 ; x<width ; x++ )
     {
       (*DivG)(x,y) = (*Gx)(x,y) + (*Gy)(x,y);
       if( x > 0 ) (*DivG)(x,y) -= (*Gx)(x-1,y);
       if( y > 0 ) (*DivG)(x,y) -= (*Gy)(x,y-1);
     }
+  }
 
 //  dumpPFS( "DivG.pfs", DivG, "Y" );
   
@@ -377,20 +387,28 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   solve_pde_multigrid( DivG, U );
 //  solve_pde_sor( DivG, U );
 
-  for( y=0 ; y<height ; y++ )
+  for( y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
+	if (ph->isTerminationRequested())
+	  break; 
     for( x=0 ; x<width ; x++ )
       (*L)(x,y) = exp( (*U)(x,y) ) - 1e-4;
+  }
 	
   // remove percentile of min and max values and renormalize
   findMaxMinPercentile(L, 0.001f, minLum, 0.995f, maxLum);
   maxLum -= minLum;
-  for( y=0 ; y<height ; y++ )
+  for( y=0 ; y<height ; y++ ) {
+	ph->newValue(100*y/height);
+	if (ph->isTerminationRequested())
+	  break; 
     for( x=0 ; x<width ; x++ )
     {
       (*L)(x,y) = ((*L)(x,y)-minLum) / maxLum;
       if( (*L)(x,y)<=0.0f )
         (*L)(x,y) = 1e-4;
     }
+  }
 
   // clean up
   delete H;

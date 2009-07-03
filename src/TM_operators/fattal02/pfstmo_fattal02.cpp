@@ -40,7 +40,7 @@
 
 #include <iostream>
 
-void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal)
+void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)
 {
     pfs::DOMIO pfsio;
 
@@ -74,7 +74,7 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
     int h = Y->getRows();
 
     pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
-    tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise);
+    tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, ph);
 		
     for( int x=0 ; x<w ; x++ )
       for( int y=0 ; y<h ; y++ )
@@ -83,6 +83,9 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
         (*Z)(x,y) = powf( (*Z)(x,y)/(*Y)(x,y), opt_saturation ) * (*L)(x,y);
         (*Y)(x,y) = (*L)(x,y);
       }
+
+	if (!ph->isTerminationRequested())
+		ph->newValue( 100 );
 
     delete L;
 }

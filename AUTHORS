@@ -3,6 +3,9 @@ If I forgot to add someone to this list please let me know.
 Main author and maintainer:
 Giuseppe Rota <grota@sourceforge.net>
 
+Improvements, bugfixing
+Franco Comida <fcomida@sourceforge.net>
+
 Contributors:
 Daniel Kaneider (windows setup, head of i18n efforts)
 Mandus (Mac OS X packager, Norwegian translator)
@@ -20,5 +23,4 @@ Arne Hagenah (various suggestions)
 Frank Boehme (various suggestions)
 Erik Ouchterlony
 Antoine Latter
-Franco Comida (bug fixes)
 

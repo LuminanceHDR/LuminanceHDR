@@ -31,11 +31,14 @@ Q_OBJECT
 
 public:
 	ProgressHelper(QObject *p = 0);
-	int newValue(int progress);
+	void newValue(int progress);
+	bool isTerminationRequested();
+public slots:
+	void terminate(bool);
 private:
-	int prev;
+	bool m_terminate;
 signals:
-	void emitValue(int progress);
+	void valueChanged(int progress);
 };
 
 #endif

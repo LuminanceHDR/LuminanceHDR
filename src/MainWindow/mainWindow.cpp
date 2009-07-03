@@ -55,17 +55,7 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	setupUi(this);
 
 	restoreState( settings.value("MainGuiState").toByteArray());
-	int x = settings.value("MainGuiPosX").toInt();
-	int y = settings.value("MainGuiPosY").toInt();
-	int width = settings.value("MainGuiWidth").toInt();
-	int height = settings.value("MainGuiHeight").toInt();
-
-	if (x<0) x=0;	
-	if (y<0) y=0;	
-	if (width==0) width=800;
-	if (height==0) height=600;
-
-	setGeometry(x, y, width, height);
+	restoreGeometry(settings.value("Geometry").toByteArray());
 
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
@@ -805,11 +795,9 @@ void MainGui::disableCrop() {
 	removeSelectionAction->setEnabled(false);
 }
 
-void MainGui::closeEvent ( QCloseEvent * ) {
-	settings.setValue("MainGuiPosX",geometry().x());
-	settings.setValue("MainGuiPosY",geometry().y());
-	settings.setValue("MainGuiWidth",width());
-	settings.setValue("MainGuiHeight",height());
+void MainGui::closeEvent ( QCloseEvent *event ) {
+	settings.setValue("Geometry", saveGeometry());
+	QWidget::closeEvent(event);
 }
 
 //

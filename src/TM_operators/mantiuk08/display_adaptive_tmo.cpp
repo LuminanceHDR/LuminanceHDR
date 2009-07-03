@@ -433,11 +433,9 @@ const double conditional_density::l_min, conditional_density::l_max, conditional
 double conditional_density::x_scale[X_COUNT] = { 0 };    // input log luminance scale
 
 
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfstmo_progress_callback progress_cb )
+std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, ProgressHelper *ph)
 {
-  if( progress_cb != NULL ) {
-    progress_cb( 0 );
-  }
+  ph->newValue( 0 );
 
   pfstmo::Array2D buf_1(width, height);
   pfstmo::Array2D buf_2(width, height);
@@ -517,9 +515,9 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
       
     std::swap( LP_low, LP_high );
 
-    if( progress_cb != NULL ) {
-      progress_cb( (f+1)*PROGRESS_CDF/C->f_count );      
-    }
+    ph->newValue( (f+1)*PROGRESS_CDF/C->f_count );  
+	if (ph->isTerminationRequested())
+		break;
   }
 
   if( warn_out_of_range )
@@ -740,7 +738,7 @@ void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_count, int 
  * a pre-allocated array and has the same size as C->x_scale.
  */
 int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize *ds,
-  float enh_factor, double *y, const float white_y, pfstmo_progress_callback progress_cb = NULL ) {
+  float enh_factor, double *y, const float white_y, ProgressHelper *ph = NULL ) {
   
   conditional_density *C = (conditional_density*)C_pub;
   
@@ -966,9 +964,9 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
     if( converged )
       break;    
   }
-  if( progress_cb != NULL ) {
-    progress_cb( 95 );    
-  }
+  ph->newValue( 95 );    
+  if (ph->isTerminationRequested())
+	return PFSTMO_ABORTED; // PFSTMO_OK is right 
   
 //   for( int i=0; i < L; i++ )
 //     fprintf( stderr, "%9.6f ", gsl_vector_get( x, i ) );
@@ -982,23 +980,21 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
 int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int height,
   const float *R_in, const float *G_in, const float *B_in, const float *L_in,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor, const float saturation_factor,
-  const float white_y, pfstmo_progress_callback progress_cb )
+  const float white_y, ProgressHelper *ph )
 {
-  std::auto_ptr<datmoConditionalDensity> C(datmo_compute_conditional_density( width, height, L_in, progress_cb ));
+  std::auto_ptr<datmoConditionalDensity> C(datmo_compute_conditional_density( width, height, L_in, ph ));
 
   datmoToneCurve tc;
   
   int res;
   
-  res = datmo_compute_tone_curve( &tc, C.get(), df, ds, enh_factor, white_y, progress_cb );
+  res = datmo_compute_tone_curve( &tc, C.get(), df, ds, enh_factor, white_y, ph );
 
   datmo_apply_tone_curve_cc( R_out, G_out, B_out, width, height, R_in, G_in, B_in, L_in, &tc,
     df, saturation_factor );
   
 
-  if( progress_cb != NULL ) {
-    progress_cb( 100 );
-  }  
+  ph->newValue( 100 );
 
   return PFSTMO_OK;  
 }
@@ -1006,11 +1002,11 @@ int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int heig
 
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor, 
-  const float white_y, pfstmo_progress_callback progress_cb )
+  const float white_y, ProgressHelper *ph )
 {
   conditional_density *C = (conditional_density*)cond_dens;
   tc->init( C->x_count, C->x_scale );
-  return optimize_tonecurve( cond_dens, df, ds, enh_factor, tc->y_i, white_y, progress_cb );
+  return optimize_tonecurve( cond_dens, df, ds, enh_factor, tc->y_i, white_y, ph );
 }
 
 

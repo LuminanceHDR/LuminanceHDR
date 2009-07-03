@@ -11,6 +11,7 @@
 #ifndef _tmo_reinhard02_h_
 #define _tmo_reinhard02_h_
 
+#include "../../Common/progressHelper.h"
 /*
  * @brief Photographic tone-reproduction
  *
@@ -28,6 +29,6 @@
 void tmo_reinhard02(unsigned int width, unsigned int height, 
   const float *Y, float *L, 
   bool use_scales, float key, float phi, 
-  int num, int low, int high, bool temporal_coherent );
+  int num, int low, int high, bool temporal_coherent, ProgressHelper *ph );
 
 #endif /* _tmo_reinhard02_h_ */

@@ -57,15 +57,9 @@ private:
 	pfs::Frame *workingframe;
 	int originalxsize;
 	int ldr_output_cs;
-	//QString cachepath;
 	bool colorspaceconversion;
 	tonemapping_options opts;
-	//void fetch(QString);
-	//void swap(pfs::Frame *, QString );
-	bool forciblyTerminated;
-	//void dumpOpts();
-	//enum {from_resize,from_pregamma,from_tm} status;
-	QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
+	//QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 	static int counter;
 };
 

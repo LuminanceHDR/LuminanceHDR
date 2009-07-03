@@ -37,16 +37,15 @@
 #include <fcntl.h>
 
 #include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 
 #include "display_adaptive_tmo.h"
 
 #define PROG_NAME "pfstmo_mantiuk08"
 
-typedef int(*pfstmo_progress_callback)(int progress);
-
 using namespace std;
 
-void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, pfstmo_progress_callback progress_cb)
+void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast_enhance_factor, float white_y, bool setluminance, ProgressHelper *ph)
 {
     //--- default tone mapping parameters;
     //float contrast_enhance_factor = 1.f;
@@ -117,12 +116,12 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
 
     datmoToneCurve tc;
  
-    std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->getRawData(), progress_cb);
+    std::auto_ptr<datmoConditionalDensity> C = datmo_compute_conditional_density( cols, rows, inY->getRawData(), ph);
     if( C.get() == NULL )
       throw pfs::Exception("failed to analyse the image");
 
     int res;
-    res = datmo_compute_tone_curve( &tc, C.get(), df, ds, contrast_enhance_factor, white_y, progress_cb);
+    res = datmo_compute_tone_curve( &tc, C.get(), df, ds, contrast_enhance_factor, white_y, ph);
     if( res != PFSTMO_OK )
       throw pfs::Exception( "failed to compute the tone-curve" );    
 
@@ -133,7 +132,7 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
     //res = datmo_tonemap( inX->getRawData(), R.getRawData(), inZ->getRawData(), cols, rows,
     //   inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
     //df, ds, contrast_enhance_factor, saturation_factor, white_y, progress_cb );
-    progress_cb( 100 );
+    ph->newValue( 100 );
 
     pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
     frame->getTags()->setString("LUMINANCE", "DISPLAY");

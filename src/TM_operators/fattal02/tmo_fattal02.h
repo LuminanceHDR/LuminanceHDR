@@ -47,7 +47,12 @@
  * @param beta parameter beta (refer to the paper)
  * @param noise gradient level of noise (extra parameter)
  */
+
+#include "../../Common/progressHelper.h"
+
 void tmo_fattal02(unsigned int width, unsigned int height,
-                  const float* Y, float* L, float alfa, float beta, float noise);
+                  const float* Y, float* L, 
+				  float alfa, float beta, float noise,
+				  ProgressHelper *ph);
 
 #endif

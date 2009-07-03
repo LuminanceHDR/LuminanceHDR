@@ -33,6 +33,7 @@
 #include "display_size.h"
 
 #include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 #include "../pfstmo.h"
 
 class datmoToneCurve
@@ -96,7 +97,7 @@ public:
 int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int height,
   const float *R_in, const float *G_in, const float *B_in, const float *L_in,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor = 1.f, const float saturation_factor = 0.4f,
-  const float white_y = -1, pfstmo_progress_callback progress_cb = NULL );
+  const float white_y = -1, ProgressHelper *ph = NULL );
 
 /**
  * Computes image statistics required for
@@ -114,7 +115,7 @@ int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int heig
  * must be freed by the calling application using the 'delete'
  * statement.
  */
-std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, pfstmo_progress_callback progress_cb = NULL );
+std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int width, int height, const float *L, ProgressHelper *ph = NULL );
 
 
 /**
@@ -139,7 +140,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
  */
 int datmo_compute_tone_curve( datmoToneCurve *tc, datmoConditionalDensity *cond_dens,
   DisplayFunction *df, DisplaySize *ds, const float enh_factor = 1.f, 
-  const float white_y = -1, pfstmo_progress_callback progress_cb = NULL );
+  const float white_y = -1, ProgressHelper *ph = NULL );
 
 /**
  * Deprectaied: use datmo_apply_tone_curve_cc()

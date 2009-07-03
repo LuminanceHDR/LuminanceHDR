@@ -38,7 +38,7 @@ using namespace std;
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);
 
-void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq) {
+void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq, ProgressHelper *ph) {
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
@@ -62,7 +62,7 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
 	int h = Y->getRows();
 	
 	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
-	tmo_ashikhmin02(Y, L, maxLum, minLum, avLum, simple_flag, lc_value, eq);
+	tmo_ashikhmin02(Y, L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
 
 	for( int x=0 ; x<w ; x++ )
 		for( int y=0 ; y<h ; y++ )
@@ -72,6 +72,9 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
 			(*X)(x,y) = (*X)(x,y) * scale;
 			(*Z)(x,y) = (*Z)(x,y) * scale;
 		}
+
+	if (!ph->isTerminationRequested())
+		ph->newValue( 100 );
 
 	delete L;
 

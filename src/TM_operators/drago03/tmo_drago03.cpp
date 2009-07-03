@@ -36,7 +36,6 @@
 
 #include <assert.h>
 
-
 /// Type of algorithm
 #define FAST 0
 
@@ -48,7 +47,7 @@ inline float biasFunc(float b, float x)
 
 //-------------------------------------------
 
-void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum )
+void calculateLuminance(unsigned int width, unsigned int height, const float* Y, float& avLum, float& maxLum)
 {
   avLum = 0.0f;
   maxLum = 0.0f;
@@ -66,7 +65,8 @@ void calculateLuminance(unsigned int width, unsigned int height, const float* Y,
 
 void tmo_drago03(unsigned int width, unsigned int height,
                  const float* nY, float* nL,
-                 float maxLum, float avLum, float bias)
+                 float maxLum, float avLum, float bias, 
+				 ProgressHelper *ph)
 {
   const float LOG05 = -0.693147f; // log(0.5)
 
@@ -87,13 +87,17 @@ void tmo_drago03(unsigned int width, unsigned int height,
 
 #if !FAST
   // Normal tone mapping of every pixel
-  for( int y=0 ; y<nrows; y++) 
+  for( int y=0 ; y<nrows; y++) { 
+	ph->newValue(100*y/nrows);
+	if (ph->isTerminationRequested()) 
+	  break; 
     for( int x=0 ; x<ncols; x++)
     {
       float Yw = (*Y)(x,y) / avLum;
       float interpol = log (2.0f + biasFunc(biasP, Yw / maxLum) * 8.0f);
       (*L)(x,y) = ( log(Yw+1.0f)/interpol ) / divider;
     }
+  }
 #else
   // 	Approximation of log(x+1)
   // 		x(6+x)/(6+4x) good if x < 1

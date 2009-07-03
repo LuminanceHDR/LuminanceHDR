@@ -31,7 +31,8 @@ FORMS = forms/maingui.ui \
         forms/projectionsDialog.ui \
         forms/editing_tools.ui \
         forms/batch_dialog.ui \ 
-	forms/imageQualityDialog.ui
+		forms/imageQualityDialog.ui \
+		forms/threadManager.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
@@ -43,9 +44,9 @@ HEADERS += src/Libpfs/array2d.h \
            src/Common/gang.h \
            src/Common/commandline.h \
            src/Common/imageQualityDialog.h \
-	   src/Common/selectionTool.h \
-	   src/Common/genericViewer.h \
-	   src/Common/progressHelper.h \
+		   src/Common/selectionTool.h \
+		   src/Common/genericViewer.h \
+		   src/Common/progressHelper.h \
            src/MainWindow/mainWindow.h \
            src/MainWindow/DnDOption.h \
            src/MainWindow/hdrviewer.h \
@@ -54,7 +55,17 @@ HEADERS += src/Libpfs/array2d.h \
            src/ToneMappingDialog/tonemappingDialog.h \
            src/ToneMappingDialog/tonemapping_widget.h \
            src/ToneMappingDialog/ldrviewer.h \
-           src/Threads/tonemapperThread.h \
+           src/ToneMappingDialog/threadManager.h \
+		   src/Threads/tonemapperThread.h \
+           src/Threads/ashikhmin02Thread.h \
+           src/Threads/drago03Thread.h \
+           src/Threads/durand02Thread.h \
+           src/Threads/fattal02Thread.h \
+           src/Threads/mantiuk06Thread.h \
+           src/Threads/mantiuk08Thread.h \
+           src/Threads/pattanaik00Thread.h \
+           src/Threads/reinhard02Thread.h \
+           src/Threads/reinhard05Thread.h \
            src/Threads/loadHdrThread.h \
            src/Threads/hdrInputLoader.h \
            src/Preferences/preferencesDialog.h \
@@ -105,9 +116,9 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Common/gang.cpp \
            src/Common/commandline.cpp \
            src/Common/imageQualityDialog.cpp \
-	   src/Common/selectionTool.cpp \
-	   src/Common/genericViewer.cpp \
-	   src/Common/progressHelper.cpp \
+		   src/Common/selectionTool.cpp \
+		   src/Common/genericViewer.cpp \
+		   src/Common/progressHelper.cpp \
            src/MainWindow/mainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
            src/MainWindow/hdrviewer.cpp \
@@ -116,7 +127,17 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/ToneMappingDialog/tonemappingDialog.cpp \
            src/ToneMappingDialog/tonemapping_widget.cpp \
            src/ToneMappingDialog/ldrviewer.cpp \
+           src/ToneMappingDialog/threadManager.cpp \
            src/Threads/tonemapperThread.cpp \
+           src/Threads/ashikhmin02Thread.cpp \
+           src/Threads/drago03Thread.cpp \
+           src/Threads/durand02Thread.cpp \
+           src/Threads/fattal02Thread.cpp \
+           src/Threads/mantiuk06Thread.cpp \
+           src/Threads/mantiuk08Thread.cpp \
+           src/Threads/pattanaik00Thread.cpp \
+           src/Threads/reinhard02Thread.cpp \
+           src/Threads/reinhard05Thread.cpp \
            src/Threads/loadHdrThread.cpp \
            src/Threads/hdrInputLoader.cpp \
            src/Preferences/preferencesDialog.cpp \
@@ -169,7 +190,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/TM_operators/mantiuk08/display_function.cpp \
            src/TM_operators/mantiuk08/display_size.cpp \
            src/TM_operators/mantiuk08/cqp/cqpminimizer.c \
-	   src/TM_operators/mantiuk08/cqp/initial_point.c \
+		   src/TM_operators/mantiuk08/cqp/initial_point.c \
            src/TM_operators/mantiuk08/cqp/mg_pdip.c \
            src/Batch/batch_dialog.cpp \
            src/Exif/exif_operations.cpp

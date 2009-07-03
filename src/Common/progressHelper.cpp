@@ -23,9 +23,18 @@
 
 #include "progressHelper.h"
 
-ProgressHelper::ProgressHelper(QObject *p): QObject(p), prev(1) {}
+ProgressHelper::ProgressHelper(QObject *p): QObject(p), m_terminate(false) {}
 
-int ProgressHelper::newValue(int progress) {
-	emit emitValue(progress);
-	return 1;
+void ProgressHelper::newValue(int progress) {
+	emit valueChanged(progress);
 }
+
+void ProgressHelper::terminate(bool b) {
+	m_terminate = b;
+}
+
+bool ProgressHelper::isTerminationRequested() {
+	return m_terminate;
+}
+
+

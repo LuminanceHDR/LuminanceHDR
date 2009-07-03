@@ -37,7 +37,7 @@
 
 #include "tmo_reinhard02.h"
 
-void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales )
+void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
     pfs::DOMIO pfsio;
 
@@ -63,7 +63,7 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
     int h = Y->getRows();
     pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
 
-    tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent );
+    tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
 
     for( int x=0 ; x<w ; x++ )
       for( int y=0 ; y<h ; y++ )

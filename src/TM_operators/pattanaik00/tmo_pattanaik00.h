@@ -36,6 +36,7 @@
 #define _tmo_pattanaik00_h_
 
 #include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 
 
 class VisualAdaptationModel;
@@ -54,7 +55,7 @@ class VisualAdaptationModel;
  */
 void tmo_pattanaik00( unsigned int width, unsigned int height,
   float* R, float* G, float* B, 
-  const float* Y, VisualAdaptationModel* am, bool local=false );
+  const float* Y, VisualAdaptationModel* am, bool local=false, ProgressHelper *ph = 0);
 
 
 /**

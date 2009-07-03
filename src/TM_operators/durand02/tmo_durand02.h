@@ -36,6 +36,7 @@
 #define _tmo_durand02_h_
 
 #include "../pfstmo.h"
+#include "../../Common/progressHelper.h"
 
 /*
  * @brief Fast bilateral filtering
@@ -55,7 +56,7 @@ void tmo_durand02(unsigned int width, unsigned int height,
   float *R, float *G, float *B,
   float sigma_s, float sigma_r, float baseContrast, int downsample,
   const bool color_correction = true,
-  pfstmo_progress_callback progress_cb = NULL );
+  ProgressHelper *ph = 0);
 
 
 #endif /* _tmo_durand02_h_ */

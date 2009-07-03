@@ -74,7 +74,7 @@ extern float rgb2xyzD65Mat[3][3];
 
 static void contrast_equalization( pyramid_t *pp, const float contrastFactor );
 
-static void transform_to_luminance(pyramid_t* pyramid, float* const x, pfstmo_progress_callback progress_cb, const bool bcg);
+static void transform_to_luminance(pyramid_t* pyramid, float* const x, ProgressHelper *ph, const bool bcg);
 static void matrix_add(const int n, const float* const a, float* const b);
 static void matrix_subtract(const int n, const float* const a, float* const b);
 static void matrix_copy(const int n, const float* const a, float* const b);
@@ -97,8 +97,8 @@ static void calculate_gradient(const int cols, const int rows, const float* cons
 static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum);
 static void solveX(const int n, const float* const b, float* const x);
 static void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
-static void linbcg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, pfstmo_progress_callback progress_cb);
-static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, pfstmo_progress_callback progress_cb);
+static void linbcg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
 static float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val);
 static void transform_to_R(const int n, float* const G);
 static void pyramid_transform_to_R(pyramid_t* pyramid);
@@ -658,7 +658,7 @@ static inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x,
 
 // bi-conjugate linear equation solver
 // overwrites pyramid!
-static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, pfstmo_progress_callback progress_cb)
+static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
 {
   const int rows = pyramid->rows;
   const int cols = pyramid->cols;
@@ -695,9 +695,10 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
   const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
     {
-      if( progress_cb != NULL )
-	progress_cb( (int) (logf(err2/ierr2)*percent_sf));    
-      
+	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );    
+      if (ph->isTerminationRequested()) //user request abort
+		  break;
+
       solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
       solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
 		
@@ -795,15 +796,14 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
   if (err2/bnrm2 > tol2)
     {
       // Not converged
-      if( progress_cb != NULL )
-	progress_cb( (int) (logf(err2/ierr2)*percent_sf));    
+	ph->newValue( (int) (logf(err2/ierr2)*percent_sf));    
       if (iter == itmax)
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
       else
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
     }
-  else if (progress_cb != NULL)
-    progress_cb(100);
+  else 
+    ph->newValue(100);
     
   
   matrix_free(x_save);
@@ -818,7 +818,7 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
 
 // conjugate linear equation solver
 // overwrites pyramid!
-static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, pfstmo_progress_callback progress_cb)
+static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
 {
   const int rows = pyramid->rows;
   const int cols = pyramid->cols;
@@ -852,11 +852,9 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float
   const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
     {
-      if( progress_cb != NULL ) {
-	int ret = progress_cb( (int) (logf(rdotr/irdotr)*percent_sf));    
-        if( ret == PFSTMO_CB_ABORT && iter > 0 ) // User requested abort
+	   ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf) );    
+        if( ph->isTerminationRequested() && iter > 0 ) // User requested abort
           break;
-      }      
       
       // Ap = A p
       multiplyA(pyramid, pC, p, Ap);
@@ -940,15 +938,14 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float
   if (rdotr/bnrm2 > tol2)
     {
       // Not converged
-      if( progress_cb != NULL )
-	progress_cb( (int) (logf(rdotr/irdotr)*percent_sf));    
+	ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf));    
       if (iter == itmax)
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
       else
 	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
     }
-  else if (progress_cb != NULL)
-    progress_cb(100);
+  else 
+    ph->newValue(100);
     
   matrix_free(x_save);
   matrix_free(p);
@@ -1071,7 +1068,7 @@ static int sort_float(const void* const v1, const void* const v2)
 
 
 // transform gradients to luminance
-static void transform_to_luminance(pyramid_t* pp, float* const x, pfstmo_progress_callback progress_cb, const bool bcg, const int itmax, const float tol)
+static void transform_to_luminance(pyramid_t* pp, float* const x, ProgressHelper *ph, const bool bcg, const int itmax, const float tol)
 {
   pyramid_t* pC = pyramid_allocate(pp->cols, pp->rows);
   pyramid_calculate_scale_factor(pp, pC); // calculate (Cx,Cy)
@@ -1082,9 +1079,9 @@ static void transform_to_luminance(pyramid_t* pp, float* const x, pfstmo_progres
   
   // calculate luminances from gradients
   if (bcg)
-    linbcg(pp, pC, b, x, itmax, tol, progress_cb);
+    linbcg(pp, pC, b, x, itmax, tol, ph);
   else
-    lincg(pp, pC, b, x, itmax, tol, progress_cb);
+    lincg(pp, pC, b, x, itmax, tol, ph);
   
   matrix_free(b);
   pyramid_free(pC);
@@ -1187,7 +1184,7 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
 
 
 // tone mapping
-int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, const bool bcg, const int itmax, const float tol, pfstmo_progress_callback progress_cb)
+int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, const bool bcg, const int itmax, const float tol, ProgressHelper *ph)
 {
   
   const int n = c*r;
@@ -1231,7 +1228,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
     contrast_equalization(pp, -contrastFactor); // Contrast equalization
 	
   pyramid_transform_to_G(pp); // transform R to gradients
-  transform_to_luminance(pp, Y, progress_cb, bcg, itmax, tol); // transform gradients to luminance Y
+  transform_to_luminance(pp, Y, ph, bcg, itmax, tol); // transform gradients to luminance Y
   pyramid_free(pp);
 
   /* Renormalize luminance */

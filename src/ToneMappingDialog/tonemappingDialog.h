@@ -36,6 +36,7 @@
 #include "../Common/global.h"
 #include "../MainWindow/hdrviewer.h"
 #include "tonemapping_widget.h"
+#include "threadManager.h"
 
 class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
 {
@@ -63,6 +64,7 @@ private:
 	float scaleFactor;
 	int VSB_Value;
 	int HSB_Value;
+	ThreadManager *threadManager;
 protected slots:
 	//bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();

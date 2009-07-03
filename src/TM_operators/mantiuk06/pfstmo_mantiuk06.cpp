@@ -40,12 +40,11 @@
 #include <iostream>
 
 #include "../../Libpfs/pfs.h"
+#include "../../Common/progressHelper.h"
 
 #include "contrast_domain.h"
 
-typedef int(*pfstmo_progress_callback)(int progress);
-
-void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, pfstmo_progress_callback progress_cb)
+void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
     //--- default tone mapping parameters;
     //float scaleFactor = 0.1f;
@@ -81,7 +80,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
     pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ );
 
     tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
-      scaleFactor, saturationFactor, bcg, itmax, tol, progress_cb);	
+      scaleFactor, saturationFactor, bcg, itmax, tol, ph);	
 
     pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
     frame->getTags()->setString("LUMINANCE", "RELATIVE");

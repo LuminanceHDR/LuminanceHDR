@@ -29,6 +29,7 @@
 #define TONEMAPPINGWIDGET_H
 
 #include <QProgressBar>
+#include "threadManager.h"
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "../Common/gang.h"
 #include "../Common/global.h"
@@ -53,7 +54,7 @@ class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame *pfsFrame);
+	TMWidget(QWidget *parent, pfs::Frame *pfsFrame, ThreadManager *threadManager);
 	~TMWidget();
 signals:
 	void newResult(const QImage&,tonemapping_options*);
@@ -112,6 +113,7 @@ private:
 	QStatusBar *statusbar;
 	float HeightWidthRatio;
 	bool adding_custom_size;
+	ThreadManager *threadManager;
 private slots:
 	void on_pregammadefault_clicked();
 	//void on_ashikhmin02Default_clicked();

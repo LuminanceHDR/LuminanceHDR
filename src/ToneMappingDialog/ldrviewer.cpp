@@ -70,7 +70,7 @@ void LdrViewer::levelsRequested(bool a) {
 	assert(a); //a is always true
 	//copy original data
 	previewimage=image.copy();
-	GammaAndLevels *levels=new GammaAndLevels(0, origimage);
+	GammaAndLevels *levels=new GammaAndLevels(this, origimage);
 	levels->setAttribute(Qt::WA_DeleteOnClose);
 	//when closing levels, inform the Tone Mapping dialog.
 	connect(levels,SIGNAL(closing()),this,SIGNAL(levels_closed()));

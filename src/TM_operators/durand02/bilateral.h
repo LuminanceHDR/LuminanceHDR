@@ -32,6 +32,7 @@
 #ifndef _bilateral_h_
 #define _bilateral_h_
 
+#include "../../Common/progressHelper.h"
 
 /**
  * @brief Bilateral filtering
@@ -47,7 +48,7 @@
  */
 void bilateralFilter( const pfstmo::Array2D *I,
   pfstmo::Array2D *J, float sigma_s, float sigma_r,
-  pfstmo_progress_callback progress_cb );
+  ProgressHelper *ph );
 
 
 #endif /* #ifndef _bilateral_h_ */

@@ -46,8 +46,10 @@
  * @param ca amount of chromatic adaptation 0:1 (saturation, def 0)
  * @param la amount of light adaptation 0:1 (local/global, def 1)
  */
+#include "../../Common/progressHelper.h"
+
 void tmo_reinhard05(unsigned int width, unsigned int height,
   float* R, float* G, float* B, 
-  const float* Y, float br, float ca, float la );
+  const float* Y, float br, float ca, float la, ProgressHelper *ph );
 
 #endif
