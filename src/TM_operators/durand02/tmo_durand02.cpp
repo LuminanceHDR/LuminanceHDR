@@ -164,7 +164,8 @@ void tmo_durand02(unsigned int width, unsigned int height,
   delete G;
   delete R;
 
-  ph->newValue( 100 );
+  if (!ph->isTerminationRequested())
+    ph->newValue( 100 );
 }
 
 

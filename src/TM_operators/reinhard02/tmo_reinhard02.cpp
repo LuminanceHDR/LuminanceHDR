@@ -570,7 +570,8 @@ void tmo_reinhard02(
   deallocate_memory();
   clean_pyramid();
 
-  ph->newValue( 100 );
+  if (!ph->isTerminationRequested())
+    ph->newValue( 100 );
   
   end:
   delete L;
