@@ -272,7 +272,7 @@ pfs::Frame* HdrViewer::getHDRPfsFrame() {
 
 void HdrViewer::saveHdrPreview() {
 	qDebug("filename=%s",qPrintable(filename));
-	saveLDRImage(QFileInfo(filename).completeBaseName()+"_preview"+".jpg",image);
+	saveLDRImage(this, QFileInfo(filename).completeBaseName()+"_preview"+".jpg",image);
 }
 
 void HdrViewer::setMaximum(int max) {

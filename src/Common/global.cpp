@@ -35,7 +35,7 @@ QSettings settings("Qtpfsgui", "Qtpfsgui");
 /**
  * \return "" when fail, out file name when successful
  */
-QString saveLDRImage(const QString initialFileName, const QImage &image, bool batchMode) {
+QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage &image, bool batchMode) {
 	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
 	if (!batchMode) {
 		QString filetypes = QObject::tr("All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;");
@@ -45,7 +45,7 @@ QString saveLDRImage(const QString initialFileName, const QImage &image, bool ba
 		filetypes += "BMP (*.bmp *.BMP)";
 
 		outfname = QFileDialog::getSaveFileName(
-				0,
+				parent,
 				QObject::tr("Save the LDR to..."),
 				QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
 				filetypes
@@ -64,7 +64,7 @@ QString saveLDRImage(const QString initialFileName, const QImage &image, bool ba
 		}
 		int quality = 100;
 		if ((format == "png" || format == "jpg") && !batchMode) {
- 			ImageQualityDialog savedFileQuality(image, format);
+ 			ImageQualityDialog savedFileQuality(image, format, parent);
 			QString winTitle(QObject::tr("Save as "));
 			winTitle += format.toUpper();
 			savedFileQuality.setWindowTitle( winTitle );

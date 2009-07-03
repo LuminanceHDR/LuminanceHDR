@@ -173,7 +173,7 @@ void TonemappingWindow::on_actionSave_triggered() {
 	if (current == originalHDR)
 		return;
 
-	QString outfname = saveLDRImage(prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
+	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
 
 	//if save is succesful
 	if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
@@ -249,7 +249,7 @@ void TonemappingWindow::on_actionSaveAll_triggered() {
 		foreach (QMdiSubWindow *p, allLDRs) {
 			if (p != originalHdrSubWin) { //skips the hdr
 			  GenericViewer* ldr = (GenericViewer*) p->widget();
-			  QString outfname = saveLDRImage(prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
+			  QString outfname = saveLDRImage(this, prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
 			  //if save is succesful
 			  if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
 				//time to write the exif data...
