@@ -479,6 +479,10 @@ INCLUDEPATH += ../DEPs/include/OpenEXR
 INCLUDEPATH += ../DEPs/include/exiv2
 LIBS        += -lexiv2 -L../DEPs/lib/exiv2
 
+#gsl
+INCLUDEPATH += ../DEPs/include/gsl
+LIBS        += -L../DEPs/lib/gsl
+
 #win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
 LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
 
