@@ -17,9 +17,6 @@
     <layout class="QVBoxLayout" name="verticalLayout_3" >
      <item>
       <widget class="QScrollArea" name="scrollArea" >
-       <property name="styleSheet" >
-        <string notr="true" >background-color: rgb(255, 255, 255);</string>
-       </property>
        <property name="widgetResizable" >
         <bool>true</bool>
        </property>

@@ -22,17 +22,31 @@
  */
 
 #include "threadManager.h"
+#include "../Common/global.h"
 
-ThreadManager::~ThreadManager() {}
+ThreadManager::~ThreadManager() {
+	clearAll();
+}
 
 ThreadManager::ThreadManager(QWidget *parent) : QDialog(parent) {
 	setupUi(this);
 	connect(clearButton,SIGNAL(clicked()),this,SLOT(clearAll()));
 }
 
-void ThreadManager::addWidget(QWidget *w) {
-	verticalLayout->addWidget(w);	
-    widgets.append(w);
+void ThreadManager::addWidget(QWidget *label, QWidget *progressBar) {
+	QPushButton *abortButton = new QPushButton(this);
+	abortButton->resize(22,22);
+	abortButton->setIcon(QIcon(":/new/prefix1/images/remove.png"));
+	abortButton->setToolTip(QString(tr("Abort computation")));
+	QHBoxLayout *hbl = new QHBoxLayout(this);
+	hbl->addWidget(progressBar);
+	hbl->addWidget(abortButton);
+	verticalLayout->addWidget(label);	
+	verticalLayout->addLayout(hbl);	
+    widgets.append(label);
+    widgets.append(progressBar);
+    widgets.append(abortButton);
+	connect(abortButton,SIGNAL(clicked()),this,SIGNAL(terminate()));
 }
 
 void ThreadManager::clearAll() {
@@ -41,6 +55,14 @@ void ThreadManager::clearAll() {
 		delete w;
 	}
 	widgets.clear();
+}
+
+void ThreadManager::showEvent(QShowEvent *) {
+	restoreGeometry(settings.value("ThreadManagerGeometry").toByteArray());
+}
+
+void ThreadManager::hideEvent(QHideEvent *) {
+	settings.setValue("ThreadManagerGeometry", saveGeometry());
 }
 
 void ThreadManager::closeEvent(QCloseEvent *event) {

@@ -308,18 +308,16 @@ void TMWidget::on_applyButton_clicked() {
 	if (current_page== page_mantiuk06) {
 		Mantiuk06Thread *thread = new Mantiuk06Thread(pfsFrame, sizes[0], ToneMappingOptions);
 		
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Mantiuk '06");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 		
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -327,18 +325,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page== page_mantiuk08) {
 		Mantiuk08Thread *thread = new Mantiuk08Thread(pfsFrame, sizes[0], ToneMappingOptions);
 		
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Mantiuk '08");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 		
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -346,18 +342,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_ashikhmin) {
 		Ashikhmin02Thread *thread = new Ashikhmin02Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Ashikhmin '02");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -365,18 +359,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_drago) {
 		Drago03Thread *thread = new Drago03Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Drago '03");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -384,18 +376,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_durand) {
 		Durand02Thread *thread = new Durand02Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Durand '02");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -403,18 +393,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_fattal) {
 		Fattal02Thread *thread = new Fattal02Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Fattal '02");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -422,18 +410,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_pattanaik) {
 		Pattanaik00Thread *thread = new Pattanaik00Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Pattanaik '00");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -441,18 +427,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_reinhard02) {
 		Reinhard02Thread *thread = new Reinhard02Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Reinhard '02");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();
@@ -460,18 +444,16 @@ void TMWidget::on_applyButton_clicked() {
 	else if (current_page == page_reinhard05) {
 		Reinhard05Thread *thread = new Reinhard05Thread(pfsFrame, sizes[0], ToneMappingOptions);
 
-		MyProgressBar *newprogressbar = new MyProgressBar(this);
+		MyProgressBar *progressBar = new MyProgressBar(this);
 		QLabel *label = new QLabel("Reinhard '05");
 		label->resize(100,36);
-		threadManager->addWidget(label);
-		threadManager->addWidget(newprogressbar);
+		threadManager->addWidget(label, progressBar);
 
 		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SIGNAL(newResult(const QImage&,tonemapping_options*)));
-		//connect(thread, SIGNAL(finished()), newprogressbar, SLOT(deleteLater()));
-		connect(thread, SIGNAL(setMaximumSteps(int)), newprogressbar, SLOT(setMaximum(int)));
-		connect(thread, SIGNAL(advanceCurrentProgress(int)), newprogressbar, SLOT(advanceCurrentProgress(int)));
+		connect(thread, SIGNAL(setMaximumSteps(int)), progressBar, SLOT(setMaximum(int)));
+		connect(thread, SIGNAL(advanceCurrentProgress(int)), progressBar, SLOT(advanceCurrentProgress(int)));
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-		connect(newprogressbar, SIGNAL(leftMouseButtonClicked()), thread, SLOT(terminateRequested()));
+		connect(threadManager, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 		//start thread
 		thread->start();

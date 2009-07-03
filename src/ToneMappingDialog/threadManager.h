@@ -25,6 +25,8 @@
 #define THREADMANAGER_IMPL_H
 
 #include <QDialog>
+#include <QShowEvent>
+#include <QHideEvent>
 #include <QCloseEvent>
 #include "../generated_uic/ui_threadManager.h"
 
@@ -35,12 +37,16 @@ Q_OBJECT
 public:
 	ThreadManager(QWidget *parent = 0);
 	~ThreadManager();
-	void addWidget(QWidget *w);
+	void addWidget(QWidget *label, QWidget *progressBar);
 public slots:
 	void clearAll();
 protected:
-	virtual void closeEvent ( QCloseEvent * event );
+	virtual void showEvent(QShowEvent *event);
+	virtual void hideEvent(QHideEvent *event);
+	virtual void closeEvent(QCloseEvent *event);
 	QList<QWidget *> widgets;
+signals:
+	void terminate();
 };
 
 #endif
