@@ -44,5 +44,6 @@
 		<file>images/edit-undo.png</file>
 		<file>images/edit-redo.png</file>
 		<file>images/system-run.png</file>
+		<file>images/working.gif</file>
     </qresource>
 </RCC>
