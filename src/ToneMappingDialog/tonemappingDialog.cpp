@@ -79,7 +79,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
 
 	threadManager = new ThreadManager(this);
-	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
 
 	tmwidget = new TMWidget(dock, pfsFrame, threadManager);
 	dock->setWidget(tmwidget);
@@ -96,7 +95,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	originalHdrSubWin = new QMdiSubWindow(this);
 	originalHdrSubWin->setWidget(originalHDR);
 	originalHdrSubWin->hide();
-	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 	
 	restoreState( settings.value("TonemappingWindowState").toByteArray() );
 	restoreGeometry(settings.value("TonemappingWindowGeometry").toByteArray());
@@ -132,6 +130,12 @@ void TonemappingWindow::setupConnections() {
 	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
+
+	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+	connect(originalHDR,SIGNAL(closeRequested(bool)),actionShowHDR,SLOT(setChecked(bool)));
+
+	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
+	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
 }
 
 void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) {
