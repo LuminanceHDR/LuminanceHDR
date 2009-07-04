@@ -30,6 +30,7 @@ ThreadManager::~ThreadManager() {
 
 ThreadManager::ThreadManager(QWidget *parent) : QDialog(parent) {
 	setupUi(this);
+	setBackgroundRole(QPalette::Light);
 	connect(clearButton,SIGNAL(clicked()),this,SLOT(clearAll()));
 }
 
@@ -49,14 +50,17 @@ void ThreadManager::clearAll() {
 }
 
 void ThreadManager::showEvent(QShowEvent *) {
-	//TODO; save pos and size instead
 	restoreGeometry(settings.value("ThreadManagerGeometry").toByteArray());
+	QPoint pos = settings.value("ThreadManagerPos").toPoint();
+	move(pos);
 }
 
 void ThreadManager::hideEvent(QHideEvent *) {
 	settings.setValue("ThreadManagerGeometry", saveGeometry());
+	settings.setValue("ThreadManagerPos", pos());
 }
 
 void ThreadManager::closeEvent(QCloseEvent *event) {
+	emit closeRequested(false);
 	event->ignore();
 }

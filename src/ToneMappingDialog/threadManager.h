@@ -46,6 +46,8 @@ protected:
 	virtual void hideEvent(QHideEvent *event);
 	virtual void closeEvent(QCloseEvent *event);
 	QList<TmoProgressIndicator *> widgets;
+signals:
+	void closeRequested(bool);
 };
 
 #endif
