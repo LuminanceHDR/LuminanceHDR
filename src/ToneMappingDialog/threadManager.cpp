@@ -33,31 +33,23 @@ ThreadManager::ThreadManager(QWidget *parent) : QDialog(parent) {
 	connect(clearButton,SIGNAL(clicked()),this,SLOT(clearAll()));
 }
 
-void ThreadManager::addWidget(QWidget *label, QWidget *progressBar) {
-	QPushButton *abortButton = new QPushButton(this);
-	abortButton->resize(22,22);
-	abortButton->setIcon(QIcon(":/new/prefix1/images/remove.png"));
-	abortButton->setToolTip(QString(tr("Abort computation")));
-	QHBoxLayout *hbl = new QHBoxLayout(this);
-	hbl->addWidget(progressBar);
-	hbl->addWidget(abortButton);
-	verticalLayout->addWidget(label);	
-	verticalLayout->addLayout(hbl);	
-    widgets.append(label);
-    widgets.append(progressBar);
-    widgets.append(abortButton);
-	connect(abortButton,SIGNAL(clicked()),this,SIGNAL(terminate()));
+void ThreadManager::addProgressIndicator(TmoProgressIndicator *pi) {
+	verticalLayout->addWidget(pi);	
+	widgets.append(pi);
 }
 
 void ThreadManager::clearAll() {
-	foreach(QWidget *w, widgets) {
-		verticalLayout->removeWidget(w);
-		delete w;
+	foreach(TmoProgressIndicator *pi, widgets) {
+		if (pi->isTerminated()) {
+			verticalLayout->removeWidget(pi);
+			delete pi;
+			widgets.removeOne(pi);
+		}
 	}
-	widgets.clear();
 }
 
 void ThreadManager::showEvent(QShowEvent *) {
+	//TODO; save pos and size instead
 	restoreGeometry(settings.value("ThreadManagerGeometry").toByteArray());
 }
 

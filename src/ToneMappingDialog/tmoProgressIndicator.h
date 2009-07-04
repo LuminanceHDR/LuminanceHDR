@@ -1,4 +1,4 @@
-/**
+/*
  * This file is a part of Qtpfsgui package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2009 Franco Comida
@@ -21,31 +21,32 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
-#ifndef THREADMANAGER_IMPL_H
-#define THREADMANAGER_IMPL_H
+#ifndef TMOPROGRESSINDICATOR
+#define TMOPROGRESSINDICATOR
 
-#include <QDialog>
-#include <QShowEvent>
-#include <QHideEvent>
-#include <QCloseEvent>
-#include "../generated_uic/ui_threadManager.h"
-#include "tmoProgressIndicator.h"
+#include <QWidget>
+#include <QLabel>
+#include <QProgressBar>
+#include <QPushButton>
 
-class ThreadManager : public QDialog, private Ui::ThreadManagerUI
-{
+class TmoProgressIndicator : public QWidget {
 Q_OBJECT
-
 public:
-	ThreadManager(QWidget *parent = 0);
-	~ThreadManager();
-	void addProgressIndicator(TmoProgressIndicator *pw);
+	TmoProgressIndicator(QWidget *parent, QString);
+	~TmoProgressIndicator();
+	bool isTerminated();
 public slots:
-	void clearAll();
+	void setValue(int);
+	void setMaximum(int);
+	void setMinimum(int);
+	void terminated();
 protected:
-	virtual void showEvent(QShowEvent *event);
-	virtual void hideEvent(QHideEvent *event);
-	virtual void closeEvent(QCloseEvent *event);
-	QList<TmoProgressIndicator *> widgets;
+	QLabel *m_label;
+	QProgressBar *m_progressBar;
+	QPushButton *m_abortButton;
+	bool m_isTerminated;
+signals:
+	void terminate();
 };
 
 #endif

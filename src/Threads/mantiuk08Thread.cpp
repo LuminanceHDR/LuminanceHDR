@@ -66,7 +66,7 @@ void Mantiuk08Thread::run() {
 		workingframe = resized;
 	}
 	
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(advanceCurrentProgress(int)));
+	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try {
 		pfstmo_mantiuk08(workingframe,
@@ -90,8 +90,10 @@ void Mantiuk08Thread::run() {
 	const QImage& res = fromLDRPFStoQImage(workingframe);
 	
 	pfsio.freeFrame(workingframe);
-	if (!(ph->isTerminationRequested()))
+	if (!(ph->isTerminationRequested())) {
 		emit imageComputed(res, &opts);
+		emit finished();
+	}
 }
 //
 // run()

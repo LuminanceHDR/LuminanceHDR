@@ -47,8 +47,9 @@ public slots:
 signals:
 	void imageComputed(const QImage&, tonemapping_options *);
 	void setMaximumSteps(int);
-	void advanceCurrentProgress(int);
-	void advanceCurrentProgress();
+	void setValue(int);
+	void setValue();
+	void finished();
 	void tmo_error(const char *);
 protected:
 	void run();

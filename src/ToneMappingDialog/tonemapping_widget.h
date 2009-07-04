@@ -28,7 +28,6 @@
 #ifndef TONEMAPPINGWIDGET_H
 #define TONEMAPPINGWIDGET_H
 
-#include <QProgressBar>
 #include "threadManager.h"
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "../Common/gang.h"
@@ -37,18 +36,6 @@
 #include "../Libpfs/pfs.h"
 
 class QStatusBar;
-class MyProgressBar : public QProgressBar {
-Q_OBJECT
-public:
-	MyProgressBar(QWidget * parent = 0 );
-	~MyProgressBar();
-public slots:
-	void advanceCurrentProgress(int);
-protected:
-	void mousePressEvent(QMouseEvent *event);
-signals:
-	void leftMouseButtonClicked();
-};
 
 class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
@@ -116,14 +103,6 @@ private:
 	ThreadManager *threadManager;
 private slots:
 	void on_pregammadefault_clicked();
-	//void on_ashikhmin02Default_clicked();
-	//void on_drago03Default_clicked();
-	//void on_durand02Default_clicked();
-	//void on_fattal02Default_clicked();
-	//void on_pattanaik00Default_clicked();
-	//void on_reinhard02Default_clicked();
-	//void on_reinhard05Default_clicked();
-	//void on_MantiukDefault_clicked();
 	void on_defaultButton_clicked();
 	void on_applyButton_clicked();
 	void on_undoButton_clicked();
