@@ -191,6 +191,7 @@ void GenericViewer::closeEvent ( QCloseEvent * event ) {
 			event->ignore();
 	} 
 	else if (noCloseFlag) {
+		emit closeRequested(false);
 		event->ignore();
 	} 
 	else {

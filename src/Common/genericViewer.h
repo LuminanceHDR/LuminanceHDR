@@ -88,5 +88,6 @@ signals:
 	virtual void selectionReady(bool isReady);
 	virtual void changed(GenericViewer *v); // emitted when zoomed in/out, scrolled ....
 	virtual void levels_closed(bool isReady); // only used by LdrViewer
+	virtual void closeRequested(bool); // emitted when NoCloseFlag is true
 };
 #endif
