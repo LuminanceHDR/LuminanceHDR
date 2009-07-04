@@ -49,12 +49,12 @@
 #include "../Filter/pfscut.h"
 
 TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame, ThreadManager *tm) : QWidget(parent), 
-	adding_custom_size(false), threadManager(tm) {
+	adding_custom_size(false), threadManager(tm), threadCounter(0) {
 	setupUi(this);
 
 	pfsFrame = frame;
-
-	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+	
+	workingLogoMovie = new QMovie(":/new/prefix1/images/working.gif");
 
 	// mantiuk06
 	contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,
@@ -159,33 +159,35 @@ TMWidget::TMWidget(QWidget *parent, pfs::Frame *frame, ThreadManager *tm) : QWid
 }
 
 TMWidget::~TMWidget() {
-delete contrastfactorGang; 
-delete saturationfactorGang; 
-delete detailfactorGang; 
-delete contrastGang; 
-delete colorSaturationGang;
-delete contrastEnhancementGang;
-delete luminanceLevelGang;
-delete biasGang; 
-delete spatialGang; 
-delete rangeGang; 
-delete baseGang; 
-delete alphaGang; 
-delete betaGang; 
-delete saturation2Gang; 
-delete noiseGang; 
-delete multiplierGang; 
-delete coneGang; 
-delete rodGang; 
-delete keyGang; 
-delete phiGang; 
-delete range2Gang; 
-delete lowerGang; 
-delete upperGang; 
-delete brightnessGang; 
-delete chromaticGang; 
-delete lightGang; 
-delete pregammagang;
+	delete contrastfactorGang; 
+	delete saturationfactorGang; 
+	delete detailfactorGang; 
+	delete contrastGang; 
+	delete colorSaturationGang;
+	delete contrastEnhancementGang;
+	delete luminanceLevelGang;
+	delete biasGang; 
+	delete spatialGang; 
+	delete rangeGang; 
+	delete baseGang; 
+	delete alphaGang; 
+	delete betaGang; 
+	delete saturation2Gang; 
+	delete noiseGang; 
+	delete multiplierGang; 
+	delete coneGang; 
+	delete rodGang; 
+	delete keyGang; 
+	delete phiGang; 
+	delete range2Gang; 
+	delete lowerGang; 
+	delete upperGang; 
+	delete brightnessGang; 
+	delete chromaticGang; 
+	delete lightGang; 
+	delete pregammagang;
+
+	delete workingLogoMovie;
 }
 
 void TMWidget::on_defaultButton_clicked() {
@@ -275,11 +277,9 @@ void TMWidget::updateUndoState(int) {
 	}
 }
 
-
 void TMWidget::on_pregammadefault_clicked(){
 	pregammagang->setDefault();
 }
-
 
 void TMWidget::on_applyButton_clicked() {
 	bool doTonemapping = true;
@@ -289,7 +289,7 @@ void TMWidget::on_applyButton_clicked() {
 	{
 		doTonemapping = QMessageBox::Yes ==
 			QMessageBox::question(
-				this, "Attention",
+				this, tr("Attention"),
 				tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
 			);
@@ -313,9 +313,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page== page_mantiuk08) {
 		Mantiuk08Thread *thread = new Mantiuk08Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -329,9 +333,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_ashikhmin) {
 		Ashikhmin02Thread *thread = new Ashikhmin02Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -345,9 +353,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_drago) {
 		Drago03Thread *thread = new Drago03Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -361,9 +373,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_durand) {
 		Durand02Thread *thread = new Durand02Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -377,9 +393,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_fattal) {
 		Fattal02Thread *thread = new Fattal02Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -393,9 +413,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_pattanaik) {
 		Pattanaik00Thread *thread = new Pattanaik00Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -409,9 +433,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_reinhard02) {
 		Reinhard02Thread *thread = new Reinhard02Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -425,9 +453,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 	else if (current_page == page_reinhard05) {
 		Reinhard05Thread *thread = new Reinhard05Thread(pfsFrame, sizes[0], ToneMappingOptions);
@@ -441,9 +473,13 @@ void TMWidget::on_applyButton_clicked() {
 		connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
 		connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 		connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+		connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+		connect(progressIndicator, SIGNAL(terminate()), this, SLOT(tonemappingFinished()));
 
 		//start thread
 		thread->start();
+		threadCounter++;
+		updateLogo();
 	}
 }
 
@@ -944,3 +980,18 @@ void TMWidget::showErrorMessage(const char *e) {
 
 }
 
+void TMWidget::tonemappingFinished() {
+	threadCounter--;
+	updateLogo();
+}
+
+void TMWidget::updateLogo() {
+	if (threadCounter == 0) {
+		workingLogoMovie->stop();
+		labelWorking->setText(" ");
+	}
+	else if (threadCounter == 1) {
+		labelWorking->setMovie(workingLogoMovie);
+		workingLogoMovie->start();
+	}
+}

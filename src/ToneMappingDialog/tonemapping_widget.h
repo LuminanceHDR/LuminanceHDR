@@ -28,6 +28,8 @@
 #ifndef TONEMAPPINGWIDGET_H
 #define TONEMAPPINGWIDGET_H
 
+#include <QMovie>
+
 #include "threadManager.h"
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "../Common/gang.h"
@@ -101,6 +103,8 @@ private:
 	float HeightWidthRatio;
 	bool adding_custom_size;
 	ThreadManager *threadManager;
+	int threadCounter;
+	QMovie *workingLogoMovie;
 private slots:
 	void on_pregammadefault_clicked();
 	void on_defaultButton_clicked();
@@ -116,6 +120,8 @@ private slots:
 	void fillCustomSizeComboBox();
 	void updateUndoState(int);
 	void showErrorMessage(const char *);
+	void tonemappingFinished();
+	void updateLogo();
 };
 
 #endif
