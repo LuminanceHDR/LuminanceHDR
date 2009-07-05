@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
+    <width>471</width>
     <height>631</height>
    </rect>
   </property>
@@ -2269,6 +2269,34 @@ p, li { white-space: pre-wrap; }
             <property name="icon" >
              <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Tonemap
+Selection</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox" >
+            <property name="text" >
+             <string/>
             </property>
            </widget>
           </item>
