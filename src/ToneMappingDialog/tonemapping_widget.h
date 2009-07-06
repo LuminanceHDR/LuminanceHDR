@@ -28,9 +28,7 @@
 #ifndef TONEMAPPINGWIDGET_H
 #define TONEMAPPINGWIDGET_H
 
-#include <QMovie>
 
-#include "threadManager.h"
 #include "../generated_uic/ui_tonemappingoptions.h"
 #include "../Common/gang.h"
 #include "../Common/global.h"
@@ -39,17 +37,21 @@
 
 class QStatusBar;
 
+enum TmoOperator { ASHIKHMIN02, DRAGO03, DURAND02, FATTAL02, MANTIUK06, MANTIUK08, PATTANAIK00, REINHARD02, REINHARD05};
+
 class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
 Q_OBJECT
 public:
-	TMWidget(QWidget *parent, pfs::Frame *pfsFrame, ThreadManager *threadManager);
+	TMWidget(QWidget *parent);
 	~TMWidget();
+	void setSizes(int, int);
+	bool tonemapSelection();
+	void setLogoText(const char *txt);
+	void setLogoPixmap(const QString &framename);
 signals:
-	void newResult(const QImage&,tonemapping_options*);
+	void startTonemapping(const TmoOperator&, const TonemappingOptions&);
 private:
-	QVector<int> sizes;
-	pfs::Frame *pfsFrame;
 	Gang    *contrastfactorGang, //mantiuk06
 		*saturationfactorGang, 
 		*detailfactorGang, 
@@ -91,20 +93,19 @@ private:
 		*chromaticGang, 
 		*lightGang, 
 		//
-		*pregammagang;
+		*pregammaGang;
 
-	tonemapping_options ToneMappingOptions;
+	TmoOperator currentTmoOperator;
+	TonemappingOptions toneMappingOptions;
+	QVector<int> sizes;
 	void fillToneMappingOptions();
 	void setupUndo();
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
-	QString RecentPathLoadSaveTmoSettings, TMOSettingsFilename, cachepath;
+	QString recentPathLoadSaveTmoSettings, tmoSettingsFilename;
 	int out_ldr_cs;
 	QStatusBar *statusbar;
-	float HeightWidthRatio;
+	float heightToWidthRatio;
 	bool adding_custom_size;
-	ThreadManager *threadManager;
-	int threadCounter;
-	QMovie *workingLogoMovie;
 private slots:
 	void on_pregammadefault_clicked();
 	void on_defaultButton_clicked();
@@ -118,10 +119,8 @@ private slots:
 	//user wants a custom size.
 	void on_addCustomSizeButton_clicked();
 	void fillCustomSizeComboBox();
-	void updateUndoState(int);
-	void showErrorMessage(const char *);
-	void tonemappingFinished();
-	void updateLogo();
+	void updateCurrentTmoOperator(int);
+	void updateUndoState();
 };
 
 #endif
