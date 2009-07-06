@@ -37,22 +37,42 @@
 #include "../Common/gang.h"
 #include "../generated_uic/ui_documentation.h"
 #include "../generated_uic/ui_about.h"
+#include "../Threads/ashikhmin02Thread.h"
+#include "../Threads/drago03Thread.h"
+#include "../Threads/durand02Thread.h"
+#include "../Threads/fattal02Thread.h"
+#include "../Threads/mantiuk06Thread.h"
+#include "../Threads/mantiuk08Thread.h"
+#include "../Threads/pattanaik00Thread.h"
+#include "../Threads/reinhard02Thread.h"
+#include "../Threads/reinhard05Thread.h"
 #include "../Filter/pfscut.h"
 
+pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
+void applyGammaOnFrame( pfs::Frame*, const float);
+
 TonemappingWindow::~TonemappingWindow() {
+	delete workingLogoTimer;
 }
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QString _file) : QMainWindow(parent), isLocked(false), changedImage(NULL) {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0) {
 	setupUi(this);
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION" - Tonemapping Window - ");
 
+	workingPfsFrame = frame;
+
+	workingLogoTimer = new QTimer();
+	workingLogoTimer->setInterval(200);
+	connect(workingLogoTimer, SIGNAL(timeout()), this, SLOT(updateLogo()));
+
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
-	cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+	//cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+
 
 	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
-	prefixname=QFileInfo(_file).completeBaseName();
+	prefixname=QFileInfo(filename).completeBaseName();
 	setWindowTitle(windowTitle() + prefixname);
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 	
@@ -80,17 +100,18 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 
 	threadManager = new ThreadManager(this);
 
-	tmwidget = new TMWidget(dock, pfsFrame, threadManager);
-	dock->setWidget(tmwidget);
+	tmWidget = new TMWidget(dock);
+	dock->setWidget(tmWidget);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
+	tmWidget->setSizes(frame->getWidth(), frame->getHeight());
 	
 	// original HDR window
-	pfs::Frame *originalPfsFrame = pfsFrame;
-	originalHDR = new HdrViewer(this,false,true, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	originalHDR = new HdrViewer(this, false, true, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
 	originalHDR->setFreePfsFrameOnExit(false); // avoid another copy in memory
-	originalHDR->updateHDR(originalPfsFrame);
+	originalHDR->updateHDR(frame);
 	originalHDR->setFileName(QString(tr("Original HDR")));
 	originalHDR->setWindowTitle(QString(tr("Original HDR")));
+	originalHDR->setSelectionTool(true);
 	originalHDR->normalSize();
 	originalHdrSubWin = new QMdiSubWindow(this);
 	originalHdrSubWin->setWidget(originalHDR);
@@ -100,6 +121,9 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* pfsFrame, QStr
 	restoreGeometry(settings.value("TonemappingWindowGeometry").toByteArray());
 	actionViewTMdock->setChecked( settings.value("actionViewTMdockState").toBool() );
 
+	qRegisterMetaType<QImage>("QImage");
+	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+
 	setupConnections();
 }
 
@@ -108,13 +132,8 @@ void TonemappingWindow::setupConnections() {
 	connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
 	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
-
-	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
-
 	connect(actionViewTMdock,SIGNAL(toggled(bool)),dock,SLOT(setVisible(bool)));
 	//connect(dock->toggleViewAction(),SIGNAL(toggled(bool)),actionViewTMdock,SLOT(setChecked(bool)));
-	connect(tmwidget,SIGNAL(newResult(const QImage&, tonemapping_options*)), this,SLOT(addMDIresult(const QImage&, tonemapping_options*)));
-
 	connect(actionAsThumbnails,SIGNAL(triggered()),this,SLOT(viewAllAsThumbnails()));
 	connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
 	connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(LevelsRequested(bool)));
@@ -130,16 +149,24 @@ void TonemappingWindow::setupConnections() {
 	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
+	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
+
+	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
+
+	//connect(tmWidget,SIGNAL(newResult(const QImage&, TonemappingOptions*)), 
+	//		this,SLOT(addMDIresult(const QImage&, TonemappingOptions*)));
+	connect(tmWidget,SIGNAL(startTonemapping(const TmoOperator&, const TonemappingOptions&)), 
+			this,SLOT(tonemapImage(const TmoOperator&, const TonemappingOptions&)));
+
+	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
 
 	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 	connect(originalHDR,SIGNAL(closeRequested(bool)),actionShowHDR,SLOT(setChecked(bool)));
 
-	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
-	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
 }
 
-void TonemappingWindow::addMDIresult(const QImage& i,tonemapping_options *opts) {
-	LdrViewer *n = new LdrViewer( i, this, false, false, opts);
+void TonemappingWindow::addMDIResult(const QImage &image) {
+	LdrViewer *n = new LdrViewer( image, this, false, false, tmoOptions);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 	n->normalSize();
 	n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
@@ -474,4 +501,139 @@ void TonemappingWindow::aboutQtpfsgui() {
 }
 
 
+pfs::Frame * TonemappingWindow::getSelectedFrame() {
+	assert( originalHDR != NULL );
+	pfs::Frame *frame = originalHDR->getHDRPfsFrame();
+	QRect cropRect = originalHDR->getSelectionRect();
+	int x_ul, y_ul, x_br, y_br;
+	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+	return pfscut(frame, x_ul, y_ul, x_br, y_br);
+}
+	
+void TonemappingWindow::tonemapImage(const TmoOperator &tmoOperator, const TonemappingOptions &opts ) {
+	pfs::DOMIO pfsio;
+	tmoOptions = &opts;	
 
+	TMOThread *thread = 0;
+	TMOProgressIndicator *progressIndicator = 0;
+	pfs::Frame *tmpFrame = 0;
+	int flag = 0;
+
+	int xsize = workingPfsFrame->getWidth();	
+
+	if (opts.pregamma != 1.0f) {
+		applyGammaOnFrame( workingPfsFrame, opts.pregamma );
+	}
+
+	if ((opts.xsize != xsize) && !tmWidget->tonemapSelection()) {
+		pfs::Frame *resized = resizeFrame(workingPfsFrame, opts.xsize);
+		pfsio.freeFrame(workingPfsFrame);
+		workingPfsFrame = resized;
+	}
+
+	if (tmWidget->tonemapSelection()) {
+		if (originalHDR->hasSelection()) {
+			tmpFrame = workingPfsFrame;
+			flag = 1;
+			workingPfsFrame = getSelectedFrame();
+			xsize = workingPfsFrame->getWidth();
+		}
+	}
+
+	switch (tmoOperator) {
+		case ASHIKHMIN02:
+			thread = new Ashikhmin02Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Ashikhmin '02"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case DRAGO03:
+			thread = new Drago03Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Drago '03"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case DURAND02:
+			thread = new Durand02Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Durand '02"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case FATTAL02:
+			thread = new Fattal02Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Fattal '02"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case MANTIUK06:
+			thread = new Mantiuk06Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Mantiuk '06"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case MANTIUK08:
+			thread = new Mantiuk08Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Mantiuk '08"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case PATTANAIK00:
+			thread = new Pattanaik00Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Pattanaik '00"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case REINHARD02:
+			thread = new Reinhard02Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Reinhard '02"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+		case REINHARD05:
+			thread = new Reinhard05Thread(workingPfsFrame, opts);
+			progressIndicator = new TMOProgressIndicator(this, QString("Reinhard '05"));
+			threadManager->addProgressIndicator(progressIndicator);
+			break;
+	}
+
+	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
+	connect(thread, SIGNAL(setMaximumSteps(int)), progressIndicator, SLOT(setMaximum(int)));
+	connect(thread, SIGNAL(setValue(int)), progressIndicator, SLOT(setValue(int)));
+	connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+	connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+	connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+	connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
+
+	//start thread
+	thread->start();
+	threadCounter++;
+	updateLogo();
+ 
+	if (flag) {
+		flag = 0;
+	    workingPfsFrame = tmpFrame;
+		tmpFrame = 0;
+	}
+}
+
+void TonemappingWindow::showErrorMessage(const char *e) {
+		QMessageBox::critical(this,tr("Qtpfsgui"),tr("Error: %1").arg(e),
+					QMessageBox::Ok,QMessageBox::NoButton);
+}
+
+void TonemappingWindow::tonemappingFinished() {
+	threadCounter--;
+	updateLogo();
+}
+
+void TonemappingWindow::deleteTMOThread(TMOThread *th) {
+	delete th;
+}
+
+void TonemappingWindow::updateLogo() {
+	if (threadCounter == 0) {
+		workingLogoTimer->stop();
+		tmWidget->setLogoText(" ");
+	}
+	else if (threadCounter > 0) {
+		workingLogoTimer->start();
+		frameCounter = ++frameCounter % 8;
+        
+	    QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
+
+		tmWidget->setLogoPixmap(framename);
+	}
+}

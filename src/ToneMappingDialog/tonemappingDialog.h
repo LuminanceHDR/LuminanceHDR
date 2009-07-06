@@ -31,11 +31,13 @@
 #include <QMdiArea>
 #include <QDockWidget>
 #include <QMdiSubWindow>
+#include <QTimer>
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "../Common/global.h"
 #include "../MainWindow/hdrviewer.h"
 #include "tonemapping_widget.h"
+#include "../Threads/tmoThread.h"
 #include "threadManager.h"
 
 class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
@@ -45,30 +47,36 @@ Q_OBJECT
 public:
 	TonemappingWindow(QWidget *parent, pfs::Frame *f, QString prefixname);
 	~TonemappingWindow();
+	pfs::Frame *getSelectedFrame();
 protected:
-	void closeEvent ( QCloseEvent * );
+	void closeEvent(QCloseEvent *);
 signals:
 	void closing();
 private:
-	pfs::Frame *originalPfsFrame;
+	pfs::Frame *workingPfsFrame;
 	QMdiArea* mdiArea;
 	QDockWidget *dock;
-	TMWidget *tmwidget;
-	QString recentPathSaveLDR, prefixname, cachepath;
+	TMWidget *tmWidget;
+	ThreadManager *threadManager;
 	HdrViewer *originalHDR;
 	QMdiSubWindow *originalHdrSubWin;
 	QtpfsguiOptions *qtpfsgui_options;
-	void load_options();
+	const TonemappingOptions *tmoOptions;
+	QString recentPathSaveLDR, prefixname, cachepath;
 	bool isLocked;
 	GenericViewer *changedImage;
 	float scaleFactor;
 	int VSB_Value;
 	int HSB_Value;
-	ThreadManager *threadManager;
+	int threadCounter;
+	int frameCounter;
+	QTimer *workingLogoTimer;
+
+	void load_options();
 protected slots:
 	//bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
-	void addMDIresult(const QImage&, tonemapping_options*);
+	void addMDIResult(const QImage&);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QMdiSubWindow *);
@@ -91,6 +99,11 @@ protected slots:
 	void dispatch(GenericViewer *);
 	void openDocumentation(); 
 	void aboutQtpfsgui();
+	void tonemapImage(const TmoOperator&, const TonemappingOptions&);
+	void showErrorMessage(const char *e);
+	void tonemappingFinished();
+	void updateLogo();
+	void deleteTMOThread(TMOThread *);
 };
 
 #endif
