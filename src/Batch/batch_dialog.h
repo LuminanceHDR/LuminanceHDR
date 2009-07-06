@@ -55,7 +55,7 @@ private slots:
 	void conditional_TMthread();
 	void load_HDR_failed(QString);
 	void finished_loading_hdr(pfs::Frame*,QString);
-	void newResult(const QImage&,tonemapping_options*);
+	void newResult(const QImage&,TonemappingOptions*);
 	void filterChanged(const QString&);
 	void filterComboBoxActivated(int);
 protected:
@@ -74,7 +74,7 @@ private:
 	//data structure (model) for left-side list: HDRs.
 	QStringList HDRs_list;
 	//data structure (model) for right-side list: tone mapping options.
-	QList< QPair<tonemapping_options*,bool> > tm_opt_list;
+	QList< QPair<TonemappingOptions*,bool> > tm_opt_list;
 	//when removing we cycle through the list to grab the selected interval.
 	void update_selection_interval(bool left);
 	//updates graphica widget (view) and data structure (model) for HDR list.
@@ -82,7 +82,7 @@ private:
 	//updates graphica widget (view) and data structure (model) for TM_opts list.
 	void add_view_model_TM_OPTs(QStringList);
 	//Parses a TM_opts file (return NULL on error).
-	tonemapping_options* parse_tm_opt_file(QString filename);
+	TonemappingOptions* parse_tm_opt_file(QString filename);
 	//set to true once we are done processing.
 	bool done;
 	//fuction that adds a log message to the model

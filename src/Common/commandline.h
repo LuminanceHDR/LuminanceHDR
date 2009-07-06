@@ -61,7 +61,7 @@ private:
 	pfs::Frame *HDR;
 	void saveHDR();
 	void printHelp(char *progname);
-	tonemapping_options *tmopts;
+	TonemappingOptions *tmopts;
 	bool verbose;
 private slots:
 	void finishedLoadingInputFiles(QStringList);
@@ -70,7 +70,7 @@ private slots:
 	void createHDR();
 	void loadFinished(pfs::Frame*,QString);
 	void parseArgs();
-	void tonemapTerminated(const QImage&,tonemapping_options*);
+	void tonemapTerminated(const QImage&,TonemappingOptions*);
 
 signals:
 	void startParsing();

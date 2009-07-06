@@ -67,11 +67,12 @@ private:
 
 };
 
-enum tmoperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk06,mantiuk08};
-struct tonemapping_options {
+enum TMOOperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk06,mantiuk08};
+struct TonemappingOptions {
 	int xsize;
 	float pregamma;
-	enum tmoperator tmoperator;
+	bool tonemapSelection;
+	enum TMOOperator tmoperator;
 	union {
 		struct {
 			bool  simple;
@@ -130,14 +131,14 @@ struct tonemapping_options {
 
 class TMOptionsOperations {
 public:
-	TMOptionsOperations(tonemapping_options* opts);
-	static tonemapping_options* parseFile(QString file);
-	static tonemapping_options* getDefaultTMOptions();
+	TMOptionsOperations(const TonemappingOptions* opts);
+	static TonemappingOptions* parseFile(QString file);
+	static TonemappingOptions* getDefaultTMOptions();
 	QString getPostfix();
 	QString getCaption();
 	QString getExifComment();
 private:
-	tonemapping_options* opts;
+	const TonemappingOptions* opts;
 };
 
 #endif

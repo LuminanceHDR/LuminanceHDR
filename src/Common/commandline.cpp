@@ -427,7 +427,7 @@ void  CommandLineInterfaceManager::startTonemap() {
 		pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
 		int origxsize= (tmopts->xsize == -2) ? -2 : HDR->getWidth();
 		TonemapperThread *thread = new TonemapperThread(HDR, origxsize, *tmopts);
-		connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SLOT(tonemapTerminated(const QImage&,tonemapping_options*)));
+		connect(thread, SIGNAL(imageComputed(const QImage&,TonemappingOptions*)), this, SLOT(tonemapTerminated(const QImage&,TonemappingOptions*)));
 		
 		thread->start();
 	} else {
@@ -436,7 +436,7 @@ void  CommandLineInterfaceManager::startTonemap() {
 	}
 }
 
-void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,tonemapping_options*) {
+void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,TonemappingOptions*) {
 	QFileInfo qfi(saveLdrFilename);
 	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100)) {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));

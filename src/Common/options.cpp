@@ -99,14 +99,14 @@ void QtpfsguiOptions::loadFromQSettings() {
 	settings.endGroup();
 }
 
-tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
+TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 	QFile file(fname);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || file.size()==0) {
 		throw (QApplication::tr("ERROR: cannot load Tone Mapping Setting file: ")+fname);
 		return NULL;
 	}
 
-	tonemapping_options *toreturn=new tonemapping_options;
+	TonemappingOptions *toreturn=new TonemappingOptions;
 	//specifying -2 as size, and passing -2 as the original size in the tone mapper thread constructor (instantiated in the batchDialog class), we basically bypass the resize step in the thread.
 	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
 	toreturn->xsize=-2;
@@ -227,8 +227,8 @@ tonemapping_options* TMOptionsOperations::parseFile(QString fname) {
 	return toreturn;
 }
 
-tonemapping_options* TMOptionsOperations::getDefaultTMOptions() {
-	tonemapping_options *toreturn=new tonemapping_options;
+TonemappingOptions* TMOptionsOperations::getDefaultTMOptions() {
+	TonemappingOptions *toreturn=new TonemappingOptions;
 	//TODO when instantiating the tonemapperThread, check this value: if -2 => create thread with originalsize=-2 (to skip resize the step as we did with the batch tone mapping), else (the user wants to resize) create thread with true originalxsize
 	toreturn->xsize=-2;
 	toreturn->pregamma=1;
@@ -240,7 +240,7 @@ tonemapping_options* TMOptionsOperations::getDefaultTMOptions() {
 	return toreturn;
 }
 
-TMOptionsOperations::TMOptionsOperations(tonemapping_options* opts) : opts(opts) {
+TMOptionsOperations::TMOptionsOperations(const TonemappingOptions* opts) : opts(opts) {
 }
 
 QString TMOptionsOperations::getPostfix() {

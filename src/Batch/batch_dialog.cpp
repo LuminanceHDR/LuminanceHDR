@@ -116,7 +116,7 @@ void BatchTMDialog::add_TMopts() {
 	add_view_model_TM_OPTs(onlytxts);
 }
 
-tonemapping_options* BatchTMDialog::parse_tm_opt_file(QString fname) {
+TonemappingOptions* BatchTMDialog::parse_tm_opt_file(QString fname) {
 	try {
 		return TMOptionsOperations::parseFile(fname);
 	} catch (QString &e) {
@@ -158,7 +158,7 @@ void BatchTMDialog::add_view_model_HDRs(QStringList list) {
 void BatchTMDialog::add_view_model_TM_OPTs(QStringList list) {
 	QStringList::ConstIterator it = list.begin();
 	while( it != list.end() ) {
-		tonemapping_options *i_th_tm_opt=parse_tm_opt_file(*it);
+		TonemappingOptions *i_th_tm_opt=parse_tm_opt_file(*it);
 		if (i_th_tm_opt!=NULL) {
 			//add to model
 			tm_opt_list.append(qMakePair(i_th_tm_opt,false));
@@ -221,7 +221,7 @@ void BatchTMDialog::remove_TMOpts() {
 
 //function used for ordering based on the value of pregamma
 //somehow I was not able to embed this in the BatchTMDialog class :)
-bool order_based_on_pregamma(const QPair<tonemapping_options*,bool> &s1, const QPair<tonemapping_options*,bool> &s2) {
+bool order_based_on_pregamma(const QPair<TonemappingOptions*,bool> &s1, const QPair<TonemappingOptions*,bool> &s2) {
 	return ((s1.first)->pregamma < (s2.first)->pregamma);
 }
 
@@ -320,7 +320,7 @@ void BatchTMDialog::conditional_TMthread() {
 			tm_opt_list[first_not_started].second=true;
 			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
 
-			connect(thread, SIGNAL(imageComputed(const QImage&,tonemapping_options*)), this, SLOT(newResult(const QImage&,tonemapping_options*)));
+			connect(thread, SIGNAL(imageComputed(const QImage&,TonemappingOptions*)), this, SLOT(newResult(const QImage&,TonemappingOptions*)));
 			//start thread
 			thread->start();
 
@@ -344,7 +344,7 @@ void BatchTMDialog::conditional_TMthread() {
 */
 }
 
-void BatchTMDialog::newResult(const QImage& newimage, tonemapping_options* opts) {
+void BatchTMDialog::newResult(const QImage& newimage, TonemappingOptions* opts) {
 	qDebug("BATCH: newResult: Thread ended, it had pregamma=%g, save prefix is %s", opts->pregamma, current_hdr_fname.toAscii().constData());
 	running_threads--;
 	TMOptionsOperations operations(opts);
