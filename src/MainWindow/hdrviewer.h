@@ -60,8 +60,8 @@ public:
 	void update_colors(unsigned int negcol, unsigned int naninfcol);
 	void mapFrameToImage();
  	void levelsRequested(bool); // do nothing but used by LdrViewer (its own implementation)
-        QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
-        QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
+	QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
+	QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
 	const QImage getQImage(); // do nothing but used by LdrViewer (its own implementation)
 	void setFreePfsFrameOnExit(bool b); 
 public slots:

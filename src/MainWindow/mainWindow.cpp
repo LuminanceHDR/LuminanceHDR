@@ -93,9 +93,9 @@ MainGui::MainGui(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
 	testTempDir(qtpfsgui_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
 	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
-        saveProgress->setWindowTitle(tr("Saving file..."));
-        saveProgress->setWindowModality(Qt::WindowModal);
-        saveProgress->setMinimumDuration(0);
+	saveProgress->setWindowTitle(tr("Saving file..."));
+	saveProgress->setWindowModality(Qt::WindowModal);
+	saveProgress->setMinimumDuration(0);
 	cropToSelectionAction->setEnabled(false);
 
 	setupConnections();
@@ -166,7 +166,6 @@ void MainGui::fileNewViaWizard(QStringList files) {
 		delete wizard;
 	}
 }
-
 
 void MainGui::fileOpen() {
 	QString filetypes = tr("All Hdr formats ");
@@ -432,37 +431,46 @@ void MainGui::projectiveTransf_requested() {
 void MainGui::current_mdi_decrease_exp() {
 	currenthdr->lumRange()->decreaseExposure();
 }
+
 void MainGui::current_mdi_extend_exp() {
 	currenthdr->lumRange()->extendRange();
 }
+
 void MainGui::current_mdi_fit_exp() {
 	currenthdr->lumRange()->fitToDynamicRange();
 }
+
 void MainGui::current_mdi_increase_exp() {
 	currenthdr->lumRange()->increaseExposure();
 }
+
 void MainGui::current_mdi_shrink_exp() {
 	currenthdr->lumRange()->shrinkRange();
 }
+
 void MainGui::current_mdi_ldr_exp() {
 	currenthdr->lumRange()->lowDynamicRange();
 }
+
 void MainGui::current_mdi_zoomin() {
 	currenthdr->zoomIn();
 	zoomOutAct->setEnabled(true);
 	zoomInAct->setEnabled(currenthdr->getScaleFactor() < 3.0);
 }
+
 void MainGui::current_mdi_zoomout() {
 	currenthdr->zoomOut();
 	zoomInAct->setEnabled(true);
 	zoomOutAct->setEnabled(currenthdr->getScaleFactor() > 0.222);
 }
+
 void MainGui::current_mdi_fit_to_win(bool checked) {
 	currenthdr->fitToWindow(checked);
 	zoomInAct->setEnabled(!checked);
 	zoomOutAct->setEnabled(!checked);
 	normalSizeAct->setEnabled(!checked);
 }
+
 void MainGui::current_mdi_original_size() {
 	currenthdr->normalSize();
 	zoomInAct->setEnabled(true);
@@ -528,7 +536,7 @@ void MainGui::setupLoadThread(QString fname) {
 	newhdr->setSelectionTool(true);
         
 	subWindow->setWidget(newhdr);
-        subWindow->setAttribute(Qt::WA_DeleteOnClose);
+	subWindow->setAttribute(Qt::WA_DeleteOnClose);
 
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
 	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
@@ -728,11 +736,11 @@ void MainGui::batch_requested() {
 }
 
 void MainGui::setMaximum(int max) {
-        saveProgress->setMaximum( max - 1 );
+	saveProgress->setMaximum( max - 1 );
 }
 
 void MainGui::setValue(int value) {
-        saveProgress->setValue( value );
+	saveProgress->setValue( value );
 }
 
 void MainGui::showSaveDialog(void) {
@@ -742,7 +750,7 @@ void MainGui::showSaveDialog(void) {
 
 void MainGui::hideSaveDialog(void) {
 	QApplication::restoreOverrideCursor();
-        saveProgress->cancel();
+	saveProgress->cancel();
 }
 
 void MainGui::cropToSelection(void) {
@@ -752,7 +760,7 @@ void MainGui::cropToSelection(void) {
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
 	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
-        pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
+	pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
 	newHdrViewer->updateHDR(cropped_frame);
 	newHdrViewer->setFileName(QString(tr("Cropped Frame")));
