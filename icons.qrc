@@ -44,6 +44,13 @@
 		<file>images/edit-undo.png</file>
 		<file>images/edit-redo.png</file>
 		<file>images/system-run.png</file>
-		<file>images/working.gif</file>
+		<file>images/working0.png</file>
+		<file>images/working1.png</file>
+		<file>images/working2.png</file>
+		<file>images/working3.png</file>
+		<file>images/working4.png</file>
+		<file>images/working5.png</file>
+		<file>images/working6.png</file>
+		<file>images/working7.png</file>
     </qresource>
 </RCC>
