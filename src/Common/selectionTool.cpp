@@ -363,6 +363,10 @@ void SelectionTool::paintEvent(QPaintEvent *e) {
 // void SelectionTool::paintEvent(QPaintEvent *e)
 //
 
+bool SelectionTool::hasSelection() {
+	return isSelectionReady;
+}
+
 void SelectionTool::removeSelection() {
 	isSelectionReady = false;
 	m_action = NOACTION;

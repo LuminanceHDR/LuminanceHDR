@@ -37,6 +37,7 @@ public:
 	SelectionTool(QWidget *parent=0);
 	bool setON(bool isON);
 	QRect getSelectionRect();
+	bool hasSelection();
 	void removeSelection();
 signals:
         void selectionReady(bool);

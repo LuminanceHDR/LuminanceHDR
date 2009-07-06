@@ -184,6 +184,10 @@ void SmartScrollArea::setSelectionTool(bool toggled) {
 	}
 }
 
+bool SmartScrollArea::hasSelection() {
+	selectionTool->hasSelection();
+}
+
 void SmartScrollArea::removeSelection() {
 	selectionTool->removeSelection();
 }
@@ -206,7 +210,7 @@ void SmartScrollArea::mouseMoveEvent(QMouseEvent *e) {
 	}
 }
 
-void SmartScrollArea::mouseReleaseEvent(QMouseEvent *e) {
+void SmartScrollArea::mouseReleaseEvent(QMouseEvent *) {
 	if (panning) {
 		panning = false;
 		emit changed();

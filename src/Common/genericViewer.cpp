@@ -28,7 +28,7 @@
 #include <QMessageBox>
 #include "genericViewer.h"
 
-GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf), isSelectionReady(false) {
+GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf) {
 	
 	VBL_L = new QVBoxLayout(this);
 	VBL_L->setSpacing(0);
@@ -100,27 +100,26 @@ void GenericViewer::setSelectionTool(bool toggled) {
 
 void GenericViewer::removeSelection(void) {
 	scrollArea->removeSelection();
-	isSelectionReady = false;
 }
 
 bool GenericViewer::hasSelection(void) {
-        return isSelectionReady;
+	return scrollArea->hasSelection();
 }
 
 bool GenericViewer::needsSaving(void) {
-        return NeedsSaving;
+	return NeedsSaving;
 }
 
 void GenericViewer::setNeedsSaving(bool s) {
-        NeedsSaving = s;
+	NeedsSaving = s;
 }
 
 const QString GenericViewer::getFileName(void) {
-        return filename;
+	return filename;
 }
 
 void GenericViewer::setFileName(const QString fn) {
-        filename = fn;
+	filename = fn;
 }
 
 void GenericViewer::slotCornerButtonPressed() {
@@ -143,7 +142,7 @@ void GenericViewer::slotCornerButtonPressed() {
 }
 
 void GenericViewer::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
-if (mousereleased) {
+	if (mousereleased) {
 		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
 		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
 		panIconWidget->close();

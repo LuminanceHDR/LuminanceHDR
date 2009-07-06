@@ -56,6 +56,7 @@ public:
 	bool isFittedToWindow();
 	QRect getSelectionRect();
 	void setSelectionTool(bool toggled);
+	bool hasSelection();
 	void removeSelection();
 protected:
 	void resizeEvent ( QResizeEvent * );

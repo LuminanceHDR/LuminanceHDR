@@ -42,17 +42,17 @@ public:
 public slots:
 	virtual void setLabelPixmap(const QPixmap pix);
 	virtual void fitToWindow(bool checked);
-        virtual void zoomIn();
-        virtual void zoomOut();
-        virtual	void normalSize();
+	virtual void zoomIn();
+	virtual void zoomOut();
+	virtual	void normalSize();
 	virtual bool isFittedToWindow();
-        virtual bool hasSelection();
+	virtual bool hasSelection();
 	virtual void setSelectionTool(bool);
 	virtual const float getScaleFactor();
 	virtual const QRect getSelectionRect(void);
 	virtual void removeSelection();
-        virtual bool needsSaving();
-        virtual void setNeedsSaving(bool);
+	virtual bool needsSaving();
+	virtual void setNeedsSaving(bool);
 	virtual const QString getFileName();
 	virtual void setFileName(const QString);
 	virtual int getHorizScrollBarValue();
@@ -62,8 +62,8 @@ public slots:
 	virtual void setVertScrollBarValue(int value);
 	virtual void zoomToFactor(float factor);
 	virtual void levelsRequested(bool) = 0; // only used by LdrViewer
-        virtual QString getFilenamePostFix() = 0; // only used by LdrViewer 
-        virtual QString getExifComment() = 0; // only used by LdrViewer
+	virtual QString getFilenamePostFix() = 0; // only used by LdrViewer 
+	virtual QString getExifComment() = 0; // only used by LdrViewer
 	virtual const QImage getQImage() = 0; // only used by LdrViewer
 protected slots:
 	virtual void slotPanIconSelectionMoved(QRect, bool);
@@ -72,8 +72,8 @@ protected slots:
 	virtual void route_changed();
 protected:
 	QImage image;
-        bool NeedsSaving;
-        bool noCloseFlag;
+	bool NeedsSaving;
+	bool noCloseFlag;
 	QLabel imageLabel;
 	QVBoxLayout *VBL_L;
 	QToolBar *toolBar;
@@ -81,8 +81,7 @@ protected:
 	SmartScrollArea *scrollArea;
 	PanIconWidget *panIconWidget;
 	QString filename;
-        bool isSelectionReady;
-        bool isSelectionToolVisible;
+	bool isSelectionToolVisible;
 	virtual void closeEvent ( QCloseEvent * event );
 signals:
 	virtual void selectionReady(bool isReady);
