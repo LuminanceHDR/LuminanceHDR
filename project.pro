@@ -58,6 +58,7 @@ HEADERS += src/Libpfs/array2d.h \
 		   src/ToneMappingDialog/threadManager.h \
            src/ToneMappingDialog/tmoProgressIndicator.h \
 		   src/Threads/tonemapperThread.h \
+		   src/Threads/tmoFactory.h \
 		   src/Threads/tmoThread.h \
            src/Threads/ashikhmin02Thread.h \
            src/Threads/drago03Thread.h \
@@ -132,6 +133,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/ToneMappingDialog/threadManager.cpp \
            src/ToneMappingDialog/tmoProgressIndicator.cpp \
            src/Threads/tonemapperThread.cpp \
+		   src/Threads/tmoFactory.cpp \
 		   src/Threads/tmoThread.cpp \
            src/Threads/ashikhmin02Thread.cpp \
            src/Threads/drago03Thread.cpp \
