@@ -67,12 +67,17 @@ private:
 
 };
 
-enum TMOOperator {ashikhmin,drago,durand,fattal,pattanaik,reinhard02,reinhard05,mantiuk06,mantiuk08};
+
+//----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
+enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
+
 struct TonemappingOptions {
+	int origxsize;
 	int xsize;
 	float pregamma;
 	bool tonemapSelection;
-	enum TMOOperator tmoperator;
+	enum TMOperator tmoperator;
+	char *tmoperator_str;
 	union {
 		struct {
 			bool  simple;
