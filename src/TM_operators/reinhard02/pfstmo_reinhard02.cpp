@@ -37,6 +37,8 @@
 
 #include "tmo_reinhard02.h"
 
+#include <iostream>
+
 void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
     pfs::DOMIO pfsio;
@@ -49,6 +51,15 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
     //int high = 43;
     //bool use_scales = false;
     bool temporal_coherent = false;  
+
+	std::cout << "pfstmo_reinhard02" << std::endl;
+	std::cout << "key: " << key << std::endl;
+	std::cout << "phi: " << phi << std::endl;
+	std::cout << "range: " << num << std::endl;
+	std::cout << "lower scale: " << low << std::endl;
+	std::cout << "upper scale: " << high << std::endl;
+	std::cout << "use scales: " << use_scales << std::endl;
+
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels( X, Y, Z );

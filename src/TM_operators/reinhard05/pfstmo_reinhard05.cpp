@@ -38,6 +38,7 @@
 
 #include "tmo_reinhard05.h"
 
+#include <iostream>
 
 void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation,
 		ProgressHelper *ph)
@@ -48,6 +49,11 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     //float brightness = 0.0f;
     //float chromaticadaptation = 0.5f;
     //float lightadaptation = 0.75f;
+
+	std::cout << "pfstmo_reinhard05" << std::endl;
+	std::cout << "brightness: " << brightness << std::endl;
+	std::cout << "chromatic adaptation: " << chromaticadaptation << std::endl;
+	std::cout << "light adaptation: " << lightadaptation << std::endl;
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels( X, Y, Z );
