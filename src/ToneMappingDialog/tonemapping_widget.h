@@ -37,7 +37,7 @@
 
 class QStatusBar;
 
-enum TmoOperator { ASHIKHMIN02, DRAGO03, DURAND02, FATTAL02, MANTIUK06, MANTIUK08, PATTANAIK00, REINHARD02, REINHARD05};
+//enum TmoOperator { ASHIKHMIN02, DRAGO03, DURAND02, FATTAL02, MANTIUK06, MANTIUK08, PATTANAIK00, REINHARD02, REINHARD05};
 
 class TMWidget : public QWidget, public Ui::ToneMappingOptions
 {
@@ -46,11 +46,10 @@ public:
 	TMWidget(QWidget *parent);
 	~TMWidget();
 	void setSizes(int, int);
-	bool tonemapSelection();
 	void setLogoText(const char *txt);
 	void setLogoPixmap(const QString &framename);
 signals:
-	void startTonemapping(const TmoOperator&, const TonemappingOptions&);
+	void startTonemapping(const TonemappingOptions&);
 private:
 	Gang    *contrastfactorGang, //mantiuk06
 		*saturationfactorGang, 
@@ -95,7 +94,7 @@ private:
 		//
 		*pregammaGang;
 
-	TmoOperator currentTmoOperator;
+	TMOperator currentTmoOperator;
 	TonemappingOptions toneMappingOptions;
 	QVector<int> sizes;
 	void fillToneMappingOptions();
