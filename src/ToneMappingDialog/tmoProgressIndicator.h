@@ -29,11 +29,11 @@
 #include <QProgressBar>
 #include <QPushButton>
 
-class TmoProgressIndicator : public QWidget {
+class TMOProgressIndicator : public QWidget {
 Q_OBJECT
 public:
-	TmoProgressIndicator(QWidget *parent, QString);
-	~TmoProgressIndicator();
+	TMOProgressIndicator(QWidget *parent, QString);
+	~TMOProgressIndicator();
 	bool isTerminated();
 public slots:
 	void setValue(int);

@@ -34,7 +34,7 @@
 class LdrViewer : public GenericViewer {
 	Q_OBJECT
 public:
-	LdrViewer(const QImage &i, QWidget *parent = 0, bool ns = false, bool ncf = false, tonemapping_options* = NULL);
+	LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts);
 	~LdrViewer();
 	void levelsRequested(bool);
 	QString getFilenamePostFix();
@@ -46,7 +46,7 @@ private slots:
 	void updatePreview(unsigned char *);
 	void restoreoriginal();
 private:
-	void parseOptions(tonemapping_options *opts);
+	void parseOptions(const TonemappingOptions *opts);
 	QString caption,postfix,exif_comment;
 	const QImage origimage;
 	QImage previewimage;

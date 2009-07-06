@@ -26,7 +26,7 @@
 
 #include "tmoProgressIndicator.h"
 
-TmoProgressIndicator::TmoProgressIndicator(QWidget *parent, QString labeltext) : 
+TMOProgressIndicator::TMOProgressIndicator(QWidget *parent, QString labeltext) : 
 	QWidget(parent), m_isTerminated(false) 
 {
 	m_label = new QLabel(labeltext);
@@ -48,31 +48,33 @@ TmoProgressIndicator::TmoProgressIndicator(QWidget *parent, QString labeltext) :
 	vbl->addLayout(hbl);
 	connect(m_abortButton, SIGNAL(clicked()), this, SIGNAL(terminate()));
 	connect(m_abortButton, SIGNAL(clicked()), this, SLOT(terminated()));
+
+	m_progressBar->setValue(0);
 }
 
-TmoProgressIndicator::~TmoProgressIndicator() {
+TMOProgressIndicator::~TMOProgressIndicator() {
 	delete m_label;
 	delete m_progressBar;
 	delete m_abortButton;
 }
 
 
-void TmoProgressIndicator::terminated() {
+void TMOProgressIndicator::terminated() {
 	m_isTerminated = true;
 }
 
-bool TmoProgressIndicator::isTerminated() {
+bool TMOProgressIndicator::isTerminated() {
 	return m_isTerminated;
 }
 
-void TmoProgressIndicator::setValue(int value) {
+void TMOProgressIndicator::setValue(int value) {
 	m_progressBar->setValue(value);
 }
 
-void TmoProgressIndicator::setMaximum(int max) {
+void TMOProgressIndicator::setMaximum(int max) {
 	m_progressBar->setMaximum(max);
 }
 
-void TmoProgressIndicator::setMinimum(int min) {
+void TMOProgressIndicator::setMinimum(int min) {
 	m_progressBar->setMinimum(min);
 }

@@ -38,14 +38,14 @@ Q_OBJECT
 public:
 	ThreadManager(QWidget *parent = 0);
 	~ThreadManager();
-	void addProgressIndicator(TmoProgressIndicator *pw);
+	void addProgressIndicator(TMOProgressIndicator *pw);
 public slots:
 	void clearAll();
 protected:
 	virtual void showEvent(QShowEvent *event);
 	virtual void hideEvent(QHideEvent *event);
 	virtual void closeEvent(QCloseEvent *event);
-	QList<TmoProgressIndicator *> widgets;
+	QList<TMOProgressIndicator *> widgets;
 signals:
 	void closeRequested(bool);
 };

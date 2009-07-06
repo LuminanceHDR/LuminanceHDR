@@ -29,7 +29,9 @@
 #include "../Common/gamma_and_levels.h"
 #include "../Common/config.h"
 
-LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, tonemapping_options *opts) : GenericViewer(parent, ns, ncf), origimage(i) {
+LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) : 
+	GenericViewer(parent, ns, ncf), origimage(i) {
+
 	image = origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
@@ -47,7 +49,7 @@ LdrViewer::~LdrViewer() {
 	delete [] origimage.bits();
 }
 
-void LdrViewer::parseOptions(tonemapping_options *opts) {
+void LdrViewer::parseOptions(const TonemappingOptions *opts) {
 	TMOptionsOperations tmopts(opts);
 	postfix=tmopts.getPostfix();
 	caption=tmopts.getCaption();

@@ -34,13 +34,13 @@ ThreadManager::ThreadManager(QWidget *parent) : QDialog(parent) {
 	connect(clearButton,SIGNAL(clicked()),this,SLOT(clearAll()));
 }
 
-void ThreadManager::addProgressIndicator(TmoProgressIndicator *pi) {
+void ThreadManager::addProgressIndicator(TMOProgressIndicator *pi) {
 	verticalLayout->addWidget(pi);	
 	widgets.append(pi);
 }
 
 void ThreadManager::clearAll() {
-	foreach(TmoProgressIndicator *pi, widgets) {
+	foreach(TMOProgressIndicator *pi, widgets) {
 		if (pi->isTerminated()) {
 			verticalLayout->removeWidget(pi);
 			delete pi;
