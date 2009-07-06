@@ -28,39 +28,15 @@
 #ifndef DRAGO03THREAD_H
 #define DRAGO03THREAD_H
 
-#include <QThread>
-#include <QImage>
-#include "../Common/options.h"
-#include "../Common/global.h"
-#include "../Libpfs/pfs.h"
-#include "../Common/progressHelper.h"
+#include "tmoThread.h"
 
-class Drago03Thread : public QThread {
+class Drago03Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	//tonemapping_options passed by value, bit-copy should be enough
-	Drago03Thread(pfs::Frame *frame, int origsize, const tonemapping_options opts);
-	~Drago03Thread();
-public slots:
-	void terminateRequested();
-signals:
-	void imageComputed(const QImage&, tonemapping_options *);
-	void setMaximumSteps(int);
-	void setValue(int);
-	void setValue();
-	void finished();
-	void tmo_error(const char *);
+	Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opt);
 protected:
 	void run();
-private:
-	pfs::Frame *workingframe;
-	int originalxsize;
-	int ldr_output_cs;
-	bool colorspaceconversion;
-	tonemapping_options opts;
-	ProgressHelper *ph;
-	static int counter;
 };
 
 #endif

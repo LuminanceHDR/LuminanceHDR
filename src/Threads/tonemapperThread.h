@@ -40,13 +40,13 @@ class TonemapperThread : public QThread {
 Q_OBJECT
 
 public:
-	//tonemapping_options passed by value, bit-copy should be enough
-	TonemapperThread(pfs::Frame *frame, int origsize, const tonemapping_options opts);
+	//TonemappingOptions passed by value, bit-copy should be enough
+	TonemapperThread(pfs::Frame *frame, int origsize, const TonemappingOptions opts);
 	~TonemapperThread();
 public slots:
 	void terminateRequested();
 signals:
-	void imageComputed(const QImage&, tonemapping_options *);
+	void imageComputed(const QImage&, TonemappingOptions *);
 	void setMaximumSteps(int);
 	void advanceCurrentProgress(int);
 	void advanceCurrentProgress();
@@ -58,7 +58,7 @@ private:
 	int originalxsize;
 	int ldr_output_cs;
 	bool colorspaceconversion;
-	tonemapping_options opts;
+	TonemappingOptions opts;
 	//QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 	static int counter;
 };

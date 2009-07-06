@@ -25,18 +25,35 @@
  *
  */
 
-#ifndef ASHIKHMIN02THREAD_H
-#define ASHIKHMIN02THREAD_H
-
 #include "tmoThread.h"
+#include "../Common/config.h"
+#include "../Filter/pfscut.h"
+#include "../Fileformat/pfsoutldrimage.h"
 
-class Ashikhmin02Thread : public TMOThread {
-Q_OBJECT
+#include <iostream>
 
-public:
-	Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
-protected:
-	void run();
-};
+TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+	QThread(0), opts(opts) {
 
-#endif
+	workingframe = pfscopy(frame);
+
+	ph = new ProgressHelper(0);
+
+	// Convert to CS_XYZ: tm operator now use this colorspace
+	pfs::Channel *X, *Y, *Z;
+	workingframe->getXYZChannels( X, Y, Z );
+	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
+}
+
+TMOThread::~TMOThread() {
+	wait();
+	pfs::DOMIO pfsio;
+	pfsio.freeFrame(workingframe);
+	delete ph;
+	std::cout << "~TMOThread()" << std::endl;
+}
+
+void TMOThread::terminateRequested() {
+	ph->terminate(true);
+}
+

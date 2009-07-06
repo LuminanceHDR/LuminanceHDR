@@ -112,7 +112,7 @@ QReadWriteLock alock;
 
 int TonemapperThread::counter = 0;
 
-TonemapperThread::TonemapperThread(pfs::Frame *frame, int xorigsize, const tonemapping_options opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
+TonemapperThread::TonemapperThread(pfs::Frame *frame, int xorigsize, const TonemappingOptions opts) : QThread(0), originalxsize(xorigsize), opts(opts) {
 
 	workingframe = pfscopy(frame);
 

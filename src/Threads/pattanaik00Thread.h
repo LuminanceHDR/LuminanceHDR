@@ -28,39 +28,15 @@
 #ifndef PATTANAIK00THREAD_H
 #define PATTANAIK00THREAD_H
 
-#include <QThread>
-#include <QImage>
-#include "../Common/options.h"
-#include "../Common/global.h"
-#include "../Libpfs/pfs.h"
-#include "../Common/progressHelper.h"
+#include "tmoThread.h"
 
-class Pattanaik00Thread : public QThread {
+class Pattanaik00Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	//tonemapping_options passed by value, bit-copy should be enough
-	Pattanaik00Thread(pfs::Frame *frame, int origsize, const tonemapping_options opts);
-	~Pattanaik00Thread();
-public slots:
-	void terminateRequested();
-signals:
-	void imageComputed(const QImage&, tonemapping_options *);
-	void setMaximumSteps(int);
-	void setValue(int);
-	void setValue();
-	void finished();
-	void tmo_error(const char *);
+	Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions &opts);
 protected:
 	void run();
-private:
-	pfs::Frame *workingframe;
-	int originalxsize;
-	int ldr_output_cs;
-	bool colorspaceconversion;
-	tonemapping_options opts;
-	ProgressHelper *ph;
-	static int counter;
 };
 
 #endif

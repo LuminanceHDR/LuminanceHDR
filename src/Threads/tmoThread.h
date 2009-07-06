@@ -25,18 +25,37 @@
  *
  */
 
-#ifndef ASHIKHMIN02THREAD_H
-#define ASHIKHMIN02THREAD_H
+#ifndef TMOTHREAD_H
+#define TMOTHREAD_H
 
-#include "tmoThread.h"
+#include <QThread>
+#include <QImage>
+#include "../Common/options.h"
+#include "../Common/global.h"
+#include "../Libpfs/pfs.h"
+#include "../Common/progressHelper.h"
 
-class Ashikhmin02Thread : public TMOThread {
+class TMOThread : public QThread {
 Q_OBJECT
 
 public:
-	Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
+	TMOThread(pfs::Frame *frame, const TonemappingOptions &opts);
+	virtual ~TMOThread();
+public slots:
+	virtual void terminateRequested();
+signals:
+	virtual void imageComputed(const QImage&);
+	virtual void setMaximumSteps(int) ;
+	virtual void setValue(int);
+	virtual void setValue();
+	virtual void finished();
+	virtual void deleteMe(TMOThread *);
+	virtual void tmo_error(const char *);
 protected:
-	void run();
+	virtual void run() = 0;
+	pfs::Frame *workingframe;
+	const TonemappingOptions &opts;
+	ProgressHelper *ph;
 };
 
 #endif
