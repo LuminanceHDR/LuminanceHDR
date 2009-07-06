@@ -5,9 +5,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
+    <width>445</width>
     <height>631</height>
    </rect>
+  </property>
+  <property name="minimumSize" >
+   <size>
+    <width>445</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -2136,6 +2142,154 @@ p, li { white-space: pre-wrap; }
         <string>Process</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
+        <item row="0" column="0" >
+         <layout class="QHBoxLayout" name="horizontalLayout" >
+          <item>
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>&amp;Result size:</string>
+            </property>
+            <property name="margin" >
+             <number>1</number>
+            </property>
+            <property name="buddy" >
+             <cstring>sizeComboBox</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="sizeComboBox" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip" >
+             <string>The size of the resulting LDR image.</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Here you can choose the size of the resulting LDR image.</string>
+            </property>
+            <property name="insertPolicy" >
+             <enum>QComboBox::NoInsert</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="addCustomSizeButton" >
+            <property name="cursor" >
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip" >
+             <string>Custom LDR size</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Clicking this button you will be able to insert a &lt;i>width&lt;/i> value for the size of the resulting LDR image.&lt;br>After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >
+              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Tonemap
+Selection</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4" >
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox" >
+            <property name="text" >
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0" >
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QToolButton" name="applyButton" >
+            <property name="minimumSize" >
+             <size>
+              <width>80</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="maximumSize" >
+             <size>
+              <width>80</width>
+              <height>28</height>
+             </size>
+            </property>
+            <property name="toolTip" >
+             <string>Start tone mapping (CTRL+A).</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
+            </property>
+            <property name="text" >
+             <string>&amp;Apply</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >
+              <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
+            </property>
+            <property name="iconSize" >
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="shortcut" >
+             <string>Ctrl+A</string>
+            </property>
+            <property name="toolButtonStyle" >
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
         <item row="1" column="0" >
          <layout class="QHBoxLayout" name="horizontalLayout_2" >
           <item>
@@ -2218,141 +2372,6 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
            </layout>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="0" >
-         <layout class="QHBoxLayout" name="horizontalLayout" >
-          <item>
-           <widget class="QLabel" name="label" >
-            <property name="text" >
-             <string>&amp;Result size:</string>
-            </property>
-            <property name="margin" >
-             <number>1</number>
-            </property>
-            <property name="buddy" >
-             <cstring>sizeComboBox</cstring>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="sizeComboBox" >
-            <property name="sizePolicy" >
-             <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip" >
-             <string>The size of the resulting LDR image.</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Here you can choose the size of the resulting LDR image.</string>
-            </property>
-            <property name="insertPolicy" >
-             <enum>QComboBox::NoInsert</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="addCustomSizeButton" >
-            <property name="cursor" >
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="toolTip" >
-             <string>Custom LDR size</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Clicking this button you will be able to insert a &lt;i>width&lt;/i> value for the size of the resulting LDR image.&lt;br>After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_3" >
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_8" >
-            <property name="text" >
-             <string>Tonemap
-Selection</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox" >
-            <property name="text" >
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer>
-            <property name="orientation" >
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0" >
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="applyButton" >
-            <property name="minimumSize" >
-             <size>
-              <width>80</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="maximumSize" >
-             <size>
-              <width>80</width>
-              <height>28</height>
-             </size>
-            </property>
-            <property name="toolTip" >
-             <string>Start tone mapping (CTRL+A).</string>
-            </property>
-            <property name="whatsThis" >
-             <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
-            </property>
-            <property name="text" >
-             <string>&amp;Apply</string>
-            </property>
-            <property name="icon" >
-             <iconset resource="../icons.qrc" >
-              <normaloff>:/new/prefix1/images/apply.png</normaloff>:/new/prefix1/images/apply.png</iconset>
-            </property>
-            <property name="iconSize" >
-             <size>
-              <width>22</width>
-              <height>22</height>
-             </size>
-            </property>
-            <property name="shortcut" >
-             <string>Ctrl+A</string>
-            </property>
-            <property name="toolButtonStyle" >
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>
