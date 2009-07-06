@@ -35,6 +35,7 @@
 
 #include "../generated_uic/ui_tonemappingdialog.h"
 #include "../Common/global.h"
+#include "../Common/options.h"
 #include "../MainWindow/hdrviewer.h"
 #include "tonemapping_widget.h"
 #include "../Threads/tmoThread.h"
@@ -99,7 +100,7 @@ protected slots:
 	void dispatch(GenericViewer *);
 	void openDocumentation(); 
 	void aboutQtpfsgui();
-	void tonemapImage(const TmoOperator&, const TonemappingOptions&);
+	void tonemapImage(const TonemappingOptions&);
 	void showErrorMessage(const char *e);
 	void tonemappingFinished();
 	void updateLogo();

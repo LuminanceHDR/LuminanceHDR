@@ -37,19 +37,8 @@
 #include "../Common/gang.h"
 #include "../generated_uic/ui_documentation.h"
 #include "../generated_uic/ui_about.h"
-#include "../Threads/ashikhmin02Thread.h"
-#include "../Threads/drago03Thread.h"
-#include "../Threads/durand02Thread.h"
-#include "../Threads/fattal02Thread.h"
-#include "../Threads/mantiuk06Thread.h"
-#include "../Threads/mantiuk08Thread.h"
-#include "../Threads/pattanaik00Thread.h"
-#include "../Threads/reinhard02Thread.h"
-#include "../Threads/reinhard05Thread.h"
+#include "../Threads/tmoFactory.h"
 #include "../Filter/pfscut.h"
-
-pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
-void applyGammaOnFrame( pfs::Frame*, const float);
 
 TonemappingWindow::~TonemappingWindow() {
 	delete workingLogoTimer;
@@ -59,8 +48,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	setupUi(this);
 
 	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION" - Tonemapping Window - ");
-
-	workingPfsFrame = frame;
 
 	workingLogoTimer = new QTimer();
 	workingLogoTimer->setInterval(200);
@@ -153,10 +140,8 @@ void TonemappingWindow::setupConnections() {
 
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
 
-	//connect(tmWidget,SIGNAL(newResult(const QImage&, TonemappingOptions*)), 
-	//		this,SLOT(addMDIresult(const QImage&, TonemappingOptions*)));
-	connect(tmWidget,SIGNAL(startTonemapping(const TmoOperator&, const TonemappingOptions&)), 
-			this,SLOT(tonemapImage(const TmoOperator&, const TonemappingOptions&)));
+	connect(tmWidget,SIGNAL(startTonemapping(const TonemappingOptions&)), 
+			this,SLOT(tonemapImage(const TonemappingOptions&)));
 
 	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
 
@@ -510,103 +495,35 @@ pfs::Frame * TonemappingWindow::getSelectedFrame() {
 	return pfscut(frame, x_ul, y_ul, x_br, y_br);
 }
 	
-void TonemappingWindow::tonemapImage(const TmoOperator &tmoOperator, const TonemappingOptions &opts ) {
+void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	pfs::DOMIO pfsio;
 	tmoOptions = &opts;	
 
-	TMOThread *thread = 0;
-	TMOProgressIndicator *progressIndicator = 0;
-	pfs::Frame *tmpFrame = 0;
-	int flag = 0;
+ 	workingPfsFrame = originalHDR->getHDRPfsFrame();
 
-	int xsize = workingPfsFrame->getWidth();	
-
-	if (opts.pregamma != 1.0f) {
-		applyGammaOnFrame( workingPfsFrame, opts.pregamma );
-	}
-
-	if ((opts.xsize != xsize) && !tmWidget->tonemapSelection()) {
-		pfs::Frame *resized = resizeFrame(workingPfsFrame, opts.xsize);
-		pfsio.freeFrame(workingPfsFrame);
-		workingPfsFrame = resized;
-	}
-
-	if (tmWidget->tonemapSelection()) {
+	if (opts.tonemapSelection) {
 		if (originalHDR->hasSelection()) {
-			tmpFrame = workingPfsFrame;
-			flag = 1;
 			workingPfsFrame = getSelectedFrame();
-			xsize = workingPfsFrame->getWidth();
 		}
 	}
 
-	switch (tmoOperator) {
-		case ASHIKHMIN02:
-			thread = new Ashikhmin02Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Ashikhmin '02"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case DRAGO03:
-			thread = new Drago03Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Drago '03"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case DURAND02:
-			thread = new Durand02Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Durand '02"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case FATTAL02:
-			thread = new Fattal02Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Fattal '02"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case MANTIUK06:
-			thread = new Mantiuk06Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Mantiuk '06"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case MANTIUK08:
-			thread = new Mantiuk08Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Mantiuk '08"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case PATTANAIK00:
-			thread = new Pattanaik00Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Pattanaik '00"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case REINHARD02:
-			thread = new Reinhard02Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Reinhard '02"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-		case REINHARD05:
-			thread = new Reinhard05Thread(workingPfsFrame, opts);
-			progressIndicator = new TMOProgressIndicator(this, QString("Reinhard '05"));
-			threadManager->addProgressIndicator(progressIndicator);
-			break;
-	}
+	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
+	TMOProgressIndicator *progInd =	new TMOProgressIndicator(this, QString(opts.tmoperator_str));
+	threadManager->addProgressIndicator(progInd);
 
 	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
-	connect(thread, SIGNAL(setMaximumSteps(int)), progressIndicator, SLOT(setMaximum(int)));
-	connect(thread, SIGNAL(setValue(int)), progressIndicator, SLOT(setValue(int)));
+	connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
+	connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
 	connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-	connect(thread, SIGNAL(finished()), progressIndicator, SLOT(terminated()));
+	connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
 	connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
 	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	connect(progressIndicator, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
+	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 	//start thread
 	thread->start();
 	threadCounter++;
 	updateLogo();
- 
-	if (flag) {
-		flag = 0;
-	    workingPfsFrame = tmpFrame;
-		tmpFrame = 0;
-	}
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
