@@ -25,50 +25,16 @@
  *
  */
 
+#ifndef TMOFACTORY
+#define TMOFACTORY
+
+#include "../Common/options.h"
 #include "tmoThread.h"
-#include "../Common/config.h"
-#include "../Filter/pfscut.h"
-#include "../Fileformat/pfsoutldrimage.h"
 
-#include <iostream>
+class TMOFactory {
 
-pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
-void applyGammaOnFrame( pfs::Frame*, const float);
+public:
+	static TMOThread * getTMOThread(const TMOperator &tmoOperator, pfs::Frame *frame, const TonemappingOptions &opt);
+};
 
-TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	QThread(0), opts(opts) {
-
-	pfs::DOMIO pfsio;
-
-	workingframe = pfscopy(frame);
-
-	ph = new ProgressHelper(0);
-
-	if (opts.pregamma != 1.0f) {
-		applyGammaOnFrame( workingframe, opts.pregamma );
-	}
-
-	if ((opts.xsize != opts.origxsize) && !opts.tonemapSelection) {
-		pfs::Frame *resized = resizeFrame(workingframe, opts.xsize);
-		pfsio.freeFrame(workingframe);
-		workingframe = resized;
-	}
-
-	// Convert to CS_XYZ: tm operator now use this colorspace
-	pfs::Channel *X, *Y, *Z;
-	workingframe->getXYZChannels( X, Y, Z );
-	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
-}
-
-TMOThread::~TMOThread() {
-	wait();
-	pfs::DOMIO pfsio;
-	pfsio.freeFrame(workingframe);
-	delete ph;
-	std::cout << "~TMOThread()" << std::endl;
-}
-
-void TMOThread::terminateRequested() {
-	ph->terminate(true);
-}
-
+#endif
