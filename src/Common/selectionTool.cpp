@@ -37,7 +37,7 @@ bool inRange(int a, int b, int c) {
 //
 SelectionTool::SelectionTool(QWidget *parent) : 
 	QWidget(parent), isSelectionReady(false), m_action(NOACTION) {
-    	setMouseTracking(true); // needed for moving and resizing selection
+	setMouseTracking(true); // needed for moving and resizing selection
 	m_parent = parent;
 	m_parent->installEventFilter(this);
 }
@@ -50,7 +50,7 @@ bool SelectionTool::eventFilter(QObject *obj, QEvent *event) {
 	if (event->type() == QEvent::Resize) {
 		float scaleFactor = (float) m_parent->width() / (float) width();
 		resize(m_parent->size());
-        	m_selectionRect=QRect(m_selectionRect.topLeft()*scaleFactor, m_selectionRect.size()*scaleFactor);
+       	m_selectionRect = QRect(m_selectionRect.topLeft()*scaleFactor, m_selectionRect.size()*scaleFactor);
 		return false; // propagate the event
 	} 
 	else {
@@ -66,16 +66,17 @@ void SelectionTool::mousePressEvent(QMouseEvent *e) {
 	m_mousePos = e->globalPos();
 	m_origin = e->pos();
 	
-	if (e->buttons()==Qt::MidButton) {  
+	if (e->buttons() == Qt::MidButton) {  
 		m_action = PANNING;
 		setCursor(QCursor(Qt::SizeAllCursor));
-     		return;
+		return;
 	}
 
-	if (e->buttons()==Qt::LeftButton) {  
+	if (e->buttons() == Qt::LeftButton) {  
 		if (!isSelectionReady) {
 			m_action = START_SELECTING;
-     			m_selectionRect = QRect(m_origin, QSize());
+			m_selectionRect = QRect(m_origin, QSize());
+			setCursor(QCursor(Qt::CrossCursor));
 			return;
 		}
 	
@@ -91,8 +92,9 @@ void SelectionTool::mousePressEvent(QMouseEvent *e) {
 		QRect innerArea = m_selectionRect;
 		innerArea.adjust(bw, bw, -bw, -bw);			
 		
-		if (innerArea.contains(e->pos()))
+		if (innerArea.contains(e->pos())) {
 			m_action = MOVING;	
+		}
 		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y1, bw)) {
 			m_action = RESIZING_XY;
 			m_origin = QPoint(x2, y2);
@@ -125,10 +127,10 @@ void SelectionTool::mousePressEvent(QMouseEvent *e) {
 			m_action = RESIZING_BOTTOM;
 			m_origin = QPoint(x1, y1);
 		}	
-		else {
+		else { // user clicked outside selected region
 			removeSelection();
 			m_action = START_SELECTING;
-     			m_selectionRect = QRect(m_origin, QSize());
+			m_selectionRect = QRect(m_origin, QSize());
 		}
 	}// if (e->buttons()==Qt::LeftButton) 
 }
@@ -137,6 +139,9 @@ void SelectionTool::mousePressEvent(QMouseEvent *e) {
 //
 
 void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
+	if ((e->buttons() == Qt::NoButton) && (!isSelectionReady)) 
+	  return;	
+
 	int x1, y1, x2, y2;
 	int mouseX, mouseY;
 	const int bw = 5; // border width	
@@ -149,6 +154,29 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
 	QPoint diff = (e->globalPos() - m_mousePos);
 
 	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
+
+	if (isSelectionReady && m_action == NOACTION ) {
+		QRect innerArea = m_selectionRect;
+		innerArea.adjust(bw, bw, -bw, -bw);			
+		if (innerArea.contains(e->pos())) 
+			setCursor(QCursor(Qt::OpenHandCursor));
+		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y1, bw))
+			setCursor(QCursor(Qt::SizeFDiagCursor));
+		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y2, bw))
+			setCursor(QCursor(Qt::SizeBDiagCursor));
+		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y1, bw))
+			setCursor(QCursor(Qt::SizeBDiagCursor));
+		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y2, bw))
+			setCursor(QCursor(Qt::SizeFDiagCursor));
+		else if ( (inRange(mouseX, x1, bw) || inRange(mouseX, x2, bw)) && (mouseY >= y1) && (mouseY <= y2) )
+			setCursor(QCursor(Qt::SizeHorCursor));
+		else if ( (inRange(mouseY, y1, bw) || inRange(mouseY, y2, bw)) && (mouseX >= x1) && (mouseX <= x2) ) 	
+			setCursor(QCursor(Qt::SizeVerCursor));
+		else 
+			setCursor(QCursor(Qt::ArrowCursor));
+		return;
+	}// if (isSelectionReady) 
+
 	
 	switch (m_action) {
 		case NOACTION:
@@ -159,26 +187,20 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
 			emit moved(diff);	
 			break;
 		case START_SELECTING: 
-			setCursor(QCursor(Qt::CrossCursor));
 			m_action = SELECTING;
 		case SELECTING: 
 			m_selectionRect = QRect(m_origin, e->pos()).normalized();
 			break;
 		case MOVING:
+			setCursor(QCursor(Qt::SizeAllCursor));
 			visibleRect = m_parent->visibleRegion().boundingRect();
 			m_selectionRect.translate(diff);
-			if (!m_parent->rect().contains(m_selectionRect)) { // outside pixmap
+			if (!m_parent->rect().contains(m_selectionRect)) { // stop moving outside pixmap
 				m_selectionRect.translate(-diff);
 				QCursor::setPos(m_mousePos);
 				updateMousePosition = false;
 			}
-			else if (!visibleRect.contains(m_selectionRect)) { // outside visible region
-				QRect r = m_parent->visibleRegion().boundingRect().intersected(m_selectionRect);
-				QCursor::setPos(m_mousePos);
-				emit scroll(r.topLeft().x(), r.topLeft().y(), r.size().width(), r.size().height());
-				updateMousePosition = false;
-			}
-			else {
+			else { //moving inside pixmap and visible region
 				updateMousePosition = true;
 			}
 			break;
@@ -204,77 +226,56 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
 
 	if (!(m_parent->visibleRegion().contains(e->pos()))) {
 		int x1, y1, x2, y2;
-		int dx = 10*diff.x();
-		int dy = 10*diff.y();
+		int dx = 6*diff.x();
+		int dy = 6*diff.y();
 			
-		if (m_action == PANNING) {
-			emit moved(diff);
-			return;
-		}	
 		m_parent->visibleRegion().boundingRect().getCoords(&x1, &y1, &x2, &y2);
-		
-		if (mouseX < x1) {
-			if (dx == 0) dx = -20;
-			if ( dx < 0 )
-				emit moved(QPoint(dx,0));
+
+		if (m_action == PANNING)
+			return;
+
+		if (m_action != MOVING) {
+
+			if (mouseX < x1) {
+				if (dx == 0) 
+					dx = -20;
+				if ( dx < 0 )
+					emit moved(QPoint(dx,0));
+			}
+			else if (mouseX > x2) {
+				if (dx == 0) 
+					dx = 20;
+				if ( dx > 0 )
+					emit moved(QPoint(dx,0));
+			}
+			if (mouseY < y1) {
+				if (dy == 0) 
+					dy = -20;
+				if ( dy < 0 )
+					emit moved(QPoint(0,dy));
+			}
+			else if (mouseY > y2) {
+				if (dy == 0) 
+					dy = 20;
+				if ( dy > 0 )
+					emit moved(QPoint(0,dy));
+			}
+			QCursor::setPos(m_mousePos);
+			updateMousePosition = false;
 		}
-		else if (mouseX > x2) {
-			if (dx == 0) dx = 20;
-			if ( dx > 0 )
-				emit moved(QPoint(dx,0));
-		}
-		if (mouseY < y1) {
-			if (dy == 0) dy = -20;
-			if ( dy < 0 )
-				emit moved(QPoint(0,dy));
-		}
-		else if (mouseY > y2) {
-			if (dy == 0) dy = 20;
-			if ( dy > 0 )
-				emit moved(QPoint(0,dy));
-		}
-		QCursor::setPos(m_mousePos);
-		updateMousePosition = false;
 	} 
 	else if (m_action != MOVING) {
 		updateMousePosition = true;
 	}
-	
-	if (isSelectionReady) {
-		QRect innerArea = m_selectionRect;
-		innerArea.adjust(bw, bw, -bw, -bw);			
-		if (innerArea.contains(e->pos())) 
-			((m_action == MOVING) || (m_action == PANNING)) ? setCursor(QCursor(Qt::SizeAllCursor)) : 
-				setCursor(QCursor(Qt::OpenHandCursor));
-		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y1, bw))
-			setCursor(QCursor(Qt::SizeFDiagCursor));
-		else if ( inRange(mouseX, x1, bw) && inRange(mouseY, y2, bw))
-			setCursor(QCursor(Qt::SizeBDiagCursor));
-		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y1, bw))
-			setCursor(QCursor(Qt::SizeBDiagCursor));
-		else if ( inRange(mouseX, x2, bw) && inRange(mouseY, y2, bw))
-			setCursor(QCursor(Qt::SizeFDiagCursor));
-		else if ( inRange(mouseX, x1, bw) || inRange(mouseX, x2, bw))
-			setCursor(QCursor(Qt::SizeHorCursor));
-		else if ( inRange(mouseY, y1, bw) || inRange(mouseY, y2, bw)) 	
-			setCursor(QCursor(Qt::SizeVerCursor));
-		else if ( m_action == PANNING )
-			setCursor(QCursor(Qt::SizeAllCursor));
-		else 
-			setCursor(QCursor(Qt::ArrowCursor));
-		
-	}// if (isSelectionReady) 
 
 	if ( !( (m_selectionRect.size() == QSize()) || 
-		    (m_selectionRect.width() == 0) || 
-		    (m_selectionRect.height() == 0) )
-	   ) { 
+		    (m_selectionRect.width() == 0) 		|| 
+		    (m_selectionRect.height() == 0) 
+	      )
+	   ) 
+	{ 
 		m_selectionRect = m_parent->rect().intersected(m_selectionRect);
 	} 
-	else {
-		if (m_action == MOVING)
-			removeSelection();
-	}
 
 	if (updateMousePosition)
 		m_mousePos = e->globalPos();
@@ -286,7 +287,7 @@ void SelectionTool::mouseMoveEvent(QMouseEvent *e) {
 //
 
 
-void SelectionTool::mouseReleaseEvent(QMouseEvent *e) {
+void SelectionTool::mouseReleaseEvent(QMouseEvent *) {
 	if ( (m_selectionRect.size() == QSize()) || 
 		(m_selectionRect.width() == 0) || 
 		(m_selectionRect.height() == 0)  
@@ -334,8 +335,8 @@ void SelectionTool::paintEvent(QPaintEvent *e) {
 	}
 
 	int x1, y1, x2, y2; 
-	const int pw = 2; //Pen Width
-	const int mpw = pw >> 1;
+	const int pw = 1; //Pen Width
+	const int mpw = 1; // pw >> 1;
 	const int cw = 6; //Corner Width
 
 	m_selectionRect.getCoords(&x1, &y1, &x2, &y2);
