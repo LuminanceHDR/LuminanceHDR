@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+
+	<area text="Start" file="index.html">
+	</area>
+
+	<area text="Manual" file="manual.html">
+	</area>
+
+	<area text="DCRaw" file="dcraw.html">
+	</area>
+
+	<area text="Hints" file="hints.html">
+	</area>
+
+	<area text="FAQ" file="faq.html">
+	</area>
+     
+</menu>
