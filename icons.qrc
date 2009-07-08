@@ -52,5 +52,31 @@
 		<file>images/working5.png</file>
 		<file>images/working6.png</file>
 		<file>images/working7.png</file>
+		<file>images/qtpfsgui00.png</file>
+		<file>images/qtpfsgui01.png</file>
+		<file>images/qtpfsgui02.png</file>
+		<file>images/qtpfsgui03.png</file>
+		<file>images/qtpfsgui04.png</file>
+		<file>images/qtpfsgui05.png</file>
+		<file>images/qtpfsgui06.png</file>
+		<file>images/qtpfsgui07.png</file>
+		<file>images/qtpfsgui08.png</file>
+		<file>images/qtpfsgui09.png</file>
+		<file>images/qtpfsgui10.png</file>
+		<file>images/qtpfsgui11.png</file>
     </qresource>
+ <qresource prefix="/help" >
+    <file alias="document-print.png" >icons/help/document-print.png</file>
+    <file alias="exit.png" >icons/help/exit.png</file>
+    <file alias="go-bottom.png" >icons/help/go-bottom.png</file>
+    <file alias="go-down.png" >icons/help/go-down.png</file>
+    <file alias="go-first.png" >icons/help/go-first.png</file>
+    <file alias="go-home.png" >icons/help/go-home.png</file>
+    <file alias="go-last.png" >icons/help/go-last.png</file>
+    <file alias="go-next.png" >icons/help/go-next.png</file>
+    <file alias="go-previous.png" >icons/help/go-previous.png</file>
+    <file alias="go-top.png" >icons/help/go-top.png</file>
+    <file alias="go-up.png" >icons/help/go-up.png</file>
+    <file alias="help-browser.png" >icons/help/help-browser.png</file>
+  </qresource>
 </RCC>

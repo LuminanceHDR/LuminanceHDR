@@ -27,7 +27,8 @@
  */
 
 #include <math.h>
-#include "../Libpfs/pfs.h"
+
+#include "Libpfs/pfs.h"
 
 void rotateArray( const pfs::Array2D *in, pfs::Array2D *out, bool clockwise );
 

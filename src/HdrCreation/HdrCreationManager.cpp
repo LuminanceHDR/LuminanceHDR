@@ -23,11 +23,12 @@
 
 #include <QApplication>
 #include <QFileInfo>
-#include "HdrCreationManager.h"
-#include "../Fileformat/pfstiff.h"
-#include "../Exif/exif_operations.h"
+
+#include "Fileformat/pfstiff.h"
+#include "Exif/ExifOperations.h"
+#include "Threads/HdrInputLoader.h"
 #include "mtb_alignment.h"
-#include "../Threads/hdrInputLoader.h"
+#include "HdrCreationManager.h"
 
 HdrCreationManager::HdrCreationManager() {
 	qtpfsgui_options=QtpfsguiOptions::getInstance();
@@ -93,7 +94,7 @@ void HdrCreationManager::loadInputFiles() {
 		while (runningThreads<qtpfsgui_options->num_threads && firstNotStarted<startedProcessing.size()) {
 			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted]=true;
-			hdrInputLoader *thread=new hdrInputLoader(fileList[firstNotStarted],firstNotStarted,qtpfsgui_options->dcraw_options);
+			HdrInputLoader *thread=new HdrInputLoader(fileList[firstNotStarted],firstNotStarted,qtpfsgui_options->dcraw_options);
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 			connect(thread, SIGNAL(loadFailed(QString,int)), this, SLOT(loadFailed(QString,int)));
 			connect(thread, SIGNAL(ldrReady(QImage *, int, float, QString, bool)), this, SLOT(ldrReady(QImage *, int, float, QString, bool)));

@@ -25,6 +25,7 @@
  *
  * $Id: pfspanoramic.cpp,v 1.2 2006/11/20 17:52:15 rafm Exp $
  */
+
 #include "pfspanoramic.h"
 
 ProjectionFactory ProjectionFactory::singleton(true);

@@ -25,7 +25,8 @@
 
 #include <QDialog>
 #include <QStringList>
-#include "../../generated_uic/ui_dndoption.h"
+
+#include "ui_DnDOption.h"
 
 class DnDOptionDialog : public QDialog
 {

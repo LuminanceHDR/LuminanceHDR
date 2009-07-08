@@ -24,11 +24,10 @@
  *
  */
 
-#include <iostream>
-#include "../Libpfs/pfs.h"
 #include <QImage>
-
 #include <QSysInfo>
+
+#include "Libpfs/pfs.h"
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
 {

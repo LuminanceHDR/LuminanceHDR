@@ -25,9 +25,10 @@
  * @author Giuseppe Rota  <grota@users.sourceforge.net>
  */
 
-#include "rgbeio.h"
-#include "../Libpfs/pfs.h"
 #include <stdlib.h>
+
+#include "rgbeio.h"
+#include "Libpfs/pfs.h"
 
 pfs::Frame* readRGBEfile (const char * filename) {
 	pfs::DOMIO pfsio;

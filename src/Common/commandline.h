@@ -27,7 +27,8 @@
 #include <QString>
 #include <QProcess>
 #include <QDir>
-#include "../HdrCreation/HdrCreationManager.h"
+
+#include "HdrCreation/HdrCreationManager.h"
 
 class CommandLineInterfaceManager : public QObject {
 Q_OBJECT

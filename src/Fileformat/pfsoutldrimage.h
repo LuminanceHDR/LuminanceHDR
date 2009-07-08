@@ -28,6 +28,10 @@
 #ifndef FROMLDRPFSTOQIMAGE
 #define FROMLDRPFSTOQIMAGE
 
+#include <QImage>
+
+#include "Libpfs/pfs.h"
+
 QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
 
 #endif

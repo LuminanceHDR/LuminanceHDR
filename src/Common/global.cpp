@@ -25,10 +25,11 @@
 #include <QImage>
 #include <QMessageBox>
 #include <QUrl>
+
 #include "config.h"
 #include "options.h"
 #include "global.h"
-#include "imageQualityDialog.h"
+#include "ImageQualityDialog.h"
 
 QSettings settings("Qtpfsgui", "Qtpfsgui");
 

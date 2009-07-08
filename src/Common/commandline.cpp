@@ -22,17 +22,18 @@
  */
 
 #include <getopt.h>
+
+#include "global.h"
 #include "options.h"
 #include "config.h"
-#include "../HdrCreation/createhdr.h"
+#include "HdrCreation/createhdr.h"
+#include "Threads/LoadHdrThread.h"
+#include "Threads/tonemapperThread.h"
+#include "Exif/ExifOperations.h"
 #include "commandline.h"
-#include "global.h"
-#include "../Threads/loadHdrThread.h"
-#include "../Threads/tonemapperThread.h"
-#include "../Exif/exif_operations.h"
 
 //save hdr
-#include "../Fileformat/pfstiff.h"
+#include "Fileformat/pfstiff.h"
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 

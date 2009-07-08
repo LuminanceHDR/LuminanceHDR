@@ -24,9 +24,10 @@
  *
  */
 
-#include "pfscut.h"
 #include <climits>
 #include <cstdlib>
+
+#include "pfscut.h"
 
 #define UNSP INT_MAX
 #define MIN 0

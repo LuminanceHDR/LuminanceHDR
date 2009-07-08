@@ -31,8 +31,11 @@
 #include <ImfRgbaFile.h>
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
-#include "../Libpfs/pfs.h"
+
+#include "Libpfs/pfs.h"
+
 #define min(x,y) ( (x)<(y) ? (x) : (y) )
+
 using namespace Imf;
 using namespace Imath;
 using std::string;

@@ -20,9 +20,10 @@
  * @author Daniel Kaneider
  */
 
-#include "DnDOption.h"
-#include "../Common/global.h"
 #include <QRegExp>
+
+#include "Common/global.h"
+#include "DnDOption.h"
 
 DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
 	ui.setupUi(this);

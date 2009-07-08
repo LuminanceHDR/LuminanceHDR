@@ -27,7 +27,8 @@
 
 #include <iostream>
 #include <math.h>
-#include "../Libpfs/pfs.h"
+
+#include "Libpfs/pfs.h"
 
 #define PROG_NAME "pfsgamma"
 

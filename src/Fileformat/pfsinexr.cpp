@@ -26,11 +26,8 @@
  */
 
 #include <cstdlib>
-
 #include <iostream>
-
 #include <stdio.h>
-#include "../Libpfs/pfs.h"
 
 #include <ImfHeader.h>
 #include <ImfChannelList.h>
@@ -38,6 +35,8 @@
 #include <ImfRgbaFile.h>
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
+
+#include "Libpfs/pfs.h"
 
 #define PROG_NAME "pfsinexr"
 

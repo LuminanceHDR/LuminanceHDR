@@ -25,6 +25,7 @@
 #define GLOBAL_H
 
 #include <QSettings>
+
 extern QSettings settings;
 QString saveLDRImage(QWidget *p, const QString initialFileName, const QImage &image, bool batchMode = false);
 bool matchesLdrFilename(QString file);

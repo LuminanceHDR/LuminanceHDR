@@ -29,7 +29,8 @@
 #include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../Libpfs/pfs.h"
+
+#include "Libpfs/pfs.h"
 
 using std::map;
 using std::string;

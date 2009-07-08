@@ -26,7 +26,8 @@
  */
 
 #include <math.h>
-#include "../Libpfs/pfs.h"
+
+#include "Libpfs/pfs.h"
 
 #define ROUNDING_ERROR 0.000001
 

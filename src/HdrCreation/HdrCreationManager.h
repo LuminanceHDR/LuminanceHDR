@@ -23,11 +23,13 @@
 
 #ifndef HDRCREATIONMANAGER_H
 #define HDRCREATIONMANAGER_H
+
 #include <QProcess>
 #include <QPair>
+
+#include "Common/options.h"
+#include "arch/freebsd/math.h"
 #include "createhdr.h"
-#include "../Common/options.h"
-#include "../arch/freebsd/math.h"
 
 const config_triple predef_confs[6]= {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},

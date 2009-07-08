@@ -1,6 +1,8 @@
 TEMPLATE = app
 CONFIG += release qt thread
 DEFINES += QT_NO_DEBUG_OUTPUT
+QT += xml
+QT += webkit
 
 # Assume openmp-capable g++ (>=4.2)
 QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp -msse2
@@ -10,154 +12,169 @@ TARGET = qtpfsgui
 
 LIBS            += -lgsl -lgslcblas
 
-
 MOC_DIR = generated_moc
 OBJECTS_DIR = generated_obj
 UI_DIR = generated_uic
 RCC_DIR = generated_moc
 
+INCLUDEPATH +=  ./src 
 
-FORMS = forms/maingui.ui \
-        forms/dndoption.ui \
-        forms/hdrwizardform.ui \
-        forms/tonemappingdialog.ui \
-        forms/tonemappingoptions.ui \
+FORMS = forms/MainWindow.ui \
+        forms/DnDOption.ui \
+        forms/HdrWizard.ui \
+        forms/TonemappingWindow.ui \
+        forms/TonemappingPanel.ui \
         forms/documentation.ui \
         forms/about.ui \
-        forms/options.ui \
-        forms/transplantexifdialog.ui \
-        forms/resizedialog.ui \
-        forms/gamma_and_levels.ui \
-        forms/projectionsDialog.ui \
-        forms/editing_tools.ui \
-        forms/batch_dialog.ui \ 
-		forms/imageQualityDialog.ui \
-		forms/threadManager.ui
+        forms/PreferencesDialog.ui \
+        forms/TransplantExifDialog.ui \
+        forms/ResizeDialog.ui \
+        forms/GammaAndLevels.ui \
+        forms/ProjectionsDialog.ui \
+        forms/EditingTools.ui \
+        forms/BatchTMDialog.ui \ 
+		forms/ImageQualityDialog.ui \
+		forms/ThreadManager.ui \
+		forms/HelpBrowser.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
            src/Common/global.h \
            src/Common/options.h \
-           src/Common/smart_scroll_area.h \
-           src/Common/panIconWidget.h \
-           src/Common/gamma_and_levels.h \
-           src/Common/gang.h \
+           src/Common/PanIconWidget.h \
+           src/Common/GammaAndLevels.h \
+           src/Common/Gang.h \
            src/Common/commandline.h \
-           src/Common/imageQualityDialog.h \
-		   src/Common/selectionTool.h \
-		   src/Common/genericViewer.h \
-		   src/Common/progressHelper.h \
-           src/MainWindow/mainWindow.h \
+           src/Common/ImageQualityDialog.h \
+		   src/Common/SelectionTool.h \
+		   src/Common/ProgressHelper.h \
+           src/MainWindow/MainWindow.h \
            src/MainWindow/DnDOption.h \
-           src/MainWindow/hdrviewer.h \
-           src/MainWindow/luminancerange_widget.h \
-           src/MainWindow/histogram.h \
-           src/ToneMappingDialog/tonemappingDialog.h \
-           src/ToneMappingDialog/tonemapping_widget.h \
-           src/ToneMappingDialog/ldrviewer.h \
-		   src/ToneMappingDialog/threadManager.h \
-           src/ToneMappingDialog/tmoProgressIndicator.h \
+           src/HelpBrowser/fmpaths.h \
+           src/HelpBrowser/schelptreemodel.h \
+           src/HelpBrowser/treeitem.h \
+           src/HelpBrowser/treemodel.h \
+           src/HelpBrowser/sctextbrowser.h \
+#src/HelpBrowser/helpwidget.h \
+           src/HelpBrowser/helpbrowser.h \
+           src/TonemappingWindow/TonemappingWindow.h \
+           src/TonemappingWindow/TonemappingPanel.h \
+		   src/TonemappingWindow/ThreadManager.h \
+           src/TonemappingWindow/TMOProgressIndicator.h \
+		   src/Viewers/GenericViewer.h \
+           src/Viewers/HdrViewer.h \
+           src/Viewers/LdrViewer.h \
+           src/Viewers/SmartScrollArea.h \
+           src/Viewers/LuminanceRangeWidget.h \
+           src/Viewers/Histogram.h \
 		   src/Threads/tonemapperThread.h \
-		   src/Threads/tmoFactory.h \
-		   src/Threads/tmoThread.h \
-           src/Threads/ashikhmin02Thread.h \
-           src/Threads/drago03Thread.h \
-           src/Threads/durand02Thread.h \
-           src/Threads/fattal02Thread.h \
-           src/Threads/mantiuk06Thread.h \
-           src/Threads/mantiuk08Thread.h \
-           src/Threads/pattanaik00Thread.h \
-           src/Threads/reinhard02Thread.h \
-           src/Threads/reinhard05Thread.h \
-           src/Threads/loadHdrThread.h \
-           src/Threads/hdrInputLoader.h \
+		   src/Threads/TMOFactory.h \
+		   src/Threads/TMOThread.h \
+           src/Threads/Ashikhmin02Thread.h \
+           src/Threads/Drago03Thread.h \
+           src/Threads/Durand02Thread.h \
+           src/Threads/Fattal02Thread.h \
+           src/Threads/Mantiuk06Thread.h \
+           src/Threads/Mantiuk08Thread.h \
+           src/Threads/Pattanaik00Thread.h \
+           src/Threads/Reinhard02Thread.h \
+           src/Threads/Reinhard05Thread.h \
+           src/Threads/LoadHdrThread.h \
+           src/Threads/HdrInputLoader.h \
            src/Preferences/preferencesDialog.h \
-           src/TransplantExif/transplant.h \
-           src/Resize/resizeDialog.h \
-           src/Projection/projectiveDialog.h \
+           src/TransplantExif/TransplantExifDialog.h \
+           src/Resize/ResizeDialog.h \
+           src/Projection/ProjectionsDialog.h \
            src/HdrCreation/HdrCreationManager.h \
            src/HdrCreation/mtb_alignment.h \
            src/HdrCreation/createhdr.h \
            src/HdrCreation/robertson02.h \
            src/HdrCreation/responses.h   \
            src/HdrCreation/debevec.h \
-           src/HdrWizard/editingTools.h \
-           src/HdrWizard/previewWidget.h \
-           src/HdrWizard/newHdrWizard.h \
+           src/HdrWizard/EditingTools.h \
+           src/HdrWizard/PreviewWidget.h \
+           src/HdrWizard/HdrWizard.h \
            src/Filter/pfspanoramic.h \
            src/Filter/pfscut.h \
            src/Fileformat/rgbeio.h \
            src/Fileformat/pfstiff.h \
-           src/TM_operators/drago03/tmo_drago03.h \
-           src/TM_operators/durand02/tmo_durand02.h \
-           src/TM_operators/durand02/bilateral.h \
-           src/TM_operators/durand02/fastbilateral.h \
-           src/TM_operators/fattal02/tmo_fattal02.h \
-           src/TM_operators/fattal02/pde.h \
-           src/TM_operators/ashikhmin02/tmo_ashikhmin02.h \
-           src/TM_operators/ashikhmin02/pyramid.h \
-           src/TM_operators/pattanaik00/tmo_pattanaik00.h \
-           src/TM_operators/reinhard05/tmo_reinhard05.h \
-           src/TM_operators/reinhard02/tmo_reinhard02.h \
-           src/TM_operators/mantiuk06/contrast_domain.h \
-           src/TM_operators/mantiuk08/display_adaptive_tmo.h \
-           src/TM_operators/mantiuk08/display_function.h \
-           src/TM_operators/mantiuk08/display_size.h \
-           src/TM_operators/mantiuk08/cqp/gsl_cqp.h \
-           src/TM_operators/mantiuk08/cqp/initial_point.h \
-           src/Batch/batch_dialog.h \
-           src/Exif/exif_operations.h
+           src/TonemappingOperators/drago03/tmo_drago03.h \
+           src/TonemappingOperators/durand02/tmo_durand02.h \
+           src/TonemappingOperators/durand02/bilateral.h \
+           src/TonemappingOperators/durand02/fastbilateral.h \
+           src/TonemappingOperators/fattal02/tmo_fattal02.h \
+           src/TonemappingOperators/fattal02/pde.h \
+           src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h \
+           src/TonemappingOperators/ashikhmin02/pyramid.h \
+           src/TonemappingOperators/pattanaik00/tmo_pattanaik00.h \
+           src/TonemappingOperators/reinhard05/tmo_reinhard05.h \
+           src/TonemappingOperators/reinhard02/tmo_reinhard02.h \
+           src/TonemappingOperators/mantiuk06/contrast_domain.h \
+           src/TonemappingOperators/mantiuk08/display_adaptive_tmo.h \
+           src/TonemappingOperators/mantiuk08/display_function.h \
+           src/TonemappingOperators/mantiuk08/display_size.h \
+           src/TonemappingOperators/mantiuk08/cqp/gsl_cqp.h \
+           src/TonemappingOperators/mantiuk08/cqp/initial_point.h \
+           src/Batch/BatchTMDialog.h \
+           src/Exif/ExifOperations.h
 
 SOURCES += src/Libpfs/pfs.cpp \
            src/Libpfs/colorspace.cpp \
            src/Common/global.cpp \
            src/main.cpp \
            src/Common/options.cpp \
-           src/Common/smart_scroll_area.cpp \
-           src/Common/panIconWidget.cpp \
-           src/Common/gamma_and_levels.cpp \
-           src/Common/gang.cpp \
+           src/Common/PanIconWidget.cpp \
+           src/Common/GammaAndLevels.cpp \
+           src/Common/Gang.cpp \
            src/Common/commandline.cpp \
-           src/Common/imageQualityDialog.cpp \
-		   src/Common/selectionTool.cpp \
-		   src/Common/genericViewer.cpp \
-		   src/Common/progressHelper.cpp \
-           src/MainWindow/mainWindow.cpp \
+           src/Common/ImageQualityDialog.cpp \
+		   src/Common/SelectionTool.cpp \
+		   src/Common/ProgressHelper.cpp \
+           src/MainWindow/MainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
-           src/MainWindow/hdrviewer.cpp \
-           src/MainWindow/luminancerange_widget.cpp \
-           src/MainWindow/histogram.cpp \
-           src/ToneMappingDialog/tonemappingDialog.cpp \
-           src/ToneMappingDialog/tonemapping_widget.cpp \
-           src/ToneMappingDialog/ldrviewer.cpp \
-           src/ToneMappingDialog/threadManager.cpp \
-           src/ToneMappingDialog/tmoProgressIndicator.cpp \
+           src/HelpBrowser/fmpaths.cpp \
+           src/HelpBrowser/treeitem.cpp \
+           src/HelpBrowser/treemodel.cpp \
+           src/HelpBrowser/schelptreemodel.cpp \
+           src/HelpBrowser/sctextbrowser.cpp \
+#           src/HelpBrowser/helpwidget.cpp \
+           src/HelpBrowser/helpbrowser.cpp \
+           src/TonemappingWindow/TonemappingWindow.cpp \
+           src/TonemappingWindow/TonemappingPanel.cpp \
+           src/TonemappingWindow/ThreadManager.cpp \
+           src/TonemappingWindow/TMOProgressIndicator.cpp \
+		   src/Viewers/GenericViewer.cpp \
+           src/Viewers/HdrViewer.cpp \
+           src/Viewers/LdrViewer.cpp \
+           src/Viewers/SmartScrollArea.cpp \
+           src/Viewers/LuminanceRangeWidget.cpp \
+           src/Viewers/Histogram.cpp \
            src/Threads/tonemapperThread.cpp \
-		   src/Threads/tmoFactory.cpp \
-		   src/Threads/tmoThread.cpp \
-           src/Threads/ashikhmin02Thread.cpp \
-           src/Threads/drago03Thread.cpp \
-           src/Threads/durand02Thread.cpp \
-           src/Threads/fattal02Thread.cpp \
-           src/Threads/mantiuk06Thread.cpp \
-           src/Threads/mantiuk08Thread.cpp \
-           src/Threads/pattanaik00Thread.cpp \
-           src/Threads/reinhard02Thread.cpp \
-           src/Threads/reinhard05Thread.cpp \
-           src/Threads/loadHdrThread.cpp \
-           src/Threads/hdrInputLoader.cpp \
+		   src/Threads/TMOFactory.cpp \
+		   src/Threads/TMOThread.cpp \
+           src/Threads/Ashikhmin02Thread.cpp \
+           src/Threads/Drago03Thread.cpp \
+           src/Threads/Durand02Thread.cpp \
+           src/Threads/Fattal02Thread.cpp \
+           src/Threads/Mantiuk06Thread.cpp \
+           src/Threads/Mantiuk08Thread.cpp \
+           src/Threads/Pattanaik00Thread.cpp \
+           src/Threads/Reinhard02Thread.cpp \
+           src/Threads/Reinhard05Thread.cpp \
+           src/Threads/LoadHdrThread.cpp \
+           src/Threads/HdrInputLoader.cpp \
            src/Preferences/preferencesDialog.cpp \
-           src/TransplantExif/transplant.cpp \
-           src/Resize/resizeDialog.cpp \
-           src/Projection/projectiveDialog.cpp \
+           src/TransplantExif/TransplantExifDialog.cpp \
+           src/Resize/ResizeDialog.cpp \
+           src/Projection/ProjectionsDialog.cpp \
            src/HdrCreation/HdrCreationManager.cpp \
            src/HdrCreation/mtb_alignment.cpp \
            src/HdrCreation/createhdr.cpp \
            src/HdrCreation/robertson02.cpp  \
            src/HdrCreation/responses.cpp  \
            src/HdrCreation/debevec.cpp \
-           src/HdrWizard/newHdrWizard.cpp \
-           src/HdrWizard/editingTools.cpp \
+           src/HdrWizard/HdrWizard.cpp \
+           src/HdrWizard/EditingTools.cpp \
            src/HdrWizard/previewWidget.cpp \
            src/Filter/pfsrotate.cpp \
            src/Filter/pfssize.cpp \
@@ -171,35 +188,35 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Fileformat/pfstiff.cpp \
            src/Fileformat/pfsinexr.cpp \
            src/Fileformat/pfsoutexr.cpp \
-           src/TM_operators/drago03/pfstmo_drago03.cpp \
-           src/TM_operators/drago03/tmo_drago03.cpp \
-           src/TM_operators/durand02/pfstmo_durand02.cpp \
-           src/TM_operators/durand02/tmo_durand02.cpp \
-           src/TM_operators/durand02/bilateral.cpp \
-           src/TM_operators/durand02/fastbilateral.cpp \
-           src/TM_operators/fattal02/pfstmo_fattal02.cpp \
-           src/TM_operators/fattal02/tmo_fattal02.cpp \
-           src/TM_operators/fattal02/pde.cpp \
-           src/TM_operators/ashikhmin02/pfstmo_ashikhmin02.cpp \
-           src/TM_operators/ashikhmin02/tmo_ashikhmin02.cpp \
-           src/TM_operators/reinhard05/pfstmo_reinhard05.cpp \
-           src/TM_operators/reinhard05/tmo_reinhard05.cpp \
-           src/TM_operators/pattanaik00/tmo_pattanaik00.cpp \
-           src/TM_operators/pattanaik00/pfstmo_pattanaik00.cpp \
-           src/TM_operators/reinhard02/pfstmo_reinhard02.cpp \
-           src/TM_operators/reinhard02/tmo_reinhard02.cpp \
-           src/TM_operators/reinhard02/approx.cpp \
-           src/TM_operators/mantiuk06/contrast_domain.cpp \
-           src/TM_operators/mantiuk06/pfstmo_mantiuk06.cpp \
-           src/TM_operators/mantiuk08/pfstmo_mantiuk08.cpp \
-           src/TM_operators/mantiuk08/display_adaptive_tmo.cpp \
-           src/TM_operators/mantiuk08/display_function.cpp \
-           src/TM_operators/mantiuk08/display_size.cpp \
-           src/TM_operators/mantiuk08/cqp/cqpminimizer.c \
-		   src/TM_operators/mantiuk08/cqp/initial_point.c \
-           src/TM_operators/mantiuk08/cqp/mg_pdip.c \
-           src/Batch/batch_dialog.cpp \
-           src/Exif/exif_operations.cpp
+           src/TonemappingOperators/drago03/pfstmo_drago03.cpp \
+           src/TonemappingOperators/drago03/tmo_drago03.cpp \
+           src/TonemappingOperators/durand02/pfstmo_durand02.cpp \
+           src/TonemappingOperators/durand02/tmo_durand02.cpp \
+           src/TonemappingOperators/durand02/bilateral.cpp \
+           src/TonemappingOperators/durand02/fastbilateral.cpp \
+           src/TonemappingOperators/fattal02/pfstmo_fattal02.cpp \
+           src/TonemappingOperators/fattal02/tmo_fattal02.cpp \
+           src/TonemappingOperators/fattal02/pde.cpp \
+           src/TonemappingOperators/ashikhmin02/pfstmo_ashikhmin02.cpp \
+           src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.cpp \
+           src/TonemappingOperators/reinhard05/pfstmo_reinhard05.cpp \
+           src/TonemappingOperators/reinhard05/tmo_reinhard05.cpp \
+           src/TonemappingOperators/pattanaik00/tmo_pattanaik00.cpp \
+           src/TonemappingOperators/pattanaik00/pfstmo_pattanaik00.cpp \
+           src/TonemappingOperators/reinhard02/pfstmo_reinhard02.cpp \
+           src/TonemappingOperators/reinhard02/tmo_reinhard02.cpp \
+           src/TonemappingOperators/reinhard02/approx.cpp \
+           src/TonemappingOperators/mantiuk06/contrast_domain.cpp \
+           src/TonemappingOperators/mantiuk06/pfstmo_mantiuk06.cpp \
+           src/TonemappingOperators/mantiuk08/pfstmo_mantiuk08.cpp \
+           src/TonemappingOperators/mantiuk08/display_adaptive_tmo.cpp \
+           src/TonemappingOperators/mantiuk08/display_function.cpp \
+           src/TonemappingOperators/mantiuk08/display_size.cpp \
+           src/TonemappingOperators/mantiuk08/cqp/cqpminimizer.c \
+		   src/TonemappingOperators/mantiuk08/cqp/initial_point.c \
+           src/TonemappingOperators/mantiuk08/cqp/mg_pdip.c \
+           src/Batch/BatchTMDialog.cpp \
+           src/Exif/ExifOperations.cpp
 
 RESOURCES = icons.qrc
 

@@ -28,12 +28,13 @@
 #ifndef PFSTIFF_H
 #define PFSTIFF_H
 
-#include <tiffio.h>
-#include "../Libpfs/array2d.h"
-#include "../Libpfs/pfs.h"
 #include <QObject>
 #include <QImage>
 
+#include <tiffio.h>
+
+#include "Libpfs/array2d.h"
+#include "Libpfs/pfs.h"
 
 class TiffReader : public QObject {
 Q_OBJECT

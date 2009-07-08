@@ -25,12 +25,13 @@
  *
  */
 
-#include "tonemapperThread.h"
 #include <QDir>
-#include "../Common/config.h"
-#include "../Filter/pfscut.h"
-#include "../Common/progressHelper.h"
-#include "../Fileformat/pfsoutldrimage.h"
+
+#include "tonemapperThread.h"
+#include "Common/config.h"
+#include "Filter/pfscut.h"
+#include "Common/ProgressHelper.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include <iostream>
 

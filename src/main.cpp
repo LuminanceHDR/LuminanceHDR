@@ -24,9 +24,9 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-// #include <QDir>
-#include "MainWindow/mainWindow.h"
+
 #include "Common/commandline.h"
+#include "MainWindow/MainWindow.h"
 
 #ifdef WIN32
 #include <QMessageBox>
@@ -71,11 +71,12 @@ int main( int argc, char ** argv )
 #endif
 	QTranslator translator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
-	translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, I18NDIR);
+	//translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, I18NDIR);
+	translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, "/usr/share/qtpfsgui/i18n/");
 	application.installTranslator(&translator);
-	MainGui maingui;
+	MainWindow mainWindow;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
-	maingui.show();
+	mainWindow.show();
 	rc=application.exec();
 	QtpfsguiOptions::deleteInstance();
 	return rc;

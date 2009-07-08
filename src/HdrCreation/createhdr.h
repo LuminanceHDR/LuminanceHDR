@@ -27,10 +27,10 @@
 #include <QString>
 #include <QList>
 #include <QImage>
-#include "../Libpfs/pfs.h"
 #include <cmath>
 #include <stdarg.h>
 
+#include "Libpfs/pfs.h"
 #include "responses.h"
 #include "robertson02.h"
 #include "icip06.h"

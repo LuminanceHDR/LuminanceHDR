@@ -31,9 +31,11 @@
 #include <QThread>
 #include <QReadWriteLock>
 #include <QImage>
-#include "../Common/options.h"
-#include "../Common/global.h"
-#include "../Libpfs/pfs.h"
+
+#include "Common/options.h"
+#include "Common/global.h"
+#include "Libpfs/pfs.h"
+
 class QProgressBar;
 
 class TonemapperThread : public QThread {
