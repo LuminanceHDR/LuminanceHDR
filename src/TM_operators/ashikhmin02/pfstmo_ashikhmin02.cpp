@@ -30,8 +30,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <QFile>
+
+#include "Libpfs/pfs.h"
 #include "tmo_ashikhmin02.h"
-#include "../../Libpfs/pfs.h"
 
 #include <iostream>
 using namespace std;

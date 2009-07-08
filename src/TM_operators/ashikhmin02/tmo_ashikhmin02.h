@@ -29,9 +29,10 @@
 #ifndef _tmo_ashikhmin02_h_
 #define _tmo_ashikhmin02_h_
 
-#include "../../Libpfs/array2d.h"
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/pfs.h"
+#include "Common/ProgressHelper.h"
+
 /**
  * @brief Michael Ashikhmin tone mapping operator
  *
