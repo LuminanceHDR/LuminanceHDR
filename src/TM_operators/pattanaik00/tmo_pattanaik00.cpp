@@ -31,12 +31,10 @@
  * $Id: tmo_pattanaik00.cpp,v 1.3 2008/11/04 23:43:08 rafm Exp $
  */
 
-
 #include <math.h>
 
-#include "tmo_pattanaik00.h"
 #include "../pfstmo.h"
-
+#include "tmo_pattanaik00.h"
 
 /// sensitivity of human visual system
 float n = 0.73f;

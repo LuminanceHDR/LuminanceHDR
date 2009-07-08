@@ -32,8 +32,8 @@
  */
 
 #include <math.h>
-#include "../../Libpfs/pfs.h"
 
+#include "Libpfs/pfs.h"
 #include "tmo_pattanaik00.h"
 
 #include <iostream>

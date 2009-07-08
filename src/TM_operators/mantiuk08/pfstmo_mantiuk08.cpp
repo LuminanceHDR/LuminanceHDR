@@ -36,9 +36,7 @@
 #include <math.h>
 #include <fcntl.h>
 
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
-
+#include "Libpfs/pfs.h"
 #include "display_adaptive_tmo.h"
 
 #define PROG_NAME "pfstmo_mantiuk08"

@@ -39,9 +39,7 @@
 #include <fcntl.h>
 #include <iostream>
 
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
-
+#include "Libpfs/pfs.h"
 #include "contrast_domain.h"
 
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)

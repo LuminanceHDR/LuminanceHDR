@@ -20,7 +20,7 @@
 #include <math.h>
 
 #include "../pfstmo.h"
-#include "../../Common/progressHelper.h"
+#include "Common/ProgressHelper.h"
 
 #ifdef HAVE_ZFFT
 #include <fft.h>

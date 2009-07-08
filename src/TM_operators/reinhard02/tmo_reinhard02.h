@@ -11,7 +11,8 @@
 #ifndef _tmo_reinhard02_h_
 #define _tmo_reinhard02_h_
 
-#include "../../Common/progressHelper.h"
+#include "Common/ProgressHelper.h"
+
 /*
  * @brief Photographic tone-reproduction
  *

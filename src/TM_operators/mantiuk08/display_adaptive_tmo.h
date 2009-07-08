@@ -32,9 +32,9 @@
 #include "display_function.h"
 #include "display_size.h"
 
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
 #include "../pfstmo.h"
+#include "Libpfs/pfs.h"
+#include "Common/ProgressHelper.h"
 
 class datmoToneCurve
 {

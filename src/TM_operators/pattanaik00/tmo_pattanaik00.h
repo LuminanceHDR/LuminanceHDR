@@ -35,9 +35,8 @@
 #ifndef _tmo_pattanaik00_h_
 #define _tmo_pattanaik00_h_
 
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
-
+#include "Libpfs/pfs.h"
+#include "Common/ProgressHelper.h"
 
 class VisualAdaptationModel;
 

@@ -33,8 +33,8 @@
 
 #include <math.h>
 
-#include "tmo_reinhard05.h"
 #include "../pfstmo.h"
+#include "tmo_reinhard05.h"
 
 #include <assert.h>
 

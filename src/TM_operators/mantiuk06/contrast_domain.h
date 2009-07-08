@@ -37,7 +37,7 @@
 #define CONTRAST_DOMAIN_H
 
 #include "../pfstmo.h"
-#include "../../Common/progressHelper.h"
+#include "Common/ProgressHelper.h"
 
 /**
  * @brief: Tone mapping algorithm [Mantiuk2006]

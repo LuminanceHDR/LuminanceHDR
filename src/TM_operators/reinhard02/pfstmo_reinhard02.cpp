@@ -33,8 +33,7 @@
 
 #include <math.h>
 
-#include "../../Libpfs/pfs.h"
-
+#include "Libpfs/pfs.h"
 #include "tmo_reinhard02.h"
 
 #include <iostream>
