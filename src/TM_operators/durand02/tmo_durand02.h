@@ -36,7 +36,7 @@
 #define _tmo_durand02_h_
 
 #include "../pfstmo.h"
-#include "../../Common/progressHelper.h"
+#include "Common/ProgressHelper.h"
 
 /*
  * @brief Fast bilateral filtering

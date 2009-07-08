@@ -32,8 +32,7 @@
  */
 
 #include <math.h>
-#include "../../Libpfs/pfs.h"
-#include "../../Common/progressHelper.h"
+#include "Libpfs/pfs.h"
 #include "tmo_durand02.h"
 
 #include <iostream>
