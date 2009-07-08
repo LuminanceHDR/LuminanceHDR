@@ -48,7 +48,7 @@
  * @param noise gradient level of noise (extra parameter)
  */
 
-#include "../../Common/progressHelper.h"
+#include "Common/ProgressHelper.h"
 
 void tmo_fattal02(unsigned int width, unsigned int height,
                   const float* Y, float* L, 

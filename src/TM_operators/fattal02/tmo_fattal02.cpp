@@ -40,8 +40,8 @@
 #include <assert.h>
 
 #include "../pfstmo.h"
-#include "../../Common/progressHelper.h"
 #include "pde.h"
+#include "tmo_fattal02.h"
 
 using namespace std;
 

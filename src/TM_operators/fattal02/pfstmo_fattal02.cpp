@@ -34,8 +34,7 @@
 
 #include <math.h>
 
-#include "../../Libpfs/pfs.h"
-
+#include "Libpfs/pfs.h"
 #include "tmo_fattal02.h"
 
 #include <iostream>
