@@ -66,7 +66,7 @@ public slots:
 	virtual QString getExifComment() = 0; // only used by LdrViewer
 	virtual const QImage getQImage() = 0; // only used by LdrViewer
 protected slots:
-	virtual void slotPanIconSelectionMoved(QRect, bool);
+	virtual void slotPanIconSelectionMoved(QRect);
 	virtual void slotPanIconHidden();
 	virtual void slotCornerButtonPressed();
 	virtual void route_changed();

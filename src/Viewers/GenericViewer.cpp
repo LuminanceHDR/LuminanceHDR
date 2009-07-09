@@ -134,7 +134,8 @@ void GenericViewer::slotCornerButtonPressed() {
 	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
 	panIconWidget->setRegionSelection(r);
 	panIconWidget->setMouseFocus();
-	connect(panIconWidget, SIGNAL(signalSelectionMoved(QRect, bool)), this, SLOT(slotPanIconSelectionMoved(QRect, bool)));
+	connect(panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
+	connect(panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
 	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
 	g.setX(g.x()+ scrollArea->viewport()->size().width());
 	g.setY(g.y()+ scrollArea->viewport()->size().height());
@@ -142,17 +143,14 @@ void GenericViewer::slotCornerButtonPressed() {
 	panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
-void GenericViewer::slotPanIconSelectionMoved(QRect gotopos, bool mousereleased) {
-	if (mousereleased) {
+void GenericViewer::slotPanIconSelectionMoved(QRect gotopos ) {
 		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
 		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
-		panIconWidget->close();
-		slotPanIconHidden();
 		emit changed(this);
-	}
 }
 
 void GenericViewer::slotPanIconHidden() {
+	panIconWidget->close();
 	cornerButton->blockSignals(true);
 	cornerButton->animateClick();
 	cornerButton->blockSignals(false);
