@@ -81,7 +81,7 @@ HEADERS += src/Libpfs/array2d.h \
            src/Threads/Reinhard05Thread.h \
            src/Threads/LoadHdrThread.h \
            src/Threads/HdrInputLoader.h \
-           src/Preferences/preferencesDialog.h \
+           src/Preferences/PreferencesDialog.h \
            src/TransplantExif/TransplantExifDialog.h \
            src/Resize/ResizeDialog.h \
            src/Projection/ProjectionsDialog.h \
@@ -163,7 +163,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/Threads/Reinhard05Thread.cpp \
            src/Threads/LoadHdrThread.cpp \
            src/Threads/HdrInputLoader.cpp \
-           src/Preferences/preferencesDialog.cpp \
+           src/Preferences/PreferencesDialog.cpp \
            src/TransplantExif/TransplantExifDialog.cpp \
            src/Resize/ResizeDialog.cpp \
            src/Projection/ProjectionsDialog.cpp \
@@ -175,7 +175,7 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/HdrCreation/debevec.cpp \
            src/HdrWizard/HdrWizard.cpp \
            src/HdrWizard/EditingTools.cpp \
-           src/HdrWizard/previewWidget.cpp \
+           src/HdrWizard/PreviewWidget.cpp \
            src/Filter/pfsrotate.cpp \
            src/Filter/pfssize.cpp \
            src/Filter/pfsgamma.cpp \
