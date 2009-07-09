@@ -31,14 +31,12 @@
 #include <QSignalMapper>
 #include <QTextStream>
 
-#include "ui_documentation.h"
 #include "ui_about.h"
 #include "Common/config.h"
 #include "Common/global.h"
 #include "Batch/BatchTMDialog.h"
 #include "Fileformat/pfstiff.h"
 #include "Filter/pfscut.h"
-#include "HelpBrowser/helpbrowser.h"
 #include "Threads/LoadHdrThread.h"
 #include "TonemappingWindow/TonemappingWindow.h"
 #include "TransplantExif/TransplantExifDialog.h"
@@ -52,8 +50,18 @@ pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
 void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 
-MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL) {
+MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrowser(NULL) {
 	setupUi(this);
+
+	QDir dir(QDir::homePath());
+
+#ifdef WIN32
+	if (!dir.exists("Qtpfsgui"))
+		dir.mkdir("Qtpfsgui");
+#else
+	if (!dir.exists(".Qtpfsgui"))
+		dir.mkdir(".Qtpfsgui");
+#endif
 
 	restoreState( settings.value("MainWindowState").toByteArray());
 	restoreGeometry(settings.value("Geometry").toByteArray());
@@ -333,23 +341,23 @@ void MainWindow::setActiveSubWindow(QWidget* w) {
 void MainWindow::tonemap_requested() {
 	if(currenthdr==NULL)
 		return;
-	if (testTempDir(qtpfsgui_options->tempfilespath)) {
-		this->setDisabled(true);
-		try {
-			TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
-			connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
-			tmodialog->show();
-			hide();
-			tmodialog->setAttribute(Qt::WA_DeleteOnClose);
-		}
-		catch(pfs::Exception e) {
-			QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: %1 ").arg(e.getMessage()));
-			reEnableMainWin();	
-		}
-		catch(...) {
-			QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: Filed to Tonemap Image"));
-			reEnableMainWin();	
-		}
+	this->setDisabled(true);
+	try {
+		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
+		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
+		tmodialog->show();
+		hide();
+		if (helpBrowser) 
+			helpBrowser->hide();
+	}
+	catch(pfs::Exception e) {
+		QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: %1 ").arg(e.getMessage()));
+		reEnableMainWin();	
+	}
+	catch(...) {
+		QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: Filed to Tonemap Image"));
+		reEnableMainWin();	
 	}
 }
 
@@ -367,6 +375,8 @@ bool MainWindow::testTempDir(QString dirname) {
 void MainWindow::reEnableMainWin() {
 	setEnabled(true);
 	show();
+	if (helpBrowser) 
+		helpBrowser->show();
 }
 
 void MainWindow::rotateccw_requested() {
@@ -477,24 +487,18 @@ void MainWindow::current_mdi_original_size() {
 	zoomInAct->setEnabled(true);
 	zoomOutAct->setEnabled(true);
 }
-/*
+
 void MainWindow::openDocumentation() {
-	QDialog *help=new QDialog(this);
-	help->setAttribute(Qt::WA_DeleteOnClose);
-	Ui::HelpDialog ui;
-	ui.setupUi(help);
-	QString docDir = QCoreApplication::applicationDirPath();
-	docDir.append("/../Resources/html");
-	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html" << docDir << "/Applications/qtpfsgui.app/Contents/Resources/html");
-	ui.tb->setSource(QUrl("index.html"));
-	help->show();
+	helpBrowser = new HelpBrowser(this,"Qtpfsgui Help");
+	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
+	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
+	helpBrowser->show();
 }
-*/
-void MainWindow::openDocumentation() {
-	HelpBrowser *help=new HelpBrowser(this,"Fontmatrix Help", "en");
-	help->setAttribute(Qt::WA_DeleteOnClose);
-	help->show();
+
+void MainWindow::helpBrowserClosed() {
+	helpBrowser = NULL;
 }
+
 void MainWindow::enterWhatsThis() {
 	QWhatsThis::enterWhatsThisMode();
 }

@@ -35,6 +35,7 @@
 #include "Preferences/PreferencesDialog.h"
 #include "Resize/ResizeDialog.h"
 #include "Projection/ProjectionsDialog.h"
+#include "HelpBrowser/helpbrowser.h"
 
 class HdrViewer;
 class QSignalMapper;
@@ -52,7 +53,7 @@ public:
 public slots: //For saveProgress Dialog
         void setMaximum(int max);
         void setValue(int value);
-private slots:
+protected slots:
 	void fileNewViaWizard(QStringList files = QStringList());
 	void fileOpen();//for File->Open, it then calls loadFile()
 	void fileSaveAs();
@@ -96,6 +97,7 @@ private slots:
 	void cropToSelection();
 	void enableCrop(bool);
 	void disableCrop();
+	void helpBrowserClosed();
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
@@ -103,7 +105,8 @@ protected:
 	HdrViewer* currenthdr;
 	HdrViewer* newhdr; 
  	QProgressDialog *saveProgress;
-private:
+	HelpBrowser *helpBrowser;
+//private:
 	void setupConnections();
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
