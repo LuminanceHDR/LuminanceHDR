@@ -27,7 +27,6 @@
 #include <image.hpp>
 #include <exif.hpp>
 
-#include "ui_documentation.h"
 #include "Common/global.h"
 #include "Common/config.h"
 #include "Exif/ExifOperations.h"
@@ -64,15 +63,17 @@ TransplantExifDialog::~TransplantExifDialog() {
 	rightlist->clear();
 }
 
+//TODO
 void TransplantExifDialog::help_requested() {
-	QDialog *help=new QDialog();
+/*	QDialog *help=new QDialog();
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
 	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
 	ui.tb->setSource(QUrl("manual.html#copyexif"));
-	help->exec();
+	help->exec();*/
 }
+
 
 void TransplantExifDialog::updateinterval(bool left) {
 	if (left) {

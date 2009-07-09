@@ -26,7 +26,6 @@
 #include <QWhatsThis>
 #include <QMessageBox>
 
-#include "ui_documentation.h"
 #include "Common/config.h"
 #include "PreferencesDialog.h"
 
@@ -229,7 +228,9 @@ void PreferencesDialog::updateLineEditString() {
 	}
 }
 
+//TODO
 void PreferencesDialog::helpDcrawParamsButtonClicked() {
+	/*
 	QDialog *help=new QDialog();
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
@@ -237,6 +238,7 @@ void PreferencesDialog::helpDcrawParamsButtonClicked() {
 	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
 	ui.tb->setSource(QUrl("dcraw.html"));
 	help->exec();
+	*/
 }
 
 void PreferencesDialog::enterWhatsThis() {
