@@ -55,6 +55,7 @@ for which a new license (GPL+exception) is in place.
 
 #include <QDebug>
 
+#include "Common/global.h"
 #include "schelptreemodel.h"
 #include "fmpaths.h"
 
@@ -145,6 +146,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 {
 	firstRun=true;
 	setupUi(this);
+	restoreGeometry(settings.value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
 	finalBaseDir = FMPaths::HelpDir();
@@ -172,6 +174,7 @@ HelpBrowser::~HelpBrowser()
 
 void HelpBrowser::closeEvent(QCloseEvent * event)
 {
+	settings.setValue("HelpBrowserGeometry", saveGeometry());
 	delete menuModel;
 
 	// no need to delete child widgets, Qt does it all for us
