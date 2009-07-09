@@ -141,7 +141,7 @@ HelpBrowser::HelpBrowser(QWidget* parent)
 }
 
 HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile)
-	: QMainWindow( parent )
+	: QMainWindow( parent ) ,zoomFactor(1.0)
 {
 	firstRun=true;
 	setupUi(this);
@@ -149,7 +149,6 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
 	finalBaseDir = FMPaths::HelpDir();
 	textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
-	std::cout << finalBaseDir.toStdString() << std::endl;
 	menuModel=NULL;
 	loadMenu();
 	if (menuModel!=NULL)
@@ -184,7 +183,7 @@ void HelpBrowser::closeEvent(QCloseEvent * event)
 		stream.setCodec("UTF-8");
 		stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		stream << "<bookmarks>\n";
-		QTreeWidgetItemIterator it(bookmarksView);
+		QTreeWidgetItemIterator it(helpSideBar->bookmarksView);
 		while (*it) 
 		{
 			if (bookmarkIndex.contains((*it)->text(0)))
@@ -220,10 +219,14 @@ void HelpBrowser::closeEvent(QCloseEvent * event)
 
 void HelpBrowser::setupLocalUI()
 {
+	helpSideBar = new HelpSideBar(tr("Help SideBar"), this);
+	helpSideBar->setFeatures(QDockWidget::AllDockWidgetFeatures);
+	addDockWidget(Qt::LeftDockWidgetArea, helpSideBar);
 // 	setWindowIcon(loadIcon("AppIcon.png"));
 	//Add Menus
 	fileMenu=menuBar()->addMenu("");
 	editMenu=menuBar()->addMenu("");
+	viewMenu=menuBar()->addMenu("");
 	bookMenu=menuBar()->addMenu("");
 	histMenu=new QMenu(this);
 
@@ -234,6 +237,9 @@ void HelpBrowser::setupLocalUI()
 	editFind=editMenu->addAction(QIcon(":/help/find.png"), "", this, SLOT(find()), Qt::CTRL+Qt::Key_F);
 	editFindNext=editMenu->addAction( "", this, SLOT(findNext()), Qt::Key_F3);
 	editFindPrev=editMenu->addAction( "", this, SLOT(findPrevious()), Qt::SHIFT+Qt::Key_F3);
+	viewContents=viewMenu->addAction( "", this, SLOT(viewContents_clicked()), Qt::CTRL+Qt::Key_C);
+	viewSearch=viewMenu->addAction( "", this, SLOT(viewSearch_clicked()), Qt::CTRL+Qt::Key_S);
+	viewBookmarks=viewMenu->addAction( "", this, SLOT(viewBookmarks_clicked()), Qt::CTRL+Qt::Key_B);
 	bookAdd=bookMenu->addAction( "", this, SLOT(bookmarkButton_clicked()), Qt::CTRL+Qt::Key_D);
 	bookDel=bookMenu->addAction( "", this, SLOT(deleteBookmarkButton_clicked()));
 	bookDelAll=bookMenu->addAction( "", this, SLOT(deleteAllBookmarkButton_clicked()));
@@ -242,14 +248,17 @@ void HelpBrowser::setupLocalUI()
 	goHome=toolBar->addAction(QIcon(":/help/go-home.png"), "", textBrowser, SLOT(home()));
 	goBack=toolBar->addAction(QIcon(":/help/go-previous.png"), "", textBrowser, SLOT(back()));
 	goFwd=toolBar->addAction(QIcon(":/help/go-next.png"), "", textBrowser, SLOT(forward()));
+	zoomIn=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-in.png"), "", this, SLOT(zoomIn_clicked()));
+	zoomOriginal=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-original.png"), "", this, SLOT(zoomOriginal_clicked()));
+	zoomOut=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-out.png"), "", this, SLOT(zoomOut_clicked()));
 	goBack->setMenu(histMenu);
 	
-	listView->header()->hide();
-	searchingView->header()->hide();
-	bookmarksView->header()->hide();
+	helpSideBar->listView->header()->hide();
+	helpSideBar->searchingView->header()->hide();
+	helpSideBar->bookmarksView->header()->hide();
 
-	splitter->setStretchFactor(splitter->indexOf(tabWidget), 0);
-	splitter->setStretchFactor(splitter->indexOf(textBrowser), 1);
+	//splitter->setStretchFactor(splitter->indexOf(tabWidget), 0);
+	//splitter->setStretchFactor(splitter->indexOf(textBrowser), 1);
 	// reset previous size
 // 	prefs = PrefsManager::instance()->prefsFile->getPluginContext("helpbrowser");
 // 	int xsize = prefs->getUInt("xsize", 640);
@@ -259,14 +268,14 @@ void HelpBrowser::setupLocalUI()
 	//basic ui
 	connect(histMenu, SIGNAL(triggered(QAction*)), this, SLOT(histChosen(QAction*)));
 	// searching
-	connect(searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
-	connect(searchingButton, SIGNAL(clicked()), this, SLOT(searchingButton_clicked()));
-	connect(searchingView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemSearchSelected(QTreeWidgetItem *, int)));
+	connect(helpSideBar->searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
+	connect(helpSideBar->searchingButton, SIGNAL(clicked()), this, SLOT(searchingButton_clicked()));
+	connect(helpSideBar->searchingView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemSearchSelected(QTreeWidgetItem *, int)));
 	// bookmarks
-	connect(bookmarkButton, SIGNAL(clicked()), this, SLOT(bookmarkButton_clicked()));
-	connect(deleteBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteBookmarkButton_clicked()));
-	connect(deleteAllBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteAllBookmarkButton_clicked()));
-	connect(bookmarksView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemBookmarkSelected(QTreeWidgetItem *, int)));
+	connect(helpSideBar->bookmarkButton, SIGNAL(clicked()), this, SLOT(bookmarkButton_clicked()));
+	connect(helpSideBar->deleteBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteBookmarkButton_clicked()));
+	connect(helpSideBar->deleteAllBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteAllBookmarkButton_clicked()));
+	connect(helpSideBar->bookmarksView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemBookmarkSelected(QTreeWidgetItem *, int)));
 	// links hoover
 	connect(textBrowser, SIGNAL(overLink(const QString &)), this, SLOT(showLinkContents(const QString &)));
 	
@@ -294,6 +303,7 @@ void HelpBrowser::languageChange()
 	
 	fileMenu->setTitle(tr("&File"));
 	editMenu->setTitle(tr("&Edit"));
+	viewMenu->setTitle(tr("&View"));
 	bookMenu->setTitle(tr("&Bookmarks"));
 	
 	filePrint->setText(tr("&Print..."));
@@ -301,6 +311,9 @@ void HelpBrowser::languageChange()
 	editFind->setText(tr("&Find..."));
 	editFindNext->setText(tr("Find &Next"));
 	editFindPrev->setText(tr("Find &Previous"));
+	viewContents->setText(tr("&Contents"));
+	viewSearch->setText(tr("&Search"));
+	viewBookmarks->setText(tr("&Bookmarks"));
 	bookAdd->setText(tr("&Add Bookmark"));
 	bookDel->setText(tr("&Delete"));
 	bookDelAll->setText(tr("D&elete All"));
@@ -353,7 +366,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 		{
 			QTextStream stream(&f);
 			QString str = stream.readAll();
-			int cnt = str.count(searchingEdit->text(), Qt::CaseInsensitive);
+			int cnt = str.count(helpSideBar->searchingEdit->text(), Qt::CaseInsensitive);
 			if (cnt > 0)
 			{
 				QString fullname = fname;
@@ -363,7 +376,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 				{
 					i.next();
 					if (i.value()==toFind)
-						searchingView->addTopLevelItem(new QTreeWidgetItem(searchingView, QStringList() << i.key()));
+						helpSideBar->searchingView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->searchingView, QStringList() << i.key()));
 				}
 			}
 			f.close();
@@ -426,14 +439,14 @@ void HelpBrowser::bookmarkButton_clicked()
 		if (i.value()==toFind)
 		{
 			bookmarkIndex.insert(title, qMakePair(i.key(), i.value()));
-			bookmarksView->addTopLevelItem(new QTreeWidgetItem(bookmarksView, QStringList() << title));
+			helpSideBar->bookmarksView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->bookmarksView, QStringList() << title));
 		}
 	}
 }
 
 void HelpBrowser::deleteBookmarkButton_clicked()
 {
-	QTreeWidgetItem *twi=bookmarksView->currentItem();
+	QTreeWidgetItem *twi=helpSideBar->bookmarksView->currentItem();
 	if (twi!=NULL)
 	{
 		if (bookmarkIndex.contains(twi->text(0)))
@@ -445,7 +458,7 @@ void HelpBrowser::deleteBookmarkButton_clicked()
 void HelpBrowser::deleteAllBookmarkButton_clicked()
 {
 	bookmarkIndex.clear();
- 	bookmarksView->clear();
+ 	helpSideBar->bookmarksView->clear();
 }
 
 void HelpBrowser::histChosen(QAction* i)
@@ -467,7 +480,7 @@ void HelpBrowser::jumpToHelpSection(const QString& jumpToSection, const QString&
 			QModelIndex index=menuModel->index(0,1);
 			if (index.isValid())
 			{
-				listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+				helpSideBar->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 				toLoad += menuModel->data(index, Qt::DisplayRole).toString();
 				qDebug()<<"jumpToHelpSection"<<finalBaseDir<<"/"<<menuModel->data(index, Qt::DisplayRole).toString();
 			}
@@ -541,13 +554,13 @@ void HelpBrowser::loadMenu()
 			delete menuModel;
 		menuModel=new ScHelpTreeModel(toLoad, "Topic", "Location", &quickHelpIndex);
 	
-		listView->setModel(menuModel);
-		listView->setSelectionMode(QAbstractItemView::SingleSelection);
+		helpSideBar->listView->setModel(menuModel);
+		helpSideBar->listView->setSelectionMode(QAbstractItemView::SingleSelection);
 		QItemSelectionModel *selectionModel = new QItemSelectionModel(menuModel);
-		listView->setSelectionModel(selectionModel);
-		connect(listView->selectionModel(), SIGNAL(selectionChanged( const QItemSelection &, const QItemSelection &)), this, SLOT(itemSelected( const QItemSelection &, const QItemSelection &)));
+		helpSideBar->listView->setSelectionModel(selectionModel);
+		connect(helpSideBar->listView->selectionModel(), SIGNAL(selectionChanged( const QItemSelection &, const QItemSelection &)), this, SLOT(itemSelected( const QItemSelection &, const QItemSelection &)));
 	
-		listView->setColumnHidden(1,true);
+		helpSideBar->listView->setColumnHidden(1,true);
 	}
 	else
 	{
@@ -559,7 +572,7 @@ void HelpBrowser::loadMenu()
 void HelpBrowser::readBookmarks()
 {
 	BookmarkParser2 handler;
-	handler.view = bookmarksView;
+	handler.view = helpSideBar->bookmarksView;
 	handler.quickHelpIndex=&quickHelpIndex;
 	handler.bookmarkIndex=&bookmarkIndex;
 	QFile xmlFile(bookmarkFile());
@@ -617,7 +630,7 @@ void HelpBrowser::itemSearchSelected(QTreeWidgetItem *twi, int i)
 		if (!filename.isEmpty())
 		{
 			loadHelp(finalBaseDir + "/" + filename);
-			findText = searchingEdit->text();
+			findText = helpSideBar->searchingEdit->text();
 			findNext();
 		}
 	}
@@ -642,18 +655,23 @@ A helper function.
 */
 QString HelpBrowser::bookmarkFile()
 {
-	//TODO
+	//TODO   MAC OSX
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
-	//QString fname(appDataDir + "HelpBookmarks.xml");
-	
+	QString sep(QDir::separator());
+#ifdef Q_WS_MAC	
+	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Qtpfsgui" + sep);
+#elif WIN32
+	QString appDataDir(QDir::homePath() + sep + "Qtpfsgui" + sep);
+#else
+	QString appDataDir(QDir::homePath() + sep + ".Qtpfsgui" + sep);
+#endif
+	QString fname(appDataDir + "HelpBookmarks.xml");
 // 	if (!QFile::exists(fname))
 // 	{
 // 		QDir d(QDir::convertSeparators(appDataDir));
 // 		d.mkdir("doc");
 // 	}
-	//TODO 	
-	//return fname;
-	return QString("");
+	return fname;
 }
 
 
@@ -663,18 +681,23 @@ A helper function.
 */
 QString HelpBrowser::historyFile()
 {
-	//TODO
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
+	QString sep(QDir::separator());
+#ifdef Q_WS_MAC	
+	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Qtpfsgui" + sep);
+#elif WIN32
+	QString appDataDir(QDir::homePath() + sep + "Qtpfsgui" + sep);
+#else
+	QString appDataDir(QDir::homePath() + sep + ".Qtpfsgui" + sep);
 	//QString fname(appDataDir + "HelpHistory.xml");
-	
+#endif	
+	QString fname(appDataDir + "HelpHistory.xml");
 // 	if (!QFile::exists(fname))
 // 	{
 // 		QDir d(QDir::convertSeparators(appDataDir));
 // 		d.mkdir("doc");
 // 	}
-	//TODO
-	//return fname;
-	return QString("");
+	return fname;
 }
 
 void HelpBrowser::displayNoHelp()
@@ -695,12 +718,46 @@ void HelpBrowser::displayNoHelp()
 	goFwd->setEnabled(false);
 	
 	histMenu->disconnect();
-	searchingEdit->disconnect();
-	searchingButton->disconnect();
-	searchingView->disconnect();
-	bookmarkButton->disconnect();
-	deleteBookmarkButton->disconnect();
-	deleteAllBookmarkButton->disconnect();
-	bookmarksView->disconnect();
+	helpSideBar->searchingEdit->disconnect();
+	helpSideBar->searchingButton->disconnect();
+	helpSideBar->searchingView->disconnect();
+	helpSideBar->bookmarkButton->disconnect();
+	helpSideBar->deleteBookmarkButton->disconnect();
+	helpSideBar->deleteAllBookmarkButton->disconnect();
+	helpSideBar->bookmarksView->disconnect();
 	textBrowser->disconnect();
+}
+
+void HelpBrowser::viewContents_clicked() {
+	helpSideBar->show();
+	helpSideBar->tabWidget->setCurrentIndex(0);
+}
+
+void HelpBrowser::viewSearch_clicked() {
+	helpSideBar->show();
+	helpSideBar->tabWidget->setCurrentIndex(1);
+}
+
+void HelpBrowser::viewBookmarks_clicked() {
+	helpSideBar->show();
+	helpSideBar->tabWidget->setCurrentIndex(2);
+}
+
+void HelpBrowser::zoomIn_clicked() {
+	zoomFactor *= 1.2;
+	if (zoomFactor > 46)
+		zoomFactor = 46.005;
+	textBrowser->setTextSizeMultiplier(zoomFactor);
+}
+
+void HelpBrowser::zoomOriginal_clicked() {
+	zoomFactor = 1.0;
+	textBrowser->setTextSizeMultiplier(1.0);
+}
+
+void HelpBrowser::zoomOut_clicked() {
+	zoomFactor /= 1.2;
+	if (zoomFactor < .02)
+		zoomFactor = .0217;
+	textBrowser->setTextSizeMultiplier(zoomFactor);
 }

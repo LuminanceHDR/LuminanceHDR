@@ -46,7 +46,8 @@ for which a new license (GPL+exception) is in place.
 class QEvent;
 class ScHelpTreeModel;
 
-#include "ui_helpbrowser.h"
+#include "ui_HelpBrowser.h"
+#include "HelpSideBar.h"
 //! \brief A structure holding title/file url reference.
 struct histd2 {
 	QString url;
@@ -96,18 +97,26 @@ protected:
 	QMenu* fileMenu;
 	QMenu* editMenu;
 	QMenu* bookMenu;
+	QMenu* viewMenu;
 	QAction* filePrint;
 	QAction* fileExit;
 	QAction* editFind;
 	QAction* editFindNext;
 	QAction* editFindPrev;
+	QAction* viewContents;
+	QAction* viewSearch;
+	QAction* viewBookmarks;
 	QAction* bookAdd;
 	QAction* bookDel;
 	QAction* bookDelAll;
 	QAction* goHome;
 	QAction* goBack;
 	QAction* goFwd;
-
+	QAction* zoomIn;
+	QAction* zoomOut;
+	QAction* zoomOriginal;
+	HelpSideBar *helpSideBar;
+	qreal zoomFactor;
 	//! \brief Selected language is here. If there is no docs for this language, "en" is used.
 	QString language;
 	//! \brief QString holding location of menu.xml we are using, we load the help files from here
@@ -170,6 +179,23 @@ protected slots:
 	/*! \brief Delete all bookmarks */
 	void deleteAllBookmarkButton_clicked();
 
+	/*! \brief Show helpSideBar Contents Tab */
+	void viewContents_clicked();
+
+	/*! \brief Show helpSideBar Search Tab */
+	void viewSearch_clicked();
+
+	/*! \brief Show helpSideBar Bookmarks */
+	void viewBookmarks_clicked();
+
+	/*! \zoom */
+	void zoomIn_clicked();
+	
+	/*! \zoom */
+	void zoomOriginal_clicked();
+
+	/*! \zoom */
+	void zoomOut_clicked();
 signals:
 	void closed();
 
