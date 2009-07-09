@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 #endif
 
 	restoreState( settings.value("MainWindowState").toByteArray());
-	restoreGeometry(settings.value("Geometry").toByteArray());
+	restoreGeometry(settings.value("MainWindowGeometry").toByteArray());
 
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
@@ -814,7 +814,7 @@ void MainWindow::disableCrop() {
 }
 
 void MainWindow::closeEvent ( QCloseEvent *event ) {
-	settings.setValue("Geometry", saveGeometry());
+	settings.setValue("MainWindowGeometry", saveGeometry());
 	QWidget::closeEvent(event);
 }
 
