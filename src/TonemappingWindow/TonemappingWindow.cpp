@@ -438,13 +438,8 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 void TonemappingWindow::openDocumentation() {
 	HelpBrowser *helpBrowser = new HelpBrowser(this,"Qtpfsgui Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
-	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
 	helpBrowser->show();
 }
-
-//void Tonemapping::helpBrowserClosed() {
-//	helpBrowser = NULL;
-//}
 
 void TonemappingWindow::aboutQtpfsgui() {
 	QDialog *about=new QDialog(this);
