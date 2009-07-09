@@ -24,7 +24,6 @@ FORMS = forms/MainWindow.ui \
         forms/HdrWizard.ui \
         forms/TonemappingWindow.ui \
         forms/TonemappingPanel.ui \
-        forms/documentation.ui \
         forms/about.ui \
         forms/PreferencesDialog.ui \
         forms/TransplantExifDialog.ui \
@@ -35,7 +34,8 @@ FORMS = forms/MainWindow.ui \
         forms/BatchTMDialog.ui \ 
 		forms/ImageQualityDialog.ui \
 		forms/ThreadManager.ui \
-		forms/HelpBrowser.ui
+		forms/helpbrowser.ui \
+		forms/HelpSideBar.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
@@ -55,8 +55,8 @@ HEADERS += src/Libpfs/array2d.h \
            src/HelpBrowser/treeitem.h \
            src/HelpBrowser/treemodel.h \
            src/HelpBrowser/sctextbrowser.h \
-#src/HelpBrowser/helpwidget.h \
            src/HelpBrowser/helpbrowser.h \
+           src/HelpBrowser/HelpSideBar.h \
            src/TonemappingWindow/TonemappingWindow.h \
            src/TonemappingWindow/TonemappingPanel.h \
 		   src/TonemappingWindow/ThreadManager.h \
@@ -137,8 +137,8 @@ SOURCES += src/Libpfs/pfs.cpp \
            src/HelpBrowser/treemodel.cpp \
            src/HelpBrowser/schelptreemodel.cpp \
            src/HelpBrowser/sctextbrowser.cpp \
-#           src/HelpBrowser/helpwidget.cpp \
            src/HelpBrowser/helpbrowser.cpp \
+           src/HelpBrowser/HelpSideBar.cpp \
            src/TonemappingWindow/TonemappingWindow.cpp \
            src/TonemappingWindow/TonemappingPanel.cpp \
            src/TonemappingWindow/ThreadManager.cpp \
