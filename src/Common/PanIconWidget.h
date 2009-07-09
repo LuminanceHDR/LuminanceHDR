@@ -39,8 +39,10 @@ public:
     void setMouseFocus(void);
     void setCursorToLocalRegionSelectionCenter(void);
 signals:
-    void signalSelectionMoved( QRect rect, bool targetDone );
+    //void signalSelectionMoved( QRect rect, bool targetDone );
+    void selectionMoved( QRect rect );
     void signalHidden(void);
+    void finished();
 
 public slots:
 protected:
@@ -49,8 +51,8 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *);
 	void mouseMoveEvent(QMouseEvent *);
 private:
-	/** Recalculate the target selection position and emit 'signalSelectionMoved'.*/
-	void regionSelectionMoved( bool targetDone );
+	/** Recalculate the target selection position and emit 'selectionMoved'.*/
+	void regionSelectionMoved( );
 	//coordinates relative to this widget
 	int      xpos;
 	int      ypos;

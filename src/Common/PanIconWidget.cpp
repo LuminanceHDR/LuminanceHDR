@@ -54,7 +54,7 @@ void PanIconWidget::setImage(const QImage &fullsize) {
 // 	qDebug("wanted w=%d, h=%d",m_width+2*frameWidth(), m_height+2*frameWidth());
 }
 
-void PanIconWidget::regionSelectionMoved(bool targetDone)
+void PanIconWidget::regionSelectionMoved()
 {
     int x = (int)lround( ((float)m_localRegionSelection.x() /*- (float)m_rect.x()*/ ) *
                          ((float)m_orgWidth / (float)m_width) );
@@ -74,7 +74,7 @@ void PanIconWidget::regionSelectionMoved(bool targetDone)
     regionSelection.setHeight(h);
 
     update();
-    emit signalSelectionMoved( regionSelection, targetDone );
+    emit selectionMoved( regionSelection );
 }
 
 void PanIconWidget::setMouseFocus()
@@ -149,7 +149,7 @@ void PanIconWidget::mouseMoveEvent ( QMouseEvent * e )
             m_localRegionSelection.moveBottom(/*m_rect.bottom()*/height());
 
         update();
-        regionSelectionMoved(false);
+        regionSelectionMoved();
         return;
     }
     else 
@@ -167,7 +167,8 @@ void PanIconWidget::mouseReleaseEvent ( QMouseEvent * )
     {
         moveSelection = false;
         QApplication::restoreOverrideCursor();
-        regionSelectionMoved(true);
+        regionSelectionMoved();
+		emit finished();
     }
 }
 
