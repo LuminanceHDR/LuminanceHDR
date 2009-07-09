@@ -30,12 +30,12 @@
 #include <QWhatsThis>
 #include <QTextStream>
 
-#include "ui_documentation.h"
 #include "ui_about.h"
 #include "Common/config.h"
 #include "Common/Gang.h"
 #include "Exif/ExifOperations.h"
 #include "Filter/pfscut.h"
+#include "HelpBrowser/helpbrowser.h"
 #include "Threads/TMOFactory.h"
 #include "Viewers/GenericViewer.h"
 #include "Viewers/LdrViewer.h"
@@ -436,16 +436,15 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 }
 
 void TonemappingWindow::openDocumentation() {
-	QDialog *help=new QDialog(this);
-	help->setAttribute(Qt::WA_DeleteOnClose);
-	Ui::HelpDialog ui;
-	ui.setupUi(help);
-	QString docDir = QCoreApplication::applicationDirPath();
-	docDir.append("/../Resources/html");
-	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html" << docDir << "/Applications/qtpfsgui.app/Contents/Resources/html");
-	ui.tb->setSource(QUrl("index.html"));
-	help->show();
+	HelpBrowser *helpBrowser = new HelpBrowser(this,"Qtpfsgui Help");
+	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
+	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
+	helpBrowser->show();
 }
+
+//void Tonemapping::helpBrowserClosed() {
+//	helpBrowser = NULL;
+//}
 
 void TonemappingWindow::aboutQtpfsgui() {
 	QDialog *about=new QDialog(this);
