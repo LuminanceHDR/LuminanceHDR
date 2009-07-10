@@ -29,16 +29,21 @@
 #include "Common/GammaAndLevels.h"
 #include "LdrViewer.h"
 
-LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) : 
+LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) :
 	GenericViewer(parent, ns, ncf), origimage(i) {
 
 	image = origimage;
 	setAttribute(Qt::WA_DeleteOnClose);
 
-	QLabel *informativeLabel = new QLabel( tr("LDR Image"), toolBar );
+	QPixmap newImage = QPixmap::fromImage(origimage);
+
+	QLabel *informativeLabel = new QLabel( tr("LDR Image [%1 x %2]")
+			.arg(newImage.width()).arg(newImage.height()),
+		toolBar
+	);
 	toolBar->addWidget(informativeLabel);
 
-	imageLabel.setPixmap(QPixmap::fromImage(origimage));
+	imageLabel.setPixmap(newImage);
 
 	parseOptions(opts);
 	setWindowTitle(caption);

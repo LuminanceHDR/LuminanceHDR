@@ -22,7 +22,7 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
- * 
+ *
  */
 
 #include <QMessageBox>
@@ -53,9 +53,9 @@ TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_cu
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,
 		NULL,NULL,NULL,NULL, 0.0f, 1.0f, 0.8f);
 	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
-	
+
 	// mantiuk08
-	colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, 
+	colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB,
 		NULL,NULL,NULL,NULL, 0.f, 2.f, 1.f);
 	connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
@@ -130,32 +130,32 @@ TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_cu
 }
 
 TonemappingPanel::~TonemappingPanel() {
-	delete contrastfactorGang; 
-	delete saturationfactorGang; 
-	delete detailfactorGang; 
-	delete contrastGang; 
+	delete contrastfactorGang;
+	delete saturationfactorGang;
+	delete detailfactorGang;
+	delete contrastGang;
 	delete colorSaturationGang;
 	delete contrastEnhancementGang;
 	delete luminanceLevelGang;
-	delete biasGang; 
-	delete spatialGang; 
-	delete rangeGang; 
-	delete baseGang; 
-	delete alphaGang; 
-	delete betaGang; 
-	delete saturation2Gang; 
-	delete noiseGang; 
-	delete multiplierGang; 
-	delete coneGang; 
-	delete rodGang; 
-	delete keyGang; 
-	delete phiGang; 
-	delete range2Gang; 
-	delete lowerGang; 
-	delete upperGang; 
-	delete brightnessGang; 
-	delete chromaticGang; 
-	delete lightGang; 
+	delete biasGang;
+	delete spatialGang;
+	delete rangeGang;
+	delete baseGang;
+	delete alphaGang;
+	delete betaGang;
+	delete saturation2Gang;
+	delete noiseGang;
+	delete multiplierGang;
+	delete coneGang;
+	delete rodGang;
+	delete keyGang;
+	delete phiGang;
+	delete range2Gang;
+	delete lowerGang;
+	delete upperGang;
+	delete brightnessGang;
+	delete chromaticGang;
+	delete lightGang;
 	delete pregammaGang;
 
 }
@@ -173,6 +173,7 @@ void TonemappingPanel::setSizes(int width, int height) {
 	sizes.push_front(width);
 	heightToWidthRatio = ( (float)height )/( (float) width);
 	fillCustomSizeComboBox();
+	sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
 }
 
 void TonemappingPanel::on_defaultButton_clicked() {
@@ -286,12 +287,12 @@ void TonemappingPanel::on_applyButton_clicked() {
 			);
 	}
 
-	if (!doTonemapping) 
+	if (!doTonemapping)
 		return;
 
 	fillToneMappingOptions();
 	setupUndo();
-	
+
 	emit startTonemapping(toneMappingOptions);
 }
 
@@ -307,19 +308,19 @@ void TonemappingPanel::fillToneMappingOptions() {
 			toneMappingOptions.operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
 			toneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
 			toneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
-			break; 
+			break;
 		case drago:
 			toneMappingOptions.tmoperator = drago;
 			toneMappingOptions.tmoperator_str = "Drago";
 			toneMappingOptions.operator_options.dragooptions.bias=biasGang->v();
-			break; 
+			break;
 		case durand:
 			toneMappingOptions.tmoperator = durand;
 			toneMappingOptions.tmoperator_str = "Durand";
 			toneMappingOptions.operator_options.durandoptions.spatial=spatialGang->v();
 			toneMappingOptions.operator_options.durandoptions.range=rangeGang->v();
 			toneMappingOptions.operator_options.durandoptions.base=baseGang->v();
-			break; 
+			break;
 		case fattal:
 			toneMappingOptions.tmoperator = fattal;
 			toneMappingOptions.tmoperator_str = "Fattal";
@@ -328,7 +329,7 @@ void TonemappingPanel::fillToneMappingOptions() {
 			toneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
 			toneMappingOptions.operator_options.fattaloptions.noiseredux=noiseGang->v();
 			toneMappingOptions.operator_options.fattaloptions.newfattal=!oldFattalGang->isCheckBox1Checked();
-			break; 
+			break;
 		case mantiuk06:
 			toneMappingOptions.tmoperator = mantiuk06;
 			toneMappingOptions.tmoperator_str = "Mantiuk '06";
@@ -336,7 +337,7 @@ void TonemappingPanel::fillToneMappingOptions() {
 			toneMappingOptions.operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
 			toneMappingOptions.operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
 			toneMappingOptions.operator_options.mantiuk06options.contrastequalization=contrastfactorGang->isCheckBox1Checked();
-			break; 
+			break;
 		case mantiuk08:
 			toneMappingOptions.tmoperator = mantiuk08;
 			toneMappingOptions.tmoperator_str = "Mantiuk '08";
@@ -380,27 +381,27 @@ void TonemappingPanel::setupUndo() {
 			simpleGang->setupUndo();
 			eq2Gang->setupUndo();
 			contrastGang->setupUndo();
-			break; 
+			break;
 		case drago:
 			biasGang->setupUndo();
-			break; 
+			break;
 		case durand:
 			spatialGang->setupUndo();
 			rangeGang->setupUndo();
 			baseGang->setupUndo();
-			break; 
+			break;
 		case fattal:
 			alphaGang->setupUndo();
 			betaGang->setupUndo();
 			saturation2Gang->setupUndo();
 			noiseGang->setupUndo();
 			oldFattalGang->setupUndo();
-			break; 
+			break;
 		case mantiuk06:
 			contrastfactorGang->setupUndo();
 			saturationfactorGang->setupUndo();
 			detailfactorGang->setupUndo();
-			break; 
+			break;
 		case mantiuk08:
 			colorSaturationGang->setupUndo();
 			contrastEnhancementGang->setupUndo();
@@ -435,27 +436,27 @@ void TonemappingPanel::on_undoButton_clicked() {
 			simpleGang->undo();
 			eq2Gang->undo();
 			contrastGang->undo();
-			break; 
+			break;
 		case drago:
 			biasGang->undo();
-			break; 
+			break;
 		case durand:
 			spatialGang->undo();
 			rangeGang->undo();
 			baseGang->undo();
-			break; 
+			break;
 		case fattal:
 			alphaGang->undo();
 			betaGang->undo();
 			saturation2Gang->undo();
 			noiseGang->undo();
 			oldFattalGang->undo();
-			break; 
+			break;
 		case mantiuk06:
 			contrastfactorGang->undo();
 			saturationfactorGang->undo();
 			detailfactorGang->undo();
-			break; 
+			break;
 		case mantiuk08:
 			colorSaturationGang->undo();
 			contrastEnhancementGang->undo();
@@ -490,27 +491,27 @@ void TonemappingPanel::on_redoButton_clicked() {
 			simpleGang->redo();
 			eq2Gang->redo();
 			contrastGang->redo();
-			break; 
+			break;
 		case drago:
 			biasGang->redo();
-			break; 
+			break;
 		case durand:
 			spatialGang->redo();
 			rangeGang->redo();
 			baseGang->redo();
-			break; 
+			break;
 		case fattal:
 			alphaGang->redo();
 			betaGang->redo();
 			saturation2Gang->redo();
 			noiseGang->redo();
 			oldFattalGang->redo();
-			break; 
+			break;
 		case mantiuk06:
 			contrastfactorGang->redo();
 			saturationfactorGang->redo();
 			detailfactorGang->redo();
-			break; 
+			break;
 		case mantiuk08:
 			colorSaturationGang->redo();
 			contrastEnhancementGang->redo();
@@ -608,7 +609,7 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
 		out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
 		out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
 		out << "CONTRASTEQUALIZATION=" << (contrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
-	} 
+	}
 	if (current_page == page_mantiuk08) {
 		out << "TMO=" << "Mantiuk08" << endl;
 		out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
@@ -623,23 +624,23 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
 		out << "COLOR=" << saturation2Gang->v() << endl;
 		out << "NOISE=" << noiseGang->v() << endl;
 		out << "OLDFATTAL=" << (oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
-	} 
+	}
 	else if (current_page == page_ashikhmin) {
 		out << "TMO=" << "Ashikhmin02" << endl;
 		out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
 		out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
 		out << "CONTRAST=" << contrastGang->v() << endl;
-	} 
+	}
 	else if (current_page == page_durand) {
 		out << "TMO=" << "Durand02" << endl;
 		out << "SPATIAL=" << spatialGang->v() << endl;
 		out << "RANGE=" << rangeGang->v() << endl;
 		out << "BASE=" << baseGang->v() << endl;
-	} 
+	}
 	else if (current_page == page_drago) {
 		out << "TMO=" << "Drago03" << endl;
 		out << "BIAS=" << biasGang->v() << endl;
-	} 
+	}
 	else if (current_page == page_pattanaik) {
 		out << "TMO=" << "Pattanaik00" << endl;
 		out << "MULTIPLIER=" << multiplierGang->v() << endl;
@@ -647,7 +648,7 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
 		out << "AUTOLUMINANCE=" << (autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
 		out << "CONE=" << coneGang->v() << endl;
 		out << "ROD=" << rodGang->v() << endl;
-	} 
+	}
 	else if (current_page == page_reinhard02) {
 		out << "TMO=" << "Reinhard02" << endl;
 		out << "KEY=" << keyGang->v() << endl;
@@ -656,7 +657,7 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
 		out << "RANGE=" << range2Gang->v() << endl;
 		out << "LOWER=" << lowerGang->v() << endl;
 		out << "UPPER=" << upperGang->v() << endl;
-	} 
+	}
 	else if (current_page == page_reinhard05) {
 		out << "TMO=" << "Reinhard05" << endl;
 		out << "BRIGHTNESS=" << brightnessGang->v() << endl;
