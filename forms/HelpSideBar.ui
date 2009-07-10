@@ -86,21 +86,29 @@
           <item>
            <widget class="QPushButton" name="bookmarkButton" >
             <property name="text" >
-             <string>&amp;New</string>
+             <string>&amp;Add</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >
+              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="deleteBookmarkButton" >
             <property name="text" >
-             <string>&amp;Delete</string>
+             <string>&amp;Remove</string>
+            </property>
+            <property name="icon" >
+             <iconset resource="../icons.qrc" >
+              <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="deleteAllBookmarkButton" >
             <property name="text" >
-             <string>D&amp;elete All</string>
+             <string>R&amp;emove All</string>
             </property>
            </widget>
           </item>
@@ -113,7 +121,9 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../icons.qrc" />
+ </resources>
  <connections>
   <connection>
    <sender>tabWidget</sender>
