@@ -372,6 +372,8 @@ void SelectionTool::removeSelection() {
 	isSelectionReady = false;
 	m_action = NOACTION;
 	emit selectionReady(false);
+	m_selectionRect = QRect();
+	repaint();
 }
 //
 // void SelectionTool::removeSelection() 
