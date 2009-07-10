@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Qtpfsgui User Manual — Tonemapping HDR images — Interactive tonemapping</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<h2>Interactive tonemapping</h3>
+
+<p>With this tool the user is able to get an LDR from an HDR.</p>
+
+<p><img src="images/tonemapdialog.jpeg" width="850" height="501"></p>
+
+<p>The most important item in the Tone mapping window is the "Tone mapping Panel" (shown on the left). You can toggle its visibility via the first button in the toolbar. The "Tone mapping Panel" is actually a dockbar, so you can make it float or dock it in the left or right areas of the window.</p>
+
+<p>At the top you can change (via a combobox) the size of the resulting image. It is usually a good idea to work on a smaller scale image while trying out the TMOs, because some of them can be very cpu-intensive.</p>
+
+<p><em>Operators may behave differently depending on the chosen size.</em></p>
+
+<p>The tone mapping step first applies to the HDR the gamma value specified by the pregamma value, then the tone mapping operator is applied.</p>
+
+<ul>
+<li>Pregamma changes the gamma in the HDR before the tone mapping: depending on the chosen tone mapping operator this can yield unexpected effects, like color saturation.</li>
+<li>The tone mapping operator transforms an HDR into a LDR.</li>
+</ul>
+
+<p>NOTE: the post-gamma operation (typical of previous versions of Qtpfsgui) can be performed via the "Correct Histogram" button.<br>
+With the "Correct Histogram" button you can tweak the histogram of the current LDR image, the tool has been designed to be similar to the one in GIMP: you can drag the triangular handles to set the new value.</p>
+
+<a name="parameters"><h4>The tone mapping operators and their parameters</h4></a>
+
+<p>This section aims to be a reference for all the tone mapping operators and related options.</p>
+
+<p>Have a look at <A href="http://osp.wikidot.com/parameters-for-photographers">http://osp.wikidot.com/parameters-for-photographers</A> in the meanwhile.</p>
+
+<a name="settingsfile"><h4>The tone mapping settings file</h4></a>
+
+<p>Via the "Save..." button it is also possible to save in a text file (the filename extension is "txt"):</p>
+
+<ul>
+<li>the currently selected tone mapping operator and its related settings.</li>
+<li>the values of the pregamma settings.</li>
+</ul>
+
+<p>NOTE: Qtpfsgui 1.8.4 uses a new file format (the postgamma option has been removed).</p>
+
+<p>This is useful if you find that are often using some specific operator (and pregamma and postgamma settings) and don't want to manually set the values each time.</p>
+
+<p>The "Load..." button lets you specify the file tone mapping settings filename that you want to load.</p>
+
+<p>The "Apply settings" button applies the settings contained in the tone mapping settings file that has been loaded. This is useful when, after playing around with the values, you want to get back to the file's values.</p>
+
+</body>
+</html>
