@@ -61,7 +61,7 @@ private:
 	QToolButton *cornerButton;
 	SelectionTool *selectionTool;
 private slots:
-	void slotPanIconSelectionMoved(QRect, bool);
+	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();
 	void slotCornerButtonPressed();
 	void saveImagesButtonClicked();
