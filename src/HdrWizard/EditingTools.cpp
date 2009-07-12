@@ -18,7 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
 
@@ -99,7 +102,6 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	selectionTool = new SelectionTool(previewWidget);
 	selectionTool->show();
-	//selectionTool->hide();
 	
 	setupConnections();
 } //end of constructor
@@ -219,7 +221,6 @@ void EditingTools::crop_stack() {
 	hcm->applyShiftsToImageStack(HV_offsets);
 
 	resetAll();
-	//QRect ca=previewWidget->getCropArea();
 	QRect ca=selectionTool->getSelectionRect();
 	if(ca.width()<=0|| ca.height()<=0)
 		return;
@@ -382,7 +383,7 @@ void EditingTools::antighostToolButtonToggled(bool toggled) {
 	label_reference_list->setDisabled(toggled);
 	referenceListWidget->setDisabled(toggled);
 	previewWidget->update();
-	toggled ? selectionTool->hide() : selectionTool->show();
+	toggled ? selectionTool->disable() : selectionTool->enable();
 }
 
 void EditingTools::maskColorButtonClicked() {
