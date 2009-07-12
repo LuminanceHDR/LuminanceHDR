@@ -39,6 +39,8 @@ public:
 	QRect getSelectionRect();
 	bool hasSelection();
 	void removeSelection();
+	void enable();
+	void disable();
 signals:
         void selectionReady(bool);
         void moved(QPoint diff);

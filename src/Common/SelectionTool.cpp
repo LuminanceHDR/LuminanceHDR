@@ -379,3 +379,21 @@ void SelectionTool::removeSelection() {
 // void SelectionTool::removeSelection() 
 //
 
+void SelectionTool::enable() {
+	setMouseTracking(true); 
+	show();
+}
+//
+// void SelectionTool::removeSelection() 
+//
+
+void SelectionTool::disable() {
+	setMouseTracking(false); 
+	hide();
+}
+//
+// void SelectionTool::disable() 
+//
+
+
+
