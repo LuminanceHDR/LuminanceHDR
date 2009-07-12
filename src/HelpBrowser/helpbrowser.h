@@ -188,14 +188,24 @@ protected slots:
 	/*! \brief Show helpSideBar Bookmarks */
 	void viewBookmarks_clicked();
 
-	/*! \zoom */
+	/*! \brief zoom In */
 	void zoomIn_clicked();
 	
-	/*! \zoom */
+	/*! \brief zoom Original Size */
 	void zoomOriginal_clicked();
 
-	/*! \zoom */
+	/*! \brief zoom Out*/
 	void zoomOut_clicked();
+
+	/*! \brief User clicked on an external link */
+	void handleExternalLink(const QUrl &);
+
+	/*! \brief Show Wait Cursor while loading a page*/
+	void loadStarted();
+	
+	/*! \brief Restore Default Cursor */
+	void loadFinished(bool);
+	void linkHovered (const QString &, const QString &, const QString & );
 signals:
 	void closed();
 

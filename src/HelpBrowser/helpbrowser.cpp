@@ -29,7 +29,6 @@ for which a new license (GPL+exception) is in place.
 #include "helpbrowser.h"
 
 #include <QAction>
-// #include <QDebug>
 #include <QDir>
 #include <QDomDocument>
 #include <QEvent>
@@ -52,6 +51,7 @@ for which a new license (GPL+exception) is in place.
 #include <QTextEdit>
 #include <QTreeView>
 #include <QXmlDefaultHandler>
+#include <QDesktopServices>
 
 #include <QDebug>
 
@@ -148,6 +148,13 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	setupUi(this);
 	restoreGeometry(settings.value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
+	
+	textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+	connect(textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
+	connect(textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+	connect(textBrowser, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+	connect(textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
+
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
 	finalBaseDir = FMPaths::HelpDir();
 	textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
@@ -172,7 +179,7 @@ HelpBrowser::~HelpBrowser()
 	firstRun=true;
 }
 
-void HelpBrowser::closeEvent(QCloseEvent * event)
+void HelpBrowser::closeEvent(QCloseEvent *)
 {
 	settings.setValue("HelpBrowserGeometry", saveGeometry());
 	delete menuModel;
@@ -763,4 +770,34 @@ void HelpBrowser::zoomOut_clicked() {
 	if (zoomFactor < .02)
 		zoomFactor = .0217;
 	textBrowser->setTextSizeMultiplier(zoomFactor);
+}
+
+void HelpBrowser::handleExternalLink(const QUrl &url) {
+	if ((url.scheme() == "http") || url.scheme() == "https")
+		textBrowser->load(url);
+	else {
+		QApplication::restoreOverrideCursor();
+		if ( QMessageBox::warning(this, tr("Qtpfsgui - Help Browser"),
+					tr("This protocol is not handled by Help Browser.\n"
+						"Do you want to open the link with the default application \n"
+						"associated with the protocol?"),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes
+			) {
+
+			QDesktopServices::openUrl(url);
+		}
+	}
+}
+
+void HelpBrowser::loadStarted() {
+	QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+}
+
+void HelpBrowser::loadFinished(bool) {
+	QApplication::restoreOverrideCursor();
+	statusBar()->showMessage("");
+}
+
+void HelpBrowser::linkHovered (const QString &link, const QString &, const QString &) {
+	statusBar()->showMessage(link);
 }
