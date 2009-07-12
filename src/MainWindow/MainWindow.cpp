@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #include <QFileDialog>
@@ -117,10 +121,7 @@ void MainWindow::setupConnections() {
 	connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
 	connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
 	connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
-
 	connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
-	windowMapper->setMapping(removeSelectionAction, QString("MainWindow"));
-
 	connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
 	connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 	connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
