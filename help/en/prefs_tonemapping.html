@@ -9,11 +9,16 @@
 <body>
 <h2>Tonemapping</h2>
 
-<p>Qtpfsgui needs a directory path where it will save some intermediate temporary files. Here you can specify this path.</p>
+<p><b>Cache</b>. Qtpfsgui needs a directory to save temporary files to. By default home 
+directory is used, but you can specify some other directory.</p>
 
-<p>You can also specify how many threads you want to use for the Batch Tone Mapping feature (and the file format you want to save the images to). Each thread gets allocated to a different CPU.</p>
+<p>You can also specify two options for Batch Tone Mapping feature:</p>
 
-<p><img src="images/snap-qt4_5.jpeg" width="634" height="436"></p>
+<p><b>File format for LDR images</b>. This is the file format to which tonemapped LDR images will be saved to. JPEG, PNG, PPM, PBM and BMP are your options. </p>
+
+<p><b>Number of threads</b>. How many threads you want to use. Each thread gets allocated to a different CPU or a core of a multicore CPU.</p>
+
+<p><img src="images/prefs_tonemap.png" /></p>
 
 </body>
 </html>
