@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -56,9 +56,9 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromGuiIndexToIso639[9]="tr";
 	fromGuiIndexToIso639[10]="hu";
 
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
-	negcolor=qtpfsgui_options->negcolor;
-	infnancolor=qtpfsgui_options->naninfcolor;
+	luminance_options=LuminanceOptions::getInstance();
+	negcolor=luminance_options->negcolor;
+	infnancolor=luminance_options->naninfcolor;
 
 	from_options_to_gui(); //update the gui in order to show the options
 	connect(negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
@@ -98,7 +98,7 @@ QStringList PreferencesDialog::sanitizeDCRAWparams() {
 		dcraw_opt_was_ok=true;
 	}
 	if (!dcraw_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -T..."),tr("Qtpfsgui requires dcraw to be executed with the \"-T\" option. Commandline options have been corrected."));
+		QMessageBox::information(this,tr("Option -T..."),tr("Luminance requires dcraw to be executed with the \"-T\" option. Commandline options have been corrected."));
 	}
 	return temp_dcraw_options;
 
@@ -133,54 +133,54 @@ QStringList PreferencesDialog::sanitizeAISparams() {
 		align_opt_was_ok=true;
 	}
 	if (!align_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -a..."),tr("Qtpfsgui requires align_image_stack to be executed with the \"-a aligned_\" option. Commandline options have been corrected."));
+		QMessageBox::information(this,tr("Option -a..."),tr("Luminance requires align_image_stack to be executed with the \"-a aligned_\" option. Commandline options have been corrected."));
 	}
 	return temp_ais_options;
 }
 
 void PreferencesDialog::ok_clicked() {
-	if (qtpfsgui_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
-		QMessageBox::information(this,tr("Please restart..."),tr("Please restart Qtpfsgui to use the new language (%1).").arg(languageComboBox->currentText()));
-	qtpfsgui_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
-	settings.setValue(KEY_GUI_LANG,qtpfsgui_options->gui_lang);
+	if (luminance_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
+		QMessageBox::information(this,tr("Please restart..."),tr("Please restart Luminance to use the new language (%1).").arg(languageComboBox->currentText()));
+	luminance_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
+	settings.setValue(KEY_GUI_LANG,luminance_options->gui_lang);
 
 	settings.beginGroup(GROUP_EXTERNALTOOLS);
-		qtpfsgui_options->dcraw_options=sanitizeDCRAWparams();
-		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,qtpfsgui_options->dcraw_options);
+		luminance_options->dcraw_options=sanitizeDCRAWparams();
+		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,luminance_options->dcraw_options);
 
-		qtpfsgui_options->align_image_stack_options=sanitizeAISparams();
-		settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,qtpfsgui_options->align_image_stack_options);
+		luminance_options->align_image_stack_options=sanitizeAISparams();
+		settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,luminance_options->align_image_stack_options);
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
-		if(negcolor.rgba() != qtpfsgui_options->negcolor) {
-			qtpfsgui_options->negcolor=negcolor.rgba();
+		if(negcolor.rgba() != luminance_options->negcolor) {
+			luminance_options->negcolor=negcolor.rgba();
 			settings.setValue(KEY_NEGCOLOR,negcolor.rgba());
 		}
-		if(infnancolor.rgba() != qtpfsgui_options->naninfcolor) {
-			qtpfsgui_options->naninfcolor=infnancolor.rgba();
+		if(infnancolor.rgba() != luminance_options->naninfcolor) {
+			luminance_options->naninfcolor=infnancolor.rgba();
 			settings.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
 		}
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TONEMAPPING);
-		if (lineEditTempPath->text() != qtpfsgui_options->tempfilespath) {
-			qtpfsgui_options->tempfilespath=lineEditTempPath->text();
+		if (lineEditTempPath->text() != luminance_options->tempfilespath) {
+			luminance_options->tempfilespath=lineEditTempPath->text();
 			settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
 		}
-		if (batchLdrFormatComboBox->currentText() != qtpfsgui_options->batch_ldr_format) {
-			qtpfsgui_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
+		if (batchLdrFormatComboBox->currentText() != luminance_options->batch_ldr_format) {
+			luminance_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
 			settings.setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
 		}
-		if (numThreadspinBox->value() != qtpfsgui_options->num_threads) {
-			qtpfsgui_options->num_threads=numThreadspinBox->value();
+		if (numThreadspinBox->value() != luminance_options->num_threads) {
+			luminance_options->num_threads=numThreadspinBox->value();
 			settings.setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
 		}
 	settings.endGroup();
 
 	settings.beginGroup(GROUP_TIFF);
-		if (logLuvRadioButton->isChecked() != qtpfsgui_options->saveLogLuvTiff) {
-			qtpfsgui_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
+		if (logLuvRadioButton->isChecked() != luminance_options->saveLogLuvTiff) {
+			luminance_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
 			settings.setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
 		}
 	settings.endGroup();
@@ -189,27 +189,27 @@ void PreferencesDialog::ok_clicked() {
 }
 
 void PreferencesDialog::from_options_to_gui() {
-	//language: if by any chance qtpfsgui_options->gui_lang does NOT contain one of the valid 2 chars
+	//language: if by any chance luminance_options->gui_lang does NOT contain one of the valid 2 chars
 	//codes which are key for the fromIso639ToGuiIndex QMap, provide the default "en"
-	if (!fromIso639ToGuiIndex.contains(qtpfsgui_options->gui_lang))
-		qtpfsgui_options->gui_lang="en";
-	languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(qtpfsgui_options->gui_lang));
-	lineEditTempPath->setText(qtpfsgui_options->tempfilespath);
-	if (qtpfsgui_options->batch_ldr_format=="JPEG")
+	if (!fromIso639ToGuiIndex.contains(luminance_options->gui_lang))
+		luminance_options->gui_lang="en";
+	languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options->gui_lang));
+	lineEditTempPath->setText(luminance_options->tempfilespath);
+	if (luminance_options->batch_ldr_format=="JPEG")
 		batchLdrFormatComboBox->setCurrentIndex(0);
-	else if (qtpfsgui_options->batch_ldr_format=="PNG")
+	else if (luminance_options->batch_ldr_format=="PNG")
 		batchLdrFormatComboBox->setCurrentIndex(1);
-	else if (qtpfsgui_options->batch_ldr_format=="PPM")
+	else if (luminance_options->batch_ldr_format=="PPM")
 		batchLdrFormatComboBox->setCurrentIndex(2);
-	else if (qtpfsgui_options->batch_ldr_format=="PBM")
+	else if (luminance_options->batch_ldr_format=="PBM")
 		batchLdrFormatComboBox->setCurrentIndex(3);
-	else if (qtpfsgui_options->batch_ldr_format=="BMP")
+	else if (luminance_options->batch_ldr_format=="BMP")
 		batchLdrFormatComboBox->setCurrentIndex(4);
-	numThreadspinBox->setValue(qtpfsgui_options->num_threads);
-	dcrawParamsLineEdit->setText(qtpfsgui_options->dcraw_options.join(" "));
-	aisParamsLineEdit->setText(qtpfsgui_options->align_image_stack_options.join(" "));
-	logLuvRadioButton->setChecked(qtpfsgui_options->saveLogLuvTiff);
-	floatTiffRadioButton->setChecked(!qtpfsgui_options->saveLogLuvTiff);
+	numThreadspinBox->setValue(luminance_options->num_threads);
+	dcrawParamsLineEdit->setText(luminance_options->dcraw_options.join(" "));
+	aisParamsLineEdit->setText(luminance_options->align_image_stack_options.join(" "));
+	logLuvRadioButton->setChecked(luminance_options->saveLogLuvTiff);
+	floatTiffRadioButton->setChecked(!luminance_options->saveLogLuvTiff);
 	change_color_of(negativeColorButton,&negcolor);
 	change_color_of(ifnanColorButton,&infnancolor);
 }
@@ -235,7 +235,7 @@ void PreferencesDialog::helpDcrawParamsButtonClicked() {
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
-	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	ui.tb->setSearchPaths(QStringList("/usr/share/luminance/html") << "/usr/local/share/luminance/html" << "./html");
 	ui.tb->setSource(QUrl("dcraw.html"));
 	help->exec();
 	*/

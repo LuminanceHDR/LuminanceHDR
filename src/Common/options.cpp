@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -34,27 +34,27 @@
 #include "global.h"
 #include "config.h"
 
-QtpfsguiOptions *QtpfsguiOptions::instance = 0;
+LuminanceOptions *LuminanceOptions::instance = 0;
 
-QtpfsguiOptions *QtpfsguiOptions::getInstance() {
+LuminanceOptions *LuminanceOptions::getInstance() {
 	if (!instance) {
-		instance=new QtpfsguiOptions();
+		instance=new LuminanceOptions();
 	}
 	return instance;
 }
 
-QtpfsguiOptions::QtpfsguiOptions () {
+LuminanceOptions::LuminanceOptions () {
 	loadFromQSettings();
 }
 
-QtpfsguiOptions::~QtpfsguiOptions() {
+LuminanceOptions::~LuminanceOptions() {
 }
 
-void QtpfsguiOptions::deleteInstance() {
+void LuminanceOptions::deleteInstance() {
 	delete instance; instance=0;
 }
 
-void QtpfsguiOptions::loadFromQSettings() {
+void LuminanceOptions::loadFromQSettings() {
 	//write system default language the first time around (discard "_country")
 	if (!settings.contains(KEY_GUI_LANG))
 		settings.setValue(KEY_GUI_LANG,QLocale::system().name().left(2));
@@ -490,7 +490,7 @@ QString TMOptionsOperations::getCaption() {
 }
 
 QString TMOptionsOperations::getExifComment() {
-	QString exif_comment="Qtpfsgui "QTPFSGUIVERSION" tonemapping parameters:\n";
+	QString exif_comment="Luminance "LUMINANCEVERSION" tonemapping parameters:\n";
 	exif_comment+="Operator: ";
 	switch (opts->tmoperator) {
 	case mantiuk06: {

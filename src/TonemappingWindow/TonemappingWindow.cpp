@@ -1,5 +1,5 @@
 /*
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -48,14 +48,14 @@ TonemappingWindow::~TonemappingWindow() {
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0) {
 	setupUi(this);
 
-	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION" - Tonemapping Window - ");
+	setWindowTitle("Luminance "LUMINANCEVERSION" - Tonemapping Window - ");
 
 	workingLogoTimer = new QTimer();
 	workingLogoTimer->setInterval(100);
 	connect(workingLogoTimer, SIGNAL(timeout()), this, SLOT(updateLogo()));
 
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
-	//cachepath=QtpfsguiOptions::getInstance()->tempfilespath;
+	luminance_options=LuminanceOptions::getInstance();
+	//cachepath=LuminanceOptions::getInstance()->tempfilespath;
 
 
 	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
@@ -94,7 +94,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	tmPanel->setSizes(frame->getWidth(), frame->getHeight());
 	
 	// original HDR window
-	originalHDR = new HdrViewer(this, false, true, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	originalHDR = new HdrViewer(this, false, true, luminance_options->negcolor, luminance_options->naninfcolor);
 	originalHDR->setFreePfsFrameOnExit(false); // avoid another copy in memory
 	originalHDR->updateHDR(frame);
 	originalHDR->setFileName(QString(tr("Original HDR")));
@@ -136,7 +136,7 @@ void TonemappingWindow::setupConnections() {
 	connect(actionNormal_Size,SIGNAL(triggered()),this,SLOT(current_mdi_original_size()));
 	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
+	connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
 	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
 
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
@@ -436,25 +436,25 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 }
 
 void TonemappingWindow::openDocumentation() {
-	HelpBrowser *helpBrowser = new HelpBrowser(this,"Qtpfsgui Help");
+	HelpBrowser *helpBrowser = new HelpBrowser(this,"Luminance Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	helpBrowser->show();
 }
 
-void TonemappingWindow::aboutQtpfsgui() {
+void TonemappingWindow::aboutLuminance() {
 	QDialog *about=new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
-	Ui::AboutQtpfsgui ui;
+	Ui::AboutLuminance ui;
 	ui.setupUi(about);
 	ui.authorsBox->setOpenExternalLinks(true);
 	ui.thanksToBox->setOpenExternalLinks(true);
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
+	ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)));
 
 	bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << docDir << "/Applications/qtpfsgui.app/Contents/Resources" << "./";
+	QStringList paths = QStringList("/usr/share/luminance") << "/usr/local/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
 	foreach (QString path,paths) {
 		QString fname(path+QString("/LICENSE"));
 #ifdef WIN32
@@ -522,7 +522,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
-		QMessageBox::critical(this,tr("Qtpfsgui"),tr("Error: %1").arg(e),
+		QMessageBox::critical(this,tr("Luminance"),tr("Error: %1").arg(e),
 					QMessageBox::Ok,QMessageBox::NoButton);
 }
 
@@ -539,7 +539,7 @@ void TonemappingWindow::updateLogo() {
 	if (threadCounter == 0) {
 		workingLogoTimer->stop();
 		//tmPanel->setLogoText(" ");
-		tmPanel->setLogoPixmap(QString(":/new/prefix1/images/qtpfsgui00.png"));
+		tmPanel->setLogoPixmap(QString(":/new/prefix1/images/luminance00.png"));
 	}
 	else if (threadCounter > 0) {
 		workingLogoTimer->start();
@@ -547,11 +547,11 @@ void TonemappingWindow::updateLogo() {
         
 	    //QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
 		if (frameCounter < 10) {
-	    	QString framename = ":/new/prefix1/images/qtpfsgui0" + QString::number(frameCounter) + ".png";
+	    	QString framename = ":/new/prefix1/images/luminance0" + QString::number(frameCounter) + ".png";
 			tmPanel->setLogoPixmap(framename);
 		}
 		else { 
-	    	QString framename = ":/new/prefix1/images/qtpfsgui" + QString::number(frameCounter) + ".png";
+	    	QString framename = ":/new/prefix1/images/luminance" + QString::number(frameCounter) + ".png";
 			tmPanel->setLogoPixmap(framename);
 		}
 	}

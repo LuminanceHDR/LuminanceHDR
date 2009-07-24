@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="pl">
 <context>
-    <name>AboutQtpfsgui</name>
+    <name>AboutLuminance</name>
     <message>
         <location filename="../forms/about.ui" line="13"/>
-        <source>About Qtpfsgui</source>
+        <source>About Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -47,7 +47,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#55aa00;&quot;&gt;Qt&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#ff0000;&quot;&gt;pfs&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;gui&lt;/span&gt; - Hdr Imaging Workflow Application&lt;br /&gt;(c) 2006-2007, Giuseppe Rota&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#55aa00;&quot;&gt;Qt&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#ff0000;&quot;&gt;pfs&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;gui&lt;/span&gt; - Hdr Imaging Workflow Application&lt;br /&gt;(c) 2006-2007, Giuseppe Rota&lt;br /&gt;&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://luminance.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
@@ -72,7 +72,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/luminance&quot;&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;FC6 packager and bug reports&lt;/span&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;   .&lt;br /&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/p&gt;
@@ -215,8 +215,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="120"/>
-        <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
-        <translation>Plik ustawień mapowania tonów Qtpfsgui (*.txt)</translation>
+        <source>Luminance tonemapping settings text file (*.txt)</source>
+        <translation>Plik ustawień mapowania tonów Luminance (*.txt)</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="250"/>
@@ -1372,7 +1372,7 @@ wartości pikseli&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="184"/>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Qtpfsgui was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
+        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;<byte value="x9"/><byte value="x9"/>Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;<byte value="x9"/><byte value="x9"/>%1&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.<byte value="x9"/><byte value="x9"/>&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data: <byte value="x9"/><byte value="x9"/>&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;<byte value="x9"/><byte value="x9"/>&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;<byte value="x9"/><byte value="x9"/>&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;<byte value="x9"/><byte value="x9"/>You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
@@ -1758,8 +1758,8 @@ p, li { white-space: pre-wrap; }
     <name>HelpBrowser</name>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="13"/>
-        <source>Qtpfsgui Help</source>
-        <translation type="unfinished">Pomoc Qtpfsgui</translation>
+        <source>Luminance Help</source>
+        <translation type="unfinished">Pomoc Luminance</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="39"/>
@@ -1813,7 +1813,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="312"/>
-        <source>Qtpfsgui Online Help</source>
+        <source>Luminance Online Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1888,13 +1888,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="715"/>
-        <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or Qtpfsgui team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
+        <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or Luminance team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="780"/>
-        <source>Qtpfsgui - Help Browser</source>
+        <source>Luminance - Help Browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1909,8 +1909,8 @@ associated with the protocol?</source>
     <name>HelpDialog</name>
     <message>
         <location filename="../forms/documentation.ui" line="21"/>
-        <source>Qtpfsgui Help</source>
-        <translation type="obsolete">Pomoc Qtpfsgui</translation>
+        <source>Luminance Help</source>
+        <translation type="obsolete">Pomoc Luminance</translation>
     </message>
     <message>
         <location filename="../forms/documentation.ui" line="173"/>
@@ -2143,8 +2143,8 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="360"/>
-        <source>Qtpfsgui</source>
-        <translation>Qtpfsgui</translation>
+        <source>Luminance</source>
+        <translation>Luminance</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="94"/>
@@ -2358,8 +2358,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="417"/>
-        <source>Show Qtpfsgui Help</source>
-        <translation>Pokaż pomoc do Qtpfsgui</translation>
+        <source>Show Luminance Help</source>
+        <translation>Pokaż pomoc do Luminance</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="420"/>
@@ -2418,13 +2418,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="525"/>
-        <source>Qtpfsgui Options</source>
-        <translation>Opcje Qtpfsgui</translation>
+        <source>Luminance Options</source>
+        <translation>Opcje Luminance</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="534"/>
-        <source>Set the various options of Qtpfsgui.</source>
-        <translation>Rozmaite ustawienia Qtpfsgui.</translation>
+        <source>Set the various options of Luminance.</source>
+        <translation>Rozmaite ustawienia Luminance.</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="537"/>
@@ -2676,12 +2676,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="528"/>
-        <source>Set the various options of Qtpfsgui</source>
+        <source>Set the various options of Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="370"/>
-        <source>Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
+        <source>Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2701,7 +2701,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="691"/>
-        <source>About &amp;Qtpfsgui</source>
+        <source>About &amp;Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2773,7 +2773,7 @@ p, li { white-space: pre-wrap; }
     <name>PreferencesDialog</name>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="19"/>
-        <source>Qtpfsgui Preferences</source>
+        <source>Luminance Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2816,7 +2816,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="172"/>
-        <source>Choose the directory where Qtpfsgui will store the temporary data to.</source>
+        <source>Choose the directory where Luminance will store the temporary data to.</source>
         <translation type="unfinished">Wybierz katalog do przechowywania plików tymczasowych.</translation>
     </message>
     <message>
@@ -2982,14 +2982,14 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Qtpfsgui will use to save an Hdr image.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wybierz format Tiff-Hdr którego Qtpfsgui użyje do zapisania obrazu Hdr.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wybierz format Tiff-Hdr którego Luminance użyje do zapisania obrazu Hdr.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; jest właściwy w większości przypadków ponieważ przechowuje dane Hdr przy rozsądnej ilości zajmowanego miejsca (rozmiarze pliku).&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Użyj formatu &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; tylko, jeżeli chcesz wczytać plik Tiff w innej aplikacji która nie potrafi korzystać z formatu LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -3067,7 +3067,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="101"/>
-        <source>Qtpfsgui requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
+        <source>Luminance requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3077,7 +3077,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="136"/>
-        <source>Qtpfsgui requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
+        <source>Luminance requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3087,7 +3087,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="143"/>
-        <source>Please restart Qtpfsgui to use the new language (%1).</source>
+        <source>Please restart Luminance to use the new language (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3345,8 +3345,8 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="575"/>
-        <source>Qtpfsgui tonemapping settings text file (*.txt)</source>
-        <translation>Plik ustawień mapowania tonów Qtpfsgui (*.txt)</translation>
+        <source>Luminance tonemapping settings text file (*.txt)</source>
+        <translation>Plik ustawień mapowania tonów Luminance (*.txt)</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="691"/>
@@ -3375,8 +3375,8 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="691"/>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Qtpfsgui. Create a new one.</source>
-        <translation>Wystąpił błąd: format pliku ustawień mapowania tonów został zmieniony. Stary plik nie może być użyty w tej wersji Qtpfsgui. Utwó¶z nowy plik.</translation>
+        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one.</source>
+        <translation>Wystąpił błąd: format pliku ustawień mapowania tonów został zmieniony. Stary plik nie może być użyty w tej wersji Luminance. Utwó¶z nowy plik.</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="791"/>
@@ -4243,7 +4243,7 @@ Selection</source>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="595"/>
-        <source>About QtPfsGui</source>
+        <source>About Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4269,8 +4269,8 @@ Selection</source>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="525"/>
-        <source>Qtpfsgui</source>
-        <translation type="unfinished">Qtpfsgui</translation>
+        <source>Luminance</source>
+        <translation type="unfinished">Luminance</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="525"/>

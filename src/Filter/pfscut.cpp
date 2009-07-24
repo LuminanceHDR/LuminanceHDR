@@ -20,7 +20,7 @@
  * ----------------------------------------------------------------------
  *
  * @author Dorota Zdrojewska, <dzdrojewska@wi.ps.pl>
- * adapted by Franco Comida <fcomida@sourceforge.net> for qtpfsgui
+ * adapted by Franco Comida <fcomida@sourceforge.net> for luminance
  *
  */
 

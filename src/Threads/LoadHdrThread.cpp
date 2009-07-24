@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -33,7 +33,7 @@ pfs::Frame* readEXRfile  (const char * filename);
 pfs::Frame* readRGBEfile (const char * filename);
 
 LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), progress(NULL) {
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	luminance_options=LuminanceOptions::getInstance();
 }
 
 LoadHdrThread::~LoadHdrThread() {
@@ -85,7 +85,7 @@ void LoadHdrThread::run() {
 		else if (rawinput) {
 			qDebug("TH: raw file");
 			QProcess *rawconversion = new QProcess(0);
-			rawconversion->setWorkingDirectory(qtpfsgui_options->tempfilespath);
+			rawconversion->setWorkingDirectory(luminance_options->tempfilespath);
 			#ifdef WIN32
 			QString separator(";");
 			#else
@@ -95,7 +95,7 @@ void LoadHdrThread::run() {
 			env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
 			rawconversion->setEnvironment(env);
 			
-			QStringList params = qtpfsgui_options->dcraw_options;
+			QStringList params = luminance_options->dcraw_options;
 			params << fname;
 			
 			#ifdef Q_WS_MAC

@@ -1,7 +1,7 @@
 /**
  * @brief Perform projective transformations of spherical images
  * 
- * This file is a part of Qtpfsgui package (based on pfstool's code).
+ * This file is a part of Luminance package (based on pfstool's code).
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2008 Giuseppe Rota

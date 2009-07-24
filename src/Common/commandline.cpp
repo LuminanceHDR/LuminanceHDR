@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -70,7 +70,7 @@ static struct option cmdLineOptions[] = {
 CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv) : argc(argc), argv(argv) {
 	hdrCreationManager=NULL;
 	align_mode=NO_ALIGN;
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	luminance_options=LuminanceOptions::getInstance();
 	connect(this,SIGNAL(startParsing()),this,SLOT(parseArgs()),Qt::QueuedConnection);
 	emit startParsing();
 }
@@ -325,9 +325,9 @@ void CommandLineInterfaceManager::parseArgs() {
 
 	if (operation_mode==CREATE_HDR_MODE) {
 		if (verbose) {
-			VERBOSEPRINT("Temporary directory: %1",qtpfsgui_options->tempfilespath);
-			VERBOSEPRINT("Dcraw parameters: %1",qtpfsgui_options->dcraw_options.join(" ") );
-			VERBOSEPRINT("Using %1 threads.", qtpfsgui_options->num_threads);
+			VERBOSEPRINT("Temporary directory: %1",luminance_options->tempfilespath);
+			VERBOSEPRINT("Dcraw parameters: %1",luminance_options->dcraw_options.join(" ") );
+			VERBOSEPRINT("Using %1 threads.", luminance_options->num_threads);
 		}
 		hdrCreationManager = new HdrCreationManager();
 		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
@@ -397,7 +397,7 @@ void CommandLineInterfaceManager::saveHDR() {
 			writeRGBEfile(HDR, encodedName);
 		} else if (qfi.suffix().toUpper().startsWith("TIF")) {
 			TiffWriter tiffwriter(encodedName, HDR);
-			if (qtpfsgui_options->saveLogLuvTiff)
+			if (luminance_options->saveLogLuvTiff)
 				tiffwriter.writeLogLuvTiff();
 			else
 				tiffwriter.writeFloatTiff();

@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -43,12 +43,12 @@ int main( int argc, char ** argv )
 	if (argc>1) {
 		QCoreApplication cliApplication( argc, argv );
 		QTranslator translator;
-		translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, I18NDIR);
+		translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
 		cliApplication.installTranslator(&translator);
 		CommandLineInterfaceManager cli( argc, argv );
 		cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
 		rc = cliApplication.exec();
-		QtpfsguiOptions::deleteInstance();
+		LuminanceOptions::deleteInstance();
 		return rc;
 	}
 #endif
@@ -71,13 +71,13 @@ int main( int argc, char ** argv )
 #endif
 	QTranslator translator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
-	//translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, I18NDIR);
-	translator.load(QString("lang_") + QtpfsguiOptions::getInstance()->gui_lang, "/usr/share/qtpfsgui/i18n/");
+	//translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+	translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, "/usr/share/luminance/i18n/");
 	application.installTranslator(&translator);
 	MainWindow mainWindow;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
 	mainWindow.show();
 	rc=application.exec();
-	QtpfsguiOptions::deleteInstance();
+	LuminanceOptions::deleteInstance();
 	return rc;
 }

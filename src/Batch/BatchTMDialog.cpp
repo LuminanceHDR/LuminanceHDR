@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
  *
@@ -35,7 +35,7 @@
 BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), done(false) {
 	setupUi(this);
 
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	luminance_options=LuminanceOptions::getInstance();
 
 	Log_Widget->setWordWrap(true);
 	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
@@ -59,15 +59,15 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
-	add_log_message(tr("Using %1 thread(s)").arg(qtpfsgui_options->num_threads));
-	add_log_message(tr("Saving using fileformat: ")+qtpfsgui_options->batch_ldr_format);
+	add_log_message(tr("Using %1 thread(s)").arg(luminance_options->num_threads));
+	add_log_message(tr("Saving using fileformat: ")+luminance_options->batch_ldr_format);
 
 	qRegisterMetaType<QImage>("QImage");
 }
 
 BatchTMDialog::~BatchTMDialog() {
-	QFile::remove(qtpfsgui_options->tempfilespath+"/original.pfs");
-	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
+	QFile::remove(luminance_options->tempfilespath+"/original.pfs");
+	QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
 	QApplication::restoreOverrideCursor();
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
@@ -113,7 +113,7 @@ void BatchTMDialog::add_dir_TMopts() {
 }
 
 void BatchTMDialog::add_TMopts() {
-	QStringList onlytxts=QFileDialog::getOpenFileNames(this, tr("Load the tonemapping settings text files..."), RecentPathLoadSaveTmoSettings, tr("Qtpfsgui tonemapping settings text file (*.txt)"));
+	QStringList onlytxts=QFileDialog::getOpenFileNames(this, tr("Load the tonemapping settings text files..."), RecentPathLoadSaveTmoSettings, tr("Luminance tonemapping settings text file (*.txt)"));
 	add_view_model_TM_OPTs(onlytxts);
 }
 
@@ -277,12 +277,12 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 	pfs::DOMIO pfsio;
 	add_log_message(tr("Starting to tone map HDR file: ")+filename);
 	//TODO
-	const char *fname = QFile::encodeName(qtpfsgui_options->tempfilespath+"/original.pfs").constData();
+	const char *fname = QFile::encodeName(luminance_options->tempfilespath+"/original.pfs").constData();
 	FILE *fd = fopen(fname, "w");
 	pfsio.writeFrame(loaded_hdr, fd );
 	fclose(fd);
 	//pregamma=-1;
-	QFile::remove(qtpfsgui_options->tempfilespath+"/after_pregamma.pfs");
+	QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
 	pfsio.freeFrame(loaded_hdr);
 	QFileInfo qfi(filename);
 	current_hdr_fname=out_folder_widgets->text() + "/" + qfi.completeBaseName();
@@ -316,7 +316,7 @@ void BatchTMDialog::conditional_TMthread() {
 
 	//if the TM_opts list has still to get processed,
 	if (first_not_started!=-1) {
-		while (running_threads < qtpfsgui_options->num_threads && first_not_started < tm_opt_list.size()) {
+		while (running_threads < luminance_options->num_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
 			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
@@ -350,8 +350,8 @@ void BatchTMDialog::newResult(const QImage& newimage, TonemappingOptions* opts) 
 	running_threads--;
 	TMOptionsOperations operations(opts);
 	QString postfix=operations.getPostfix();
-	QString fname=current_hdr_fname+"_"+postfix+"."+qtpfsgui_options->batch_ldr_format;
-	if (!newimage.save(fname, qtpfsgui_options->batch_ldr_format.toAscii().constData(), 100)) {
+	QString fname=current_hdr_fname+"_"+postfix+"."+luminance_options->batch_ldr_format;
+	if (!newimage.save(fname, luminance_options->batch_ldr_format.toAscii().constData(), 100)) {
 		qDebug("BATCH: newResult: Cannot save to %s",QFile::encodeName(fname).constData());
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {

@@ -24,7 +24,7 @@
    <string>Editing Tools</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/luminance.png</iconset>
   </property>
   <property name="modal" >
    <bool>true</bool>

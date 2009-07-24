@@ -7,7 +7,7 @@
  * In ACM Transactions on Graphics, 2002.
  *
  * 
- * This file is a part of Qtpfsgui package, based on pfstmo.
+ * This file is a part of Luminance package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 

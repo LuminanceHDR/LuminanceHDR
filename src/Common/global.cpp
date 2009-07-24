@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -31,7 +31,7 @@
 #include "global.h"
 #include "ImageQualityDialog.h"
 
-QSettings settings("Qtpfsgui", "Qtpfsgui");
+QSettings settings("Luminance", "Luminance");
 
 /**
  * \return "" when fail, out file name when successful

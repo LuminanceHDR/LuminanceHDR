@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Giuseppe Rota
  *
@@ -68,7 +68,7 @@ private:
 	// number of threads currently running in parallel.
 	int running_threads;
 	//required for the cache path and for the dcraw opts required by the hdr-load thread.
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 	//the filename for the hdr we are currently working on, used when a LDR result comes up.
 	QString current_hdr_fname;
 	//Application-wide settings, loaded via QSettings.

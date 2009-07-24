@@ -2,7 +2,7 @@
  * @file approx.cpp
  * @brief Approximate computation of local adaptation
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * Source code courtesy of Erik Reinhard
  *
  * Original source code:

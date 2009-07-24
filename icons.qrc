@@ -24,7 +24,7 @@
         <file>images/newfile.png</file>
         <file>images/options.png</file>
         <file>images/orange_apply.png</file>
-        <file>images/qtpfsgui.png</file>
+        <file>images/luminance.png</file>
         <file>images/raw_import.png</file>
         <file>images/remove.png</file>
         <file>images/rotate_left.png</file>
@@ -52,18 +52,18 @@
 		<file>images/working5.png</file>
 		<file>images/working6.png</file>
 		<file>images/working7.png</file>
-		<file>images/qtpfsgui00.png</file>
-		<file>images/qtpfsgui01.png</file>
-		<file>images/qtpfsgui02.png</file>
-		<file>images/qtpfsgui03.png</file>
-		<file>images/qtpfsgui04.png</file>
-		<file>images/qtpfsgui05.png</file>
-		<file>images/qtpfsgui06.png</file>
-		<file>images/qtpfsgui07.png</file>
-		<file>images/qtpfsgui08.png</file>
-		<file>images/qtpfsgui09.png</file>
-		<file>images/qtpfsgui10.png</file>
-		<file>images/qtpfsgui11.png</file>
+		<file>images/luminance00.png</file>
+		<file>images/luminance01.png</file>
+		<file>images/luminance02.png</file>
+		<file>images/luminance03.png</file>
+		<file>images/luminance04.png</file>
+		<file>images/luminance05.png</file>
+		<file>images/luminance06.png</file>
+		<file>images/luminance07.png</file>
+		<file>images/luminance08.png</file>
+		<file>images/luminance09.png</file>
+		<file>images/luminance10.png</file>
+		<file>images/luminance11.png</file>
 		<file>images/zoom-in.png</file>
 		<file>images/zoom-original.png</file>
 		<file>images/zoom-out.png</file>

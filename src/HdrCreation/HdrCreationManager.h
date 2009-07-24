@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -124,7 +124,7 @@ private:
 	//once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
 	void newResult(int index, float expotime, QString);
 
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 
 	//align_image_stack
 	QProcess *ais;

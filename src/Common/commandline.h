@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -58,7 +58,7 @@ private:
 	HdrCreationManager *hdrCreationManager;
 	QString saveHdrFilename;
 	QString saveLdrFilename;
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 	pfs::Frame *HDR;
 	void saveHDR();
 	void printHelp(char *progname);

@@ -1,7 +1,7 @@
 /**
  * @brief Tiff facilities
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006 Giuseppe Rota
@@ -22,7 +22,7 @@
  * ----------------------------------------------------------------------
  *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * slightly modified by Giuseppe Rota <grota@sourceforge.net> for qtpfsgui
+ * slightly modified by Giuseppe Rota <grota@sourceforge.net> for luminance
  */
 
 #include <cmath>

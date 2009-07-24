@@ -6,7 +6,7 @@
  * by Raanan Fattal, Dani Lischinski, Michael Werman.
  *
  * 
- * This file is a part of Qtpfsgui package, based on pfstmo.
+ * This file is a part of Luminance package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 

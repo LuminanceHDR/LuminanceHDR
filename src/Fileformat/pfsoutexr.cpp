@@ -1,7 +1,7 @@
 /**
  * @brief save an exr file
  * 
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * Copyright (C) 2006,2007 Giuseppe Rota

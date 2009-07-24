@@ -1,8 +1,8 @@
-This is the README file for Qtpfsgui
+This is the README file for Luminance
 -------------------------------------------------------------------
 Copyright (C) 2006-2008 Giuseppe Rota, <grota@users.sourceforge.net>
-Webpage:       http://qtpfsgui.sourceforge.net
-Sourceforge:   http://sourceforge.net/projects/qtpfsgui
+Webpage:       http://luminance.sourceforge.net
+Sourceforge:   http://sourceforge.net/projects/luminance
 
 
 Contents
@@ -45,7 +45,7 @@ Raw image formats are supported -and treated as HDRs- thanks to dcraw's.
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
 Read section 5 (Changes) to read the changes for this version.
-Read section 3 (Compiling the sources) if you intend to package Qtpfsgui for a GNU/Linux distribution.
+Read section 3 (Compiling the sources) if you intend to package Luminance for a GNU/Linux distribution.
 
 The code is in part based on the existing opensource packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
@@ -55,7 +55,7 @@ Without their contribution all of this would have not been possible.
 
 2. Dependencies
 -------------------------------------------------------------------
-Qtpfsgui has 5 dependencies:
+Luminance has 5 dependencies:
 1) Qt4 (www.trolltech.com)
 2) exiv2 (www.exiv2.org)
 3) fftw3 (www.fftw.org)
@@ -64,7 +64,7 @@ Qtpfsgui has 5 dependencies:
 6) Gnu Gsl (http://www.gnu.org/software/gsl/)
 
 
-On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V4'' available at http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V4.zip
+On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V4'' available at http://downloads.sourceforge.net/luminance/luminance-windows-DLLs-V4.zip
 On GNU/Linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distribution's naming convention).
 
 1) Qt4 is required because it's the framework the graphical interface is built on.
@@ -72,7 +72,7 @@ On GNU/Linux you have to compile the code and you need the aforementioned packag
 2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other exif-related functionalities).
 
 3) fftw is required by the fast implementation of Durand tonemapping algorithm.
-Qtpfsgui requires the "float" variety of fftw3.
+Luminance requires the "float" variety of fftw3.
 
 4) libtiff is required because of the tiff load/save feature.
 
@@ -92,25 +92,25 @@ Gnu GSL is required because Mantiuk08 TMO uses this library.
 The build system is based on Qt's qmake.
 The build description is contained in the project.pro file.
 
-If you want Qtpfsgui to use a language different from english you should run:
+If you want Luminance to use a language different from english you should run:
 > lrelease project.pro
 as a first step.
 This steps creates a "qm" file for each one of the "ts" files in the i18n directory.
-If you want to run Qtpfsgui without the internationalization feature
+If you want to run Luminance without the internationalization feature
 you can skip this step and continue with the steps described below.
 Running
 > qmake
 from the directory where there is project.pro creates the Makefile.
-Qtpfsgui should be able to detect if your system has all the required dependencies at the "qmake" step.
+Luminance should be able to detect if your system has all the required dependencies at the "qmake" step.
 If something goes wrong drop me an email.
 Then you can run
 > make
 to compile.
 In Linux you can also run
 # make install
-as root to install the qtpfsgui executable in /usr/local/bin.
+as root to install the luminance executable in /usr/local/bin.
 This last step also installs the icon, the desktop file, the html documentation and the "qm" translation files.
-This last step is usually required in order for Qtpfsgui to locate the "qm" files used for internationalization.
+This last step is usually required in order for Luminance to locate the "qm" files used for internationalization.
 
 WARNING:
 In Linux you have to make sure to install qt4 and qt4-devel, since most distributions install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``galternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
@@ -119,17 +119,17 @@ Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X
 Some people have experienced some problems using shells different than bash/sh.
 
 NOTE FOR PACKAGERS:
-Qtpfsgui's default PREFIX is "/usr/local". You can execute:
+Luminance's default PREFIX is "/usr/local". You can execute:
 qmake PREFIX=/usr
 before running make in order to modify the default PREFIX.
-Also, the icon qtpfsgui.png will be installed in $${PREFIX}/share/icons/hicolor/48x48/apps. This has been chosen in order to make the icon show up in the KDE/GNOME menu in both cases of PREFIX=/usr/local and PREFIX=/usr.
-You may need to run update-desktop-database in case Qtpfsgui's entry doesn't show up in the graphical menus.
+Also, the icon luminance.png will be installed in $${PREFIX}/share/icons/hicolor/48x48/apps. This has been chosen in order to make the icon show up in the KDE/GNOME menu in both cases of PREFIX=/usr/local and PREFIX=/usr.
+You may need to run update-desktop-database in case Luminance's entry doesn't show up in the graphical menus.
 In case you need it you can also specify a path where the "translation messages" (qm files) will be installed to. You can do that specifying the I18NDIR variable like this:
 qmake I18NDIR=/choose/your/path
-The default is I18NDIR=$${PREFIX}/share/qtpfsgui/i18n
+The default is I18NDIR=$${PREFIX}/share/luminance/i18n
 Running:
 > qmake ENABLE_DEBUG="yes"
-creates a Makefile that builds Qtpfsgui with debug statements enabled.
+creates a Makefile that builds Luminance with debug statements enabled.
 By default the debug statements are disabled.
 
 The Windows EXE was obtained on Windows XP using MinGW and MSYS.
@@ -138,7 +138,7 @@ If you want to compile the sources in windows you need to have a compiled
 version of libexiv2 and fftw3. You also need Qt4 Opensource Edition by Trolltech.
 Also check the variables in the win32{} section in project.pro: they need
 to be changed according to your setup.
-Building Qtpfsgui from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
+Building Luminance from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
 
 Optimization note: the default compiler flags include SSE2 and OpenMP. SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer). OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customize the CXXFLAGS and LFLAGS before compiling.
 
@@ -148,7 +148,7 @@ Optimization note: the default compiler flags include SSE2 and OpenMP. SSE2 is o
 See also the online help:
 Help->Documentation...
 
-Here I'll only describe the basic workflow in Qtpfsgui.
+Here I'll only describe the basic workflow in Luminance.
 
 From the main window you can see the buttons that enable the user
 to work on HDR images:
@@ -207,14 +207,14 @@ v1.9.2
 * Integrated pfstmo 1.2 changes (Ed Brambley's optimization to Mantiuk)
 * Fixed other bugs with non-ascii characters in paths/filenames.
 * Added support for align_image_stack commandline parameters and user language selection.
-* Global: added 2 new fields in the singleton qtpfsgui class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user interface.
+* Global: added 2 new fields in the singleton luminance class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Luminance's user interface.
 * Improved comments with references for the algorithm that reads exif data to obtain average global luminance (and EV).
 * Cleaned up the code a little bit.
 
 ***WARNING***
-Starting Qtpfsgui 1.8.10, Windows users have to download the new
+Starting Luminance 1.8.10, Windows users have to download the new
 ``Windows DLL Package V4'', make sure to get it at:
-http://downloads.sourceforge.net/qtpfsgui/qtpfsgui-windows-DLLs-V4.zip
+http://downloads.sourceforge.net/luminance/luminance-windows-DLLs-V4.zip
 If you already have "V4" you don't need to download it again.
 
 Read the Changelog file for previous versions' details.

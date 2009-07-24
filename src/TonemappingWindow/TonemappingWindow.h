@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007,2008 Giuseppe Rota
  *
@@ -61,7 +61,7 @@ private:
 	ThreadManager *threadManager;
 	HdrViewer *originalHDR;
 	QMdiSubWindow *originalHdrSubWin;
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 	const TonemappingOptions *tmoOptions;
 	QString recentPathSaveLDR, prefixname, cachepath;
 	bool isLocked;
@@ -99,7 +99,7 @@ protected slots:
 	void updateImage(GenericViewer *viewer);
 	void dispatch(GenericViewer *);
 	void openDocumentation(); 
-	void aboutQtpfsgui();
+	void aboutLuminance();
 	void tonemapImage(const TonemappingOptions&);
 	void showErrorMessage(const char *e);
 	void tonemappingFinished();

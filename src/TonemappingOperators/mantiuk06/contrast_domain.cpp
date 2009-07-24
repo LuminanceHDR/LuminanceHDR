@@ -8,7 +8,7 @@
  * In: ACM Transactions on Applied Perception 3 (3), pp. 286-308, 2006
  * http://www.mpi-inf.mpg.de/~mantiuk/contrast_domain/
  *
- * This file is a part of Qtpfsgui package, based on pfstmo.
+ * This file is a part of Luminance package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
  * 

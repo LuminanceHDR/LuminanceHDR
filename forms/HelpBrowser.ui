@@ -10,11 +10,11 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Qtpfsgui Help</string>
+   <string>Luminance Help</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
-    <normaloff>:/new/prefix1/images/qtpfsgui.png</normaloff>:/new/prefix1/images/qtpfsgui.png</iconset>
+    <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget" >
    <layout class="QGridLayout" name="gridLayout" >

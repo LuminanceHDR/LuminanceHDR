@@ -309,7 +309,7 @@ void HelpBrowser::changeEvent(QEvent *e)
 
 void HelpBrowser::languageChange()
 {
-	setWindowTitle( tr( "Qtpfsgui Online Help" ) );
+	setWindowTitle( tr( "Luminance Online Help" ) );
 	
 	fileMenu->setTitle(tr("&File"));
 	editMenu->setTitle(tr("&Edit"));
@@ -669,11 +669,11 @@ QString HelpBrowser::bookmarkFile()
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
 	QString sep(QDir::separator());
 #ifdef Q_WS_MAC	
-	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Luminance" + sep);
 #elif WIN32
-	QString appDataDir(QDir::homePath() + sep + "Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + "Luminance" + sep);
 #else
-	QString appDataDir(QDir::homePath() + sep + ".Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + ".Luminance" + sep);
 #endif
 	QString fname(appDataDir + "HelpBookmarks.xml");
 // 	if (!QFile::exists(fname))
@@ -694,11 +694,11 @@ QString HelpBrowser::historyFile()
 	//QString appDataDir(typotek::getInstance()->getOwnDir().path() + "/");
 	QString sep(QDir::separator());
 #ifdef Q_WS_MAC	
-	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + "Library" + sep + "Luminance" + sep);
 #elif WIN32
-	QString appDataDir(QDir::homePath() + sep + "Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + "Luminance" + sep);
 #else
-	QString appDataDir(QDir::homePath() + sep + ".Qtpfsgui" + sep);
+	QString appDataDir(QDir::homePath() + sep + ".Luminance" + sep);
 	//QString fname(appDataDir + "HelpHistory.xml");
 #endif	
 	QString fname(appDataDir + "HelpHistory.xml");
@@ -712,7 +712,7 @@ QString HelpBrowser::historyFile()
 
 void HelpBrowser::displayNoHelp()
 {
-	QString noHelpMsg=tr("<h2><p>Sorry, no manual is installed!</p><p>Please contact your package provider or Qtpfsgui team if you built the application yourself</p></h2>", "HTML message for no documentation available to show");
+	QString noHelpMsg=tr("<h2><p>Sorry, no manual is installed!</p><p>Please contact your package provider or Luminance team if you built the application yourself</p></h2>", "HTML message for no documentation available to show");
 
 	textBrowser->setHtml(noHelpMsg);
 	
@@ -777,7 +777,7 @@ void HelpBrowser::handleExternalLink(const QUrl &url) {
 		textBrowser->load(url);
 	else {
 		QApplication::restoreOverrideCursor();
-		if ( QMessageBox::warning(this, tr("Qtpfsgui - Help Browser"),
+		if ( QMessageBox::warning(this, tr("Luminance - Help Browser"),
 					tr("This protocol is not handled by Help Browser.\n"
 						"Do you want to open the link with the default application \n"
 						"associated with the protocol?"),

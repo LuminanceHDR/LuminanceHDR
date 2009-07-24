@@ -8,7 +8,7 @@ QT += webkit
 QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp -msse2
 QMAKE_LFLAGS += -fopenmp
 
-TARGET = qtpfsgui
+TARGET = luminance
 
 LIBS            += -lgsl -lgslcblas
 
@@ -230,7 +230,6 @@ TRANSLATIONS = i18n/lang_cs.ts \
                i18n/lang_pl.ts \
                i18n/lang_ru.ts \
                i18n/lang_tr.ts
-               #i18n/lang_xx.ts
                
 
 unix {
@@ -372,25 +371,25 @@ isEmpty(PREFIX) {
 isEmpty(I18NDIR) {
 	mac {
 		#I18NDIR=(QCoreApplication::applicationDirPath()+\"/i18n\")
-		#I18NDIR=/Applications/qtpfsgui.app/Contents/Resources/i18n
+		#I18NDIR=/Applications/luminance.app/Contents/Resources/i18n
 		#maybe we need parenthesis and/or backslashes somewhere.
 		#I18NDIR=QCoreApplication::applicationDirPath()+"/../Resources/i18n"
 		I18NDIR=QCoreApplication::applicationDirPath\\\(\\\)+"/../Resources/i18n"
 	} else {
-		I18NDIR = $${PREFIX}/share/qtpfsgui/i18n
+		I18NDIR = $${PREFIX}/share/luminance/i18n
 	}
 }
 isEmpty(DOCDIR) {
-	DOCDIR = $${PREFIX}/share/qtpfsgui
+	DOCDIR = $${PREFIX}/share/luminance
 }
 isEmpty(HTMLDIR) {
 	HTMLDIR = $${DOCDIR}
 }
 
 target.path      = $${PREFIX}/bin
-menu.files       = qtpfsgui.desktop
+menu.files       = luminance.desktop
 menu.path        = $${PREFIX}/share/applications
-icon.files       = images/qtpfsgui.png
+icon.files       = images/luminance.png
 icon.path        = $${PREFIX}/share/icons/hicolor/32x32/apps
 htmls.files      = html
 htmls.path       = $$HTMLDIR
@@ -410,9 +409,9 @@ DEFINES -= QT_NO_DEBUG_OUTPUT
 message ("Debug statements ENABLED")
 }
 message ("Here's what will be installed:")
-message ("qtpfsgui         ==> $$target.path")
-message ("qtpfsgui.desktop ==> $$menu.path")
-message ("qtpfsgui.png     ==> $$icon.path")
+message ("luminance         ==> $$target.path")
+message ("luminance.desktop ==> $$menu.path")
+message ("luminance.png     ==> $$icon.path")
 message ("docs             ==> $$docs.path")
 message ("html             ==> $$htmls.path")
 message ("i18n messages    ==> $$i18n.path")
@@ -432,7 +431,7 @@ DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
 }
 
 macx {
-ICON = images/qtpfsgui.icns
+ICON = images/luminance.icns
 
 #TODO we have to complete this.
 LIBS+=-lIlmThread
@@ -519,7 +518,7 @@ INCLUDEPATH += ../DEPs/include/libtiff
 LIBS += -L../DEPs/lib/libtiff -ltiff
 
 DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
-RC_FILE = images/qtpfsgui_ico.rc
+RC_FILE = images/luminance_ico.rc
 
 }
 

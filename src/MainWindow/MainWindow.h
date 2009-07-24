@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -94,7 +94,7 @@ protected slots:
 	void setCurrentFile(const QString &fileName);
 	void updateRecentDirHDRSetting(QString);
 	void load_failed(QString);
-	void aboutQtpfsgui();
+	void aboutLuminance();
 
 	void updateActions( QMdiSubWindow * w );
 	void setActiveSubWindow(QWidget* w);
@@ -123,7 +123,7 @@ protected:
 	QAction *recentFileActs[MaxRecentFiles];
 	QAction *separatorRecentFiles;
 	QString RecentDirHDRSetting;
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 };
 //
 //=============== MySubWindow ==========================================================

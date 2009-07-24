@@ -2,7 +2,7 @@
  * @file tmo_reinhard02.cpp
  * @brief Tone map luminance channel using Reinhard02 model
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * Implementation courtesy of Erik Reinhard. 
  *
  * Original source code note:

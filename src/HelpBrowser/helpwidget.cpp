@@ -28,7 +28,7 @@ HelpWidget::HelpWidget(QWidget *parent)
 	
 	theText->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 	//theText->load(QUrl::fromLocalFile(FMPaths::HelpFilePath()));
-	theText->load(QUrl::fromLocalFile("/usr/share/qtpfsgui/index.html"));
+	theText->load(QUrl::fromLocalFile("/usr/share/luminance/index.html"));
 	progressBar->hide();
 	
 	connect(closeButton,SIGNAL( clicked() ),this,SLOT( slotIsClosing() ));

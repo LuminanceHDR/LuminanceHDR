@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -60,11 +60,11 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	QDir dir(QDir::homePath());
 
 #ifdef WIN32
-	if (!dir.exists("Qtpfsgui"))
-		dir.mkdir("Qtpfsgui");
+	if (!dir.exists("Luminance"))
+		dir.mkdir("Luminance");
 #else
-	if (!dir.exists(".Qtpfsgui"))
-		dir.mkdir(".Qtpfsgui");
+	if (!dir.exists(".Luminance"))
+		dir.mkdir(".Luminance");
 #endif
 
 	restoreState( settings.value("MainWindowState").toByteArray());
@@ -87,10 +87,10 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
 	setCentralWidget(mdiArea);
 
-	qtpfsgui_options=QtpfsguiOptions::getInstance();
+	luminance_options=LuminanceOptions::getInstance();
 	load_options();
 
-	setWindowTitle("Qtpfsgui "QTPFSGUIVERSION);
+	setWindowTitle("Luminance "LUMINANCEVERSION);
 
 	//recent files
 	for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 		menuFile->addAction(recentFileActs[i]);
 	updateRecentFileActions();
 
-	testTempDir(qtpfsgui_options->tempfilespath);
+	testTempDir(luminance_options->tempfilespath);
 	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
 	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
 	saveProgress->setWindowTitle(tr("Saving file..."));
@@ -140,7 +140,7 @@ void MainWindow::setupConnections() {
 	connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
 	connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-	connect(actionAbout_Qtpfsgui,SIGNAL(triggered()),this,SLOT(aboutQtpfsgui()));
+	connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
 	connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
 	connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
 	connect(actionTile,SIGNAL(triggered()),mdiArea,SLOT(tileSubWindows()));
@@ -161,10 +161,10 @@ void MainWindow::setupConnections() {
 
 void MainWindow::fileNewViaWizard(QStringList files) {
 	HdrWizard *wizard;
-	if (testTempDir(qtpfsgui_options->tempfilespath)) {
+	if (testTempDir(luminance_options->tempfilespath)) {
 		wizard=new HdrWizard (this, files);
 		if (wizard->exec() == QDialog::Accepted) {
-			HdrViewer *newmdi=new HdrViewer(this, true, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor); //true means needs saving
+			HdrViewer *newmdi=new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor); //true means needs saving
 			connect(newmdi, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
 			mdiArea->addSubWindow(newmdi);
@@ -245,7 +245,7 @@ void MainWindow::fileSaveAs()
 			TiffWriter tiffwriter(encodedName, currenthdr->getHDRPfsFrame());
 			connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SLOT(setMaximum(int)));
 			connect(&tiffwriter, SIGNAL(nextstep(int)), this, SLOT(setValue(int)));
-			if (qtpfsgui_options->saveLogLuvTiff)
+			if (luminance_options->saveLogLuvTiff)
 				tiffwriter.writeLogLuvTiff();
 			else
 				tiffwriter.writeFloatTiff();
@@ -264,7 +264,7 @@ void MainWindow::fileSaveAs()
 			absoluteFileName = absoluteFileName + ".exr";
 			encodedName = strdup(QFile::encodeName(absoluteFileName).constData());
 			writeEXRfile  (currenthdr->getHDRPfsFrame(),encodedName);
-//			QMessageBox::warning(this,tr("Aborting..."), tr("Qtpfsgui supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),
+//			QMessageBox::warning(this,tr("Aborting..."), tr("Luminance supports only the following formats: <br>Radiance RGBE (hdr), PFS, tiff-hdr and OpenEXR."),
 //			QMessageBox::Ok,QMessageBox::NoButton);
 //			return;
 		}
@@ -353,11 +353,11 @@ void MainWindow::tonemap_requested() {
 			helpBrowser->hide();
 	}
 	catch(pfs::Exception e) {
-		QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: %1 ").arg(e.getMessage()));
+		QMessageBox::warning(this,tr("Luminance"),tr("Error: %1 ").arg(e.getMessage()));
 		reEnableMainWin();	
 	}
 	catch(...) {
-		QMessageBox::warning(this,tr("Qtpfsgui"),tr("Error: Filed to Tonemap Image"));
+		QMessageBox::warning(this,tr("Luminance"),tr("Error: Filed to Tonemap Image"));
 		reEnableMainWin();	
 	}
 }
@@ -367,7 +367,7 @@ bool MainWindow::testTempDir(QString dirname) {
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		return true;
 	} else {
-		QMessageBox::critical(this,tr("Error..."),tr("Qtpfsgui needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone Mapping."),
+		QMessageBox::critical(this,tr("Error..."),tr("Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone Mapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
@@ -490,7 +490,7 @@ void MainWindow::current_mdi_original_size() {
 }
 
 void MainWindow::openDocumentation() {
-	helpBrowser = new HelpBrowser(this,"Qtpfsgui Help");
+	helpBrowser = new HelpBrowser(this,"Luminance Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
 	helpBrowser->show();
@@ -540,7 +540,7 @@ void MainWindow::openRecentFile() {
 void MainWindow::setupLoadThread(QString fname) {
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
-	newhdr=new HdrViewer(this, false, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	newhdr=new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	newhdr->setAttribute(Qt::WA_DeleteOnClose);
 	connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 	newhdr->showLoadDialog();
@@ -572,14 +572,14 @@ void MainWindow::load_failed(QString error_message) {
 }
 
 void MainWindow::preferences_called() {
-	unsigned int negcol=qtpfsgui_options->negcolor;
-	unsigned int naninfcol=qtpfsgui_options->naninfcolor;
+	unsigned int negcol=luminance_options->negcolor;
+	unsigned int naninfcol=luminance_options->naninfcolor;
 	PreferencesDialog *opts=new PreferencesDialog(this);
 	opts->setAttribute(Qt::WA_DeleteOnClose);
-	if (opts->exec() == QDialog::Accepted && (negcol!=qtpfsgui_options->negcolor || naninfcol!=qtpfsgui_options->naninfcolor) ) {
+	if (opts->exec() == QDialog::Accepted && (negcol!=luminance_options->negcolor || naninfcol!=luminance_options->naninfcolor) ) {
 		QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
 		foreach(QMdiSubWindow *p,allhdrs) {
-			((HdrViewer*)p->widget())->update_colors(qtpfsgui_options->negcolor,qtpfsgui_options->naninfcolor);
+			((HdrViewer*)p->widget())->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
 		}
 	}
 }
@@ -684,20 +684,20 @@ void MainWindow::Text_Only() {
 	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 
-void MainWindow::aboutQtpfsgui() {
+void MainWindow::aboutLuminance() {
 	QDialog *about=new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
-	Ui::AboutQtpfsgui ui;
+	Ui::AboutLuminance ui;
 	ui.setupUi(about);
 	ui.authorsBox->setOpenExternalLinks(true);
 	ui.thanksToBox->setOpenExternalLinks(true);
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-	ui.label_version->setText(ui.label_version->text().append(QString(QTPFSGUIVERSION)));
+	ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)));
 
         bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	QStringList paths = QStringList("/usr/share/qtpfsgui") << "/usr/local/share/qtpfsgui" << docDir << "/Applications/qtpfsgui.app/Contents/Resources" << "./";
+	QStringList paths = QStringList("/usr/share/luminance") << "/usr/local/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
 	foreach (QString path,paths) {
 		QString fname(path+QString("/LICENSE"));
 #ifdef WIN32
@@ -770,7 +770,7 @@ void MainWindow::cropToSelection(void) {
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
-	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, qtpfsgui_options->negcolor, qtpfsgui_options->naninfcolor);
+	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
 	newHdrViewer->updateHDR(cropped_frame);

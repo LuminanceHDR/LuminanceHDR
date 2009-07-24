@@ -14,7 +14,7 @@
    <string>Copy Exif data</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</iconset>
+   <iconset resource="../icons.qrc" >:/new/prefix1/images/luminance.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >

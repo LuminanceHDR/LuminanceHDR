@@ -57,10 +57,10 @@ QString FMPaths::HelpDir()
 //#else
 //	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
 //#endif
-	hf = LocalizedDirPath( "/usr" + dirsep + "share" + dirsep + "qtpfsgui" + dirsep + "help" + dirsep );
+	hf = LocalizedDirPath( "/usr" + dirsep + "share" + dirsep + "luminance" + dirsep + "help" + dirsep );
 	getThis()->FMPathsDB["HelpDir"] = hf;
 
-	//getThis()->FMPathsDB["HelpDir"] = "/usr/share/qtpfsgui/html/";
+	//getThis()->FMPathsDB["HelpDir"] = "/usr/share/luminance/html/";
 	return getThis()->FMPathsDB["HelpDir"];
 }
 

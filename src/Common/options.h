@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -32,10 +32,10 @@
 #include <QStringList>
 
 //Singleton class
-class QtpfsguiOptions {
+class LuminanceOptions {
 public:
 	//global point of access to singleton instance
-	static QtpfsguiOptions *getInstance();
+	static LuminanceOptions *getInstance();
 	//public accessor to destroy singleton
 	static void deleteInstance();
 
@@ -53,17 +53,17 @@ public:
 	int num_threads;
 	//Image format used to save LDRs in batch mode.
 	QString batch_ldr_format;
-	//2-chars ISO 639 language code for Qtpfsgui's user interface.
+	//2-chars ISO 639 language code for Luminance's user interface.
 	QString gui_lang;
 private:
 	//use QSettings to load stored settings (or use hardcoded defaults on very first run)
 	void loadFromQSettings ();
 	//private constructor
-	QtpfsguiOptions ();
+	LuminanceOptions ();
 	//private destructor
-	~QtpfsguiOptions ();
+	~LuminanceOptions ();
 	//the private singleton instance
-	static QtpfsguiOptions *instance;
+	static LuminanceOptions *instance;
 
 };
 

@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -40,7 +40,7 @@ public:
 private:
 	void change_color_of(QPushButton *,QColor *);
 	void from_options_to_gui();
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 	QColor infnancolor, negcolor;
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;

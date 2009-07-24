@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
  *
@@ -69,7 +69,7 @@ void TransplantExifDialog::help_requested() {
 	help->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::HelpDialog ui;
 	ui.setupUi(help);
-	ui.tb->setSearchPaths(QStringList("/usr/share/qtpfsgui/html") << "/usr/local/share/qtpfsgui/html" << "./html");
+	ui.tb->setSearchPaths(QStringList("/usr/share/luminance/html") << "/usr/local/share/luminance/html" << "./html");
 	ui.tb->setSource(QUrl("manual.html#copyexif"));
 	help->exec();*/
 }

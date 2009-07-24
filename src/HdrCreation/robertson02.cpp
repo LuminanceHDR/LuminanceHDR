@@ -1,7 +1,7 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -156,7 +156,7 @@ for( int j=0 ; j<width*height ; j++ )
 		// --- anti ghosting: monotonous increase in time should result
 		// in monotonous increase in intensity; make forward and
 		// backward check, ignore value if condition not satisfied
-		// TODO: in qtpfsgui verify that the image list is indeed in decreasing exposure time order
+		// TODO: in luminance verify that the image list is indeed in decreasing exposure time order
 		int R_lower = qRed  (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
 		int R_upper = qRed  (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
 		int G_lower = qGreen(* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );

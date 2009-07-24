@@ -1,5 +1,5 @@
 /**
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -50,7 +50,7 @@ protected:
 	void run();
 private:
 	QString fname,RecentDirHDRSetting;
-	QtpfsguiOptions *qtpfsgui_options;
+	LuminanceOptions *luminance_options;
 	QProgressDialog *progress;
 };
 #endif

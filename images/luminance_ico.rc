@@ -1,12 +1,12 @@
-#define QTPFSGUI_VER 1,9,3
-#define QTPFSGUI_VER_STR "1.9.3\0"
+#define LUMINANCE_VER 2,0,0
+#define LUMINANCE_VER_STR "2.0.0\0"
 
-#define PRODUCTNAME_STR "Qtpfsgui\0"
-IDI_ICON1               ICON    DISCARDABLE     "qtpfsgui.ico"
+#define PRODUCTNAME_STR "Luminance\0"
+IDI_ICON1               ICON    DISCARDABLE     "luminance.ico"
 //See for more information MSDN: http://msdn.microsoft.com/en-us/library/aa381049(VS.85).aspx
 1 VERSIONINFO
-FILEVERSION    QTPFSGUI_VER,0
-PRODUCTVERSION QTPFSGUI_VER,0
+FILEVERSION    LUMINANCE_VER,0
+PRODUCTVERSION LUMINANCE_VER,0
 //these 2 do not seem to work with gnu's windres (v 2.17.50)
 //FILEOS         VOS_NT_WINDOWS32
 //FILETYPE       VFT_APP
@@ -16,14 +16,14 @@ BEGIN
         BLOCK "040904E4"
         BEGIN
             VALUE "ProductName",      PRODUCTNAME_STR
-            VALUE "FileVersion",      QTPFSGUI_VER_STR
+            VALUE "FileVersion",      LUMINANCE_VER_STR
             VALUE "FileDescription",  "Open Source HDR Imaging Workflow tool\0"
-            VALUE "CompanyName",      "http://qtpfsgui.sourceforge.net\0"
+            VALUE "CompanyName",      "http://luminance.sourceforge.net\0"
             VALUE "InternalName",     PRODUCTNAME_STR
-            VALUE "ProductVersion",   QTPFSGUI_VER_STR
+            VALUE "ProductVersion",   LUMINANCE_VER_STR
             VALUE "LegalCopyright",   "GPL v2.0\0"
             VALUE "Comments",         "For the full text version of the GPL please read http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
-            VALUE "OriginalFilename", "qtpfsgui.exe\0"
+            VALUE "OriginalFilename", "luminance.exe\0"
             //VALUE "LegalTrademarks",  VER_LEGALTRADEMARKS1_STR
         END
     END

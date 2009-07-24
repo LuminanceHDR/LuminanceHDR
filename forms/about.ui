@@ -1,6 +1,6 @@
 <ui version="4.0" >
- <class>AboutQtpfsgui</class>
- <widget class="QDialog" name="AboutQtpfsgui" >
+ <class>AboutLuminance</class>
+ <widget class="QDialog" name="AboutLuminance" >
   <property name="geometry" >
    <rect>
     <x>0</x>
@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>About Qtpfsgui</string>
+   <string>About Luminance</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" >
    <item row="0" column="0" >
@@ -41,7 +41,7 @@
           <string/>
          </property>
          <property name="pixmap" >
-          <pixmap resource="../icons.qrc" >:/new/prefix1/images/qtpfsgui.png</pixmap>
+          <pixmap resource="../icons.qrc" >:/new/prefix1/images/luminance.png</pixmap>
          </property>
          <property name="scaledContents" >
           <bool>true</bool>
@@ -61,7 +61,7 @@
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
 &lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:13pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600; color:#55aa00;">Qt&lt;/span>&lt;span style=" font-weight:600; color:#ff0000;">pfs&lt;/span>&lt;span style=" font-weight:600; color:#00007f;">gui &lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600; color:#00007f;">Luminance &lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
          </property>
         </widget>
        </item>
@@ -94,8 +94,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:11pt; font-weight:400; font-style:normal;">
-&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600; color:#55aa00;">Qt&lt;/span>&lt;span style=" font-size:12pt; font-weight:600; color:#ff0000;">pfs&lt;/span>&lt;span style=" font-size:12pt; font-weight:600; color:#00007f;">gui&lt;/span> - Hdr Imaging Workflow Application&lt;br />(c) 2006-2007, Giuseppe Rota&lt;br />&lt;a href="http://qtpfsgui.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">http://qtpfsgui.sourceforge.net&lt;/span>&lt;/a>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:11pt; font-weight:400; font-style:normal;">
+&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;span style=" font-size:12pt; font-weight:600; color:#00007f;">Luminance&lt;/span> - Hdr Imaging Workflow Application&lt;br />(c) 2006-2007, Giuseppe Rota&lt;br />&lt;a href="http://luminance.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">http://luminance.sourceforge.net&lt;/span>&lt;/a>&lt;/p>&lt;/body>&lt;/html></string>
            </property>
            <property name="textFormat" >
             <enum>Qt::AutoText</enum>
@@ -161,15 +161,18 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">Please &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">let me know&lt;/span>&lt;/a> if I forgot to add someone to this list.&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;br />&lt;span style=" font-weight:600;">Main developer&lt;/span>&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">   Giuseppe Rota&lt;br />   &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">grota@users.sourceforge.net&lt;/span>&lt;/a>&lt;br />.&lt;br />&lt;span style=" font-weight:600;">Improvements, bugfixing&lt;/span>&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">    Franco Comida&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">    &lt;a href="mailto:fcomida@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">fcomida@users.sourceforge.net&lt;/span>&lt;/a>&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">pfs{tools|calibration|tmo} codebase&lt;/span>&lt;br />   Grzegorz Krawczyk&lt;br />   &lt;a href="mailto:krawczyk@mpi-sb.mpg.de">&lt;span style=" text-decoration: underline; color:#0000ff;">krawczyk@mpi-sb.mpg.de&lt;/span>&lt;/a>&lt;br />   &lt;br />   Rafal Mantiuk&lt;br />   &lt;a href="mailto:mantiuk@mpi-sb.mpg.de">&lt;span style=" text-decoration: underline; color:#0000ff;">mantiuk@mpi-sb.mpg.de &lt;/span>&lt;/a>&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;">&lt;br />&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">G.Ward's Mean Threshold Bitmap (MTB) algorithm &lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Nicholas Phillips&lt;br />   &lt;/span>&lt;a href="ngphillips@gmail.com">ngphillips@gmail.com&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />  &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Russian translator, fixed usability issues, .desktop file&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Alexandre Prokoudine&lt;br />   &lt;/span>&lt;a href="alexandre.prokoudine@gmail.com">alexandre.prokoudine@gmail.com&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Mac OS X packager, Norwegian translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Åsmund Ødegård&lt;br />   &lt;/span>&lt;a href="mandus@users.sourceforge.net">mandus@users.sourceforge.net&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Turkish translato&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">r&lt;br />   Mustafa GÜNAY&lt;br />   .&lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">French translator and Ubuntu packager&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">  &lt;br />   Cyril Lavier&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Spanish translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Alberto Garcia&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">German translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Ralph Kaeppeli&lt;br />   .&lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Czech translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Jan Gemela&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Polish translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Maciej Dziardziel&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">FreeBSD patches and maintainers&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Bertrand Petit and Steffen Beyer&lt;br />&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">Please &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">let me know&lt;/span>&lt;/a> if I forgot to add someone to this list.&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;br />&lt;span style=" font-weight:600;">Main developer&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">   Giuseppe Rota&lt;br />   &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">grota@users.sourceforge.net&lt;/span>&lt;/a>&lt;br />.&lt;br />&lt;span style=" font-weight:600;">Improvements, bugfixing&lt;/span>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">    Franco Comida&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">    &lt;a href="mailto:fcomida@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">fcomida@users.sourceforge.net&lt;/span>&lt;/a>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt; text-decoration: underline; color:#0000ff;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">    Daniel Kaneider&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">    &lt;a href="mailto:danielkaneider@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">danielkaneider@users.sourceforge.net&lt;/span>&lt;/a>&lt;/p>
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt; text-decoration: underline; color:#0000ff;">&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">pfs{tools|calibration|tmo} codebase&lt;/span>&lt;br />   Grzegorz Krawczyk&lt;br />   &lt;a href="mailto:krawczyk@mpi-sb.mpg.de">&lt;span style=" text-decoration: underline; color:#0000ff;">krawczyk@mpi-sb.mpg.de&lt;/span>&lt;/a>&lt;br />   &lt;br />   Rafal Mantiuk&lt;br />   &lt;a href="mailto:mantiuk@mpi-sb.mpg.de">&lt;span style=" text-decoration: underline; color:#0000ff;">mantiuk@mpi-sb.mpg.de &lt;/span>&lt;/a>&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt; text-decoration: underline; color:#0000ff;">&lt;br />&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">G.Ward's Mean Threshold Bitmap (MTB) algorithm &lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Nicholas Phillips&lt;br />   &lt;/span>&lt;a href="ngphillips@gmail.com">ngphillips@gmail.com&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />  &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Russian translator, fixed usability issues, .desktop file&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Alexandre Prokoudine&lt;br />   &lt;/span>&lt;a href="alexandre.prokoudine@gmail.com">alexandre.prokoudine@gmail.com&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Mac OS X packager, Norwegian translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Åsmund Ødegård&lt;br />   &lt;/span>&lt;a href="mandus@users.sourceforge.net">mandus@users.sourceforge.net&lt;/a>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Turkish translato&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">r&lt;br />   Mustafa GÜNAY&lt;br />   .&lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">French translator and Ubuntu packager&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">  &lt;br />   Cyril Lavier&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Spanish translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Alberto Garcia&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">German translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Ralph Kaeppeli&lt;br />   .&lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Czech translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Jan Gemela&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">Polish translator&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Maciej Dziardziel&lt;br />   &lt;br />&lt;/span>&lt;span style=" font-weight:600; text-decoration:none; color:#000000;">FreeBSD patches and maintainers&lt;/span>&lt;span style=" text-decoration:none; color:#000000;">&lt;br />   Bertrand Petit and Steffen Beyer&lt;br />&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
          </item>
@@ -232,14 +235,14 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">Please &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">let me know&lt;/span>&lt;/a> if I forgot to add someone to this list.&lt;br />&lt;br />&lt;span style=" font-weight:600;">All the community on &lt;/span>&lt;a href="http://www.flickr.com/groups/qtpfsgui">&lt;span style=" font-weight:600; text-decoration: underline; color:#0000ff;">flickr&lt;/span>&lt;/a>&lt;br />&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">Hugin's &lt;/span>&lt;span style=" font-weight:600; font-style:italic;">align_image_stack&lt;/span>&lt;span style=" font-weight:600;"> and more&lt;/span>&lt;br />  Pablo D'Angelo&lt;br />  &lt;br />&lt;span style=" font-weight:600;">Opensuse 10.2 and 10.3 packager&lt;/span>&lt;br />  Peter Linnell&lt;br />   &lt;br />&lt;span style=" font-weight:600;">FC6 packager and bug reports&lt;/span>&lt;br />  Douglas E. Warner&lt;br />   .&lt;br />&lt;span style=" font-weight:600;">openSUSE 10.2 packager&lt;/span>&lt;br />  Rauch Christian&lt;br />&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">Gentoo Linux Ebuild&lt;/span>&lt;br />  Rene Zbinden&lt;br />&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">Various suggestions&lt;/span>&lt;br />  Arne Hagenah&lt;br />&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">Tiff ldr bugfixes and suggestion&lt;/span>&lt;br />  Ignacy Gawedzki&lt;br /> &lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">dcraw&lt;/span>&lt;br />  Dave Coffin&lt;br />&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt;">&lt;span style=" font-weight:600;">And also&lt;/span>&lt;br />  Erik Ouchterlony&lt;br />  Antoine Latter&lt;br />  Frank Boehme&lt;br />  Sloan Poe&lt;br />&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">Please &lt;a href="mailto:grota@users.sourceforge.net">&lt;span style=" text-decoration: underline; color:#0000ff;">let me know&lt;/span>&lt;/a> if I forgot to add someone to this list.&lt;br />&lt;br />&lt;span style=" font-weight:600;">All the community on &lt;/span>&lt;a href="http://www.flickr.com/groups/luminance">&lt;span style=" font-weight:600; text-decoration: underline; color:#0000ff;">flickr&lt;/span>&lt;/a>&lt;br />&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">Hugin's &lt;/span>&lt;span style=" font-weight:600; font-style:italic;">align_image_stack&lt;/span>&lt;span style=" font-weight:600;"> and more&lt;/span>&lt;br />  Pablo D'Angelo&lt;br />  &lt;br />&lt;span style=" font-weight:600;">Opensuse 10.2 and 10.3 packager&lt;/span>&lt;br />  Peter Linnell&lt;br />   &lt;br />&lt;span style=" font-weight:600;">FC6 packager and bug reports&lt;/span>&lt;br />  Douglas E. Warner&lt;br />   .&lt;br />&lt;span style=" font-weight:600;">openSUSE 10.2 packager&lt;/span>&lt;br />  Rauch Christian&lt;br />&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">Gentoo Linux Ebuild&lt;/span>&lt;br />  Rene Zbinden&lt;br />&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">Various suggestions&lt;/span>&lt;br />  Arne Hagenah&lt;br />&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">Tiff ldr bugfixes and suggestion&lt;/span>&lt;br />  Ignacy Gawedzki&lt;br /> &lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">dcraw&lt;/span>&lt;br />  Dave Coffin&lt;br />&lt;/p>
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif'; font-size:9pt;">&lt;span style=" font-weight:600;">And also&lt;/span>&lt;br />  Erik Ouchterlony&lt;br />  Antoine Latter&lt;br />  Frank Boehme&lt;br />  Sloan Poe&lt;br />&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
          </item>
@@ -310,8 +313,8 @@ p, li { white-space: pre-wrap; }
             <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 &lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p align="justify" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p align="justify" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
          </item>
@@ -360,7 +363,7 @@ p, li { white-space: pre-wrap; }
   <connection>
    <sender>pushButton</sender>
    <signal>clicked()</signal>
-   <receiver>AboutQtpfsgui</receiver>
+   <receiver>AboutLuminance</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel" >

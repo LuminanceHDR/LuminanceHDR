@@ -2,18 +2,18 @@
 <html>
 
 <head>
-  <title>Qtpfsgui Manual</title>
+  <title>Luminance Manual</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body>
-<h1>Qtpfsgui Manual</h1>
+<h1>Luminance Manual</h1>
 <ol>
 <li><A href="#intro">Introduction</A></li>
 	<ol>
 	<li><A href="#terminology">Terminology</A></li>
 	<li><A href="#features">Summary of features</A></li>
 	</ol>
-<li><A href="#usingqtpfsgui">Using Qtpfsgui</A></li>
+<li><A href="#usingluminance">Using Luminance</A></li>
 	<ol>
 	<li><A href="#mainwindow">The main window</A></li>
 		<ol>
@@ -45,7 +45,7 @@
 </ol>
 
 <A name="intro"><h2>Introduction</h2></A>
-Qtpfsgui is an open source graphical user interface application that provides a workflow for HDR imaging.
+Luminance is an open source graphical user interface application that provides a workflow for HDR imaging.
 
 <A name="terminology"><h3>Terminology</h3></A>
 <dl>
@@ -77,17 +77,17 @@ The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wi
 Raw files are processed with dcraw in order to obtain a (8 or 16 bit) tiff file. For more information read <A href="dcraw.html">this page</A>.<br>
 The pictures must have been taken at the same scene, with different exposure settings (change the exposure time and/or aperture, and use a tripod if you have one). The newly created HDR will be available in the workspace as soon as the HDR creation wizard has ended.<br>
 The input files can be aligned via two alignment engines: align_image_stack and MTB.<br>
-The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. Qtpfsgui provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
+The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. Luminance provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
 Read the chapter <A href="#createhdr">about the creation of an hdr</A> for more information about the alignment engines and the interactive anti-ghosting tool.<br>
 To tone map an HDR file to get an LDR image <strong>(second feature)</strong> you can press the "Tonemap the HDR" button.<br>
 Via the "File -> Open Hdr..." wizard you can choose to load in the workspace an HDR image image file, and the "File->Save Hdr as..." item lets you save the currently selected hdr image to a HDR image file format <strong>(third feature)</strong>.<br>
 Users can also rotate and resize <strong>(fourth feature)</strong> the currently selected hdr image via the "Image" menu item, see below.<br>
 It is also possible to apply panoramic (projective) transformation to a Hdr image via the "Image" menu item <strong>(fifth feature)</strong>.<br>
-In order to create an HDR image Qtpfsgui requires to have a set of images with exif data in it. Qtpfsgui requires this information to get the exposure settings for an image in the set. When Qtpfsgui doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Qtpfsgui provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(sixth feature)</strong>.
+In order to create an HDR image Luminance requires to have a set of images with exif data in it. Luminance requires this information to get the exposure settings for an image in the set. When Luminance doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Luminance provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(sixth feature)</strong>.
 
 
-<A name="usingqtpfsgui"><h2>Using Qtpfsgui</h2></A>
-This chapter describes the most important elements of Qtpfsgui: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
+<A name="usingluminance"><h2>Using Luminance</h2></A>
+This chapter describes the most important elements of Luminance: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
 
 <A name="mainwindow"><h3>The main window</h3></A>
 Here's the main window that you can see once the program has launched.<br>
@@ -143,7 +143,7 @@ As soon as at least one HDR image has been loaded in the workspace you can:
 <A name="createhdr"><h3>The Creation of an HDR</h3></A>
 You can access the wizard that will guide you through the process of creating a new HDR image via the "File -> New Hdr..." menu item.<br>
 On the first page the wizard will ask you to select the set of images (of the same scene, but taken at different exposures) that are going to contribute to the final hdr (supported input: jpeg, raw and tiff -8 and 16 bit-).<br>
-Even if Qtpfsgui doesn't find the required exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for the images in your the set.<br>
+Even if Luminance doesn't find the required exif data (Shutter Speed &#038; Aperture) in your image set you can still proceed creating an HDR. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values for the images in your the set.<br>
 The first page of the wizard enables the user to apply an automatic alignment step to the images in the set. It is possible to use one of two alignment options (or "engines"): align_image_stack and MTB.<br>
 The first option is usually a good choice (MTB works only on LDR images and has a simpler model that does not take into account rotation).<br>
 If your image set consists of LDR images (JPEG, 8 bit TIFF, or RAW files converted to tiff without the -4 switch) the second step of the wizard will show you a window that can be used to perform some "pre merging" editing activities.<br>
@@ -182,7 +182,7 @@ The tone mapping step first applies to the HDR the gamma value specified by the 
 <li>Pregamma changes the gamma in the HDR before the tone mapping: depending on the chosen tone mapping operator this can yield unexpected effects, like color saturation.</li>
 <li>The tone mapping operator transforms an HDR into a LDR.</li>
 </ul>
-NOTE: the post-gamma operation (typical of previous versions of Qtpfsgui) can be performed via the "Correct Histogram" button.<br>
+NOTE: the post-gamma operation (typical of previous versions of Luminance) can be performed via the "Correct Histogram" button.<br>
 With the "Correct Histogram" button you can tweak the histogram of the current LDR image, the tool has been designed to be similar to the one in GIMP: you can drag the triangular handles to set the new value.
 
 <A name="parameters"><h4>The tone mapping operators and their parameters</h4></A>
@@ -195,7 +195,7 @@ Via the "Save..." button it is also possible to save in a text file (the filenam
 <li>the currently selected tone mapping operator and its related settings.</li>
 <li>the values of the pregamma settings.</li>
 </ul>
-NOTE: Qtpfsgui 1.8.4 uses a new file format (the postgamma option has been removed).<br>
+NOTE: Luminance 1.8.4 uses a new file format (the postgamma option has been removed).<br>
 This is useful if you find that are often using some specific operator (and pregamma and postgamma settings) and don't want to manually set the values each time.<br>
 The "Load..." button lets you specify the file tone mapping settings filename that you want to load.<br>
 The "Apply settings" button applies the settings contained in the tone mapping settings file that has been loaded. This is useful when, after playing around with the values, you want to get back to the file's values.<br><br>
@@ -209,10 +209,10 @@ You can also always see what's happening in the Log panel at the bottom. You can
 
 
 <A name="optionsdialog"><h3>Preferences</h3></A>
-This window lets you configure the global behavior of Qtpfsgui. You can access this tool via the "Tools -> Preferences..." menu item.<br><br>
+This window lets you configure the global behavior of Luminance. You can access this tool via the "Tools -> Preferences..." menu item.<br><br>
 
 <A name="optrawimport"><h4>RAW Import</h4></A>
-Qtpfsgui uses dcraw to convert RAW files. For more information please refer to <A href="dcraw.html">the specific page</A>.<br><br>
+Luminance uses dcraw to convert RAW files. For more information please refer to <A href="dcraw.html">the specific page</A>.<br><br>
 
 <A name="optvisualization"><h4>HDR Visualization</h4></A>
 Click on the buttons to pop-up a window that lets you choose which color to use for the nan/inf and for the negative values.<br>
@@ -220,13 +220,13 @@ Click on the buttons to pop-up a window that lets you choose which color to use 
 
 <br>
 <A name="opttm"><h4>Tone mapping</h4></A>
-Qtpfsgui needs a directory path where it will save some intermediate temporary files. Here you can specify this path.<br>
+Luminance needs a directory path where it will save some intermediate temporary files. Here you can specify this path.<br>
 You can also specify how many threads you want to use for the Batch Tone Mapping feature (and the file format you want to save the images to). Each thread gets allocated to a different CPU.<br>
 <img src="images/snap-qt4_5.jpeg" width="634" height="436"><br>
 
 <br>
 <A name="opttiff"><h4>Tiff Options</h4></A>
-Here you can choose which TIFF-HDR format Qtpfsgui will use to save an HDR image.<br>
+Here you can choose which TIFF-HDR format Luminance will use to save an HDR image.<br>
 <img src="images/snap-qt4_6.jpeg" width="400" height="317"><br>
 LogLuv TIFF is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size). Even if it is a 16 bit format, it can store floating point data.<br>
 The Float TIFF format has to be used only if you want to load your tiff in another application that cannot open the LogLuv format.<br><br>
@@ -278,7 +278,7 @@ In this section you can find a complete reference describing what all the items 
 <dd>moves the boundaries of the blue "histogram selection" rectangle right.</dd>
 <hr>
 <dt>Tools -> Preferences...</dt>
-<dd>launches a window that lets you configure the global behaviour of Qtpfsgui.</dd>
+<dd>launches a window that lets you configure the global behaviour of Luminance.</dd>
 <dt>Tools -> Copy Exif Data...</dt>
 <dd>launches a window that lets you copy (a one-to-one copy) the exif tags in a set of images into another set.</dd>
 <hr>

@@ -1,5 +1,5 @@
 /*
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2009 Franco Comida
  *
