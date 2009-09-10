@@ -31,13 +31,13 @@
 
 <p><img src="images/translated-menu-item.png" /></p>
 
-<p><a href="contributing_testing.html">Send</a> the updated file to us.</p>
+<p><a href="https://sourceforge.net/tracker/?group_id=183831&atid=906822">Send</a> the updated file to us.</p>
 
 <h3>Translating user interface</h3>
 
 <p>The very first thing you need to translate Luminance into your native language is to get source code from the current development branch. To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type</p>
 
-<p><tt>svn co http://svn.gna.org/svn/undertype/trunk/tools/typotek fontmatrix</tt></p>
+<p><tt>svn co https://qtpfsgui.svn.sourceforge.net/svnroot/qtpfsgui/trunk/qtpfsgui qtpfsgui</tt></p>
 
 <p>somewhere in your home directory to fetch source code, so that you always have access to it.</p>
 
@@ -53,7 +53,7 @@
 	<li>Open console in that directory and run "$ lupdate-qt4 project.pro" command. This will create a new translation file (and update existing translation files).</li>
 	<li>Open your lang_LOCALE.ts file in Linguist and start translating.</li>
 	<li>To test your translation, use <em>File&nbsp;&gt; Release</em> menu item in Linguist to create a binary version of translation and then run <span class="code">sudo make install</span> from console to quickly install created translation in the right place.</li>
-	<li>When your work is done, compress this lang_LOCALE.ts file to a ZIP, GZ or BZ2 archive and submit it via <a href="contributing_testing.html">patches tracker</a>.</li>
+	<li>When your work is done, compress this lang_LOCALE.ts file to a ZIP, GZ or BZ2 archive and submit it via <a href="https://sourceforge.net/tracker/?group_id=183831&atid=906822">patches tracker</a>.</li>
 </ol>
 
 <p>Here are some tips to help you make translation better.</p>
@@ -82,7 +82,7 @@
 
 <p>Please keep all of your illustrations below 800 pixels on the longer side. The reason is: when an image doesn't fit help browser's window, a nasty horizontal scrollbar appears. To get rid of it you need to grow width of the window, and that means that text will reflow and there will be too long barely readable lines of text.</p>
 
-<p>When you are done, archive help/LANGUAGE directory with your translation and <a href="contributing_testing.html">send it</a> to us.</p>
+<p>When you are done, archive help/LANGUAGE directory with your translation and <a href="https://sourceforge.net/tracker/?group_id=183831&atid=906822">send it</a> to us.</p>
 
 </body>
 </html>
