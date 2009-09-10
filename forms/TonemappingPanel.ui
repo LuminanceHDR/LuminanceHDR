@@ -20,7 +20,7 @@
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <property name="toolTip" >
-   <string>Tonemapping Operators and options</string>
+   <string>Tonemapping operators and their options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_13" >
    <property name="margin" >
@@ -2029,7 +2029,7 @@ p, li { white-space: pre-wrap; }
              <string>Restore operator's default values</string>
             </property>
             <property name="text" >
-             <string/>
+             <string>Restore</string>
             </property>
             <property name="icon" >
              <iconset resource="../icons.qrc" >
@@ -2040,13 +2040,6 @@ p, li { white-space: pre-wrap; }
               <width>10</width>
               <height>10</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_7" >
-            <property name="text" >
-             <string>Default Values for operator</string>
             </property>
            </widget>
           </item>
@@ -2069,7 +2062,7 @@ p, li { white-space: pre-wrap; }
              <bool>false</bool>
             </property>
             <property name="toolTip" >
-             <string>previous applied settings</string>
+             <string>Previous applied settings</string>
             </property>
             <property name="text" >
              <string>...</string>
@@ -2086,7 +2079,7 @@ p, li { white-space: pre-wrap; }
              <bool>false</bool>
             </property>
             <property name="toolTip" >
-             <string>next applied settings</string>
+             <string>Next applied settings</string>
             </property>
             <property name="whatsThis" >
              <string/>
@@ -2410,7 +2403,7 @@ Selection</string>
             <item>
              <widget class="QLabel" name="label_34" >
               <property name="text" >
-               <string>Pre Gamma:</string>
+               <string>Pre-gamma:</string>
               </property>
               <property name="margin" >
                <number>1</number>

@@ -391,14 +391,14 @@ menu.files       = luminance.desktop
 menu.path        = $${PREFIX}/share/applications
 icon.files       = images/luminance.png
 icon.path        = $${PREFIX}/share/icons/hicolor/32x32/apps
-htmls.files      = html
-htmls.path       = $$HTMLDIR
+help.files      = help
+help.path       = $$HTMLDIR
 i18n.files       = i18n/lang_de.qm i18n/lang_es.qm i18n/lang_it.qm i18n/lang_fr.qm i18n/lang_pl.qm i18n/lang_tr.qm i18n/lang_ru.qm i18n/lang_cs.qm
 i18n.path        = $$I18NDIR
 docs.files       = README LICENSE AUTHORS INSTALL Changelog
 docs.path        = $$DOCDIR
 
-INSTALLS        += target menu icon htmls i18n docs
+INSTALLS        += target menu icon help i18n docs
 message ( "" )
 message ("********************************************************************")
 message ("Installation PREFIX=$$PREFIX")
@@ -413,7 +413,7 @@ message ("luminance         ==> $$target.path")
 message ("luminance.desktop ==> $$menu.path")
 message ("luminance.png     ==> $$icon.path")
 message ("docs             ==> $$docs.path")
-message ("html             ==> $$htmls.path")
+message ("help             ==> $$help.path")
 message ("i18n messages    ==> $$i18n.path")
 message ("********************************************************************")
 

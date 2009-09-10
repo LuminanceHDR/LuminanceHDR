@@ -36,7 +36,7 @@
   <widget class="QStatusBar" name="statusbar" />
   <widget class="QToolBar" name="toolBar" >
    <property name="windowTitle" >
-    <string>Fontmatrix Help</string>
+    <string>Luminance Help</string>
    </property>
    <attribute name="toolBarArea" >
     <enum>TopToolBarArea</enum>

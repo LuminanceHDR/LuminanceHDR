@@ -104,7 +104,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	updateRecentFileActions();
 
 	testTempDir(luminance_options->tempfilespath);
-	statusBar()->showMessage(tr("Ready.... Now open an Hdr or create one!"),17000);
+	statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"),17000);
 	saveProgress = new QProgressDialog(0, 0, 0, 0, this);
 	saveProgress->setWindowTitle(tr("Saving file..."));
 	saveProgress->setWindowModality(Qt::WindowModal);
@@ -189,7 +189,7 @@ void MainWindow::fileOpen() {
 	filetypes += "PFS Stream (*.pfs *.PFS)";
 	QStringList files = QFileDialog::getOpenFileNames(
         	this,
-		tr("Load one or more Hdr files..."),
+		tr("Load one or more HDR images..."),
 		RecentDirHDRSetting,
 		filetypes );
 
@@ -212,7 +212,7 @@ void MainWindow::fileSaveAs()
 	// That's has already been fixed, plz confirm
 	//HdrViewer* workaround = currenthdr; //odd workaround from Sławomir Szczyrba
 
-	QString filetypes = tr("All Hdr formats ");
+	QString filetypes = tr("All HDR formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
 	filetypes += "OpenEXR (*.exr *.EXR);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
@@ -221,7 +221,7 @@ void MainWindow::fileSaveAs()
 
 	QString fname = QFileDialog::getSaveFileName(
 		this,
-		tr("Save the HDR..."),
+		tr("Save the HDR image as..."),
 		RecentDirHDRSetting,
 		filetypes
 	);

@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
+    <width>483</width>
     <height>438</height>
    </rect>
   </property>
@@ -13,22 +13,14 @@
    <string>Luminance Preferences</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/luminance.png</iconset>
+   <iconset resource="../icons.qrc" >
+    <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
    <property name="spacing" >
     <number>6</number>
    </property>
-   <property name="leftMargin" >
-    <number>9</number>
-   </property>
-   <property name="topMargin" >
-    <number>9</number>
-   </property>
-   <property name="rightMargin" >
-    <number>9</number>
-   </property>
-   <property name="bottomMargin" >
+   <property name="margin" >
     <number>9</number>
    </property>
    <item>
@@ -36,35 +28,26 @@
      <property name="spacing" >
       <number>6</number>
      </property>
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <property name="rightMargin" >
-      <number>0</number>
-     </property>
-     <property name="bottomMargin" >
+     <property name="margin" >
       <number>0</number>
      </property>
      <item>
       <widget class="QListWidget" name="leftsideListWidget" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Expanding" hsizetype="Maximum" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize" >
         <size>
-         <width>127</width>
+         <width>100</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>129</width>
+         <width>110</width>
          <height>16777215</height>
         </size>
        </property>
@@ -92,23 +75,40 @@
        <property name="uniformItemSizes" >
         <bool>true</bool>
        </property>
+       <property name="wordWrap" >
+        <bool>false</bool>
+       </property>
+       <property name="selectionRectVisible" >
+        <bool>true</bool>
+       </property>
        <property name="currentRow" >
-        <number>0</number>
+        <number>-1</number>
        </property>
        <item>
         <property name="text" >
-         <string>Tone Mapping</string>
+         <string>Interface</string>
         </property>
         <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/tonemap.png</iconset>
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/language-selector.png</normaloff>:/new/prefix1/images/language-selector.png</iconset>
         </property>
        </item>
        <item>
         <property name="text" >
-         <string>Language</string>
+         <string>HDR</string>
         </property>
         <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/language-selector.png</iconset>
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/appearance.png</normaloff>:/new/prefix1/images/appearance.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Tonemapping</string>
+        </property>
+        <property name="icon" >
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
         </property>
        </item>
        <item>
@@ -116,23 +116,8 @@
          <string>External Tools</string>
         </property>
         <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/raw_import.png</iconset>
-        </property>
-       </item>
-       <item>
-        <property name="text" >
-         <string>Hdr Tiff</string>
-        </property>
-        <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/raw_import.png</iconset>
-        </property>
-       </item>
-       <item>
-        <property name="text" >
-         <string>Hdr Visualization</string>
-        </property>
-        <property name="icon" >
-         <iconset resource="../icons.qrc" >:/new/prefix1/images/appearance.png</iconset>
+         <iconset resource="../icons.qrc" >
+          <normaloff>:/new/prefix1/images/raw_import.png</normaloff>:/new/prefix1/images/raw_import.png</iconset>
         </property>
        </item>
       </widget>
@@ -141,8 +126,14 @@
       <widget class="QStackedWidget" name="stackedPagesWidget" >
        <property name="minimumSize" >
         <size>
-         <width>326</width>
+         <width>300</width>
          <height>370</height>
+        </size>
+       </property>
+       <property name="maximumSize" >
+        <size>
+         <width>400</width>
+         <height>500</height>
         </size>
        </property>
        <property name="frameShape" >
@@ -152,287 +143,46 @@
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex" >
-        <number>0</number>
+        <number>2</number>
        </property>
-       <widget class="QWidget" name="tonemappingPage" >
+       <widget class="QWidget" name="languagePage" >
         <layout class="QVBoxLayout" >
          <property name="spacing" >
           <number>3</number>
          </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
+         <property name="margin" >
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="titleTonemappingPageLabel" >
+          <widget class="QLabel" name="titleLanguagePageLabel" >
+           <property name="font" >
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Tone Mapping Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">Interface&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="Line" name="TMtitleSeparatorLine" >
+          <widget class="Line" name="UItitleSeparatorLine" >
            <property name="orientation" >
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="tempDirGroupBox" >
-           <property name="title" >
-            <string>Cache</string>
-           </property>
-           <layout class="QVBoxLayout" >
-            <property name="spacing" >
-             <number>8</number>
-            </property>
-            <property name="leftMargin" >
-             <number>5</number>
-            </property>
-            <property name="topMargin" >
-             <number>5</number>
-            </property>
-            <property name="rightMargin" >
-             <number>5</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>5</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="tempDirDescriptionLabel" >
-              <property name="text" >
-               <string>Choose the directory where Luminance will store the temporary data to.</string>
-              </property>
-              <property name="wordWrap" >
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLineEdit" name="lineEditTempPath" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="readOnly" >
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="chooseCachePathButton" >
-                <property name="text" >
-                 <string>&amp;Load...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="batchGroupBox" >
-           <property name="title" >
-            <string>Batch</string>
-           </property>
-           <layout class="QVBoxLayout" >
-            <property name="spacing" >
-             <number>8</number>
-            </property>
-            <property name="leftMargin" >
-             <number>5</number>
-            </property>
-            <property name="topMargin" >
-             <number>5</number>
-            </property>
-            <property name="rightMargin" >
-             <number>5</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>5</number>
-            </property>
-            <item>
-             <layout class="QHBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="batchLdrFormatLabel" >
-                <property name="text" >
-                 <string>Save using this LDR image &amp;format:</string>
-                </property>
-                <property name="buddy" >
-                 <cstring>batchLdrFormatComboBox</cstring>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="batchLdrFormatComboBox" >
-                <item>
-                 <property name="text" >
-                  <string>JPEG</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>PNG</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>PPM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>PBM</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text" >
-                  <string>BMP</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="numThreadsLabel" >
-                <property name="text" >
-                 <string>Number of &amp;threads:
-(useful on multi-core/SMP machines)</string>
-                </property>
-                <property name="wordWrap" >
-                 <bool>true</bool>
-                </property>
-                <property name="buddy" >
-                 <cstring>numThreadspinBox</cstring>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="numThreadspinBox" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimum" >
-                 <number>1</number>
-                </property>
-                <property name="maximum" >
-                 <number>10</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="languagePage" >
-        <layout class="QVBoxLayout" >
-         <property name="spacing" >
-          <number>3</number>
-         </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="titleLanguagePageLabel" >
-           <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">User Interface&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QGroupBox" name="languageGroupBox" >
+           <property name="font" >
+            <font>
+             <kerning>true</kerning>
+            </font>
+           </property>
            <property name="title" >
             <string>Language:</string>
            </property>
@@ -440,16 +190,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>0</number>
             </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>0</number>
             </property>
             <item>
@@ -519,7 +260,7 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Vertical</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>20</width>
              <height>40</height>
@@ -529,202 +270,22 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="externalToolsPage" >
-        <layout class="QVBoxLayout" >
-         <property name="spacing" >
-          <number>0</number>
-         </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="dcrawTitleLabel" >
-           <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;/head>&lt;body style=" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Raw Import Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="dcrawGroupBox" >
-           <property name="title" >
-            <string>dcraw commandline parameters:</string>
-           </property>
-           <layout class="QVBoxLayout" >
-            <property name="spacing" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLineEdit" name="dcrawParamsLineEdit" >
-              <property name="toolTip" >
-               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Click the help button below for more information&lt;/p>&lt;/body>&lt;/html></string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" >
-              <property name="spacing" >
-               <number>6</number>
-              </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="helpDcrawParamsButton" >
-                <property name="toolTip" >
-                 <string>Click here to get more information about the Raw convertion parameters</string>
-                </property>
-                <property name="whatsThis" >
-                 <string>Click here to get more information about the Raw convertion parameters</string>
-                </property>
-                <property name="text" >
-                 <string>&amp;About Raw Parameters</string>
-                </property>
-                <property name="icon" >
-                 <iconset resource="../icons.qrc" >:/new/prefix1/images/help.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <spacer>
-                <property name="orientation" >
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" >
-                 <size>
-                  <width>61</width>
-                  <height>21</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="toolsSeparatorLine" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="aisTitleLabel" >
-           <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Alignment Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="aisGroupBox" >
-           <property name="title" >
-            <string>align_image_stack commandline parameters:</string>
-           </property>
-           <layout class="QVBoxLayout" >
-            <property name="spacing" >
-             <number>0</number>
-            </property>
-            <property name="leftMargin" >
-             <number>0</number>
-            </property>
-            <property name="topMargin" >
-             <number>0</number>
-            </property>
-            <property name="rightMargin" >
-             <number>0</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLineEdit" name="aisParamsLineEdit" >
-              <property name="toolTip" >
-               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Click the help button below for more information&lt;/p>&lt;/body>&lt;/html></string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>121</width>
-             <height>51</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="hdrTiffPage" >
+       <widget class="QWidget" name="hdrOptionsPage" >
         <layout class="QVBoxLayout" >
          <property name="spacing" >
           <number>3</number>
          </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
+         <property name="margin" >
           <number>0</number>
          </property>
          <item>
           <widget class="QLabel" name="titleHdrTiffLabel" >
            <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Tiff Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;span style=" font-size:10pt; font-weight:600;">HDR Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
            </property>
           </widget>
          </item>
@@ -737,48 +298,26 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QGroupBox" name="hdrTiffGroupBox" >
+           <property name="toolTip" >
+            <string>Choose what type of HDR TIFF to save to</string>
+           </property>
            <property name="title" >
-            <string>Hdr Tiff</string>
+            <string>HDR TIFF File Format</string>
            </property>
            <layout class="QVBoxLayout" >
             <property name="spacing" >
              <number>8</number>
             </property>
-            <property name="leftMargin" >
+            <property name="margin" >
              <number>5</number>
             </property>
-            <property name="topMargin" >
-             <number>5</number>
-            </property>
-            <property name="rightMargin" >
-             <number>5</number>
-            </property>
-            <property name="bottomMargin" >
-             <number>5</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="hdrTiffDescriptionLabel" >
-              <property name="text" >
-               <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p>
-&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-weight:600;">LogLuv Tiff&lt;/span> is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p>
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Use the &lt;span style=" font-weight:600;">Float Tiff&lt;/span> format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p>&lt;/body>&lt;/html></string>
-              </property>
-              <property name="textFormat" >
-               <enum>Qt::RichText</enum>
-              </property>
-              <property name="wordWrap" >
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
             <item>
              <widget class="QRadioButton" name="logLuvRadioButton" >
+              <property name="toolTip" >
+               <string>Good quality and smaller file size</string>
+              </property>
               <property name="text" >
-               <string>LogLuv Tiff (float, 16bit)</string>
+               <string>LogLuv Tiff (float, 16bit per color channel)</string>
               </property>
               <property name="checked" >
                <bool>true</bool>
@@ -787,61 +326,15 @@ p, li { white-space: pre-wrap; }
             </item>
             <item>
              <widget class="QRadioButton" name="floatTiffRadioButton" >
+              <property name="toolTip" >
+               <string>Better quality, larger file size, better compatibility with other applications</string>
+              </property>
               <property name="text" >
-               <string>Float Tiff (float, 32bit)</string>
+               <string>Float Tiff (float, 32bit per color channel)</string>
               </property>
              </widget>
             </item>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <spacer>
-           <property name="orientation" >
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" >
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="hdrVisualizationPage" >
-        <layout class="QVBoxLayout" >
-         <property name="spacing" >
-          <number>3</number>
-         </property>
-         <property name="leftMargin" >
-          <number>0</number>
-         </property>
-         <property name="topMargin" >
-          <number>0</number>
-         </property>
-         <property name="rightMargin" >
-          <number>0</number>
-         </property>
-         <property name="bottomMargin" >
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="hdrVisualizationTitleLabel" >
-           <property name="text" >
-            <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Hdr Visualization Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="hdrVisualizationTitleSeparatorLine" >
-           <property name="orientation" >
-            <enum>Qt::Horizontal</enum>
-           </property>
           </widget>
          </item>
          <item>
@@ -853,16 +346,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing" >
              <number>8</number>
             </property>
-            <property name="leftMargin" >
-             <number>5</number>
-            </property>
-            <property name="topMargin" >
-             <number>5</number>
-            </property>
-            <property name="rightMargin" >
-             <number>5</number>
-            </property>
-            <property name="bottomMargin" >
+            <property name="margin" >
              <number>5</number>
             </property>
             <item>
@@ -870,16 +354,7 @@ p, li { white-space: pre-wrap; }
               <property name="spacing" >
                <number>6</number>
               </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
+              <property name="margin" >
                <number>0</number>
               </property>
               <item>
@@ -894,7 +369,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>40</width>
                   <height>20</height>
@@ -916,16 +391,7 @@ p, li { white-space: pre-wrap; }
               <property name="spacing" >
                <number>6</number>
               </property>
-              <property name="leftMargin" >
-               <number>0</number>
-              </property>
-              <property name="topMargin" >
-               <number>0</number>
-              </property>
-              <property name="rightMargin" >
-               <number>0</number>
-              </property>
-              <property name="bottomMargin" >
+              <property name="margin" >
                <number>0</number>
               </property>
               <item>
@@ -940,7 +406,7 @@ p, li { white-space: pre-wrap; }
                 <property name="orientation" >
                  <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="sizeHint" >
+                <property name="sizeHint" stdset="0" >
                  <size>
                   <width>40</width>
                   <height>20</height>
@@ -965,10 +431,327 @@ p, li { white-space: pre-wrap; }
            <property name="orientation" >
             <enum>Qt::Vertical</enum>
            </property>
-           <property name="sizeHint" >
+           <property name="sizeType" >
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>20</width>
+             <height>30</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tonemappingPage" >
+        <layout class="QVBoxLayout" >
+         <property name="spacing" >
+          <number>3</number>
+         </property>
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="titleTonemappingPageLabel" >
+           <property name="text" >
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:10pt; font-weight:600;">Tonemapping Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="TMtitleSeparatorLine" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="tempDirGroupBox" >
+           <property name="title" >
+            <string>Cache</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>8</number>
+            </property>
+            <property name="margin" >
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="tempDirDescriptionLabel" >
+              <property name="text" >
+               <string>Where to store temporary data:</string>
+              </property>
+              <property name="wordWrap" >
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLineEdit" name="lineEditTempPath" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="readOnly" >
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="chooseCachePathButton" >
+                <property name="text" >
+                 <string>&amp;Choose</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="batchGroupBox" >
+           <property name="title" >
+            <string>Batch Tonemapping</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>8</number>
+            </property>
+            <property name="margin" >
+             <number>5</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="batchLdrFormatLabel" >
+                <property name="toolTip" >
+                 <string>Which LDR image format to save to</string>
+                </property>
+                <property name="text" >
+                 <string>LDR image &amp;format:</string>
+                </property>
+                <property name="buddy" >
+                 <cstring>batchLdrFormatComboBox</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="batchLdrFormatComboBox" >
+                <property name="toolTip" >
+                 <string>Which LDR image format to save to</string>
+                </property>
+                <item>
+                 <property name="text" >
+                  <string>JPEG</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text" >
+                  <string>PNG</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text" >
+                  <string>PPM</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text" >
+                  <string>PBM</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text" >
+                  <string>BMP</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="numThreadsLabel" >
+                <property name="toolTip" >
+                 <string>Amount of threads to use on multicore/SMP machines</string>
+                </property>
+                <property name="text" >
+                 <string>Number of &amp;threads:</string>
+                </property>
+                <property name="wordWrap" >
+                 <bool>true</bool>
+                </property>
+                <property name="buddy" >
+                 <cstring>numThreadspinBox</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="numThreadspinBox" >
+                <property name="sizePolicy" >
+                 <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip" >
+                 <string>Amount of threads to use on multicore/SMP machines</string>
+                </property>
+                <property name="minimum" >
+                 <number>1</number>
+                </property>
+                <property name="maximum" >
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
             <size>
              <width>20</width>
              <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="externalToolsPage" >
+        <layout class="QVBoxLayout" >
+         <property name="spacing" >
+          <number>0</number>
+         </property>
+         <property name="margin" >
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="dcrawTitleLabel" >
+           <property name="text" >
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;span style=" font-size:10pt; font-weight:600;">External Tools&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line" >
+           <property name="orientation" >
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="dcrawGroupBox" >
+           <property name="title" >
+            <string>DCraw options:</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>0</number>
+            </property>
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="dcrawParamsLineEdit" >
+              <property name="toolTip" >
+               <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-family:'Sans Serif';">Read &lt;/span>&lt;span style=" font-family:'Sans Serif'; font-style:italic;">Help &amp;gt; Contents &amp;gt; DCRaw reference&lt;/span>&lt;span style=" font-family:'Sans Serif';"> to find out more about DCRaw command line arguments&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" >
+              <property name="spacing" >
+               <number>6</number>
+              </property>
+              <property name="margin" >
+               <number>0</number>
+              </property>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="aisGroupBox" >
+           <property name="title" >
+            <string>align_image_stack commandline arguments:</string>
+           </property>
+           <layout class="QVBoxLayout" >
+            <property name="spacing" >
+             <number>0</number>
+            </property>
+            <property name="margin" >
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="aisParamsLineEdit" >
+              <property name="toolTip" >
+               <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-family:'Sans Serif';">Read &lt;/span>&lt;span style=" font-family:'Sans Serif'; font-style:italic;">Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span>&lt;span style=" font-family:'Sans Serif';"> to find out more about align_image_stack command line arguments&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation" >
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0" >
+            <size>
+             <width>121</width>
+             <height>51</height>
             </size>
            </property>
           </spacer>
@@ -991,16 +774,7 @@ p, li { white-space: pre-wrap; }
      <property name="spacing" >
       <number>6</number>
      </property>
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <property name="rightMargin" >
-      <number>0</number>
-     </property>
-     <property name="bottomMargin" >
+     <property name="margin" >
       <number>0</number>
      </property>
      <item>
@@ -1015,7 +789,8 @@ p, li { white-space: pre-wrap; }
         <string>&amp;What's this?</string>
        </property>
        <property name="icon" >
-        <iconset resource="../icons.qrc" >:/new/prefix1/images/whatsthis.png</iconset>
+        <iconset resource="../icons.qrc" >
+         <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
        </property>
        <property name="iconSize" >
         <size>
@@ -1033,7 +808,7 @@ p, li { white-space: pre-wrap; }
        <property name="orientation" >
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0" >
         <size>
          <width>131</width>
          <height>31</height>

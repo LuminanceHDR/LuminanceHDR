@@ -80,8 +80,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	setCentralWidget(mdiArea);
 
-	dock = new QDockWidget(tr("Tone mapping Panel"), this);
-	dock->setObjectName("Tone Mapping Panel"); // for save and restore docks state
+	dock = new QDockWidget(tr("Tonemapping Options"), this);
+	dock->setObjectName("Tonemapping Options"); // for save and restore docks state
 	//dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);

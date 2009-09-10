@@ -65,7 +65,6 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
-	connect(helpDcrawParamsButton,SIGNAL(clicked()),this,SLOT(helpDcrawParamsButtonClicked()));
 	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis()));
 
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();

@@ -47,7 +47,7 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
 
 		outfname = QFileDialog::getSaveFileName(
 				parent,
-				QObject::tr("Save the LDR to..."),
+				QObject::tr("Save the LDR image as..."),
 				QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
 				filetypes
 		);

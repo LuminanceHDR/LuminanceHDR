@@ -25,7 +25,7 @@
      <x>0</x>
      <y>0</y>
      <width>1337</width>
-     <height>31</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp" >
@@ -111,7 +111,7 @@
     <bool>true</bool>
    </property>
    <property name="windowTitle" >
-    <string>Toolbar</string>
+    <string>Show Main Toolbar</string>
    </property>
    <property name="orientation" >
     <enum>Qt::Horizontal</enum>
@@ -152,19 +152,19 @@
      <normaloff>:/new/prefix1/images/exit.png</normaloff>:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Exit</string>
+    <string>&amp;Close</string>
    </property>
    <property name="iconText" >
-    <string>Exit</string>
-   </property>
-   <property name="toolTip" >
     <string>Close</string>
    </property>
+   <property name="toolTip" >
+    <string>Close the tonemapping dialog</string>
+   </property>
    <property name="statusTip" >
-    <string>Close Tone Mapping Window</string>
+    <string>Close the tonemapping dialog</string>
    </property>
    <property name="whatsThis" >
-    <string>Close Tone Mapping Window </string>
+    <string>Close the tonemapping dialog</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+Q</string>
@@ -182,19 +182,19 @@
      <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
    </property>
    <property name="text" >
-    <string>Tone Mapping Panel</string>
+    <string>Tonemapping Options</string>
    </property>
    <property name="iconText" >
-    <string>Tone Mapping Panel</string>
+    <string>Tonemapping Options</string>
    </property>
    <property name="toolTip" >
-    <string>Tone Mapping Panel</string>
+    <string>Toggle display of the tonemapping options sidebar</string>
    </property>
    <property name="statusTip" >
-    <string>Show/Hide the Tone mapping Panel</string>
+    <string>Toggle display of the tonemapping options sidebar</string>
    </property>
    <property name="whatsThis" >
-    <string>Show/Hide the Tone mapping Panel</string>
+    <string>Show/Hide the tonemapping options sidebar</string>
    </property>
   </action>
   <action name="actionFix_Histogram" >
@@ -298,10 +298,10 @@
     <string>Images as Thumbnails</string>
    </property>
    <property name="statusTip" >
-    <string>Layout all LDRs as thumbnails.</string>
+    <string>Layout all LDR images as thumbnails</string>
    </property>
    <property name="whatsThis" >
-    <string>Layout all LDRs as thumbnails.</string>
+    <string>Layout all LDR images as thumbnails</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+T</string>
@@ -363,10 +363,10 @@
     <string>What's This?</string>
    </property>
    <property name="statusTip" >
-    <string>Use this button to get information about the graphical elements</string>
+    <string>Get verbose information about user interface elements</string>
    </property>
    <property name="whatsThis" >
-    <string>Use this button to get information about the graphical elements</string>
+    <string>Get verbose information about user interface elements</string>
    </property>
    <property name="shortcut" >
     <string>Shift+F1</string>
@@ -378,10 +378,16 @@
      <normaloff>:/new/prefix1/images/help.png</normaloff>:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Documentation...</string>
+    <string>&amp;Contents...</string>
+   </property>
+   <property name="toolTip" >
+    <string>Open user manual for Luminance</string>
+   </property>
+   <property name="statusTip" >
+    <string>Open user manual for Luminance</string>
    </property>
    <property name="shortcut" >
-    <string>Ctrl+H</string>
+    <string>F1</string>
    </property>
   </action>
   <action name="actionSaveAll" >
@@ -429,10 +435,10 @@
     <string>HDR Image</string>
    </property>
    <property name="statusTip" >
-    <string>Shows the Original High Dynamic Range Image</string>
+    <string>Show the original high dynamic range image</string>
    </property>
    <property name="whatsThis" >
-    <string>Shows the Original High Dynamic Range Image</string>
+    <string>Show the original high dynamic range image</string>
    </property>
   </action>
   <action name="actionShowNext" >
@@ -453,10 +459,10 @@
     <string>Next Image</string>
    </property>
    <property name="statusTip" >
-    <string>Shows The Next Image</string>
+    <string>Show the next image</string>
    </property>
    <property name="whatsThis" >
-    <string>Shows The Next Image</string>
+    <string>Show the next image</string>
    </property>
   </action>
   <action name="actionShowPrevious" >
@@ -477,10 +483,10 @@
     <string>Previous Image</string>
    </property>
    <property name="statusTip" >
-    <string>Shows The Previous Image</string>
+    <string>Show the previous image</string>
    </property>
    <property name="whatsThis" >
-    <string>Shows The Previous Image</string>
+    <string>Show the previous image</string>
    </property>
   </action>
   <action name="actionNormal_Size" >
@@ -587,17 +593,44 @@
      <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
    </property>
    <property name="text" >
-    <string>Lock Images</string>
+    <string>Sync View</string>
+   </property>
+   <property name="toolTip" >
+    <string>Lock view of all images to sync panning</string>
+   </property>
+   <property name="statusTip" >
+    <string>Lock view of all images to sync panning</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Lock view of all images to sync panning</string>
    </property>
   </action>
   <action name="actionAbout_Luminance" >
    <property name="text" >
     <string>About Luminance</string>
    </property>
+   <property name="toolTip" >
+    <string>Show information about Luminance</string>
+   </property>
+   <property name="statusTip" >
+    <string>Show information about Luminance, its authors and contributors</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Show information about Luminance, its authors and contributors</string>
+   </property>
   </action>
   <action name="actionAbout_Qt" >
    <property name="text" >
     <string>About Qt</string>
+   </property>
+   <property name="toolTip" >
+    <string>Show information about Qt</string>
+   </property>
+   <property name="statusTip" >
+    <string>Show information about Qt library that is used by Luminance</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Show information about Qt library that is used by Luminance</string>
    </property>
   </action>
   <action name="actionThreadManager" >
@@ -609,7 +642,7 @@
      <normaloff>:/new/prefix1/images/system-run.png</normaloff>:/new/prefix1/images/system-run.png</iconset>
    </property>
    <property name="text" >
-    <string>ThreadManager</string>
+    <string>Threads Manager</string>
    </property>
   </action>
  </widget>
