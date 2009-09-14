@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Batch Tone Mapping</string>
+   <string>Batch Tonemapping</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -34,7 +34,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_3" >
        <property name="title" >
-        <string>Input Hdr list</string>
+        <string>Input HDR Images List</string>
        </property>
        <layout class="QHBoxLayout" >
         <property name="spacing" >
@@ -154,7 +154,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_5" >
        <property name="title" >
-        <string>Input Tone Mapping Setting list</string>
+        <string>Input Tonemapping Settings List</string>
        </property>
        <layout class="QHBoxLayout" >
         <property name="spacing" >

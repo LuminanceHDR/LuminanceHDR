@@ -182,7 +182,7 @@ void GenericViewer::route_changed() {
 
 void GenericViewer::closeEvent ( QCloseEvent * event ) {
 	if (NeedsSaving) {
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This Image has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
+		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This image has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
 		if (ret==QMessageBox::Yes)
 			event->accept();
 		else

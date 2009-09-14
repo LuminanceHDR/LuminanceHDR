@@ -178,7 +178,7 @@ void MainWindow::fileNewViaWizard(QStringList files) {
 }
 
 void MainWindow::fileOpen() {
-	QString filetypes = tr("All Hdr formats ");
+	QString filetypes = tr("All HDR formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
 	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;" ;
 	filetypes += "OpenEXR (*.exr *.EXR);;" ;

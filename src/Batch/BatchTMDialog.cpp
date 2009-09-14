@@ -90,7 +90,7 @@ void BatchTMDialog::add_dir_HDRs() {
 }
 
 void BatchTMDialog::add_HDRs() {
-	QString filetypes = tr("All Hdr formats ");
+	QString filetypes = tr("All HDR formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 "
                       "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)";
 	QStringList onlyhdrs=QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirHDRSetting, filetypes);
@@ -275,7 +275,7 @@ void BatchTMDialog::load_HDR_failed(QString error_message) {
 extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
-	add_log_message(tr("Starting to tone map HDR file: ")+filename);
+	add_log_message(tr("Starting to tonemap an HDR image: ")+filename);
 	//TODO
 	const char *fname = QFile::encodeName(luminance_options->tempfilespath+"/original.pfs").constData();
 	FILE *fd = fopen(fname, "w");
