@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Luminance</string>
+   <string>LuminanceHDR</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
