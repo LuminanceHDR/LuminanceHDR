@@ -2281,7 +2281,7 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="label" >
               <property name="text" >
-               <string>&amp;Result size:</string>
+               <string>&amp;Result Size:</string>
               </property>
               <property name="margin" >
                <number>1</number>
@@ -2492,10 +2492,10 @@ Selection</string>
                </size>
               </property>
               <property name="toolTip" >
-               <string>Start tone mapping (CTRL+A).</string>
+               <string>Start tonemapping (CTRL+A)</string>
               </property>
               <property name="whatsThis" >
-               <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</string>
+               <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</string>
               </property>
               <property name="text" >
                <string>&amp;Apply</string>

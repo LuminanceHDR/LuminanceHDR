@@ -26,7 +26,7 @@
           <x>0</x>
           <y>0</y>
           <width>395</width>
-          <height>234</height>
+          <height>236</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout" >
@@ -73,14 +73,14 @@
        <item>
         <widget class="QPushButton" name="clearButton" >
          <property name="text" >
-          <string>Clear List</string>
+          <string>Clear &amp;List</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="closeButton" >
          <property name="text" >
-          <string>Close</string>
+          <string>&amp;Close</string>
          </property>
         </widget>
        </item>

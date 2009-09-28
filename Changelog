@@ -1,5 +1,10 @@
 Changes 2.0.0
-* Project renamed from 'Qtpfsgui' to 'Luminance'
+* Project renamed from 'Qtpfsgui' to 'LuminanceHDR'
+* Cropping of HDR images
+* Tonemapping selections
+* Threads manager
+* Added mantiuk08
+* New help browser and new help content
 TODO: Check Flickr (and other external links) (actually mapped to 'luminance')
 TODO: Repaint Icons in TMO dialog
  
