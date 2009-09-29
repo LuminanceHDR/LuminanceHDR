@@ -60,11 +60,11 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	QDir dir(QDir::homePath());
 
 #ifdef WIN32
-	if (!dir.exists("Luminance"))
-		dir.mkdir("Luminance");
+	if (!dir.exists("LuminanceHDR"))
+		dir.mkdir("LuminanceHDR");
 #else
-	if (!dir.exists(".Luminance"))
-		dir.mkdir(".Luminance");
+	if (!dir.exists(".LuminanceHDR"))
+		dir.mkdir(".LuminanceHDR");
 #endif
 
 	restoreState( settings.value("MainWindowState").toByteArray());
@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	luminance_options=LuminanceOptions::getInstance();
 	load_options();
 
-	setWindowTitle("Luminance "LUMINANCEVERSION);
+	setWindowTitle("LuminanceHDR "LUMINANCEVERSION);
 
 	//recent files
 	for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -183,10 +183,10 @@ void MainWindow::fileOpen() {
 	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;" ;
 	filetypes += "OpenEXR (*.exr *.EXR);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-	filetypes += "TIFF Images (*.TIFF *.TIF *.tiff *.tif);;";
-	filetypes += "RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
+	filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
+	filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
 	filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;";
-	filetypes += "PFS Stream (*.pfs *.PFS)";
+	filetypes += "PFS stream (*.pfs *.PFS)";
 	QStringList files = QFileDialog::getOpenFileNames(
         	this,
 		tr("Load one or more HDR images..."),
@@ -353,11 +353,11 @@ void MainWindow::tonemap_requested() {
 			helpBrowser->hide();
 	}
 	catch(pfs::Exception e) {
-		QMessageBox::warning(this,tr("Luminance"),tr("Error: %1 ").arg(e.getMessage()));
+		QMessageBox::warning(this,tr("LuminanceHDR"),tr("Error: %1 ").arg(e.getMessage()));
 		reEnableMainWin();	
 	}
 	catch(...) {
-		QMessageBox::warning(this,tr("Luminance"),tr("Error: Filed to Tonemap Image"));
+		QMessageBox::warning(this,tr("LuminanceHDR"),tr("Error: Filed to Tonemap Image"));
 		reEnableMainWin();	
 	}
 }
@@ -367,7 +367,7 @@ bool MainWindow::testTempDir(QString dirname) {
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		return true;
 	} else {
-		QMessageBox::critical(this,tr("Error..."),tr("Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tone Mapping."),
+		QMessageBox::critical(this,tr("Error..."),tr("LuminanceHDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
@@ -490,7 +490,7 @@ void MainWindow::current_mdi_original_size() {
 }
 
 void MainWindow::openDocumentation() {
-	helpBrowser = new HelpBrowser(this,"Luminance Help");
+	helpBrowser = new HelpBrowser(this,"LuminanceHDR Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
 	helpBrowser->show();
@@ -658,7 +658,7 @@ void MainWindow::fileExit() {
 		if (((HdrViewer*)p->widget())->needsSaving())
 			closeok=false;
 	}
-	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one Hdr with unsaved changes.<br>Do you still want to quit?"),
+	if (closeok || (QMessageBox::warning(this,tr("Unsaved changes..."),tr("There is at least one HDR image with unsaved changes.<br>Do you still want to quit?"),
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
 		== QMessageBox::Yes))
 		emit close();
@@ -774,8 +774,8 @@ void MainWindow::cropToSelection(void) {
 	pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
 	newHdrViewer->updateHDR(cropped_frame);
-	newHdrViewer->setFileName(QString(tr("Cropped Frame")));
-	newHdrViewer->setWindowTitle(QString(tr("Cropped Frame")));
+	newHdrViewer->setFileName(QString(tr("Cropped Image")));
+	newHdrViewer->setWindowTitle(QString(tr("Cropped Image")));
 	newHdrViewer->setSelectionTool(true);
 
     newHdrViewer->setFlagUpdateImage(false); // disable updating image for performance

@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Luminance Help</string>
+   <string>LuminanceHDR Help</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>630</width>
-     <height>31</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

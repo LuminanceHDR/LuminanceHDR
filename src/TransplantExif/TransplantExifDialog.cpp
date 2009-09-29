@@ -44,7 +44,7 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	connect(addleft,		SIGNAL(clicked()),this,SLOT(append_left()));
 	connect(addright,		SIGNAL(clicked()),this,SLOT(append_right()));
 	connect(TransplantButton,	SIGNAL(clicked()),this,SLOT(transplant_requested()));
-	connect(HelpButton,		SIGNAL(clicked()),this,SLOT(help_requested()));
+ /*	connect(HelpButton,		SIGNAL(clicked()),this,SLOT(help_requested())); */
 
 	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));

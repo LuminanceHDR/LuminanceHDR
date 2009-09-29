@@ -30,7 +30,7 @@ void ExifOperations::writeExifData(const std::string& filename, const std::strin
 	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
 	image->readMetadata();
 	Exiv2::ExifData &exifData = image->exifData();
-	exifData["Exif.Image.Software"]="Created with opensource tool Luminance, http://luminance.sourceforge.net";
+	exifData["Exif.Image.Software"]="Created with opensource tool LuminanceHDR, http://luminancehdr.sourceforge.net";
 	exifData["Exif.Image.ImageDescription"]=comment;
 	exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
 	image->setExifData(exifData);

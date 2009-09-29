@@ -545,7 +545,7 @@ void TonemappingPanel::on_loadsettingsbutton_clicked() {
 			this,
 			tr("Load a tonemapping settings text file..."),
 			recentPathLoadSaveTmoSettings,
-			tr("Luminance tonemapping settings text file (*.txt)") );
+			tr("LuminanceHDR tonemapping settings text file (*.txt)") );
 	if( ! opened.isEmpty() ) {
 		QFileInfo qfi(opened);
 		if (!qfi.isReadable()) {
@@ -572,7 +572,7 @@ void TonemappingPanel::on_savesettingsbutton_clicked() {
 			this,
 			tr("Save tonemapping settings text file to..."),
 			recentPathLoadSaveTmoSettings,
-			tr("Luminance tonemapping settings text file (*.txt)"));
+			tr("LuminanceHDR tonemapping settings text file (*.txt)"));
 	if( ! fname.isEmpty() ) {
 		QFileInfo qfi(fname);
 		if (qfi.suffix().toUpper() != "TXT") {
@@ -597,7 +597,7 @@ void TonemappingPanel::fromGui2Txt(QString destination) {
 		return;
 	}
 	QTextStream out(&file);
-	out << "# Luminance Tonemapping Setting file." << endl;
+	out << "# LuminanceHDR Tonemapping Setting file." << endl;
 	out << "# Editing this file by hand is risky, worst case scenario is Luminance crashing." << endl;
 	out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
 	out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
@@ -688,7 +688,7 @@ void TonemappingPanel::fromTxt2Gui() {
 		value=line.section('=',1,1); //get the value
 		if (field == "TMOSETTINGSVERSION") {
 			if (value != TMOSETTINGSVERSION) {
-				QMessageBox::critical(this,tr("Aborting..."),tr("Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one."),
+				QMessageBox::critical(this,tr("Aborting..."),tr("Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one."),
 				QMessageBox::Ok,QMessageBox::NoButton);
 				return;
 			}

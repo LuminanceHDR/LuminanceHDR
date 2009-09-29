@@ -97,7 +97,7 @@ QStringList PreferencesDialog::sanitizeDCRAWparams() {
 		dcraw_opt_was_ok=true;
 	}
 	if (!dcraw_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -T..."),tr("Luminance requires dcraw to be executed with the \"-T\" option. Commandline options have been corrected."));
+		QMessageBox::information(this,tr("Option -T..."),tr("LuminanceHDR requires dcraw to be executed with the \"-T\" option. Command line options have been corrected."));
 	}
 	return temp_dcraw_options;
 
@@ -132,14 +132,14 @@ QStringList PreferencesDialog::sanitizeAISparams() {
 		align_opt_was_ok=true;
 	}
 	if (!align_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -a..."),tr("Luminance requires align_image_stack to be executed with the \"-a aligned_\" option. Commandline options have been corrected."));
+		QMessageBox::information(this,tr("Option -a..."),tr("LuminanceHDR requires align_image_stack to be executed with the \"-a aligned_\" option. Command line options have been corrected."));
 	}
 	return temp_ais_options;
 }
 
 void PreferencesDialog::ok_clicked() {
 	if (luminance_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
-		QMessageBox::information(this,tr("Please restart..."),tr("Please restart Luminance to use the new language (%1).").arg(languageComboBox->currentText()));
+		QMessageBox::information(this,tr("Please restart..."),tr("Please restart LuminanceHDR to use the new language (%1).").arg(languageComboBox->currentText()));
 	luminance_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
 	settings.setValue(KEY_GUI_LANG,luminance_options->gui_lang);
 

@@ -37,7 +37,7 @@ LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const 
 
 	QPixmap newImage = QPixmap::fromImage(origimage);
 
-	QLabel *informativeLabel = new QLabel( tr("LDR Image [%1 x %2]")
+	QLabel *informativeLabel = new QLabel( tr("LDR image [%1 x %2]")
 			.arg(newImage.width()).arg(newImage.height()),
 		toolBar
 	);
