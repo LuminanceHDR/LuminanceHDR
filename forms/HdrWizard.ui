@@ -343,7 +343,7 @@
                           </sizepolicy>
                          </property>
                          <property name="text" >
-                          <string>Auto &amp;Align Images</string>
+                          <string>&amp;Autoalign images</string>
                          </property>
                         </widget>
                        </item>
@@ -360,12 +360,12 @@
                          </property>
                          <item>
                           <property name="text" >
-                           <string>hugin's align_image_stack</string>
+                           <string>Hugin's align_image_stack</string>
                           </property>
                          </item>
                          <item>
                           <property name="text" >
-                           <string>Median Threshold Bitmap</string>
+                           <string>Median threshold bitmap</string>
                           </property>
                          </item>
                         </widget>
@@ -513,7 +513,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QLabel" name="label_weights" >
                   <property name="text" >
-                   <string>Weighting Function:</string>
+                   <string>Weighting function:</string>
                   </property>
                  </widget>
                 </item>
@@ -562,7 +562,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QLabel" name="label_resp" >
                   <property name="text" >
-                   <string>Response Curve:</string>
+                   <string>Response curve:</string>
                   </property>
                  </widget>
                 </item>
@@ -611,7 +611,7 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QLabel" name="label_model" >
                   <property name="text" >
-                   <string>HDR Creation Model:</string>
+                   <string>HDR creation model:</string>
                   </property>
                  </widget>
                 </item>
@@ -686,7 +686,7 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </property>
                   <property name="text" >
-                   <string>Response Curve:</string>
+                   <string>Response curve:</string>
                   </property>
                  </widget>
                 </item>
@@ -1066,7 +1066,7 @@ p, li { white-space: pre-wrap; }
                       </sizepolicy>
                      </property>
                      <property name="text" >
-                      <string>Save response function to file</string>
+                      <string>Save response function to file:</string>
                      </property>
                     </widget>
                    </item>
@@ -1090,7 +1090,7 @@ p, li { white-space: pre-wrap; }
                         </size>
                        </property>
                        <property name="text" >
-                        <string>Save as...</string>
+                        <string>Save As...</string>
                        </property>
                       </widget>
                      </item>
@@ -1153,7 +1153,7 @@ p, li { white-space: pre-wrap; }
                    <item>
                     <widget class="QLabel" name="label_choosemodel" >
                      <property name="text" >
-                      <string>Choose Model:</string>
+                      <string>Choose model:</string>
                      </property>
                     </widget>
                    </item>

@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Luminance Preferences</string>
+   <string>Preferences</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -41,13 +41,13 @@
        </property>
        <property name="minimumSize" >
         <size>
-         <width>100</width>
+         <width>90</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>110</width>
+         <width>105</width>
          <height>16777215</height>
         </size>
        </property>
@@ -83,6 +83,9 @@
        </property>
        <property name="currentRow" >
         <number>-1</number>
+       </property>
+       <property name="sortingEnabled" >
+        <bool>false</bool>
        </property>
        <item>
         <property name="text" >
@@ -143,7 +146,7 @@
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex" >
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="languagePage" >
         <layout class="QVBoxLayout" >
@@ -158,6 +161,8 @@
            <property name="font" >
             <font>
              <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
             </font>
            </property>
            <property name="text" >
@@ -280,12 +285,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <item>
           <widget class="QLabel" name="titleHdrTiffLabel" >
+           <property name="font" >
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text" >
-            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;span style=" font-size:10pt; font-weight:600;">HDR Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+            <string>HDR Options</string>
            </property>
           </widget>
          </item>
@@ -317,7 +325,7 @@ p, li { white-space: pre-wrap; }
                <string>Good quality and smaller file size</string>
               </property>
               <property name="text" >
-               <string>LogLuv Tiff (float, 16bit per color channel)</string>
+               <string>LogLuv TIFF (float, 16bit per color channel)</string>
               </property>
               <property name="checked" >
                <bool>true</bool>
@@ -330,7 +338,7 @@ p, li { white-space: pre-wrap; }
                <string>Better quality, larger file size, better compatibility with other applications</string>
               </property>
               <property name="text" >
-               <string>Float Tiff (float, 32bit per color channel)</string>
+               <string>Float TIFF (float, 32bit per color channel)</string>
               </property>
              </widget>
             </item>
@@ -360,7 +368,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QLabel" name="negativeColorsLabel" >
                 <property name="text" >
-                 <string>Show Negative Numbers as:</string>
+                 <string>Show negative numbers as:</string>
                 </property>
                </widget>
               </item>
@@ -454,12 +462,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <item>
           <widget class="QLabel" name="titleTonemappingPageLabel" >
+           <property name="font" >
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text" >
-            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:10pt; font-weight:600;">Tonemapping Options&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+            <string>Tonemapping Options</string>
            </property>
           </widget>
          </item>
@@ -516,7 +527,7 @@ p, li { white-space: pre-wrap; }
               <item>
                <widget class="QPushButton" name="chooseCachePathButton" >
                 <property name="text" >
-                 <string>&amp;Choose</string>
+                 <string>C&amp;hoose</string>
                 </property>
                </widget>
               </item>
@@ -665,12 +676,15 @@ p, li { white-space: pre-wrap; }
          </property>
          <item>
           <widget class="QLabel" name="dcrawTitleLabel" >
+           <property name="font" >
+            <font>
+             <pointsize>10</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
            <property name="text" >
-            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
-p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Sans Serif';">&lt;span style=" font-size:10pt; font-weight:600;">External Tools&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+            <string>External Tools</string>
            </property>
           </widget>
          </item>

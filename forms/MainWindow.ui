@@ -33,10 +33,10 @@
     <property name="title" >
      <string>&amp;Tools</string>
     </property>
-    <addaction name="OptionsAction" />
-    <addaction name="separator" />
     <addaction name="Transplant_Exif_Data_action" />
     <addaction name="actionBatch_Tone_Mapping" />
+    <addaction name="separator" />
+    <addaction name="OptionsAction" />
    </widget>
    <widget class="QMenu" name="menuHelp" >
     <property name="title" >
@@ -264,10 +264,10 @@
     <string>&amp;Quit</string>
    </property>
    <property name="toolTip" >
-    <string>Quit Luminance</string>
+    <string>Quit LuminanceHDR</string>
    </property>
    <property name="statusTip" >
-    <string>Quit Luminance</string>
+    <string>Quit LuminanceHDR</string>
    </property>
    <property name="whatsThis" >
     <string>Exit</string>
@@ -411,13 +411,13 @@
     <string>About...</string>
    </property>
    <property name="toolTip" >
-    <string>Open user manual for Luminance</string>
+    <string>Open user manual for LuminanceHDR</string>
    </property>
    <property name="statusTip" >
-    <string>Open user manual for Luminance</string>
+    <string>Open user manual for LuminanceHDR</string>
    </property>
    <property name="whatsThis" >
-    <string>Open user manual for Luminance</string>
+    <string>Open user manual for LuminanceHDR</string>
    </property>
    <property name="shortcut" >
     <string>F1</string>
@@ -730,16 +730,16 @@
   </action>
   <action name="actionAbout_Luminance" >
    <property name="text" >
-    <string>About &amp;Luminance</string>
+    <string>About &amp;LuminanceHDR</string>
    </property>
    <property name="toolTip" >
-    <string>Show information about Luminance</string>
+    <string>Show information about LuminanceHDR</string>
    </property>
    <property name="statusTip" >
-    <string>Show information about Luminance, its authors and contributors</string>
+    <string>Show information about LuminanceHDR, its authors and contributors</string>
    </property>
    <property name="whatsThis" >
-    <string>Show information about Luminance, its authors and contributors</string>
+    <string>Show information about LuminanceHDR, its authors and contributors</string>
    </property>
   </action>
   <action name="actionSave_Hdr_Preview" >
