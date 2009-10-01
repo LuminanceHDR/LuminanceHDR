@@ -7,7 +7,7 @@
  * To appear in: ACM Transactions on Graphics (Proc. of SIGGRAPH'08) 27 (3)
  * http://www.mpi-inf.mpg.de/resources/hdr/datmo/
  *
- * This file is a part of Luminance package, based on pfstmo.
+ * This file is a part of LuminanceHDR package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

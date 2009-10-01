@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2007 Giuseppe Rota
  *

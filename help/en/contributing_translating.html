@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Luminance User Manual - Contributing - Translating</title>
+<title>LuminanceHDR User Manual - Contributing - Translating</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -15,7 +15,7 @@
 
 <p><img src="images/not-translated-menu-item.png" /></p>
 
-<p>Luminance ships with such a file as well. It is located in root directory with source code and gets installed to /usr/share/applications or /usr/local/share/applications, depending on your preferences.</p>
+<p>LuminanceHDR ships with such a file as well. It is located in root directory with source code and gets installed to /usr/share/applications or /usr/local/share/applications, depending on your preferences.</p>
 
 <p>To get a localized menu entry you need to do a very simple thing:</p>
 
@@ -24,7 +24,7 @@
 <li>Create a new entry which looks like "Comment[LANG]=Create and tonemap HDR images", where LANG is a two-letter code for your language (as referenced by <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO-639-1</a>) and everything after "=" is translated.</li>
 <li>Create a new entry which looks like "GenericName[LANG]=HDR imaging".</li>
 <li>Save.</li>
-<li>Test by running 'sudo make install' (if Luminance is already installed or just 'sudo cp luminance.desktop /usr/share/applications/' and look in the menu.</li>
+<li>Test by running 'sudo make install' (if LuminanceHDR is already installed or just 'sudo cp luminance.desktop /usr/share/applications/' and look in the menu.</li>
 </ol>
 
 <p>You should see something like this:</p>
@@ -35,7 +35,7 @@
 
 <h3>Translating user interface</h3>
 
-<p>The very first thing you need to translate Luminance into your native language is to get source code from the current development branch. To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type</p>
+<p>The very first thing you need to translate LuminanceHDR into your native language is to get source code from the current development branch. To do this, you need a Subversion client (<span class="code">svn</span> being the regular command line client). Then type</p>
 
 <p><tt>svn co https://qtpfsgui.svn.sourceforge.net/svnroot/qtpfsgui/trunk/qtpfsgui qtpfsgui</tt></p>
 
@@ -46,7 +46,7 @@
 <p>The next steps are as follows:</p>
 
 <ol>
-	<li>Go to the top level directory of Luminance's source code.</li>
+	<li>Go to the top level directory of LuminanceHDR's source code.</li>
 	<li>Open the file called <em>project.pro</em>.</li>
 	<li>Find a section that starts with "TRANSLATIONS =" and add a new line that looks like "i18n/lang_LOCALE.ts \", where LOCALE is a two-letter code for your language (as referenced by <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO-639-1</a>), lowercase, e.g. <em>pt</em> for Portuguese.</li>
 	<li>Save the <em>project.pro</em> file.</li>
@@ -58,7 +58,7 @@
 
 <p>Here are some tips to help you make translation better.</p>
 
-<p>Translating Luminance takes a while, so it's best to translate those parts of user interface that you use most of the time. This will give you a false, but useful feeling of accomplishment and motivation to finish the whole work.</p>
+<p>Translating LuminanceHDR takes a while, so it's best to translate those parts of user interface that you use most of the time. This will give you a false, but useful feeling of accomplishment and motivation to finish the whole work.</p>
 
 <p>Test your translation as frequently as possible. This is especially important for dialogs that you rarely use.</p>
 
@@ -72,9 +72,9 @@
 
 <p>Every translation is kept in its own directory named with two-letter language code like <em>ru</em> for Russian or <em>es</em> for Spanish. So download source code, unpack it and create a copy of <em>help/en</em> directory in <em>help</em> directory.</p>
 
-<p>Start translating. It's best to translate table of contents first and proceed with actual content later. To translate table of contents open menu.xml file in your editor of choice and translate values of every <em>text</em> attribute. E.g. for &lt;area text="Setting up Luminance" file="prefs.html"&gt; translatable text will be "Setting up Luminance".</p>
+<p>Start translating. It's best to translate table of contents first and proceed with actual content later. To translate table of contents open menu.xml file in your editor of choice and translate values of every <em>text</em> attribute. E.g. for &lt;area text="Setting up LuminanceHDR" file="prefs.html"&gt; translatable text will be "Setting up LuminanceHDR".</p>
 
-<p>To test your translation open a terminal window, go to the top level directory with source code, and run <tt>sudo make install</tt> to reinstall Luminance. All available translations will be automaticaly copied to the right place, and you will have to restart Luminance to let it pick the added translation. However, as you progress with your translation, you only need to restart help browser to see changes in table of contents and you don't even need to restart the help browser to see changes in separate chapters&nbsp;&mdash; just click on some other chapter and go back again.</p>
+<p>To test your translation open a terminal window, go to the top level directory with source code, and run <tt>sudo make install</tt> to reinstall LuminanceHDR. All available translations will be automaticaly copied to the right place, and you will have to restart LuminanceHDR to let it pick the added translation. However, as you progress with your translation, you only need to restart help browser to see changes in table of contents and you don't even need to restart the help browser to see changes in separate chapters&nbsp;&mdash; just click on some other chapter and go back again.</p>
 
 <p>If user interface is not localized, you might want to do it before translating docs. Some users might complain and tell you that user interface in English is a de-facto standard and thus localized documentation should refer only to English UI. But this is just because they have grown up to use unlocalized software, so don't you worry.</p>
 

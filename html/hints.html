@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <title>Hints &#038; Tips for Luminance</title>
+  <title>Hints &#038; Tips for LuminanceHDR</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body>
-<h1>Hints &#038; Tips for Luminance</h1>
+<h1>Hints &#038; Tips for LuminanceHDR</h1>
 <ol>
 <li><A href="#singleraw">Single Raw file workflow</A></li>
 <li><A href="#postproc">Post-processing of the LDR</A></li>
@@ -14,11 +14,11 @@
 </ol>
 
 <A name="singleraw"><h2>Single Raw file workflow</h2></A>
-<p>You can load directly a raw file in Luminance via the "File->Load Hdr..." menu item. Doing so you will be able to tone map directly this single raw file. This means that there is no need to create different exposures in Ufraw from your raw file.</p>
+<p>You can load directly a raw file in LuminanceHDR via the "File->Load Hdr..." menu item. Doing so you will be able to tone map directly this single raw file. This means that there is no need to create different exposures in Ufraw from your raw file.</p>
 <p>When the user wants to load a single raw file in the main workspace a RAW->TIFF conversion takes place by calling the dcraw executable.<br>
 For more information please read the page about <A href="dcraw.html">Raw Conversion</A>.
 </p>
-<p>If you still don't like what Luminance does with your raw file and you want to process you raw file directly before loading it in Luminance (white balance, color profile, and so on), you can use Ufraw to tweak the color settings of your raw file, and then save the result as a 16-bits tiff file.<br>
+<p>If you still don't like what LuminanceHDR does with your raw file and you want to process you raw file directly before loading it in LuminanceHDR (white balance, color profile, and so on), you can use Ufraw to tweak the color settings of your raw file, and then save the result as a 16-bits tiff file.<br>
 Just remember to save the result as a 16-bits file, or you'll lose some dynamic range in the process.</p>
 
 <A name="postproc"><h2>Post-processing of the LDR</h2></A>
@@ -32,7 +32,7 @@ Just remember to save the result as a 16-bits file, or you'll lose some dynamic 
 </p>
 
 <A name="align_image_stack"><h2>Align_image_stack</h2></A>
-<p>align_image_stack is a tool that can be found in the hugin project (http://hugin.sf.net). It is a standalone tool (an exe in windows) that can perform various functions, we use it in Luminance to do what it says, i.e. to align a stack of (LDR) images.<br>
+<p>align_image_stack is a tool that can be found in the hugin project (http://hugin.sf.net). It is a standalone tool (an exe in windows) that can perform various functions, we use it in LuminanceHDR to do what it says, i.e. to align a stack of (LDR) images.<br>
 <strong>Linux</strong><br>
 As of today (23 Nov 2007) the hugin project has not published a release with align_image_stack in it yet (they are working hard for their next release). Linux users have to checkout the project's subversion repository and compile the sources. On this page ( http://luminance.wiki.sourceforge.net/align_image_stack ) you can find how to do that.<br>
 <strong>Mac OS X</strong><br>

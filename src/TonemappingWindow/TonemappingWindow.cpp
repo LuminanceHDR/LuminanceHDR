@@ -1,5 +1,5 @@
 /*
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -48,7 +48,7 @@ TonemappingWindow::~TonemappingWindow() {
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0) {
 	setupUi(this);
 
-	setWindowTitle("Luminance "LUMINANCEVERSION" - Tonemapping Window - ");
+	setWindowTitle("LuminanceHDR "LUMINANCEVERSION" - Tonemapping Window - ");
 
 	workingLogoTimer = new QTimer();
 	workingLogoTimer->setInterval(100);
@@ -436,7 +436,7 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 }
 
 void TonemappingWindow::openDocumentation() {
-	HelpBrowser *helpBrowser = new HelpBrowser(this,"Luminance Help");
+	HelpBrowser *helpBrowser = new HelpBrowser(this,"LuminanceHDR Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	helpBrowser->show();
 }
@@ -522,7 +522,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
-		QMessageBox::critical(this,tr("Luminance"),tr("Error: %1").arg(e),
+		QMessageBox::critical(this,tr("LuminanceHDR"),tr("Error: %1").arg(e),
 					QMessageBox::Ok,QMessageBox::NoButton);
 }
 

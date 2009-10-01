@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  *
  *  This program is free software; you can redistribute it and/or modify

@@ -67,7 +67,7 @@ Language tab should not say "User Interface" on top when opened.
 18. It is already possible, but probably not very well advertised. See
 --bit-depth parameter of pfsoutimgmagick.
 
-19. If you set a custom LDR size, Luminance suddenly processes a fullsize 
+19. If you set a custom LDR size, LuminanceHDR suddenly processes a fullsize 
 picture.
 
 20. After saving EXR or HDR an attempt to close this HDR image results

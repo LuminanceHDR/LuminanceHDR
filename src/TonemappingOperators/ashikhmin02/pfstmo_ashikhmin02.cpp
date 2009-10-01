@@ -2,7 +2,7 @@
  * @brief Ashikhmin Tone Mapping Operator: tone reproduction for displaying high contrast scenes
  * Michael Ashikhmin 2002
  *
- * This file is a part of Luminance package, based on pfstmo.
+ * This file is a part of LuminanceHDR package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Grzegorz Krawczyk
  * 

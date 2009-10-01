@@ -1,7 +1,7 @@
 /**
  * @brief Read files in OpenEXR format
  * 
- * This file is a part of Luminance package, based on pfstools.
+ * This file is a part of LuminanceHDR package, based on pfstools.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * 

@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Raw convertion parameters</h1>
-This page gives some details about the raw image format conversion process that takes place in Luminance.
+This page gives some details about the raw image format conversion process that takes place in LuminanceHDR.
 <ol>
 <li><A href="#intro">Introduction</A></li>
 <li><A href="#tweak">Tweaking the conversion process</A></li>
@@ -23,14 +23,14 @@ Each time the user:
 <li>specifies a set of raw files in the "File -> New Hdr..." wizard</li>
 </ul>
 a RAW->TIFF conversion transparently takes place by calling the dcraw [1] executable (by Dave Coffin).<br>
-Luminance calls dcraw to convert a raw file [2] to a (either 8 bit or 16 bit) TIFF file.<br>
+LuminanceHDR calls dcraw to convert a raw file [2] to a (either 8 bit or 16 bit) TIFF file.<br>
 
 <A name="tweak"><h2>Tweaking the conversion process</h2></A>
 You can tweak the way dcraw operates by setting specific command line switches (aka options or parameters) in the <em>Tools -> Preferences... -> Raw Import</em> section (here's a screenshot).<br>
 <img src="images/raw_conversion.jpg" width="483" height="480"><br>
 The -T switch (TIFF output, see <A href="#excerpt">below</A>) is the only required parameter.<br>
 In this particular case we have also specified the optional -4 parameter to ask dcraw to obtain a 16 bit (TIFF) file.<br>
-Starting with Luminance 1.9.3 the default options for calling dcraw are -T -4 -q 3.<br>
+Starting with LuminanceHDR 1.9.3 the default options for calling dcraw are -T -4 -q 3.<br>
 The dcraw's manual page lists all the available options.<br>
 An excerpt is available <A href="#excerpt">below</A>, for the latest manual page follow this reference [3].<br>
 

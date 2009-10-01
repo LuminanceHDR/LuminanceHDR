@@ -2,17 +2,17 @@
 <html>
 
 <head>
-  <title>Luminance Manual</title>
+  <title>LuminanceHDR Manual</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body>
-<h1>Luminance Manual</h1>
+<h1>LuminanceHDR Manual</h1>
 <ol>
 <li><A href="#intro">Introduction</A></li>
 	<ol>
 	<li><A href="#features">Summary of features</A></li>
 	</ol>
-<li><A href="#usingluminance">Using Luminance</A></li>
+<li><A href="#usingluminance">Using LuminanceHDR</A></li>
 	<ol>
 	<li><A href="#mainwindow">The main window</A></li>
 		<ol>
@@ -28,7 +28,7 @@
 </ol>
 
 <A name="intro"><h2>Introduction</h2></A>
-Luminance is an open source graphical user interface application that provides a workflow for HDR imaging.
+LuminanceHDR is an open source graphical user interface application that provides a workflow for HDR imaging.
 
 
 <A name="features"><h3>Summary of features</h3></A>
@@ -45,17 +45,17 @@ The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wi
 Raw files are processed with dcraw in order to obtain a (8 or 16 bit) tiff file. For more information read <A href="dcraw.html">this page</A>.<br>
 The pictures must have been taken at the same scene, with different exposure settings (change the exposure time and/or aperture, and use a tripod if you have one). The newly created HDR will be available in the workspace as soon as the HDR creation wizard has ended.<br>
 The input files can be aligned via two alignment engines: align_image_stack and MTB.<br>
-The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. Luminance provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
+The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. LuminanceHDR provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
 Read the chapter <A href="#createhdr">about the creation of an hdr</A> for more information about the alignment engines and the interactive anti-ghosting tool.<br>
 To tone map an HDR file to get an LDR image <strong>(second feature)</strong> you can press the "Tonemap the HDR" button.<br>
 Via the "File -> Open Hdr..." wizard you can choose to load in the workspace an HDR image image file, and the "File->Save Hdr as..." item lets you save the currently selected hdr image to a HDR image file format <strong>(third feature)</strong>.<br>
 Users can also rotate and resize <strong>(fourth feature)</strong> the currently selected hdr image via the "Image" menu item, see below.<br>
 It is also possible to apply panoramic (projective) transformation to a Hdr image via the "Image" menu item <strong>(fifth feature)</strong>.<br>
-In order to create an HDR image Luminance requires to have a set of images with exif data in it. Luminance requires this information to get the exposure settings for an image in the set. When Luminance doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement Luminance provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(sixth feature)</strong>.
+In order to create an HDR image LuminanceHDR requires to have a set of images with exif data in it. LuminanceHDR requires this information to get the exposure settings for an image in the set. When LuminanceHDR doesn't find this information in an image it warns the user and aborts the hdr creation process. To cope with this requirement LuminanceHDR provides a panel that performs a one-to-one copy of the exif data between two sets of files <strong>(sixth feature)</strong>.
 
 
-<A name="usingluminance"><h2>Using Luminance</h2></A>
-This chapter describes the most important elements of Luminance: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
+<A name="usingluminance"><h2>Using LuminanceHDR</h2></A>
+This chapter describes the most important elements of LuminanceHDR: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
 
 <A name="mainwindow"><h3>The main window</h3></A>
 Here's the main window that you can see once the program has launched.<br>
@@ -142,7 +142,7 @@ In this section you can find a complete reference describing what all the items 
 <dd>moves the boundaries of the blue "histogram selection" rectangle right.</dd>
 <hr>
 <dt>Tools -> Preferences...</dt>
-<dd>launches a window that lets you configure the global behaviour of Luminance.</dd>
+<dd>launches a window that lets you configure the global behaviour of LuminanceHDR.</dd>
 <dt>Tools -> Copy Exif Data...</dt>
 <dd>launches a window that lets you copy (a one-to-one copy) the exif tags in a set of images into another set.</dd>
 <hr>

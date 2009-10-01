@@ -1,7 +1,7 @@
 /**
  * @brief IO operations on Radiance's RGBE file format
  * 
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003-2007 Rafal Mantiuk and Grzegorz Krawczyk
  * 

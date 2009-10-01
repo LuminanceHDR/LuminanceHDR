@@ -1,7 +1,7 @@
 /**
  * @brief Writing QImage from PFS stream (which is a tonemapped LDR)
  *
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
  *

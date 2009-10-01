@@ -1,5 +1,5 @@
 /*
- * This file is a part of Luminance package, based on pfstmo.
+ * This file is a part of LuminanceHDR package, based on pfstmo.
  *
  * common configuration file for tone mapping operators
  */

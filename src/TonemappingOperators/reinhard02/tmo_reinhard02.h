@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance package, based on pfstmo.
+ * This file is a part of LuminanceHDR package, based on pfstmo.
  * @file tmo_reinhard02.h
  * @brief Tone map luminance channel using Reinhard02 model
  *

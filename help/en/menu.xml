@@ -35,7 +35,7 @@
 		<submenuitem text="Copying Exif metadata" file="copying_exif.html" />
 	</area>
 
-	<area text="Setting up Luminance" file="prefs.html">
+	<area text="Setting up LuminanceHDR" file="prefs.html">
 		<submenuitem text="Tonemapping" file="prefs_tonemapping.html" />
 		<submenuitem text="User interface" file="prefs_ui.html" />
 		<submenuitem text="External tools" file="prefs_tools.html" />

@@ -1,6 +1,6 @@
 /**
  * 
- * This file is a part of Luminance package.
+ * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004,2005,2006,2007 Rafal Mantiuk and Grzegorz Krawczyk
  * 

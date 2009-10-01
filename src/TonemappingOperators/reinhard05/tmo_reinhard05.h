@@ -6,7 +6,7 @@
  * E. Reinhard and K. Devlin.
  * In IEEE Transactions on Visualization and Computer Graphics, 2005.
  *
- * This file is a part of Luminance package, based on pfstmo.
+ * This file is a part of LuminanceHDR package, based on pfstmo.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2007 Grzegorz Krawczyk
  * 
