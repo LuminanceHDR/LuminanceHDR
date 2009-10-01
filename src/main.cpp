@@ -71,8 +71,7 @@ int main( int argc, char ** argv )
 #endif
 	QTranslator translator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
-	//translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-	translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, "/usr/share/luminance/i18n/");
+	translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
 	application.installTranslator(&translator);
 	MainWindow mainWindow;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
