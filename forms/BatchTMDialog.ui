@@ -10,7 +10,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Batch Tonemapping</string>
+   <string>Batch Tone Mapping</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -154,7 +154,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_5" >
        <property name="title" >
-        <string>Input Tonemapping Settings List</string>
+        <string>Input Tone Mapping Settings List</string>
        </property>
        <layout class="QHBoxLayout" >
         <property name="spacing" >

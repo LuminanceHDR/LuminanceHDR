@@ -48,7 +48,7 @@ TonemappingWindow::~TonemappingWindow() {
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0) {
 	setupUi(this);
 
-	setWindowTitle("LuminanceHDR "LUMINANCEVERSION" - Tonemapping Window - ");
+	setWindowTitle("LuminanceHDR "LUMINANCEVERSION" - Tone Mapping - ");
 
 	workingLogoTimer = new QTimer();
 	workingLogoTimer->setInterval(100);
@@ -80,8 +80,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	setCentralWidget(mdiArea);
 
-	dock = new QDockWidget(tr("Tonemapping Options"), this);
-	dock->setObjectName("Tonemapping Options"); // for save and restore docks state
+	dock = new QDockWidget(tr("Tone Mapping Options"), this);
+	dock->setObjectName("Tone Mapping Options"); // for save and restore docks state
 	//dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);

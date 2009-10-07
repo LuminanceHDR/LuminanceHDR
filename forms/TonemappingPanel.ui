@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
+    <width>381</width>
     <height>744</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <property name="toolTip" >
-   <string>Tonemapping operators and their options</string>
+   <string>Tone mapping operators and their options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_13" >
    <property name="margin" >
@@ -2114,7 +2114,7 @@ p, li { white-space: pre-wrap; }
         <string>Here you can load and save a tone mapping settings file.&lt;br>You can also apply the contents of the currently loaded settings file.</string>
        </property>
        <property name="title" >
-        <string>Tonemapping settings</string>
+        <string>Tone Mapping Settings</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_4" >
         <property name="horizontalSpacing" >
@@ -2300,7 +2300,7 @@ p, li { white-space: pre-wrap; }
                </sizepolicy>
               </property>
               <property name="toolTip" >
-               <string>The size of the resulting LDR image.</string>
+               <string>Size of the resulting LDR image</string>
               </property>
               <property name="whatsThis" >
                <string>Here you can choose the size of the resulting LDR image.</string>
@@ -2342,8 +2342,11 @@ p, li { white-space: pre-wrap; }
             </item>
             <item>
              <widget class="QLabel" name="label_8" >
+              <property name="toolTip" >
+               <string>Process only selection of the original HDR image</string>
+              </property>
               <property name="text" >
-               <string>Tonemap
+               <string>Process
 Selection</string>
               </property>
              </widget>
@@ -2363,6 +2366,9 @@ Selection</string>
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox" >
+              <property name="toolTip" >
+               <string>Process only selection of the original HDR image</string>
+              </property>
               <property name="text" >
                <string/>
               </property>

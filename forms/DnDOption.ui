@@ -19,7 +19,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle" >
-   <string>Drag and drop</string>
+   <string>Drag and Drop</string>
   </property>
   <property name="windowIcon" >
    <iconset resource="../icons.qrc" >
@@ -81,7 +81,7 @@
       </size>
      </property>
      <property name="description" >
-      <string>Open an existing HDR.</string>
+      <string>Open an existing HDR image</string>
      </property>
     </widget>
    </item>
@@ -101,7 +101,7 @@
       </size>
      </property>
      <property name="description" >
-      <string>Create a new HDR, by using one or more images.</string>
+      <string>Create a new HDR image from one or more images</string>
      </property>
     </widget>
    </item>
@@ -121,7 +121,7 @@
       </size>
      </property>
      <property name="description" >
-      <string>Cancel the drag and drop process and return to the main window.</string>
+      <string>Cancel the drag and drop process and return to the main window</string>
      </property>
     </widget>
    </item>

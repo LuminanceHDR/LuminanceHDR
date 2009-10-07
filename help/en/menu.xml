@@ -2,11 +2,11 @@
 <menu>
 
 	<area text="Welcome" file="index.html">
-		<submenuitem text="Features overview" file="features.html" />
-		<submenuitem text="What's new" file="news.html" />
+		<submenuitem text="Features Overview" file="features.html" />
+		<submenuitem text="What's New" file="news.html" />
 	</area>
 
-	<area text="HDR imaging basics" file="basics.html">
+	<area text="HDR Imaging Basics" file="basics.html">
 	</area>
 
 <!-- Let's see if we really need explianing UI parts
@@ -16,12 +16,12 @@
 	<area text="Workflow" file="workflow.html">
 	</area>
 
-	<area text="Creating HDR images" file="creating_hdr.html">
+	<area text="Creating HDR Images" file="creating_hdr.html">
 		<submenuitem text="Interactive" file="creating_hdr_interactive.html" />
 		<submenuitem text="From console" file="creating_hdr_cli.html" />
 	</area>
 
-	<area text="Editing HDR images" file="editing_hdr.html">
+	<area text="Editing HDR Images" file="editing_hdr.html">
 	</area>
 
 	<area text="Tonemapping HDR images" file="tonemapping.html">
@@ -30,40 +30,40 @@
 		<submenuitem text="From console" file="tonemapping_cli.html" />
 	</area>
 
-	<area text="Additional tools" file="additional.html">
+	<area text="Additional Tools" file="additional.html">
 		<submenuitem text="Projective transformation" file="projective_transformation.html" />
 		<submenuitem text="Copying Exif metadata" file="copying_exif.html" />
 	</area>
 
-	<area text="Setting up LuminanceHDR" file="prefs.html">
+	<area text="Setting up" file="prefs.html">
 		<submenuitem text="Tonemapping" file="prefs_tonemapping.html" />
 		<submenuitem text="User interface" file="prefs_ui.html" />
-		<submenuitem text="External tools" file="prefs_tools.html" />
+		<submenuitem text="External Tools" file="prefs_tools.html" />
 		<submenuitem text="Hdr Tiff" file="prefs_tiff.html" />
 		<submenuitem text="Hdr Visualization" file="prefs_visualization.html" />
 	</area>
 
-	<area text="Tonemapping operators reference" file="tmap_ref.html">
+	<area text="Tone Mapping Operators" file="tmap_ref.html">
 		<submenuitem text="Mantiuk'06" file="tmap_ref_mantiuk06.html" />
-		<submenuitem text="Mantiuk'08" file="tmap_ref_mantiuk08.html" />
-		<submenuitem text="Fattal" file="tmap_ref_fattal.html" />
+<!--		<submenuitem text="Mantiuk'08" file="tmap_ref_mantiuk08.html" />
+		<submenuitem text="Fattal" file="tmap_ref_fattal.html" /> -->
 		<submenuitem text="Drago" file="tmap_ref_drago.html" />
 		<submenuitem text="Durand" file="tmap_ref_durand.html" />
-		<submenuitem text="Reinhard'02" file="tmap_ref_reinhard02.html" />
+<!--		<submenuitem text="Reinhard'02" file="tmap_ref_reinhard02.html" />
 		<submenuitem text="Reinhard'05" file="tmap_ref_reinhard05.html" />
 		<submenuitem text="Ashikhmin" file="tmap_ref_ashikhmin.html" />
-		<submenuitem text="Pattanaik" file="tmap_ref_pattanaik.html" />
+		<submenuitem text="Pattanaik" file="tmap_ref_pattanaik.html" /> -->
 	</area>
 
-	<area text="DCRaw reference" file="dcraw.html">
+	<area text="DCRaw Reference" file="dcraw.html">
 	</area>
 <!-- Who will need FAQ with a well structured user manual? :)
 	<area text="FAQ" file="faq.html">
 	</area>
 -->
 
-	<area text="Contributing to this project" file="contributing.html">
-		<submenuitem text="Testing and reporting" file="contributing_testing.html"/>
+	<area text="Contributing to This Project" file="contributing.html">
+		<submenuitem text="Testing and Reporting" file="contributing_testing.html"/>
 		<submenuitem text="Translating" file="contributing_translating.html"/>
 		<submenuitem text="Programming" file="contributing_programming.html"/>
 	</area>

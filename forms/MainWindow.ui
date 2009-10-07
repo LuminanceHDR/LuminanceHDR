@@ -34,8 +34,8 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="Transplant_Exif_Data_action" />
-    <addaction name="actionBatch_Tone_Mapping" />
     <addaction name="separator" />
+    <addaction name="actionBatch_Tone_Mapping" />
     <addaction name="OptionsAction" />
    </widget>
    <widget class="QMenu" name="menuHelp" >
@@ -110,9 +110,9 @@
     <addaction name="action_Projective_Transformation" />
     <addaction name="actionResizeHDR" />
     <addaction name="separator" />
-    <addaction name="TonemapAction" />
     <addaction name="cropToSelectionAction" />
     <addaction name="removeSelectionAction" />
+    <addaction name="TonemapAction" />
    </widget>
    <addaction name="menuFile" />
    <addaction name="menuEdit" />
@@ -237,19 +237,19 @@
      <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
    </property>
    <property name="text" >
-    <string>&amp;Tonemap...</string>
+    <string>&amp;Tone Mapping...</string>
    </property>
    <property name="iconText" >
-    <string>Tonemap HDR image</string>
+    <string>Convert to LDR</string>
    </property>
    <property name="toolTip" >
-    <string>Tonemap the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="statusTip" >
-    <string>Tonemap the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="whatsThis" >
-    <string>Tonemap the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
+    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+T</string>
@@ -692,16 +692,16 @@
   </action>
   <action name="actionBatch_Tone_Mapping" >
    <property name="text" >
-    <string>&amp;Batch Tonemapping...</string>
+    <string>&amp;Batch Tone Mapping...</string>
    </property>
    <property name="toolTip" >
-    <string>Tonemap multiple HDR images to LDR</string>
+    <string>Convert multiple HDR images to LDR</string>
    </property>
    <property name="statusTip" >
-    <string>Tonemap multiple HDR images to LDR using existing settings files</string>
+    <string>Convert multiple HDR images to LDR using existing settings files</string>
    </property>
    <property name="whatsThis" >
-    <string>Tonemap multiple HDR images to LDR using existing settings files</string>
+    <string>Convert multiple HDR images to LDR using existing settings files</string>
    </property>
    <property name="shortcut" >
     <string>Ctrl+B</string>

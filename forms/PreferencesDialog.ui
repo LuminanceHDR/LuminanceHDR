@@ -34,20 +34,20 @@
      <item>
       <widget class="QListWidget" name="leftsideListWidget" >
        <property name="sizePolicy" >
-        <sizepolicy vsizetype="Expanding" hsizetype="Preferred" >
+        <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize" >
         <size>
-         <width>90</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>105</width>
+         <width>151</width>
          <height>16777215</height>
         </size>
        </property>
@@ -61,16 +61,19 @@
         <enum>QListView::Static</enum>
        </property>
        <property name="flow" >
-        <enum>QListView::LeftToRight</enum>
+        <enum>QListView::TopToBottom</enum>
        </property>
        <property name="resizeMode" >
         <enum>QListView::Adjust</enum>
        </property>
        <property name="spacing" >
-        <number>5</number>
+        <number>3</number>
        </property>
        <property name="viewMode" >
-        <enum>QListView::IconMode</enum>
+        <enum>QListView::ListMode</enum>
+       </property>
+       <property name="modelColumn" >
+        <number>0</number>
        </property>
        <property name="uniformItemSizes" >
         <bool>true</bool>
@@ -107,7 +110,7 @@
        </item>
        <item>
         <property name="text" >
-         <string>Tonemapping</string>
+         <string>Tone Mapping</string>
         </property>
         <property name="icon" >
          <iconset resource="../icons.qrc" >
@@ -129,14 +132,14 @@
       <widget class="QStackedWidget" name="stackedPagesWidget" >
        <property name="minimumSize" >
         <size>
-         <width>300</width>
-         <height>370</height>
+         <width>0</width>
+         <height>0</height>
         </size>
        </property>
        <property name="maximumSize" >
         <size>
-         <width>400</width>
-         <height>500</height>
+         <width>16777215</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="frameShape" >
@@ -470,7 +473,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text" >
-            <string>Tonemapping Options</string>
+            <string>Tone Mapping Options</string>
            </property>
           </widget>
          </item>
@@ -539,7 +542,7 @@ p, li { white-space: pre-wrap; }
          <item>
           <widget class="QGroupBox" name="batchGroupBox" >
            <property name="title" >
-            <string>Batch Tonemapping</string>
+            <string>Batch Tone Mapping</string>
            </property>
            <layout class="QVBoxLayout" >
             <property name="spacing" >
@@ -791,32 +794,6 @@ p, li { white-space: pre-wrap; }
      <property name="margin" >
       <number>0</number>
      </property>
-     <item>
-      <widget class="QToolButton" name="whatsThisButton" >
-       <property name="toolTip" >
-        <string>Get information about the graphical elements</string>
-       </property>
-       <property name="whatsThis" >
-        <string>Get information about the graphical elements</string>
-       </property>
-       <property name="text" >
-        <string>&amp;What's this?</string>
-       </property>
-       <property name="icon" >
-        <iconset resource="../icons.qrc" >
-         <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
-       </property>
-       <property name="iconSize" >
-        <size>
-         <width>22</width>
-         <height>22</height>
-        </size>
-       </property>
-       <property name="shortcut" >
-        <string>Shift+F1</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <spacer>
        <property name="orientation" >

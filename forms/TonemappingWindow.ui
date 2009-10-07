@@ -182,10 +182,10 @@
      <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
    </property>
    <property name="text" >
-    <string>Tonemapping Options</string>
+    <string>Tone Mapping Options</string>
    </property>
    <property name="iconText" >
-    <string>Tonemapping Options</string>
+    <string>Tone Mapping Options</string>
    </property>
    <property name="toolTip" >
     <string>Toggle display of the tonemapping options sidebar</string>
