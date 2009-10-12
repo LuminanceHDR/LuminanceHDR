@@ -60,7 +60,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	Log_Widget->setModel(log_filter);
 
 	add_log_message(tr("Using %1 thread(s)").arg(luminance_options->num_threads));
-	add_log_message(tr("Saving using fileformat: ")+luminance_options->batch_ldr_format);
+	add_log_message(tr("Saving using file format: ")+luminance_options->batch_ldr_format);
 
 	qRegisterMetaType<QImage>("QImage");
 }
@@ -93,7 +93,7 @@ void BatchTMDialog::add_HDRs() {
 	QString filetypes = tr("All HDR images ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 "
                       "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)";
-	QStringList onlyhdrs=QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirHDRSetting, filetypes);
+	QStringList onlyhdrs=QFileDialog::getOpenFileNames(this, tr("Select input images"), RecentDirHDRSetting, filetypes);
 	add_view_model_HDRs(onlyhdrs);
 }
 
@@ -113,7 +113,7 @@ void BatchTMDialog::add_dir_TMopts() {
 }
 
 void BatchTMDialog::add_TMopts() {
-	QStringList onlytxts=QFileDialog::getOpenFileNames(this, tr("Load the tonemapping settings text files..."), RecentPathLoadSaveTmoSettings, tr("LuminanceHDR tonemapping settings text file (*.txt)"));
+	QStringList onlytxts=QFileDialog::getOpenFileNames(this, tr("Load tone mapping settings text files..."), RecentPathLoadSaveTmoSettings, tr("LuminanceHDR tone mapping settings text file (*.txt)"));
 	add_view_model_TM_OPTs(onlytxts);
 }
 
@@ -275,7 +275,7 @@ void BatchTMDialog::load_HDR_failed(QString error_message) {
 extern float pregamma;
 void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filename) {
 	pfs::DOMIO pfsio;
-	add_log_message(tr("Starting to tonemap an HDR image: ")+filename);
+	add_log_message(tr("Starting to convert an HDR image: ")+filename);
 	//TODO
 	const char *fname = QFile::encodeName(luminance_options->tempfilespath+"/original.pfs").constData();
 	FILE *fd = fopen(fname, "w");

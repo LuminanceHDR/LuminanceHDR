@@ -24,20 +24,20 @@
 	<area text="Editing HDR Images" file="editing_hdr.html">
 	</area>
 
-	<area text="Tonemapping HDR images" file="tonemapping.html">
+	<area text="Conversion to LDR" file="tonemapping.html">
 		<submenuitem text="Interactive" file="tonemapping_interactive.html" />
-		<submenuitem text="Batch mode" file="tonemapping_batch.html" />
-		<submenuitem text="From console" file="tonemapping_cli.html" />
+		<submenuitem text="Batch Mode" file="tonemapping_batch.html" />
+		<submenuitem text="From Console" file="tonemapping_cli.html" />
 	</area>
 
 	<area text="Additional Tools" file="additional.html">
-		<submenuitem text="Projective transformation" file="projective_transformation.html" />
-		<submenuitem text="Copying Exif metadata" file="copying_exif.html" />
+		<submenuitem text="Projective Transformation" file="projective_transformation.html" />
+		<submenuitem text="Copying Exif Metadata" file="copying_exif.html" />
 	</area>
 
 	<area text="Setting up" file="prefs.html">
 		<submenuitem text="Tonemapping" file="prefs_tonemapping.html" />
-		<submenuitem text="User interface" file="prefs_ui.html" />
+		<submenuitem text="User Interface" file="prefs_ui.html" />
 		<submenuitem text="External Tools" file="prefs_tools.html" />
 		<submenuitem text="Hdr Tiff" file="prefs_tiff.html" />
 		<submenuitem text="Hdr Visualization" file="prefs_visualization.html" />

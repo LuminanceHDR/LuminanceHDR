@@ -642,7 +642,7 @@
      <normaloff>:/new/prefix1/images/system-run.png</normaloff>:/new/prefix1/images/system-run.png</iconset>
    </property>
    <property name="text" >
-    <string>Threads Manager</string>
+    <string>Active TM Processes</string>
    </property>
   </action>
  </widget>
