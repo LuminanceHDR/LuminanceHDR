@@ -13,7 +13,7 @@
    <string>Batch Tone Mapping</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+   <iconset resource="../icons.qrc" >
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
@@ -66,7 +66,7 @@
              <string>Add &amp;Directory</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -89,7 +89,7 @@
              <string>&amp;Add Files</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -112,7 +112,7 @@
              <string>&amp;Remove Files</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -186,7 +186,7 @@
              <string>Add D&amp;irectory</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -209,7 +209,7 @@
              <string>Add Fi&amp;les</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -232,7 +232,7 @@
              <string>R&amp;emove Files</string>
             </property>
             <property name="icon" >
-             <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+             <iconset resource="../icons.qrc" >
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
             <property name="toolButtonStyle" >
@@ -414,7 +414,7 @@
            <string>Clear filter text</string>
           </property>
           <property name="icon" >
-           <iconset resource="../../qtpfsgui-rev628/icons.qrc" >
+           <iconset resource="../icons.qrc" >
             <normaloff>:/new/prefix1/images/fileclose.png</normaloff>:/new/prefix1/images/fileclose.png</iconset>
           </property>
          </widget>
@@ -501,7 +501,7 @@
   <tabstop>out_folder_widgets</tabstop>
  </tabstops>
  <resources>
-  <include location="../../qtpfsgui-rev628/icons.qrc" />
+  <include location="../icons.qrc" />
  </resources>
  <connections>
   <connection>
