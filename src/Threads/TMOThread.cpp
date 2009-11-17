@@ -69,6 +69,7 @@ TMOThread::~TMOThread() {
 }
 
 void TMOThread::terminateRequested() {
+	std::cout << "TMOThread::terminateRequested()" << std::endl;
 	ph->terminate(true);
 }
 

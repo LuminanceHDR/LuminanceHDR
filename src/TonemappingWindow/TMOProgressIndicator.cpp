@@ -27,6 +27,8 @@
 
 #include "TMOProgressIndicator.h"
 
+#include <iostream>
+
 TMOProgressIndicator::TMOProgressIndicator(QWidget *parent, QString labeltext) : 
 	QWidget(parent), m_isTerminated(false) 
 {
@@ -59,9 +61,10 @@ TMOProgressIndicator::~TMOProgressIndicator() {
 	delete m_abortButton;
 }
 
-
 void TMOProgressIndicator::terminated() {
+	std::cout << "TMOProgressIndicator::terminated()" << std::endl;
 	m_isTerminated = true;
+	emit deleteMe();
 }
 
 bool TMOProgressIndicator::isTerminated() {

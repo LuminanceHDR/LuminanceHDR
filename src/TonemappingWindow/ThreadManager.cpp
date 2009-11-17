@@ -25,26 +25,32 @@
 #include "ThreadManager.h"
 
 ThreadManager::~ThreadManager() {
-	clearAll();
+//	clearAll();
 }
 
 ThreadManager::ThreadManager(QWidget *parent) : QDialog(parent) {
 	setupUi(this);
 	setBackgroundRole(QPalette::Light);
-	connect(clearButton,SIGNAL(clicked()),this,SLOT(clearAll()));
+	connect(abortAllButton,SIGNAL(clicked()),this,SLOT(abortAll()));
 }
 
 void ThreadManager::addProgressIndicator(TMOProgressIndicator *pi) {
 	verticalLayout->addWidget(pi);	
 	widgets.append(pi);
+	connect(pi,SIGNAL(deleteMe()),this,SLOT(clearWidget()));
 }
 
-void ThreadManager::clearAll() {
+void ThreadManager::abortAll() {
+	foreach(TMOProgressIndicator *pi, widgets) 
+		pi->emit_terminate();
+}
+
+void ThreadManager::clearWidget() {
 	foreach(TMOProgressIndicator *pi, widgets) {
 		if (pi->isTerminated()) {
 			verticalLayout->removeWidget(pi);
-			delete pi;
 			widgets.removeOne(pi);
+			delete pi;
 		}
 	}
 }

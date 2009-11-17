@@ -39,9 +39,10 @@ Q_OBJECT
 public:
 	ThreadManager(QWidget *parent = 0);
 	~ThreadManager();
-	void addProgressIndicator(TMOProgressIndicator *pw);
+	void addProgressIndicator(TMOProgressIndicator *pi);
 public slots:
-	void clearAll();
+	void clearWidget(); 
+	void abortAll();
 protected:
 	virtual void showEvent(QShowEvent *event);
 	virtual void hideEvent(QHideEvent *event);

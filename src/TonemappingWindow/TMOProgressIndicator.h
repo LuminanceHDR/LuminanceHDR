@@ -32,10 +32,12 @@
 
 class TMOProgressIndicator : public QWidget {
 Q_OBJECT
+
 public:
 	TMOProgressIndicator(QWidget *parent, QString);
 	~TMOProgressIndicator();
 	bool isTerminated();
+	void emit_terminate() { emit terminate(); }
 public slots:
 	void setValue(int);
 	void setMaximum(int);
@@ -48,6 +50,7 @@ protected:
 	bool m_isTerminated;
 signals:
 	void terminate();
+	void deleteMe();
 };
 
 #endif

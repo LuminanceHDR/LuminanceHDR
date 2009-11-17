@@ -41,6 +41,8 @@
 #include "Viewers/LdrViewer.h"
 #include "TonemappingWindow.h"
 
+#include <iostream>
+
 TonemappingWindow::~TonemappingWindow() {
 	delete workingLogoTimer;
 }
@@ -527,6 +529,7 @@ void TonemappingWindow::showErrorMessage(const char *e) {
 }
 
 void TonemappingWindow::tonemappingFinished() {
+	std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
 	threadCounter--;
 	updateLogo();
 }
