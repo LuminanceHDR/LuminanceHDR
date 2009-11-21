@@ -765,10 +765,10 @@ void MainWindow::hideSaveDialog(void) {
 }
 
 void MainWindow::cropToSelection(void) {
-	disableCrop();
 	QRect cropRect = currenthdr->getSelectionRect();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+	disableCrop();
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
 	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
