@@ -29,6 +29,8 @@
 #include "Fileformat/pfstiff.h"
 #include "HdrInputLoader.h"
 
+#include <iostream>
+
 HdrInputLoader::HdrInputLoader(QString filename, int image_idx, QStringList dcrawOpts) : QThread(0), image_idx(image_idx), fname(filename), dcrawOpts(dcrawOpts) {
 }
 
@@ -67,8 +69,8 @@ void HdrInputLoader::run() {
 			}
 			//if 16bit (tiff) treat as hdr
 			else if (reader.is16bitTiff()) {
-				pfs::Frame *frame=reader.readIntoPfsFrame();
-				if (frame==NULL)
+				pfs::Frame *frame = reader.readIntoPfsFrame();
+				if (frame == NULL)
 					throw "Failed Loading Image";
 				emit mdrReady(frame, image_idx, expotime, fname);
 				return;
@@ -107,7 +109,7 @@ void HdrInputLoader::run() {
 				emit loadFailed(tr("ERROR: Cannot start dcraw on file: %1").arg(qfi.fileName()),image_idx);
 				return;
 			}
-			
+		
 			//blocking, timeout of 5mins
 			if(!rawconversion->waitForFinished(300000)) {
 				emit loadFailed(tr("ERROR: Error or timeout occured while executing dcraw on file: %1").arg(qfi.fileName()),image_idx);
@@ -122,14 +124,14 @@ void HdrInputLoader::run() {
 				qDebug("raw -> 8bit tiff");
 				QImage *newimage=reader.readIntoQImage();
 				emit ldrReady(newimage, image_idx, expotime, outfname, true);
-				return;
+				//return;
 			}
 			//if 16bit (tiff) treat as hdr
 			else if (reader.is16bitTiff()) {
 				qDebug("raw -> 16bit tiff");
 				pfs::Frame *frame=reader.readIntoPfsFrame();
 				emit mdrReady(frame, image_idx, expotime, outfname);
-				return;
+				//return;
 			}
 			//error if other tiff type
 			else {
@@ -137,6 +139,28 @@ void HdrInputLoader::run() {
 				return;
 			}
 			//now do not remove tiff file, it might be required by align_image_stack
+
+		//
+		// Extract thumbnail on disk	
+		//
+			QProcess *extract_thumbnail = new QProcess(0);
+		    QStringList parameters;
+		    parameters << "-e " << fname;
+			
+			std::cout << "FILE NAME: " << fname.toStdString() << std::endl;
+
+			extract_thumbnail->start("dcraw", parameters);
+			
+			if(!extract_thumbnail->waitForStarted(10000)) {
+				emit loadFailed(tr("ERROR: Cannot start dcraw to create thumbnail of file: %1").arg(qfi.fileName()),image_idx);
+				return;
+			}
+			
+			//blocking, timeout of 5mins
+			if(!extract_thumbnail->waitForFinished(300000)) {
+				emit loadFailed(tr("ERROR: Error or timeout occured, dcraw on file: %1").arg(qfi.fileName()),image_idx);
+				return;
+			}
 		}
 	}
 	catch(pfs::Exception e) {

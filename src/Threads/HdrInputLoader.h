@@ -37,8 +37,9 @@ public:
 	HdrInputLoader(QString filename, int image_idx, QStringList dcrawOpts);
 	~HdrInputLoader();
 signals:
-	void ldrReady(    QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
+	void ldrReady(QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
 	void mdrReady(pfs::Frame *mdrImage, int index, float expotime, QString new_fname);
+	void thumbReady(QImage *thumb);
 	void loadFailed(QString errormessage, int index);
 protected:
 	void run();

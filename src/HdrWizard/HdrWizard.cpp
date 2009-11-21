@@ -35,6 +35,8 @@
 #include "EditingTools.h"
 #include "HdrWizard.h"
 
+#include <iostream>
+
 HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
 	setAcceptDrops(true);
@@ -530,6 +532,18 @@ void HdrWizard::inputHdrFileSelected(int i) {
 		QImage *image=hdrCreationManager->getLDRList().at(i);
 		previewLabel->setPixmap(QPixmap::fromImage(image->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 	}
+	else {
+		QString fname = hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
+		//std::cout << thumb_name.toStdString() << std::endl;
+		//
+		//TODO: check the presence of thumbnail file on disk
+		//
+		QImage thumb_image(thumb_name);
+		previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+	}
+
 	ImageEVdsb->setFocus();
 }
 
