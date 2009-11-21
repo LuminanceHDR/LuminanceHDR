@@ -532,16 +532,16 @@ void HdrWizard::inputHdrFileSelected(int i) {
 		QImage *image=hdrCreationManager->getLDRList().at(i);
 		previewLabel->setPixmap(QPixmap::fromImage(image->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 	}
-	else {
+	else { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
 		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
-		//std::cout << thumb_name.toStdString() << std::endl;
-		//
-		//TODO: check the presence of thumbnail file on disk
-		//
-		QImage thumb_image(thumb_name);
-		previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+
+		if ( QFile::exists(thumb_name))  {
+			QImage thumb_image(thumb_name);
+			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+			QFile::remove(thumb_name);
+		}
 	}
 
 	ImageEVdsb->setFocus();

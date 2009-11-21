@@ -82,15 +82,48 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			QProcess *rawconversion = new QProcess(0);
+			//
+			// Extract thumbnail on disk	
+			//
+			QProcess *extract_thumbnail = new QProcess(0);
 
 			#ifdef WIN32
 			QString separator(";");
 			#else
 			QString separator(":");
 			#endif
+			
 			QStringList env = QProcess::systemEnvironment();
 			env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
+
+			extract_thumbnail->setEnvironment(env);
+
+		    QStringList parameters;
+		    parameters << "-e " << fname;
+			
+			#ifdef Q_WS_MAC
+			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw", parameters);
+			#elifdef Q_WS_WIN
+			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", parameters);
+			#else
+			extract_thumbnail->start("dcraw", parameters);
+			#endif
+			
+			if(!extract_thumbnail->waitForStarted(10000)) {
+				emit loadFailed(tr("ERROR: Cannot start dcraw to create thumbnail of file: %1").arg(qfi.fileName()),image_idx);
+				return;
+			}
+			
+			//blocking, timeout of 5mins
+			if(!extract_thumbnail->waitForFinished(300000)) {
+				emit loadFailed(tr("ERROR: Error or timeout occured, dcraw on file: %1").arg(qfi.fileName()),image_idx);
+				return;
+			}
+
+			//Start raw conversion
+
+			QProcess *rawconversion = new QProcess(0);
+
 			rawconversion->setEnvironment(env);
 			
 			QStringList params = dcrawOpts;
@@ -140,27 +173,6 @@ void HdrInputLoader::run() {
 			}
 			//now do not remove tiff file, it might be required by align_image_stack
 
-		//
-		// Extract thumbnail on disk	
-		//
-			QProcess *extract_thumbnail = new QProcess(0);
-		    QStringList parameters;
-		    parameters << "-e " << fname;
-			
-			std::cout << "FILE NAME: " << fname.toStdString() << std::endl;
-
-			extract_thumbnail->start("dcraw", parameters);
-			
-			if(!extract_thumbnail->waitForStarted(10000)) {
-				emit loadFailed(tr("ERROR: Cannot start dcraw to create thumbnail of file: %1").arg(qfi.fileName()),image_idx);
-				return;
-			}
-			
-			//blocking, timeout of 5mins
-			if(!extract_thumbnail->waitForFinished(300000)) {
-				emit loadFailed(tr("ERROR: Error or timeout occured, dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				return;
-			}
 		}
 	}
 	catch(pfs::Exception e) {
