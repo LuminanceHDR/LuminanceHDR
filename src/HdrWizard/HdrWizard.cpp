@@ -64,6 +64,22 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 	setupConnections();
 }
 
+HdrWizard::~HdrWizard() {
+	std::cout << "HdrWizard::~HdrWizard()" << std::endl;
+	
+	QStringList  fnames = hdrCreationManager->getFileList();
+	int n = fnames.size();
+	
+	for (int i=0; i<n; i++) {
+		QString fname = hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
+		QFile::remove(thumb_name);
+	}
+
+	delete EVgang;
+	delete hdrCreationManager;
+}
 
 void HdrWizard::setupConnections() {
 	connect(EVgang, SIGNAL(finished()), this, SLOT(editingEVfinished()));
@@ -519,7 +535,7 @@ void HdrWizard::editingEVfinished() {
 		NextFinishButton->setEnabled(true);
 		//give an offset to the EV values if they are outside of the -10..10 range.
 		hdrCreationManager->checkEVvalues();
-		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Great!!!</b></h3></font></center>"));
+		confirmloadlabel->setText(tr("<center><font color=\"#008400\"><h3><b>All the EV values have been set.<br>Now click on Next button.</b></h3></font></center>"));
 	} else {
 		confirmloadlabel->setText( QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(hdrCreationManager->getFilesLackingExif().size()) );
 	}
@@ -540,7 +556,6 @@ void HdrWizard::inputHdrFileSelected(int i) {
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
-			QFile::remove(thumb_name);
 		}
 	}
 
@@ -553,11 +568,16 @@ void HdrWizard::resizeEvent ( QResizeEvent * ) {
 		QImage *image=hdrCreationManager->getLDRList().at(tableWidget->currentRow());
 		previewLabel->setPixmap(QPixmap::fromImage(image->scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 	}
-}
+	else if (pagestack->currentIndex()==0 && tableWidget->currentRow()!=-1 && hdrCreationManager->inputImageType()!=HdrCreationManager::LDR_INPUT_TYPE) { // load preview from thumbnail previously created on disk
+		QString fname = hdrCreationManager->getFileList().at(tableWidget->currentRow());
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
 
-HdrWizard::~HdrWizard() {
-	delete EVgang;
-	delete hdrCreationManager;
+		if ( QFile::exists(thumb_name))  {
+			QImage thumb_image(thumb_name);
+			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+		}
+	}
 }
 
 
