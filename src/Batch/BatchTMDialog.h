@@ -58,6 +58,7 @@ private slots:
 	void load_HDR_failed(QString);
 	void finished_loading_hdr(pfs::Frame*,QString);
 	void newResult(const QImage&,TonemappingOptions*);
+	void newResult(const QImage&);
 	void filterChanged(const QString&);
 	void filterComboBoxActivated(int);
 protected:
@@ -93,5 +94,7 @@ private:
 	QSortFilterProxyModel *log_filter;
 	//the model that holds the data
 	QStringListModel *full_Log_Model;
+	pfs::Frame* workingPfsFrame;
+	TonemappingOptions *opts;
 };
 #endif

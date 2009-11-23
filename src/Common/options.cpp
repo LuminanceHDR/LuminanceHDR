@@ -109,7 +109,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 	TonemappingOptions *toreturn=new TonemappingOptions;
 	//specifying -2 as size, and passing -2 as the original size in the tone mapper thread constructor (instantiated in the batchDialog class), we basically bypass the resize step in the thread.
 	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
-	toreturn->xsize=-2;
+	//TODO
+	//toreturn->xsize=-2;
 
 	QTextStream in(&file);
 	QString field,value;

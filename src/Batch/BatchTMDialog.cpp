@@ -28,8 +28,9 @@
 #include "Common/config.h"
 #include "Libpfs/pfs.h"
 #include "Threads/LoadHdrThread.h"
-#include "Threads/tonemapperThread.h"
+#include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
+#include "Filter/pfscut.h"
 
 
 BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), done(false) {
@@ -51,8 +52,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	connect(remove_TMOpts_Button, SIGNAL(clicked()), this, SLOT(remove_TMOpts()));
 	connect(BatchGoButton, SIGNAL(clicked()), this, SLOT(start_called()));
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
-
 	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
+
 	full_Log_Model=new QStringListModel();
 	log_filter=new QSortFilterProxyModel(this);
 	log_filter->setDynamicSortFilter(true);
@@ -66,8 +67,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 }
 
 BatchTMDialog::~BatchTMDialog() {
-	QFile::remove(luminance_options->tempfilespath+"/original.pfs");
-	QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
+	//QFile::remove(luminance_options->tempfilespath+"/original.pfs");
+	//QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
 	QApplication::restoreOverrideCursor();
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
@@ -277,13 +278,14 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 	pfs::DOMIO pfsio;
 	add_log_message(tr("Starting to convert an HDR image: ")+filename);
 	//TODO
-	const char *fname = QFile::encodeName(luminance_options->tempfilespath+"/original.pfs").constData();
-	FILE *fd = fopen(fname, "w");
-	pfsio.writeFrame(loaded_hdr, fd );
-	fclose(fd);
+	//const char *fname = QFile::encodeName(luminance_options->tempfilespath+"/original.pfs").constData();
+	//FILE *fd = fopen(fname, "w");
+	//pfsio.writeFrame(loaded_hdr, fd );
+	//fclose(fd);
 	//pregamma=-1;
-	QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
-	pfsio.freeFrame(loaded_hdr);
+	//QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
+	workingPfsFrame = pfscopy(loaded_hdr);
+	//pfsio.freeFrame(loaded_hdr);
 	QFileInfo qfi(filename);
 	current_hdr_fname=out_folder_widgets->text() + "/" + qfi.completeBaseName();
 	//now start processing the list of tone mapping settings
@@ -291,7 +293,7 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 }
 
 void BatchTMDialog::conditional_TMthread() {
-/*
+
 	int first_not_started=-1;
 	//look for the first that has not been started yet
 	for (int i = 0; i < tm_opt_list.size(); i++) {
@@ -319,9 +321,15 @@ void BatchTMDialog::conditional_TMthread() {
 		while (running_threads < luminance_options->num_threads && first_not_started < tm_opt_list.size()) {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
-			TonemapperThread *thread = new TonemapperThread(-2,*(tm_opt_list.at(first_not_started).first));
 
-			connect(thread, SIGNAL(imageComputed(const QImage&,TonemappingOptions*)), this, SLOT(newResult(const QImage&,TonemappingOptions*)));
+			//TonemappingOptions *opts = tm_opt_list.at(first_not_started).first; 
+			opts = tm_opt_list.at(first_not_started).first; 
+			opts->xsize = workingPfsFrame->getWidth();
+			opts->origxsize = opts->xsize;
+			TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, workingPfsFrame, *opts);
+
+			connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(newResult(const QImage&)));
+
 			//start thread
 			thread->start();
 
@@ -342,7 +350,6 @@ void BatchTMDialog::conditional_TMthread() {
 		}
 		conditional_loadthread();
 	}
-*/
 }
 
 void BatchTMDialog::newResult(const QImage& newimage, TonemappingOptions* opts) {
@@ -352,7 +359,24 @@ void BatchTMDialog::newResult(const QImage& newimage, TonemappingOptions* opts) 
 	QString postfix=operations.getPostfix();
 	QString fname=current_hdr_fname+"_"+postfix+"."+luminance_options->batch_ldr_format;
 	if (!newimage.save(fname, luminance_options->batch_ldr_format.toAscii().constData(), 100)) {
-		qDebug("BATCH: newResult: Cannot save to %s",QFile::encodeName(fname).constData());
+		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
+	} else {
+		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+		ExifOperations::writeExifData(QFile::encodeName(fname).constData(),operations.getExifComment().toStdString());
+		add_log_message(tr("Successfully saved LDR file: ")+fname);
+	}
+	overallProgressBar->setValue(overallProgressBar->value()+1);
+	conditional_TMthread();
+}
+
+void BatchTMDialog::newResult(const QImage& newimage) {
+	std::cout << "BatchTMDialog::newResult" << std::endl;
+	running_threads--;
+	TMOptionsOperations operations(opts);
+	QString postfix=operations.getPostfix();
+	QString fname=current_hdr_fname+"_"+postfix+"."+luminance_options->batch_ldr_format;
+	//QString fname=current_hdr_fname+"."+luminance_options->batch_ldr_format;
+	if (!newimage.save(fname, luminance_options->batch_ldr_format.toAscii().constData(), 100)) {
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
