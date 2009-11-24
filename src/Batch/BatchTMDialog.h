@@ -18,12 +18,17 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing 
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef BATCH_IMPL_H
 #define BATCH_IMPL_H
 
+#include <QVector>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
 
@@ -94,7 +99,7 @@ private:
 	QSortFilterProxyModel *log_filter;
 	//the model that holds the data
 	QStringListModel *full_Log_Model;
-	pfs::Frame* workingPfsFrame;
+	QVector<pfs::Frame*> workingPfsFrame;
 	TonemappingOptions *opts;
 };
 #endif
