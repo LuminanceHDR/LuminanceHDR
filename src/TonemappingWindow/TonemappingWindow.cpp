@@ -541,21 +541,26 @@ void TonemappingWindow::deleteTMOThread(TMOThread *th) {
 void TonemappingWindow::updateLogo() {
 	if (threadCounter == 0) {
 		workingLogoTimer->stop();
-		//tmPanel->setLogoText(" ");
-		tmPanel->setLogoPixmap(QString(":/new/prefix1/images/luminance00.png"));
+		tmPanel->setLogoText(" ");
+		//tmPanel->setLogoPixmap(QString(":/new/prefix1/images/luminance00.png"));
 	}
 	else if (threadCounter > 0) {
 		workingLogoTimer->start();
-		frameCounter = ++frameCounter % 12;
+		//frameCounter = ++frameCounter % 12;
+		frameCounter = ++frameCounter % 8;
         
-	    //QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
-		if (frameCounter < 10) {
-	    	QString framename = ":/new/prefix1/images/luminance0" + QString::number(frameCounter) + ".png";
+		if (frameCounter < 8) {
+	    	QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
 			tmPanel->setLogoPixmap(framename);
 		}
-		else { 
-	    	QString framename = ":/new/prefix1/images/luminance" + QString::number(frameCounter) + ".png";
-			tmPanel->setLogoPixmap(framename);
-		}
+		//if (frameCounter < 10) {
+	    //	QString framename = ":/new/prefix1/images/luminance0" + QString::number(frameCounter) + ".png";
+		//	tmPanel->setLogoPixmap(framename);
+		//}
+		//else { 
+	    //	QString framename = ":/new/prefix1/images/luminance" + QString::number(frameCounter) + ".png";
+		//	tmPanel->setLogoPixmap(framename);
+		//}
+		//
 	}
 }

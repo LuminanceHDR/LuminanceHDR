@@ -806,7 +806,7 @@ void TonemappingPanel::setLogoText(const char *txt) {
 }
 
 void TonemappingPanel::setLogoPixmap(const QString &framename) {
-	//labelWorking->setPixmap(QPixmap(framename));
-	labelLogo->setPixmap(QPixmap(framename));
+	labelWorking->setPixmap(QPixmap(framename));
+	//labelLogo->setPixmap(QPixmap(framename));
 }
 
