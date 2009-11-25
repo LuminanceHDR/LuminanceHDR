@@ -561,8 +561,14 @@ void HdrWizard::inputHdrFileSelected(int i) {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 		}
+		else {
+			QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+			if ( QFile::exists(thumb_name))  {
+				QImage thumb_image(thumb_name);
+				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+			}
+		}
 	}
-
 	ImageEVdsb->setFocus();
 }
 
@@ -580,6 +586,13 @@ void HdrWizard::resizeEvent ( QResizeEvent * ) {
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+		}
+		else {
+			QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+			if ( QFile::exists(thumb_name))  {
+				QImage thumb_image(thumb_name);
+				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
+			}
 		}
 	}
 }
