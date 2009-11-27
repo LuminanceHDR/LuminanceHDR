@@ -790,8 +790,9 @@ void TonemappingPanel::on_addCustomSizeButton_clicked(){
 	int i = QInputDialog::getInteger(this, tr("Custom LDR size"),
 	                                      tr("Enter the width of the new size:"), 0 , 0, 2147483647, 1, &ok);
 	if (ok && i > 0) {
-		sizes.push_front(i);
+		sizes.push_back(i);
 		fillCustomSizeComboBox();
+		sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
 	}
 }
 
