@@ -116,8 +116,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	setupConnections();
 
 	// SPLASH SCREEoN
-	if (settings.contains("DoNotShowSplashScreen")) {
-		if (settings.value("DoNotShowSplashScreen").toInt())
+	if (settings.contains("ShowSplashScreen")) {
+		if (settings.value("ShowSplashScreen").toInt())
 			showSplash();
 	}
 	else 
@@ -722,7 +722,7 @@ void MainWindow::splashShowDonationsPage() {
 }
 
 void MainWindow::splashClose() {
-	settings.setValue("DoNotShowSplashScreen", 0);
+	settings.setValue("ShowSplashScreen", 0);
 	splash->close();
 }
 
