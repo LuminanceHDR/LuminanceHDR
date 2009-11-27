@@ -82,4 +82,7 @@
     <file alias="go-up.png" >icons/help/go-up.png</file>
     <file alias="help-browser.png" >icons/help/help-browser.png</file>
   </qresource>
+  <qresource prefix="/splash" >
+	<file>images/LuminanceImage.png</file>
+  </qresource>
 </RCC>

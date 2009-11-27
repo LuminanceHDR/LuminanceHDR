@@ -34,8 +34,10 @@
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>
+#include <QDesktopServices>
 
 #include "ui_about.h"
+#include "ui_Splash.h"
 #include "Common/config.h"
 #include "Common/global.h"
 #include "Batch/BatchTMDialog.h"
@@ -112,6 +114,14 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	cropToSelectionAction->setEnabled(false);
 
 	setupConnections();
+
+	// SPLASH SCREEoN
+	if (settings.contains("DoNotShowSplashScreen")) {
+		if (settings.value("DoNotShowSplashScreen").toInt())
+			showSplash();
+	}
+	else 
+		showSplash();
 }
 
 void MainWindow::setupConnections() {
@@ -154,10 +164,18 @@ void MainWindow::setupConnections() {
 	connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
 	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
 	connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+	connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 
 }
+
+void MainWindow::showDonationsPage()
+{
+        //QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037580"));
+        QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037712"));
+}
+
 
 void MainWindow::fileNewViaWizard(QStringList files) {
 	HdrWizard *wizard;
@@ -682,6 +700,30 @@ void MainWindow::Text_Alongside_Icons() {
 void MainWindow::Text_Only() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
 	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+}
+
+
+void MainWindow::showSplash() {
+	splash=new QDialog(this);
+	splash->setAttribute(Qt::WA_DeleteOnClose);
+	Ui::SplashLuminance ui;
+	ui.setupUi(splash);
+	connect(ui.yesButton, SIGNAL(clicked()), this, SLOT(splashShowDonationsPage()));
+	connect(ui.noButton, SIGNAL(clicked()), this, SLOT(splashClose()));
+	connect(ui.askMeLaterButton, SIGNAL(clicked()), splash, SLOT(close()));
+	
+	splash->show();
+
+}
+
+void MainWindow::splashShowDonationsPage() {
+	showDonationsPage();
+	splash->close();
+}
+
+void MainWindow::splashClose() {
+	settings.setValue("DoNotShowSplashScreen", 0);
+	splash->close();
 }
 
 void MainWindow::aboutLuminance() {

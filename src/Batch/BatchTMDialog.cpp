@@ -37,7 +37,7 @@
 #include "Filter/pfscut.h"
 
 
-BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), done(false) {
+BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), running_threads(0), done(false), job_num(0) {
 	setupUi(this);
 
 	luminance_options=LuminanceOptions::getInstance();
@@ -71,8 +71,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 }
 
 BatchTMDialog::~BatchTMDialog() {
-	//QFile::remove(luminance_options->tempfilespath+"/original.pfs");
-	//QFile::remove(luminance_options->tempfilespath+"/after_pregamma.pfs");
+	//pfs::DOMIO pfsio;
+	//pfsio.freeFrame(workingFrame[running_threads]);
 	QApplication::restoreOverrideCursor();
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
@@ -284,7 +284,7 @@ void BatchTMDialog::finished_loading_hdr(pfs::Frame* loaded_hdr, QString filenam
 	pfs::DOMIO pfsio;
 	add_log_message(tr("Starting to convert an HDR image: ")+filename);
 	//pregamma=-1;
-	workingPfsFrame[running_threads] = pfscopy(loaded_hdr);
+	workingFrame[job_num] = pfscopy(loaded_hdr);
 	QFileInfo qfi(filename);
 	current_hdr_fname=out_folder_widgets->text() + "/" + qfi.completeBaseName();
 	//now start processing the list of tone mapping settings
@@ -324,9 +324,9 @@ void BatchTMDialog::conditional_TMthread() {
 
 			//TonemappingOptions *opts = tm_opt_list.at(first_not_started).first; 
 			opts = tm_opt_list.at(first_not_started).first; 
-			opts->xsize = workingPfsFrame[running_threads]->getWidth();
+			opts->xsize = workingFrame[job_num]->getWidth();
 			opts->origxsize = opts->xsize;
-			TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, workingPfsFrame[running_threads], *opts);
+			TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, workingFrame[job_num], *opts);
 
 			connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(newResult(const QImage&)));
 
@@ -335,7 +335,9 @@ void BatchTMDialog::conditional_TMthread() {
 
 			first_not_started++;
 			running_threads++;
+			job_num++;
 			std::cout << "after start running threads: " << running_threads << std::endl;
+			std::cout << "job num: " << job_num << std::endl;
 		}
 	} else {//if we are done processing the TM_opts list,
 		//if there are still threads running
@@ -378,7 +380,6 @@ void BatchTMDialog::newResult(const QImage& newimage) {
 	TMOptionsOperations operations(opts);
 	QString postfix=operations.getPostfix();
 	QString fname=current_hdr_fname+"_"+postfix+"."+luminance_options->batch_ldr_format;
-	//QString fname=current_hdr_fname+"."+luminance_options->batch_ldr_format;
 	if (!newimage.save(fname, luminance_options->batch_ldr_format.toAscii().constData(), 100)) {
 		add_log_message(tr("ERROR: Cannot save to file: ")+fname);
 	} else {

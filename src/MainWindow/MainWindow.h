@@ -95,6 +95,7 @@ protected slots:
 	void updateRecentDirHDRSetting(QString);
 	void load_failed(QString);
 	void aboutLuminance();
+	void showSplash();
 
 	void updateActions( QMdiSubWindow * w );
 	void setActiveSubWindow(QWidget* w);
@@ -102,6 +103,10 @@ protected slots:
 	void enableCrop(bool);
 	void disableCrop();
 	void helpBrowserClosed();
+	void showDonationsPage();
+	void splashShowDonationsPage();
+	void splashClose();
+
 protected:
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
@@ -124,6 +129,7 @@ protected:
 	QAction *separatorRecentFiles;
 	QString RecentDirHDRSetting;
 	LuminanceOptions *luminance_options;
+	QDialog *splash;
 };
 //
 //=============== MySubWindow ==========================================================

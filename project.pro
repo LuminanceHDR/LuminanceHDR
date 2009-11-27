@@ -25,6 +25,7 @@ FORMS = forms/MainWindow.ui \
         forms/TonemappingWindow.ui \
         forms/TonemappingPanel.ui \
         forms/about.ui \
+        forms/Splash.ui \
         forms/PreferencesDialog.ui \
         forms/TransplantExifDialog.ui \
         forms/ResizeDialog.ui \
@@ -32,10 +33,10 @@ FORMS = forms/MainWindow.ui \
         forms/ProjectionsDialog.ui \
         forms/EditingTools.ui \
         forms/BatchTMDialog.ui \ 
-		forms/ImageQualityDialog.ui \
-		forms/ThreadManager.ui \
-		forms/HelpBrowser.ui \
-		forms/HelpSideBar.ui
+	forms/ImageQualityDialog.ui \
+	forms/ThreadManager.ui \
+	forms/HelpBrowser.ui \
+	forms/HelpSideBar.ui
 
 HEADERS += src/Libpfs/array2d.h \
            src/Libpfs/pfs.h \
