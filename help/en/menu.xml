@@ -66,6 +66,7 @@
 		<submenuitem text="Testing and Reporting" file="contributing_testing.html"/>
 		<submenuitem text="Translating" file="contributing_translating.html"/>
 		<submenuitem text="Programming" file="contributing_programming.html"/>
+		<submenuitem text="Donating" file="contributing_donating.html"/>
 	</area>
 
 </menu>
