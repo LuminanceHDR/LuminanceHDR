@@ -527,6 +527,7 @@ INCLUDEPATH += ../DEPs/include/exiv2
 LIBS        += -lexiv2 -L../DEPs/lib/exiv2
 
 #gsl
+LIBS 		+= -lgsl -lgslcblas
 INCLUDEPATH += ../DEPs/include/gsl
 LIBS        += -L../DEPs/lib/gsl
 
