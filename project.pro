@@ -10,7 +10,7 @@ QMAKE_LFLAGS += -fopenmp
 
 TARGET = luminance
 
-LIBS            += -lgsl -lgslcblas
+#LIBS            += -lgsl -lgslcblas
 
 MOC_DIR = generated_moc
 OBJECTS_DIR = generated_obj
@@ -362,6 +362,30 @@ isEmpty(LIBTIFFDIR) {
 }
 INCLUDEPATH *= $$LIBTIFFDIR
 LIBS += -ltiff
+
+############################################# GSL #############################################
+#required by mantiuk.
+message ( "" )
+message ( "Detecting gsl:" )
+#I think these are the only paths where we have to search for.
+#If your system is more exotic let me know.
+GSLHEADER = /usr/include/gsl/gsl_blas.h /usr/local/include/gsl/gsl_blas.h $$(LOCALSOFT)/include/gsl/gsl_blas.h
+for(path, GSLHEADER) {
+	exists($$path) {
+		GSLDIR = $$dirname(path)
+		message ( headers found in $$GSLDIR)
+	}
+}
+isEmpty(GSLDIR) {
+	message("gsl devel package not found")
+	message("in fedora run (as root):")
+	message("yum install gsl-devel")
+	message("Or, if you have to compile the sources go to http://www.remotesensing.org/libtiff/")
+	message("If you, on the other had, think that this message is wrong and indeed you HAVE gsl-devel installed, send an email to grota@users.sourceforge.net saying so.")
+	error( "fatal error, bailing out." )	
+}
+INCLUDEPATH *= $$GSLDIR
+LIBS += -lgsl -lgslcblas
 
 ######################################## end of detection ########################################
 
