@@ -99,10 +99,7 @@ private:
 	QSortFilterProxyModel *log_filter;
 	//the model that holds the data
 	QStringListModel *full_Log_Model;
-	QVector<pfs::Frame*> workingFrame;
-	int job_num;
-	//QVector< Qvector<pfs::Frame*> >  workingFrame;
-	int row,colon;
+	pfs::Frame* workingFrame;
 	TonemappingOptions *opts;
 };
 #endif
