@@ -51,7 +51,7 @@ HEADERS += src/Libpfs/array2d.h \
 		   src/Common/ProgressHelper.h \
            src/MainWindow/MainWindow.h \
            src/MainWindow/DnDOption.h \
-           src/HelpBrowser/fmpaths.h \
+           src/HelpBrowser/LuminancePaths.h \
            src/HelpBrowser/schelptreemodel.h \
            src/HelpBrowser/treeitem.h \
            src/HelpBrowser/treemodel.h \
@@ -133,7 +133,7 @@ SOURCES += src/Libpfs/pfs.cpp \
 		   src/Common/ProgressHelper.cpp \
            src/MainWindow/MainWindow.cpp \
            src/MainWindow/DnDOption.cpp \
-           src/HelpBrowser/fmpaths.cpp \
+           src/HelpBrowser/LuminancePaths.cpp \
            src/HelpBrowser/treeitem.cpp \
            src/HelpBrowser/treemodel.cpp \
            src/HelpBrowser/schelptreemodel.cpp \
