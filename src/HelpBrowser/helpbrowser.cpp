@@ -57,7 +57,8 @@ for which a new license (GPL+exception) is in place.
 
 #include "Common/global.h"
 #include "schelptreemodel.h"
-#include "fmpaths.h"
+//#include "fmpaths.h"
+#include "LuminancePaths.h"
 
 #include <iostream>
 
@@ -156,7 +157,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	connect(textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
 
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
-	finalBaseDir = FMPaths::HelpDir();
+	finalBaseDir = LuminancePaths::HelpDir();
 	textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
 	menuModel=NULL;
 	loadMenu();
@@ -520,7 +521,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 			toLoad=filename;
 		else
 		{
-			toLoad = FMPaths::HelpDir() +"index.html";
+			toLoad = LuminancePaths::HelpDir() +"index.html";
  			language="en";
 			qDebug()<<"Help index:"<<toLoad;
 			fi = QFileInfo(toLoad);
@@ -553,7 +554,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 
 void HelpBrowser::loadMenu()
 {
-	QString baseHelpDir = FMPaths::HelpDir();
+	QString baseHelpDir = LuminancePaths::HelpDir();
 	QString baseHelpMenuFile = baseHelpDir + "menu.xml";
 	QFileInfo baseFi = QFileInfo(baseHelpMenuFile);
 	QString toLoad = baseHelpMenuFile;
