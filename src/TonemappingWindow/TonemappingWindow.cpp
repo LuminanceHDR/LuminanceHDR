@@ -524,8 +524,10 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
-		QMessageBox::critical(this,tr("LuminanceHDR"),tr("Error: %1").arg(e),
-					QMessageBox::Ok,QMessageBox::NoButton);
+	QMessageBox::critical(this,tr("LuminanceHDR"),tr("Error: %1").arg(e),
+		QMessageBox::Ok,QMessageBox::NoButton);
+	threadCounter--;
+	updateLogo();
 }
 
 void TonemappingWindow::tonemappingFinished() {
