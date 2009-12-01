@@ -18,7 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #include <getopt.h>
@@ -28,7 +32,7 @@
 #include "config.h"
 #include "HdrCreation/createhdr.h"
 #include "Threads/LoadHdrThread.h"
-#include "Threads/tonemapperThread.h"
+#include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
 #include "commandline.h"
 
@@ -235,6 +239,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				      tmopts->operator_options.mantiuk08options.luminancelevel=toFloatWithErrMsg(keyandvalue.at(1));
 				    else if (keyandvalue.at(0)== "setluminance")
 				      tmopts->operator_options.mantiuk08options.setluminance=(keyandvalue.at(1)=="true");
+
 				    //ashikhmin options
 				    else if (keyandvalue.at(0)== "localcontrast")
 				      tmopts->operator_options.ashikhminoptions.lct=toFloatWithErrMsg(keyandvalue.at(1));
@@ -423,13 +428,16 @@ void  CommandLineInterfaceManager::startTonemap() {
 		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
 		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
 		//TODO
-		pfs::Channel *X, *Y, *Z;
-		HDR->getXYZChannels(X, Y, Z);
-		pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );   
-		int origxsize= (tmopts->xsize == -2) ? -2 : HDR->getWidth();
-		TonemapperThread *thread = new TonemapperThread(HDR, origxsize, *tmopts);
-		connect(thread, SIGNAL(imageComputed(const QImage&,TonemappingOptions*)), this, SLOT(tonemapTerminated(const QImage&,TonemappingOptions*)));
+		tmopts->origxsize = HDR->getWidth();
 		
+		std::cout << "XSIZE: " << tmopts->xsize << std::endl;
+	
+		if (tmopts->xsize == -2)	
+			tmopts->xsize = HDR->getWidth();
+
+		TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, *tmopts);
+		connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(tonemapTerminated(const QImage&)));
+
 		thread->start();
 	} else {
 		VERBOSEPRINT("Tonemapping NOT requested. %1","");
@@ -437,7 +445,7 @@ void  CommandLineInterfaceManager::startTonemap() {
 	}
 }
 
-void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage,TonemappingOptions*) {
+void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage) {
 	QFileInfo qfi(saveLdrFilename);
 	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100)) {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
