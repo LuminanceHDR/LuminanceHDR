@@ -407,7 +407,10 @@ void CommandLineInterfaceManager::saveHDR() {
 			else
 				tiffwriter.writeFloatTiff();
 		} else if (qfi.suffix().toUpper()=="PFS") {
-			//TODO
+			// Convert to CS_XYZ: 
+			pfs::Channel *X, *Y, *Z;
+			HDR->getXYZChannels( X, Y, Z );
+			pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
 			FILE *fd = fopen(encodedName, "wb");
 			pfs::DOMIO pfsio;
 			pfsio.writeFrame(HDR, fd);

@@ -41,7 +41,7 @@ HdrInputLoader::~HdrInputLoader() {
 
 void HdrInputLoader::run() {
 	try {
-		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+		//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		QFileInfo qfi(fname);
 
 		//get exposure time, -1 is error
@@ -56,7 +56,7 @@ void HdrInputLoader::run() {
 			if (newimage->isNull())
 				throw "Failed Loading Image";
 			emit ldrReady(newimage, image_idx, expotime, fname, false);
-			QApplication::restoreOverrideCursor();
+			//QApplication::restoreOverrideCursor();
 			return;
 		}
 		//if tiff
@@ -68,7 +68,7 @@ void HdrInputLoader::run() {
 				if (newimage->isNull())
 					throw "Failed Loading Image";
 				emit ldrReady(newimage, image_idx, expotime, fname, true);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			//if 16bit (tiff) treat as hdr
@@ -77,13 +77,13 @@ void HdrInputLoader::run() {
 				if (frame == NULL)
 					throw "Failed Loading Image";
 				emit mdrReady(frame, image_idx, expotime, fname);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			//error if other tiff type
 			else {
 				emit loadFailed(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.").arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
@@ -117,14 +117,14 @@ void HdrInputLoader::run() {
 			
 			if(!extract_thumbnail->waitForStarted(10000)) {
 				emit loadFailed(tr("ERROR: Cannot start dcraw to create thumbnail of file: %1").arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			
 			//blocking, timeout of 5mins
 			if(!extract_thumbnail->waitForFinished(300000)) {
 				emit loadFailed(tr("ERROR: Error or timeout occured, dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 
@@ -148,14 +148,14 @@ void HdrInputLoader::run() {
 			//blocking, timeout of 10 sec
 			if(!rawconversion->waitForStarted(10000)) {
 				emit loadFailed(tr("ERROR: Cannot start dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 		
 			//blocking, timeout of 5mins
 			if(!rawconversion->waitForFinished(300000)) {
 				emit loadFailed(tr("ERROR: Error or timeout occured while executing dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 
@@ -167,7 +167,7 @@ void HdrInputLoader::run() {
 				qDebug("raw -> 8bit tiff");
 				QImage *newimage=reader.readIntoQImage();
 				emit ldrReady(newimage, image_idx, expotime, outfname, true);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			//if 16bit (tiff) treat as hdr
@@ -175,13 +175,13 @@ void HdrInputLoader::run() {
 				qDebug("raw -> 16bit tiff");
 				pfs::Frame *frame=reader.readIntoPfsFrame();
 				emit mdrReady(frame, image_idx, expotime, outfname);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			//error if other tiff type
 			else {
 				emit loadFailed(QString(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()),image_idx);
-				QApplication::restoreOverrideCursor();
+				//QApplication::restoreOverrideCursor();
 				return;
 			}
 			//now do not remove tiff file, it might be required by align_image_stack
@@ -190,13 +190,13 @@ void HdrInputLoader::run() {
 	}
 	catch(pfs::Exception e) {
 		emit loadFailed(QString(tr("ERROR: %1")).arg(e.getMessage()),image_idx);
-		QApplication::restoreOverrideCursor();
+		//QApplication::restoreOverrideCursor();
 		return;
 	}
 	catch (...) {
 		qDebug("LIT: catched exception");
 		emit loadFailed(QString(tr("ERROR: Failed Loading file: %1")).arg(fname),image_idx);
-		QApplication::restoreOverrideCursor();
+		//QApplication::restoreOverrideCursor();
 		return;
 	}
 }
