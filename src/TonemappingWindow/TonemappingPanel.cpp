@@ -51,7 +51,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_cu
 	connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
 	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,
-		NULL,NULL,NULL,NULL, 0.0f, 1.0f, 0.8f);
+		NULL,NULL,NULL,NULL, 0.0f, 2.0f, 0.8f);
 	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
 
 	// mantiuk08
