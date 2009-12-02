@@ -79,6 +79,8 @@ HdrWizard::~HdrWizard() {
 		QFileInfo qfi(fname);
 		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
 		QFile::remove(thumb_name);
+		thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+		QFile::remove(thumb_name);
 	}
 
 	delete EVgang;
