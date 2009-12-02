@@ -73,7 +73,7 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
     int h = Y->getRows();
 
     pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
-    tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, ph);
+    tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
 		
     for( int x=0 ; x<w ; x++ )
       for( int y=0 ; y<h ; y++ )

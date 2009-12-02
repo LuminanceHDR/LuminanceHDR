@@ -50,9 +50,6 @@
 
 #include "Common/ProgressHelper.h"
 
-void tmo_fattal02(unsigned int width, unsigned int height,
-                  const float* Y, float* L, 
-				  float alfa, float beta, float noise,
-				  ProgressHelper *ph);
+void tmo_fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
 
 #endif

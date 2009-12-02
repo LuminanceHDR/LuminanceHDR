@@ -224,7 +224,7 @@ void upSample(pfstmo::Array2D* A, pfstmo::Array2D* B)
 
 void calculateFiMatrix(pfstmo::Array2D* FI, pfstmo::Array2D* gradients[], 
   float avgGrad[], int nlevels,
-  float alfa, float beta, float noise)
+  float alfa, float beta, float noise, bool newfattal)
 {
   int width = gradients[nlevels-1]->getCols();
   int height = gradients[nlevels-1]->getRows();
@@ -232,8 +232,9 @@ void calculateFiMatrix(pfstmo::Array2D* FI, pfstmo::Array2D* gradients[],
   pfstmo::Array2D** fi = new pfstmo::Array2D*[nlevels];
 
   fi[nlevels-1] = new pfstmo::Array2D(width,height);
-  for( k=0 ; k<width*height ; k++ )
-    (*fi[nlevels-1])(k) = 1.0f;
+  if (newfattal)
+  	for( k=0 ; k<width*height ; k++ )
+    	(*fi[nlevels-1])(k) = 1.0f;
   
   for( k=nlevels-1 ; k>=0 ; k-- )
   {
@@ -249,7 +250,10 @@ void calculateFiMatrix(pfstmo::Array2D* FI, pfstmo::Array2D* gradients[],
         float value=1.0;
         if( grad>1e-4 )
           value = a/(grad+noise) * pow((grad+noise)/a, beta);
-        (*fi[k])(x,y) *= value;
+		if (newfattal)
+        	(*fi[k])(x,y) *= value;
+		else
+			(*fi[k])(x,y) = value;
       }
 		
     // create next level
@@ -262,7 +266,7 @@ void calculateFiMatrix(pfstmo::Array2D* FI, pfstmo::Array2D* gradients[],
     else
       fi[0] = FI;               // highest level -> result
 
-    if( k>0 )
+    if( k>0  && newfattal )
     {
       upSample(fi[k], fi[k-1]);		// upsample to next level
       gaussianBlur(fi[k-1],fi[k-1]);
@@ -297,7 +301,7 @@ static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLu
 
 void tmo_fattal02(unsigned int width, unsigned int height,
                   const float* nY, float* nL, 
-				  float alfa, float beta, float noise, 
+				  float alfa, float beta, float noise, bool newfattal, 
 				  ProgressHelper *ph)
 {
   const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
@@ -342,7 +346,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 
   // calculate fi matrix
   pfstmo::Array2D* FI = new pfstmo::Array2D(width, height);
-  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise);
+  calculateFiMatrix(FI, gradients, avgGrad, nlevels, alfa, beta, noise, newfattal);
 
 //  dumpPFS( "FI.pfs", FI, "Y" );
 
