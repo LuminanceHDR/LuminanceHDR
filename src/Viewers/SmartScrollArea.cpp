@@ -185,7 +185,7 @@ void SmartScrollArea::setSelectionTool(bool toggled) {
 }
 
 bool SmartScrollArea::hasSelection() {
-	selectionTool->hasSelection();
+	return selectionTool->hasSelection();
 }
 
 void SmartScrollArea::removeSelection() {

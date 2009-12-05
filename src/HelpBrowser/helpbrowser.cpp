@@ -53,14 +53,12 @@ for which a new license (GPL+exception) is in place.
 #include <QXmlDefaultHandler>
 #include <QDesktopServices>
 
-#include <QDebug>
-
 #include "Common/global.h"
 #include "schelptreemodel.h"
 //#include "fmpaths.h"
 #include "LuminancePaths.h"
 
-#include <iostream>
+//#include <iostream>
 
 /*! \brief XML parsef for documantation history.
 This is small helper class which reads saved bookmarks configuration
@@ -170,7 +168,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	}
 	else
 	{
-		qDebug()<<"menuModel == NULL";
+		qDebug("menuModel == NULL");
 		displayNoHelp();
 	}
 }
@@ -493,7 +491,7 @@ void HelpBrowser::jumpToHelpSection(const QString& jumpToSection, const QString&
 			{
 				helpSideBar->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 				toLoad += menuModel->data(index, Qt::DisplayRole).toString();
-				qDebug()<<"jumpToHelpSection"<<finalBaseDir<<"/"<<menuModel->data(index, Qt::DisplayRole).toString();
+				qDebug("jumpToHelpSection %1 / %2", finalBaseDir,  menuModel->data(index, Qt::DisplayRole).toString());
 			}
 			else
 				noDocs=true;
@@ -523,7 +521,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 		{
 			toLoad = LuminancePaths::HelpDir() +"index.html";
  			language="en";
-			qDebug()<<"Help index:"<<toLoad;
+			qDebug("Help index: %l", toLoad);
 			fi = QFileInfo(toLoad);
 			if (!fi.exists())
 			{
@@ -575,7 +573,7 @@ void HelpBrowser::loadMenu()
 	}
 	else
 	{
-		qDebug()<<"Help menu does not exist:"<<baseHelpMenuFile;
+		qDebug("Help menu does not exist: %f", baseHelpMenuFile);
 		menuModel=NULL;
 	}
 }

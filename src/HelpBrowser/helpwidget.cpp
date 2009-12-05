@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "helpwidget.h"
 #include "fmpaths.h"
-#include <QDebug>
 
 HelpWidget::HelpWidget(QWidget *parent)
  : QDialog(parent)
@@ -52,7 +51,7 @@ void HelpWidget::slotIsClosing()
 
 void HelpWidget::slotWebLink(const QUrl & url)
 {
-	qDebug()<<"slotWebLink("<<url<<")";
+	qDebug("slotWebLink(" + url + ")");
 	urlLabel->setText(url.toString());
 	theText->load(url);
 }

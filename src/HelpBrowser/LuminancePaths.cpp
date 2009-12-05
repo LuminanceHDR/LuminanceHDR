@@ -29,14 +29,14 @@ QString LuminancePaths::HelpDir()
 		return getThis()->LuminancePathsDB["HelpDir"];
 	QString hf;
 	QString dirsep(QDir::separator());
-//#ifdef PLATFORM_APPLE
-//	hf = LocalizedDirPath( QApplication::applicationDirPath() + dirsep + "help" + dirsep );
-//#elif _WIN32
-//	hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep );
-//#else
+#ifdef PLATFORM_APPLE
+	hf = LocalizedDirPath( QApplication::applicationDirPath() + dirsep + "help" + dirsep );
+#elif _WIN32
+	hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep );
+#else
 //	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-//#endif
 	hf = LocalizedDirPath( "/usr" + dirsep + "share" + dirsep + "luminance" + dirsep + "help" + dirsep );
+#endif
 	getThis()->LuminancePathsDB["HelpDir"] = hf;
 
 	return getThis()->LuminancePathsDB["HelpDir"];
@@ -62,9 +62,7 @@ QString LuminancePaths::LocalizedDirPath(const QString & base, const QString& fa
 	{
 		QDir d(t);
 		if( d.exists() )
-		{
 			return d.absolutePath() + QString(QDir::separator()) ;
-		}
 	}
 	
 	return QString();
