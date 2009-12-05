@@ -48,7 +48,11 @@ void ImageQualityDialog::on_getSizeButton_clicked() {
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
         image.save(&buffer, (const char *) format.toLatin1(), quality);
-	label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
+	
+	QLocale def;
+	QString s = def.toString( ba.size() );	
+	//label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
+	label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
 	setCursor(QCursor(Qt::ArrowCursor));
 }
 
