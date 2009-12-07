@@ -167,7 +167,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				}
 				break;
 			case 'l':
-				loadHdrFilename=QString(optarg);
+				loadHdrFilename=QDir::currentPath () + "/" + QString(optarg);
 				break;
 			case 's':
 				saveHdrFilename=QString(optarg);
@@ -348,7 +348,7 @@ void CommandLineInterfaceManager::parseArgs() {
 		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(loadFinished(pfs::Frame*,QString)));
 		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(errorWhileLoading(QString)));
 		loadthread->start();
-		VERBOSEPRINT("Loading file %1.",loadHdrFilename);
+		VERBOSEPRINT("Loading file %1",loadHdrFilename);
 	}
 }
 
