@@ -143,11 +143,11 @@ HelpBrowser::HelpBrowser(QWidget* parent)
 HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile)
 	: QMainWindow( parent ) ,zoomFactor(1.0)
 {
-	firstRun=true;
+        firstRun=true;
 	setupUi(this);
 	restoreGeometry(settings.value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
-	
+
 	textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
 	connect(textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
 	connect(textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
@@ -158,7 +158,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 	finalBaseDir = LuminancePaths::HelpDir();
 	textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
 	menuModel=NULL;
-	loadMenu();
+        loadMenu();
 	if (menuModel!=NULL)
 	{
 		readBookmarks();
@@ -491,7 +491,7 @@ void HelpBrowser::jumpToHelpSection(const QString& jumpToSection, const QString&
 			{
 				helpSideBar->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 				toLoad += menuModel->data(index, Qt::DisplayRole).toString();
-				qDebug("jumpToHelpSection %1 / %2", finalBaseDir,  menuModel->data(index, Qt::DisplayRole).toString());
+                //qDebug("jumpToHelpSection %c / %c", finalBaseDir,  menuModel->data(index, Qt::DisplayRole).toString());
 			}
 			else
 				noDocs=true;
@@ -521,7 +521,7 @@ void HelpBrowser::loadHelp(const QString& filename)
 		{
 			toLoad = LuminancePaths::HelpDir() +"index.html";
  			language="en";
-			qDebug("Help index: %l", toLoad);
+            //qDebug("Help index: %c", toLoad);
 			fi = QFileInfo(toLoad);
 			if (!fi.exists())
 			{
@@ -557,9 +557,9 @@ void HelpBrowser::loadMenu()
 	QFileInfo baseFi = QFileInfo(baseHelpMenuFile);
 	QString toLoad = baseHelpMenuFile;
 	finalBaseDir=baseFi.path();
-	if (baseFi.exists())
+        if (baseFi.exists())
 	{
-		if (menuModel!=NULL)
+                if (menuModel!=NULL)
 			delete menuModel;
 		menuModel=new ScHelpTreeModel(toLoad, "Topic", "Location", &quickHelpIndex);
 	
@@ -573,7 +573,7 @@ void HelpBrowser::loadMenu()
 	}
 	else
 	{
-		qDebug("Help menu does not exist: %f", baseHelpMenuFile);
+        //qDebug("Help menu does not exist: %c", baseHelpMenuFile);
 		menuModel=NULL;
 	}
 }

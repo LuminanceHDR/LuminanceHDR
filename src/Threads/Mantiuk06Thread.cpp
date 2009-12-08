@@ -65,8 +65,19 @@ void Mantiuk06Thread::run() {
 	}
 	emit finished();
 	emit deleteMe(this);
-}
-//
-// run()
-//
+} // run()
 
+void Mantiuk06Thread::startTonemapping() {
+    // Use this to circumvent a bug in GCC > 4.2 on Windows:
+    // the usage of OpenMP pragmas lets the program crash with a
+    // segmentation fault in libgomp.dll, since the OpenMP blocks
+    // are not run in the context of the main thread (id = 0).
+    // Most probably due to a mismatch of
+    // PThreads (OpenMP) vs Windows threads (Qt).
+    #ifdef WIN32
+        run();
+        return;
+    #endif
+
+    start();
+}

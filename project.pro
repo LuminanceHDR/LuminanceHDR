@@ -513,7 +513,7 @@ message ("Debug statements ENABLED")
 # this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 CONFIG += windows
 #CONFIG += debug
-CONFIG += console
+#CONFIG += console
 
 #OpenEXR available in win32
 LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
@@ -530,7 +530,9 @@ INCLUDEPATH += ../DEPs/include/gsl
 LIBS        += -L../DEPs/lib/gsl
 
 #win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
-LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
+#LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
+
+LIBS        += -lpthread
 
 #fftw3
 LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm

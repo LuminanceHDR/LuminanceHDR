@@ -167,7 +167,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				}
 				break;
 			case 'l':
-				loadHdrFilename=QDir::currentPath () + "/" + QString(optarg);
+                loadHdrFilename=QDir::currentPath () + QDir::separator () + QString(optarg);
 				break;
 			case 's':
 				saveHdrFilename=QString(optarg);
@@ -441,7 +441,7 @@ void  CommandLineInterfaceManager::startTonemap() {
 		TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, *tmopts);
 		connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(tonemapTerminated(const QImage&)));
 
-		thread->start();
+        thread->startTonemapping();
 	} else {
 		VERBOSEPRINT("Tonemapping NOT requested. %1","");
 		emit finishedParsing();

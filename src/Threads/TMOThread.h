@@ -42,6 +42,8 @@ Q_OBJECT
 public:
 	TMOThread(pfs::Frame *frame, const TonemappingOptions &opts);
 	virtual ~TMOThread();
+        virtual void startTonemapping();
+
 public slots:
 	virtual void terminateRequested();
 signals:

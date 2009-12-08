@@ -339,7 +339,7 @@ void BatchTMDialog::conditional_TMthread() {
 			connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(newResult(const QImage&)));
 
 			//start thread
-			thread->start();
+            thread->startTonemapping();
 
 			first_not_started++;
 			running_threads++;

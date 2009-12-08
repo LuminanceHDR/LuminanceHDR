@@ -73,3 +73,7 @@ void TMOThread::terminateRequested() {
 	ph->terminate(true);
 }
 
+void TMOThread::startTonemapping() {
+    start();
+}
+

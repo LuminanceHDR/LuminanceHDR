@@ -518,7 +518,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 	//start thread
-	thread->start();
+    thread->startTonemapping();
 	threadCounter++;
 	updateLogo();
 }
