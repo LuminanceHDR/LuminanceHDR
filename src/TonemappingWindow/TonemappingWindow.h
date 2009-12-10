@@ -78,6 +78,7 @@ protected slots:
 	//bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
 	void addMDIResult(const QImage&);
+	void addProcessedFrame(pfs::Frame *);
 	void LevelsRequested(bool);
 	void levels_closed();
 	void updateActions(QMdiSubWindow *);

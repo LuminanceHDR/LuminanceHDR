@@ -59,7 +59,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	luminance_options=LuminanceOptions::getInstance();
 	//cachepath=LuminanceOptions::getInstance()->tempfilespath;
 
-
 	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
 
 	prefixname=QFileInfo(filename).completeBaseName();
@@ -168,6 +167,24 @@ void TonemappingWindow::addMDIResult(const QImage &image) {
 	mdiArea->activeSubWindow()->showMaximized();
 
 	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+}
+
+void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
+	HdrViewer *HDR = new HdrViewer(this, false, true, luminance_options->negcolor, luminance_options->naninfcolor);
+	HDR->setFreePfsFrameOnExit(true); 
+	HDR->updateHDR(frame);
+	HDR->setFileName(QString(tr("Processed HDR")));
+	HDR->setWindowTitle(QString(tr("Processed HDR")));
+	HDR->setSelectionTool(true);
+	HDR->normalSize();
+	HDR->showMaximized();
+	if (actionFit_to_Window->isChecked())
+		HDR->fitToWindow(true);
+	QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
+	HdrSubWin->setWidget(HDR);
+	mdiArea->addSubWindow(HdrSubWin);
+	HDR->showMaximized();
+	mdiArea->activeSubWindow()->showMaximized();
 }
 
 void TonemappingWindow::LevelsRequested(bool checked) {
@@ -496,7 +513,29 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	pfs::DOMIO pfsio;
 	tmoOptions = &opts;	
 
- 	workingPfsFrame = originalHDR->getHDRPfsFrame();
+	if (opts.tonemapOriginal) {
+ 		workingPfsFrame = originalHDR->getHDRPfsFrame();
+	}
+	else {
+		if (!mdiArea->subWindowList().isEmpty()) {
+			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
+
+			if (viewer->isHDR()) {
+					HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
+					workingPfsFrame = HDR->getHDRPfsFrame();
+			}		
+			else {
+				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+					QMessageBox::Ok);
+				return;
+			}
+		}
+		else {
+			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+				QMessageBox::Ok);
+			return;
+		}
+	}
 
 	if (opts.tonemapSelection) {
 		if (originalHDR->hasSelection()) {
@@ -509,6 +548,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	threadManager->addProgressIndicator(progInd);
 
 	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
+	connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
 	connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
 	connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
 	connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
