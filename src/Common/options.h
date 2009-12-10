@@ -76,6 +76,7 @@ struct TonemappingOptions {
 	int xsize;
 	float pregamma;
 	bool tonemapSelection;
+	bool tonemapOriginal;
 	enum TMOperator tmoperator;
 	char *tmoperator_str;
 	union {
