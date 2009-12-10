@@ -170,7 +170,7 @@ void TonemappingWindow::addMDIResult(const QImage &image) {
 }
 
 void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
-	HdrViewer *HDR = new HdrViewer(this, false, true, luminance_options->negcolor, luminance_options->naninfcolor);
+	HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	HDR->setFreePfsFrameOnExit(true); 
 	HDR->updateHDR(frame);
 	HDR->setFileName(QString(tr("Processed HDR")));

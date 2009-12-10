@@ -18,8 +18,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
+ * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * based on Rafal Mantiuk and Grzegorz Krawczyk 's pfsview code
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #include <math.h>
@@ -299,7 +302,7 @@ void HdrViewer::setFreePfsFrameOnExit(bool b) {
 //
 //==================================================================================================//
 //
-// The following methods do nothing. They are defined here to keep tonemappingDialog.cpp code simple
+// The following methods do nothing. They are defined here to keep tonemappingWindow.cpp code simple
 //
 void HdrViewer::levelsRequested(bool) {} 
 
