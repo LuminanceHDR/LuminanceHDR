@@ -61,6 +61,7 @@ public slots:
 	virtual void setHorizScrollBarValue(int value);
 	virtual void setVertScrollBarValue(int value);
 	virtual void zoomToFactor(float factor);
+	virtual bool isHDR() = 0; 
 	virtual void levelsRequested(bool) = 0; // only used by LdrViewer
 	virtual QString getFilenamePostFix() = 0; // only used by LdrViewer 
 	virtual QString getExifComment() = 0; // only used by LdrViewer

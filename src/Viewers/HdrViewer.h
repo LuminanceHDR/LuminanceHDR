@@ -65,6 +65,7 @@ public:
 	QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
 	const QImage getQImage(); // do nothing but used by LdrViewer (its own implementation)
 	void setFreePfsFrameOnExit(bool b); 
+	bool isHDR() { return true; }
 public slots:
 	void updateRangeWindow();
 	int getLumMappingMethod();

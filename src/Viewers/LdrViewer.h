@@ -40,6 +40,7 @@ public:
 	QString getFilenamePostFix();
 	QString getExifComment();
 	const QImage getQImage();
+	bool isHDR() { return false; }
 signals:
 	void levels_closed();
 private slots:
