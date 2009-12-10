@@ -62,8 +62,8 @@ TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 
 TMOThread::~TMOThread() {
 	wait();
-	pfs::DOMIO pfsio;
-	pfsio.freeFrame(workingframe);
+	//pfs::DOMIO pfsio;
+	//pfsio.freeFrame(workingframe);
 	delete ph;
 	std::cout << "~TMOThread()" << std::endl;
 }

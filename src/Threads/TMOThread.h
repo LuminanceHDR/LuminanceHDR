@@ -48,7 +48,8 @@ public slots:
 	virtual void terminateRequested();
 signals:
 	virtual void imageComputed(const QImage&);
-	virtual void setMaximumSteps(int) ;
+	virtual void processedFrame(pfs::Frame *);
+	virtual void setMaximumSteps(int);
 	virtual void setValue(int);
 	virtual void setValue();
 	virtual void finished();

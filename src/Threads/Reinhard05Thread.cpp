@@ -58,6 +58,7 @@ void Reinhard05Thread::run() {
 	if (!(ph->isTerminationRequested())) {
 		const QImage& res = fromLDRPFStoQImage(workingframe);
 		emit imageComputed(res);
+		emit processedFrame(workingframe);
 	}
 	emit finished();
 	emit deleteMe(this);
