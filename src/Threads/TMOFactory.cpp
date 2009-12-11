@@ -56,6 +56,7 @@ TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator, pfs::Frame *
 		case reinhard02:
 			return new Reinhard02Thread(workingPfsFrame, opts);
 		case reinhard05:
+		default:		// just to be sure
 			return new Reinhard05Thread(workingPfsFrame, opts);
 	}
 }
