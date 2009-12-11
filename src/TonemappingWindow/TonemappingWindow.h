@@ -54,6 +54,7 @@ protected:
 signals:
 	void closing();
 private:
+	pfs::Frame *workingPfsFrame;
 	QMdiArea* mdiArea;
 	QDockWidget *dock;
 	TonemappingPanel *tmPanel;
