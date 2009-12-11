@@ -94,7 +94,7 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
 	tmPanel->setSizes(frame->getWidth(), frame->getHeight());
 	
-	// original HDR window
+	//original HDR window
 	originalHDR = new HdrViewer(this, false, true, luminance_options->negcolor, luminance_options->naninfcolor);
 	originalHDR->setFreePfsFrameOnExit(false); // avoid another copy in memory
 	originalHDR->updateHDR(frame);
@@ -181,10 +181,13 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
 	if (actionFit_to_Window->isChecked())
 		HDR->fitToWindow(true);
 	QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
+	HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
 	HdrSubWin->setWidget(HDR);
 	mdiArea->addSubWindow(HdrSubWin);
 	HDR->showMaximized();
 	mdiArea->activeSubWindow()->showMaximized();
+	
+	connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
 void TonemappingWindow::LevelsRequested(bool checked) {
@@ -264,8 +267,9 @@ void TonemappingWindow::viewAllAsThumbnails() {
 }
 
 void TonemappingWindow::on_actionClose_All_triggered() {
-	QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
-	foreach (QMdiSubWindow *p, allLDRs) {
+	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+	foreach (QMdiSubWindow *p, allViewers) {
+		disconnect(p->widget(),SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 		p->close();
 	}
 	actionClose_All->setEnabled(false);
@@ -500,10 +504,10 @@ void TonemappingWindow::aboutLuminance() {
 }
 
 
-pfs::Frame * TonemappingWindow::getSelectedFrame() {
-	assert( originalHDR != NULL );
-	pfs::Frame *frame = originalHDR->getHDRPfsFrame();
-	QRect cropRect = originalHDR->getSelectionRect();
+pfs::Frame * TonemappingWindow::getSelectedFrame(HdrViewer *hdr) {
+	assert( hdr != NULL );
+	pfs::Frame *frame = hdr->getHDRPfsFrame();
+	QRect cropRect = hdr->getSelectionRect();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	return pfscut(frame, x_ul, y_ul, x_br, y_br);
@@ -513,35 +517,65 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	pfs::DOMIO pfsio;
 	tmoOptions = &opts;	
 
-	// Initialize working variables
-	pfs::Frame* workingPfsFrame = 0;
-	HdrViewer* workingHdrViewer = 0;
-
-	if (opts.tonemapOriginal) {
-		workingHdrViewer = originalHDR;
+	if ( (opts.tonemapOriginal) && (!opts.tonemapSelection) )  {
  		workingPfsFrame = originalHDR->getHDRPfsFrame();
+	}
+	else if ( (!opts.tonemapOriginal) && (!opts.tonemapSelection) ){
+		if (!mdiArea->subWindowList().isEmpty()) {
+			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
+
+			if (viewer->isHDR()) {
+					HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
+					workingPfsFrame = HDR->getHDRPfsFrame();
+			}		
+			else {
+				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+					QMessageBox::Ok);
+				return;
+			}
+		}
+		else {
+			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+				QMessageBox::Ok);
+			return;
+		}
+	} 
+	else if (opts.tonemapOriginal && opts.tonemapSelection) {
+		if (originalHDR->hasSelection()) {
+			workingPfsFrame = getSelectedFrame(originalHDR);
+		}
+		else {
+			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."),
+				QMessageBox::Ok);
+			return;
+		}
 	}
 	else {
 		if (!mdiArea->subWindowList().isEmpty()) {
-			QMdiSubWindow* activeSubWindow = mdiArea->activeSubWindow();
-			if (activeSubWindow) {
-				GenericViewer *viewer = (GenericViewer *) activeSubWindow->widget();
-				if (viewer->isHDR()) {
-					workingHdrViewer = (HdrViewer *) viewer;
-					workingPfsFrame = workingHdrViewer->getHDRPfsFrame();
+			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
+
+			if (viewer->isHDR()) {
+				HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
+				if (HDR->hasSelection()) {
+					workingPfsFrame = getSelectedFrame(HDR);
 				}
+				else {
+					QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), 
+						QMessageBox::Ok);
+					return;
+				}
+			}		
+			else {
+				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+					QMessageBox::Ok);
+				return;
 			}
 		}
-	}
-
-	// Gets the selection of the original or the selected HDR
-	if (opts.tonemapSelection && workingHdrViewer && workingHdrViewer->hasSelection())
-		workingPfsFrame = getSelectedFrame();
-
-	if (!workingPfsFrame || !workingHdrViewer) {
-		QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
-			QMessageBox::Ok);
-		return;
+		else {
+			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
+				QMessageBox::Ok);
+			return;
+		}
 	}
 
 	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
@@ -585,25 +619,14 @@ void TonemappingWindow::updateLogo() {
 	if (threadCounter == 0) {
 		workingLogoTimer->stop();
 		tmPanel->setLogoText(" ");
-		//tmPanel->setLogoPixmap(QString(":/new/prefix1/images/luminance00.png"));
 	}
 	else if (threadCounter > 0) {
 		workingLogoTimer->start();
-		//frameCounter = ++frameCounter % 12;
 		frameCounter = ++frameCounter % 8;
         
 		if (frameCounter < 8) {
 	    	QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
 			tmPanel->setLogoPixmap(framename);
 		}
-		//if (frameCounter < 10) {
-	    //	QString framename = ":/new/prefix1/images/luminance0" + QString::number(frameCounter) + ".png";
-		//	tmPanel->setLogoPixmap(framename);
-		//}
-		//else { 
-	    //	QString framename = ":/new/prefix1/images/luminance" + QString::number(frameCounter) + ".png";
-		//	tmPanel->setLogoPixmap(framename);
-		//}
-		//
 	}
 }

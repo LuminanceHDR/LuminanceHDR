@@ -48,7 +48,7 @@ Q_OBJECT
 public:
 	TonemappingWindow(QWidget *parent, pfs::Frame *f, QString prefixname);
 	~TonemappingWindow();
-	pfs::Frame *getSelectedFrame();
+	pfs::Frame *getSelectedFrame(HdrViewer *);
 protected:
 	void closeEvent(QCloseEvent *);
 signals:
