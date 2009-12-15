@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>1014</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -242,7 +242,7 @@
     <string>&amp;Tone Mapping...</string>
    </property>
    <property name="iconText">
-    <string>Convert to LDR</string>
+    <string>Tonemap HDR image</string>
    </property>
    <property name="toolTip">
     <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
