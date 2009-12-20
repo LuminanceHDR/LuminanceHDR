@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	luminance_options=LuminanceOptions::getInstance();
 	load_options();
 
-	setWindowTitle("LuminanceHDR "LUMINANCEVERSION);
+	setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 
 	//recent files
 	for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -167,7 +167,6 @@ void MainWindow::setupConnections() {
 	connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
-
 }
 
 void MainWindow::showDonationsPage()
@@ -371,11 +370,11 @@ void MainWindow::tonemap_requested() {
 			helpBrowser->hide();
 	}
 	catch(pfs::Exception e) {
-		QMessageBox::warning(this,tr("LuminanceHDR"),tr("Error: %1 ").arg(e.getMessage()));
+		QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: %1 ").arg(e.getMessage()));
 		reEnableMainWin();	
 	}
 	catch(...) {
-		QMessageBox::warning(this,tr("LuminanceHDR"),tr("Error: Filed to Tonemap Image"));
+		QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: Filed to Tonemap Image"));
 		reEnableMainWin();	
 	}
 }
@@ -385,7 +384,7 @@ bool MainWindow::testTempDir(QString dirname) {
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		return true;
 	} else {
-		QMessageBox::critical(this,tr("Error..."),tr("LuminanceHDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
+		QMessageBox::critical(this,tr("Error..."),tr("Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
 		QMessageBox::Ok,QMessageBox::NoButton);
 		return false;
 	}
@@ -508,7 +507,7 @@ void MainWindow::current_mdi_original_size() {
 }
 
 void MainWindow::openDocumentation() {
-	helpBrowser = new HelpBrowser(this,"LuminanceHDR Help");
+	helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	connect(helpBrowser, SIGNAL(closed()), this, SLOT(helpBrowserClosed()));
 	helpBrowser->show();
