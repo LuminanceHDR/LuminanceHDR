@@ -1,5 +1,5 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -30,6 +30,7 @@
 #include <QWhatsThis>
 #include <QTextStream>
 #include <QCloseEvent>
+#include <QSignalMapper>
 
 #include "ui_about.h"
 #include "Common/config.h"
@@ -51,7 +52,7 @@ TonemappingWindow::~TonemappingWindow() {
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0) {
 	setupUi(this);
 
-	setWindowTitle("LuminanceHDR "LUMINANCEVERSION" - Tone Mapping - ");
+	setWindowTitle("Luminance HDR "LUMINANCEVERSION" - Tonemapping Window - ");
 
 	workingLogoTimer = new QTimer();
 	workingLogoTimer->setInterval(100);
@@ -114,6 +115,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	qRegisterMetaType<QImage>("QImage");
 	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
 
+	windowMapper = new QSignalMapper(this);
+
 	setupConnections();
 }
 
@@ -140,6 +143,7 @@ void TonemappingWindow::setupConnections() {
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
 	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
+	connect(menu_Windows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
 
@@ -151,6 +155,7 @@ void TonemappingWindow::setupConnections() {
 	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 	connect(originalHDR,SIGNAL(closeRequested(bool)),actionShowHDR,SLOT(setChecked(bool)));
 
+	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 }
 
 bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
@@ -292,7 +297,7 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	actionShowPrevious->setEnabled( more_than_one || (noLdr && isHdrVisible) );
 	
 	if (w != NULL) {
-		GenericViewer *current = (GenericViewer*) w->widget(); 
+		current = (GenericViewer*) w->widget(); 
 		if ( current->isFittedToWindow())
 			actionFit_to_Window->setChecked(true); 
 		else
@@ -512,7 +517,7 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 }
 
 void TonemappingWindow::openDocumentation() {
-	HelpBrowser *helpBrowser = new HelpBrowser(this,"LuminanceHDR Help");
+	HelpBrowser *helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	helpBrowser->show();
 }
@@ -652,7 +657,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
-	QMessageBox::critical(this,tr("LuminanceHDR"),tr("Error: %1").arg(e),
+	QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
 		QMessageBox::Ok,QMessageBox::NoButton);
 	threadCounter--;
 	updateLogo();
@@ -682,4 +687,28 @@ void TonemappingWindow::updateLogo() {
 			tmPanel->setLogoPixmap(framename);
 		}
 	}
+}
+
+void TonemappingWindow::updateWindowMenu() {
+	menu_Windows->clear();
+	QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
+	for (int i = 0; i < windows.size(); ++i) {
+		GenericViewer *child = qobject_cast<GenericViewer *>(windows.at(i)->widget());
+		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
+		QAction *action  = menu_Windows->addAction(text);
+		action->setCheckable(true);
+		action->setChecked(child==current);
+		connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+		windowMapper->setMapping(action, child);
+	}
+	menu_Windows->addSeparator();
+	menu_Windows->addAction(actionAsThumbnails);
+	menu_Windows->addAction(actionCascade);
+}
+
+void TonemappingWindow::setActiveSubWindow(QWidget* w) {
+	QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
+	foreach(QMdiSubWindow *p,allhdrs)
+		if (p->widget() == w)
+			mdiArea->setActiveSubWindow(p);
 }

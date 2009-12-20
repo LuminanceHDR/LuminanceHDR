@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007,2008 Giuseppe Rota
  *
@@ -41,6 +41,8 @@
 #include "Threads/TMOThread.h"
 #include "ThreadManager.h"
 
+class QSignalMapper;
+	
 class TonemappingWindow : public QMainWindow, public Ui::TonemappingWindow
 {
 Q_OBJECT
@@ -56,6 +58,8 @@ signals:
 private:
 	pfs::Frame *workingPfsFrame;
 	QMdiArea* mdiArea;
+	QSignalMapper *windowMapper;
+	GenericViewer *current;
 	QDockWidget *dock;
 	TonemappingPanel *tmPanel;
 	ThreadManager *threadManager;
@@ -107,6 +111,8 @@ protected slots:
 	void tonemappingFinished();
 	void updateLogo();
 	void deleteTMOThread(TMOThread *);
+	void updateWindowMenu();
+	void setActiveSubWindow(QWidget* w);
 };
 
 #endif
