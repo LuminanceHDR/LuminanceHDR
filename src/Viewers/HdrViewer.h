@@ -39,6 +39,8 @@
 #include "Libpfs/array2d.h"
 #include "Libpfs/pfs.h"
 
+#include <iostream>
+
 enum LumMappingMethod {
   MAP_LINEAR,
   MAP_GAMMA1_4,

@@ -31,6 +31,8 @@
 #include "Common/options.h"
 #include "GenericViewer.h"
 
+#include <iostream>
+
 class LdrViewer : public GenericViewer {
 	Q_OBJECT
 public:

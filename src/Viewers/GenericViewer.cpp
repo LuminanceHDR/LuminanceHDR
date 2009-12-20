@@ -87,7 +87,7 @@ bool GenericViewer::isFittedToWindow() {
 	return scrollArea->isFittedToWindow();
 }
 
-const float GenericViewer::getScaleFactor() {
+float GenericViewer::getScaleFactor() {
 	return scrollArea->getScaleFactor();
 }
 

@@ -48,7 +48,7 @@ public slots:
 	virtual bool isFittedToWindow();
 	virtual bool hasSelection();
 	virtual void setSelectionTool(bool);
-	virtual const float getScaleFactor();
+	virtual float getScaleFactor();
 	virtual const QRect getSelectionRect(void);
 	virtual void removeSelection();
 	virtual bool needsSaving();
