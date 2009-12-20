@@ -1210,42 +1210,42 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Barra degli strumenti per impostazioni visualizzazione</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="102"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="105"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="103"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="106"/>
         <source>Gamma 1.4</source>
         <translation>Gamma 1.4</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="104"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="107"/>
         <source>Gamma 1.8</source>
         <translation>Gamma 1.8</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="105"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="108"/>
         <source>Gamma 2.2</source>
         <translation>Gamma 2.2</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="106"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="109"/>
         <source>Gamma 2.6</source>
         <translation>Gamma 2.6</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="107"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="110"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="111"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="114"/>
         <source>Histogram:</source>
         <translation>Istogramma:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="121"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="124"/>
         <source>Loading file...</source>
         <translation>Caricamento file...</translation>
     </message>
@@ -1258,7 +1258,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Questo Hdr presenta modifiche non salvate.&lt;br&gt;Si e&apos; sicuri di volerlo chiudere?</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="94"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="97"/>
         <source>&amp;Mapping:</source>
         <translation></translation>
     </message>
@@ -1430,7 +1430,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="542"/>
         <location filename="../forms/HdrWizard.ui" line="890"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="504"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="506"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
@@ -1504,7 +1504,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="591"/>
         <location filename="../forms/HdrWizard.ui" line="711"/>
         <location filename="../forms/HdrWizard.ui" line="979"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="515"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
@@ -1515,7 +1515,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="640"/>
         <location filename="../forms/HdrWizard.ui" line="1180"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="526"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -1526,7 +1526,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="706"/>
         <location filename="../forms/HdrWizard.ui" line="974"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="515"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="517"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1574,13 +1574,13 @@ dei pixel&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="895"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="510"/>
         <source>Gaussian</source>
         <translation>Gaussiana</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="900"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="506"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -1622,13 +1622,13 @@ dei pixel&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1185"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1257"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="305"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="307"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Avanti &gt;</translation>
     </message>
@@ -1648,42 +1648,42 @@ dei pixel&lt;/p&gt;</translation>
         <translation>Esposizione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="135"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="137"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
         <translation>Tutti i formati  (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="136"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="138"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;</source>
         <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="137"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="139"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="138"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="140"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="139"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="141"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
         <translation>Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="140"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="142"/>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="144"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="146"/>
         <source>Select the input images</source>
         <translation>Carica le immagini iniziali</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="196"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="198"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Immagini Caricate.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1697,7 +1697,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
 i seguenti tag exif al loro interno: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi)&lt;/li&gt;	&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;CONSIGLIO:&lt;/b&gt; I dati EXIF vengono persi solitamente dopo una fase di processing.&lt;br&gt;	Puoi eseguire una &lt;b&gt;copia uno-ad-uno dei dati exif&lt;/b&gt; tra due set di immagini con lo strumento che si trova in&lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia i dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="198"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="200"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		LuminanceHDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1708,108 +1708,108 @@ per le seguenti immagini:
 i seguenti dati exif: 		&lt;ul&gt;&lt;li&gt;Velocità Otturatore (secondi)&lt;/li&gt;		&lt;li&gt;Apertura (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;SUGGERIMENYO:&lt;/b&gt; La perdita dei dati EXIF accade generalmente quando si preprocessano le immagini.&lt;br&gt;		Puoi sempre eseguire una &lt;b&gt;copia uno a uno dei dati exif&lt;/b&gt; tra due insiemi di immagini tramite &lt;i&gt;&lt;b&gt;&quot;Strumenti-&gt;Copia i dati Exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="207"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="209"/>
         <source>EXIF data not found</source>
         <translation>Dati EXIF non trovati</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="208"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="544"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="210"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="546"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;Per procedere devi impostare manualmente i valori di esposizione.&lt;br&gt;Mancano ancora %1 valori.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="231"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="233"/>
         <source>Loading Error</source>
         <translation>Errore di caricamento</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="249"/>
         <source>Unknown</source>
         <translation>Sconosciuto</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="264"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="273"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="266"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="275"/>
         <source>Error...</source>
         <translation>Errore...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="264"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="266"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Impossibile eseguire l&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Leggere &quot;Aiuto -&gt; Documentazione... -&gt; Hints and tips&quot; per maggiori informazioni.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="267"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="269"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>L&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; e&apos; andata in crash...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="273"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="275"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>Un errore sconosciuto e&apos; stato rilevato nell&apos;esecuzione di &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="303"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="419"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="437"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="305"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="421"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="439"/>
         <source>&amp;Finish</source>
         <translation>&amp;Termina</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="377"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="379"/>
         <source>Aligning...</source>
         <translation>Sto Allineando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="449"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="451"/>
         <source>Load a camera response curve file</source>
         <translation>Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="451"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="463"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="453"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="465"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="463"/>
         <source>Save a camera response curve file</source>
         <translation>Salva la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="497"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="499"/>
         <source>(*) Weights: </source>
         <translation>(*) Pesi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="497"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="499"/>
         <source> - Response curve: </source>
         <translation> - Curva di risposta: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="497"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="499"/>
         <source> - Model: </source>
         <translation> - Modello: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="517"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
         <source>From Calibration</source>
         <translation>Via calibrazione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
         <source>From File</source>
         <translation>Da File</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="544"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tutti i valori EV sono stati impostati.&lt;br&gt;Fai ora click sul pulsante Avanti.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -2165,7 +2165,7 @@ i seguenti tag exif al loro interno: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="50"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="320"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="318"/>
         <source>&amp;Print...</source>
         <translation>&amp;Stampa...</translation>
     </message>
@@ -2176,7 +2176,7 @@ i seguenti tag exif al loro interno: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="60"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="322"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="320"/>
         <source>&amp;Find...</source>
         <translation>&amp;Trova...</translation>
     </message>
@@ -2197,110 +2197,110 @@ i seguenti tag exif al loro interno: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (secondi
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="80"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="329"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
         <source>&amp;Delete</source>
         <translation>&amp;Rimuovi</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="85"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="330"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
         <source>D&amp;elete All</source>
         <translation>Cancella &amp;tutto</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="233"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="231"/>
         <source>Help SideBar</source>
         <translation>Barra laterale di aiuto</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="313"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="311"/>
         <source>LuminanceHDR Online Help</source>
         <translation>Aiuto online di Luminance</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="315"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="313"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="316"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="314"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifica</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="317"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="315"/>
         <source>&amp;View</source>
         <translation>&amp;Visualizza</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="318"/>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="316"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
         <source>&amp;Bookmarks</source>
         <translation>&amp;Segnalibri</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="321"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="319"/>
         <source>&amp;Quit</source>
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="323"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="321"/>
         <source>Find &amp;Next</source>
         <translation>Trova &amp;Successivo</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="324"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="322"/>
         <source>Find &amp;Previous</source>
         <translation>trova &amp;Precedente</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="323"/>
         <source>&amp;Contents</source>
         <translation>&amp;Sommario</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="326"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="324"/>
         <source>&amp;Search</source>
         <translation>&amp;Cerca</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="326"/>
         <source>&amp;Add Bookmark</source>
         <translation>&amp;Aggiungi Segnalibro</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="407"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="405"/>
         <source>Find</source>
         <translation>Trova</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="407"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="405"/>
         <source>Search Term:</source>
         <translation>Ricerca Parola:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="439"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="437"/>
         <source>New Bookmark</source>
         <translation>Nuovo Segnalibro</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="439"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="437"/>
         <source>New Bookmark&apos;s Title:</source>
         <translation>Titolo del Nuovo Segnalibro:</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="716"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="714"/>
         <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or LuminanceHDR team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
         <translation>&lt;h2&gt;&lt;p&gt;Spiacente, il manuale non è installato!&lt;/p&gt;&lt;p&gt;Per favore contatta il fornitore del programma o il team di Luminancence HDR se hai compilato l&apos;applicazione da te&lt;/p&gt;&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="781"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="779"/>
         <source>LuminanceHDR - Help Browser</source>
         <translation>LuminanceHDR - Help Browser</translation>
     </message>
     <message>
-        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="782"/>
+        <location filename="../src/HelpBrowser/helpbrowser.cpp" line="780"/>
         <source>This protocol is not handled by the help browser.
 Do you want to open the link with the default application 
 associated with the protocol?</source>
@@ -2380,7 +2380,7 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con ik protoc
 <context>
     <name>ImageQualityDialog</name>
     <message>
-        <location filename="../src/Common/ImageQualityDialog.cpp" line="56"/>
+        <location filename="../src/Common/ImageQualityDialog.cpp" line="60"/>
         <source>Unknown</source>
         <translation>Sconosciuta</translation>
     </message>
@@ -2510,37 +2510,37 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LoadHdrThread</name>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="50"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="52"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation>ERRORE: Il seguente file non e&apos; accessibile: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="112"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="115"/>
         <source>ERROR: Cannot start dcraw on file: %1</source>
         <translation>ERRORE: impossibile eseguire dcraw sul file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="119"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="122"/>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
         <translation>ERRORE: Errore o timeout nell&apos;eseguire dcraw sul file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="132"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="138"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERRORE: Il file %1 ha una estensione non supportata.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="168"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="174"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERRORE: impossibile caricare il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="73"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="75"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation>Errore: Impossibile aprire il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="163"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="169"/>
         <source>ERROR: %1</source>
         <translation>Errore: %1</translation>
     </message>
@@ -3167,9 +3167,13 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/MainWindow.ui" line="245"/>
         <source>Convert to LDR</source>
-        <translation>Converti a LDR</translation>
+        <translation type="obsolete">Converti a LDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="245"/>
+        <source>Tonemap HDR image</source>
+        <translation>Processa immagine HDR</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="248"/>
@@ -3910,22 +3914,22 @@ p, li { white-space: pre-wrap; }
         <translation>Ungherese</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="100"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="101"/>
         <source>Option -T...</source>
         <translation>Opzione -T...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="100"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="101"/>
         <source>LuminanceHDR requires dcraw to be executed with the &quot;-T&quot; option. Command line options have been corrected.</source>
         <translation>LuminanceHDR richiede che dcraw sia eseguito con l&apos;opzione &quot;T&quot;. L&apos;opzione della riga di comando è stata correta.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="135"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="136"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
         <translation>LuminanceHDR richiede che align_image_stack sia esegita con l&apos;opzione &quot;-a aligned_&quot;. L&apos;opzione della riga di comando è stata correta.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="143"/>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation>Riavviare Luminance per usare la lingua: (%1).</translation>
     </message>
@@ -3934,7 +3938,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance richiede che dcraw venga eseguito con l&apos;opzione &quot;-T&quot;. Le opzioni da linea di comando sono state corrette.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="135"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="136"/>
         <source>Option -a...</source>
         <translation>Opzione -a...</translation>
     </message>
@@ -3943,7 +3947,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance richiede che align_image_stack venga eseguito con l&apos;opzione &quot;-a aligned_&quot;. Le opzioni a linea di comando sono state corrette.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="142"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="143"/>
         <source>Please restart...</source>
         <translation>Riavviare...</translation>
     </message>
@@ -3952,7 +3956,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Riavviare Luminance per utilizzare la nuova lingua (%1).</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="222"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="223"/>
         <source>Choose a directory</source>
         <translation>Seleziona una directory</translation>
     </message>
@@ -4256,7 +4260,7 @@ Do you want to continue?</source>
 Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="546"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="547"/>
         <source>Load a tonemapping settings text file...</source>
         <translation>Carica un file di impostazioni di tone mapping...</translation>
     </message>
@@ -4265,41 +4269,41 @@ Vuoi continuare?</translation>
         <translation type="obsolete">File di impostazioni di tone mapping di Luminance (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="548"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="575"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="549"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="576"/>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
         <translation>File di impostazione di tonemappings (*.txt)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="552"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="595"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="674"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="691"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="553"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="596"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="675"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="692"/>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="553"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="554"/>
         <source>File is not readable (check existence, permissions,...)</source>
         <translation>Il File non e&apos; accessibile (controllarne l&apos;esistenza, i permessi,...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="573"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="574"/>
         <source>Save tonemapping settings text file to...</source>
         <translation>Salve il file di impostazioni di tone mapping in...</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="595"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="596"/>
         <source>File is not writable (check permissions, path...)</source>
         <translation>Errore di accesso in scrittura al file (controllarne i permessi, il percorso,...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="674"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="675"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Errore di accesso in lettura al file (controllarne i permessi, il percorso,...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="691"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="692"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Errore, il formato delle opzioni di tonemapping è cambiato. Questo (vecchio) file non può essere usato dalla versione corrente di Luminance HDR. Creane uno nuovo.</translation>
     </message>
@@ -4308,13 +4312,13 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Errore, il formato del file di impostazioni di tone mapping e&apos; cambiato. Questo (vecchio) file non puo&apos; essere usato con questa versione di Luminance. E&apos; necessario crearne uno nuovo.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="791"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="792"/>
         <source>Enter the width of the new size:</source>
         <translation>Specifica la larghezza della nuova dimensione:</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2322"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="790"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="791"/>
         <source>Custom LDR size</source>
         <translation>Personalizza la dimensione dell&apos;LDR</translation>
     </message>
@@ -4585,34 +4589,40 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2349"/>
-        <location filename="../forms/TonemappingPanel.ui" line="2360"/>
+        <source>Process
+Original HDR</source>
+        <translation>Processa
+HDR Originale</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2373"/>
         <source>Process only selection of the original HDR image</source>
         <translation>Processa solo la selezione dell&apos;immagine HDR originale</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2352"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2376"/>
         <source>Process
 Selection</source>
         <translation>Processa
 Selezione</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2377"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2391"/>
         <source>Pre-gamma:</source>
         <translation>Pre-gamma:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2466"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2480"/>
         <source>Start tonemapping (CTRL+A)</source>
         <translation>Avvia tonemapping(CTRL+A)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2469"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2483"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
         <translation>Usa i parametri correnti come sopra (pregamma e operatore di tonemapping) per calcolare l&apos;immagine LDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2485"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2499"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
@@ -4655,7 +4665,7 @@ Selezione</translation>
         <translation>Qua puoi applicare un valore di correzione gamma all&apos;HDR.&lt;br&gt;La correzione gamma verra&apos; applicata prima del tone mapping.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2399"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2413"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Ripristina il valore di default del gamma (1)</translation>
     </message>
@@ -4719,7 +4729,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Utilizza i parametri correnti qua sopra (pregamma e operatore di tone mapping) per calcolare una immagine LDR.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2472"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2486"/>
         <source>&amp;Apply</source>
         <translation>&amp;Applica</translation>
     </message>
@@ -4877,12 +4887,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2508"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2522"/>
         <source>undo</source>
         <translation>annulla</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2517"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2531"/>
         <source>redo</source>
         <translation>ripeti</translation>
     </message>
@@ -5205,7 +5215,7 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="262"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="336"/>
         <source>Save files in</source>
         <translation>Salva i file in</translation>
     </message>
@@ -5357,13 +5367,49 @@ p, li { white-space: pre-wrap; }
         <translation>HDR Originale</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="480"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="200"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="201"/>
+        <source>Processed HDR</source>
+        <translation>HDR Processata</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="554"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Il documento della licenza non e&apos; stato trovato, lo si puo&apos; trovare online seguendo %2questo link%3</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="527"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="238"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="585"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="591"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="601"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="616"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="622"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="628"/>
+        <source>Luminance HDR</source>
+        <translation>Luminance HDR</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="238"/>
+        <source>Please select an LDR image to save.</source>
+        <translation>Seleziona un-immagine LDR da salvare.</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="585"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="591"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="622"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="628"/>
+        <source>Please select an HDR image to tonemap.</source>
+        <translation>Seleziona un-immagine LDR da processare.</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="601"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="616"/>
+        <source>Please make a selection of the HDR image to tonemap.</source>
+        <translation>Seleziona un rettangolo dell&apos;HDR da processare.</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="655"/>
         <source>LuminanceHDR</source>
         <translation>Luminance-HDR</translation>
     </message>
@@ -5372,7 +5418,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="527"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="655"/>
         <source>Error: %1</source>
         <translation>Errore: %1</translation>
     </message>
