@@ -29,6 +29,7 @@
 #include <QMessageBox>
 #include <QWhatsThis>
 #include <QTextStream>
+#include <QCloseEvent>
 
 #include "ui_about.h"
 #include "Common/config.h"
@@ -41,13 +42,13 @@
 #include "Viewers/LdrViewer.h"
 #include "TonemappingWindow.h"
 
-#include <iostream>
+//#include <iostream>
 
 TonemappingWindow::~TonemappingWindow() {
 	delete workingLogoTimer;
 }
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0) {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0) {
 	setupUi(this);
 
 	setWindowTitle("LuminanceHDR "LUMINANCEVERSION" - Tone Mapping - ");
@@ -152,7 +153,28 @@ void TonemappingWindow::setupConnections() {
 
 }
 
+bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
+{
+	if (event->type() == QEvent::Close) {
+		QMdiSubWindow *w = (QMdiSubWindow *) obj;
+		GenericViewer *v = (GenericViewer *) w->widget();
+		if (v->isHDR()) {
+			if (v != originalHDR) {
+				hdrNum--;
+			}
+		}
+		else {
+			ldrNum--;
+		}
+		return true;
+	} else {
+			//Standard event processing
+		return QMainWindow::eventFilter(obj, event);
+	}
+}
+
 void TonemappingWindow::addMDIResult(const QImage &image) {
+	ldrNum++;
 	LdrViewer *n = new LdrViewer( image, this, false, false, tmoOptions);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 	n->normalSize();
@@ -166,10 +188,12 @@ void TonemappingWindow::addMDIResult(const QImage &image) {
 	n->showMaximized();
 	mdiArea->activeSubWindow()->showMaximized();
 
+	subwin->installEventFilter(this);
 	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
 void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
+	hdrNum++;
 	HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	HDR->setFreePfsFrameOnExit(true); 
 	HDR->updateHDR(frame);
@@ -187,6 +211,7 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
 	HDR->showMaximized();
 	mdiArea->activeSubWindow()->showMaximized();
 	
+	HdrSubWin->installEventFilter(this);
 	connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
@@ -209,8 +234,11 @@ void TonemappingWindow::on_actionSave_triggered() {
 	GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
 	if (current==NULL)
 		return;
-	if (current == originalHDR)
+	if (current->isHDR()) {
+		QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an LDR image to save."),
+			QMessageBox::Ok);
 		return;
+	}
 
 	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
 
@@ -223,21 +251,46 @@ void TonemappingWindow::on_actionSave_triggered() {
 }
 
 void TonemappingWindow::updateActions(QMdiSubWindow *w) {
-	int mdi_num = mdiArea->subWindowList().size(); // mdi number
+	//std::cout << "UpdateActions" << std::endl;
+	GenericViewer *viewer;
+
+	if (w)
+		viewer = (GenericViewer *) w->widget();
+	else
+		viewer = NULL;
+
+	int mdiNum = mdiArea->subWindowList().size(); // mdi number
 	bool isHdrVisible = !originalHdrSubWin->isHidden();
-	int ldr_num = (isHdrVisible ? mdi_num-1 : mdi_num); // ldr number
-	bool more_than_one  = (mdi_num > 1); // more than 1 Visible Image 
-	bool ldr = !(ldr_num == 0); // no LDRs
-	bool isNotHDR = (w != originalHdrSubWin);
-	
-	actionFix_Histogram->setEnabled( isNotHDR && ldr );
-	actionSave->setEnabled( isNotHDR && ldr );
-	actionSaveAll->setEnabled( ldr );
-	actionClose_All->setEnabled( ldr );
-	actionAsThumbnails->setEnabled( mdi_num );
+	bool more_than_one = (mdiNum > 1); // more than 1 Image
+	bool noLdr = !(ldrNum == 0); // no LDRs
+	bool noHdr = !(hdrNum == 0); // no HDRs
+	int hdr_num = (isHdrVisible ? hdrNum+1 : hdrNum); // hdr number
+
+	bool isHDR = false;
+	if (viewer) 
+		isHDR = viewer->isHDR();
+
+	//std::cout << "viewer: " << viewer << std::endl;
+	//std::cout << "mdiNum: " << mdiNum << std::endl;
+	//std::cout << "ldrNum: " << ldrNum << std::endl;
+	//std::cout << "hdrNum: " << hdrNum << std::endl;
+	//std::cout << "isHdrVisible: " << isHdrVisible << std::endl;
+	//std::cout << "more_than_one: " << more_than_one << std::endl;
+	//std::cout << "noLdr: " << noLdr << std::endl;
+	//std::cout << "noHdr: " << noHdr << std::endl;
+	//std::cout << "hdr_num: " << hdr_num << std::endl;
+	//std::cout << "isHDR: " << isHDR << std::endl;
+	//std::cout << std::endl;
+
+	actionFix_Histogram->setEnabled( !isHDR && ldrNum );
+	actionSave->setEnabled( !isHDR && ldrNum );
+	actionSaveAll->setEnabled( !isHDR && ldrNum );
+	actionClose_All->setEnabled( hdrNum || ldrNum );
+	actionAsThumbnails->setEnabled( mdiNum );
 	actionCascade->setEnabled( more_than_one );
-	actionShowNext->setEnabled( more_than_one || (ldr && isHdrVisible) );
-	actionShowPrevious->setEnabled( more_than_one || (ldr && isHdrVisible) );
+	actionShowNext->setEnabled( more_than_one || (noLdr && isHdrVisible) );
+	actionShowPrevious->setEnabled( more_than_one || (noLdr && isHdrVisible) );
+	
 	if (w != NULL) {
 		GenericViewer *current = (GenericViewer*) w->widget(); 
 		if ( current->isFittedToWindow())

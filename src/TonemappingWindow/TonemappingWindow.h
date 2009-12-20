@@ -72,10 +72,11 @@ private:
 	int threadCounter;
 	int frameCounter;
 	QTimer *workingLogoTimer;
-
 	void load_options();
+	int ldrNum;
+	int hdrNum;
 protected slots:
-	//bool eventFilter(QObject *obj, QEvent *event);
+	bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
 	void addMDIResult(const QImage&);
 	void addProcessedFrame(pfs::Frame *);
