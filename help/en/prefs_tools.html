@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>LuminanceHDR User Manual — Setting up LuminanceHDR — External tools</title>
+<title>Luminance HDR User Manual — Setting up Luminance HDR — External tools</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -16,17 +16,17 @@
 <li>loads a single raw file in the main workspace</li>
 <li>specifies a set of raw files in the <em>File&nbsp;&gt; New Hdr...</em> wizard</li>
 </ul>
-a RAW->TIFF conversion transparently takes place by calling the <a href="http://cybercom.net/~dcoffin/dcraw/">dcraw</a> executable (by Dave Coffin). LuminanceHDR calls dcraw to convert a <a href="http://en.wikipedia.org/wiki/Raw_image_format">raw file</a> to a (either 8 bit or 16 bit) TIFF file.</p>
+a RAW->TIFF conversion transparently takes place by calling the <a href="http://cybercom.net/~dcoffin/dcraw/">dcraw</a> executable (by Dave Coffin). Luminance HDR calls dcraw to convert a <a href="http://en.wikipedia.org/wiki/Raw_image_format">raw file</a> to a (either 8 bit or 16 bit) TIFF file.</p>
 
 <p>You can tweak the way dcraw operates by setting specific command line switches (aka options or parameters) in the <em>External tools</em> tab of <em>Preferences</em> dialog.</p>
 
 <p>The -T switch (TIFF output, see <a href="#excerpt">below</a>) is the only required parameter. In this particular case we have also specified the optional -4 parameter to ask dcraw to obtain a 16 bit (TIFF) file.</p>
 
-<p>Starting with LuminanceHDR 1.9.3 the default options for calling dcraw are -T -4 -q 3. The DCRaw's manual page lists all the available options. An excerpt, being quite long, is available <a href="dcraw.html">separately</a>, for the latest manual page please follow <a href="http://cybercom.net/~dcoffin/dcraw/dcraw.1.html">this reference</a>.</p>
+<p>Starting with Luminance HDR 1.9.3 the default options for calling dcraw are -T -4 -q 3. The DCRaw's manual page lists all the available options. An excerpt, being quite long, is available <a href="dcraw.html">separately</a>, for the latest manual page please follow <a href="http://cybercom.net/~dcoffin/dcraw/dcraw.1.html">this reference</a>.</p>
 
 <h3>Alignment options</h3>
 
-<p>LuminanceHDR can optionally use align_image_stack command line tool bundled with Hugin, a panorama stitcher, for the alignment of slightly misaligned images. When several differently exposed images are taken in the process of creating a High Dynamic Range image, the images are not perfectly aligned, and the quality of the HDR image created will suffer from this. align_image_stack uses the tools available to hugin to optimize the roll, pitch and yaw, as well as some parameters of the lens geometry, to align the images.</p>
+<p>Luminance HDR can optionally use align_image_stack command line tool bundled with Hugin, a panorama stitcher, for the alignment of slightly misaligned images. When several differently exposed images are taken in the process of creating a High Dynamic Range image, the images are not perfectly aligned, and the quality of the HDR image created will suffer from this. align_image_stack uses the tools available to hugin to optimize the roll, pitch and yaw, as well as some parameters of the lens geometry, to align the images.</p>
 
 <p>align_image_stack doesn't have a lot of relevant options, so we list them here:</p>
 
@@ -51,7 +51,7 @@ a RAW->TIFF conversion transparently takes place by calling the <a href="http://
 <dd>Break image into a rectangular grid (gsize x gsize) and attempt to find num control points in each section (default: 5 [5x5 grid])</dd>
 </dl>
 
-<p>By default LuminanceHDR just defines prefix for aligned images: <tt>-a aligned_</tt>.</p>
+<p>By default Luminance HDR just defines prefix for aligned images: <tt>-a aligned_</tt>.</p>
 
 </body>
 </html>

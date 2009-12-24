@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LuminanceHDR</string>
+   <string>Luminance HDR</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../icons.qrc">
@@ -266,10 +266,10 @@
     <string>&amp;Quit</string>
    </property>
    <property name="toolTip">
-    <string>Quit LuminanceHDR</string>
+    <string>Quit Luminance HDR</string>
    </property>
    <property name="statusTip">
-    <string>Quit LuminanceHDR</string>
+    <string>Quit Luminance HDR</string>
    </property>
    <property name="whatsThis">
     <string>Exit</string>
@@ -413,13 +413,13 @@
     <string>About...</string>
    </property>
    <property name="toolTip">
-    <string>Open user manual for LuminanceHDR</string>
+    <string>Open user manual for Luminance HDR</string>
    </property>
    <property name="statusTip">
-    <string>Open user manual for LuminanceHDR</string>
+    <string>Open user manual for Luminance HDR</string>
    </property>
    <property name="whatsThis">
-    <string>Open user manual for LuminanceHDR</string>
+    <string>Open user manual for Luminance HDR</string>
    </property>
    <property name="shortcut">
     <string>F1</string>
@@ -732,16 +732,16 @@
   </action>
   <action name="actionAbout_Luminance">
    <property name="text">
-    <string>About &amp;LuminanceHDR</string>
+    <string>About &amp;Luminance HDR</string>
    </property>
    <property name="toolTip">
-    <string>Show information about LuminanceHDR</string>
+    <string>Show information about Luminance HDR</string>
    </property>
    <property name="statusTip">
-    <string>Show information about LuminanceHDR, its authors and contributors</string>
+    <string>Show information about Luminance HDR, its authors and contributors</string>
    </property>
    <property name="whatsThis">
-    <string>Show information about LuminanceHDR, its authors and contributors</string>
+    <string>Show information about Luminance HDR, its authors and contributors</string>
    </property>
   </action>
   <action name="actionSave_Hdr_Preview">

@@ -268,8 +268,8 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w) {
 	bool isHdrVisible = !originalHdrSubWin->isHidden();
 	bool more_than_one = (mdiNum > 1); // more than 1 Image
 	bool noLdr = !(ldrNum == 0); // no LDRs
-	bool noHdr = !(hdrNum == 0); // no HDRs
-	int hdr_num = (isHdrVisible ? hdrNum+1 : hdrNum); // hdr number
+	//bool noHdr = !(hdrNum == 0); // no HDRs
+	//int hdr_num = (isHdrVisible ? hdrNum+1 : hdrNum); // hdr number
 
 	bool isHDR = false;
 	if (viewer) 
