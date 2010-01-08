@@ -62,7 +62,7 @@ void LuminanceOptions::loadFromQSettings() {
 
 	settings.beginGroup(GROUP_EXTERNALTOOLS);
 		if (!settings.contains(KEY_EXTERNAL_DCRAW_OPTIONS))
-			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS, QStringList() << "-T" << "-4" << "-q" << "3");
+			settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS, QStringList() << "-T" << "-4" << "-q" << "3" << "-w");
 		dcraw_options=settings.value(KEY_EXTERNAL_DCRAW_OPTIONS).toStringList();
 		//bug 2001032, remove spurious default QString "-a aligned_" value set by ver 1.9.2
 		if (!settings.contains(KEY_EXTERNAL_AIS_OPTIONS) || settings.value(KEY_EXTERNAL_AIS_OPTIONS).toString()=="-a aligned_")
