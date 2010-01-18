@@ -31,7 +31,7 @@
 #include <QMdiArea>
 #include <QDockWidget>
 #include <QMdiSubWindow>
-#include <QTimer>
+#include <QProgressBar>
 
 #include "ui_TonemappingWindow.h"
 #include "Common/global.h"
@@ -75,10 +75,10 @@ private:
 	int HSB_Value;
 	int threadCounter;
 	int frameCounter;
-	QTimer *workingLogoTimer;
 	void load_options();
 	int ldrNum;
 	int hdrNum;
+	QProgressBar *progressbar;
 protected slots:
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();
@@ -109,7 +109,7 @@ protected slots:
 	void tonemapImage(const TonemappingOptions&);
 	void showErrorMessage(const char *e);
 	void tonemappingFinished();
-	void updateLogo();
+	void updateProgressbar();
 	void deleteTMOThread(TMOThread *);
 	void updateWindowMenu();
 	void setActiveSubWindow(QWidget* w);

@@ -46,17 +46,13 @@
 //#include <iostream>
 
 TonemappingWindow::~TonemappingWindow() {
-	delete workingLogoTimer;
+	delete progressbar;
 }
 
 TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0) {
 	setupUi(this);
 
 	setWindowTitle("Luminance HDR "LUMINANCEVERSION" - Tonemapping Window - ");
-
-	workingLogoTimer = new QTimer();
-	workingLogoTimer->setInterval(100);
-	connect(workingLogoTimer, SIGNAL(timeout()), this, SLOT(updateLogo()));
 
 	luminance_options=LuminanceOptions::getInstance();
 	//cachepath=LuminanceOptions::getInstance()->tempfilespath;
@@ -116,6 +112,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
 
 	windowMapper = new QSignalMapper(this);
+
+	progressbar = new QProgressBar();
 
 	setupConnections();
 }
@@ -247,12 +245,19 @@ void TonemappingWindow::on_actionSave_triggered() {
 
 	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
 
+	if (outfname == "") return;
+
 	//if save is succesful
 	if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
 		//time to write the exif data...
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), current->getExifComment().toStdString() );
 	}
+
+	QFileInfo fi(outfname);	
+	mdiArea->currentSubWindow()->setWindowTitle(fi.fileName());
+	current->setFileName(fi.fileName());
+	updateWindowMenu();
 }
 
 void TonemappingWindow::updateActions(QMdiSubWindow *w) {
@@ -651,41 +656,37 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
 	//start thread
-    thread->startTonemapping();
+	thread->startTonemapping();
 	threadCounter++;
-	updateLogo();
+	if (threadCounter == 1) { 
+		statusbar->insertWidget(0,progressbar);
+		progressbar->setMaximum(0);
+		progressbar->setMinimum(0);
+		progressbar->setValue(1);
+		progressbar->show();
+	}
 }
 
 void TonemappingWindow::showErrorMessage(const char *e) {
 	QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
 		QMessageBox::Ok,QMessageBox::NoButton);
 	threadCounter--;
-	updateLogo();
+	updateProgressbar();
 }
 
 void TonemappingWindow::tonemappingFinished() {
 	std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
 	threadCounter--;
-	updateLogo();
+	updateProgressbar();
 }
 
 void TonemappingWindow::deleteTMOThread(TMOThread *th) {
 	delete th;
 }
 
-void TonemappingWindow::updateLogo() {
+void TonemappingWindow::updateProgressbar() {
 	if (threadCounter == 0) {
-		workingLogoTimer->stop();
-		tmPanel->setLogoText(" ");
-	}
-	else if (threadCounter > 0) {
-		workingLogoTimer->start();
-		frameCounter = ++frameCounter % 8;
-        
-		if (frameCounter < 8) {
-	    	QString framename = ":/new/prefix1/images/working" + QString::number(frameCounter) + ".png";
-			tmPanel->setLogoPixmap(framename);
-		}
+		statusbar->removeWidget(progressbar);
 	}
 }
 
