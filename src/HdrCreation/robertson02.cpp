@@ -131,51 +131,66 @@ for( int j=0 ; j<width*height ; j++ )
 	float divR = 0.0f;
 	float divG = 0.0f;
 	float divB = 0.0f;
-	float maxti = -1e6f;
-	float minti = +1e6f;
+	float maxtiR = -1e6f;
+	float maxtiG = -1e6f;
+	float maxtiB = -1e6f;
+	float mintiR = +1e6f;
+	float mintiG = +1e6f;
+	float mintiB = +1e6f;
 
 	if (ldrinput) { //LDR INPUT
 		//for all exposures
-		for( int i=0 ; i<N ; i++ ) {
+		for( int i=0 ; i<N ; i++ ) 
+		{
 
-		//pick the 3 channels' values
-		int mR = qRed  (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-		int mG = qGreen(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-		int mB = qBlue (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-		int mA = qAlpha(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
+			//pick the 3 channels' values
+			int mR = qRed  (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
+			int mG = qGreen(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
+			int mB = qBlue (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
+			int mA = qAlpha(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
 	
-		float ti = arrayofexptime[i];
-		// --- anti saturation: observe minimum exposure time at which
-		// saturated value is present, and maximum exp time at which
-		// black value is present
-		if (( mR>maxM ) || ( mG>maxM ) || ( mB>maxM ))
-			minti = fminf(minti,ti);
-		if (( mR<minM ) || ( mG<minM ) || ( mB<minM ) )
-			maxti = fmaxf(maxti,ti);
+			float ti = arrayofexptime[i];
+			// --- anti saturation: observe minimum exposure time at which
+			// saturated value is present, and maximum exp time at which
+			// black value is present
+			// this needs to be done separately for each channel
+			if ( mR>maxM )
+				mintiR = fminf(mintiR,ti);
+			if ( mG>maxM )
+				mintiG = fminf(mintiG,ti);
+			if ( mB>maxM )
+				mintiB = fminf(mintiB,ti);
+			if ( mR<minM )
+				maxtiR = fmaxf(maxtiR,ti);
+			if ( mG<minM )
+				maxtiG = fmaxf(maxtiG,ti);
+			if ( mB<minM )
+				maxtiB = fmaxf(maxtiB,ti);
 	
-		// --- anti ghosting: monotonous increase in time should result
-		// in monotonous increase in intensity; make forward and
-		// backward check, ignore value if condition not satisfied
-		// TODO: in luminance verify that the image list is indeed in decreasing exposure time order
-		int R_lower = qRed  (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-		int R_upper = qRed  (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-		int G_lower = qGreen(* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-		int G_upper = qGreen(* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-		int B_lower = qBlue (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-		int B_upper = qBlue (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-		if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
-			continue;
+			// --- anti ghosting: monotonous increase in time should result
+			// in monotonous increase in intensity; make forward and
+			// backward check, ignore value if condition not satisfied
+			// if this is violated for one channel then the pixel is ignored for all channels
+			// TODO: in luminance verify that the image list is indeed in decreasing exposure time order
+			int R_lower = qRed  (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
+			int R_upper = qRed  (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
+			int G_lower = qGreen(* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
+			int G_upper = qGreen(* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
+			int B_lower = qBlue (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
+			int B_upper = qBlue (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
+			if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
+				continue;
 
-		// mA assumed to handle de-ghosting masks
-		// mA values assumed to be in [0, 255]
-		// mA=0 assummed to mean that the pixel should be excluded
-		float fmA = mA/255.f;
-		sumR += fmA * w[mR] * ti * Ir[mR];
-		sumG += fmA * w[mG] * ti * Ig[mG];
-		sumB += fmA * w[mB] * ti * Ib[mB];
-		divR += fmA * w[mR] * ti * ti;
-		divG += fmA * w[mG] * ti * ti;
-		divB += fmA * w[mB] * ti * ti;
+			// mA assumed to handle de-ghosting masks
+			// mA values assumed to be in [0, 255]
+			// mA=0 assummed to mean that the pixel should be excluded
+			float fmA = mA/255.f;
+			sumR += fmA * w[mR] * ti * Ir[mR];
+			sumG += fmA * w[mG] * ti * Ig[mG];
+			sumB += fmA * w[mB] * ti * Ib[mB];
+			divR += fmA * w[mR] * ti * ti;
+			divG += fmA * w[mG] * ti * ti;
+			divB += fmA * w[mB] * ti * ti;
 		}
 	} else { //HDR INPUT
 		//for all exposures
@@ -187,10 +202,18 @@ for( int j=0 ; j<width*height ; j++ )
 			// --- anti saturation: observe minimum exposure time at which
 			// saturated value is present, and maximum exp time at which
 			// black value is present
-			if (( mR>maxM ) || ( mG>maxM ) || ( mB>maxM ))
-				minti = fminf(minti,ti);
-			if (( mR<minM ) || ( mG<minM ) || ( mB<minM ) )
-				maxti = fmaxf(maxti,ti);
+			if ( mR>maxM )
+				mintiR = fminf(mintiR,ti);
+			if ( mG>maxM )
+				mintiG = fminf(mintiG,ti);
+			if ( mB>maxM )
+				mintiB = fminf(mintiB,ti);
+			if ( mR<minM )
+				maxtiR = fmaxf(maxtiR,ti);
+			if ( mG<minM )
+				maxtiG = fmaxf(maxtiG,ti);
+			if ( mB<minM )
+				maxtiB = fmaxf(maxtiB,ti);
 		
 			// --- anti ghosting: monotonous increase in time should result
 			// in monotonous increase in intensity; make forward and
@@ -216,17 +239,30 @@ for( int j=0 ; j<width*height ; j++ )
 
 	// --- anti saturation: if a meaningful representation of pixel
 	// was not found, replace it with information from observed data
-	if( divR==0.0f || divG==0.0f || divB==0.0f && maxti>-1e6f ) {
+	// this needs to be done separately for each channel
+	if( divR==0.0f && maxtiR>-1e6f ) {
 		sumR = Ir[minM];
-		sumG = Ig[minM];
-		sumB = Ib[minM];
-		divR = divG = divB = maxti;
+		divR = maxtiR;
 	}
-	if( divR==0.0f || divG==0.0f || divB==0.0f && minti<+1e6f ) {
+	if( divG==0.0f && maxtiG>-1e6f ) {
+		sumG = Ig[minM];
+		divG = maxtiG;
+	}
+	if( divB==0.0f && maxtiB>-1e6f ) {
+		sumB = Ib[minM];
+		divB = maxtiB;
+	}
+	if( divR==0.0f && mintiR<+1e6f ) {
 		sumR = Ir[maxM];
+		divR = mintiR;
+	}
+	if( divG==0.0f && mintiG<+1e6f ) {
 		sumG = Ig[maxM];
+		divG = mintiG;
+	}
+	if( divB==0.0f && mintiB<+1e6f ) {
 		sumB = Ib[maxM];
-		divR = divG = divB = minti;
+		divB = mintiB;
 	}
 
 	if( divR!=0.0f && divG!=0.0f && divB!=0.0f ) {
