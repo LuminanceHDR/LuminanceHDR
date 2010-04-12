@@ -62,8 +62,6 @@ TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 
 TMOThread::~TMOThread() {
 	wait();
-	//pfs::DOMIO pfsio;
-	//pfsio.freeFrame(workingframe);
 	delete ph;
 	std::cout << "~TMOThread()" << std::endl;
 }
@@ -75,5 +73,15 @@ void TMOThread::terminateRequested() {
 
 void TMOThread::startTonemapping() {
     start();
+}
+
+void TMOThread::finalize() {
+	if (!(ph->isTerminationRequested())) {
+		const QImage& res = fromLDRPFStoQImage(workingframe);
+		emit processedFrame(workingframe);
+		emit imageComputed(res);
+	}
+	emit finished();
+	emit deleteMe(this);
 }
 

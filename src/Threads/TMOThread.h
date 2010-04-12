@@ -47,16 +47,17 @@ public:
 public slots:
 	virtual void terminateRequested();
 signals:
-	virtual void imageComputed(const QImage&);
-	virtual void processedFrame(pfs::Frame *);
-	virtual void setMaximumSteps(int);
-	virtual void setValue(int);
-	virtual void setValue();
-	virtual void finished();
-	virtual void deleteMe(TMOThread *);
-	virtual void tmo_error(const char *);
+	void imageComputed(const QImage&);
+	void processedFrame(pfs::Frame *);
+	void setMaximumSteps(int);
+	void setValue(int);
+	void setValue();
+	void finished();
+	void deleteMe(TMOThread *);
+	void tmo_error(const char *);
 protected:
 	virtual void run() = 0;
+	void finalize();
 	pfs::Frame *workingframe;
 	const TonemappingOptions &opts;
 	ProgressHelper *ph;
