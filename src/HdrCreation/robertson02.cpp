@@ -35,6 +35,8 @@
 #include "responses.h"
 #include "robertson02.h"
 
+#include "generic_applyResponse.h"
+
 #define PROG_NAME "robertson02"
 
 // maximum iterations after algorithm accepts local minima
@@ -45,240 +47,40 @@
 
 float normalizeI( float* I, int M );
 
-void robertson02_applyResponse( pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... ) {
-
-QList<QImage*> *listldr=NULL;
-Array2DList *listhdrR=NULL;
-Array2DList *listhdrG=NULL;
-Array2DList *listhdrB=NULL;
-va_list arg_pointer;
-va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
-int N=-1; int width=-1; int height=-1;
-
-if (ldrinput) {
-	listldr=va_arg(arg_pointer,QList<QImage*>*);
-	// number of exposures
-	N = listldr->count();
-	// frame size
-	width = (listldr->at(0))->width();
-	height = (listldr->at(0))->height();
-} else {
-	listhdrR=va_arg(arg_pointer,Array2DList*);
-	listhdrG=va_arg(arg_pointer,Array2DList*);
-	listhdrB=va_arg(arg_pointer,Array2DList*);
-	// number of exposures
-	N = listhdrR->size();
-	// frame size
-	width= ((*listhdrR)[0])->getCols();
-	height=((*listhdrR)[0])->getRows();
-}
-va_end(arg_pointer); /* Clean up. */
-
-
-// --- anti saturation: calculate trusted camera output range
-int minM = 0;
-for( int m=0 ; m<M ; m++ )
-	if( w[m]>0 ) {
-		minM = m;
-		break;
-	}
-int maxM = M-1;
-for( int m=M-1 ; m>=0 ; m-- )
-	if( w[m]>0 ) {
-		maxM = m;
-		break;
-	}
-
-// --- anti ghosting: for each image i, find images with
-// the immediately higher and lower exposure times
-int* i_lower = new int[N];
-int* i_upper = new int[N];
-for( int i=0 ; i<N ; i++ )
-{
-	i_lower[i]=-1;
-	i_upper[i]=-1;
-	float ti =  arrayofexptime[i];
-	float ti_upper =  arrayofexptime[0];
-	float ti_lower = arrayofexptime[0];
-
-	for( int j=0 ; j<N ; j++ )
-		if( i!=j )
-		{
-			if( arrayofexptime[j]>ti && arrayofexptime[j]<ti_upper )
-			{
-				ti_upper=arrayofexptime[j];
-				i_upper[i]=j;
-			}
-			if(arrayofexptime[j]<ti && arrayofexptime[j]>ti_lower )
-			{
-				ti_lower=arrayofexptime[j];
-				i_lower[i]=j;
-			}
-		}
-	if( i_lower[i]==-1 )
-		i_lower[i]=i;
-	if( i_upper[i]==-1 )
-		i_upper[i]=i;
+float robertson02_sum(float weight, float, float t, float response) {
+	return weight * t * response;
 }
 
-//for all pixels
-for( int j=0 ; j<width*height ; j++ )
-{
-	// all exposures for each pixel
-	float sumR = 0.0f;
-	float sumG = 0.0f;
-	float sumB = 0.0f;
-	float divR = 0.0f;
-	float divG = 0.0f;
-	float divB = 0.0f;
-	float maxtiR = -1e6f;
-	float maxtiG = -1e6f;
-	float maxtiB = -1e6f;
-	float mintiR = +1e6f;
-	float mintiG = +1e6f;
-	float mintiB = +1e6f;
+float robertson02_div(float weight, float, float t, float) {
+	return weight * t * t;
+}
 
-	if (ldrinput) { //LDR INPUT
-		//for all exposures
-		for( int i=0 ; i<N ; i++ ) 
-		{
+float robertson02_out(float quotient) {
+	return quotient;
+}
 
-			//pick the 3 channels' values
-			int mR = qRed  (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-			int mG = qGreen(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-			int mB = qBlue (* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-			int mA = qAlpha(* ( (QRgb*)( (listldr->at(i) )->bits() ) + j ) );
-	
-			float ti = arrayofexptime[i];
-			// --- anti saturation: observe minimum exposure time at which
-			// saturated value is present, and maximum exp time at which
-			// black value is present
-			// this needs to be done separately for each channel
-			if ( mR>maxM )
-				mintiR = fminf(mintiR,ti);
-			if ( mG>maxM )
-				mintiG = fminf(mintiG,ti);
-			if ( mB>maxM )
-				mintiB = fminf(mintiB,ti);
-			if ( mR<minM )
-				maxtiR = fmaxf(maxtiR,ti);
-			if ( mG<minM )
-				maxtiG = fmaxf(maxtiG,ti);
-			if ( mB<minM )
-				maxtiB = fmaxf(maxtiB,ti);
-	
-			// --- anti ghosting: monotonous increase in time should result
-			// in monotonous increase in intensity; make forward and
-			// backward check, ignore value if condition not satisfied
-			// if this is violated for one channel then the pixel is ignored for all channels
-			// TODO: in luminance verify that the image list is indeed in decreasing exposure time order
-			int R_lower = qRed  (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-			int R_upper = qRed  (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-			int G_lower = qGreen(* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-			int G_upper = qGreen(* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-			int B_lower = qBlue (* ( (QRgb*)( (listldr->at(i_lower[i]) )->bits() ) + j ) );
-			int B_upper = qBlue (* ( (QRgb*)( (listldr->at(i_upper[i]) )->bits() ) + j ) );
-			if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
-				continue;
+void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...) {
+	QList<QImage*> *listldr=NULL;
+	Array2DList *listhdrR=NULL;
+	Array2DList *listhdrG=NULL;
+	Array2DList *listhdrB=NULL;
+	va_list arg_pointer;
+	va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
 
-			// mA assumed to handle de-ghosting masks
-			// mA values assumed to be in [0, 255]
-			// mA=0 assummed to mean that the pixel should be excluded
-			float fmA = mA/255.f;
-			sumR += fmA * w[mR] * ti * Ir[mR];
-			sumG += fmA * w[mG] * ti * Ig[mG];
-			sumB += fmA * w[mB] * ti * Ib[mB];
-			divR += fmA * w[mR] * ti * ti;
-			divG += fmA * w[mG] * ti * ti;
-			divB += fmA * w[mB] * ti * ti;
-		}
-	} else { //HDR INPUT
-		//for all exposures
-		for( int i=0 ; i<N ; i++ ) {
-			int mR= (int) ( ( *( ( (*listhdrR)[i] ) ) ) (j) );
-			int mG= (int) ( ( *( ( (*listhdrG)[i] ) ) ) (j) );
-			int mB= (int) ( ( *( ( (*listhdrB)[i] ) ) ) (j) );
-			float ti = arrayofexptime[i];
-			// --- anti saturation: observe minimum exposure time at which
-			// saturated value is present, and maximum exp time at which
-			// black value is present
-			if ( mR>maxM )
-				mintiR = fminf(mintiR,ti);
-			if ( mG>maxM )
-				mintiG = fminf(mintiG,ti);
-			if ( mB>maxM )
-				mintiB = fminf(mintiB,ti);
-			if ( mR<minM )
-				maxtiR = fmaxf(maxtiR,ti);
-			if ( mG<minM )
-				maxtiG = fmaxf(maxtiG,ti);
-			if ( mB<minM )
-				maxtiB = fmaxf(maxtiB,ti);
-		
-			// --- anti ghosting: monotonous increase in time should result
-			// in monotonous increase in intensity; make forward and
-			// backward check, ignore value if condition not satisfied
-			int R_lower = (int) ( ( *( ( (*listhdrR)[i_lower[i]] ) ) ) (j) );
-			int R_upper = (int) ( ( *( ( (*listhdrR)[i_upper[i]] ) ) ) (j) );
-			int G_lower = (int) ( ( *( ( (*listhdrG)[i_lower[i]] ) ) ) (j) );
-			int G_upper = (int) ( ( *( ( (*listhdrG)[i_upper[i]] ) ) ) (j) );
-			int B_lower = (int) ( ( *( ( (*listhdrB)[i_lower[i]] ) ) ) (j) );
-			int B_upper = (int) ( ( *( ( (*listhdrB)[i_upper[i]] ) ) ) (j) );
-			
-			if( ( R_lower>mR || R_upper<mR)||( G_lower>mG || G_upper<mG)||( B_lower>mB || B_upper<mB) )
-				continue;
-		
-			sumR += w[mR] * ti * Ir[mR];
-			sumG += w[mG] * ti * Ig[mG];
-			sumB += w[mB] * ti * Ib[mB];
-			divR += w[mR] * ti * ti;
-			divG += w[mG] * ti * ti;
-			divB += w[mB] * ti * ti;
-		}
-	}
-
-	// --- anti saturation: if a meaningful representation of pixel
-	// was not found, replace it with information from observed data
-	// this needs to be done separately for each channel
-	if( divR==0.0f && maxtiR>-1e6f ) {
-		sumR = Ir[minM];
-		divR = maxtiR;
-	}
-	if( divG==0.0f && maxtiG>-1e6f ) {
-		sumG = Ig[minM];
-		divG = maxtiG;
-	}
-	if( divB==0.0f && maxtiB>-1e6f ) {
-		sumB = Ib[minM];
-		divB = maxtiB;
-	}
-	if( divR==0.0f && mintiR<+1e6f ) {
-		sumR = Ir[maxM];
-		divR = mintiR;
-	}
-	if( divG==0.0f && mintiG<+1e6f ) {
-		sumG = Ig[maxM];
-		divG = mintiG;
-	}
-	if( divB==0.0f && mintiB<+1e6f ) {
-		sumB = Ib[maxM];
-		divB = mintiB;
-	}
-
-	if( divR!=0.0f && divG!=0.0f && divB!=0.0f ) {
-		(*Rout)(j) = sumR/divR;
-		(*Gout)(j) = sumG/divG;
-		(*Bout)(j) = sumB/divB;
+	if (ldrinput) {
+		listldr=va_arg(arg_pointer,QList<QImage*>*);
 	} else {
-		(*Rout)(j) = 0.0f;
-		(*Gout)(j) = 0.0f;
-		(*Bout)(j) = 0.0f;
+		listhdrR=va_arg(arg_pointer,Array2DList*);
+		listhdrG=va_arg(arg_pointer,Array2DList*);
+		listhdrB=va_arg(arg_pointer,Array2DList*);
 	}
-}//for all pixels
+	va_end(arg_pointer); /* Clean up. */
 
-delete[] i_lower;
-delete[] i_upper;
-
+	generic_applyResponse(
+	    &robertson02_sum, &robertson02_div, &robertson02_out, 
+	    Rout, Gout, Bout, arrayofexptime, Ir,  Ig, Ib, w,  M, ldrinput,
+	    listldr, listhdrR, listhdrG, listhdrB
+	);
 }
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////

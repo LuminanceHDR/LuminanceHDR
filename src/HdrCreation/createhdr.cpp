@@ -247,9 +247,9 @@ int maxResponse=M;
 // 	}
 // 	else {
 		if (ldrinput)
-			debevec_applyResponse(arrayofexptime, Rj, Gj, Bj,  Ir, Ig, Ib, w, M, true, listldr);
+			debevec_applyResponse( Rj, Gj, Bj, arrayofexptime, Ir, Ig, Ib, w, M, true, listldr);
 		else
-			debevec_applyResponse(arrayofexptime, Rj, Gj, Bj,  Ir, Ig, Ib, w, M, false, listhdrR,listhdrG,listhdrB);
+			debevec_applyResponse( Rj, Gj, Bj, arrayofexptime, Ir, Ig, Ib, w, M, false, listhdrR,listhdrG,listhdrB);
 // 	}
 	break;
     } //end switch
