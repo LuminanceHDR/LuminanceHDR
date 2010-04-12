@@ -115,7 +115,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 
 	setupConnections();
 
-	// SPLASH SCREEoN
+	// SPLASH SCREEN
 	if (settings.contains("ShowSplashScreen")) {
 		if (settings.value("ShowSplashScreen").toInt())
 			showSplash();
@@ -171,8 +171,8 @@ void MainWindow::setupConnections() {
 
 void MainWindow::showDonationsPage()
 {
-        //QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037580"));
-        QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037712"));
+	//QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037580"));
+	QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037712"));
 }
 
 
@@ -196,16 +196,16 @@ void MainWindow::fileNewViaWizard(QStringList files) {
 
 void MainWindow::fileOpen() {
 	QString filetypes = tr("All HDR formats ");
-	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
-	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;" ;
+	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.3fr";
+	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.3FR);;" ;
 	filetypes += "OpenEXR (*.exr *.EXR);;" ;
 	filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
 	filetypes += "TIFF images (*.TIFF *.TIF *.tiff *.tif);;";
-	filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 ";
-	filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2);;";
+	filetypes += "RAW images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.3fr";
+	filetypes +=             "*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.3FR);;";
 	filetypes += "PFS stream (*.pfs *.PFS)";
 	QStringList files = QFileDialog::getOpenFileNames(
-        	this,
+       	this,
 		tr("Load one or more HDR images..."),
 		RecentDirHDRSetting,
 		filetypes );
@@ -363,6 +363,7 @@ void MainWindow::tonemap_requested() {
 	try {
 		TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
 		tmodialog->setAttribute(Qt::WA_DeleteOnClose);
+		//tmodialog->setAttribute(Qt::WA_Window);
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
 		hide();
@@ -374,7 +375,7 @@ void MainWindow::tonemap_requested() {
 		reEnableMainWin();	
 	}
 	catch(...) {
-		QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: Filed to Tonemap Image"));
+		QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: Failed to Tonemap Image"));
 		reEnableMainWin();	
 	}
 }
