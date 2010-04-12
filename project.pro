@@ -88,6 +88,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/HdrCreation/HdrCreationManager.h \
 			src/HdrCreation/mtb_alignment.h \
 			src/HdrCreation/createhdr.h \
+			src/HdrCreation/generic_applyResponse.h \
 			src/HdrCreation/robertson02.h \
 			src/HdrCreation/responses.h   \
 			src/HdrCreation/debevec.h \
@@ -169,6 +170,7 @@ SOURCES +=  src/Libpfs/pfs.cpp \
 			src/HdrCreation/HdrCreationManager.cpp \
 			src/HdrCreation/mtb_alignment.cpp \
 			src/HdrCreation/createhdr.cpp \
+			src/HdrCreation/generic_applyResponse.cpp  \
 			src/HdrCreation/robertson02.cpp  \
 			src/HdrCreation/responses.cpp  \
 			src/HdrCreation/debevec.cpp \
