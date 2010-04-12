@@ -70,8 +70,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 }
 
 BatchTMDialog::~BatchTMDialog() {
-	//pfs::DOMIO pfsio;
-	//pfsio.freeFrame(workingFrame[running_threads]);
 	QApplication::restoreOverrideCursor();
 	while (!tm_opt_list.isEmpty())
 		delete (tm_opt_list.takeFirst()).first;
@@ -330,7 +328,6 @@ void BatchTMDialog::conditional_TMthread() {
 			qDebug("BATCH: conditional_TMthread: creating TM_opts thread");
 			tm_opt_list[first_not_started].second=true;
 
-			//TonemappingOptions *opts = tm_opt_list.at(first_not_started).first; 
 			opts = tm_opt_list.at(first_not_started).first; 
 			opts->xsize = workingFrame->getWidth();
 			opts->origxsize = opts->xsize;
@@ -339,7 +336,7 @@ void BatchTMDialog::conditional_TMthread() {
 			connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(newResult(const QImage&)));
 
 			//start thread
-            thread->startTonemapping();
+			thread->startTonemapping();
 
 			first_not_started++;
 			running_threads++;
