@@ -491,7 +491,7 @@ QString TMOptionsOperations::getCaption() {
 }
 
 QString TMOptionsOperations::getExifComment() {
-	QString exif_comment="Luminance "LUMINANCEVERSION" tonemapping parameters:\n";
+	QString exif_comment="Luminance HDR "LUMINANCEVERSION" tonemapping parameters:\n";
 	exif_comment+="Operator: ";
 	switch (opts->tmoperator) {
 	case mantiuk06: {
