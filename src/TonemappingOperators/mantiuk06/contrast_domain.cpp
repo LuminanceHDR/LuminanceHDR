@@ -988,7 +988,7 @@ static inline void transform_to_R(const int n, float* const G)
 	sign = -1;
       else
 	sign = 1;	
-      G[j] = (powf(10,absG) - 1.0f) * sign;
+      G[j] = (powf(10,absG * log10) - 1.0f) * sign;
 		
       // W to RESP
       if(G[j] < 0)
@@ -1032,7 +1032,7 @@ static inline void transform_to_G(const int n, float* const R){
       sign = -1;
     else
       sign = 1;	
-    R[j] = log10f(fabsf(R[j]) + 1.0f) * sign;
+    R[j] = log(fabsf(R[j]) + 1.0f) / log10 * sign;
 		
   }
 }
