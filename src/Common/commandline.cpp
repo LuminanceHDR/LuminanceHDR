@@ -339,6 +339,7 @@ void CommandLineInterfaceManager::parseArgs() {
 		connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
 		connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(createHDR()));
 		connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+        hdrCreationManager->setConfig(hdrcreationconfig);
 		hdrCreationManager->setFileList(inputFiles);
 		hdrCreationManager->loadInputFiles();
 	}

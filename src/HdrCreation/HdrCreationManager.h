@@ -46,6 +46,8 @@ public:
 	HdrCreationManager();
 	~HdrCreationManager();
 
+    void setConfig(config_triple &);
+
 	//LDR is a  8 bit format (jpeg, 8bit tiff, raw->8bit tiff)
 	//MDR is a 16 bit format (16bit tiff, raw->16bit tiff)
 	enum {LDR_INPUT_TYPE,MDR_INPUT_TYPE,UNKNOWN_INPUT_TYPE} inputType;

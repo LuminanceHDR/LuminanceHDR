@@ -38,6 +38,10 @@ HdrCreationManager::HdrCreationManager() {
 	inputType=UNKNOWN_INPUT_TYPE;
 }
 
+void HdrCreationManager::setConfig(config_triple &c) {
+    chosen_config=c;
+}
+
 void HdrCreationManager::setFileList(QStringList &l) {
 	processedFiles=0;
 	runningThreads=0;
