@@ -2643,7 +2643,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="44"/>
         <source>&amp;Help</source>
-        <translation>&amp;Guida</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>Common operations</source>
@@ -3531,7 +3531,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="769"/>
         <source>&amp;Projective Transformation...</source>
-        <translation>&amp;Projective Transformation...</translation>
+        <translation>Trasformazione &amp;Proiettiva...</translation>
     </message>
     <message>
         <source>Apply a projective transformation to the current Hdr.</source>
@@ -4056,7 +4056,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="13"/>
         <source>Projective Transformation</source>
-        <translation>Proiezioni</translation>
+        <translation>Trasformazione Proiettiva</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="25"/>
@@ -5191,7 +5191,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="33"/>
         <source>&amp;Help</source>
-        <translation>&amp;Guida</translation>
+        <translation>&amp;Aiuto</translation>
     </message>
     <message>
         <source>Tone Mapping Panel</source>

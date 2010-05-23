@@ -50,7 +50,7 @@
 #include "MainWindow.h"
 #include "DnDOption.h"
 
-#include <iostream>
+//#include <iostream>
 
 pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
 void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
@@ -366,7 +366,11 @@ void MainWindow::tonemap_requested() {
 		//tmodialog->setAttribute(Qt::WA_Window);
 		connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
 		tmodialog->show();
+#ifdef WIN32
+		;
+#else
 		hide();
+#endif
 		if (helpBrowser) 
 			helpBrowser->hide();
 	}

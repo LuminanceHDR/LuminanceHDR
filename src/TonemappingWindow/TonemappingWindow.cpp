@@ -662,7 +662,7 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 		statusbar->insertWidget(0,progressbar);
 		progressbar->setMaximum(0);
 		progressbar->setMinimum(0);
-		progressbar->setValue(1);
+		progressbar->setValue(-1);
 		progressbar->show();
 	}
 }

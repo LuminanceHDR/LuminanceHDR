@@ -803,12 +803,3 @@ void TonemappingPanel::fillCustomSizeComboBox() {
 		sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
 }
 
-void TonemappingPanel::setLogoText(const char *txt) {
-	labelWorking->setText(txt);
-}
-
-void TonemappingPanel::setLogoPixmap(const QString &framename) {
-	labelWorking->setPixmap(QPixmap(framename));
-	//labelLogo->setPixmap(QPixmap(framename));
-}
-

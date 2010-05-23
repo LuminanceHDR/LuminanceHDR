@@ -44,8 +44,6 @@ public:
 	TonemappingPanel(QWidget *parent);
 	~TonemappingPanel();
 	void setSizes(int, int);
-	void setLogoText(const char *txt);
-	void setLogoPixmap(const QString &framename);
 signals:
 	void startTonemapping(const TonemappingOptions&);
 private:
