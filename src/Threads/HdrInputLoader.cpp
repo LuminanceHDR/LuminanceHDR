@@ -109,7 +109,7 @@ void HdrInputLoader::run() {
 			
 			#ifdef Q_WS_MAC
 			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw", parameters);
-			#elifdef Q_WS_WIN
+			#elif defined(Q_WS_WIN)
 			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", parameters);
 			#else
 			extract_thumbnail->start("dcraw", parameters);
@@ -139,7 +139,7 @@ void HdrInputLoader::run() {
 			
 			#ifdef Q_WS_MAC
 			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw", params);
-			#elifdef Q_WS_WIN
+			#elif defined(Q_WS_WIN)
 			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", params);
 			#else
 			rawconversion->start("dcraw", params);
