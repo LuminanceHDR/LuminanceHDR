@@ -1,9 +1,8 @@
 This is the README file for Luminance
 -------------------------------------------------------------------
-Copyright (C) 2006-2008 Giuseppe Rota, <grota@users.sourceforge.net>
-Webpage:       http://luminance.sourceforge.net
-Sourceforge:   http://sourceforge.net/projects/luminance
-
+Copyright (C) 2006-2010 Giuseppe Rota, <grota@users.sourceforge.net>
+Webpage:       http://qtpfsgui.sourceforge.net
+Sourceforge:   http://sourceforge.net/projects/qtpfsgui
 
 Contents
 ---------
@@ -13,8 +12,6 @@ Contents
 4. Workflow in the gui
 5. Changes
 6. Contact and Links
-
-
 
 1. What it is
 ---------------------------------------------------------------------
@@ -47,7 +44,7 @@ MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
 Read section 5 (Changes) to read the changes for this version.
 Read section 3 (Compiling the sources) if you intend to package Luminance for a GNU/Linux distribution.
 
-The code is in part based on the existing opensource packages:
+The code is in part based on the existing open source packages:
 "pfstools", "pfstmo" and "pfscalibration" by Grzegorz Krawczyk and Rafal Mantiuk
 "qpfstmo", by Nicholas Phillips.
 Without their contribution all of this would have not been possible.
@@ -113,7 +110,7 @@ This last step also installs the icon, the desktop file, the html documentation 
 This last step is usually required in order for Luminance to locate the "qm" files used for internationalization.
 
 WARNING:
-In Linux you have to make sure to install qt4 and qt4-devel, since most distributions install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``galternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
+In Linux you have to make sure to install qt4 and qt4-devel, since most distributions install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``alternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
 
 Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X.X has solved the issue.
 Some people have experienced some problems using shells different than bash/sh.
@@ -135,12 +132,14 @@ By default the debug statements are disabled.
 The Windows EXE was obtained on Windows XP using MinGW and MSYS.
 In GNU/Linux you have to compile the code and you need the packages mentioned in Chapter 2 (and the ``devel'' or ``dev'' ones, depending on the distribution's naming convention).
 If you want to compile the sources in windows you need to have a compiled
-version of libexiv2 and fftw3. You also need Qt4 Opensource Edition by Trolltech.
+version of libexiv2 and fftw3. You also need Qt4 Open Source Edition by Trolltech.
 Also check the variables in the win32{} section in project.pro: they need
 to be changed according to your setup.
 Building Luminance from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
 
-Optimization note: the default compiler flags include SSE2 and OpenMP. SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer). OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customize the CXXFLAGS and LFLAGS before compiling.
+Optimisation note: the default compiler flags include SSE2 and OpenMP.
+SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).
+OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customise the CXXFLAGS and LFLAGS before compiling (NOTE: OpenMP is currently disabled due to an error in the Mantiuk operator).
 
 
 4. Workflow in the gui

@@ -6,7 +6,7 @@ QT += webkit
 
 # Assume openmp-capable g++ (>=4.2)
 QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -fopenmp -msse2
-QMAKE_LFLAGS += -fopenmp
+#QMAKE_LFLAGS += -fopenmp
 
 TARGET = luminance
 

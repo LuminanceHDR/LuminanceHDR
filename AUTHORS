@@ -3,10 +3,11 @@ If I forgot to add someone to this list please let me know.
 Original author and maintainer:
 Giuseppe Rota <grota@sourceforge.net>
 
-Main developer, improvements, bugfixing
+Main developer, improvements, bug fixing
 Franco Comida <fcomida@sourceforge.net>
 
 Contributors:
+Davide Anastasia (code improvement, performance improvement, Mac OS support)
 Daniel Kaneider (windows setup, head of i18n efforts)
 Mandus (Mac OS X packager, Norwegian translator)
 Nicholas Phillips (MTB alignment code)
