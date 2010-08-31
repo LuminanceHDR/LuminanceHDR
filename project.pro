@@ -265,7 +265,7 @@ message ( "" )
 message ( "Detecting exiv2:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-EXIV2IMAGEHPP = /usr/include/exiv2/image.hpp /usr/local/include/exiv2/image.hpp $$(LOCALSOFT)/include/exiv2/image.hpp 
+EXIV2IMAGEHPP = /usr/include/exiv2/image.hpp /usr/local/include/exiv2/image.hpp /opt/local/include/exiv2/image.hpp
 for(path, EXIV2IMAGEHPP) {
 	exists($$path) {
 		EXIV2PATH = $$dirname(path)
@@ -291,7 +291,7 @@ message ( "" )
 message ( "Detecting OpenEXR:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h /usr/include/ilmbase/ImfHeader.h $$(LOCALSOFT)/include/OpenEXR/ImfHeader.h 
+OPENEXRHEADER = /usr/include/OpenEXR/ImfHeader.h /usr/local/include/OpenEXR/ImfHeader.h /usr/local/include/ilmbase/ImfHeader.h /usr/include/ilmbase/ImfHeader.h /opt/local/include/OpenEXR/ImfHeader.h 
 for(path, OPENEXRHEADER) {
 	exists($$path) {
 		OPENEXRDIR = $$dirname(path)
@@ -317,7 +317,7 @@ message ( "" )
 message ( "Detecting fftw3:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-FFTW3HEADER = /usr/include/fftw3.h /usr/local/include/fftw3.h $$(LOCALSOFT)/include/fftw3.h
+FFTW3HEADER = /usr/include/fftw3.h /usr/local/include/fftw3.h /opt/local/include/fftw3.h
 for(path, FFTW3HEADER) {
 	exists($$path) {
 		FFTW3DIR = $$dirname(path)
@@ -344,7 +344,7 @@ message ( "" )
 message ( "Detecting libtiff:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-LIBTIFFHEADER = /usr/include/tiffio.h /usr/local/include/tiffio.h $$(LOCALSOFT)/include/tiffio.h
+LIBTIFFHEADER = /usr/include/tiffio.h /usr/local/include/tiffio.h /opt/local/include/tiffio.h
 for(path, LIBTIFFHEADER) {
 	exists($$path) {
 		LIBTIFFDIR = $$dirname(path)
@@ -370,7 +370,7 @@ message ( "" )
 message ( "Detecting gsl:" )
 #I think these are the only paths where we have to search for.
 #If your system is more exotic let me know.
-GSLHEADER = /usr/include/gsl/gsl_blas.h /usr/local/include/gsl/gsl_blas.h $$(LOCALSOFT)/include/gsl/gsl_blas.h
+GSLHEADER = /usr/include/gsl/gsl_blas.h /usr/local/include/gsl/gsl_blas.h /opt/local/include/gsl/gsl_blas.h
 for(path, GSLHEADER) {
 	exists($$path) {
 		GSLDIR = $$dirname(path)
@@ -492,7 +492,7 @@ contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
 }
 
 # We like to search the LOCALSOFT/lib explicitly on MacOSX
-LIBS += -L$$(LOCALSOFT)/lib
+LIBS += -L/opt/local/lib
 # Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
 LIBS += -ljpeg
 # Exiv also depend on libexpat and libiconv, so same as above:
