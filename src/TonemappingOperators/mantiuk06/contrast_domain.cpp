@@ -51,6 +51,16 @@
 
 #include "contrast_domain.h"
 
+#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+#include <ppc_intrinsics.h>
+#elif __i386__ || __x86_64__
+#include <pmmintrin.h>
+#include <tmmintrin.h>
+#else
+#error unsupported architecture
+#endif
+
+
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -72,8 +82,8 @@ typedef struct pyramid_s {
 extern float xyz2rgbD65Mat[3][3];
 extern float rgb2xyzD65Mat[3][3];
 
-#define PYRAMID_MIN_PIXELS 3
-#define LOOKUP_W_TO_R 107
+#define PYRAMID_MIN_PIXELS      3
+#define LOOKUP_W_TO_R           107
 
 static void contrast_equalization( pyramid_t *pp, const float contrastFactor );
 
@@ -122,12 +132,12 @@ float detailFactor=1.0;
 static void matrix_show(const char* const text, int cols, int rows, const float* const data)
 {
   const int _cols = cols;
-
+  
   if(rows > 8)
     rows = 8;
   if(cols > 8)
     cols = 8;
-
+  
   printf("\n%s\n", text);
   for(int ky=0; ky<rows; ky++){
     for(int kx=0; kx<cols; kx++){
@@ -142,23 +152,23 @@ static void matrix_show(const char* const text, int cols, int rows, const float*
 static void pyramid_show(pyramid_t* pyramid)
 {
   char ss[30];
-
+  
   while (pyramid->next != NULL)
     pyramid = pyramid->next;
-
+  
   while (pyramid != NULL)
-    {
-      printf("\n----- pyramid_t level %d,%d\n", pyramid->cols, pyramid->rows);
-	
-      sprintf(ss, "Gx %p ", pyramid->Gx);
-      if(pyramid->Gx != NULL)
-	matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gx);
-      sprintf(ss, "Gy %p ", pyramid->Gy);	
-      if(pyramid->Gy != NULL)
-	matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gy);
-
-      pyramid = pyramid->prev;
-    }
+  {
+    printf("\n----- pyramid_t level %d,%d\n", pyramid->cols, pyramid->rows);
+    
+    sprintf(ss, "Gx %p ", pyramid->Gx);
+    if(pyramid->Gx != NULL)
+      matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gx);
+    sprintf(ss, "Gy %p ", pyramid->Gy);	
+    if(pyramid->Gy != NULL)
+      matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gy);
+    
+    pyramid = pyramid->prev;
+  }
 }
 
 
@@ -187,34 +197,33 @@ static void matrix_upsample(const int outCols, const int outRows, const float* c
 {
   const int inRows = outRows/2;
   const int inCols = outCols/2;
-
+  
   // Transpose of experimental downsampling matrix (theoretically the correct thing to do)
-
+  
   const float dx = (float)inCols / ((float)outCols);
   const float dy = (float)inRows / ((float)outRows);
   const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
   // const float factor = 1.0f; // Theoretically, this should be the best.
-
-#pragma omp parallel for schedule(static)
+  
+//#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
+  {
+    const float sy = y * dy;
+    const int iy1 =      (  y   * inRows) / outRows;
+    const int iy2 = imin(((y+1) * inRows) / outRows, inRows-1);
+    
+    for (int x = 0; x < outCols; x++)
     {
-      const float sy = y * dy;
-      const int iy1 =      (  y   * inRows) / outRows;
-      const int iy2 = imin(((y+1) * inRows) / outRows, inRows-1);
-
-      for (int x = 0; x < outCols; x++)
-	{
-	  const float sx = x * dx;
-	  const int ix1 =      (  x   * inCols) / outCols;
-	  const int ix2 = imin(((x+1) * inCols) / outCols, inCols-1);
-
-	  out[x + y*outCols] = (
-	    ((ix1+1) - sx)*((iy1+1 - sy)) * in[ix1 + iy1*inCols] +
-	    ((ix1+1) - sx)*(sy+dy - (iy1+1)) * in[ix1 + iy2*inCols] +
-	    (sx+dx - (ix1+1))*((iy1+1 - sy)) * in[ix2 + iy1*inCols] +
-	    (sx+dx - (ix1+1))*(sy+dx - (iy1+1)) * in[ix2 + iy2*inCols])*factor;
-	}
+      const float sx = x * dx;
+      const int ix1 =      (  x   * inCols) / outCols;
+      const int ix2 = imin(((x+1) * inCols) / outCols, inCols-1);
+      
+      out[x + y*outCols] = (((ix1+1) - sx)*((iy1+1 - sy)) * in[ix1 + iy1*inCols] +
+                            ((ix1+1) - sx)*(sy+dy - (iy1+1)) * in[ix1 + iy2*inCols] +
+                            (sx+dx - (ix1+1))*((iy1+1 - sy)) * in[ix2 + iy1*inCols] +
+                            (sx+dx - (ix1+1))*(sy+dx - (iy1+1)) * in[ix2 + iy2*inCols])*factor;
     }
+  }
 }
 
 
@@ -223,10 +232,10 @@ static void matrix_downsample(const int inCols, const int inRows, const float* c
 {
   const int outRows = inRows / 2;
   const int outCols = inCols / 2;
-
+  
   const float dx = (float)inCols / ((float)outCols);
   const float dy = (float)inRows / ((float)outRows);
-
+  
   // New downsampling by Ed Brambley:
   // Experimental downsampling that assumes pixels are square and
   // integrates over each new pixel to find the average value of the
@@ -242,55 +251,55 @@ static void matrix_downsample(const int inCols, const int inRows, const float* c
   // (ix2, iy2) is the coordinate of the bottom right visible pixel.
   // (fx1, fy1) is the fraction of the top left pixel showing.
   // (fx2, fy2) is the fraction of the bottom right pixel showing.
-
+  
   const float normalize = 1.0f/(dx*dy);
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
+  {
+    const int iy1 = (  y   * inRows) / outRows;
+    const int iy2 = ((y+1) * inRows) / outRows;
+    const float fy1 = (iy1+1) - y * dy;
+    const float fy2 = (y+1) * dy - iy2;
+    
+    for (int x = 0; x < outCols; x++)
     {
-      const int iy1 = (  y   * inRows) / outRows;
-      const int iy2 = ((y+1) * inRows) / outRows;
-      const float fy1 = (iy1+1) - y * dy;
-      const float fy2 = (y+1) * dy - iy2;
-
-      for (int x = 0; x < outCols; x++)
-	{
-	  const int ix1 = (  x   * inCols) / outCols;
-	  const int ix2 = ((x+1) * inCols) / outCols;
-	  const float fx1 = (ix1+1) - x * dx;
-	  const float fx2 = (x+1) * dx - ix2;
-	  
-	  float pixVal = 0.0f;
-	  float factorx, factory;
-	  for (int i = iy1; i <= iy2 && i < inRows; i++)
+      const int ix1 = (  x   * inCols) / outCols;
+      const int ix2 = ((x+1) * inCols) / outCols;
+      const float fx1 = (ix1+1) - x * dx;
+      const float fx2 = (x+1) * dx - ix2;
+      
+      float pixVal = 0.0f;
+      float factorx, factory;
+      for (int i = iy1; i <= iy2 && i < inRows; i++)
 	    {
 	      if (i == iy1)
-		factory = fy1;  // We're just getting the bottom edge of this pixel
+          factory = fy1;  // We're just getting the bottom edge of this pixel
 	      else if (i == iy2)
-		factory = fy2;  // We're just gettting the top edge of this pixel
+          factory = fy2;  // We're just gettting the top edge of this pixel
 	      else
-		factory = 1.0f; // We've got the full height of this pixel
+          factory = 1.0f; // We've got the full height of this pixel
 	      for (int j = ix1; j <= ix2 && j < inCols; j++)
-		{
-		  if (j == ix1)
-		    factorx = fx1;  // We've just got the right edge of this pixel
-		  else if (j == ix2)
-		    factorx = fx2; // We've just got the left edge of this pixel
-		  else
-		    factorx = 1.0f; // We've got the full width of this pixel
-
-		  pixVal += data[j + i*inCols] * factorx * factory;
-		}
+        {
+          if (j == ix1)
+            factorx = fx1;  // We've just got the right edge of this pixel
+          else if (j == ix2)
+            factorx = fx2; // We've just got the left edge of this pixel
+          else
+            factorx = 1.0f; // We've got the full width of this pixel
+          
+          pixVal += data[j + i*inCols] * factorx * factory;
+        }
 	    }
-
-	  res[x + y * outCols] = pixVal * normalize;  // Normalize by the area of the new pixel
-	}
+      
+      res[x + y * outCols] = pixVal * normalize;  // Normalize by the area of the new pixel
     }
+  }
 }
 
 // return = a + b
 static inline void matrix_add(const int n, const float* const a, float* const b)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] += a[i];
 }
@@ -298,7 +307,7 @@ static inline void matrix_add(const int n, const float* const a, float* const b)
 // return = a - b
 static inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] = a[i] - b[i];
 }
@@ -312,7 +321,7 @@ static inline void matrix_copy(const int n, const float* const a, float* const b
 // multiply matrix a by scalar val
 static inline void matrix_multiply_const(const int n, float* const a, const float val)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     a[i] *= val;
 }
@@ -320,38 +329,40 @@ static inline void matrix_multiply_const(const int n, float* const a, const floa
 // b = a[i] / b[i]
 static inline void matrix_divide(const int n, const float* const a, float* const b)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     b[i] = a[i] / b[i];
 }
 
 
 // alloc memory for the float table
-static inline float* matrix_alloc(int size){
-
-  float* m = (float*)malloc(sizeof(float)*size);
-  if(m == NULL){
+static inline float* matrix_alloc(int size)
+{
+  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
+  //float* m  = (float*)malloc      (sizeof(float)*size);
+  if(m == NULL)
+  {
     fprintf(stderr, "ERROR: malloc in matrix_alloc() (size:%d)", size);
     exit(155);
   }
-
+  
   return m;
 }
 
 // free memory for matrix
 static inline void matrix_free(float* m){
   if(m != NULL)
-    free(m);
+    _mm_free(m);
 }
 
 // multiply vector by vector (each vector should have one dimension equal to 1)
 static inline float matrix_DotProduct(const int n, const float* const a, const float* const b){
   float val = 0;
-
-#pragma omp parallel for reduction(+:val) schedule(static)
+  
+//#pragma omp parallel for reduction(+:val) schedule(static)
   for(int j=0;j<n;j++)
     val += a[j] * b[j];
-
+  
   return val;
 }
 
@@ -362,29 +373,39 @@ static inline void matrix_zero(int n, float* m)
   memset(m, 0, n*sizeof(float));
 }
 
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 08 31)
 // calculate divergence of two gradient maps (Gx and Gy)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
 static inline void calculate_and_add_divergence(const int cols, const int rows, const float* const Gx, const float* const Gy, float* const divG)
 {
-#pragma omp parallel for schedule(static)
-  for(int ky=0; ky<rows; ky++)
-    for(int kx=0; kx<cols; kx++)
-      {
-	float divGx, divGy;
-	const int idx = kx + ky*cols;
-	
-	if(kx == 0)
-	  divGx = Gx[idx];
-	else	
-	  divGx = Gx[idx] - Gx[idx-1];
-	
-	if(ky == 0)
-	  divGy = Gy[idx];
-	else	
-	  divGy = Gy[idx] - Gy[idx - cols];			
-		
-	divG[idx] += divGx + divGy;			
+  register float divGx, divGy;
+  
+  // kx = 0 AND ky = 0;
+  divG[0] += Gx[0] + Gy[0];
+  
+  // ky = 0
+  for(int kx=1; kx<cols; kx++)
+  {
+    divGx = Gx[kx] - Gx[kx - 1];
+    divGy = Gy[kx];
+    divG[kx] += divGx + divGy;			
+  }
+  
+  for(int ky=1; ky<rows; ky++)
+  {
+    // kx = 0
+    divGx = Gx[ky*cols];
+    divGy = Gy[ky*cols] - Gy[ky*cols - cols];			
+    divG[ky*cols] += divGx + divGy;	
+    
+    // kx > 0
+    for(int kx=1; kx<cols; kx++)
+    {
+      divGx = Gx[kx + ky*cols] - Gx[kx + ky*cols-1];
+      divGy = Gy[kx + ky*cols] - Gy[kx + ky*cols - cols];			
+      divG[kx + ky*cols] += divGx + divGy;			
     }
+  }
 }
 
 // calculate the sum of divergences for the all pyramid level
@@ -393,49 +414,49 @@ static inline void calculate_and_add_divergence(const int cols, const int rows, 
 static void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum)
 {
   float* temp = matrix_alloc(pyramid->rows*pyramid->cols);
-
+  
   // Find the coarsest pyramid, and the number of pyramid levels
   int levels = 1;
   while (pyramid->next != NULL)
-    {
-      levels++;
-      pyramid = pyramid->next;
-    }
-
+  {
+    levels++;
+    pyramid = pyramid->next;
+  }
+  
   // For every level, we swap temp and divG_sum.  So, if there are an odd number of levels...
   if (levels % 2)
-    {
-      float* const dummy = divG_sum;
-      divG_sum = temp;
-      temp = dummy;
-    }
+  {
+    float* const dummy = divG_sum;
+    divG_sum = temp;
+    temp = dummy;
+  }
 	
   // Add them all together
   while (pyramid != NULL)
-    {
-      // Upsample or zero as needed
-      if (pyramid->next != NULL)
-	matrix_upsample(pyramid->cols, pyramid->rows, divG_sum, temp);
-      else
-	matrix_zero(pyramid->rows * pyramid->cols, temp);
-
-      // Add in the (freshly calculated) divergences
-      calculate_and_add_divergence(pyramid->cols, pyramid->rows, pyramid->Gx, pyramid->Gy, temp);
-
-//   char name[256];
-//   sprintf( name, "Up_%d.pfs", pyramid->cols );
-//   dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );  
-
-      // matrix_copy(pyramid->rows*pyramid->cols, temp, divG_sum);
-
-      // Rather than copying, just switch round the pointers: we know we get them the right way round at the end.
-      float* const dummy = divG_sum;
-      divG_sum = temp;
-      temp = dummy;
-
-      pyramid = pyramid->prev;
-    }
-
+  {
+    // Upsample or zero as needed
+    if (pyramid->next != NULL)
+      matrix_upsample(pyramid->cols, pyramid->rows, divG_sum, temp);
+    else
+      matrix_zero(pyramid->rows * pyramid->cols, temp);
+    
+    // Add in the (freshly calculated) divergences
+    calculate_and_add_divergence(pyramid->cols, pyramid->rows, pyramid->Gx, pyramid->Gy, temp);
+    
+    //   char name[256];
+    //   sprintf( name, "Up_%d.pfs", pyramid->cols );
+    //   dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );  
+    
+    // matrix_copy(pyramid->rows*pyramid->cols, temp, divG_sum);
+    
+    // Rather than copying, just switch round the pointers: we know we get them the right way round at the end.
+    float* const dummy = divG_sum;
+    divG_sum = temp;
+    temp = dummy;
+    
+    pyramid = pyramid->prev;
+  }
+  
   matrix_free(temp);
 }
 
@@ -443,45 +464,45 @@ static void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum
 // C is equal to EDGE_WEIGHT for gradients smaller than GFIXATE or 1.0 otherwise
 static inline void calculate_scale_factor(const int n, const float* const G, float* const C)
 {
-  float GFIXATE = 0.1f;
-  float EDGE_WEIGHT = 0.01f;
+//  float GFIXATE = 0.1f;
+//  float EDGE_WEIGHT = 0.01f;
   const float detectT = 0.001f;
   const float a = 0.038737;
   const float b = 0.537756;
 	
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
-    {
-#if 1
-      const float g = max( detectT, fabsf(G[i]) );    
-      C[i] = 1.0f / (a*powf(g,b));
-#else
-      if(fabsf(G[i]) < GFIXATE)
-	C[i] = 1.0f / EDGE_WEIGHT;
-      else	
-	C[i] = 1.0f;
-#endif
-    }
+  {
+//#if 1
+    const float g = max( detectT, fabsf(G[i]) );    
+    C[i] = 1.0f / (a*powf(g,b));
+//#else
+//    if(fabsf(G[i]) < GFIXATE)
+//      C[i] = 1.0f / EDGE_WEIGHT;
+//    else	
+//      C[i] = 1.0f;
+//#endif
+  }
 }
 
 // calculate scale factor for the whole pyramid
 static void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 {
   while (pyramid != NULL)
-    {
-      const int size = pyramid->rows * pyramid->cols;
-      calculate_scale_factor(size, pyramid->Gx, pC->Gx);
-      calculate_scale_factor(size, pyramid->Gy, pC->Gy);
-      pyramid = pyramid->next;
-      pC = pC->next;
-    }
+  {
+    const int size = pyramid->rows * pyramid->cols;
+    calculate_scale_factor(size, pyramid->Gx, pC->Gx);
+    calculate_scale_factor(size, pyramid->Gy, pC->Gy);
+    pyramid = pyramid->next;
+    pC = pC->next;
+  }
 }
 
 // Scale gradient (Gx and Gy) by C (Cx and Cy)
 // G = G / C
 static inline void scale_gradient(const int n, float* const G, const float* const C)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     G[i] *= C[i];
 }
@@ -490,13 +511,13 @@ static inline void scale_gradient(const int n, float* const G, const float* cons
 static void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC)
 {
   while (pyramid != NULL)
-    {
-      const int size = pyramid->rows * pyramid->cols;
-      scale_gradient(size, pyramid->Gx, pC->Gx);	
-      scale_gradient(size, pyramid->Gy, pC->Gy);
-      pyramid = pyramid->next;
-      pC = pC->next;
-    }
+  {
+    const int size = pyramid->rows * pyramid->cols;
+    scale_gradient(size, pyramid->Gx, pC->Gx);	
+    scale_gradient(size, pyramid->Gy, pC->Gy);
+    pyramid = pyramid->next;
+    pC = pC->next;
+  }
 }
 
 
@@ -504,23 +525,23 @@ static void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC)
 static void pyramid_free(pyramid_t* pyramid)
 {
   while (pyramid)
+  {
+    if(pyramid->Gx != NULL)
     {
-      if(pyramid->Gx != NULL)
-	{
-	  free(pyramid->Gx);
-	  pyramid->Gx = NULL;
-	}
-      if(pyramid->Gy != NULL)
-	{
-	  free(pyramid->Gy);
-	  pyramid->Gy = NULL;
-	}
-      pyramid_t* const next = pyramid->next;
-      pyramid->prev = NULL;
-      pyramid->next = NULL;
-      free(pyramid);
-      pyramid = next;
-    }			
+      free(pyramid->Gx);
+      pyramid->Gx = NULL;
+    }
+    if(pyramid->Gy != NULL)
+    {
+      free(pyramid->Gy);
+      pyramid->Gy = NULL;
+    }
+    pyramid_t* const next = pyramid->next;
+    pyramid->prev = NULL;
+    pyramid->next = NULL;
+    free(pyramid);
+    pyramid = next;
+  }			
 }
 
 
@@ -530,33 +551,33 @@ static pyramid_t * pyramid_allocate(int cols, int rows)
   pyramid_t* level = NULL;
   pyramid_t* pyramid = NULL;
   pyramid_t* prev = NULL;
-
+  
   while(rows >= PYRAMID_MIN_PIXELS && cols >= PYRAMID_MIN_PIXELS)
+  {
+    level = (pyramid_t *) malloc(sizeof(pyramid_t));
+    if(level == NULL)
     {
-      level = (pyramid_t *) malloc(sizeof(pyramid_t));
-      if(level == NULL)
-	{
-	  fprintf(stderr, "ERROR: malloc in pyramid_alloc() (size:%z)", sizeof(pyramid_t));
-	  exit(155);
-	}
-      memset( level, 0, sizeof(pyramid_t) );
-      
-      level->rows = rows;
-      level->cols = cols;
-      const int size = level->rows * level->cols;
-      level->Gx = matrix_alloc(size);
-      level->Gy = matrix_alloc(size);
-      
-      level->prev = prev;
-      if(prev != NULL)
-	prev->next = level;
-      prev = level;
-      
-      if(pyramid == NULL)
-	pyramid = level;
-      
-      rows /= 2;
-      cols /= 2;		
+      fprintf(stderr, "ERROR: malloc in pyramid_alloc() (size:%zu)", sizeof(pyramid_t) );
+      exit(155);
+    }
+    memset( level, 0, sizeof(pyramid_t) );
+    
+    level->rows = rows;
+    level->cols = cols;
+    const int size = level->rows * level->cols;
+    level->Gx = matrix_alloc(size);
+    level->Gy = matrix_alloc(size);
+    
+    level->prev = prev;
+    if(prev != NULL)
+      prev->next = level;
+    prev = level;
+    
+    if(pyramid == NULL)
+      pyramid = level;
+    
+    rows /= 2;
+    cols /= 2;		
   }
 	
   return pyramid;
@@ -566,7 +587,7 @@ static pyramid_t * pyramid_allocate(int cols, int rows)
 // calculate gradients
 static inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int ky=0; ky<rows; ky++){
     for(int kx=0; kx<cols; kx++){
 			
@@ -593,8 +614,8 @@ static void dump_matrix_to_file(const int width, const int height, const float* 
   // assert( fh != NULL );
   
   fprintf( fh, "PFS1" PFSEOL "%d %d" PFSEOL "1" PFSEOL "0" PFSEOL
-    "%s" PFSEOL "0" PFSEOL "ENDH", width, height, "Y");
-
+          "%s" PFSEOL "0" PFSEOL "ENDH", width, height, "Y");
+  
   for( int y = 0; y < height; y++ )
     for( int x = 0; x < width; x++ ) {
       int idx = x + y*width;
@@ -610,32 +631,32 @@ static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
 {
   float* temp = matrix_alloc((pyramid->rows/2)*(pyramid->cols/2));
   float* const temp_saved = temp;
-
+  
   calculate_gradient(pyramid->cols, pyramid->rows, lum_temp, pyramid->Gx, pyramid->Gy);	
-
+  
   pyramid = pyramid->next;
-
+  
   //  int l = 1;
   while(pyramid)
-    {
-      matrix_downsample(pyramid->prev->cols, pyramid->prev->rows, lum_temp, temp);
+  {
+    matrix_downsample(pyramid->prev->cols, pyramid->prev->rows, lum_temp, temp);
 		
-//     fprintf( stderr, "%d x %d -> %d x %d\n", pyramid->cols, pyramid->rows,
-//       prev_pp->cols, prev_pp->rows );
+    //     fprintf( stderr, "%d x %d -> %d x %d\n", pyramid->cols, pyramid->rows,
+    //       prev_pp->cols, prev_pp->rows );
     
-//      char name[40];
-//      sprintf( name, "ds_%d.pfs", l++ );
-//      dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );    
+    //      char name[40];
+    //      sprintf( name, "ds_%d.pfs", l++ );
+    //      dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );    
 		
-      calculate_gradient(pyramid->cols, pyramid->rows, temp, pyramid->Gx, pyramid->Gy);
+    calculate_gradient(pyramid->cols, pyramid->rows, temp, pyramid->Gx, pyramid->Gy);
 		
-      float* const dummy = lum_temp;
-      lum_temp = temp;	
-      temp = dummy;
-			
-      pyramid = pyramid->next;
+    float* const dummy = lum_temp;
+    lum_temp = temp;	
+    temp = dummy;
+    
+    pyramid = pyramid->next;
   }
-
+  
   matrix_free(temp_saved);
 }
 
@@ -643,7 +664,7 @@ static void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
 // x = -0.25 * b
 static inline void solveX(const int n, const float* const b, float* const x)
 {
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for (int i=0; i<n; i++)
     x[i] = -0.25f * b[i];
 }
@@ -681,133 +702,133 @@ static void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* con
   multiplyA(pyramid, pC, x, r); // r = A*x = divergence(x)
   matrix_subtract(n, b, r); // r = b - r
   float err2 = matrix_DotProduct(n, r, r); // err2 = r.r
-
+  
   // matrix_copy(n, r, rr); // rr = r
   multiplyA(pyramid, pC, r, rr); // rr = A*r
   
   float bkden = 0;
   float saved_err2 = err2;
   matrix_copy(n, x, x_save);
-
+  
   const float ierr2 = err2;
   const float percent_sf = 100.0f/logf(tol2*bnrm2/ierr2);
-
+  
   int iter = 0;
   bool reset = true;
   int num_backwards = 0;
   const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
-    {
+  {
 	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );    
-      if (ph->isTerminationRequested()) //user request abort
+    if (ph->isTerminationRequested()) //user request abort
 		  break;
-
-      solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
-      solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
+    
+    solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
+    solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
 		
-      const float bknum = matrix_DotProduct(n, z, rr);
+    const float bknum = matrix_DotProduct(n, z, rr);
 		
-      if(reset)
-	{
-	  reset = false;
-	  matrix_copy(n, z, p);
-	  matrix_copy(n, zz, pp); 
-	}
-      else
-	{
-	  const float bk = bknum / bkden; // beta = ...
-#pragma omp parallel for schedule(static)
-	  for (int i = 0; i < n; i++)
+    if(reset)
+    {
+      reset = false;
+      matrix_copy(n, z, p);
+      matrix_copy(n, zz, pp); 
+    }
+    else
+    {
+      const float bk = bknum / bkden; // beta = ...
+//#pragma omp parallel for schedule(static)
+      for (int i = 0; i < n; i++)
 	    {
 	      p[i]  =  z[i] + bk *  p[i];
 	      pp[i] = zz[i] + bk * pp[i];
 	    }
-	}
+    }
 		
-      bkden = bknum; // numerato becomes the dominator for the next iteration
-      
-      multiplyA(pyramid, pC,  p,  z); //  z = A* p = divergence( p)
-      multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
-      
-      const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
-#pragma omp parallel for schedule(static)
-      for(int i = 0 ; i < n ; i++ )
-	{
-	  r[i]  -= ak *  z[i];	// r =  r - alfa * z
-	  rr[i] -= ak * zz[i];	//rr = rr - alfa * zz
-	}
-      
-      const float old_err2 = err2;
-      err2 = matrix_DotProduct(n, r, r);
-
-      // Have we gone unstable?
-      if (err2 > old_err2)
-	{
-	  // Save where we've got to if it's the best yet
-	  if (num_backwards == 0 && old_err2 < saved_err2)
+    bkden = bknum; // numerato becomes the dominator for the next iteration
+    
+    multiplyA(pyramid, pC,  p,  z); //  z = A* p = divergence( p)
+    multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
+    
+    const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
+//#pragma omp parallel for schedule(static)
+    for(int i = 0 ; i < n ; i++ )
+    {
+      r[i]  -= ak *  z[i];	// r =  r - alfa * z
+      rr[i] -= ak * zz[i];	//rr = rr - alfa * zz
+    }
+    
+    const float old_err2 = err2;
+    err2 = matrix_DotProduct(n, r, r);
+    
+    // Have we gone unstable?
+    if (err2 > old_err2)
+    {
+      // Save where we've got to if it's the best yet
+      if (num_backwards == 0 && old_err2 < saved_err2)
 	    {
 	      saved_err2 = old_err2;
 	      matrix_copy(n, x, x_save);
 	    }
-	  
-	  num_backwards++;
-	}
-      else
-	{
-	  num_backwards = 0;
-	}
-
-#pragma omp parallel for schedule(static)
-      for(int i = 0 ; i < n ; i++ )
-	x[i] += ak * p[i];	// x =  x + alfa * p
-
-      if (num_backwards > num_backwards_ceiling)
-	{
-	  // Reset
-	  reset = true;
-	  num_backwards = 0;
-	  
-	  // Recover saved value
-	  matrix_copy(n, x_save, x);
-	  
-	  // r = Ax
-	  multiplyA(pyramid, pC, x, r);
-	  
-	  // r = b - r
-	  matrix_subtract(n, b, r);
-	  
-	  // err2 = r.r
-	  err2 = matrix_DotProduct(n, r, r);
-	  saved_err2 = err2;
-
-	  // rr = A*r
-	  multiplyA(pyramid, pC, r, rr);
-	}
       
-      // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(err2/bnrm2));
-      if(err2/bnrm2 < tol2)
-	break;
+      num_backwards++;
     }
-
+    else
+    {
+      num_backwards = 0;
+    }
+    
+//#pragma omp parallel for schedule(static)
+    for(int i = 0 ; i < n ; i++ )
+      x[i] += ak * p[i];	// x =  x + alfa * p
+    
+    if (num_backwards > num_backwards_ceiling)
+    {
+      // Reset
+      reset = true;
+      num_backwards = 0;
+      
+      // Recover saved value
+      matrix_copy(n, x_save, x);
+      
+      // r = Ax
+      multiplyA(pyramid, pC, x, r);
+      
+      // r = b - r
+      matrix_subtract(n, b, r);
+      
+      // err2 = r.r
+      err2 = matrix_DotProduct(n, r, r);
+      saved_err2 = err2;
+      
+      // rr = A*r
+      multiplyA(pyramid, pC, r, rr);
+    }
+    
+    // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(err2/bnrm2));
+    if(err2/bnrm2 < tol2)
+      break;
+  }
+  
   // Use the best version we found
   if (err2 > saved_err2)
-    {
-      err2 = saved_err2;
-      matrix_copy(n, x_save, x);
-    }
-
+  {
+    err2 = saved_err2;
+    matrix_copy(n, x_save, x);
+  }
+  
   if (err2/bnrm2 > tol2)
-    {
-      // Not converged
-	ph->newValue( (int) (logf(err2/ierr2)*percent_sf));    
-      if (iter == itmax)
-	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
-      else
-	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
-    }
+  {
+    // Not converged
+    ph->newValue( (int) (logf(err2/ierr2)*percent_sf));    
+    if (iter == itmax)
+      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
+    else
+      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
+  }
   else 
     ph->newValue(100);
-    
+  
   
   matrix_free(x_save);
   matrix_free(p);
@@ -835,7 +856,7 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float
 	
   // bnrm2 = ||b||
   const float bnrm2 = matrix_DotProduct(n, b, b);
-
+  
   // r = b - Ax
   multiplyA(pyramid, pC, x, r);
   matrix_subtract(n, b, r);
@@ -843,113 +864,113 @@ static void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float
 	
   // p = r
   matrix_copy(n, r, p);
-
+  
   // Setup initial vector
   float saved_rdotr = rdotr;
   matrix_copy(n, x, x_save);
-
+  
   const float irdotr = rdotr;
   const float percent_sf = 100.0f/logf(tol2*bnrm2/irdotr);
   int iter = 0;
   int num_backwards = 0;
   const int num_backwards_ceiling = 3;
   for (; iter < itmax; iter++)
+  {
+    ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf) );    
+    if( ph->isTerminationRequested() && iter > 0 ) // User requested abort
+      break;
+    
+    // Ap = A p
+    multiplyA(pyramid, pC, p, Ap);
+    
+    // alpha = r.r / (p . Ap)
+    const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
+    
+    // r = r - alpha Ap
+//#pragma omp parallel for schedule(static)
+    for (int i = 0; i < n; i++)
+      r[i] -= alpha * Ap[i];
+    
+    // rdotr = r.r
+    const float old_rdotr = rdotr;
+    rdotr = matrix_DotProduct(n, r, r);
+    
+    // Have we gone unstable?
+    if (rdotr > old_rdotr)
     {
-	   ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf) );    
-        if( ph->isTerminationRequested() && iter > 0 ) // User requested abort
-          break;
-      
-      // Ap = A p
-      multiplyA(pyramid, pC, p, Ap);
-      
-      // alpha = r.r / (p . Ap)
-      const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
-      
-      // r = r - alpha Ap
-#pragma omp parallel for schedule(static)
-      for (int i = 0; i < n; i++)
-	r[i] -= alpha * Ap[i];
-            
-      // rdotr = r.r
-      const float old_rdotr = rdotr;
-      rdotr = matrix_DotProduct(n, r, r);
-      
-      // Have we gone unstable?
-      if (rdotr > old_rdotr)
-	{
-	  // Save where we've got to
-	  if (num_backwards == 0 && old_rdotr < saved_rdotr)
+      // Save where we've got to
+      if (num_backwards == 0 && old_rdotr < saved_rdotr)
 	    {
 	      saved_rdotr = old_rdotr;
 	      matrix_copy(n, x, x_save);
 	    }
-
-	  num_backwards++;
-	}
-      else
-	{
-	  num_backwards = 0;
-	}
-
-      // x = x + alpha p
-#pragma omp parallel for schedule(static)
-      for (int i = 0; i < n; i++)
-	x[i] += alpha * p[i];
-
-
-      // Exit if we're done
-      // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
-      if(rdotr/bnrm2 < tol2)
-	break;
       
-      if (num_backwards > num_backwards_ceiling)
-	{
-	  // Reset
-	  num_backwards = 0;
-	  matrix_copy(n, x_save, x);
-
-	  // r = Ax
-	  multiplyA(pyramid, pC, x, r);
-
-	  // r = b - r
-	  matrix_subtract(n, b, r);
-
-	  // rdotr = r.r
-	  rdotr = matrix_DotProduct(n, r, r);
-	  saved_rdotr = rdotr;
-
-	  // p = r
-	  matrix_copy(n, r, p);
-	}
-      else
-	{
-	  // p = r + beta p
-	  const float beta = rdotr/old_rdotr;
-#pragma omp parallel for schedule(static)
-	  for (int i = 0; i < n; i++)
-	    p[i] = r[i] + beta*p[i];
-	}
+      num_backwards++;
     }
-
+    else
+    {
+      num_backwards = 0;
+    }
+    
+    // x = x + alpha p
+//#pragma omp parallel for schedule(static)
+    for (int i = 0; i < n; i++)
+      x[i] += alpha * p[i];
+    
+    
+    // Exit if we're done
+    // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
+    if(rdotr/bnrm2 < tol2)
+      break;
+    
+    if (num_backwards > num_backwards_ceiling)
+    {
+      // Reset
+      num_backwards = 0;
+      matrix_copy(n, x_save, x);
+      
+      // r = Ax
+      multiplyA(pyramid, pC, x, r);
+      
+      // r = b - r
+      matrix_subtract(n, b, r);
+      
+      // rdotr = r.r
+      rdotr = matrix_DotProduct(n, r, r);
+      saved_rdotr = rdotr;
+      
+      // p = r
+      matrix_copy(n, r, p);
+    }
+    else
+    {
+      // p = r + beta p
+      const float beta = rdotr/old_rdotr;
+//#pragma omp parallel for schedule(static)
+      for (int i = 0; i < n; i++)
+        p[i] = r[i] + beta*p[i];
+    }
+  }
+  
   // Use the best version we found
   if (rdotr > saved_rdotr)
-    {
-      rdotr = saved_rdotr;
-      matrix_copy(n, x_save, x);
-    }  
-
+  {
+    rdotr = saved_rdotr;
+    matrix_copy(n, x_save, x);
+  }  
+  
   if (rdotr/bnrm2 > tol2)
-    {
-      // Not converged
-	ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf));    
-      if (iter == itmax)
-	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
-      else
-	fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
-    }
+  {
+    // Not converged
+    ph->newValue( (int) (logf(rdotr/irdotr)*percent_sf));    
+    if (iter == itmax)
+      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
+    else
+      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(rdotr/bnrm2), tol);  
+  }
   else 
     ph->newValue(100);
-    
+  
   matrix_free(x_save);
   matrix_free(p);
   matrix_free(Ap);
@@ -962,14 +983,14 @@ static inline float lookup_table(const int n, const float* const in_tab, const f
 {
   if(unlikely(val < in_tab[0]))
     return out_tab[0];
-
+  
   for (int j = 1; j < n; j++)
     if(val < in_tab[j])
-      {
-	const float dd = (val - in_tab[j-1]) / (in_tab[j] - in_tab[j-1]);
-	return out_tab[j-1] + (out_tab[j] - out_tab[j-1]) * dd;
-      }
-
+    {
+      const float dd = (val - in_tab[j-1]) / (in_tab[j] - in_tab[j-1]);
+      return out_tab[j-1] + (out_tab[j] - out_tab[j-1]) * dd;
+    }
+  
   return out_tab[n-1];
 }
 
@@ -977,48 +998,49 @@ static inline float lookup_table(const int n, const float* const in_tab, const f
 // transform gradient (Gx,Gy) to R
 static inline void transform_to_R(const int n, float* const G)
 {
-	  const float log10=2.3025850929940456840179914546844*detailFactor;
-#pragma omp parallel for schedule(static)
+  const float log10=2.3025850929940456840179914546844*detailFactor;
+//#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
-    {
-      // G to W
-      const float absG = fabsf(G[j]);
-      int sign;
-      if(G[j] < 0)
-	sign = -1;
-      else
-	sign = 1;	
-      G[j] = (powf(10,absG * log10) - 1.0f) * sign;
+  {
+    // G to W
+    const float absG = fabsf(G[j]);
+    int sign;
+    if(G[j] < 0)
+      sign = -1;
+    else
+      sign = 1;	
+    
+    G[j] = (powf(10,absG * log10) - 1.0f) * sign;
 		
-      // W to RESP
-      if(G[j] < 0)
-	sign = -1;
-      else
-	sign = 1;	
-      
-      G[j] = sign * lookup_table(LOOKUP_W_TO_R, W_table, R_table, fabsf(G[j]));
-    }
+    // W to RESP
+    if(G[j] < 0)
+      sign = -1;
+    else
+      sign = 1;	
+    
+    G[j] = sign * lookup_table(LOOKUP_W_TO_R, W_table, R_table, fabsf(G[j]));
+  }
 }
 
 // transform gradient (Gx,Gy) to R for the whole pyramid
 static inline void pyramid_transform_to_R(pyramid_t* pyramid)
 {
   while (pyramid != NULL)
-    {
-      const int size = pyramid->rows * pyramid->cols;
-      transform_to_R(size, pyramid->Gx);	
-      transform_to_R(size, pyramid->Gy);	
-      pyramid = pyramid->next;
-    }
+  {
+    const int size = pyramid->rows * pyramid->cols;
+    transform_to_R(size, pyramid->Gx);	
+    transform_to_R(size, pyramid->Gy);	
+    pyramid = pyramid->next;
+  }
 }
 
 // transform from R to G
 static inline void transform_to_G(const int n, float* const R){
-
-  const float log10=2.3025850929940456840179914546844*detailFactor;//here we are actually changing the base of logarithm
-#pragma omp parallel for schedule(static)
+  
+  const float log10=2.3025850929940456840179914546844*detailFactor; //here we are actually changing the base of logarithm
+//#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++){
-	
+    
     // RESP to W
     int sign;
     if(R[j] < 0)
@@ -1026,14 +1048,14 @@ static inline void transform_to_G(const int n, float* const R){
     else
       sign = 1;			
     R[j] = sign * lookup_table(LOOKUP_W_TO_R, R_table, W_table, fabsf(R[j]));
-	
+    
     // W to G
     if(R[j] < 0)
       sign = -1;
     else
-      sign = 1;	
+      sign = 1;
+    
     R[j] = log(fabsf(R[j]) + 1.0f) / log10 * sign;
-		
   }
 }
 
@@ -1041,22 +1063,22 @@ static inline void transform_to_G(const int n, float* const R){
 static inline void pyramid_transform_to_G(pyramid_t* pyramid)
 {
   while (pyramid != NULL)
-    {
-      transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gx);	
-      transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gy);	
-      pyramid = pyramid->next;
-    }
+  {
+    transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gx);	
+    transform_to_G(pyramid->rows*pyramid->cols, pyramid->Gy);	
+    pyramid = pyramid->next;
+  }
 }
 
 // multiply gradient (Gx,Gy) values by float scalar value for the whole pyramid
 static inline void pyramid_gradient_multiply(pyramid_t* pyramid, const float val)
 {
   while (pyramid != NULL)
-    {
-      matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gx, val);	
-      matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gy, val);	
-      pyramid = pyramid->next;
-    }
+  {
+    matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gx, val);	
+    matrix_multiply_const(pyramid->rows*pyramid->cols, pyramid->Gy, val);	
+    pyramid = pyramid->next;
+  }
 }
 
 
@@ -1064,10 +1086,10 @@ static int sort_float(const void* const v1, const void* const v2)
 {
   if (*((float*)v1) < *((float*)v2))
     return -1;
-
+  
   if(likely(*((float*)v1) > *((float*)v2)))
     return 1;
-
+  
   return 0;
 }
 
@@ -1078,7 +1100,7 @@ static void transform_to_luminance(pyramid_t* pp, float* const x, ProgressHelper
   pyramid_t* pC = pyramid_allocate(pp->cols, pp->rows);
   pyramid_calculate_scale_factor(pp, pC); // calculate (Cx,Cy)
   pyramid_scale_gradient(pp, pC); // scale small gradients by (Cx,Cy);
-
+  
   float* b = matrix_alloc(pp->cols * pp->rows);
   pyramid_calculate_divergence_sum(pp, b); // calculate the sum of divergences (equal to b)
   
@@ -1107,7 +1129,7 @@ static int hist_data_order(const void* const v1, const void* const v2)
   
   if (((struct hist_data*) v1)->size > ((struct hist_data*) v2)->size)
     return 1;
-
+  
   return 0;
 }
 
@@ -1124,66 +1146,66 @@ static void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   int total_pixels = 0;
   pyramid_t* l = pp;
   while (l != NULL)
-    {
-      total_pixels += l->rows * l->cols;
-      l = l->next;
-    }
+  {
+    total_pixels += l->rows * l->cols;
+    l = l->next;
+  }
   
   // Allocate memory
   struct hist_data* hist = (struct hist_data*) malloc(sizeof(struct hist_data) * total_pixels);
   if (hist == NULL)
-    {
-      fprintf(stderr, "ERROR: malloc in contrast_equalization() (size:%z)", sizeof(struct hist_data) * total_pixels);
-      exit(155);
-    }
-    
+  {
+    fprintf(stderr, "ERROR: malloc in contrast_equalization() (size:%zu)", sizeof(struct hist_data) * total_pixels);
+    exit(155);
+  }
+  
   // Build histogram info
   l = pp;
   int index = 0;
   while( l != NULL )
+  {
+    const int pixels = l->rows*l->cols;
+    const int offset = index;
+//#pragma omp parallel for schedule(static)
+    for(int c = 0; c < pixels; c++)
     {
-      const int pixels = l->rows*l->cols;
-      const int offset = index;
-#pragma omp parallel for schedule(static)
-      for(int c = 0; c < pixels; c++)
-	{
-	  hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
-	  hist[c+offset].index = c + offset;
-	} 
-      index += pixels;
-      l = l->next;
-    }
+      hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
+      hist[c+offset].index = c + offset;
+    } 
+    index += pixels;
+    l = l->next;
+  }
   
   // Generate histogram
   qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_order);
-
+  
   // Calculate cdf
   const float norm = 1.0f / (float) total_pixels;
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for (int i = 0; i < total_pixels; i++)
     hist[i].cdf = ((float) i) * norm;
-
+  
   // Recalculate in terms of indexes
   qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_index);
-
+  
   //Remap gradient magnitudes
   l = pp;
   index = 0;
   while( l != NULL ) {
     const int pixels = l->rows*l->cols;
     const int offset = index;
-
-#pragma omp parallel for schedule(static)
+    
+//#pragma omp parallel for schedule(static)
     for( int c = 0; c < pixels; c++)
-      {
-	const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
-	l->Gx[c] *= scale;
-	l->Gy[c] *= scale;        
-      } 
+    {
+      const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
+      l->Gx[c] *= scale;
+      l->Gy[c] *= scale;        
+    } 
     index += pixels;
     l = l->next;
   }
-
+  
   free(hist);
 }
 
@@ -1200,25 +1222,25 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   for (int j = 1; j < n; j++)
     if (Y[j] > Ymax)
       Ymax = Y[j];
-
+  
   const float clip_min = 1e-7f*Ymax;
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for (int j = 0; j < n; j++)
-    {
-      if( unlikely(R[j] < clip_min) ) R[j] = clip_min;
-      if( unlikely(G[j] < clip_min) ) G[j] = clip_min;
-      if( unlikely(B[j] < clip_min) ) B[j] = clip_min;
-      if( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
-    }
+  {
+    if( unlikely(R[j] < clip_min) ) R[j] = clip_min;
+    if( unlikely(G[j] < clip_min) ) G[j] = clip_min;
+    if( unlikely(B[j] < clip_min) ) B[j] = clip_min;
+    if( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
+  }
 	
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
-    {
-      R[j] /= Y[j];
-      G[j] /= Y[j];
-      B[j] /= Y[j];
-      Y[j] = log10f(Y[j]);
-    }
+  {
+    R[j] /= Y[j];
+    G[j] /= Y[j];
+    B[j] /= Y[j];
+    Y[j] = log10f(Y[j]);
+  }
 	
   pyramid_t* pp = pyramid_allocate(c,r); // create pyramid
   float* tY = matrix_alloc(n);
@@ -1226,7 +1248,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   pyramid_calculate_gradient(pp,tY); // calculate gradients for pyramid, destroys tY
   matrix_free(tY);
   pyramid_transform_to_R(pp); // transform gradients to R
-
+  
   /* Contrast map */
   if( contrastFactor > 0.0f )
     pyramid_gradient_multiply(pp, contrastFactor); // Contrast mapping
@@ -1236,7 +1258,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   pyramid_transform_to_G(pp); // transform R to gradients
   transform_to_luminance(pp, Y, ph, bcg, itmax, tol); // transform gradients to luminance Y
   pyramid_free(pp);
-
+  
   /* Renormalize luminance */
   float* temp = matrix_alloc(n);
 	
@@ -1249,7 +1271,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   float trim = (n-1) * CUT_MARGIN * 0.01f;
   float delta = trim - floorf(trim);
   const float l_min = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
-
+  
   trim = (n-1) * (100.0f - CUT_MARGIN) * 0.01f;
   delta = trim - floorf(trim);
   const float l_max = temp[(int)floorf(trim)] * delta + temp[(int)ceilf(trim)] * (1.0f-delta);	
@@ -1257,20 +1279,20 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   matrix_free(temp);
 	
   const float disp_dyn_range = 2.3f;
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
-                                                                               // 
+  // 
   /* Transform to linear scale RGB */
-#pragma omp parallel for schedule(static)
+//#pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
-    {
-      Y[j] = powf(10,Y[j]);
-      R[j] = powf( R[j], saturationFactor) * Y[j];
-      G[j] = powf( G[j], saturationFactor) * Y[j];
-      B[j] = powf( B[j], saturationFactor) * Y[j];
-    }
-
+  {
+    Y[j] = powf(10,Y[j]);
+    R[j] = powf( R[j], saturationFactor) * Y[j];
+    G[j] = powf( G[j], saturationFactor) * Y[j];
+    B[j] = powf( B[j], saturationFactor) * Y[j];
+  }
+  
   return PFSTMO_OK;
 }
 

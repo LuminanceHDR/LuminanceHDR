@@ -44,42 +44,42 @@
 
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
-    //--- default tone mapping parameters;
-    //float scaleFactor = 0.1f;
-    //float saturationFactor = 0.8f;
-    //bool cont_map = false, cont_eq = false
-    bool cont_map = false;
-    bool bcg = true;
-    int itmax = 200;
-    float tol = 1e-3;
-
-    if (!cont_eq)
-	cont_map = true;
-    else 
-	scaleFactor = -scaleFactor;
-
-   std::cout << "pfstmo_mantiuk06" << std::endl;
-   std::cout << "cont_map: " << cont_map << std::endl;
-   std::cout << "cont_eq: " << cont_eq << std::endl;
-   std::cout << "scaleFactor: " << scaleFactor << std::endl;
-   std::cout << "saturationFactor: " << saturationFactor << std::endl;
-   std::cout << "detailFactor: " << detailFactor << std::endl;
-
-    pfs::DOMIO pfsio;
-
-    pfs::Channel *inX, *inY, *inZ;
-	
-    frame->getXYZChannels(inX, inY, inZ);
-    int cols = frame->getWidth();
-    int rows = frame->getHeight();
-
-    pfs::Array2DImpl R( cols, rows );
+  //--- default tone mapping parameters;
+  //float scaleFactor = 0.1f;
+  //float saturationFactor = 0.8f;
+  //bool cont_map = false, cont_eq = false
+  bool cont_map = false;
+  bool bcg = true;
+  int itmax = 200;
+  float tol = 1e-3;
   
-    pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ );
-
-    tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
-      scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
-
-    pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  if (!cont_eq)
+    cont_map = true;
+  else 
+    scaleFactor = -scaleFactor;
+  
+  std::cout << "pfstmo_mantiuk06" << std::endl;
+  std::cout << "cont_map: " << cont_map << std::endl;
+  std::cout << "cont_eq: " << cont_eq << std::endl;
+  std::cout << "scaleFactor: " << scaleFactor << std::endl;
+  std::cout << "saturationFactor: " << saturationFactor << std::endl;
+  std::cout << "detailFactor: " << detailFactor << std::endl;
+  
+  pfs::DOMIO pfsio;
+  
+  pfs::Channel *inX, *inY, *inZ;
+	
+  frame->getXYZChannels(inX, inY, inZ);
+  int cols = frame->getWidth();
+  int rows = frame->getHeight();
+  
+  pfs::Array2DImpl R( cols, rows );
+  
+  pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ );
+  
+  tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
+                        scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
+  
+  pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
+  frame->getTags()->setString("LUMINANCE", "RELATIVE");
 }

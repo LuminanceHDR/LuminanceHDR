@@ -57,7 +57,7 @@
  * error was encountered.
  */
 int tmo_mantiuk06_contmap( int cols, int rows, float* R, float* G, float* B, float* Y,
-			    float contrastFactor, float saturationFactor, float detailFactor, bool bcg,
-			    int itmax = 200, float tol = 1e-3, ProgressHelper *ph = NULL);
+                          float contrastFactor, float saturationFactor, float detailFactor, bool bcg,
+                          int itmax = 200, float tol = 1e-3, ProgressHelper *ph = NULL);
 
 #endif
