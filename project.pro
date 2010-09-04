@@ -494,7 +494,7 @@ contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
 # We like to search the LOCALSOFT/lib explicitly on MacOSX
 LIBS += -L/opt/local/lib
 # Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
-LIBS += -ljpeg
+LIBS += -ljpeg -framework Accelerate
 # Exiv also depend on libexpat and libiconv, so same as above:
 LIBS += -lexpat 
 LIBS += -liconv

@@ -60,6 +60,9 @@
 #error unsupported architecture
 #endif
 
+#ifdef __APPLE__
+#include <Accelerate/Accelerate.h>
+#endif
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -92,7 +95,7 @@ void matrix_add(const int n, const float* const a, float* const b);
 void matrix_subtract(const int n, const float* const a, float* const b);
 void matrix_copy(const int n, const float* const a, float* const b);
 void matrix_multiply_const(const int n, float* const a, const float val);
-void matrix_divide(const int n, const float* const a, float* const b);
+void matrix_divide(const int n, const float* a, float* b);
 float* matrix_alloc(const int size);
 void matrix_free(float* m);
 float matrix_DotProduct(const int n, const float* const a, const float* const b);
@@ -297,19 +300,33 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 }
 
 // return = a + b
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_add(const int n, const float* const a, float* const b)
 {
+#ifdef __APPLE__  
+  vDSP_vadd(b, 1, a, 1, b, 1, n);
+#else
   //#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
+  {
     b[i] += a[i];
+  }
+#endif
 }
 
 // return = a - b
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
+#ifdef __APPLE__  
+  vDSP_vsub(a, 1, b, 1, b, 1, n);
+#else
   //#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
+  {
     b[i] = a[i] - b[i];
+  }
+#endif
 }
 
 // copy matix a to b, return = a 
@@ -319,19 +336,33 @@ inline void matrix_copy(const int n, const float* const a, float* const b)
 }
 
 // multiply matrix a by scalar val
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_multiply_const(const int n, float* const a, const float val)
 {
+#ifdef __APPLE__
+  vDSP_vsmul (a, 1, &val, a, 1, n);
+#else
   //#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
+  {
     a[i] *= val;
+  }
+#endif
 }
 
 // b = a[i] / b[i]
-inline void matrix_divide(const int n, const float* const a, float* const b)
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
+inline void matrix_divide(const int n, float* a, float* b)
 {
+#ifdef __APPLE__  
+  vDSP_vdiv(b, 1, a, 1, b, 1, n);
+#else  
   //#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
+  {
     b[i] = a[i] / b[i];
+  }
+#endif
 }
 
 
@@ -350,19 +381,28 @@ inline float* matrix_alloc(int size)
 }
 
 // free memory for matrix
-inline void matrix_free(float* m){
+inline void matrix_free(float* m)
+{
   if(m != NULL)
+  {
     _mm_free(m);
+  }
 }
 
 // multiply vector by vector (each vector should have one dimension equal to 1)
-inline float matrix_DotProduct(const int n, const float* const a, const float* const b){
+// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
+float matrix_DotProduct(const int n, const float* const a, const float* const b)
+{
   float val = 0;
-  
+#ifdef __APPLE__
+  vDSP_dotpr(a, 1, b, 1, &val, n);
+#else  
   //#pragma omp parallel for reduction(+:val) schedule(static)
-  for(int j=0;j<n;j++)
+  for(int j=0; j<n; j++)
+  {
     val += a[j] * b[j];
-  
+  }
+#endif
   return val;
 }
 
