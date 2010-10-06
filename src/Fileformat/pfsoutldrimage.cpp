@@ -36,9 +36,10 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
     return (unsigned char)v;
 }
 
-QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
+QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe )
+{
 	assert(inpfsframe!=NULL);
-
+  
 	pfs::Channel *X, *Y, *Z;
 	inpfsframe->getXYZChannels( X, Y, Z );
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
@@ -46,24 +47,40 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe ) {
 	// Back to CS_RGB for the Viewer
 	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );	
 	
-	int width = X->getCols();
-	int height =  X->getRows();
-	uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
-	for( int y = 0; y < height; y++ ) { // For each row of the image
-		for( int x = 0; x < width; x++ ) {
-			if (QSysInfo::ByteOrder == QSysInfo::LittleEndian) {
-			*(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
-			*(data + 3 + (y*width+x)*4) = 0xff;
-			} else {
-			*(data + 3 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
-			*(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-			*(data + 1 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-			*(data + 0 + (y*width+x)*4) = 0xff;
-			}
-		}
-	}
-
+	int width   = X->getCols();
+	int height  = X->getRows();
+  
+	uchar *data = new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
+  
+  if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)
+  {
+    // Intel Processors
+    for( int y = 0; y < height; y++ ) // For each row of the image
+    { 
+      for( int x = 0; x < width; x++ )
+      {
+        *(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
+        *(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
+        *(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+        *(data + 3 + (y*width+x)*4) = 0xff;
+      }
+    }
+  }
+  else
+  {
+    // Motorola Processors
+    // I have a feeling that this piece of code is not right!
+    for( int y = 0; y < height; y++ ) // For each row of the image
+    { 
+      for( int x = 0; x < width; x++ )
+      {
+        *(data + 3 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
+        *(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
+        *(data + 1 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
+        *(data + 0 + (y*width+x)*4) = 0xff;
+      }
+    }
+  }
+  
 	return QImage (const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
 }
