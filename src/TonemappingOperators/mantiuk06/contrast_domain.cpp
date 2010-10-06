@@ -320,7 +320,7 @@ inline void matrix_add(const int n, const float* const a, float* const b)
 inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
 #ifdef __APPLE__  
-  vDSP_vsub(a, 1, b, 1, b, 1, n);
+  vDSP_vsub(b, 1, a, 1, b, 1, n); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
 #else
   //#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
