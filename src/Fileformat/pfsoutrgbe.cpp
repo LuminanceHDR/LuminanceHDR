@@ -28,9 +28,10 @@
 #include "Libpfs/pfs.h"
 #include "rgbeio.h"
 
-void writeRGBEfile (pfs::Frame * inputpfshdr,const char* outfilename) {
+void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename)
+{
 	pfs::DOMIO pfsio;
-	FILE *outfp=fopen(outfilename,"wb");
+	FILE *outfp = fopen(outfilename,"wb");
 	RGBEWriter writer(outfp);
 	pfs::Channel *X, *Y, *Z;
 	// X Y Z Channels contain R G B data

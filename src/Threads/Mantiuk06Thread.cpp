@@ -39,20 +39,24 @@ Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &op
 	TMOThread(frame, opts) {
 }
 
-void Mantiuk06Thread::run() {
+void Mantiuk06Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try {
+	//emit setMaximumSteps(100);
+  emit setMaximumSteps(4);
+	try
+  {
 		// pfstmo_mantiuk06 not reentrant
 		lock.lockForWrite();
 		pfstmo_mantiuk06(workingframe,
-		opts.operator_options.mantiuk06options.contrastfactor,
-		opts.operator_options.mantiuk06options.saturationfactor,
-		opts.operator_options.mantiuk06options.detailfactor,
-		opts.operator_options.mantiuk06options.contrastequalization,ph);
+                     opts.operator_options.mantiuk06options.contrastfactor,
+                     opts.operator_options.mantiuk06options.saturationfactor,
+                     opts.operator_options.mantiuk06options.detailfactor,
+                     opts.operator_options.mantiuk06options.contrastequalization,ph);
 		lock.unlock();
 	}
-	catch(...) {
+	catch(...)
+  {
 		lock.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);

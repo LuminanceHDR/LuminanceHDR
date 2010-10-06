@@ -44,11 +44,13 @@ TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 
 	ph = new ProgressHelper(0);
 
-	if (opts.pregamma != 1.0f) {
+	if (opts.pregamma != 1.0f)
+  {
 		applyGammaOnFrame( workingframe, opts.pregamma );
 	}
 
-	if ((opts.xsize != opts.origxsize) && !opts.tonemapSelection) {
+	if ((opts.xsize != opts.origxsize) && !opts.tonemapSelection)
+  {
 		pfs::Frame *resized = resizeFrame(workingframe, opts.xsize);
 		pfsio.freeFrame(workingframe);
 		workingframe = resized;
@@ -60,22 +62,26 @@ TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
 }
 
-TMOThread::~TMOThread() {
+TMOThread::~TMOThread()
+{
 	wait();
 	delete ph;
 	std::cout << "~TMOThread()" << std::endl;
 }
 
-void TMOThread::terminateRequested() {
+void TMOThread::terminateRequested()
+{
 	std::cout << "TMOThread::terminateRequested()" << std::endl;
 	ph->terminate(true);
 }
 
-void TMOThread::startTonemapping() {
+void TMOThread::startTonemapping()
+{
     start();
 }
 
-void TMOThread::finalize() {
+void TMOThread::finalize()
+{
 	if (!(ph->isTerminationRequested())) {
 		const QImage& res = fromLDRPFStoQImage(workingframe);
 		emit processedFrame(workingframe);
