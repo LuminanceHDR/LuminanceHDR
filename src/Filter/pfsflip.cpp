@@ -43,83 +43,83 @@ class QuietException
 
 void flipArray( const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v );
 
-void printHelp()
-{
-  fprintf( stderr, PROG_NAME " [-h] [-v] [--help]\n"
-    "See man page for more information.\n" );
-}
+//void printHelp()
+//{
+//  fprintf( stderr, PROG_NAME " [-h] [-v] [--help]\n"
+//    "See man page for more information.\n" );
+//}
 
-void flipFrames( int argc, char* argv[] )
-{
-  pfs::DOMIO pfsio;
-
-  static struct option cmdLineOptions[] = {
-    { "help", no_argument, NULL, '1' },
-    { "h", no_argument, NULL, 'h' },
-    { "v", no_argument, NULL, 'v' },
-    { NULL, 0, NULL, 0 }
-  };
-
-  bool h = false;
-  bool v = false;
-    
-  int optionIndex = 0;
-  while( 1 ) {
-    int c = getopt_long (argc, argv, "hv", cmdLineOptions, &optionIndex);
-    if( c == -1 ) break;
-    switch( c ) {
-    case '1':
-      printHelp();
-      throw QuietException();
-    case 'h':
-      h = true;
-      break;
-    case 'v':
-      v = true;
-      break;
-    case '?':
-      throw QuietException();
-    case ':':
-      throw QuietException();
-    }
-  }
-  
-  if( (!h) & (!v) )
-    throw pfs::Exception( "Either --h or --v must be specified" );
-  
-  bool firstFrame = true;
-  pfs::Frame *resizedFrame = NULL;
-  
-  while( true ) {
-    pfs::Frame *frame = pfsio.readFrame( stdin );
-    if( frame == NULL ) break; // No more frames
-
-    pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
-
-    pfs::Channel *dX, *dY, *dZ;
-    
-    if( firstFrame ) {
-      int xSize = frame->getWidth();
-      int ySize = frame->getHeight();
-      resizedFrame = pfsio.createFrame( xSize, ySize );
-      firstFrame = false;
-    }
-
-    pfs::ChannelIterator *it = frame->getChannels();
-    while( it->hasNext() ) {
-      pfs::Channel *originalCh = it->getNext();
-      pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-
-      flipArray( originalCh, newCh, h, v );
-    }
-
-    pfs::copyTags( frame, resizedFrame );
-    pfsio.writeFrame( resizedFrame, stdout );
-    pfsio.freeFrame( frame );        
-  }
-  pfsio.freeFrame( resizedFrame );
-}
+//void flipFrames( int argc, char* argv[] )
+//{
+//  pfs::DOMIO pfsio;
+//
+//  static struct option cmdLineOptions[] = {
+//    { "help", no_argument, NULL, '1' },
+//    { "h", no_argument, NULL, 'h' },
+//    { "v", no_argument, NULL, 'v' },
+//    { NULL, 0, NULL, 0 }
+//  };
+//
+//  bool h = false;
+//  bool v = false;
+//    
+//  int optionIndex = 0;
+//  while( 1 ) {
+//    int c = getopt_long (argc, argv, "hv", cmdLineOptions, &optionIndex);
+//    if( c == -1 ) break;
+//    switch( c ) {
+//    case '1':
+//      printHelp();
+//      throw QuietException();
+//    case 'h':
+//      h = true;
+//      break;
+//    case 'v':
+//      v = true;
+//      break;
+//    case '?':
+//      throw QuietException();
+//    case ':':
+//      throw QuietException();
+//    }
+//  }
+//  
+//  if( (!h) & (!v) )
+//    throw pfs::Exception( "Either --h or --v must be specified" );
+//  
+//  bool firstFrame = true;
+//  pfs::Frame *resizedFrame = NULL;
+//  
+//  while( true ) {
+//    pfs::Frame *frame = pfsio.readFrame( stdin );
+//    if( frame == NULL ) break; // No more frames
+//
+//    pfs::Channel *X, *Y, *Z;
+//    frame->getXYZChannels( X, Y, Z );
+//
+//    pfs::Channel *dX, *dY, *dZ;
+//    
+//    if( firstFrame ) {
+//      int xSize = frame->getWidth();
+//      int ySize = frame->getHeight();
+//      resizedFrame = pfsio.createFrame( xSize, ySize );
+//      firstFrame = false;
+//    }
+//
+//    pfs::ChannelIterator *it = frame->getChannels();
+//    while( it->hasNext() ) {
+//      pfs::Channel *originalCh = it->getNext();
+//      pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
+//
+//      flipArray( originalCh, newCh, h, v );
+//    }
+//
+//    pfs::copyTags( frame, resizedFrame );
+//    pfsio.writeFrame( resizedFrame, stdout );
+//    pfsio.freeFrame( frame );        
+//  }
+//  pfsio.freeFrame( resizedFrame );
+//}
 
 void flipArray(const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v )
 {
@@ -141,17 +141,17 @@ void flipArray(const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v )
   }
 }
 
-int main( int argc, char* argv[] )
-{
-  try {
-    flipFrames( argc, argv );
-  }
-  catch( pfs::Exception ex ) {
-    fprintf( stderr, PROG_NAME " error: %s\n", ex.getMessage() );
-    return EXIT_FAILURE;
-  }
-  catch( QuietException  ex ) {
-    return EXIT_FAILURE;
-  }
-  return EXIT_SUCCESS;
-}
+//int main( int argc, char* argv[] )
+//{
+//  try {
+//    flipFrames( argc, argv );
+//  }
+//  catch( pfs::Exception ex ) {
+//    fprintf( stderr, PROG_NAME " error: %s\n", ex.getMessage() );
+//    return EXIT_FAILURE;
+//  }
+//  catch( QuietException  ex ) {
+//    return EXIT_FAILURE;
+//  }
+//  return EXIT_SUCCESS;
+//}

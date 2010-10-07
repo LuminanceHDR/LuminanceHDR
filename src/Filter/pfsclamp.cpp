@@ -80,11 +80,11 @@ void clamp( pfs::Array2D *array, float min, float max,
 }
 
 
-void printHelp()
-{
-  fprintf( stderr, PROG_NAME " [--min <val>] [--max <val>] [--verbose] [--help]\n"
-    "See man page for more information.\n" );
-}
+//void printHelp()
+//{
+//  fprintf( stderr, PROG_NAME " [--min <val>] [--max <val>] [--verbose] [--help]\n"
+//    "See man page for more information.\n" );
+//}
 
 void clampFrames( int argc, char* argv[] )
 {
@@ -203,17 +203,17 @@ void clampFrames( int argc, char* argv[] )
 }
 
 
-int main( int argc, char* argv[] )
-{
-    try {
-        clampFrames( argc, argv );
-    }
-    catch( pfs::Exception ex ) {
-        fprintf( stderr, PROG_NAME " error: %s\n", ex.getMessage() );
-        return EXIT_FAILURE;
-    }        
-    catch( QuietException  ex ) {
-        return EXIT_FAILURE;
-    }        
-    return EXIT_SUCCESS;
-}
+//int main( int argc, char* argv[] )
+//{
+//    try {
+//        clampFrames( argc, argv );
+//    }
+//    catch( pfs::Exception ex ) {
+//        fprintf( stderr, PROG_NAME " error: %s\n", ex.getMessage() );
+//        return EXIT_FAILURE;
+//    }        
+//    catch( QuietException  ex ) {
+//        return EXIT_FAILURE;
+//    }        
+//    return EXIT_SUCCESS;
+//}

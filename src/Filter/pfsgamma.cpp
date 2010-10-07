@@ -37,50 +37,50 @@ void applyGamma( pfs::Array2D *array, const float exponent, const float multipli
 pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
 {
   pfs::DOMIO pfsio;
-
+  
   float multiplier = 1.0f;
-
+  
   const char *lum_type = frame->getTags()->getString("LUMINANCE");
   if( lum_type ) {
     if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
-         std::cerr << PROG_NAME " warning: applying gamma correction to a display referred image" << std::endl;
-  if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
-     std::cerr << PROG_NAME " warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
-  if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
-     std::cerr << PROG_NAME " warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
-   }
-   
-    pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
-
-    if( X != NULL ) {           // Color, XYZ
-      
-      pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
-      // At this point (X,Y,Z) = (R,G,B)
-        
-      applyGamma( X, 1/gamma, multiplier );
-      applyGamma( Y, 1/gamma, multiplier );
-      applyGamma( Z, 1/gamma, multiplier );
-
-      pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
-      // At this point (X,Y,Z) = (X,Y,Z)
-      
-    } else if( (Y = frame->getChannel( "Y" )) != NULL ) {
-      // Luminance only
-
-      applyGamma( Y, 1/gamma, multiplier );
-      
-    } 
-    //TODO
+      std::cerr << PROG_NAME " warning: applying gamma correction to a display referred image" << std::endl;
+    if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
+      std::cerr << PROG_NAME " warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
+    if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
+      std::cerr << PROG_NAME " warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
+  }
+  
+  pfs::Channel *X, *Y, *Z;
+  frame->getXYZChannels( X, Y, Z );
+  
+  if( X != NULL ) {           // Color, XYZ
+    
+    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
+    // At this point (X,Y,Z) = (R,G,B)
+    
+    applyGamma( X, 1/gamma, multiplier );
+    applyGamma( Y, 1/gamma, multiplier );
+    applyGamma( Z, 1/gamma, multiplier );
+    
+    pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+    // At this point (X,Y,Z) = (X,Y,Z)
+    
+  } else if( (Y = frame->getChannel( "Y" )) != NULL ) {
+    // Luminance only
+    
+    applyGamma( Y, 1/gamma, multiplier );
+    
+  } 
+  //TODO
 	//else
 	// throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-
-    //if( opt_setgamma && gamma > 1.0f )
-      frame->getTags()->setString("LUMINANCE", "DISPLAY");
-    //else if( opt_setgamma && gamma < 1.0f )
-    //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
-    
-    return frame;        
+  
+  //if( opt_setgamma && gamma > 1.0f )
+  frame->getTags()->setString("LUMINANCE", "DISPLAY");
+  //else if( opt_setgamma && gamma < 1.0f )
+  //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  
+  return frame;        
 }
 
 
