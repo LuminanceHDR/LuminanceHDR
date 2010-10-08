@@ -47,6 +47,12 @@ public:
 	unsigned int naninfcolor, negcolor;
 	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 	bool saveLogLuvTiff;
+	// if true, tmo result windows should come up maximized
+	bool tmowindow_max;
+	//if true also show processed hdr
+	bool tmowindow_showprocessed;
+	// if true (default) warn user about differing results with small frames
+	bool tmowarning_fattalsmall;
 	//path to save temporary cached pfs files.
 	QString tempfilespath;
 	//number of threads to use (where threaded execution is enabled).

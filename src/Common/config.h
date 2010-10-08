@@ -48,6 +48,13 @@
 #define GROUP_TIFF "TIFF_Options"
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
 
+#define GROUP_TMOWINDOW "TMOWindow_Options"
+#define KEY_TMOWINDOW_MAX "TMOWindow_Max"
+#define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_ShowProcessed"
+
+#define GROUP_TMOWARNING "TMOWarning_Options"
+#define KEY_TMOWARNING_FATTALSMALL "TMOWarning_fattalsmall"
+
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"
 #define KEY_RECENT_FILES "Recent_files_list"

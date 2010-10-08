@@ -82,9 +82,16 @@ void TMOThread::startTonemapping()
 
 void TMOThread::finalize()
 {
-	if (!(ph->isTerminationRequested())) {
+  LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
+  
+	if (!(ph->isTerminationRequested()))
+  {
 		const QImage& res = fromLDRPFStoQImage(workingframe, out_CS);
-		//emit processedFrame(workingframe);
+    
+    if ( luminance_options->tmowindow_showprocessed )
+    {
+      emit processedFrame(workingframe);
+    }
 		emit imageComputed(res);
 	}
 	emit finished();

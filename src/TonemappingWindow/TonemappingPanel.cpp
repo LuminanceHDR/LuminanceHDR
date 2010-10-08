@@ -276,20 +276,24 @@ void TonemappingPanel::on_pregammadefault_clicked(){
 
 void TonemappingPanel::on_applyButton_clicked() {
 	bool doTonemapping = true;
-	// Warning when using size dependent TMOs with smaller sizes
-	if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 ))
-	{
-		doTonemapping = QMessageBox::Yes ==
-			QMessageBox::question(
-				this, tr("Attention"),
-				tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"),
-				QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
-			);
+
+	LuminanceOptions *luminance_options=LuminanceOptions::getInstance();
+	if (luminance_options->tmowarning_fattalsmall) {
+		
+		// Warning when using size dependent TMOs with smaller sizes
+		if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 ))
+		{
+			doTonemapping = QMessageBox::Yes ==
+				QMessageBox::question(
+					this, tr("Attention"),
+					tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"),
+					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
+					);
+		}
+		if (!doTonemapping)
+			return;
 	}
-
-	if (!doTonemapping)
-		return;
-
+	
 	fillToneMappingOptions();
 	setupUndo();
 

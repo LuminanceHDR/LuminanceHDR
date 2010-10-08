@@ -97,6 +97,22 @@ void LuminanceOptions::loadFromQSettings() {
 			settings.setValue(KEY_SAVE_LOGLUV,true);
 		saveLogLuvTiff=settings.value(KEY_SAVE_LOGLUV,true).toBool();
 	settings.endGroup();
+
+	settings.beginGroup(GROUP_TMOWINDOW);
+	if (!settings.contains(KEY_TMOWINDOW_MAX))
+			settings.setValue(KEY_TMOWINDOW_MAX,false);
+		tmowindow_max=settings.value(KEY_TMOWINDOW_MAX,false).toBool();
+		
+		if (!settings.contains(KEY_TMOWINDOW_SHOWPROCESSED))
+			settings.setValue(KEY_TMOWINDOW_SHOWPROCESSED,false);
+		tmowindow_showprocessed=settings.value(KEY_TMOWINDOW_SHOWPROCESSED,false).toBool();
+	settings.endGroup();
+
+	settings.beginGroup(GROUP_TMOWARNING);
+	if (!settings.contains(KEY_TMOWARNING_FATTALSMALL))
+			settings.setValue(KEY_TMOWARNING_FATTALSMALL,true);
+		tmowarning_fattalsmall=settings.value(KEY_TMOWARNING_FATTALSMALL,true).toBool();
+	settings.endGroup();
 }
 
 TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {

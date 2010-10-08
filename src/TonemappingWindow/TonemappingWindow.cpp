@@ -191,7 +191,11 @@ void TonemappingWindow::addMDIResult(const QImage &image)
 	subwin->setWidget(n);
 	mdiArea->addSubWindow(subwin);
 	n->showMaximized();
-	mdiArea->activeSubWindow()->showMaximized();
+	
+	if (luminance_options->tmowindow_max)
+		mdiArea->activeSubWindow()->showMaximized();
+	else
+		mdiArea->activeSubWindow()->showNormal();
 
 	subwin->installEventFilter(this);
 	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
@@ -215,8 +219,12 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame)
 	HdrSubWin->setWidget(HDR);
 	mdiArea->addSubWindow(HdrSubWin);
 	HDR->showMaximized();
-	mdiArea->activeSubWindow()->showMaximized();
 	
+	if (luminance_options->tmowindow_max)
+		mdiArea->activeSubWindow()->showMaximized();
+	else
+		mdiArea->activeSubWindow()->showNormal();
+		
 	HdrSubWin->installEventFilter(this);
 	connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
