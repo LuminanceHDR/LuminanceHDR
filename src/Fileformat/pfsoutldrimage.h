@@ -18,10 +18,12 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
  *
- * Original Work
+ *  Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing 
+ *  Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * 
+ * @author Davide Anastasia <davide.anastasia@gmail.com>
  *
  */
 
@@ -32,6 +34,6 @@
 
 #include "Libpfs/pfs.h"
 
-QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe );
+QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace display_colorspace = pfs::CS_RGB );
 
 #endif

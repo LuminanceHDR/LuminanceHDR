@@ -39,8 +39,7 @@
 
 #include <iostream>
 
-void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation,
-		ProgressHelper *ph)
+void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation, ProgressHelper *ph)
 {
     pfs::DOMIO pfsio;
 

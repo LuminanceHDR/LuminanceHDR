@@ -35,27 +35,27 @@
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
 void applyGammaOnFrame( pfs::Frame*, const float);
 
-TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	QThread(0), opts(opts) {
-
+TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
+QThread(0), opts(opts), out_CS(pfs::CS_RGB)
+{
 	pfs::DOMIO pfsio;
-
+  
 	workingframe = pfscopy(frame);
-
+  
 	ph = new ProgressHelper(0);
-
+  
 	if (opts.pregamma != 1.0f)
   {
 		applyGammaOnFrame( workingframe, opts.pregamma );
 	}
-
+  
 	if ((opts.xsize != opts.origxsize) && !opts.tonemapSelection)
   {
 		pfs::Frame *resized = resizeFrame(workingframe, opts.xsize);
 		pfsio.freeFrame(workingframe);
 		workingframe = resized;
 	}
-
+  
 	// Convert to CS_XYZ: tm operator now use this colorspace
 	pfs::Channel *X, *Y, *Z;
 	workingframe->getXYZChannels( X, Y, Z );
@@ -77,14 +77,14 @@ void TMOThread::terminateRequested()
 
 void TMOThread::startTonemapping()
 {
-    start();
+  start();
 }
 
 void TMOThread::finalize()
 {
 	if (!(ph->isTerminationRequested())) {
-		const QImage& res = fromLDRPFStoQImage(workingframe);
-		emit processedFrame(workingframe);
+		const QImage& res = fromLDRPFStoQImage(workingframe, out_CS);
+		//emit processedFrame(workingframe);
 		emit imageComputed(res);
 	}
 	emit finished();

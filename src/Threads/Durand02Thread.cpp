@@ -28,30 +28,34 @@
 #include <QReadWriteLock>
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Durand02Thread.h"
-
-void pfstmo_durand02 (pfs::Frame*,float,float,float,ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 static QReadWriteLock lock;	
 
-Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
+TMOThread(frame, opts)
+{
+  out_CS = pfs::CS_SRGB;
 }
 
-void Durand02Thread::run() {
+void Durand02Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
-	try {
+	try
+  {
 		// pfstmo_durand02 not reentrant
 		lock.lockForWrite();
 		pfstmo_durand02(workingframe,
-		opts.operator_options.durandoptions.spatial,
-		opts.operator_options.durandoptions.range,
-		opts.operator_options.durandoptions.base, ph);
+                    opts.operator_options.durandoptions.spatial,
+                    opts.operator_options.durandoptions.range,
+                    opts.operator_options.durandoptions.base,
+                    ph);
 		lock.unlock();
 	}
-	catch(...) {
+	catch(...)
+  {
 		lock.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);

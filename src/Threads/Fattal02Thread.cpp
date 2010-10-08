@@ -28,32 +28,35 @@
 #include <QReadWriteLock>
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Fattal02Thread.h"
-
-void pfstmo_fattal02 (pfs::Frame*,float,float,float,float,bool,ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 static QReadWriteLock lock;	
 
-Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
+TMOThread(frame, opts)
+{
 }
 
-void Fattal02Thread::run() {
+void Fattal02Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
-	try {
+	try
+  {
 		// pfstmo_fattal02 not reentrant
 		lock.lockForWrite();
 		pfstmo_fattal02(workingframe,
-		opts.operator_options.fattaloptions.alpha,
-		opts.operator_options.fattaloptions.beta,
-		opts.operator_options.fattaloptions.color,
-		opts.operator_options.fattaloptions.noiseredux,
-		opts.operator_options.fattaloptions.newfattal,ph);
+                    opts.operator_options.fattaloptions.alpha,
+                    opts.operator_options.fattaloptions.beta,
+                    opts.operator_options.fattaloptions.color,
+                    opts.operator_options.fattaloptions.noiseredux,
+                    opts.operator_options.fattaloptions.newfattal,
+                    ph);
 		lock.unlock();
 	}
-	catch(...) {
+	catch(...)
+  {
 		lock.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);

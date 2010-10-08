@@ -26,32 +26,36 @@
  */
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Pattanaik00Thread.h"
-
-void pfstmo_pattanaik00 (pfs::Frame*,bool,float,float,float,bool, ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 Pattanaik00Thread::Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+TMOThread(frame, opts)
+{
+  out_CS = pfs::CS_SRGB;
 }
 
-void Pattanaik00Thread::run() {
+void Pattanaik00Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try {
 		pfstmo_pattanaik00(workingframe,
-		opts.operator_options.pattanaikoptions.local,
-		opts.operator_options.pattanaikoptions.multiplier,
-		opts.operator_options.pattanaikoptions.cone,
-		opts.operator_options.pattanaikoptions.rod,
-		opts.operator_options.pattanaikoptions.autolum,ph);
+                       opts.operator_options.pattanaikoptions.local,
+                       opts.operator_options.pattanaikoptions.multiplier,
+                       opts.operator_options.pattanaikoptions.cone,
+                       opts.operator_options.pattanaikoptions.rod,
+                       opts.operator_options.pattanaikoptions.autolum,
+                       ph);
 	}
-	catch(pfs::Exception e) {
+	catch(pfs::Exception e)
+  {
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
-	catch(...) {
+	catch(...)
+  {
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

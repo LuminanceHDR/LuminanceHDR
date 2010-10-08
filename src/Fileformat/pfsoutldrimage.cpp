@@ -36,7 +36,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
     return (unsigned char)v;
 }
 
-QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe )
+QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
 	assert(inpfsframe!=NULL);
   
@@ -45,7 +45,7 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe )
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 	
 	// Back to CS_RGB for the Viewer
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );	
+	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z );	
 	
 	int width   = X->getCols();
 	int height  = X->getRows();

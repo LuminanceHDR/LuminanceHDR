@@ -26,30 +26,34 @@
  */
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Reinhard05Thread.h"
-
-void pfstmo_reinhard05 (pfs::Frame *, float, float, float, ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 Reinhard05Thread::Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+TMOThread(frame, opts)
+{
 }
 
-void Reinhard05Thread::run() {
+void Reinhard05Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
-	try {
+	try
+  {
 		pfstmo_reinhard05(workingframe,
-		opts.operator_options.reinhard05options.brightness,
-		opts.operator_options.reinhard05options.chromaticAdaptation,
-		opts.operator_options.reinhard05options.lightAdaptation, ph);
+                      opts.operator_options.reinhard05options.brightness,
+                      opts.operator_options.reinhard05options.chromaticAdaptation,
+                      opts.operator_options.reinhard05options.lightAdaptation,
+                      ph);
 	}
-	catch(pfs::Exception e) {
+	catch(pfs::Exception e)
+  {
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
-	catch(...) {
+	catch(...)
+  {
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

@@ -37,8 +37,10 @@
 #include "Reinhard05Thread.h"
 
 TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator, pfs::Frame *workingPfsFrame, 
-		const TonemappingOptions &opts) {
-	switch (tmoOperator) {
+                                     const TonemappingOptions &opts)
+{
+	switch (tmoOperator)
+  {
 		case ashikhmin:
 			return new Ashikhmin02Thread(workingPfsFrame, opts); 
 		case drago:

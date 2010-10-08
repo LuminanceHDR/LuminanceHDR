@@ -28,13 +28,14 @@
  */
 
 #include <stdlib.h>
-#include <math.h>
+//#include <math.h>
+#include <cmath>
+#include <iostream>
 #include <QFile>
 
 #include "Libpfs/pfs.h"
 #include "tmo_ashikhmin02.h"
 
-#include <iostream>
 using namespace std;
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);

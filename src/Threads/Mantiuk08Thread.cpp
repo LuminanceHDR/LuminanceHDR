@@ -26,33 +26,36 @@
  */
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Mantiuk08Thread.h"
-
-void pfstmo_mantiuk08 (pfs::Frame*,float,float,float,bool,ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+TMOThread(frame, opts)
+{
 }
 
-void Mantiuk08Thread::run() {
+void Mantiuk08Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try {
 		pfstmo_mantiuk08(workingframe,
-		opts.operator_options.mantiuk08options.colorsaturation,
-		opts.operator_options.mantiuk08options.contrastenhancement,
-		opts.operator_options.mantiuk08options.luminancelevel,
-		opts.operator_options.mantiuk08options.setluminance,ph);
+                     opts.operator_options.mantiuk08options.colorsaturation,
+                     opts.operator_options.mantiuk08options.contrastenhancement,
+                     opts.operator_options.mantiuk08options.luminancelevel,
+                     opts.operator_options.mantiuk08options.setluminance,
+                     ph);
 	}
-	catch(pfs::Exception e) {
+	catch(pfs::Exception e)
+  {
 		if (strcmp("failed to analyse the image", e.getMessage())) 
-				return;
+      return;
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;
 	}
-	catch(...) {
+	catch(...)
+  {
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

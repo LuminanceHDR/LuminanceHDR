@@ -26,28 +26,31 @@
  */
 
 #include "Common/config.h"
-#include "Filter/pfscut.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Drago03Thread.h"
+#include "TonemappingOperators/tm_operators.h"
 
-void pfstmo_drago03 (pfs::Frame *, float, ProgressHelper *);
-
-Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opts): 
+TMOThread(frame, opts)
+{
+  out_CS = pfs::CS_SRGB;  
 }
 
-void Drago03Thread::run() {
+void Drago03Thread::run()
+{
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
-	try {
+	try
+  {
 		pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias, ph);
 	}
-	catch(pfs::Exception e) {
+	catch(pfs::Exception e)
+  {
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
-	catch(...) {
+	catch(...)
+  {
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

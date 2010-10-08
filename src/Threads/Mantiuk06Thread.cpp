@@ -28,22 +28,21 @@
 #include <QReadWriteLock>
 
 #include "Common/config.h"
-#include "Fileformat/pfsoutldrimage.h"
 #include "Mantiuk06Thread.h"
-
-void pfstmo_mantiuk06 (pfs::Frame*,float,float,float,bool,ProgressHelper *);
+#include "TonemappingOperators/tm_operators.h"
 
 static QReadWriteLock lock;	
 
 Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts) {
+	TMOThread(frame, opts)
+{
+  out_CS = pfs::CS_SRGB;
 }
 
 void Mantiuk06Thread::run()
 {
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	//emit setMaximumSteps(100);
-  emit setMaximumSteps(4);
+	emit setMaximumSteps(100);
 	try
   {
 		// pfstmo_mantiuk06 not reentrant
@@ -52,7 +51,8 @@ void Mantiuk06Thread::run()
                      opts.operator_options.mantiuk06options.contrastfactor,
                      opts.operator_options.mantiuk06options.saturationfactor,
                      opts.operator_options.mantiuk06options.detailfactor,
-                     opts.operator_options.mantiuk06options.contrastequalization,ph);
+                     opts.operator_options.mantiuk06options.contrastequalization,
+                     ph);
 		lock.unlock();
 	}
 	catch(...)
@@ -64,9 +64,11 @@ void Mantiuk06Thread::run()
 	}
 	
 	finalize();
-} // run()
+}
+// run()
 
-void Mantiuk06Thread::startTonemapping() {
+void Mantiuk06Thread::startTonemapping()
+{
     // Use this to circumvent a bug in GCC > 4.2 on Windows:
     // the usage of OpenMP pragmas lets the program crash with a
     // segmentation fault in libgomp.dll, since the OpenMP blocks

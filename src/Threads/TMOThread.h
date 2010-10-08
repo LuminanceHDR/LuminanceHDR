@@ -40,12 +40,13 @@ class TMOThread : public QThread {
 Q_OBJECT
 
 public:
-	TMOThread(pfs::Frame *frame, const TonemappingOptions &opts);
-	virtual ~TMOThread();
-        virtual void startTonemapping();
+  TMOThread(pfs::Frame *frame, const TonemappingOptions &opts);
+  virtual ~TMOThread();
+  virtual void startTonemapping();
 
 public slots:
 	virtual void terminateRequested();
+  
 signals:
 	void imageComputed(const QImage&);
 	void processedFrame(pfs::Frame *);
@@ -55,12 +56,18 @@ signals:
 	void finished();
 	void deleteMe(TMOThread *);
 	void tmo_error(const char *);
+  
 protected:
 	virtual void run() = 0;
 	void finalize();
 	pfs::Frame *workingframe;
 	const TonemappingOptions &opts;
 	ProgressHelper *ph;
+  
+  // Different output color spaces can be selected by a specific operator
+  // in order to make its output compliant to the one defined by qtpfsgui 1.9.3
+  // In the future, this value can change accordingly to the TM operator's changes
+  pfs::ColorSpace out_CS;  
 };
 
 #endif
