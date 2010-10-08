@@ -30,7 +30,8 @@
 #include "rgbeio.h"
 #include "Libpfs/pfs.h"
 
-pfs::Frame* readRGBEfile (const char * filename) {
+pfs::Frame* readRGBEfile (const char * filename)
+{
 	pfs::DOMIO pfsio;
 	FILE *inputRGBEfile=fopen(filename,"rb");
 	RGBEReader reader( inputRGBEfile );

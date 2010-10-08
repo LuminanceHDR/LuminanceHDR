@@ -36,4 +36,10 @@
 #include "pfstiff.h"
 #include "pfsoutldrimage.h"
 
+pfs::Frame* readEXRfile  (const char * filename);
+void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename);
+
+pfs::Frame* readRGBEfile (const char * filename);
+void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
+
 #endif

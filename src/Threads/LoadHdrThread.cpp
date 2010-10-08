@@ -27,31 +27,35 @@
 #include <QCoreApplication>
 
 #include "LoadHdrThread.h"
-#include "Fileformat/pfstiff.h"
+#include "Fileformat/pfs_file_format.h"
+//#include "Fileformat/pfstiff.h"
 
-pfs::Frame* readEXRfile  (const char * filename);
-pfs::Frame* readRGBEfile (const char * filename);
 
-LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), progress(NULL) {
+LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), progress(NULL)
+{
 	luminance_options=LuminanceOptions::getInstance();
 }
 
-LoadHdrThread::~LoadHdrThread() {
+LoadHdrThread::~LoadHdrThread()
+{
 	wait();
 }
 
-void LoadHdrThread::run() {
+void LoadHdrThread::run()
+{
 	if( fname.isEmpty() )
 		return;
 
 	QFileInfo qfi(fname);
-	if (!qfi.isReadable()) {
+	if (!qfi.isReadable())
+  {
 		qDebug("File %s is not readable.", fname.toAscii().constData());
 		emit load_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
 		return;
 	}
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirHDRSetting != qfi.path() ) {
+	if (RecentDirHDRSetting != qfi.path() )
+  {
 		emit updateRecentDirHDRSetting(qfi.path());
 	}
 	pfs::Frame* hdrpfsframe = NULL;
@@ -59,13 +63,19 @@ void LoadHdrThread::run() {
 	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "3FR";
 	QString extension = qfi.suffix().toUpper();
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
-	try {
+	try
+  {
 		char* encodedFileName=strdup(QFile::encodeName(qfi.filePath()).constData());
-		if (extension=="EXR") {
+		if (extension=="EXR")
+    {
 			hdrpfsframe = readEXRfile(encodedFileName);
-		} else if (extension=="HDR") {
+		}
+    else if (extension=="HDR")
+    {
 			hdrpfsframe = readRGBEfile(encodedFileName);
-		} else if (extension=="PFS") {
+		}
+    else if (extension=="PFS")
+    {
 			//TODO
 			const char *fname = encodedFileName;
 			FILE *fd = fopen(fname, "rb");
@@ -76,13 +86,16 @@ void LoadHdrThread::run() {
 			pfs::DOMIO pfsio;
 			hdrpfsframe=pfsio.readFrame( fd);
 			fclose(fd);
-		} else if (extension.startsWith("TIF")) {	
+		}
+    else if (extension.startsWith("TIF"))
+    {
 			TiffReader reader(encodedFileName);
 			connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
 			connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
 		}
-		else if (rawinput) {
+		else if (rawinput)
+    {
 			qDebug("TH: raw file");
 			QProcess *rawconversion = new QProcess(0);
 			rawconversion->setWorkingDirectory(luminance_options->tempfilespath);
@@ -127,7 +140,8 @@ void LoadHdrThread::run() {
 
 			QFile::remove(outfname);
 		} //raw file detected
-		else {
+		else
+    {
 			qDebug("TH: File %s has unsupported extension.", qPrintable(fname));
 			emit load_failed(tr("ERROR: File %1 has unsupported extension.").arg(fname));
 			return;
@@ -140,7 +154,9 @@ void LoadHdrThread::run() {
 		float maxRval=-1; float minRval=1e6;
 		float maxGval=-1; float minGval=1e6;
 		float maxBval=-1; float minBval=1e6;
-		for (int i=0; i<hdrpfsframe->getHeight()*hdrpfsframe->getWidth(); i++) {
+    
+		for (int i=0; i<hdrpfsframe->getHeight()*hdrpfsframe->getWidth(); i++)
+    {
 			float yval = 0.212656f*(*R)(i)+0.715158f*(*G)(i)+0.072186f*(*B)(i);
 			maxYval = (yval>maxYval) ? yval : maxYval;
 			minYval = (yval<minYval) ? yval : minYval;
@@ -159,11 +175,13 @@ void LoadHdrThread::run() {
 		if (hdrpfsframe == NULL)
 			throw "Error loading file";
 	}
-	catch(pfs::Exception e) {
+	catch(pfs::Exception e)
+  {
 		emit load_failed(tr("ERROR: %1").arg(e.getMessage()));
 		return;
 	}
-	catch (...) {
+	catch (...)
+  {
 		qDebug("TH: catched exception");
 		emit load_failed(tr("ERROR: Failed loading file: %1").arg(fname));
 		return;

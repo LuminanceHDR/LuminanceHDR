@@ -25,6 +25,7 @@
 #include <QImage>
 #include <QMessageBox>
 #include <QUrl>
+#include <iostream>
 
 #include "config.h"
 #include "options.h"
@@ -36,72 +37,87 @@ QSettings settings("Luminance", "Luminance");
 /**
  * \return "" when fail, out file name when successful
  */
-QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage &image, bool batchMode) {
+QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage &image, bool batchMode)
+{
 	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
-	if (!batchMode) {
+	if (!batchMode)
+  {
 		QString filetypes = QObject::tr("All LDR formats") + " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
 		filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
 		filetypes += "PNG (*.png *.PNG);;" ;
 		filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
 		filetypes += "BMP (*.bmp *.BMP)";
 
-		outfname = QFileDialog::getSaveFileName(
-				parent,
-				QObject::tr("Save the LDR image as..."),
-				QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
-				filetypes
-		);
-	}
+		outfname = QFileDialog::getSaveFileName(parent,
+                                            QObject::tr("Save the LDR image as..."),
+                                            QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
+                                            filetypes);
+  }
 
-	if(!outfname.isEmpty()) {
+	if( !outfname.isEmpty() )
+  {
 		QFileInfo qfi(outfname);
 		//save settings
 		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
 		QString format=qfi.suffix();
-		if (qfi.suffix().isEmpty()) {
+    
+		if ( qfi.suffix().isEmpty() )
+    {
 			// default as png
-			format="png";
-			outfname+=".png";
+			format    =   "png";
+			outfname  +=  ".png";
 		}
 		int quality = 100;
-		if ((format == "png" || format == "jpg") && !batchMode) {
+		if ((format == "png" || format == "jpg") && !batchMode)
+    {
  			ImageQualityDialog savedFileQuality(image, format, parent);
 			QString winTitle(QObject::tr("Save as..."));
 			winTitle += format.toUpper();
 			savedFileQuality.setWindowTitle( winTitle );
-			if (savedFileQuality.exec() == QDialog::Rejected)
+			if ( savedFileQuality.exec() == QDialog::Rejected )
+      {
 				return "";
+      }
 			quality = savedFileQuality.getQuality();
 		}
 		//std::cout << quality << std::endl;
-		if(!(image.save(outfname,format.toAscii().constData(),quality))) {
+		if( !(image.save(outfname,format.toAscii().constData(), quality)) )
+    {
+      //std::cout << "Failed to save" << std::endl;
 			QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 			return "";
 		}
-	} //if(!outfname.isEmpty())
+	} // if(!outfname.isEmpty())
 	return outfname;
 }
 
-bool matchesLdrFilename(QString file) {
+bool matchesLdrFilename(QString file)
+{
 	QRegExp exp(".*\\.(jpeg|jpg|tiff|tif|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesHdrFilename(QString file) {
+bool matchesHdrFilename(QString file)
+{
 	QRegExp exp(".*\\.(exr|hdr|pic|tiff|tif|pfs|crw|cr2|nef|dng|mrw|orf|kdc|dcr|arw|raf|ptx|pef|x3f|raw|sr2|rw2)$", Qt::CaseInsensitive);
 	return exp.exactMatch(file);
 }
 
-bool matchesValidHDRorLDRfilename(QString file) {
+bool matchesValidHDRorLDRfilename(QString file)
+{
 	return matchesLdrFilename(file) || matchesHdrFilename(file);
 }
 
-QStringList convertUrlListToFilenameList(QList<QUrl> urls) {
+QStringList convertUrlListToFilenameList(QList<QUrl> urls)
+{
 	QStringList files;
-	for (int i = 0; i < urls.size(); ++i) {
+	for (int i = 0; i < urls.size(); ++i)
+  {
 		QString localFile = urls.at(i).toLocalFile();
 		if (matchesValidHDRorLDRfilename(localFile))
+    {
 			files.append(localFile);
+    }
 	}
 	return files;
 }

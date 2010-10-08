@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <QCloseEvent>
 #include <QSignalMapper>
+#include <iostream>
 
 #include "ui_about.h"
 #include "Common/config.h"
@@ -118,7 +119,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	setupConnections();
 }
 
-void TonemappingWindow::setupConnections() {
+void TonemappingWindow::setupConnections()
+{
 	connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
 	connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
 	connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
@@ -145,8 +147,7 @@ void TonemappingWindow::setupConnections() {
 
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
 
-	connect(tmPanel,SIGNAL(startTonemapping(const TonemappingOptions&)), 
-			this,SLOT(tonemapImage(const TonemappingOptions&)));
+	connect(tmPanel,SIGNAL(startTonemapping(const TonemappingOptions&)), this, SLOT(tonemapImage(const TonemappingOptions&)));
 
 	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
 
@@ -176,7 +177,8 @@ bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
 	}
 }
 
-void TonemappingWindow::addMDIResult(const QImage &image) {
+void TonemappingWindow::addMDIResult(const QImage &image)
+{
 	ldrNum++;
 	LdrViewer *n = new LdrViewer( image, this, false, false, tmoOptions);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
@@ -195,7 +197,8 @@ void TonemappingWindow::addMDIResult(const QImage &image) {
 	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
-void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
+void TonemappingWindow::addProcessedFrame(pfs::Frame *frame)
+{
 	hdrNum++;
 	HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 	HDR->setFreePfsFrameOnExit(true); 
@@ -218,8 +221,10 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame) {
 	connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
-void TonemappingWindow::LevelsRequested(bool checked) {
-	if (checked) {
+void TonemappingWindow::LevelsRequested(bool checked)
+{
+	if (checked)
+  {
 		GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
 		if (current==NULL)
 			return;
@@ -228,27 +233,36 @@ void TonemappingWindow::LevelsRequested(bool checked) {
 	}
 }
 
-void TonemappingWindow::levels_closed() {
+void TonemappingWindow::levels_closed()
+{
 	actionFix_Histogram->setDisabled(false);
 	actionFix_Histogram->setChecked(false);
 }
 
-void TonemappingWindow::on_actionSave_triggered() {
+void TonemappingWindow::on_actionSave_triggered()
+{
 	GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
 	if (current==NULL)
+  {
 		return;
-	if (current->isHDR()) {
-		QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an LDR image to save."),
-			QMessageBox::Ok);
+  }
+	if (current->isHDR())
+  {
+		QMessageBox::critical(this, tr("Luminance HDR"), tr("Please select an LDR image to save."),	QMessageBox::Ok);
 		return;
 	}
 
 	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
 
-	if (outfname == "") return;
+	if (outfname == "")
+  {
+    //std::cout << "outfname == \"\"" << std::endl;
+    return;
+  }
 
 	//if save is succesful
-	if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
+	if ( outfname.endsWith("jpeg", Qt::CaseInsensitive) || outfname.endsWith("jpg", Qt::CaseInsensitive) )
+  {
 		//time to write the exif data...
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), current->getExifComment().toStdString() );
@@ -260,7 +274,8 @@ void TonemappingWindow::on_actionSave_triggered() {
 	updateWindowMenu();
 }
 
-void TonemappingWindow::updateActions(QMdiSubWindow *w) {
+void TonemappingWindow::updateActions(QMdiSubWindow *w)
+{
 	//std::cout << "UpdateActions" << std::endl;
 	GenericViewer *viewer;
 
@@ -340,31 +355,37 @@ void TonemappingWindow::on_actionClose_All_triggered() {
 		updateActions(0);
 }
 
-void TonemappingWindow::on_actionSaveAll_triggered() {
-	QString dir = QFileDialog::getExistingDirectory(
-			0,
-			tr("Save files in"),
-			settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()
-	);
-	if (!dir.isEmpty()) {
+void TonemappingWindow::on_actionSaveAll_triggered()
+{
+	QString dir = QFileDialog::getExistingDirectory(0,
+                                                  tr("Save files in"),
+                                                  settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString());
+  
+	if (!dir.isEmpty())
+  {
 		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
 		QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
-		foreach (QMdiSubWindow *p, allLDRs) {
-			if (p != originalHdrSubWin) { //skips the hdr
+    
+		foreach (QMdiSubWindow *p, allLDRs)
+    {
+			if ( p != originalHdrSubWin )
+      { //skips the hdr
 			  GenericViewer* ldr = (GenericViewer*) p->widget();
 			  QString outfname = saveLDRImage(this, prefixname + "_" + ldr->getFilenamePostFix()+ ".jpg",ldr->getQImage(), true);
 			  //if save is succesful
-			  if ( outfname.endsWith("jpeg",Qt::CaseInsensitive) || outfname.endsWith("jpg",Qt::CaseInsensitive) ) {
-				//time to write the exif data...
-				//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
-				ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), ldr->getExifComment().toStdString() );
+			  if ( outfname.endsWith("jpeg", Qt::CaseInsensitive) || outfname.endsWith("jpg", Qt::CaseInsensitive) )
+        {
+          //time to write the exif data...
+          //ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+          ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), ldr->getExifComment().toStdString() );
 			  }
 			}
 		}
 	}
 }
 
-void TonemappingWindow::enterWhatsThis() {
+void TonemappingWindow::enterWhatsThis()
+{
 	QWhatsThis::enterWhatsThisMode();
 }
 

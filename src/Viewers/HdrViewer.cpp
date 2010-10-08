@@ -274,7 +274,8 @@ pfs::Frame* HdrViewer::getHDRPfsFrame() {
 	return pfsFrame;
 }
 
-void HdrViewer::saveHdrPreview() {
+void HdrViewer::saveHdrPreview()
+{
 	qDebug("filename=%s",qPrintable(filename));
 	saveLDRImage(this, QFileInfo(filename).completeBaseName()+"_preview"+".jpg",image);
 }
