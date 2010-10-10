@@ -53,15 +53,15 @@
 
 #include "contrast_domain.h"
 
-#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
-#include <ppc_intrinsics.h>
-#elif __i386__ || __x86_64__
-//#include <pmmintrin.h>
-//#include <tmmintrin.h>
-#include <mm_malloc.h>
-#else
-#error unsupported architecture
-#endif
+//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+//#include <ppc_intrinsics.h>
+//#elif __i386__ || __x86_64__
+////#include <pmmintrin.h>
+////#include <tmmintrin.h>
+//#include <mm_malloc.h>
+//#else
+//#error unsupported architecture
+//#endif
 
 #ifdef __APPLE__
 #include <Accelerate/Accelerate.h>
@@ -371,8 +371,8 @@ inline void matrix_divide(const int n, float* a, float* b)
 // alloc memory for the float table
 inline float* matrix_alloc(int size)
 {
-  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
-  //float* m  = (float*)malloc      (sizeof(float)*size);
+  //float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
+  float* m  = (float*)malloc      (sizeof(float)*size);
   if(m == NULL)
   {
     fprintf(stderr, "ERROR: malloc in matrix_alloc() (size:%d)", size);
@@ -387,8 +387,8 @@ inline void matrix_free(float* m)
 {
   if (m != NULL)
   {
-    //free(m);
-    _mm_free(m);
+    free(m);
+    //_mm_free(m);
     m = NULL;
   }
 }
