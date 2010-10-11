@@ -53,15 +53,15 @@
 
 #include "contrast_domain.h"
 
-//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
-//#include <ppc_intrinsics.h>
-//#elif __i386__ || __x86_64__
-////#include <pmmintrin.h>
-////#include <tmmintrin.h>
-//#include <mm_malloc.h>
-//#else
-//#error unsupported architecture
-//#endif
+#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+#include <ppc_intrinsics.h>
+#elif __i386__ || __x86_64__
+//#include <pmmintrin.h>
+//#include <tmmintrin.h>
+#include <mm_malloc.h>
+#else
+#error unsupported architecture
+#endif
 
 #ifdef __APPLE__
 #include <Accelerate/Accelerate.h>
@@ -371,14 +371,13 @@ inline void matrix_divide(const int n, float* a, float* b)
 // alloc memory for the float table
 inline float* matrix_alloc(int size)
 {
-  //float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
-  float* m  = (float*)malloc      (sizeof(float)*size);
+  float* m    = (float*)_mm_malloc  (sizeof(float)*size, 16);
+  //float* m  = (float*)malloc      (sizeof(float)*size);
   if(m == NULL)
   {
     fprintf(stderr, "ERROR: malloc in matrix_alloc() (size:%d)", size);
     exit(155);
   }
-  
   return m;
 }
 
@@ -387,9 +386,13 @@ inline void matrix_free(float* m)
 {
   if (m != NULL)
   {
-    free(m);
-    //_mm_free(m);
+    //free(m);
+    _mm_free(m);
     m = NULL;
+  }
+  else
+  {
+    fprintf(stderr, "ERROR: This pointer has already been freed");
   }
 }
 
@@ -570,14 +573,14 @@ void pyramid_free(pyramid_t* pyramid)
 {
   while (pyramid)
   {
-    if(pyramid->Gx != NULL)
+    if (pyramid->Gx != NULL)
     {
-      free(pyramid->Gx);
+      matrix_free(pyramid->Gx);   //free(pyramid->Gx);
       pyramid->Gx = NULL;
     }
-    if(pyramid->Gy != NULL)
+    if (pyramid->Gy != NULL)
     {
-      free(pyramid->Gy);
+      matrix_free(pyramid->Gy);   //free(pyramid->Gy);
       pyramid->Gy = NULL;
     }
     pyramid_t* const next = pyramid->next;
@@ -613,11 +616,11 @@ pyramid_t * pyramid_allocate(int cols, int rows)
     level->Gy = matrix_alloc(size);
     
     level->prev = prev;
-    if(prev != NULL)
+    if (prev != NULL)
       prev->next = level;
     prev = level;
     
-    if(pyramid == NULL)
+    if (pyramid == NULL)
       pyramid = level;
     
     rows /= 2;
@@ -632,9 +635,10 @@ pyramid_t * pyramid_allocate(int cols, int rows)
 inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
 {
   //#pragma omp parallel for schedule(static)
-  for(int ky=0; ky<rows; ky++){
-    for(int kx=0; kx<cols; kx++){
-			
+  for(int ky=0; ky<rows; ky++)
+  {
+    for(int kx=0; kx<cols; kx++)
+    {
       const int idx = kx + ky*cols;
 			
       if(kx == (cols - 1))
@@ -1257,7 +1261,6 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
 // tone mapping
 int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, float detailfactor, const bool bcg, const int itmax, const float tol, ProgressHelper *ph)
 {
-  
   const int n = c*r;
   
   /* Normalize */
@@ -1288,7 +1291,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   pyramid_t* pp = pyramid_allocate(c,r); // create pyramid
   float* tY = matrix_alloc(n);
   matrix_copy(n, Y, tY); // copy Y to tY
-  pyramid_calculate_gradient(pp,tY); // calculate gradients for pyramid, destroys tY
+  pyramid_calculate_gradient(pp, tY); // calculate gradients for pyramid, destroys tY
   matrix_free(tY);
   pyramid_transform_to_R(pp, detailfactor); // transform gradients to R
   
