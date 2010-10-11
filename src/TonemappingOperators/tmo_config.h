@@ -4,6 +4,7 @@
  * common configuration file for tone mapping operators
  */
 
+// NOTE (2010 10 11): this file is currently Useless and will be removed in the next release
 
 #ifndef __TMO_CONFIG_H
 #define __TMO_CONFIG_H

@@ -51,21 +51,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "Common/sse.h"
 #include "contrast_domain.h"
-
-#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
-#include <ppc_intrinsics.h>
-#elif __i386__ || __x86_64__
-//#include <pmmintrin.h>
-//#include <tmmintrin.h>
-#include <mm_malloc.h>
-#else
-#error unsupported architecture
-#endif
-
-#ifdef __APPLE__
-#include <Accelerate/Accelerate.h>
-#endif
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)

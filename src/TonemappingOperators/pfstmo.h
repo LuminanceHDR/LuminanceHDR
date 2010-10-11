@@ -108,25 +108,25 @@ namespace pfstmo
 
     inline T operator () (unsigned int x, unsigned int y) const
     {
-      assert(x >= 0 && x < width && y >= 0 && y < height);
+      assert( /* x >= 0 && */ x < width /* && y >= 0 */ && y < height);
       return data[y * width + x];
     }
 
     inline T& operator () (unsigned int x, unsigned int y)
     {
-      assert(x >= 0 && x < width && y >= 0 && y < height);
+      assert( /* x >= 0 && */ x < width /* && y >= 0 */ && y < height);
       return data[y * width + x];
     }
 
     inline T operator () (unsigned int index) const
     {
-      assert(index >= 0 && index < width * height);
+      assert( /* index >= 0 && */ index < width * height);
       return data[index];
     }
 
     inline T& operator () (unsigned int index)
     {
-      assert(index >= 0 && index < width * height);
+      assert( /* index >= 0 && */ index < width * height);
       return data[index];
     }
 
