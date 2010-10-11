@@ -33,7 +33,7 @@
 
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "tmo_pattanaik00.h"
 
 /// sensitivity of human visual system

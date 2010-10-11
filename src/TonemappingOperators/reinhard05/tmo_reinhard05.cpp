@@ -33,7 +33,7 @@
 
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "tmo_reinhard05.h"
 
 #include <assert.h>

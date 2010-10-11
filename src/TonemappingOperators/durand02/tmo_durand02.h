@@ -35,7 +35,7 @@
 #ifndef _tmo_durand02_h_
 #define _tmo_durand02_h_
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
 /*

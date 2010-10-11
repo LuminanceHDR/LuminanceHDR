@@ -31,7 +31,7 @@
 
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "tmo_drago03.h"
 
 #include <assert.h>

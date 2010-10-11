@@ -36,7 +36,7 @@
 #ifndef CONTRAST_DOMAIN_H
 #define CONTRAST_DOMAIN_H
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
 /**

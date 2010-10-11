@@ -31,7 +31,7 @@
 #ifndef _fastbilateral_h_
 #define _fastbilateral_h_
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
 /**

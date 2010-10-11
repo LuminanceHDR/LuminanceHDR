@@ -32,7 +32,7 @@
 #ifndef _fmg_pde_h_
 #define _fmg_pde_h_
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 
 /// limit of iterations for successive overrelaxation
 #define SOR_MAXITS 5001

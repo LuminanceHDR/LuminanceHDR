@@ -146,7 +146,7 @@ namespace pfs
 /**
  * @brief Two dimensional array of floats
  *
- * Holds 2D data in column-major oder. Allows easy indexing
+ * Holds 2D data in column-major order. Allows easy indexing
  * and retrieving array dimensions.
  */
   class Array2DImpl: public Array2D

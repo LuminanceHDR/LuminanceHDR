@@ -54,7 +54,7 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
     float tol = 1e-3;
 
     if (!setluminance)
-	white_y = -2.f;
+      white_y = -2.f;
     
     if( contrast_enhance_factor <= 0.0f )
       throw pfs::Exception("incorrect contrast enhancement factor, accepted value is any positive number");
@@ -92,9 +92,11 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
 
     if( white_y == -2.f ) {      
       const char *white_y_str = frame->getTags()->getString( "WHITE_Y" );
-      if( white_y_str != NULL ) {
+      if( white_y_str != NULL )
+      {
         white_y = strtof( white_y_str, NULL );
-	if( white_y == 0 ) {
+        if( white_y == 0 )
+        {
           white_y = -1;
           fprintf( stderr, PROG_NAME ": warning - wrong WHITE_Y in the input image" );        
         }

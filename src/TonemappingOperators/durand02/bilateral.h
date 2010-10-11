@@ -32,7 +32,7 @@
 #ifndef _bilateral_h_
 #define _bilateral_h_
 
-#include "../../Common/progressHelper.h"
+#include "Common/progressHelper.h"
 
 /**
  * @brief Bilateral filtering

@@ -30,7 +30,7 @@
 
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)

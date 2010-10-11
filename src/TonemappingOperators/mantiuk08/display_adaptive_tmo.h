@@ -32,7 +32,7 @@
 #include "display_function.h"
 #include "display_size.h"
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Libpfs/pfs.h"
 #include "Common/ProgressHelper.h"
 

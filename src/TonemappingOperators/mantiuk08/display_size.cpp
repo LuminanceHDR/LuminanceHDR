@@ -31,7 +31,7 @@
 
 #include "display_size.h"
 
-#include "../../Libpfs/pfs.h"
+#include "Libpfs/pfs.h"
 
 #include <stdlib.h>
 #include <math.h>

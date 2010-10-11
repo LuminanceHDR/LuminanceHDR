@@ -37,7 +37,7 @@
 #include <algorithm>
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 
 //#undef HAVE_FFTW3F
 

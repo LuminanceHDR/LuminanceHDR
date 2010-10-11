@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
 
 #ifdef HAVE_ZFFT

@@ -34,7 +34,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "../../Libpfs/pfs.h"
+#include "Libpfs/pfs.h"
 
 #include "display_function.h"
 

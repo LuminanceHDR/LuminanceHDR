@@ -32,7 +32,7 @@
 #include <fftw3.h>
 #include <math.h>
 
-#include "../pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "fastbilateral.h"
 
 #ifdef BRANCH_PREDICTION
