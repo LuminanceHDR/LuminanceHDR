@@ -26,8 +26,10 @@
 
 #include <QImage>
 #include <QSysInfo>
+#include <iostream>
 
 #include "Libpfs/pfs.h"
+#include "Common/msec_timer.h"
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
 {
@@ -38,6 +40,11 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 
 QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
+#ifdef TIMER_PROFILING
+  msec_timer __timer;
+  __timer.start();
+#endif
+  
 	assert(inpfsframe!=NULL);
   
 	pfs::Channel *X, *Y, *Z;
@@ -47,23 +54,27 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
 	// Back to CS_RGB for the Viewer
 	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z );	
 	
-	int width   = X->getCols();
-	int height  = X->getRows();
+	const int width   = X->getCols();
+	const int height  = X->getRows();
+  const int elems   = width*height;
   
-	uchar *data = new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
+	unsigned char* data = new uchar[elems*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
   
   if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)
   {
-    // Intel Processors
-    for( int y = 0; y < height; y++ ) // For each row of the image
-    { 
-      for( int x = 0; x < width; x++ )
-      {
-        *(data + 0 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-        *(data + 1 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-        *(data + 2 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
-        *(data + 3 + (y*width+x)*4) = 0xff;
-      }
+    // Intel Processors    
+    float* p_Z = Z->getRawData();
+    float* p_Y = Y->getRawData();
+    float* p_X = X->getRawData();
+    
+    unsigned char* p_data = data;
+    
+    for ( int c = elems; c > 0; c-- )
+    {
+      (*p_data) = clamp((*p_Z)*255.f, 0, 255);  p_Z++;  p_data++;
+      (*p_data) = clamp((*p_Y)*255.f, 0, 255);  p_Y++;  p_data++;
+      (*p_data) = clamp((*p_X)*255.f, 0, 255);  p_X++;  p_data++;
+      (*p_data) = 0xFF;                                 p_data++;
     }
   }
   else
@@ -82,5 +93,10 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
     }
   }
   
-	return QImage (const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
+#ifdef TIMER_PROFILING
+  __timer.stop_and_update();
+  std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
+#endif
+  
+	return QImage (const_cast<unsigned char*>(data), width, height, QImage::Format_ARGB32);
 }

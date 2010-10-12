@@ -53,6 +53,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Common/ImageQualityDialog.h \
 			src/Common/SelectionTool.h \
 			src/Common/ProgressHelper.h \
+			src/Common/msec_timer.h \
 			src/MainWindow/MainWindow.h \
 			src/MainWindow/DnDOption.h \
 			src/HelpBrowser/LuminancePaths.h \
@@ -136,6 +137,7 @@ SOURCES +=  src/Libpfs/pfs.cpp \
 			src/Common/ImageQualityDialog.cpp \
 			src/Common/SelectionTool.cpp \
 			src/Common/ProgressHelper.cpp \
+			src/Common/msec_timer.cpp \
 			src/MainWindow/MainWindow.cpp \
 			src/MainWindow/DnDOption.cpp \
 			src/HelpBrowser/LuminancePaths.cpp \
