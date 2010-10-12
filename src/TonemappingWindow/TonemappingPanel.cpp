@@ -34,10 +34,12 @@
 #include <QProgressBar>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <iostream>
 
 #include "Common/config.h"
 #include "TonemappingPanel.h"
 #include "TMOProgressIndicator.h"
+#include "TonemappingWarnDialog.h"
 
 TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_custom_size(false) {
 	setupUi(this);
@@ -279,16 +281,12 @@ void TonemappingPanel::on_applyButton_clicked() {
 
 	LuminanceOptions *luminance_options=LuminanceOptions::getInstance();
 	if (luminance_options->tmowarning_fattalsmall) {
-		
 		// Warning when using size dependent TMOs with smaller sizes
-		if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 ))
-		{
-			doTonemapping = QMessageBox::Yes ==
-				QMessageBox::question(
-					this, tr("Attention"),
-					tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"),
-					QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
-					);
+		if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 )) {
+			TonemappingWarningDialog *warn = new TonemappingWarningDialog(this);
+			warn->exec();
+			doTonemapping = warn->wasAccepted();
+			delete warn;
 		}
 		if (!doTonemapping)
 			return;
