@@ -25,9 +25,9 @@
 #ifndef __LUMINANCE_SSE_H__
 #define __LUMINANCE_SSE_H__
 
-#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
-#include <ppc_intrinsics.h>
-#elif __i386__ || __x86_64__
+//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+//#include <ppc_intrinsics.h>
+#if __i386__ || __x86_64__
 //#include <pmmintrin.h>
 //#include <tmmintrin.h>
 #include <mm_malloc.h>
@@ -39,6 +39,8 @@
 #include <Accelerate/Accelerate.h>
 #endif
 
+//const __m128 ZERO = _mm_setzero_ps();
 
+//void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3]);
 
 #endif

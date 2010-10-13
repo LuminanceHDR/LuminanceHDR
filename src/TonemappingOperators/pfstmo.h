@@ -27,6 +27,7 @@
 
 #include <assert.h>
 #include <string.h>
+//#include "Libpfs/array2d.h"
 
 /* Common return codes for operators */
 #define PFSTMO_OK 1             /* Successful */
@@ -169,6 +170,8 @@ namespace pfstmo
   }
 
   typedef Array2DBase<float> Array2D;
+  //typedef pfs::Array2DImpl Array2D;
+  
 }
 
 #endif

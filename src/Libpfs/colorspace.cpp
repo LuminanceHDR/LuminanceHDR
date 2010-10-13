@@ -22,15 +22,20 @@
  * 
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
+ * @author Davide Anastasia <davide.anastasia@gmail.com> (2010 10 13)
+ *  Reimplementation of most of the functions (in particular the ones involving RGB and XYZ)
+ *
  * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $
  */
 
 #include <math.h>
-#include "pfs.h"
 #include <assert.h>
 #include <list>
-
 #include <iostream>
+
+#include "Libpfs/pfs.h"
+#include "Common/msec_timer.h"
+//#include "Common/sse.h"
 
 namespace pfs 
 {
@@ -69,18 +74,33 @@ namespace pfs
   //   { 0.0557f, -0.2040f,  1.0570f } };
   
   
-  static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                               Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
-  {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      const float x1 = (*inC1)(index), x2 = (*inC2)(index), x3 = (*inC3)(index);
-      float &y1 = (*outC1)(index), &y2 = (*outC2)(index), &y3 = (*outC3)(index);
-      y1 = mat[0][0]*x1 + mat[0][1]*x2 + mat[0][2]*x3;
-      y2 = mat[1][0]*x1 + mat[1][1]*x2 + mat[1][2]*x3;
-      y3 = mat[2][0]*x1 + mat[2][1]*x2 + mat[2][2]*x3;        
-    }    
-  }
+//  static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+//                               Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
+//  {
+//#ifdef TIMER_PROFILING
+//    msec_timer f_timer;
+//    f_timer.start();
+//#endif
+//
+//    float i1, i2, i3;
+//    const int elems = inC1->getRows()*inC1->getCols();
+//    
+//    for( int idx = 0; idx < elems; idx++ )
+//    {
+//      i1 = (*inC1)(idx);
+//      i2 = (*inC2)(idx);
+//      i3 = (*inC3)(idx);
+//      
+//      (*outC1)(idx) = mat[0][0]*i1 + mat[0][1]*i2 + mat[0][2]*i3;
+//      (*outC2)(idx) = mat[1][0]*i1 + mat[1][1]*i2 + mat[1][2]*i3;
+//      (*outC3)(idx) = mat[2][0]*i1 + mat[2][1]*i2 + mat[2][2]*i3;
+//    }
+//    
+//#ifdef TIMER_PROFILING
+//    f_timer.stop_and_update();
+//    std::cout << "multiplyByMatrix() = " << f_timer.get_time() << " msec" << std::endl;
+//#endif
+//  }
   
   //-----------------------------------------------------------
   // sRGB conversion functions
@@ -97,47 +117,81 @@ namespace pfs
   static void transformSRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                                 Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      float r = (*inC1)(index), g = (*inC2)(index), b = (*inC3)(index);
-      float &x = (*outC1)(index), &y = (*outC2)(index), &z = (*outC3)(index);
-      r = clamp( r, 0, 1 );
-      g = clamp( g, 0, 1 );
-      b = clamp( b, 0, 1 );
-      x = (r <= 0.04045 ? r / 12.92f : powf( (r + 0.055f) / 1.055f, 2.4f )  );
-      y = (g <= 0.04045 ? g / 12.92f : powf( (g + 0.055f) / 1.055f, 2.4f )  );
-      z = (b <= 0.04045 ? b / 12.92f : powf( (b + 0.055f) / 1.055f, 2.4f )  );
-    }
-    multiplyByMatrix( outC1, outC2, outC3, outC1, outC2, outC3, rgb2xyzD65Mat );
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+
+    float i1, i2, i3;
+    float t1, t2, t3;
+    
+    int elems = inC1->getRows()*inC1->getCols();
+    for( int idx = 0; idx < elems ; idx++ )
+    {
+      i1 = clamp( (*inC1)(idx), 0, 1 );
+      i2 = clamp( (*inC2)(idx), 0, 1 );
+      i3 = clamp( (*inC3)(idx), 0, 1 );
+      
+      t1 = (i1 <= 0.04045 ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
+      t2 = (i2 <= 0.04045 ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
+      t3 = (i3 <= 0.04045 ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
+      
+      (*outC1)(idx) = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
+      (*outC2)(idx) = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
+      (*outC3)(idx) = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
+    }    
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
   }
   
   static void transformXYZ2SRGB( const Array2D *inC1, const Array2D *inC2,
                                 const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    multiplyByMatrix( outC1, outC2, outC3, outC1, outC2, outC3, xyz2rgbD65Mat );
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
     
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      float r = (*inC1)(index), g = (*inC2)(index), b = (*inC3)(index);
-      float &o_r = (*outC1)(index), &o_g = (*outC2)(index), &o_b = (*outC3)(index);
+    float i1, i2, i3;
+    float t1, t2, t3;
+    
+    int elems = inC1->getRows()*inC1->getCols();
+    for( int idx = 0; idx < elems; idx++ )
+    {
+      i1 = (*inC1)(idx);
+      i2 = (*inC2)(idx);
+      i3 = (*inC3)(idx);
       
-      r = clamp( r, 0, 1 );
-      g = clamp( g, 0, 1 );
-      b = clamp( b, 0, 1 );
+      t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+      t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+      t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
       
-      o_r = (r <= 0.0031308 ? r *= 12.92f : 1.055f * powf( r, 1./2.4 ) - 0.055);
-      o_g = (g <= 0.0031308 ? g *= 12.92f : 1.055f * powf( g, 1./2.4 ) - 0.055);
-      o_b = (b <= 0.0031308 ? b *= 12.92f : 1.055f * powf( b, 1./2.4 ) - 0.055);    
+      t1 = clamp( t1, 0, 1 );
+      t2 = clamp( t2, 0, 1 );
+      t3 = clamp( t3, 0, 1 );
+      
+      (*outC1)(idx) = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
+      (*outC2)(idx) = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
+      (*outC3)(idx) = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);    
     }
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformXYZ2SRGB() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
   }
   
   static void transformXYZ2Yuv( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                                Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      const float &X = (*inC1)(index), Y = (*inC2)(index), &Z = (*inC3)(index);
-      float &outY = (*outC1)(index), &u = (*outC2)(index), &v = (*outC3)(index);
+    const int elems = inC1->getRows()*inC1->getCols();
+    for ( int idx = 0; idx < elems; idx++ )
+    {
+      const float &X = (*inC1)(idx), Y = (*inC2)(idx), &Z = (*inC3)(idx);
+      float &outY = (*outC1)(idx), &u = (*outC2)(idx), &v = (*outC3)(idx);
       
       float x = X/(X+Y+Z);
       float y = Y/(X+Y+Z);
@@ -155,10 +209,11 @@ namespace pfs
   static void transformYuv2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                                Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      const float Y = (*inC1)(index), &u = (*inC2)(index), &v = (*inC3)(index);
-      float &X = (*outC1)(index), &outY = (*outC2)(index), &Z = (*outC3)(index);
+    const int elems = inC1->getRows()*inC1->getCols();
+    for( int idx = 0; idx < elems ; idx++ )
+    {
+      const float Y = (*inC1)(idx), &u = (*inC2)(idx), &v = (*inC3)(idx);
+      float &X = (*outC1)(idx), &outY = (*outC2)(idx), &Z = (*outC3)(idx);
       
       float x = 9.f*u / (6.f*u - 16.f*v + 12.f);
       float y = 4.f*v / (6.f*u - 16.f*v + 12.f);
@@ -172,10 +227,11 @@ namespace pfs
   static void transformYxy2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                                Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      const float Y = (*inC1)(index), x = (*inC2)(index), y = (*inC3)(index);
-      float &X = (*outC1)(index), &outY = (*outC2)(index), &Z = (*outC3)(index);
+    const int elems = inC1->getRows()*inC1->getCols();
+    for( int idx = 0; idx < elems; idx++ )
+    {
+      const float Y = (*inC1)(idx), x = (*inC2)(idx), y = (*inC3)(idx);
+      float &X = (*outC1)(idx), &outY = (*outC2)(idx), &Z = (*outC3)(idx);
       
       X = x/y * Y;
       Z = (1.f-x-y)/y * Y;
@@ -186,27 +242,71 @@ namespace pfs
   static void transformXYZ2Yxy( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                                Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    int imgSize = inC1->getRows()*inC1->getCols();
-    for( int index = 0; index < imgSize ; index++ ) {
-      const float X = (*inC1)(index), Y = (*inC2)(index), Z = (*inC3)(index);
-      float &outY = (*outC1)(index), &x = (*outC2)(index), &y = (*outC3)(index);
+    const int elems = inC1->getRows()*inC1->getCols();
+    for( int idx = 0; idx < elems; idx++ )
+    {
+      const float X = (*inC1)(idx), Y = (*inC2)(idx), Z = (*inC3)(idx);
+      float &outY = (*outC1)(idx), &x = (*outC2)(idx), &y = (*outC3)(idx);
       
       x = X/(X+Y+Z);
       y = Y/(X+Y+Z);
       
       outY = Y;
     }
-    
   }
   
   static void transformRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    multiplyByMatrix( inC1, inC2, inC3, outC1, outC2, outC3, rgb2xyzD65Mat );
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+    
+    float i1, i2, i3;
+    const int elems = inC1->getRows()*inC1->getCols();
+    
+    for( int idx = 0; idx < elems; idx++ )
+    {
+      i1 = (*inC1)(idx);
+      i2 = (*inC2)(idx);
+      i3 = (*inC3)(idx);
+      
+      (*outC1)(idx) = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
+      (*outC2)(idx) = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
+      (*outC3)(idx) = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+    }
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
   }
   
   static void transformXYZ2RGB( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
-    multiplyByMatrix( inC1, inC2, inC3, outC1, outC2, outC3, xyz2rgbD65Mat );
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+    
+    float i1, i2, i3;
+    const int elems = inC1->getRows()*inC1->getCols();
+    
+    for( int idx = 0; idx < elems; idx++ )
+    {
+      i1 = (*inC1)(idx);
+      i2 = (*inC2)(idx);
+      i3 = (*inC3)(idx);
+      
+      (*outC1)(idx) = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+      (*outC2)(idx) = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+      (*outC3)(idx) = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+    }
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "transformXYZ2RGB() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
   }
   
   typedef void(*CSTransformFunc)( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 );

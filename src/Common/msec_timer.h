@@ -34,9 +34,7 @@
  * this define enables the timing profile
  * You should comment this define if you want to disable this feature
  */
-#define TIMER_PROFILING 
-
-#ifdef TIMER_PROFILING
+//#define TIMER_PROFILING 
 
 #include <stdio.h>
 
@@ -84,5 +82,4 @@ public:
 
 double convert_to_gigaflops(double, double);
 
-#endif // TIMER_PROFILING 
 #endif // __TIMING_C_H__
