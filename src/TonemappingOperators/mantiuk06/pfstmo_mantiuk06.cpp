@@ -73,13 +73,13 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   int cols = frame->getWidth();
   int rows = frame->getHeight();
   
-  pfs::Array2DImpl R( cols, rows );
+  pfs::Array2DImpl G( cols, rows );
   
-  pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &R, inZ );
+  pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &G, inZ );
   
-  tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
+  tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), G.getRawData(), inZ->getRawData(), inY->getRawData(),
                         scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
   
-  pfs::transformColorSpace( pfs::CS_RGB, inX, &R, inZ, pfs::CS_XYZ, inX, inY, inZ );
+  pfs::transformColorSpace( pfs::CS_RGB, inX, &G, inZ, pfs::CS_XYZ, inX, inY, inZ );
   frame->getTags()->setString("LUMINANCE", "RELATIVE");
 }
