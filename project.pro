@@ -1,19 +1,19 @@
 TEMPLATE = app
-CONFIG += release qt thread
+CONFIG += qt release thread
 DEFINES += QT_NO_DEBUG_OUTPUT
-QT += xml
-QT += webkit
 
+# Default compilation optimizations until Luminance HDR 2.0.1-1
+#QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2
+# Compilation optimization from Luminance 2.0.2 on
+QMAKE_CXXFLAGS += -fomit-frame-pointer -ffast-math -msse2 
+# Compilation in Debug mode
+#QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
+
+# This option is currently disabled
 # Assume openmp-capable g++ (>=4.2)
-QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2 
-# -fopenmp
-#QMAKE_CXXFLAGS += -g -O0 -fno-inline
-
 #QMAKE_LFLAGS += -fopenmp
 
 TARGET = luminance
-
-LIBS            += -lgsl -lgslcblas
 
 MOC_DIR = generated_moc
 OBJECTS_DIR = generated_obj
@@ -248,25 +248,27 @@ unix {
 message( "Detecting Qt version:" )
 checkqt4 = $$[QT_VERSION]
 isEmpty(checkqt4) {
-message( "error, Qt3 found!")
-message( "It seems like we are using Qt3, which is wrong!" )
-message( "to install qt4 in ubuntu run:" )
-message( "sudo apt-get install libqt4-dev qt4-dev-tools libqt4-core" )
-message( "to install qt4 in fedora core 6 run (as root):" )
-message( "yum install qt4-devel" )
-message( "Make sure also that you are using the Qt4 versions of the executables qmake, uic and moc." )
-message( "To do so in Ubuntu you can install galternatives to switch those executable from Qt3 to Qt4, by running:" )
-message( "sudo apt-get install galternatives" )
-message( "and then run galternatives with:" )
-message( "sudo galternatives" )
-message( "In fedora you can simply invoke qmake with its full qt4 path:" )
-message( "/usr/lib/qt4/bin/qmake" )
-message( "In Ubuntu you can invoke Qt4's qmake with:" )
-message( "qmake-qt4" )
-message( "If you, on the other had, think that this message is wrong and indeed you HAVE Qt4, send an email to grota@users.sourceforge.net saying so." )
-error( "fatal error, bailing out." )
+	message( "error, Qt3 found!")
+	message( "It seems like we are using Qt3, which is wrong!" )
+	message( "to install qt4 in ubuntu run:" )
+	message( "sudo apt-get install libqt4-dev qt4-dev-tools libqt4-core" )
+	message( "to install qt4 in fedora core 6 run (as root):" )
+	message( "yum install qt4-devel" )
+	message( "Make sure also that you are using the Qt4 versions of the executables qmake, uic and moc." )
+	message( "To do so in Ubuntu you can install galternatives to switch those executable from Qt3 to Qt4, by running:" )
+	message( "sudo apt-get install galternatives" )
+	message( "and then run galternatives with:" )
+	message( "sudo galternatives" )
+	message( "In fedora you can simply invoke qmake with its full qt4 path:" )
+	message( "/usr/lib/qt4/bin/qmake" )
+	message( "In Ubuntu you can invoke Qt4's qmake with:" )
+	message( "qmake-qt4" )
+	message( "If you, on the other had, think that this message is wrong and indeed you HAVE Qt4, send an email to grota@users.sourceforge.net saying so." )
+	error( "fatal error, bailing out." )
 } else {
-message("Qt4, OK")
+	message("Qt4, OK")
+	QT += xml
+	QT += webkit
 }
 
 ########################################### EXIV2 ###########################################
@@ -396,6 +398,7 @@ isEmpty(GSLDIR) {
 }
 INCLUDEPATH *= $$GSLDIR
 LIBS += -lgsl -lgslcblas
+#LIBS += -lgsl -lgslcblas
 
 ######################################## end of detection ########################################
 
@@ -438,10 +441,10 @@ message ( "" )
 message ("********************************************************************")
 message ("Installation PREFIX=$$PREFIX")
 isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
-message ("Debug statements DISABLED")
+	message ("Debug statements DISABLED")
 } else {
-DEFINES -= QT_NO_DEBUG_OUTPUT
-message ("Debug statements ENABLED")
+	DEFINES -= QT_NO_DEBUG_OUTPUT
+	message ("Debug statements ENABLED")
 }
 message ("Here's what will be installed:")
 message ("luminance         ==> $$target.path")
@@ -466,98 +469,101 @@ DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
 }
 
 macx {
-ICON = images/luminance.icns
+	ICON = images/luminance.icns
 
-#TODO we have to complete this.
-LIBS+=-lIlmThread
+	#TODO we have to complete this.
+	LIBS+=-lIlmThread
 
-# Enable universal (requires a universal Qt)? Default = non-universal
-# If you wish to build a Universal Binary please un-comment the following line
-#CONFIG += x86 ppc
+	# Enable universal (requires a universal Qt)? Default = non-universal
+	# If you wish to build a Universal Binary please un-comment the following line
+	#CONFIG += x86 ppc
 
-# Warn user what type of binary is being built and what the possible implications are
-contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
-	message ("Building an OS X Universal Binary:")
-	message ("Please ensure all dependencies and Qt are also Universal")
-	message ("********************************************************************")
-} else {
-	# Test what architecture we are on (Intel or PPC)
-	# 'arch' returns "i386" on Intel-Tiger is this true on Intel-Leopard?
-	# What does 'arch' return on PPC machines? Presumably "ppc"?
-	MAC_ARCH = $$system(arch)
-	contains(MAC_ARCH, i386) {
-		message ("This is an Intel Mac - Building an Intel specific OS X binary")
-		message ("Please refer to the documentation if you require a Universal Binary")
+	# Warn user what type of binary is being built and what the possible implications are
+	contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
+		message ("Building an OS X Universal Binary:")
+		message ("Please ensure all dependencies and Qt are also Universal")
 		message ("********************************************************************")
-		# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
-		CONFIG += x86
 	} else {
-		message ("This is a PPC Mac - Building a PPC specific OS X binary")
-		message ("Please refer to the documentation if you require a Universal Binary")
-		message ("********************************************************************")
-		# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
-		CONFIG += ppc
+		# Test what architecture we are on (Intel or PPC)
+		# 'arch' returns "i386" on Intel-Tiger is this true on Intel-Leopard?
+		# What does 'arch' return on PPC machines? Presumably "ppc"?
+		MAC_ARCH = $$system(arch)
+		contains(MAC_ARCH, i386) {
+			message ("This is an Intel Mac - Building an Intel specific OS X binary")
+			message ("Please refer to the documentation if you require a Universal Binary")
+			message ("********************************************************************")
+			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
+			CONFIG += x86
+		} else {
+			message ("This is a PPC Mac - Building a PPC specific OS X binary")
+			message ("Please refer to the documentation if you require a Universal Binary")
+			message ("********************************************************************")
+			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
+			CONFIG += ppc
+		}
 	}
-}
 
-# We like to search the LOCALSOFT/lib explicitly on MacOSX
-LIBS += -L/opt/local/lib
-# Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
-LIBS += -ljpeg -framework Accelerate
-# Exiv also depend on libexpat and libiconv, so same as above:
-LIBS += -lexpat 
-LIBS += -liconv
+	# We like to search the /opt/local/lib explicitly on MacOSX
+	# because this is the default MacPorts directory
+	LIBS += -L/opt/local/lib
+	
+	# Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
+	LIBS += -ljpeg
+	
+	# Exiv also depend on libexpat and libiconv, so same as above:
+	LIBS += -lexpat 
+	LIBS += -liconv
+	
+	# Apple Accelerate is enable in order to speed up vector operations
+	LIBS += -framework Accelerate
 
-# for now, we disable OpenMP on MacOSX - have to wait for support in next
-# Xcode!
-#QMAKE_CXXFLAGS -= -fopenmp
+	# for now, we disable OpenMP on MacOSX - have to wait for support in next Xcode
+	#QMAKE_CXXFLAGS -= -fopenmp
 }
 
 win32 {
+	isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
+		message ("Debug statements DISABLED")
+	} else {
+		DEFINES -= QT_NO_DEBUG_OUTPUT
+		message ("Debug statements ENABLED")
+	}
 
-isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
-message ("Debug statements DISABLED")
-} else {
-DEFINES -= QT_NO_DEBUG_OUTPUT
-message ("Debug statements ENABLED")
-}
+	# this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
+	CONFIG += windows
+	#CONFIG += debug
+	#CONFIG += console
 
-# this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
-CONFIG += windows
-#CONFIG += debug
-#CONFIG += console
+	#OpenEXR available in win32
+	LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
+	INCLUDEPATH += ../DEPs/include/OpenEXR
+	# -lImath (no need to link against this)
 
-#OpenEXR available in win32
-LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
-INCLUDEPATH += ../DEPs/include/OpenEXR
-# -lImath (no need to link against this)
+	#exiv2
+	INCLUDEPATH += ../DEPs/include/exiv2
+	LIBS        += -lexiv2 -L../DEPs/lib/exiv2
 
-#exiv2
-INCLUDEPATH += ../DEPs/include/exiv2
-LIBS        += -lexiv2 -L../DEPs/lib/exiv2
+	#gsl
+	LIBS 		+= -lgsl -lgslcblas
+	INCLUDEPATH += ../DEPs/include/gsl
+	LIBS        += -L../DEPs/lib/gsl
 
-#gsl
-LIBS 		+= -lgsl -lgslcblas
-INCLUDEPATH += ../DEPs/include/gsl
-LIBS        += -L../DEPs/lib/gsl
+	# This option is currently disabled
+	# win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
+	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
+	#LIBS        += -lpthread
 
-#win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
-#LIBS            += -L../DEPs/lib/pthread  -lpthreadGC2
+	#fftw3
+	LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm
+	DEFINES += HAVE_FFTW3F
+	INCLUDEPATH += ../DEPs/include/fftw3
 
-LIBS        += -lpthread
+	#tiff
+	INCLUDEPATH += ../DEPs/include/libtiff
+	LIBS += -L../DEPs/lib/libtiff -ltiff
 
-#fftw3
-LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm
-DEFINES += HAVE_FFTW3F
-INCLUDEPATH += ../DEPs/include/fftw3
-
-#tiff
-INCLUDEPATH += ../DEPs/include/libtiff
-LIBS += -L../DEPs/lib/libtiff -ltiff
-
-DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
-RC_FILE = images/luminance_ico.rc
-
+	DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
+	RC_FILE = images/luminance_ico.rc
 }
 
 
