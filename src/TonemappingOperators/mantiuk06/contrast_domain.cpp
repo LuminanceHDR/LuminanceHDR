@@ -197,7 +197,7 @@ void matrix_upsample(const int outCols, const int outRows, const float* const in
   const float factor = 1.0f / (dx*dy); // This gives a genuine upsampling matrix, not the transpose of the downsampling matrix
   // const float factor = 1.0f; // Theoretically, this should be the best.
   
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
     const float sy = y * dy;
@@ -245,7 +245,7 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
   // (fx2, fy2) is the fraction of the bottom right pixel showing.
   
   const float normalize = 1.0f/(dx*dy);
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
     const int iy1 = (  y   * inRows) / outRows;
@@ -295,7 +295,7 @@ inline void matrix_add(const int n, const float* const a, float* const b)
 #ifdef __APPLE__  
   vDSP_vadd(b, 1, a, 1, b, 1, n);
 #else
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
   {
     b[i] += a[i];
@@ -310,7 +310,7 @@ inline void matrix_subtract(const int n, const float* const a, float* const b)
 #ifdef __APPLE__  
   vDSP_vsub(b, 1, a, 1, b, 1, n); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
 #else
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
   {
     b[i] = a[i] - b[i];
@@ -331,7 +331,7 @@ inline void matrix_multiply_const(const int n, float* const a, const float val)
 #ifdef __APPLE__
   vDSP_vsmul (a, 1, &val, a, 1, n);
 #else
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
   {
     a[i] *= val;
@@ -346,7 +346,7 @@ inline void matrix_divide(const int n, float* a, float* b)
 #ifdef __APPLE__  
   vDSP_vdiv(b, 1, a, 1, b, 1, n);
 #else  
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
   {
     b[i] = a[i] / b[i];
@@ -391,7 +391,7 @@ float matrix_DotProduct(const int n, const float* const a, const float* const b)
 #ifdef __APPLE__
   vDSP_dotpr(a, 1, b, 1, &val, n);
 #else  
-  //#pragma omp parallel for reduction(+:val) schedule(static)
+  #pragma omp parallel for reduction(+:val) schedule(static)
   for(int j=0; j<n; j++)
   {
     val += a[j] * b[j];
@@ -504,7 +504,7 @@ inline void calculate_scale_factor(const int n, const float* const G, float* con
   const float a = 0.038737;
   const float b = 0.537756;
 	
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
   {
     //#if 1
@@ -536,7 +536,7 @@ void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 // G = G / C
 inline void scale_gradient(const int n, float* const G, const float* const C)
 {
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
     G[i] *= C[i];
 }
@@ -621,7 +621,7 @@ pyramid_t * pyramid_allocate(int cols, int rows)
 // calculate gradients
 inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
 {
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int ky=0; ky<rows; ky++)
   {
     for(int kx=0; kx<cols; kx++)
@@ -699,7 +699,7 @@ void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
 // x = -0.25 * b
 inline void solveX(const int n, const float* const b, float* const x)
 {
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for (int i=0; i<n; i++)
     x[i] = -0.25f * b[i];
 }
@@ -772,7 +772,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     else
     {
       const float bk = bknum / bkden; // beta = ...
-      //#pragma omp parallel for schedule(static)
+      #pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
 	    {
 	      p[i]  =  z[i] + bk *  p[i];
@@ -786,7 +786,8 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
     
     const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
-    //#pragma omp parallel for schedule(static)
+    
+    #pragma omp parallel for schedule(static)
     for(int i = 0 ; i < n ; i++ )
     {
       r[i]  -= ak *  z[i];	// r =  r - alfa * z
@@ -813,7 +814,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
       num_backwards = 0;
     }
     
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for(int i = 0 ; i < n ; i++ )
       x[i] += ak * p[i];	// x =  x + alfa * p
     
@@ -922,7 +923,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
     
     // r = r - alpha Ap
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
       r[i] -= alpha * Ap[i];
     
@@ -948,7 +949,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     }
     
     // x = x + alpha p
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
       x[i] += alpha * p[i];
     
@@ -981,7 +982,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     {
       // p = r + beta p
       const float beta = rdotr/old_rdotr;
-      //#pragma omp parallel for schedule(static)
+      #pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
         p[i] = r[i] + beta*p[i];
     }
@@ -1034,7 +1035,7 @@ inline float lookup_table(const int n, const float* const in_tab, const float* c
 inline void transform_to_R(const int n, float* const G, float detail_factor)
 {
   const float log10=2.3025850929940456840179914546844*detail_factor;
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
     // G to W
@@ -1073,7 +1074,7 @@ inline void pyramid_transform_to_R(pyramid_t* pyramid, float detail_factor)
 inline void transform_to_G(const int n, float* const R, float detail_factor)
 {  
   const float log10=2.3025850929940456840179914546844*detail_factor; //here we are actually changing the base of logarithm
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++){
     
     // RESP to W
@@ -1201,7 +1202,7 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   {
     const int pixels = l->rows*l->cols;
     const int offset = index;
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for(int c = 0; c < pixels; c++)
     {
       hist[c+offset].size = sqrtf( l->Gx[c]*l->Gx[c] + l->Gy[c]*l->Gy[c] );
@@ -1216,7 +1217,7 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   
   // Calculate cdf
   const float norm = 1.0f / (float) total_pixels;
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for (int i = 0; i < total_pixels; i++)
     hist[i].cdf = ((float) i) * norm;
   
@@ -1230,7 +1231,7 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
     const int pixels = l->rows*l->cols;
     const int offset = index;
     
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for( int c = 0; c < pixels; c++)
     {
       const float scale = contrastFactor * hist[c+offset].cdf/hist[c+offset].size;
@@ -1257,7 +1258,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
       Ymax = Y[j];
   
   const float clip_min = 1e-7f*Ymax;
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for (int j = 0; j < n; j++)
   {
     if( unlikely(R[j] < clip_min) ) R[j] = clip_min;
@@ -1266,7 +1267,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
     if( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
   }
 	
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
     R[j] /= Y[j];
@@ -1312,12 +1313,12 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   matrix_free(temp);
 	
   const float disp_dyn_range = 2.3f;
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
     Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
   // 
   /* Transform to linear scale RGB */
-  //#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
     Y[j] = powf(10,Y[j]);
