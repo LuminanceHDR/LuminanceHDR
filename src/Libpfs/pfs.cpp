@@ -84,7 +84,8 @@ public:
   {
     const string &tag = *(it++);
     size_t equalSign = tag.find( '=' );
-    assert( equalSign != -1 );
+    //assert( equalSign != -1 );
+    assert( equalSign != string::npos );
     tagName = string( tag, 0, equalSign );
     return tagName.c_str();
   }
@@ -517,7 +518,7 @@ static void writeTags( const TagContainerImpl *tags, FILE *out )
   TagList::const_iterator it;
   fprintf( out, "%d" PFSEOL, tags->getSize() );
   for( it = tags->tagsBegin(); it != tags->tagsEnd(); it++ ) {
-    fprintf( out, it->c_str() );
+    fprintf( out, "%s", it->c_str() );
     fprintf( out, PFSEOL );
   }
 }
@@ -585,7 +586,7 @@ public:
     list<ChannelImpl*>::iterator it;
     for( it = orderedChannel.begin(); it != orderedChannel.end(); it++ ) {
       ChannelImpl *ch = *it;
-      int size = frame->getWidth()*frame->getHeight();
+      unsigned int size = frame->getWidth()*frame->getHeight();
       read = fread( ch->getRawData(), sizeof( float ), size, inputStream );
       if( read != size )
         throw Exception( "Corrupted PFS file: missing channel data" );
@@ -625,7 +626,8 @@ delete lastFrame;*/
     fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
     
     fprintf( outputStream, "%d %d" PFSEOL, frame->getWidth(), frame->getHeight() );
-    fprintf( outputStream, "%d" PFSEOL, frameImpl->channel.size() );
+    //fprintf( outputStream, "%d" PFSEOL, frameImpl->channel.size() );
+    fprintf( outputStream, "%zd" PFSEOL, frameImpl->channel.size() );
 
     writeTags( frameImpl->tags, outputStream );
 

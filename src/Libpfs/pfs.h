@@ -67,12 +67,18 @@ namespace pfs
       T *ptr;
       mutable bool itsOwn;
     public:
-      explicit SelfDestructPtr( T *ptr = 0 ): ptr(ptr), itsOwn(ptr!=0)
+      explicit SelfDestructPtr( T *ptr = 0 ) /*: ptr(ptr) , itsOwn(ptr!=0) */
         {
+          this->ptr = ptr;
+          if (this->ptr != 0) itsOwn = true;
         }
 
       SelfDestructPtr( const SelfDestructPtr& r ) 
-        : itsOwn(r.itsOwn), ptr(r.release()) {}
+      /*  : itsOwn(r.itsOwn), ptr(r.release()) */
+      {
+        itsOwn = r.itsOwn;
+        ptr = r.release();
+      }
       
       SelfDestructPtr& operator=( const SelfDestructPtr& r ) {
         if (&r != this) {

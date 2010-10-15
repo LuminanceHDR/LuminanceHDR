@@ -176,8 +176,8 @@ public:
 
   FrameFile getNextFrameFile( )
   {
-    while( currentPattern != patternList.end() ) {
-
+    while( currentPattern != patternList.end() )
+    {
       int skippedFrames = 0;
       do {
 
