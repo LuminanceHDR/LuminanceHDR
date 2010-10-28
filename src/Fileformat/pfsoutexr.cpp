@@ -100,9 +100,10 @@ void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename)
   FrameBuffer frameBuffer;
   // Create channels in FrameBuffer
   {
-    //         pfs::ChannelIterator *it = frame->getChannels();
+    // pfs::ChannelIterator *it = frame->getChannels();
     
-    if( firstFrame ) {
+    if ( firstFrame )
+    {
       halfR = new half[frame->getWidth()*frame->getHeight()];
       halfG = new half[frame->getWidth()*frame->getHeight()];
       halfB = new half[frame->getWidth()*frame->getHeight()];
@@ -128,12 +129,19 @@ void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename)
     
     int pixelCount = frame->getHeight()*frame->getWidth();
     
-    //          Check if pixel values do not exceed maximum HALF value
+    // Get Array2D from Channel
+    pfs::Array2D* Rr = R->getChannelData();
+    pfs::Array2D* Gr = G->getChannelData();
+    pfs::Array2D* Br = B->getChannelData();
+    
+    
+    // Check if pixel values do not exceed maximum HALF value
     float maxValue = -1;
-    for( int i = 0; i < pixelCount; i++ ) {
-      if( (*R)(i) > maxValue ) maxValue = (*R)(i);
-      if( (*G)(i) > maxValue ) maxValue = (*G)(i);
-      if( (*B)(i) > maxValue ) maxValue = (*B)(i);
+    for( int i = 0; i < pixelCount; i++ )
+    {
+      if( (*Rr)(i) > maxValue ) maxValue = (*Rr)(i);
+      if( (*Gr)(i) > maxValue ) maxValue = (*Gr)(i);
+      if( (*Br)(i) > maxValue ) maxValue = (*Br)(i);
       //             if( (*X)(i) > maxValue ) maxValue = (*X)(i);
       //             if( (*Y)(i) > maxValue ) maxValue = (*Y)(i);
       //             if( (*Z)(i) > maxValue ) maxValue = (*Z)(i);
@@ -141,13 +149,15 @@ void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename)
     
     bool maxHalfExceeded = maxValue > HALF_MAX;
     
-    if( maxHalfExceeded ) {
+    if( maxHalfExceeded )
+    {
       //          Rescale and copy pixels to half-type buffers
       float scaleFactor = HALF_MAX/maxValue;
-      for( int i = 0; i < pixelCount; i++ ) {
-        halfR[i] = (half)((*R)(i)*scaleFactor);
-        halfG[i] = (half)((*G)(i)*scaleFactor);
-        halfB[i] = (half)((*B)(i)*scaleFactor);
+      for( int i = 0; i < pixelCount; i++ )
+      {
+        halfR[i] = (half)((*Rr)(i)*scaleFactor);
+        halfG[i] = (half)((*Gr)(i)*scaleFactor);
+        halfB[i] = (half)((*Br)(i)*scaleFactor);
         //               halfR[i] = (half)((*X)(i)*scaleFactor);
         //               halfG[i] = (half)((*Y)(i)*scaleFactor);
         //               halfB[i] = (half)((*Z)(i)*scaleFactor);
@@ -155,12 +165,15 @@ void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename)
       // Store scale factor as WhileLuminance standard sttribute
       // in order to restore absolute values later
       addWhiteLuminance( header, 1/scaleFactor );
-    } else {
-      //          Copy pixels to half-type buffers
-      for( int i = 0; i < pixelCount; i++ ) {
-        halfR[i] = min( (*R)(i), HALF_MAX );
-        halfG[i] = min( (*G)(i), HALF_MAX );
-        halfB[i] = min( (*B)(i), HALF_MAX );
+    }
+    else
+    {
+      // Copy pixels to half-type buffers
+      for( int i = 0; i < pixelCount; i++ )
+      {
+        halfR[i] = min( (*Rr)(i), HALF_MAX );
+        halfG[i] = min( (*Gr)(i), HALF_MAX );
+        halfB[i] = min( (*Br)(i), HALF_MAX );
         //               halfR[i] = min( (*X)(i), HALF_MAX );
         //               halfG[i] = min( (*Y)(i), HALF_MAX );
         //               halfB[i] = min( (*Z)(i), HALF_MAX );

@@ -29,12 +29,10 @@
 
 #include <iostream>
 #include <vector>
-
-#include <math.h>
+#include <cmath>
 
 #include "responses.h"
 #include "robertson02.h"
-
 #include "generic_applyResponse.h"
 
 #define PROG_NAME "robertson02"
@@ -44,6 +42,12 @@
 
 // maximum accepted error
 #define MAX_DELTA 1e-5f
+
+#ifdef __APPLE__
+inline bool isnan(double x) {
+	return __isnand(x);
+}
+#endif
 
 float normalizeI( float* I, int M );
 

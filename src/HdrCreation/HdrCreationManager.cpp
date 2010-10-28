@@ -141,9 +141,9 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 	}
 
 	// fill with image data
-	listmdrR[index]=R;
-	listmdrG[index]=G;
-	listmdrB[index]=B;
+	listmdrR[index]=R->getChannelData();
+	listmdrG[index]=G->getChannelData();
+	listmdrB[index]=B->getChannelData();
 	//perform some housekeeping
 	newResult(index,expotime,newfname);
 	//continue with the loading process
@@ -286,9 +286,9 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 				R = newFrame->getChannel("X");
 				G = newFrame->getChannel("Y");
 				B = newFrame->getChannel("Z");
-				listmdrR.push_back(R);
-				listmdrG.push_back(G);
-				listmdrB.push_back(B);
+				listmdrR.push_back(R->getChannelData());
+				listmdrG.push_back(G->getChannelData());
+				listmdrB.push_back(B->getChannelData());
 			}
 			QFile::remove(fname);
 			free(fname);

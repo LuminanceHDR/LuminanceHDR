@@ -1,5 +1,5 @@
 /**
- * @brief SSE for high performance vector operations
+ * @brief SSE for high performance vector operations (Vector EXtension - VEX)
  *
  * This file is a part of LuminanceHDR package
  * ---------------------------------------------------------------------- 
@@ -22,25 +22,50 @@
  *
  */
 
-#ifndef __LUMINANCE_SSE_H__
-#define __LUMINANCE_SSE_H__
+#ifndef __VEX_H__
+#define __VEX_H__
 
+#ifdef __SSE__
 //#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
 //#include <ppc_intrinsics.h>
 #if __i386__ || __x86_64__
+#include <mm_malloc.h>
+#include <xmmintrin.h>
 //#include <pmmintrin.h>
 //#include <tmmintrin.h>
-#include <mm_malloc.h>
 #else
 #error unsupported architecture
 #endif
-
-#ifdef __APPLE__
-#include <Accelerate/Accelerate.h>
 #endif
 
-//const __m128 ZERO = _mm_setzero_ps();
+// C[i] = A[i] - B[i]
+void VEX_vsub(const float* A, const float* B, float* C, const int N);
+// C[i] = A[i] - val * B[i]
+void VEX_vsubs(const float* A, const float val, const float* B, float* C, const int N);
+
+// C[i] = A[i] + B[i]
+void VEX_vadd(const float* A, const float* B, float* C, const int N);
+// C[i] = A[i] + val * B[i]
+void VEX_vadds(const float* A, const float val, const float* B, float* C, const int N);
+
+// C[i] = A[i] * B[i]
+void VEX_vmul(float* A, float* B, float* C, const int N);
+// O[i] = c * I[i]
+void VEX_vsmul(const float* I, const float c, float* O, const int N);
+
+// C[i] = A[i] / B[i]
+void VEX_vdiv(float* A, float* B, float* C, const int N);
+
+// O[i] = i[i]
+void VEX_vcopy(const float* I, float* O, const int N);
+
+// IO[i] = val
+void VEX_vset(float* IO, const float val, const int N);
+
+// IO[i] = 0.0f
+void VEX_vreset(float* IO, const int N);
+
+void VEX_dotpr(const float* I1, const float* I2, float& val, const int N);
 
 //void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3]);
-
 #endif

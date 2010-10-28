@@ -446,8 +446,8 @@ void GrayBar::changeBlack(int v) {
 	emit black_changed(v);
 }
 
-void GrayBar::changeGamma(double v) {
-
+void GrayBar::changeGamma(double v)
+{
 	float mediumpos = (float)blackpos+ ((float)whitepos-(float)blackpos)/2.0f;
 	if (v<1.0f) {
 		gammapos=(int)( mediumpos-((float)(whitepos)-mediumpos)*log10f(v) );
@@ -464,7 +464,8 @@ void GrayBar::changeGamma(double v) {
 	emit gamma_changed (v);
 }
 
-void GrayBar::changeWhite(int v) {
+void GrayBar::changeWhite(int v)
+{
 	if ((int)(255*((float)(whitepos)/(float)(width()))) == v)
 		return;
 	qDebug("GrayBar::changeWhite, %d", v);

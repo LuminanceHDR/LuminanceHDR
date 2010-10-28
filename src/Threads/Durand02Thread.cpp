@@ -29,7 +29,7 @@
 
 #include "Common/config.h"
 #include "Durand02Thread.h"
-#include "TonemappingOperators/tm_operators.h"
+#include "TonemappingOperators/pfstmo.h"
 
 static QReadWriteLock lock;	
 

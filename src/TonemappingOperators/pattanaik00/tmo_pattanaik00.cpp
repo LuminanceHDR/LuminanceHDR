@@ -39,7 +39,8 @@
 /// sensitivity of human visual system
 float n = 0.73f;
 
-void calculateLocalAdaptation(const pfstmo::Array2D* Y, int x, int y, float& Acone, float& Arod);
+//void calculateLocalAdaptation(const pfs::Array2DImpl* Y, int x, int y, float& Acone, float& Arod);
+void calculateLocalAdaptation(const pfs::Array2DImpl* Y, int x, int y, float& Acone, float& Arod);
 float sigma_response_rod(float I);
 float sigma_response_cone(float I);
 float model_response(float I, float sigma);
@@ -53,10 +54,10 @@ void tmo_pattanaik00( unsigned int width, unsigned int height,
 {  
   ///--- initialization of parameters
 
-  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
-  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
-  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
-  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, nB);
+  const pfs::Array2DImpl* Y = new pfs::Array2DImpl(width, height, const_cast<float*>(nY));
+  pfs::Array2DImpl* R = new pfs::Array2DImpl(width, height, nR);
+  pfs::Array2DImpl* G = new pfs::Array2DImpl(width, height, nG);
+  pfs::Array2DImpl* B = new pfs::Array2DImpl(width, height, nB);
 
   /// cones level of adaptation
   float Acone = am->getAcone();
@@ -264,7 +265,7 @@ float model_response(float I, float sigma)
  * @param Acone [out] calculated adaptation for cones
  * @param Arod [out] calculated adaptation for rods
  */
-void calculateLocalAdaptation(const pfstmo::Array2D* Y, int x, int y, float& Acone, float& Arod)
+void calculateLocalAdaptation(const pfs::Array2DImpl* Y, int x, int y, float& Acone, float& Arod)
 {
   int width = Y->getCols();
   int height = Y->getRows();

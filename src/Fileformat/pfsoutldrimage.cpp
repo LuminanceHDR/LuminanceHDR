@@ -29,6 +29,7 @@
 #include <iostream>
 
 #include "Libpfs/pfs.h"
+#include "Libpfs/colorspace.h"
 #include "Common/msec_timer.h"
 
 static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
@@ -47,15 +48,19 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
   
 	assert(inpfsframe!=NULL);
   
-	pfs::Channel *X, *Y, *Z;
-	inpfsframe->getXYZChannels( X, Y, Z );
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
-	
+	pfs::Channel *Xc, *Yc, *Zc;
+	inpfsframe->getXYZChannels( Xc, Yc, Zc );
+	assert( Xc != NULL && Yc != NULL && Zc != NULL );
+  
+  pfs::Array2DImpl  *X = Xc->getChannelData();
+	pfs::Array2DImpl  *Y = Yc->getChannelData();
+  pfs::Array2DImpl  *Z = Zc->getChannelData();
+  
 	// Back to CS_RGB for the Viewer
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z );	
+	pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z);	
 	
-	const int width   = X->getCols();
-	const int height  = X->getRows();
+	const int width   = Xc->getWidth();
+	const int height  = Xc->getHeight();
   const int elems   = width*height;
   
 	unsigned char* data = new uchar[elems*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB

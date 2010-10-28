@@ -40,17 +40,17 @@
 
 void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
-    pfs::DOMIO pfsio;
-
-    //--- default tone mapping parameters;
-    //float key = 0.18;
-    //float phi = 1.0;
-    //int num = 8;
-    //int low = 1;
-    //int high = 43;
-    //bool use_scales = false;
-    bool temporal_coherent = false;  
-
+  pfs::DOMIO pfsio;
+  
+  //--- default tone mapping parameters;
+  //float key = 0.18;
+  //float phi = 1.0;
+  //int num = 8;
+  //int low = 1;
+  //int high = 43;
+  //bool use_scales = false;
+  bool temporal_coherent = false;  
+  
 	std::cout << "pfstmo_reinhard02" << std::endl;
 	std::cout << "key: " << key << std::endl;
 	std::cout << "phi: " << phi << std::endl;
@@ -58,31 +58,38 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
 	std::cout << "lower scale: " << low << std::endl;
 	std::cout << "upper scale: " << high << std::endl;
 	std::cout << "use scales: " << use_scales << std::endl;
-
-
-    pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
-    //---
-
-    if( Y==NULL || X==NULL || Z==NULL)
-      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-        
-    // tone mapping
-    int w = Y->getCols();
-    int h = Y->getRows();
-    pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
-
-    tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
-
-    for( int x=0 ; x<w ; x++ )
-      for( int y=0 ; y<h ; y++ )
-      {
-        float scale = (*L)(x,y) / (*Y)(x,y);
-        (*Y)(x,y) *= scale;
-        (*X)(x,y) *= scale;
-        (*Z)(x,y) *= scale;
-      }
-
-    delete L;
+  
+  
+  pfs::Channel *X, *Y, *Z;
+  frame->getXYZChannels( X, Y, Z );
+  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  //---
+  
+  if( Y==NULL || X==NULL || Z==NULL)
+    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  
+  pfs::Array2DImpl* Xr = X->getChannelData();
+  pfs::Array2DImpl* Yr = Y->getChannelData();
+  pfs::Array2DImpl* Zr = Z->getChannelData();
+  
+  // tone mapping
+  int w = Y->getWidth();
+  int h = Y->getHeight();
+  pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
+  
+  tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
+  
+  // TODO: this section can be rewritten using SSE Function
+  for( int x=0 ; x<w ; x++ )
+  {
+    for( int y=0 ; y<h ; y++ )
+    {
+      float scale = (*L)(x,y) / (*Yr)(x,y);
+      (*Yr)(x,y) *= scale;
+      (*Xr)(x,y) *= scale;
+      (*Zr)(x,y) *= scale;
+    }
+  }
+  
+  delete L;
 }

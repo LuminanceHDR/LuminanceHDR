@@ -46,13 +46,14 @@ using std::string;
 
 static string escapeString( const string &src )
 {
-  int pos = 0;
+  size_t pos = 0;
   string ret = src;
-  while( pos < ret.size() ) {
+  while( pos < ret.size() )
+  {
     pos = ret.find( "\n", pos );
-    if( pos == -1 ) break;
-    ret.replace( pos, 1, "\\n" );
-    pos+=2;
+    if( pos == string::npos ) break;
+    ret.replace(pos, 1, "\\n");
+    pos += 2;
   }
   return ret;
 }
@@ -78,7 +79,6 @@ pfs::Frame * readEXRfile( const char *filename )
       dtw.min.y < dw.min.y && dtw.max.y > dw.max.y )
       throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
     
-
     pfs::Frame *frame = pfsio.createFrame( width, height );
 
     const ChannelList &channels = file.header().channels();
@@ -124,7 +124,7 @@ pfs::Frame * readEXRfile( const char *filename )
     for( ChannelList::ConstIterator i = channels.begin();
          i != channels.end(); ++i )
     {
-      const Channel &channel = i.channel();
+      //const Channel &channel = i.channel();
         
       if( processColorChannels ) { // Skip color channels
         if( !strcmp( i.name(), "R" ) || !strcmp( i.name(), "G" ) ||
@@ -177,22 +177,32 @@ pfs::Frame * readEXRfile( const char *filename )
     file.setFrameBuffer( frameBuffer );
     file.readPixels( dw.min.y, dw.max.y );
 
-    if( processColorChannels ) {      
+    if( processColorChannels )
+    {      
       // Rescale values if WhiteLuminance is present
-      if( hasWhiteLuminance( file.header() ) ) {
+      if( hasWhiteLuminance( file.header() ) )
+      {
         float scaleFactor = whiteLuminance( file.header() );
         int pixelCount = frame->getHeight()*frame->getWidth();
-        for( int i = 0; i < pixelCount; i++ ) {
-          (*X)(i) *= scaleFactor;
-          (*Y)(i) *= scaleFactor;
-          (*Z)(i) *= scaleFactor;
+        
+        pfs::Array2D* Xr = X->getChannelData();
+        pfs::Array2D* Yr = Y->getChannelData();
+        pfs::Array2D* Zr = Z->getChannelData();
+        
+        // TODO: convert in SSE
+        for( int i = 0; i < pixelCount; i++ )
+        {
+          (*Xr)(i) *= scaleFactor;
+          (*Yr)(i) *= scaleFactor;
+          (*Zr)(i) *= scaleFactor;
         }
-        const StringAttribute *relativeLum =
-          file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
+        const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
 
-        const char *luminanceTag = frame->getTags()->getString( "LUMINANCE" );
+        const char *luminanceTag = frame->getTags()->getString("LUMINANCE");
         if( luminanceTag == NULL )
-          frame->getTags()->setString( "LUMINANCE", "ABSOLUTE" );
+        {
+          frame->getTags()->setString("LUMINANCE", "ABSOLUTE");
+        }
       }  
     }    
     frame->getTags()->setString( "FILE_NAME", filename );

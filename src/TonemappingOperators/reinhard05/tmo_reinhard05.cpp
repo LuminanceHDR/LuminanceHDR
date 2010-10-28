@@ -43,10 +43,10 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
   float* nR, float* nG, float* nB, 
   const float* nY, float br, float ca, float la, ProgressHelper *ph )
 {
-  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
-  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
-  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
-  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, nB);
+  const pfs::Array2DImpl* Y = new pfs::Array2DImpl(width, height, const_cast<float*>(nY));
+  pfs::Array2DImpl* R = new pfs::Array2DImpl(width, height, nR);
+  pfs::Array2DImpl* G = new pfs::Array2DImpl(width, height, nG);
+  pfs::Array2DImpl* B = new pfs::Array2DImpl(width, height, nB);
 
   float max_lum = (*Y)(0);
   float min_lum = (*Y)(0);

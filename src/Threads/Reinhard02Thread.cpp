@@ -27,7 +27,7 @@
 
 #include "Common/config.h"
 #include "Reinhard02Thread.h"
-#include "TonemappingOperators/tm_operators.h"
+#include "TonemappingOperators/pfstmo.h"
 
 Reinhard02Thread::Reinhard02Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
 TMOThread(frame, opts)

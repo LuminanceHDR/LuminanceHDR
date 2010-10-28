@@ -35,15 +35,21 @@
  */
 
 #include <stdlib.h>
-#include <math.h>
 #include <fcntl.h>
+#include <cmath>
 #include <iostream>
 
-#include "Libpfs/pfs.h"
 #include "contrast_domain.h"
+#include "Libpfs/pfs.h"
+#include "Libpfs/colorspace.h"
+#include "Common/msec_timer.h"
 
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
+#ifdef TIMER_PROFILING
+  msec_timer f_timer;
+#endif
+  
   //--- default tone mapping parameters;
   //float scaleFactor = 0.1f;
   //float saturationFactor = 0.8f;
@@ -68,18 +74,36 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   pfs::DOMIO pfsio;
   
   pfs::Channel *inX, *inY, *inZ;
-	
   frame->getXYZChannels(inX, inY, inZ);
+  
   int cols = frame->getWidth();
   int rows = frame->getHeight();
   
+  pfs::Array2DImpl* Xr = inX->getChannelData();
+  pfs::Array2DImpl* Yr = inY->getChannelData();
+  pfs::Array2DImpl* Zr = inZ->getChannelData();
+  
   pfs::Array2DImpl G( cols, rows );
+   
+  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, &G, Zr );
   
-  pfs::transformColorSpace( pfs::CS_XYZ, inX, inY, inZ, pfs::CS_RGB, inX, &G, inZ );
+#ifdef TIMER_PROFILING
+  f_timer.start();
+#endif
   
-  tmo_mantiuk06_contmap( cols, rows, inX->getRawData(), G.getRawData(), inZ->getRawData(), inY->getRawData(),
+  tmo_mantiuk06_contmap(cols, rows, inX->getRawData(), G.getRawData(), inZ->getRawData(), inY->getRawData(),
                         scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
   
-  pfs::transformColorSpace( pfs::CS_RGB, inX, &G, inZ, pfs::CS_XYZ, inX, inY, inZ );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+#ifdef TIMER_PROFILING
+  f_timer.stop_and_update();
+#endif
+  if (!ph->isTerminationRequested())
+  {
+    pfs::transformColorSpace( pfs::CS_RGB, Xr, &G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  }
+  
+#ifdef TIMER_PROFILING
+  std::cout << "pfstmo_mantiuk06() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
 }

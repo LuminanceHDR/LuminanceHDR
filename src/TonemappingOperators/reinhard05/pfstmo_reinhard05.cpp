@@ -31,13 +31,12 @@
  * $Id: pfstmo_reinhard05.cpp,v 1.2 2008/09/04 12:46:49 julians37 Exp $
  */
 
-
-#include <math.h>
-
-#include "Libpfs/pfs.h"
-#include "tmo_reinhard05.h"
-
 #include <iostream>
+#include <cmath>
+
+#include "tmo_reinhard05.h"
+#include "Libpfs/pfs.h"
+#include "Libpfs/colorspace.h"
 
 void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation, ProgressHelper *ph)
 {
@@ -61,17 +60,23 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
   if( Y==NULL || X==NULL || Z==NULL)
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
+  pfs::Array2DImpl* Xr = X->getChannelData();
+  pfs::Array2DImpl* Yr = Y->getChannelData();
+  pfs::Array2DImpl* Zr = Z->getChannelData();
+  
   // tone mapping
-  int w = Y->getCols();
-  int h = Y->getRows();
+  int w = Y->getWidth();
+  int h = Y->getHeight();
+  
   pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
   pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
   pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
   
-  pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, R, G, B );
+  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
   
   tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
-  pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, X, Y, Z );
+  
+  pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
   
   if (!ph->isTerminationRequested())
 		ph->newValue( 100 );

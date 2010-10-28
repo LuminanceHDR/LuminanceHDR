@@ -25,15 +25,17 @@
  *
  */
 
-#include "Common/config.h"
-#include "Filter/pfscut.h"
-#include "Fileformat/pfsoutldrimage.h"
-#include "TMOThread.h"
-
 #include <iostream>
 
+#include "TMOThread.h"
+#include "Libpfs/colorspace.h"
+#include "Common/config.h"
+#include "Filter/pfscut.h"
+#include "Filter/pfsgamma.h"
+#include "Fileformat/pfsoutldrimage.h"
+
 pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
-void applyGammaOnFrame( pfs::Frame*, const float);
+
 
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 QThread(0), opts(opts), out_CS(pfs::CS_RGB)
@@ -59,7 +61,8 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 	// Convert to CS_XYZ: tm operator now use this colorspace
 	pfs::Channel *X, *Y, *Z;
 	workingframe->getXYZChannels( X, Y, Z );
-	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
+	pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                           pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());	
 }
 
 TMOThread::~TMOThread()

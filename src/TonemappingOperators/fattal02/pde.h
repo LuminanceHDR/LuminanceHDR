@@ -43,7 +43,7 @@
  * @param F array with divergence
  * @param U [out] sollution
  */
-void solve_pde_multigrid(pfstmo::Array2D *F, pfstmo::Array2D *U);
+void solve_pde_multigrid(pfs::Array2DImpl *F, pfs::Array2DImpl *U);
 
 /**
  * @brief solve pde using successive overrelaxation
@@ -52,7 +52,7 @@ void solve_pde_multigrid(pfstmo::Array2D *F, pfstmo::Array2D *U);
  * @param U [out] sollution
  * @param maxits limit of iterations
  */
-void solve_pde_sor(pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits=SOR_MAXITS);
+void solve_pde_sor(pfs::Array2DImpl *F, pfs::Array2DImpl *U, int maxits=SOR_MAXITS);
 
 #endif
 

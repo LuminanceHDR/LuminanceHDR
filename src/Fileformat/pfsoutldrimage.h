@@ -32,7 +32,7 @@
 
 #include <QImage>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/colorspace.h"
 
 QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace display_colorspace = pfs::CS_RGB );
 

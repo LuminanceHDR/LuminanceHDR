@@ -26,44 +26,36 @@
  * $Id: pfsrotate.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
-#include <math.h>
-
-#include "Libpfs/pfs.h"
-
-void rotateArray( const pfs::Array2D *in, pfs::Array2D *out, bool clockwise );
-
+#include "pfsrotate.h"
 
 pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise)
 {
   pfs::DOMIO pfsio;
-
-  int xSize = -1;
-  int ySize = -1;
   
-  bool firstFrame = true;
-  pfs::Frame *resizedFrame = NULL;
+  // bool firstFrame = true;
+  // pfs::Channel *X, *Y, *Z;
+  // frame->getXYZChannels( X, Y, Z );
   
-    pfs::Channel *X, *Y, *Z;
-    frame->getXYZChannels( X, Y, Z );
-
-    pfs::Channel *dX, *dY, *dZ;
+  // pfs::Channel *dX, *dY, *dZ;
+  
+  int xSize = frame->getHeight();
+  int ySize = frame->getWidth();
+  pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
+  
+  pfs::ChannelIterator *it = frame->getChannels();
+  while( it->hasNext() )
+  {
+    pfs::Channel *originalCh = it->getNext();
+    pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
     
-    xSize = frame->getHeight();
-    ySize = frame->getWidth();
-    resizedFrame = pfsio.createFrame( xSize, ySize );
-
-    pfs::ChannelIterator *it = frame->getChannels();
-    while( it->hasNext() ) {
-      pfs::Channel *originalCh = it->getNext();
-      pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-
-      rotateArray( originalCh, newCh, clock_wise );
-    }
-
-    pfs::copyTags( frame, resizedFrame );
-    return resizedFrame;
+    rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+  }
+  
+  pfs::copyTags( frame, resizedFrame );
+  return resizedFrame;
 }
 
+// TODO: define this function as friend in order to decrease the execution
 void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
 {
   int outRows = out->getRows();

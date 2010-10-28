@@ -99,50 +99,50 @@ public:
   }
 };
 
+// to be double checked! 
+// Davide Anastasia <davide.anastasia@gmail.com>
 
-class BoxFilter : public ResampleFilter
-{
-public:
-  float getSize() { return 0.5; }
-  float getValue( const float x ) 
-  {
-    return 1;
-  }
-};
-
+//class BoxFilter : public ResampleFilter
+//{
+//public:
+//  float getSize() { return 0.5; }
+//  float getValue( const float x ) 
+//  {
+//    return 1;
+//  }
+//};
 
 pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
 {
-    pfs::DOMIO pfsio;
-
-    ResampleFilter *filter = NULL;
-
-    if( filter == NULL ) filter = new LinearFilter();
-
-    pfs::Frame *resizedFrame = NULL;
+  pfs::DOMIO pfsio;
   
-    pfs::Channel *X, *Y, *Z;
+  // ResampleFilter *filter = NULL;
+  //
+  // if ( filter == NULL ) filter = new LinearFilter();
+  
+  ResampleFilter *filter = new LinearFilter();
+  
+  // pfs::Channel *X, *Y, *Z; 
+  // frame->getXYZChannels( X, Y, Z );
+  // int new_x, new_y;
+  
+  int new_x = xSize;
+  int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
+  
+  pfs::Frame *resizedFrame = pfsio.createFrame( new_x, new_y );
+  
+  pfs::ChannelIterator *it = frame->getChannels();
+  while( it->hasNext() )
+  {
+    pfs::Channel *originalCh = it->getNext();
+    pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
     
-    frame->getXYZChannels( X, Y, Z );
-
-    int new_x, new_y;
-    
-    new_x = xSize;
-    new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
-      
-    resizedFrame = pfsio.createFrame( new_x, new_y );
-      
-    pfs::ChannelIterator *it = frame->getChannels();
-    while( it->hasNext() ) {
-      pfs::Channel *originalCh = it->getNext();
-      pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
-
-      resampleArray( originalCh, newCh, filter );
-    }
-
-    pfs::copyTags( frame, resizedFrame );
-    delete filter;
-    return resizedFrame;
+    resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter );
+  }
+  
+  pfs::copyTags( frame, resizedFrame );
+  delete filter;
+  return resizedFrame;
 }
 
 
@@ -153,8 +153,8 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *f
 
   float pad;
   
-  float filterSamplingX = max( modff( dx, &pad ), 0.01f );
-  float filterSamplingY = max( modff( dy, &pad ), 0.01f );
+  //float filterSamplingX = max( modff( dx, &pad ), 0.01f );
+  //float filterSamplingY = max( modff( dy, &pad ), 0.01f );
 
   const int outRows = out->getRows();
   const int outCols = out->getCols();

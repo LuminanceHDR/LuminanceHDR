@@ -26,7 +26,7 @@
  */
 
 #include "Common/config.h"
-#include "TonemappingOperators/tm_operators.h"
+#include "TonemappingOperators/pfstmo.h"
 #include "Ashikhmin02Thread.h"
 
 Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions &opts): 

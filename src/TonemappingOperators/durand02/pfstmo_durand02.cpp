@@ -31,50 +31,59 @@
  * $Id: pfstmo_durand02.cpp,v 1.5 2009/02/23 19:09:41 rafm Exp $
  */
 
-#include <math.h>
-#include "Libpfs/pfs.h"
-#include "tmo_durand02.h"
 
 #include <iostream>
+#include <cmath>
+
+#include "Libpfs/colorspace.h"
+#include "tmo_durand02.h"
 
 void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, ProgressHelper *ph)
 {
-    pfs::DOMIO pfsio;
-
-    //--- default tone mapping parameters;
-    //#ifdef HAVE_FFTW3F
-    //  float sigma_s = 40.0f;
-    //#else
-    //float sigma_s = 8.0f;
-    //#endif
-    //float sigma_r = 0.4f;
-    //float baseContrast = 5.0f;
-    int downsample=1;
-    bool original_algorithm = false;
-
-    std::cout << "pfstmo_durand02" << std::endl;
-    #ifdef HAVE_FFTW3F
-      std::cout << "using fftw3f" << std::endl;
-    #endif
-    std::cout << "sigma_s: " << sigma_s << std::endl;
-    std::cout << "sigma_r: " << sigma_r << std::endl;
-    std::cout << "base contrast: " << baseContrast << std::endl;
-
-    pfs::Channel *X, *Y, *Z;
-
-    frame->getXYZChannels( X, Y, Z );
-    frame->getTags()->setString("LUMINANCE", "RELATIVE");
-    //---
-
-    if( Y==NULL || X==NULL || Z==NULL)
-      throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-        
-    // tone mapping
-    int w = Y->getCols();
-    int h = Y->getRows();
-
-    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
-    tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample, !original_algorithm, ph );
-    pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+  pfs::DOMIO pfsio;
+  
+  //--- default tone mapping parameters;
+  //#ifdef HAVE_FFTW3F
+  //  float sigma_s = 40.0f;
+  //#else
+  //float sigma_s = 8.0f;
+  //#endif
+  //float sigma_r = 0.4f;
+  //float baseContrast = 5.0f;
+  int downsample=1;
+  bool original_algorithm = false;
+  
+  std::cout << "pfstmo_durand02" << std::endl;
+#ifdef HAVE_FFTW3F
+  std::cout << "using fftw3f" << std::endl;
+#endif
+  std::cout << "sigma_s: " << sigma_s << std::endl;
+  std::cout << "sigma_r: " << sigma_r << std::endl;
+  std::cout << "base contrast: " << baseContrast << std::endl;
+  
+  pfs::Channel *X, *Y, *Z;
+  
+  frame->getXYZChannels( X, Y, Z );
+  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+  //---
+  
+  if( Y==NULL || X==NULL || Z==NULL)
+    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  
+  pfs::Array2DImpl* Xr = X->getChannelData();
+  pfs::Array2DImpl* Yr = Y->getChannelData();
+  pfs::Array2DImpl* Zr = Z->getChannelData();
+  
+  // tone mapping
+  int w = Y->getWidth();
+  int h = Y->getHeight();
+  
+  pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
+                           pfs::CS_RGB, Xr, Yr, Zr);
+  
+  tmo_durand02( w, h, X->getRawData(), Y->getRawData(), Z->getRawData(), sigma_s, sigma_r, baseContrast, downsample, !original_algorithm, ph );
+  
+  pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
+                           pfs::CS_XYZ, Xr, Yr, Zr);
 }
 

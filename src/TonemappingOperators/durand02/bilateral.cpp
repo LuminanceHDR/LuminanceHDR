@@ -49,7 +49,7 @@ inline int min( int a, int b )
 
 // support functions
 
-void gaussianKernel( pfstmo::Array2D *kern, float sigma )
+void gaussianKernel( pfs::Array2DImpl *kern, float sigma )
 {
   for( int y = 0; y < kern->getRows(); y++ ) {
     for( int x = 0; x < kern->getCols(); x++ ) {
@@ -90,16 +90,16 @@ public:
 
 
 
-void bilateralFilter( const pfstmo::Array2D *I,
-  pfstmo::Array2D *J, float sigma_s, float sigma_r,
+void bilateralFilter( const pfs::Array2DImpl *I,
+  pfs::Array2DImpl *J, float sigma_s, float sigma_r,
   pfstmo_progress_callback progress_cb )
 {
-  const pfstmo::Array2D *X1 = I;     // intenisity data
+  const pfs::Array2DImpl *X1 = I;     // intenisity data
 
   // x +- sigma_s*2 should contain 95% of the Gaussian distrib
   int sKernelSize = (int)( sigma_s*4 + 0.5 ) + 1;
 
-  pfstmo::Array2D sKernel(sKernelSize, sKernelSize);
+  pfs::Array2DImpl sKernel(sKernelSize, sKernelSize);
   gaussianKernel( &sKernel, sigma_s );
   GaussLookup gauss( sigma_r, 256 );
 

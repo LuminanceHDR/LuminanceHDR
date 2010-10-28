@@ -42,6 +42,7 @@
 
 #include <stdio.h>
 #include <string.h>
+
 #include "array2d.h"
 
 struct option;
@@ -185,24 +186,25 @@ namespace pfs
  * Channel interface represents a 2D rectangular array with
  * associated tags.
  */
-  class Channel : public Array2D {
+  class Channel /*: public Array2D */{
   public:
     /**
      * Gets width of the channel (in pixels).
      * This is a synonym for Array2D::getCols().
      */
-    int getWidth() const {
-      return getCols();
-    }
+    virtual int getWidth() const = 0;
+//    {
+//      return getCols();
+//    }
 
     /**
      * Gets height of the channel (in pixels).
      * This is a synonym for Array2D::getRows().
      */
-    virtual int getHeight() const
-      {
-        return getRows();
-      }
+    virtual int getHeight() const = 0;
+//      {
+//        return getRows();
+//      }
 
     /**
      * Gets name of the channel. 
@@ -224,6 +226,8 @@ namespace pfs
      * @return a table of floats of the size width*height
      */
     virtual float *getRawData() = 0;
+    
+    virtual Array2DImpl* getChannelData() = 0;
   };
 
   /**
@@ -532,43 +536,6 @@ namespace pfs
       static void printUsage( FILE *out, const char *progName );
 
     };
-
-
-/// This enum is used to specify color spaces for transformColorSpace function
-  enum ColorSpace
-    {
-      CS_XYZ = 0,         ///< Absolute XYZ space, reference white - D65, Y is calibrated luminance in cd/m^2
-      CS_RGB,             ///< Absolute XYZ space, reference white - D65
-      CS_SRGB,            ///< sRGB color space for LDR images (see
-                          ///www.srgb.com). The possible pixel values
-                          ///for R, G and B channel should be within
-                          ///range 0-1 (the values above or below this
-                          ///range will be clamped). Peak luminance
-                          ///level of the display is 80cd/m^2.
-      CS_YUV,             ///< Perceptually uniform u and v color coordinates, Y is calibrated luminance in cd/m^2
-      CS_Yxy,              ///< Luminance and normalized chromacities (x=X/(X+Y+Z), y=Y/(X+Y+Z))
-      CS_LAST             ///< For internal purposes only
-    };
-
-/**
- * Transform color channels from one color space into
- * another. Input and output channels may point to the same data
- * for in-memory transform.
- *
- * @param inCS input color space
- * @param inC1 first color channel of the input image
- * @param inC2 second color channel of the input image
- * @param inC3 third color channel of the input image
- * @param outCS output color space
- * @param outC1 first color channel of the output image
- * @param outC2 second color channel of the output image
- * @param outC3 third color channel of the output image
- */
-  void transformColorSpace( ColorSpace inCS,
-    const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-    ColorSpace outCS,
-    Array2D *outC1, Array2D *outC2, Array2D *outC3 );
-
 
 /**
  * General exception class used to throw exceptions from pfs library.

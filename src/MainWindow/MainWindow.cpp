@@ -25,6 +25,7 @@
  *
  */
 
+//#include <iostream>
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
@@ -41,8 +42,10 @@
 #include "Common/config.h"
 #include "Common/global.h"
 #include "Batch/BatchTMDialog.h"
-#include "Fileformat/pfstiff.h"
+// #include "Fileformat/pfstiff.h"
+#include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
+#include "Filter/pfsrotate.h"
 #include "Threads/LoadHdrThread.h"
 #include "TonemappingWindow/TonemappingWindow.h"
 #include "TransplantExif/TransplantExifDialog.h"
@@ -50,13 +53,9 @@
 #include "MainWindow.h"
 #include "DnDOption.h"
 
-//#include <iostream>
 
-pfs::Frame* rotateFrame( pfs::Frame* inputpfsframe, bool clock_wise );
-void writeRGBEfile (pfs::Frame* inputpfsframe, const char* outfilename);
-void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
-
-MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrowser(NULL) {
+MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrowser(NULL)
+{
 	setupUi(this);
 
 	QDir dir(QDir::homePath());
@@ -89,13 +88,14 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
 	setCentralWidget(mdiArea);
 
-	luminance_options=LuminanceOptions::getInstance();
+	luminance_options = LuminanceOptions::getInstance();
 	load_options();
 
 	setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 
 	//recent files
-	for (int i = 0; i < MaxRecentFiles; ++i) {
+	for (int i = 0; i < MaxRecentFiles; ++i)
+  {
 		recentFileActs[i] = new QAction(this);
 		recentFileActs[i]->setVisible(false);
 		connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
@@ -412,7 +412,8 @@ void MainWindow::rotatecw_requested() {
 	dispatchrotate(true);
 }
 
-void MainWindow::dispatchrotate(bool clockwise) {
+void MainWindow::dispatchrotate(bool clockwise)
+{
 	if(currenthdr==NULL)
 		return;
 	rotateccw->setEnabled(false);

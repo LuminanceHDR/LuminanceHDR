@@ -33,14 +33,15 @@
 #include <iostream>
 #include <QFile>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/colorspace.h"
 #include "tmo_ashikhmin02.h"
 
 using namespace std;
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum);
 
-void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq, ProgressHelper *ph) {
+void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_value, int eq, ProgressHelper *ph)
+{
 	assert(inpfsframe!=NULL);
 
 	pfs::DOMIO pfsio;
@@ -56,31 +57,38 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
 	inpfsframe->getXYZChannels(X,Y,Z);
 	assert( X!=NULL && Y!=NULL && Z!=NULL );
 
-	pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
-	float maxLum,avLum,minLum;
-	calculateLuminance( Y, avLum, maxLum, minLum);
+  pfs::Array2DImpl* Xr = X->getChannelData();
+  pfs::Array2DImpl* Yr = Y->getChannelData();
+  pfs::Array2DImpl* Zr = Z->getChannelData();
+  
+	pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+	float maxLum, avLum, minLum;
+	calculateLuminance( Yr, avLum, maxLum, minLum);
 	
-	int w = Y->getCols();
-	int h = Y->getRows();
+	int w = Yr->getCols();
+	int h = Yr->getRows();
 	
 	pfs::Array2D* L = new pfs::Array2DImpl(w,h);
-	tmo_ashikhmin02(Y, L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
+	tmo_ashikhmin02(Yr, L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
 
+  // TODO: this section can be rewritten using SSE Function
 	for( int x=0 ; x<w ; x++ )
+  {
 		for( int y=0 ; y<h ; y++ )
 		{
-			float scale = (*L)(x,y) / (*Y)(x,y);
-			(*Y)(x,y) = (*Y)(x,y) * scale;
-			(*X)(x,y) = (*X)(x,y) * scale;
-			(*Z)(x,y) = (*Z)(x,y) * scale;
+			float scale = (*L)(x,y) / (*Yr)(x,y);
+			(*Yr)(x,y) = (*Yr)(x,y) * scale;
+			(*Xr)(x,y) = (*Xr)(x,y) * scale;
+			(*Zr)(x,y) = (*Zr)(x,y) * scale;
 		}
+  }
 
 	if (!ph->isTerminationRequested())
 		ph->newValue( 100 );
 
 	delete L;
 
-	pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
+	pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, Yr, Zr);
 }
 
 void calculateLuminance( pfs::Array2D* Y, float& avLum, float& maxLum, float& minLum)

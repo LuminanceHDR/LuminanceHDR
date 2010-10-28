@@ -29,14 +29,11 @@
 
 
 #include <cstdlib>
-
 #include <fcntl.h>
-
 #include <string.h>
 #include <assert.h>
 #include <string>
 #include <list>
-
 #include <map>
 
 #include "pfs.h"
@@ -238,87 +235,106 @@ void copyTags( Frame *from, Frame *to )
 // Channel implementation  
 //------------------------------------------------------------------------------
 
-class DOMIOImpl;
-
-class ChannelImpl: public Channel {
-  int width, height;
-  float *data;
-  const char *name;
-
-protected:
-  friend class DOMIOImpl;
-
-  TagContainerImpl *tags;
-
-public:
-  ChannelImpl( int width, int height, const char *n_name ) : width( width ), height( height )
-  {
-    data = new float[width*height];
-    tags = new TagContainerImpl();
-    name = strdup( n_name );
-  }
-
-  virtual ~ChannelImpl()
-  {
-    delete tags;
-    delete[] data;
-    free( (void*)name );
-  }
-
-  // Channel implementation
-  TagContainer *getTags()
-  {
-    return tags;
-  }
-
-  float *getRawData()
-  {
-    return data;
-  }
-
-  //Array2D implementation
-
-  virtual int getCols() const {
-    return width;
-  }
-
-  virtual int getRows() const {
-    return height;
-  }
-
-  virtual const char *getName() const
-  {
-    return name;
-  }  
+  class DOMIOImpl;
   
-  inline float& operator()( int x, int y ) {
-    assert( x >= 0 && x < width );
-    assert( y >= 0 && y < height );
-    return data[ x+y*width ];
-  }
-
-  inline const float& operator()( int x, int y ) const
+  class ChannelImpl: public Channel
   {
-    assert( x >= 0 && x < width );
-    assert( y >= 0 && y < height );
-    return data[ x+y*width ];
-  }
-
-  inline float& operator()( int rowMajorIndex )
-  {
-    assert( rowMajorIndex < width*height );    
-    assert( rowMajorIndex >= 0 );    
-    return data[ rowMajorIndex ];
-  }
-  
-  inline const float& operator()( int rowMajorIndex ) const
-  {
-    assert( rowMajorIndex < width*height );    
-    assert( rowMajorIndex >= 0 );    
-    return data[ rowMajorIndex ];
-  }
-
-};
+    /* width = cols */
+    /* height = rows */
+    
+    const char *name;
+    Array2DImpl* channel_map;
+    
+  protected:
+    friend class DOMIOImpl;
+    
+    TagContainerImpl *tags;
+    
+  public:
+    ChannelImpl( int width, int height, const char *n_name )
+    {
+      channel_map = new Array2DImpl( width, height );
+      tags = new TagContainerImpl();
+      name = strdup( n_name );
+    }
+    
+    virtual ~ChannelImpl()
+    {
+      delete channel_map;
+      delete tags;
+      free( (void*)name );
+    }
+    
+    // Channel implementation
+    TagContainer *getTags()
+    {
+      return tags;
+    }
+    
+    float *getRawData()
+    {
+      return channel_map->getRawData();
+    }
+    
+    //Array2D implementation
+//    virtual int getCols() const
+//    {
+//      return channel_map->getCols();
+//    }
+//    
+//    virtual int getRows() const
+//    {
+//      return channel_map->getRows();
+//    }
+    
+    /**
+     * Gets width of the channel (in pixels).
+     * This is a synonym for Array2D::getCols().
+     */
+    virtual int getWidth() const
+    {
+      return channel_map->getCols();
+    }
+    
+    /**
+     * Gets height of the channel (in pixels).
+     * This is a synonym for Array2D::getRows().
+     */
+    virtual int getHeight() const
+    {
+      return channel_map->getRows();
+    }
+    
+    virtual const char *getName() const
+    {
+      return name;
+    }  
+    
+//    inline float& operator()( int x, int y )
+//    {
+//      return channel_map->operator()(x, y);
+//    }
+//    
+//    inline const float& operator()( int x, int y ) const
+//    {
+//      return channel_map->operator()(x, y);
+//    }
+//    
+//    inline float& operator()( int rowMajorIndex )
+//    {
+//      return channel_map->operator()(rowMajorIndex);
+//    }
+//    
+//    inline const float& operator()( int rowMajorIndex ) const
+//    {
+//      return channel_map->operator()(rowMajorIndex);
+//    }
+    
+    Array2DImpl* getChannelData()
+    {
+      return channel_map;
+    }
+  };
 
 
 //------------------------------------------------------------------------------

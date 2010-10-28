@@ -46,8 +46,8 @@
  *
  * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
-void bilateralFilter( const pfstmo::Array2D *I,
-  pfstmo::Array2D *J, float sigma_s, float sigma_r,
+void bilateralFilter( const pfs::Array2DImpl *I,
+  pfs::Array2DImpl *J, float sigma_s, float sigma_r,
   ProgressHelper *ph );
 
 

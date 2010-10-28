@@ -35,6 +35,8 @@
 #include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
 #include "commandline.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/colorspace.h"
 
 //save hdr
 #include "Fileformat/pfstiff.h"
@@ -53,7 +55,6 @@ void writeEXRfile  (pfs::Frame* inputpfsframe, const char* outfilename);
 if (verbose) { \
 	fprintf(stdout, qPrintable(tr( string "\n" ).arg( argument )) ); \
 }
-
 
 static struct option cmdLineOptions[] = {
 	{ "verbose", no_argument, NULL, 'v' },
@@ -392,68 +393,94 @@ void CommandLineInterfaceManager::createHDR() {
 	saveHDR();
 }
 
-void CommandLineInterfaceManager::saveHDR() {
-	if (!saveHdrFilename.isEmpty()) {
+void CommandLineInterfaceManager::saveHDR()
+{
+	if (!saveHdrFilename.isEmpty())
+  {
 		VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 		QFileInfo qfi(saveHdrFilename);
 		char* encodedName=strdup(QFile::encodeName(qfi.filePath()).constData());
-		if (qfi.suffix().toUpper()=="EXR") {
+		if (qfi.suffix().toUpper()=="EXR")
+    {
 			writeEXRfile(HDR,encodedName);
-		} else if (qfi.suffix().toUpper()=="HDR") {
+		}
+    else if (qfi.suffix().toUpper()=="HDR")
+    {
 			writeRGBEfile(HDR, encodedName);
-		} else if (qfi.suffix().toUpper().startsWith("TIF")) {
+		}
+    else if (qfi.suffix().toUpper().startsWith("TIF"))
+    {
 			TiffWriter tiffwriter(encodedName, HDR);
 			if (luminance_options->saveLogLuvTiff)
+      {
 				tiffwriter.writeLogLuvTiff();
+      }
 			else
+      {
 				tiffwriter.writeFloatTiff();
-		} else if (qfi.suffix().toUpper()=="PFS") {
+      }
+		}
+    else if (qfi.suffix().toUpper()=="PFS")
+    {
 			// Convert to CS_XYZ: 
 			pfs::Channel *X, *Y, *Z;
 			HDR->getXYZChannels( X, Y, Z );
-			pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );	
+			pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                               pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());	
 			FILE *fd = fopen(encodedName, "wb");
 			pfs::DOMIO pfsio;
 			pfsio.writeFrame(HDR, fd);
 			fclose(fd);
-		} else {
+		}
+    else
+    {
 			error("Error, please specify a supported HDR file format.");
 		}
 		free(encodedName);
-	} else {
+	}
+  else
+  {
 		VERBOSEPRINT("NOT Saving HDR image to file. %1","");
 	}
 
 	startTonemap();
 }
 
-void  CommandLineInterfaceManager::startTonemap() {
-	if (!saveLdrFilename.isEmpty()) {
+void  CommandLineInterfaceManager::startTonemap()
+{
+	if (!saveLdrFilename.isEmpty())
+  {
 		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
 		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
 		//TODO
 		tmopts->origxsize = HDR->getWidth();
 		
 		std::cout << "XSIZE: " << tmopts->xsize << std::endl;
-	
+    
 		if (tmopts->xsize == -2)	
 			tmopts->xsize = HDR->getWidth();
-
+    
 		TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, *tmopts);
 		connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(tonemapTerminated(const QImage&)));
-
-        thread->startTonemapping();
-	} else {
+    
+    thread->startTonemapping();
+	}
+  else
+  {
 		VERBOSEPRINT("Tonemapping NOT requested. %1","");
 		emit finishedParsing();
 	}
 }
 
-void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage) {
+void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage)
+{
 	QFileInfo qfi(saveLdrFilename);
-	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100)) {
+	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100))
+  {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
-	} else {
+	}
+  else
+  {
 		TMOptionsOperations operations(tmopts);
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
@@ -461,10 +488,12 @@ void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage) {
 	emit finishedParsing();
 }
 
-float CommandLineInterfaceManager::toFloatWithErrMsg(const QString &str) {
+float CommandLineInterfaceManager::toFloatWithErrMsg(const QString &str)
+{
 	bool ok;
 	float ret = str.toFloat(&ok);
-	if (!ok) {
+	if (!ok)
+  {
 		QString errmessage=tr("Cannot convert %1 to a float").arg(str);
 		error(qPrintable(errmessage));
 	}

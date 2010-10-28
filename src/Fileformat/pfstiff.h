@@ -37,11 +37,11 @@
 #include "Libpfs/pfs.h"
 
 class TiffReader : public QObject {
-Q_OBJECT
-
+  Q_OBJECT
+  
   TIFF* tif;
   uint32 width, height;
-
+  
   uint16 comp;                  /// compression type
   uint16 phot;                  /// type of photometric data
   enum {FLOATLOGLUV, FLOAT, WORD, BYTE} TypeOfData; //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
@@ -49,42 +49,43 @@ Q_OBJECT
   uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
   bool has_alpha;
   double stonits;               /// scale factor to get nit values
-
+  
 public:
   TiffReader( const char* filename );
   ~TiffReader() {}
-
+  
   int getWidth() const { return width; }
   int getHeight() const { return height; }
-
+  
   bool is8bitTiff() { return TypeOfData==BYTE; }
   bool is16bitTiff() { return TypeOfData==WORD; }
   bool is32bitTiff() { return TypeOfData==FLOAT; }
   bool isLogLuvTiff() { return (TypeOfData==FLOATLOGLUV); }
-
+  
   pfs::Frame* readIntoPfsFrame(); //from 8,16,32,logluv TIFF to pfs::Frame
   QImage* readIntoQImage();
-
+  
 signals: //For ProgressDialog
   void maximumValue(int);
   void nextstep(int);
 };
 
-
 class TiffWriter : public QObject {
-Q_OBJECT
-
+  Q_OBJECT
+  
 private:
   TIFF* tif;
-  pfs::Channel *X,*Y,*Z;
+  pfs::Channel *Xc, *Yc, *Zc;
+  pfs::Array2D  *X,  *Y,  *Z;
+  
   QImage *ldrimage;
   uint32 width,height;
 public:
   TiffWriter( const char* filename, pfs::Frame *f );
   TiffWriter( const char* filename, QImage *ldrimage );
-
+  
   int write8bitTiff(); //write 8bit Tiff from QImage
-//   int write16bitTiff(); //write 16bit Tiff from pfs::Frame
+  //   int write16bitTiff(); //write 16bit Tiff from pfs::Frame
   int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
   int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
 signals: //For ProgressDialog

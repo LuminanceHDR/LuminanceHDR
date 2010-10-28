@@ -1,11 +1,10 @@
 /**
- * @file fastbilateral.h
- * @brief Fast bilateral filtering
- *
+ * @brief Resize images in PFS stream
  * 
- * This file is a part of LuminanceHDR package, based on pfstmo.
+ * This file is a part of PFSTOOLS package.
  * ---------------------------------------------------------------------- 
- * Copyright (C) 2003,2004 Grzegorz Krawczyk
+ * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk,
+ *  Alexander Efremov
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,32 +20,18 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- * 
- * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
  *
- * $Id: fastbilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
+ * @author Alexander Efremov, <aefremov@mpi-sb.mpg.de>
+ *
+ * $Id: pfsrotate.h,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
+#ifndef __PFSROTATE_H__
+#define __PFSROTATE_H__
 
-#ifndef _fastbilateral_h_
-#define _fastbilateral_h_
+#include "Libpfs/pfs.h"
 
-#include "TonemappingOperators/pfstmo.h"
-#include "Common/ProgressHelper.h"
+void rotateArray( const pfs::Array2D *in, pfs::Array2D *out, bool clockwise );
+pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise);
 
-/**
- * @brief Fast bilateral filtering
- *
- * Pieceweise linear algorithm (fast).
- *
- * @param I [in] input array
- * @param J [out] filtered array
- * @param sigma_s sigma value for spatial kernel
- * @param sigma_r sigma value for range kernel
- */
-void fastBilateralFilter( const pfs::Array2DImpl *I,
-  pfs::Array2DImpl *J, float sigma_s, float sigma_r, int downsample,
-  ProgressHelper *ph );
-
-
-#endif /* #ifndef _fastbilateral_h_ */
+#endif 

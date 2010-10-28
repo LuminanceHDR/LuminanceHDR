@@ -56,7 +56,7 @@
 #endif
 
 
-static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum, 
+static void findMaxMinPercentile(pfs::Array2DImpl* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum);
 
 
@@ -83,17 +83,17 @@ void tmo_durand02(unsigned int width, unsigned int height,
   const bool color_correction,
   ProgressHelper *ph) 
 {
-  pfstmo::Array2D* R = new pfstmo::Array2D(width, height, nR);
-  pfstmo::Array2D* G = new pfstmo::Array2D(width, height, nG);
-  pfstmo::Array2D* B = new pfstmo::Array2D(width, height, nB);
+  pfs::Array2DImpl* R = new pfs::Array2DImpl(width, height, nR);
+  pfs::Array2DImpl* G = new pfs::Array2DImpl(width, height, nG);
+  pfs::Array2DImpl* B = new pfs::Array2DImpl(width, height, nB);
 
   int i;
   int w = R->getCols();
   int h = R->getRows();
   int size = w*h;
-  pfstmo::Array2D* I = new pfstmo::Array2D(w,h); // intensities
-  pfstmo::Array2D* BASE = new pfstmo::Array2D(w,h); // base layer
-  pfstmo::Array2D* DETAIL = new pfstmo::Array2D(w,h); // detail layer
+  pfs::Array2DImpl* I = new pfs::Array2DImpl(w,h); // intensities
+  pfs::Array2DImpl* BASE = new pfs::Array2DImpl(w,h); // base layer
+  pfs::Array2DImpl* DETAIL = new pfs::Array2DImpl(w,h); // detail layer
 
   float min_pos = 1e10f; // minimum positive value (to avoid log(0))
   for( i=0 ; i<size ; i++ )
@@ -174,7 +174,7 @@ void tmo_durand02(unsigned int width, unsigned int height,
  * @brief Find minimum and maximum value skipping the extreems
  *
  */
-static void findMaxMinPercentile(pfstmo::Array2D* I, float minPrct, float& minLum, 
+static void findMaxMinPercentile(pfs::Array2DImpl* I, float minPrct, float& minLum, 
   float maxPrct, float& maxLum)
 {
   int size = I->getRows() * I->getCols();

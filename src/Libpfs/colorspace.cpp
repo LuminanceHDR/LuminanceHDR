@@ -1,7 +1,7 @@
 /**
  * @brief PFS library - color space transformations
  *
- * This file is a part of PFSTOOLS package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
  * 
@@ -34,11 +34,20 @@
 #include <iostream>
 
 #include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/colorspace.h"
+
 #include "Common/msec_timer.h"
-//#include "Common/sse.h"
+#include "Common/vex.h"
 
 namespace pfs 
 {
+  static inline float clamp( const float v, const float min, const float max )
+  {
+    if( v < min ) return min;
+    if( v > max ) return max;
+    return v;
+  }
   
   //--- 7 digits approximation of precise values
   static const float rgb2xyzD65Mat[3][3] =
@@ -74,71 +83,81 @@ namespace pfs
   //   { 0.0557f, -0.2040f,  1.0570f } };
   
   
-//  static void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-//                               Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
-//  {
-//#ifdef TIMER_PROFILING
-//    msec_timer f_timer;
-//    f_timer.start();
-//#endif
-//
-//    float i1, i2, i3;
-//    const int elems = inC1->getRows()*inC1->getCols();
-//    
-//    for( int idx = 0; idx < elems; idx++ )
-//    {
-//      i1 = (*inC1)(idx);
-//      i2 = (*inC2)(idx);
-//      i3 = (*inC3)(idx);
-//      
-//      (*outC1)(idx) = mat[0][0]*i1 + mat[0][1]*i2 + mat[0][2]*i3;
-//      (*outC2)(idx) = mat[1][0]*i1 + mat[1][1]*i2 + mat[1][2]*i3;
-//      (*outC3)(idx) = mat[2][0]*i1 + mat[2][1]*i2 + mat[2][2]*i3;
-//    }
-//    
-//#ifdef TIMER_PROFILING
-//    f_timer.stop_and_update();
-//    std::cout << "multiplyByMatrix() = " << f_timer.get_time() << " msec" << std::endl;
-//#endif
-//  }
+  //  void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+  //                               Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
+  //  {
+  //#ifdef TIMER_PROFILING
+  //    msec_timer f_timer;
+  //    f_timer.start();
+  //#endif
+  //
+  //    float i1, i2, i3;
+  //    const int elems = inC1->getRows()*inC1->getCols();
+  //    
+  //    for( int idx = 0; idx < elems; idx++ )
+  //    {
+  //      i1 = (*inC1)(idx);
+  //      i2 = (*inC2)(idx);
+  //      i3 = (*inC3)(idx);
+  //      
+  //      (*outC1)(idx) = mat[0][0]*i1 + mat[0][1]*i2 + mat[0][2]*i3;
+  //      (*outC2)(idx) = mat[1][0]*i1 + mat[1][1]*i2 + mat[1][2]*i3;
+  //      (*outC3)(idx) = mat[2][0]*i1 + mat[2][1]*i2 + mat[2][2]*i3;
+  //    }
+  //    
+  //#ifdef TIMER_PROFILING
+  //    f_timer.stop_and_update();
+  //    std::cout << "multiplyByMatrix() = " << f_timer.get_time() << " msec" << std::endl;
+  //#endif
+  //  }
   
   //-----------------------------------------------------------
   // sRGB conversion functions
   //-----------------------------------------------------------
-  
-  static inline float clamp( const float v, const float min, const float max )
-  {
-    if( v < min ) return min;
-    if( v > max ) return max;
-    return v;
-  }
-  
-  
-  static void transformSRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                                Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformSRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                         Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
-
+    
+    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
+    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
+    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
+    
+    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
+    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
+    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
+    
+    assert ( X != NULL && Y != NULL && Z != NULL );
+    assert ( R != NULL && G != NULL && B != NULL );
+    
+    const float* __r = R->data;
+    const float* __g = G->data;
+    const float* __b = B->data;
+    
+    float* __x = X->data;
+    float* __y = Y->data;
+    float* __z = Z->data;
+    
     float i1, i2, i3;
     float t1, t2, t3;
     
     int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems ; idx++ )
     {
-      i1 = clamp( (*inC1)(idx), 0, 1 );
-      i2 = clamp( (*inC2)(idx), 0, 1 );
-      i3 = clamp( (*inC3)(idx), 0, 1 );
+      i1 = clamp(__r[idx], 0, 1);
+      i2 = clamp(__g[idx], 0, 1);
+      i3 = clamp(__b[idx], 0, 1);
       
       t1 = (i1 <= 0.04045 ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
       t2 = (i2 <= 0.04045 ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
       t3 = (i3 <= 0.04045 ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
       
-      (*outC1)(idx) = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
-      (*outC2)(idx) = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
-      (*outC3)(idx) = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
+      __x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
+      __y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
+      __z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
     }    
     
 #ifdef TIMER_PROFILING
@@ -147,23 +166,43 @@ namespace pfs
 #endif
   }
   
-  static void transformXYZ2SRGB( const Array2D *inC1, const Array2D *inC2,
-                                const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2SRGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                         Array2D *outC1, Array2D *outC2, Array2D *outC3)
   {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
     
+    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
+    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
+    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
+    
+    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
+    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
+    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
+    
+    assert ( X != NULL && Y != NULL && Z != NULL );
+    assert ( R != NULL && G != NULL && B != NULL );
+    
+    const float* __x = X->data;
+    const float* __y = Y->data;
+    const float* __z = Z->data;
+    
+    float* __r = R->data;
+    float* __g = G->data;
+    float* __b = B->data;
+    
     float i1, i2, i3;
     float t1, t2, t3;
     
-    int elems = inC1->getRows()*inC1->getCols();
-    for( int idx = 0; idx < elems; idx++ )
+    const int ELEMS = inC1->getRows()*inC1->getCols();
+    
+    for( int idx = ELEMS; idx; idx-- )
     {
-      i1 = (*inC1)(idx);
-      i2 = (*inC2)(idx);
-      i3 = (*inC3)(idx);
+      i1 = (*__x);
+      i2 = (*__y);
+      i3 = (*__z);
       
       t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
       t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
@@ -173,10 +212,36 @@ namespace pfs
       t2 = clamp( t2, 0, 1 );
       t3 = clamp( t3, 0, 1 );
       
-      (*outC1)(idx) = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
-      (*outC2)(idx) = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
-      (*outC3)(idx) = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);    
+      (*__r) = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
+      (*__g) = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
+      (*__b) = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);
+      
+      __x++; __y++; __z++;
+      __r++; __g++; __b++;
     }
+    
+//    float i1, i2, i3;
+//    float t1, t2, t3;
+//    
+//    int elems = inC1->getRows()*inC1->getCols();
+//    for( int idx = 0; idx < elems; idx++ )
+//    {
+//      i1 = (*inC1)(idx);
+//      i2 = (*inC2)(idx);
+//      i3 = (*inC3)(idx);
+//      
+//      t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+//      t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+//      t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+//      
+//      t1 = clamp( t1, 0, 1 );
+//      t2 = clamp( t2, 0, 1 );
+//      t3 = clamp( t3, 0, 1 );
+//      
+//      (*outC1)(idx) = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
+//      (*outC2)(idx) = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
+//      (*outC3)(idx) = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);    
+//    }
     
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -184,8 +249,8 @@ namespace pfs
 #endif
   }
   
-  static void transformXYZ2Yuv( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                               Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2Yuv( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for ( int idx = 0; idx < elems; idx++ )
@@ -206,8 +271,8 @@ namespace pfs
     
   }
   
-  static void transformYuv2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                               Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformYuv2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems ; idx++ )
@@ -224,8 +289,8 @@ namespace pfs
     }
   }
   
-  static void transformYxy2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                               Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformYxy2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems; idx++ )
@@ -239,8 +304,8 @@ namespace pfs
     }
   }
   
-  static void transformXYZ2Yxy( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                               Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2Yxy( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
     const int elems = inC1->getRows()*inC1->getCols();
     for( int idx = 0; idx < elems; idx++ )
@@ -255,26 +320,62 @@ namespace pfs
     }
   }
   
-  static void transformRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
+
+    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
+    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
+    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
+    
+    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
+    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
+    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
+    
+    assert ( X != NULL && Y != NULL && Z != NULL );
+    assert ( R != NULL && G != NULL && B != NULL );
+    
+    const float* __r = R->data;
+    const float* __g = G->data;
+    const float* __b = B->data;
+    
+    float* __x = X->data;
+    float* __y = Y->data;
+    float* __z = Z->data;
     
     float i1, i2, i3;
-    const int elems = inC1->getRows()*inC1->getCols();
+    const int ELEMS = inC1->getRows()*inC1->getCols();
     
-    for( int idx = 0; idx < elems; idx++ )
+    for( int idx = ELEMS; idx; idx-- )
     {
-      i1 = (*inC1)(idx);
-      i2 = (*inC2)(idx);
-      i3 = (*inC3)(idx);
+      i1 = (*__r);
+      i2 = (*__g);
+      i3 = (*__b);
       
-      (*outC1)(idx) = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
-      (*outC2)(idx) = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
-      (*outC3)(idx) = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+      (*__x) = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
+      (*__y) = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
+      (*__z) = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+      
+      __x++; __y++; __z++;
+      __r++; __g++; __b++;
     }
+    
+//    float i1, i2, i3;
+//    const int elems = inC1->getRows()*inC1->getCols();
+//    
+//    for( int idx = 0; idx < elems; idx++ )
+//    {
+//      i1 = (*inC1)(idx);
+//      i2 = (*inC2)(idx);
+//      i3 = (*inC3)(idx);
+//      
+//      (*outC1)(idx) = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
+//      (*outC2)(idx) = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
+//      (*outC3)(idx) = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+//    }
     
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -282,26 +383,62 @@ namespace pfs
 #endif
   }
   
-  static void transformXYZ2RGB( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2RGB( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
 #ifdef TIMER_PROFILING
     msec_timer f_timer;
     f_timer.start();
 #endif
     
-    float i1, i2, i3;
-    const int elems = inC1->getRows()*inC1->getCols();
+    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
+    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
+    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
+        
+    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
+    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
+    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
     
-    for( int idx = 0; idx < elems; idx++ )
+    assert ( X != NULL && Y != NULL && Z != NULL );
+    assert ( R != NULL && G != NULL && B != NULL );
+    
+    const float* __x = X->data;
+    const float* __y = Y->data;
+    const float* __z = Z->data;
+    
+    float* __r = R->data;
+    float* __g = G->data;
+    float* __b = B->data;
+    
+    float i1, i2, i3;
+    const int ELEMS = inC1->getRows()*inC1->getCols();
+    
+    for( int idx = ELEMS; idx; idx-- )
     {
-      i1 = (*inC1)(idx);
-      i2 = (*inC2)(idx);
-      i3 = (*inC3)(idx);
+      i1 = (*__x);
+      i2 = (*__y);
+      i3 = (*__z);
       
-      (*outC1)(idx) = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-      (*outC2)(idx) = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-      (*outC3)(idx) = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+      (*__r) = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+      (*__g) = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+      (*__b) = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+      
+      __x++; __y++; __z++;
+      __r++; __g++; __b++;
     }
+    
+//    float i1, i2, i3;
+//    const int elems = inC1->getRows()*inC1->getCols();
+//    
+//    for( int idx = 0; idx < elems; idx++ )
+//    {
+//      i1 = (*inC1)(idx);
+//      i2 = (*inC2)(idx);
+//      i3 = (*inC3)(idx);
+//      
+//      (*outC1)(idx) = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+//      (*outC2)(idx) = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+//      (*outC3)(idx) = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+//    }
     
 #ifdef TIMER_PROFILING
     f_timer.stop_and_update();
@@ -341,7 +478,6 @@ namespace pfs
     &TN_Yxy2XYZ
   };
   
-  
   void transformColorSpace( ColorSpace inCS,
                            const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
                            ColorSpace outCS, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
@@ -366,17 +502,19 @@ namespace pfs
     bfsList.push_back( inCS );
     
     bool found = false;
-    while( !bfsList.empty() ) {
+    while( !bfsList.empty() )
+    {
       ColorSpace node = bfsList.front();
       bfsList.pop_front();
       //    std::cerr << "Graph Node: " << node << "\n";
       
-      if( node == outCS ) {
+      if( node == outCS )
+      {
         found = true;
         break;
       }
-      for( CSTransEdge *edge = CSTransGraph[node]; edge != NULL;
-          edge = edge->next ) {
+      for( CSTransEdge *edge = CSTransGraph[node]; edge != NULL; edge = edge->next )
+      {
         if( edge->destCS != inCS && gotByEdge[ edge->destCS ] == NULL ) {
           bfsList.push_back( edge->destCS );
           gotByEdge[ edge->destCS ] = edge;
@@ -384,14 +522,18 @@ namespace pfs
       }
     } 
     
-    if( !found ) {
+    if( !found )
+    {
       // TODO: All transforms should be supported
       throw Exception( "Not supported color tranform" );
-    } else {
+    }
+    else
+    {
       // Reverse path
       std::list<CSTransEdge *> step;
       ColorSpace currentNode = outCS;
-      while( currentNode != inCS ) {
+      while( currentNode != inCS )
+      {
         //       std::cerr << "edge: " << gotByEdge[ currentNode ]->srcCS << " -- "
         //                 << gotByEdge[ currentNode ]->destCS << "\n";
         step.push_front( gotByEdge[ currentNode ] );
@@ -399,7 +541,8 @@ namespace pfs
       }
       // Execute path
       std::list<CSTransEdge *>::iterator it;
-      for( it = step.begin(); it != step.end(); it++ ) {
+      for( it = step.begin(); it != step.end(); it++ )
+      {
         //       std::cerr << "edge: " << (*it)->srcCS << " -- "
         //                 << (*it)->destCS << "\n";
         if( it == step.begin() )
@@ -407,9 +550,7 @@ namespace pfs
         else
           (*it)->func( outC1, outC2, outC3, outC1, outC2, outC3 );      
       }
-      
     }
-    
   }
   
   

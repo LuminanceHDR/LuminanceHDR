@@ -27,7 +27,7 @@
 
 #include "Common/config.h"
 #include "Drago03Thread.h"
-#include "TonemappingOperators/tm_operators.h"
+#include "TonemappingOperators/pfstmo.h"
 
 Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opts): 
 TMOThread(frame, opts)

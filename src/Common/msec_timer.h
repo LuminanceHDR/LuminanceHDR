@@ -34,9 +34,10 @@
  * this define enables the timing profile
  * You should comment this define if you want to disable this feature
  */
-//#define TIMER_PROFILING 
+#define TIMER_PROFILING 
 
 #include <stdio.h>
+#include <iostream>
 
 // TIMER -----
 #ifdef WIN_TIMER

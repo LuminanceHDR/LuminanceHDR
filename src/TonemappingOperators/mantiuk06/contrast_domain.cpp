@@ -50,9 +50,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
-#include "Common/sse.h"
 #include "contrast_domain.h"
+#include "Common/vex.h"
+
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -71,8 +75,8 @@ typedef struct pyramid_s {
   struct pyramid_s* prev;
 } pyramid_t;
 
-extern float xyz2rgbD65Mat[3][3];
-extern float rgb2xyzD65Mat[3][3];
+//extern float xyz2rgbD65Mat[3][3];
+//extern float rgb2xyzD65Mat[3][3];
 
 #define PYRAMID_MIN_PIXELS      3
 #define LOOKUP_W_TO_R           107
@@ -146,18 +150,24 @@ void pyramid_show(pyramid_t* pyramid)
   char ss[30];
   
   while (pyramid->next != NULL)
+  {
     pyramid = pyramid->next;
+  }
   
   while (pyramid != NULL)
   {
     printf("\n----- pyramid_t level %d,%d\n", pyramid->cols, pyramid->rows);
     
     sprintf(ss, "Gx %p ", pyramid->Gx);
-    if(pyramid->Gx != NULL)
+    if (pyramid->Gx != NULL)
+    {
       matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gx);
+    }
     sprintf(ss, "Gy %p ", pyramid->Gy);	
-    if(pyramid->Gy != NULL)
+    if (pyramid->Gy != NULL)
+    {
       matrix_show(ss,pyramid->cols, pyramid->rows, pyramid->Gy);
+    }
     
     pyramid = pyramid->prev;
   }
@@ -289,11 +299,10 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 }
 
 // return = a + b
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_add(const int n, const float* const a, float* const b)
 {
-#ifdef __APPLE__  
-  vDSP_vadd(b, 1, a, 1, b, 1, n);
+#ifdef __SSE__  
+  VEX_vadd(b, a, b, n);
 #else
   #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
@@ -304,11 +313,10 @@ inline void matrix_add(const int n, const float* const a, float* const b)
 }
 
 // return = a - b
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
-#ifdef __APPLE__  
-  vDSP_vsub(b, 1, a, 1, b, 1, n); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
+#ifdef __SSE__  
+  VEX_vsub(a, b, b, n);
 #else
   #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
@@ -325,11 +333,10 @@ inline void matrix_copy(const int n, const float* const a, float* const b)
 }
 
 // multiply matrix a by scalar val
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_multiply_const(const int n, float* const a, const float val)
 {
-#ifdef __APPLE__
-  vDSP_vsmul (a, 1, &val, a, 1, n);
+#ifdef __SSE__
+  VEX_vsmul(a, val, a, n);
 #else
   #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
@@ -340,11 +347,10 @@ inline void matrix_multiply_const(const int n, float* const a, const float val)
 }
 
 // b = a[i] / b[i]
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 inline void matrix_divide(const int n, float* a, float* b)
 {
-#ifdef __APPLE__  
-  vDSP_vdiv(b, 1, a, 1, b, 1, n);
+#ifdef __SSE__  
+  VEX_vdiv(a, b, b, n);
 #else  
   #pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
@@ -353,7 +359,6 @@ inline void matrix_divide(const int n, float* a, float* b)
   }
 #endif
 }
-
 
 // alloc memory for the float table
 inline float* matrix_alloc(int size)
@@ -384,12 +389,11 @@ inline void matrix_free(float* m)
 }
 
 // multiply vector by vector (each vector should have one dimension equal to 1)
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 09 04) - Apple Accelerate
 float matrix_DotProduct(const int n, const float* const a, const float* const b)
 {
   float val = 0;
-#ifdef __APPLE__
-  vDSP_dotpr(a, 1, b, 1, &val, n);
+#ifdef __SSE__
+  VEX_dotpr(a, b, val, n);
 #else  
   #pragma omp parallel for reduction(+:val) schedule(static)
   for(int j=0; j<n; j++)
@@ -696,12 +700,19 @@ void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
 }
 
 
+
 // x = -0.25 * b
 inline void solveX(const int n, const float* const b, float* const x)
 {
+#ifdef __SSE__
+  VEX_vsmul(b, (-0.25f), x, n);
+#else
   #pragma omp parallel for schedule(static)
   for (int i=0; i<n; i++)
-    x[i] = -0.25f * b[i];
+  {
+    x[i] = (-0.25f) * b[i];
+  }
+#endif
 }
 
 // divG_sum = A * x = sum(divG(x))
@@ -772,12 +783,17 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     else
     {
       const float bk = bknum / bkden; // beta = ...
+#ifdef __SSE__
+      VEX_vadds(z, bk, p, p, n);
+      VEX_vadds(zz, bk, pp, pp, n);
+#else
       #pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
 	    {
 	      p[i]  =  z[i] + bk *  p[i];
 	      pp[i] = zz[i] + bk * pp[i];
 	    }
+#endif
     }
 		
     bkden = bknum; // numerato becomes the dominator for the next iteration
@@ -787,12 +803,17 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     
     const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
     
+#ifdef __SSE__
+    VEX_vsubs(r, ak, z, r, n);
+    VEX_vsubs(rr, ak, zz, rr, n);
+#else
     #pragma omp parallel for schedule(static)
     for(int i = 0 ; i < n ; i++ )
     {
       r[i]  -= ak *  z[i];	// r =  r - alfa * z
       rr[i] -= ak * zz[i];	//rr = rr - alfa * zz
     }
+#endif
     
     const float old_err2 = err2;
     err2 = matrix_DotProduct(n, r, r);
@@ -814,9 +835,13 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
       num_backwards = 0;
     }
     
+#ifdef __SSE__
+    VEX_vadds(x, ak, p, x, n);
+#else
     #pragma omp parallel for schedule(static)
     for(int i = 0 ; i < n ; i++ )
       x[i] += ak * p[i];	// x =  x + alfa * p
+#endif
     
     if (num_backwards > num_backwards_ceiling)
     {
@@ -923,9 +948,13 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
     
     // r = r - alpha Ap
+#ifdef __SSE__
+    VEX_vsubs(r, alpha, Ap, r, n);
+#else
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
       r[i] -= alpha * Ap[i];
+#endif
     
     // rdotr = r.r
     const float old_rdotr = rdotr;
@@ -949,10 +978,13 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     }
     
     // x = x + alpha p
+#ifdef __SSE__
+    VEX_vadds(x, alpha, p, x, n);
+#else
     #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; i++)
       x[i] += alpha * p[i];
-    
+#endif
     
     // Exit if we're done
     // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
@@ -982,9 +1014,13 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
     {
       // p = r + beta p
       const float beta = rdotr/old_rdotr;
+#ifdef __SSE__
+      VEX_vadds(r, beta, p, p, n);
+#else
       #pragma omp parallel for schedule(static)
       for (int i = 0; i < n; i++)
         p[i] = r[i] + beta*p[i];
+#endif
     }
   }
   
@@ -1021,11 +1057,13 @@ inline float lookup_table(const int n, const float* const in_tab, const float* c
     return out_tab[0];
   
   for (int j = 1; j < n; j++)
+  {
     if(val < in_tab[j])
     {
       const float dd = (val - in_tab[j-1]) / (in_tab[j] - in_tab[j-1]);
       return out_tab[j-1] + (out_tab[j] - out_tab[j-1]) * dd;
     }
+  }
   
   return out_tab[n-1];
 }

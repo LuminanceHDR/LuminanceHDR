@@ -26,13 +26,11 @@
  */
 
 #include <config.h>
-
-#include "pfs.h"
-
 #include <stdlib.h>
 #include <list>
-
 #include <getopt.h>
+
+#include "pfs.h"
 
 #define MAX_FRAME 99999
 

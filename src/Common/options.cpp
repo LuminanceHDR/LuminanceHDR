@@ -36,9 +36,10 @@
 
 LuminanceOptions *LuminanceOptions::instance = 0;
 
-LuminanceOptions *LuminanceOptions::getInstance() {
+LuminanceOptions *LuminanceOptions::getInstance()
+{
 	if (!instance) {
-		instance=new LuminanceOptions();
+		instance = new LuminanceOptions();
 	}
 	return instance;
 }
@@ -54,7 +55,8 @@ void LuminanceOptions::deleteInstance() {
 	delete instance; instance=0;
 }
 
-void LuminanceOptions::loadFromQSettings() {
+void LuminanceOptions::loadFromQSettings()
+{
 	//write system default language the first time around (discard "_country")
 	if (!settings.contains(KEY_GUI_LANG))
 		settings.setValue(KEY_GUI_LANG,QLocale::system().name().left(2));

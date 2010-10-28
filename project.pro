@@ -5,13 +5,16 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 # Default compilation optimizations until Luminance HDR 2.0.1-1
 #QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2
 # Compilation optimization from Luminance 2.0.2 on
-QMAKE_CXXFLAGS += -fomit-frame-pointer -ffast-math -msse2 
+QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer
 # Compilation in Debug mode
 #QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
 
 # This option is currently disabled
 # Assume openmp-capable g++ (>=4.2)
+#QMAKE_CXXFLAGS += -fopenmp
 #QMAKE_LFLAGS += -fopenmp
+
+QT += xml webkit
 
 TARGET = luminance
 
@@ -43,6 +46,7 @@ FORMS = forms/MainWindow.ui \
 		forms/TonemappingWarnDialog.ui
 
 HEADERS +=  src/Libpfs/array2d.h \
+			src/Libpfs/colorspace.h \
 			src/Libpfs/pfs.h \
 			src/Common/global.h \
 			src/Common/options.h \
@@ -54,7 +58,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Common/SelectionTool.h \
 			src/Common/ProgressHelper.h \
 			src/Common/msec_timer.h \
-			src/Common/sse.h \
+			src/Common/vex.h \
 			src/MainWindow/MainWindow.h \
 			src/MainWindow/DnDOption.h \
 			src/HelpBrowser/LuminancePaths.h \
@@ -104,6 +108,8 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/HdrWizard/HdrWizard.h \
 			src/Filter/pfspanoramic.h \
 			src/Filter/pfscut.h \
+			src/Filter/pfsrotate.h \
+			src/Filter/pfsgamma.h \
 			src/Fileformat/rgbeio.h \
 			src/Fileformat/pfstiff.h \
 			src/TonemappingOperators/drago03/tmo_drago03.h \
@@ -126,7 +132,8 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Batch/BatchTMDialog.h \
 			src/Exif/ExifOperations.h
 
-SOURCES +=  src/Libpfs/pfs.cpp \
+SOURCES +=  src/Libpfs/array2d.cpp \
+			src/Libpfs/pfs.cpp \
 			src/Libpfs/colorspace.cpp \
 			src/Common/global.cpp \
 			src/main.cpp \
@@ -139,7 +146,7 @@ SOURCES +=  src/Libpfs/pfs.cpp \
 			src/Common/SelectionTool.cpp \
 			src/Common/ProgressHelper.cpp \
 			src/Common/msec_timer.cpp \
-			src/Common/sse.cpp \
+			src/Common/vex.cpp \
 			src/MainWindow/MainWindow.cpp \
 			src/MainWindow/DnDOption.cpp \
 			src/HelpBrowser/LuminancePaths.cpp \
@@ -267,8 +274,6 @@ isEmpty(checkqt4) {
 	error( "fatal error, bailing out." )
 } else {
 	message("Qt4, OK")
-	QT += xml
-	QT += webkit
 }
 
 ########################################### EXIV2 ###########################################

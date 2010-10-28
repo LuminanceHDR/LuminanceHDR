@@ -26,13 +26,10 @@
  */
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
-#include "Libpfs/pfs.h"
-
-#define PROG_NAME "pfsgamma"
-
-void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier );
+#include "pfsgamma.h"
+#include "Libpfs/colorspace.h"
 
 pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
 {
@@ -41,35 +38,42 @@ pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
   float multiplier = 1.0f;
   
   const char *lum_type = frame->getTags()->getString("LUMINANCE");
-  if( lum_type ) {
+  if( lum_type )
+  {
     if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
-      std::cerr << PROG_NAME " warning: applying gamma correction to a display referred image" << std::endl;
+      std::cerr << "applyGammaOnFrame() warning: applying gamma correction to a display referred image" << std::endl;
     if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
-      std::cerr << PROG_NAME " warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
+      std::cerr << "applyGammaOnFrame() warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
     if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
-      std::cerr << PROG_NAME " warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
+      std::cerr << "applyGammaOnFrame() warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
   }
   
   pfs::Channel *X, *Y, *Z;
   frame->getXYZChannels( X, Y, Z );
   
-  if( X != NULL ) {           // Color, XYZ
+  // TODO: applyGamma can be improved in order to use SSE
+  if ( X != NULL ) // Color, XYZ
+  {
+    pfs::Array2D* Xr = X->getChannelData();
+    pfs::Array2D* Yr = Y->getChannelData();
+    pfs::Array2D* Zr = Z->getChannelData();
     
-    pfs::transformColorSpace( pfs::CS_XYZ, X, Y, Z, pfs::CS_RGB, X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
+                             pfs::CS_RGB, Xr, Yr, Zr);
     // At this point (X,Y,Z) = (R,G,B)
     
-    applyGamma( X, 1/gamma, multiplier );
-    applyGamma( Y, 1/gamma, multiplier );
-    applyGamma( Z, 1/gamma, multiplier );
+    applyGamma(Xr, 1/gamma, multiplier);
+    applyGamma(Yr, 1/gamma, multiplier);
+    applyGamma(Zr, 1/gamma, multiplier);
     
-    pfs::transformColorSpace( pfs::CS_RGB, X, Y, Z, pfs::CS_XYZ, X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
+                             pfs::CS_XYZ, Xr, Yr, Zr);
     // At this point (X,Y,Z) = (X,Y,Z)
-    
-  } else if( (Y = frame->getChannel( "Y" )) != NULL ) {
+  }
+  else if ( (Y = frame->getChannel( "Y" )) != NULL )
+  {
     // Luminance only
-    
-    applyGamma( Y, 1/gamma, multiplier );
-    
+    applyGamma(Y->getChannelData(), 1/gamma, multiplier);
   } 
   //TODO
 	//else
@@ -87,7 +91,8 @@ pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
 void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier )
 {
   int imgSize = array->getRows()*array->getCols();
-  for( int index = 0; index < imgSize ; index++ ) {    
+  for( int index = 0; index < imgSize ; index++ )
+  {    
     float &v = (*array)(index);
     if( v < 0 ) v = 0;
     v = powf( v*multiplier, exponent );

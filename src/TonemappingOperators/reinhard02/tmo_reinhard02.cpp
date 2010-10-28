@@ -492,15 +492,14 @@ void dynamic_range ()
  * @param low size in pixels of smallest scale (should be kept at 1)
  * @param high size in pixels of largest scale (default 1.6^8 = 43)
  */
-void tmo_reinhard02(
-  unsigned int width, unsigned int height,
+void tmo_reinhard02(unsigned int width, unsigned int height,
   const float *nY, float *nL, 
   bool use_scales, float key, float phi, 
   int num, int low, int high, bool temporal_coherent, ProgressHelper *ph )
 {
   ph->newValue( 0 );
-  const pfstmo::Array2D* Y = new pfstmo::Array2D(width, height, const_cast<float*>(nY));
-  pfstmo::Array2D* L = new pfstmo::Array2D(width, height, nL);
+  const pfs::Array2DImpl* Y = new pfs::Array2DImpl(width, height, const_cast<float*>(nY));
+  pfs::Array2DImpl* L = new pfs::Array2DImpl(width, height, nL);
 
   int x,y;
 

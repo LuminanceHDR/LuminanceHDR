@@ -73,7 +73,7 @@ inline float min( float a, float b )
 
 //!! TODO: for debugging purposes
 // #define PFSEOL "\x0a"
-// static void dumpPFS( const char *fileName, const pfstmo::Array2D *data, const char *channelName )
+// static void dumpPFS( const char *fileName, const pfs::Array2DImpl *data, const char *channelName )
 // {
 //   FILE *fh = fopen( fileName, "wb" );
 //   assert( fh != NULL );
@@ -96,7 +96,7 @@ inline float min( float a, float b )
 // Full Multigrid Algorithm for solving partial differential equations
 //////////////////////////////////////////////////////////////////////
 
-void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
+void restrict( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
 {
   const float inRows = in->getRows();
   const float inCols = in->getCols();
@@ -127,7 +127,7 @@ void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 }
 
 // from_level>to_level, from_size>to_size
-// void restrict( pfstmo::Array2D *F, pfstmo::Array2D *T )
+// void restrict( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
 // {
 // //   DEBUG_STR << "restrict" << endl;
   
@@ -159,7 +159,7 @@ void restrict( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 // }
 
 
-void prolongate( const pfstmo::Array2D *in, pfstmo::Array2D *out )
+void prolongate( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -203,7 +203,7 @@ void prolongate( const pfstmo::Array2D *in, pfstmo::Array2D *out )
 }
 
 // to_level<from_level, from_size<to_size
-void prolongate_old( pfstmo::Array2D *F, pfstmo::Array2D *T )
+void prolongate_old( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
 {
 //   DEBUG_STR << "prolongate" << endl;
 
@@ -264,7 +264,7 @@ void prolongate_old( pfstmo::Array2D *F, pfstmo::Array2D *T )
     }
 }
 
-void exact_sollution( pfstmo::Array2D *F, pfstmo::Array2D *U )
+void exact_sollution( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
@@ -307,7 +307,7 @@ inline int idx( int r, int c )
 }
 
 // smooth u using f at level
-void smooth( pfstmo::Array2D *U, pfstmo::Array2D *F )
+void smooth( pfs::Array2DImpl *U, pfs::Array2DImpl *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -356,7 +356,7 @@ void smooth( pfstmo::Array2D *U, pfstmo::Array2D *F )
 //   }
 }
 
-void calculate_defect( pfstmo::Array2D *D, pfstmo::Array2D *U, pfstmo::Array2D *F )
+void calculate_defect( pfs::Array2DImpl *D, pfs::Array2DImpl *U, pfs::Array2DImpl *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
@@ -382,7 +382,7 @@ void calculate_defect( pfstmo::Array2D *D, pfstmo::Array2D *U, pfstmo::Array2D *
   
 }
 
-void add_correction( pfstmo::Array2D *U, pfstmo::Array2D *C )
+void add_correction( pfs::Array2DImpl *U, pfs::Array2DImpl *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
@@ -394,7 +394,7 @@ void add_correction( pfstmo::Array2D *U, pfstmo::Array2D *C )
 }
 
 
-void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
+void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -416,17 +416,17 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
   }
 
   // given function f restricted on levels
-  pfstmo::Array2D** RHS = new pfstmo::Array2D*[levels+1];
+  pfs::Array2DImpl** RHS = new pfs::Array2DImpl*[levels+1];
 
   // approximate initial sollutions on levels
-  pfstmo::Array2D** IU = new pfstmo::Array2D*[levels+1];
+  pfs::Array2DImpl** IU = new pfs::Array2DImpl*[levels+1];
   // target functions in cycles (approximate sollution error (uh - ~uh) )
-  pfstmo::Array2D** VF = new pfstmo::Array2D*[levels+1];
+  pfs::Array2DImpl** VF = new pfs::Array2DImpl*[levels+1];
 
-  VF[0] = new pfstmo::Array2D(xmax,ymax);
+  VF[0] = new pfs::Array2DImpl(xmax,ymax);
   RHS[0] = F;
-  IU[0] = new pfstmo::Array2D(xmax,ymax);
-  pfstmo::copyArray( U, IU[0] );
+  IU[0] = new pfs::Array2DImpl(xmax,ymax);
+  pfs::copyArray( U, IU[0] );
 
   int sx=xmax;
   int sy=ymax;
@@ -436,9 +436,9 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
     
-    RHS[k+1] = new pfstmo::Array2D(sx,sy);
-    IU[k+1] = new pfstmo::Array2D(sx,sy);
-    VF[k+1] = new pfstmo::Array2D(sx,sy);
+    RHS[k+1] = new pfs::Array2DImpl(sx,sy);
+    IU[k+1] = new pfs::Array2DImpl(sx,sy);
+    VF[k+1] = new pfs::Array2DImpl(sx,sy);
 
     // restrict from level k to level k+1 (coarser-grid)
     restrict( RHS[k], RHS[k+1] );
@@ -477,7 +477,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
-        pfstmo::Array2D* D = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2DImpl* D = new pfs::Array2DImpl(IU[k2]->getCols(), IU[k2]->getRows());
 	calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
@@ -496,7 +496,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
       {
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
-        pfstmo::Array2D* C = new pfstmo::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2DImpl* C = new pfs::Array2DImpl(IU[k2]->getCols(), IU[k2]->getRows());
 	prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2
@@ -527,7 +527,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 //     dumpPFS( name, VF[k], "Y" );
 //   }  
 
-  pfstmo::copyArray( IU[0], U );
+  pfs::copyArray( IU[0], U );
   
   delete VF[0];
   delete IU[0];
@@ -551,7 +551,7 @@ void solve_pde_multigrid( pfstmo::Array2D *F, pfstmo::Array2D *U )
 // SOR - Succesive Overrelaxation Algorithm
 //////////////////////////////////////////////////////////////////////
 
-void solve_pde_sor( pfstmo::Array2D *F, pfstmo::Array2D *U, int maxits)
+void solve_pde_sor( pfs::Array2DImpl *F, pfs::Array2DImpl *U, int maxits)
 {
 
   int xmax = F->getCols();

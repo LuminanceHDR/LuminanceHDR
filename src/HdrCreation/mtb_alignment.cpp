@@ -33,12 +33,14 @@ QImage* shiftQImage(const QImage *in, int dx, int dy)
 	QImage *out=new QImage(in->size(),QImage::Format_ARGB32);
 	assert(out!=NULL);
 	out->fill(qRgba(0,0,0,0)); //transparent black
-	for(int i = 0; i < in->height(); i++) {
+	for(int i = 0; i < in->height(); i++)
+  {
 		if( (i+dy) < 0 ) continue;
 		if( (i+dy) >= in->height()) break;
 		QRgb *inp = (QRgb*)in->scanLine(i);
 		QRgb *outp = (QRgb*)out->scanLine(i+dy);
-		for(int j = 0; j < in->width(); j++) {
+		for(int j = 0; j < in->width(); j++)
+    {
 			if( (j+dx) >= in->width()) break;
 			if( (j+dx) >= 0 ) outp[j+dx] = *inp;
 			inp++;
@@ -47,7 +49,8 @@ QImage* shiftQImage(const QImage *in, int dx, int dy)
 	return out;
 }
 
-void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
+void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
+{
 	assert(ImagePtrList.size()>=2);
 	int width=ImagePtrList.at(0)->width();
 	int height=ImagePtrList.at(0)->height();
@@ -61,18 +64,21 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input) {
 	int *shiftsY=new int[ImagePtrList.size()-1];
 
 	//find the shitfs
-	for (int i=0; i<ImagePtrList.size()-1; i++) {
+	for (int i=0; i<ImagePtrList.size()-1; i++)
+  {
 		mtbalign(ImagePtrList.at(i),ImagePtrList.at(i+1), quantile, noise, shift_bits, shiftsX[i], shiftsY[i]);
 	}
 	
 	//qDebug("::mtb_alignment: now shifting the images");
 	int originalsize=ImagePtrList.size();
 	//shift the images (apply the shifts starting from the second (index=1))
-	for (int i=1; i<originalsize; i++) {
+	for (int i=1; i<originalsize; i++)
+  {
 		int cumulativeX=0;
 		int cumulativeY=0;
 		//gather all the x,y shifts until you reach the first image
-		for (int j=i-1; j>=0; j--) {
+		for (int j=i-1; j>=0; j--)
+    {
 			cumulativeX+=shiftsX[j];
 			cumulativeY+=shiftsY[j];
 // 			qDebug("::mtb_alignment: partial cumulativeX=%d, cumulativeY=%d",cumulativeX,cumulativeY);
@@ -139,8 +145,10 @@ void getExpShift(const QImage *img1, const int median1,
 	QImage *diff             = setbitmap(img2->size());
 
 	int minerr = img1->width()*img2->height();
-	for(int i = -1; i <= 1; i++) {
-		for(int j = -1; j <= 1; j++) {
+	for(int i = -1; i <= 1; i++)
+  {
+		for(int j = -1; j <= 1; j++)
+    {
 			int dx = curr_x + i;
 			int dy = curr_y + j;
 			shiftimage(img2threshold, dx, dy, img2th_shifted);
@@ -181,11 +189,13 @@ void shiftimage(const QImage *in, const int dx, const int dy, QImage *out)
 void setThreshold(const QImage *in, const int threshold, const int noise,
 			QImage *threshold_out, QImage *mask_out)
 {
-	for(int i = 0; i < in->height(); i++) {
+	for(int i = 0; i < in->height(); i++)
+  {
 		const uchar *inp = in->scanLine(i);
 		uchar *outp = threshold_out->scanLine(i);
 		uchar *maskp = mask_out->scanLine(i);
-		for(int j = 0; j < in->width(); j++) {
+		for(int j = 0; j < in->width(); j++)
+    {
 			*outp++ = *inp < threshold ? 0 : 1;
 			*maskp++ = (*inp > (threshold-noise)) && (*inp < (threshold+noise)) ? 0 : 1;
 			inp++;
@@ -203,7 +213,8 @@ void XORimages(const QImage *img1, const QImage *mask1, const QImage *img2, cons
 		const uchar *m1 = mask1->scanLine(i);
 		const uchar *m2 = mask2->scanLine(i);
 		uchar *dp = diff->scanLine(i);
-		for(int j = 0; j < img1->width(); j++) {
+		for(int j = 0; j < img1->width(); j++)
+    {
 			//*dp++ = xor_t[*p1++][*p2++]*(*m1++)*(*m2++);
 			*dp++ = (*p1++ xor *p2++) and *m1++ and *m2++;
 		}
@@ -214,7 +225,8 @@ void XORimages(const QImage *img1, const QImage *mask1, const QImage *img2, cons
 long sumimage(const QImage *img)
 {
 	long ttl  = 0;
-	for(int i = 0; i < img->height(); i++) {
+	for(int i = 0; i < img->height(); i++)
+  {
 		const uchar *p = img->scanLine(i);
 		for(int j = 0; j < img->width(); j++) 
 			ttl += (long)(*p++);
@@ -233,13 +245,17 @@ void getLum(const QImage *in, QImage *out, vector<double> &cdf)
 	
 	QVector<QRgb> graycolortable;
 	for(uint i = 0; i < 256; i++)
+  {
 		graycolortable.append(qRgb(i,i,i));
+  }
 	out->setColorTable(graycolortable);
 	
-	for(int i = 0; i < in->height(); i++) {
+	for(int i = 0; i < in->height(); i++)
+  {
 		QRgb *inl = (QRgb *)in->scanLine(i);
 		uchar *outl = out->scanLine(i);
-		for(int j = 0; j < in->width(); j++) {
+		for(int j = 0; j < in->width(); j++)
+    {
 			uint v = qGray(*inl);
 			hist[v] = hist[v] + 1;
 			inl++;

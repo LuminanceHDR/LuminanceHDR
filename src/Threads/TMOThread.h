@@ -35,6 +35,7 @@
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
 #include "Common/ProgressHelper.h"
+#include "Libpfs/colorspace.h"
 
 class TMOThread : public QThread {
 Q_OBJECT

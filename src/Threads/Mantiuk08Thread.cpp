@@ -27,7 +27,7 @@
 
 #include "Common/config.h"
 #include "Mantiuk08Thread.h"
-#include "TonemappingOperators/tm_operators.h"
+#include "TonemappingOperators/pfstmo.h"
 
 Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
 TMOThread(frame, opts)
