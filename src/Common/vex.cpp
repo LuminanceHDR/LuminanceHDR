@@ -550,12 +550,12 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
 #elif __SSE__
   for (int j=0; j<N; j++)
   {
-    val += a[j] * b[j];
+    val += I1[j] * I2[j];
   }
 #else
   for (int j=0; j<N; j++)
   {
-    val += a[j] * b[j];
+    val += I1[j] * I2[j];
   }
 #endif
 }
