@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 		dir.mkdir(".LuminanceHDR");
 #endif
 
-	restoreState( settings.value("MainWindowState").toByteArray());
+	restoreState(settings.value("MainWindowState").toByteArray());
 	restoreGeometry(settings.value("MainWindowGeometry").toByteArray());
 
 	setAcceptDrops(true);
@@ -171,18 +171,18 @@ void MainWindow::setupConnections() {
 
 void MainWindow::showDonationsPage()
 {
-	//QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037580")); // grota
-	//QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10037712")); // fcomida
   QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
-
 }
 
 
-void MainWindow::fileNewViaWizard(QStringList files) {
+void MainWindow::fileNewViaWizard(QStringList files)
+{
 	HdrWizard *wizard;
-	if (testTempDir(luminance_options->tempfilespath)) {
+	if (testTempDir(luminance_options->tempfilespath))
+  {
 		wizard=new HdrWizard (this, files);
-		if (wizard->exec() == QDialog::Accepted) {
+		if (wizard->exec() == QDialog::Accepted)
+    {
 			HdrViewer *newmdi=new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor); //true means needs saving
 			connect(newmdi, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
 			newmdi->updateHDR(wizard->getPfsFrameHDR());
@@ -196,7 +196,8 @@ void MainWindow::fileNewViaWizard(QStringList files) {
 	}
 }
 
-void MainWindow::fileOpen() {
+void MainWindow::fileOpen()
+{
 	QString filetypes = tr("All HDR formats ");
 	filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.3fr";
 	filetypes +=  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.3FR);;" ;
@@ -217,7 +218,8 @@ void MainWindow::fileOpen() {
 	}
 }
 
-void MainWindow::updateRecentDirHDRSetting(QString newvalue) {
+void MainWindow::updateRecentDirHDRSetting(QString newvalue)
+{
 	// update internal field variable
 	RecentDirHDRSetting=newvalue;
 	settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
@@ -562,7 +564,8 @@ void MainWindow::openRecentFile() {
 		setupLoadThread(action->data().toString());
 }
 
-void MainWindow::setupLoadThread(QString fname) {
+void MainWindow::setupLoadThread(QString fname)
+{
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	newhdr=new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
@@ -582,10 +585,15 @@ void MainWindow::setupLoadThread(QString fname) {
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), subWindow, SLOT(load_failed(QString)));
 
+  // add progress bar in the status bar and launch it
+  
 	loadthread->start();
+  
+  // remove status bar
 }
 
-void MainWindow::load_failed(QString error_message) {
+void MainWindow::load_failed(QString error_message)
+{
 	QMessageBox::critical(this,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
 	LoadHdrThread *lht=(LoadHdrThread *)(sender());
@@ -596,14 +604,17 @@ void MainWindow::load_failed(QString error_message) {
 	updateRecentFileActions();
 }
 
-void MainWindow::preferences_called() {
+void MainWindow::preferences_called()
+{
 	unsigned int negcol=luminance_options->negcolor;
 	unsigned int naninfcol=luminance_options->naninfcolor;
 	PreferencesDialog *opts=new PreferencesDialog(this);
 	opts->setAttribute(Qt::WA_DeleteOnClose);
-	if (opts->exec() == QDialog::Accepted && (negcol!=luminance_options->negcolor || naninfcol!=luminance_options->naninfcolor) ) {
+	if (opts->exec() == QDialog::Accepted && (negcol!=luminance_options->negcolor || naninfcol!=luminance_options->naninfcolor) )
+  {
 		QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
-		foreach(QMdiSubWindow *p,allhdrs) {
+		foreach (QMdiSubWindow *p, allhdrs)
+    {
 			((HdrViewer*)p->widget())->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
 		}
 	}

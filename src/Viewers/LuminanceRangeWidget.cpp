@@ -35,6 +35,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QMouseEvent>
+#include <assert.h>
 
 #include "LuminanceRangeWidget.h"
 #include "Histogram.h"

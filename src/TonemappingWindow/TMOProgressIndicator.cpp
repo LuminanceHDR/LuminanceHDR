@@ -34,7 +34,7 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent, QString labeltext) :
 {
 	m_label = new QLabel(labeltext);
 
-    m_progressBar = new QProgressBar;
+  m_progressBar = new QProgressBar;
 	
 	m_abortButton = new QPushButton;
 	m_abortButton->resize(22,22);

@@ -45,10 +45,11 @@ TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p) : QDialog(p)
 void TonemappingWarningDialog::accepted()
 {
 	settings.beginGroup(GROUP_TMOWARNING);
-		if (checkBoxAskAgain->isChecked() != luminance_options->tmowarning_fattalsmall) {
-			luminance_options->tmowarning_fattalsmall=checkBoxAskAgain->isChecked();
-			settings.setValue(KEY_TMOWARNING_FATTALSMALL,checkBoxAskAgain->isChecked());
-		}
+  if (checkBoxAskAgain->isChecked() != luminance_options->tmowarning_fattalsmall)
+  {
+    luminance_options->tmowarning_fattalsmall = checkBoxAskAgain->isChecked();
+    settings.setValue(KEY_TMOWARNING_FATTALSMALL, checkBoxAskAgain->isChecked());
+  }
 	settings.endGroup();
 	
 	accept();

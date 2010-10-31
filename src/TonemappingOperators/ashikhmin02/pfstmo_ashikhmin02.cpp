@@ -32,6 +32,7 @@
 #include <cmath>
 #include <iostream>
 #include <QFile>
+#include <assert.h>
 
 #include "Libpfs/colorspace.h"
 #include "tmo_ashikhmin02.h"

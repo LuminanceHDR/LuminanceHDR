@@ -26,6 +26,7 @@
  */
 
 #include <math.h>
+#include <assert.h>
 
 #include "Histogram.h"
 

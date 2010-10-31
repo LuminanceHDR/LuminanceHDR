@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QSysInfo>
 #include <iostream>
+#include <assert.h>
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/colorspace.h"
@@ -42,8 +43,8 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
 QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
 #ifdef TIMER_PROFILING
-  //msec_timer __timer;
-  //__timer.start();
+  msec_timer __timer;
+  __timer.start();
 #endif
   
 	assert(inpfsframe!=NULL);
@@ -99,8 +100,8 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
   }
   
 #ifdef TIMER_PROFILING
-  //__timer.stop_and_update();
-  //std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
+  __timer.stop_and_update();
+  std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
 #endif
   
 	return QImage (const_cast<unsigned char*>(data), width, height, QImage::Format_ARGB32);

@@ -29,13 +29,14 @@
  * $Id: display_size.cpp,v 1.3 2008/06/16 18:42:58 rafm Exp $
  */
 
-#include "display_size.h"
-
-#include "Libpfs/pfs.h"
 
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <assert.h>
+
+#include "display_size.h"
+#include "Libpfs/pfs.h"
 
 static void removeCommandLineArg( int &argc, char* argv[],
   int firstArgToRemove, int numArgsToRemove );

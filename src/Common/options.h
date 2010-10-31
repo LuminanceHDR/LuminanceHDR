@@ -77,11 +77,12 @@ private:
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
 
-struct TonemappingOptions {
+struct TonemappingOptions
+{
 	int origxsize;
 	int xsize;
 	float pregamma;
-	bool tonemapSelection;
+	bool tonemapSelection;  
 	bool tonemapOriginal;
 	enum TMOperator tmoperator;
 	char *tmoperator_str;
@@ -139,6 +140,15 @@ struct TonemappingOptions {
 			bool  setluminance;
 		} mantiuk08options;
 	} operator_options;
+  
+  // Davide Anastasia <davide.anastasia@gmail.com>
+  // Adding the coordinates of the crop inside this structure will allow TMOThread
+  // to crop itself the region of interest, keeping the code tight and simple
+  // and avoiding useless copy in memory of the frame to be processed.
+  int selection_x_up_left;
+  int selection_y_up_left;
+  int selection_x_bottom_right;
+  int selection_y_bottom_right;
 };
 
 class TMOptionsOperations {

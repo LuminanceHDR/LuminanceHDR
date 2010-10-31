@@ -51,6 +51,7 @@ public:
 	TonemappingWindow(QWidget *parent, pfs::Frame *f, QString prefixname);
 	~TonemappingWindow();
 	pfs::Frame *getSelectedFrame(HdrViewer *);
+  void getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
 protected:
 	void closeEvent(QCloseEvent *);
 signals:
@@ -66,7 +67,7 @@ private:
 	HdrViewer *originalHDR;
 	QMdiSubWindow *originalHdrSubWin;
 	LuminanceOptions *luminance_options;
-	const TonemappingOptions *tmoOptions;
+	TonemappingOptions *tmoOptions;
 	QString recentPathSaveLDR, prefixname, cachepath;
 	bool isLocked;
 	GenericViewer *changedImage;
@@ -106,7 +107,7 @@ protected slots:
 	void dispatch(GenericViewer *);
 	void openDocumentation(); 
 	void aboutLuminance();
-	void tonemapImage(const TonemappingOptions&);
+	void tonemapImage(TonemappingOptions&);
 	void showErrorMessage(const char *e);
 	void tonemappingFinished();
 	void updateProgressbar();

@@ -38,12 +38,8 @@
 #ifndef __ARRAY2D_H__
 #define __ARRAY2D_H__
 
-#include <assert.h>
-#include "Common/vex.h"
-
 namespace pfs
 {
-  
   /**
    * @brief Interface for 2 dimensional array of floats.
    *
@@ -155,95 +151,36 @@ namespace pfs
    */
   class Array2DImpl: public Array2D
   {
-  protected:
-    float   *data;
+  private:
+    float*  data;
     int     cols;
     int     rows;
     bool    data_owned;
     
   public:
-    Array2DImpl( int __cols, int __rows )
-    {
-      cols = __cols;
-      rows = __rows;
-      data = (float*)_mm_malloc(cols*rows*sizeof(float), 16); //new float[cols*rows];
-      data_owned = true;
-    }
+    Array2DImpl( int __cols, int __rows );
+    Array2DImpl( int __cols, int __rows, float* __data);
+    Array2DImpl(const Array2DImpl& other);
+    Array2DImpl& operator = (const Array2DImpl& other);
+    ~Array2DImpl();
     
-    Array2DImpl( int __cols, int __rows, float* __data)
-    {
-      cols = __cols;
-      rows = __rows;
-      data = __data;
-      data_owned = false;
-    }
-    
-    Array2DImpl(const Array2DImpl& other) : Array2D()
-    {
-      this->cols = other.cols;
-      this->rows = other.rows;
-      this->data = other.data;
-      this->data_owned = false;
-    }
-    
-    Array2DImpl& operator = (const Array2DImpl& other)
-    {
-      if (data_owned) _mm_free(data); //delete[] data;
-      this->cols = other.cols;
-      this->rows = other.rows;
-      this->data = other.data;
-      this->data_owned = false;
-      return *this;
-    }
-    
-    ~Array2DImpl()
-    {
-      if (data_owned) _mm_free(data); //delete[] data;
-    }
+    float& operator()( int col, int row );
+    const float& operator()( int col, int row ) const;
+    float& operator()( int index );
+    const float& operator()( int index ) const;
     
     inline int getCols() const { return cols; }
     inline int getRows() const { return rows; }
     
-    inline float& operator()( int col, int row )
-    {
-      assert( col >= 0 && col < cols );
-      assert( row >= 0 && row < rows );
-      return data[ col+row*cols ];
-    }
-    
-    inline const float& operator()( int col, int row ) const
-    {
-      assert( col >= 0 && col < cols );
-      assert( row >= 0 && row < rows );
-      return data[ col+row*cols ];
-    }
-    
-    inline float& operator()( int index )
-    {
-      assert( index >= 0 && index < rows*cols );
-      return data[index];
-    }
-    
-    inline const float& operator()( int index ) const
-    {
-      assert( index >= 0 && index <= rows*cols );        
-      return data[index];
-    }
-    
-    float* getRawData()
-    {
-      return data;
-    }
-    
-    const float* getRawData() const
-    {
-      return data;
-    }    
+    inline float*       getRawData()        { return data; }
+    inline const float* getRawData() const  { return data; }
     
     // Data manipulation
     friend void copyArray(const Array2D *from, Array2D *to);
+        
     friend void setArray(Array2D *array, const float value);
-    //friend void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
+    friend void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
+    friend void divideArray(Array2D *z, const Array2D *x, const Array2D *y);
     
     // Colorspace Conversions
     friend void transformRGB2XYZ(const Array2D *R, const Array2D *G, const Array2D *B, Array2D *X, Array2D *Y, Array2D *Z);
@@ -251,11 +188,16 @@ namespace pfs
     
     friend void transformSRGB2XYZ(const Array2D *R, const Array2D *G, const Array2D *B, Array2D *X, Array2D *Y, Array2D *Z);
     friend void transformXYZ2SRGB(const Array2D *X, const Array2D *Y, const Array2D *Z, Array2D *R, Array2D *G, Array2D *B);
-  };        // Array2DImpl
+    
+    // Array2D manipulation
+    //friend void downsampleArray(const Array2D *from, Array2D *to);
+  };       
+  // Array2DImpl
   
-  void copyArray(const Array2D *from, Array2D *to);
+  void copyArray(const Array2D *from, Array2D *to);  
   void setArray(Array2D *array, const float value);
-  //void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
+  void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
+  void divideArray(Array2D *z, const Array2D *x, const Array2D *y);
 }
 
 #endif // __ARRAY2D_H__

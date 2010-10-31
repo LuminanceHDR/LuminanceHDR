@@ -32,30 +32,35 @@
 #include "Common/config.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsgamma.h"
+#include "Filter/pfssize.h"
 #include "Fileformat/pfsoutldrimage.h"
-
-pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int xSize);
-
 
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
 QThread(0), opts(opts), out_CS(pfs::CS_RGB)
-{
-	pfs::DOMIO pfsio;
-  
-	workingframe = pfscopy(frame);
-  
+{  
 	ph = new ProgressHelper(0);
   
-	if (opts.pregamma != 1.0f)
+  if ( opts.tonemapSelection )
+  {
+    // workingframe = "crop"
+    // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
+    // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_x_bottom_right <<"]" << std::endl;
+    workingframe = pfscut(frame, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+  }
+	else if ( opts.xsize != opts.origxsize )
+  {
+    // workingframe = "resize"
+    workingframe = resizeFrame(frame, opts.xsize);
+	}
+  else
+  {
+    // workingframe = "full res"
+    workingframe = pfscopy(frame); 
+  }
+  
+  if (opts.pregamma != 1.0f)
   {
 		applyGammaOnFrame( workingframe, opts.pregamma );
-	}
-  
-	if ((opts.xsize != opts.origxsize) && !opts.tonemapSelection)
-  {
-		pfs::Frame *resized = resizeFrame(workingframe, opts.xsize);
-		pfsio.freeFrame(workingframe);
-		workingframe = resized;
 	}
   
 	// Convert to CS_XYZ: tm operator now use this colorspace
@@ -90,12 +95,17 @@ void TMOThread::finalize()
 	if (!(ph->isTerminationRequested()))
   {
 		const QImage& res = fromLDRPFStoQImage(workingframe, out_CS);
+    emit imageComputed(res);
     
     if ( luminance_options->tmowindow_showprocessed )
     {
       emit processedFrame(workingframe);
     }
-		emit imageComputed(res);
+    else
+    {
+      // clean up workingframe in order not to waste much memory!
+      delete workingframe;
+    }
 	}
 	emit finished();
 	emit deleteMe(this);

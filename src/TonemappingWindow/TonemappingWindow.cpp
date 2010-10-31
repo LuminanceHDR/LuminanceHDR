@@ -32,6 +32,7 @@
 #include <QCloseEvent>
 #include <QSignalMapper>
 #include <iostream>
+#include <assert.h>
 
 #include "ui_about.h"
 #include "Common/config.h"
@@ -145,14 +146,14 @@ void TonemappingWindow::setupConnections()
 	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
 	connect(menu_Windows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
-	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
+	connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
 
-	connect(tmPanel,SIGNAL(startTonemapping(const TonemappingOptions&)), this, SLOT(tonemapImage(const TonemappingOptions&)));
+	connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions&)), this, SLOT(tonemapImage(TonemappingOptions&)));
 
-	connect(threadManager,SIGNAL(closeRequested(bool)),actionThreadManager,SLOT(setChecked(bool)));
+	connect(threadManager,SIGNAL(closeRequested(bool)), actionThreadManager,SLOT(setChecked(bool)));
 
-	connect(originalHDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-	connect(originalHDR,SIGNAL(closeRequested(bool)),actionShowHDR,SLOT(setChecked(bool)));
+	connect(originalHDR, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
+	connect(originalHDR, SIGNAL(closeRequested(bool)), actionShowHDR, SLOT(setChecked(bool)));
 
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 }
@@ -596,7 +597,8 @@ void TonemappingWindow::aboutLuminance() {
 }
 
 
-pfs::Frame * TonemappingWindow::getSelectedFrame(HdrViewer *hdr) {
+pfs::Frame * TonemappingWindow::getSelectedFrame(HdrViewer *hdr)
+{
 	assert( hdr != NULL );
 	pfs::Frame *frame = hdr->getHDRPfsFrame();
 	QRect cropRect = hdr->getSelectionRect();
@@ -604,76 +606,77 @@ pfs::Frame * TonemappingWindow::getSelectedFrame(HdrViewer *hdr) {
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 	return pfscut(frame, x_ul, y_ul, x_br, y_br);
 }
-	
-void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
-	pfs::DOMIO pfsio;
+
+void TonemappingWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)
+{
+	assert( hdr != NULL );
+  
+	QRect cropRect = hdr->getSelectionRect();
+	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+}
+
+void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
+{
 	tmoOptions = &opts;	
-
-	if ( (opts.tonemapOriginal) && (!opts.tonemapSelection) )  {
+  
+	if ( opts.tonemapOriginal )
+  {
  		workingPfsFrame = originalHDR->getHDRPfsFrame();
+    
+    if ( opts.tonemapSelection )
+    {
+      if ( originalHDR->hasSelection() )
+      {
+        getCropCoords(originalHDR, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+      }
+      else
+      {
+        QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
+        return;
+      }
+    }
 	}
-	else if ( (!opts.tonemapOriginal) && (!opts.tonemapSelection) ){
-		if (!mdiArea->subWindowList().isEmpty()) {
+	else // if ( !opts.tonemapOriginal )
+  {
+		if (!mdiArea->subWindowList().isEmpty())
+    {
 			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-
-			if (viewer->isHDR()) {
-					HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
-					workingPfsFrame = HDR->getHDRPfsFrame();
+      
+			if ( viewer->isHDR() )
+      {
+        HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
+        workingPfsFrame = HDR->getHDRPfsFrame();
 			}		
-			else {
-				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
-					QMessageBox::Ok);
+			else
+      {
+				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
 				return;
 			}
+      
+      if ( opts.tonemapSelection )
+      {
+        if ( originalHDR->hasSelection() )
+        {
+          getCropCoords(originalHDR, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+        }
+        else
+        {
+          QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
+          return;
+        }
+      }
 		}
-		else {
-			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
-				QMessageBox::Ok);
+		else
+    {
+			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
 			return;
 		}
 	} 
-	else if (opts.tonemapOriginal && opts.tonemapSelection) {
-		if (originalHDR->hasSelection()) {
-			workingPfsFrame = getSelectedFrame(originalHDR);
-		}
-		else {
-			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."),
-				QMessageBox::Ok);
-			return;
-		}
-	}
-	else {
-		if (!mdiArea->subWindowList().isEmpty()) {
-			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-
-			if (viewer->isHDR()) {
-				HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
-				if (HDR->hasSelection()) {
-					workingPfsFrame = getSelectedFrame(HDR);
-				}
-				else {
-					QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), 
-						QMessageBox::Ok);
-					return;
-				}
-			}		
-			else {
-				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
-					QMessageBox::Ok);
-				return;
-			}
-		}
-		else {
-			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."),
-				QMessageBox::Ok);
-			return;
-		}
-	}
-
+  
 	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
 	TMOProgressIndicator *progInd =	new TMOProgressIndicator(this, QString(opts.tmoperator_str));
 	threadManager->addProgressIndicator(progInd);
-
+  
 	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
 	connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
 	connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
@@ -683,12 +686,13 @@ void TonemappingWindow::tonemapImage(const TonemappingOptions &opts ) {
 	connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
 	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
-
+  
 	//start thread
 	thread->startTonemapping();
 	threadCounter++;
-	if (threadCounter == 1) { 
-		statusbar->insertWidget(0,progressbar);
+	if (threadCounter == 1)
+  { 
+		statusbar->insertWidget(0,progressbar,1);
 		progressbar->setMaximum(0);
 		progressbar->setMinimum(0);
 		progressbar->setValue(-1);

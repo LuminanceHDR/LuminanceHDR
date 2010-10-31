@@ -25,9 +25,12 @@
  * $Id: pfssize.cpp,v 1.4 2009/01/29 00:44:30 rafm Exp $
  */
 
-#include <math.h>
+#include <cmath>
+#include <assert.h>
 
 #include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
+#include "Common/msec_timer.h"
 
 #define ROUNDING_ERROR 0.000001
 
@@ -114,17 +117,14 @@ public:
 
 pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
 {
+#ifdef TIMER_PROFILING
+  msec_timer f_timer;
+  f_timer.start();
+#endif
+  
   pfs::DOMIO pfsio;
   
-  // ResampleFilter *filter = NULL;
-  //
-  // if ( filter == NULL ) filter = new LinearFilter();
-  
   ResampleFilter *filter = new LinearFilter();
-  
-  // pfs::Channel *X, *Y, *Z; 
-  // frame->getXYZChannels( X, Y, Z );
-  // int new_x, new_y;
   
   int new_x = xSize;
   int new_y = (int)((float)frame->getHeight() * (float)xSize / (float)frame->getWidth());
@@ -137,11 +137,17 @@ pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize)
     pfs::Channel *originalCh = it->getNext();
     pfs::Channel *newCh = resizedFrame->createChannel( originalCh->getName() );
     
-    resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter );
+    resampleArray(originalCh->getChannelData(), newCh->getChannelData(), filter);
   }
   
   pfs::copyTags( frame, resizedFrame );
   delete filter;
+  
+#ifdef TIMER_PROFILING
+  f_timer.stop_and_update();
+  std::cout << "resizeFrame() = " << f_timer.get_time() << " msec" << std::endl;
+#endif 
+  
   return resizedFrame;
 }
 
@@ -151,7 +157,7 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *f
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
 
-  float pad;
+  //float pad;
   
   //float filterSamplingX = max( modff( dx, &pad ), 0.01f );
   //float filterSamplingY = max( modff( dy, &pad ), 0.01f );
@@ -204,33 +210,44 @@ void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
 
   const float dx = (float)in->getCols() / (float)out->getCols();
   const float dy = (float)in->getRows() / (float)out->getRows();
-
+  
   const float filterSize = 0.5;
   
   float sx, sy;
   int x, y;
   
   for( y = 0, sy = dy/2-0.5f; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5f; x < outCols; x++, sx += dx ) {
-
+  {
+    for( x = 0, sx = dx/2-0.5f; x < outCols; x++, sx += dx )
+    {
       float pixVal = 0;
       float w = 0;
       for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
-        for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
+      {
+        for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ )
+        {
           pixVal += (*in)( (int)ix, (int)iy );
           w += 1;
-        }     
+        }
+      }
       (*out)(x,y) = pixVal/w;      
     }
+  }
 }
 
 void resampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter )
 {
-  if( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
-    pfs::copyArray( in, out );
+  if ( in->getCols() == out->getCols() && in->getRows() == out->getRows() )
+  {
+    pfs::copyArray(in, out);
+  }
   else if( in->getCols() < out->getCols() || in->getRows() < out->getRows() )
-    upsampleArray( in, out, filter );
-  else                          
-    downsampleArray( in, out ); 
+  {
+    upsampleArray(in, out, filter);
+  }
+  else
+  {
+    downsampleArray(in, out);
+  }
 }
 

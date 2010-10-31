@@ -25,7 +25,8 @@
  *
  */
 
-#include <math.h>
+#include <cmath>
+#include <assert.h>
 #include <QApplication>
 #include <QFileInfo>
 

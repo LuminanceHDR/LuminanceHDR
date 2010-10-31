@@ -243,7 +243,7 @@ void copyTags( Frame *from, Frame *to )
     /* height = rows */
     
     const char *name;
-    Array2DImpl* channel_map;
+    Array2DImpl* channel_impl;
     
   protected:
     friend class DOMIOImpl;
@@ -253,14 +253,14 @@ void copyTags( Frame *from, Frame *to )
   public:
     ChannelImpl( int width, int height, const char *n_name )
     {
-      channel_map = new Array2DImpl( width, height );
+      channel_impl = new Array2DImpl( width, height );
       tags = new TagContainerImpl();
       name = strdup( n_name );
     }
     
     virtual ~ChannelImpl()
     {
-      delete channel_map;
+      delete channel_impl;
       delete tags;
       free( (void*)name );
     }
@@ -273,7 +273,7 @@ void copyTags( Frame *from, Frame *to )
     
     float *getRawData()
     {
-      return channel_map->getRawData();
+      return channel_impl->getRawData();
     }
     
     //Array2D implementation
@@ -293,7 +293,7 @@ void copyTags( Frame *from, Frame *to )
      */
     virtual int getWidth() const
     {
-      return channel_map->getCols();
+      return channel_impl->getCols();
     }
     
     /**
@@ -302,7 +302,7 @@ void copyTags( Frame *from, Frame *to )
      */
     virtual int getHeight() const
     {
-      return channel_map->getRows();
+      return channel_impl->getRows();
     }
     
     virtual const char *getName() const
@@ -332,7 +332,7 @@ void copyTags( Frame *from, Frame *to )
     
     Array2DImpl* getChannelData()
     {
-      return channel_map;
+      return channel_impl;
     }
   };
 
@@ -417,7 +417,8 @@ public:
   {
     delete tags;
     ChannelMap::iterator it;
-    for( it = channel.begin(); it != channel.end(); ) {
+    for( it = channel.begin(); it != channel.end(); )
+    {
       Channel *ch = it->second;
       ChannelMap::iterator itToDelete = it; // Nasty trick because hashmap
                                             // elements point to string that is

@@ -73,7 +73,8 @@ QString LdrViewer::getExifComment() {
 	return exif_comment;
 }
 
-void LdrViewer::levelsRequested(bool a) {
+void LdrViewer::levelsRequested(bool a)
+{
 	//TODO assert(a); //a is always true
 	//copy original data
 	previewimage=image.copy();

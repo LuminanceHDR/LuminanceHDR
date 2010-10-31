@@ -1,11 +1,10 @@
 /**
- * @brief save a radiance rgbe file
+ * @brief Resize images in PFS stream
  * 
- * This file is a part of LuminanceHDR package.
+ * This file is a part of PFSTOOLS package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
- * Copyright (C) 2006,2007 Giuseppe Rota
- *
+ * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,23 +21,16 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- * @author Giuseppe Rota  <grota@users.sourceforge.net>
+ *
+ * $Id: pfssize.h,v 1.4 2009/01/29 00:44:30 rafm Exp $
  */
 
-#include <assert.h>
+#ifndef __PFSSIZE_H__
+#define __PFSSIZE_H__
 
 #include "Libpfs/pfs.h"
-#include "rgbeio.h"
 
-void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename)
-{
-	pfs::DOMIO pfsio;
-	FILE *outfp = fopen(outfilename,"wb");
-	RGBEWriter writer(outfp);
-	pfs::Channel *X, *Y, *Z;
-	// X Y Z Channels contain R G B data
-	inputpfshdr->getXYZChannels(X, Y, Z);
-	assert( X!=NULL && Y!=NULL && Z!=NULL );
-	writer.writeImage(X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-	fclose(outfp);
-}
+pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize);
+
+void downsampleArray( const pfs::Array2D *from, pfs::Array2D *to );
+#endif

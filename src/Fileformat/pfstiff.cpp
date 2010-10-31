@@ -29,6 +29,7 @@
 #include <QObject>
 #include <QSysInfo>
 #include <iostream>
+#include <assert.h>
 
 #include "pfstiff.h"
 

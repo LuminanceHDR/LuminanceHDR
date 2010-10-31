@@ -5,7 +5,7 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 # Default compilation optimizations until Luminance HDR 2.0.1-1
 #QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2
 # Compilation optimization from Luminance 2.0.2 on
-QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer
+QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer -g3 
 # Compilation in Debug mode
 #QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
 
@@ -110,8 +110,10 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Filter/pfscut.h \
 			src/Filter/pfsrotate.h \
 			src/Filter/pfsgamma.h \
+			src/Filter/pfssize.h \
 			src/Fileformat/rgbeio.h \
 			src/Fileformat/pfstiff.h \
+			src/Fileformat/pfs_file_format.h \
 			src/TonemappingOperators/drago03/tmo_drago03.h \
 			src/TonemappingOperators/durand02/tmo_durand02.h \
 			src/TonemappingOperators/durand02/bilateral.h \

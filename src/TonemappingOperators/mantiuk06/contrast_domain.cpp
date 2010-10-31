@@ -329,7 +329,11 @@ inline void matrix_subtract(const int n, const float* const a, float* const b)
 // copy matix a to b, return = a 
 inline void matrix_copy(const int n, const float* const a, float* const b)
 {
+#ifdef __SSE__
+  VEX_vcopy(a, b, n);
+#else
   memcpy(b, a, sizeof(float)*n);
+#endif
 }
 
 // multiply matrix a by scalar val

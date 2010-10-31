@@ -42,10 +42,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <getopt.h> // struct option;
 
 #include "array2d.h"
-
-struct option;
 
 /**
  * All classes and function from PFS library reside in pfs namespace. 

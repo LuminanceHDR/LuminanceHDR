@@ -11,6 +11,7 @@
  * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2010 Davide Anastasia (Luminance HDR)
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -42,6 +43,75 @@
 
 namespace pfs
 {  
+  Array2DImpl::Array2DImpl( int __cols, int __rows )
+  {
+    cols = __cols;
+    rows = __rows;
+    data = (float*)_mm_malloc(cols*rows*sizeof(float), 16); //new float[cols*rows];
+    data_owned = true;
+  }
+  
+  Array2DImpl::Array2DImpl( int __cols, int __rows, float* __data)
+  {
+    cols = __cols;
+    rows = __rows;
+    data = __data;
+    data_owned = false;
+  }
+  
+  Array2DImpl::Array2DImpl(const Array2DImpl& other) : Array2D()
+  {
+    this->cols = other.cols;
+    this->rows = other.rows;
+    this->data = other.data;
+    this->data_owned = false;
+  }
+  
+  Array2DImpl& Array2DImpl::operator = (const Array2DImpl& other)
+  {
+    if (data_owned) _mm_free(data); //delete[] data;
+    this->cols = other.cols;
+    this->rows = other.rows;
+    this->data = other.data;
+    this->data_owned = false;
+    return *this;
+  }
+  
+  Array2DImpl::~Array2DImpl()
+  {
+    if (data_owned) _mm_free(data); //delete[] data;
+  }
+  
+  
+  float& Array2DImpl::operator()( int col, int row )
+  {
+    assert( col >= 0 && col < cols );
+    assert( row >= 0 && row < rows );
+    return data[ col+row*cols ];
+  }
+  
+  const float& Array2DImpl::operator()( int col, int row ) const
+  {
+    assert( col >= 0 && col < cols );
+    assert( row >= 0 && row < rows );
+    return data[ col+row*cols ];
+  }
+  
+  float& Array2DImpl::operator()( int index )
+  {
+    assert( index >= 0 && index < rows*cols );
+    return data[index];
+  }
+  
+  const float& Array2DImpl::operator()( int index ) const
+  {
+    assert( index >= 0 && index <= rows*cols );        
+    return data[index];
+  }
+  
+  
+  
+  
   /**
    * Copy data from one Array2D to another. Dimensions of the arrays must be the same.
    *
@@ -100,22 +170,45 @@ namespace pfs
   }
   
   /**
-   * Perform element-by-element multiplication: z = x * y. z can be the same as x or y.
+   * Perform element-by-element multiplication: z = x * y. z must be the same as x or y.
    *
    * @param z array where the result is stored
    * @param x first element of the multiplication
    * @param y second element of the multiplication
    */
-//  void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
-//  {    
-//    assert( x->getRows() == y->getRows() );
-//    assert( x->getCols() == y->getCols() );
-//    assert( x->getRows() == z->getRows() );
-//    assert( x->getCols() == z->getCols() );
-//    
-//    const int elements = x->getRows()*x->getCols();
-//    for( int i = 0; i < elements; i++ )
-//      (*z)(i) = (*x)(i) * (*y)(i);
-//  }
+  void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
+  {    
+    assert( x->getRows() == y->getRows() );
+    assert( x->getCols() == y->getCols() );
+    assert( x->getRows() == z->getRows() );
+    assert( x->getCols() == z->getCols() );
+    
+    const int elements = x->getRows()*x->getCols();
+    for( int i = 0; i < elements; i++ )
+    {
+      (*z)(i) = (*x)(i) * (*y)(i);
+    }
+  }
+  
+  /**
+   * Perform element-by-element division: z = x / y. z must be the same as x or y.
+   *
+   * @param z array where the result is stored
+   * @param x first element of the division
+   * @param y second element of the division
+   */
+  void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
+  {    
+    assert( x->getRows() == y->getRows() );
+    assert( x->getCols() == y->getCols() );
+    assert( x->getRows() == z->getRows() );
+    assert( x->getCols() == z->getCols() );
+    
+    const int elements = x->getRows()*x->getCols();
+    for( int i = 0; i < elements; i++ )
+    {
+      (*z)(i) = (*x)(i) / (*y)(i);
+    }
+  }
   
 }

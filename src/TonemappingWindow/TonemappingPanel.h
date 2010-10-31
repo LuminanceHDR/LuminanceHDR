@@ -28,14 +28,13 @@
 #ifndef TONEMAPPINGWIDGET_H
 #define TONEMAPPINGWIDGET_H
 
+#include <QStatusBar>
 
 #include "Common/global.h"
 #include "Common/options.h"
 #include "Common/Gang.h"
 #include "Libpfs/pfs.h"
 #include "ui_TonemappingPanel.h"
-
-class QStatusBar;
 
 class TonemappingPanel : public QWidget, public Ui::TonemappingPanel
 {
@@ -45,7 +44,7 @@ public:
 	~TonemappingPanel();
 	void setSizes(int, int);
 signals:
-	void startTonemapping(const TonemappingOptions&);
+	void startTonemapping(TonemappingOptions&);
 private:
 	Gang    *contrastfactorGang, //mantiuk06
 		*saturationfactorGang, 

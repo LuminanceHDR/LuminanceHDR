@@ -41,19 +41,19 @@
 #include "TMOProgressIndicator.h"
 #include "TonemappingWarnDialog.h"
 
-TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_custom_size(false) {
+TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_custom_size(false)
+{
 	setupUi(this);
 
 	currentTmoOperator = mantiuk06; // from Qt Designer
 
 	// mantiuk06
-	contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,
-		NULL,NULL, NULL, 0.001f, 1.0f, 0.1f);
+	contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, 0.1f);
+  
 	connect(contrastfactorGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,
-		NULL,NULL,NULL,NULL, 0.0f, 2.0f, 0.8f);
+	saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb,NULL,NULL,NULL,NULL, 0.0f, 2.0f, 0.8f);
 	detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
 
 	// mantiuk08
@@ -276,19 +276,22 @@ void TonemappingPanel::on_pregammadefault_clicked(){
 	pregammaGang->setDefault();
 }
 
-void TonemappingPanel::on_applyButton_clicked() {
-	bool doTonemapping = true;
-
+void TonemappingPanel::on_applyButton_clicked()
+{
 	LuminanceOptions *luminance_options=LuminanceOptions::getInstance();
-	if (luminance_options->tmowarning_fattalsmall) {
+	if (luminance_options->tmowarning_fattalsmall)
+  {
+    bool doTonemapping = true;
+    
 		// Warning when using size dependent TMOs with smaller sizes
-		if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 )) {
+		if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 ))
+    {
 			TonemappingWarningDialog *warn = new TonemappingWarningDialog(this);
 			warn->exec();
 			doTonemapping = warn->wasAccepted();
 			delete warn;
 		}
-		if (!doTonemapping)
+		if (doTonemapping == false)
 			return;
 	}
 	
@@ -298,7 +301,8 @@ void TonemappingPanel::on_applyButton_clicked() {
 	emit startTonemapping(toneMappingOptions);
 }
 
-void TonemappingPanel::fillToneMappingOptions() {
+void TonemappingPanel::fillToneMappingOptions()
+{
 	toneMappingOptions.origxsize = sizes[0];
 	toneMappingOptions.xsize = sizes[sizeComboBox->currentIndex()];
 	toneMappingOptions.pregamma = pregammaGang->v();
