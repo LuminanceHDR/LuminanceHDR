@@ -73,6 +73,8 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	tmToolBarOptsGroup->addAction(actionText_Only);
 	menuToolbars->addAction(tmToolBar->toggleViewAction());
 
+  setUnifiedTitleAndToolBarOnMac(true);
+  
 	load_options();
 
 	mdiArea = new QMdiArea(this);

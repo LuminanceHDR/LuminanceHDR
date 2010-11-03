@@ -82,6 +82,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	toolBarOptsGroup->addAction(actionText_Only);
 	menuToolbars->addAction(toolBar->toggleViewAction());
 
+  setUnifiedTitleAndToolBarOnMac(true);
+  
 	mdiArea = new QMdiArea(this);
 	mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -124,7 +126,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 		showSplash();
 }
 
-void MainWindow::setupConnections() {
+void MainWindow::setupConnections()
+{
 	connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(updateActions(QMdiSubWindow*)));
 	connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
 	connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
