@@ -31,12 +31,10 @@
 #include "TMOThread.h"
 
 class Mantiuk06Thread : public TMOThread {
-Q_OBJECT
-
+  Q_OBJECT
+  
 public:
-        Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts);
-        virtual void startTonemapping();
-
+  Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts);
 protected:
 	void run();
 };

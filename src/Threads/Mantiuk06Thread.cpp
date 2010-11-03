@@ -25,16 +25,16 @@
  *
  */
 
-#include <QReadWriteLock>
+#include <QMutex>
 
 #include "Common/config.h"
 #include "Mantiuk06Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-static QReadWriteLock lock;	
+static QMutex mutex_mantiuk06;
 
 Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
-	TMOThread(frame, opts)
+TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;
 }
@@ -46,18 +46,18 @@ void Mantiuk06Thread::run()
 	try
   {
 		// pfstmo_mantiuk06 not reentrant
-		lock.lockForWrite();
+    mutex_mantiuk06.lock();
 		pfstmo_mantiuk06(workingframe,
                      opts.operator_options.mantiuk06options.contrastfactor,
                      opts.operator_options.mantiuk06options.saturationfactor,
                      opts.operator_options.mantiuk06options.detailfactor,
                      opts.operator_options.mantiuk06options.contrastequalization,
                      ph);
-		lock.unlock();
+    mutex_mantiuk06.unlock();
 	}
 	catch(...)
   {
-		lock.unlock();
+    mutex_mantiuk06.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;
@@ -66,19 +66,3 @@ void Mantiuk06Thread::run()
 	finalize();
 }
 // run()
-
-void Mantiuk06Thread::startTonemapping()
-{
-    // Use this to circumvent a bug in GCC > 4.2 on Windows:
-    // the usage of OpenMP pragmas lets the program crash with a
-    // segmentation fault in libgomp.dll, since the OpenMP blocks
-    // are not run in the context of the main thread (id = 0).
-    // Most probably due to a mismatch of
-    // PThreads (OpenMP) vs Windows threads (Qt).
-    #ifdef WIN32
-        run();
-        return;
-    #endif
-
-    start();
-}
