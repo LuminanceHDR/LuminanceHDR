@@ -223,15 +223,17 @@ public:
      memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
   }
 
-      UniformArrayLUT& operator = (const UniformArrayLUT& other)
-      {
-         this->lut_size = other.lut_size;
-         this->delta = other.delta;
-         this->x_i = other.x_i;
-     this->y_i = new double[lut_size];
-     own_y_i = true;
-     memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
-      }
+  UniformArrayLUT& operator = (const UniformArrayLUT& other)
+  {
+    this->lut_size = other.lut_size;
+    this->delta = other.delta;
+    this->x_i = other.x_i;
+    this->y_i = new double[lut_size];
+    own_y_i = true;
+    memcpy(this->y_i, other.y_i, lut_size * sizeof(double));
+    
+    return *this;
+  }
 
   ~UniformArrayLUT()
   {
