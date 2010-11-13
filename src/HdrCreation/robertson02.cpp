@@ -29,7 +29,7 @@
 
 #include <iostream>
 #include <vector>
-#include <cmath>
+#include <math.h>
 
 #include "responses.h"
 #include "robertson02.h"
@@ -42,12 +42,6 @@
 
 // maximum accepted error
 #define MAX_DELTA 1e-5f
-
-#ifdef __APPLE__
-inline bool isnan(double x) {
-	return __isnand(x);
-}
-#endif
 
 float normalizeI( float* I, int M );
 
@@ -80,8 +74,7 @@ void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Arra
 	}
 	va_end(arg_pointer); /* Clean up. */
 
-	generic_applyResponse(
-	    &robertson02_sum, &robertson02_div, &robertson02_out, 
+	generic_applyResponse(&robertson02_sum, &robertson02_div, &robertson02_out, 
 	    Rout, Gout, Bout, arrayofexptime, Ir,  Ig, Ib, w,  M, ldrinput,
 	    listldr, listhdrR, listhdrG, listhdrB
 	);
