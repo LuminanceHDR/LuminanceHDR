@@ -126,7 +126,7 @@ void gaussianBlur(pfs::Array2DImpl* I, pfs::Array2DImpl* L)
   delete T;
 }
 
-int createGaussianPyramids( pfs::Array2DImpl* H, pfs::Array2DImpl** pyramids, int nlevels )
+void createGaussianPyramids( pfs::Array2DImpl* H, pfs::Array2DImpl** pyramids, int nlevels )
 {
   int width = H->getCols();
   int height = H->getRows();
