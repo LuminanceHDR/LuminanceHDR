@@ -42,5 +42,5 @@
  * @param M  number of levels of the input images
  * @param ldrinput if true listldr is used for the input images otherwise listhdrR, listhdrG, listhdrB are used
  */
-void debevec_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, 
+void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, 
     const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );

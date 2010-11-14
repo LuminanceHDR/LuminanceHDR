@@ -26,38 +26,43 @@
 #include "debevec.h"
 #include "generic_applyResponse.h"
 
-float debevec_sum(float weight, float average_weight, float t, float response) {
+inline float debevec_sum(float weight, float average_weight, float t, float response)
+{
 	return weight * response/t;
 }
 
-float debevec_div(float weight, float average_weight, float t, float) {
+inline float debevec_div(float weight, float average_weight, float t, float)
+{
 	return weight;
 }
 
-float debevec_out(float quotient) {
+inline float debevec_out(float quotient)
+{
 	return quotient;
 }
 
-void debevec_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...) {
-	QList<QImage*> *listldr=NULL;
-	Array2DList *listhdrR=NULL;
-	Array2DList *listhdrG=NULL;
-	Array2DList *listhdrB=NULL;
+void debevec_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...)
+{
+	QList<QImage*> *listldr = NULL;
+	Array2DList* listhdrR = NULL;
+	Array2DList* listhdrG = NULL;
+	Array2DList* listhdrB = NULL;
 	va_list arg_pointer;
 	va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
 
-	if (ldrinput) {
-		listldr=va_arg(arg_pointer,QList<QImage*>*);
-	} else {
-		listhdrR=va_arg(arg_pointer,Array2DList*);
-		listhdrG=va_arg(arg_pointer,Array2DList*);
-		listhdrB=va_arg(arg_pointer,Array2DList*);
+	if (ldrinput)
+  {
+		listldr=va_arg(arg_pointer, QList<QImage*>*);
+	}
+  else
+  {
+		listhdrR=va_arg(arg_pointer, Array2DList*);
+		listhdrG=va_arg(arg_pointer, Array2DList*);
+		listhdrB=va_arg(arg_pointer, Array2DList*);
 	}
 	va_end(arg_pointer); /* Clean up. */
 
-	generic_applyResponse(
-	    &debevec_sum, &debevec_div, &debevec_out, 
+	generic_applyResponse(&debevec_sum, &debevec_div, &debevec_out, 
 	    Rout, Gout, Bout, arrayofexptime, Ir,  Ig, Ib, w,  M, ldrinput,
-	    listldr, listhdrR, listhdrG, listhdrB
-	);
+	    listldr, listhdrR, listhdrG, listhdrB);
 }

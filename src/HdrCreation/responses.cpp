@@ -59,7 +59,7 @@ void dump_gnuplot( const char* filename, const float* array, int M, int counter 
 void exposure_weights_icip06( float* w, int M, int Mmin, int Mmax )
 {
   for( int m=0 ; m<M ; m++ )
-    if( m<Mmin || m>Mmax )
+    if ( m<Mmin || m>Mmax )
       w[m] = 0.0f;
     else
       w[m]=1.0f-pow( ( (2.0f*float(m-Mmin)/float(Mmax-Mmin)) - 1.0f), 12.0f);
@@ -69,9 +69,12 @@ void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
 {
   float mid = Mmin + (Mmax-Mmin)/2.0f - 0.5f;
   float mid2 = (mid-Mmin) * (mid-Mmin);
-  for( int m=0 ; m<M ; m++ )
+  for (int m=0 ; m<M ; m++)
+  {
     if( m<Mmin || m>Mmax )
+    {
       w[m] = 0.0f;
+    }
     else
     {
       // gkrawczyk: that's not really a gaussian, but equation is
@@ -83,6 +86,7 @@ void weightsGauss( float* w, int M, int Mmin, int Mmax, float sigma )
       else
         w[m] = weight;
     }
+  }
 }
 
 void weights_triangle( float* w, int M/*, int Mmin, int Mmax*/ )
@@ -91,7 +95,8 @@ void weights_triangle( float* w, int M/*, int Mmin, int Mmax*/ )
 	  w[i]=i/ (float(M)/2.0f);
 // 	  if (w[i]<0.06f)w[i]=0;
 	}
-	for(int i=int(float(M)/2.0f);i<M;i++) {
+	for(int i=int(float(M)/2.0f);i<M;i++)
+  {
 	  w[i]=(M-1-i)/(float(M)/2.0f);
 // 	  if (w[i]<0.06f)w[i]=0;
 	}
