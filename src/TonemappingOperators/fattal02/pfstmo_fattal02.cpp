@@ -38,9 +38,7 @@
 #include "tmo_fattal02.h"
 
 void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)
-{
-  pfs::DOMIO pfsio;
-  
+{  
   //--- default tone mapping parameters;
   //float opt_alpha = 1.0f;
   //float opt_beta = 0.9f;
@@ -48,8 +46,10 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   //float opt_noise = -1.0f; // not set!
   
   // adjust noise floor if not set by user
-  if( opt_noise<=0.0f )
-    opt_noise = opt_alpha*0.01;
+  if ( opt_noise <= 0.0f )
+  {
+    opt_noise = opt_alpha*0.01f;
+  }
   
   std::cout << "pfstmo_fattal02" << std::endl;
   std::cout << "alpha: " << opt_alpha << std::endl;
@@ -63,8 +63,11 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   frame->getTags()->setString("LUMINANCE", "RELATIVE");
   //---
   
-  if( Y==NULL || X==NULL || Z==NULL)
+  
+  if ( Y==NULL || X==NULL || Z==NULL )
+  {
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+  }
   
   pfs::Array2DImpl* Xr = X->getChannelData();
   pfs::Array2DImpl* Yr = Y->getChannelData();
@@ -76,19 +79,21 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   
   pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
   tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
-  
-  for( int x=0 ; x<w ; x++ )
+
+  if ( !ph->isTerminationRequested() )
   {
-    for( int y=0 ; y<h ; y++ )
+    for( int x=0 ; x<w ; x++ )
     {
-      (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-      (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
-      (*Yr)(x,y) = (*L)(x,y);
+      for( int y=0 ; y<h ; y++ )
+      {
+        (*Xr)(x,y) = powf( (*Xr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
+        (*Zr)(x,y) = powf( (*Zr)(x,y)/(*Yr)(x,y), opt_saturation ) * (*L)(x,y);
+        (*Yr)(x,y) = (*L)(x,y);
+      }
     }
+    
+    ph->newValue( 100 );
   }
-  
-	if (!ph->isTerminationRequested())
-		ph->newValue( 100 );
   
   delete L;
 }

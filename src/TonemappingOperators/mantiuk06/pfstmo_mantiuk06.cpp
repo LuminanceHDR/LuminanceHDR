@@ -40,6 +40,7 @@
 #include <iostream>
 
 #include "contrast_domain.h"
+
 #include "Libpfs/pfs.h"
 #include "Libpfs/colorspace.h"
 #include "Common/msec_timer.h"
@@ -60,9 +61,13 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   float tol = 1e-3;
   
   if (!cont_eq)
+  {
     cont_map = true;
+  }
   else 
+  {
     scaleFactor = -scaleFactor;
+  }
   
   std::cout << "pfstmo_mantiuk06" << std::endl;
   std::cout << "cont_map: " << cont_map << std::endl;
@@ -70,8 +75,6 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   std::cout << "scaleFactor: " << scaleFactor << std::endl;
   std::cout << "saturationFactor: " << saturationFactor << std::endl;
   std::cout << "detailFactor: " << detailFactor << std::endl;
-  
-  pfs::DOMIO pfsio;
   
   pfs::Channel *inX, *inY, *inZ;
   frame->getXYZChannels(inX, inY, inZ);
@@ -97,7 +100,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
 #ifdef TIMER_PROFILING
   f_timer.stop_and_update();
 #endif
-  if (!ph->isTerminationRequested())
+  if ( !ph->isTerminationRequested() )
   {
     pfs::transformColorSpace( pfs::CS_RGB, Xr, &G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     frame->getTags()->setString("LUMINANCE", "RELATIVE");
