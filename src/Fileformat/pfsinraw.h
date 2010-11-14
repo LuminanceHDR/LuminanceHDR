@@ -1,9 +1,7 @@
 /**
- * @brief Header file for pfs file format IO
- *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2006 Davide Anastasia
+ * Copyright (C) 2010 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,27 +18,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davide.anastasia@gmail.com>
+ * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
 
-#ifndef __PFS_FILE_FORMAT_H__
-#define __PFS_FILE_FORMAT_H__
+#ifndef READRAWINTOPFSFRAME
+#define READRAWINTOPFSFRAME
 
-#include <QImage>
-#include <QSysInfo>
-
-#include "Libpfs/pfs.h"
-
-#include "rgbeio.h"
-#include "pfstiff.h"
-#include "pfsoutldrimage.h"
-#include "pfsinraw.h"
-
-pfs::Frame* readEXRfile  (const char * filename);
-void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename);
-
-pfs::Frame* readRGBEfile (const char * filename);
-void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
+pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool writeOnDisk);
 
 #endif

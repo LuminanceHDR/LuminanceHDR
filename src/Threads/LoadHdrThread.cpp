@@ -96,49 +96,7 @@ void LoadHdrThread::run()
 		}
 		else if (rawinput)
     {
-			qDebug("TH: raw file");
-			QProcess *rawconversion = new QProcess(0);
-			rawconversion->setWorkingDirectory(luminance_options->tempfilespath);
-			#ifdef WIN32
-			QString separator(";");
-			#else
-			QString separator(":");
-			#endif
-			QStringList env = QProcess::systemEnvironment();
-			env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
-			rawconversion->setEnvironment(env);
-			
-			QStringList params = luminance_options->dcraw_options;
-			params << fname;
-			
-			#ifdef Q_WS_MAC
-			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw", params);
-			#elif defined(Q_WS_WIN)
-			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", params);
-			#else
-			rawconversion->start("dcraw", params);
-			#endif
-
-			//blocking, timeout of 10 sec
-			if(!rawconversion->waitForStarted(10000)) {
-				qDebug("Cannot start dcraw on file: %s", qPrintable(fname));
-				emit load_failed(tr("ERROR: Cannot start dcraw on file: %1").arg(fname));
-				return;
-			}
-			
-			//blocking, timeout of 5mins
-			if(!rawconversion->waitForFinished(300000)) {
-				qDebug("Error or timeout occured while executing dcraw on file: %s", qPrintable(fname));
-				emit load_failed(tr("ERROR: Error or timeout occured while executing dcraw on file: %1").arg(fname));
-				return;
-			}
-
-			QString outfname = QString(qfi.path() + "/"+qfi.completeBaseName()+".tiff");
-			qDebug("TH: Loading back file name=%s", qPrintable(outfname));
-			TiffReader reader(QFile::encodeName(outfname).constData());
-			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
-
-			QFile::remove(outfname);
+			hdrpfsframe = readRawIntoPfsFrame(fname.toAscii().constData(), (luminance_options->tempfilespath).toAscii().constData(), false);
 		} //raw file detected
 		else
     {
@@ -147,31 +105,6 @@ void LoadHdrThread::run()
 			return;
 		}
 		free(encodedFileName);
-#if 0
-		pfs::Channel *R,*G,*B;
-		hdrpfsframe->getRGBChannels( R, G, B );
-		float maxYval=-1; float minYval=1e6;
-		float maxRval=-1; float minRval=1e6;
-		float maxGval=-1; float minGval=1e6;
-		float maxBval=-1; float minBval=1e6;
-    
-		for (int i=0; i<hdrpfsframe->getHeight()*hdrpfsframe->getWidth(); i++)
-    {
-			float yval = 0.212656f*(*R)(i)+0.715158f*(*G)(i)+0.072186f*(*B)(i);
-			maxYval = (yval>maxYval) ? yval : maxYval;
-			minYval = (yval<minYval) ? yval : minYval;
-			maxRval = ((*R)(i)>maxRval) ? (*R)(i) : maxRval;
-			minRval = ((*R)(i)<minRval) ? (*R)(i) : minRval;
-			maxGval = ((*G)(i)>maxGval) ? (*G)(i) : maxGval;
-			minGval = ((*G)(i)<minGval) ? (*G)(i) : minGval;
-			maxBval = ((*B)(i)>maxBval) ? (*B)(i) : maxBval;
-			minBval = ((*B)(i)<minBval) ? (*B)(i) : minBval;
-		}
-		qDebug("minYval=%f, maxYval=%f",minYval,maxYval);
-		qDebug("minRval=%f, maxRval=%f",minRval,maxRval);
-		qDebug("minGval=%f, maxGval=%f",minGval,maxGval);
-		qDebug("minBval=%f, maxBval=%f",minBval,maxBval);
-#endif
 		if (hdrpfsframe == NULL)
 			throw "Error loading file";
 	}

@@ -47,5 +47,6 @@ private:
 	int image_idx;
 	QString fname;
 	QStringList dcrawOpts;
+	LuminanceOptions *luminance_options;
 };
 #endif

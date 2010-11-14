@@ -114,6 +114,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Fileformat/rgbeio.h \
 			src/Fileformat/pfstiff.h \
 			src/Fileformat/pfs_file_format.h \
+			src/Fileformat/pfsinraw.h \
 			src/TonemappingOperators/drago03/tmo_drago03.h \
 			src/TonemappingOperators/durand02/tmo_durand02.h \
 			src/TonemappingOperators/durand02/bilateral.h \
@@ -208,6 +209,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Fileformat/pfstiff.cpp \
 			src/Fileformat/pfsinexr.cpp \
 			src/Fileformat/pfsoutexr.cpp \
+			src/Fileformat/pfsinraw.cpp \
 			src/TonemappingOperators/drago03/pfstmo_drago03.cpp \
 			src/TonemappingOperators/drago03/tmo_drago03.cpp \
 			src/TonemappingOperators/durand02/pfstmo_durand02.cpp \
@@ -404,7 +406,7 @@ isEmpty(GSLDIR) {
 	error( "fatal error, bailing out." )	
 }
 INCLUDEPATH *= $$GSLDIR
-LIBS += -lgsl -lgslcblas
+LIBS += -lgsl -lgslcblas -lraw_r
 #LIBS += -lgsl -lgslcblas
 
 ######################################## end of detection ########################################

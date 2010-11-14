@@ -62,7 +62,7 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
 	
 	const int width   = Xc->getWidth();
 	const int height  = Xc->getHeight();
-  const int elems   = width*height;
+	const int elems   = width*height;
   
 	unsigned char* data = new uchar[elems*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
   

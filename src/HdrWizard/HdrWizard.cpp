@@ -65,6 +65,9 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 	if (files.size()) {
 		loadInputFiles(files, files.size());
 	}
+
+	luminance_options=LuminanceOptions::getInstance();
+
 	setupConnections();
 }
 
@@ -77,9 +80,9 @@ HdrWizard::~HdrWizard() {
 	for (int i=0; i<n; i++) {
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 
@@ -134,12 +137,12 @@ void HdrWizard::setupConnections() {
 void HdrWizard::loadImagesButtonClicked() {
     QString filetypes;
     // when changing these filetypes, also change in DnDOption - for Drag and Drop
-    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 ");
-    filetypes += tr("*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2);;");
+    filetypes += tr("All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.raw *.nrw");
+    filetypes += tr("*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.RAW *.NRW);;");
     filetypes += tr("JPEG (*.jpeg *.jpg *.JPEG *.JPG);;");
     filetypes += tr("TIFF Images (*.tiff *.tif *.TIFF *.TIF);;");
-    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 ");
-    filetypes += tr("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)");
+    filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.raw *.nrw");
+    filetypes += tr("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.RAW *.NRW)");
 
     QString RecentDirInputLDRs = settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
 
@@ -210,7 +213,7 @@ void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
 		confirmloadlabel->setText(QString(tr("<center><h3><b>To proceed you need to manually set the exposure values.<br><font color=\"#FF0000\">%1</font> values still required.</b></h3></center>")).arg(filesLackingExif.size()));
 	}
 	//do not load any more images
-	loadImagesButton->setEnabled(false);
+	//loadImagesButton->setEnabled(false);
 	//graphical fix
 	tableWidget->resizeColumnsToContents();
 	//enable user EV input
@@ -557,14 +560,14 @@ void HdrWizard::inputHdrFileSelected(int i) {
 	else { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
+		QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 		}
 		else {
-			QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+			QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
 			if ( QFile::exists(thumb_name))  {
 				QImage thumb_image(thumb_name);
 				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
@@ -583,14 +586,14 @@ void HdrWizard::resizeEvent ( QResizeEvent * ) {
 	else if (pagestack->currentIndex()==0 && tableWidget->currentRow()!=-1 && hdrCreationManager->inputImageType()!=HdrCreationManager::LDR_INPUT_TYPE) { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(tableWidget->currentRow());
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.jpg");
+		QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 		}
 		else {
-			QString thumb_name = QString(qfi.path() + "/"+qfi.completeBaseName()+".thumb.ppm");
+			QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
 			if ( QFile::exists(thumb_name))  {
 				QImage thumb_image(thumb_name);
 				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));

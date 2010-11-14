@@ -27,12 +27,13 @@
 #include <QCoreApplication>
 
 #include "Exif/ExifOperations.h"
-#include "Fileformat/pfstiff.h"
+#include "Fileformat/pfs_file_format.h"
 #include "HdrInputLoader.h"
 
 #include <iostream>
 
 HdrInputLoader::HdrInputLoader(QString filename, int image_idx, QStringList dcrawOpts) : QThread(0), image_idx(image_idx), fname(filename), dcrawOpts(dcrawOpts) {
+	luminance_options=LuminanceOptions::getInstance();
 }
 
 HdrInputLoader::~HdrInputLoader() {
@@ -88,104 +89,12 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			//
-			// Extract thumbnail on disk	
-			//
-			QProcess *extract_thumbnail = new QProcess(0);
+			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),true);
+			if (frame == NULL)
+				throw "Failed Loading Image";
 
-			#ifdef WIN32
-			QString separator(";");
-			#else
-			QString separator(":");
-			#endif
-			
-			QStringList env = QProcess::systemEnvironment();
-			env.replaceInStrings(QRegExp("^PATH=(.*)", Qt::CaseInsensitive), "PATH=\\1"+separator+QCoreApplication::applicationDirPath());
-
-			extract_thumbnail->setEnvironment(env);
-
-		    QStringList parameters;
-		    parameters << "-e " << fname;
-			
-			#ifdef Q_WS_MAC
-			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw", parameters);
-			#elif defined(Q_WS_WIN)
-			extract_thumbnail->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", parameters);
-			#else
-			extract_thumbnail->start("dcraw", parameters);
-			#endif
-			
-			if(!extract_thumbnail->waitForStarted(10000)) {
-				emit loadFailed(tr("ERROR: Cannot start dcraw to create thumbnail of file: %1").arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			
-			//blocking, timeout of 5mins
-			if(!extract_thumbnail->waitForFinished(300000)) {
-				emit loadFailed(tr("ERROR: Error or timeout occured, dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-
-			//Start raw conversion
-
-			QProcess *rawconversion = new QProcess(0);
-
-			rawconversion->setEnvironment(env);
-			
-			QStringList params = dcrawOpts;
-			params << fname;
-			
-			#ifdef Q_WS_MAC
-			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw", params);
-			#elif defined(Q_WS_WIN)
-			rawconversion->start(QCoreApplication::applicationDirPath()+"/dcraw.exe", params);
-			#else
-			rawconversion->start("dcraw", params);
-			#endif
-
-			//blocking, timeout of 10 sec
-			if(!rawconversion->waitForStarted(10000)) {
-				emit loadFailed(tr("ERROR: Cannot start dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-		
-			//blocking, timeout of 5mins
-			if(!rawconversion->waitForFinished(300000)) {
-				emit loadFailed(tr("ERROR: Error or timeout occured while executing dcraw on file: %1").arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-
-			QString outfname = QString(qfi.path() + "/"+qfi.completeBaseName()+".tiff");
-			qDebug("TH: Loading back file name=%s", qPrintable(outfname));
-			TiffReader reader(QFile::encodeName(outfname).constData());
-			//if 8bit ldr tiff
-			if (reader.is8bitTiff()) {
-				qDebug("raw -> 8bit tiff");
-				QImage *newimage=reader.readIntoQImage();
-				emit ldrReady(newimage, image_idx, expotime, outfname, true);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			//if 16bit (tiff) treat as hdr
-			else if (reader.is16bitTiff()) {
-				qDebug("raw -> 16bit tiff");
-				pfs::Frame *frame=reader.readIntoPfsFrame();
-				emit mdrReady(frame, image_idx, expotime, outfname);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			//error if other tiff type
-			else {
-				emit loadFailed(QString(tr("ERROR: The file<br>%1<br> is not a 8 bit or 16 bit tiff.")).arg(qfi.fileName()),image_idx);
-				//QApplication::restoreOverrideCursor();
-				return;
-			}
-			//now do not remove tiff file, it might be required by align_image_stack
-
+			QString outfname = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".tiff");
+			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}
 	catch(pfs::Exception e) {

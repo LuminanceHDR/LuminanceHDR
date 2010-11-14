@@ -58,6 +58,7 @@ protected:
 private:
 	QString getQStringFromConfig( int type );
 	void loadInputFiles(QStringList files, int count);
+	LuminanceOptions *luminance_options;
 
 	Gang *EVgang;
 

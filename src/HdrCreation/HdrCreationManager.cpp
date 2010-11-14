@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -99,6 +99,8 @@ void HdrCreationManager::loadInputFiles() {
 			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted]=true;
 			HdrInputLoader *thread=new HdrInputLoader(fileList[firstNotStarted],firstNotStarted,luminance_options->dcraw_options);
+			if (thread == NULL)
+				exit(1);
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 			connect(thread, SIGNAL(loadFailed(QString,int)), this, SLOT(loadFailed(QString,int)));
 			connect(thread, SIGNAL(ldrReady(QImage *, int, float, QString, bool)), this, SLOT(ldrReady(QImage *, int, float, QString, bool)));
@@ -237,6 +239,8 @@ void HdrCreationManager::align_with_mtb() {
 
 void HdrCreationManager::align_with_ais() {
 	ais=new QProcess(this);
+	if (ais == NULL)
+		exit(1);
 	ais->setWorkingDirectory(luminance_options->tempfilespath);
 	QStringList env = QProcess::systemEnvironment();
 	#ifdef WIN32
@@ -251,7 +255,6 @@ void HdrCreationManager::align_with_ais() {
 	
 	QStringList ais_parameters = luminance_options->align_image_stack_options;
 	ais_parameters << (filesToRemove.empty() ? fileList : filesToRemove);
-
 	#ifdef Q_WS_MAC
 	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 	#else
@@ -302,6 +305,8 @@ void HdrCreationManager::removeTempFiles() {
 	foreach (QString tempfname, filesToRemove) {
 		//qDebug("removing temp file: %s",qPrintable(tempfname));
 		QFile::remove(tempfname);
+		std::cout << tempfname.toAscii().constData() << std::endl;
+
 	}
 }
 
@@ -395,6 +400,8 @@ void HdrCreationManager::makeSureLDRsHaveAlpha() {
 		int origlistsize=ldrImagesList.size();
 		for (int image_idx=0; image_idx<origlistsize; image_idx++) {
 			QImage *newimage=new QImage(ldrImagesList.at(0)->convertToFormat(QImage::Format_ARGB32));
+			if (newimage == NULL)
+				exit(1);
 			ldrImagesList.append(newimage);
 			if (tiffLdrList[0]) {
 				delete [] ldrImagesList[0]->bits();
@@ -432,6 +439,8 @@ void HdrCreationManager::cropLDR (QRect ca) {
 	int origlistsize=ldrImagesList.size();
 	for (int image_idx=0; image_idx<origlistsize; image_idx++) {
 		QImage *newimage=new QImage(ldrImagesList.at(0)->copy(ca));
+		if (newimage == NULL)
+			exit(1);
 		ldrImagesList.append(newimage);
 		if (tiffLdrList[0])
 			delete [] ldrImagesList[0]->bits();
