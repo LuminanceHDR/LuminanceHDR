@@ -85,7 +85,7 @@ struct TonemappingOptions
 	bool tonemapSelection;  
 	bool tonemapOriginal;
 	enum TMOperator tmoperator;
-	char *tmoperator_str;
+	const char *tmoperator_str;
 	union {
 		struct {
 			bool  simple;
