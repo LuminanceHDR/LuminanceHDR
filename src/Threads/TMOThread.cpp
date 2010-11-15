@@ -74,7 +74,7 @@ TMOThread::~TMOThread()
 {
 	wait();
 	delete ph;
-	std::cout << "~TMOThread()" << std::endl;
+	std::cout << "TMOThread::~TMOThread()" << std::endl;
 }
 
 void TMOThread::terminateRequested()
@@ -104,7 +104,9 @@ void TMOThread::finalize()
     else
     {
       // clean up workingframe in order not to waste much memory!
-      delete workingframe;
+      //delete workingframe;
+      pfs::DOMIO pfsio;
+      pfsio.freeFrame(workingframe);
     }
 	}
 	emit finished();
