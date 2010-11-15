@@ -85,9 +85,9 @@ protected:
 	bool isSelectionToolVisible;
 	virtual void closeEvent ( QCloseEvent * event );
 signals:
-	virtual void selectionReady(bool isReady);
-	virtual void changed(GenericViewer *v); // emitted when zoomed in/out, scrolled ....
-	virtual void levels_closed(bool isReady); // only used by LdrViewer
-	virtual void closeRequested(bool); // emitted when NoCloseFlag is true
+	void selectionReady(bool isReady);
+	void changed(GenericViewer *v); // emitted when zoomed in/out, scrolled ....
+	void levels_closed(bool isReady); // only used by LdrViewer
+	void closeRequested(bool); // emitted when NoCloseFlag is true
 };
 #endif
