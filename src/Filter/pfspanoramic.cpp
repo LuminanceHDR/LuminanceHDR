@@ -26,6 +26,7 @@
  * $Id: pfspanoramic.cpp,v 1.2 2006/11/20 17:52:15 rafm Exp $
  */
 
+#include <string.h>
 #include "pfspanoramic.h"
 
 ProjectionFactory ProjectionFactory::singleton(true);
@@ -138,31 +139,33 @@ class Point2D
 ProjectionFactory::ProjectionFactory(bool ) {
 }
 
-void ProjectionFactory::registerProjection(char *name, ProjectionCreator ptr) {
+void ProjectionFactory::registerProjection(const char *name, ProjectionCreator ptr) {
       singleton.projections[ string( name ) ] = ptr;
 }
 
-Projection *ProjectionFactory::getProjection(char *name) {
-      char *opts;
+Projection *ProjectionFactory::getProjection(const char *name) {
+	char *opts;
+	char *nd = strdup(name);
+	Projection *projection = NULL;
       
-      if( (opts = strchr(name, '/')) )
+      if( (opts = strchr(nd, '/')) )
       {
         *opts++ = '\0';
       }
+
 
       ProjectionCreator projectionCreator = singleton.projections.find(string(name))->second;
 
       if(projectionCreator != NULL)
       {
-        Projection *projection = projectionCreator();
+        projection = projectionCreator();
 
         if(opts != NULL)
           projection->setOptions(opts);
-
-        return projection;
       }
-      else
-        return NULL;
+
+	  free(nd);
+	  return projection;
 }
 
 //FIXME: Lame. Should return an iterator over the names. No time for this now. :/
@@ -190,7 +193,7 @@ Projection* MirrorBallProjection::create() {
     return new MirrorBallProjection(false);
 }
 
-char *MirrorBallProjection::getName(void) {
+const char *MirrorBallProjection::getName(void) {
     return name;
 }
 
@@ -290,7 +293,7 @@ void AngularProjection::setOptions(char *opts) {
     }
 }
 
-char *AngularProjection::getName(void) {
+const char *AngularProjection::getName(void) {
     return name;
 }
 

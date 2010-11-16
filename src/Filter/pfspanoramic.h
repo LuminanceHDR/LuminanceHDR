@@ -41,7 +41,7 @@ class Point2D;
 class Projection
 {
   protected:
-  char *name;
+  const char *name;
   public:
     
     virtual Vector3D *uvToDirection(double u, double v) = 0;
@@ -56,7 +56,7 @@ class Projection
     {
     }
 
-    virtual char *getName(void)
+    virtual const char *getName(void)
     {
       return name;
     }
@@ -71,8 +71,8 @@ class ProjectionFactory
     ProjectionFactory(bool );
   public:
     map < string, ProjectionCreator > projections;
-    static void registerProjection(char *name, ProjectionCreator ptr);
-    static Projection *getProjection(char *name);
+    static void registerProjection(const char *name, ProjectionCreator ptr);
+    static Projection *getProjection(const char *name);
     static void listProjectionNames(void);
 };
 
@@ -82,7 +82,7 @@ class MirrorBallProjection : public Projection
   public:
   static MirrorBallProjection singleton;
   static Projection* create();
-  char *getName(void);
+  const char *getName(void);
   double getSizeRatio(void);
   bool isValidPixel(double u, double v);
   Vector3D* uvToDirection(double u, double v);
@@ -97,7 +97,7 @@ class AngularProjection : public Projection
   static AngularProjection singleton;
   static Projection* create();
   void setOptions(char *opts);
-  char *getName(void);
+  const char *getName(void);
   double getSizeRatio(void);
   bool isValidPixel(double u, double v);
   Vector3D* uvToDirection(double u, double v);
