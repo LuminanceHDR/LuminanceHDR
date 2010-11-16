@@ -72,7 +72,7 @@ class ProjectionFactory
   public:
     map < string, ProjectionCreator > projections;
     static void registerProjection(const char *name, ProjectionCreator ptr);
-    static Projection *getProjection(const char *name);
+    static Projection *getProjection(char *name);
     static void listProjectionNames(void);
 };
 

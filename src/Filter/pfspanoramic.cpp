@@ -143,12 +143,12 @@ void ProjectionFactory::registerProjection(const char *name, ProjectionCreator p
       singleton.projections[ string( name ) ] = ptr;
 }
 
-Projection *ProjectionFactory::getProjection(const char *name) {
+// TODO: check this function
+Projection *ProjectionFactory::getProjection(char *name) {
 	char *opts;
-	char *nd = strdup(name);
 	Projection *projection = NULL;
       
-      if( (opts = strchr(nd, '/')) )
+      if( (opts = strchr(name, '/')) )
       {
         *opts++ = '\0';
       }
@@ -164,7 +164,6 @@ Projection *ProjectionFactory::getProjection(const char *name) {
           projection->setOptions(opts);
       }
 
-	  free(nd);
 	  return projection;
 }
 
