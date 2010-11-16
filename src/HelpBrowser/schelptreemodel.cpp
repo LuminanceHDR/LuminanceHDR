@@ -192,7 +192,7 @@ void ScHelpTreeModel::setupModelData(const QString &dataFile, TreeItem *parent, 
 	}
 }
 
-void ScHelpTreeModel::addRow(const QString& s1, const QString& s2, int i)
+void ScHelpTreeModel::addRow(const QString& s1, const QString& s2, int /*i*/)
 {
 	QList<TreeItem*> parents;
 	QList<int> indentations;

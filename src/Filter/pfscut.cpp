@@ -35,7 +35,7 @@
 #define MAX 1
 #define SIZE 2
 
-void calcBorders(int min, int max, int size, int inSize, int flag, int* out)
+void calcBorders(int min, int max, int size, int inSize, int* out)
 {
   if (min!=UNSP && max!=UNSP && size==UNSP) {
     out[MIN]=min;
@@ -116,8 +116,8 @@ pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)
   else
   {
     //calculate edge columns and rows of an input image to be in an output image  
-    calcBorders(left, right, width, inWidth, 1, leftRight);
-    calcBorders(top, bottom, height, inHeight, 0, topBottom);
+    calcBorders(left, right, width, inWidth, leftRight);
+    calcBorders(top, bottom, height, inHeight, topBottom);
   }
   
   int lCol=leftRight[MIN];

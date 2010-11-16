@@ -27,6 +27,7 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QDebug>
 
 #include "BatchTMDialog.h"
 #include "Common/config.h"
@@ -392,7 +393,7 @@ void BatchTMDialog::newResult(const QImage& newimage) {
 }
 
 void BatchTMDialog::add_log_message(const QString& message) {
-	qDebug(qPrintable(message));
+	qDebug() << qPrintable(message);
 	full_Log_Model->insertRows(full_Log_Model->rowCount(),1);
 	full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
 	Log_Widget->scrollToBottom();

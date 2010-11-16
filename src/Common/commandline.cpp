@@ -41,16 +41,17 @@
 #include "Fileformat/pfs_file_format.h"
 
 #if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC) || defined(__APPLE__)
-#define error(Z) { fprintf(stderr,Z); exit(1); }
+#define error(Z) { fprintf(stderr,"%s", Z); exit(1); }
+
 #else
 #include <error.h>
-#define error(Z) error(1,0,Z);
+#define error(Z) error(1,0,"%s", Z);
 #endif
 
 ///string is a QString with a %1 in it
 #define VERBOSEPRINT( string, argument ) \
 if (verbose) { \
-	fprintf(stdout, qPrintable(tr( string "\n" ).arg( argument )) ); \
+	fprintf(stdout, "%s", qPrintable(tr( string "\n" ).arg( argument )) ); \
 }
 
 static struct option cmdLineOptions[] = {
@@ -538,5 +539,5 @@ tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
 "\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
 "\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
 tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
-	fprintf(stderr,qPrintable(help));
+	fprintf(stderr,"%s", qPrintable(help));
 }

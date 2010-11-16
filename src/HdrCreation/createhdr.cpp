@@ -24,7 +24,6 @@
 #include <stdio.h>
 #include "createhdr.h"
 
-// extern "C" {
 inline float max3( float a, float b, float c ) {
   float max = (a>b) ? a : b;
   return (c>max) ? c : max;
@@ -40,7 +39,7 @@ inline float min3( float a, float b, float c ) {
   return (c<min) ? c : min;
 }
 
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int /*iterations*/, const bool ldrinput, ...)
+pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool /*antighosting*/, int /*iterations*/, const bool ldrinput, ...)
 {
   //only one of these two is used by casting extra parameters:
   //listldr is used when input is a list of LDRs (jpegs or LDR tiffs).
@@ -60,7 +59,7 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
   
   TWeight opt_weight = chosen_config->weights;
   // TResponse opt_response = chosen_config->response_curve;
-  TModel opt_model = chosen_config->model;
+  // TModel opt_model = chosen_config->model;
   
   if (ldrinput) {
     listldr=va_arg(arg_pointer,QList<QImage*>*);
@@ -270,4 +269,3 @@ pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* co
   delete[] Ib;
   return frameout;
 }
-// }//extern "C"

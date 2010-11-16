@@ -26,12 +26,12 @@
 #include "debevec.h"
 #include "generic_applyResponse.h"
 
-inline float debevec_sum(float weight, float average_weight, float t, float response)
+inline float debevec_sum(float weight, float /*average_weight*/, float t, float response)
 {
 	return weight * response/t;
 }
 
-inline float debevec_div(float weight, float average_weight, float t, float)
+inline float debevec_div(float weight, float /*average_weight*/, float /*t*/, float)
 {
 	return weight;
 }

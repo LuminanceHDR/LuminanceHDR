@@ -75,7 +75,8 @@ pfs::Frame * readEXRfile( const char *filename )
   int width  = dw.max.x - dw.min.x + 1;
   int height = dw.max.y - dw.min.y + 1;
   
-  if( dtw.min.x < dw.min.x && dtw.max.x > dw.max.x || dtw.min.y < dw.min.y && dtw.max.y > dw.max.y )
+  if( (dtw.min.x < dw.min.x && dtw.max.x > dw.max.x) ||
+	  (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
   {
     throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
   }
@@ -202,8 +203,8 @@ pfs::Frame * readEXRfile( const char *filename )
         (*Yr)(i) *= scaleFactor;
         (*Zr)(i) *= scaleFactor;
       }
-      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
-      
+/*      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
+ */    
       const char *luminanceTag = frame->getTags()->getString("LUMINANCE");
       if( luminanceTag == NULL )
       {

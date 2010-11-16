@@ -59,7 +59,7 @@ SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrol
 
 }
 
-void SmartScrollArea::valueChanged(int value) {
+void SmartScrollArea::valueChanged(int /*value*/) {
 	emit changed();
 }
 

@@ -142,9 +142,11 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
   float fval;
   int format=0;
   exposure = 1.0f;
+  char *dummy;
+  
   while( !feof(file) )
   {
-    fgets(head, 200, file);
+    dummy=fgets(head, 200, file);
     if( strcmp(head, "\n")==0 )
       break;
     if( strcmp(head, "#?RADIANCE\n")==0 )
@@ -187,7 +189,7 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
 
   // image size
   char xbuf[4], ybuf[4];
-  if( fgets(head,sizeof(head)/sizeof(head[0]),file) == 0
+  if( (dummy=fgets(head,sizeof(head)/sizeof(head[0]),file)) == 0
       || sscanf(head,"%3s %d %3s %d",ybuf,&height,xbuf,&width) != 4 )
   {
     throw pfs::Exception( "RGBE: unknown image size" );
@@ -207,10 +209,12 @@ void readRadianceHeader( FILE *file, int &width, int &height, float &exposure )
 void RLERead( FILE* file, Trgbe* scanline, int size )
 {
   int peek=0;
+  size_t dummy;
+  
   while( peek<size )
   {
     Trgbe p[2];
-    fread(p, sizeof(p), 1, file);
+    dummy=fread(p, sizeof(p), 1, file);
     if( p[0]>128 )
     {
       // a run
@@ -230,7 +234,7 @@ void RLERead( FILE* file, Trgbe* scanline, int size )
       int nonrun_len = p[0]-1;
       if( nonrun_len>0 )
       {
-	fread(scanline+peek, sizeof(*scanline), nonrun_len, file);
+	dummy=fread(scanline+peek, sizeof(*scanline), nonrun_len, file);
 	peek += nonrun_len;
       }
     }
@@ -249,17 +253,18 @@ void readRadiance( FILE *file, int width, int height, float exposure,
   // read image
   // depending on format read either rle or normal (note: only rle supported)
   Trgbe* scanline = new Trgbe[width*4];
+  size_t dummy;
 
   for( int y=0 ; y<height ; y++ )
   {
     // read rle header
     Trgbe header[4];
-    fread(header, sizeof(header), 1, file);
+    dummy=fread(header, sizeof(header), 1, file);
     if( header[0] != 2 || header[1] != 2 || (header[2]<<8) + header[3] != width )
     {
       //--- simple scanline (not rle)
       size_t rez = fread(scanline+4, sizeof(Trgbe), 4*width-4, file);
-      if( rez!=4*width-4 )
+      if( rez!=(size_t)4*width-4 )
       {
 // 	DEBUG_STR << "RGBE: scanline " << y
 // 		  << "(" << (int)rez << "/" << width << ")" <<endl;
