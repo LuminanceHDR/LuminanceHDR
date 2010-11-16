@@ -24,6 +24,7 @@ UI_DIR = generated_uic
 RCC_DIR = generated_moc
 
 INCLUDEPATH +=  ./src 
+LIBS = -L/usr/local/lib
 
 FORMS = forms/MainWindow.ui \
 		forms/DnDOption.ui \
@@ -401,14 +402,38 @@ isEmpty(GSLDIR) {
 	message("gsl devel package not found")
 	message("in fedora run (as root):")
 	message("yum install gsl-devel")
-	message("Or, if you have to compile the sources go to http://www.remotesensing.org/libtiff/")
+	message("Or, if you have to compile the sources go to http://www.gnu.org/software/gsl/")
 	message("If you, on the other had, think that this message is wrong and indeed you HAVE gsl-devel installed, send an email to grota@users.sourceforge.net saying so.")
 	error( "fatal error, bailing out." )	
 }
 INCLUDEPATH *= $$GSLDIR
-LIBS += -lgsl -lgslcblas -lraw_r
-#LIBS += -lgsl -lgslcblas
+LIBS += -lgsl -lgslcblas
 
+########################################### LIBRAW ###########################################
+#required, since we want to read raw files.
+message ( "" )
+message ( "Detecting libraw:" )
+#I think these are the only paths where we have to search for.
+#If your system is more exotic let me know.
+LIBRAWHEADER = /usr/include/libraw/libraw.h /usr/local/include/libraw/libraw.h /opt/local/include/libraw/libraw.h
+for(path, LIBRAWHEADER) {
+	exists($$path) {
+		LIBRAWDIR = $$dirname(path)
+		message ( headers found in $$LIBRAWDIR)
+	}
+}
+isEmpty(LIBRAWDIR) {
+	message("libraw devel package not found")
+	message("In ubuntu you can run:")
+	message("sudo apt-get install libraw-dev")
+	message("in fedora (as root):")
+	message("yum install LibRaw-devel")
+	message("Or, if you have to compile the sources go to http://www.libraw.org/download")
+	message("If you, on the other had, think that this message is wrong and indeed you HAVE libraw installed, send an email to grota@users.sourceforge.net saying so.")
+	error( "fatal error, bailing out." )	
+}
+INCLUDEPATH *= $$LIBRAWDIR
+LIBS += -lraw_r
 ######################################## end of detection ########################################
 
 ############################## required by "make install" ########################################
