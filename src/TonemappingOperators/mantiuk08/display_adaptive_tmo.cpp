@@ -99,7 +99,7 @@ class auto_cqpminimizer
 
 // =============== Tone-curve filtering ==============
 
-datmoToneCurve::datmoToneCurve() : x_i( NULL ), y_i( NULL ), own_y_i( false )
+datmoToneCurve::datmoToneCurve() : own_y_i( false ), x_i( NULL ), y_i( NULL )
 { 
 }
 
@@ -137,14 +137,14 @@ double t_filter[DATMO_TF_TAPSIZE] = { 0.0040, 0.0051, 0.0079, 0.0126, 0.0190, 0.
 
 void datmo_filter_tone_curves( datmoToneCurve **in_tc, size_t count_in_tc, datmoToneCurve *out_tc )
 {
-  for( int j=0; j < in_tc[0]->size; j++ )
+  for( size_t j=0; j < in_tc[0]->size; j++ )
     out_tc->y_i[j] = 0;
   
-  for( int t=0; t < DATMO_TF_TAPSIZE; t++ ) {
-    int at = t;
+  for( size_t t=0; t < DATMO_TF_TAPSIZE; t++ ) {
+    size_t at = t;
     if( at >= count_in_tc )
       at = count_in_tc-1;
-    for( int j=0; j < in_tc[0]->size; j++ )
+    for( size_t j=0; j < in_tc[0]->size; j++ )
       out_tc->y_i[j] += t_filter[t] * in_tc[at]->y_i[j];
   }  
 }
@@ -171,7 +171,7 @@ inline float safe_log10( float x, const float min_x = MIN_PHVAL, const float max
 float min_positive( const float *x, size_t len )
 {
   float min_val = MAX_PHVAL;
-  for( int k=0; k < len; k++ )
+  for( size_t k=0; k < len; k++ )
     if( unlikely(x[k] < min_val && x[k] > 0) )
       min_val = x[k];
 
@@ -182,8 +182,8 @@ float min_positive( const float *x, size_t len )
 void mult_rows( const gsl_matrix *A, const gsl_vector *b, gsl_matrix *C )
 {
   assert( A->size1 == b->size );
-  for( int j=0; j < A->size2; j++ )
-    for( int i=0; i < A->size1; i++ ) 
+  for( size_t j=0; j < A->size2; j++ )
+    for( size_t i=0; i < A->size1; i++ ) 
       gsl_matrix_set( C, i, j, gsl_matrix_get(A,i,j)*gsl_vector_get(b,i) );        
 }
 
@@ -214,7 +214,7 @@ public:
     }
   }
 
-  UniformArrayLUT() : x_i( 0 ), y_i(0), lut_size( 0 ), delta( 0. ) {}
+  UniformArrayLUT() : x_i( 0 ), lut_size( 0 ), delta( 0. ), y_i(0) {}
 
   UniformArrayLUT(const UniformArrayLUT& other) : x_i( other.x_i ), lut_size( other.lut_size ), delta( other.delta )
   {
@@ -260,6 +260,7 @@ public:
   
 };
 
+#ifdef DEBUG
 #define PFSEOL "\x0a"
 static void dumpPFS( const char *fileName, const int width, const int height, float *data, const char *channelName )
 {
@@ -276,6 +277,7 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
   
   fclose( fh );
 }
+#endif
 
 
 void compute_gaussian_level( const int width, const int height, const pfs::Array2DImpl& in, pfs::Array2DImpl& out, int level, pfs::Array2DImpl& temp )
@@ -338,9 +340,9 @@ inline float clamp_channel( const float v )
   
 void print_matrix( gsl_matrix *m )
 {
-  for( int r=0; r < m->size1; r++ ) {
+  for( size_t r=0; r < m->size1; r++ ) {
     fprintf( stderr, "[ " );
-    for( int c=0; c< m->size2; c++ ) {
+    for( size_t c=0; c< m->size2; c++ ) {
       fprintf( stderr, "%g ", gsl_matrix_get( m, r, c ) );
     } 
     fprintf( stderr, "]\n" );
@@ -349,7 +351,7 @@ void print_matrix( gsl_matrix *m )
 
 void print_vector( gsl_vector *v )
 {
-  for( int r=0; r < v->size; r++ ) {
+  for( size_t r=0; r < v->size; r++ ) {
     fprintf( stderr, "[ %g\t ]\n ", gsl_vector_get( v, r ) );
   }
 }  
@@ -466,9 +468,11 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     compute_gaussian_level( width, height, *LP_high, *LP_low, f, temp );
 
 // For debug purposes only
-//    char fname[20];
-//    sprintf( fname, "l_%d.pfs", f+1 );
-//    dumpPFS( fname, width, height, LP_low, "Y" );
+#ifdef DEBUG	
+    char fname[20];
+    sprintf( fname, "l_%d.pfs", f+1 );
+    dumpPFS( fname, width, height, LP_low, "Y" );
+#endif	
     
     const int gi_tp = C->g_count/2+1;
     const int gi_tn = C->g_count/2-1;
@@ -541,8 +545,8 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
 
 // =============== Quadratic programming solver ==============
 
-const static gsl_matrix null_matrix = {0};          
-const static gsl_vector null_vector = {0};          
+const static gsl_matrix null_matrix = {0,0,0,0,0,0};          
+const static gsl_vector null_vector = {0,0,0,0,0};          
 
 /* objective function: 0.5*(x^t)Qx+(q^t)x */
 /* constraints: Cx>=d */
@@ -593,7 +597,7 @@ int solve( gsl_matrix *Q, gsl_vector *q, gsl_matrix *C, gsl_vector *d, gsl_vecto
     status = gsl_cqpminimizer_iterate(s);
     status = gsl_cqpminimizer_test_convergence(s, 1e-10, 1e-10);
 		  
-    if( verbose ) fprintf( stderr, "%4d   %14.8f  %13.6e  %13.6e\n", iter, gsl_cqpminimizer_f(s), gsl_cqpminimizer_gap(s), gsl_cqpminimizer_residuals_norm(s));
+    if( verbose ) fprintf( stderr, "%4lu   %14.8f  %13.6e  %13.6e\n", iter, gsl_cqpminimizer_f(s), gsl_cqpminimizer_gap(s), gsl_cqpminimizer_residuals_norm(s));
 		  
     if(status == GSL_SUCCESS)
     {
@@ -704,16 +708,20 @@ void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_count, int 
   double sum_d = 0;
   double alpha = 1;
   for( int k=0; k < L; k++ )
+  {
     sum_d += gsl_vector_get( x, k );
+  }
   double cy = log10(Ld_min) + alpha*(log10(Ld_max)-log10(Ld_min) - sum_d);
   double dy;
   y[0] = cy;
   dy = 0;
-  for( int i=0; i < x_count-1; i++ ) {
-    if( skip_lut[i] != -1 ) {
+  for( int i=0; i < x_count-1; i++ )
+  {
+    if( skip_lut[i] != -1 )
+    {
       // Check how many nodes spans this d_i
       int j;
-      for( j = i+1; j < (x_count-1) && skip_lut[j] == -1; j++ );
+      for ( j = i+1; j < (x_count-1) && skip_lut[j] == -1; j++ ) {};
       
       if( j == (x_count-1) ) { // The last node
         dy = 0;
@@ -739,7 +747,7 @@ void compute_y( double *y, const gsl_vector *x, int *skip_lut, int x_count, int 
  * @param y output luminance value for the nodes C->x_scale. y must be
  * a pre-allocated array and has the same size as C->x_scale.
  */
-int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize *ds,
+int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, DisplaySize */*ds*/,
   float enh_factor, double *y, const float white_y, ProgressHelper *ph = NULL ) {
   
   conditional_density *C = (conditional_density*)C_pub;
@@ -773,7 +781,6 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
 
         const int from = std::min(i,j);
         const int to = std::max(i,j);
-        size_t use_fwrk = 0;
         for( int l = from; l <= to-1; l++ ) {
           used_var[l] = 1;
         }
@@ -781,7 +788,7 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
         minmax_i[1] = std::max( minmax_i[1], to-1 );
       }
 
-  int white_i;
+  int white_i=0;
   if( white_y > 0 ) {
     k++;
     const float white_l = log10( white_y );
@@ -1020,7 +1027,7 @@ int datmo_apply_tone_curve( float *R_out, float *G_out, float *B_out, int width,
   
   // Create LUT: log10( lum factor ) -> pixel value
   UniformArrayLUT tc_lut( tc->size, tc->x_i );  
-  for( int i=0; i < tc->size; i++ ) {
+  for( size_t i=0; i < tc->size; i++ ) {
     tc_lut.y_i[i] = df->inv_display( (float)pow( 10, tc->y_i[i] ) );
   }  
 
@@ -1047,14 +1054,14 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
 { 
   // Create LUT: log10( lum factor ) -> pixel value
   UniformArrayLUT tc_lut( tc->size, tc->x_i );  
-  for( int i=0; i < tc->size; i++ ) {
+  for( size_t i=0; i < tc->size; i++ ) {
     tc_lut.y_i[i] = (float)pow( 10, tc->y_i[i] );
 //    tc_lut.y_i[i] = df->inv_display( (float)pow( 10, tc->y_i[i] ) );
   }  
 
   // Create LUT: log10( lum factor ) -> saturation correction (for the tone-level)
   UniformArrayLUT cc_lut( tc->size, tc->x_i );  
-  for( int i=0; i < tc->size-1; i++ ) {
+  for( size_t i=0; i < tc->size-1; i++ ) {
     const float contrast = (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]);
     const float k1 = 1.48;
     const float k2 = 0.82;
