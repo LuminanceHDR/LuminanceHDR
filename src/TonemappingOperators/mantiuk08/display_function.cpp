@@ -97,7 +97,7 @@ float DisplayFunctionGGBA::display( float pix )
 
 // ========== LUT Display Function ==============
 
-static const size_t max_lut_size = 4096;
+static const int max_lut_size = 4096;
 
 DisplayFunctionLUT::DisplayFunctionLUT( const char *file_name ) : pix_lut( NULL ), L_lut( NULL )
 {
