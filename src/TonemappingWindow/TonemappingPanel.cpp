@@ -139,6 +139,8 @@ TonemappingPanel::~TonemappingPanel() {
 	delete colorSaturationGang;
 	delete contrastEnhancementGang;
 	delete luminanceLevelGang;
+	delete simpleGang;
+	delete eq2Gang;
 	delete biasGang;
 	delete spatialGang;
 	delete rangeGang;
@@ -150,11 +152,14 @@ TonemappingPanel::~TonemappingPanel() {
 	delete multiplierGang;
 	delete coneGang;
 	delete rodGang;
+	delete autoYGang;
+	delete pattalocalGang;
 	delete keyGang;
 	delete phiGang;
 	delete range2Gang;
 	delete lowerGang;
 	delete upperGang;
+	delete usescalesGang;
 	delete brightnessGang;
 	delete chromaticGang;
 	delete lightGang;
