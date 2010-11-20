@@ -46,7 +46,7 @@ DisplaySize::DisplaySize( int vres, float vd_screen_h, float vd_meters ) : view_
   ppd = vres * M_PI / (360* atan(0.5/vd_screen_h));
 }
 
-DisplaySize::DisplaySize( float ppd, float vd_meters ) : ppd( ppd ), view_d(vd_meters)
+DisplaySize::DisplaySize( float ppd, float vd_meters ) : view_d(vd_meters), ppd( ppd )
 {
 }
 
