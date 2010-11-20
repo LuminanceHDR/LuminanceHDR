@@ -53,13 +53,6 @@ gsl_cqpminimizer_alloc (const gsl_cqpminimizer_type * T, const size_t n, const s
 	  GSL_ERROR_VAL ("the problem dimension n must be greater than 0", GSL_ENOMEM, 0);  
   }
   
-  if(me < 0)
-  {
-	  free (minimizer);
-	  GSL_ERROR_VAL ("the number of equality constrains me must be greater or equal to 0", GSL_ENOMEM, 0);  
-
-  }
-
   if(mi <= 0)
   {
 	  free (minimizer);
