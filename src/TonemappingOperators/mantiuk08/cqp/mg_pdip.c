@@ -307,7 +307,7 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 		printf("\n *** Predictor Step ***\n");
 		printf("\nthe right-hand side of the KKT-system:\n");
 		for(i=0; i<state->r->size; i++)
-			printf("r[%d]=%f ",i,gsl_vector_get(state->r,i));
+			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
 		printf("\n");	
 		printf("\nsolution (delta_x,-delta_y,-delta_z):\n");
 		for(i=0; i<delta->size; i++)
@@ -369,7 +369,7 @@ mg_pdip_iterate (void *vstate, const gsl_cqp_data *cqp, gsl_vector *x, gsl_vecto
 		printf("\n *** Corrector Step ***\n");
 		printf("the right-hand side:\n");
 		for(i=0; i<state->r->size; i++)
-			printf("r[%d]=%f ",i,gsl_vector_get(state->r,i));
+			printf("r[%lu]=%f ",i,gsl_vector_get(state->r,i));
 		printf("\n");
 		for(i=0; i<delta->size; i++)
 			printf("%6.3f ",gsl_vector_get(delta,i));
@@ -671,24 +671,24 @@ print_vectors(const gsl_vector * x, const gsl_vector * y, const gsl_vector * z, 
 {
 	size_t i;
 	
-	printf("\nx[1 x %d]:\n",x->size);
+	printf("\nx[1 x %lu]:\n",x->size);
 	for(i=0; i<x->size; i++)
 		printf("%f  ",gsl_vector_get(x,i));
 	printf("\n");
 
         if( y != NULL ) {
-          printf("\ny[1 x %d]: (LM zu Ax=b)\n",y->size);
+          printf("\ny[1 x %lu]: (LM zu Ax=b)\n",y->size);
           for(i=0; i<y->size; i++)
             printf("%f  ",gsl_vector_get(y,i));
           printf("\n");
         }
 	
-	printf("\nz[1 x %d]: (LM zu Cx>=d)\n",z->size);
+	printf("\nz[1 x %lu]: (LM zu Cx>=d)\n",z->size);
 	for(i=0; i<z->size; i++)
 		printf("%f  ",gsl_vector_get(z,i));		
 	printf("\n");
 	
-	printf("\ns[1 x %d]: (Slack zu Cx>=d)\n",s->size);
+	printf("\ns[1 x %lu]: (Slack zu Cx>=d)\n",s->size);
 	for(i=0; i<s->size; i++)
 		printf("%f  ",gsl_vector_get(s,i));
 	printf("\n");	
