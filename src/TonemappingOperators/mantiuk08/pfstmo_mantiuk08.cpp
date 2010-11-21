@@ -51,8 +51,6 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   //float saturation_factor = 1.f;
   //float white_y = -2.f;
   //int temporal_filter = 0;
-  int itmax = 200;
-  float tol = 1e-3;
   
   if (!setluminance)
     white_y = -2.f;
