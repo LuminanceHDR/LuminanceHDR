@@ -6,6 +6,7 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 #QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2
 # Compilation optimization from Luminance 2.0.2 on
 QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer -g3 
+QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer -g3 
 # Compilation in Debug mode
 #QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
 
@@ -563,10 +564,17 @@ win32 {
 		message ("Debug statements ENABLED")
 	}
 
+	QMAKE_CXXFLAGS -= -mthreads
+
 	# this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 	CONFIG += windows
 	#CONFIG += debug
 	#CONFIG += console
+
+	#LibRAW
+	INCLUDEPATH += ../DEPs/include/libraw
+	LIBS += -L../DEPs/lib/libraw -lraw -lws2_32
+	DEFINES += LIBRAW_NODLL
 
 	#OpenEXR available in win32
 	LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
@@ -583,9 +591,9 @@ win32 {
 	LIBS        += -L../DEPs/lib/gsl
 
 	# This option is currently disabled
-	# win32-pthread, required by OpenMP (gcc-4.2.1-sjlj-2) (headers not required)
+	# win32-pthread, required by OpenMP (headers not required)
 	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
-	#LIBS        += -lpthread
+	LIBS        += -lpthread
 
 	#fftw3
 	LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm

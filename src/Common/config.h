@@ -24,7 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define LUMINANCEVERSION "2.0.1-Halloween"
+#define LUMINANCEVERSION "2.0.2-pre1"
 #define TMOSETTINGSVERSION "0.5"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
