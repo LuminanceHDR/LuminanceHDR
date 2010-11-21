@@ -37,14 +37,10 @@ typedef struct {
 typedef double  COLOR[3];       /* red, green, blue (or X,Y,Z) */
 //--- end of defines.h
 
-
-static int       width, height, scale;
 static COLOR   **image;
-static double ***convolved_image;
 static double    sigma_0, sigma_1;
 double         **luminance;
 
-static double    k                = 1. / (2. * 1.4142136);
 static double    key              = 0.18;
 static double    threshold        = 0.05;
 static double    phi              = 8.;
@@ -178,6 +174,9 @@ double kaiserbessel (double x, double y, double M)
  * FFT functions
  */
 #ifdef HAVE_ZFFT
+static int       width, height, scale;
+static double ***convolved_image;
+static double    k                = 1. / (2. * 1.4142136);
 
 void initialise_fft (int width, int height)
 {
