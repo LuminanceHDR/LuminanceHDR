@@ -38,7 +38,7 @@
 #define OUT RawProcessor.imgdata.params
 
 pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool writeOnDisk)
-{
+{  
   LibRaw RawProcessor;
   int ret;
   
@@ -53,7 +53,16 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool 
   }
 
   OUT.output_bps = 16;
-  OUT.gamm[0] = OUT.gamm[1] =  OUT.no_auto_bright    = 1;  
+
+  OUT.gamm[0] = 1/2.4;
+  OUT.gamm[1] = 12.92;
+  
+  OUT.no_auto_bright    = 1;  
+
+  OUT.highlight = 2;      // -H 2 // Highlight blend
+  OUT.user_qual = 3;      // -q 3 // Interpolation type
+  OUT.use_auto_wb = 1;    // -a // Auto-white balance
+  OUT.threshold = 100;    // noise reduction
 
   if( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS) {
     std::cout << "Error Processing RAW File" << std::endl;
@@ -109,7 +118,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool 
   std::cout << "W: " << image->width << " H: " << image->height << std::endl;
 
 
-  if (writeOnDisk) { // for align_image_stack and thumbnails
+  if (writeOnDisk)   // for align_image_stack and thumbnails
+  {
     QString fname(filename);
     QString tmpdir(tempdir);
     QFileInfo qfi(fname);
@@ -117,7 +127,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool 
 
     RawProcessor.dcraw_ppm_tiff_writer(outname.toAscii().constData());
 
-    if( (ret = RawProcessor.unpack_thumb() ) == LIBRAW_SUCCESS) {
+    if( (ret = RawProcessor.unpack_thumb() ) == LIBRAW_SUCCESS)
+    {
       QString suffix = T.tformat == LIBRAW_THUMBNAIL_JPEG ? "thumb.jpg" : "thumb.ppm"; 
       QString thumbname = tmpdir + "/" + qfi.baseName() + "." + suffix;
       RawProcessor.dcraw_thumb_writer(thumbname.toAscii().constData());
