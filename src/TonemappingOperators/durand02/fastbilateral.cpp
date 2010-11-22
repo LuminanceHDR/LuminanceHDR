@@ -86,7 +86,7 @@ public:
 
   void blur( const pfs::Array2DImpl *I, pfs::Array2DImpl *J )
   {
-    int i,x,y;
+    int x,y;
 
     int nx = I->getCols();
     int ny = I->getRows();
@@ -94,7 +94,6 @@ public:
 
     int ox = nx;
     int oy = ny/2 + 1;            // saves half of the data
-    int osize = ox * oy;
     
     for( y=0 ; y<ny ; y++ )
       for( x=0 ; x<nx ; x++ )
@@ -242,7 +241,7 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
 */
 
 void fastBilateralFilter( const pfs::Array2DImpl *I,
-  pfs::Array2DImpl *J, float sigma_s, float sigma_r, int downsample,
+  pfs::Array2DImpl *J, float sigma_s, float sigma_r, int /*downsample*/,
   ProgressHelper *ph )
 {
   int i;
