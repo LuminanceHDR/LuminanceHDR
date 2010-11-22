@@ -198,7 +198,7 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
     for(int x=0; x<ncols; x++) {
       (*la)(x,y) = LAL(myPyramid, x, y, lc_value);
       if((*la)(x,y) == 0.0)
-	(*la)(x,y) == EPSILON;
+	(*la)(x,y) = EPSILON;
     }
   }
   delete(myPyramid);
