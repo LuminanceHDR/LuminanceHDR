@@ -30,7 +30,7 @@ msec_timer::msec_timer():
 #ifdef WIN_TIMER
 wrk_time(0.0)
 #elif __APPLE__
-wrk_time(0), start_t(0), stop_t(0), conversion(1.0)
+start_t(0), stop_t(0), wrk_time(0), conversion(1.0)
 #else
 wrk_time(0.0)
 #endif

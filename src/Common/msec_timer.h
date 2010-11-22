@@ -55,8 +55,8 @@ private:
 #ifdef WIN_TIMER
   LARGE_INTEGER start_t;
   LARGE_INTEGER stop_t;
-  LARGE_INTEGER freq;
   double        wrk_time;
+  LARGE_INTEGER freq;
 #elif __APPLE__
   uint64_t start_t;
   uint64_t stop_t;
