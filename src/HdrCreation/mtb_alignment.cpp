@@ -94,7 +94,7 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
 		ldr_tiff_input.removeAt(1);
 		ldr_tiff_input.append(false);
 	}
-	delete shiftsX; delete shiftsY;
+	delete [] shiftsX; delete [] shiftsY;
 }
 
 
