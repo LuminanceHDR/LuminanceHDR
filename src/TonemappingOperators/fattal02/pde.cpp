@@ -164,11 +164,6 @@ void prolongate( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
 
-  float pad;
-  
-  float filterSamplingX = max( modff( dx, &pad ), 0.01f );
-  float filterSamplingY = max( modff( dy, &pad ), 0.01f );
-
   const int outRows = out->getRows();
   const int outCols = out->getCols();
 
@@ -264,16 +259,17 @@ void prolongate_old( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
     }
 }
 
-void exact_sollution( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
+void exact_sollution( pfs::Array2DImpl */*F*/, pfs::Array2DImpl *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
-  int sx = F->getCols();
+/*  int sx = F->getCols();
   int sy = F->getRows();
   int x,y;
 
   float h = 1.0/sqrt(sx*sy*1.0f);
   float h2 = h*h;
+*/
 
     setArray( U, 0.0f); return;   /* also works well?? */
   
@@ -402,7 +398,6 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
   int i;	// index for simple loops
   int k;	// index for iterating through levels
   int k2;	// index for iterating through levels in V-cycles
-  int x,y;
 
   // 1. restrict f to coarse-grid (by the way count the number of levels)
   //	  k=0: fine-grid = f
@@ -608,7 +603,7 @@ void solve_pde_sor( pfs::Array2DImpl *F, pfs::Array2DImpl *U, int maxits)
 
 //#define EPS 1.0e-14
 
-void asolve(unsigned long n, float b[], float x[], int itrnsp)
+void asolve(unsigned long /*n*/, float b[], float x[], int /*itrnsp*/)
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -616,7 +611,7 @@ void asolve(unsigned long n, float b[], float x[], int itrnsp)
       }
 }
 
-void atimes(unsigned long n, float x[], float res[], int itrnsp)
+void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
@@ -669,7 +664,7 @@ float snrm(unsigned long n, float sx[], int itol)
 void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
 {	
 	unsigned long j;
-	float ak,akden,bk,bkden,bknum,bnrm,dxnrm,xnrm,zm1nrm,znrm;
+	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,dxnrm,xnrm,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
 	p=new float[n+1];
