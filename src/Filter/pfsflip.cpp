@@ -30,16 +30,15 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <math.h>
+#include <sstream>
 
 #include "Libpfs/pfs.h"
 
-#include <sstream>
-
-#define PROG_NAME "pfsflip"
-
-class QuietException 
-{
-};
+//#define PROG_NAME "pfsflip"
+//
+//class QuietException 
+//{
+//};
 
 void flipArray( const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v );
 
