@@ -90,7 +90,6 @@ void gaussianBlur(pfs::Array2DImpl* I, pfs::Array2DImpl* L)
 {
   int width = I->getCols();
   int height = I->getRows();
-  int size = width*height;
   int x,y;
 
   pfs::Array2DImpl* T = new pfs::Array2DImpl(width,height);
@@ -308,8 +307,8 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 
   const int MSIZE = 32;         // minimum size of gaussian pyramid
 	
-  int size = width*height;
-  int x,y,i,k;
+  unsigned int size = width*height;
+  unsigned int x,y,i,k;
 
   // find max & min values, normalize to range 0..100 and take logarithm
   float minLum = (*Y)(0,0);
@@ -325,7 +324,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 
   // create gaussian pyramids
   int mins = (width<height) ? width : height;	// smaller dimension
-  int nlevels = 0;
+  unsigned int nlevels = 0;
   while( mins>=MSIZE )
   {
     nlevels++;
