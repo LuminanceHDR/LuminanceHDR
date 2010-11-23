@@ -10,11 +10,6 @@ QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer -g3
 # Compilation in Debug mode
 #QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
 
-# This option is currently disabled
-# Assume openmp-capable g++ (>=4.2)
-#QMAKE_CXXFLAGS += -fopenmp
-#QMAKE_LFLAGS += -fopenmp
-
 QT += xml webkit
 
 TARGET = luminance
@@ -503,6 +498,13 @@ DEFINES += I18NDIR=\\\"$$I18NDIR\\\"
 
 }
 
+unix {
+	# Assume openmp-capable g++ (>=4.2, better if GCC >= 4.4)
+	QMAKE_CXXFLAGS += -fopenmp
+	QMAKE_CFLAGS += -fopenmp
+	QMAKE_LFLAGS += -fopenmp
+}
+
 macx {
 	ICON = images/luminance.icns
 
@@ -552,8 +554,11 @@ macx {
 	# Apple Accelerate is enable in order to speed up vector operations
 	LIBS += -framework Accelerate
 
-	# for now, we disable OpenMP on MacOSX - have to wait for support in next Xcode
-	#QMAKE_CXXFLAGS -= -fopenmp
+	# XCode has a well know bug in the OpenMP implementation
+	# For this reason, OpenMP is currently disabled in Mac OS X
+	QMAKE_CXXFLAGS -= -fopenmp
+	QMAKE_CFLAGS -= -fopenmp
+	QMAKE_LFLAGS -= -fopenmp
 }
 
 win32 {
@@ -563,8 +568,6 @@ win32 {
 		DEFINES -= QT_NO_DEBUG_OUTPUT
 		message ("Debug statements ENABLED")
 	}
-
-	QMAKE_CXXFLAGS -= -mthreads
 
 	# this is just how my MinGW installation is. You gotta change it if you want to compile it in windows.
 	CONFIG += windows
@@ -590,11 +593,6 @@ win32 {
 	INCLUDEPATH += ../DEPs/include/gsl
 	LIBS        += -L../DEPs/lib/gsl
 
-	# This option is currently disabled
-	# win32-pthread, required by OpenMP (headers not required)
-	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
-	LIBS        += -lpthread
-
 	#fftw3
 	LIBS += -L../DEPs/lib/fftw3 -lfftw3f-3 -lm
 	DEFINES += HAVE_FFTW3F
@@ -606,6 +604,16 @@ win32 {
 
 	DEFINES += I18NDIR=(QCoreApplication::applicationDirPath()+\\\"/i18n\\\")
 	RC_FILE = images/luminance_ico.rc
+
+	# OpenMP makes the final build highly unstable in Windows and for this reason it is currently disable
+	# Try it at your own risk!
+	QMAKE_CXXFLAGS -= -fopenmp
+	QMAKE_CFLAGS -= -fopenmp
+	QMAKE_LFLAGS -= -fopenmp
+
+	# win32-pthread, required by OpenMP (headers not required)  É is it true!?
+	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
+	#LIBS        += -lpthread
 }
 
 

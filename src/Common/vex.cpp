@@ -25,6 +25,10 @@
 #include <iostream>
 #include "vex.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #ifdef __APPLE__
 #include <Accelerate/Accelerate.h>
 #endif
@@ -37,52 +41,54 @@
 
 void VEX_vsub(const float* A, const float* B, float* C, const int N)
 {
-//#ifdef __APPLE__  
-//  vDSP_vsub(B, 1, A, 1, C, 1, N); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
-//#elif __SSE__
+  //#ifdef __APPLE__  
+  //  vDSP_vsub(B, 1, A, 1, C, 1, N); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
+  //#elif __SSE__
 #ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
-  
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-  
   __m128 a, b, c;
   
-  while (LOOP1--)
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
+  
+#pragma omp parallel for schedule(static, 5120) private(a,b,c)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+4], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+8], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+12], c);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC       = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
     c = _mm_sub_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    _mm_store_ss(&pC[l], c);
   }
 #else
   // plain code
@@ -95,56 +101,57 @@ void VEX_vsub(const float* A, const float* B, float* C, const int N)
 
 void VEX_vsubs(const float* A, const float val, const float* B, float* C, const int N)
 {
-#ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
-  
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-  
+#ifdef __SSE__  
   __m128 a, b, c;
   const __m128 __val = _mm_set1_ps(val);
   
-  // 512 bits unrolling
-  while (LOOP1--)
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
+  
+#pragma omp parallel for schedule(static, 5120) private(a,b,c)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
     b = _mm_mul_ps(b, __val);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
     b = _mm_mul_ps(b, __val);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+4], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
     b = _mm_mul_ps(b, __val);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+8], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
     b = _mm_mul_ps(b, __val);
     c = _mm_sub_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+12], c);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC       = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
     b = _mm_mul_ss(b, __val);
     c = _mm_sub_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    _mm_store_ss(&pC[l], c);
   }
 #else
   // plain code
@@ -157,52 +164,54 @@ void VEX_vsubs(const float* A, const float val, const float* B, float* C, const 
 
 void VEX_vadd(const float* A, const float* B, float* C, const int N)
 {
-//#ifdef __APPLE__  
-//  vDSP_vadd(A, 1, B, 1, C, 1, N);
-//#elif __SSE__
+  //#ifdef __APPLE__  
+  //  vDSP_vadd(A, 1, B, 1, C, 1, N);
+  //#elif __SSE__
 #ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
-  
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-  
   __m128 a, b, c;
   
-  while (LOOP1--)
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
+  
+#pragma omp parallel for schedule(static, 5120) private(a,b,c)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+4], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+8], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+12], c);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC       = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
     c = _mm_add_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    _mm_store_ss(&pC[l], c);
   }
 #else
   // plain code
@@ -215,55 +224,57 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N)
 
 void VEX_vadds(const float* A, const float val, const float* B, float* C, const int N)
 {
-#ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
-  
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-  
+#ifdef __SSE__  
   const __m128 __val = _mm_set1_ps(val);
   __m128 a, b, c;
   
-  while (LOOP1--)
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
+  
+#pragma omp parallel for schedule(static, 5120) private(a,b,c)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
     b = _mm_mul_ps(b, __val);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
     b = _mm_mul_ps(b, __val);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+4], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
     b = _mm_mul_ps(b, __val);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+8], c);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
     b = _mm_mul_ps(b, __val);
     c = _mm_add_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    _mm_store_ps(&C[l+12], c);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
     b = _mm_mul_ss(b, __val);
     c = _mm_add_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    _mm_store_ss(&pC[l], c);
   }
 #else
   // plain code
@@ -276,46 +287,48 @@ void VEX_vadds(const float* A, const float val, const float* B, float* C, const 
 
 void VEX_vsmul(const float* I, const float val, float* O, const int N)
 {
-//#ifdef __APPLE__
-//  vDSP_vsmul (I, 1, &c, O, 1, N);
-//#elif __SSE__
+  //#ifdef __APPLE__
+  //  vDSP_vsmul (I, 1, &c, O, 1, N);
+  //#elif __SSE__
 #ifdef __SSE__
-  const float* pI = I;
-  float* pO = O;
-  
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-  
   const __m128 __val = _mm_set1_ps(val);
   __m128 t;
   
-  while (LOOP1--)
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
+  
+#pragma omp parallel for schedule(static, 5120) private(t)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pI, FETCH_DISTANCE);
-    PREFETCH_T0(pO, FETCH_DISTANCE);
+    PREFETCH_T0(&I[l], FETCH_DISTANCE);
+    PREFETCH_T0(&O[l], FETCH_DISTANCE);
     
-    t = _mm_load_ps(pI);      pI += 4;
+    t = _mm_load_ps(&I[l]);
     t = _mm_mul_ps(t, __val);
-    _mm_store_ps(pO, t);      pO += 4;
+    _mm_store_ps(&O[l], t);
     
-    t = _mm_load_ps(pI);      pI += 4;
+    t = _mm_load_ps(&I[l+4]);
     t = _mm_mul_ps(t, __val);
-    _mm_store_ps(pO, t);      pO += 4;
+    _mm_store_ps(&O[l+4], t);
     
-    t = _mm_load_ps(pI);      pI += 4;
+    t = _mm_load_ps(&I[l+8]);
     t = _mm_mul_ps(t, __val);
-    _mm_store_ps(pO, t);      pO += 4;
+    _mm_store_ps(&O[l+8], t);
     
-    t = _mm_load_ps(pI);      pI += 4;
+    t = _mm_load_ps(&I[l+12]);
     t = _mm_mul_ps(t, __val);
-    _mm_store_ps(pO, t);      pO += 4;
+    _mm_store_ps(&O[l+12], t);
   }
   
-  while (LOOP2--)
+  const float* pI = &I[ELEMS_LOOP1];
+  float* pO       = &O[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    t = _mm_load_ss(pI);      pI ++;
+    t = _mm_load_ss(&pI[l]);
     t = _mm_mul_ss(t, __val);
-    _mm_store_ss(pO, t);      pO ++;
+    _mm_store_ss(&pO[l], t);
   }
 #else 
   // plain code
@@ -332,48 +345,50 @@ void VEX_vmul(float* A, float* B, float* C, const int N)
   //vDSP_vmul(B, 1, A, 1, C, 1, N);
   //#elif __SSE__
 #ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
+  __m128 a, b;
   
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
   
-  __m128 a, b, c;
-  
-  while (LOOP1--)
+#pragma omp parallel for schedule(static, 5120) private(a, b)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_mul_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
+    a = _mm_mul_ps(a, b);
+    _mm_store_ps(&C[l], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_mul_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
+    a = _mm_mul_ps(a, b);
+    _mm_store_ps(&C[l+4], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_mul_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
+    a = _mm_mul_ps(a, b);
+    _mm_store_ps(&C[l+8], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_mul_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
+    a = _mm_mul_ps(a, b);
+    _mm_store_ps(&C[l+12], a);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC       = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
-    c = _mm_mul_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
+    a = _mm_mul_ss(a, b);
+    _mm_store_ss(&pC[l], a);
   }
 #else
   // plain code
@@ -386,52 +401,54 @@ void VEX_vmul(float* A, float* B, float* C, const int N)
 
 void VEX_vdiv(float* A, float* B, float* C, const int N)
 {
-//#ifdef __APPLE__  
-//  vDSP_vdiv(B, 1, A, 1, C, 1, N);
-//#elif __SSE__
-#ifdef __SSE__
-  const float* pA = A;
-  const float* pB = B;
-  float* pC = C;
+  //#ifdef __APPLE__  
+  //  vDSP_vdiv(B, 1, A, 1, C, 1, N);
+  //#elif __SSE__
+#ifdef __SSE__   
+  __m128 a, b;
   
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
   
-  __m128 a, b, c;
-  
-  while (LOOP1--)
+#pragma omp parallel for schedule(static, 5120) private(a, b)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pA, FETCH_DISTANCE);
-    PREFETCH_T0(pB, FETCH_DISTANCE);
-    PREFETCH_T0(pC, FETCH_DISTANCE);
+    PREFETCH_T0(&A[l], FETCH_DISTANCE);
+    PREFETCH_T0(&B[l], FETCH_DISTANCE);
+    PREFETCH_T0(&C[l], FETCH_DISTANCE);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_div_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l]);
+    b = _mm_load_ps(&B[l]);
+    a = _mm_div_ps(a, b);
+    _mm_store_ps(&C[l], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_div_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+4]);
+    b = _mm_load_ps(&B[l+4]);
+    a = _mm_div_ps(a, b);
+    _mm_store_ps(&C[l+4], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_div_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+8]);
+    b = _mm_load_ps(&B[l+8]);
+    a = _mm_div_ps(a, b);
+    _mm_store_ps(&C[l+8], a);
     
-    a = _mm_load_ps(pA);      pA += 4;
-    b = _mm_load_ps(pB);      pB += 4;
-    c = _mm_div_ps(a, b);
-    _mm_store_ps(pC, c);      pC += 4;
+    a = _mm_load_ps(&A[l+12]);
+    b = _mm_load_ps(&B[l+12]);
+    a = _mm_div_ps(a, b);
+    _mm_store_ps(&C[l+12], a);
   }
   
-  while (LOOP2--)
+  const float* pA = &A[ELEMS_LOOP1];
+  const float* pB = &B[ELEMS_LOOP1];
+  float* pC       = &C[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    a = _mm_load_ss(pA);      pA ++;
-    b = _mm_load_ss(pB);      pB ++;
-    c = _mm_div_ss(a, b);
-    _mm_store_ss(pC, c);      pC ++;
+    a = _mm_load_ss(&pA[l]);
+    b = _mm_load_ss(&pB[l]);
+    a = _mm_div_ss(a, b);
+    _mm_store_ss(&pC[l], a);
   }
 #else
   // plain code
@@ -444,27 +461,29 @@ void VEX_vdiv(float* A, float* B, float* C, const int N)
 
 void VEX_vcopy(const float* I, float* O, const int N)
 {
-#ifdef __SSE__
-  const float* pI = I;
-  float* pO = O;
+#ifdef __SSE__ 
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
   
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-    
-  while (LOOP1--)
+#pragma omp parallel for schedule(static, 5120)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pO, FETCH_DISTANCE);
-    PREFETCH_T0(pI, FETCH_DISTANCE);
+    PREFETCH_T0(&O[l], FETCH_DISTANCE);
+    PREFETCH_T0(&I[l], FETCH_DISTANCE);
     
-    _mm_store_ps(pO, _mm_load_ps(pI));      pI += 4; pO += 4;
-    _mm_store_ps(pO, _mm_load_ps(pI));      pI += 4; pO += 4; 
-    _mm_store_ps(pO, _mm_load_ps(pI));      pI += 4; pO += 4; 
-    _mm_store_ps(pO, _mm_load_ps(pI));      pI += 4; pO += 4; 
+    _mm_store_ps(&O[l],    _mm_load_ps(&I[l]));
+    _mm_store_ps(&O[l+4],  _mm_load_ps(&I[l+4]));
+    _mm_store_ps(&O[l+8],  _mm_load_ps(&I[l+8]));
+    _mm_store_ps(&O[l+12], _mm_load_ps(&I[l+12]));
   }
   
-  while (LOOP2--)
+  const float* pI = &I[ELEMS_LOOP1];
+  float* pO       = &O[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    _mm_store_ss(pO, _mm_load_ss(pI));      pI ++; pO ++;
+    _mm_store_ss(&pO[l], _mm_load_ss(&pI[l]));
   }
   _mm_sfence();
 #else 
@@ -479,26 +498,28 @@ void VEX_vcopy(const float* I, float* O, const int N)
 void VEX_vset(float* IO, const float val, const int N)
 {
 #ifdef __SSE__
-  float* pIO = IO;
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
   
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-
   const __m128 __val = _mm_set1_ps(val);
   
-  while (LOOP1--)
+#pragma omp parallel for schedule(static, 5120)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pIO, FETCH_DISTANCE);
+    PREFETCH_T0(&IO[l], FETCH_DISTANCE);
     
-    _mm_store_ps(pIO, __val);      pIO += 4;
-    _mm_store_ps(pIO, __val);      pIO += 4;
-    _mm_store_ps(pIO, __val);      pIO += 4;
-    _mm_store_ps(pIO, __val);      pIO += 4;
+    _mm_store_ps(&IO[l], __val);
+    _mm_store_ps(&IO[l+4], __val);
+    _mm_store_ps(&IO[l+8], __val);
+    _mm_store_ps(&IO[l+12], __val);
   }
   
-  while (LOOP2--)
+  float* pIO = &IO[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    _mm_store_ss(pIO, __val);      pIO ++;
+    _mm_store_ss(&pIO[l], __val);
   }
 #else 
   // plain code
@@ -512,26 +533,28 @@ void VEX_vset(float* IO, const float val, const int N)
 void VEX_vreset(float* IO, const int N)
 {
 #ifdef __SSE__
-  float* pIO = IO;
+  const int LOOP1       = (N >> 4);
+  const int ELEMS_LOOP1 = (LOOP1 << 4);
+  const int LOOP2       = (N - ELEMS_LOOP1);
   
-  int LOOP1 = (N >> 4);
-  int LOOP2 = (N - (LOOP1 << 4));
-
   const __m128 _zero = _mm_setzero_ps();
   
-  while (LOOP1--)
+  #pragma omp parallel for schedule(static, 5120)
+  for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
-    PREFETCH_T0(pIO, FETCH_DISTANCE);
+    PREFETCH_T0(&IO[l], FETCH_DISTANCE);
     
-    _mm_store_ps(pIO, _zero);      pIO += 4;
-    _mm_store_ps(pIO, _zero);      pIO += 4;
-    _mm_store_ps(pIO, _zero);      pIO += 4;
-    _mm_store_ps(pIO, _zero);      pIO += 4;
+    _mm_store_ps(&IO[l], _zero);
+    _mm_store_ps(&IO[l+4], _zero);
+    _mm_store_ps(&IO[l+8], _zero);
+    _mm_store_ps(&IO[l+12], _zero);
   }
   
-  while (LOOP2--)
+  float* pIO = &IO[ELEMS_LOOP1];
+  
+  for (int l = 0; l < LOOP2; l++)
   {
-    _mm_store_ss(pIO, _zero);      pIO ++;
+    _mm_store_ss(&pIO[l], _zero);
   }
 #else 
   // plain code
@@ -548,6 +571,7 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
 #ifdef __APPLE__
   vDSP_dotpr(I1, 1, I2, 1, &val, N);
 #elif __SSE__
+  //#pragma omp parallel for reduction(+:val) schedule(static, 5120)
   for (int j=0; j<N; j++)
   {
     val += I1[j] * I2[j];
@@ -559,31 +583,3 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
   }
 #endif
 }
-
-//void mm_3x3(float i1, float i2, float i3, float &o1, float &o2, float &o3, const float mat[3][3])
-//{
-//  const __m128 d      = _mm_set_ps(0.0f, i3, i2, i1);
-//  const __m128 mat_r1 = _mm_set_ps(0.0f, mat[0][2], mat[0][1], mat[0][0]);
-//  const __m128 mat_r2 = _mm_set_ps(0.0f, mat[1][2], mat[1][1], mat[1][0]);
-//  const __m128 mat_r3 = _mm_set_ps(0.0f, mat[2][2], mat[2][1], mat[2][0]);
-//  
-//  register __m128 t;
-//  
-//  // row 1
-//  t = _mm_mul_ps(d, mat_r1);
-//  t = _mm_hadd_ps(t, ZERO);
-//  t = _mm_hadd_ps(t, ZERO);
-//  _mm_store_ss(&o1, t);
-//          
-//  // row 2
-//  t = _mm_mul_ps(d, mat_r2);
-//  t = _mm_hadd_ps(t, ZERO);
-//  t = _mm_hadd_ps(t, ZERO);
-//  _mm_store_ss(&o2, t);
-//  
-//  // row 3
-//  t = _mm_mul_ps(d, mat_r3);
-//  t = _mm_hadd_ps(t, ZERO);
-//  t = _mm_hadd_ps(t, ZERO);
-//  _mm_store_ss(&o3, t);
-//}

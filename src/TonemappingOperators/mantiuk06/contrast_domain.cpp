@@ -50,6 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -74,9 +75,6 @@ typedef struct pyramid_s {
   struct pyramid_s* next;
   struct pyramid_s* prev;
 } pyramid_t;
-
-//extern float xyz2rgbD65Mat[3][3];
-//extern float rgb2xyzD65Mat[3][3];
 
 #define PYRAMID_MIN_PIXELS      3
 #define LOOKUP_W_TO_R           107
@@ -190,7 +188,6 @@ inline int imin(int a, int b)
   return a < b ? a : b;
 }
 
-
 // upsample the matrix
 // upsampled matrix is twice bigger in each direction than data[]
 // res should be a pointer to allocated memory for bigger matrix
@@ -227,7 +224,6 @@ void matrix_upsample(const int outCols, const int outRows, const float* const in
     }
   }
 }
-
 
 // downsample the matrix
 void matrix_downsample(const int inCols, const int inRows, const float* const data, float* const res)
@@ -433,6 +429,7 @@ inline void calculate_and_add_divergence(const int cols, const int rows, const f
     divG[kx] += divGx + divGy;			
   }
   
+#pragma omp parallel for schedule(static, 5120) private(divGx, divGy)
   for(int ky=1; ky<rows; ky++)
   {
     // kx = 0
@@ -1078,7 +1075,7 @@ inline void transform_to_R(const int n, float* const G, float detail_factor)
 {
   const float log10=2.3025850929940456840179914546844*detail_factor;
   #pragma omp parallel for schedule(static)
-  for(int j=0;j<n;j++)
+  for(int j=0; j<n; j++)
   {
     // G to W
     const float absG = fabsf(G[j]);
@@ -1117,8 +1114,8 @@ inline void transform_to_G(const int n, float* const R, float detail_factor)
 {  
   const float log10=2.3025850929940456840179914546844*detail_factor; //here we are actually changing the base of logarithm
   #pragma omp parallel for schedule(static)
-  for(int j=0;j<n;j++){
-    
+  for(int j=0;j<n;j++)
+  {
     // RESP to W
     int sign;
     if(R[j] < 0)
@@ -1261,7 +1258,9 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   const float norm = 1.0f / (float) total_pixels;
   #pragma omp parallel for schedule(static)
   for (int i = 0; i < total_pixels; i++)
+  {
     hist[i].cdf = ((float) i) * norm;
+  }
   
   // Recalculate in terms of indexes
   qsort(hist, total_pixels, sizeof(struct hist_data), hist_data_index);
@@ -1269,7 +1268,8 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   //Remap gradient magnitudes
   l = pp;
   index = 0;
-  while( l != NULL ) {
+  while( l != NULL )
+  {
     const int pixels = l->rows*l->cols;
     const int offset = index;
     
@@ -1327,19 +1327,23 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   
   /* Contrast map */
   if( contrastFactor > 0.0f )
+  {
     pyramid_gradient_multiply(pp, contrastFactor); // Contrast mapping
+  }
   else
+  {
     contrast_equalization(pp, -contrastFactor); // Contrast equalization
+  }
 	
-  pyramid_transform_to_G(pp, detailfactor); // transform R to gradients
+  pyramid_transform_to_G(pp, detailfactor);   // transform R to gradients
   transform_to_luminance(pp, Y, ph, bcg, itmax, tol); // transform gradients to luminance Y
   pyramid_free(pp);
   
   /* Renormalize luminance */
   float* temp = matrix_alloc(n);
 	
-  matrix_copy(n, Y, temp); // copy Y to temp
-  qsort(temp, n, sizeof(float), sort_float); // sort temp in ascending order
+  matrix_copy(n, Y, temp);                    // copy Y to temp
+  qsort(temp, n, sizeof(float), sort_float);  // sort temp in ascending order
 	
   // const float median = (temp[(int)((n-1)/2)] + temp[(int)((n-1)/2+1)]) * 0.5f; // calculate median
   const float CUT_MARGIN = 0.1f;
