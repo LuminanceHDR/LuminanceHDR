@@ -30,7 +30,13 @@
 
 #include "Libpfs/pfs.h"
 
-pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize);
+namespace pfs
+{
+  pfs::Frame* resizeFrame(pfs::Frame* frame, int xSize);
+  
+  void downsampleArray(const pfs::Array2D *from, pfs::Array2D *to);
+}
 
-void downsampleArray( const pfs::Array2D *from, pfs::Array2D *to );
+
+
 #endif

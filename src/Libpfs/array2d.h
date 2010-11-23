@@ -39,7 +39,7 @@
 #define __ARRAY2D_H__
 
 namespace pfs
-{
+{ 
   /**
    * @brief Interface for 2 dimensional array of floats.
    *
@@ -190,9 +190,8 @@ namespace pfs
     friend void transformXYZ2SRGB(const Array2D *X, const Array2D *Y, const Array2D *Z, Array2D *R, Array2D *G, Array2D *B);
     
     // Array2D manipulation
-    //friend void downsampleArray(const Array2D *from, Array2D *to);
-  };       
-  // Array2DImpl
+    friend void downsampleArray(const Array2D *from, Array2D *to);
+  };
   
   void copyArray(const Array2D *from, Array2D *to);  
   void setArray(Array2D *array, const float value);

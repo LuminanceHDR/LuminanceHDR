@@ -21,9 +21,8 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include "Filter/pfssize.h"
 #include "ResizeDialog.h"
-
-pfs::Frame* resizeFrame(pfs::Frame* inpfsframe, int _xSize);
 
 ResizeDialog::ResizeDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent),original(orig) {
 	setupUi(this);
@@ -68,7 +67,7 @@ void ResizeDialog::scaledPressed() {
 		emit reject();
 		return;
 	}
-	resized=resizeFrame(original,resized_width);
+	resized = pfs::resizeFrame(original,resized_width);
 	accept();
 }
 

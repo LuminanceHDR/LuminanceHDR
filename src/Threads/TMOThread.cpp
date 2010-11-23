@@ -50,7 +50,7 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 	else if ( opts.xsize != opts.origxsize )
   {
     // workingframe = "resize"
-    workingframe = resizeFrame(frame, opts.xsize);
+    workingframe = pfs::resizeFrame(frame, opts.xsize);
 	}
   else
   {
