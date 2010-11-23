@@ -39,10 +39,10 @@
 
 #include "ui_about.h"
 #include "ui_Splash.h"
+#include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
 #include "Batch/BatchTMDialog.h"
-// #include "Fileformat/pfstiff.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
@@ -52,7 +52,6 @@
 #include "Viewers/HdrViewer.h"
 #include "MainWindow.h"
 #include "DnDOption.h"
-
 
 MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrowser(NULL)
 {
@@ -747,8 +746,9 @@ void MainWindow::splashClose() {
 	splash->close();
 }
 
-void MainWindow::aboutLuminance() {
-	QDialog *about=new QDialog(this);
+void MainWindow::aboutLuminance()
+{
+	QDialog *about = new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutLuminance ui;
 	ui.setupUi(about);
@@ -756,17 +756,19 @@ void MainWindow::aboutLuminance() {
 	ui.thanksToBox->setOpenExternalLinks(true);
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)));
-
-        bool license_file_not_found=true;
+  
+  bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	QStringList paths = QStringList("/usr/share/luminance") << "/usr/local/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
-	foreach (QString path,paths) {
+  QStringList paths = QStringList( BASEDIR "/share/doc/luminance") << BASEDIR "/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
+	foreach (QString path,paths)
+  {
 		QString fname(path+QString("/LICENSE"));
 #ifdef WIN32
 		fname+=".txt";
 #endif
-		if (QFile::exists(fname)) {
+		if (QFile::exists(fname))
+    {
 			QFile file(fname);
 			//try opening it
 			if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -778,7 +780,8 @@ void MainWindow::aboutLuminance() {
 			break;
 		}
 	}
-	if (license_file_not_found) {
+	if (license_file_not_found)
+  {
 		ui.GPLbox->setOpenExternalLinks(true);
 		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
 		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));

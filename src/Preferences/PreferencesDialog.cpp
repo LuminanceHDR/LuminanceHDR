@@ -26,12 +26,14 @@
 #include <QWhatsThis>
 #include <QMessageBox>
 
+#include "Common/archs.h"
 #include "Common/config.h"
 #include "PreferencesDialog.h"
 
-PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
+PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p)
+{
 	setupUi(this);
-
+  
 	fromIso639ToGuiIndex["cs"]=0;
 	fromIso639ToGuiIndex["en"]=1;
 	fromIso639ToGuiIndex["fr"]=2;
@@ -43,7 +45,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromIso639ToGuiIndex["es"]=8;
 	fromIso639ToGuiIndex["tr"]=9;
 	fromIso639ToGuiIndex["hu"]=10;
-
+  
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="en";
 	fromGuiIndexToIso639[2]="fr";
@@ -55,38 +57,42 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromGuiIndexToIso639[8]="es";
 	fromGuiIndexToIso639[9]="tr";
 	fromGuiIndexToIso639[10]="hu";
-
+  
 	luminance_options=LuminanceOptions::getInstance();
 	negcolor=luminance_options->negcolor;
 	infnancolor=luminance_options->naninfcolor;
-
+  
 	from_options_to_gui(); //update the gui in order to show the options
 	connect(negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
 	connect(ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
 	
-/**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
-	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-*	whatsThisButton->setToolButtonStyle(style); */
+  /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
+   Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+   *	whatsThisButton->setToolButtonStyle(style); */
 }
 
-void PreferencesDialog::negative_clicked() {
+void PreferencesDialog::negative_clicked()
+{
 	negcolor = QColorDialog::getColor(negcolor, this);
 	change_color_of(negativeColorButton,&negcolor);
 }
-void PreferencesDialog::infnan_clicked() {
+void PreferencesDialog::infnan_clicked()
+{
 	infnancolor = QColorDialog::getColor(infnancolor, this);
 	change_color_of(ifnanColorButton,&infnancolor);
 }
 
-void PreferencesDialog::change_color_of(QPushButton *button, QColor *newcolor) {
+void PreferencesDialog::change_color_of(QPushButton *button, QColor *newcolor)
+{
 	if (newcolor->isValid()) {
 		button->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(newcolor->red()).arg(newcolor->green()).arg(newcolor->blue()));
 	}
 }
 
-QStringList PreferencesDialog::sanitizeDCRAWparams() {
+QStringList PreferencesDialog::sanitizeDCRAWparams()
+{
 	bool dcraw_opt_was_ok=false;
 	QStringList temp_dcraw_options=dcrawParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
 	int idx_T=temp_dcraw_options.indexOf("-T");
@@ -100,33 +106,34 @@ QStringList PreferencesDialog::sanitizeDCRAWparams() {
 		QMessageBox::information(this,tr("Option -T..."),tr("LuminanceHDR requires dcraw to be executed with the \"-T\" option. Command line options have been corrected."));
 	}
 	return temp_dcraw_options;
-
+  
 }
 
-QStringList PreferencesDialog::sanitizeAISparams() {
+QStringList PreferencesDialog::sanitizeAISparams()
+{
 	bool align_opt_was_ok=false;
 	//check if we have '-a "aligned_"'
 	QStringList temp_ais_options=aisParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
 	int idx_a=temp_ais_options.indexOf("-a");
 	//if we don't have -a
 	if (idx_a==-1) {
-// 		qDebug("missing, adding");
+    // 		qDebug("missing, adding");
 		temp_ais_options+="-a";
 		temp_ais_options+="aligned_";
 	}
 	//if we have -a at the very end (without the prefix)
 	else if (idx_a==temp_ais_options.size()-1) {
 		temp_ais_options+="aligned_";
-// 		qDebug("-a at end, adding aligned_");
+    // 		qDebug("-a at end, adding aligned_");
 	}
 	//if we have -a in the middle without the prefix
 	else if ( (idx_a!=-1 && temp_ais_options.at(idx_a+1) != "aligned_") ) {
-// 		qDebug("-a in the middle without the prefix after");
+    // 		qDebug("-a in the middle without the prefix after");
 		if (!temp_ais_options.at(idx_a+1).startsWith("-")) {
-// 			qDebug("next is bad prefix, removing");
+      // 			qDebug("next is bad prefix, removing");
 			temp_ais_options.removeAt(idx_a+1);
 		}
-// 		qDebug("now adding");
+    // 		qDebug("now adding");
 		temp_ais_options.insert(idx_a+1,"aligned_");
 	} else {
 		align_opt_was_ok=true;
@@ -137,69 +144,71 @@ QStringList PreferencesDialog::sanitizeAISparams() {
 	return temp_ais_options;
 }
 
-void PreferencesDialog::ok_clicked() {
+void PreferencesDialog::ok_clicked()
+{
 	if (luminance_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
 		QMessageBox::information(this,tr("Please restart..."),tr("Please restart LuminanceHDR to use the new language (%1).").arg(languageComboBox->currentText()));
 	luminance_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
 	settings.setValue(KEY_GUI_LANG,luminance_options->gui_lang);
-
+  
 	settings.beginGroup(GROUP_EXTERNALTOOLS);
-		luminance_options->dcraw_options=sanitizeDCRAWparams();
-		settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,luminance_options->dcraw_options);
-
-		luminance_options->align_image_stack_options=sanitizeAISparams();
-		settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,luminance_options->align_image_stack_options);
+  luminance_options->dcraw_options=sanitizeDCRAWparams();
+  settings.setValue(KEY_EXTERNAL_DCRAW_OPTIONS,luminance_options->dcraw_options);
+  
+  luminance_options->align_image_stack_options=sanitizeAISparams();
+  settings.setValue(KEY_EXTERNAL_AIS_OPTIONS,luminance_options->align_image_stack_options);
 	settings.endGroup();
-
+  
 	settings.beginGroup(GROUP_HDRVISUALIZATION);
-		if(negcolor.rgba() != luminance_options->negcolor) {
-			luminance_options->negcolor=negcolor.rgba();
-			settings.setValue(KEY_NEGCOLOR,negcolor.rgba());
-		}
-		if(infnancolor.rgba() != luminance_options->naninfcolor) {
-			luminance_options->naninfcolor=infnancolor.rgba();
-			settings.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
-		}
+  if(negcolor.rgba() != luminance_options->negcolor) {
+    luminance_options->negcolor=negcolor.rgba();
+    settings.setValue(KEY_NEGCOLOR,negcolor.rgba());
+  }
+  if(infnancolor.rgba() != luminance_options->naninfcolor) {
+    luminance_options->naninfcolor=infnancolor.rgba();
+    settings.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
+  }
 	settings.endGroup();
-
+  
 	settings.beginGroup(GROUP_TONEMAPPING);
-		if (lineEditTempPath->text() != luminance_options->tempfilespath) {
-			luminance_options->tempfilespath=lineEditTempPath->text();
-			settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
-		}
-		if (batchLdrFormatComboBox->currentText() != luminance_options->batch_ldr_format) {
-			luminance_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
-			settings.setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
-		}
-		if (numThreadspinBox->value() != luminance_options->num_threads) {
-			luminance_options->num_threads=numThreadspinBox->value();
-			settings.setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
-		}
+  if (lineEditTempPath->text() != luminance_options->tempfilespath) {
+    luminance_options->tempfilespath=lineEditTempPath->text();
+    settings.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
+  }
+  if (batchLdrFormatComboBox->currentText() != luminance_options->batch_ldr_format) {
+    luminance_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
+    settings.setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
+  }
+  if (numThreadspinBox->value() != luminance_options->num_threads) {
+    luminance_options->num_threads=numThreadspinBox->value();
+    settings.setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
+  }
 	settings.endGroup();
-
+  
 	settings.beginGroup(GROUP_TIFF);
-		if (logLuvRadioButton->isChecked() != luminance_options->saveLogLuvTiff) {
-			luminance_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
-			settings.setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
-		}
+  if (logLuvRadioButton->isChecked() != luminance_options->saveLogLuvTiff) {
+    luminance_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
+    settings.setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
+  }
 	settings.endGroup();
-
+  
 	settings.beginGroup(GROUP_TMOWINDOW);
-		if (checkBoxTMOWindowsMax->isChecked() != luminance_options->tmowindow_max) {
-			luminance_options->tmowindow_max=checkBoxTMOWindowsMax->isChecked();
-			settings.setValue(KEY_TMOWINDOW_MAX,checkBoxTMOWindowsMax->isChecked());
-		}
-
-		if (checkBoxTMOWindowsHDR->isChecked() != luminance_options->tmowindow_showprocessed) {
-			luminance_options->tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
-			settings.setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
-		}
+  if (checkBoxTMOWindowsMax->isChecked() != luminance_options->tmowindow_max) {
+    luminance_options->tmowindow_max=checkBoxTMOWindowsMax->isChecked();
+    settings.setValue(KEY_TMOWINDOW_MAX,checkBoxTMOWindowsMax->isChecked());
+  }
+  
+  if (checkBoxTMOWindowsHDR->isChecked() != luminance_options->tmowindow_showprocessed) {
+    luminance_options->tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
+    settings.setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
+  }
 	settings.endGroup();
 	
 	accept();
 }
 
-void PreferencesDialog::from_options_to_gui() {
+void PreferencesDialog::from_options_to_gui()
+{
 	//language: if by any chance luminance_options->gui_lang does NOT contain one of the valid 2 chars
 	//codes which are key for the fromIso639ToGuiIndex QMap, provide the default "en"
 	if (!fromIso639ToGuiIndex.contains(luminance_options->gui_lang))
@@ -227,33 +236,37 @@ void PreferencesDialog::from_options_to_gui() {
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
 }
 
-PreferencesDialog::~PreferencesDialog() {
+PreferencesDialog::~PreferencesDialog()
+{
 }
 
-void PreferencesDialog::updateLineEditString() {
-	QString dir=QFileDialog::getExistingDirectory(
-	this,
-	tr("Choose a directory"),
-	QDir::currentPath(),
-	QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
-	if (!dir.isEmpty()) {
+void PreferencesDialog::updateLineEditString()
+{
+	QString dir=QFileDialog::getExistingDirectory(this,
+                                                tr("Choose a directory"),
+                                                QDir::currentPath(),
+                                                QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
+	if (!dir.isEmpty())
+  {
 		lineEditTempPath->setText(dir);
 	}
 }
 
 //TODO
-void PreferencesDialog::helpDcrawParamsButtonClicked() {
+void PreferencesDialog::helpDcrawParamsButtonClicked()
+{
 	/*
-	QDialog *help=new QDialog();
-	help->setAttribute(Qt::WA_DeleteOnClose);
-	Ui::HelpDialog ui;
-	ui.setupUi(help);
-	ui.tb->setSearchPaths(QStringList("/usr/share/luminance/html") << "/usr/local/share/luminance/html" << "./html");
-	ui.tb->setSource(QUrl("dcraw.html"));
-	help->exec();
-	*/
+   QDialog *help=new QDialog();
+   help->setAttribute(Qt::WA_DeleteOnClose);
+   Ui::HelpDialog ui;
+   ui.setupUi(help);
+   ui.tb->setSearchPaths(QStringList( BASEDIR "/share/doc/luminance/html") << BASEDIR "/share/luminance/html" << "./html");
+   ui.tb->setSource(QUrl("dcraw.html"));
+   help->exec();
+   */
 }
 
-void PreferencesDialog::enterWhatsThis() {
+void PreferencesDialog::enterWhatsThis()
+{
 	QWhatsThis::enterWhatsThisMode();
 }

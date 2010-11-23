@@ -24,6 +24,7 @@
 #include <image.hpp>
 #include <cmath>
 
+#include "arch/freebsd/math.h"
 #include "ExifOperations.h"
 
 void ExifOperations::writeExifData(const std::string& filename, const std::string& comment) {

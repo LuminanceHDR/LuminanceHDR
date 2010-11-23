@@ -28,6 +28,8 @@
 #include <QVector>
 #include "mtb_alignment.h"
 
+#include "arch/freebsd/math.h"
+
 QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
 	QImage *out=new QImage(in->size(),QImage::Format_ARGB32);

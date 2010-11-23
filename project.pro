@@ -45,6 +45,7 @@ FORMS = forms/MainWindow.ui \
 HEADERS +=  src/Libpfs/array2d.h \
 			src/Libpfs/colorspace.h \
 			src/Libpfs/pfs.h \
+			src/Common/archs.h \
 			src/Common/global.h \
 			src/Common/options.h \
 			src/Common/PanIconWidget.h \

@@ -35,6 +35,7 @@
 #include <assert.h>
 
 #include "ui_about.h"
+#include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/Gang.h"
 #include "Exif/ExifOperations.h"
@@ -45,22 +46,22 @@
 #include "Viewers/LdrViewer.h"
 #include "TonemappingWindow.h"
 
-//#include <iostream>
-
-TonemappingWindow::~TonemappingWindow() {
+TonemappingWindow::~TonemappingWindow()
+{
 	delete progressbar;
 }
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0) {
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0)
+{
 	setupUi(this);
-
+  
 	setWindowTitle("Luminance HDR "LUMINANCEVERSION" - Tonemapping Window - ");
-
+  
 	luminance_options=LuminanceOptions::getInstance();
 	//cachepath=LuminanceOptions::getInstance()->tempfilespath;
-
+  
 	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
-
+  
 	prefixname=QFileInfo(filename).completeBaseName();
 	setWindowTitle(windowTitle() + prefixname);
 	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
@@ -72,25 +73,25 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	tmToolBarOptsGroup->addAction(actionText_Alongside_Icons);
 	tmToolBarOptsGroup->addAction(actionText_Only);
 	menuToolbars->addAction(tmToolBar->toggleViewAction());
-
+  
   setUnifiedTitleAndToolBarOnMac(true);
   
 	load_options();
-
+  
 	mdiArea = new QMdiArea(this);
 	mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
 	mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	setCentralWidget(mdiArea);
-
+  
 	dock = new QDockWidget(tr("Tone Mapping Options"), this);
 	dock->setObjectName("Tone Mapping Options"); // for save and restore docks state
 	//dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
-
+  
 	threadManager = new ThreadManager(this);
-
+  
 	tmPanel = new TonemappingPanel(dock);
 	dock->setWidget(tmPanel);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
@@ -111,14 +112,14 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	restoreState( settings.value("TonemappingWindowState").toByteArray() );
 	restoreGeometry(settings.value("TonemappingWindowGeometry").toByteArray());
 	actionViewTMdock->setChecked( settings.value("actionViewTMdockState").toBool() );
-
+  
 	qRegisterMetaType<QImage>("QImage");
 	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
-
+  
 	windowMapper = new QSignalMapper(this);
-
+  
 	progressbar = new QProgressBar();
-
+  
 	setupConnections();
 }
 
@@ -147,16 +148,16 @@ void TonemappingWindow::setupConnections()
 	connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
 	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
 	connect(menu_Windows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
-
+  
 	connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
-
+  
 	connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions&)), this, SLOT(tonemapImage(TonemappingOptions&)));
-
+  
 	connect(threadManager,SIGNAL(closeRequested(bool)), actionThreadManager,SLOT(setChecked(bool)));
-
+  
 	connect(originalHDR, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
 	connect(originalHDR, SIGNAL(closeRequested(bool)), actionShowHDR, SLOT(setChecked(bool)));
-
+  
 	connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
 }
 
@@ -175,7 +176,7 @@ bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
 		}
 		return true;
 	} else {
-			//Standard event processing
+    //Standard event processing
 		return QMainWindow::eventFilter(obj, event);
 	}
 }
@@ -199,7 +200,7 @@ void TonemappingWindow::addMDIResult(const QImage &image)
 		mdiArea->activeSubWindow()->showMaximized();
 	else
 		mdiArea->activeSubWindow()->showNormal();
-
+  
 	subwin->installEventFilter(this);
 	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
@@ -227,7 +228,7 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame)
 		mdiArea->activeSubWindow()->showMaximized();
 	else
 		mdiArea->activeSubWindow()->showNormal();
-		
+  
 	HdrSubWin->installEventFilter(this);
 	connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
@@ -262,15 +263,15 @@ void TonemappingWindow::on_actionSave_triggered()
 		QMessageBox::critical(this, tr("Luminance HDR"), tr("Please select an LDR image to save."),	QMessageBox::Ok);
 		return;
 	}
-
+  
 	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
-
+  
 	if (outfname == "")
   {
     //std::cout << "outfname == \"\"" << std::endl;
     return;
   }
-
+  
 	//if save is succesful
 	if ( outfname.endsWith("jpeg", Qt::CaseInsensitive) || outfname.endsWith("jpg", Qt::CaseInsensitive) )
   {
@@ -278,7 +279,7 @@ void TonemappingWindow::on_actionSave_triggered()
 		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
 		ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), current->getExifComment().toStdString() );
 	}
-
+  
 	QFileInfo fi(outfname);	
 	mdiArea->currentSubWindow()->setWindowTitle(fi.fileName());
 	current->setFileName(fi.fileName());
@@ -289,23 +290,23 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w)
 {
 	//std::cout << "UpdateActions" << std::endl;
 	GenericViewer *viewer;
-
+  
 	if (w)
 		viewer = (GenericViewer *) w->widget();
 	else
 		viewer = NULL;
-
+  
 	int mdiNum = mdiArea->subWindowList().size(); // mdi number
 	bool isHdrVisible = !originalHdrSubWin->isHidden();
 	bool more_than_one = (mdiNum > 1); // more than 1 Image
 	bool noLdr = !(ldrNum == 0); // no LDRs
 	//bool noHdr = !(hdrNum == 0); // no HDRs
 	//int hdr_num = (isHdrVisible ? hdrNum+1 : hdrNum); // hdr number
-
+  
 	bool isHDR = false;
 	if (viewer) 
 		isHDR = viewer->isHDR();
-
+  
 	//std::cout << "viewer: " << viewer << std::endl;
 	//std::cout << "mdiNum: " << mdiNum << std::endl;
 	//std::cout << "ldrNum: " << ldrNum << std::endl;
@@ -317,7 +318,7 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w)
 	//std::cout << "hdr_num: " << hdr_num << std::endl;
 	//std::cout << "isHDR: " << isHDR << std::endl;
 	//std::cout << std::endl;
-
+  
 	actionFix_Histogram->setEnabled( !isHDR && ldrNum );
 	actionSave->setEnabled( !isHDR && ldrNum );
 	actionSaveAll->setEnabled( !isHDR && ldrNum );
@@ -327,18 +328,20 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w)
 	actionShowNext->setEnabled( more_than_one || (noLdr && isHdrVisible) );
 	actionShowPrevious->setEnabled( more_than_one || (noLdr && isHdrVisible) );
 	
-	if (w != NULL) {
+	if (w != NULL)
+  {
 		current = (GenericViewer*) w->widget(); 
 		if ( current->isFittedToWindow())
 			actionFit_to_Window->setChecked(true); 
 		else
 			actionFit_to_Window->setChecked(false); 
-
+    
 		//actionFix_Histogram->setChecked(current->hasLevelsOpen());
 	}
 }
 
-void TonemappingWindow::closeEvent ( QCloseEvent *event ) {
+void TonemappingWindow::closeEvent ( QCloseEvent *event )
+{
 	settings.setValue("TonemappingWindowState", saveState());
 	settings.setValue("TonemappingWindowGeometry", saveGeometry());
 	settings.setValue("actionViewTMdockState",actionViewTMdock->isChecked());
@@ -346,18 +349,22 @@ void TonemappingWindow::closeEvent ( QCloseEvent *event ) {
 	emit closing();
 }
 
-void TonemappingWindow::viewAllAsThumbnails() {
+void TonemappingWindow::viewAllAsThumbnails()
+{
 	mdiArea->tileSubWindows();
 	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-	foreach (QMdiSubWindow *p, allViewers) {
+	foreach (QMdiSubWindow *p, allViewers)
+  {
 		((GenericViewer*)p->widget())->fitToWindow(true);
 	}
 	actionFit_to_Window->setChecked(true);
 }
 
-void TonemappingWindow::on_actionClose_All_triggered() {
+void TonemappingWindow::on_actionClose_All_triggered()
+{
 	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-	foreach (QMdiSubWindow *p, allViewers) {
+	foreach (QMdiSubWindow *p, allViewers)
+  {
 		disconnect(p->widget(),SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 		p->close();
 	}
@@ -400,7 +407,8 @@ void TonemappingWindow::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
-void TonemappingWindow::showHDR(bool toggled) {
+void TonemappingWindow::showHDR(bool toggled)
+{
 	int n = mdiArea->subWindowList().size();
 	if (toggled) {
 		if (isLocked)  
@@ -426,28 +434,34 @@ void TonemappingWindow::showHDR(bool toggled) {
 	}
 }
 
-void TonemappingWindow::Text_Under_Icons() {
+void TonemappingWindow::Text_Under_Icons()
+{
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
-void TonemappingWindow::Icons_Only() {
+void TonemappingWindow::Icons_Only()
+{
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
 }
 
-void TonemappingWindow::Text_Alongside_Icons() {
+void TonemappingWindow::Text_Alongside_Icons()
+{
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
-void TonemappingWindow::Text_Only() {
+void TonemappingWindow::Text_Only()
+{
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
 	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 
-void TonemappingWindow::current_mdi_zoomin() {
-	if (!mdiArea->subWindowList().isEmpty()) {
+void TonemappingWindow::current_mdi_zoomin()
+{
+	if (!mdiArea->subWindowList().isEmpty())
+  {
 		GenericViewer *viewer = (GenericViewer *) mdiArea->currentSubWindow()->widget();
 		viewer->zoomIn();
 		actionZoom_Out->setEnabled(true);
@@ -455,8 +469,10 @@ void TonemappingWindow::current_mdi_zoomin() {
 	}
 }
 
-void TonemappingWindow::current_mdi_zoomout() {
-	if (!mdiArea->subWindowList().isEmpty()) {
+void TonemappingWindow::current_mdi_zoomout()
+{
+	if (!mdiArea->subWindowList().isEmpty())
+  {
 		GenericViewer *viewer = (GenericViewer *) mdiArea->currentSubWindow()->widget();
 		viewer->zoomOut();
 		actionZoom_In->setEnabled(true);
@@ -464,16 +480,21 @@ void TonemappingWindow::current_mdi_zoomout() {
 	}
 }
 
-void TonemappingWindow::current_mdi_fit_to_win(bool checked) {
-	if (isLocked) {
+void TonemappingWindow::current_mdi_fit_to_win(bool checked)
+{
+	if (isLocked)
+  {
 		QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-		foreach (QMdiSubWindow *p, allViewers) {
+		foreach (QMdiSubWindow *p, allViewers)
+    {
 			GenericViewer *viewer = (GenericViewer*)p->widget();
 			viewer->fitToWindow(checked);
 		}
 	}
-	else {
-		if (!mdiArea->subWindowList().isEmpty()) {
+	else
+  {
+		if (!mdiArea->subWindowList().isEmpty())
+    {
 			GenericViewer *viewer = (GenericViewer *) mdiArea->currentSubWindow()->widget();
 			viewer->fitToWindow(checked);
 		}
@@ -483,8 +504,10 @@ void TonemappingWindow::current_mdi_fit_to_win(bool checked) {
 	actionNormal_Size->setEnabled(!checked);
 }
 
-void TonemappingWindow::current_mdi_original_size() {
-	if (!mdiArea->subWindowList().isEmpty()) {
+void TonemappingWindow::current_mdi_original_size()
+{
+	if (!mdiArea->subWindowList().isEmpty())
+  {
 		GenericViewer *viewer = (GenericViewer *) mdiArea->currentSubWindow()->widget();
 		viewer->normalSize();
 		actionZoom_In->setEnabled(true);
@@ -492,7 +515,8 @@ void TonemappingWindow::current_mdi_original_size() {
 	}
 }
 
-void TonemappingWindow::load_options() {
+void TonemappingWindow::load_options() 
+{
 	//load from settings the toolbar visualization mode
 	if (!settings.contains(KEY_TM_TOOLBAR_MODE))
 		settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
@@ -500,32 +524,35 @@ void TonemappingWindow::load_options() {
 		case Qt::ToolButtonIconOnly:
 			Icons_Only();
 			actionIcons_Only->setChecked(true);
-		break;
+      break;
 		case Qt::ToolButtonTextOnly:
 			Text_Only();
 			actionText_Only->setChecked(true);
-		break;
+      break;
 		case Qt::ToolButtonTextBesideIcon:
 			Text_Alongside_Icons();
 			actionText_Alongside_Icons->setChecked(true);
-		break;
+      break;
 		case Qt::ToolButtonTextUnderIcon:
 			Text_Under_Icons();
 			actionText_Under_Icons->setChecked(true);
-		break;
+      break;
 	}
 }
 
-void TonemappingWindow::lockImages(bool toggled) {
+void TonemappingWindow::lockImages(bool toggled)
+{
 	isLocked = toggled;
 	if (!mdiArea->subWindowList().isEmpty())
 		dispatch((GenericViewer *) mdiArea->currentSubWindow()->widget());
 }
 
-void TonemappingWindow::updateImage(GenericViewer *viewer) {
+void TonemappingWindow::updateImage(GenericViewer *viewer)
+{
 	assert(viewer!=NULL);
 	assert(changedImage!=NULL);
-	if (isLocked) {
+	if (isLocked)
+  {
 		scaleFactor = changedImage->getImageScaleFactor();
 		HSB_Value = changedImage->getHorizScrollBarValue();
 		VSB_Value = changedImage->getVertScrollBarValue();
@@ -540,12 +567,15 @@ void TonemappingWindow::updateImage(GenericViewer *viewer) {
 	}
 }
 
-void TonemappingWindow::dispatch(GenericViewer *sender) {
+void TonemappingWindow::dispatch(GenericViewer *sender)
+{
 	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
 	changedImage = sender;
-	foreach (QMdiSubWindow *p, allViewers) {
+	foreach (QMdiSubWindow *p, allViewers)
+  {
 		GenericViewer *viewer = (GenericViewer*)p->widget();
-		if (sender != viewer) {
+		if (sender != viewer)
+    {
 			disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 			updateImage(viewer);
 			connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
@@ -553,13 +583,15 @@ void TonemappingWindow::dispatch(GenericViewer *sender) {
 	}
 }
 
-void TonemappingWindow::openDocumentation() {
+void TonemappingWindow::openDocumentation()
+{
 	HelpBrowser *helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
 	helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
 	helpBrowser->show();
 }
 
-void TonemappingWindow::aboutLuminance() {
+void TonemappingWindow::aboutLuminance()
+{
 	QDialog *about=new QDialog(this);
 	about->setAttribute(Qt::WA_DeleteOnClose);
 	Ui::AboutLuminance ui;
@@ -568,17 +600,18 @@ void TonemappingWindow::aboutLuminance() {
 	ui.thanksToBox->setOpenExternalLinks(true);
 	ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
 	ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)));
-
+  
 	bool license_file_not_found=true;
 	QString docDir = QCoreApplication::applicationDirPath();
 	docDir.append("/../Resources");
-	QStringList paths = QStringList("/usr/share/luminance") << "/usr/local/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
+  QStringList paths = QStringList( BASEDIR "/share/doc/luminance") << BASEDIR "/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
 	foreach (QString path,paths) {
 		QString fname(path+QString("/LICENSE"));
 #ifdef WIN32
 		fname+=".txt";
 #endif
-		if (QFile::exists(fname)) {
+		if (QFile::exists(fname))
+    {
 			QFile file(fname);
 			//try opening it
 			if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -590,7 +623,8 @@ void TonemappingWindow::aboutLuminance() {
 			break;
 		}
 	}
-	if (license_file_not_found) {
+	if (license_file_not_found)
+  {
 		ui.GPLbox->setOpenExternalLinks(true);
 		ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
 		ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
@@ -702,33 +736,40 @@ void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
 	}
 }
 
-void TonemappingWindow::showErrorMessage(const char *e) {
+void TonemappingWindow::showErrorMessage(const char *e)
+{
 	QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
-		QMessageBox::Ok,QMessageBox::NoButton);
+                        QMessageBox::Ok,QMessageBox::NoButton);
 	threadCounter--;
 	updateProgressbar();
 }
 
-void TonemappingWindow::tonemappingFinished() {
+void TonemappingWindow::tonemappingFinished()
+{
 	std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
 	threadCounter--;
 	updateProgressbar();
 }
 
-void TonemappingWindow::deleteTMOThread(TMOThread *th) {
+void TonemappingWindow::deleteTMOThread(TMOThread *th)
+{
 	delete th;
 }
 
-void TonemappingWindow::updateProgressbar() {
-	if (threadCounter == 0) {
+void TonemappingWindow::updateProgressbar()
+{
+	if (threadCounter == 0)
+  {
 		statusbar->removeWidget(progressbar);
 	}
 }
 
-void TonemappingWindow::updateWindowMenu() {
+void TonemappingWindow::updateWindowMenu()
+{
 	menu_Windows->clear();
 	QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
-	for (int i = 0; i < windows.size(); ++i) {
+	for (int i = 0; i < windows.size(); ++i)
+  {
 		GenericViewer *child = qobject_cast<GenericViewer *>(windows.at(i)->widget());
 		QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
 		QAction *action  = menu_Windows->addAction(text);
@@ -742,9 +783,10 @@ void TonemappingWindow::updateWindowMenu() {
 	menu_Windows->addAction(actionCascade);
 }
 
-void TonemappingWindow::setActiveSubWindow(QWidget* w) {
+void TonemappingWindow::setActiveSubWindow(QWidget* w)
+{
 	QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
 	foreach(QMdiSubWindow *p,allhdrs)
-		if (p->widget() == w)
-			mdiArea->setActiveSubWindow(p);
+  if (p->widget() == w)
+    mdiArea->setActiveSubWindow(p);
 }

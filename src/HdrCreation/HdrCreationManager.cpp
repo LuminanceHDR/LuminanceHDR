@@ -29,6 +29,7 @@
 #include "Threads/HdrInputLoader.h"
 #include "mtb_alignment.h"
 #include "HdrCreationManager.h"
+#include "arch/freebsd/math.h"
 
 HdrCreationManager::HdrCreationManager() {
 	luminance_options=LuminanceOptions::getInstance();

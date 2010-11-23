@@ -29,14 +29,18 @@ QString LuminancePaths::HelpDir()
 		return getThis()->LuminancePathsDB["HelpDir"];
 	QString hf;
 	QString dirsep(QDir::separator());
+  
 #ifdef PLATFORM_APPLE
-	hf = LocalizedDirPath( QApplication::applicationDirPath() + dirsep + "help" + dirsep );
+  hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
 #elif _WIN32
-	hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep );
+  hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
+#elif __FreeBSD__
+  hf = LocalizedDirPath("/usr/local/share/doc/luminance/");
 #else
-//	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-	hf = LocalizedDirPath( "/usr" + dirsep + "share" + dirsep + "luminance" + dirsep + "help" + dirsep );
+  //	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
+  hf = LocalizedDirPath("/usr" + dirsep + "share" + dirsep + "luminance" + dirsep + "help" + dirsep);
 #endif
+  
 	getThis()->LuminancePathsDB["HelpDir"] = hf;
 
 	return getThis()->LuminancePathsDB["HelpDir"];
