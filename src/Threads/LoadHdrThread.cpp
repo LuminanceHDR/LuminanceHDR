@@ -31,7 +31,7 @@
 //#include "Fileformat/pfstiff.h"
 
 
-LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname),RecentDirHDRSetting(RecentDirHDRSetting), progress(NULL)
+LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname), RecentDirHDRSetting(RecentDirHDRSetting)
 {
 	luminance_options=LuminanceOptions::getInstance();
 }
@@ -65,7 +65,7 @@ void LoadHdrThread::run()
 	bool rawinput = (rawextensions.indexOf(extension)!=-1);
 	try
   {
-		char* encodedFileName=strdup(QFile::encodeName(qfi.filePath()).constData());
+		char* encodedFileName = strdup(QFile::encodeName(qfi.filePath()).constData());
 		if (extension=="EXR")
     {
 			hdrpfsframe = readEXRfile(encodedFileName);
@@ -92,7 +92,8 @@ void LoadHdrThread::run()
 			TiffReader reader(encodedFileName);
 			connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
 			connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
-			hdrpfsframe = reader.readIntoPfsFrame(); //from 8,16,32,logluv to pfs::Frame
+			hdrpfsframe = reader.readIntoPfsFrame();
+      //from 8,16,32,logluv to pfs::Frame
 		}
 		else if (rawinput)
     {
@@ -106,7 +107,9 @@ void LoadHdrThread::run()
 		}
 		free(encodedFileName);
 		if (hdrpfsframe == NULL)
+    {
 			throw "Error loading file";
+    }
 	}
 	catch(pfs::Exception e)
   {

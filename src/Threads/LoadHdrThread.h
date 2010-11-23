@@ -25,7 +25,7 @@
 #define IOTHREAD_H
 
 #include <QThread>
-#include <QProgressDialog>
+//#include <QProgressDialog>
 
 #include "Common/options.h"
 
@@ -49,8 +49,8 @@ signals:
 protected:
 	void run();
 private:
-	QString fname,RecentDirHDRSetting;
+	QString fname;
+  QString RecentDirHDRSetting;
 	LuminanceOptions *luminance_options;
-	QProgressDialog *progress;
 };
 #endif
