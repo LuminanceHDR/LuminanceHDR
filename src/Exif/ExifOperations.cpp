@@ -23,22 +23,25 @@
 
 #include <image.hpp>
 #include <cmath>
+#include <iostream>
 
-#include "arch/freebsd/math.h"
 #include "ExifOperations.h"
+#include "arch/freebsd/math.h"
 
-void ExifOperations::writeExifData(const std::string& filename, const std::string& comment) {
+void ExifOperations::writeExifData(const std::string& filename, const std::string& comment)
+{
 	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
 	image->readMetadata();
 	Exiv2::ExifData &exifData = image->exifData();
-	exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://luminancehdr.sourceforge.net";
+	exifData["Exif.Image.Software"]="Created with opensource tool Luminance HDR, http://qtpfsgui.sourceforge.net";
 	exifData["Exif.Image.ImageDescription"]=comment;
 	exifData["Exif.Photo.UserComment"]=(QString("charset=\"Ascii\" ") + QString::fromStdString(comment)).toStdString();
 	image->setExifData(exifData);
 	image->writeMetadata();
 }
 
-void ExifOperations::copyExifData(const std::string& from, const std::string& to, bool dont_overwrite) {
+void ExifOperations::copyExifData(const std::string& from, const std::string& to, bool dont_overwrite)
+{
 	std::cerr << "processing file: " << from.c_str() << " and " << to.c_str() << std::endl;
 	//get source and destination exif data
 	//THROWS, if opening the file fails or it contains data of an unknown image type.
@@ -103,61 +106,78 @@ void ExifOperations::copyExifData(const std::string& from, const std::string& to
  * 
  * F-number and shutter speed are mandatory in exif data for EV calculation, iso is not.
  */
-float ExifOperations::obtain_avg_lum(const std::string& filename) {
-try {
-	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
-	image->readMetadata();
-	Exiv2::ExifData &exifData = image->exifData();
-	if (exifData.empty())
-		return -1;
-
-	Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
-	Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
-	Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
-	Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
-	Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
-	// default not valid values
-	float expo=-1; float iso=-1; float fnum=-1;
-
-	if (iexpo != exifData.end()) {
-		expo=iexpo->toFloat();
-	} else if (iexpo2 != exifData.end()) {
-		long num=1, div=1;
-		double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
-		if (tmp > 1) {
-			div = static_cast<long>(tmp + 0.5);
-		}
-		else {
-			num = static_cast<long>(1/tmp + 0.5);
-		}
-		expo=static_cast<float>(num)/static_cast<float>(div);
-	}
-
-	if (ifnum != exifData.end()) {
-		fnum=ifnum->toFloat();
-	} else if (ifnum2 != exifData.end()) {
-		fnum=static_cast<float>(std::exp(std::log(2.0) * ifnum2->toFloat() / 2));
-	}
-	// some cameras/lens DO print the fnum but with value 0, and this is not allowed for ev computation purposes.
-	if (fnum==0)
-		return -1;
-
-	//if iso is found use that value, otherwise assume a value of iso=100. (again, some cameras do not print iso in exif).
-	if (iiso == exifData.end()) {
-		iso=100.0;
-	} else {
-		iso=iiso->toFloat();
-	}
-
-	//At this point the three variables have to be != -1
-	if (expo!=-1 && iso!=-1 && fnum!=-1) {
-// 		std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
-		return ( (expo * iso) / (fnum*fnum*12.07488f) );
-	} else {
-		return -1;
-	}
-} catch (Exiv2::AnyError& e) {
-	return -1;
-}
+float ExifOperations::obtain_avg_lum(const std::string& filename)
+{
+  try
+  {
+    Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+    image->readMetadata();
+    Exiv2::ExifData &exifData = image->exifData();
+    if (exifData.empty())
+      return -1;
+    
+    Exiv2::ExifData::const_iterator iexpo = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ExposureTime"));
+    Exiv2::ExifData::const_iterator iexpo2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ShutterSpeedValue"));
+    Exiv2::ExifData::const_iterator iiso  = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ISOSpeedRatings"));
+    Exiv2::ExifData::const_iterator ifnum = exifData.findKey(Exiv2::ExifKey("Exif.Photo.FNumber"));
+    Exiv2::ExifData::const_iterator ifnum2 = exifData.findKey(Exiv2::ExifKey("Exif.Photo.ApertureValue"));
+    
+    // default not valid values
+    float expo  = -1;
+    float iso   = -1;
+    float fnum  = -1;
+    
+    if (iexpo != exifData.end())
+    {
+      expo=iexpo->toFloat();
+    }
+    else if (iexpo2 != exifData.end())
+    {
+      long num=1, div=1;
+      double tmp = std::exp(std::log(2.0) * iexpo2->toFloat());
+      if (tmp > 1) {
+        div = static_cast<long>(tmp + 0.5);
+      }
+      else {
+        num = static_cast<long>(1/tmp + 0.5);
+      }
+      expo = static_cast<float>(num)/static_cast<float>(div);
+    }
+    
+    if (ifnum != exifData.end())
+    {
+      fnum = ifnum->toFloat();
+    }
+    else if (ifnum2 != exifData.end())
+    {
+      fnum = static_cast<float>(std::exp(std::log(2.0) * ifnum2->toFloat() / 2));
+    }
+    // some cameras/lens DO print the fnum but with value 0, and this is not allowed for ev computation purposes.
+    if (fnum == 0)
+      return -1;
+    
+    //if iso is found use that value, otherwise assume a value of iso=100. (again, some cameras do not print iso in exif).
+    if (iiso == exifData.end())
+    {
+      iso = 100.0;
+    }
+    else
+    {
+      iso = iiso->toFloat();
+    }
+    
+    //At this point the three variables have to be != -1
+    if (expo!=-1 && iso!=-1 && fnum!=-1)
+    {
+      // 		std::cerr << "expo=" << expo << " fnum=" << fnum << " iso=" << iso << " |returned=" << (expo * iso) / (fnum*fnum*12.07488f) << std::endl;
+      return ( (expo * iso) / (fnum*fnum*12.07488f) );
+    }
+    else
+    {
+      return -1;
+    }
+  } catch (Exiv2::AnyError& e) {
+    return -1;
+  }
 }
 
