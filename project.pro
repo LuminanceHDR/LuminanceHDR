@@ -20,7 +20,7 @@ UI_DIR = generated_uic
 RCC_DIR = generated_moc
 
 INCLUDEPATH +=  ./src 
-LIBS = -L/usr/local/lib
+LIBS += -L/usr/local/lib
 
 FORMS = forms/MainWindow.ui \
 		forms/DnDOption.ui \
@@ -544,6 +544,7 @@ macx {
 	# We like to search the /opt/local/lib explicitly on MacOSX
 	# because this is the default MacPorts directory
 	LIBS += -L/opt/local/lib
+	LIBS -= -L/usr/local/lib
 	
 	# Libtiff depends on jpeg, but it is not searched for automatically on MacOSX
 	LIBS += -ljpeg
