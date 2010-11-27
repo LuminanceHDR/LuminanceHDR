@@ -40,7 +40,7 @@
 //{
 //};
 
-void flipArray( const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v );
+//void flipArray( const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v );
 
 //void printHelp()
 //{
@@ -120,25 +120,25 @@ void flipArray( const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v );
 //  pfsio.freeFrame( resizedFrame );
 //}
 
-void flipArray(const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v )
-{
-  int outRows = out->getRows();
-  int outCols = out->getCols();
-  
-  if( h & v ) {
-    for( int i=0; i<outCols; i++ )
-      for( int j=0; j<outRows; j++ )
-        (*out)( i, j ) = (*in)( outCols - i - 1, outRows - j - 1 );
-  } else if( h ) {
-    for( int i=0; i<outCols; i++ )
-      for( int j=0; j<outRows; j++ )
-        (*out)( i, j ) = (*in)( outCols - i - 1, j );
-  } else if( v ) {
-    for( int i=0; i<outCols; i++ )
-      for( int j=0; j<outRows; j++ )
-        (*out)( i, j ) = (*in)( i, outRows - j - 1 );
-  }
-}
+//void flipArray(const pfs::Array2D *in, pfs::Array2D *out, bool h, bool v )
+//{
+//  int outRows = out->getRows();
+//  int outCols = out->getCols();
+//  
+//  if( h & v ) {
+//    for( int i=0; i<outCols; i++ )
+//      for( int j=0; j<outRows; j++ )
+//        (*out)( i, j ) = (*in)( outCols - i - 1, outRows - j - 1 );
+//  } else if( h ) {
+//    for( int i=0; i<outCols; i++ )
+//      for( int j=0; j<outRows; j++ )
+//        (*out)( i, j ) = (*in)( outCols - i - 1, j );
+//  } else if( v ) {
+//    for( int i=0; i<outCols; i++ )
+//      for( int j=0; j<outRows; j++ )
+//        (*out)( i, j ) = (*in)( i, outRows - j - 1 );
+//  }
+//}
 
 //int main( int argc, char* argv[] )
 //{
