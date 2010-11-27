@@ -60,7 +60,7 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
   
   if (opts.pregamma != 1.0f)
   {
-		applyGammaOnFrame( workingframe, opts.pregamma );
+    pfs::applyGammaOnFrame( workingframe, opts.pregamma );
 	}
   
 	// Convert to CS_XYZ: tm operator now use this colorspace

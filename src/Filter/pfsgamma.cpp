@@ -27,76 +27,102 @@
 
 #include <iostream>
 #include <cmath>
+#include <assert.h>
 
 #include "pfsgamma.h"
 #include "Libpfs/colorspace.h"
+#include "Common/msec_timer.h"
 
-pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma )
+namespace pfs
 {
-  pfs::DOMIO pfsio;
-  
-  float multiplier = 1.0f;
-  
-  const char *lum_type = frame->getTags()->getString("LUMINANCE");
-  if( lum_type )
+  pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma)
   {
-    if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
-      std::cerr << "applyGammaOnFrame() warning: applying gamma correction to a display referred image" << std::endl;
-    if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
-      std::cerr << "applyGammaOnFrame() warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
-    if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
-      std::cerr << "applyGammaOnFrame() warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
+    pfs::DOMIO pfsio;
+    
+    float multiplier = 1.0f;
+    
+    const char *lum_type = frame->getTags()->getString("LUMINANCE");
+    if( lum_type )
+    {
+      if( !strcmp( lum_type, "DISPLAY" ) && gamma > 1.0f )
+        std::cerr << "applyGammaOnFrame() warning: applying gamma correction to a display referred image" << std::endl;
+      if( !strcmp( lum_type, "RELATIVE" ) && gamma < 1.0f )
+        std::cerr << "applyGammaOnFrame() warning: applying inverse gamma correction to a linear luminance or radiance image" << std::endl;
+      if( !strcmp( lum_type, "ABSOLUTE" ) && multiplier == 1 )
+        std::cerr << "applyGammaOnFrame() warning: an image should be normalized to 0-1 before applying gamma correction" << std::endl;
+    }
+    
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+    
+    // TODO: applyGamma can be improved in order to use SSE
+    if ( X != NULL ) // Color, XYZ
+    {
+      pfs::Array2D* Xr = X->getChannelData();
+      pfs::Array2D* Yr = Y->getChannelData();
+      pfs::Array2D* Zr = Z->getChannelData();
+      
+      pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
+                               pfs::CS_RGB, Xr, Yr, Zr);
+      // At this point (X,Y,Z) = (R,G,B)
+      
+      applyGamma(Xr, 1/gamma, multiplier);
+      applyGamma(Yr, 1/gamma, multiplier);
+      applyGamma(Zr, 1/gamma, multiplier);
+      
+      pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
+                               pfs::CS_XYZ, Xr, Yr, Zr);
+      // At this point (X,Y,Z) = (X,Y,Z)
+    }
+    else if ( (Y = frame->getChannel( "Y" )) != NULL )
+    {
+      // Luminance only
+      applyGamma(Y->getChannelData(), 1/gamma, multiplier);
+    } 
+    //TODO
+    //else
+    // throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+    
+    //if( opt_setgamma && gamma > 1.0f )
+    frame->getTags()->setString("LUMINANCE", "DISPLAY");
+    //else if( opt_setgamma && gamma < 1.0f )
+    //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    
+    return frame;        
   }
   
-  pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
   
-  // TODO: applyGamma can be improved in order to use SSE
-  if ( X != NULL ) // Color, XYZ
+  void applyGamma(pfs::Array2D *array, const float exponent, const float multiplier)
   {
-    pfs::Array2D* Xr = X->getChannelData();
-    pfs::Array2D* Yr = Y->getChannelData();
-    pfs::Array2D* Zr = Z->getChannelData();
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
     
-    pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
-                             pfs::CS_RGB, Xr, Yr, Zr);
-    // At this point (X,Y,Z) = (R,G,B)
+    pfs::Array2DImpl* v_in = dynamic_cast<pfs::Array2DImpl*> (array);
     
-    applyGamma(Xr, 1/gamma, multiplier);
-    applyGamma(Yr, 1/gamma, multiplier);
-    applyGamma(Zr, 1/gamma, multiplier);
+    assert( v_in != NULL );
     
-    pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
-                             pfs::CS_XYZ, Xr, Yr, Zr);
-    // At this point (X,Y,Z) = (X,Y,Z)
+    float* Vin  = v_in->data;
+    
+    const unsigned int V_ELEMS = array->getRows()*array->getCols();
+    for (unsigned int idx = 0; idx < V_ELEMS; idx++)
+    {
+      if (Vin[idx] > 0.0f)
+      {
+        Vin[idx] = powf(Vin[idx]*multiplier, exponent);
+      }
+      else 
+      {
+        Vin[idx] = 0.0f;
+      }
+    }
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "applyGamma() = " << f_timer.get_time() << " msec" << std::endl;
+#endif 
   }
-  else if ( (Y = frame->getChannel( "Y" )) != NULL )
-  {
-    // Luminance only
-    applyGamma(Y->getChannelData(), 1/gamma, multiplier);
-  } 
-  //TODO
-	//else
-	// throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
-  //if( opt_setgamma && gamma > 1.0f )
-  frame->getTags()->setString("LUMINANCE", "DISPLAY");
-  //else if( opt_setgamma && gamma < 1.0f )
-  //  frame->getTags()->setString("LUMINANCE", "RELATIVE");
-  
-  return frame;        
 }
-
-
-void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier )
-{
-  int imgSize = array->getRows()*array->getCols();
-  for( int index = 0; index < imgSize ; index++ )
-  {    
-    float &v = (*array)(index);
-    if( v < 0 ) v = 0;
-    v = powf( v*multiplier, exponent );
-  }    
-}
-
 

@@ -30,7 +30,10 @@
 
 #include "Libpfs/pfs.h"
 
-void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier );
-pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma );
+namespace pfs
+{
+  void applyGamma( pfs::Array2D *array, const float exponent, const float multiplier );
+  pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma );
+}
 
 #endif
