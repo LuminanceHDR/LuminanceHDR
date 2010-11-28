@@ -837,7 +837,7 @@ void MainWindow::cropToSelection(void) {
 	disableCrop();
 	pfs::Frame *original_frame = currenthdr->getHDRPfsFrame();
 	HdrViewer *newHdrViewer = new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor);
-	pfs::Frame *cropped_frame = pfscut(original_frame, x_ul, y_ul, x_br, y_br);
+	pfs::Frame *cropped_frame = pfs::pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
 	newHdrViewer->updateHDR(cropped_frame);
 	newHdrViewer->setFileName(QString(tr("Cropped Image")));

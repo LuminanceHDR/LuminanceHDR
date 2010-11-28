@@ -44,8 +44,8 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
   {
     // workingframe = "crop"
     // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
-    // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_x_bottom_right <<"]" << std::endl;
-    workingframe = pfscut(frame, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+    // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
+    workingframe = pfs::pfscut(frame, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
   }
 	else if ( opts.xsize != opts.origxsize )
   {
@@ -55,7 +55,7 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
   else
   {
     // workingframe = "full res"
-    workingframe = pfscopy(frame); 
+    workingframe = pfs::pfscopy(frame); 
   }
   
   if (opts.pregamma != 1.0f)

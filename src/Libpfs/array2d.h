@@ -177,6 +177,7 @@ namespace pfs
     
     // Data manipulation
     friend void copyArray(const Array2D *from, Array2D *to);
+    friend void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br);
         
     friend void setArray(Array2D *array, const float value);
     friend void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
@@ -195,6 +196,8 @@ namespace pfs
   };
   
   void copyArray(const Array2D *from, Array2D *to);  
+  void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br);
+  
   void setArray(Array2D *array, const float value);
   void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
   void divideArray(Array2D *z, const Array2D *x, const Array2D *y);

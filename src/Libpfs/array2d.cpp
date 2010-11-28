@@ -131,17 +131,54 @@ namespace pfs
     const float* __f = f_x->data;
           float* __t = t_x->data;
     
-    const int elements = from->getRows()*from->getCols();
+    const int V_ELEMS = f_x->rows*f_x->cols;
 #ifdef __SSE__
-    VEX_vcopy(__f, __t, elements);
+    VEX_vcopy(__f, __t, V_ELEMS);
 #else
-    for( int i = elements; i; i-- )
+    for (int idx = 0; idx < V_ELEMS; idx++ )
     {
-      (*__t) = (*__f);
-      __t++;
-      __f++;
+      __t[idx] = __f[idx];
     }
 #endif
+  }
+  
+  void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
+  {
+    const Array2DImpl* from_2d  = dynamic_cast<const Array2DImpl*> (from);
+    Array2DImpl* to_2d          = dynamic_cast<Array2DImpl*> (to);
+    
+    assert( from_2d != NULL && to_2d != NULL );
+    
+    const float* from_2d_data   = from_2d->data;
+    float* to_2d_data           = to_2d->data;
+    
+    const int IN_W    = from_2d->cols;
+    const int IN_H    = from_2d->rows;
+    const int OUT_W   = to_2d->cols;
+    const int OUT_H   = to_2d->rows;
+    
+    assert( OUT_H <= IN_H );
+    assert( OUT_H <= IN_H );
+    assert( x_ul >= 0 );
+    assert( y_ul >= 0 );
+    assert( x_br <= IN_W );
+    assert( y_br <= IN_H );
+    
+    // move to row (x_ul, y_ul)
+    from_2d_data = &from_2d_data[IN_W*y_ul + x_ul];
+    
+    for (int r = 0; r < OUT_H; r++)
+    {
+      //NOTE: do NOT use VEX_vcopy
+      #pragma omp parallel for schedule(static, 5120)
+      for (int c = 0; c < OUT_W; c++)
+      {
+        to_2d_data[c] = from_2d_data[c];
+      }
+      
+      from_2d_data  += IN_W;
+      to_2d_data    += OUT_W;
+    }
   }
   
   /**
@@ -158,11 +195,11 @@ namespace pfs
     
     float* __array = array_t->data;
     
-    const int elements = array->getRows()*array->getCols();
+    const int V_ELEMS = (array_t->rows*array_t->cols);
 #ifdef __SSE__
-    VEX_vset(__array, value, elements);
+    VEX_vset(__array, value, V_ELEMS);
 #else
-    for( int i = 0; i < elements; i++ )
+    for( int i = 0; i < V_ELEMS; i++ )
     {
       __array[i] = value;
     }

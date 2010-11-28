@@ -640,7 +640,7 @@ pfs::Frame * TonemappingWindow::getSelectedFrame(HdrViewer *hdr)
 	QRect cropRect = hdr->getSelectionRect();
 	int x_ul, y_ul, x_br, y_br;
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-	return pfscut(frame, x_ul, y_ul, x_br, y_br);
+	return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
 }
 
 void TonemappingWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)

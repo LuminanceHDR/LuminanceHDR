@@ -29,174 +29,85 @@
 
 #include "pfscut.h"
 #include "Common/msec_timer.h"
-
-#define UNSP INT_MAX
-#define MIN 0
-#define MAX 1
-#define SIZE 2
-
-void calcBorders(int min, int max, int size, int inSize, int* out)
+namespace pfs
 {
-  if (min!=UNSP && max!=UNSP && size==UNSP) {
-    out[MIN]=min;
-    out[MAX]=inSize-max-1;
-    out[SIZE]=inSize-min-max;
-  }
-  
-  if (min!=UNSP && max==UNSP && size==UNSP) {
-    out[MIN]=min;
-    out[MAX]=inSize-1;
-    out[SIZE]=inSize-min;
-  }
-  
-  if (min==UNSP && max!=UNSP && size==UNSP) {
-    out[MIN]=0;
-    out[MAX]=inSize-max-1;
-    out[SIZE]=inSize-max;
-  }
-  
-  if (min!=UNSP && max==UNSP && size!=UNSP) {
-    out[MIN]=min;
-    out[MAX]=size+min-1;
-    out[SIZE]=size;
-  }
-  
-  if (min==UNSP && max!=UNSP && size!=UNSP) {
-    out[MIN]=inSize-max-size;
-    out[MAX]=inSize-max-1;
-    out[SIZE]=size;
-  }
-  
-  if (min==UNSP && max==UNSP && size!=UNSP) {
-    int diff=inSize-size;
-    out[MIN]=diff/2;
-    out[MAX]=inSize-(diff/2)-1;
-    if(diff%2) out[MAX]--;
-    out[SIZE]=size;
-  }
-  
-  if (min==UNSP && max==UNSP && size==UNSP) {
-    out[MIN]=0;
-    out[MAX]=inSize-1;
-    out[SIZE]=inSize;
-  }
-  
-}
-
-pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)
-{
+  pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)
+  {
 #ifdef TIMER_PROFILING
-  msec_timer f_timer;
-  f_timer.start();
+    msec_timer f_timer;
+    f_timer.start();
 #endif
-  
-  pfs::DOMIO pfsio;
-  
-  //numbers of pixels to cut from each border of an image 
-  int left=UNSP, right=UNSP, top=UNSP, bottom=UNSP; 
-  int width=UNSP, height=UNSP; //size of an output image
-  //int x_ul=UNSP, y_ul=UNSP, x_br=UNSP, y_br=UNSP;
-  
-  //int optionIndex=0;
-  //while (1) {
-  
-  int inWidth=inFrame->getWidth();
-  int inHeight=inFrame->getHeight();
-  
-  int leftRight[3], topBottom[3];
-  if( x_ul != UNSP )
-  {
-    leftRight[MIN] = x_ul;
-    leftRight[MAX] = x_br;
-    leftRight[SIZE] = x_br - x_ul + 1;
-    topBottom[MIN] = y_ul;
-    topBottom[MAX] = y_br;
-    topBottom[SIZE] = y_br - y_ul + 1;
-  }
-  else
-  {
-    //calculate edge columns and rows of an input image to be in an output image  
-    calcBorders(left, right, width, inWidth, leftRight);
-    calcBorders(top, bottom, height, inHeight, topBottom);
-  }
-  
-  int lCol=leftRight[MIN];
-  int rCol=leftRight[MAX];
-  int tRow=topBottom[MIN];
-  int bRow=topBottom[MAX];
-  
-  int outWidth=leftRight[SIZE];
-  int outHeight=topBottom[SIZE];
-  
-  pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
-  
-  pfs::ChannelIterator *it = inFrame->getChannels();
-  
-  while (it->hasNext())
-  {
-    pfs::Channel *inCh = it->getNext();
-    pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
     
-    pfs::Array2DImpl* inArray2D = inCh->getChannelData();
-    pfs::Array2DImpl* outArray2D = outCh->getChannelData();
+    // ----  Boundary Check!
+    if (x_ul < 0) x_ul = 0;
+    if (y_ul < 0) y_ul = 0;
+    if (x_br > inFrame->getWidth()) x_br = inFrame->getWidth();
+    if (y_br > inFrame->getHeight()) y_br = inFrame->getHeight();
+    // ----- 
     
-    // TODO: this function can be rewritten in a much convinient way
-    // if Array2D owns a copyArray(in, out, start, elem) function.
-    // to be done!
-    for (int i=tRow; i<=bRow; i++)
+    pfs::DOMIO pfsio;
+    pfs::Frame *outFrame = pfsio.createFrame((x_br-x_ul), (y_br-y_ul));
+    
+    pfs::ChannelIterator *it = inFrame->getChannels();
+    
+    while (it->hasNext())
     {
-      for (int j=lCol; j<=rCol; j++) 
-      {
-        (*outArray2D)(j-lCol, i-tRow) = (*inArray2D)(j,i);
-      }
+      pfs::Channel *inCh  = it->getNext();
+      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+      
+      pfs::Array2D* inArray2D   = inCh->getChannelData();
+      pfs::Array2D* outArray2D  = outCh->getChannelData();
+      
+      copyArray(inArray2D, outArray2D, x_ul, y_ul, x_br, y_br);
     }
-  }
-  
-  pfs::copyTags(inFrame, outFrame);
-  //}
-  
-#ifdef TIMER_PROFILING
-  f_timer.stop_and_update();
-  std::cout << "pfscut() = " << f_timer.get_time() << " msec" << std::endl;
-#endif 
-  
-  return outFrame;
-}
-
-pfs::Frame *pfscopy(pfs::Frame *inFrame)
-{
-#ifdef TIMER_PROFILING
-  msec_timer f_timer;
-  f_timer.start();
-#endif
-  
-  pfs::DOMIO pfsio;
-  
-  const int outWidth   = inFrame->getWidth();
-  const int outHeight  = inFrame->getHeight();
-  
-  pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
-  
-  pfs::ChannelIterator *it = inFrame->getChannels();
-  
-  while (it->hasNext())
-  {
-    pfs::Channel *inCh = it->getNext();
-    pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
     
-    pfs::Array2DImpl* inArray2D = inCh->getChannelData();
-    pfs::Array2DImpl* outArray2D = outCh->getChannelData();
-
-    copyArray(inArray2D, outArray2D);
+    pfs::copyTags(inFrame, outFrame);
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "pfscut(";
+    std::cout << "[" << x_ul <<", " << y_ul <<"],";
+    std::cout << "[" << x_br << ", " << y_br <<"]";
+    std::cout << ") = " << f_timer.get_time() << " msec" << std::endl;
+#endif 
+    
+    return outFrame;
   }
   
-  pfs::copyTags(inFrame, outFrame);
-  
+  pfs::Frame *pfscopy(pfs::Frame *inFrame)
+  {
 #ifdef TIMER_PROFILING
-  f_timer.stop_and_update();
-  std::cout << "pfscopy() = " << f_timer.get_time() << " msec" << std::endl;
+    msec_timer f_timer;
+    f_timer.start();
+#endif
+    
+    pfs::DOMIO pfsio;
+    
+    const int outWidth   = inFrame->getWidth();
+    const int outHeight  = inFrame->getHeight();
+    
+    pfs::Frame *outFrame = pfsio.createFrame(outWidth, outHeight);
+    
+    pfs::ChannelIterator *it = inFrame->getChannels();
+    
+    while (it->hasNext())
+    {
+      pfs::Channel *inCh  = it->getNext();
+      pfs::Channel *outCh = outFrame->createChannel(inCh->getName());
+      
+      pfs::Array2D* inArray2D   = inCh->getChannelData();
+      pfs::Array2D* outArray2D  = outCh->getChannelData();
+      
+      copyArray(inArray2D, outArray2D);
+    }
+    
+    pfs::copyTags(inFrame, outFrame);
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "pfscopy() = " << f_timer.get_time() << " msec" << std::endl;
 #endif 
-  
-  return outFrame;
+    
+    return outFrame;
+  }
 }
-
