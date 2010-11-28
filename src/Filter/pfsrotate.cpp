@@ -80,7 +80,7 @@ namespace pfs
     const int I_ROWS = in->getRows();
     const int I_COLS = in->getCols();
     
-    const int O_ROWS = out->getRows();
+    //const int O_ROWS = out->getRows();
     const int O_COLS = out->getCols();
     
     if (clockwise)
@@ -96,7 +96,7 @@ namespace pfs
       for (int j = 0; j < I_ROWS; j++)
         for (int i = 0; i < I_COLS; i++)
         {
-          Vout[i*O_COLS+j] = Vin[j*I_COLS+i];
+          Vout[(I_COLS - i - 1)*O_COLS+j] = Vin[j*I_COLS+i];
         }
     }
   }
