@@ -31,7 +31,10 @@
 
 #include "Libpfs/pfs.h"
 
-void rotateArray( const pfs::Array2D *in, pfs::Array2D *out, bool clockwise );
-pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise);
+namespace pfs
+{
+  void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
+  pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise);
+}
 
 #endif 

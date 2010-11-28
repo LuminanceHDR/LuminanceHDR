@@ -418,15 +418,16 @@ void MainWindow::rotatecw_requested() {
 
 void MainWindow::dispatchrotate(bool clockwise)
 {
-	if(currenthdr==NULL)
+	if (currenthdr==NULL)
 		return;
 	rotateccw->setEnabled(false);
 	rotatecw->setEnabled(false);
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-	pfs::Frame *rotated=rotateFrame(currenthdr->getHDRPfsFrame(),clockwise);
+	pfs::Frame *rotated = pfs::rotateFrame(currenthdr->getHDRPfsFrame(),clockwise);
 	//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 	currenthdr->updateHDR(rotated);
-	if (! currenthdr->needsSaving()) {
+	if (! currenthdr->needsSaving())
+  {
 		currenthdr->setNeedsSaving(true);
 		currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
 	}
@@ -435,15 +436,18 @@ void MainWindow::dispatchrotate(bool clockwise)
 	rotatecw->setEnabled(true);
 }
 
-void MainWindow::resize_requested() {
+void MainWindow::resize_requested()
+{
 	if (currenthdr==NULL)
 		return;
-	ResizeDialog *resizedialog=new ResizeDialog(this,currenthdr->getHDRPfsFrame());
-	if (resizedialog->exec() == QDialog::Accepted) {
+	ResizeDialog *resizedialog = new ResizeDialog(this,currenthdr->getHDRPfsFrame());
+	if (resizedialog->exec() == QDialog::Accepted)
+  {
 		QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 		//updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
 		currenthdr->updateHDR(resizedialog->getResizedFrame());
-		if (! currenthdr->needsSaving()) {
+		if (! currenthdr->needsSaving())
+    {
 			currenthdr->setNeedsSaving(true);
 			currenthdr->setWindowTitle(currenthdr->windowTitle().prepend("(*) "));
 		}

@@ -193,6 +193,7 @@ namespace pfs
     // Array2D manipulation
     friend void downsampleArray(const Array2D *from, Array2D *to);
     friend void applyGamma(Array2D *array, const float exponent, const float multiplier);
+    friend void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
   };
   
   void copyArray(const Array2D *from, Array2D *to);  

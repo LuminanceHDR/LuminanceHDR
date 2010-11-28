@@ -26,46 +26,79 @@
  * $Id: pfsrotate.cpp,v 1.1 2005/06/15 13:36:54 rafm Exp $
  */
 
+#include <assert.h>
 #include "pfsrotate.h"
+#include "Common/msec_timer.h"
 
-pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise)
+namespace pfs
 {
-  pfs::DOMIO pfsio;
   
-  // bool firstFrame = true;
-  // pfs::Channel *X, *Y, *Z;
-  // frame->getXYZChannels( X, Y, Z );
-  
-  // pfs::Channel *dX, *dY, *dZ;
-  
-  int xSize = frame->getHeight();
-  int ySize = frame->getWidth();
-  pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
-  
-  pfs::ChannelIterator *it = frame->getChannels();
-  while( it->hasNext() )
+  pfs::Frame* rotateFrame(pfs::Frame* frame, bool clock_wise)
   {
-    pfs::Channel *originalCh = it->getNext();
-    pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
+#ifdef TIMER_PROFILING
+    msec_timer f_timer;
+    f_timer.start();
+#endif
     
-    rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+    pfs::DOMIO pfsio;
+    
+    int xSize = frame->getHeight();
+    int ySize = frame->getWidth();
+    pfs::Frame *resizedFrame = pfsio.createFrame( xSize, ySize );
+    
+    pfs::ChannelIterator *it = frame->getChannels();
+    while( it->hasNext() )
+    {
+      pfs::Channel *originalCh = it->getNext();
+      pfs::Channel *newCh = resizedFrame->createChannel(originalCh->getName());
+      
+      rotateArray(originalCh->getChannelData(), newCh->getChannelData(), clock_wise);
+    }
+    
+    pfs::copyTags( frame, resizedFrame );
+    
+#ifdef TIMER_PROFILING
+    f_timer.stop_and_update();
+    std::cout << "rotateFrame() = " << f_timer.get_time() << " msec" << std::endl;
+#endif 
+    
+    return resizedFrame;
   }
   
-  pfs::copyTags( frame, resizedFrame );
-  return resizedFrame;
-}
-
-// TODO: define this function as friend in order to decrease the execution
-void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
-{
-  int outRows = out->getRows();
-  int outCols = out->getCols();
+  //TODO: it is possible to implement this function in block-major format to lower the execution time,
+  // but it is not strictly necessary at the moment
+  void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
+  {
+    const pfs::Array2DImpl* Ain = dynamic_cast<const pfs::Array2DImpl*> (in);
+    pfs::Array2DImpl* Aout      = dynamic_cast<pfs::Array2DImpl*> (out);
+    
+    assert( Aout != NULL && Ain != NULL );
+    
+    const float* Vin  = Ain->data;
+    float* Vout       = Aout->data;
+    
+    const int I_ROWS = in->getRows();
+    const int I_COLS = in->getCols();
+    
+    const int O_ROWS = out->getRows();
+    const int O_COLS = out->getCols();
+    
+    if (clockwise)
+    {
+      for (int j = 0; j < I_ROWS; j++)
+        for (int i = 0; i < I_COLS; i++)
+        {
+          Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS+i];
+        }
+    }
+    else
+    {
+      for (int j = 0; j < I_ROWS; j++)
+        for (int i = 0; i < I_COLS; i++)
+        {
+          Vout[i*O_COLS+j] = Vin[j*I_COLS+i];
+        }
+    }
+  }
   
-  for( int i=0; i<outCols; i++ )
-    for( int j=0; j<outRows; j++ )
-      if( clockwise )
-        (*out)( i, j ) = (*in)( j, outCols - i - 1 );          
-      else
-        (*out)( i, j ) = (*in)( outRows - j - 1, i );
 }
-
