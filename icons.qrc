@@ -1,88 +1,89 @@
 <RCC>
-    <qresource prefix="/new/prefix1" >
-        <file>images/add.png</file>
-        <file>images/appearance.png</file>
-        <file>images/apply.png</file>
-        <file>images/back.png</file>
-        <file>images/copyexif.png</file>
-        <file>images/cancel.png</file>
-        <file>images/crop.png</file>
-        <file>images/downarrow.png</file>
-        <file>images/draganddrop.png</file>
-        <file>images/exit.png</file>
-        <file>images/fileclose.png</file>
-        <file>images/fileopen.png</file>
-        <file>images/filesave.png</file>
-        <file>images/filesaveall.png</file>
-        <file>images/forward.png</file>
-        <file>images/ghost_32x32.png</file>
-        <file>images/help.png</file>
-        <file>images/histogram.png</file>
-        <file>images/home.png</file>
-        <file>images/language-selector.png</file>
-        <file>images/move.png</file>
-        <file>images/newfile.png</file>
-        <file>images/options.png</file>
-        <file>images/orange_apply.png</file>
-        <file>images/luminance.png</file>
-        <file>images/raw_import.png</file>
-        <file>images/remove.png</file>
-        <file>images/rotate_left.png</file>
-        <file>images/rotate_right.png</file>
-        <file>images/scale.png</file>
-        <file>images/tonemap.png</file>
-        <file>images/undo.png</file>
-        <file>images/uparrow.png</file>
-        <file>images/viewmag1.png</file>
-        <file>images/viewmag_dec.png</file>
-        <file>images/viewmag_inc.png</file>
-        <file>images/viewmagfit.png</file>
-        <file>images/whatsthis.png</file>
-        <file>images/games-config-background.png</file>
-		<file>images/lock-on.png</file>
-		<file>images/lock-off.png</file>
-		<file>images/edit-undo.png</file>
-		<file>images/edit-redo.png</file>
-		<file>images/system-run.png</file>
-		<file>images/working0.png</file>
-		<file>images/working1.png</file>
-		<file>images/working2.png</file>
-		<file>images/working3.png</file>
-		<file>images/working4.png</file>
-		<file>images/working5.png</file>
-		<file>images/working6.png</file>
-		<file>images/working7.png</file>
-		<file>images/luminance00.png</file>
-		<file>images/luminance01.png</file>
-		<file>images/luminance02.png</file>
-		<file>images/luminance03.png</file>
-		<file>images/luminance04.png</file>
-		<file>images/luminance05.png</file>
-		<file>images/luminance06.png</file>
-		<file>images/luminance07.png</file>
-		<file>images/luminance08.png</file>
-		<file>images/luminance09.png</file>
-		<file>images/luminance10.png</file>
-		<file>images/luminance11.png</file>
-		<file>images/zoom-in.png</file>
-		<file>images/zoom-original.png</file>
-		<file>images/zoom-out.png</file>
-    </qresource>
- <qresource prefix="/help" >
-    <file alias="document-print.png" >icons/help/document-print.png</file>
-    <file alias="exit.png" >icons/help/exit.png</file>
-    <file alias="go-bottom.png" >icons/help/go-bottom.png</file>
-    <file alias="go-down.png" >icons/help/go-down.png</file>
-    <file alias="go-first.png" >icons/help/go-first.png</file>
-    <file alias="go-home.png" >icons/help/go-home.png</file>
-    <file alias="go-last.png" >icons/help/go-last.png</file>
-    <file alias="go-next.png" >icons/help/go-next.png</file>
-    <file alias="go-previous.png" >icons/help/go-previous.png</file>
-    <file alias="go-top.png" >icons/help/go-top.png</file>
-    <file alias="go-up.png" >icons/help/go-up.png</file>
-    <file alias="help-browser.png" >icons/help/help-browser.png</file>
+  <qresource prefix="/new/prefix1">
+    <file>images/raw.png</file>
+    <file>images/add.png</file>
+    <file>images/appearance.png</file>
+    <file>images/apply.png</file>
+    <file>images/back.png</file>
+    <file>images/copyexif.png</file>
+    <file>images/cancel.png</file>
+    <file>images/crop.png</file>
+    <file>images/downarrow.png</file>
+    <file>images/draganddrop.png</file>
+    <file>images/exit.png</file>
+    <file>images/fileclose.png</file>
+    <file>images/fileopen.png</file>
+    <file>images/filesave.png</file>
+    <file>images/filesaveall.png</file>
+    <file>images/forward.png</file>
+    <file>images/ghost_32x32.png</file>
+    <file>images/help.png</file>
+    <file>images/histogram.png</file>
+    <file>images/home.png</file>
+    <file>images/language-selector.png</file>
+    <file>images/move.png</file>
+    <file>images/newfile.png</file>
+    <file>images/options.png</file>
+    <file>images/orange_apply.png</file>
+    <file>images/luminance.png</file>
+    <file>images/raw_import.png</file>
+    <file>images/remove.png</file>
+    <file>images/rotate_left.png</file>
+    <file>images/rotate_right.png</file>
+    <file>images/scale.png</file>
+    <file>images/tonemap.png</file>
+    <file>images/undo.png</file>
+    <file>images/uparrow.png</file>
+    <file>images/viewmag1.png</file>
+    <file>images/viewmag_dec.png</file>
+    <file>images/viewmag_inc.png</file>
+    <file>images/viewmagfit.png</file>
+    <file>images/whatsthis.png</file>
+    <file>images/games-config-background.png</file>
+    <file>images/lock-on.png</file>
+    <file>images/lock-off.png</file>
+    <file>images/edit-undo.png</file>
+    <file>images/edit-redo.png</file>
+    <file>images/system-run.png</file>
+    <file>images/working0.png</file>
+    <file>images/working1.png</file>
+    <file>images/working2.png</file>
+    <file>images/working3.png</file>
+    <file>images/working4.png</file>
+    <file>images/working5.png</file>
+    <file>images/working6.png</file>
+    <file>images/working7.png</file>
+    <file>images/luminance00.png</file>
+    <file>images/luminance01.png</file>
+    <file>images/luminance02.png</file>
+    <file>images/luminance03.png</file>
+    <file>images/luminance04.png</file>
+    <file>images/luminance05.png</file>
+    <file>images/luminance06.png</file>
+    <file>images/luminance07.png</file>
+    <file>images/luminance08.png</file>
+    <file>images/luminance09.png</file>
+    <file>images/luminance10.png</file>
+    <file>images/luminance11.png</file>
+    <file>images/zoom-in.png</file>
+    <file>images/zoom-original.png</file>
+    <file>images/zoom-out.png</file>
   </qresource>
-  <qresource prefix="/splash" >
-	<file>images/LuminanceImage.png</file>
+  <qresource prefix="/help">
+    <file alias="document-print.png">icons/help/document-print.png</file>
+    <file alias="exit.png">icons/help/exit.png</file>
+    <file alias="go-bottom.png">icons/help/go-bottom.png</file>
+    <file alias="go-down.png">icons/help/go-down.png</file>
+    <file alias="go-first.png">icons/help/go-first.png</file>
+    <file alias="go-home.png">icons/help/go-home.png</file>
+    <file alias="go-last.png">icons/help/go-last.png</file>
+    <file alias="go-next.png">icons/help/go-next.png</file>
+    <file alias="go-previous.png">icons/help/go-previous.png</file>
+    <file alias="go-top.png">icons/help/go-top.png</file>
+    <file alias="go-up.png">icons/help/go-up.png</file>
+    <file alias="help-browser.png">icons/help/help-browser.png</file>
+  </qresource>
+  <qresource prefix="/splash">
+    <file>images/LuminanceImage.png</file>
   </qresource>
 </RCC>

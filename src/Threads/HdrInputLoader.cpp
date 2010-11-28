@@ -89,7 +89,7 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),true);
+			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),luminance_options, true);
 			if (frame == NULL)
 				throw "Failed Loading Image";
 

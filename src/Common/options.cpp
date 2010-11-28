@@ -115,6 +115,73 @@ void LuminanceOptions::loadFromQSettings()
 			settings.setValue(KEY_TMOWARNING_FATTALSMALL,true);
 		tmowarning_fattalsmall=settings.value(KEY_TMOWARNING_FATTALSMALL,true).toBool();
 	settings.endGroup();
+	settings.beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
+	if (!settings.contains(KEY_GAMM_0)) {
+		//set default values
+		settings.setValue(KEY_ABER_0,1.0);
+		settings.setValue(KEY_ABER_2,1.0);
+		settings.setValue(KEY_GAMM_0,0.45);
+		settings.setValue(KEY_GAMM_1,4.5);
+		settings.setValue(KEY_USER_MUL_0,1.0);
+		settings.setValue(KEY_USER_MUL_1,1.0);
+		settings.setValue(KEY_USER_MUL_2,1.0);
+		settings.setValue(KEY_USER_MUL_3,1.0);
+		settings.setValue(KEY_AUTO_BRIGHT,1);
+		settings.setValue(KEY_BRIGHTNESS,1.0);
+		settings.setValue(KEY_THRESHOLD,0.0);
+		settings.setValue(KEY_HALF_SIZE,0);
+		settings.setValue(KEY_FOUR_COLOR_RGB,0);
+		settings.setValue(KEY_WB_METHOD,0);
+		settings.setValue(KEY_OUTPUT_COLOR,1);
+		settings.setValue(KEY_OUTPUT_PROFILE,"");
+		settings.setValue(KEY_CAMERA_PROFILE,"");
+		settings.setValue(KEY_USER_FLIP,0);
+		settings.setValue(KEY_USER_QUAL,0);
+		settings.setValue(KEY_USER_BLACK,0);
+		settings.setValue(KEY_USER_SAT,0);
+		settings.setValue(KEY_MED_PASSES,0);
+		settings.setValue(KEY_HIGHLIGHTS,0);
+		settings.setValue(KEY_LEVEL,0);
+		//settings.setValue(KEY_AUTO_BRIGHT_THR,0);
+		//settings.setValue(KEY_ADJUST_MAXIMUM_THR,0);
+		settings.setValue(KEY_USE_FUJI_ROTATE,0);
+		settings.setValue(KEY_USE_BLACK,0);
+		settings.setValue(KEY_USE_SAT,0);
+		settings.setValue(KEY_USE_NOISE,0);
+		settings.setValue(KEY_USE_CHROMA,0);
+	}
+	aber_0 = settings.value(KEY_ABER_0).toDouble();
+	aber_1 = settings.value(KEY_ABER_2).toDouble();
+	gamm_0 = settings.value(KEY_GAMM_0).toDouble();
+	gamm_1 = settings.value(KEY_GAMM_1).toDouble();
+	user_mul_0 = settings.value(KEY_USER_MUL_0).toFloat();
+	user_mul_1 = settings.value(KEY_USER_MUL_1).toFloat();
+	user_mul_2 = settings.value(KEY_USER_MUL_2).toFloat();
+	user_mul_3 = settings.value(KEY_USER_MUL_3).toFloat();
+	auto_bright = settings.value(KEY_AUTO_BRIGHT).toInt();
+	brightness = settings.value(KEY_BRIGHTNESS).toFloat();
+	threshold = settings.value(KEY_THRESHOLD).toFloat();
+	half_size = settings.value(KEY_HALF_SIZE).toInt();
+	four_color_rgb = settings.value(KEY_FOUR_COLOR_RGB).toInt();
+	wb_method = settings.value(KEY_WB_METHOD).toInt();
+	output_color = settings.value(KEY_OUTPUT_COLOR).toInt();
+	output_profile = settings.value(KEY_OUTPUT_PROFILE).toString().toAscii().constData();
+	camera_profile = settings.value(KEY_CAMERA_PROFILE).toString().toAscii().constData();
+	user_flip = settings.value(KEY_USER_FLIP).toInt();
+	user_qual = settings.value(KEY_USER_QUAL).toInt();
+	user_black = settings.value(KEY_USER_BLACK).toInt();
+	user_sat = settings.value(KEY_USER_SAT).toInt();
+	med_passes = settings.value(KEY_MED_PASSES).toInt();
+	highlights = settings.value(KEY_HIGHLIGHTS).toInt();
+	level = settings.value(KEY_LEVEL).toInt();
+	//auto_bright_thr = settings.value(KEY_AUTO_BRIGHT_THR).toFloat();
+	//adjust_maximum_thr = settings.value(KEY_ADJUST_MAXIMUM_THR).toFloat();
+	use_fuji_rotate = settings.value(KEY_USE_FUJI_ROTATE).toInt();
+	use_black = settings.value(KEY_USE_BLACK).toInt();
+	use_sat = settings.value(KEY_USE_SAT).toInt();
+	use_noise = settings.value(KEY_USE_NOISE).toInt();
+	use_chroma = settings.value(KEY_USE_CHROMA).toInt();
+	settings.endGroup();
 }
 
 TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
@@ -125,10 +192,6 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 	}
 
 	TonemappingOptions *toreturn=new TonemappingOptions;
-	//specifying -2 as size, and passing -2 as the original size in the tone mapper thread constructor (instantiated in the batchDialog class), we basically bypass the resize step in the thread.
-	//-1 cannot be used because the global variable xsize is -1 by default, so we would sooner or later end up loading the file resized.pfs (which never gets written to disk).
-	//TODO
-	//toreturn->xsize=-2;
 
 	QTextStream in(&file);
 	QString field,value;

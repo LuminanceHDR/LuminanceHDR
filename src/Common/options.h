@@ -61,6 +61,40 @@ public:
 	QString batch_ldr_format;
 	//2-chars ISO 639 language code for Luminance's user interface.
 	QString gui_lang;
+	//Raw Conversion options
+	double aber_0;
+	double aber_1;
+	double aber_2;
+	double aber_3;
+	double gamm_0;
+	double gamm_1;
+	float user_mul_0;
+	float user_mul_1;
+	float user_mul_2;
+	float user_mul_3;
+	int auto_bright;
+	float brightness;
+	float threshold;
+	int half_size;
+	int four_color_rgb;
+	int highlights;
+	int level;
+	int wb_method;
+	int output_color;
+	const char *output_profile;
+	const char *camera_profile;
+	int user_flip;
+	int user_qual;
+	int user_black;
+	int user_sat;
+	int med_passes;
+	//float auto_bright_thr;
+	//float adjust_maximum_thr;
+	int use_fuji_rotate;
+	int use_black;
+	int use_sat;
+	int use_noise;
+	int use_chroma;
 private:
 	//use QSettings to load stored settings (or use hardcoded defaults on very first run)
 	void loadFromQSettings ();

@@ -29,6 +29,7 @@
 #include <iostream>
 
 #include "Libpfs/pfs.h"
+#include "pfsinraw.h"
 
 #define P1 RawProcessor.imgdata.idata
 #define S RawProcessor.imgdata.sizes
@@ -37,11 +38,56 @@
 #define P2 RawProcessor.imgdata.other
 #define OUT RawProcessor.imgdata.params
 
-pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool writeOnDisk)
+pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk)
 {  
   LibRaw RawProcessor;
   int ret;
+
+  OUT.output_bps = 16;
+
+  OUT.gamm[0] = 1/2.4;   //sRGB
+  OUT.gamm[1] = 12.92;   //sRGB
   
+  OUT.no_auto_bright = !options->auto_bright;  
+  if( options->auto_bright) 
+    OUT.bright = options->brightness;
+
+  OUT.user_qual = options->user_qual; 
+  OUT.med_passes = options->med_passes; 
+
+  if(options->wb_method == 0) // Camera WB
+    OUT.use_camera_wb = 1;
+  else if(options->wb_method == 1) // Auto WB
+    OUT.use_auto_wb = 1;
+  else { // Manual WB
+    OUT.user_mul[0] = options->user_mul_0;
+    OUT.user_mul[1] = options->user_mul_1;
+    OUT.user_mul[2] = options->user_mul_2;
+    OUT.user_mul[3] = options->user_mul_3;
+  }
+
+  if(options->highlights < 3)
+    OUT.highlight = options->highlights;
+  else
+    OUT.highlight = options->highlights + options->level; 
+  
+  if (!options->auto_bright)
+    OUT.bright = options->brightness;
+
+  if (options->use_black)
+    OUT.user_black = options->user_black;
+
+  if (options->use_sat)
+    OUT.user_sat = options->user_sat;
+
+  if (options->use_noise)
+    OUT.threshold = options->threshold;
+
+  if (options->use_chroma) {
+    OUT.aber[0] = options->aber_0;
+    OUT.aber[2] = options->aber_2;
+  }
+
   if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
     std::cout << "Error Opening RAW File" << std::endl;
     return NULL;
@@ -51,18 +97,6 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool 
     std::cout << "Error Unpacking RAW File" << std::endl;
     return NULL;
   }
-
-  OUT.output_bps = 16;
-
-  OUT.gamm[0] = 1/2.4;
-  OUT.gamm[1] = 12.92;
-  
-  OUT.no_auto_bright    = 1;  
-
-  OUT.highlight = 2;      // -H 2 // Highlight blend
-  OUT.user_qual = 3;      // -q 3 // Interpolation type
-  OUT.use_auto_wb = 1;    // -a // Auto-white balance
-  OUT.threshold = 100;    // noise reduction
 
   if( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS) {
     std::cout << "Error Processing RAW File" << std::endl;

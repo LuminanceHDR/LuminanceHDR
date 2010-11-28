@@ -97,7 +97,7 @@ void LoadHdrThread::run()
 		}
 		else if (rawinput)
     {
-			hdrpfsframe = readRawIntoPfsFrame(fname.toAscii().constData(), (luminance_options->tempfilespath).toAscii().constData(), false);
+			hdrpfsframe = readRawIntoPfsFrame(fname.toAscii().constData(), (luminance_options->tempfilespath).toAscii().constData(), luminance_options, false);
 		} //raw file detected
 		else
     {

@@ -53,5 +53,12 @@ private slots:
 	void updateLineEditString();
 	void helpDcrawParamsButtonClicked();
 	void enterWhatsThis();
+	void wb_method_comboBox_currentIndexChanged(int i);
+	void use_black_CB_stateChanged(int);
+	void use_sat_CB_stateChanged(int);
+	void use_noise_CB_stateChanged(int);
+	void use_chroma_CB_stateChanged(int);
+	void brightness_horizontalSlider_valueChanged(int);
+	void brightness_doubleSpinBox_valueChanged(double);
 };
 #endif

@@ -51,6 +51,7 @@ LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const 
 }
 
 LdrViewer::~LdrViewer() {
+	std::cout << "LdrViewer::~LdrViewer()" << std::endl;
 	delete [] origimage.bits();
 }
 

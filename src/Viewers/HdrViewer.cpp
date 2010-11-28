@@ -281,6 +281,7 @@ HdrViewer::~HdrViewer()
 	//do not delete workarea, it shares the same memory area of pfsFrame
 	if (pfsFrame && flagFreeOnExit) // It must be deleted calling freeFrame()
   {
+		std::cout << "HdrViewer::~HdrViewer(): Freed pfsFrame" << std::endl;
 		pfsio.freeFrame(pfsFrame);
   }
 }

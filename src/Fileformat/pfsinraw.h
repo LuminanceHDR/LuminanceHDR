@@ -25,6 +25,8 @@
 #ifndef READRAWINTOPFSFRAME
 #define READRAWINTOPFSFRAME
 
-pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, bool writeOnDisk);
+#include "Common/options.h"
+
+pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk);
 
 #endif
