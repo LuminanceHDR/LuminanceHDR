@@ -85,7 +85,7 @@
 #define KEY_AUTO_BRIGHT "auto_bright"
 #define KEY_AUTO_BRIGHT_THR "auto_bright_thr"
 #define KEY_ADJUST_MAXIMUM_THR "adjust_maximum_thr"
-#define KEY_USE_FUJI_ROTATE "use_fuji_rotate"
+#define KEY_DO_NOT_USE_FUJI_ROTATE "do_not_use_fuji_rotate"
 #define KEY_USE_BLACK "use_black"
 #define KEY_USE_SAT "use_sat"
 #define KEY_USE_NOISE "use_noise"

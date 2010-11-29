@@ -120,17 +120,17 @@ void LuminanceOptions::loadFromQSettings()
 		//set default values
 		settings.setValue(KEY_ABER_0,1.0);
 		settings.setValue(KEY_ABER_2,1.0);
-		settings.setValue(KEY_GAMM_0,0.45);
-		settings.setValue(KEY_GAMM_1,4.5);
+		settings.setValue(KEY_GAMM_0,1/2.4);
+		settings.setValue(KEY_GAMM_1,12.92);
 		settings.setValue(KEY_USER_MUL_0,1.0);
 		settings.setValue(KEY_USER_MUL_1,1.0);
 		settings.setValue(KEY_USER_MUL_2,1.0);
 		settings.setValue(KEY_USER_MUL_3,1.0);
-		settings.setValue(KEY_AUTO_BRIGHT,1);
+		settings.setValue(KEY_AUTO_BRIGHT,true);
 		settings.setValue(KEY_BRIGHTNESS,1.0);
 		settings.setValue(KEY_THRESHOLD,0.0);
 		settings.setValue(KEY_HALF_SIZE,0);
-		settings.setValue(KEY_FOUR_COLOR_RGB,0);
+		settings.setValue(KEY_FOUR_COLOR_RGB,false);
 		settings.setValue(KEY_WB_METHOD,0);
 		settings.setValue(KEY_OUTPUT_COLOR,1);
 		settings.setValue(KEY_OUTPUT_PROFILE,"");
@@ -138,17 +138,17 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_USER_FLIP,0);
 		settings.setValue(KEY_USER_QUAL,0);
 		settings.setValue(KEY_USER_BLACK,0);
-		settings.setValue(KEY_USER_SAT,0);
+		settings.setValue(KEY_USER_SAT,20000);
 		settings.setValue(KEY_MED_PASSES,0);
 		settings.setValue(KEY_HIGHLIGHTS,0);
 		settings.setValue(KEY_LEVEL,0);
 		//settings.setValue(KEY_AUTO_BRIGHT_THR,0);
 		//settings.setValue(KEY_ADJUST_MAXIMUM_THR,0);
-		settings.setValue(KEY_USE_FUJI_ROTATE,0);
-		settings.setValue(KEY_USE_BLACK,0);
-		settings.setValue(KEY_USE_SAT,0);
-		settings.setValue(KEY_USE_NOISE,0);
-		settings.setValue(KEY_USE_CHROMA,0);
+		settings.setValue(KEY_DO_NOT_USE_FUJI_ROTATE,false);
+		settings.setValue(KEY_USE_BLACK,false);
+		settings.setValue(KEY_USE_SAT,false);
+		settings.setValue(KEY_USE_NOISE,false);
+		settings.setValue(KEY_USE_CHROMA,false);
 	}
 	aber_0 = settings.value(KEY_ABER_0).toDouble();
 	aber_1 = settings.value(KEY_ABER_2).toDouble();
@@ -158,11 +158,11 @@ void LuminanceOptions::loadFromQSettings()
 	user_mul_1 = settings.value(KEY_USER_MUL_1).toFloat();
 	user_mul_2 = settings.value(KEY_USER_MUL_2).toFloat();
 	user_mul_3 = settings.value(KEY_USER_MUL_3).toFloat();
-	auto_bright = settings.value(KEY_AUTO_BRIGHT).toInt();
+	auto_bright = settings.value(KEY_AUTO_BRIGHT).toBool();
 	brightness = settings.value(KEY_BRIGHTNESS).toFloat();
 	threshold = settings.value(KEY_THRESHOLD).toFloat();
 	half_size = settings.value(KEY_HALF_SIZE).toInt();
-	four_color_rgb = settings.value(KEY_FOUR_COLOR_RGB).toInt();
+	four_color_rgb = settings.value(KEY_FOUR_COLOR_RGB).toBool();
 	wb_method = settings.value(KEY_WB_METHOD).toInt();
 	output_color = settings.value(KEY_OUTPUT_COLOR).toInt();
 	output_profile = settings.value(KEY_OUTPUT_PROFILE).toString().toAscii().constData();
@@ -176,11 +176,11 @@ void LuminanceOptions::loadFromQSettings()
 	level = settings.value(KEY_LEVEL).toInt();
 	//auto_bright_thr = settings.value(KEY_AUTO_BRIGHT_THR).toFloat();
 	//adjust_maximum_thr = settings.value(KEY_ADJUST_MAXIMUM_THR).toFloat();
-	use_fuji_rotate = settings.value(KEY_USE_FUJI_ROTATE).toInt();
-	use_black = settings.value(KEY_USE_BLACK).toInt();
-	use_sat = settings.value(KEY_USE_SAT).toInt();
-	use_noise = settings.value(KEY_USE_NOISE).toInt();
-	use_chroma = settings.value(KEY_USE_CHROMA).toInt();
+	do_not_use_fuji_rotate = settings.value(KEY_DO_NOT_USE_FUJI_ROTATE).toBool();
+	use_black = settings.value(KEY_USE_BLACK).toBool();
+	use_sat = settings.value(KEY_USE_SAT).toBool();
+	use_noise = settings.value(KEY_USE_NOISE).toBool();
+	use_chroma = settings.value(KEY_USE_CHROMA).toBool();
 	settings.endGroup();
 }
 

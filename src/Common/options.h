@@ -72,11 +72,11 @@ public:
 	float user_mul_1;
 	float user_mul_2;
 	float user_mul_3;
-	int auto_bright;
+	bool auto_bright;
 	float brightness;
 	float threshold;
 	int half_size;
-	int four_color_rgb;
+	bool four_color_rgb;
 	int highlights;
 	int level;
 	int wb_method;
@@ -90,11 +90,11 @@ public:
 	int med_passes;
 	//float auto_bright_thr;
 	//float adjust_maximum_thr;
-	int use_fuji_rotate;
-	int use_black;
-	int use_sat;
-	int use_noise;
-	int use_chroma;
+	bool do_not_use_fuji_rotate;
+	bool use_black;
+	bool use_sat;
+	bool use_noise;
+	bool use_chroma;
 private:
 	//use QSettings to load stored settings (or use hardcoded defaults on very first run)
 	void loadFromQSettings ();

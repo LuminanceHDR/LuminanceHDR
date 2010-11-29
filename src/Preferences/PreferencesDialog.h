@@ -60,5 +60,9 @@ private slots:
 	void use_chroma_CB_stateChanged(int);
 	void brightness_horizontalSlider_valueChanged(int);
 	void brightness_doubleSpinBox_valueChanged(double);
+	void red_horizontalSlider_valueChanged(int);
+	void red_doubleSpinBox_valueChanged(double);
+	void green_horizontalSlider_valueChanged(int);
+	void green_doubleSpinBox_valueChanged(double);
 };
 #endif

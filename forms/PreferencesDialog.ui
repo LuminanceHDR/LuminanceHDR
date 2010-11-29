@@ -178,7 +178,7 @@
         <enum>QFrame::Raised</enum>
        </property>
        <property name="currentIndex">
-        <number>3</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="languagePage">
         <layout class="QVBoxLayout">
@@ -738,7 +738,7 @@ p, li { white-space: pre-wrap; }
          <item row="0" column="0">
           <widget class="QToolBox" name="toolBox">
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page_2">
             <property name="geometry">
@@ -746,7 +746,7 @@ p, li { white-space: pre-wrap; }
               <x>0</x>
               <y>0</y>
               <width>478</width>
-              <height>160</height>
+              <height>356</height>
              </rect>
             </property>
             <attribute name="label">
@@ -765,7 +765,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QCheckBox" name="use_fuji_rotate_CB">
+                  <widget class="QCheckBox" name="do_not_use_fuji_rotate_CB">
                    <property name="text">
                     <string>Do not stretch or rotate pixels</string>
                    </property>
@@ -931,8 +931,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>485</width>
-              <height>290</height>
+              <width>502</width>
+              <height>356</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1471,6 +1471,9 @@ p, li { white-space: pre-wrap; }
                    <property name="pageStep">
                     <number>1000</number>
                    </property>
+                   <property name="value">
+                    <number>20000</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1646,7 +1649,7 @@ p, li { white-space: pre-wrap; }
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>Red:</string>
+                    <string>Red:    </string>
                    </property>
                   </widget>
                  </item>
@@ -1678,13 +1681,16 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>100</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
                    <property name="tickPosition">
                     <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>0</number>
                    </property>
                   </widget>
                  </item>
@@ -1763,7 +1769,7 @@ p, li { white-space: pre-wrap; }
                     <number>200</number>
                    </property>
                    <property name="value">
-                    <number>1</number>
+                    <number>100</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
@@ -1833,8 +1839,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>478</width>
-              <height>165</height>
+              <width>485</width>
+              <height>140</height>
              </rect>
             </property>
             <attribute name="label">

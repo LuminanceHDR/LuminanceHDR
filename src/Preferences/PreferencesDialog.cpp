@@ -136,6 +136,10 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(use_chroma_CB,SIGNAL(stateChanged(int)),this,SLOT(use_chroma_CB_stateChanged(int)));
 	connect(brightness_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(brightness_horizontalSlider_valueChanged(int)));
 	connect(brightness_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(brightness_doubleSpinBox_valueChanged(double)));
+	connect(red_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(red_horizontalSlider_valueChanged(int)));
+	connect(red_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(red_horizontalSlider_valueChanged(int)));
+	connect(green_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(green_doubleSpinBox_valueChanged(double)));
+	connect(green_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(green_doubleSpinBox_valueChanged(double)));
 	
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
@@ -254,8 +258,8 @@ void PreferencesDialog::ok_clicked() {
 		luminance_options->four_color_rgb = four_color_rgb_CB->isChecked();
 		settings.setValue(KEY_FOUR_COLOR_RGB, four_color_rgb_CB->isChecked());
 
-		luminance_options->use_fuji_rotate = use_fuji_rotate_CB->isChecked();
-		settings.setValue(KEY_USE_FUJI_ROTATE, use_fuji_rotate_CB->isChecked());
+		luminance_options->do_not_use_fuji_rotate = do_not_use_fuji_rotate_CB->isChecked();
+		settings.setValue(KEY_DO_NOT_USE_FUJI_ROTATE, do_not_use_fuji_rotate_CB->isChecked());
 		
 		luminance_options->user_qual = user_qual_comboBox->currentIndex();
 		settings.setValue(KEY_USER_QUAL, user_qual_comboBox->currentIndex());
@@ -401,13 +405,32 @@ void PreferencesDialog::use_chroma_CB_stateChanged(int i) {
 	}
 }
 
+/***********************************************************/
+// TODO: right handling of horizontalSlider
 void PreferencesDialog::brightness_horizontalSlider_valueChanged( int value) {
-	brightness_doubleSpinBox->setValue((double) value/10.0);
+	brightness_doubleSpinBox->setValue((double) value/brightness_doubleSpinBox->maximum());
 }
 
 void PreferencesDialog::brightness_doubleSpinBox_valueChanged( double value) {
-	brightness_horizontalSlider->setValue((int) value*10);
+	brightness_horizontalSlider->setValue((int) value*brightness_doubleSpinBox->maximum());
 }
+
+void PreferencesDialog::red_horizontalSlider_valueChanged( int value) {
+	red_doubleSpinBox->setValue((double) value/red_doubleSpinBox->maximum());
+}
+
+void PreferencesDialog::red_doubleSpinBox_valueChanged( double value) {
+	red_horizontalSlider->setValue((int) value*red_doubleSpinBox->maximum());
+}
+
+void PreferencesDialog::green_horizontalSlider_valueChanged( int value) {
+	green_doubleSpinBox->setValue((double) value/green_doubleSpinBox->maximum());
+}
+
+void PreferencesDialog::green_doubleSpinBox_valueChanged( double value) {
+	green_horizontalSlider->setValue((int) value*green_doubleSpinBox->maximum());
+}
+/*********************************************************/
 
 void PreferencesDialog::from_options_to_gui() {
 	//language: if by any chance luminance_options->gui_lang does NOT contain one of the valid 2 chars
@@ -434,6 +457,97 @@ void PreferencesDialog::from_options_to_gui() {
 	change_color_of(ifnanColorButton,&infnancolor);
 	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
+
+	//TODO: right restoring of horizontalSlider
+	four_color_rgb_CB->setChecked(luminance_options->four_color_rgb);
+	do_not_use_fuji_rotate_CB->setChecked(luminance_options->do_not_use_fuji_rotate);
+	user_qual_comboBox->setCurrentIndex(luminance_options->user_qual);
+	med_passes_horizontalSlider->setValue(luminance_options->med_passes);
+	med_passes_spinBox->setValue(luminance_options->med_passes);
+	wb_method_comboBox->setCurrentIndex(luminance_options->wb_method);
+	if (luminance_options->wb_method == 3) {
+		label_4->setEnabled(false);
+		R_label->setEnabled(false);
+		R_doubleSpinBox->setEnabled(false);
+		G_label->setEnabled(false);
+		G_doubleSpinBox->setEnabled(false);
+		B_label->setEnabled(false);
+		B_doubleSpinBox->setEnabled(false);
+		G2_label->setEnabled(false);
+		G2_doubleSpinBox->setEnabled(false);
+	}
+	else {
+		label_4->setEnabled(true);
+		R_label->setEnabled(true);
+		R_doubleSpinBox->setEnabled(true);
+		G_label->setEnabled(true);
+		G_doubleSpinBox->setEnabled(true);
+		B_label->setEnabled(true);
+		B_doubleSpinBox->setEnabled(true);
+		G2_label->setEnabled(true);
+		G2_doubleSpinBox->setEnabled(true);
+	}
+	R_doubleSpinBox->setValue(luminance_options->user_mul_0);
+	G_doubleSpinBox->setValue(luminance_options->user_mul_1);
+	B_doubleSpinBox->setValue(luminance_options->user_mul_2);
+	G2_doubleSpinBox->setValue(luminance_options->user_mul_3);
+	highlights_comboBox->setCurrentIndex(luminance_options->highlights);
+	level_horizontalSlider->setValue(luminance_options->level);
+	level_spinBox->setValue(luminance_options->level);
+	//false_colors_CB->setChecked(luminance_options->false_colors);
+	auto_bright_CB->setChecked(luminance_options->auto_bright);
+	brightness_horizontalSlider->setValue(luminance_options->brightness);
+	brightness_doubleSpinBox->setValue(luminance_options->brightness);
+	use_black_CB->setChecked(luminance_options->use_black);
+	if (luminance_options->use_black) {
+		user_black_horizontalSlider->setEnabled(true);
+		user_black_spinBox->setEnabled(true);
+	}
+	else {
+		user_black_horizontalSlider->setEnabled(false);
+		user_black_spinBox->setEnabled(false);
+	}
+	user_black_horizontalSlider->setValue(luminance_options->user_black);
+	user_black_spinBox->setValue(luminance_options->user_black);
+	use_sat_CB->setChecked(luminance_options->use_sat);
+	if (luminance_options->use_sat) {
+		user_sat_horizontalSlider->setEnabled(true);
+		user_sat_spinBox->setEnabled(true);
+	}
+	else {
+		user_sat_horizontalSlider->setEnabled(false);
+		user_sat_spinBox->setEnabled(false);
+	}
+	user_sat_horizontalSlider->setValue(luminance_options->user_sat);
+	user_sat_spinBox->setValue(luminance_options->user_sat);
+	use_noise_CB->setChecked(luminance_options->use_noise);
+	if (luminance_options->use_noise) {
+		threshold_horizontalSlider->setEnabled(true);
+		threshold_spinBox->setEnabled(true);
+	}
+	else {
+		threshold_horizontalSlider->setEnabled(false);
+		threshold_spinBox->setEnabled(false);
+	}
+	threshold_horizontalSlider->setValue(luminance_options->threshold);
+	threshold_spinBox->setValue(luminance_options->threshold);	
+	use_chroma_CB->setChecked(luminance_options->use_chroma);
+	if (luminance_options->use_chroma) {
+		red_horizontalSlider->setEnabled(true);
+		red_doubleSpinBox->setEnabled(true);
+		green_horizontalSlider->setEnabled(true);
+		green_doubleSpinBox->setEnabled(true);
+	}
+	else {
+		red_horizontalSlider->setEnabled(false);
+		red_doubleSpinBox->setEnabled(false);
+		green_horizontalSlider->setEnabled(false);
+		green_doubleSpinBox->setEnabled(false);
+	}
+	red_horizontalSlider->setValue(luminance_options->aber_0);
+	red_doubleSpinBox->setValue(luminance_options->aber_0);
+	green_horizontalSlider->setValue(luminance_options->aber_2);
+	green_doubleSpinBox->setValue(luminance_options->aber_2);
 }
 
 PreferencesDialog::~PreferencesDialog() {

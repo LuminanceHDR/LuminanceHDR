@@ -47,11 +47,13 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   OUT.gamm[0] = 1/2.4;   //sRGB
   OUT.gamm[1] = 12.92;   //sRGB
-  
-  OUT.no_auto_bright = !options->auto_bright;  
-  if( options->auto_bright) 
-    OUT.bright = options->brightness;
+ 
+  if( options->four_color_rgb)
+    OUT.four_color_rgb = 1;
 
+  if( options->do_not_use_fuji_rotate)
+    OUT.use_fuji_rotate = 0; // do not rotate or strech pixels on fuji cameras - default = 1 (rotate)
+ 
   OUT.user_qual = options->user_qual; 
   OUT.med_passes = options->med_passes; 
 
@@ -71,8 +73,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   else
     OUT.highlight = options->highlights + options->level; 
   
-  if (!options->auto_bright)
-    OUT.bright = options->brightness;
+  OUT.no_auto_bright = !options->auto_bright;
+  OUT.bright = options->brightness;
 
   if (options->use_black)
     OUT.user_black = options->user_black;
