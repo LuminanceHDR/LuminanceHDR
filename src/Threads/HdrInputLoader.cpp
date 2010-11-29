@@ -32,7 +32,7 @@
 
 #include <iostream>
 
-HdrInputLoader::HdrInputLoader(QString filename, int image_idx, QStringList dcrawOpts) : QThread(0), image_idx(image_idx), fname(filename), dcrawOpts(dcrawOpts) {
+HdrInputLoader::HdrInputLoader(QString filename, int image_idx) : QThread(0), image_idx(image_idx), fname(filename) {
 	luminance_options=LuminanceOptions::getInstance();
 }
 

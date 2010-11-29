@@ -34,7 +34,7 @@ class HdrInputLoader : public QThread {
 Q_OBJECT
 
 public:
-	HdrInputLoader(QString filename, int image_idx, QStringList dcrawOpts);
+	HdrInputLoader(QString filename, int image_idx);
 	~HdrInputLoader();
 signals:
 	void ldrReady(QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
@@ -46,7 +46,6 @@ protected:
 private:
 	int image_idx;
 	QString fname;
-	QStringList dcrawOpts;
 	LuminanceOptions *luminance_options;
 };
 #endif

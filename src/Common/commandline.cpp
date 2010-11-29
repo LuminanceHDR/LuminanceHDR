@@ -330,7 +330,6 @@ void CommandLineInterfaceManager::parseArgs() {
 	if (operation_mode==CREATE_HDR_MODE) {
 		if (verbose) {
 			VERBOSEPRINT("Temporary directory: %1",luminance_options->tempfilespath);
-			VERBOSEPRINT("Dcraw parameters: %1",luminance_options->dcraw_options.join(" ") );
 			VERBOSEPRINT("Using %1 threads.", luminance_options->num_threads);
 		}
 		hdrCreationManager = new HdrCreationManager();

@@ -39,8 +39,6 @@ public:
 	//public accessor to destroy singleton
 	static void deleteInstance();
 
-	//commandline options for RAW import functionality, thanks to dcraw
-	QStringList dcraw_options;
 	//commandline options for align_image_stack
 	QStringList align_image_stack_options;
 	//colors used to draw the NAN/INF or the negative colors

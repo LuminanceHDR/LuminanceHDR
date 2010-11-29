@@ -33,7 +33,6 @@
 #define KEY_GUI_LANG "UserInterfaceLanguage"
 
 #define GROUP_EXTERNALTOOLS "External_Tools_Options"
-#define KEY_EXTERNAL_DCRAW_OPTIONS "ExternalDcrawOptions"
 #define KEY_EXTERNAL_AIS_OPTIONS "ExternalAlignImageStackOptions"
 
 #define GROUP_HDRVISUALIZATION "HDR_visualization"
@@ -90,6 +89,18 @@
 #define KEY_USE_SAT "use_sat"
 #define KEY_USE_NOISE "use_noise"
 #define KEY_USE_CHROMA "use_chroma"
+#define KEY_USER_QUAL_TOOLBUTTON "user_qual_toolButton"
+#define KEY_MED_PASSES_TOOLBUTTON "med_passes_toolButton"
+#define KEY_WB_METHOD_TOOLBUTTON "wb_method_toolButton"
+#define KEY_MULTIPLIERS_TOOLBUTTON "multipliers_toolButton"
+#define KEY_HIGHLIGHTS_TOOLBUTTON "highlights_toolButton"
+#define KEY_LEVEL_TOOLBUTTON "level_toolButton"
+#define KEY_BRIGHTNESS_TOOLBUTTON "brightness_toolButton"
+#define KEY_USER_BLACK_TOOLBUTTON "user_black_toolButton"
+#define KEY_USER_SAT_TOOLBUTTON "user_sat_toolButton"
+#define KEY_THRESHOLD_TOOLBUTTON "threshold_toolButton"
+#define KEY_RED_TOOLBUTTON "red_toolButton"
+#define KEY_GREEN_TOOLBUTTON "green_toolButton"
 
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"

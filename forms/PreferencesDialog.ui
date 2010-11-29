@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>710</width>
     <height>570</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
+    <width>710</width>
     <height>570</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>700</width>
+    <width>710</width>
     <height>570</height>
    </size>
   </property>
@@ -104,7 +104,7 @@
         <bool>true</bool>
        </property>
        <property name="currentRow">
-        <number>-1</number>
+        <number>0</number>
        </property>
        <property name="sortingEnabled">
         <bool>false</bool>
@@ -745,7 +745,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>478</width>
+              <width>488</width>
               <height>356</height>
              </rect>
             </property>
@@ -823,7 +823,7 @@ p, li { white-space: pre-wrap; }
                       </widget>
                      </item>
                      <item>
-                      <widget class="QToolButton" name="toolButton">
+                      <widget class="QToolButton" name="user_qual_toolButton">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -890,7 +890,7 @@ p, li { white-space: pre-wrap; }
                       </widget>
                      </item>
                      <item>
-                      <widget class="QToolButton" name="toolButton_2">
+                      <widget class="QToolButton" name="med_passes_toolButton">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -931,8 +931,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>502</width>
-              <height>356</height>
+              <width>485</width>
+              <height>290</height>
              </rect>
             </property>
             <attribute name="label">
@@ -989,7 +989,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_3">
+                  <widget class="QToolButton" name="wb_method_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1007,7 +1007,7 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
-                  <widget class="QLabel" name="label_4">
+                  <widget class="QLabel" name="multipliers_label">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1122,7 +1122,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_4">
+                  <widget class="QToolButton" name="multipliers_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1187,7 +1187,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_6">
+                  <widget class="QToolButton" name="highlights_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1254,7 +1254,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_7">
+                  <widget class="QToolButton" name="level_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1344,7 +1344,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_8">
+                  <widget class="QToolButton" name="brightness_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1417,7 +1417,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_9">
+                  <widget class="QToolButton" name="user_black_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1496,7 +1496,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_10">
+                  <widget class="QToolButton" name="user_sat_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1520,7 +1520,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>478</width>
+              <width>488</width>
               <height>356</height>
              </rect>
             </property>
@@ -1619,7 +1619,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_11">
+                  <widget class="QToolButton" name="threshold_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1674,14 +1674,20 @@ p, li { white-space: pre-wrap; }
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
                    <property name="maximum">
-                    <number>200</number>
+                    <number>20</number>
                    </property>
                    <property name="singleStep">
                     <number>1</number>
                    </property>
+                   <property name="pageStep">
+                    <number>2</number>
+                   </property>
                    <property name="value">
-                    <number>100</number>
+                    <number>10</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
@@ -1690,7 +1696,7 @@ p, li { white-space: pre-wrap; }
                     <enum>QSlider::TicksBelow</enum>
                    </property>
                    <property name="tickInterval">
-                    <number>0</number>
+                    <number>1</number>
                    </property>
                   </widget>
                  </item>
@@ -1717,7 +1723,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_12">
+                  <widget class="QToolButton" name="red_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1765,17 +1771,26 @@ p, li { white-space: pre-wrap; }
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
                    <property name="maximum">
-                    <number>200</number>
+                    <number>20</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>2</number>
                    </property>
                    <property name="value">
-                    <number>100</number>
+                    <number>10</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
                    <property name="tickPosition">
                     <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>1</number>
                    </property>
                   </widget>
                  </item>
@@ -1802,7 +1817,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_13">
+                  <widget class="QToolButton" name="green_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1839,8 +1854,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>485</width>
-              <height>140</height>
+              <width>488</width>
+              <height>165</height>
              </rect>
             </property>
             <attribute name="label">

@@ -99,7 +99,7 @@ void HdrCreationManager::loadInputFiles() {
 		while (runningThreads<luminance_options->num_threads && firstNotStarted<startedProcessing.size()) {
 			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted]=true;
-			HdrInputLoader *thread=new HdrInputLoader(fileList[firstNotStarted],firstNotStarted,luminance_options->dcraw_options);
+			HdrInputLoader *thread=new HdrInputLoader(fileList[firstNotStarted],firstNotStarted);
 			if (thread == NULL)
 				exit(1);
 			connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
@@ -148,6 +148,8 @@ void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotim
 	listmdrG[index]=G->getChannelData();
 	listmdrB[index]=B->getChannelData();
 	//perform some housekeeping
+        //pfs::DOMIO pfsio;
+	//pfsio.freeFrame(newFrame);
 	newResult(index,expotime,newfname);
 	//continue with the loading process
 	loadInputFiles();
@@ -293,6 +295,8 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 				listmdrR.push_back(R->getChannelData());
 				listmdrG.push_back(G->getChannelData());
 				listmdrB.push_back(B->getChannelData());
+        			//pfs::DOMIO pfsio;
+				//pfsio.freeFrame(newFrame);
 			}
 			QFile::remove(fname);
 			free(fname);

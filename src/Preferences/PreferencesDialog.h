@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -51,9 +51,16 @@ private slots:
 	void infnan_clicked();
 	void ok_clicked();
 	void updateLineEditString();
-	void helpDcrawParamsButtonClicked();
 	void enterWhatsThis();
-	void wb_method_comboBox_currentIndexChanged(int i);
+	
+	void user_qual_comboBox_currentIndexChanged(int);
+	void med_passes_spinBox_valueChanged(int);
+	void wb_method_comboBox_currentIndexChanged(int);
+	void highlights_comboBox_currentIndexChanged(int);
+	void level_spinBox_valueChanged(int);
+	void user_black_spinBox_valueChanged(int);
+	void user_sat_spinBox_valueChanged(int);
+	void threshold_spinBox_valueChanged(int);
 	void use_black_CB_stateChanged(int);
 	void use_sat_CB_stateChanged(int);
 	void use_noise_CB_stateChanged(int);
@@ -64,5 +71,18 @@ private slots:
 	void red_doubleSpinBox_valueChanged(double);
 	void green_horizontalSlider_valueChanged(int);
 	void green_doubleSpinBox_valueChanged(double);
+
+ 	void user_qual_toolButton_clicked();
+	void med_passes_toolButton_clicked();
+	void wb_method_toolButton_clicked();
+	void multipliers_toolButton_clicked();
+	void highlights_toolButton_clicked();
+	void level_toolButton_clicked();
+	void brightness_toolButton_clicked();
+	void user_black_toolButton_clicked();
+	void user_sat_toolButton_clicked();
+	void threshold_toolButton_clicked();
+	void red_toolButton_clicked();
+	void green_toolButton_clicked();
 };
 #endif
