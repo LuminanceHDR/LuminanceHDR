@@ -30,6 +30,8 @@
 #include <QMessageBox>
 #include <cmath>
 
+#include <iostream>
+
 #include "Common/config.h"
 #include "PreferencesDialog.h"
 
@@ -553,7 +555,7 @@ void PreferencesDialog::brightness_doubleSpinBox_valueChanged( double value) {
 }
 
 void PreferencesDialog::red_horizontalSlider_valueChanged( int value) {
-	red_doubleSpinBox->setValue(((double) value)/red_doubleSpinBox->maximum());
+	red_doubleSpinBox->setValue(((double) value)/(red_doubleSpinBox->maximum()));
 }
 
 void PreferencesDialog::red_doubleSpinBox_valueChanged( double value) {

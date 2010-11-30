@@ -931,8 +931,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>485</width>
-              <height>290</height>
+              <width>507</width>
+              <height>356</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1678,13 +1678,13 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>20</number>
+                    <number>100</number>
                    </property>
                    <property name="singleStep">
-                    <number>1</number>
+                    <number>2</number>
                    </property>
                    <property name="pageStep">
-                    <number>2</number>
+                    <number>10</number>
                    </property>
                    <property name="value">
                     <number>10</number>
@@ -1696,7 +1696,7 @@ p, li { white-space: pre-wrap; }
                     <enum>QSlider::TicksBelow</enum>
                    </property>
                    <property name="tickInterval">
-                    <number>1</number>
+                    <number>10</number>
                    </property>
                   </widget>
                  </item>
@@ -1712,7 +1712,7 @@ p, li { white-space: pre-wrap; }
                     <double>0.000010000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>2.000000000000000</double>
+                    <double>10.000000000000000</double>
                    </property>
                    <property name="singleStep">
                     <double>0.100000000000000</double>
@@ -1775,10 +1775,10 @@ p, li { white-space: pre-wrap; }
                     <number>1</number>
                    </property>
                    <property name="maximum">
-                    <number>20</number>
+                    <number>100</number>
                    </property>
                    <property name="pageStep">
-                    <number>2</number>
+                    <number>10</number>
                    </property>
                    <property name="value">
                     <number>10</number>
@@ -1790,7 +1790,7 @@ p, li { white-space: pre-wrap; }
                     <enum>QSlider::TicksBelow</enum>
                    </property>
                    <property name="tickInterval">
-                    <number>1</number>
+                    <number>10</number>
                    </property>
                   </widget>
                  </item>
@@ -1806,7 +1806,7 @@ p, li { white-space: pre-wrap; }
                     <double>0.000010000000000</double>
                    </property>
                    <property name="maximum">
-                    <double>2.000000000000000</double>
+                    <double>10.000000000000000</double>
                    </property>
                    <property name="singleStep">
                     <double>0.100000000000000</double>
@@ -1854,8 +1854,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>488</width>
-              <height>165</height>
+              <width>264</width>
+              <height>140</height>
              </rect>
             </property>
             <attribute name="label">
