@@ -43,6 +43,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   LibRaw RawProcessor;
   int ret;
 
+  OUT.filtering_mode = LIBRAW_FILTERING_AUTOMATIC;
   OUT.output_bps = 16;
 
   OUT.gamm[0] = 1/2.4;   //sRGB

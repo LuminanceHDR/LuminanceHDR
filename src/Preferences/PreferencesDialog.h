@@ -56,6 +56,10 @@ private slots:
 	void user_qual_comboBox_currentIndexChanged(int);
 	void med_passes_spinBox_valueChanged(int);
 	void wb_method_comboBox_currentIndexChanged(int);
+	void R_doubleSpinBox_valueChanged(double);
+	void G_doubleSpinBox_valueChanged(double);
+	void B_doubleSpinBox_valueChanged(double);
+	void G2_doubleSpinBox_valueChanged(double);
 	void highlights_comboBox_currentIndexChanged(int);
 	void level_spinBox_valueChanged(int);
 	void user_black_spinBox_valueChanged(int);

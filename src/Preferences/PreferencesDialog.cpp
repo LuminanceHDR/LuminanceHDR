@@ -30,8 +30,6 @@
 #include <QMessageBox>
 #include <cmath>
 
-#include <iostream>
-
 #include "Common/config.h"
 #include "PreferencesDialog.h"
 
@@ -152,6 +150,10 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(red_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(red_doubleSpinBox_valueChanged(double)));
 	connect(green_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(green_horizontalSlider_valueChanged(int)));
 	connect(green_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(green_doubleSpinBox_valueChanged(double)));
+	connect(R_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(R_doubleSpinBox_valueChanged(double)));
+	connect(G_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(G_doubleSpinBox_valueChanged(double)));
+	connect(B_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(B_doubleSpinBox_valueChanged(double)));
+	connect(G2_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(G2_doubleSpinBox_valueChanged(double)));
 	
 	connect(user_qual_toolButton,SIGNAL(clicked()),this,SLOT(user_qual_toolButton_clicked()));
 	connect(med_passes_toolButton,SIGNAL(clicked()),this,SLOT(med_passes_toolButton_clicked()));
@@ -405,6 +407,46 @@ void PreferencesDialog::wb_method_comboBox_currentIndexChanged(int i) {
 		wb_method_toolButton->setEnabled(false);
 	else
 		wb_method_toolButton->setEnabled(true);
+}
+
+void PreferencesDialog::R_doubleSpinBox_valueChanged(double value) {
+	double value1 = G_doubleSpinBox->value(),
+		value2 = B_doubleSpinBox->value(),
+		value3 = G2_doubleSpinBox->value();
+	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
+		multipliers_toolButton->setEnabled(false);
+	else
+		multipliers_toolButton->setEnabled(true);
+}
+
+void PreferencesDialog::G_doubleSpinBox_valueChanged(double value) {
+	double value1 = R_doubleSpinBox->value(),
+		value2 = B_doubleSpinBox->value(),
+		value3 = G2_doubleSpinBox->value();
+	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
+		multipliers_toolButton->setEnabled(false);
+	else
+		multipliers_toolButton->setEnabled(true);
+}
+
+void PreferencesDialog::B_doubleSpinBox_valueChanged(double value) {
+	double value1 = R_doubleSpinBox->value(),
+		value2 = G_doubleSpinBox->value(),
+		value3 = G2_doubleSpinBox->value();
+	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
+		multipliers_toolButton->setEnabled(false);
+	else
+		multipliers_toolButton->setEnabled(true);
+}
+
+void PreferencesDialog::G2_doubleSpinBox_valueChanged(double value) {
+	double value1 = R_doubleSpinBox->value(),
+		value2 = G_doubleSpinBox->value(),
+		value3 = B_doubleSpinBox->value();
+	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
+		multipliers_toolButton->setEnabled(false);
+	else
+		multipliers_toolButton->setEnabled(true);
 }
 
 void PreferencesDialog::highlights_comboBox_currentIndexChanged(int i) {
