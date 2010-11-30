@@ -148,7 +148,7 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_USE_CHROMA,false);
 	}
 	aber_0 = settings.value(KEY_ABER_0).toDouble();
-	aber_1 = settings.value(KEY_ABER_2).toDouble();
+	aber_2 = settings.value(KEY_ABER_2).toDouble();
 	gamm_0 = settings.value(KEY_GAMM_0).toDouble();
 	gamm_1 = settings.value(KEY_GAMM_1).toDouble();
 	user_mul_0 = settings.value(KEY_USER_MUL_0).toFloat();

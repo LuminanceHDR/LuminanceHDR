@@ -97,6 +97,16 @@ void RGB_to_Temperature(double RGB[3], double *T, double *Green)
 }
 /*********************** END UFRAW CODE ********************************/
 
+static double pos2value(int pos, int minpos, int maxpos, double minv, double maxv) {
+	double x = (pos - minpos)/( (double) (maxpos - minpos));
+	return minv*exp(log(maxv/minv)*x );
+}
+
+static int value2pos(double value, int minpos, int maxpos, double minv, double maxv) {
+	double y = (log(value)-log(minv))/(log(maxv)-log(minv));
+	return (int) ((maxpos - minpos)*y) + minpos;
+}
+
 PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	setupUi(this);
 
@@ -554,25 +564,45 @@ void PreferencesDialog::brightness_doubleSpinBox_valueChanged( double value) {
 		brightness_toolButton->setEnabled(true);
 }
 
-void PreferencesDialog::red_horizontalSlider_valueChanged( int value) {
-	red_doubleSpinBox->setValue(((double) value)/(red_doubleSpinBox->maximum()));
+void PreferencesDialog::red_horizontalSlider_valueChanged( int pos) {
+	int minpos = red_horizontalSlider->minimum();
+	int maxpos = red_horizontalSlider->maximum();
+	double minv = red_doubleSpinBox->minimum();
+	double maxv = red_doubleSpinBox->maximum();
+	double value = pos2value(pos, minpos, maxpos, minv, maxv);
+	red_doubleSpinBox->setValue(value);
 }
 
 void PreferencesDialog::red_doubleSpinBox_valueChanged( double value) {
-	red_horizontalSlider->setValue((int) (value*red_doubleSpinBox->maximum()));
-	if (fabs(value) < 1e-4)
+	int minpos = red_horizontalSlider->minimum();
+	int maxpos = red_horizontalSlider->maximum();
+	double minv = red_doubleSpinBox->minimum();
+	double maxv = red_doubleSpinBox->maximum();
+	int pos = value2pos(value, minpos, maxpos, minv, maxv);
+	red_horizontalSlider->setValue(pos);
+	if (fabs(value - 1.0) < 1e-4)
 		red_toolButton->setEnabled(false);
 	else
 		red_toolButton->setEnabled(true);
 }
 
-void PreferencesDialog::green_horizontalSlider_valueChanged( int value) {
-	green_doubleSpinBox->setValue(((double) value)/green_doubleSpinBox->maximum());
+void PreferencesDialog::green_horizontalSlider_valueChanged( int pos) {
+	int minpos = green_horizontalSlider->minimum();
+	int maxpos = green_horizontalSlider->maximum();
+	double minv = green_doubleSpinBox->minimum();
+	double maxv = green_doubleSpinBox->maximum();
+	double value = pos2value(pos, minpos, maxpos, minv, maxv);
+	green_doubleSpinBox->setValue(value);
 }
 
 void PreferencesDialog::green_doubleSpinBox_valueChanged( double value) {
-	green_horizontalSlider->setValue((int) (value*green_doubleSpinBox->maximum()));
-	if (fabs(value) < 1e-4)
+	int minpos = green_horizontalSlider->minimum();
+	int maxpos = green_horizontalSlider->maximum();
+	double minv = green_doubleSpinBox->minimum();
+	double maxv = green_doubleSpinBox->maximum();
+	int pos = value2pos(value, minpos, maxpos, minv, maxv);
+	green_horizontalSlider->setValue(pos);
+	if (fabs(value - 1.0) < 1e-4)
 		green_toolButton->setEnabled(false);
 	else
 		green_toolButton->setEnabled(true);
@@ -641,15 +671,24 @@ void PreferencesDialog::threshold_toolButton_clicked() {
 }
 
 void PreferencesDialog::red_toolButton_clicked() {
-	red_horizontalSlider->setValue(10);
+	int minpos = red_horizontalSlider->minimum();
+	int maxpos = red_horizontalSlider->maximum();
+	double minv = red_doubleSpinBox->minimum();
+	double maxv = red_doubleSpinBox->maximum();
+	int pos = value2pos(1.0, minpos, maxpos, minv, maxv);
+	red_horizontalSlider->setValue(pos);
 	red_doubleSpinBox->setValue(1.0);
 	red_toolButton->setEnabled(false);
 }
 
 void PreferencesDialog::green_toolButton_clicked() {
-	green_horizontalSlider->setValue(10);
+	int minpos = green_horizontalSlider->minimum();
+	int maxpos = green_horizontalSlider->maximum();
+	double minv = green_doubleSpinBox->minimum();
+	double maxv = green_doubleSpinBox->maximum();
+	int pos = value2pos(1.0, minpos, maxpos, minv, maxv);
+	green_horizontalSlider->setValue(pos);
 	green_doubleSpinBox->setValue(1.0);
-	green_toolButton->setEnabled(false);
 	green_toolButton->setEnabled(false);
 }
 
@@ -767,9 +806,18 @@ void PreferencesDialog::from_options_to_gui() {
 		green_horizontalSlider->setEnabled(false);
 		green_doubleSpinBox->setEnabled(false);
 	}
-	red_horizontalSlider->setValue(luminance_options->aber_0);
+	double  r_minv = red_doubleSpinBox->minimum(),
+		r_maxv = red_doubleSpinBox->maximum(),
+		r_minpos = red_horizontalSlider->minimum(),
+		r_maxpos = red_horizontalSlider->maximum(),
+		g_minv = green_doubleSpinBox->minimum(),
+		g_maxv = green_doubleSpinBox->maximum(),
+		g_minpos = green_horizontalSlider->minimum(),
+		g_maxpos = green_horizontalSlider->maximum();
+		
+	red_horizontalSlider->setValue(value2pos(luminance_options->aber_0, r_minpos, r_maxpos, r_minv, r_maxv));
 	red_doubleSpinBox->setValue(luminance_options->aber_0);
-	green_horizontalSlider->setValue(luminance_options->aber_2);
+	green_horizontalSlider->setValue(value2pos(luminance_options->aber_2, g_minpos, g_maxpos, g_minv, g_maxv));
 	green_doubleSpinBox->setValue(luminance_options->aber_2);
 	
 	settings.beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
