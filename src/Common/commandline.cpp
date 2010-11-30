@@ -166,16 +166,17 @@ void CommandLineInterfaceManager::parseArgs() {
 				}
 				break;
 			case 'l':
-                loadHdrFilename=QDir::currentPath () + QDir::separator () + QString(optarg);
+        loadHdrFilename = QString(optarg);
+        //loadHdrFilename=QDir::currentPath () + QDir::separator () + QString(optarg);
 				break;
 			case 's':
-				saveHdrFilename=QString(optarg);
+				saveHdrFilename = QString(optarg);
 				break;
 			case 'r':
-				tmopts->xsize=toIntWithErrMsg(optarg);
+				tmopts->xsize = toIntWithErrMsg(optarg);
 				break;
 			case 'g':
-				tmopts->pregamma=toFloatWithErrMsg(optarg);
+				tmopts->pregamma = toFloatWithErrMsg(optarg);
 				break;
 			case 't': {
 				QString tmoperator=QString(optarg);
@@ -226,9 +227,11 @@ void CommandLineInterfaceManager::parseArgs() {
 				      tmopts->operator_options.mantiuk06options.contrastfactor=toFloatWithErrMsg(keyandvalue.at(1));
 				    else if (keyandvalue.at(0)== "saturation")
 				      tmopts->operator_options.mantiuk06options.saturationfactor=toFloatWithErrMsg(keyandvalue.at(1));
+            else if (keyandvalue.at(0)== "detail")
+              tmopts->operator_options.mantiuk06options.detailfactor=toFloatWithErrMsg(keyandvalue.at(1));
 				    else if (keyandvalue.at(0)== "equalization")
 				      tmopts->operator_options.mantiuk06options.contrastequalization=(keyandvalue.at(1)=="true");
-
+            
 				    //mantiuk08 options
 				    else if (keyandvalue.at(0)== "colorsaturation")
 				      tmopts->operator_options.mantiuk08options.colorsaturation=toFloatWithErrMsg(keyandvalue.at(1));
@@ -507,36 +510,37 @@ int CommandLineInterfaceManager::toIntWithErrMsg(const QString &str) {
 	return ret;
 }
 
-void CommandLineInterfaceManager::printHelp(char * progname) {
+void CommandLineInterfaceManager::printHelp(char * progname)
+{
 	QString help=
-tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
-"\t" + tr("Commandline interface to %1.").arg(progname) + "\n\n" +
-"\t" + tr("-h --help              Display this help.") + "\n" +
-"\t" + tr("-v --verbose           Print more messages during execution.") + "\n" +
-"\t" + tr("-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).") + "\n" +
-"\t" + tr("-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).") + "\n" +
-"\t" + tr("-c --config            HDR creation config. Possible values: ") + "\n" +
-"\t\t" + tr("weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m") + "\n" +
-"\t\t" + tr("(Default is weight=triangular:response_curve=linear:model=debevec) ") + "\n" +
-"\t" + tr("-l --load HDR_FILE     Load an HDR instead of creating a new one. ") + "\n" +
-"\t" + tr("-s --save HDR_FILE     Save to a HDR file format. (default: don't save) ") + "\n" +
-"\t" + tr("-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) ") + "\n" +
-"\t" + tr("-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) ") + "\n" +
-"\t" + tr("-t --tmo               Tone mapping operator. Legal values are: ") + "\n" +
-"\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08") + "\n" +
-"\t\t" + tr("(Default is mantiuk06)") + "\n" +
-"\t" + tr("-p --tmoptions         Tone mapping operator options. Legal values are: ") + "\n" +
-"\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
-"\t\t" + tr("contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk06)") + "\n" +
-"\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
-"\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
-"\t\t" + tr("bias=VALUE (for drago)") + "\n" +
-"\t\t" + tr("local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)") + "\n" +
-"\t\t" + tr("scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)") + "\n" +
-"\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
-"\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
-"\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
-"\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
-tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
+  tr("Usage: %1 [OPTIONS]... [INPUTFILES]...").arg(progname) + "\n" +
+  "\t" + tr("Commandline interface to %1.").arg(progname) + "\n\n" +
+  "\t" + tr("-h --help              Display this help.") + "\n" +
+  "\t" + tr("-v --verbose           Print more messages during execution.") + "\n" +
+  "\t" + tr("-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).") + "\n" +
+  "\t" + tr("-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).") + "\n" +
+  "\t" + tr("-c --config            HDR creation config. Possible values: ") + "\n" +
+  "\t\t" + tr("weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m") + "\n" +
+  "\t\t" + tr("(Default is weight=triangular:response_curve=linear:model=debevec) ") + "\n" +
+  "\t" + tr("-l --load HDR_FILE     Load an HDR instead of creating a new one. ") + "\n" +
+  "\t" + tr("-s --save HDR_FILE     Save to a HDR file format. (default: don't save) ") + "\n" +
+  "\t" + tr("-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) ") + "\n" +
+  "\t" + tr("-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) ") + "\n" +
+  "\t" + tr("-t --tmo               Tone mapping operator. Legal values are: ") + "\n" +
+  "\t\t" + tr("ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08") + "\n" +
+  "\t\t" + tr("(Default is mantiuk06)") + "\n" +
+  "\t" + tr("-p --tmoptions         Tone mapping operator options. Legal values are: ") + "\n" +
+  "\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
+  "\t\t" + tr("contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)") + "\n" +
+  "\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
+  "\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
+  "\t\t" + tr("bias=VALUE (for drago)") + "\n" +
+  "\t\t" + tr("local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)") + "\n" +
+  "\t\t" + tr("scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)") + "\n" +
+  "\t\t" + tr("brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)") + "\n" +
+  "\t\t" + tr("(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)") + "\n" +
+  "\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
+  "\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
+  tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
 	fprintf(stderr,"%s", qPrintable(help));
 }
