@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>HdrWizard</class>
- <widget class="QDialog" name="HdrWizard" >
-  <property name="geometry" >
+ <widget class="QDialog" name="HdrWizard">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,86 +10,237 @@
     <height>562</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>HDR Creation Wizard</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_9" >
-   <property name="margin" >
+  <layout class="QGridLayout" name="gridLayout_9">
+   <property name="margin">
     <number>6</number>
    </property>
-   <property name="spacing" >
+   <property name="spacing">
     <number>9</number>
    </property>
-   <item row="0" column="0" >
-    <layout class="QVBoxLayout" name="verticalLayout_9" >
-     <property name="spacing" >
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="spacing">
       <number>6</number>
      </property>
-     <property name="margin" >
+     <property name="margin">
       <number>6</number>
      </property>
      <item>
-      <widget class="QStackedWidget" name="pagestack" >
-       <property name="autoFillBackground" >
+      <widget class="QStackedWidget" name="pagestack">
+       <property name="autoFillBackground">
         <bool>true</bool>
        </property>
-       <property name="currentIndex" >
+       <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="choose_files" >
-        <layout class="QGridLayout" name="gridLayout_12" >
-         <item row="0" column="0" >
-          <widget class="QGroupBox" name="groupBox" >
-           <property name="title" >
+       <widget class="QWidget" name="page">
+        <layout class="QGridLayout" name="gridLayout_13">
+         <item row="0" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <item>
+              <widget class="QLabel" name="camera_label">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap resource="../icons.qrc">:/splash/images/camera.png</pixmap>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_11">
+               <item>
+                <spacer name="horizontalSpacer_8">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="stack_label">
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="../icons.qrc">:/splash/images/stack.png</pixmap>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_9">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_10">
+               <item>
+                <spacer name="horizontalSpacer_10">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;HDR Creation Wizard&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:16pt; font-weight:600;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This tool help you in fusing bracketed images taken with different exposures to make an &lt;a href=&quot;http://it.wikipedia.org/wiki/High_Dynamic_Range&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;HDR Image&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bracketed images must be taken with the same camera in the same conditions and possibly using a tripod.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This assistant will help you through all the steps: importing the images,  aligning them, choosing a profile to create an HDR.&lt;/p&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="openExternalLinks">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_11">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="choose_files">
+        <layout class="QGridLayout" name="gridLayout_12">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
             <string>[1/2] Load Input Images</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_11" >
-            <property name="margin" >
+           <layout class="QGridLayout" name="gridLayout_11">
+            <property name="margin">
              <number>6</number>
             </property>
-            <item row="0" column="0" >
-             <layout class="QVBoxLayout" name="verticalLayout_4" >
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" >
-                <property name="margin" >
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="margin">
                  <number>3</number>
                 </property>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout" >
-                  <property name="margin" >
+                 <layout class="QVBoxLayout" name="verticalLayout">
+                  <property name="margin">
                    <number>3</number>
                   </property>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout" >
+                   <layout class="QHBoxLayout" name="horizontalLayout">
                     <item>
-                     <widget class="QLabel" name="label_2" >
-                      <property name="maximumSize" >
+                     <widget class="QLabel" name="label_2">
+                      <property name="maximumSize">
                        <size>
                         <width>222</width>
                         <height>16777215</height>
                        </size>
                       </property>
-                      <property name="text" >
+                      <property name="text">
                        <string>Currently Loaded &amp;Files</string>
                       </property>
-                      <property name="alignment" >
+                      <property name="alignment">
                        <set>Qt::AlignCenter</set>
                       </property>
-                      <property name="buddy" >
+                      <property name="buddy">
                        <cstring>tableWidget</cstring>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="horizontalSpacer" >
-                      <property name="orientation" >
+                     <spacer name="horizontalSpacer">
+                      <property name="orientation">
                        <enum>Qt::Horizontal</enum>
                       </property>
-                      <property name="sizeHint" stdset="0" >
+                      <property name="sizeHint" stdset="0">
                        <size>
                         <width>40</width>
                         <height>20</height>
@@ -99,23 +251,23 @@
                    </layout>
                   </item>
                   <item>
-                   <widget class="QTableWidget" name="tableWidget" >
-                    <property name="sizePolicy" >
-                     <sizepolicy vsizetype="Expanding" hsizetype="MinimumExpanding" >
+                   <widget class="QTableWidget" name="tableWidget">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
-                    <property name="editTriggers" >
+                    <property name="editTriggers">
                      <set>QAbstractItemView::NoEditTriggers</set>
                     </property>
-                    <property name="selectionMode" >
+                    <property name="selectionMode">
                      <enum>QAbstractItemView::SingleSelection</enum>
                     </property>
-                    <property name="selectionBehavior" >
+                    <property name="selectionBehavior">
                      <enum>QAbstractItemView::SelectRows</enum>
                     </property>
-                    <property name="columnCount" >
+                    <property name="columnCount">
                      <number>2</number>
                     </property>
                     <column/>
@@ -123,30 +275,30 @@
                    </widget>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_2" >
-                    <property name="spacing" >
+                   <layout class="QHBoxLayout" name="horizontalLayout_2">
+                    <property name="spacing">
                      <number>6</number>
                     </property>
-                    <property name="margin" >
+                    <property name="margin">
                      <number>6</number>
                     </property>
                     <item>
-                     <widget class="QProgressBar" name="progressBar" >
-                      <property name="value" >
+                     <widget class="QProgressBar" name="progressBar">
+                      <property name="value">
                        <number>0</number>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="loadImagesButton" >
-                      <property name="toolTip" >
+                     <widget class="QPushButton" name="loadImagesButton">
+                      <property name="toolTip">
                        <string>Load Input Images</string>
                       </property>
-                      <property name="text" >
+                      <property name="text">
                        <string>&amp;Load Images...</string>
                       </property>
-                      <property name="icon" >
-                       <iconset resource="../icons.qrc" >
+                      <property name="icon">
+                       <iconset resource="../icons.qrc">
                         <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                       </property>
                      </widget>
@@ -156,53 +308,60 @@
                  </layout>
                 </item>
                 <item>
-                 <widget class="Line" name="line_5" >
-                  <property name="orientation" >
+                 <widget class="Line" name="line_5">
+                  <property name="orientation">
                    <enum>Qt::Vertical</enum>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_3" >
-                  <property name="spacing" >
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <property name="spacing">
                    <number>6</number>
                   </property>
-                  <property name="margin" >
+                  <property name="margin">
                    <number>3</number>
                   </property>
                   <item>
-                   <widget class="QFrame" name="previewFrame" >
-                    <property name="sizePolicy" >
-                     <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+                   <widget class="QLabel" name="label_3">
+                    <property name="text">
+                     <string>Preview</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QFrame" name="previewFrame">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
-                    <property name="frameShape" >
+                    <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
                     </property>
-                    <property name="frameShadow" >
+                    <property name="frameShadow">
                      <enum>QFrame::Sunken</enum>
                     </property>
-                    <layout class="QGridLayout" >
-                     <property name="margin" >
+                    <layout class="QGridLayout">
+                     <property name="margin">
                       <number>0</number>
                      </property>
-                     <property name="spacing" >
+                     <property name="spacing">
                       <number>0</number>
                      </property>
-                     <item row="0" column="0" >
-                      <widget class="QLabel" name="previewLabel" >
-                       <property name="sizePolicy" >
-                        <sizepolicy vsizetype="Ignored" hsizetype="Ignored" >
+                     <item row="0" column="0">
+                      <widget class="QLabel" name="previewLabel">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
-                       <property name="text" >
+                       <property name="text">
                         <string/>
                        </property>
-                       <property name="alignment" >
+                       <property name="alignment">
                         <set>Qt::AlignCenter</set>
                        </property>
                       </widget>
@@ -211,90 +370,90 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QGroupBox" name="EVgroupBox" >
-                    <property name="enabled" >
+                   <widget class="QGroupBox" name="EVgroupBox">
+                    <property name="enabled">
                      <bool>false</bool>
                     </property>
-                    <property name="title" >
+                    <property name="title">
                      <string>Selected Image &amp;Exposure</string>
                     </property>
-                    <layout class="QGridLayout" name="gridLayout_2" >
-                     <property name="spacing" >
+                    <layout class="QGridLayout" name="gridLayout_2">
+                     <property name="spacing">
                       <number>9</number>
                      </property>
-                     <item row="0" column="0" >
-                      <layout class="QHBoxLayout" name="horizontalLayout_3" >
-                       <property name="spacing" >
+                     <item row="0" column="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_3">
+                       <property name="spacing">
                         <number>6</number>
                        </property>
-                       <property name="margin" >
+                       <property name="margin">
                         <number>6</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="label" >
-                         <property name="sizePolicy" >
-                          <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                        <widget class="QLabel" name="label">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="text" >
+                         <property name="text">
                           <string>EV:</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QSlider" name="EVSlider" >
-                         <property name="sizePolicy" >
-                          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+                        <widget class="QSlider" name="EVSlider">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximum" >
+                         <property name="maximum">
                           <number>2000</number>
                          </property>
-                         <property name="pageStep" >
+                         <property name="pageStep">
                           <number>100</number>
                          </property>
-                         <property name="value" >
+                         <property name="value">
                           <number>1000</number>
                          </property>
-                         <property name="sliderPosition" >
+                         <property name="sliderPosition">
                           <number>1000</number>
                          </property>
-                         <property name="orientation" >
+                         <property name="orientation">
                           <enum>Qt::Horizontal</enum>
                          </property>
-                         <property name="tickPosition" >
+                         <property name="tickPosition">
                           <enum>QSlider::TicksAbove</enum>
                          </property>
-                         <property name="tickInterval" >
+                         <property name="tickInterval">
                           <number>100</number>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QDoubleSpinBox" name="ImageEVdsb" >
-                         <property name="sizePolicy" >
-                          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                        <widget class="QDoubleSpinBox" name="ImageEVdsb">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="prefix" >
+                         <property name="prefix">
                           <string/>
                          </property>
-                         <property name="decimals" >
+                         <property name="decimals">
                           <number>2</number>
                          </property>
-                         <property name="minimum" >
+                         <property name="minimum">
                           <double>-10.000000000000000</double>
                          </property>
-                         <property name="maximum" >
+                         <property name="maximum">
                           <double>10.000000000000000</double>
                          </property>
-                         <property name="singleStep" >
+                         <property name="singleStep">
                           <double>0.100000000000000</double>
                          </property>
                         </widget>
@@ -305,66 +464,66 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="Line" name="line_4" >
-                    <property name="orientation" >
+                   <widget class="Line" name="line_4">
+                    <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QGroupBox" name="alignGroupBox" >
-                    <property name="enabled" >
+                   <widget class="QGroupBox" name="alignGroupBox">
+                    <property name="enabled">
                      <bool>false</bool>
                     </property>
-                    <property name="title" >
+                    <property name="title">
                      <string>Alignment</string>
                     </property>
-                    <layout class="QGridLayout" name="gridLayout_3" >
-                     <property name="spacing" >
+                    <layout class="QGridLayout" name="gridLayout_3">
+                     <property name="spacing">
                       <number>9</number>
                      </property>
-                     <item row="0" column="0" >
-                      <layout class="QVBoxLayout" name="verticalLayout_2" >
-                       <property name="spacing" >
+                     <item row="0" column="0">
+                      <layout class="QVBoxLayout" name="verticalLayout_2">
+                       <property name="spacing">
                         <number>6</number>
                        </property>
-                       <property name="margin" >
+                       <property name="margin">
                         <number>6</number>
                        </property>
                        <item>
-                        <widget class="QCheckBox" name="alignCheckBox" >
-                         <property name="enabled" >
+                        <widget class="QCheckBox" name="alignCheckBox">
+                         <property name="enabled">
                           <bool>false</bool>
                          </property>
-                         <property name="sizePolicy" >
-                          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="text" >
+                         <property name="text">
                           <string>&amp;Autoalign images</string>
                          </property>
                         </widget>
                        </item>
                        <item>
-                        <widget class="QComboBox" name="alignmentEngineCB" >
-                         <property name="enabled" >
+                        <widget class="QComboBox" name="alignmentEngineCB">
+                         <property name="enabled">
                           <bool>false</bool>
                          </property>
-                         <property name="sizePolicy" >
-                          <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
                          <item>
-                          <property name="text" >
+                          <property name="text">
                            <string>Hugin's align_image_stack</string>
                           </property>
                          </item>
                          <item>
-                          <property name="text" >
+                          <property name="text">
                            <string>Median threshold bitmap</string>
                           </property>
                          </item>
@@ -380,38 +539,38 @@
                </layout>
               </item>
               <item>
-               <widget class="Line" name="line" >
-                <property name="orientation" >
+               <widget class="Line" name="line">
+                <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="confirmloadlabel" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+               <widget class="QLabel" name="confirmloadlabel">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="minimumSize" >
+                <property name="minimumSize">
                  <size>
                   <width>0</width>
                   <height>42</height>
                  </size>
                 </property>
-                <property name="maximumSize" >
+                <property name="maximumSize">
                  <size>
                   <width>16777215</width>
                   <height>42</height>
                  </size>
                 </property>
-                <property name="text" >
-                 <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+                <property name="text">
+                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
-&lt;p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-size:12pt; font-weight:600;">Start loading a set of images with different exposure&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Start loading a set of images with different exposure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -422,79 +581,79 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="chooseHDRconfig" >
-        <layout class="QGridLayout" name="gridLayout_5" >
-         <item row="0" column="0" >
-          <widget class="QGroupBox" name="groupBox_2" >
-           <property name="title" >
+       <widget class="QWidget" name="chooseHDRconfig">
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
             <string>[2/2] Choose Settings for HDR Creation</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_4" >
-            <item row="0" column="0" >
-             <layout class="QVBoxLayout" name="verticalLayout_6" >
-              <property name="spacing" >
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
                <number>6</number>
               </property>
-              <property name="margin" >
+              <property name="margin">
                <number>9</number>
               </property>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>14</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_predef_configs" >
-                  <property name="text" >
+                 <widget class="QLabel" name="label_predef_configs">
+                  <property name="text">
                    <string>Choose one of the predefined profiles:</string>
                   </property>
-                  <property name="alignment" >
+                  <property name="alignment">
                    <set>Qt::AlignJustify|Qt::AlignVCenter</set>
                   </property>
-                  <property name="wordWrap" >
+                  <property name="wordWrap">
                    <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="predefConfigsComboBox" >
-                  <property name="toolTip" >
-                   <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
-&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+                 <widget class="QComboBox" name="predefConfigsComboBox">
+                  <property name="toolTip">
+                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style>&lt;/head>&lt;body style=" font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;">
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-family:'Sans Serif';">The first predefined profile in the list usually leads to best results. Change it only if the resulting HDR image is not good enough.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt;The first predefined profile in the list usually leads to best results. Change it only if the resulting HDR image is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 1</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 2</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 3</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 4</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 5</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Profile 6</string>
                    </property>
                   </item>
@@ -503,26 +662,26 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_weights" >
-                  <property name="text" >
+                 <widget class="QLabel" name="label_weights">
+                  <property name="text">
                    <string>Weighting function:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <spacer>
-                  <property name="orientation" >
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>112</width>
                     <height>20</height>
@@ -531,20 +690,20 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_showWeight" >
-                  <property name="sizePolicy" >
-                   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <widget class="QLineEdit" name="lineEdit_showWeight">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Triangular</string>
                   </property>
-                  <property name="alignment" >
+                  <property name="alignment">
                    <set>Qt::AlignHCenter</set>
                   </property>
-                  <property name="readOnly" >
+                  <property name="readOnly">
                    <bool>true</bool>
                   </property>
                  </widget>
@@ -552,26 +711,26 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_resp" >
-                  <property name="text" >
+                 <widget class="QLabel" name="label_resp">
+                  <property name="text">
                    <string>Response curve:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <spacer>
-                  <property name="orientation" >
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>120</width>
                     <height>20</height>
@@ -580,20 +739,20 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_show_resp" >
-                  <property name="sizePolicy" >
-                   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <widget class="QLineEdit" name="lineEdit_show_resp">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Linear</string>
                   </property>
-                  <property name="alignment" >
+                  <property name="alignment">
                    <set>Qt::AlignHCenter</set>
                   </property>
-                  <property name="readOnly" >
+                  <property name="readOnly">
                    <bool>true</bool>
                   </property>
                  </widget>
@@ -601,26 +760,26 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QLabel" name="label_model" >
-                  <property name="text" >
+                 <widget class="QLabel" name="label_model">
+                  <property name="text">
                    <string>HDR creation model:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <spacer>
-                  <property name="orientation" >
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>107</width>
                     <height>20</height>
@@ -629,20 +788,20 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit_showmodel" >
-                  <property name="sizePolicy" >
-                   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+                 <widget class="QLineEdit" name="lineEdit_showmodel">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Debevec</string>
                   </property>
-                  <property name="alignment" >
+                  <property name="alignment">
                    <set>Qt::AlignHCenter</set>
                   </property>
-                  <property name="readOnly" >
+                  <property name="readOnly">
                    <bool>true</bool>
                   </property>
                  </widget>
@@ -650,29 +809,29 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
-                 <widget class="QCheckBox" name="antighostingCheckBox" >
-                  <property name="enabled" >
+                 <widget class="QCheckBox" name="antighostingCheckBox">
+                  <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Anti-ghosting (beta!)</string>
                   </property>
                  </widget>
                 </item>
                 <item>
                  <spacer>
-                  <property name="orientation" >
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>72</width>
                     <height>23</height>
@@ -681,43 +840,43 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_RespCurve_Antighost" >
-                  <property name="enabled" >
+                 <widget class="QLabel" name="label_RespCurve_Antighost">
+                  <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Response curve:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="antighostRespCurveCombobox" >
-                  <property name="enabled" >
+                 <widget class="QComboBox" name="antighostRespCurveCombobox">
+                  <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="minimumSize" >
+                  <property name="minimumSize">
                    <size>
                     <width>110</width>
                     <height>0</height>
                    </size>
                   </property>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Gamma</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Linear</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Log</string>
                    </property>
                   </item>
                   <item>
-                   <property name="text" >
+                   <property name="text">
                     <string>Calibration</string>
                    </property>
                   </item>
@@ -726,19 +885,19 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" >
-                <property name="spacing" >
+               <layout class="QHBoxLayout">
+                <property name="spacing">
                  <number>6</number>
                 </property>
-                <property name="margin" >
+                <property name="margin">
                  <number>6</number>
                 </property>
                 <item>
                  <spacer>
-                  <property name="orientation" >
+                  <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="sizeHint" stdset="0" >
+                  <property name="sizeHint" stdset="0">
                    <size>
                     <width>80</width>
                     <height>20</height>
@@ -747,30 +906,30 @@ p, li { white-space: pre-wrap; }
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_Iterations" >
-                  <property name="enabled" >
+                 <widget class="QLabel" name="label_Iterations">
+                  <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="text" >
+                  <property name="text">
                    <string>Amount of iterations:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="spinBoxIterations" >
-                  <property name="enabled" >
+                 <widget class="QSpinBox" name="spinBoxIterations">
+                  <property name="enabled">
                    <bool>false</bool>
                   </property>
-                  <property name="toolTip" >
+                  <property name="toolTip">
                    <string>Keep it small</string>
                   </property>
-                  <property name="minimum" >
+                  <property name="minimum">
                    <number>1</number>
                   </property>
-                  <property name="maximum" >
+                  <property name="maximum">
                    <number>22</number>
                   </property>
-                  <property name="value" >
+                  <property name="value">
                    <number>1</number>
                   </property>
                  </widget>
@@ -778,28 +937,28 @@ p, li { white-space: pre-wrap; }
                </layout>
               </item>
               <item>
-               <widget class="Line" name="line_2" >
-                <property name="orientation" >
+               <widget class="Line" name="line_2">
+                <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="customConfigCheckBox" >
-                <property name="toolTip" >
+               <widget class="QCheckBox" name="customConfigCheckBox">
+                <property name="toolTip">
                  <string>Use this only if the default profiles above do not yield good results</string>
                 </property>
-                <property name="text" >
+                <property name="text">
                  <string>Use custom configuration</string>
                 </property>
                </widget>
               </item>
               <item>
                <spacer>
-                <property name="orientation" >
+                <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" stdset="0" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -815,67 +974,67 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="CustomConfigPage" >
-        <layout class="QGridLayout" name="gridLayout_10" >
-         <item row="0" column="0" >
-          <widget class="QGroupBox" name="groupBox_3" >
-           <property name="title" >
+       <widget class="QWidget" name="CustomConfigPage">
+        <layout class="QGridLayout" name="gridLayout_10">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
             <string>[2/2] Choose Custom Configuration</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_8" >
-            <item row="0" column="0" >
-             <layout class="QVBoxLayout" name="verticalLayout_7" >
-              <property name="spacing" >
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <property name="spacing">
                <number>9</number>
               </property>
-              <property name="margin" >
+              <property name="margin">
                <number>9</number>
               </property>
               <item>
-               <widget class="QGroupBox" name="groupBox_4" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <widget class="QGroupBox" name="groupBox_4">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="title" >
+                <property name="title">
                  <string>Weights:</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout" >
-                 <property name="verticalSpacing" >
+                <layout class="QGridLayout" name="gridLayout">
+                 <property name="verticalSpacing">
                   <number>6</number>
                  </property>
-                 <item row="0" column="0" >
-                  <layout class="QHBoxLayout" name="horizontalLayout_6" >
-                   <property name="margin" >
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_6">
+                   <property name="margin">
                     <number>6</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_tri_gaus_plateau" >
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
+                    <widget class="QLabel" name="label_tri_gaus_plateau">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>Choose confidence function over all the possible pixel values:</string>
                      </property>
-                     <property name="wordWrap" >
+                     <property name="wordWrap">
                       <bool>true</bool>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_4" >
-                     <property name="orientation" >
+                    <spacer name="horizontalSpacer_4">
+                     <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
-                     <property name="sizeType" >
+                     <property name="sizeType">
                       <enum>QSizePolicy::Preferred</enum>
                      </property>
-                     <property name="sizeHint" stdset="0" >
+                     <property name="sizeHint" stdset="0">
                       <size>
                        <width>40</width>
                        <height>20</height>
@@ -884,19 +1043,19 @@ p, li { white-space: pre-wrap; }
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="triGaussPlateauComboBox" >
+                    <widget class="QComboBox" name="triGaussPlateauComboBox">
                      <item>
-                      <property name="text" >
+                      <property name="text">
                        <string>Triangular</string>
                       </property>
                      </item>
                      <item>
-                      <property name="text" >
+                      <property name="text">
                        <string>Gaussian</string>
                       </property>
                      </item>
                      <item>
-                      <property name="text" >
+                      <property name="text">
                        <string>Plateau</string>
                       </property>
                      </item>
@@ -908,52 +1067,52 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_5" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+               <widget class="QGroupBox" name="groupBox_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="title" >
+                <property name="title">
                  <string>Response Curve:</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_6" >
-                 <property name="verticalSpacing" >
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <property name="verticalSpacing">
                   <number>6</number>
                  </property>
-                 <item row="0" column="0" >
-                  <layout class="QVBoxLayout" name="verticalLayout_5" >
-                   <property name="margin" >
+                 <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                   <property name="margin">
                     <number>6</number>
                    </property>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_7" >
+                    <layout class="QHBoxLayout" name="horizontalLayout_7">
                      <item>
-                      <widget class="QRadioButton" name="predefRespCurveRadioButton" >
-                       <property name="sizePolicy" >
-                        <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                      <widget class="QRadioButton" name="predefRespCurveRadioButton">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
-                       <property name="text" >
+                       <property name="text">
                         <string>Predefined response curves:</string>
                        </property>
-                       <property name="checked" >
+                       <property name="checked">
                         <bool>true</bool>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <spacer>
-                       <property name="orientation" >
+                       <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
-                       <property name="sizeType" >
+                       <property name="sizeType">
                         <enum>QSizePolicy::Minimum</enum>
                        </property>
-                       <property name="sizeHint" stdset="0" >
+                       <property name="sizeHint" stdset="0">
                         <size>
                          <width>40</width>
                          <height>20</height>
@@ -962,25 +1121,25 @@ p, li { white-space: pre-wrap; }
                       </spacer>
                      </item>
                      <item>
-                      <widget class="QComboBox" name="gammaLinLogComboBox" >
-                       <property name="sizePolicy" >
-                        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+                      <widget class="QComboBox" name="gammaLinLogComboBox">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
                        <item>
-                        <property name="text" >
+                        <property name="text">
                          <string>Gamma</string>
                         </property>
                        </item>
                        <item>
-                        <property name="text" >
+                        <property name="text">
                          <string>Linear</string>
                         </property>
                        </item>
                        <item>
-                        <property name="text" >
+                        <property name="text">
                          <string>Log</string>
                         </property>
                        </item>
@@ -989,45 +1148,45 @@ p, li { white-space: pre-wrap; }
                     </layout>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="loadRespCurveFromFileCheckbox" >
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                    <widget class="QCheckBox" name="loadRespCurveFromFileCheckbox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>Load response function from file</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_8" >
+                    <layout class="QHBoxLayout" name="horizontalLayout_8">
                      <item>
-                      <widget class="QPushButton" name="loadRespCurveFileButton" >
-                       <property name="enabled" >
+                      <widget class="QPushButton" name="loadRespCurveFileButton">
+                       <property name="enabled">
                         <bool>false</bool>
                        </property>
-                       <property name="minimumSize" >
+                       <property name="minimumSize">
                         <size>
                          <width>0</width>
                          <height>29</height>
                         </size>
                        </property>
-                       <property name="text" >
+                       <property name="text">
                         <string>Load...</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <spacer name="horizontalSpacer_5" >
-                       <property name="orientation" >
+                      <spacer name="horizontalSpacer_5">
+                       <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
-                       <property name="sizeType" >
+                       <property name="sizeType">
                         <enum>QSizePolicy::Preferred</enum>
                        </property>
-                       <property name="sizeHint" stdset="0" >
+                       <property name="sizeHint" stdset="0">
                         <size>
                          <width>40</width>
                          <height>20</height>
@@ -1036,11 +1195,11 @@ p, li { white-space: pre-wrap; }
                       </spacer>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="RespCurveFileLoadedLineEdit" >
-                       <property name="enabled" >
+                      <widget class="QLineEdit" name="RespCurveFileLoadedLineEdit">
+                       <property name="enabled">
                         <bool>false</bool>
                        </property>
-                       <property name="readOnly" >
+                       <property name="readOnly">
                         <bool>true</bool>
                        </property>
                       </widget>
@@ -1048,61 +1207,61 @@ p, li { white-space: pre-wrap; }
                     </layout>
                    </item>
                    <item>
-                    <widget class="QRadioButton" name="recoverRespCurveRadio" >
-                     <property name="text" >
+                    <widget class="QRadioButton" name="recoverRespCurveRadio">
+                     <property name="text">
                       <string>Use calibration to find response curve (robertson02 algorithm)</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="saveRespCurveToFileCheckbox" >
-                     <property name="enabled" >
+                    <widget class="QCheckBox" name="saveRespCurveToFileCheckbox">
+                     <property name="enabled">
                       <bool>false</bool>
                      </property>
-                     <property name="sizePolicy" >
-                      <sizepolicy vsizetype="Preferred" hsizetype="Minimum" >
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="text" >
+                     <property name="text">
                       <string>Save response function to file:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <layout class="QHBoxLayout" >
-                     <property name="spacing" >
+                    <layout class="QHBoxLayout">
+                     <property name="spacing">
                       <number>6</number>
                      </property>
-                     <property name="margin" >
+                     <property name="margin">
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="QPushButton" name="saveRespCurveFileButton" >
-                       <property name="enabled" >
+                      <widget class="QPushButton" name="saveRespCurveFileButton">
+                       <property name="enabled">
                         <bool>false</bool>
                        </property>
-                       <property name="minimumSize" >
+                       <property name="minimumSize">
                         <size>
                          <width>0</width>
                          <height>29</height>
                         </size>
                        </property>
-                       <property name="text" >
+                       <property name="text">
                         <string>Save As...</string>
                        </property>
                       </widget>
                      </item>
                      <item>
-                      <spacer name="horizontalSpacer_6" >
-                       <property name="orientation" >
+                      <spacer name="horizontalSpacer_6">
+                       <property name="orientation">
                         <enum>Qt::Horizontal</enum>
                        </property>
-                       <property name="sizeType" >
+                       <property name="sizeType">
                         <enum>QSizePolicy::Preferred</enum>
                        </property>
-                       <property name="sizeHint" stdset="0" >
+                       <property name="sizeHint" stdset="0">
                         <size>
                          <width>40</width>
                          <height>20</height>
@@ -1111,11 +1270,11 @@ p, li { white-space: pre-wrap; }
                       </spacer>
                      </item>
                      <item>
-                      <widget class="QLineEdit" name="CurveFileNameSaveLineEdit" >
-                       <property name="enabled" >
+                      <widget class="QLineEdit" name="CurveFileNameSaveLineEdit">
+                       <property name="enabled">
                         <bool>false</bool>
                        </property>
-                       <property name="readOnly" >
+                       <property name="readOnly">
                         <bool>true</bool>
                        </property>
                       </widget>
@@ -1128,44 +1287,44 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="groupBox_6" >
-                <property name="sizePolicy" >
-                 <sizepolicy vsizetype="Minimum" hsizetype="Preferred" >
+               <widget class="QGroupBox" name="groupBox_6">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="title" >
+                <property name="title">
                  <string>HDR Creation Equation:</string>
                 </property>
-                <layout class="QGridLayout" name="gridLayout_7" >
-                 <property name="verticalSpacing" >
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <property name="verticalSpacing">
                   <number>6</number>
                  </property>
-                 <item row="0" column="0" >
-                  <layout class="QHBoxLayout" name="horizontalLayout_9" >
-                   <property name="sizeConstraint" >
+                 <item row="0" column="0">
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <property name="sizeConstraint">
                     <enum>QLayout::SetDefaultConstraint</enum>
                    </property>
-                   <property name="margin" >
+                   <property name="margin">
                     <number>6</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_choosemodel" >
-                     <property name="text" >
+                    <widget class="QLabel" name="label_choosemodel">
+                     <property name="text">
                       <string>Choose model:</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_7" >
-                     <property name="orientation" >
+                    <spacer name="horizontalSpacer_7">
+                     <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
-                     <property name="sizeType" >
+                     <property name="sizeType">
                       <enum>QSizePolicy::Minimum</enum>
                      </property>
-                     <property name="sizeHint" stdset="0" >
+                     <property name="sizeHint" stdset="0">
                       <size>
                        <width>40</width>
                        <height>20</height>
@@ -1174,25 +1333,25 @@ p, li { white-space: pre-wrap; }
                     </spacer>
                    </item>
                    <item>
-                    <widget class="QComboBox" name="modelComboBox" >
+                    <widget class="QComboBox" name="modelComboBox">
                      <item>
-                      <property name="text" >
+                      <property name="text">
                        <string>Debevec</string>
                       </property>
                      </item>
                      <item>
-                      <property name="text" >
+                      <property name="text">
                        <string>Robertson</string>
                       </property>
                      </item>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_3" >
-                     <property name="orientation" >
+                    <spacer name="horizontalSpacer_3">
+                     <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
-                     <property name="sizeHint" stdset="0" >
+                     <property name="sizeHint" stdset="0">
                       <size>
                        <width>40</width>
                        <height>20</height>
@@ -1206,11 +1365,11 @@ p, li { white-space: pre-wrap; }
                </widget>
               </item>
               <item>
-               <spacer name="verticalSpacer" >
-                <property name="orientation" >
+               <spacer name="verticalSpacer">
+                <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
-                <property name="sizeHint" stdset="0" >
+                <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
                   <height>40</height>
@@ -1228,19 +1387,19 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5" >
-       <property name="spacing" >
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <property name="spacing">
         <number>6</number>
        </property>
-       <property name="margin" >
+       <property name="margin">
         <number>6</number>
        </property>
        <item>
-        <spacer name="horizontalSpacer_2" >
-         <property name="orientation" >
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>40</width>
            <height>20</height>
@@ -1249,18 +1408,18 @@ p, li { white-space: pre-wrap; }
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="NextFinishButton" >
-         <property name="enabled" >
-          <bool>false</bool>
+        <widget class="QPushButton" name="NextFinishButton">
+         <property name="enabled">
+          <bool>true</bool>
          </property>
-         <property name="text" >
-          <string>&amp;Next ></string>
+         <property name="text">
+          <string>&amp;Next &gt;</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="cancelButton" >
-         <property name="text" >
+        <widget class="QPushButton" name="cancelButton">
+         <property name="text">
           <string>&amp;Cancel</string>
          </property>
         </widget>
@@ -1272,9 +1431,9 @@ p, li { white-space: pre-wrap; }
   </layout>
   <zorder></zorder>
  </widget>
- <layoutdefault spacing="0" margin="0" />
+ <layoutdefault spacing="0" margin="0"/>
  <resources>
-  <include location="../icons.qrc" />
+  <include location="../icons.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1283,11 +1442,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_weights</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1299,11 +1458,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_showWeight</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1315,11 +1474,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1331,11 +1490,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_show_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1347,11 +1506,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_model</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>97</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1363,11 +1522,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_showmodel</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1379,11 +1538,11 @@ p, li { white-space: pre-wrap; }
    <receiver>RespCurveFileLoadedLineEdit</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1395,11 +1554,11 @@ p, li { white-space: pre-wrap; }
    <receiver>RespCurveFileLoadedLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1411,11 +1570,11 @@ p, li { white-space: pre-wrap; }
    <receiver>loadRespCurveFileButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1427,11 +1586,11 @@ p, li { white-space: pre-wrap; }
    <receiver>predefConfigsComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1443,11 +1602,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_predef_configs</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1459,11 +1618,11 @@ p, li { white-space: pre-wrap; }
    <receiver>gammaLinLogComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1475,11 +1634,11 @@ p, li { white-space: pre-wrap; }
    <receiver>loadRespCurveFileButton</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1491,11 +1650,11 @@ p, li { white-space: pre-wrap; }
    <receiver>loadRespCurveFromFileCheckbox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1507,11 +1666,11 @@ p, li { white-space: pre-wrap; }
    <receiver>gammaLinLogComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1523,11 +1682,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_show_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>102</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1539,11 +1698,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_RespCurve_Antighost</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1555,11 +1714,11 @@ p, li { white-space: pre-wrap; }
    <receiver>predefConfigsComboBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1571,11 +1730,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_weights</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>101</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>78</x>
      <y>35</y>
     </hint>
@@ -1587,11 +1746,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_model</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>94</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1603,11 +1762,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_RespCurve_Antighost</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>74</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1619,11 +1778,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_showmodel</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>82</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1635,11 +1794,11 @@ p, li { white-space: pre-wrap; }
    <receiver>lineEdit_showWeight</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>101</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1651,11 +1810,11 @@ p, li { white-space: pre-wrap; }
    <receiver>antighostRespCurveCombobox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>115</x>
      <y>35</y>
     </hint>
@@ -1667,11 +1826,11 @@ p, li { white-space: pre-wrap; }
    <receiver>antighostingCheckBox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>70</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>92</x>
      <y>35</y>
     </hint>
@@ -1683,11 +1842,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_predef_configs</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1699,11 +1858,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_resp</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1715,11 +1874,11 @@ p, li { white-space: pre-wrap; }
    <receiver>antighostRespCurveCombobox</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>63</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>115</x>
      <y>35</y>
     </hint>
@@ -1731,11 +1890,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_Iterations</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1747,11 +1906,11 @@ p, li { white-space: pre-wrap; }
    <receiver>spinBoxIterations</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1763,11 +1922,11 @@ p, li { white-space: pre-wrap; }
    <receiver>label_Iterations</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1779,11 +1938,11 @@ p, li { white-space: pre-wrap; }
    <receiver>spinBoxIterations</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>
@@ -1795,11 +1954,11 @@ p, li { white-space: pre-wrap; }
    <receiver>alignmentEngineCB</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>431</x>
      <y>364</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>544</x>
      <y>389</y>
     </hint>
@@ -1811,11 +1970,11 @@ p, li { white-space: pre-wrap; }
    <receiver>saveRespCurveToFileCheckbox</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>83</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>81</x>
      <y>35</y>
     </hint>
@@ -1827,11 +1986,11 @@ p, li { white-space: pre-wrap; }
    <receiver>saveRespCurveFileButton</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>67</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>43</x>
      <y>35</y>
     </hint>
@@ -1843,11 +2002,11 @@ p, li { white-space: pre-wrap; }
    <receiver>CurveFileNameSaveLineEdit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>105</x>
      <y>35</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>105</x>
      <y>35</y>
     </hint>

@@ -260,7 +260,7 @@ void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
 void HdrWizard::finishedAligning() {
 	QApplication::restoreOverrideCursor();
 	NextFinishButton->setEnabled(true);
-	pagestack->setCurrentIndex(1);
+	pagestack->setCurrentIndex(2);
 }
 
 void HdrWizard::ais_failed(QProcess::ProcessError e) {
@@ -376,6 +376,10 @@ void HdrWizard::NextFinishButtonClicked() {
 	int currentpage=pagestack->currentIndex();
 	switch (currentpage) {
 	case 0:
+		pagestack->setCurrentIndex(1);
+		NextFinishButton->setDisabled(true);
+		break;
+	case 1:
 		//now align, if requested
 		if (alignCheckBox->isChecked()) {
 			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -399,16 +403,16 @@ void HdrWizard::NextFinishButtonClicked() {
 			}
 			return;
 		}
-		pagestack->setCurrentIndex(1);
+		pagestack->setCurrentIndex(2);
 		break;
-	case 1:
+	case 2:
 		if(!customConfigCheckBox->isChecked()) {
-			currentpage=2;
+			currentpage=3;
 		} else {
-			pagestack->setCurrentIndex(2);
+			pagestack->setCurrentIndex(3);
 			break;
 		}
-	case 2:
+	case 3:
 		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 		PfsFrameHDR=hdrCreationManager->createHdr(antighostingCheckBox->isChecked(),spinBoxIterations->value());
 		QApplication::restoreOverrideCursor();
@@ -419,7 +423,7 @@ void HdrWizard::NextFinishButtonClicked() {
 
 void HdrWizard::currentPageChangedInto(int newindex) {
 	//predefined configs page
-	if (newindex==1) {
+	if (newindex==2) {
 		hdrCreationManager->removeTempFiles();
 		NextFinishButton->setText(tr("&Finish"));
 		//when at least 2 LDR inputs perform Manual Alignment
@@ -437,7 +441,7 @@ void HdrWizard::currentPageChangedInto(int newindex) {
 			delete editingtools;
 		}
 	}
-	else if (newindex==2) { //custom config
+	else if (newindex==3) { //custom config
 		predefConfigsComboBoxActivated(1);
 		NextFinishButton->setText(tr("&Finish"));
 		return;

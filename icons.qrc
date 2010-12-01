@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/new/prefix1">
+    <file>images/button_add.png</file>
     <file>images/raw.png</file>
     <file>images/add.png</file>
     <file>images/appearance.png</file>
@@ -85,5 +86,7 @@
   </qresource>
   <qresource prefix="/splash">
     <file>images/LuminanceImage.png</file>
+    <file>images/camera.png</file>
+    <file>images/stack.png</file>
   </qresource>
 </RCC>
