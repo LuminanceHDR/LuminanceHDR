@@ -578,8 +578,9 @@ win32 {
 
 	#LibRAW
 	INCLUDEPATH += ../DEPs/include/libraw
-	LIBS += -L../DEPs/lib/libraw -lraw -lws2_32
+	LIBS += -L../DEPs/lib/libraw -lraw_r -lws2_32 -lm -lpthread
 	DEFINES += LIBRAW_NODLL
+	DEFINES += _REENTRANT
 
 	#OpenEXR available in win32
 	LIBS += -lIlmImf -lHalf -lIex -L../DEPs/lib/OpenEXR
@@ -613,7 +614,7 @@ win32 {
 	QMAKE_CFLAGS -= -fopenmp
 	QMAKE_LFLAGS -= -fopenmp
 
-	# win32-pthread, required by OpenMP (headers not required)  É is it true!?
+	# win32-pthread, required by OpenMP (headers not required) ...is it true!?
 	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
 	#LIBS        += -lpthread
 }
