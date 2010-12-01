@@ -41,6 +41,8 @@
 
 #include <iostream>
 
+enum {LDR_INPUT_TYPE,MDR_INPUT_TYPE,UNKNOWN_INPUT_TYPE};
+
 HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
 	setAcceptDrops(true);
@@ -156,8 +158,9 @@ void HdrWizard::loadImagesButtonClicked() {
 		RecentDirInputLDRs=qfi.path();
 		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
-
+	loadImagesButton->setEnabled(false);
 	loadInputFiles(files, files.count());
+	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     } //if (!files.isEmpty())
 }
 
@@ -222,10 +225,16 @@ void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
 	tableWidget->setEnabled(true);
 
 	//FIXME mtb doesn't work with 16bit data yet (and probably ever)
-	if (tableWidget->rowCount()>=2) {
+	if ((tableWidget->rowCount()>=2) && (hdrCreationManager->inputImageType() == LDR_INPUT_TYPE)) {
 		alignCheckBox->setEnabled(true);
 		alignGroupBox->setEnabled(true);
 	}
+	else if ((tableWidget->rowCount()>=2) && (hdrCreationManager->inputImageType() == MDR_INPUT_TYPE)) {
+		alignCheckBox->setEnabled(true);
+		alignGroupBox->setEnabled(true);
+		mtb_radioButton->setEnabled(false);
+	}
+	QApplication::restoreOverrideCursor();
 }
 
 void HdrWizard::errorWhileLoading(QString error) {
@@ -389,18 +398,23 @@ void HdrWizard::NextFinishButtonClicked() {
 			EVgroupBox->setDisabled(true);
 			tableWidget->setDisabled(true);
 			this->repaint();
-			switch (alignmentEngineCB->currentIndex()) {
-				case 0: //Hugin's align_image_stack
+			if (ais_radioButton->isChecked())
 				hdrCreationManager->align_with_ais();
-				break;
-				case 1:
+			else
+				hdrCreationManager->align_with_mtb();
+
+//			switch (alignmentEngineCB->currentIndex()) {
+//				case 0: //Hugin's align_image_stack
+//				hdrCreationManager->align_with_ais();
+//				break;
+//				case 1:
 // 				if (hdrCreationManager->inputImageType()==HdrCreationManager::MDR_INPUT_TYPE) {
 // 					QMessageBox::warning(this,tr("Error..."),tr("MTB is not available with 16 bit input images."));
 // 					return;
 // 				}
-				hdrCreationManager->align_with_mtb();
-				break;
-			}
+//				hdrCreationManager->align_with_mtb();
+//				break;
+//			}
 			return;
 		}
 		pagestack->setCurrentIndex(2);

@@ -242,7 +242,7 @@ void HdrCreationManager::align_with_mtb() {
 
 void HdrCreationManager::align_with_ais() {
 	ais=new QProcess(this);
-	if (ais == NULL)
+	if (ais == NULL) //TODO
 		exit(1);
 	ais->setWorkingDirectory(luminance_options->tempfilespath);
 	QStringList env = QProcess::systemEnvironment();
