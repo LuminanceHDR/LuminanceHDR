@@ -1,3 +1,18 @@
+Changes 2.0.2
+* Smaller memory footprint during the TM process
+* [Windows only] improved responsiveness of the UI
+* [Windows only] update of the library in the package with the latest release (not yet completed)
+* libRaw is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
+* [Mac only] Luminance HDR 2.0.2 works on Mac OS X 10.5.X (64 bits version for Snow Leopard also planned, but not yet released)
+* [Mac only] Better UI in Mac OS X (looks cleaner and closer to the Mac style)
+* Huge memory leak during the HDR creation process has been sorted out. The overall procedure is now much faster and uses less memory (much less memory)
+* Huge clean of compilation errors and wrong memory allocation/release (Thanks to Elizabeth Oldham)
+* [Linux only] Multithread support is active again and improved
+* [FreeBSD] Cleaner compilation (Thanks to Joao Rocha Braga Filho, Maintainer of Luminance HDR for FreeBSD)
+
+TODO: Redesign of the UI
+
+
 Changes 2.0.0
 * Project renamed from 'Qtpfsgui' to 'LuminanceHDR'
 * Cropping of HDR images
