@@ -123,9 +123,9 @@ HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsig
 	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
   
 	progress = new QProgressDialog(0, 0, 0, 0, this);
-  progress->setWindowTitle(tr("Loading file..."));
-  progress->setWindowModality(Qt::WindowModal);
-  progress->setMinimumDuration(0);
+	progress->setWindowTitle(tr("Loading file..."));
+	progress->setWindowModality(Qt::WindowModal);
+	progress->setMinimumDuration(0);
 }
 
 void HdrViewer::updateHDR(pfs::Frame* inputframe) {
@@ -305,7 +305,8 @@ void HdrViewer::setValue(int value) {
 }
 
 void HdrViewer::showLoadDialog(void) {
-  progress->setValue( 1 );
+  progress->show();
+  progress->setValue( -1 );
 }
 
 void HdrViewer::hideLoadDialog(void) {
