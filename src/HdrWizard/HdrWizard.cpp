@@ -159,6 +159,7 @@ void HdrWizard::loadImagesButtonClicked() {
 		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 	loadImagesButton->setEnabled(false);
+	confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
 	loadInputFiles(files, files.count());
 	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     } //if (!files.isEmpty())
@@ -402,19 +403,6 @@ void HdrWizard::NextFinishButtonClicked() {
 				hdrCreationManager->align_with_ais();
 			else
 				hdrCreationManager->align_with_mtb();
-
-//			switch (alignmentEngineCB->currentIndex()) {
-//				case 0: //Hugin's align_image_stack
-//				hdrCreationManager->align_with_ais();
-//				break;
-//				case 1:
-// 				if (hdrCreationManager->inputImageType()==HdrCreationManager::MDR_INPUT_TYPE) {
-// 					QMessageBox::warning(this,tr("Error..."),tr("MTB is not available with 16 bit input images."));
-// 					return;
-// 				}
-//				hdrCreationManager->align_with_mtb();
-//				break;
-//			}
 			return;
 		}
 		pagestack->setCurrentIndex(2);
@@ -427,7 +415,8 @@ void HdrWizard::NextFinishButtonClicked() {
 			break;
 		}
 	case 3:
-		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+		settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
+		QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 		PfsFrameHDR=hdrCreationManager->createHdr(antighostingCheckBox->isChecked(),spinBoxIterations->value());
 		QApplication::restoreOverrideCursor();
 		accept();
@@ -620,6 +609,11 @@ void HdrWizard::resizeEvent ( QResizeEvent * ) {
 	}
 }
 
+
+void HdrWizard::reject() {
+	QApplication::restoreOverrideCursor();
+	QDialog::reject();
+}
 
 void HdrWizard::keyPressEvent(QKeyEvent *event) {
 	if (event->key() == Qt::Key_Enter || event->key()==Qt::Key_Return) {

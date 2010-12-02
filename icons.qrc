@@ -88,6 +88,7 @@
   <qresource prefix="/splash">
     <file>images/LuminanceImage.png</file>
     <file>images/camera.png</file>
+    <file>images/camera_on_tripod.png</file>
     <file>images/stack.png</file>
   </qresource>
 </RCC>

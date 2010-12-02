@@ -99,7 +99,7 @@ private slots:
 	void currentPageChangedInto(int);
 	void loadRespCurveFilename(const QString&);
 	void editingEVfinished();
-
+	void reject();
 	void ais_failed(QProcess::ProcessError);
 	void setupConnections();
 };
