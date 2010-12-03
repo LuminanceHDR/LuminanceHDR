@@ -35,10 +35,10 @@ QString LuminancePaths::HelpDir()
 #elif _WIN32
   hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
 #elif __FreeBSD__
-  hf = LocalizedDirPath("/usr/local/share/doc/luminance/");
+  hf = LocalizedDirPath("/usr/local/share/doc/luminance-hdr/");
 #else
   //	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-  hf = LocalizedDirPath("/usr" + dirsep + "share" + dirsep + "luminance" + dirsep + "help" + dirsep);
+  hf = LocalizedDirPath("/usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
 #endif
   
 	getThis()->LuminancePathsDB["HelpDir"] = hf;
