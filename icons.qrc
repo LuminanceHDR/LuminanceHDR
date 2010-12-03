@@ -27,7 +27,7 @@
     <file>images/newfile.png</file>
     <file>images/options.png</file>
     <file>images/orange_apply.png</file>
-    <file>images/luminance.png</file>
+    <file>images/luminance-hdr.png</file>
     <file>images/raw_import.png</file>
     <file>images/remove.png</file>
     <file>images/rotate_left.png</file>
@@ -47,26 +47,6 @@
     <file>images/edit-undo.png</file>
     <file>images/edit-redo.png</file>
     <file>images/system-run.png</file>
-    <file>images/working0.png</file>
-    <file>images/working1.png</file>
-    <file>images/working2.png</file>
-    <file>images/working3.png</file>
-    <file>images/working4.png</file>
-    <file>images/working5.png</file>
-    <file>images/working6.png</file>
-    <file>images/working7.png</file>
-    <file>images/luminance00.png</file>
-    <file>images/luminance01.png</file>
-    <file>images/luminance02.png</file>
-    <file>images/luminance03.png</file>
-    <file>images/luminance04.png</file>
-    <file>images/luminance05.png</file>
-    <file>images/luminance06.png</file>
-    <file>images/luminance07.png</file>
-    <file>images/luminance08.png</file>
-    <file>images/luminance09.png</file>
-    <file>images/luminance10.png</file>
-    <file>images/luminance11.png</file>
     <file>images/zoom-in.png</file>
     <file>images/zoom-original.png</file>
     <file>images/zoom-out.png</file>
