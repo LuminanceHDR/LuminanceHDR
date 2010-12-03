@@ -12,7 +12,7 @@ QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer -g3
 
 QT += xml webkit
 
-TARGET = luminance
+TARGET = luminance-hdr
 
 MOC_DIR = generated_moc
 OBJECTS_DIR = generated_obj
@@ -445,20 +445,20 @@ isEmpty(I18NDIR) {
 		#I18NDIR=QCoreApplication::applicationDirPath()+"/../Resources/i18n"
 		I18NDIR=QCoreApplication::applicationDirPath\\\(\\\)+"/../Resources/i18n"
 	} else {
-		I18NDIR = $${PREFIX}/share/luminance/i18n
+		I18NDIR = $${PREFIX}/share/luminance-hdr/i18n
 	}
 }
 isEmpty(DOCDIR) {
-	DOCDIR = $${PREFIX}/share/luminance
+	DOCDIR = $${PREFIX}/share/luminance-hdr
 }
 isEmpty(HTMLDIR) {
 	HTMLDIR = $${DOCDIR}
 }
 
 target.path      = $${PREFIX}/bin
-menu.files       = luminance.desktop
+menu.files       = luminance-hdr.desktop
 menu.path        = $${PREFIX}/share/applications
-icon.files       = images/luminance.png
+icon.files       = images/luminance-hdr.png
 icon.path        = $${PREFIX}/share/icons/hicolor/32x32/apps
 help.files      = help
 help.path       = $$HTMLDIR
@@ -478,9 +478,9 @@ isEmpty(ENABLE_DEBUG) | contains(ENABLE_DEBUG, "no") {
 	message ("Debug statements ENABLED")
 }
 message ("Here's what will be installed:")
-message ("luminance         ==> $$target.path")
-message ("luminance.desktop ==> $$menu.path")
-message ("luminance.png     ==> $$icon.path")
+message ("luminance-hdr         ==> $$target.path")
+message ("luminance-hdr.desktop ==> $$menu.path")
+message ("luminance-hdr.png     ==> $$icon.path")
 message ("docs             ==> $$docs.path")
 message ("help             ==> $$help.path")
 message ("i18n messages    ==> $$i18n.path")
