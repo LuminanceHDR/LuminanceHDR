@@ -14,7 +14,7 @@
    <string>Tone Mapping: </string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset>
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>1240</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -183,7 +183,7 @@
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
+     <normaloff>:/new/prefix1/images/luminance-hdr.png</normaloff>:/new/prefix1/images/luminance-hdr.png</iconset>
    </property>
    <property name="text">
     <string>Tone Mapping Options</string>
