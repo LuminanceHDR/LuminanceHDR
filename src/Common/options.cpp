@@ -125,7 +125,7 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_USER_MUL_3,1.0);
 		settings.setValue(KEY_AUTO_BRIGHT,true);
 		settings.setValue(KEY_BRIGHTNESS,1.0);
-		settings.setValue(KEY_THRESHOLD,0.0);
+		settings.setValue(KEY_THRESHOLD,100.0);
 		settings.setValue(KEY_HALF_SIZE,0);
 		settings.setValue(KEY_FOUR_COLOR_RGB,false);
 		settings.setValue(KEY_WB_METHOD,0);
@@ -144,7 +144,7 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_DO_NOT_USE_FUJI_ROTATE,false);
 		settings.setValue(KEY_USE_BLACK,false);
 		settings.setValue(KEY_USE_SAT,false);
-		settings.setValue(KEY_USE_NOISE,false);
+		settings.setValue(KEY_USE_NOISE,true);
 		settings.setValue(KEY_USE_CHROMA,false);
 	}
 	aber_0 = settings.value(KEY_ABER_0).toDouble();
