@@ -22,8 +22,13 @@
  *
  */
 
-#include <cmath>
+#ifdef __APPLE__
+#include <libraw.h>
+#else
 #include <libraw/libraw.h>
+#endif
+
+#include <cmath>
 #include <QString>
 #include <QFileInfo>
 #include <iostream>

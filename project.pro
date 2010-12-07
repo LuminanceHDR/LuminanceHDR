@@ -510,17 +510,17 @@ macx {
 	ICON = images/luminance.icns
 
 	#TODO we have to complete this.
-	LIBS+=-lIlmThread
-
-	# Enable universal (requires a universal Qt)? Default = non-universal
-	# If you wish to build a Universal Binary please un-comment the following line
-	#CONFIG += x86 ppc
+	LIBS += -lIlmThread
 
 	# Warn user what type of binary is being built and what the possible implications are
 	contains(CONFIG, "x86"):contains(CONFIG, "ppc") {
+		# Enable universal (requires a universal Qt)? Default = non-universal
+		# If you wish to build a Universal Binary please un-comment the following line
+
 		message ("Building an OS X Universal Binary:")
 		message ("Please ensure all dependencies and Qt are also Universal")
 		message ("********************************************************************")
+		#CONFIG += x86 ppc
 	} else {
 		# Test what architecture we are on (Intel or PPC)
 		# 'arch' returns "i386" on Intel-Tiger is this true on Intel-Leopard?
@@ -532,12 +532,28 @@ macx {
 			message ("********************************************************************")
 			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
 			CONFIG += x86
+
+			QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
+			MAKE_MAC_SDK=/Developer/SDKs/MacOSX10.5.sdk #/Developer/SDKs/MacOSX10.4u.sdk
+
+			QMAKE_CXXFLAGS += -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+			QMAKE_CFLAGS += -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
+			LIBS += -isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5
 		} else {
+			#NOTE: This section of the project.pro is NOT TESTED, because I do not own a PPC machine.
+			#If you test it and you change something to make it working, please let me know <davideanastasia@users.sourceforge.net>
 			message ("This is a PPC Mac - Building a PPC specific OS X binary")
 			message ("Please refer to the documentation if you require a Universal Binary")
 			message ("********************************************************************")
 			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
 			CONFIG += ppc
+
+			QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
+			MAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
+
+			QMAKE_CXXFLAGS += -isysroot /Developer/SDKs/MacOSX10.4.sdk -mmacosx-version-min=10.4
+			QMAKE_CFLAGS += -isysroot /Developer/SDKs/MacOSX10.4.sdk -mmacosx-version-min=10.4
+			LIBS += -isysroot /Developer/SDKs/MacOSX10.4.sdk -mmacosx-version-min=10.4
 		}
 	}
 
