@@ -10,8 +10,7 @@ Contents
 2. Dependencies
 3. Compiling the sources
 4. Workflow in the gui
-5. Changes
-6. Contact and Links
+5. Contact and Links
 
 1. What it is
 ---------------------------------------------------------------------
@@ -30,18 +29,17 @@ Supported LDR formats:
 
 Supported features:
 * Create an HDR file from a set of images (JPEG, TIFF 8bit and 16bit, RAW)
-of the same scene taken at different exposure setting.
-* Save and load HDR files.
-* Rotate and resize HDR files.
-* Tonemap HDR images.
-* Projective Transformations.
-* Copy exif data between sets of images.
-* Supports internationalization.
+of the same scene taken at different exposure setting
+* Save and load HDR files
+* Rotate and resize HDR files
+* Tonemap HDR images
+* Projective Transformations
+* Copy EXIF data between sets of images
+* Supports internationalization
 
-Raw image formats are supported -and treated as HDRs- thanks to dcraw's.
+Raw image formats are supported -and treated as HDRs- thanks to LibRAW (http://www.libraw.org/).
 
 MAKE SURE YOU READ THE "Dependencies" CHAPTER IN THIS FILE.
-Read section 5 (Changes) to read the changes for this version.
 Read section 3 (Compiling the sources) if you intend to package Luminance for a GNU/Linux distribution.
 
 The code is in part based on the existing open source packages:
@@ -52,24 +50,23 @@ Without their contribution all of this would have not been possible.
 
 2. Dependencies
 -------------------------------------------------------------------
-Luminance has 5 dependencies:
+Luminance has 7 dependencies:
 1) Qt4 (www.trolltech.com)
 2) exiv2 (www.exiv2.org)
 3) fftw3 (www.fftw.org)
 4) libtiff (http://www.remotesensing.org/libtiff)
 5) OpenEXR (www.openexr.com, *Linux only*)
 6) Gnu Gsl (http://www.gnu.org/software/gsl/)
-
+7) LibRAW (http://www.libraw.org/)
 
 On Windows you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package V4'' available at http://downloads.sourceforge.net/luminance/luminance-windows-DLLs-V4.zip
 On GNU/Linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distribution's naming convention).
 
 1) Qt4 is required because it's the framework the graphical interface is built on.
 
-2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other exif-related functionalities).
+2) libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other EXIF-related functionalities).
 
-3) fftw is required by the fast implementation of Durand tonemapping algorithm.
-Luminance requires the "float" variety of fftw3.
+3) FFTW is required by the fast implementation of Durand tonemapping algorithm. Luminance requires the "float" version of fftw3.
 
 4) libtiff is required because of the tiff load/save feature.
 
@@ -81,7 +78,8 @@ As for the other dependencies, OpenEXR is required at runtime as well.
 6) Gnu GSL (http://www.gnu.org/software/gsl/)
 Gnu GSL is required because Mantiuk08 TMO uses this library.
 
-
+7) LibRAW (http://www.libraw.org/)
+Used to read the vast majority of RAW file on the market.
 
 
 3. Compiling the sources
@@ -110,7 +108,7 @@ This last step also installs the icon, the desktop file, the html documentation 
 This last step is usually required in order for Luminance to locate the "qm" files used for internationalization.
 
 WARNING:
-In Linux you have to make sure to install qt4 and qt4-devel, since most distributions install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian you can install the program ``alternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
+In Linux you have to make sure to install qt4 and qt4-devel, since most distributions install only qt3. Once you have qt4 and qt4-devel installed you also have to make sure that you are using the tools from qt4 and not qt3. The tools are ``qmake'', ``uic'' and ``moc''. On Ubuntu and debian, you can install the program ``alternatives'' that lets you switch from Qt3's to Qt4's executables (or you can use qmake-qt4 rather than qmake).
 
 Some people have experienced some problems using gcc 3.X.X. Switching to gcc 4.X.X has solved the issue.
 Some people have experienced some problems using shells different than bash/sh.
@@ -137,9 +135,9 @@ Also check the variables in the win32{} section in project.pro: they need
 to be changed according to your setup.
 Building Luminance from sources on Mac OS X can be performed by either issuing "qmake -spec macx-g++" or "qmake -spec macx-xcode", read the Qt Documentation (http://doc.trolltech.com/4.3/qmake-platform-notes.html) for more detail.
 
-Optimisation note: the default compiler flags include SSE2 and OpenMP.
+Optimisation note: the default compiler flags include SSE2 and [Linux only] OpenMP.
 SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).
-OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customise the CXXFLAGS and LFLAGS before compiling (NOTE: OpenMP is currently disabled due to an error in the Mantiuk operator).
+OpenMP is only available if compiling with gcc 4.2 or newer. If your CPU is a Pentium III or older, or your compiler is gcc 4.1.x or older, you may need to customise the CXXFLAGS and LFLAGS before compiling (NOTE: OpenMP is currently disabled in Windows and Mac OS X due to Qt/GCC bug that makes Mantiuk06 instable).
 
 
 4. Workflow in the gui
@@ -198,29 +196,7 @@ The pregamma changes the gamma in the HDR before the tonemapping:
 depending on the chosen tonemapping operator it can yield
 unexpected effects like changing color saturation.
 
-
-
-5. Changes
--------------------------------------------------------------------
-v1.9.2
-* Integrated pfstmo 1.2 changes (Ed Brambley's optimization to Mantiuk)
-* Fixed other bugs with non-ascii characters in paths/filenames.
-* Added support for align_image_stack commandline parameters and user language selection.
-* Global: added 2 new fields in the singleton luminance class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Luminance's user interface.
-* Improved comments with references for the algorithm that reads exif data to obtain average global luminance (and EV).
-* Cleaned up the code a little bit.
-
-***WARNING***
-Starting Luminance 1.8.10, Windows users have to download the new
-``Windows DLL Package V4'', make sure to get it at:
-http://downloads.sourceforge.net/luminance/luminance-windows-DLLs-V4.zip
-If you already have "V4" you don't need to download it again.
-
-Read the Changelog file for previous versions' details.
-
-
-
-6. Contact and Links
+5. Contact and Links
 -------------------------------------------------------------------
 All comments and suggestions concerning this package or implementation
 of particular algorithm are welcome. Please report bugs and
