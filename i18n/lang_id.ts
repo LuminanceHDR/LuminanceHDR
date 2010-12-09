@@ -26,7 +26,7 @@
 &lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="111"/>
+        <location filename="../forms/about.ui" line="114"/>
         <source>A&amp;uthors</source>
         <translation>Peng&amp;arang</translation>
     </message>
@@ -56,21 +56,25 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, Giuseppe Rota, Franco Comida&lt;br /&gt;&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://luminance-hdr.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, Giuseppe Rota, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
-        <location filename="../forms/about.ui" line="163"/>
+        <location filename="../forms/about.ui" line="166"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developer Luminance HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
@@ -80,12 +84,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="186"/>
+        <location filename="../forms/about.ui" line="196"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Terimakasih Kepada</translation>
     </message>
     <message utf8="true">
-        <location filename="../forms/about.ui" line="238"/>
+        <location filename="../forms/about.ui" line="248"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -100,17 +104,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="256"/>
+        <location filename="../forms/about.ui" line="266"/>
         <source>&amp;License Agreement</source>
         <translation>&amp;License Agreement</translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="352"/>
+        <location filename="../forms/about.ui" line="362"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="316"/>
+        <location filename="../forms/about.ui" line="326"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -1344,7 +1348,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="516"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
         <source>Triangular</source>
         <translation type="unfinished">Triangular</translation>
     </message>
@@ -1427,7 +1431,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="739"/>
         <location filename="../forms/HdrWizard.ui" line="859"/>
         <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
         <source>Linear</source>
         <translation type="unfinished">Linear</translation>
     </message>
@@ -1438,7 +1442,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="788"/>
         <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
@@ -1449,7 +1453,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="854"/>
         <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="527"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
@@ -1496,13 +1500,13 @@ pixel values&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="520"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="518"/>
         <source>Gaussian</source>
         <translation type="unfinished">Gaussian</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="518"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="516"/>
         <source>Plateau</source>
         <translation type="unfinished">Plateau</translation>
     </message>
@@ -1544,7 +1548,7 @@ pixel values&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="540"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -1559,7 +1563,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1427"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="320"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished">&amp;Berikutnya &gt;</translation>
     </message>
@@ -1569,32 +1573,52 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Batal</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="60"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="58"/>
         <source>Image Filename</source>
         <translation type="unfinished">Image Filename</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="60"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="58"/>
         <source>Exposure</source>
         <translation type="unfinished">Exposure</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="144"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="140"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="141"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="142"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="145"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="143"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="144"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="145"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="149"/>
         <source>Select the input images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="205"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="203"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1609,32 +1633,12 @@ for the following images:
 the following exif data: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;	&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;	You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="142"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.raw *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="143"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.RAW *.NRW);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="146"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.raw *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="147"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.RAW *.NRW)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="162"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="160"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="207"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="205"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
@@ -1642,113 +1646,113 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="216"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="214"/>
         <source>EXIF data not found</source>
         <translation type="unfinished">Data EXIF tidak ditemukan</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="217"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="556"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="554"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Untuk memprosesnya anda membutuhkan set secara manual nilai exposure.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; Nilai masih dibutuhkan.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="246"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="244"/>
         <source>Loading Error</source>
         <translation type="unfinished">Loading Error</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="262"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="260"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="279"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="282"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="288"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="277"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="286"/>
         <source>Error...</source>
         <translation type="unfinished">Error...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="279"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="277"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation type="unfinished">Gagal memulai external aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Silahkan baca &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; untuk informasi lebih lanjut.</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="282"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation type="unfinished">Aplikasi external &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crash...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="288"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="286"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation type="unfinished">Terjadi error yang tidak diketahui ketika mengeksekusi aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="431"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="449"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="316"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="429"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="447"/>
         <source>&amp;Finish</source>
         <translation type="unfinished">&amp;Selesai</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="396"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="394"/>
         <source>Aligning...</source>
         <translation type="unfinished">Aligning...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="418"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="416"/>
         <source>Processing...</source>
         <translation type="unfinished">Memroses...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="459"/>
         <source>Load a camera response curve file</source>
         <translation type="unfinished">Muat file camera response curve</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="463"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="475"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="461"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="473"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished">Camera response curve (*.m);;Semua File (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="473"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="471"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Simpan file camera response curve</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="509"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
         <source>(*) Weights: </source>
         <translation type="unfinished">(*) Weights: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="509"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
         <source> - Response curve: </source>
         <translation type="unfinished"> - Response curve: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="509"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
         <source> - Model: </source>
         <translation type="unfinished"> Model: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="527"/>
         <source>Logarithmic</source>
         <translation type="unfinished">Logarithmic</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
         <source>From Calibration</source>
         <translation type="unfinished">Dari Kalibrasi</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="533"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
         <source>From File</source>
         <translation type="unfinished">Dari File</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="554"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="552"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3395,7 +3399,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2072"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2302"/>
         <source>External Tools</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3647,253 +3651,472 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="763"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interpolate RGB as four colors&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default is to assume that all green pixels are the same. If even-row green pixels are more sensitive to ultraviolet light than odd-row this difference causes a mesh                             pattern in the output; using this option solves this problem with minimal loss of detail.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="772"/>
         <source>Interpolate RGB using 4 colours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="770"/>
+        <location filename="../forms/PreferencesDialog.ui" line="779"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not stretch or rotate pixels&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="787"/>
         <source>Do not stretch or rotate pixels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="781"/>
+        <location filename="../forms/PreferencesDialog.ui" line="798"/>
         <source>Quality:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="805"/>
+        <location filename="../forms/PreferencesDialog.ui" line="821"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Quality (interpolation)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the demosaicing RAW images decoding interpolation method. A demosaicing algorithm is a digital image process used to interpolate a complete image from the partial raw data received from the color-filtered image sensor internal to many digital cameras in form of a matrix of colored pixels. Also known as CFA interpolation or color reconstruction, another common spelling is demosaicing. There are 4 methods to demosaicing RAW images:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bilinear&lt;/span&gt;: use high-speed but low-quality bilinear interpolation (default - for slow computer). In this method, the red value of a non-red pixel is computed as the average of &lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;the adjacent red pixels, and similar for blue and green.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;VNG&lt;/span&gt;: use Variable Number of Gradients interpolation. This method computes gradients near the pixel of interest and uses the lower gradients (representing smoother and more similar parts of the image) to make an estimate.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PPG&lt;/span&gt;: use Patterned Pixel Grouping interpolation. Pixel Grouping uses assumptions about natural scenery in making estimates. It has fewer color artifacts on natural images than the Variable Number of Gradients method.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Adaptive Homogeneity-Directed interpolation. This method selects the direction of interpolation so as to maximize a homogeneity metric, thus typically minimizing color artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="835"/>
         <source>Bilinear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="810"/>
+        <location filename="../forms/PreferencesDialog.ui" line="840"/>
         <source>VNG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="815"/>
+        <location filename="../forms/PreferencesDialog.ui" line="845"/>
         <source>PPG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="820"/>
+        <location filename="../forms/PreferencesDialog.ui" line="850"/>
         <source>AHD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="831"/>
-        <location filename="../forms/PreferencesDialog.ui" line="898"/>
-        <location filename="../forms/PreferencesDialog.ui" line="997"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1130"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1195"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1262"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1352"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1425"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1504"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1627"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1731"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1828"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1910"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1935"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1998"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2023"/>
+        <location filename="../forms/PreferencesDialog.ui" line="861"/>
+        <location filename="../forms/PreferencesDialog.ui" line="936"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1052"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1148"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1239"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1316"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1391"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1489"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1578"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1673"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1812"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1932"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2033"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2126"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2151"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2228"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2253"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="846"/>
+        <location filename="../forms/PreferencesDialog.ui" line="876"/>
         <source>Median:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="939"/>
+        <location filename="../forms/PreferencesDialog.ui" line="918"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Median Filter&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the passes used by median filter applied after interpolation to Red-Green and Blue-Green channels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="977"/>
         <source>White Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="949"/>
+        <location filename="../forms/PreferencesDialog.ui" line="987"/>
         <source>Method:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="976"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1010"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White Balance Method&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Configure the raw white balance :&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Default D65&lt;/span&gt;: Use a standard daylight D65 white balance (dcraw defaults)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera&lt;/span&gt;: Use the white balance specified by the camera. If not available, reverts to default neutral white balance&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Automatic&lt;/span&gt;: Calculates an automatic white balance averaging the entire image&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manual&lt;/span&gt;: Set a custom temperature and green level values&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1026"/>
+        <source>Predefined D65</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1031"/>
         <source>Camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="981"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1036"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="986"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1041"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1015"/>
-        <source>Multipliers:</source>
+        <location filename="../forms/PreferencesDialog.ui" line="1070"/>
+        <source>T(K):      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1038"/>
-        <source>R</source>
+        <location filename="../forms/PreferencesDialog.ui" line="1121"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the color temperature in Kelvin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1061"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1107"/>
-        <source>G</source>
+        <location filename="../forms/PreferencesDialog.ui" line="1217"/>
+        <source>Set here the green component to set magenta color cast removal level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1084"/>
-        <source>B</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1145"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1254"/>
         <source>Highlights:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1169"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1277"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Highlights&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the highlight clipping method:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Solid white&lt;/span&gt;: clip all highlights to solid white&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Unclip&lt;/span&gt;: leave highlights unclipped in various shades of pink&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blend&lt;/span&gt;: Blend clipped and unclipped values together for a gradual fade to white&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rebuild&lt;/span&gt;: reconstruct highlights using a level value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1290"/>
         <source>Solid White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1174"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1295"/>
         <source>Do not transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1179"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1300"/>
         <source>Blend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1184"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1305"/>
         <source>Reconstruct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1210"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1331"/>
         <source>Level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1275"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1373"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Level&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the reconstruct highlight level. Low values favor whites and high values favor colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1404"/>
         <source>Correct false colors in highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1282"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1411"/>
         <source>Auto Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1294"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1423"/>
         <source>Brightness:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1367"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1465"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Brighness&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the brightness level of output image. The default value is 1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1504"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific black point value to decode RAW pictures. If you set this option to off, the Black Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1512"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1440"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1560"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1593"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1601"/>
         <source>White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1528"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1652"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point value&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific white point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1697"/>
         <source>Corrections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1536"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1705"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Enable Noise Reduction&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use wavelets to erase noise while preserving real detail.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1713"/>
         <source>Enable noise reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1551"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1728"/>
         <source>Threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1640"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1785"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Threshold&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the noise reduction threshold value to use.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1825"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Enable Chromatic Aberration correction&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enlarge the raw red and blue layers by the given factors, typically 0.999 to 1.001, to correct chromatic aberration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1833"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1652"/>
-        <source>Red:    </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1749"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1166"/>
         <source>Green:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1865"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1845"/>
+        <source>Red:  </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1902"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Red multiplier&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the red layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1950"/>
+        <source>Blue:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2007"/>
+        <source>Blue multiplier
+Set here the magnification factor of the blue layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2070"/>
         <source>Color Management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1878"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2083"/>
         <source>Camera profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1889"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2093"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera Profile&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the input color space used to decode RAW data.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: no input color profile is used during RAW decoding.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Embedded&lt;/span&gt;: use embedded color profile from RAW file if exist.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom input color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2105"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1894"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2110"/>
         <source>Built in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1899"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1987"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1953"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2169"/>
         <source>Color Space:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1967"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2179"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Workspace&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the output color space used to decode RAW data.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Raw (linear)&lt;/span&gt;: in this mode, no output color space is used during RAW decoding.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: this is a RGB color space, created cooperatively by Hewlett-Packard and Microsoft. It is the best choice for images destined for the Web and portrait photography.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: this color space is an extended RGB color space, developed by Adobe. It is used for photography applications such as advertising and fine art.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2197"/>
         <source>RAW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1972"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2202"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1977"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2207"/>
         <source>Wide Gamut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1982"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2212"/>
         <source>Pro Photo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2079"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2309"/>
         <source>align_image_stack commandline arguments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2091"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2321"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3990,12 +4213,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2152"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2382"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;Batal</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2159"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2389"/>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
     </message>
@@ -4005,27 +4228,27 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="232"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="171"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="239"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="178"/>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="232"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="171"/>
         <source>Option -a...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="239"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="178"/>
         <source>Please restart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="845"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="771"/>
         <source>Choose a directory</source>
         <translation type="unfinished">Pilih direktori</translation>
     </message>
@@ -4133,17 +4356,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/Common/options.cpp" line="187"/>
+        <location filename="../src/Common/options.cpp" line="191"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
         <translation>ERROR: Tidak dapat memuat file Setting Tone Mapping: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="207"/>
+        <location filename="../src/Common/options.cpp" line="211"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: File terlalu lama, cannot parse Tone Mapping Setting file: </translation>
     </message>
     <message>
-        <location filename="../src/Common/options.cpp" line="302"/>
+        <location filename="../src/Common/options.cpp" line="306"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>ERROR: cannot parse Tone Mapping Setting file: </translation>
     </message>
