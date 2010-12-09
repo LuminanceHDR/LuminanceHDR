@@ -32,7 +32,7 @@
    <string>Preferences</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset>
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <layout class="QVBoxLayout">
@@ -931,8 +931,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>485</width>
-              <height>290</height>
+              <width>488</width>
+              <height>356</height>
              </rect>
             </property>
             <attribute name="label">
@@ -969,8 +969,13 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <widget class="QComboBox" name="wb_method_comboBox">
                    <property name="currentIndex">
-                    <number>0</number>
+                    <number>1</number>
                    </property>
+                   <item>
+                    <property name="text">
+                     <string>Predefined D65</string>
+                    </property>
+                   </item>
                    <item>
                     <property name="text">
                      <string>Camera</string>
@@ -1007,12 +1012,12 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_5">
                  <item>
-                  <widget class="QLabel" name="multipliers_label">
+                  <widget class="QLabel" name="TK_label">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>Multipliers:</string>
+                    <string>T(K):      </string>
                    </property>
                   </widget>
                  </item>
@@ -1030,22 +1035,134 @@ p, li { white-space: pre-wrap; }
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QLabel" name="R_label">
+                  <widget class="QSlider" name="TK_horizontalSlider">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
-                   <property name="text">
-                    <string>R</string>
+                   <property name="minimum">
+                    <number>2000</number>
+                   </property>
+                   <property name="maximum">
+                    <number>12000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>1000</number>
+                   </property>
+                   <property name="value">
+                    <number>6500</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDoubleSpinBox" name="R_doubleSpinBox">
+                  <widget class="QSpinBox" name="TK_spinBox">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
+                   <property name="minimum">
+                    <number>2000</number>
+                   </property>
+                   <property name="maximum">
+                    <number>12000</number>
+                   </property>
                    <property name="singleStep">
-                    <double>0.010000000000000</double>
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>6500</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="TK_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QLabel" name="green_label">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>Green:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="green_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimum">
+                    <number>20</number>
+                   </property>
+                   <property name="maximum">
+                    <number>2500</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>1000</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="green_doubleSpinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimum">
+                    <double>0.200000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>2.500000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
                    </property>
                    <property name="value">
                     <double>1.000000000000000</double>
@@ -1053,76 +1170,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="G_label">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>G</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QDoubleSpinBox" name="G_doubleSpinBox">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>1.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="B_label">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>B</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QDoubleSpinBox" name="B_doubleSpinBox">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>1.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="G2_label">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>G</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QDoubleSpinBox" name="G2_doubleSpinBox">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="singleStep">
-                    <double>0.010000000000000</double>
-                   </property>
-                   <property name="value">
-                    <double>1.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QToolButton" name="multipliers_toolButton">
+                  <widget class="QToolButton" name="green_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1520,7 +1568,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>489</width>
+              <width>488</width>
               <height>356</height>
              </rect>
             </property>
@@ -1649,7 +1697,7 @@ p, li { white-space: pre-wrap; }
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>Red:    </string>
+                    <string>Red:  </string>
                    </property>
                   </widget>
                  </item>
@@ -1741,12 +1789,12 @@ p, li { white-space: pre-wrap; }
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_12">
                  <item>
-                  <widget class="QLabel" name="green_label">
+                  <widget class="QLabel" name="blue_label">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>Green:</string>
+                    <string>Blue:</string>
                    </property>
                   </widget>
                  </item>
@@ -1767,7 +1815,7 @@ p, li { white-space: pre-wrap; }
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QSlider" name="green_horizontalSlider">
+                  <widget class="QSlider" name="blue_horizontalSlider">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1798,7 +1846,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QDoubleSpinBox" name="green_doubleSpinBox">
+                  <widget class="QDoubleSpinBox" name="blue_doubleSpinBox">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1820,7 +1868,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="green_toolButton">
+                  <widget class="QToolButton" name="blue_toolButton">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -1857,8 +1905,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>489</width>
-              <height>165</height>
+              <width>471</width>
+              <height>140</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2184,8 +2232,8 @@ p, li { white-space: pre-wrap; }
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>578</x>
-     <y>558</y>
+     <x>645</x>
+     <y>557</y>
     </hint>
     <hint type="destinationlabel">
      <x>179</x>
@@ -2216,12 +2264,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>438</x>
-     <y>156</y>
+     <x>566</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
-     <x>564</x>
-     <y>156</y>
+     <x>631</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -2232,12 +2280,12 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>564</x>
+     <x>631</x>
      <y>170</y>
     </hint>
     <hint type="destinationlabel">
-     <x>470</x>
-     <y>170</y>
+     <x>566</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -2252,8 +2300,8 @@ p, li { white-space: pre-wrap; }
      <y>258</y>
     </hint>
     <hint type="destinationlabel">
-     <x>532</x>
-     <y>255</y>
+     <x>650</x>
+     <y>267</y>
     </hint>
    </hints>
   </connection>
@@ -2264,8 +2312,8 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>556</x>
-     <y>247</y>
+     <x>650</x>
+     <y>267</y>
     </hint>
     <hint type="destinationlabel">
      <x>507</x>
@@ -2284,8 +2332,8 @@ p, li { white-space: pre-wrap; }
      <y>377</y>
     </hint>
     <hint type="destinationlabel">
-     <x>524</x>
-     <y>370</y>
+     <x>650</x>
+     <y>392</y>
     </hint>
    </hints>
   </connection>
@@ -2296,8 +2344,8 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>558</x>
-     <y>388</y>
+     <x>650</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -2312,8 +2360,8 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>532</x>
-     <y>380</y>
+     <x>650</x>
+     <y>392</y>
     </hint>
     <hint type="destinationlabel">
      <x>504</x>
@@ -2332,8 +2380,8 @@ p, li { white-space: pre-wrap; }
      <y>414</y>
     </hint>
     <hint type="destinationlabel">
-     <x>521</x>
-     <y>422</y>
+     <x>650</x>
+     <y>429</y>
     </hint>
    </hints>
   </connection>
@@ -2344,8 +2392,8 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>568</x>
-     <y>407</y>
+     <x>650</x>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>487</x>
@@ -2364,8 +2412,8 @@ p, li { white-space: pre-wrap; }
      <y>156</y>
     </hint>
     <hint type="destinationlabel">
-     <x>523</x>
-     <y>159</y>
+     <x>631</x>
+     <y>170</y>
     </hint>
    </hints>
   </connection>
@@ -2376,12 +2424,44 @@ p, li { white-space: pre-wrap; }
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>543</x>
-     <y>148</y>
+     <x>631</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>489</x>
      <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TK_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TK_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>585</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TK_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TK_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>606</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
+     <y>153</y>
     </hint>
    </hints>
   </connection>

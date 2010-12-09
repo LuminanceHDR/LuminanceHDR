@@ -61,6 +61,8 @@
 #define KEY_ABER_3 "aber_3"
 #define KEY_GAMM_0 "gamm_0"
 #define KEY_GAMM_1 "gamm_1"
+#define KEY_TK "TK"
+#define KEY_GREEN "green"
 #define KEY_USER_MUL_0 "user_mul_0"
 #define KEY_USER_MUL_1 "user_mul_1"
 #define KEY_USER_MUL_2 "user_mul_2"
@@ -92,6 +94,7 @@
 #define KEY_USER_QUAL_TOOLBUTTON "user_qual_toolButton"
 #define KEY_MED_PASSES_TOOLBUTTON "med_passes_toolButton"
 #define KEY_WB_METHOD_TOOLBUTTON "wb_method_toolButton"
+#define KEY_TK_TOOLBUTTON "TK_toolButton"
 #define KEY_MULTIPLIERS_TOOLBUTTON "multipliers_toolButton"
 #define KEY_HIGHLIGHTS_TOOLBUTTON "highlights_toolButton"
 #define KEY_LEVEL_TOOLBUTTON "level_toolButton"
@@ -100,6 +103,7 @@
 #define KEY_USER_SAT_TOOLBUTTON "user_sat_toolButton"
 #define KEY_THRESHOLD_TOOLBUTTON "threshold_toolButton"
 #define KEY_RED_TOOLBUTTON "red_toolButton"
+#define KEY_BLUE_TOOLBUTTON "blue_toolButton"
 #define KEY_GREEN_TOOLBUTTON "green_toolButton"
 
 //--------------------PATHS & co. ----------------

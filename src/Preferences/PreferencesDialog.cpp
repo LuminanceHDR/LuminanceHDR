@@ -35,67 +35,6 @@
 #include "Common/config.h"
 #include "PreferencesDialog.h"
 
-/**************************** From UFRAW sourcecode ********************************
- *
- * Convert between Temperature and RGB.
- * Base on information from http://www.brucelindbloom.com/
- * The fit for D-illuminant between 4000K and 15000K are from CIE
- * The generalization to 2000K < T < 4000K and the blackbody fits
- * are my own and should be taken with a grain of salt.
- */
-static const double XYZ_to_RGB[3][3] = {
-    { 3.24071,	-0.969258,  0.0556352 },
-    {-1.53726,	1.87599,    -0.203996 },
-    {-0.498571,	0.0415557,  1.05707 } };
-
-void Temperature_to_RGB(double T, double RGB[3])
-{
-    int c;
-    double xD, yD, X, Y, Z, max;
-    // Fit for CIE Daylight illuminant
-    if (T<= 4000) {
-	xD = 0.27475e9/(T*T*T) - 0.98598e6/(T*T) + 1.17444e3/T + 0.145986;
-    } else if (T<= 7000) {
-	xD = -4.6070e9/(T*T*T) + 2.9678e6/(T*T) + 0.09911e3/T + 0.244063;
-    } else {
-	xD = -2.0064e9/(T*T*T) + 1.9018e6/(T*T) + 0.24748e3/T + 0.237040;
-    }
-    yD = -3*xD*xD + 2.87*xD - 0.275;
-
-    // Fit for Blackbody using CIE standard observer function at 2 degrees
-    //xD = -1.8596e9/(T*T*T) + 1.37686e6/(T*T) + 0.360496e3/T + 0.232632;
-    //yD = -2.6046*xD*xD + 2.6106*xD - 0.239156;
-
-    // Fit for Blackbody using CIE standard observer function at 10 degrees
-    //xD = -1.98883e9/(T*T*T) + 1.45155e6/(T*T) + 0.364774e3/T + 0.231136;
-    //yD = -2.35563*xD*xD + 2.39688*xD - 0.196035;
-
-    X = xD/yD;
-    Y = 1;
-    Z = (1-xD-yD)/yD;
-    max = 0;
-    for (c=0; c<3; c++) {
-	RGB[c] = X*XYZ_to_RGB[0][c] + Y*XYZ_to_RGB[1][c] + Z*XYZ_to_RGB[2][c];
-	if (RGB[c]>max) max = RGB[c];
-    }
-    for (c=0; c<3; c++) RGB[c] = RGB[c]/max;
-}
-
-void RGB_to_Temperature(double RGB[3], double *T, double *Green)
-{
-    double Tmax, Tmin, testRGB[3];
-    Tmin = 2000;
-    Tmax = 15000;
-    for (*T=(Tmax+Tmin)/2; Tmax-Tmin>10; *T=(Tmax+Tmin)/2) {
-	Temperature_to_RGB(*T, testRGB);
-	if (testRGB[2]/testRGB[0] > RGB[2]/RGB[0])
-	    Tmax = *T;
-	else
-	    Tmin = *T;
-    }
-    *Green = (testRGB[1]/testRGB[0]) / (RGB[1]/RGB[0]);
-}
-/*********************** END UFRAW CODE ********************************/
 
 static double pos2value(int pos, int minpos, int maxpos, double minv, double maxv) {
 	double x = (pos - minpos)/( (double) (maxpos - minpos));
@@ -147,6 +86,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(user_qual_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(user_qual_comboBox_currentIndexChanged(int)));
 	connect(med_passes_spinBox,SIGNAL(valueChanged(int)),this,SLOT(med_passes_spinBox_valueChanged(int)));
 	connect(wb_method_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(wb_method_comboBox_currentIndexChanged(int)));
+	connect(TK_spinBox,SIGNAL(valueChanged(int)),this,SLOT(TK_spinBox_valueChanged(int)));
 	connect(highlights_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(highlights_comboBox_currentIndexChanged(int)));
 	connect(level_spinBox,SIGNAL(valueChanged(int)),this,SLOT(level_spinBox_valueChanged(int)));
 	connect(user_black_spinBox,SIGNAL(valueChanged(int)),this,SLOT(user_black_spinBox_valueChanged(int)));
@@ -160,17 +100,15 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(brightness_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(brightness_doubleSpinBox_valueChanged(double)));
 	connect(red_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(red_horizontalSlider_valueChanged(int)));
 	connect(red_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(red_doubleSpinBox_valueChanged(double)));
+	connect(blue_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(blue_horizontalSlider_valueChanged(int)));
+	connect(blue_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(blue_doubleSpinBox_valueChanged(double)));
 	connect(green_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(green_horizontalSlider_valueChanged(int)));
 	connect(green_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(green_doubleSpinBox_valueChanged(double)));
-	connect(R_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(R_doubleSpinBox_valueChanged(double)));
-	connect(G_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(G_doubleSpinBox_valueChanged(double)));
-	connect(B_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(B_doubleSpinBox_valueChanged(double)));
-	connect(G2_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(G2_doubleSpinBox_valueChanged(double)));
 	
 	connect(user_qual_toolButton,SIGNAL(clicked()),this,SLOT(user_qual_toolButton_clicked()));
 	connect(med_passes_toolButton,SIGNAL(clicked()),this,SLOT(med_passes_toolButton_clicked()));
 	connect(wb_method_toolButton,SIGNAL(clicked()),this,SLOT(wb_method_toolButton_clicked()));
-	connect(multipliers_toolButton,SIGNAL(clicked()),this,SLOT(multipliers_toolButton_clicked()));
+	connect(TK_toolButton,SIGNAL(clicked()),this,SLOT(TK_toolButton_clicked()));
 	connect(highlights_toolButton,SIGNAL(clicked()),this,SLOT(highlights_toolButton_clicked()));
 	connect(level_toolButton,SIGNAL(clicked()),this,SLOT(level_toolButton_clicked()));
 	connect(brightness_toolButton,SIGNAL(clicked()),this,SLOT(brightness_toolButton_clicked()));
@@ -178,6 +116,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(user_sat_toolButton,SIGNAL(clicked()),this,SLOT(user_sat_toolButton_clicked()));
 	connect(threshold_toolButton,SIGNAL(clicked()),this,SLOT(threshold_toolButton_clicked()));
 	connect(red_toolButton,SIGNAL(clicked()),this,SLOT(red_toolButton_clicked()));
+	connect(blue_toolButton,SIGNAL(clicked()),this,SLOT(blue_toolButton_clicked()));
 	connect(green_toolButton,SIGNAL(clicked()),this,SLOT(green_toolButton_clicked()));
 
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
@@ -307,6 +246,12 @@ void PreferencesDialog::ok_clicked() {
 		luminance_options->wb_method = wb_method_comboBox->currentIndex();
 		settings.setValue(KEY_WB_METHOD, wb_method_comboBox->currentIndex());
 	
+		luminance_options->TK = TK_spinBox->value();
+		settings.setValue(KEY_TK, TK_spinBox->value());
+	
+		luminance_options->green = green_doubleSpinBox->value();
+		settings.setValue(KEY_GREEN, green_doubleSpinBox->value());
+	
 		luminance_options->highlights = highlights_comboBox->currentIndex();
 		settings.setValue(KEY_HIGHLIGHTS, highlights_comboBox->currentIndex());
 
@@ -343,27 +288,15 @@ void PreferencesDialog::ok_clicked() {
 		luminance_options->aber_0 = red_doubleSpinBox->value();
 		settings.setValue(KEY_ABER_0, red_doubleSpinBox->value());
 		
-		luminance_options->aber_2 = green_doubleSpinBox->value();
-		settings.setValue(KEY_ABER_2, green_doubleSpinBox->value());
-		
-		luminance_options->user_mul_0 = R_doubleSpinBox->value();
-		settings.setValue(KEY_USER_MUL_0, R_doubleSpinBox->value());
-		
-		luminance_options->user_mul_1 = G_doubleSpinBox->value();
-		settings.setValue(KEY_USER_MUL_1, G_doubleSpinBox->value());
-		
-		luminance_options->user_mul_2 = B_doubleSpinBox->value();
-		settings.setValue(KEY_USER_MUL_2, B_doubleSpinBox->value());
-		
-		luminance_options->user_mul_3 = G2_doubleSpinBox->value();
-		settings.setValue(KEY_USER_MUL_3, G2_doubleSpinBox->value());
+		luminance_options->aber_2 = blue_doubleSpinBox->value();
+		settings.setValue(KEY_ABER_2, blue_doubleSpinBox->value());
 		
 		//////////////////////////////////////////////////////////////
 
 		settings.setValue(KEY_USER_QUAL_TOOLBUTTON, user_qual_toolButton->isEnabled()); 
 		settings.setValue(KEY_MED_PASSES_TOOLBUTTON, med_passes_toolButton->isEnabled());
 		settings.setValue(KEY_WB_METHOD_TOOLBUTTON, wb_method_toolButton->isEnabled());
-		settings.setValue(KEY_MULTIPLIERS_TOOLBUTTON, multipliers_toolButton->isEnabled());
+		settings.setValue(KEY_TK_TOOLBUTTON, TK_toolButton->isEnabled());
 		settings.setValue(KEY_HIGHLIGHTS_TOOLBUTTON, highlights_toolButton->isEnabled());
 		settings.setValue(KEY_LEVEL_TOOLBUTTON, level_toolButton->isEnabled());
 		settings.setValue(KEY_BRIGHTNESS_TOOLBUTTON, brightness_toolButton->isEnabled());
@@ -371,6 +304,7 @@ void PreferencesDialog::ok_clicked() {
 		settings.setValue(KEY_USER_SAT_TOOLBUTTON, user_sat_toolButton->isEnabled());
 		settings.setValue(KEY_THRESHOLD_TOOLBUTTON, threshold_toolButton->isEnabled());
 		settings.setValue(KEY_RED_TOOLBUTTON, red_toolButton->isEnabled());
+		settings.setValue(KEY_BLUE_TOOLBUTTON, blue_toolButton->isEnabled());
 		settings.setValue(KEY_GREEN_TOOLBUTTON, green_toolButton->isEnabled());
 		
 	settings.endGroup();
@@ -393,72 +327,33 @@ void PreferencesDialog::med_passes_spinBox_valueChanged(int value) {
 }
 
 void PreferencesDialog::wb_method_comboBox_currentIndexChanged(int i) {
-	if (i == 2) {	// Manual method
-		multipliers_label->setEnabled(true);
-		R_label->setEnabled(true);
-		G_label->setEnabled(true);
-		B_label->setEnabled(true);
-		G2_label->setEnabled(true);
-		R_doubleSpinBox->setEnabled(true);
-		G_doubleSpinBox->setEnabled(true);
-		B_doubleSpinBox->setEnabled(true);
-		G2_doubleSpinBox->setEnabled(true);
+	if (i == 3) {	// Manual method
+		TK_label->setEnabled(true);
+		TK_horizontalSlider->setEnabled(true);
+		TK_spinBox->setEnabled(true);
+		green_label->setEnabled(true);
+		green_horizontalSlider->setEnabled(true);
+		green_doubleSpinBox->setEnabled(true);		
 	}
 	else {
-		multipliers_label->setEnabled(false);
-		R_label->setEnabled(false);
-		G_label->setEnabled(false);
-		B_label->setEnabled(false);
-		G2_label->setEnabled(false);
-		R_doubleSpinBox->setEnabled(false);
-		G_doubleSpinBox->setEnabled(false);
-		B_doubleSpinBox->setEnabled(false);
-		G2_doubleSpinBox->setEnabled(false);
+		TK_label->setEnabled(false);
+		TK_horizontalSlider->setEnabled(false);
+		TK_spinBox->setEnabled(false);
+		green_label->setEnabled(false);
+		green_horizontalSlider->setEnabled(false);
+		green_doubleSpinBox->setEnabled(false);		
 	}
-	if (i == 0)
+	if (i == 1)
 		wb_method_toolButton->setEnabled(false);
 	else
 		wb_method_toolButton->setEnabled(true);
 }
 
-void PreferencesDialog::R_doubleSpinBox_valueChanged(double value) {
-	double value1 = G_doubleSpinBox->value(),
-		value2 = B_doubleSpinBox->value(),
-		value3 = G2_doubleSpinBox->value();
-	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
-		multipliers_toolButton->setEnabled(false);
+void PreferencesDialog::TK_spinBox_valueChanged(int value) {
+	if (value == 6500)
+		TK_toolButton->setEnabled(false);
 	else
-		multipliers_toolButton->setEnabled(true);
-}
-
-void PreferencesDialog::G_doubleSpinBox_valueChanged(double value) {
-	double value1 = R_doubleSpinBox->value(),
-		value2 = B_doubleSpinBox->value(),
-		value3 = G2_doubleSpinBox->value();
-	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
-		multipliers_toolButton->setEnabled(false);
-	else
-		multipliers_toolButton->setEnabled(true);
-}
-
-void PreferencesDialog::B_doubleSpinBox_valueChanged(double value) {
-	double value1 = R_doubleSpinBox->value(),
-		value2 = G_doubleSpinBox->value(),
-		value3 = G2_doubleSpinBox->value();
-	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
-		multipliers_toolButton->setEnabled(false);
-	else
-		multipliers_toolButton->setEnabled(true);
-}
-
-void PreferencesDialog::G2_doubleSpinBox_valueChanged(double value) {
-	double value1 = R_doubleSpinBox->value(),
-		value2 = G_doubleSpinBox->value(),
-		value3 = B_doubleSpinBox->value();
-	if (fabs(value - 1.0) < 1e-4 && fabs(value1 - 1.0) < 1e-4 && fabs(value2 - 1.0) < 1e-4 && fabs(value3 - 1.0) < 1e-4)
-		multipliers_toolButton->setEnabled(false);
-	else
-		multipliers_toolButton->setEnabled(true);
+		TK_toolButton->setEnabled(true);
 }
 
 void PreferencesDialog::highlights_comboBox_currentIndexChanged(int i) {
@@ -536,22 +431,22 @@ void PreferencesDialog::use_chroma_CB_stateChanged(int) {
 		red_label->setEnabled(true);
 		red_horizontalSlider->setEnabled(true);
 		red_doubleSpinBox->setEnabled(true);
-		green_label->setEnabled(true);
-		green_horizontalSlider->setEnabled(true);
-		green_doubleSpinBox->setEnabled(true);
+		blue_label->setEnabled(true);
+		blue_horizontalSlider->setEnabled(true);
+		blue_doubleSpinBox->setEnabled(true);
 	}
 	else {
 		red_label->setEnabled(false);
 		red_horizontalSlider->setEnabled(false);
 		red_doubleSpinBox->setEnabled(false);
-		green_label->setEnabled(false);
-		green_horizontalSlider->setEnabled(false);
-		green_doubleSpinBox->setEnabled(false);
+		blue_label->setEnabled(false);
+		blue_horizontalSlider->setEnabled(false);
+		blue_doubleSpinBox->setEnabled(false);
 	}
 }
 
 /***********************************************************/
-// TODO: correct handling of horizontalSlider
+
 void PreferencesDialog::brightness_horizontalSlider_valueChanged( int value) {
 	brightness_doubleSpinBox->setValue(((double) value)/brightness_doubleSpinBox->maximum());
 }
@@ -586,6 +481,28 @@ void PreferencesDialog::red_doubleSpinBox_valueChanged( double value) {
 		red_toolButton->setEnabled(true);
 }
 
+void PreferencesDialog::blue_horizontalSlider_valueChanged( int pos) {
+	int minpos = blue_horizontalSlider->minimum();
+	int maxpos = blue_horizontalSlider->maximum();
+	double minv = blue_doubleSpinBox->minimum();
+	double maxv = blue_doubleSpinBox->maximum();
+	double value = pos2value(pos, minpos, maxpos, minv, maxv);
+	blue_doubleSpinBox->setValue(value);
+}
+
+void PreferencesDialog::blue_doubleSpinBox_valueChanged( double value) {
+	int minpos = blue_horizontalSlider->minimum();
+	int maxpos = blue_horizontalSlider->maximum();
+	double minv = blue_doubleSpinBox->minimum();
+	double maxv = blue_doubleSpinBox->maximum();
+	int pos = value2pos(value, minpos, maxpos, minv, maxv);
+	blue_horizontalSlider->setValue(pos);
+	if (fabs(value - 1.0) < 1e-4)
+		blue_toolButton->setEnabled(false);
+	else
+		blue_toolButton->setEnabled(true);
+}
+
 void PreferencesDialog::green_horizontalSlider_valueChanged( int pos) {
 	int minpos = green_horizontalSlider->minimum();
 	int maxpos = green_horizontalSlider->maximum();
@@ -601,7 +518,7 @@ void PreferencesDialog::green_doubleSpinBox_valueChanged( double value) {
 	double minv = green_doubleSpinBox->minimum();
 	double maxv = green_doubleSpinBox->maximum();
 	int pos = value2pos(value, minpos, maxpos, minv, maxv);
-	green_horizontalSlider->setValue(pos);
+	blue_horizontalSlider->setValue(pos);
 	if (fabs(value - 1.0) < 1e-4)
 		green_toolButton->setEnabled(false);
 	else
@@ -622,16 +539,14 @@ void PreferencesDialog::med_passes_toolButton_clicked() {
 }
 
 void PreferencesDialog::wb_method_toolButton_clicked() {
-	wb_method_comboBox->setCurrentIndex(0);
+	wb_method_comboBox->setCurrentIndex(1);
 	wb_method_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::multipliers_toolButton_clicked() {
-	R_doubleSpinBox->setValue(1.0);
-	G_doubleSpinBox->setValue(1.0);
-	B_doubleSpinBox->setValue(1.0);
-	G2_doubleSpinBox->setValue(1.0);
-	multipliers_toolButton->setEnabled(false);
+void PreferencesDialog::TK_toolButton_clicked() {
+	TK_horizontalSlider->setValue(6500);
+	TK_spinBox->setValue(6500);
+	TK_toolButton->setEnabled(false);
 }
 
 void PreferencesDialog::highlights_toolButton_clicked() {
@@ -681,6 +596,17 @@ void PreferencesDialog::red_toolButton_clicked() {
 	red_toolButton->setEnabled(false);
 }
 
+void PreferencesDialog::blue_toolButton_clicked() {
+	int minpos = blue_horizontalSlider->minimum();
+	int maxpos = blue_horizontalSlider->maximum();
+	double minv = blue_doubleSpinBox->minimum();
+	double maxv = blue_doubleSpinBox->maximum();
+	int pos = value2pos(1.0, minpos, maxpos, minv, maxv);
+	blue_horizontalSlider->setValue(pos);
+	blue_doubleSpinBox->setValue(1.0);
+	blue_toolButton->setEnabled(false);
+}
+
 void PreferencesDialog::green_toolButton_clicked() {
 	int minpos = green_horizontalSlider->minimum();
 	int maxpos = green_horizontalSlider->maximum();
@@ -720,39 +646,31 @@ void PreferencesDialog::from_options_to_gui() {
 	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
 
-	//TODO: correct restoring of horizontalSlider
 	four_color_rgb_CB->setChecked(luminance_options->four_color_rgb);
 	do_not_use_fuji_rotate_CB->setChecked(luminance_options->do_not_use_fuji_rotate);
 	user_qual_comboBox->setCurrentIndex(luminance_options->user_qual);
 	med_passes_horizontalSlider->setValue(luminance_options->med_passes);
 	med_passes_spinBox->setValue(luminance_options->med_passes);
 	wb_method_comboBox->setCurrentIndex(luminance_options->wb_method);
-	if (luminance_options->wb_method < 2) {
-		multipliers_label->setEnabled(false);
-		R_label->setEnabled(false);
-		R_doubleSpinBox->setEnabled(false);
-		G_label->setEnabled(false);
-		G_doubleSpinBox->setEnabled(false);
-		B_label->setEnabled(false);
-		B_doubleSpinBox->setEnabled(false);
-		G2_label->setEnabled(false);
-		G2_doubleSpinBox->setEnabled(false);
+	if (luminance_options->wb_method < 3) {
+		//TODO
+		TK_label->setEnabled(false);
+		TK_horizontalSlider->setEnabled(false);
+		TK_spinBox->setEnabled(false);
+		green_label->setEnabled(false);
+		green_horizontalSlider->setEnabled(false);
+		green_doubleSpinBox->setEnabled(false);
 	}
 	else {
-		multipliers_label->setEnabled(true);
-		R_label->setEnabled(true);
-		R_doubleSpinBox->setEnabled(true);
-		G_label->setEnabled(true);
-		G_doubleSpinBox->setEnabled(true);
-		B_label->setEnabled(true);
-		B_doubleSpinBox->setEnabled(true);
-		G2_label->setEnabled(true);
-		G2_doubleSpinBox->setEnabled(true);
+		TK_label->setEnabled(true);
+		TK_horizontalSlider->setEnabled(true);
+		TK_spinBox->setEnabled(true);
+		green_label->setEnabled(true);
+		green_horizontalSlider->setEnabled(true);
+		green_doubleSpinBox->setEnabled(true);
 	}
-	R_doubleSpinBox->setValue(luminance_options->user_mul_0);
-	G_doubleSpinBox->setValue(luminance_options->user_mul_1);
-	B_doubleSpinBox->setValue(luminance_options->user_mul_2);
-	G2_doubleSpinBox->setValue(luminance_options->user_mul_3);
+	TK_horizontalSlider->setValue(luminance_options->TK);
+	TK_spinBox->setValue(luminance_options->TK);
 	highlights_comboBox->setCurrentIndex(luminance_options->highlights);
 	level_horizontalSlider->setValue(luminance_options->level);
 	level_spinBox->setValue(luminance_options->level);
@@ -797,34 +715,41 @@ void PreferencesDialog::from_options_to_gui() {
 	if (luminance_options->use_chroma) {
 		red_horizontalSlider->setEnabled(true);
 		red_doubleSpinBox->setEnabled(true);
-		green_horizontalSlider->setEnabled(true);
-		green_doubleSpinBox->setEnabled(true);
+		blue_horizontalSlider->setEnabled(true);
+		blue_doubleSpinBox->setEnabled(true);
 	}
 	else {
 		red_horizontalSlider->setEnabled(false);
 		red_doubleSpinBox->setEnabled(false);
-		green_horizontalSlider->setEnabled(false);
-		green_doubleSpinBox->setEnabled(false);
+		blue_horizontalSlider->setEnabled(false);
+		blue_doubleSpinBox->setEnabled(false);
 	}
 	double  r_minv = red_doubleSpinBox->minimum(),
 		r_maxv = red_doubleSpinBox->maximum(),
 		r_minpos = red_horizontalSlider->minimum(),
 		r_maxpos = red_horizontalSlider->maximum(),
+		b_minv = blue_doubleSpinBox->minimum(),
+		b_maxv = blue_doubleSpinBox->maximum(),
+		b_minpos = blue_horizontalSlider->minimum(),
+		b_maxpos = blue_horizontalSlider->maximum(),
 		g_minv = green_doubleSpinBox->minimum(),
 		g_maxv = green_doubleSpinBox->maximum(),
 		g_minpos = green_horizontalSlider->minimum(),
 		g_maxpos = green_horizontalSlider->maximum();
 		
+		
 	red_horizontalSlider->setValue(value2pos(luminance_options->aber_0, r_minpos, r_maxpos, r_minv, r_maxv));
 	red_doubleSpinBox->setValue(luminance_options->aber_0);
-	green_horizontalSlider->setValue(value2pos(luminance_options->aber_2, g_minpos, g_maxpos, g_minv, g_maxv));
-	green_doubleSpinBox->setValue(luminance_options->aber_2);
+	blue_horizontalSlider->setValue(value2pos(luminance_options->aber_2, b_minpos, b_maxpos, b_minv, b_maxv));
+	blue_doubleSpinBox->setValue(luminance_options->aber_2);
+	green_horizontalSlider->setValue(value2pos(luminance_options->green, g_minpos, g_maxpos, g_minv, g_maxv));
+	green_doubleSpinBox->setValue(luminance_options->green);
 	
 	settings.beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
 	user_qual_toolButton->setEnabled( settings.value(KEY_USER_QUAL_TOOLBUTTON).toBool()); 
 	med_passes_toolButton->setEnabled( settings.value(KEY_MED_PASSES_TOOLBUTTON).toBool());
 	wb_method_toolButton->setEnabled( settings.value(KEY_WB_METHOD_TOOLBUTTON).toBool());
-	multipliers_toolButton->setEnabled( settings.value(KEY_MULTIPLIERS_TOOLBUTTON).toBool());
+	TK_toolButton->setEnabled( settings.value(KEY_TK_TOOLBUTTON).toBool());
 	highlights_toolButton->setEnabled( settings.value(KEY_HIGHLIGHTS_TOOLBUTTON).toBool());
 	level_toolButton->setEnabled( settings.value(KEY_LEVEL_TOOLBUTTON).toBool());
 	brightness_toolButton->setEnabled( settings.value(KEY_BRIGHTNESS_TOOLBUTTON).toBool());
@@ -832,6 +757,7 @@ void PreferencesDialog::from_options_to_gui() {
 	user_sat_toolButton->setEnabled( settings.value(KEY_USER_SAT_TOOLBUTTON).toBool());
 	threshold_toolButton->setEnabled( settings.value(KEY_THRESHOLD_TOOLBUTTON).toBool());
 	red_toolButton->setEnabled( settings.value(KEY_RED_TOOLBUTTON).toBool());
+	blue_toolButton->setEnabled( settings.value(KEY_BLUE_TOOLBUTTON).toBool());
 	green_toolButton->setEnabled( settings.value(KEY_GREEN_TOOLBUTTON).toBool());
 	settings.endGroup();		
 }

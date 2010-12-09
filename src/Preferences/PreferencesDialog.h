@@ -56,10 +56,7 @@ private slots:
 	void user_qual_comboBox_currentIndexChanged(int);
 	void med_passes_spinBox_valueChanged(int);
 	void wb_method_comboBox_currentIndexChanged(int);
-	void R_doubleSpinBox_valueChanged(double);
-	void G_doubleSpinBox_valueChanged(double);
-	void B_doubleSpinBox_valueChanged(double);
-	void G2_doubleSpinBox_valueChanged(double);
+	void TK_spinBox_valueChanged(int);
 	void highlights_comboBox_currentIndexChanged(int);
 	void level_spinBox_valueChanged(int);
 	void user_black_spinBox_valueChanged(int);
@@ -73,13 +70,15 @@ private slots:
 	void brightness_doubleSpinBox_valueChanged(double);
 	void red_horizontalSlider_valueChanged(int);
 	void red_doubleSpinBox_valueChanged(double);
+	void blue_horizontalSlider_valueChanged(int);
+	void blue_doubleSpinBox_valueChanged(double);
 	void green_horizontalSlider_valueChanged(int);
 	void green_doubleSpinBox_valueChanged(double);
 
  	void user_qual_toolButton_clicked();
 	void med_passes_toolButton_clicked();
 	void wb_method_toolButton_clicked();
-	void multipliers_toolButton_clicked();
+	void TK_toolButton_clicked();
 	void highlights_toolButton_clicked();
 	void level_toolButton_clicked();
 	void brightness_toolButton_clicked();
@@ -87,6 +86,7 @@ private slots:
 	void user_sat_toolButton_clicked();
 	void threshold_toolButton_clicked();
 	void red_toolButton_clicked();
+	void blue_toolButton_clicked();
 	void green_toolButton_clicked();
 };
 #endif

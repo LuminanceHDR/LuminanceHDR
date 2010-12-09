@@ -66,6 +66,8 @@ public:
 	double aber_3;
 	double gamm_0;
 	double gamm_1;
+	int TK;
+	float green;
 	float user_mul_0;
 	float user_mul_1;
 	float user_mul_2;
@@ -86,8 +88,8 @@ public:
 	int user_black;
 	int user_sat;
 	int med_passes;
-	//float auto_bright_thr;
-	//float adjust_maximum_thr;
+	float auto_bright_thr;
+	float adjust_maximum_thr;
 	bool do_not_use_fuji_rotate;
 	bool use_black;
 	bool use_sat;

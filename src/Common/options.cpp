@@ -119,6 +119,8 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_ABER_2,1.0);
 		settings.setValue(KEY_GAMM_0,1/2.4);
 		settings.setValue(KEY_GAMM_1,12.92);
+		settings.setValue(KEY_TK,6500);
+		settings.setValue(KEY_GREEN,1.0);
 		settings.setValue(KEY_USER_MUL_0,1.0);
 		settings.setValue(KEY_USER_MUL_1,1.0);
 		settings.setValue(KEY_USER_MUL_2,1.0);
@@ -139,8 +141,8 @@ void LuminanceOptions::loadFromQSettings()
 		settings.setValue(KEY_MED_PASSES,0);
 		settings.setValue(KEY_HIGHLIGHTS,0);
 		settings.setValue(KEY_LEVEL,0);
-		//settings.setValue(KEY_AUTO_BRIGHT_THR,0);
-		//settings.setValue(KEY_ADJUST_MAXIMUM_THR,0);
+		settings.setValue(KEY_AUTO_BRIGHT_THR,0);
+		settings.setValue(KEY_ADJUST_MAXIMUM_THR,0);
 		settings.setValue(KEY_DO_NOT_USE_FUJI_ROTATE,false);
 		settings.setValue(KEY_USE_BLACK,false);
 		settings.setValue(KEY_USE_SAT,false);
@@ -151,6 +153,8 @@ void LuminanceOptions::loadFromQSettings()
 	aber_2 = settings.value(KEY_ABER_2).toDouble();
 	gamm_0 = settings.value(KEY_GAMM_0).toDouble();
 	gamm_1 = settings.value(KEY_GAMM_1).toDouble();
+	TK = settings.value(KEY_TK).toInt();
+	green = settings.value(KEY_GREEN).toFloat();
 	user_mul_0 = settings.value(KEY_USER_MUL_0).toFloat();
 	user_mul_1 = settings.value(KEY_USER_MUL_1).toFloat();
 	user_mul_2 = settings.value(KEY_USER_MUL_2).toFloat();
@@ -171,8 +175,8 @@ void LuminanceOptions::loadFromQSettings()
 	med_passes = settings.value(KEY_MED_PASSES).toInt();
 	highlights = settings.value(KEY_HIGHLIGHTS).toInt();
 	level = settings.value(KEY_LEVEL).toInt();
-	//auto_bright_thr = settings.value(KEY_AUTO_BRIGHT_THR).toFloat();
-	//adjust_maximum_thr = settings.value(KEY_ADJUST_MAXIMUM_THR).toFloat();
+	auto_bright_thr = settings.value(KEY_AUTO_BRIGHT_THR).toFloat();
+	adjust_maximum_thr = settings.value(KEY_ADJUST_MAXIMUM_THR).toFloat();
 	do_not_use_fuji_rotate = settings.value(KEY_DO_NOT_USE_FUJI_ROTATE).toBool();
 	use_black = settings.value(KEY_USE_BLACK).toBool();
 	use_sat = settings.value(KEY_USE_SAT).toBool();
