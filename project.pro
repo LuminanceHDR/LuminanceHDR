@@ -37,7 +37,6 @@ FORMS = forms/MainWindow.ui \
 		forms/EditingTools.ui \
 		forms/BatchTMDialog.ui \ 
 		forms/ImageQualityDialog.ui \
-		forms/ThreadManager.ui \
 		forms/HelpBrowser.ui \
 		forms/HelpSideBar.ui \
 		forms/TonemappingWarnDialog.ui
@@ -68,7 +67,6 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/HelpBrowser/HelpSideBar.h \
 			src/TonemappingWindow/TonemappingWindow.h \
 			src/TonemappingWindow/TonemappingPanel.h \
-			src/TonemappingWindow/ThreadManager.h \
 			src/TonemappingWindow/TMOProgressIndicator.h \
 			src/TonemappingWindow/TonemappingWarnDialog.h \
 			src/Viewers/GenericViewer.h \
@@ -159,7 +157,6 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/HelpBrowser/HelpSideBar.cpp \
 			src/TonemappingWindow/TonemappingWindow.cpp \
 			src/TonemappingWindow/TonemappingPanel.cpp \
-			src/TonemappingWindow/ThreadManager.cpp \
 			src/TonemappingWindow/TMOProgressIndicator.cpp \
 			src/TonemappingWindow/TonemappingWarnDialog.cpp \
 			src/Viewers/GenericViewer.cpp \
