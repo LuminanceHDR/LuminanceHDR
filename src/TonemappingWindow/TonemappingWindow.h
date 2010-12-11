@@ -63,7 +63,6 @@ private:
 	GenericViewer *current;
 	QDockWidget *dock;
 	TonemappingPanel *tmPanel;
-	ThreadManager *threadManager;
 	HdrViewer *originalHDR;
 	QMdiSubWindow *originalHdrSubWin;
 	LuminanceOptions *luminance_options;
@@ -74,12 +73,10 @@ private:
 	float scaleFactor;
 	int VSB_Value;
 	int HSB_Value;
-	int threadCounter;
-	int frameCounter;
 	void load_options();
 	int ldrNum;
 	int hdrNum;
-	QProgressBar *progressbar;
+	TMOProgressIndicator *progInd;
 protected slots:
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setupConnections();

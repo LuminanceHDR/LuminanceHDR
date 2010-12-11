@@ -34,7 +34,7 @@ class TMOProgressIndicator : public QWidget {
 Q_OBJECT
 
 public:
-	TMOProgressIndicator(QWidget *parent, QString);
+	TMOProgressIndicator(QWidget *parent);
 	~TMOProgressIndicator();
 	bool isTerminated();
 	void emit_terminate() { emit terminate(); }
@@ -44,7 +44,6 @@ public slots:
 	void setMinimum(int);
 	void terminated();
 protected:
-	QLabel *m_label;
 	QProgressBar *m_progressBar;
 	QPushButton *m_abortButton;
 	bool m_isTerminated;

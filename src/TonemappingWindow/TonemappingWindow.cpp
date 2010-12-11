@@ -48,10 +48,9 @@
 
 TonemappingWindow::~TonemappingWindow()
 {
-	delete progressbar;
 }
 
-TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), threadCounter(0), frameCounter(0), ldrNum(0), hdrNum(0)
+TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString filename) : QMainWindow(parent), isLocked(false), changedImage(NULL), ldrNum(0), hdrNum(0)
 {
 	setupUi(this);
   
@@ -90,8 +89,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	//dock->setFeatures(QDockWidget::AllDockWidgetFeatures);
   
-	threadManager = new ThreadManager(this);
-  
 	tmPanel = new TonemappingPanel(dock);
 	dock->setWidget(tmPanel);
 	addDockWidget(Qt::LeftDockWidgetArea, dock);
@@ -117,8 +114,6 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
   
 	windowMapper = new QSignalMapper(this);
-  
-	progressbar = new QProgressBar();
   
 	setupConnections();
 }
@@ -146,14 +141,11 @@ void TonemappingWindow::setupConnections()
 	connect(actionLockImages,SIGNAL(toggled(bool)),this,SLOT(lockImages(bool)));
 	connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
 	connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
-	connect(actionThreadManager,SIGNAL(toggled(bool)),threadManager,SLOT(setVisible(bool)));
 	connect(menu_Windows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
   
 	connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
   
 	connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions&)), this, SLOT(tonemapImage(TonemappingOptions&)));
-  
-	connect(threadManager,SIGNAL(closeRequested(bool)), actionThreadManager,SLOT(setChecked(bool)));
   
 	connect(originalHDR, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
 	connect(originalHDR, SIGNAL(closeRequested(bool)), actionShowHDR, SLOT(setChecked(bool)));
@@ -710,8 +702,7 @@ void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
 	} 
   
 	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
-	TMOProgressIndicator *progInd =	new TMOProgressIndicator(this, QString(opts.tmoperator_str));
-	threadManager->addProgressIndicator(progInd);
+	progInd = new TMOProgressIndicator(this);
   
 	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
 	connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
@@ -724,30 +715,22 @@ void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
 	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
   
 	//start thread
+	tmPanel->applyButton->setEnabled(false);
 	thread->startTonemapping();
-	threadCounter++;
-	if (threadCounter == 1)
-  { 
-		statusbar->insertWidget(0,progressbar,1);
-		progressbar->setMaximum(0);
-		progressbar->setMinimum(0);
-		progressbar->setValue(-1);
-		progressbar->show();
-	}
+	//statusbar->insertWidget(0,progInd,1);
+	statusbar->addWidget(progInd);
 }
 
 void TonemappingWindow::showErrorMessage(const char *e)
 {
 	QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
                         QMessageBox::Ok,QMessageBox::NoButton);
-	threadCounter--;
 	updateProgressbar();
 }
 
 void TonemappingWindow::tonemappingFinished()
 {
 	std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
-	threadCounter--;
 	updateProgressbar();
 }
 
@@ -758,10 +741,8 @@ void TonemappingWindow::deleteTMOThread(TMOThread *th)
 
 void TonemappingWindow::updateProgressbar()
 {
-	if (threadCounter == 0)
-  {
-		statusbar->removeWidget(progressbar);
-	}
+	statusbar->removeWidget(progInd);
+	tmPanel->applyButton->setEnabled(true);
 }
 
 void TonemappingWindow::updateWindowMenu()

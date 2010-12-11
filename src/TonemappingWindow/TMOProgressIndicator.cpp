@@ -29,26 +29,20 @@
 
 #include <iostream>
 
-TMOProgressIndicator::TMOProgressIndicator(QWidget *parent, QString labeltext) : 
+TMOProgressIndicator::TMOProgressIndicator(QWidget *parent) : 
 	QWidget(parent), m_isTerminated(false) 
 {
-	m_label = new QLabel(labeltext);
-
-  m_progressBar = new QProgressBar;
+	m_progressBar = new QProgressBar(this);
 	
-	m_abortButton = new QPushButton;
+	m_abortButton = new QPushButton(this);
 	m_abortButton->resize(22,22);
 	m_abortButton->setIcon(QIcon(":/new/prefix1/images/remove.png"));
 	m_abortButton->setToolTip(QString(tr("Abort computation")));
 	
-	QHBoxLayout *hbl = new QHBoxLayout(0);
+	QHBoxLayout *hbl = new QHBoxLayout(this);
 	hbl->addWidget(m_progressBar);
 	hbl->addWidget(m_abortButton);
 
-	QVBoxLayout *vbl = new QVBoxLayout(this);
-
-	vbl->addWidget(m_label);
-	vbl->addLayout(hbl);
 	connect(m_abortButton, SIGNAL(clicked()), this, SIGNAL(terminate()));
 	connect(m_abortButton, SIGNAL(clicked()), this, SLOT(terminated()));
 
@@ -56,9 +50,6 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent, QString labeltext) :
 }
 
 TMOProgressIndicator::~TMOProgressIndicator() {
-	delete m_label;
-	delete m_progressBar;
-	delete m_abortButton;
 }
 
 void TMOProgressIndicator::terminated() {

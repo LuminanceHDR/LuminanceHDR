@@ -92,7 +92,7 @@
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -100,13 +100,13 @@
    <property name="minimumSize">
     <size>
      <width>0</width>
-     <height>24</height>
+     <height>32</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>16777215</width>
-     <height>24</height>
+     <height>32</height>
     </size>
    </property>
   </widget>
@@ -141,8 +141,6 @@
    <addaction name="actionShowNext"/>
    <addaction name="separator"/>
    <addaction name="actionLockImages"/>
-   <addaction name="separator"/>
-   <addaction name="actionThreadManager"/>
    <addaction name="separator"/>
    <addaction name="actionWhat_s_This"/>
    <addaction name="separator"/>
@@ -635,18 +633,6 @@
    </property>
    <property name="whatsThis">
     <string>Show information about Qt library that is used by Luminance</string>
-   </property>
-  </action>
-  <action name="actionThreadManager">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/system-run.png</normaloff>:/new/prefix1/images/system-run.png</iconset>
-   </property>
-   <property name="text">
-    <string>Active TM Processes</string>
    </property>
   </action>
  </widget>
