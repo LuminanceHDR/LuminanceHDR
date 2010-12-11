@@ -414,6 +414,7 @@ void HdrWizard::NextFinishButtonClicked() {
 		}
 	case 3:
 		settings_label->setText("<center><h3><b>"+tr("Processing...")+"</b></h3></center>");
+		repaint();
 		QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 		PfsFrameHDR=hdrCreationManager->createHdr(antighostingCheckBox->isChecked(),spinBoxIterations->value());
 		QApplication::restoreOverrideCursor();
