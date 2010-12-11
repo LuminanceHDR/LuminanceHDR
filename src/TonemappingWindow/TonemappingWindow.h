@@ -39,7 +39,7 @@
 #include "Viewers/HdrViewer.h"
 #include "TonemappingPanel.h"
 #include "Threads/TMOThread.h"
-#include "ThreadManager.h"
+#include "TMOProgressIndicator.h"
 
 class QSignalMapper;
 	
