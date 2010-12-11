@@ -1399,7 +1399,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="515"/>
         <source>Triangular</source>
         <translation type="unfinished">Háromszögelő</translation>
     </message>
@@ -1482,7 +1482,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="739"/>
         <location filename="../forms/HdrWizard.ui" line="859"/>
         <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="524"/>
         <source>Linear</source>
         <translation type="unfinished">Egyenes arányú</translation>
     </message>
@@ -1493,7 +1493,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="788"/>
         <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="537"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
@@ -1504,7 +1504,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="854"/>
         <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="526"/>
         <source>Gamma</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1551,13 +1551,13 @@ figyelembevételével&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="518"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
         <source>Gaussian</source>
         <translation type="unfinished">Gauß</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="516"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="517"/>
         <source>Plateau</source>
         <translation type="unfinished">Fennsík</translation>
     </message>
@@ -1599,7 +1599,7 @@ figyelembevételével&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="539"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -1702,7 +1702,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="554"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="555"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;A továbbiakhoz kézzel meg kell adni a megvilágítási értékeket.&lt;br&gt;Ebből kell még &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; darab.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
@@ -1740,8 +1740,8 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="316"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="429"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="447"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="430"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="448"/>
         <source>&amp;Finish</source>
         <translation type="unfinished">&amp;Befejezés</translation>
     </message>
@@ -1756,53 +1756,53 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation type="unfinished">Feldolgozás...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="459"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="460"/>
         <source>Load a camera response curve file</source>
         <translation type="unfinished">Fényképezőgép válaszgörbéjének a betöltése</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="461"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="473"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="462"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="474"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished">Fényképezőgép válaszgörbéje (*.m);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="471"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="472"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Fényképezőgép válaszgörbéjének a mentése</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
         <source>(*) Weights: </source>
         <translation type="unfinished">(*) Súlyok: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
         <source> - Response curve: </source>
         <translation type="unfinished"> - Válaszgörbe: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="507"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
         <source> - Model: </source>
         <translation type="unfinished"> - Típus: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="527"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
         <source>Logarithmic</source>
         <translation type="unfinished">Logaritmikus</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
         <source>From Calibration</source>
         <translation type="unfinished">A kalibrálásból eredő</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
         <source>From File</source>
         <translation type="unfinished">Fájlból</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="552"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3500,7 +3500,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2302"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2291"/>
         <source>External Tools</source>
         <translation>Programok</translation>
     </message>
@@ -3796,12 +3796,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="798"/>
+        <location filename="../forms/PreferencesDialog.ui" line="800"/>
         <source>Quality:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="821"/>
+        <location filename="../forms/PreferencesDialog.ui" line="833"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3816,53 +3816,53 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="835"/>
+        <location filename="../forms/PreferencesDialog.ui" line="847"/>
         <source>Bilinear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="840"/>
+        <location filename="../forms/PreferencesDialog.ui" line="852"/>
         <source>VNG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="845"/>
+        <location filename="../forms/PreferencesDialog.ui" line="857"/>
         <source>PPG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="850"/>
+        <location filename="../forms/PreferencesDialog.ui" line="862"/>
         <source>AHD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="861"/>
-        <location filename="../forms/PreferencesDialog.ui" line="936"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1052"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1148"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1239"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1316"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1391"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1489"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1578"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1673"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1812"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1932"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2033"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2126"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2228"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2253"/>
+        <location filename="../forms/PreferencesDialog.ui" line="873"/>
+        <location filename="../forms/PreferencesDialog.ui" line="928"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1072"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1145"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1213"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1309"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1361"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1468"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1582"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1649"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1805"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1943"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2018"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2140"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2242"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="876"/>
+        <location filename="../forms/PreferencesDialog.ui" line="807"/>
         <source>Median:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="918"/>
+        <location filename="../forms/PreferencesDialog.ui" line="910"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3872,17 +3872,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="977"/>
+        <location filename="../forms/PreferencesDialog.ui" line="969"/>
         <source>White Balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="987"/>
+        <location filename="../forms/PreferencesDialog.ui" line="981"/>
         <source>Method:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1010"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1030"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3896,32 +3896,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1026"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1046"/>
         <source>Predefined D65</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1031"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1051"/>
         <source>Camera</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1036"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1056"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1041"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1061"/>
         <source>Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1070"/>
+        <location filename="../forms/PreferencesDialog.ui" line="991"/>
         <source>T(K):      </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1121"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1118"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3931,17 +3931,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1217"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1191"/>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1254"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1234"/>
         <source>Highlights:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1277"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1270"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3955,32 +3955,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1290"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1283"/>
         <source>Solid White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1295"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1288"/>
         <source>Do not transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1300"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1293"/>
         <source>Blend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1305"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1298"/>
         <source>Reconstruct</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1331"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1241"/>
         <source>Level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1373"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1343"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3990,22 +3990,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1404"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1378"/>
         <source>Correct false colors in highlights</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1411"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1385"/>
         <source>Auto Brightness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1423"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1397"/>
         <source>Brightness:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1465"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1444"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4015,7 +4015,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1504"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1487"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4025,12 +4025,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1512"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1495"/>
         <source>Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1560"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1564"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4040,7 +4040,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1593"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1502"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4050,12 +4050,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1601"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1510"/>
         <source>White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1652"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1625"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4065,12 +4065,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1697"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1690"/>
         <source>Corrections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1705"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1698"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4080,17 +4080,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1713"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1706"/>
         <source>Enable noise reduction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1728"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1721"/>
         <source>Threshold:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1785"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1778"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4100,7 +4100,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1825"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1818"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4110,22 +4110,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1833"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1826"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1166"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1001"/>
         <source>Green:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1845"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1840"/>
         <source>Red:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1902"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1913"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4135,28 +4135,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1950"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1850"/>
         <source>Blue:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2007"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1992"/>
         <source>Blue multiplier
 Set here the magnification factor of the blue layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2070"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2059"/>
         <source>Color Management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2083"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2072"/>
         <source>Camera profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2093"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2082"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4169,28 +4169,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2105"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2094"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2110"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2099"/>
         <source>Built in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2104"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2206"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2169"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2158"/>
         <source>Color Space:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2179"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2168"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4206,32 +4206,32 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2197"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2186"/>
         <source>RAW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2202"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2191"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2207"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2196"/>
         <source>Wide Gamut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2212"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2201"/>
         <source>Pro Photo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2309"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2298"/>
         <source>align_image_stack commandline arguments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2321"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2310"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4350,12 +4350,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2382"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2371"/>
         <source>&amp;Cancel</source>
         <translation>Mé&amp;gsem</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2389"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2378"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -4663,7 +4663,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMOProgressIndicator</name>
     <message>
-        <location filename="../src/TonemappingWindow/TMOProgressIndicator.cpp" line="42"/>
+        <location filename="../src/TonemappingWindow/TMOProgressIndicator.cpp" line="40"/>
         <source>Abort computation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4671,19 +4671,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>ThreadManager</name>
     <message>
-        <location filename="../forms/ThreadManager.ui" line="14"/>
-        <source>Active TM Processes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ThreadManager.ui" line="77"/>
-        <source>&amp;Abort All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ThreadManager.ui" line="84"/>
         <source>&amp;Close</source>
-        <translation type="unfinished">Ki&amp;lépés</translation>
+        <translation type="obsolete">Ki&amp;lépés</translation>
     </message>
 </context>
 <context>
@@ -5050,6 +5039,11 @@ Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2437"/>
+        <source>&amp;Tonemap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2450"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
@@ -5152,9 +5146,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Használja a fenti jellemzőket (gamma előtti és átnyalatnövelési műveleteket) az LDR kép előállításához.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2437"/>
         <source>&amp;Apply</source>
-        <translation>&amp;Alkalmaz</translation>
+        <translation type="obsolete">&amp;Alkalmaz</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2114"/>
@@ -5357,50 +5350,50 @@ Do you want to continue?</source>
         <translation type="obsolete">Árnyalatnövelési panel</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="225"/>
-        <location filename="../forms/TonemappingWindow.ui" line="228"/>
+        <location filename="../forms/TonemappingWindow.ui" line="223"/>
+        <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
         <translation>A jelenlegi LDR hisztogrammját megváltoztatni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="258"/>
+        <location filename="../forms/TonemappingWindow.ui" line="256"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="270"/>
+        <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
         <translation>Be&amp;zár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="273"/>
-        <location filename="../forms/TonemappingWindow.ui" line="276"/>
+        <location filename="../forms/TonemappingWindow.ui" line="271"/>
+        <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
         <translation>Bezár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="279"/>
-        <location filename="../forms/TonemappingWindow.ui" line="282"/>
+        <location filename="../forms/TonemappingWindow.ui" line="277"/>
+        <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
         <translation>A rajzasztalon bezár minden LDR képet</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="285"/>
+        <location filename="../forms/TonemappingWindow.ui" line="283"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="296"/>
+        <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
         <translation>Mint &amp;indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="299"/>
+        <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
         <translation>Mint indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="302"/>
+        <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
         <translation>Képeket mint indexképeket</translation>
     </message>
@@ -5409,23 +5402,23 @@ Do you want to continue?</source>
         <translation type="obsolete">Minden LDR képet indexképként mutatni.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="319"/>
+        <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Egymás alatt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="346"/>
+        <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
         <translation>&amp;Ablakhoz igazítani</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="349"/>
-        <location filename="../forms/TonemappingWindow.ui" line="352"/>
+        <location filename="../forms/TonemappingWindow.ui" line="347"/>
+        <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
         <translation>A jelenlegi LDR képet az ablakához igazítani.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="355"/>
+        <location filename="../forms/TonemappingWindow.ui" line="353"/>
         <source>W</source>
         <translation>W</translation>
     </message>
@@ -5451,36 +5444,36 @@ Do you want to continue?</source>
         <translation type="obsolete">Szinteket szabályozni...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="243"/>
+        <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
         <translation>Men&amp;tés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="246"/>
-        <location filename="../forms/TonemappingWindow.ui" line="249"/>
+        <location filename="../forms/TonemappingWindow.ui" line="244"/>
+        <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
         <translation>Mentés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="252"/>
-        <location filename="../forms/TonemappingWindow.ui" line="255"/>
+        <location filename="../forms/TonemappingWindow.ui" line="250"/>
+        <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
         <translation>A kijelölt LDR képet menteni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="322"/>
-        <location filename="../forms/TonemappingWindow.ui" line="325"/>
+        <location filename="../forms/TonemappingWindow.ui" line="320"/>
+        <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
         <translation>A rajzasztalon minden LDR képet egymás alá helyezni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="364"/>
-        <location filename="../forms/TonemappingWindow.ui" line="367"/>
+        <location filename="../forms/TonemappingWindow.ui" line="362"/>
+        <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
         <translation>Ez mi?</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="376"/>
+        <location filename="../forms/TonemappingWindow.ui" line="374"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
@@ -5493,22 +5486,22 @@ Do you want to continue?</source>
         <translation type="obsolete">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="174"/>
+        <location filename="../forms/TonemappingWindow.ui" line="172"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="231"/>
+        <location filename="../forms/TonemappingWindow.ui" line="229"/>
         <source>Ctrl+L</source>
         <translation>Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="311"/>
+        <location filename="../forms/TonemappingWindow.ui" line="309"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="328"/>
+        <location filename="../forms/TonemappingWindow.ui" line="326"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
@@ -5542,31 +5535,31 @@ Do you want to continue?</source>
         <translation type="obsolete">Eszköztár</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="406"/>
-        <location filename="../forms/TonemappingWindow.ui" line="409"/>
-        <location filename="../forms/TonemappingWindow.ui" line="412"/>
+        <location filename="../forms/TonemappingWindow.ui" line="404"/>
+        <location filename="../forms/TonemappingWindow.ui" line="407"/>
+        <location filename="../forms/TonemappingWindow.ui" line="410"/>
         <source>Save All</source>
         <translation>Mentés egyszerre</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="415"/>
-        <location filename="../forms/TonemappingWindow.ui" line="418"/>
+        <location filename="../forms/TonemappingWindow.ui" line="413"/>
+        <location filename="../forms/TonemappingWindow.ui" line="416"/>
         <source>Saves all LDRs</source>
         <translation>Minden LDR-t elmenteni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="421"/>
+        <location filename="../forms/TonemappingWindow.ui" line="419"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="379"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="371"/>
         <source>Save files in</source>
         <translation>Képeket menteni itt</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="543"/>
+        <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
         <translation type="unfinished">Eszköztárak</translation>
     </message>
@@ -5581,270 +5574,265 @@ Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="159"/>
+        <location filename="../forms/TonemappingWindow.ui" line="157"/>
         <source>&amp;Close</source>
         <translation type="unfinished">Ki&amp;lépés</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="162"/>
+        <location filename="../forms/TonemappingWindow.ui" line="160"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="216"/>
+        <location filename="../forms/TonemappingWindow.ui" line="214"/>
         <source>Adjust &amp;Levels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="219"/>
-        <location filename="../forms/TonemappingWindow.ui" line="222"/>
+        <location filename="../forms/TonemappingWindow.ui" line="217"/>
+        <location filename="../forms/TonemappingWindow.ui" line="220"/>
         <source>Adjust Levels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="433"/>
-        <location filename="../forms/TonemappingWindow.ui" line="436"/>
-        <location filename="../forms/TonemappingWindow.ui" line="439"/>
+        <location filename="../forms/TonemappingWindow.ui" line="431"/>
+        <location filename="../forms/TonemappingWindow.ui" line="434"/>
+        <location filename="../forms/TonemappingWindow.ui" line="437"/>
         <source>HDR Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="457"/>
-        <location filename="../forms/TonemappingWindow.ui" line="460"/>
-        <location filename="../forms/TonemappingWindow.ui" line="463"/>
+        <location filename="../forms/TonemappingWindow.ui" line="455"/>
+        <location filename="../forms/TonemappingWindow.ui" line="458"/>
+        <location filename="../forms/TonemappingWindow.ui" line="461"/>
         <source>Next Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="481"/>
-        <location filename="../forms/TonemappingWindow.ui" line="484"/>
-        <location filename="../forms/TonemappingWindow.ui" line="487"/>
+        <location filename="../forms/TonemappingWindow.ui" line="479"/>
+        <location filename="../forms/TonemappingWindow.ui" line="482"/>
+        <location filename="../forms/TonemappingWindow.ui" line="485"/>
         <source>Previous Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="165"/>
-        <location filename="../forms/TonemappingWindow.ui" line="168"/>
-        <location filename="../forms/TonemappingWindow.ui" line="171"/>
+        <location filename="../forms/TonemappingWindow.ui" line="163"/>
+        <location filename="../forms/TonemappingWindow.ui" line="166"/>
+        <location filename="../forms/TonemappingWindow.ui" line="169"/>
         <source>Close the tonemapping dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="189"/>
-        <location filename="../forms/TonemappingWindow.ui" line="192"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="87"/>
+        <location filename="../forms/TonemappingWindow.ui" line="187"/>
+        <location filename="../forms/TonemappingWindow.ui" line="190"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="86"/>
         <source>Tone Mapping Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="195"/>
-        <location filename="../forms/TonemappingWindow.ui" line="198"/>
+        <location filename="../forms/TonemappingWindow.ui" line="193"/>
+        <location filename="../forms/TonemappingWindow.ui" line="196"/>
         <source>Toggle display of the tonemapping options sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="201"/>
+        <location filename="../forms/TonemappingWindow.ui" line="199"/>
         <source>Show/Hide the tonemapping options sidebar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="305"/>
-        <location filename="../forms/TonemappingWindow.ui" line="308"/>
+        <location filename="../forms/TonemappingWindow.ui" line="303"/>
+        <location filename="../forms/TonemappingWindow.ui" line="306"/>
         <source>Layout all LDR images as thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="370"/>
-        <location filename="../forms/TonemappingWindow.ui" line="373"/>
+        <location filename="../forms/TonemappingWindow.ui" line="368"/>
+        <location filename="../forms/TonemappingWindow.ui" line="371"/>
         <source>Get verbose information about user interface elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="385"/>
+        <location filename="../forms/TonemappingWindow.ui" line="383"/>
         <source>&amp;Contents...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="388"/>
-        <location filename="../forms/TonemappingWindow.ui" line="391"/>
+        <location filename="../forms/TonemappingWindow.ui" line="386"/>
+        <location filename="../forms/TonemappingWindow.ui" line="389"/>
         <source>Open user manual for Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="394"/>
+        <location filename="../forms/TonemappingWindow.ui" line="392"/>
         <source>F1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="442"/>
-        <location filename="../forms/TonemappingWindow.ui" line="445"/>
+        <location filename="../forms/TonemappingWindow.ui" line="440"/>
+        <location filename="../forms/TonemappingWindow.ui" line="443"/>
         <source>Show the original high dynamic range image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="466"/>
-        <location filename="../forms/TonemappingWindow.ui" line="469"/>
+        <location filename="../forms/TonemappingWindow.ui" line="464"/>
+        <location filename="../forms/TonemappingWindow.ui" line="467"/>
         <source>Show the next image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="490"/>
-        <location filename="../forms/TonemappingWindow.ui" line="493"/>
+        <location filename="../forms/TonemappingWindow.ui" line="488"/>
+        <location filename="../forms/TonemappingWindow.ui" line="491"/>
         <source>Show the previous image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="505"/>
+        <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
         <translation type="unfinished">&amp;Eredeti méret</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="508"/>
+        <location filename="../forms/TonemappingWindow.ui" line="506"/>
         <source>O</source>
         <translation type="unfinished">O</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="520"/>
+        <location filename="../forms/TonemappingWindow.ui" line="518"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">&amp;Nagyítás</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="523"/>
+        <location filename="../forms/TonemappingWindow.ui" line="521"/>
         <source>+</source>
         <translation type="unfinished">+</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="535"/>
+        <location filename="../forms/TonemappingWindow.ui" line="533"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">&amp;Kicsinyítés</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="538"/>
+        <location filename="../forms/TonemappingWindow.ui" line="536"/>
         <source>-</source>
         <translation type="unfinished">-</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="554"/>
+        <location filename="../forms/TonemappingWindow.ui" line="552"/>
         <source>Text Under Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="562"/>
+        <location filename="../forms/TonemappingWindow.ui" line="560"/>
         <source>Only Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="565"/>
-        <location filename="../forms/TonemappingWindow.ui" line="568"/>
+        <location filename="../forms/TonemappingWindow.ui" line="563"/>
+        <location filename="../forms/TonemappingWindow.ui" line="566"/>
         <source>Icons Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="576"/>
+        <location filename="../forms/TonemappingWindow.ui" line="574"/>
         <source>Text Alongside Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="584"/>
+        <location filename="../forms/TonemappingWindow.ui" line="582"/>
         <source>Text Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="600"/>
+        <location filename="../forms/TonemappingWindow.ui" line="598"/>
         <source>Sync View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="603"/>
-        <location filename="../forms/TonemappingWindow.ui" line="606"/>
-        <location filename="../forms/TonemappingWindow.ui" line="609"/>
+        <location filename="../forms/TonemappingWindow.ui" line="601"/>
+        <location filename="../forms/TonemappingWindow.ui" line="604"/>
+        <location filename="../forms/TonemappingWindow.ui" line="607"/>
         <source>Lock view of all images to sync panning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="631"/>
+        <location filename="../forms/TonemappingWindow.ui" line="629"/>
         <source>Show information about Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="634"/>
-        <location filename="../forms/TonemappingWindow.ui" line="637"/>
+        <location filename="../forms/TonemappingWindow.ui" line="632"/>
+        <location filename="../forms/TonemappingWindow.ui" line="635"/>
         <source>Show information about Qt library that is used by Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="649"/>
-        <source>Active TM Processes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="614"/>
+        <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
         <translation type="unfinished">Luminance névjegye</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="617"/>
+        <location filename="../forms/TonemappingWindow.ui" line="615"/>
         <source>Show information about Luminance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="620"/>
-        <location filename="../forms/TonemappingWindow.ui" line="623"/>
+        <location filename="../forms/TonemappingWindow.ui" line="618"/>
+        <location filename="../forms/TonemappingWindow.ui" line="621"/>
         <source>Show information about Luminance, its authors and contributors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="628"/>
+        <location filename="../forms/TonemappingWindow.ui" line="626"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="104"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="105"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="101"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="102"/>
         <source>Original HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="214"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="215"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="206"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="207"/>
         <source>Processed HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="263"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="670"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="688"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="700"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="707"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="741"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="662"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="680"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="692"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Luminance HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="263"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
         <source>Please select an LDR image to save.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="630"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="622"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation type="unfinished">%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="688"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="707"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="680"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
         <source>Please select an HDR image to tonemap.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="670"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="700"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="662"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="692"/>
         <source>Please make a selection of the HDR image to tonemap.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="774"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="755"/>
         <source>Untitled</source>
         <translation type="unfinished">Névtelen</translation>
     </message>
@@ -5853,7 +5841,7 @@ Do you want to continue?</source>
         <translation type="obsolete">Luminance</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="741"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
