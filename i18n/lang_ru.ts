@@ -1277,7 +1277,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="515"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
         <source>Triangular</source>
         <translation>Треугольная</translation>
     </message>
@@ -1360,7 +1360,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="739"/>
         <location filename="../forms/HdrWizard.ui" line="859"/>
         <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="524"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
         <source>Linear</source>
         <translation>Линейная</translation>
     </message>
@@ -1377,14 +1377,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="788"/>
         <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="537"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="541"/>
         <source>Debevec</source>
         <translation>Дебевек</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="854"/>
         <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="526"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
         <source>Gamma</source>
         <translation>Гамма</translation>
     </message>
@@ -1411,13 +1411,13 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
         <source>Gaussian</source>
         <translation>Гауссова</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="517"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
         <source>Plateau</source>
         <translation>Плато</translation>
     </message>
@@ -1443,7 +1443,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="539"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="543"/>
         <source>Robertson</source>
         <translation>Робертсон</translation>
     </message>
@@ -1458,7 +1458,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1427"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="318"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="321"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Вперед &gt;</translation>
     </message>
@@ -1553,7 +1553,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="555"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="559"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Для продолжения необходимо вручную указать экспозицию каждого исходного снимка.&lt;br&gt;Не указано значений: &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt;.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
@@ -1563,97 +1563,103 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation>Ошибка при загрузке</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="260"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
+        <source>Start loading a set of images with different exposure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="263"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="277"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="286"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="283"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="289"/>
         <source>Error...</source>
         <translation>Ошибка...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="277"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation>Не удалось запустить внешнее приложение &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Подробности вы можете узнать из справки по программе: «Справка → Документация...→ Hints and tips».</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="283"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
         <translation>Внешняя программа &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; аварийно завершила свою работу...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="286"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="289"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
         <translation>При выполнении внешней программы &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; произошла неизвестная ошибка...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="316"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="430"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="448"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="319"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="434"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="452"/>
         <source>&amp;Finish</source>
         <translation>&amp;Завершить</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="394"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="397"/>
         <source>Aligning...</source>
         <translation>Выполняется выравнивание...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="416"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="419"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="420"/>
         <source>Processing...</source>
         <translation type="unfinished">Выполняется обработка...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="460"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="464"/>
         <source>Load a camera response curve file</source>
         <translation>Загрузить файл кривой отклика камеры</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="462"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="474"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="478"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Кривая отклика камеры (*.m);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="472"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="476"/>
         <source>Save a camera response curve file</source>
         <translation>Сохранить файл с кривой отклика камеры</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
         <source>(*) Weights: </source>
         <translation>(*) Функция взвешивания: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
         <source> - Response curve: </source>
         <translation> - Кривая отклика: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="508"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
         <source> - Model: </source>
         <translation> - Модель: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
         <source>Logarithmic</source>
         <translation>Логарифмическая</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="534"/>
         <source>From Calibration</source>
         <translation>Из результата калибровки</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
         <source>From File</source>
         <translation>Из файла</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="553"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="557"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Все значения EV указаны.&lt;br&gt;Теперь щёлкните кнопку «Дальше».&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -3822,57 +3828,57 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TonemappingPanel</name>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="43"/>
+        <location filename="../forms/TonemappingPanel.ui" line="55"/>
         <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
         <translation>&lt;b&gt;Оператор:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="60"/>
+        <location filename="../forms/TonemappingPanel.ui" line="72"/>
         <source>Mantiuk &apos;06</source>
         <translation>Mantiuk &apos;06</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="65"/>
+        <location filename="../forms/TonemappingPanel.ui" line="77"/>
         <source>Mantiuk &apos;08</source>
         <translation>Mantiuk &apos;08</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="70"/>
+        <location filename="../forms/TonemappingPanel.ui" line="82"/>
         <source>Fattal</source>
         <translation>Fattal</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="75"/>
+        <location filename="../forms/TonemappingPanel.ui" line="87"/>
         <source>Drago</source>
         <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="80"/>
+        <location filename="../forms/TonemappingPanel.ui" line="92"/>
         <source>Durand</source>
         <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="85"/>
+        <location filename="../forms/TonemappingPanel.ui" line="97"/>
         <source>Reinhard &apos;02</source>
         <translation>Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="90"/>
+        <location filename="../forms/TonemappingPanel.ui" line="102"/>
         <source>Reinhard &apos;05</source>
         <translation>Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="95"/>
+        <location filename="../forms/TonemappingPanel.ui" line="107"/>
         <source>Ashikhmin</source>
         <translation>Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="100"/>
+        <location filename="../forms/TonemappingPanel.ui" line="112"/>
         <source>Pattanaik</source>
         <translation>Pattanaik</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="149"/>
+        <location filename="../forms/TonemappingPanel.ui" line="153"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3883,73 +3889,73 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Перцептивная инфраструктура обработки контраста HDR-снимков&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="162"/>
+        <location filename="../forms/TonemappingPanel.ui" line="166"/>
         <source>Contrast Equalization</source>
         <translation>Выравнивание контрастности</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="171"/>
+        <location filename="../forms/TonemappingPanel.ui" line="177"/>
         <source>Contrast Factor</source>
         <translation>Коэффициент контраста</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="217"/>
+        <location filename="../forms/TonemappingPanel.ui" line="184"/>
         <source>Saturation Factor</source>
         <translation>Коэффициент насыщенности</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="263"/>
+        <location filename="../forms/TonemappingPanel.ui" line="194"/>
         <source>Detail Factor</source>
         <translation>Коэффициент детализации</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="360"/>
+        <location filename="../forms/TonemappingPanel.ui" line="379"/>
         <source>Predefined Display</source>
         <translation>Профиль монитора</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="368"/>
+        <location filename="../forms/TonemappingPanel.ui" line="400"/>
         <source>Lcd Office</source>
         <translation>Офисный ЖК-монитор</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="373"/>
+        <location filename="../forms/TonemappingPanel.ui" line="405"/>
         <source>Lcd</source>
         <translation>ЖК-монитор</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="378"/>
+        <location filename="../forms/TonemappingPanel.ui" line="410"/>
         <source>Lcd Bright</source>
         <translation>Яркий ЖК-монитор</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="383"/>
+        <location filename="../forms/TonemappingPanel.ui" line="415"/>
         <source>CRT</source>
         <translation>ЭЛТ-монитор</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="395"/>
-        <location filename="../forms/TonemappingPanel.ui" line="648"/>
+        <location filename="../forms/TonemappingPanel.ui" line="429"/>
+        <location filename="../forms/TonemappingPanel.ui" line="625"/>
         <source>Color Saturation</source>
         <translation>Насыщенность</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="429"/>
+        <location filename="../forms/TonemappingPanel.ui" line="436"/>
         <source>Contrast Enhancement</source>
         <translation>Контраст</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="466"/>
+        <location filename="../forms/TonemappingPanel.ui" line="446"/>
         <source>Luminance Level</source>
         <translation>Уровень светимости</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="498"/>
+        <location filename="../forms/TonemappingPanel.ui" line="555"/>
         <source>Set Manual Luminace Level</source>
         <translation>Вручную задать уровень светимости</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="547"/>
+        <location filename="../forms/TonemappingPanel.ui" line="594"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -3960,37 +3966,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Компрессия HDR по области градиентов&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski и M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="562"/>
+        <location filename="../forms/TonemappingPanel.ui" line="611"/>
         <source>Alpha</source>
         <translation>Альфа</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="605"/>
+        <location filename="../forms/TonemappingPanel.ui" line="618"/>
         <source>Beta</source>
         <translation>Бета</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="688"/>
+        <location filename="../forms/TonemappingPanel.ui" line="632"/>
         <source>Noise Reduction</source>
         <translation>Подавление шума</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="726"/>
+        <location filename="../forms/TonemappingPanel.ui" line="798"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
         <translation>Прежняя версия Fattal (до 1.8.4)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="797"/>
+        <location filename="../forms/TonemappingPanel.ui" line="853"/>
         <source>Bias</source>
         <translation>Смещение</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="24"/>
+        <location filename="../forms/TonemappingPanel.ui" line="36"/>
         <source>Tone mapping operators and their options</source>
         <translation>Операторы отображения тонов и их параметры</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="346"/>
+        <location filename="../forms/TonemappingPanel.ui" line="365"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4005,7 +4011,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Rafal Mantiuk, Scott Daly и Louis Kerofsky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="775"/>
+        <location filename="../forms/TonemappingPanel.ui" line="837"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4018,7 +4024,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Адаптивное логарифмическое отображение лоя показа высококонтрастных сцен&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen и N. Chiba&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="877"/>
+        <location filename="../forms/TonemappingPanel.ui" line="940"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4031,22 +4037,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Быстрая билатеральная фильтрация для показа HDR-изображений&lt;/span&gt;&lt;br /&gt;F. Durand и J. Dorsey&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="899"/>
+        <location filename="../forms/TonemappingPanel.ui" line="958"/>
         <source>Spatial Kernel Sigma</source>
         <translation>Сигма пространственного ядра</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="942"/>
+        <location filename="../forms/TonemappingPanel.ui" line="965"/>
         <source>Range Kernel Sigma</source>
         <translation>Сигма диапазонного ядра</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="988"/>
+        <location filename="../forms/TonemappingPanel.ui" line="972"/>
         <source>Base Contrast</source>
         <translation>Контраст основного слоя</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1062"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1122"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -4057,37 +4063,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Фотографическое воспроизведение тонов в цифровых изображениях&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1075"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1135"/>
         <source>Use Scales</source>
         <translation>Использовать шкалы</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1090"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1146"/>
         <source>Key Value</source>
         <translation>Значение ключа</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1133"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1153"/>
         <source>Phi</source>
         <translation>δ (фи)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1179"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1163"/>
         <source>Range</source>
         <translation>Диапазон</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1243"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1173"/>
         <source>Lower Scale</source>
         <translation>Нижняя шкала</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1304"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1183"/>
         <source>Upper Scale</source>
         <translation>Верхняя шкала</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1396"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1441"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -4098,22 +4104,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Сокращение динамического диапазона на основе физиологии фоторецептора&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1417"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1458"/>
         <source>Brightness</source>
         <translation>Яркость</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1472"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1465"/>
         <source>Chromatic Adaptation</source>
         <translation>Хроматическая адаптация</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1518"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1472"/>
         <source>Light Adaptation</source>
         <translation>Адаптация к свету</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1604"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1654"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -4124,32 +4130,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Алгоритм отображения тонов высококонтрастных изображений&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1628"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1678"/>
         <source>Simple</source>
         <translation>Простой вариант</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1647"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1697"/>
         <source>Equation Number</source>
         <translation>Номер уравнения</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1665"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1715"/>
         <source>Eqn 2</source>
         <translation>Уравнение 2</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1681"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1731"/>
         <source>Eqn 4</source>
         <translation>Уравнение 4</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1714"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1764"/>
         <source>Local Contrast Threshold</source>
         <translation>Порог локального контраста</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1797"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1852"/>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
@@ -4160,184 +4166,184 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Зависящая от времени визуальная адаптация для реалистичного представления изображения&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee и D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1818"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1873"/>
         <source>Multiplier</source>
         <translation>Множитель</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1864"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1932"/>
         <source>Local Tone Mapping</source>
         <translation>Локальное отображение тонов</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1871"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1939"/>
         <source>Cone and Rod based on Luminance</source>
         <translation>Уровень чувствительности колбочек и 
 палочек на основе освещенности</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1894"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1958"/>
         <source>Cone Level</source>
         <translation>Уровень чувствительности колбочек</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="1946"/>
+        <location filename="../forms/TonemappingPanel.ui" line="1968"/>
         <source>Rod Level</source>
         <translation>Уровень чувствительности палочек</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2032"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2111"/>
         <source>Restore operator&apos;s default values</source>
         <translation>Восстановить исходные параметры оператора</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2035"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2114"/>
         <source>Restore</source>
         <translation>Восстановить</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2068"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2147"/>
         <source>Previous applied settings</source>
         <translation>Предыдущие использованные параметры</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2085"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2164"/>
         <source>Next applied settings</source>
         <translation>Следующие использованные параметры</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2120"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2199"/>
         <source>Tone Mapping Settings</source>
         <translation>Параметры отображения тонов</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2238"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2317"/>
         <source>&amp;Result Size:</source>
         <translation>&amp;Размер LDR:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2257"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2336"/>
         <source>Size of the resulting LDR image</source>
         <translation>Размер конечного LDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2300"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2379"/>
         <source>Process
 Original HDR</source>
         <translation>Обработать
 исходный HDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2324"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2403"/>
         <source>Process only selection of the original HDR image</source>
         <translation>Обработать только выделение в исходном HDR-снимке</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2327"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2406"/>
         <source>Process
 Selection</source>
         <translation>Обработать
 выделение</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2342"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2421"/>
         <source>Pre-gamma:</source>
         <translation>Предкоррекция гаммы:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2431"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2510"/>
         <source>Start tonemapping (CTRL+A)</source>
         <translation>Запустить отображение тонов (Ctrl-A)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2434"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2513"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
         <translation>Использовать текущие параметры (гамма-коррекция и оператор отображения тонов) для создания LDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2437"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2516"/>
         <source>&amp;Tonemap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2071"/>
-        <location filename="../forms/TonemappingPanel.ui" line="2091"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2150"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2170"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2114"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2193"/>
         <source>Tone Mapping settings file section</source>
         <translation>Часть окна с файлами параметров отображения тонов</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2117"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2196"/>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation>Здесь можно загрузить или сохранить файл с параметрами отображения тонов.&lt;br&gt;Здесь же можно применить выбранный файл с параметрами к открытому HDR-снимку.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2146"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2225"/>
         <source>Save current parameters to a text file</source>
         <translation>Сохранить параметры отображения тонов в текстовый файл</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2149"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2228"/>
         <source>Save current parameters (pregamma and TMO) to a text file.</source>
         <translation>Сохранить текущие параметры (предварительной коррекции гаммы и операторов отображения тонов) в текстовый файл.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2152"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2231"/>
         <source>&amp;Save...</source>
         <translation>&amp;Сохранить...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2169"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2248"/>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation>Загрузить файл с параметрами гамма-коррекции и оператора отображения тонов</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2172"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2251"/>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation>Загрузить файл с параметрами гамма-коррекции и оператора отображения тонов.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2175"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2254"/>
         <source>&amp;Load...</source>
         <translation>З&amp;агрузить...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2210"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2289"/>
         <source>Gamma applied before tone mapping</source>
         <translation>Гамма-коррекция, применяемая перед отображением тонов</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2213"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2292"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Здесь можно применить гамма-коррекцию к HDR-снимку.&lt;br&gt;Она будет применена перед отображением тонов.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2216"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2295"/>
         <source>Process</source>
         <translation>Процесс</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2260"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2339"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation>Здесь вы можете выбрать размер конечного LDR-снимка.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2273"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2352"/>
         <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="802"/>
         <source>Custom LDR size</source>
         <translation>Добавить свой размер LDR-снимка</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2276"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2355"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Щелкните эту кнопку для вставки значения &lt;i&gt;ширины&lt;/i&gt; конечного LDR-снимка.&lt;br&gt;По нажатию ввода автоматически будет вычислено и подставлено значение высоты.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2364"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2443"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Восстановить исходное значение гаммы (1,00)</translation>
     </message>
@@ -4346,17 +4352,17 @@ Selection</source>
         <translation type="obsolete">&amp;Применить</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2450"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2529"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2473"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2552"/>
         <source>undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2482"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2561"/>
         <source>redo</source>
         <translation>Вернуть</translation>
     </message>
