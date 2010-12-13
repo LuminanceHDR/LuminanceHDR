@@ -69,10 +69,13 @@ int main( int argc, char ** argv )
 		return 1;
 	}
 #endif
-	QTranslator translator;
+	QTranslator guiTranslator;
+	QTranslator qtTranslator;
 // 	qDebug( "Looking for i18n files in: " I18NDIR );
-	translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-	application.installTranslator(&translator);
+	qtTranslator.load(QString("qt_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+	guiTranslator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+	application.installTranslator(&qtTranslator);
+	application.installTranslator(&guiTranslator);
 	MainWindow mainWindow;
 	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
 	mainWindow.show();
@@ -80,3 +83,4 @@ int main( int argc, char ** argv )
 	LuminanceOptions::deleteInstance();
 	return rc;
 }
+
