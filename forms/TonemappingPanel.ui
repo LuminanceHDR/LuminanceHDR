@@ -2190,7 +2190,7 @@ p, li { white-space: pre-wrap; }
         </sizepolicy>
        </property>
        <property name="toolTip">
-        <string>Tone Mapping settings file section</string>
+        <string/>
        </property>
        <property name="whatsThis">
         <string>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</string>
@@ -2286,7 +2286,7 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="toolTip">
-        <string>Gamma applied before tone mapping</string>
+        <string/>
        </property>
        <property name="whatsThis">
         <string>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</string>
@@ -2375,6 +2375,9 @@ p, li { white-space: pre-wrap; }
             </item>
             <item>
              <widget class="QCheckBox" name="checkBoxOriginal">
+              <property name="toolTip">
+               <string>If checked process the original HDR image, if not process the previously tonemapped image</string>
+              </property>
               <property name="text">
                <string>Process
 Original HDR</string>
@@ -2417,6 +2420,9 @@ Selection</string>
             </property>
             <item>
              <widget class="QLabel" name="label_34">
+              <property name="toolTip">
+               <string>Gamma applied before tonemapping</string>
+              </property>
               <property name="text">
                <string>Pre-gamma:</string>
               </property>
@@ -2472,6 +2478,9 @@ Selection</string>
             </item>
             <item>
              <widget class="QDoubleSpinBox" name="pregammadsb">
+              <property name="toolTip">
+               <string>Gamma applied before tonemapping</string>
+              </property>
               <property name="decimals">
                <number>3</number>
               </property>
@@ -2507,7 +2516,7 @@ Selection</string>
                </size>
               </property>
               <property name="toolTip">
-               <string>Start tonemapping (CTRL+A)</string>
+               <string>Start tonemapping (CTRL+T)</string>
               </property>
               <property name="whatsThis">
                <string>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</string>
