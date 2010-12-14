@@ -290,11 +290,10 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
 	break;
 	}
 	QApplication::restoreOverrideCursor();
+	alignGroupBox->setEnabled(true);
 	alignCheckBox->setChecked(false);
 	NextFinishButton->setEnabled(true);
 	confirmloadlabel->setText("<center><h3><b>"+tr("Now click on next button")+"</b></h3></center>");
-	if (pagestack->currentIndex() == 0)
-		pagestack->setCurrentIndex(1);
 }
 
 void HdrWizard::customConfigCheckBoxToggled(bool want_custom) {
@@ -401,7 +400,7 @@ void HdrWizard::NextFinishButtonClicked() {
 			alignGroupBox->setDisabled(true);
 			EVgroupBox->setDisabled(true);
 			tableWidget->setDisabled(true);
-			this->repaint();
+			repaint();
 			if (ais_radioButton->isChecked())
 				hdrCreationManager->align_with_ais();
 			else
