@@ -1523,7 +1523,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="519"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
         <source>Triangular</source>
         <translation>Triangolare</translation>
     </message>
@@ -1610,7 +1610,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="739"/>
         <location filename="../forms/HdrWizard.ui" line="859"/>
         <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="528"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
         <source>Linear</source>
         <translation>Lineare</translation>
     </message>
@@ -1621,7 +1621,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="788"/>
         <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="541"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="543"/>
         <source>Debevec</source>
         <translation>Debevec</translation>
     </message>
@@ -1632,7 +1632,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="854"/>
         <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
@@ -1680,13 +1680,13 @@ dei pixel&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
         <source>Gaussian</source>
         <translation>Gaussiana</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
         <source>Plateau</source>
         <translation>Plateau</translation>
     </message>
@@ -1728,7 +1728,7 @@ dei pixel&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="543"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="545"/>
         <source>Robertson</source>
         <translation>Robertson</translation>
     </message>
@@ -1747,7 +1747,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1427"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="321"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="323"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Avanti &gt;</translation>
     </message>
@@ -1865,7 +1865,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="559"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="561"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#FF9500&quot;&gt;&lt;h3&gt;&lt;b&gt;Per procedere devi impostare manualmente i valori di esposizione.&lt;br&gt;Mancano ancora %1 valori.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
@@ -1907,71 +1907,76 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation>Un errore sconosciuto e&apos; stato rilevato nell&apos;esecuzione di &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="319"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="434"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="452"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="295"/>
+        <source>Now click on next button</source>
+        <translation>Fai ora click sul pulsante Avanti</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="321"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="436"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="454"/>
         <source>&amp;Finish</source>
         <translation>&amp;Termina</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="397"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="399"/>
         <source>Aligning...</source>
         <translation>Stò allineando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="419"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="420"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="421"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="422"/>
         <source>Processing...</source>
         <translation>Stò processando...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="464"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="466"/>
         <source>Load a camera response curve file</source>
         <translation>Carica il file contenente la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="466"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="478"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="468"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="480"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation>Curva di risposta fotocamera (*.m);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="476"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="478"/>
         <source>Save a camera response curve file</source>
         <translation>Salva la curva di risposta</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
         <source>(*) Weights: </source>
         <translation>(*) Pesi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
         <source> - Response curve: </source>
         <translation> - Curva di risposta: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="512"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
         <source> - Model: </source>
         <translation> - Modello: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="534"/>
         <source>Logarithmic</source>
         <translation>Logaritmica</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="534"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
         <source>From Calibration</source>
         <translation>Via calibrazione</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
         <source>From File</source>
         <translation>Da File</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="557"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="559"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Tutti i valori EV sono stati impostati.&lt;br&gt;Fai ora click sul pulsante Avanti.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
