@@ -290,7 +290,9 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
 	break;
 	}
 	QApplication::restoreOverrideCursor();
+	alignCheckBox->setChecked(false);
 	NextFinishButton->setEnabled(true);
+	confirmloadlabel->setText("<center><h3><b>"+tr("Now click on next button")+"</b></h3></center>");
 	if (pagestack->currentIndex() == 0)
 		pagestack->setCurrentIndex(1);
 }
