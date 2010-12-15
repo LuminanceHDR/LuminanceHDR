@@ -116,7 +116,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_cu
 	usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
 
 	// reinhard05
-	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -8.f, 8.f, 0.f);
+	brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, 0.f);
 	connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
 	connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 	chromaticGang  = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.f);
