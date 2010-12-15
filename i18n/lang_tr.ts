@@ -1277,7 +1277,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="521"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="520"/>
         <source>Triangular</source>
         <translation type="unfinished">Üçgensel</translation>
     </message>
@@ -1360,7 +1360,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="739"/>
         <location filename="../forms/HdrWizard.ui" line="859"/>
         <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="530"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
         <source>Linear</source>
         <translation type="unfinished">Doğrusal</translation>
     </message>
@@ -1371,7 +1371,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="788"/>
         <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="543"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
     </message>
@@ -1382,7 +1382,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="854"/>
         <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="532"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
         <source>Gamma</source>
         <translation type="unfinished">Gama</translation>
     </message>
@@ -1429,13 +1429,13 @@ işlevini seçiniz&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="525"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="524"/>
         <source>Gaussian</source>
         <translation type="unfinished">Gaussian</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="523"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="522"/>
         <source>Plateau</source>
         <translation type="unfinished">Plato</translation>
     </message>
@@ -1469,7 +1469,7 @@ işlevini seçiniz&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="545"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="544"/>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -1484,7 +1484,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1427"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="323"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="322"/>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished">&amp;İleri &gt;</translation>
     </message>
@@ -1563,7 +1563,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="561"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="560"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1605,76 +1605,76 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="295"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
         <source>Now click on next button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="321"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="436"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="454"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="320"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="435"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="453"/>
         <source>&amp;Finish</source>
         <translation type="unfinished">&amp;Bitir</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="399"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="398"/>
         <source>Aligning...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="420"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="421"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="422"/>
         <source>Processing...</source>
         <translation type="unfinished">İşleniyor...</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="466"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="465"/>
         <source>Load a camera response curve file</source>
         <translation type="unfinished">Bir fotoğraf makinesi yanıt eğrisi dosyası yükle</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="468"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="480"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="467"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="479"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
         <translation type="unfinished">Fotoğraf makinesi yanıt eğrisi (*.m);;Bütün Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="478"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
         <source>Save a camera response curve file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source>(*) Weights: </source>
         <translation type="unfinished">(*) Derinlik: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source> - Response curve: </source>
         <translation type="unfinished"> - Yanıt Eğrisi: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="514"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source> - Model: </source>
         <translation type="unfinished"> - Model: </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="534"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="533"/>
         <source>Logarithmic</source>
         <translation type="unfinished">Logaritmik</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="536"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="535"/>
         <source>From Calibration</source>
         <translation type="unfinished">Ölçeklendirmeden</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="538"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="537"/>
         <source>From File</source>
         <translation type="unfinished">Dosyadan</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="559"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="558"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3175,7 +3175,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2291"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2300"/>
         <source>External Tools</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3630,13 +3630,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1992"/>
-        <source>Blue multiplier
-Set here the magnification factor of the blue layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2082"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2086"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3649,7 +3643,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2168"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2172"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3665,12 +3659,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2298"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2307"/>
         <source>align_image_stack commandline arguments:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2310"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2319"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3784,11 +3778,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/PreferencesDialog.ui" line="1649"/>
         <location filename="../forms/PreferencesDialog.ui" line="1805"/>
         <location filename="../forms/PreferencesDialog.ui" line="1943"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2018"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2140"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2242"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2022"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2119"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2144"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2226"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2251"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3903,63 +3897,78 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2059"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1992"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blue multiplier&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2063"/>
         <source>Color Management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2072"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2076"/>
         <source>Camera profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2094"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2098"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2099"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2103"/>
         <source>Built in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2104"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2206"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2108"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2215"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2158"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2162"/>
         <source>Color Space:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2186"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2190"/>
         <source>RAW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2191"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2195"/>
         <source>sRGB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2196"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2200"/>
+        <source>Adobe RGB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="2205"/>
         <source>Wide Gamut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2201"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2210"/>
         <source>Pro Photo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2371"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2380"/>
         <source>&amp;Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2378"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2387"/>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;Tamam</translation>
     </message>
