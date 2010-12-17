@@ -960,8 +960,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>481</width>
-              <height>344</height>
+              <width>498</width>
+              <height>356</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1373,6 +1373,9 @@ p, li { white-space: pre-wrap; }
                </item>
                <item>
                 <widget class="QCheckBox" name="false_colors_CB">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>Correct false colors in highlights</string>
                  </property>
@@ -1681,8 +1684,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>498</width>
-              <height>356</height>
+              <width>405</width>
+              <height>166</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2054,7 +2057,7 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>481</width>
+              <width>264</width>
               <height>140</height>
              </rect>
             </property>
