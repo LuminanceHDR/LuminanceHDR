@@ -49,9 +49,13 @@ class TiffReader : public QObject {
   uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
   bool has_alpha;
   double stonits;               /// scale factor to get nit values
+ 
+  bool writeOnDisk;
+  QString fileName;
+  QString tempFilesPath;
   
 public:
-  TiffReader( const char* filename );
+  TiffReader( const char* filename, const char *tempfilespath, bool writeOnDisk );
   ~TiffReader() {}
   
   int getWidth() const { return width; }

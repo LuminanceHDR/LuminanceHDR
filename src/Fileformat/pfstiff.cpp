@@ -28,13 +28,18 @@
 #include <cmath>
 #include <QObject>
 #include <QSysInfo>
+#include <QFileInfo>
 #include <iostream>
 #include <assert.h>
 
 #include "pfstiff.h"
 
-TiffReader::TiffReader( const char* filename ) {
+TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wod) {
   // read header containing width and height from file
+  fileName = QString(filename);
+  tempFilesPath = QString(tempfilespath);
+  writeOnDisk = wod;
+
   tif = TIFFOpen(filename, "r");
   if( !tif )
     throw pfs::Exception("TIFF: could not open file for reading.");
@@ -133,6 +138,8 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
     void* vp;
   } buf;
   
+  uchar *data = NULL;
+
   pfs::DOMIO pfsio;
   pfs::Frame *frame = pfsio.createFrame( width, height );
   
@@ -149,6 +156,12 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
   
   emit maximumValue( imagelength ); //for QProgressDialog
   
+  if (writeOnDisk) {
+    data=new uchar[width*height*4]; //this will contain the image data linearly remapped to 8bit per channel,  data must be 32-bit aligned, in Format: 0xffRRGGBB
+    if (data == NULL)
+      throw pfs::Exception("TIFF: Memory error");
+  }
+      
   //--- image scanline size
   uint32 scanlinesize = TIFFScanlineSize(tif);
   buf.vp = _TIFFmalloc(scanlinesize);
@@ -177,6 +190,12 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
           (*X)(i,row) = buf.wp[i*nSamples];
           (*Y)(i,row) = buf.wp[i*nSamples+1];
           (*Z)(i,row) = buf.wp[i*nSamples+2];
+          if (writeOnDisk) {
+            *(data + 0 + (row*width+i)*4) = buf.wp[i*nSamples+2]/256.0 ;
+            *(data + 1 + (row*width+i)*4) = buf.wp[i*nSamples+1]/256.0 ;
+            *(data + 2 + (row*width+i)*4) = buf.wp[i*nSamples]/256.0 ;
+            *(data + 3 + (row*width+i)*4) = 0xff;
+          }
         }
         break;
       case BYTE:
@@ -191,6 +210,16 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
     }
   }
   
+  if (writeOnDisk) {
+    QImage remapped(const_cast<uchar *>(data),image_width,imagelength,QImage::Format_ARGB32);
+  
+    QFileInfo fi(fileName);
+    QString fname = fi.baseName() + ".thumb.jpg";
+    //std::cout << fileName.toAscii().constData() << std::endl;
+    //std::cout << fname.toAscii().constData() << std::endl;
+    //std::cout << tempFilesPath.toAscii().constData() << std::endl; 
+    remapped.scaledToHeight(imagelength/10).save(tempFilesPath + "/" + fname);
+  }
   //--- free buffers and close files
   _TIFFfree(buf.vp);
   TIFFClose(tif);

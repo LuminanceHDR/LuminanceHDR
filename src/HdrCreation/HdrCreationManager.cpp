@@ -278,7 +278,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 			//align_image_stack can only output tiff files
 			char* fname=strdup(QFile::encodeName(QString(luminance_options->tempfilespath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif")).constData());
 			//qDebug("HCM: Loading back file name=%s", fname);
-			TiffReader reader(fname);
+			TiffReader reader(fname, "", false);
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				ldrImagesList.append( reader.readIntoQImage() );

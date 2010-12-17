@@ -62,7 +62,7 @@ void HdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-			TiffReader reader(QFile::encodeName(qfi.filePath()).constData());
+			TiffReader reader(QFile::encodeName(qfi.filePath()).constData(), (luminance_options->tempfilespath).toAscii().constData(), true);
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				QImage *newimage=reader.readIntoQImage();

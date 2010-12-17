@@ -89,7 +89,7 @@ void LoadHdrThread::run()
 		}
     else if (extension.startsWith("TIF"))
     {
-			TiffReader reader(encodedFileName);
+			TiffReader reader(encodedFileName, (luminance_options->tempfilespath).toAscii().constData(), false );
 			connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
 			connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			hdrpfsframe = reader.readIntoPfsFrame();
