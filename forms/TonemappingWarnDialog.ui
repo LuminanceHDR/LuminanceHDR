@@ -9,42 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>419</width>
-    <height>276</height>
+    <width>421</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Attention!</string>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>240</y>
-     <width>171</width>
-     <height>32</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::No|QDialogButtonBox::Yes</set>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBoxAskAgain">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>240</y>
-     <width>91</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Ask again</string>
-   </property>
-  </widget>
   <widget class="QPlainTextEdit" name="plainText">
    <property name="geometry">
     <rect>
@@ -63,6 +34,47 @@
    <property name="readOnly">
     <bool>true</bool>
    </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>401</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QCheckBox" name="checkBoxAskAgain">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Ask again</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::No|QDialogButtonBox::Yes</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
