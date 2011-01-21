@@ -39,9 +39,9 @@
  *  Optimization improvements by Lebed Dmytry
  *
  * Updated 2008/07/26 by Dejan Beric <dejan.beric@live.com>
- *  Added the detail Factor slider which offers more control over contrast in details
+ *  Added the detail factor slider which offers more control over contrast in details
  * Update 2010/10/06 by Axel Voitier <axel.voitier@gmail.com>
- *  detailfactor patch in order to remove potential issues in a multithreading environment
+ *  detail_factor patch in order to remove potential issues in a multithreading environment
  *
  * $Id: contrast_domain.cpp,v 1.14 2008/08/26 17:08:49 rafm Exp $
  */
@@ -50,6 +50,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <iostream>
 
 #ifdef _OPENMP
 #include <omp.h>
@@ -57,7 +58,7 @@
 
 #include "contrast_domain.h"
 #include "Common/vex.h"
-
+#include "Common/msec_timer.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -96,12 +97,12 @@ void pyramid_calculate_divergence(pyramid_t* pyramid);
 void pyramid_calculate_divergence_sum(pyramid_t* pyramid, float* divG_sum);
 void calculate_scale_factor(const int n, const float* const G, float* const C);
 void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC);
-void scale_gradient(const int n, float* const G, const float* const C);
+void scale_gradient(const int n, float* G, const float* C);
 void pyramid_scale_gradient(pyramid_t* pyramid, pyramid_t* pC);
 void pyramid_free(pyramid_t* pyramid);
 pyramid_t* pyramid_allocate(const int cols, const int rows);
 void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy);
-void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum);
+void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* lum);
 void solveX(const int n, const float* const b, float* const x);
 void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
 void linbcg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
@@ -416,7 +417,7 @@ inline void matrix_zero(int n, float* m)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
 inline void calculate_and_add_divergence(const int cols, const int rows, const float* const Gx, const float* const Gy, float* const divG)
 {
-  register float divGx, divGy;
+  float divGx, divGy;
   
   // kx = 0 AND ky = 0;
   divG[0] += Gx[0] + Gy[0];
@@ -538,12 +539,18 @@ void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 }
 
 // Scale gradient (Gx and Gy) by C (Cx and Cy)
-// G = G / C
-inline void scale_gradient(const int n, float* const G, const float* const C)
+// G = G * C
+inline void scale_gradient(const int n, float* G, const float* C)
 {
-  #pragma omp parallel for schedule(static)
+#ifdef __SSE__  
+  VEX_vmul(G, C, G, n);
+#else
+#pragma omp parallel for schedule(static)
   for(int i=0; i<n; i++)
+  {
     G[i] *= C[i];
+  }
+#endif
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy) from the other pyramid
@@ -624,28 +631,40 @@ pyramid_t * pyramid_allocate(int cols, int rows)
 
 
 // calculate gradients
-inline void calculate_gradient(const int cols, const int rows, const float* const lum, float* const Gx, float* const Gy)
-{
-  #pragma omp parallel for schedule(static)
-  for(int ky=0; ky<rows; ky++)
+//TODO: check this implementation in Linux, where the OMP is enabled!
+inline void calculate_gradient(const int COLS, const int ROWS, const float* const lum, float* const Gx, float* const Gy)
+{ 
+  int Y_IDX, IDX;
+  
+  #pragma omp parallel for schedule(static, 64) private(Y_IDX, IDX)
+  for (int ky = 0; ky < ROWS-1; ky++)
   {
-    for(int kx=0; kx<cols; kx++)
+    Y_IDX = ky*COLS;
+    for (int kx = 0; kx < COLS-1; kx++)
     {
-      const int idx = kx + ky*cols;
-			
-      if(kx == (cols - 1))
-        Gx[idx] = 0;
-      else	
-        Gx[idx] = lum[idx+1] - lum[idx];
-			
-      if(ky == (rows - 1))
-        Gy[idx] = 0;
-      else	
-        Gy[idx] = lum[idx + cols] - lum[idx];
+      IDX = Y_IDX + kx;
+  
+			Gx[IDX] = lum[IDX + 1]    - lum[IDX];
+      Gy[IDX] = lum[IDX + COLS] - lum[IDX];
     }
+    
+    Gx[Y_IDX + COLS - 1] = 0.0f; // last columns (kx = COLS - 1)
+    Gy[Y_IDX + COLS - 1] = lum[Y_IDX + COLS - 1 + COLS] - lum[Y_IDX + COLS - 1];
   }
+  
+  // last row (ky = ROWS-1)
+  for (int kx = 0; kx < (COLS-1); kx++)
+  {
+    IDX = (ROWS - 1)*COLS + kx;
+    
+    Gx[IDX] = lum[IDX + 1] - lum[IDX];
+    Gy[IDX] = 0.0f;
+  }
+  
+  // last row & last col = last element
+  Gx[ROWS*COLS - 1] = 0.0f;
+  Gy[ROWS*COLS - 1] = 0.0f;
 }
-
 
 #define PFSEOL "\x0a"
 void dump_matrix_to_file(const int width, const int height, const float* const m, const char * const file_name)
@@ -665,42 +684,53 @@ void dump_matrix_to_file(const int width, const int height, const float* const m
   fclose( fh );
 }  
 
-// calculate gradients for the pyramid
-// lum_temp gets overwritten!
-void pyramid_calculate_gradient(pyramid_t* pyramid, float* lum_temp)
+
+void swap_pointers(float* &pOne, float* &pTwo)
 {
-  float* temp = matrix_alloc((pyramid->rows/2)*(pyramid->cols/2));
-  float* const temp_saved = temp;
-  
-  calculate_gradient(pyramid->cols, pyramid->rows, lum_temp, pyramid->Gx, pyramid->Gy);	
-  
-  pyramid = pyramid->next;
-  
-  //  int l = 1;
-  while(pyramid)
-  {
-    matrix_downsample(pyramid->prev->cols, pyramid->prev->rows, lum_temp, temp);
-		
-    //     fprintf( stderr, "%d x %d -> %d x %d\n", pyramid->cols, pyramid->rows,
-    //       prev_pp->cols, prev_pp->rows );
-    
-    //      char name[40];
-    //      sprintf( name, "ds_%d.pfs", l++ );
-    //      dump_matrix_to_file( pyramid->cols, pyramid->rows, temp, name );    
-		
-    calculate_gradient(pyramid->cols, pyramid->rows, temp, pyramid->Gx, pyramid->Gy);
-		
-    float* const dummy = lum_temp;
-    lum_temp = temp;	
-    temp = dummy;
-    
-    pyramid = pyramid->next;
-  }
-  
-  matrix_free(temp_saved);
+  float* pTemp = pOne;
+  pOne = pTwo;
+  pTwo = pTemp;
 }
 
-
+// calculate gradients for the pyramid
+// lum_temp WILL NOT BE overwritten!
+void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* Y /*lum_temp*/)
+{  
+  float* buffer1 = matrix_alloc((pyramid->rows*pyramid->cols)/4); // /4
+  float* buffer2 = matrix_alloc((pyramid->rows*pyramid->cols)/16); // /16
+  
+  float* p_t1 = buffer1;
+  float* p_t2 = buffer2;
+  
+  calculate_gradient(pyramid->cols, pyramid->rows, Y, pyramid->Gx, pyramid->Gy);
+  
+  pyramid_t* py_curr = pyramid->next;
+  pyramid_t* py_prev = py_curr->prev;
+  
+  if (py_curr)
+  {
+    matrix_downsample(py_prev->cols, py_prev->rows, Y, p_t1);
+    calculate_gradient(py_curr->cols, py_curr->rows, p_t1, py_curr->Gx, py_curr->Gy);
+    
+    py_prev = py_curr;
+    py_curr = py_curr->next;
+  }
+  
+  while (py_curr)
+  {
+    matrix_downsample(py_prev->cols, py_prev->rows, p_t1, p_t2);
+	  calculate_gradient(py_curr->cols, py_curr->rows, p_t2, py_curr->Gx, py_curr->Gy);
+		
+    // swap pointers
+    swap_pointers(p_t1, p_t2);
+    
+    py_prev = py_curr;
+    py_curr = py_curr->next;
+  }
+  
+  matrix_free(buffer1);
+  matrix_free(buffer2);
+}
 
 // x = -0.25 * b
 inline void solveX(const int n, const float* const b, float* const x)
@@ -718,10 +748,12 @@ inline void solveX(const int n, const float* const b, float* const x)
 
 // divG_sum = A * x = sum(divG(x))
 // memory for the temporary pyramid px should be allocated
+//TODO: if pyramid does not change the inputs, then you don't need temporable variables
 inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float* const divG_sum)
 {
-  matrix_copy(pC->rows*pC->cols, x, divG_sum); // use divG_sum as a temp variable
-  pyramid_calculate_gradient(px, divG_sum);
+  //matrix_copy(pC->rows*pC->cols, x, divG_sum); // use divG_sum as a temp variable
+  //pyramid_calculate_gradient(px, divG_sum);
+  pyramid_calculate_gradient(px, x);    // x won't be changed
   pyramid_scale_gradient(px, pC); // scale gradients by Cx,Cy from main pyramid
   pyramid_calculate_divergence_sum(px, divG_sum); // calculate the sum of divergences
 } 
@@ -764,6 +796,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
   bool reset = true;
   int num_backwards = 0;
   const int num_backwards_ceiling = 3;
+  
   for (; iter < itmax; iter++)
   {
 	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );    
@@ -775,7 +808,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
 		
     const float bknum = matrix_DotProduct(n, z, rr);
 		
-    if(reset)
+    if (reset)
     {
       reset = false;
       matrix_copy(n, z, p);
@@ -1054,12 +1087,12 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
 // in_tab and out_tab should contain inccreasing float values
 inline float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val)
 {
-  if(unlikely(val < in_tab[0]))
+  if (unlikely(val < in_tab[0]))
     return out_tab[0];
   
   for (int j = 1; j < n; j++)
   {
-    if(val < in_tab[j])
+    if (val < in_tab[j])
     {
       const float dd = (val - in_tab[j-1]) / (in_tab[j] - in_tab[j-1]);
       return out_tab[j-1] + (out_tab[j] - out_tab[j-1]) * dd;
@@ -1074,26 +1107,28 @@ inline float lookup_table(const int n, const float* const in_tab, const float* c
 inline void transform_to_R(const int n, float* const G, float detail_factor)
 {
   const float log10=2.3025850929940456840179914546844*detail_factor;
-  #pragma omp parallel for schedule(static)
-  for(int j=0; j<n; j++)
-  {
+  
+  #pragma omp parallel for schedule(static, 1024)
+  for (int j=0; j<n; j++)
+  {    
     // G to W
-    const float absG = fabsf(G[j]);
-    int sign;
-    if(G[j] < 0)
-      sign = -1;
-    else
-      sign = 1;	
+    float Curr_G = G[j];
     
-    G[j] = (powf(10,absG * log10) - 1.0f) * sign;
-		
+    if (Curr_G < 0.0f)
+    {
+      Curr_G = -(powf(10, (-Curr_G) * log10) - 1.0f);
+    } else {
+      Curr_G = (powf(10, Curr_G * log10) - 1.0f);
+    }
     // W to RESP
-    if(G[j] < 0)
-      sign = -1;
-    else
-      sign = 1;	
+    if (Curr_G < 0.0f)
+    {
+      Curr_G = -lookup_table(LOOKUP_W_TO_R, W_table, R_table, -Curr_G);
+    } else {
+      Curr_G = lookup_table(LOOKUP_W_TO_R, W_table, R_table, Curr_G);
+    }
     
-    G[j] = sign * lookup_table(LOOKUP_W_TO_R, W_table, R_table, fabsf(G[j]));
+    G[j] = Curr_G;
   }
 }
 
@@ -1268,7 +1303,7 @@ void contrast_equalization( pyramid_t *pp, const float contrastFactor )
   //Remap gradient magnitudes
   l = pp;
   index = 0;
-  while( l != NULL )
+  while  ( l != NULL )
   {
     const int pixels = l->rows*l->cols;
     const int offset = index;
@@ -1300,6 +1335,8 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
       Ymax = Y[j];
   
   const float clip_min = 1e-7f*Ymax;
+  
+  //TODO: use VEX, if you can
   #pragma omp parallel for schedule(static)
   for (int j = 0; j < n; j++)
   {
@@ -1309,6 +1346,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
     if( unlikely(Y[j] < clip_min) ) Y[j] = clip_min;    
   }
 	
+  //TODO: use VEX
   #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
@@ -1319,10 +1357,9 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   }
 	
   pyramid_t* pp = pyramid_allocate(c,r); // create pyramid
-  float* tY = matrix_alloc(n);
-  matrix_copy(n, Y, tY); // copy Y to tY
-  pyramid_calculate_gradient(pp, tY); // calculate gradients for pyramid, destroys tY
-  matrix_free(tY);
+
+  pyramid_calculate_gradient(pp, Y); // calculate gradients for pyramid (Y won't be changed)
+
   pyramid_transform_to_R(pp, detailfactor); // transform gradients to R
   
   /* Contrast map */
@@ -1359,15 +1396,20 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   matrix_free(temp);
 	
   const float disp_dyn_range = 2.3f;
+  
+  //TODO: is it possible to use VEX?
   #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
+  {
     Y[j] = (Y[j] - l_min) / (l_max - l_min) * disp_dyn_range - disp_dyn_range; // x scaled
-  // 
+  }
+  
+  //TODO: use VEX
   /* Transform to linear scale RGB */
   #pragma omp parallel for schedule(static)
   for(int j=0;j<n;j++)
   {
-    Y[j] = powf(10,Y[j]);
+    Y[j] = powf(10, Y[j]);
     R[j] = powf( R[j], saturationFactor) * Y[j];
     G[j] = powf( G[j], saturationFactor) * Y[j];
     B[j] = powf( B[j], saturationFactor) * Y[j];

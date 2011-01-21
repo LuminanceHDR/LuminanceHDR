@@ -339,7 +339,7 @@ void VEX_vsmul(const float* I, const float val, float* O, const int N)
 #endif
 }
 
-void VEX_vmul(float* A, float* B, float* C, const int N)
+void VEX_vmul(const float* A, const float* B, float* C, const int N)
 {
   //#ifdef __APPLE__  
   //vDSP_vmul(B, 1, A, 1, C, 1, N);
