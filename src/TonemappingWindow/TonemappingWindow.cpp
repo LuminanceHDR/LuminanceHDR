@@ -717,8 +717,8 @@ void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
 	//start thread
 	tmPanel->applyButton->setEnabled(false);
 	thread->startTonemapping();
-	//statusbar->insertWidget(0,progInd,1);
-	statusbar->addWidget(progInd);
+	statusbar->insertWidget(0,progInd,1);
+	//statusbar->addWidget(progInd);
 }
 
 void TonemappingWindow::showErrorMessage(const char *e)

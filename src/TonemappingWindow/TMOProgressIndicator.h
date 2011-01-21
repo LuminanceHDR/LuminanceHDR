@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QPushButton>
+#include <QHBoxLayout>
 
 class TMOProgressIndicator : public QWidget {
 Q_OBJECT
@@ -44,9 +45,10 @@ public slots:
 	void setMinimum(int);
 	void terminated();
 protected:
-	QProgressBar *m_progressBar;
-	QPushButton *m_abortButton;
-	bool m_isTerminated;
+  QHBoxLayout   *m_hbl;
+	QProgressBar  *m_progressBar;
+	QPushButton   *m_abortButton;
+	bool          m_isTerminated;
 signals:
 	void terminate();
 	void deleteMe();
