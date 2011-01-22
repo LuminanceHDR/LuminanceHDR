@@ -51,27 +51,29 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 
 	fromIso639ToGuiIndex["cs"]=0;
 	fromIso639ToGuiIndex["en"]=1;
-	fromIso639ToGuiIndex["fr"]=2;
-	fromIso639ToGuiIndex["de"]=3;
-	fromIso639ToGuiIndex["id"]=4;
-	fromIso639ToGuiIndex["it"]=5;
-	fromIso639ToGuiIndex["pl"]=6;
-	fromIso639ToGuiIndex["ru"]=7;
-	fromIso639ToGuiIndex["es"]=8;
-	fromIso639ToGuiIndex["tr"]=9;
-	fromIso639ToGuiIndex["hu"]=10;
+	fromIso639ToGuiIndex["fi"]=2;
+	fromIso639ToGuiIndex["fr"]=3;
+	fromIso639ToGuiIndex["de"]=4;
+	fromIso639ToGuiIndex["id"]=5;
+	fromIso639ToGuiIndex["it"]=6;
+	fromIso639ToGuiIndex["pl"]=7;
+	fromIso639ToGuiIndex["ru"]=8;
+	fromIso639ToGuiIndex["es"]=9;
+	fromIso639ToGuiIndex["tr"]=10;
+	fromIso639ToGuiIndex["hu"]=11;
 
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="en";
-	fromGuiIndexToIso639[2]="fr";
-	fromGuiIndexToIso639[3]="de";
-	fromGuiIndexToIso639[4]="id";
-	fromGuiIndexToIso639[5]="it";
-	fromGuiIndexToIso639[6]="pl";
-	fromGuiIndexToIso639[7]="ru";
-	fromGuiIndexToIso639[8]="es";
-	fromGuiIndexToIso639[9]="tr";
-	fromGuiIndexToIso639[10]="hu";
+	fromGuiIndexToIso639[2]="fi";
+	fromGuiIndexToIso639[3]="fr";
+	fromGuiIndexToIso639[4]="de";
+	fromGuiIndexToIso639[5]="id";
+	fromGuiIndexToIso639[6]="it";
+	fromGuiIndexToIso639[7]="pl";
+	fromGuiIndexToIso639[8]="ru";
+	fromGuiIndexToIso639[9]="es";
+	fromGuiIndexToIso639[10]="tr";
+	fromGuiIndexToIso639[11]="hu";
 
 	luminance_options=LuminanceOptions::getInstance();
 	negcolor=luminance_options->negcolor;
