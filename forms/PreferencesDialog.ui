@@ -244,6 +244,11 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <property name="text">
+                <string>Finnish</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>French</string>
                </property>
               </item>
@@ -745,8 +750,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>498</width>
-              <height>356</height>
+              <width>269</width>
+              <height>133</height>
              </rect>
             </property>
             <attribute name="label">
@@ -960,8 +965,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>498</width>
-              <height>356</height>
+              <width>341</width>
+              <height>344</height>
              </rect>
             </property>
             <attribute name="label">
