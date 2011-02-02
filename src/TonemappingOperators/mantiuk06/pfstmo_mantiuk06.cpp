@@ -55,23 +55,25 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   //float scaleFactor = 0.1f;
   //float saturationFactor = 0.8f;
   //bool cont_map = false, cont_eq = false
-  bool cont_map = false;
+  //bool cont_map = false;
   bool bcg = true;
   int itmax = 200;
   float tol = 1e-3;
   
+  std::cout << "pfstmo_mantiuk06" << std::endl;
   if (!cont_eq)
   {
-    cont_map = true;
+    //cont_map = true;
+    std::cout << "cont_map: TRUE (Contrast Mapping)" << std::endl;
   }
   else 
   {
     scaleFactor = -scaleFactor;
+    std::cout << "cont_map: FALSE (Contrast Equalization)" << std::endl;
   }
+  //std::cout << "cont_map: " << cont_map << std::endl;
+  //std::cout << "cont_eq: " << cont_eq << std::endl;
   
-  std::cout << "pfstmo_mantiuk06" << std::endl;
-  std::cout << "cont_map: " << cont_map << std::endl;
-  std::cout << "cont_eq: " << cont_eq << std::endl;
   std::cout << "scaleFactor: " << scaleFactor << std::endl;
   std::cout << "saturationFactor: " << saturationFactor << std::endl;
   std::cout << "detailFactor: " << detailFactor << std::endl;
