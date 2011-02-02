@@ -354,7 +354,7 @@ LIBS += -lfftw3f -lm
 DEFINES += HAVE_FFTW3F
 
 ########################################### LIBTIFF ###########################################
-#required, since we want to read hdr/ldr tiff files.
+#required, since we want to read hdr/ldr tiff files
 message ( "" )
 message ( "Detecting libtiff:" )
 #I think these are the only paths where we have to search for.
@@ -380,7 +380,7 @@ INCLUDEPATH *= $$LIBTIFFDIR
 LIBS += -ltiff
 
 ############################################# GSL #############################################
-#required by mantiuk.
+#required by mantiuk08
 message ( "" )
 message ( "Detecting gsl:" )
 #I think these are the only paths where we have to search for.
@@ -401,7 +401,8 @@ isEmpty(GSLDIR) {
 	error( "fatal error, bailing out." )	
 }
 INCLUDEPATH *= $$GSLDIR
-LIBS += -lgsl -lgslcblas
+LIBS += -lgsl -lgslcblas -lm
+#-framework Accelerate will be used in place of gslcblas when compiled on OS X
 
 ########################################### LIBRAW ###########################################
 #required, since we want to read raw files.
@@ -567,6 +568,7 @@ macx {
 	LIBS += -liconv
 	
 	# Apple Accelerate is enable in order to speed up vector operations
+	LIBS -= -lgslcblas
 	LIBS += -framework Accelerate
 
 	# XCode has a well know bug in the OpenMP implementation
