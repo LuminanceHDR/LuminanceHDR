@@ -717,7 +717,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
   
   for (; iter < itmax; iter++)
   {
-	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );    
+	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );
     if (ph->isTerminationRequested()) //user request abort
 		  break;
     
@@ -859,6 +859,11 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
 // overwrites pyramid!
 void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
 {
+#ifdef TIMER_PROFILING
+  //msec_timer f_timer;
+  //f_timer.start();
+#endif
+  
   const int rows = pyramid->rows;
   const int cols = pyramid->cols;
   const int n = rows*cols;
@@ -1001,6 +1006,11 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
   matrix_free(p);
   matrix_free(Ap);
   matrix_free(r);
+  
+#ifdef TIMER_PROFILING
+  //f_timer.stop_and_update();
+  //std::cout << "lincg() = " << f_timer.get_time() << " msec" << std::endl;
+#endif
 }
 
 

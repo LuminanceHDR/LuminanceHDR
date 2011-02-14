@@ -56,7 +56,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   //float saturationFactor = 0.8f;
   //bool cont_map = false, cont_eq = false
   //bool cont_map = false;
-  bool bcg = true;
+  bool bcg = false;
   int itmax = 200;
   float tol = 1e-3;
   
