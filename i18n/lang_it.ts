@@ -3723,7 +3723,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2307"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2312"/>
         <source>External Tools</source>
         <translation>Strumenti esterni</translation>
     </message>
@@ -3746,7 +3746,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni di Tone Mapping&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="559"/>
+        <location filename="../forms/PreferencesDialog.ui" line="564"/>
         <source>Cache</source>
         <translation>Cache</translation>
     </message>
@@ -3767,27 +3767,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Salva utilizzando il &amp;formato:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="651"/>
+        <location filename="../forms/PreferencesDialog.ui" line="656"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="656"/>
+        <location filename="../forms/PreferencesDialog.ui" line="661"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="661"/>
+        <location filename="../forms/PreferencesDialog.ui" line="666"/>
         <source>PPM</source>
         <translation>PPM</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="666"/>
+        <location filename="../forms/PreferencesDialog.ui" line="671"/>
         <source>PBM</source>
         <translation>PBM</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="671"/>
+        <location filename="../forms/PreferencesDialog.ui" line="676"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
@@ -3881,123 +3881,128 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="277"/>
+        <source>Romanian</source>
+        <translation>Rumeno</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="282"/>
         <source>Russian</source>
         <translation>Russo</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="282"/>
+        <location filename="../forms/PreferencesDialog.ui" line="287"/>
         <source>Spanish</source>
         <translation>Spagnolo</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="287"/>
+        <location filename="../forms/PreferencesDialog.ui" line="292"/>
         <source>Turkish</source>
         <translation>Turco</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="315"/>
+        <location filename="../forms/PreferencesDialog.ui" line="320"/>
         <source>Tonemapping Windows</source>
         <translation>Finestra di Tonemapping</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="321"/>
+        <location filename="../forms/PreferencesDialog.ui" line="326"/>
         <source>Maximize result</source>
         <translation>Massimizza risultato</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="328"/>
+        <location filename="../forms/PreferencesDialog.ui" line="333"/>
         <source>Always show Processed HDR</source>
         <translation>Mostra sempre l&apos;HDR processata</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="368"/>
+        <location filename="../forms/PreferencesDialog.ui" line="373"/>
         <source>HDR Options</source>
         <translation>Opzioni HDR</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="382"/>
+        <location filename="../forms/PreferencesDialog.ui" line="387"/>
         <source>Choose what type of HDR TIFF to save to</source>
         <translation>Scegli il tipo di HDR TIFF da salvare</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="385"/>
+        <location filename="../forms/PreferencesDialog.ui" line="390"/>
         <source>HDR TIFF File Format</source>
         <translation>Formato file HDR TIFF</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="397"/>
+        <location filename="../forms/PreferencesDialog.ui" line="402"/>
         <source>Good quality and smaller file size</source>
         <translation>Buona qualità e piccole dimensioni</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="400"/>
+        <location filename="../forms/PreferencesDialog.ui" line="405"/>
         <source>LogLuv TIFF (float, 16bit per color channel)</source>
         <translation>LogLuv TIFF (float, 16bit per canale)</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="410"/>
+        <location filename="../forms/PreferencesDialog.ui" line="415"/>
         <source>Better quality, larger file size, better compatibility with other applications</source>
         <translation>Migliore qualità, grandi dimensioni, migliore compatibilità con altre applicazioni</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="413"/>
+        <location filename="../forms/PreferencesDialog.ui" line="418"/>
         <source>Float TIFF (float, 32bit per color channel)</source>
         <translation>Float TIFF (float, 32bit per canale)</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="443"/>
+        <location filename="../forms/PreferencesDialog.ui" line="448"/>
         <source>Show negative numbers as:</source>
         <translation>Mostra i numeri negativi come:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="545"/>
+        <location filename="../forms/PreferencesDialog.ui" line="550"/>
         <source>Tone Mapping Options</source>
         <translation>Opzioni di Tonemappig</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="571"/>
+        <location filename="../forms/PreferencesDialog.ui" line="576"/>
         <source>Where to store temporary data:</source>
         <translation>Dove salva i dati temporanei:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="602"/>
+        <location filename="../forms/PreferencesDialog.ui" line="607"/>
         <source>C&amp;hoose</source>
         <translation>&amp;Scegli</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="614"/>
+        <location filename="../forms/PreferencesDialog.ui" line="619"/>
         <source>Batch Tone Mapping</source>
         <translation>Batch Tone Mapping</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="634"/>
-        <location filename="../forms/PreferencesDialog.ui" line="647"/>
+        <location filename="../forms/PreferencesDialog.ui" line="639"/>
+        <location filename="../forms/PreferencesDialog.ui" line="652"/>
         <source>Which LDR image format to save to</source>
         <translation>Formato immagine LDR</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="637"/>
+        <location filename="../forms/PreferencesDialog.ui" line="642"/>
         <source>LDR image &amp;format:</source>
         <translation>&amp;Formato immagine LDR:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="689"/>
-        <location filename="../forms/PreferencesDialog.ui" line="711"/>
+        <location filename="../forms/PreferencesDialog.ui" line="694"/>
+        <location filename="../forms/PreferencesDialog.ui" line="716"/>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation>Numero di threads da usare su macchine multicore/SMP</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="692"/>
+        <location filename="../forms/PreferencesDialog.ui" line="697"/>
         <source>Number of &amp;threads:</source>
         <translation>Numero di &amp;threads:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="758"/>
+        <location filename="../forms/PreferencesDialog.ui" line="763"/>
         <source>Demosaicing</source>
         <translation>Demosaicizzazione</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="768"/>
+        <location filename="../forms/PreferencesDialog.ui" line="773"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4014,12 +4019,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Per riassumere, questa opzione sfoca un poco l&apos;immagine ma elimina i falsi pattern 2x2 in uscita.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="777"/>
+        <location filename="../forms/PreferencesDialog.ui" line="782"/>
         <source>Interpolate RGB using 4 colours</source>
         <translation>Interpola RGB come 4 colori</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="784"/>
+        <location filename="../forms/PreferencesDialog.ui" line="789"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4034,12 +4039,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Per le fotocamere con sensore Fuji Super CCD  mostra l&apos;immagine ruotata di 45 gradi. Per fotocamere con pixel non quadrati, non riscala l&apos;immagine al suo corretto &quot;aspect ratio&quot;. In ogni caso questa opzione garantisce che ogni pixel in uscita corrisponde a un pixel nell&apos;immagine RAW.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="792"/>
+        <location filename="../forms/PreferencesDialog.ui" line="797"/>
         <source>Do not stretch or rotate pixels</source>
         <translation>Non stirare o ruotare i pixels</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="805"/>
+        <location filename="../forms/PreferencesDialog.ui" line="810"/>
         <source>Quality:</source>
         <translation>Qualità:</translation>
     </message>
@@ -4067,48 +4072,48 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: usa  l&apos;interpolazione &quot;Adaptive Homogeneity-Directed&quot;. Questo metodo seleziona la direzione di interpolazione in modo da massimizzare una metrica di omogeneità, così da minimizzare gli artefatti di colore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="851"/>
+        <location filename="../forms/PreferencesDialog.ui" line="856"/>
         <source>Bilinear</source>
         <translation>Bilineare</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="856"/>
+        <location filename="../forms/PreferencesDialog.ui" line="861"/>
         <source>VNG</source>
         <translation>VNG</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="861"/>
+        <location filename="../forms/PreferencesDialog.ui" line="866"/>
         <source>PPG</source>
         <translation>PPG</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="866"/>
+        <location filename="../forms/PreferencesDialog.ui" line="871"/>
         <source>AHD</source>
         <translation>AHD</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="877"/>
-        <location filename="../forms/PreferencesDialog.ui" line="932"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1076"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1149"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1217"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1313"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1365"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1475"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1589"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1656"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1812"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1950"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2029"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2126"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2233"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2258"/>
+        <location filename="../forms/PreferencesDialog.ui" line="882"/>
+        <location filename="../forms/PreferencesDialog.ui" line="937"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1081"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1154"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1222"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1318"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1370"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1480"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1594"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1661"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1817"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1955"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2034"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2131"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2156"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2238"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2263"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1999"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2004"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4123,12 +4128,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Imposta qui il fattore moltiplicativo per il livello blu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="812"/>
+        <location filename="../forms/PreferencesDialog.ui" line="817"/>
         <source>Median:</source>
         <translation>Mediana:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="914"/>
+        <location filename="../forms/PreferencesDialog.ui" line="919"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4143,17 +4148,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Scegliere qui il numero di passi di un filtro mediano applicato dopo l&apos;interpolazione ai canali Rosso-Verde e Blu-Verde.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="973"/>
+        <location filename="../forms/PreferencesDialog.ui" line="978"/>
         <source>White Balance</source>
         <translation>Bilanciamento del bianco</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="985"/>
+        <location filename="../forms/PreferencesDialog.ui" line="990"/>
         <source>Method:</source>
         <translation>Metodo:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1034"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1039"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4176,32 +4181,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manuale&lt;/span&gt;: Imposta la temperatura di colore e il livello del verde&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1050"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1055"/>
         <source>Predefined D65</source>
         <translation>Predefinito D65</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1055"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1060"/>
         <source>Camera</source>
         <translation>Fotocamera</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1060"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1065"/>
         <source>Auto</source>
         <translation>Automatico</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1065"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1070"/>
         <source>Manual</source>
         <translation>Manuale</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="995"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1000"/>
         <source>T(K):      </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1122"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1127"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4232,12 +4237,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">B</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1238"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1243"/>
         <source>Highlights:</source>
         <translation>Zone luminose:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1274"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1279"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4260,32 +4265,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ricostruisci&lt;/span&gt;: ricostruisce le zone luminose usando un livello soglia&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1287"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1292"/>
         <source>Solid White</source>
         <translation>Bianco pieno</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1292"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1297"/>
         <source>Do not transform</source>
         <translation>Non trasformare</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1297"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1302"/>
         <source>Blend</source>
         <translation>Miscela</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1302"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1307"/>
         <source>Reconstruct</source>
         <translation>Ricostruisci</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1245"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1250"/>
         <source>Level:</source>
         <translation>Livello:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1347"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1352"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4300,22 +4305,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specifica il livello di ricostruzione delle zone luminose. Bassi valori favoriscono il bianco, valori elevati favoriscono i colori.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1385"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1390"/>
         <source>Correct false colors in highlights</source>
         <translation>Correggi colori falsi nelle zone luminose</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1392"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1397"/>
         <source>Auto Brightness</source>
         <translation>Luminosità automatica</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1404"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1409"/>
         <source>Brightness:</source>
         <translation>Luminosità:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1451"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1456"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4330,7 +4335,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specifica il livello di luminosità dell&apos;immagine in uscita. Il valore predefinito è 1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1494"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1499"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4345,12 +4350,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Usa uno specifico punto di nero per la decodifica delle immagini RAW. Se non selezionato, il valore viene automaticamente calcolato.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1502"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1507"/>
         <source>Black</source>
         <translation>Nero</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1571"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1576"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4365,7 +4370,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specifica un particolare valore del punto nero per l&apos;immagine in uscita.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1509"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1514"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4380,7 +4385,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Usa uno specifico punto di bianco.per la decodifica delle immagini RAW. Se non selezionato, il valore viene automaticamente calcolato.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="838"/>
+        <location filename="../forms/PreferencesDialog.ui" line="843"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4403,12 +4408,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: usa l&apos;interpolazione Adaptive Homogeneity-Directed. Questo metodo seleziona la direzione di interpolazione così da massimizzare una metrica di omogeneità, minimizzando tipicamente gli artefatti di colore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1517"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1522"/>
         <source>White</source>
         <translation>Bianco</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1632"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1637"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4423,12 +4428,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specifica un particolare valore del punto bianco per l&apos;immagine in uscita.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1697"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1702"/>
         <source>Corrections</source>
         <translation>Correzioni</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1705"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1710"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4443,17 +4448,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Usa le wavelets per ridurre il rumore preservando i dettagli.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1713"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1718"/>
         <source>Enable noise reduction</source>
         <translation>Abilita riduzione dei disturbi</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1728"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1733"/>
         <source>Threshold:</source>
         <translation>Soglia:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1785"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1790"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4468,7 +4473,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Imposta qui il valore della soglia di riduzione del rumore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1825"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1830"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4483,7 +4488,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aumenta il valore dei livelli rosso e blu del fattore specificato, tipicamente da 0.999 a 1.001, per corregere l&apos;aberrazione cromatica.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1833"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1838"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation>Abilita la correzione dell&apos;aberrazione cromatica</translation>
     </message>
@@ -4492,22 +4497,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Rosso:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1005"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1010"/>
         <source>Green:</source>
         <translation>Verde:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1195"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1200"/>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation>Imposta qui la componente verde per il livello di rimozione della dominante cromatica magenta</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1847"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1852"/>
         <source>Red:  </source>
         <translation>Rosso:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1920"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1925"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4522,7 +4527,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Imposta qui il fattore moltiplicativo per il livello rosso&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1857"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1862"/>
         <source>Blue:</source>
         <translation>Blu:</translation>
     </message>
@@ -4533,17 +4538,17 @@ Set here the magnification factor of the blue layer</source>
 Imposta qui il fattore moltiplicativo per il livello rosso</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2070"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2075"/>
         <source>Color Management</source>
         <translation>Gestione del colore</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2083"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2088"/>
         <source>Camera profile:</source>
         <translation>Profilo della macchina fotografica:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2093"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2098"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4564,28 +4569,28 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Personalizzato&lt;/span&gt;: usa un peofilo di colore di ingresso personalizzato.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2105"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2110"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2110"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
         <source>Built in</source>
         <translation>Incorporato</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2115"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2222"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2120"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2227"/>
         <source>Custom</source>
         <translation>Personalizzato</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2169"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2174"/>
         <source>Color Space:</source>
         <translation>Spazio di lavoro:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2179"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2184"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4612,27 +4617,27 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Personalizzato&lt;/span&gt;: usa un profilo di colore di uscita personalizzato.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2197"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2202"/>
         <source>RAW</source>
         <translation>RAW</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2202"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2207"/>
         <source>sRGB</source>
         <translation>sRGB</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2207"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2212"/>
         <source>Adobe RGB</source>
         <translation>Adobe RGB</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2212"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
         <source>Wide Gamut</source>
         <translation>Ampio Gamut</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2222"/>
         <source>Pro Photo</source>
         <translation>Pro Photo</translation>
     </message>
@@ -4653,12 +4658,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Leggi &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Aiuto &amp;gt; Sommario &amp;gt; guida di DCRaw&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; per tutte le opzioni di DCRaw&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2314"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2319"/>
         <source>align_image_stack commandline arguments:</source>
         <translation>argomenti align_image_stack:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2326"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2331"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -4749,7 +4754,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opzioni per la visualizzazione Hdr&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="423"/>
+        <location filename="../forms/PreferencesDialog.ui" line="428"/>
         <source>Colors</source>
         <translation>Colori</translation>
     </message>
@@ -4758,7 +4763,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Mostra i numeri negativi come:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="480"/>
+        <location filename="../forms/PreferencesDialog.ui" line="485"/>
         <source>Show nan and +/-Inf values as:</source>
         <translation>Mostra i numeri +/- Inf come:</translation>
     </message>
@@ -4775,17 +4780,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2387"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2392"/>
         <source>&amp;Cancel</source>
         <translation>A&amp;nnulla</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2394"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2399"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="292"/>
+        <location filename="../forms/PreferencesDialog.ui" line="297"/>
         <source>Hungarian</source>
         <translation>Ungherese</translation>
     </message>
@@ -4798,12 +4803,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">LuminanceHDR richiede che dcraw sia eseguito con l&apos;opzione &quot;T&quot;. L&apos;opzione della riga di comando è stata correta.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="173"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="175"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
         <translation>LuminanceHDR richiede che align_image_stack sia esegita con l&apos;opzione &quot;-a aligned_&quot;. L&apos;opzione della riga di comando è stata correta.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="180"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="182"/>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation>Riavviare Luminance per usare la lingua: (%1).</translation>
     </message>
@@ -4812,7 +4817,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance richiede che dcraw venga eseguito con l&apos;opzione &quot;-T&quot;. Le opzioni da linea di comando sono state corrette.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="173"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="175"/>
         <source>Option -a...</source>
         <translation>Opzione -a...</translation>
     </message>
@@ -4821,7 +4826,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance richiede che align_image_stack venga eseguito con l&apos;opzione &quot;-a aligned_&quot;. Le opzioni a linea di comando sono state corrette.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="180"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="182"/>
         <source>Please restart...</source>
         <translation>Riavviare...</translation>
     </message>
@@ -4830,7 +4835,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Riavviare Luminance per utilizzare la nuova lingua (%1).</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="773"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="775"/>
         <source>Choose a directory</source>
         <translation>Seleziona una directory</translation>
     </message>
@@ -5898,7 +5903,7 @@ Vuoi continuare?</translation>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="187"/>
         <location filename="../forms/TonemappingWindow.ui" line="190"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="88"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="86"/>
         <source>Tone Mapping Options</source>
         <translation>Opzioni di Tonemapping</translation>
     </message>
@@ -6132,7 +6137,7 @@ Vuoi continuare?</translation>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="373"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="371"/>
         <source>Save files in</source>
         <translation>Salva i file in</translation>
     </message>
@@ -6278,52 +6283,52 @@ Vuoi continuare?</translation>
         <translation>Informazioni su Qt</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="103"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="104"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="101"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="102"/>
         <source>Original HDR</source>
         <translation>HDR Originale</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="208"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="209"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="206"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="207"/>
         <source>Processed HDR</source>
         <translation>HDR Processata</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="624"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="622"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
         <translation>%1 Il documento della licenza non e&apos; stato trovato, lo si puo&apos; trovare online seguendo %2questo link%3</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="257"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="664"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="682"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="693"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="700"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="782"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="662"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="680"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="692"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Luminance HDR</source>
         <translation>Luminance HDR</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="257"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
         <source>Please select an LDR image to save.</source>
         <translation>Seleziona un-immagine LDR da salvare.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="682"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="700"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="680"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
         <source>Please select an HDR image to tonemap.</source>
         <translation>Seleziona un-immagine LDR da processare.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="664"/>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="693"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="662"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="692"/>
         <source>Please make a selection of the HDR image to tonemap.</source>
         <translation>Seleziona un rettangolo dell&apos;HDR da processare.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="811"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="755"/>
         <source>Untitled</source>
         <translation>Nuovo</translation>
     </message>
@@ -6336,7 +6341,7 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Luminance</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="782"/>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Error: %1</source>
         <translation>Errore: %1</translation>
     </message>

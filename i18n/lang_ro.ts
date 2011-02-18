@@ -1,44 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="id">
+<TS version="2.0" language="ro_RO">
 <context>
     <name>AboutLuminance</name>
     <message>
         <location filename="../forms/about.ui" line="14"/>
         <source>About Luminance</source>
-        <translation>Tentang Luminance</translation>
-    </message>
-    <message>
-        <source>Luminance </source>
-        <translation type="obsolete">Luminance </translation>
-    </message>
-    <message>
-        <location filename="../forms/about.ui" line="78"/>
-        <source>&amp;About</source>
-        <translation>Tent&amp;ang</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;center&gt;Luminance - Hdr Imaging Workflow Application&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;center&gt;Luminance - Hdr Imaging Workflow Application&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/about.ui" line="114"/>
-        <source>A&amp;uthors</source>
-        <translation>Peng&amp;arang</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Mandus&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>Despre Luminance</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="61"/>
@@ -47,7 +15,12 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="78"/>
+        <source>&amp;About</source>
+        <translation>&amp;Despre</translation>
     </message>
     <message utf8="true">
         <location filename="../forms/about.ui" line="95"/>
@@ -83,11 +56,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Mac OS X packager, Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator and Ubuntu packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;  &lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Ralph Kaeppeli&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../forms/about.ui" line="196"/>
-        <source>&amp;Thanks To</source>
-        <translation>&amp;Terimakasih Kepada</translation>
-    </message>
     <message utf8="true">
         <location filename="../forms/about.ui" line="248"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -103,15 +71,34 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message utf8="true">
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, Giuseppe Rota, Franco Comida&lt;br /&gt;&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://luminance-hdr.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — aplicație pentru flux de lucru cu imagini&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, Giuseppe Rota, Franco Comida&lt;br /&gt;&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://luminance-hdr.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="114"/>
+        <source>A&amp;uthors</source>
+        <translation>A&amp;utori</translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="196"/>
+        <source>&amp;Thanks To</source>
+        <translation>&amp;Mulțumiri</translation>
+    </message>
     <message>
         <location filename="../forms/about.ui" line="266"/>
         <source>&amp;License Agreement</source>
-        <translation>&amp;License Agreement</translation>
-    </message>
-    <message>
-        <location filename="../forms/about.ui" line="362"/>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation>&amp;Licența</translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="326"/>
@@ -120,7 +107,12 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="362"/>
+        <source>&amp;OK</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -128,286 +120,242 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="13"/>
         <source>Batch Tone Mapping</source>
-        <translation>Batch Tone Mapping</translation>
-    </message>
-    <message>
-        <source>Input Hdr list</source>
-        <translation type="obsolete">Daftar masukan HDR</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="63"/>
-        <source>Add all the HDRs in a directory to the list</source>
-        <translation>Tambah semua HDR kedalam direktory dalam daftar</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="66"/>
-        <source>Add &amp;Directory</source>
-        <translation>Tambah &amp;Direktori</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="86"/>
-        <source>Add single HDR files to the list</source>
-        <translation>Tambah file single HDR ke dalam daftar</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="89"/>
-        <source>&amp;Add Files</source>
-        <translation>&amp;Tambah File</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="109"/>
-        <source>Remove single HDR files to the list</source>
-        <translation>Buang file single HDR ke dalam daftar</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="112"/>
-        <source>&amp;Remove Files</source>
-        <translation>&amp;Buang File</translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="141"/>
-        <source>List of HDRs that will be tone mapped</source>
-        <translation>Daftar HDR yang akan di tone mapped</translation>
-    </message>
-    <message>
-        <source>Input Tone Mapping Setting list</source>
-        <translation type="obsolete">Daftar Setting Input Tone Mapping</translation>
+        <translation>Mapare tonuri în serie</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="37"/>
         <source>HDR Images to Convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagini HDR de convertit</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="63"/>
+        <source>Add all the HDRs in a directory to the list</source>
+        <translation>Adaugă toate HDR-urile dintr-un dosar la listă</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="66"/>
+        <source>Add &amp;Directory</source>
+        <translation>Adaugă &amp;dosar</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="86"/>
+        <source>Add single HDR files to the list</source>
+        <translation>Adaugă fișiere HDR la listă</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="89"/>
+        <source>&amp;Add Files</source>
+        <translation>&amp;Adaugă fișiere</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="109"/>
+        <source>Remove single HDR files to the list</source>
+        <translation>Șterge fișiere HDR din listă</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="112"/>
+        <source>&amp;Remove Files</source>
+        <translation>Ște&amp;rge fișiere</translation>
+    </message>
+    <message>
+        <location filename="../forms/BatchTMDialog.ui" line="141"/>
+        <source>List of HDRs that will be tone mapped</source>
+        <translation>Lista de HDR-uri care vor fi mapate</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="157"/>
         <source>Tone Mapping Settings Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fișiere setări pentru maparea de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="183"/>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation>Tambah semua file di direktori Tone Mapping Setting ke dalam daftar</translation>
+        <translation>Adaugă la listă toate fișierele de setări pentru maparea de tonuri dintr-un dosar</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="186"/>
         <source>Add D&amp;irectory</source>
-        <translation>Tambah D&amp;irektori</translation>
+        <translation>Adaugă d&amp;osar</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="206"/>
         <source>Add single Tone Mapping Setting files to the list</source>
-        <translation>Tambah file single Tone Mapping Setting ke dalam daftar</translation>
+        <translation>Adaugă la listă fișiere de setări mapare de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="209"/>
         <source>Add Fi&amp;les</source>
-        <translation>Tambah Fi&amp;les</translation>
+        <translation>Adaugă Fi&amp;șiere</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="229"/>
         <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation>Buang file single Tone Mapping Setting ke dalam daftar</translation>
+        <translation>Șterge fișiere setări pentru maparea de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="232"/>
         <source>R&amp;emove Files</source>
-        <translation>&amp;Hapus File</translation>
+        <translation>Șt&amp;erge fișiere</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="261"/>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
-        <translation>Daftar file Tone Mapping Setting yang akan digunakan untuk tone map setiap HDR</translation>
+        <translation>Listă de fișiere de setări de mapare de tonuri ce vor fi folosite pentru maparea fiecărei imagini HDR</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="279"/>
         <source>Specify output folder for the tone mapped files</source>
-        <translation>Tentukan output folder untuk file tone mapped</translation>
+        <translation>Specifică dosarul destinație pentru fișierele mapate de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="282"/>
         <source>Output</source>
-        <translation>Output</translation>
+        <translation>Destinație</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="294"/>
         <source>Select &amp;Output Folder...</source>
-        <translation>Pilih folder &amp;output...</translation>
+        <translation>Selectează dosar &amp;destinație...</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="311"/>
         <source>Conversion Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="398"/>
-        <source>&amp;Filter log messages:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/BatchTMDialog.ui" line="477"/>
-        <source>&amp;Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log:</source>
-        <translation type="obsolete">Log:</translation>
+        <translation>Jurnal conversie</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="335"/>
         <source>Batch operations report</source>
-        <translation>Laporan operasi Batch</translation>
+        <translation>Raport operații în serie</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="359"/>
         <source>&amp;Show only:</source>
-        <translation>&amp;Hanya Tampilkan:</translation>
+        <translation>Ara&amp;tă doar:</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="369"/>
         <source>Filter messages based on severity</source>
-        <translation>Filter messages based on severity</translation>
+        <translation>Filtrează mesajele pe baza severității</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="373"/>
         <source>All messages</source>
-        <translation>Semua pesan</translation>
+        <translation>Toate mesajele</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="378"/>
         <source>Errors only</source>
-        <translation>Hanya error-error</translation>
+        <translation>Doar erorile</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="383"/>
         <source>Success messages</source>
-        <translation>Pesan Sukses</translation>
+        <translation>Mesajele de succes</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filter Log messages:</translation>
+        <location filename="../forms/BatchTMDialog.ui" line="398"/>
+        <source>&amp;Filter log messages:</source>
+        <translation>&amp;Filtrează mesajele jurnal:</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="414"/>
         <source>Clear filter text</source>
-        <translation>Bersihkan text penyaring</translation>
+        <translation>Șterge text filtru</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="430"/>
         <source>Overall completion progress</source>
-        <translation>Keseluruhan progress yang telah selesai</translation>
+        <translation>Progres îndeplinire global</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="461"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Batal</translation>
+        <translation>A&amp;nulează</translation>
     </message>
     <message>
         <location filename="../forms/BatchTMDialog.ui" line="474"/>
         <source>Start batch tone mapping</source>
-        <translation>Mulai batch tone mapping</translation>
+        <translation>Începe mapare de tonuri în serie</translation>
     </message>
     <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Mulai!</translation>
+        <location filename="../forms/BatchTMDialog.ui" line="477"/>
+        <source>&amp;Start</source>
+        <translation>&amp;Începe</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="67"/>
         <source>Using %1 thread(s)</source>
-        <translation>Menggunakan %1 thread(s)</translation>
+        <translation>Folosind %1 fire de execuție</translation>
     </message>
     <message>
-        <source>Saving using fileformat: </source>
-        <translation type="obsolete">Simpan menggunakan fileformat: </translation>
+        <location filename="../src/Batch/BatchTMDialog.cpp" line="68"/>
+        <source>Saving using file format: </source>
+        <translation>Salvând folosind formatul de fișier: </translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="80"/>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="104"/>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="138"/>
         <source>Choose a directory</source>
-        <translation>Pilih direktori</translation>
+        <translation>Alege un dosar</translation>
     </message>
     <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Semua format HDR </translation>
+        <location filename="../src/Batch/BatchTMDialog.cpp" line="96"/>
+        <source>All HDR images </source>
+        <translation>Toate imaginile HDR</translation>
     </message>
     <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Pilih gambar input</translation>
+        <location filename="../src/Batch/BatchTMDialog.cpp" line="99"/>
+        <source>Select input images</source>
+        <translation>Alege imaginile sursă</translation>
     </message>
     <message>
-        <source>Load the tonemapping settings text files...</source>
-        <translation type="obsolete">Memuat sebuah file text setting tonemapping...</translation>
+        <location filename="../src/Batch/BatchTMDialog.cpp" line="119"/>
+        <source>Load tone mapping settings text files...</source>
+        <translation>Încarcă fișierele text de setări pentru maparea de tonuri...</translation>
     </message>
     <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">File text setting Luminance tonemapping (*.txt)</translation>
+        <location filename="../src/Batch/BatchTMDialog.cpp" line="119"/>
+        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
+        <translation>Fișier text de setări pentru mapare de tonuri LuminanceHDR (*.txt)</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="249"/>
         <source>Processing...</source>
-        <translation>Memroses...</translation>
+        <translation>Procesând...</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="278"/>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="316"/>
         <source>&amp;Done</source>
-        <translation>&amp;Selesai</translation>
-    </message>
-    <message>
-        <source>Starting to tone map HDR file: </source>
-        <translation type="obsolete">Memulai file tone map HDR: </translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/BatchTMDialog.cpp" line="68"/>
-        <source>Saving using file format: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/BatchTMDialog.cpp" line="96"/>
-        <source>All HDR images </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/BatchTMDialog.cpp" line="99"/>
-        <source>Select input images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/BatchTMDialog.cpp" line="119"/>
-        <source>Load tone mapping settings text files...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Batch/BatchTMDialog.cpp" line="119"/>
-        <source>LuminanceHDR tone mapping settings text file (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gata</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="293"/>
         <source>Starting to convert an HDR image: </source>
-        <translation type="unfinished"></translation>
+        <translation>Pornind convertirea unei imagini HDR: </translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="318"/>
         <source>All tasks completed.</source>
-        <translation type="unfinished">Seluruh task telah komplet.</translation>
+        <translation>Toate sarcinile finalizate.</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="353"/>
         <source>Finished tone mapping the current HDR.</source>
-        <translation type="unfinished">Telah selesai tone maping HDR ini.</translation>
+        <translation>Finalizat maparea de tonuri a HDR curent.</translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="369"/>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="385"/>
         <source>ERROR: Cannot save to file: </source>
-        <translation>ERROR: Tidak dapat menyimpan ke file:</translation>
+        <translation>EROARE: Nu pot salva în fișier: </translation>
     </message>
     <message>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="373"/>
         <location filename="../src/Batch/BatchTMDialog.cpp" line="389"/>
         <source>Successfully saved LDR file: </source>
-        <translation>Sukses menyimpan file LDR:</translation>
+        <translation>Fișier LDR salvat cu succes: </translation>
     </message>
 </context>
 <context>
@@ -415,152 +363,177 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="108"/>
         <source>Error: Alignment engine not recognized.</source>
-        <translation>Error: Alignment engine not recognized.</translation>
+        <translation>Eroare: Motor de aliniere nerecunoscut.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="122"/>
         <source>Error: Wrong HDR creation format</source>
-        <translation>Error: Kesalahan format kreasi HDR</translation>
+        <translation>Eroare: Format de creere HDR greșit</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="132"/>
         <source>Error: Unknown weight function specified.</source>
-        <translation>Error: Tidak diketahui spesifik weight function.</translation>
+        <translation>Eroare: funcția de ponderi necunoscută.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="147"/>
         <source>Error: Unknown response curve specified.</source>
-        <translation>Error: Tidak diketahui spesifik response curve.</translation>
+        <translation>Eroare: Curba de răspuns necunoscută.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="156"/>
         <source>Error: Unknown HDR creation model specified.</source>
-        <translation>Error: Tidak diketahui spesifik HDR creation model.</translation>
+        <translation>Eroare: Model de creere HDR necunoscut.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="163"/>
         <source>Error: Unknown HDR creation format specified.</source>
-        <translation>Error: Tidak diketahui spesifik format HDR creation.</translation>
+        <translation>Eroare: Format de creere HDR necunoscut.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="202"/>
         <source>Error: Unknown tone mapping operator specified.</source>
-        <translation>Error: Tidak diketahui spesifik operator tone mapping.</translation>
+        <translation>Eroare: Operator mapare de tonuri necunoscut.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="211"/>
         <source>Error: Wrong tone mapping option format.</source>
-        <translation>Error: Kesalahan format opsi tone mapping.</translation>
+        <translation>Eroare: Format de opțiune mapare de tonuri greșit.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="300"/>
         <source>Error: Unknown tone mapping option specified.</source>
-        <translation>Error: Tidak diketahui spesifik opsi tone mapping.</translation>
+        <translation>Eroare: Opțiune mapare de tonuri necunoscută.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="308"/>
         <source>Error: Unknown option %1.</source>
-        <translation>Error: TIdak diketahui opsi %1.</translation>
+        <translation>Eroare: Opțiune necunoscută %1.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="310"/>
         <source>Error: Missing argument for %1.</source>
-        <translation>Error: kehilangan argument untuk %1.</translation>
+        <translation>Eroare: Parametru lipsă pentru %1.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="319"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
-        <translation>Error: Jumlah spesifik nilai EV berbeda dengan file masukan.</translation>
+        <translation>Eroare: Numărul de valori EV specificat este diferit de numărul de fișiere sursă.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="365"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
-        <translation>Error: kehilangan Exif data pada image dan nilai EV tidak spesifik pada commandline, bailing out.</translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="480"/>
-        <source>ERROR: Cannot save to file: %1</source>
-        <translation>Error: Tidak dapat menyimpan ke file: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="497"/>
-        <source>Cannot convert %1 to a float</source>
-        <translation>Tidak dapat mengkonversi %1 ke float</translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="507"/>
-        <source>Cannot convert %1 to an integer</source>
-        <translation>Tidak dapat mengkonversi %1 ke sebuah integer</translation>
+        <translation>Eroare: Informațiile Exif lipsesc din imagini și valorile EV nu sunt specificate în linia de comandă, renunțând.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="386"/>
         <source>Failed executing align_image_stack</source>
-        <translation type="unfinished"></translation>
+        <translation>Eșuat în a executa align_image_stack</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="480"/>
+        <source>ERROR: Cannot save to file: %1</source>
+        <translation>EROARE: Nu pot salva în fișier: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="497"/>
+        <source>Cannot convert %1 to a float</source>
+        <translation>Nu pot coverti %1 la virgulă mobilă</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="507"/>
+        <source>Cannot convert %1 to an integer</source>
+        <translation>Nu pot converti %1 la întreg</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="516"/>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizare: %1 [OPȚIUNI]...[FIȘIERESURSĂ]...</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="517"/>
         <source>Commandline interface to %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Interfață linie de comandă către %1.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="518"/>
         <source>-h --help              Display this help.</source>
-        <translation type="unfinished"></translation>
+        <translation>-h --help             Arată acest ajutor.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="519"/>
         <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished"></translation>
+        <translation>-v --verbose           Afișează mai multe mesaje în timpul execuției.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="520"/>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation type="unfinished"></translation>
+        <translation>-a --align AIS|MTB     Motor de aliniere de folosit în timpul creării HDR (implicit: fără aliniere).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="521"/>
         <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
-        <translation type="unfinished"></translation>
+        <translation>-e --ev EV1,EV2,...    Specifică valorile EV (la fel de multe ca FIȘIERESURSĂ).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="522"/>
         <source>-c --config            HDR creation config. Possible values: </source>
-        <translation type="unfinished"></translation>
+        <translation>-c --config            Configurare creare HDR. Valori posibile: </translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="523"/>
+        <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
+        <translation>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=fișierul_tău_aici.m</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="524"/>
+        <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
+        <translation>(Implicit este weight=triangular:response_curve=linear:model=debevec) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="525"/>
         <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation type="unfinished"></translation>
+        <translation>-l --load FISIER_HDR     Încarcă un HDR în loc să creezi unul nou. </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="526"/>
         <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation type="unfinished"></translation>
+        <translation>-s --save FIȘIER_HDR     Salvează într-un format de fișier HDR. (implicit: nu salva) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="527"/>
         <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
-        <translation type="unfinished"></translation>
+        <translation>-g --gamma VALOARE       Valoare gamma de folosit în timpul mapării de tonuri. (implicit: 1) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="528"/>
         <source>-r --resize VALUE      Width you want to resize your HDR to (resized before gamma and tone mapping) </source>
-        <translation type="unfinished"></translation>
+        <translation>-r --resize VALOARE      Lățimea la care vrei să redimensionezi HDR-ul (redimensionat înainte de gamma și mapare de tonuri) </translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="529"/>
         <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-t --tmo               Operator mapare de tonuri. Valorile legale sunt: </translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="530"/>
+        <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
+        <translation>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="531"/>
+        <source>(Default is mantiuk06)</source>
+        <translation>(Implicit este mantiuk06)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="532"/>
         <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
-        <translation type="unfinished"></translation>
+        <translation>-p --tmoptions         Opțiuni operator mapare de tonuri. Valorile legale sunt: </translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="533"/>
+        <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
+        <translation>alpha=VALOARE:beta=VALOARE:color=VALOARE:noise=VALOARE:new=true|false (pentru fattal)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="534"/>
@@ -568,80 +541,60 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk06)</source>
+        <translation type="obsolete">contrast=VALOARE:saturation=VALOARE:equalization=true|false (pentru mantiuk06)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="535"/>
+        <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
+        <translation>localcontrast=VALOARE:eq=2|4:simple=true|false (pentru ashikhmin)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="536"/>
+        <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
+        <translation>sigma_s=VALOARE:sigma_r=VALOARE:base=VALOARE (pentru durand)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="537"/>
+        <source>bias=VALUE (for drago)</source>
+        <translation>bias=VALOARE (pentru drago)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="538"/>
+        <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
+        <translation>local=true|false:autolum=true|false:cone=VALOARE:rod=VALOARE:multiplier=VALOARE (pentru pattanaik)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="539"/>
+        <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
+        <translation>scales=true|false:key=VALOARE:phi=VALOARE:num=VALOARE:low=VALOARE:high=VALOARE (pentru reinhard02)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="540"/>
+        <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
+        <translation>brightness=VALOARE:chroma=VALOARE:lightness=VALOARE (pentru reinhard05)</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/commandline.cpp" line="541"/>
+        <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
+        <translation>(implicit este contrast=0.3:equalization=false:saturation=1.8, vezi deasemenea -o)</translation>
+    </message>
+    <message>
         <location filename="../src/Common/commandline.cpp" line="542"/>
         <source>-o --output LDR_FILE   File name you want to save your tone mapped LDR to.</source>
-        <translation type="unfinished"></translation>
+        <translation>-o --output FIȘIER_LDR   Nume fișier în care vrei să salvezi maparea de tonuri LDR.</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="543"/>
         <source>                       (No tonemapping is performed unless -o is specified).</source>
-        <translation type="unfinished"></translation>
+        <translation>                       (Nici o mapare de tonuti nu este realizată decât dacă -o este specificat).</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="544"/>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="523"/>
-        <source>weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="524"/>
-        <source>(Default is weight=triangular:response_curve=linear:model=debevec) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="533"/>
-        <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="535"/>
-        <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="536"/>
-        <source>sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="537"/>
-        <source>bias=VALUE (for drago)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="538"/>
-        <source>local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="539"/>
-        <source>scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="540"/>
-        <source>brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="541"/>
-        <source>(default is contrast=0.3:equalization=false:saturation=1.8, see also -o)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="530"/>
-        <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Common/commandline.cpp" line="531"/>
-        <source>(Default is mantiuk06)</source>
-        <translation type="unfinished"></translation>
+        <translation>Trebuie fie să încarci un fișier HDR existent (cu opțiunea -l) sau să specifici FIȘIERESURSĂ pentru a crea un HDR nou.
+</translation>
     </message>
 </context>
 <context>
@@ -649,42 +602,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/DnDOption.ui" line="22"/>
         <source>Drag and Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage și mută</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="57"/>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Ce vrei să faci cu fișierele?&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="71"/>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deschide</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="84"/>
         <source>Open an existing HDR image</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide o imagine HDR existentă</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="91"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nou</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="104"/>
         <source>Create a new HDR image from one or more images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/DnDOption.ui" line="124"/>
-        <source>Cancel the drag and drop process and return to the main window</source>
-        <translation type="unfinished"></translation>
+        <translation>Creează o imagine HDR nouă din una sau mai multe imagini</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="111"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
+    </message>
+    <message>
+        <location filename="../forms/DnDOption.ui" line="124"/>
+        <source>Cancel the drag and drop process and return to the main window</source>
+        <translation>Anulează procesul trage și mută și întoarce-te la fereastra principală</translation>
     </message>
 </context>
 <context>
@@ -692,7 +645,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/EditingTools.cpp" line="405"/>
         <source>Choose a directory and a prefix</source>
-        <translation>Pilih sebuah direktori dan sebuah prefix</translation>
+        <translation>Alege un dosar și un prefix</translation>
     </message>
 </context>
 <context>
@@ -700,97 +653,97 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/EditingTools.ui" line="23"/>
         <source>Editing Tools</source>
-        <translation>Editing Tools</translation>
+        <translation>Unelte editare</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="59"/>
         <source>Visualization and Navigation</source>
-        <translation>Visualisasi dan Navigasi</translation>
+        <translation>Vizualizare și navigare</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="92"/>
         <source>Fit to window</source>
-        <translation>Fit to window</translation>
+        <translation>Potrivește în fereastră</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="95"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Fit to Window</translation>
+        <translation>&amp;Potrivește</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="115"/>
         <source>Original size</source>
-        <translation>Original size</translation>
+        <translation>Dimensiunea originală</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="118"/>
         <source>Origina&amp;l Size</source>
-        <translation>Origina&amp;l Size</translation>
+        <translation>Origina&amp;lă</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="135"/>
         <source>Zoom In</source>
-        <translation>Zoom In</translation>
+        <translation>Mărește</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="138"/>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>Mă&amp;rește</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="155"/>
         <source>Zoom Out</source>
-        <translation>Zoom Out</translation>
+        <translation>Mișorează</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="158"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>Mi&amp;cșorează</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="211"/>
         <source>Preview &amp;Mode:</source>
-        <translation>Preview &amp;Mode:</translation>
+        <translation>&amp;Mod previzualizare:</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="222"/>
         <source>Difference (E-P)</source>
-        <translation>Difference (E-P)</translation>
+        <translation>Diferență (E-P)</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="227"/>
         <source>Overlay (E+P)</source>
-        <translation>Overlay (E+P)</translation>
+        <translation>Suprapus (E+P)</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="232"/>
         <source>Editable Only (E)</source>
-        <translation>Editable Only (E)</translation>
+        <translation>Doar editabil (E)</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="237"/>
         <source>Pivot Only (P)</source>
-        <translation>Pivot Only (P)</translation>
+        <translation>Doar pivot (P)</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="242"/>
         <source>Antighosting Mask</source>
-        <translation>Antighosting Mask</translation>
+        <translation>Mască anti-reflexii</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="253"/>
         <source>Mask Color</source>
-        <translation>Mask Color</translation>
+        <translation>Culoare mască</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="290"/>
         <source>Images List</source>
-        <translation>Daftar Image</translation>
+        <translation>Listă imagini</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="310"/>
         <source>Ed&amp;itable</source>
-        <translation>Ed&amp;itable</translation>
+        <translation>Ed&amp;itabil</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="335"/>
@@ -801,44 +754,44 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The currently selected image is the one that you can shift and paint an anti-ghosting mask on.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Imaginea curent selectată este aceea pe care o poți deplasa și pe care să desenezi masca anti reflexii.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="341"/>
         <source>The image currently selected in this list can be translated up,down,left and right using the controls below.
 This image&apos;s histogram is diplayed in the widget above.</source>
-        <translation>The image currently selected in this list can be translated up,down,left and right using the controls below.
-This image&apos;s histogram is diplayed in the widget above.</translation>
+        <translation>Imaginea selectată în această listă poate fi deplasată în sus, în jos, în stânga și în dreapta folosind controalele de mai jos.
+Histograma acestei imagini este afișată în widgetul de mai sus.</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="378"/>
         <source>Select the previous image in both lists</source>
-        <translation>Select image sebelumnya dalam kedua daftar</translation>
+        <translation>Selectează imaginea precedentă în ambele liste</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="381"/>
         <source>Use this button to move the selection to the previous image in both lists.</source>
-        <translation>Gunakan tombol ini untuk memindah seleksi image sebelumnya dalam kedua daftar.</translation>
+        <translation>Utilizează acest buton pentru a muta selecția la imaginea precedentă în ambele liste.</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="398"/>
         <source>Select the next image in both lists</source>
-        <translation>Select image berikutnya dalam kedua daftar</translation>
+        <translation>Selectează imaginea următoare în ambele liste</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="401"/>
         <source>Use this button to move the selection to the next image in both lists.</source>
-        <translation>Gunakan tombol ini untuk memindah seleksi ke image berikutnya dalam kedua daftar.</translation>
+        <translation>Utilizează acest buton pentru a muta selecția la imaginea următoare în ambele liste.</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="435"/>
         <source>R&amp;eference</source>
-        <translation>R&amp;eferensi</translation>
+        <translation>R&amp;eferință</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="460"/>
         <source>The reference image is the one currently selected</source>
-        <translation>The reference image is the one currently selected</translation>
+        <translation>Imaginea referință este cea selectată curent</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="463"/>
@@ -849,27 +802,27 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The image currently selected in this list serves as a reference position for the editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Imaginea selectată curent în această listă servește ca poziție de referință pentru imaginea editabilă&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="484"/>
         <source>Tools</source>
-        <translation>Peralatan</translation>
+        <translation>Unelte</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="520"/>
         <source>Crop the stack of images after a selection with the left mouse button has been made</source>
-        <translation>Crop the stack of images after a selection with the left mouse button has been made</translation>
+        <translation>Taie stiva de imagini după ce s-a făcut o selecție cu butonul stânga maus</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="523"/>
         <source>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</source>
-        <translation>Clicking this button you will be able to crop all the images to the size that you have previously selected with the left mouse button (press and hold the left mouse button and move the pointer to select a crop area, then press this button).</translation>
+        <translation>Cu acest buton vei putea tăia toate imaginile la dimensiunea selectată cu butonul stânga maus (apasă și ține butonul stânga maus și mută indicatorul pentru a selecta o suprafață de tăiat, apoi apasă acest buton).</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="526"/>
         <source>&amp;Crop All Images</source>
-        <translation>&amp;Crop Semua Images</translation>
+        <translation>&amp;Taie toate imaginile</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="539"/>
@@ -879,12 +832,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/EditingTools.ui" line="559"/>
         <source>&amp;Anti Ghosting</source>
-        <translation>&amp;Anti Ghosting</translation>
+        <translation>&amp;Anti reflexii</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="592"/>
         <source>&amp;Save Images</source>
-        <translation>&amp;Simpan Images</translation>
+        <translation>&amp;Salvează imaginile</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="605"/>
@@ -894,27 +847,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/EditingTools.ui" line="663"/>
         <source>A&amp;dd Mask</source>
-        <translation>Ta&amp;mbahkan Mask</translation>
+        <translation>A&amp;daugă mască</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="673"/>
         <source>Remove Mas&amp;k</source>
-        <translation>Buang Mas&amp;k</translation>
+        <translation>Șterge ma&amp;scă</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="732"/>
         <source>Size:</source>
-        <translation>Size:</translation>
+        <translation>Dimensiune:</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="755"/>
         <source> pixels</source>
-        <translation> Pixels</translation>
+        <translation>pixeli</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="771"/>
         <source>&amp;Strength:</source>
-        <translation>&amp;Strength:</translation>
+        <translation>&amp;Tărie:</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="801"/>
@@ -925,7 +878,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Deplasează valorile pentru imaginea editabilă selectată&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="807"/>
@@ -936,47 +889,47 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Here the user can view and set the shift values for the currently selected editable image&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aici utilizatorul poate vedea și seta valorile deplasării pentru imaginea editabilă selectată&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="813"/>
         <source>Shift values for editable image</source>
-        <translation>Shift values for editable image</translation>
+        <translation>Valori deplasare pentru imaginea editabilă</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="833"/>
         <source>Reset the shift values for the currently selected movable image</source>
-        <translation>Reset the shift values for the currently selected movable image</translation>
+        <translation>Restabilește valorile deplasării pentru imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="836"/>
         <source>&amp;Reset</source>
-        <translation>&amp;Reset</translation>
+        <translation>&amp;Restabilește</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="843"/>
         <source>Reset the shift values for all the images</source>
-        <translation>Reset nilai shift untuk semua image</translation>
+        <translation>Restabilește valoarile deplasării pentru toate imaginile</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="846"/>
         <source>Reset &amp;All</source>
-        <translation>Reset &amp;All</translation>
+        <translation>Restabilește To&amp;ate</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="876"/>
         <source>&amp;Horizontal:</source>
-        <translation>&amp;Horisontal:</translation>
+        <translation>&amp;Orizontal:</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="889"/>
         <source>&amp;Vertical:</source>
-        <translation>&amp;Vertikal:</translation>
+        <translation>&amp;Vertical:</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="902"/>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
-        <translation>Insert an horizontal shift value for the currently selected movable image</translation>
+        <translation>Inserează o valoare deplasare orizontală pentru imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="905"/>
@@ -987,37 +940,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/EditingTools.ui" line="918"/>
         <source>Insert a vertical shift value for the currently selected movable image</source>
-        <translation>Insert a vertical shift value for the currently selected movable image</translation>
+        <translation>Inserează o valoare deplasare verticală pentru imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="944"/>
         <source>Move up of 1 pixel the currently selected movable image</source>
-        <translation>Move up of 1 pixel the currently selected movable image</translation>
+        <translation>Mută în sus 1 pixel imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="957"/>
         <source>Move down of 1 pixel the currently selected movable image</source>
-        <translation>Move down of 1 pixel the currently selected movable image</translation>
+        <translation>Mută în jos 1 pixel imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="970"/>
         <source>Move right of 1 pixel the currently selected movable image</source>
-        <translation>Move right of 1 pixel the currently selected movable image</translation>
+        <translation>Mută la dreapta 1 pixel imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="983"/>
         <source>Move left of 1 pixel the currently selected movable image</source>
-        <translation>Move left of 1 pixel the currently selected movable image</translation>
+        <translation>Mută la stânga 1 pixel imaginea mutabilă selectată</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="1018"/>
         <source>Get information about the graphical elements</source>
-        <translation>Dapatkan informasi tentang graphical elements</translation>
+        <translation>Obține informații despre elementele grafice</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="1021"/>
         <source>&amp;What&apos;s this?</source>
-        <translation>&amp;Apa ini?</translation>
+        <translation>&amp;Ce este aceasta?</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="1034"/>
@@ -1027,12 +980,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/EditingTools.ui" line="1054"/>
         <source>&amp;Next &gt;</source>
-        <translation>&amp;Berikutnya &gt;</translation>
+        <translation>Î&amp;nainte&gt;</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="1064"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <location filename="../forms/EditingTools.ui" line="1088"/>
@@ -1042,7 +995,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This area shows the preview (using the preview mode on the left) between the editable and reference image.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the same image is selected in both the editable and reference list, this area will show the image itself.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Clicking and holding the left mouse button you will be able to select a crop area.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Această suprafață arată previzualizarea (utilizând modul previzualizare din stânga) între imaginea editabilă și cea referință.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dacă aceiași imagine este selectată atât în lista cu editabile cât și în cea cu referințe, această suprafață va arăta imaginea însuși.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dând clic și ținând apăsat butonul stânga maus vei putea selecta o arie de tăiere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1050,17 +1008,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Viewers/GenericViewer.cpp" line="48"/>
         <source>Pan the image to a region</source>
-        <translation type="unfinished"></translation>
+        <translation>Deplasează imaginea la o regiune</translation>
     </message>
     <message>
         <location filename="../src/Viewers/GenericViewer.cpp" line="185"/>
         <source>Unsaved changes...</source>
-        <translation type="unfinished"></translation>
+        <translation>Schimbări nesalvate...</translation>
     </message>
     <message>
         <location filename="../src/Viewers/GenericViewer.cpp" line="185"/>
         <source>This image has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Această imagine are schimbări nesalvate. &lt;br&gt;Ești sigur că vrei să o închizi?</translation>
     </message>
 </context>
 <context>
@@ -1068,12 +1026,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="135"/>
         <source>The image %1 is an 8 bit format (LDR) while the previous ones are not.</source>
-        <translation>Image %1 adalah 8 bit format (LDR) yang sebelumnya bukan.</translation>
+        <translation>Imaginea %1 este în format 8 bit (LDR) în timp ce precedentele nu sunt.</translation>
     </message>
     <message>
         <location filename="../src/HdrCreation/HdrCreationManager.cpp" line="142"/>
         <source>The image %1 has an invalid size.</source>
-        <translation>Image %1 mempunyai ukuran yang tidak valid.</translation>
+        <translation>Imaginea %1 are o dimensiune invalidă.</translation>
     </message>
 </context>
 <context>
@@ -1081,37 +1039,46 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/HdrInputLoader.cpp" line="86"/>
         <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="unfinished">ERROR: File&lt;br&gt;%1&lt;br&gt; bukan 8 bit atau 16 bit tiff.</translation>
+        <translation>EROARE: Fișierul&lt;br&gt;%1 nu este un tiff 8 bit sau 16 bit.</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start dcraw to create thumbnail of file: %1</source>
+        <translation type="obsolete">EROARE: Nu pot porni dcraw pentru a crea miniatura fișierului: %1</translation>
+    </message>
+    <message>
+        <source>ERROR: Error or timeout occured, dcraw on file: %1</source>
+        <translation type="obsolete">EROARE: A avut loc o eroare sau a expirat timpul, dcraw pe fișierul: %1</translation>
     </message>
     <message>
         <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Tidak dapat memulai dcraw pada file: %1</translation>
+        <translation type="obsolete">EROARE: Nu pot porni dcraw pe fișierul: %1</translation>
     </message>
     <message>
         <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Error atau terjadi timeout ketika mengeksekusi dcraw pada file: %1</translation>
+        <translation type="obsolete">EROARE: A avut loc o eroare sau a expirat timpul la execuția dvraw pe fișierul: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/HdrInputLoader.cpp" line="101"/>
         <source>ERROR: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>EROARE: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/HdrInputLoader.cpp" line="107"/>
         <source>ERROR: Failed Loading file: %1</source>
-        <translation type="unfinished">ERROR: Gagal memuat file: %1</translation>
+        <translation>EROARE: Eșuat în a încărca fișierul: %1</translation>
     </message>
 </context>
 <context>
     <name>HdrViewer</name>
     <message>
-        <source>Viewing Settings Toolbar</source>
-        <translation type="obsolete">Melihat Setingan Toolbar</translation>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="100"/>
+        <source>&amp;Mapping:</source>
+        <translation>&amp;Mapare:</translation>
     </message>
     <message>
         <location filename="../src/Viewers/HdrViewer.cpp" line="108"/>
         <source>Linear</source>
-        <translation>Linear</translation>
+        <translation>Liniară</translation>
     </message>
     <message>
         <location filename="../src/Viewers/HdrViewer.cpp" line="109"/>
@@ -1136,123 +1103,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
         <source>Logarithmic</source>
-        <translation>Logarithmic</translation>
+        <translation>Logaritmică</translation>
     </message>
     <message>
         <location filename="../src/Viewers/HdrViewer.cpp" line="117"/>
         <source>Histogram:</source>
-        <translation>Histogram:</translation>
+        <translation>Histogramă:</translation>
     </message>
     <message>
         <location filename="../src/Viewers/HdrViewer.cpp" line="126"/>
         <source>Loading file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Perubahan yang tak tersimpan...</translation>
-    </message>
-    <message>
-        <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="obsolete">Hdr ini mempunyai perubahan yang belum disimpan.&lt;br&gt;Anda yakin untuk menutupnya?</translation>
-    </message>
-    <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="100"/>
-        <source>&amp;Mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Încărcând fișier...</translation>
     </message>
 </context>
 <context>
     <name>HdrWizard</name>
     <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Hdr creation Wizard</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="194"/>
-        <source>[1/2] Load Input Images</source>
-        <translation type="unfinished">[1/2] Muat Input Images</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="223"/>
-        <source>Currently Loaded &amp;Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="290"/>
-        <source>Load Input Images</source>
-        <translation type="unfinished">Muat Input Images</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="293"/>
-        <source>&amp;Load Images...</source>
-        <translation type="unfinished">&amp;Load Images...</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="323"/>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="373"/>
-        <source>Selected Image &amp;Exposure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="396"/>
-        <source>EV:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="474"/>
-        <source>Alignment</source>
-        <translation type="unfinished">Alignment</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Auto &amp;Align Images</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin&apos;s align_image_stack</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Median Threshold Bitmap</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="558"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Start loading a set of images with different exposure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Pilih Settingan untuk Hdr Creation</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Silahkan pilih dari daftar predefined profiles yang ada disebelah kanan:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Yang pertama pada daftar biasanya hasil yang terbaik, rubah ini bila hasil HDR kurang memuaskan.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">Daftar profil default</translation>
-    </message>
-    <message>
         <location filename="../forms/HdrWizard.ui" line="14"/>
         <source>HDR Creation Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Asistent creare HDR</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="122"/>
@@ -1277,14 +1146,58 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/HdrWizard.ui" line="194"/>
+        <source>[1/2] Load Input Images</source>
+        <translation>[1/2] Încarcă imaginile sursă</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="223"/>
+        <source>Currently Loaded &amp;Files</source>
+        <translation>&amp;Fișierele curent încărcate</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="290"/>
+        <source>Load Input Images</source>
+        <translation>Încarcă imaginile sursă</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="293"/>
+        <source>&amp;Load Images...</source>
+        <translation>&amp;Încarcă imaginile...</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="323"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="373"/>
+        <source>Selected Image &amp;Exposure</source>
+        <translation>&amp;Expunearea imaginii selectate</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="396"/>
+        <source>EV:</source>
+        <translation>EV:</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="474"/>
+        <source>Alignment</source>
+        <translation>Aliniere</translation>
+    </message>
+    <message>
         <location filename="../forms/HdrWizard.ui" line="500"/>
         <source>&amp;Autoalign images</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aliniază automat imaginile</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="507"/>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation type="unfinished"></translation>
+        <translation>align_image_stack a Hugin</translation>
+    </message>
+    <message>
+        <source>Median threshold bitmap</source>
+        <translation type="obsolete">Median threshold bitmap</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="517"/>
@@ -1292,14 +1205,27 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/HdrWizard.ui" line="558"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Start loading a set of images with different exposure&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Încarcă un set de imagini cu expuneri diferite&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../forms/HdrWizard.ui" line="578"/>
         <source>[2/2] Choose Settings for HDR Creation</source>
-        <translation type="unfinished"></translation>
+        <translation>[2/2]Alege setările pentru crearea HDR</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="600"/>
         <source>Choose one of the predefined profiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alege unul din profilele predefinite:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="613"/>
@@ -1308,85 +1234,122 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;The first predefined profile in the list usually leads to best results. Change it only if the resulting HDR image is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Primul profil predefinit dă de obicei cele mai bune rezultate. Schimbă-l doar dacă imaginea HDR rezultată nu este suficient de bună.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="621"/>
         <source>Profile 1</source>
-        <translation type="unfinished">Profil 1</translation>
+        <translation>Profil 1</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="626"/>
         <source>Profile 2</source>
-        <translation type="unfinished">Profil 2</translation>
+        <translation>Profil 2</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="631"/>
         <source>Profile 3</source>
-        <translation type="unfinished">Profil 3</translation>
+        <translation>Profil 3</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="636"/>
         <source>Profile 4</source>
-        <translation type="unfinished">Profil 4</translation>
+        <translation>Profil 4</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="641"/>
         <source>Profile 5</source>
-        <translation type="unfinished">Profil 5</translation>
+        <translation>Profil 5</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="646"/>
         <source>Profile 6</source>
-        <translation type="unfinished">Profil 6</translation>
+        <translation>Profil 6</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="664"/>
         <source>Weighting function:</source>
-        <translation type="unfinished">Weighting function:</translation>
+        <translation>Funcție ponderare:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="690"/>
         <location filename="../forms/HdrWizard.ui" line="1049"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="520"/>
         <source>Triangular</source>
-        <translation type="unfinished">Triangular</translation>
+        <translation>Triunghiulară</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="713"/>
         <location filename="../forms/HdrWizard.ui" line="837"/>
         <source>Response curve:</source>
-        <translation type="unfinished"></translation>
+        <translation>Curba de răspuns:</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="739"/>
+        <location filename="../forms/HdrWizard.ui" line="859"/>
+        <location filename="../forms/HdrWizard.ui" line="1138"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
+        <source>Linear</source>
+        <translation>Liniară</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="762"/>
         <source>HDR creation model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moder creare HDR:</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="788"/>
+        <location filename="../forms/HdrWizard.ui" line="1339"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
+        <source>Debevec</source>
+        <translation>Debevec</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="814"/>
         <source>Anti-ghosting (beta!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anti-reflexii (beta!)</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="854"/>
+        <location filename="../forms/HdrWizard.ui" line="1133"/>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
+        <source>Gamma</source>
+        <translation>Gamma</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="864"/>
+        <location filename="../forms/HdrWizard.ui" line="1143"/>
+        <source>Log</source>
+        <translation>Log</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="869"/>
+        <source>Calibration</source>
+        <translation>Calibrare</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="903"/>
         <source>Amount of iterations:</source>
-        <translation type="unfinished"></translation>
+        <translation>Număr de iterații:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="913"/>
         <source>Keep it small</source>
-        <translation type="unfinished"></translation>
+        <translation>Menține-l mic</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="938"/>
         <source>Use this only if the default profiles above do not yield good results</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizează aceasta doar dacă profilele implicite de mai sus nu dau rezultate bune</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="941"/>
         <source>Use custom configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizează configurație personalizată</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="961"/>
@@ -1398,159 +1361,82 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/HdrWizard.ui" line="1022"/>
-        <source>Choose confidence function over all the possible pixel values:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="1078"/>
-        <source>Response Curve:</source>
-        <translation type="unfinished">Response Curve:</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="1228"/>
-        <source>Save response function to file:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="1252"/>
-        <source>Save As...</source>
-        <translation type="unfinished">Simpan sebagai...</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="1298"/>
-        <source>HDR Creation Equation:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="1315"/>
-        <source>Choose model:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="739"/>
-        <location filename="../forms/HdrWizard.ui" line="859"/>
-        <location filename="../forms/HdrWizard.ui" line="1138"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="529"/>
-        <source>Linear</source>
-        <translation type="unfinished">Linear</translation>
-    </message>
-    <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Hdr creation model:</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="788"/>
-        <location filename="../forms/HdrWizard.ui" line="1339"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="542"/>
-        <source>Debevec</source>
-        <translation type="unfinished">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Anti-ghosting(beta!)</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="854"/>
-        <location filename="../forms/HdrWizard.ui" line="1133"/>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="531"/>
-        <source>Gamma</source>
-        <translation type="unfinished">Gamma</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="864"/>
-        <location filename="../forms/HdrWizard.ui" line="1143"/>
-        <source>Log</source>
-        <translation type="unfinished">Log</translation>
-    </message>
-    <message>
-        <location filename="../forms/HdrWizard.ui" line="869"/>
-        <source>Calibration</source>
-        <translation type="unfinished">Kalibrasi</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jumlah iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</translation>
-    </message>
-    <message>
         <location filename="../forms/HdrWizard.ui" line="982"/>
         <source>[2/2] Choose Custom Configuration</source>
-        <translation type="unfinished">[2/2] Pilih Custom Configuration</translation>
+        <translation>[2/2] Alege configurație personalizată</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1002"/>
         <source>Weights:</source>
-        <translation type="unfinished">Weights:</translation>
+        <translation>Ponderi:</translation>
     </message>
     <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Pilih confidence function
-over all the possible
-pixel values&lt;/p&gt;</translation>
+        <location filename="../forms/HdrWizard.ui" line="1022"/>
+        <source>Choose confidence function over all the possible pixel values:</source>
+        <translation>Alege funcția de încredere pentru toate valorile de pixeli posibile:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1054"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="524"/>
         <source>Gaussian</source>
-        <translation type="unfinished">Gaussian</translation>
+        <translation>Gaussian</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1059"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="522"/>
         <source>Plateau</source>
-        <translation type="unfinished">Plateau</translation>
+        <translation>Platou</translation>
+    </message>
+    <message>
+        <location filename="../forms/HdrWizard.ui" line="1078"/>
+        <source>Response Curve:</source>
+        <translation>Curbă de răspuns:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1100"/>
         <source>Predefined response curves:</source>
-        <translation type="unfinished">Predefined response curves:</translation>
+        <translation>Curbe de răspuns predefinite:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1159"/>
         <source>Load response function from file</source>
-        <translation type="unfinished">Muat response function dari file</translation>
+        <translation>Încarcă funcția de răspuns din fișier</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1177"/>
         <source>Load...</source>
-        <translation type="unfinished">Memuat...</translation>
+        <translation>Încarcă...</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1212"/>
         <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="unfinished">Gunakan kalibrasi untuk mencari response curve (robertson02 algorithm)</translation>
+        <translation>Utilizează calibrarea pentr a găsi curba de răspuns (algoritm robertson02)</translation>
     </message>
     <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Simpan response function ke file</translation>
+        <location filename="../forms/HdrWizard.ui" line="1228"/>
+        <source>Save response function to file:</source>
+        <translation>Salvează funcția de răspuns în fișier:</translation>
     </message>
     <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Simpan sebagai...</translation>
+        <location filename="../forms/HdrWizard.ui" line="1252"/>
+        <source>Save As...</source>
+        <translation>Salvează Ca...</translation>
     </message>
     <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Hdr creation equation:</translation>
+        <location filename="../forms/HdrWizard.ui" line="1298"/>
+        <source>HDR Creation Equation:</source>
+        <translation>Ecuația creării HDR:</translation>
     </message>
     <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Pilih Model:</translation>
+        <location filename="../forms/HdrWizard.ui" line="1315"/>
+        <source>Choose model:</source>
+        <translation>Alege model:</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1344"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="544"/>
         <source>Robertson</source>
-        <translation type="unfinished">Robertson</translation>
+        <translation>Robertson</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1383"/>
@@ -1565,22 +1451,40 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/HdrWizard.ui" line="1427"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="322"/>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished">&amp;Berikutnya &gt;</translation>
+        <translation>Î&amp;nainte&gt;</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="1434"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="58"/>
         <source>Image Filename</source>
-        <translation type="unfinished">Image Filename</translation>
+        <translation>Nume fișier imagine</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="58"/>
         <source>Exposure</source>
-        <translation type="unfinished">Exposure</translation>
+        <translation>Expunere</translation>
+    </message>
+    <message>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
+        <translation type="obsolete">Toate formatele (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="142"/>
+        <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="143"/>
+        <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
+        <translation>Imagini TIFF (*.tiff *.tif *.TIFF *.TIF);;</translation>
+    </message>
+    <message>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </source>
+        <translation type="obsolete">Imagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="140"/>
@@ -1590,16 +1494,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="141"/>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="142"/>
-        <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="143"/>
-        <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1615,22 +1509,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="149"/>
         <source>Select the input images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="203"/>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.	&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;	&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;	You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</translation>
+        <translation>Selectează imaginile sursă</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="160"/>
@@ -1638,28 +1517,36 @@ the following exif data: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="203"/>
+        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imagini încărcate.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+    </message>
+    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="205"/>
         <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
 for the following images:
  &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;AVERTISMENT:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR nu a putut găsi marcajele&lt;i&gt;EXIF&lt;/i&gt; 
+pentru următoarele imagini:
+ &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Poți încă continua crearea unui HDR. Pentru aceasta va trebui să inserezi &lt;b&gt;manual&lt;/b&gt; EV (valori expunere) sau diferențele de stopuri.		&lt;hr&gt;Dacă vrei ca Qtpfsgui să facă asta &lt;b&gt;automat&lt;/b&gt;, va trebui să încarci imagini ce au cel puțin 
+următoarele date exif: 		&lt;ul&gt;&lt;li&gt;Viteză obturator (secunde)&lt;/li&gt;		&lt;li&gt;Deschidere (număr f)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;INDICIU:&lt;/b&gt; Pierderea informațiilor EXIF are loc de obicei când preprocesați imaginile.&lt;br&gt;		Puteți realiza &lt;b&gt;o copie de informații exif unul la unul&lt;/b&gt; între două seturi de imagini prin intermediul meniului &lt;i&gt;&lt;b&gt;&quot;Unelte-&gt;Copiază date exif...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="214"/>
         <source>EXIF data not found</source>
-        <translation type="unfinished">Data EXIF tidak ditemukan</translation>
+        <translation>Nu am găsit informațiile EXIF</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="215"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="560"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Untuk memprosesnya anda membutuhkan set secara manual nilai exposure.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; Nilai masih dibutuhkan.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pentru a continua trebuie să setezi manual valorile expunererii.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valori încă necesare.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="244"/>
         <source>Loading Error</source>
-        <translation type="unfinished">Loading Error</translation>
+        <translation>Eroare încărcare</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="247"/>
@@ -1669,29 +1556,29 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="263"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Necunoscut</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="283"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="289"/>
         <source>Error...</source>
-        <translation type="unfinished">Error...</translation>
+        <translation>Eroare...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="280"/>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="unfinished">Gagal memulai external aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Silahkan baca &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; untuk informasi lebih lanjut.</translation>
+        <translation>Eșuat în a porni aplicația externă &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Te rog citește &quot;Ajutor -&gt; Documentație... -&gt; Indicii și sfaturi&quot; pentru mai multe informații.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="283"/>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="unfinished">Aplikasi external &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crash...</translation>
+        <translation>Aplicația externă &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; a eșuat...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="289"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="unfinished">Terjadi error yang tidak diketahui ketika mengeksekusi aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
+        <translation>A apărut o eroare necunoscută la execuția aplicației &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="296"/>
@@ -1703,569 +1590,227 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="435"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="453"/>
         <source>&amp;Finish</source>
-        <translation type="unfinished">&amp;Selesai</translation>
+        <translation>&amp;Finalizare</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="398"/>
         <source>Aligning...</source>
-        <translation type="unfinished">Aligning...</translation>
+        <translation>Aliniere...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="420"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="421"/>
         <source>Processing...</source>
-        <translation type="unfinished">Memroses...</translation>
+        <translation type="unfinished">Procesând...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="465"/>
         <source>Load a camera response curve file</source>
-        <translation type="unfinished">Muat file camera response curve</translation>
+        <translation>Încarcă curba de răspuns a camerei</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="467"/>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="479"/>
         <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="unfinished">Camera response curve (*.m);;Semua File (*)</translation>
+        <translation>Curbă de răspuns a camerei (*.m);;Toate fișierele (*)</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="477"/>
         <source>Save a camera response curve file</source>
-        <translation type="unfinished">Simpan file camera response curve</translation>
+        <translation>Salvează fișierul curbă de răspuns a camerei</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source>(*) Weights: </source>
-        <translation type="unfinished">(*) Weights: </translation>
+        <translation>(*) Ponderi: </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source> - Response curve: </source>
-        <translation type="unfinished"> - Response curve: </translation>
+        <translation> - Curbă de răspuns: </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="513"/>
         <source> - Model: </source>
-        <translation type="unfinished"> Model: </translation>
+        <translation> - Model: </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="533"/>
         <source>Logarithmic</source>
-        <translation type="unfinished">Logarithmic</translation>
+        <translation>Logaritmic</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="535"/>
         <source>From Calibration</source>
-        <translation type="unfinished">Dari Kalibrasi</translation>
+        <translation>Din calibrare</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="537"/>
         <source>From File</source>
-        <translation type="unfinished">Dari File</translation>
+        <translation>Din fișier</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="558"/>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HdrWizardForm</name>
-    <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Hdr creation Wizard</translation>
-    </message>
-    <message>
-        <source>[1/2] Load Input Images</source>
-        <translation type="obsolete">[1/2] Muat Input Images</translation>
-    </message>
-    <message>
-        <source>&amp;Exposure for selected image</source>
-        <translation type="obsolete">&amp;Exposure for selected image</translation>
-    </message>
-    <message>
-        <source>EV </source>
-        <translation type="obsolete">EV </translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="obsolete">Alignment</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Auto &amp;Align Images</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin&apos;s align_image_stack</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Median Threshold Bitmap</translation>
-    </message>
-    <message>
-        <source>Click the button below to load the input images</source>
-        <translation type="obsolete">Clik tombol dibawah untuk memuad input images</translation>
-    </message>
-    <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Muat Input Images</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Load Images...</translation>
-    </message>
-    <message>
-        <source>&amp;Files Currently Loaded:</source>
-        <translation type="obsolete">&amp;Files Currently Loaded:</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Pilih Settingan untuk Hdr Creation</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Silahkan pilih dari daftar predefined profiles yang ada disebelah kanan:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Yang pertama pada daftar biasanya hasil yang terbaik, rubah ini bila hasil HDR kurang memuaskan.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">Daftar profil default</translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="obsolete">Profil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="obsolete">Profil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="obsolete">Profil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="obsolete">Profil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="obsolete">Profil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="obsolete">Profil 6</translation>
-    </message>
-    <message>
-        <source>Weighting function:</source>
-        <translation type="obsolete">Weighting function:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="obsolete">Triangular</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="obsolete">Response Curve:</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Linear</translation>
-    </message>
-    <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Hdr creation model:</translation>
-    </message>
-    <message>
-        <source>Debevec</source>
-        <translation type="obsolete">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Anti-ghosting(beta!)</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation type="obsolete">Gamma</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="obsolete">Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrasi</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Jumlah iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="obsolete">[2/2] Pilih Custom Configuration</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="obsolete">Weights:</translation>
-    </message>
-    <message>
-        <source>Gaussian</source>
-        <translation type="obsolete">Gaussian</translation>
-    </message>
-    <message>
-        <source>Plateau</source>
-        <translation type="obsolete">Plateau</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Pilih confidence function
-over all the possible
-pixel values&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="obsolete">Predefined response curves:</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="obsolete">Muat response function dari file</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="obsolete">Memuat...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="obsolete">Gunakan kalibrasi untuk mencari response curve (robertson02 algorithm)</translation>
-    </message>
-    <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Simpan response function ke file</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Simpan sebagai...</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Hdr creation equation:</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Pilih Model:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="obsolete">Robertson</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="obsolete">&amp;Berikutnya &gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Batal</translation>
-    </message>
-    <message>
-        <source>Image Filename</source>
-        <translation type="obsolete">Image Filename</translation>
-    </message>
-    <message>
-        <source>Exposure</source>
-        <translation type="obsolete">Exposure</translation>
-    </message>
-    <message>
-        <source>JPEG (*.jpeg *.jpg);;</source>
-        <translation type="obsolete">JPEG (*.jpeg *.jpg);;</translation>
-    </message>
-    <message>
-        <source>TIFF Images (*.tiff *.tif);;</source>
-        <translation type="obsolete">TIFF Images (*.tiff *.tif);;</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Pilih input images</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.	&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 	&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;	&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;	You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</translation>
-    </message>
-    <message>
-        <source>EXIF data not found</source>
-        <translation type="obsolete">Data EXIF tidak ditemukan</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Untuk memprosesnya anda membutuhkan set secara manual nilai exposure.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; Nilai masih dibutuhkan.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Loading Error</translation>
-    </message>
-    <message>
-        <source>Unknown </source>
-        <translation type="obsolete">Tidak diketahui </translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Error...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Gagal memulai external aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Silahkan baca &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; untuk informasi lebih lanjut.</translation>
-    </message>
-    <message>
-        <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="obsolete">Aplikasi external &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crash...</translation>
-    </message>
-    <message>
-        <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="obsolete">Terjadi error yang tidak diketahui ketika mengeksekusi aplikasi &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;...</translation>
-    </message>
-    <message>
-        <source>&amp;Finish</source>
-        <translation type="obsolete">&amp;Selesai</translation>
-    </message>
-    <message>
-        <source>Aligning...</source>
-        <translation type="obsolete">Aligning...</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Muat file camera response curve</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Camera response curve (*.m);;Semua File (*)</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Simpan file camera response curve</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Weights: </translation>
-    </message>
-    <message>
-        <source> - Response curve: </source>
-        <translation type="obsolete"> - Response curve: </translation>
-    </message>
-    <message>
-        <source> - Model: </source>
-        <translation type="obsolete"> Model: </translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="obsolete">Logarithmic</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="obsolete">Dari Kalibrasi</translation>
-    </message>
-    <message>
-        <source>From File</source>
-        <translation type="obsolete">Dari File</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Semua nilai EV telah di set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Toate valorile EV au fost setate.&lt;br&gt;Acum apasă butonul Înainte.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
 </context>
 <context>
     <name>HelpBrowser</name>
     <message>
-        <location filename="../forms/HelpBrowser.ui" line="39"/>
-        <source>Luminance Help</source>
-        <translation type="unfinished">Bantuan Luminance</translation>
-    </message>
-    <message>
         <location filename="../forms/HelpBrowser.ui" line="13"/>
         <source>Luminance HDR Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajutor Luminance HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/HelpBrowser.ui" line="39"/>
+        <source>Luminance Help</source>
+        <translation>Ajutor Luminance</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="50"/>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="318"/>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tipărește...</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="55"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished">&amp;Keluar</translation>
+        <translation>&amp;Ieșire</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="60"/>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="320"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Caută...</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="65"/>
         <source>Find &amp;Next...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută &amp;următorul...</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="70"/>
         <source>Find &amp;Previous...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută &amp;precedentul...</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="75"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Adaugă</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="80"/>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="327"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Șterge</translation>
     </message>
     <message>
         <location filename="../forms/HelpBrowser.ui" line="85"/>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="328"/>
         <source>D&amp;elete All</source>
-        <translation type="unfinished"></translation>
+        <translation>Șt&amp;erge Tot</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="231"/>
         <source>Help SideBar</source>
-        <translation type="unfinished"></translation>
+        <translation>Bară laterală ajutor</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="311"/>
         <source>LuminanceHDR Online Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajutor online LuminanceHDR</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="313"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation>&amp;Fișier</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="314"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editare</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="315"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vizualizare</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="316"/>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="325"/>
         <source>&amp;Bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Semne de carte</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="319"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ieșire</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="321"/>
         <source>Find &amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută &amp;următorul</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="322"/>
         <source>Find &amp;Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută &amp;precedentul</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="323"/>
         <source>&amp;Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Conținut</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="324"/>
         <source>&amp;Search</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Căutare</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="326"/>
         <source>&amp;Add Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Adaugă semn de carte</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="405"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="405"/>
         <source>Search Term:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temen căutare:</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="437"/>
         <source>New Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Semn de carte nou</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="437"/>
         <source>New Bookmark&apos;s Title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Titlu semn de carte:</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="714"/>
         <source>&lt;h2&gt;&lt;p&gt;Sorry, no manual is installed!&lt;/p&gt;&lt;p&gt;Please contact your package provider or LuminanceHDR team if you built the application yourself&lt;/p&gt;&lt;/h2&gt;</source>
         <comment>HTML message for no documentation available to show</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h2&gt;&lt;p&gt;Nici un manual nu este instalat!&lt;/p&gt;&lt;p&gt;Contactează furnizorul de pachete sau echipa LuminanceHDR dacă ai construit aplicația personal&lt;/p&gt;&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="779"/>
         <source>LuminanceHDR - Help Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>LuminanceHDR - Navigator ajutor</translation>
     </message>
     <message>
         <location filename="../src/HelpBrowser/helpbrowser.cpp" line="780"/>
         <source>This protocol is not handled by the help browser.
 Do you want to open the link with the default application 
 associated with the protocol?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Luminance Help</source>
-        <translation type="obsolete">Bantuan Luminance</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Tutup</translation>
-    </message>
-    <message>
-        <source>CTRL+Q</source>
-        <translation type="obsolete">CTRL+Q</translation>
+        <translation>Acest protocol nu poate fi manipulat de navigatorul ajutor.
+Vrei să deschid legătura cu aplicația implicită
+asociată cu protocolul?</translation>
     </message>
 </context>
 <context>
@@ -2273,53 +1818,53 @@ associated with the protocol?</source>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="13"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Conținut</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="24"/>
         <source>&amp;Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Conținut</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="38"/>
         <source>Se&amp;arch</source>
-        <translation type="unfinished"></translation>
+        <translation>Căut&amp;are</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="46"/>
         <source>Searching is case insensitive</source>
-        <translation type="unfinished"></translation>
+        <translation>Căutarea nu este sensibilă la majuscule</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="53"/>
         <source>&amp;Search</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Căutare</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="63"/>
         <location filename="../forms/HelpSideBar.ui" line="79"/>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation>1</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="72"/>
         <source>Book&amp;marks</source>
-        <translation type="unfinished"></translation>
+        <translation>Se&amp;mne de carte</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="89"/>
         <source>&amp;Add</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Adaugă</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="100"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Șterge</translation>
     </message>
     <message>
         <location filename="../forms/HelpSideBar.ui" line="111"/>
         <source>R&amp;emove All</source>
-        <translation type="unfinished"></translation>
+        <translation>Șt&amp;erge tot</translation>
     </message>
 </context>
 <context>
@@ -2327,7 +1872,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../src/Common/ImageQualityDialog.cpp" line="60"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Necunoscut</translation>
     </message>
 </context>
 <context>
@@ -2335,42 +1880,42 @@ associated with the protocol?</source>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="31"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează ca</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="42"/>
         <source>Saved File Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate fișier salvat</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="65"/>
         <source>Quality:</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate:</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="117"/>
         <source>File size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensiune fișier:</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="124"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Necunoscută</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="144"/>
         <source>Ca&amp;lculate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Calculează</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="171"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salvează</translation>
     </message>
     <message>
         <location filename="../forms/ImageQualityDialog.ui" line="178"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
 </context>
 <context>
@@ -2378,7 +1923,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../src/Viewers/LdrViewer.cpp" line="40"/>
         <source>LDR image [%1 x %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine LDR [%1 x %2]</translation>
     </message>
 </context>
 <context>
@@ -2386,7 +1931,7 @@ associated with the protocol?</source>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="16"/>
         <source>Levels and Gamma</source>
-        <translation>Levels dan Gamma</translation>
+        <translation>Nivele și gamma</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="55"/>
@@ -2397,7 +1942,7 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adjust Color Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ajustează nivele culori&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="88"/>
@@ -2408,12 +1953,12 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Input Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivele sursă&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="145"/>
         <source>Clip black</source>
-        <translation>Klip hitam</translation>
+        <translation>Taie negrul</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="172"/>
@@ -2423,7 +1968,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="208"/>
         <source>Clip White</source>
-        <translation>Klip Putih</translation>
+        <translation>Taie albul</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="237"/>
@@ -2434,17 +1979,17 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Levels&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nivele destinație&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="337"/>
         <source>&amp;Reset</source>
-        <translation>&amp;Reset</translation>
+        <translation>&amp;Restabilește</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="357"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <location filename="../forms/GammaAndLevels.ui" line="364"/>
@@ -2457,107 +2002,111 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Threads/LoadHdrThread.cpp" line="53"/>
         <source>ERROR: The following file is not readable: %1</source>
-        <translation>ERROR: File berikut tidak dapat dibaca: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Tidak dapat memulai dcraw pada file: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Error atau terjadi timeout ketika mengeksekusi dcraw pada file: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="105"/>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation>ERROR: File %1 mempunyai extensi yang tidak didukung.</translation>
-    </message>
-    <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="122"/>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation>ERROR: Gagal memuat file: %1</translation>
+        <translation>EROARE: Următorul fișier nu este citibil: %1</translation>
     </message>
     <message>
         <location filename="../src/Threads/LoadHdrThread.cpp" line="83"/>
         <source>ERROR: Cannot open file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>EROARE: Nu pot deschide fișierul: %1</translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot start dcraw on file: %1</source>
+        <translation type="obsolete">EROARE: Nu pot începe dcraw pe fișierul: %1</translation>
+    </message>
+    <message>
+        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
+        <translation type="obsolete">EROARE: Eroare sau timpul a expirat în timpul execuției dcraw pe fișierul: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="105"/>
+        <source>ERROR: File %1 has unsupported extension.</source>
+        <translation>EROARE: Fișierul %1 are o extensie nesuportată.</translation>
     </message>
     <message>
         <location filename="../src/Threads/LoadHdrThread.cpp" line="116"/>
         <source>ERROR: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>EROARE: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="122"/>
+        <source>ERROR: Failed loading file: %1</source>
+        <translation>EROARE: Eșuat la încărcarea fișierului: %1</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="99"/>
-        <source>&amp;File</source>
-        <translation>&amp;File</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="38"/>
-        <source>&amp;Tools</source>
-        <translation>Perala&amp;tan</translation>
-    </message>
-    <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
         <location filename="../src/MainWindow/MainWindow.cpp" line="384"/>
         <location filename="../src/MainWindow/MainWindow.cpp" line="388"/>
         <source>Luminance HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminance HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="38"/>
+        <source>&amp;Tools</source>
+        <translation>&amp;Unelte</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="47"/>
         <source>&amp;Help</source>
-        <translation>&amp;Bantuan</translation>
-    </message>
-    <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">&amp;Image</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="63"/>
-        <source>&amp;View</source>
-        <translation>&amp;Melihat</translation>
-    </message>
-    <message>
-        <source>Hdr &amp;Histogram</source>
-        <translation type="obsolete">Hdr &amp;Histogram</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="81"/>
-        <source>&amp;Toolbars</source>
-        <translation>&amp;Toolbars</translation>
+        <translation>&amp;Ajutor</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="58"/>
         <source>&amp;Windows</source>
-        <translation>&amp;Jendela</translation>
+        <translation>&amp;Ferestre</translation>
     </message>
     <message>
-        <source>Common operations</source>
-        <translation type="obsolete">Common operations</translation>
+        <location filename="../forms/MainWindow.ui" line="63"/>
+        <source>&amp;View</source>
+        <translation>&amp;Vizualizare</translation>
     </message>
     <message>
-        <source>&amp;New Hdr...</source>
-        <translation type="obsolete">&amp;HDR baru...</translation>
+        <location filename="../forms/MainWindow.ui" line="70"/>
+        <source>HDR &amp;Histogram</source>
+        <translation>&amp;Histogramă HDR</translation>
     </message>
     <message>
-        <source>New Hdr...</source>
-        <translation type="obsolete">HDR baru...</translation>
+        <location filename="../forms/MainWindow.ui" line="81"/>
+        <source>&amp;Toolbars</source>
+        <translation>&amp;Bare de unelte</translation>
     </message>
     <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
-        <translation type="obsolete">Buat sebuah Hdr dari sebuah set JPEGs atau RAWs, atau 8 atau file 16 bit TIFF</translation>
+        <location filename="../forms/MainWindow.ui" line="99"/>
+        <source>&amp;File</source>
+        <translation>&amp;Fișier</translation>
     </message>
     <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation type="obsolete">Buat sebuah Hdr dari sebuah set JPEGs atau RAWs, atau 8 atau file 16 bit TIFF.</translation>
+        <location filename="../forms/MainWindow.ui" line="110"/>
+        <source>&amp;Edit</source>
+        <translation>&amp;Editare</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="132"/>
+        <source>Show Main Toolbar</source>
+        <translation>Arată bara de unelte principală</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="161"/>
+        <source>&amp;New HDR image...</source>
+        <translation>Imagine HDR &amp;nouă...</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="164"/>
+        <source>New HDR image</source>
+        <translation>Imagine HDR nouă</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="167"/>
+        <location filename="../forms/MainWindow.ui" line="170"/>
+        <source>Create a new HDR image from a set of LDR or Raw images</source>
+        <translation>Crează o imagine HDR nouă dintr-un set de imagini LDR sau Raw</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="173"/>
+        <source>Create a new HDR image from a set of JPEG, Raw, or 8/16 bpc TIFF files</source>
+        <translation>Crează o imagine HDR dintr-un set de fișiere JPEG, Raw, sau TIFF 8/16 bpc</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="176"/>
@@ -2565,20 +2114,21 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <source>&amp;Open Hdr...</source>
-        <translation type="obsolete">&amp;Buka HDR...</translation>
+        <location filename="../forms/MainWindow.ui" line="185"/>
+        <source>&amp;Open HDR image...</source>
+        <translation>&amp;Deschide imagine HDR...</translation>
     </message>
     <message>
-        <source>Open Hdr....</source>
-        <translation type="obsolete">Buka HDR...</translation>
+        <location filename="../forms/MainWindow.ui" line="188"/>
+        <source>Open HDR image</source>
+        <translation>Deschide imagine HDR</translation>
     </message>
     <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation type="obsolete">Muat file image Hdr yang ada (OpenEXR, Radiance RGBE, PFS stream, RAW atau TIFF)</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation type="obsolete">Muat file image Hdr yang ada (OpenEXR, Radiance RGBE, PFS stream, RAW atau TIFF).</translation>
+        <location filename="../forms/MainWindow.ui" line="191"/>
+        <location filename="../forms/MainWindow.ui" line="194"/>
+        <location filename="../forms/MainWindow.ui" line="197"/>
+        <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
+        <translation>Încarcă o imagine HDR existentă (OpenEXR, Radiance RGBE, PFS stream, RAW sau TIFF)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="200"/>
@@ -2586,16 +2136,21 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <source>&amp;Save Hdr as...</source>
-        <translation type="obsolete">&amp;Simpan HDR sebagai...</translation>
+        <location filename="../forms/MainWindow.ui" line="212"/>
+        <source>&amp;Save HDR image as...</source>
+        <translation>&amp;Salvează imagine HDR ca...</translation>
     </message>
     <message>
-        <source>Save Hdr as...</source>
-        <translation type="obsolete">Simpan HDR sebagai...</translation>
+        <location filename="../forms/MainWindow.ui" line="215"/>
+        <source>Save HDR image as...</source>
+        <translation>Salvează imagine HDR ca...</translation>
     </message>
     <message>
-        <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Simpan Hdr (OpenEXR, Radiance RGBE, PFS stream, atau 32bit atau LogLuv TIFF)</translation>
+        <location filename="../forms/MainWindow.ui" line="218"/>
+        <location filename="../forms/MainWindow.ui" line="221"/>
+        <location filename="../forms/MainWindow.ui" line="224"/>
+        <source>Save HDR image (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
+        <translation>Salvează imagine HDR (OpenEXR, Radiance RGBE, PFS stream, sau 32bit sau LogLuv TIFF)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="227"/>
@@ -2603,16 +2158,21 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <source>&amp;Tonemap the Hdr...</source>
-        <translation type="obsolete">&amp;Tonemap the Hdr...</translation>
+        <location filename="../forms/MainWindow.ui" line="245"/>
+        <source>&amp;Tone Mapping...</source>
+        <translation>Mapare de &amp;tonuri...</translation>
     </message>
     <message>
-        <source>Tonemap the Hdr</source>
-        <translation type="obsolete">Tonemap the Hdr</translation>
+        <location filename="../forms/MainWindow.ui" line="248"/>
+        <source>Tonemap HDR image</source>
+        <translation>Mapează tonuri imagine HDR</translation>
     </message>
     <message>
-        <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="obsolete">Tonemap Hdr kedalam sebuah common LDR (misalnya. JPEG atau PNG) format</translation>
+        <location filename="../forms/MainWindow.ui" line="251"/>
+        <location filename="../forms/MainWindow.ui" line="254"/>
+        <location filename="../forms/MainWindow.ui" line="257"/>
+        <source>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</source>
+        <translation>Convertește imaginea HDR la un format LDR comun (i.e. JPEG sau PNG)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="260"/>
@@ -2620,13 +2180,20 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Keluar</translation>
+        <location filename="../forms/MainWindow.ui" line="269"/>
+        <source>&amp;Quit</source>
+        <translation>&amp;Ieșire</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="272"/>
+        <location filename="../forms/MainWindow.ui" line="275"/>
+        <source>Quit Luminance HDR</source>
+        <translation>Ieși din Luminance HDR</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="278"/>
         <source>Exit</source>
-        <translation>Keluar</translation>
+        <translation>Ieșire</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="281"/>
@@ -2634,16 +2201,21 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <source>Rotate C&amp;ounterClockWise</source>
-        <translation type="obsolete">Putar berlawa&amp;nan arah jarum jam</translation>
+        <location filename="../forms/MainWindow.ui" line="293"/>
+        <source>Rotate c&amp;ounter-clockwise</source>
+        <translation>Rotește c&amp;ontrar orar</translation>
     </message>
     <message>
-        <source>Rotate CounterClockWise</source>
-        <translation type="obsolete">Putar berlawanan arah jarum jam</translation>
+        <location filename="../forms/MainWindow.ui" line="296"/>
+        <source>Rotate counter-clockwise</source>
+        <translation>Rotește contrar orar</translation>
     </message>
     <message>
-        <source>Rotate Counterclockwise the Hdr</source>
-        <translation type="obsolete">Putar HDR berlawanan arah jarum jam</translation>
+        <location filename="../forms/MainWindow.ui" line="299"/>
+        <location filename="../forms/MainWindow.ui" line="302"/>
+        <location filename="../forms/MainWindow.ui" line="305"/>
+        <source>Rotate counter-clockwise the HDR image</source>
+        <translation>Rotește imaginea HDR contrar orar</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="308"/>
@@ -2651,148 +2223,21 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;</translation>
     </message>
     <message>
-        <source>Rotate C&amp;lockWise</source>
-        <translation type="obsolete">Putar seara&amp;h jarum jam</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise</source>
-        <translation type="obsolete">Putar searah jarum jam</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise the Hdr</source>
-        <translation type="obsolete">Putar HDR searah jarum jam</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="70"/>
-        <source>HDR &amp;Histogram</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="110"/>
-        <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="132"/>
-        <source>Show Main Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="161"/>
-        <source>&amp;New HDR image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="164"/>
-        <source>New HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="167"/>
-        <location filename="../forms/MainWindow.ui" line="170"/>
-        <source>Create a new HDR image from a set of LDR or Raw images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="173"/>
-        <source>Create a new HDR image from a set of JPEG, Raw, or 8/16 bpc TIFF files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="185"/>
-        <source>&amp;Open HDR image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="188"/>
-        <source>Open HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="191"/>
-        <location filename="../forms/MainWindow.ui" line="194"/>
-        <location filename="../forms/MainWindow.ui" line="197"/>
-        <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="212"/>
-        <source>&amp;Save HDR image as...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="215"/>
-        <source>Save HDR image as...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="218"/>
-        <location filename="../forms/MainWindow.ui" line="221"/>
-        <location filename="../forms/MainWindow.ui" line="224"/>
-        <source>Save HDR image (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="245"/>
-        <source>&amp;Tone Mapping...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="248"/>
-        <source>Tonemap HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="251"/>
-        <location filename="../forms/MainWindow.ui" line="254"/>
-        <location filename="../forms/MainWindow.ui" line="257"/>
-        <source>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="269"/>
-        <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="272"/>
-        <location filename="../forms/MainWindow.ui" line="275"/>
-        <source>Quit Luminance HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="293"/>
-        <source>Rotate c&amp;ounter-clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="296"/>
-        <source>Rotate counter-clockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="299"/>
-        <location filename="../forms/MainWindow.ui" line="302"/>
-        <location filename="../forms/MainWindow.ui" line="305"/>
-        <source>Rotate counter-clockwise the HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/MainWindow.ui" line="320"/>
         <source>Rotate c&amp;lockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotește în sens o&amp;rar</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="323"/>
         <source>Rotate clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotește în sens orar</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="326"/>
         <location filename="../forms/MainWindow.ui" line="329"/>
         <location filename="../forms/MainWindow.ui" line="332"/>
         <source>Rotate clockwise the HDR image</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotește imaginea HDR în sens orar</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="335"/>
@@ -2802,7 +2247,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="343"/>
         <source>Low Dynamic Range</source>
-        <translation>Low Dynamic Range</translation>
+        <translation>Interval dinamic redus (LDR)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="346"/>
@@ -2812,12 +2257,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="354"/>
         <source>Fit to Dynamic Range</source>
-        <translation>Fit to Dynamic Range</translation>
+        <translation>Potrivește în interval dinamic</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="357"/>
         <source>Fit to dynamic range</source>
-        <translation type="unfinished"></translation>
+        <translation>Potrivește în interval dinamic</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="360"/>
@@ -2827,7 +2272,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="368"/>
         <source>Shrink Dynamic Range</source>
-        <translation>Shrink Dynamic Range</translation>
+        <translation>Reduce interval dinamic</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="371"/>
@@ -2837,7 +2282,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="379"/>
         <source>Extend Dynamic Range</source>
-        <translation>Extend Dynamic Range</translation>
+        <translation>Extinde interval dinamic</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="382"/>
@@ -2847,7 +2292,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="390"/>
         <source>Decrease Exposure</source>
-        <translation>Decrease Exposure</translation>
+        <translation>Reduce expunerea</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="393"/>
@@ -2857,7 +2302,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="401"/>
         <source>&amp;Increase Exposure</source>
-        <translation>&amp;Increase Exposure</translation>
+        <translation>&amp;Mărește expunerea</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="404"/>
@@ -2867,197 +2312,41 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="413"/>
         <source>&amp;Contents...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Conținut...</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="416"/>
+        <source>About...</source>
+        <translation>Despre...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="419"/>
         <location filename="../forms/MainWindow.ui" line="422"/>
         <location filename="../forms/MainWindow.ui" line="425"/>
         <source>Open user manual for Luminance HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide manual utilizator pentru Luminance HDR</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="428"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="440"/>
+        <source>&amp;Normal Size</source>
+        <translation>&amp;Dimensiune normală</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="443"/>
         <source>Normal size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensiune normală</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="446"/>
         <location filename="../forms/MainWindow.ui" line="449"/>
         <location filename="../forms/MainWindow.ui" line="452"/>
         <source>View HDR image at its normal size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="470"/>
-        <location filename="../forms/MainWindow.ui" line="473"/>
-        <location filename="../forms/MainWindow.ui" line="476"/>
-        <source>Zoom in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="494"/>
-        <location filename="../forms/MainWindow.ui" line="497"/>
-        <location filename="../forms/MainWindow.ui" line="500"/>
-        <source>Zoom out</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="521"/>
-        <source>&amp;Fit in Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="524"/>
-        <location filename="../forms/MainWindow.ui" line="527"/>
-        <source>Fit in Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="530"/>
-        <location filename="../forms/MainWindow.ui" line="533"/>
-        <source>Make the HDR image fit its window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="551"/>
-        <location filename="../forms/MainWindow.ui" line="554"/>
-        <location filename="../forms/MainWindow.ui" line="557"/>
-        <source>Set various options of Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="572"/>
-        <source>&amp;Resize...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="575"/>
-        <source>Resize the HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="578"/>
-        <location filename="../forms/MainWindow.ui" line="581"/>
-        <location filename="../forms/MainWindow.ui" line="584"/>
-        <source>Change size of the HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="602"/>
-        <location filename="../forms/MainWindow.ui" line="605"/>
-        <location filename="../forms/MainWindow.ui" line="608"/>
-        <source>Copy Exif data between two sets of files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="671"/>
-        <source>Text &amp;under Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="724"/>
-        <location filename="../forms/MainWindow.ui" line="727"/>
-        <source>Get verbose information about user interface elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="738"/>
-        <source>About &amp;Luminance HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="741"/>
-        <source>Show information about Luminance HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="744"/>
-        <location filename="../forms/MainWindow.ui" line="747"/>
-        <source>Show information about Luminance HDR, its authors and contributors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="755"/>
-        <source>Save HDR image &amp;preview...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="758"/>
-        <location filename="../forms/MainWindow.ui" line="761"/>
-        <location filename="../forms/MainWindow.ui" line="764"/>
-        <source>Save the current HDR Preview to an LDR file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="775"/>
-        <location filename="../forms/MainWindow.ui" line="778"/>
-        <location filename="../forms/MainWindow.ui" line="781"/>
-        <source>Apply projective transformation to the current HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="796"/>
-        <location filename="../forms/MainWindow.ui" line="799"/>
-        <source>Crop the image to selection rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="802"/>
-        <source>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="813"/>
-        <source>Remove selection rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="816"/>
-        <location filename="../forms/MainWindow.ui" line="819"/>
-        <source>Remove selection rectangle from image area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="824"/>
-        <source>Make a &amp;Donation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="827"/>
-        <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentasi...</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="416"/>
-        <source>About...</source>
-        <translation>Tentang...</translation>
-    </message>
-    <message>
-        <source>Show Luminance Help</source>
-        <translation type="obsolete">Tunjukkan Bantuan Luminance</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="obsolete">Ctrl+H</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="440"/>
-        <source>&amp;Normal Size</source>
-        <translation>Ukuran &amp;Normal</translation>
-    </message>
-    <message>
-        <source>View Hdr at Normal Size</source>
-        <translation type="obsolete">Lihat HDR pada Ukuran Normal</translation>
+        <translation>Vezi imaginea HDR la dimensiunea ei normală</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="455"/>
@@ -3067,11 +2356,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="467"/>
         <source>Zoom &amp;In</source>
-        <translation>Zoom &amp;In</translation>
+        <translation>&amp;Mărește</translation>
     </message>
     <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Zoom In</translation>
+        <location filename="../forms/MainWindow.ui" line="470"/>
+        <location filename="../forms/MainWindow.ui" line="473"/>
+        <location filename="../forms/MainWindow.ui" line="476"/>
+        <source>Zoom in</source>
+        <translation>Mărește</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="479"/>
@@ -3081,11 +2373,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="491"/>
         <source>Zoom &amp;Out</source>
-        <translation>Zoom &amp;Out</translation>
+        <translation>M&amp;icșorează</translation>
     </message>
     <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Zoom Out</translation>
+        <location filename="../forms/MainWindow.ui" line="494"/>
+        <location filename="../forms/MainWindow.ui" line="497"/>
+        <location filename="../forms/MainWindow.ui" line="500"/>
+        <source>Zoom out</source>
+        <translation>Micșorează</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="503"/>
@@ -3093,12 +2388,21 @@ p, li { white-space: pre-wrap; }
         <translation>-</translation>
     </message>
     <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Fit to Window</translation>
+        <location filename="../forms/MainWindow.ui" line="521"/>
+        <source>&amp;Fit in Window</source>
+        <translation>&amp;Potrivește în fereastră</translation>
     </message>
     <message>
-        <source>Shrink the Hdr to fit its containing window</source>
-        <translation type="obsolete">Shrink the Hdr to fit its containing window</translation>
+        <location filename="../forms/MainWindow.ui" line="524"/>
+        <location filename="../forms/MainWindow.ui" line="527"/>
+        <source>Fit in Window</source>
+        <translation>Potrivește în fereastră</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="530"/>
+        <location filename="../forms/MainWindow.ui" line="533"/>
+        <source>Make the HDR image fit its window</source>
+        <translation>Fă ca imaginea HDR să se potrivească în fereastra ei</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="536"/>
@@ -3108,20 +2412,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="545"/>
         <source>&amp;Preferences...</source>
-        <translation>&amp;Preferences...</translation>
+        <translation>&amp;Preferințe...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="548"/>
         <source>Luminance Options</source>
-        <translation>Opsi-opsi Luminance</translation>
+        <translation>Opțiuni Luminance</translation>
     </message>
     <message>
-        <source>Set the various options of Luminance</source>
-        <translation type="obsolete">Set the various options of Luminance</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance.</source>
-        <translation type="obsolete">Set the various options of Luminance.</translation>
+        <location filename="../forms/MainWindow.ui" line="551"/>
+        <location filename="../forms/MainWindow.ui" line="554"/>
+        <location filename="../forms/MainWindow.ui" line="557"/>
+        <source>Set various options of Luminance</source>
+        <translation>Setează diverse opțiuni ale Luminance</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="560"/>
@@ -3129,16 +2432,21 @@ p, li { white-space: pre-wrap; }
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <source>&amp;Resize the Hdr...</source>
-        <translation type="obsolete">&amp;Resize the Hdr...</translation>
+        <location filename="../forms/MainWindow.ui" line="572"/>
+        <source>&amp;Resize...</source>
+        <translation>&amp;Redimensionează...</translation>
     </message>
     <message>
-        <source>Resize the Hdr</source>
-        <translation type="obsolete">Resize the Hdr</translation>
+        <location filename="../forms/MainWindow.ui" line="575"/>
+        <source>Resize the HDR image</source>
+        <translation>Redimensionează imaginea HDR</translation>
     </message>
     <message>
-        <source>Resize (shrink or expand) the Hdr</source>
-        <translation type="obsolete">Resize (shrink atau expand) the Hdr</translation>
+        <location filename="../forms/MainWindow.ui" line="578"/>
+        <location filename="../forms/MainWindow.ui" line="581"/>
+        <location filename="../forms/MainWindow.ui" line="584"/>
+        <source>Change size of the HDR image</source>
+        <translation>Schimbă dimensiunea imaginii HDR</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="587"/>
@@ -3148,16 +2456,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="596"/>
         <source>Copy &amp;Exif Data...</source>
-        <translation>Copy Data &amp;Exif...</translation>
+        <translation>Copiază date &amp;exif...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="599"/>
         <source>Copy Exif Data</source>
-        <translation>Copy Data Exif</translation>
+        <translation>Copiază datele exif</translation>
     </message>
     <message>
-        <source>Copy Exif Data between two set of files</source>
-        <translation type="obsolete">Copy data Exif antara dua set file</translation>
+        <location filename="../forms/MainWindow.ui" line="602"/>
+        <location filename="../forms/MainWindow.ui" line="605"/>
+        <location filename="../forms/MainWindow.ui" line="608"/>
+        <source>Copy Exif data between two sets of files</source>
+        <translation>Copiază datele exif între două seturi de fișiere</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="611"/>
@@ -3167,86 +2478,87 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="619"/>
         <source>&amp;Align Images...</source>
-        <translation>&amp;Align Images...</translation>
+        <translation>&amp;Aliniază imagini...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="622"/>
         <location filename="../forms/MainWindow.ui" line="625"/>
         <location filename="../forms/MainWindow.ui" line="628"/>
         <source>WORK IN PROGRESS</source>
-        <translation>MASIH DALAM PENGERJAAN</translation>
+        <translation>PROCESARE ÎN CURS</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="633"/>
         <source>&amp;About Qt</source>
-        <translation>&amp;Tentang Qt</translation>
+        <translation>&amp;Despre Qt</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="636"/>
         <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată informații despre Qt</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="639"/>
         <location filename="../forms/MainWindow.ui" line="642"/>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată informații despre biblioteca Qt care este folosită de Luminance</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="647"/>
         <source>&amp;Tile</source>
-        <translation>&amp;Tile</translation>
+        <translation>&amp;Mozaic</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="652"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Cascade</translation>
+        <translation>&amp;Cascadă</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="655"/>
         <location filename="../forms/MainWindow.ui" line="658"/>
         <source>Cascade</source>
-        <translation>Cascade</translation>
+        <translation>Cascadă</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="663"/>
         <source>Toolbars</source>
-        <translation>Toolbars</translation>
+        <translation>Bare de unelte</translation>
     </message>
     <message>
-        <source>Text &amp;Under Icons</source>
-        <translation type="obsolete">Text diba&amp;wah Icons</translation>
+        <location filename="../forms/MainWindow.ui" line="671"/>
+        <source>Text &amp;under Icons</source>
+        <translation>Text &amp;sub pictograme</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="679"/>
         <source>&amp;Icons Only</source>
-        <translation>Hanya &amp;Icon</translation>
+        <translation>&amp;Doar pictograme</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="687"/>
         <source>&amp;Text Only</source>
-        <translation>Hanya &amp;Text</translation>
+        <translation>Doar &amp;text</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="695"/>
         <source>Text &amp;Alongside Icons</source>
-        <translation>Text &amp;Alongside Icons</translation>
+        <translation>Text &amp;lângă pictograme</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="700"/>
         <source>&amp;Batch Tone Mapping...</source>
-        <translation>&amp;Batch Tone Mapping...</translation>
+        <translation>Mapare de tonuri în &amp;serie...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="703"/>
         <source>Convert multiple HDR images to LDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertește mai multe imagini HDR la LDR</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="706"/>
         <location filename="../forms/MainWindow.ui" line="709"/>
         <source>Convert multiple HDR images to LDR using existing settings files</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertește mai multe imagini HDR la LDR folosind fișiere de setări existente</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="712"/>
@@ -3256,11 +2568,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="721"/>
         <source>&amp;What&apos;s This?</source>
-        <translation>&amp;Apa ini?</translation>
+        <translation>&amp;Ce-i asta?</translation>
     </message>
     <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Dapatkan informasi tentang graphical elements</translation>
+        <location filename="../forms/MainWindow.ui" line="724"/>
+        <location filename="../forms/MainWindow.ui" line="727"/>
+        <source>Get verbose information about user interface elements</source>
+        <translation>Obține informații detaliate despre elementele interfeței utilizator</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="733"/>
@@ -3268,231 +2582,203 @@ p, li { white-space: pre-wrap; }
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <source>About &amp;Luminance</source>
-        <translation type="obsolete">Tentang &amp;Luminance</translation>
+        <location filename="../forms/MainWindow.ui" line="738"/>
+        <source>About &amp;Luminance HDR</source>
+        <translation>Despre &amp;Luminance HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="741"/>
+        <source>Show information about Luminance HDR</source>
+        <translation>Arată informații despre Luminance HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="744"/>
+        <location filename="../forms/MainWindow.ui" line="747"/>
+        <source>Show information about Luminance HDR, its authors and contributors</source>
+        <translation>Arată informații despre Luminance HDR, autorii și contribuitorii săi </translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="755"/>
+        <source>Save HDR image &amp;preview...</source>
+        <translation>Salvează &amp;previzualizare imagine HDR...</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="758"/>
+        <location filename="../forms/MainWindow.ui" line="761"/>
+        <location filename="../forms/MainWindow.ui" line="764"/>
+        <source>Save the current HDR Preview to an LDR file</source>
+        <translation>Salvează previzualizarea HDR curentă într-un fișier LDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="772"/>
+        <source>&amp;Projective Transformation...</source>
+        <translation>Transformare &amp;proiectivă...</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="775"/>
+        <location filename="../forms/MainWindow.ui" line="778"/>
+        <location filename="../forms/MainWindow.ui" line="781"/>
+        <source>Apply projective transformation to the current HDR image</source>
+        <translation>Aplică transformarea proiectivă imaginii HDR curente</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="790"/>
+        <source>&amp;Crop to Selection</source>
+        <translation>&amp;Taie la selecție</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="793"/>
         <source>Crop to Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Taie la selecție</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="796"/>
+        <location filename="../forms/MainWindow.ui" line="799"/>
+        <source>Crop the image to selection rectangle</source>
+        <translation>Taie imaginea la dreptunghiul selecției</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="802"/>
+        <source>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</source>
+        <translation>Clic și trage în interiorul suprafeței imaginii pentru a crea o selecție, apoi folosește acest buton pentru a tăia o imagine HDR nouă</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="810"/>
         <source>Remove &amp;Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Șterge &amp;selecție</translation>
     </message>
     <message>
-        <source>Ready.... Now open an Hdr or create one!</source>
-        <translation type="obsolete">Siap.... Sekarang buka sebuah HDR atau membuat baru!</translation>
+        <location filename="../forms/MainWindow.ui" line="813"/>
+        <source>Remove selection rectangle</source>
+        <translation>Șterge dreptunghi selecție</translation>
     </message>
     <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Semua format HDR </translation>
+        <location filename="../forms/MainWindow.ui" line="816"/>
+        <location filename="../forms/MainWindow.ui" line="819"/>
+        <source>Remove selection rectangle from image area</source>
+        <translation>Șterge dreptunghi selecție din suprafața imaginii</translation>
     </message>
     <message>
-        <source>Load an Hdr file...</source>
-        <translation type="obsolete">Muat sebuah file HDR...</translation>
+        <location filename="../forms/MainWindow.ui" line="824"/>
+        <source>Make a &amp;Donation</source>
+        <translation>&amp;Donează</translation>
     </message>
     <message>
-        <source>Save the HDR...</source>
-        <translation type="obsolete">Simpan HDR...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="603"/>
-        <source>Aborting...</source>
-        <translation>Membatalkan...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="398"/>
-        <source>Error...</source>
-        <translation>Error...</translation>
+        <location filename="../forms/MainWindow.ui" line="827"/>
+        <source>Ctrl+D</source>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="110"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
-        <translation type="unfinished"></translation>
+        <translation>Gata. Acum deschide o imagine HDR existentă sau crează una nouă!</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="112"/>
         <source>Saving file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvând fișier...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="203"/>
         <location filename="../src/MainWindow/MainWindow.cpp" line="238"/>
         <source>All HDR formats </source>
-        <translation type="unfinished"></translation>
+        <translation>Toate formatele HDR</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="214"/>
         <source>Load one or more HDR images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Încarcă una sau mai multe imagini HDR...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="247"/>
         <source>Save the HDR image as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează imaginea HDR ca...</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="384"/>
+        <source>Error: %1 </source>
+        <translation>Eroare: %1 </translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="388"/>
         <source>Error: Failed to Tonemap Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare: Eșuat în a mapa tonurile imaginii</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="398"/>
+        <source>Error...</source>
+        <translation>Eroare...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="398"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminance HDR are nevoie să salveze rezultatele în fișiere temporare, dar dosarul curent selectat este invalid.&lt;br&gt;Alege o cale validă în Unelte -&gt; Preferințe...-&gt; Mapare de tonuri.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="703"/>
-        <source>There is at least one HDR image with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="847"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="848"/>
-        <source>Cropped Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
-        <translation type="obsolete">Luminance butuh cache untuk hasilnya sebagai file temporary, tapi direktori yang ter-select tidak valid.&lt;br&gt;Silahkan pilih path yang valid pada Tools -&gt; Preferences... -&gt; Tone Mapping.</translation>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="603"/>
+        <source>Aborting...</source>
+        <translation>Anulând...</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="703"/>
         <source>Unsaved changes...</source>
-        <translation>Perubahan tidak dapat disimpan...</translation>
+        <translation>Schimbări nesalvate...</translation>
     </message>
     <message>
-        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Sedikitnya ada satu HDR yang mempunyai perubahan belum disimpan.&lt;br&gt;Anda masih ingin keluar?</translation>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="703"/>
+        <source>There is at least one HDR image with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
+        <translation>Există cel puțin o imagine HDR cu schimbări nesalvate.&lt;br&gt;Vrei să ieși oricum?</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="791"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation>%1 Lisensi document tidak ditemukan, anda dapat mencarinya secara online: %2disini%3</translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="772"/>
-        <source>&amp;Projective Transformation...</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Document licență negăsit, îl poți găsi online: %2here%3</translation>
     </message>
     <message>
         <location filename="../src/MainWindow/MainWindow.cpp" line="801"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Fără titlu</translation>
     </message>
     <message>
-        <location filename="../forms/MainWindow.ui" line="790"/>
-        <source>&amp;Crop to Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="384"/>
-        <source>Error: %1 </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PreferenceDialog</name>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Pilih direktori</translation>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="847"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="848"/>
+        <source>Cropped Image</source>
+        <translation>Imagine tăiată</translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="132"/>
-        <source>Tone Mapping</source>
-        <translation type="unfinished">Tone Mapping</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="151"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2312"/>
-        <source>External Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hdr Tiff</source>
-        <translation type="obsolete">Hdr Tiff</translation>
-    </message>
-    <message>
-        <source>Hdr Visualization</source>
-        <translation type="obsolete">Hdr Visualization</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="564"/>
-        <source>Cache</source>
-        <translation type="unfinished">Cache</translation>
-    </message>
-    <message>
-        <source>Choose the directory where Luminance will store the temporary data to.</source>
-        <translation type="obsolete">Pilih direktori dimana Luminance meletakkan data temporary.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Memuat...</translation>
-    </message>
-    <message>
-        <source>Batch</source>
-        <translation type="obsolete">Batch</translation>
-    </message>
-    <message>
-        <source>Save using this LDR image &amp;format:</source>
-        <translation type="obsolete">Simpan menggunakan &amp;format image LDR:</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="656"/>
-        <source>JPEG</source>
-        <translation type="unfinished">JPEG</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="661"/>
-        <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="666"/>
-        <source>PPM</source>
-        <translation type="unfinished">PPM</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="671"/>
-        <source>PBM</source>
-        <translation type="unfinished">PBM</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="676"/>
-        <source>BMP</source>
-        <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>Number of &amp;threads:
-(useful on multi-core/SMP machines)</source>
-        <translation type="obsolete">Jumlah &amp;threads:
-(Berguna untuk mesin multi-core/SMP)</translation>
-    </message>
-    <message>
         <location filename="../forms/PreferencesDialog.ui" line="32"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferințe</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="114"/>
         <source>Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Intefață</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="123"/>
         <source>HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="132"/>
+        <source>Tone Mapping</source>
+        <translation>Mapare de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="141"/>
         <source>Raw Conversion</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="151"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2312"/>
+        <source>External Tools</source>
+        <translation>Unelte externe</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="201"/>
@@ -3501,22 +2787,26 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interfață&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="224"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Limba:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="237"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Cehă</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="242"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Engleză</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="247"/>
@@ -3526,27 +2816,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="252"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Franceză</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="257"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Germană</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="262"/>
         <source>Indonesian</source>
-        <translation type="unfinished"></translation>
+        <translation>Indoneziană</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="267"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italiană</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="272"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloneză</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="277"/>
@@ -3556,17 +2846,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="282"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rusă</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="287"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spaniolă</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="292"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Turcă</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="297"/>
+        <source>Hungarian</source>
+        <translation>Ungară</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="320"/>
@@ -3586,84 +2881,124 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="373"/>
         <source>HDR Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opțiuni HDR</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="387"/>
         <source>Choose what type of HDR TIFF to save to</source>
-        <translation type="unfinished"></translation>
+        <translation>Alege ce tip de TIFF HDR să salvez</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="390"/>
         <source>HDR TIFF File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format de fișier TIFF HDR</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="402"/>
         <source>Good quality and smaller file size</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate bună și dimensiune de fișier mai mică</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="405"/>
         <source>LogLuv TIFF (float, 16bit per color channel)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF LogLuv (virgulă mobilă, 16 biți pe canal de culoare)</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="415"/>
         <source>Better quality, larger file size, better compatibility with other applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate mai bună, dimensiune de fișier mai mare, mai bună compatibilitate cu alte aplicații</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="418"/>
         <source>Float TIFF (float, 32bit per color channel)</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF float (virgulă mobilă, 32 biți pe canal de culoare)</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="428"/>
+        <source>Colors</source>
+        <translation>Culori</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="448"/>
         <source>Show negative numbers as:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată numerele negative ca:</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="485"/>
+        <source>Show nan and +/-Inf values as:</source>
+        <translation>Arată nan și +/- Inf ca:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="550"/>
         <source>Tone Mapping Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Optiuni mapare de tonuri</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="564"/>
+        <source>Cache</source>
+        <translation>Memorie temporară</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="576"/>
         <source>Where to store temporary data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unde să stochez datele temporare:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="607"/>
         <source>C&amp;hoose</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;lege</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="619"/>
         <source>Batch Tone Mapping</source>
-        <translation type="unfinished">Batch Tone Mapping</translation>
+        <translation>Mapare de tonuri în serie</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="639"/>
         <location filename="../forms/PreferencesDialog.ui" line="652"/>
         <source>Which LDR image format to save to</source>
-        <translation type="unfinished"></translation>
+        <translation>În ce format de imagine LDR să salvez</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="642"/>
         <source>LDR image &amp;format:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Format de imagine LDR:</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="656"/>
+        <source>JPEG</source>
+        <translation>JPEG</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="661"/>
+        <source>PNG</source>
+        <translation>PNG</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="666"/>
+        <source>PPM</source>
+        <translation>PPM</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="671"/>
+        <source>PBM</source>
+        <translation>PBM</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="676"/>
+        <source>BMP</source>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="694"/>
         <location filename="../forms/PreferencesDialog.ui" line="716"/>
         <source>Amount of threads to use on multicore/SMP machines</source>
-        <translation type="unfinished"></translation>
+        <translation>Număr de fire de execuție de folosit pe calculatoare multi-nucleu/SMP</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="697"/>
         <source>Number of &amp;threads:</source>
-        <translation type="unfinished"></translation>
+        <translation>Număr de &amp;fire de execuție:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="763"/>
@@ -3704,6 +3039,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="810"/>
         <source>Quality:</source>
+        <translation type="unfinished">Calitate:</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="817"/>
+        <source>Median:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="843"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Quality (interpolation)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the demosaicing RAW images decoding interpolation method. A demosaicing algorithm is a digital image process used to interpolate a complete image from the partial raw data received from the color-filtered image sensor internal to many digital cameras in form of a matrix of colored pixels. Also known as CFA interpolation or color reconstruction, another common spelling is demosaicing. There are 4 methods to demosaicing RAW images:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bilinear&lt;/span&gt;: use high-speed but low-quality bilinear interpolation (default - for slow computer). In this method, the red value of a non-red pixel is computed as the average of the adjacent red pixels, and similar for blue and green.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;VNG&lt;/span&gt;: use Variable Number of Gradients interpolation. This method computes gradients near the pixel of interest and uses the lower gradients (representing smoother and more similar parts of the image) to make an estimate.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PPG&lt;/span&gt;: use Patterned Pixel Grouping interpolation. Pixel Grouping uses assumptions about natural scenery in making estimates. It has fewer color artifacts on natural images than the Variable Number of Gradients method.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Adaptive Homogeneity-Directed interpolation. This method selects the direction of interpolation so as to maximize a homogeneity metric, thus typically minimizing color artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3745,22 +3099,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/PreferencesDialog.ui" line="2238"/>
         <location filename="../forms/PreferencesDialog.ui" line="2263"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2004"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blue multiplier&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="817"/>
-        <source>Median:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="919"/>
@@ -3780,6 +3119,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="990"/>
         <source>Method:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1000"/>
+        <source>T(K):      </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1010"/>
+        <source>Green:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3817,11 +3166,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1000"/>
-        <source>T(K):      </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/PreferencesDialog.ui" line="1127"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -3839,6 +3183,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="1243"/>
         <source>Highlights:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1250"/>
+        <source>Level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3873,11 +3222,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="1307"/>
         <source>Reconstruct</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1250"/>
-        <source>Level:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3931,16 +3275,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1576"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/PreferencesDialog.ui" line="1514"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -3953,6 +3287,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="1522"/>
         <source>White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="1576"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4016,13 +3360,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1010"/>
-        <source>Green:</source>
+        <location filename="../forms/PreferencesDialog.ui" line="1852"/>
+        <source>Red:  </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1852"/>
-        <source>Red:  </source>
+        <location filename="../forms/PreferencesDialog.ui" line="1862"/>
+        <source>Blue:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4036,22 +3380,13 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1862"/>
-        <source>Blue:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="843"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2004"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Quality (interpolation)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the demosaicing RAW images decoding interpolation method. A demosaicing algorithm is a digital image process used to interpolate a complete image from the partial raw data received from the color-filtered image sensor internal to many digital cameras in form of a matrix of colored pixels. Also known as CFA interpolation or color reconstruction, another common spelling is demosaicing. There are 4 methods to demosaicing RAW images:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bilinear&lt;/span&gt;: use high-speed but low-quality bilinear interpolation (default - for slow computer). In this method, the red value of a non-red pixel is computed as the average of the adjacent red pixels, and similar for blue and green.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;VNG&lt;/span&gt;: use Variable Number of Gradients interpolation. This method computes gradients near the pixel of interest and uses the lower gradients (representing smoother and more similar parts of the image) to make an estimate.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PPG&lt;/span&gt;: use Patterned Pixel Grouping interpolation. Pixel Grouping uses assumptions about natural scenery in making estimates. It has fewer color artifacts on natural images than the Variable Number of Gradients method.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Adaptive Homogeneity-Directed interpolation. This method selects the direction of interpolation so as to maximize a homogeneity metric, thus typically minimizing color artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blue multiplier&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4140,9 +3475,25 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>DCraw options:</source>
+        <translation type="obsolete">Opțiuni DCraw:</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; DCRaw reference&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about DCRaw command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Ajutor &amp;gt; Conținut &amp;gt; Referința DCraw&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; pentru a afla mai multe despre parametrii în linie de comandă DCraws&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
         <location filename="../forms/PreferencesDialog.ui" line="2319"/>
         <source>align_image_stack commandline arguments:</source>
-        <translation type="unfinished"></translation>
+        <translation>parametri linie de comandă align_image_stack:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="2331"/>
@@ -4151,135 +3502,54 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opsi Import Raw&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click tombol bantuan dibawah untuk informasi lebih lengkap&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="obsolete">Click disini untuk mendapatkan informasi tentang paramater konversi Raw</translation>
-    </message>
-    <message>
-        <source>&amp;About Raw Parameters</source>
-        <translation type="obsolete">Tent&amp;ang Parameter Raw</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opsi Tiff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pilih format Tiff-Hdr yang akan Luminance gunakan untuk menyimpan image HDR.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="obsolete">LogLuv Tiff (float, 16bit)</translation>
-    </message>
-    <message>
-        <source>Float Tiff (float, 32bit)</source>
-        <translation type="obsolete">Float Tiff (float, 32bit)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opsi Hdr Visualization&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="428"/>
-        <source>Colors</source>
-        <translation type="unfinished">Colors</translation>
-    </message>
-    <message>
-        <source>Show Negative Numbers as:</source>
-        <translation type="obsolete">Tampilkan Negative Numbers sebagai:</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="485"/>
-        <source>Show nan and +/-Inf values as:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;What&apos;s this?</source>
-        <translation type="obsolete">&amp;Apa ini?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Ajutor &amp;gt; Conținut &amp;gt; Setare Luminance &amp;gt; Unelte externe&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; pentru a afla mai multe despre parametrii în linie de comandă ai align_image_stack&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="2392"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="2399"/>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="297"/>
-        <source>Hungarian</source>
-        <translation type="unfinished"></translation>
+        <source>Option -T...</source>
+        <translation type="obsolete">Opțiunea -T...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="175"/>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="182"/>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
+        <source>LuminanceHDR requires dcraw to be executed with the &quot;-T&quot; option. Command line options have been corrected.</source>
+        <translation type="obsolete">Luminance HDR necesită ca dcraw să fie executat cu opțiunea &quot;-T&quot;. Opțiunile de linie de comandă au fost corectate.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="175"/>
         <source>Option -a...</source>
-        <translation type="unfinished"></translation>
+        <translation>Opțiunea -a...</translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="175"/>
+        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
+        <translation>Luminance HDR necesită ca align_image_stack să fie executată cu opțiunea &quot;-a aligned_&quot;. Opțiunile de linie de comandă au fost corectate.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="182"/>
         <source>Please restart...</source>
-        <translation type="unfinished"></translation>
+        <translation>Restartează...</translation>
+    </message>
+    <message>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="182"/>
+        <source>Please restart LuminanceHDR to use the new language (%1).</source>
+        <translation>Restartează Luminance HDR pentru a folosi nouă limbă (%1).</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="775"/>
         <source>Choose a directory</source>
-        <translation type="unfinished">Pilih direktori</translation>
+        <translation>Alege un dosar</translation>
     </message>
 </context>
 <context>
@@ -4287,91 +3557,51 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="13"/>
         <source>Projective Transformation</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformare proiectivă</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="25"/>
         <source>Projections</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiecții</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="53"/>
         <source>Source Projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiecție sursă:</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="61"/>
         <location filename="../forms/ProjectionsDialog.ui" line="102"/>
         <source>Polar</source>
-        <translation type="unfinished"></translation>
+        <translation>Polară</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="66"/>
         <location filename="../forms/ProjectionsDialog.ui" line="107"/>
         <source>Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>Angulară</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="71"/>
         <location filename="../forms/ProjectionsDialog.ui" line="112"/>
         <source>Cylindrical</source>
-        <translation type="unfinished"></translation>
+        <translation>Cilindrică</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="76"/>
         <location filename="../forms/ProjectionsDialog.ui" line="117"/>
         <source>Mirror Ball</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilă oglindită</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="94"/>
         <source>Destination Projection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Proiecție destinație:</translation>
     </message>
     <message>
         <location filename="../forms/ProjectionsDialog.ui" line="153"/>
         <source>Angles:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="193"/>
-        <source>Bilinear Interpolation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="216"/>
-        <source>Oversample factor:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="238"/>
-        <source>Rotation (degrees)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="258"/>
-        <source>Yaw:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="347"/>
-        <source>Pitch:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="436"/>
-        <source>Roll:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="541"/>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished">&amp;Batal</translation>
-    </message>
-    <message>
-        <location filename="../forms/ProjectionsDialog.ui" line="548"/>
-        <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation>Unghiuri:</translation>
     </message>
     <message utf8="true">
         <location filename="../forms/ProjectionsDialog.ui" line="163"/>
@@ -4379,7 +3609,47 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/ProjectionsDialog.ui" line="375"/>
         <location filename="../forms/ProjectionsDialog.ui" line="464"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="193"/>
+        <source>Bilinear Interpolation</source>
+        <translation>Interpolare biliniară</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="216"/>
+        <source>Oversample factor:</source>
+        <translation>Factor supra-eșantionare:</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="238"/>
+        <source>Rotation (degrees)</source>
+        <translation>Rotație (grade)</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="258"/>
+        <source>Yaw:</source>
+        <translation>Derivă:</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="347"/>
+        <source>Pitch:</source>
+        <translation>Înclinație:</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="436"/>
+        <source>Roll:</source>
+        <translation>Rotație:</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="541"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Anulează</translation>
+    </message>
+    <message>
+        <location filename="../forms/ProjectionsDialog.ui" line="548"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -4387,54 +3657,50 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/options.cpp" line="191"/>
         <source>ERROR: cannot load Tone Mapping Setting file: </source>
-        <translation>ERROR: Tidak dapat memuat file Setting Tone Mapping: </translation>
+        <translation>Eroare: nu pot încărca fișierul de setări pentru mapare de tonuri: </translation>
     </message>
     <message>
         <location filename="../src/Common/options.cpp" line="211"/>
         <source>ERROR: File too old, cannot parse Tone Mapping Setting file: </source>
-        <translation>ERROR: File terlalu lama, cannot parse Tone Mapping Setting file: </translation>
+        <translation>Eroare: Fișier prea vechi, nu pot parcurge fișierul de setări pentru maparea de tonuri: </translation>
     </message>
     <message>
         <location filename="../src/Common/options.cpp" line="306"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
-        <translation>ERROR: cannot parse Tone Mapping Setting file: </translation>
+        <translation>Eroare:  nu pot parcurge fișierul de setări pentru maparea de tonuri: </translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="68"/>
-        <source>Aborting...</source>
-        <translation>Membatalkan...</translation>
-    </message>
-    <message>
-        <location filename="../src/main.cpp" line="68"/>
-        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
-        <translation>Tidak menemukan Plugin Qt&apos;s JPEG...&lt;br&gt;Dimohon unzip paket DLL menggunakan opsi &quot;use folder names&quot; telah diaktifkan.</translation>
-    </message>
-    <message>
-        <source>Save the LDR to...</source>
-        <translation type="obsolete">Simpan LDR ke...</translation>
-    </message>
-    <message>
-        <location filename="../src/Common/global.cpp" line="87"/>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Gagal menyimpan &lt;b&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/Common/global.cpp" line="45"/>
         <source>All LDR formats</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate formatele LDR</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
         <source>Save the LDR image as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează imaginea LDR ca...</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
         <source>Save as...</source>
-        <translation type="unfinished">Simpan sebagai...</translation>
+        <translation>Salvează ca...</translation>
+    </message>
+    <message>
+        <location filename="../src/Common/global.cpp" line="87"/>
+        <source>Failed to save &lt;b&gt;</source>
+        <translation>Eșuat la salvare &lt;b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="68"/>
+        <source>Aborting...</source>
+        <translation>Anulând...</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="68"/>
+        <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
+        <translation>Nu pot găsi modulul JPEG al Qt...&lt;br&gt;Te rog dezarhivează pachetul DLL cu opțiunea &quot;folosește numele dosarelor&quot; activată.</translation>
     </message>
 </context>
 <context>
@@ -4442,62 +3708,62 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/ResizeDialog.ui" line="13"/>
         <source>Scale Image</source>
-        <translation>Scale Image</translation>
+        <translation>Scalează imagine</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="31"/>
         <source>Hdr Image Size</source>
-        <translation>Ukuran Image HDR</translation>
+        <translation>Dimensiune imagine Hdr</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="65"/>
         <source>Width:</source>
-        <translation>Lebar:</translation>
+        <translation>Lățime:</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="98"/>
         <source>Switch between pixels or percentage</source>
-        <translation>Mengalihkan antara pixels atau persen</translation>
+        <translation>Comută între pixeli sau procentaj</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="102"/>
         <source>Pixels</source>
-        <translation>Pixels</translation>
+        <translation>Pixeli</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="107"/>
         <source>Percent</source>
-        <translation>Persen</translation>
+        <translation>Procent</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="147"/>
         <source>Height:</source>
-        <translation>Tinggi:</translation>
+        <translation>Înălțime:</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="180"/>
         <source>Result size</source>
-        <translation>Hasil ukuran</translation>
+        <translation>Dimensiune rezultat</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="193"/>
         <source>Restore original size</source>
-        <translation>Kembalikan ke ukuran semula</translation>
+        <translation>Restabilește dimensiunea originală</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="196"/>
         <source>&amp;Reset</source>
-        <translation>&amp;Reset</translation>
+        <translation>&amp;Resetează</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="235"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
         <location filename="../forms/ResizeDialog.ui" line="242"/>
         <source>&amp;Scale</source>
-        <translation>&amp;Skala</translation>
+        <translation>&amp;Scalează</translation>
     </message>
 </context>
 <context>
@@ -4505,7 +3771,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/Splash.ui" line="26"/>
         <source>Luminance HDR - Make a Donation</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminance HDR - Donează</translation>
     </message>
     <message>
         <location filename="../forms/Splash.ui" line="34"/>
@@ -4514,22 +3780,26 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; is open-source software and its development required hundreds of hours of work.&lt;br /&gt;&lt;br /&gt;If you like it, if you use it in your work and you would like to see it gradually improved,&lt;br /&gt;please support its authors by making a donation.&lt;br /&gt;&lt;br /&gt;Would you like to make a donation for Luminance HDR now?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Droid Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-weight:600; color:#000000;&quot;&gt;Luminance HDR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt; este software open source al cărui dezvoltare a necesitat sute de oră de muncă.&lt;br /&gt;&lt;br /&gt;Dacă îți place, dacă îl folosești în munca ta și îți place să fie treptat îmbunătățit, &lt;br&gt; te rog să ajuți autorii cu o donație.&lt;br /&gt;&lt;br /&gt;Vrei să faci o donație la Luminance HDR acum?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/Splash.ui" line="47"/>
         <source>Yes, I&apos;d love to!</source>
-        <translation type="unfinished"></translation>
+        <translation>Da, aș vrea!</translation>
     </message>
     <message>
         <location filename="../forms/Splash.ui" line="54"/>
         <source>Ask me again later</source>
-        <translation type="unfinished"></translation>
+        <translation>Întreabă-mă din nou mai târziu</translation>
     </message>
     <message>
         <location filename="../forms/Splash.ui" line="67"/>
         <source>No, Stop bothering me!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu, nu mă mai deranja!</translation>
     </message>
 </context>
 <context>
@@ -4537,148 +3807,80 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingWindow/TMOProgressIndicator.cpp" line="38"/>
         <source>Abort computation</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulează calcul</translation>
     </message>
 </context>
 <context>
     <name>ThreadManager</name>
     <message>
+        <source>Active TM Processes</source>
+        <translation type="obsolete">Procese MT active</translation>
+    </message>
+    <message>
+        <source>&amp;Abort All</source>
+        <translation type="obsolete">&amp;Anulează tot</translation>
+    </message>
+    <message>
         <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Tutup</translation>
+        <translation type="obsolete">&amp;Închide</translation>
     </message>
 </context>
 <context>
     <name>TonemappingPanel</name>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="558"/>
-        <source>Load a tonemapping settings text file...</source>
-        <translation>Memuat sebuah file text setting tonemapping...</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="36"/>
+        <source>Tone mapping operators and their options</source>
+        <translation>Operatori mapare de tonuri și opțiunile lor</translation>
     </message>
     <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">File text setting Luminance tonemapping (*.txt)</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="55"/>
+        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Operator:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="560"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="587"/>
-        <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../forms/TonemappingPanel.ui" line="72"/>
+        <source>Mantiuk &apos;06</source>
+        <translation>Mantiuk &apos;06</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="564"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="607"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="686"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="703"/>
-        <source>Aborting...</source>
-        <translation>Membatalkan...</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="77"/>
+        <source>Mantiuk &apos;08</source>
+        <translation>Mantiuk &apos;08</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="565"/>
-        <source>File is not readable (check existence, permissions,...)</source>
-        <translation>File tidak terbaca (silahkan cek keberadaannya, permissions,...)</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="82"/>
+        <source>Fattal</source>
+        <translation>Fattal</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="585"/>
-        <source>Save tonemapping settings text file to...</source>
-        <translation>Simpan text setting tonemapping file ke...</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="87"/>
+        <source>Drago</source>
+        <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="607"/>
-        <source>File is not writable (check permissions, path...)</source>
-        <translation>File tidak dapat ditulisi (silahkan cek permission, path...)</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="92"/>
+        <source>Durand</source>
+        <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="686"/>
-        <source>File is not readable (check permissions, path...)</source>
-        <translation>File tidak terbaca (silahkan cek permissions, path...)</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="97"/>
+        <source>Reinhard &apos;02</source>
+        <translation>Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="703"/>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="unfinished"></translation>
+        <location filename="../forms/TonemappingPanel.ui" line="102"/>
+        <source>Reinhard &apos;05</source>
+        <translation>Reinhard &apos;05</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one.</source>
-        <translation type="obsolete">Error, Format file setting tone mapping telah berubah. file ini (terlalu lama) tidak dapat digunakan pada Luminance versi ini. Buat yang baru lagi.</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="107"/>
+        <source>Ashikhmin</source>
+        <translation>Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="803"/>
-        <source>Enter the width of the new size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2352"/>
-        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="802"/>
-        <source>Custom LDR size</source>
-        <translation>Custom LDR size</translation>
-    </message>
-    <message>
-        <source>Tonemapping Operators and options</source>
-        <translation type="obsolete">Operator tonemapping dan opsi</translation>
-    </message>
-    <message>
-        <source>&amp;Result size:</source>
-        <translation type="obsolete">Hasil uku&amp;ran:</translation>
-    </message>
-    <message>
-        <source>The size of the resulting LDR image.</source>
-        <translation type="obsolete">Ukuran hasil imaga LDR.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2339"/>
-        <source>Here you can choose the size of the resulting LDR image.</source>
-        <translation>Anda dapat memilih ukuran dari hasil image LDR.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2355"/>
-        <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
-        <translation>Clik tombol ini, anda akan dapat menyisipkan nilai &lt;i&gt;lebar&lt;/i&gt; untuk ukuran hasil image LDR.&lt;br&gt;Setelah menekan Enter (atau Return) nilai tinggi akan otomatis dicomputasi dan ukuran baru akan ditambahkan ke dalam daftar.</translation>
-    </message>
-    <message>
-        <source>Gamma applied before tone mapping</source>
-        <translation type="obsolete">Gamma applied sebelum tone mapping</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2292"/>
-        <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
-        <translation>Anda dapan menerapkan sebuah gamma correction ke HDR.&lt;br&gt;Gamma correction akan diterapkan sebelum tone mapping.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2317"/>
-        <source>&amp;Result Size:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2336"/>
-        <source>Size of the resulting LDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2382"/>
-        <source>Process
-Original HDR</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2406"/>
-        <source>Process only selection of the original HDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2409"/>
-        <source>Process
-Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2427"/>
-        <source>Pre-gamma:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2449"/>
-        <source>Restore pregamma&apos;s default value (1)</source>
-        <translation>Kembalikan nilai default pregamma&apos;s (1)</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="112"/>
+        <source>Pattanaik</source>
+        <translation>Pattanaik</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="153"/>
@@ -4689,31 +3891,88 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Un cadru perceptual pentru procesarea de contrast a imaginilor cu interval dinamic mare&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="166"/>
         <source>Contrast Equalization</source>
-        <translation>Contrast Equalization</translation>
+        <translation>Egalizare contrast</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="177"/>
         <source>Contrast Factor</source>
-        <translation>Contrast Factor</translation>
+        <translation>Factor contrast</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="184"/>
         <source>Saturation Factor</source>
-        <translation>Saturation Factor</translation>
+        <translation>Factor saturație</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2111"/>
-        <source>Restore operator&apos;s default values</source>
-        <translation>Kembalikan ke nilai default operator</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="194"/>
+        <source>Detail Factor</source>
+        <translation>Factor detalii</translation>
     </message>
     <message>
-        <source>Default Values for operator</source>
-        <translation type="obsolete">Nilai default untuk operator</translation>
+        <location filename="../forms/TonemappingPanel.ui" line="365"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Display Adaptive Tone Mapping&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Rafal Mantiuk, Scott Daly and Louis Kerofsky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Afișează mapare de tonuri adaptivă&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Rafal Mantiuk, Scott Daly și Louis Kerofsky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="379"/>
+        <source>Predefined Display</source>
+        <translation>Afișaj predefinit</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="400"/>
+        <source>Lcd Office</source>
+        <translation>Lcd birou</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="405"/>
+        <source>Lcd</source>
+        <translation>Lcd</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="410"/>
+        <source>Lcd Bright</source>
+        <translation>Lcd strălucitor</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="415"/>
+        <source>CRT</source>
+        <translation>CRT</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="429"/>
+        <location filename="../forms/TonemappingPanel.ui" line="625"/>
+        <source>Color Saturation</source>
+        <translation>Saturație culoare</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="436"/>
+        <source>Contrast Enhancement</source>
+        <translation>Îmbunătățire contrast</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="446"/>
+        <source>Luminance Level</source>
+        <translation>Nive luminanță</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="555"/>
+        <source>Set Manual Luminace Level</source>
+        <translation>Setează nivel luminanță manual</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="594"/>
@@ -4724,12 +3983,12 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gradient Domain High Dynamic Range Compression&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Domeniu gradient, compresie interval dinamic mare&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, și M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="611"/>
         <source>Alpha</source>
-        <translation></translation>
+        <translation>Alfa</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="618"/>
@@ -4737,60 +3996,60 @@ p, li { white-space: pre-wrap; }
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="429"/>
-        <location filename="../forms/TonemappingPanel.ui" line="625"/>
-        <source>Color Saturation</source>
-        <translation>Color Saturation</translation>
-    </message>
-    <message>
         <location filename="../forms/TonemappingPanel.ui" line="632"/>
         <source>Noise Reduction</source>
-        <translation>Noise Reduction</translation>
+        <translation>Reducere de zgomot</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="798"/>
         <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
-        <translation>&quot;Old&quot; Fattal (pre 1.8.4)</translation>
+        <translation>&quot;Vechiul&quot; Fattal (pre 1.8.4)</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <location filename="../forms/TonemappingPanel.ui" line="837"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Mapare adaptivă logaritmică pentru a afișa scene cu contrast mare&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, și N. Chiba&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="853"/>
         <source>Bias</source>
-        <translation>Bias</translation>
+        <translation>Tendință</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <location filename="../forms/TonemappingPanel.ui" line="940"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Filtrare bilaterală rapidă pentru afișarea imaginilori HDR&lt;/span&gt;&lt;br /&gt;F. Durand și J. Dorsey&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="958"/>
         <source>Spatial Kernel Sigma</source>
-        <translation>Spatial Kernel Sigma</translation>
+        <translation>Sigma nucleu spațial</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="965"/>
         <source>Range Kernel Sigma</source>
-        <translation>Range Kernel Sigma</translation>
+        <translation>Sigma nucleu interval</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="972"/>
         <source>Base Contrast</source>
-        <translation>Base Contrast</translation>
+        <translation>Contrast bază</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1122"/>
@@ -4801,17 +4060,17 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Photographic Tone Reproduction for Digital Images&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reproducere de tonuri fotografică pentru imagini digitale&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, și J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1135"/>
         <source>Use Scales</source>
-        <translation>Gunakan Skala</translation>
+        <translation>Utilizează scale</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1146"/>
         <source>Key Value</source>
-        <translation>Niai Kunci</translation>
+        <translation>Valoare cheie</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1153"/>
@@ -4821,17 +4080,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1163"/>
         <source>Range</source>
-        <translation>Range</translation>
+        <translation>Interval</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1173"/>
         <source>Lower Scale</source>
-        <translation>Lower Scale</translation>
+        <translation>Scală joasă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1183"/>
         <source>Upper Scale</source>
-        <translation>Upper Scale</translation>
+        <translation>Scală înaltă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1441"/>
@@ -4842,22 +4101,22 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dynamic Range Reduction Inspired by Photoreceptor Physiology&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reducere interval dinamic inspirată de fiziologia fotoreceptorilor&lt;/span&gt;&lt;br /&gt;E. Reinhard și K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1458"/>
         <source>Brightness</source>
-        <translation>Brightness</translation>
+        <translation>Strălucire</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1465"/>
         <source>Chromatic Adaptation</source>
-        <translation>Chromatic Adaptation</translation>
+        <translation>Adaptare cromatică</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1472"/>
         <source>Light Adaptation</source>
-        <translation>Light Adaptation</translation>
+        <translation>Adaptare lumină</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1654"/>
@@ -4868,32 +4127,32 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Tone Mapping Algorithm for High Contrast Images&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Un algoritm de mapare de tonuri pentru imagini cu contrast mare&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1678"/>
         <source>Simple</source>
-        <translation>Simple</translation>
+        <translation>Simplu</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1697"/>
         <source>Equation Number</source>
-        <translation>Equation Number</translation>
+        <translation>Număr ecuație</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1715"/>
         <source>Eqn 2</source>
-        <translation>Eqn 2</translation>
+        <translation>Ecț 2</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1731"/>
         <source>Eqn 4</source>
-        <translation>Eqn 4</translation>
+        <translation>Ecț 4</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1764"/>
         <source>Local Contrast Threshold</source>
-        <translation></translation>
+        <translation>Prag contrast local</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1852"/>
@@ -4904,259 +4163,58 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time-Dependent Visual Adaptation for Realistic Image Display&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptare vizuală dependentă de timp pentru afișaj de imagini realist&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, și D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1873"/>
         <source>Multiplier</source>
-        <translation>Multiplier</translation>
+        <translation>Multiplicator</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1932"/>
         <source>Local Tone Mapping</source>
-        <translation>Local Tone Mapping</translation>
+        <translation>Mapare de tonuri locală</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1939"/>
         <source>Cone and Rod based on Luminance</source>
-        <translation>Cone and Rod based on Luminance</translation>
+        <translation>Con și tijă bazate pe luminanță</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1958"/>
         <source>Cone Level</source>
-        <translation>Cone Level</translation>
+        <translation>Nivel con</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1968"/>
         <source>Rod Level</source>
-        <translation>Rod Level</translation>
+        <translation>Nivel tijă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2522"/>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start tone mapping (CTRL+A).</source>
-        <translation type="obsolete">Mulai tone mapping (CTRL+A).</translation>
-    </message>
-    <message>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
-        <translation type="obsolete">Menggunakan parameter diatas (pregamma dan tone mapping operator) untuk mengkomputasi sebua image LDR.</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">&amp;Apply</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2538"/>
-        <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="365"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Display Adaptive Tone Mapping&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Rafal Mantiuk, Scott Daly and Louis Kerofsky&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="837"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="940"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <location filename="../forms/TonemappingPanel.ui" line="2111"/>
+        <source>Restore operator&apos;s default values</source>
+        <translation>Restabilește valorile implicite ale operatorilor</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2114"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Restabilește</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2147"/>
         <source>Previous applied settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2164"/>
-        <source>Next applied settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2196"/>
-        <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
-        <translation>Sekarang anda dapat memuat dan menyimpan sebuah file tone mapping setting.&lt;br&gt;Anda dapat juga menerapkan content dari file yang telah dimuat.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2199"/>
-        <source>Tone Mapping Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2225"/>
-        <source>Save current parameters to a text file</source>
-        <translation>Simpan parameter ke sebuah file text</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2228"/>
-        <source>Save current parameters (pregamma and TMO) to a text file.</source>
-        <translation>Simpan parameter (pregamma dan TMO) ke sebuah file text.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2231"/>
-        <source>&amp;Save...</source>
-        <translation>&amp;Simpan...</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2248"/>
-        <source>Load an existing text file containing pregamma and TMO settings</source>
-        <translation>Muat file text pregamma dan TMO setting yang ada</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2251"/>
-        <source>Load an existing text file containing pregamma and TMO settings.</source>
-        <translation>Muat file text pregamma dan TMO setting yang ada.</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2254"/>
-        <source>&amp;Load...</source>
-        <translation>&amp;Memuat...</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="194"/>
-        <source>Detail Factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="36"/>
-        <source>Tone mapping operators and their options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="55"/>
-        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="82"/>
-        <source>Fattal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="87"/>
-        <source>Drago</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="92"/>
-        <source>Durand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="97"/>
-        <source>Reinhard &apos;02</source>
-        <translation type="unfinished">Reinhard &apos;02</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="102"/>
-        <source>Reinhard &apos;05</source>
-        <translation type="unfinished">Reinhard &apos;05</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="107"/>
-        <source>Ashikhmin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="112"/>
-        <source>Pattanaik</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2295"/>
-        <source>Process</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="72"/>
-        <source>Mantiuk &apos;06</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="77"/>
-        <source>Mantiuk &apos;08</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="379"/>
-        <source>Predefined Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="400"/>
-        <source>Lcd Office</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="405"/>
-        <source>Lcd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="410"/>
-        <source>Lcd Bright</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="415"/>
-        <source>CRT</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="436"/>
-        <source>Contrast Enhancement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="446"/>
-        <source>Luminance Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="555"/>
-        <source>Set Manual Luminace Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Precedentele setări aplicate</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2150"/>
         <location filename="../forms/TonemappingPanel.ui" line="2170"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2379"/>
-        <source>If checked process the original HDR image, if not process the previously tonemapped image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2424"/>
-        <location filename="../forms/TonemappingPanel.ui" line="2482"/>
-        <source>Gamma applied before tonemapping</source>
-        <translation type="unfinished"></translation>
+        <location filename="../forms/TonemappingPanel.ui" line="2164"/>
+        <source>Next applied settings</source>
+        <translation>Următoarele setări aplicate</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2519"/>
@@ -5169,14 +4227,215 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Tone Mapping settings file section</source>
+        <translation type="obsolete">Secțiune fișier setări mapare de tonuri</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2196"/>
+        <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
+        <translation>Aici poți încărca și salva un fișier de setări pentru mapare de tonuri.&lt;br&gt;Poți deasemenea aplica conținutul fișierului de setări curent încărcat.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2199"/>
+        <source>Tone Mapping Settings</source>
+        <translation>Setări mapare de tonuri</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2225"/>
+        <source>Save current parameters to a text file</source>
+        <translation>Salvează parametrii curenți într-un fișier text</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2228"/>
+        <source>Save current parameters (pregamma and TMO) to a text file.</source>
+        <translation>Salvează parametrii curenți (pregamma și TMO) într-un fișier text.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2231"/>
+        <source>&amp;Save...</source>
+        <translation>&amp;Salvează...</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2248"/>
+        <source>Load an existing text file containing pregamma and TMO settings</source>
+        <translation>Încarcă un fișier text existent conținând setări pregamma și TMO</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2251"/>
+        <source>Load an existing text file containing pregamma and TMO settings.</source>
+        <translation>Încarcă un fișier text existent conținând setări pregamma și TMO.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2254"/>
+        <source>&amp;Load...</source>
+        <translation>&amp;Încarcă...</translation>
+    </message>
+    <message>
+        <source>Gamma applied before tone mapping</source>
+        <translation type="obsolete">Gamma aplicat înainte de mapare de tonuri</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2292"/>
+        <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
+        <translation>Aici poți aplica corecția gamma la HDR.&lt;br&gt;Corecția gamma va fi aplicată înainte de maparea de tonuri.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2295"/>
+        <source>Process</source>
+        <translation>Proces</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2317"/>
+        <source>&amp;Result Size:</source>
+        <translation>&amp;Dimensiune rezultat:</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2336"/>
+        <source>Size of the resulting LDR image</source>
+        <translation>Dimensiunea imaginii LDR rezultate</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2339"/>
+        <source>Here you can choose the size of the resulting LDR image.</source>
+        <translation>Aici poți alege dimensiunea imaginii LDR rezultate.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2352"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="802"/>
+        <source>Custom LDR size</source>
+        <translation>Dimensiune LDR customizată</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2355"/>
+        <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
+        <translation>Cu clic pe acest buton vei putea să inserezi o &lt;i&gt;lățime&lt;/i&gt; pentru imaginea LDR rezultată.&lt;br&gt;După apasarea Enter o valoare a înălțimii va fi calculată automat și noua dimensiune va fi adăugată la listă.</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2379"/>
+        <source>If checked process the original HDR image, if not process the previously tonemapped image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2382"/>
+        <source>Process
+Original HDR</source>
+        <translation>Procesează HDR original</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2406"/>
+        <source>Process only selection of the original HDR image</source>
+        <translation>Procesează doar selecția din imaginea HDR originală</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2409"/>
+        <source>Process
+Selection</source>
+        <translation>Procesează selecție</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2424"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2482"/>
+        <source>Gamma applied before tonemapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2427"/>
+        <source>Pre-gamma:</source>
+        <translation>Pre-gamma:</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2449"/>
+        <source>Restore pregamma&apos;s default value (1)</source>
+        <translation>Restaurează valoare implicită pregamma (1)</translation>
+    </message>
+    <message>
+        <source>Start tonemapping (CTRL+A)</source>
+        <translation type="obsolete">Începe mapare de tonuri (CTRL+A)</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2522"/>
+        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
+        <translation>Utilizează parametrii curenți de mai sus (pregamma și operator mapare de tonuri) pentru a calcula o imagine LDR</translation>
+    </message>
+    <message>
+        <source>&amp;Apply</source>
+        <translation type="obsolete">&amp;Aplică</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2538"/>
+        <source>Ctrl+A</source>
+        <translation>Ctrl+A</translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2561"/>
         <source>undo</source>
-        <translation type="unfinished"></translation>
+        <translation>anulează</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2570"/>
         <source>redo</source>
-        <translation type="unfinished"></translation>
+        <translation>refă</translation>
+    </message>
+    <message>
+        <source>Attention</source>
+        <translation type="obsolete">Atenție</translation>
+    </message>
+    <message>
+        <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
+
+Do you want to continue?</source>
+        <translation type="obsolete">Acest operator de mapare de tonuri depinde de dimensiunea imaginii sursă. Aplicarea acestui operator pe imaginea completă va rezulta cel mai probabil într-o imagine diferită.
+
+Vrei să continui?</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="558"/>
+        <source>Load a tonemapping settings text file...</source>
+        <translation>Încarcă un fișier setări text de mapare de tonuri...</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="560"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="587"/>
+        <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
+        <translation>Fișier setări text de mapare de tonuri Luminance HDR (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="564"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="607"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="686"/>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="703"/>
+        <source>Aborting...</source>
+        <translation>Anulând...</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="565"/>
+        <source>File is not readable (check existence, permissions,...)</source>
+        <translation>Fișierul nu este citibil (verifică existența, drepturi,...)</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="585"/>
+        <source>Save tonemapping settings text file to...</source>
+        <translation>Salvează fișier setări text de mapare de tonuri în...</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="607"/>
+        <source>File is not writable (check permissions, path...)</source>
+        <translation>Fișierul nu poate fi scris (verifică drepturi, cale...)</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="686"/>
+        <source>File is not readable (check permissions, path...)</source>
+        <translation>Fișierul nu poate fi citit (verifică drepturi, cale...)</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="703"/>
+        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <translation>Eroare, formatul fișierul de setări pentru mapare de tonuri s-a schimbat. Acest fișier (vechi) nu poate fi folosit cu această versiune de LuminanceHDR. Crează unul nou.</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingPanel.cpp" line="803"/>
+        <source>Enter the width of the new size:</source>
+        <translation>Introduce lățimea noii dimensiuni:</translation>
     </message>
 </context>
 <context>
@@ -5196,7 +4455,9 @@ p, li { white-space: pre-wrap; }
         <source>This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.
 
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Acest operator de mapare de tonuri depinde de dimensiunea imaginii sursă. Aplicarea acestui operator pe imaginea completă va rezulta cel mai probabil într-o imagine diferită.
+
+Vrei să continui?</translation>
     </message>
 </context>
 <context>
@@ -5204,34 +4465,55 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="14"/>
         <source>Tone Mapping: </source>
-        <translation>Tone Mapping:</translation>
+        <translation>Mapare de tonuri: </translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="37"/>
         <source>&amp;Help</source>
-        <translation>&amp;Bantuan</translation>
+        <translation>&amp;Ajutor</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="46"/>
         <source>&amp;View</source>
-        <translation>&amp;Lihat</translation>
+        <translation>&amp;Vizualizare</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="50"/>
+        <location filename="../forms/TonemappingWindow.ui" line="541"/>
+        <source>Toolbars</source>
+        <translation>Bare de unelte</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="72"/>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation>&amp;Fișier</translation>
     </message>
     <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Keluar</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="83"/>
+        <source>&amp;Windows</source>
+        <translation>&amp;Ferestre</translation>
     </message>
     <message>
-        <source>Exit</source>
-        <translation type="obsolete">Keluar</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="118"/>
+        <source>Show Main Toolbar</source>
+        <translation>Arată bara de unelte principală</translation>
     </message>
     <message>
-        <source>Close Tone Mapping Window</source>
-        <translation type="obsolete">Tutup Windo Tone Mapping</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="157"/>
+        <source>&amp;Close</source>
+        <translation>În&amp;chide</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="160"/>
+        <source>Close</source>
+        <translation>Închide</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="163"/>
+        <location filename="../forms/TonemappingWindow.ui" line="166"/>
+        <location filename="../forms/TonemappingWindow.ui" line="169"/>
+        <source>Close the tonemapping dialog</source>
+        <translation>Închide dialogul de mapare de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="172"/>
@@ -5239,51 +4521,39 @@ Do you want to continue?</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <source>Tone Mapping Panel</source>
-        <translation type="obsolete">Panel tone mapping</translation>
-    </message>
-    <message>
-        <source>Show/Hide the Tone mapping Panel</source>
-        <translation type="obsolete">Tunjukkan/Sembunyikan panel Tone mapping</translation>
-    </message>
-    <message>
-        <source>Adjust &amp;Levels...</source>
-        <translation type="obsolete">Adjust &amp;Levels...</translation>
-    </message>
-    <message>
-        <source>Adjust Levels...</source>
-        <translation type="obsolete">Adjust Levels...</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="163"/>
-        <location filename="../forms/TonemappingWindow.ui" line="166"/>
-        <location filename="../forms/TonemappingWindow.ui" line="169"/>
-        <source>Close the tonemapping dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/TonemappingWindow.ui" line="187"/>
         <location filename="../forms/TonemappingWindow.ui" line="190"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="86"/>
         <source>Tone Mapping Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opțiuni mapare de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="193"/>
         <location filename="../forms/TonemappingWindow.ui" line="196"/>
         <source>Toggle display of the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>Comută afișarea barei laterale cu opțiuni mapare de tonuri</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="199"/>
         <source>Show/Hide the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată/Ascunde bara laterală cu opțiuni mapare de tonuri</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="214"/>
+        <source>Adjust &amp;Levels</source>
+        <translation>Ajutează &amp;nivele</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="217"/>
+        <location filename="../forms/TonemappingWindow.ui" line="220"/>
+        <source>Adjust Levels</source>
+        <translation>Ajustează nivele</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="223"/>
         <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Tune histogram LDR ini</translation>
+        <translation>Reglează histograma pentru imaginea LDR curentă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="229"/>
@@ -5293,19 +4563,19 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
-        <translation>&amp;Simpan sebagai...</translation>
+        <translation>&amp;Salvează ca...</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="244"/>
         <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
-        <translation>Simpan sebagai...</translation>
+        <translation>Salvează ca...</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="250"/>
         <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
-        <translation>Simpan LDR yang ter-select</translation>
+        <translation>Salvează LDR curent selectat</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="256"/>
@@ -5315,19 +4585,19 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
-        <translation>T&amp;utup Semua</translation>
+        <translation>Înc&amp;hide toate</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="271"/>
         <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
-        <translation>Tutup Semua</translation>
+        <translation>Închide toate</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="277"/>
         <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Tutup semua LDR dalam bidang kerja</translation>
+        <translation>Închide toate imaginile LDR din spațiul de lucru</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="283"/>
@@ -5337,62 +4607,23 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
-        <translation>Sebagai &amp;Thumbnails</translation>
+        <translation>Ca pic&amp;tograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
-        <translation>Sebagai Thumbnails</translation>
+        <translation>Ca pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
-        <translation>Images as Thumbnails</translation>
+        <translation>Imagini ca pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="440"/>
-        <location filename="../forms/TonemappingWindow.ui" line="443"/>
-        <source>Show the original high dynamic range image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="464"/>
-        <location filename="../forms/TonemappingWindow.ui" line="467"/>
-        <source>Show the next image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="488"/>
-        <location filename="../forms/TonemappingWindow.ui" line="491"/>
-        <source>Show the previous image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="598"/>
-        <source>Sync View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="601"/>
-        <location filename="../forms/TonemappingWindow.ui" line="604"/>
-        <location filename="../forms/TonemappingWindow.ui" line="607"/>
-        <source>Lock view of all images to sync panning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="629"/>
-        <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="632"/>
-        <location filename="../forms/TonemappingWindow.ui" line="635"/>
-        <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layout all LDRs as thumbnails.</source>
-        <translation type="obsolete">Layout semua LDR as thumbnails.</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="303"/>
+        <location filename="../forms/TonemappingWindow.ui" line="306"/>
+        <source>Layout all LDR images as thumbnails</source>
+        <translation>Afișează toate imaginile LDR ca pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="309"/>
@@ -5402,13 +4633,13 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Cascade</translation>
+        <translation>În &amp;cascadă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="320"/>
         <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Cascade semua LDR dalam bidang kerja</translation>
+        <translation>Adișează toate LDR-urile din spațiul de lucru în cascadă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="326"/>
@@ -5418,13 +4649,13 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Fit to Window</translation>
+        <translation>&amp;Potrivește în fereastră</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="347"/>
         <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Fit the current LDR to its containing window.</translation>
+        <translation>Potrivește LDR curent în fereastra care îl conține.</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="353"/>
@@ -5435,15 +4666,13 @@ Do you want to continue?</source>
         <location filename="../forms/TonemappingWindow.ui" line="362"/>
         <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
-        <translation>Apa ini?</translation>
+        <translation>Ce-i asta?</translation>
     </message>
     <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Dapatkan informasi tentang elemen grafik</translation>
-    </message>
-    <message>
-        <source>Use this button to get information about the graphical elements</source>
-        <translation type="obsolete">Gunakan tombol ini untuk mendapatkan informasi tentang elemen grafik</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="368"/>
+        <location filename="../forms/TonemappingWindow.ui" line="371"/>
+        <source>Get verbose information about user interface elements</source>
+        <translation>Obține informații detaliate despre elementele interfeței cu utilizatorul</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="374"/>
@@ -5451,214 +4680,193 @@ Do you want to continue?</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentasi...</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="383"/>
+        <source>&amp;Contents...</source>
+        <translation>&amp;Conținut...</translation>
     </message>
     <message>
-        <source>Ctrl+H</source>
-        <translation type="obsolete">Ctrl+H</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="386"/>
+        <location filename="../forms/TonemappingWindow.ui" line="389"/>
+        <source>Open user manual for Luminance</source>
+        <translation>Deschide manualul Luminance</translation>
     </message>
     <message>
-        <source>Tone mapping Panel</source>
-        <translation type="obsolete">Panel tone mapping</translation>
+        <location filename="../forms/TonemappingWindow.ui" line="392"/>
+        <source>F1</source>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="404"/>
         <location filename="../forms/TonemappingWindow.ui" line="407"/>
         <location filename="../forms/TonemappingWindow.ui" line="410"/>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează toate</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="413"/>
         <location filename="../forms/TonemappingWindow.ui" line="416"/>
         <source>Saves all LDRs</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează toate imaginile LDR</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="419"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="371"/>
-        <source>Save files in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="541"/>
-        <source>Toolbars</source>
-        <translation type="unfinished">Toolbars</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="83"/>
-        <source>&amp;Windows</source>
-        <translation type="unfinished">&amp;Jendela</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="118"/>
-        <source>Show Main Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="157"/>
-        <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Tutup</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="160"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="214"/>
-        <source>Adjust &amp;Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="217"/>
-        <location filename="../forms/TonemappingWindow.ui" line="220"/>
-        <source>Adjust Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="303"/>
-        <location filename="../forms/TonemappingWindow.ui" line="306"/>
-        <source>Layout all LDR images as thumbnails</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="368"/>
-        <location filename="../forms/TonemappingWindow.ui" line="371"/>
-        <source>Get verbose information about user interface elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="383"/>
-        <source>&amp;Contents...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="386"/>
-        <location filename="../forms/TonemappingWindow.ui" line="389"/>
-        <source>Open user manual for Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="392"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="431"/>
         <location filename="../forms/TonemappingWindow.ui" line="434"/>
         <location filename="../forms/TonemappingWindow.ui" line="437"/>
         <source>HDR Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine HDR</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="440"/>
+        <location filename="../forms/TonemappingWindow.ui" line="443"/>
+        <source>Show the original high dynamic range image</source>
+        <translation>Arată imaginea cu interval dinamic mare originală</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="455"/>
         <location filename="../forms/TonemappingWindow.ui" line="458"/>
         <location filename="../forms/TonemappingWindow.ui" line="461"/>
         <source>Next Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imaginea următoare</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="464"/>
+        <location filename="../forms/TonemappingWindow.ui" line="467"/>
+        <source>Show the next image</source>
+        <translation>Arată imaginea următoare</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="479"/>
         <location filename="../forms/TonemappingWindow.ui" line="482"/>
         <location filename="../forms/TonemappingWindow.ui" line="485"/>
         <source>Previous Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imaginea precedentă</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="488"/>
+        <location filename="../forms/TonemappingWindow.ui" line="491"/>
+        <source>Show the previous image</source>
+        <translation>Arată imaginea precedentă</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
-        <translation type="unfinished">Ukuran &amp;Normal</translation>
+        <translation>Dimensiune &amp;normală</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="506"/>
         <source>O</source>
-        <translation type="unfinished">O</translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="518"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Zoom &amp;In</translation>
+        <translation>&amp;Mărește</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="521"/>
         <source>+</source>
-        <translation type="unfinished">+</translation>
+        <translation>+</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="533"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Zoom &amp;Out</translation>
+        <translation>Mi&amp;cșorează</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="536"/>
         <source>-</source>
-        <translation type="unfinished">-</translation>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="552"/>
         <source>Text Under Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Text sub pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="560"/>
         <source>Only Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Doar pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="563"/>
         <location filename="../forms/TonemappingWindow.ui" line="566"/>
         <source>Icons Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Doar pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="574"/>
         <source>Text Alongside Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Text lângă pictograme</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="582"/>
         <source>Text Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Doar text</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="598"/>
+        <source>Sync View</source>
+        <translation>Vizualizare sincronizată</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="601"/>
+        <location filename="../forms/TonemappingWindow.ui" line="604"/>
+        <location filename="../forms/TonemappingWindow.ui" line="607"/>
+        <source>Lock view of all images to sync panning</source>
+        <translation>Blochează vizualizarea tuturor imaginilor la deplasare sincronizată</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
-        <translation type="unfinished">Tentang Luminance</translation>
+        <translation>Despre Luminance</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="615"/>
         <source>Show information about Luminance</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată informații despre Luminance</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="618"/>
         <location filename="../forms/TonemappingWindow.ui" line="621"/>
         <source>Show information about Luminance, its authors and contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată informații despre Luminance, autorii și colaboratorii săi</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingWindow.ui" line="626"/>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Despre Qt</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="629"/>
+        <source>Show information about Qt</source>
+        <translation>Arată informații despre Qt</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingWindow.ui" line="632"/>
+        <location filename="../forms/TonemappingWindow.ui" line="635"/>
+        <source>Show information about Qt library that is used by Luminance</source>
+        <translation>Arată informații despre biblioteca Qt folosită de Luminance</translation>
+    </message>
+    <message>
+        <source>Active TM Processes</source>
+        <translation type="obsolete">Procese MT active</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="101"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="102"/>
         <source>Original HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR original</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="206"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="207"/>
         <source>Processed HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>HDR procesat</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
@@ -5668,44 +4876,45 @@ Do you want to continue?</source>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Luminance HDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminance HDR</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="255"/>
         <source>Please select an LDR image to save.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează o imagine LDR să salvezi.</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="371"/>
+        <source>Save files in</source>
+        <translation>Salvează fișierele în</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="622"/>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation type="unfinished">%1 Lisensi document tidak ditemukan, anda dapat mencarinya secara online: %2disini%3</translation>
+        <translation>%1 Nu s-a găsit fișierul cu licența, în poți găsi online: %2here%3</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="680"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="699"/>
         <source>Please select an HDR image to tonemap.</source>
-        <translation type="unfinished"></translation>
+        <translation>Te rog selectează o imagine HDR să mapez tonurile.</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="662"/>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="692"/>
         <source>Please make a selection of the HDR image to tonemap.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="755"/>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
+        <translation>Selectează o parte a imaginii HDR să mapez tonurile.</translation>
     </message>
     <message>
         <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="726"/>
         <source>Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/TonemappingWindow/TonemappingWindow.cpp" line="755"/>
+        <source>Untitled</source>
+        <translation>Fară nume</translation>
     </message>
 </context>
 <context>
@@ -5713,39 +4922,31 @@ Do you want to continue?</source>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="14"/>
         <source>Copy Exif data</source>
-        <translation>Copy Exif data</translation>
+        <translation>Copiază date Exif</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="59"/>
         <location filename="../forms/TransplantExifDialog.ui" line="225"/>
         <source>Move up selected file(s)</source>
-        <translation>Naikkan ke atas file yang ter-select</translation>
+        <translation>Mută în sus fișierele selectate</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="73"/>
         <location filename="../forms/TransplantExifDialog.ui" line="239"/>
         <source>Move down selected file(s)</source>
-        <translation>Turunkan file yang ter-select</translation>
+        <translation>Mută în jos fișierele selectate</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="87"/>
         <location filename="../forms/TransplantExifDialog.ui" line="253"/>
         <source>Remove selected file(s) from the list</source>
-        <translation>Buang file yang ter-select dari daftar</translation>
+        <translation>Șterge fișierele selectate din listă</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="101"/>
         <location filename="../forms/TransplantExifDialog.ui" line="267"/>
         <source>Append files to the list</source>
-        <translation>Tambah file ke dalam daftar</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;From...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Dari...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;To...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Ke...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>Adaugă fișiere în listă</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="138"/>
@@ -5754,7 +4955,11 @@ Do you want to continue?</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;From:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;De la:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="178"/>
@@ -5763,118 +4968,83 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;To:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;span style=&quot; font-size:11pt; font-weight:600;&quot;&gt;Către:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="298"/>
         <source>Log:</source>
-        <translation>Log:</translation>
+        <translation>Jurnal:</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="322"/>
         <source>Exif operations report</source>
-        <translation>Laporan operasi Exif</translation>
+        <translation>Raport operații exif</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="346"/>
         <source>&amp;Show only:</source>
-        <translation>Tampilkan &amp;saja:</translation>
+        <translation>&amp;Arată doar:</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="356"/>
         <source>Filter messages based on severity</source>
-        <translation>Filter messages based on severity</translation>
+        <translation>Filtrează mesajele pe baza severității</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="360"/>
         <source>All messages</source>
-        <translation>Semua pesan</translation>
+        <translation>Toate mesajele</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="365"/>
         <source>Errors only</source>
-        <translation>Hanya error</translation>
+        <translation>Doar erorile</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="380"/>
         <source>&amp;Filter log messages:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TransplantExifDialog.ui" line="425"/>
-        <source>Keep existing Exif tags in destination file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TransplantExifDialog.ui" line="466"/>
-        <source>&amp;Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filter Log messages:</translation>
+        <translation>&amp;Filtrează mesajele jurnal:</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="396"/>
         <source>Clear filter text</source>
-        <translation>Bersihkan text penyaring</translation>
+        <translation>Șterge text filtru</translation>
     </message>
     <message>
-        <source>Keep existing exif tags in destination file</source>
-        <translation type="obsolete">Pertahankan tag exif yang ada dalam file tujuan</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Bantuan</translation>
+        <location filename="../forms/TransplantExifDialog.ui" line="425"/>
+        <source>Keep existing Exif tags in destination file</source>
+        <translation>Păstrează marcajele Exif existente în fișierul destinație</translation>
     </message>
     <message>
         <location filename="../forms/TransplantExifDialog.ui" line="456"/>
         <source>&amp;Cancel</source>
-        <translation>&amp;Batal</translation>
+        <translation>&amp;Anulează</translation>
     </message>
     <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Mulai!</translation>
-    </message>
-    <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="194"/>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="222"/>
-        <source>Select the input images</source>
-        <translation>Pilih gambar inputan</translation>
-    </message>
-    <message>
-        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="271"/>
-        <source>&amp;Done</source>
-        <translation type="unfinished">&amp;Selesai</translation>
-    </message>
-    <message>
-        <source>&amp;Done.</source>
-        <translation type="obsolete">&amp;Selesai.</translation>
+        <location filename="../forms/TransplantExifDialog.ui" line="466"/>
+        <source>&amp;Start</source>
+        <translation>&amp;Pornește</translation>
     </message>
     <message>
         <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="191"/>
         <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="216"/>
         <source>All Supported formats</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>hdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">ERROR: File&lt;br&gt;%1&lt;br&gt; bukan 8 bit atau 16 bit tiff.</translation>
+        <translation>Toate formatele acceptate</translation>
     </message>
     <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Tidak dapat memulai dcraw pada file: %1</translation>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="194"/>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="222"/>
+        <source>Select the input images</source>
+        <translation>Selectează imaginile sursă</translation>
     </message>
     <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Error atau terjadi timeout ketika mengeksekusi dcraw pada file: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">ERROR: Gagal memuat file: %1</translation>
+        <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="271"/>
+        <source>&amp;Done</source>
+        <translation>&amp;Gata</translation>
     </message>
 </context>
 </TS>

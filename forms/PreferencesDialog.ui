@@ -274,6 +274,11 @@ p, li { white-space: pre-wrap; }
               </item>
               <item>
                <property name="text">
+                <string>Romanian</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Russian</string>
                </property>
               </item>

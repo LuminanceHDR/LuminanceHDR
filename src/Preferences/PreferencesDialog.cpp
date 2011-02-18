@@ -57,10 +57,11 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromIso639ToGuiIndex["id"]=5;
 	fromIso639ToGuiIndex["it"]=6;
 	fromIso639ToGuiIndex["pl"]=7;
-	fromIso639ToGuiIndex["ru"]=8;
-	fromIso639ToGuiIndex["es"]=9;
-	fromIso639ToGuiIndex["tr"]=10;
-	fromIso639ToGuiIndex["hu"]=11;
+	fromIso639ToGuiIndex["ro"]=8;
+	fromIso639ToGuiIndex["ru"]=9;
+	fromIso639ToGuiIndex["es"]=10;
+	fromIso639ToGuiIndex["tr"]=11;
+	fromIso639ToGuiIndex["hu"]=12;
 
 	fromGuiIndexToIso639[0]="cs";
 	fromGuiIndexToIso639[1]="en";
@@ -70,10 +71,11 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromGuiIndexToIso639[5]="id";
 	fromGuiIndexToIso639[6]="it";
 	fromGuiIndexToIso639[7]="pl";
-	fromGuiIndexToIso639[8]="ru";
-	fromGuiIndexToIso639[9]="es";
-	fromGuiIndexToIso639[10]="tr";
-	fromGuiIndexToIso639[11]="hu";
+	fromGuiIndexToIso639[8]="ro";
+	fromGuiIndexToIso639[9]="ru";
+	fromGuiIndexToIso639[10]="es";
+	fromGuiIndexToIso639[11]="tr";
+	fromGuiIndexToIso639[12]="hu";
 
 	luminance_options=LuminanceOptions::getInstance();
 	negcolor=luminance_options->negcolor;
