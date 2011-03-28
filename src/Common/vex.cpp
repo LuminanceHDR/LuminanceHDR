@@ -43,8 +43,8 @@ void VEX_vsub(const float* A, const float* B, float* C, const int N)
 {
   //#ifdef __APPLE__  
   //  vDSP_vsub(B, 1, A, 1, C, 1, N); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
-  //#elif __SSE__
-#ifdef __SSE__
+  //#elif __USE_SSE__
+#ifdef __USE_SSE__
   __m128 a, b, c;
   
   const int LOOP1       = (N >> 4);
@@ -92,6 +92,7 @@ void VEX_vsub(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] - B[idx];
@@ -101,7 +102,7 @@ void VEX_vsub(const float* A, const float* B, float* C, const int N)
 
 void VEX_vsubs(const float* A, const float val, const float* B, float* C, const int N)
 {
-#ifdef __SSE__  
+#ifdef __USE_SSE__  
   __m128 a, b, c;
   const __m128 __val = _mm_set1_ps(val);
   
@@ -155,6 +156,7 @@ void VEX_vsubs(const float* A, const float val, const float* B, float* C, const 
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] - val * B[idx];
@@ -166,8 +168,8 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N)
 {
   //#ifdef __APPLE__  
   //  vDSP_vadd(A, 1, B, 1, C, 1, N);
-  //#elif __SSE__
-#ifdef __SSE__
+  //#elif __USE_SSE__
+#ifdef __USE_SSE__
   __m128 a, b, c;
   
   const int LOOP1       = (N >> 4);
@@ -215,6 +217,7 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] + B[idx];
@@ -224,7 +227,7 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N)
 
 void VEX_vadds(const float* A, const float val, const float* B, float* C, const int N)
 {
-#ifdef __SSE__  
+#ifdef __USE_SSE__  
   const __m128 __val = _mm_set1_ps(val);
   __m128 a, b, c;
   
@@ -278,6 +281,7 @@ void VEX_vadds(const float* A, const float val, const float* B, float* C, const 
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] + val * B[idx];
@@ -289,8 +293,8 @@ void VEX_vsmul(const float* I, const float val, float* O, const int N)
 {
   //#ifdef __APPLE__
   //  vDSP_vsmul (I, 1, &c, O, 1, N);
-  //#elif __SSE__
-#ifdef __SSE__
+  //#elif __USE_SSE__
+#ifdef __USE_SSE__
   const __m128 __val = _mm_set1_ps(val);
   __m128 t;
   
@@ -332,6 +336,7 @@ void VEX_vsmul(const float* I, const float val, float* O, const int N)
   }
 #else 
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for(int idx = 0; idx < N; idx++)
   {
     O[idx] = val * I[idx];
@@ -343,8 +348,8 @@ void VEX_vmul(const float* A, const float* B, float* C, const int N)
 {
   //#ifdef __APPLE__  
   //vDSP_vmul(B, 1, A, 1, C, 1, N);
-  //#elif __SSE__
-#ifdef __SSE__
+  //#elif __USE_SSE__
+#ifdef __USE_SSE__
   __m128 a, b;
   
   const int LOOP1       = (N >> 4);
@@ -392,6 +397,7 @@ void VEX_vmul(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] * B[idx];
@@ -403,8 +409,8 @@ void VEX_vdiv(float* A, float* B, float* C, const int N)
 {
   //#ifdef __APPLE__  
   //  vDSP_vdiv(B, 1, A, 1, C, 1, N);
-  //#elif __SSE__
-#ifdef __SSE__   
+  //#elif __USE_SSE__
+#ifdef __USE_SSE__   
   __m128 a, b;
   
   const int LOOP1       = (N >> 4);
@@ -452,6 +458,7 @@ void VEX_vdiv(float* A, float* B, float* C, const int N)
   }
 #else
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for (int idx = 0; idx < N; idx++ )
   {
     C[idx] = A[idx] / B[idx];
@@ -461,7 +468,7 @@ void VEX_vdiv(float* A, float* B, float* C, const int N)
 
 void VEX_vcopy(const float* I, float* O, const int N)
 {
-#ifdef __SSE__ 
+#ifdef __USE_SSE__ 
   const int LOOP1       = (N >> 4);
   const int ELEMS_LOOP1 = (LOOP1 << 4);
   const int LOOP2       = (N - ELEMS_LOOP1);
@@ -488,6 +495,7 @@ void VEX_vcopy(const float* I, float* O, const int N)
   _mm_sfence();
 #else 
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for(int idx = 0; idx < N; idx++)
   {
     O[idx] = I[idx];
@@ -497,7 +505,7 @@ void VEX_vcopy(const float* I, float* O, const int N)
 
 void VEX_vset(float* IO, const float val, const int N)
 {
-#ifdef __SSE__
+#ifdef __USE_SSE__
   const int LOOP1       = (N >> 4);
   const int ELEMS_LOOP1 = (LOOP1 << 4);
   const int LOOP2       = (N - ELEMS_LOOP1);
@@ -523,6 +531,7 @@ void VEX_vset(float* IO, const float val, const int N)
   }
 #else 
   // plain code
+#pragma omp parallel for schedule(static, 5120)
   for(int idx = 0; idx < N; idx++)
   {
     IO[idx] = val;
@@ -532,14 +541,14 @@ void VEX_vset(float* IO, const float val, const int N)
 
 void VEX_vreset(float* IO, const int N)
 {
-#ifdef __SSE__
+#ifdef __USE_SSE__
   const int LOOP1       = (N >> 4);
   const int ELEMS_LOOP1 = (LOOP1 << 4);
   const int LOOP2       = (N - ELEMS_LOOP1);
   
   const __m128 _zero = _mm_setzero_ps();
   
-  #pragma omp parallel for schedule(static, 5120)
+#pragma omp parallel for schedule(static, 5120)
   for (int l = 0; l < ELEMS_LOOP1; l+=16)
   {
     PREFETCH_T0(&IO[l], FETCH_DISTANCE);
@@ -558,7 +567,8 @@ void VEX_vreset(float* IO, const int N)
   }
 #else 
   // plain code
-  for(int idx = 0; idx < N; idx++)
+#pragma omp parallel for schedule(static, 5120)
+  for (int idx = 0; idx < N; idx++)
   {
     IO[idx] = 0.0f;
   }
@@ -570,16 +580,17 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
   val = 0.0f;
 #ifdef __APPLE__
   vDSP_dotpr(I1, 1, I2, 1, &val, N);
-#elif __SSE__
-  //#pragma omp parallel for reduction(+:val) schedule(static, 5120)
-  for (int j=0; j<N; j++)
-  {
-    val += I1[j] * I2[j];
-  }
+  //#elif __USE_SSE__
+  //  #pragma omp parallel for reduction(+:val) schedule(static, 5120)
+  //  for (int idx = 0; idx < N; idx++)
+  //  {
+  //    val += I1[idx] * I2[idx];
+  //  }
 #else
-  for (int j=0; j<N; j++)
+#pragma omp parallel for reduction(+:val) schedule(static, 5120)
+  for (int idx = 0; idx < N; idx++)
   {
-    val += I1[j] * I2[j];
+    val += I1[idx] * I2[idx];
   }
 #endif
 }

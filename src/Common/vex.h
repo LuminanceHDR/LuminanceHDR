@@ -29,6 +29,7 @@
 //#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
 //#include <ppc_intrinsics.h>
 #if __i386__ || __x86_64__
+//#define __USE_SSE__
 #include <mm_malloc.h>
 #include <xmmintrin.h>
 //#include <pmmintrin.h>
