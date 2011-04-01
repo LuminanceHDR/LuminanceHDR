@@ -25,13 +25,11 @@
  *
  */
 
-#include <QReadWriteLock>
-
 #include "Common/config.h"
 #include "Fattal02Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-static QReadWriteLock lock;	
+QMutex Fattal02Thread::fattal02_mutex;
 
 Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
 TMOThread(frame, opts)
@@ -44,8 +42,8 @@ void Fattal02Thread::run()
 	emit setMaximumSteps(100);
 	try
   {
-		// pfstmo_fattal02 not reentrant
-		lock.lockForWrite();
+		// pfstmo_fattal02 not reentrant AKA not thread-safe!
+		fattal02_mutex.lock();
 		pfstmo_fattal02(workingframe,
                     opts.operator_options.fattaloptions.alpha,
                     opts.operator_options.fattaloptions.beta,
@@ -53,11 +51,11 @@ void Fattal02Thread::run()
                     opts.operator_options.fattaloptions.noiseredux,
                     opts.operator_options.fattaloptions.newfattal,
                     ph);
-		lock.unlock();
+		fattal02_mutex.unlock();
 	}
 	catch(...)
   {
-		lock.unlock();
+		fattal02_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

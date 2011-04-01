@@ -28,6 +28,8 @@
 #ifndef MANTIUK06THREAD_H
 #define MANTIUK06THREAD_H
 
+#include <QMutex>
+
 #include "TMOThread.h"
 
 class Mantiuk06Thread : public TMOThread {
@@ -37,6 +39,9 @@ public:
   Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts);
 protected:
 	void run();
+  
+  // It may be removed, because the issue in the race condition of the operator has been solved
+  static QMutex mantiuk06_mutex;
 };
 
 #endif

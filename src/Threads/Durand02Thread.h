@@ -28,6 +28,7 @@
 #ifndef DURAND02THREAD_H
 #define DURAND02THREAD_H
 
+#include <QMutex>
 #include "TMOThread.h"
 
 class Durand02Thread : public TMOThread {
@@ -37,6 +38,8 @@ public:
 	Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
 protected:
 	void run();
+  
+  static QMutex durand02_mutex;
 };
 
 #endif

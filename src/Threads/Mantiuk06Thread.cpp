@@ -25,13 +25,11 @@
  *
  */
 
-#include <QMutex>
-
 #include "Common/config.h"
 #include "Mantiuk06Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-static QMutex mutex_mantiuk06;
+QMutex Mantiuk06Thread::mantiuk06_mutex;
 
 Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
 TMOThread(frame, opts)
@@ -46,18 +44,18 @@ void Mantiuk06Thread::run()
 	try
   {
 		// pfstmo_mantiuk06 not reentrant
-    mutex_mantiuk06.lock();
+    mantiuk06_mutex.lock();
 		pfstmo_mantiuk06(workingframe,
                      opts.operator_options.mantiuk06options.contrastfactor,
                      opts.operator_options.mantiuk06options.saturationfactor,
                      opts.operator_options.mantiuk06options.detailfactor,
                      opts.operator_options.mantiuk06options.contrastequalization,
                      ph);
-    mutex_mantiuk06.unlock();
+    mantiuk06_mutex.unlock();
 	}
 	catch(...)
   {
-    mutex_mantiuk06.unlock();
+    mantiuk06_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

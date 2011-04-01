@@ -28,6 +28,8 @@
 #ifndef FATTAL02THREAD_H
 #define FATTAL02THREAD_H
 
+#include <QMutex>
+
 #include "TMOThread.h"
 
 class Fattal02Thread : public TMOThread {
@@ -37,6 +39,8 @@ public:
 	Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
 protected:
 	void run();
+  
+  static QMutex fattal02_mutex;	
 };
 
 #endif

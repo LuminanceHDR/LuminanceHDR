@@ -25,13 +25,11 @@
  *
  */
 
-#include <QReadWriteLock>
-
 #include "Common/config.h"
 #include "Durand02Thread.h"
-#include "TonemappingOperators/pfstmo.h"
+#include "TonemappingOperators/pfstmo.h"	
 
-static QReadWriteLock lock;	
+QMutex Durand02Thread::durand02_mutex;
 
 Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
 TMOThread(frame, opts)
@@ -46,17 +44,17 @@ void Durand02Thread::run()
 	try
   {
 		// pfstmo_durand02 not reentrant
-		lock.lockForWrite();
+		durand02_mutex.lock();
 		pfstmo_durand02(workingframe,
                     opts.operator_options.durandoptions.spatial,
                     opts.operator_options.durandoptions.range,
                     opts.operator_options.durandoptions.base,
                     ph);
-		lock.unlock();
+		durand02_mutex.unlock();
 	}
 	catch(...)
   {
-		lock.unlock();
+		durand02_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;
