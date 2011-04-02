@@ -37,6 +37,8 @@
 #include "Common/ProgressHelper.h"
 #include "Libpfs/colorspace.h"
 
+enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH };
+
 class TMOThread : public QThread {
 Q_OBJECT
 
@@ -45,11 +47,15 @@ public:
   virtual ~TMOThread();
   virtual void startTonemapping();
 
+  void set_mode(TMOTHREAD_MODE mode) { m_tmo_thread_mode = mode; }
+  void set_batch_mode() { m_tmo_thread_mode = TMO_BATCH; }
+  
 public slots:
 	virtual void terminateRequested();
   
 signals:
-	void imageComputed(const QImage&);
+	void imageComputed(QImage*);
+  void imageComputed(QImage*, const TonemappingOptions* opts);
 	void processedFrame(pfs::Frame *);
 	void setMaximumSteps(int);
 	void setValue(int);
@@ -63,6 +69,7 @@ protected:
 	void finalize();
 	pfs::Frame *workingframe;
 	const TonemappingOptions &opts;
+  TMOTHREAD_MODE m_tmo_thread_mode;
 	ProgressHelper *ph;
   
   // Different output color spaces can be selected by a specific operator

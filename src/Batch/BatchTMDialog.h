@@ -31,21 +31,26 @@
 #include <QVector>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
+#include <QFuture>
+#include <QMutex>
+#include <QSemaphore> 
+#include <QtGui/QCloseEvent> 
 
 #include "ui_BatchTMDialog.h"
+
+#include "Batch/BatchTMJob.h"
 #include "Common/options.h"
 #include "Common/global.h"
-
-namespace pfs {
-class Frame;
-}
+#include "libpfs/pfs.h"
+#include "Threads/LoadHdrThread.h"
+#include "Threads/TMOFactory.h"
 
 class BatchTMDialog : public QDialog, public Ui::BatchTMDialog
 {
 Q_OBJECT
 
 public:
-	BatchTMDialog(QWidget *parent=0);
+	BatchTMDialog(QWidget *parent = 0);
 	~BatchTMDialog();
 // protected:
 private slots:
@@ -57,49 +62,68 @@ private slots:
 	void check_enable_start();
 	void remove_HDRs();
 	void remove_TMOpts();
-	void start_called();
-	void conditional_loadthread();
-	void conditional_TMthread();
-	void load_HDR_failed(QString);
-	void finished_loading_hdr(pfs::Frame*,QString);
-	void newResult(const QImage&,TonemappingOptions*);
-	void newResult(const QImage&);
-	void filterChanged(const QString&);
+  void filterChanged(const QString&);
 	void filterComboBoxActivated(int);
-protected:
-// 	void closeEvent(QCloseEvent *);
-private:
-	//selection start/stop left/right.
-	int start_left,stop_left,start_right,stop_right;
-	// number of threads currently running in parallel.
-	int running_threads;
-	//required for the cache path and for the dcraw opts required by the hdr-load thread.
-	LuminanceOptions *luminance_options;
-	//the filename for the hdr we are currently working on, used when a LDR result comes up.
-	QString current_hdr_fname;
-	//Application-wide settings, loaded via QSettings.
-	QString RecentDirHDRSetting, RecentPathLoadSaveTmoSettings, recentPathSaveLDR;
-	//data structure (model) for left-side list: HDRs.
-	QStringList HDRs_list;
-	//data structure (model) for right-side list: tone mapping options.
-	QList< QPair<TonemappingOptions*,bool> > tm_opt_list;
-	//when removing we cycle through the list to grab the selected interval.
-	void update_selection_interval(bool left);
-	//updates graphica widget (view) and data structure (model) for HDR list.
-	void add_view_model_HDRs(QStringList);
-	//updates graphica widget (view) and data structure (model) for TM_opts list.
-	void add_view_model_TM_OPTs(QStringList);
-	//Parses a TM_opts file (return NULL on error).
-	TonemappingOptions* parse_tm_opt_file(QString filename);
-	//set to true once we are done processing.
-	bool done;
-	//fuction that adds a log message to the model
+
+  //fuction that adds a log message to the model
 	void add_log_message(const QString &);
-	//the class that performs regexp filtering
-	QSortFilterProxyModel *log_filter;
-	//the model that holds the data
-	QStringListModel *full_Log_Model;
-	pfs::Frame* workingFrame;
-	TonemappingOptions *opts;
+  
+  void batch_core();
+  void release_thread(int t_id);
+  void start_batch_thread(); 
+  void stop_batch_tm_ui();
+  void increment_progress_bar(int);
+protected:
+  void closeEvent(QCloseEvent *);
+private:
+  //Parses a TM_opts file (return NULL on error)
+	TonemappingOptions* parse_tm_opt_file(QString filename); 
+  
+  //required for the cache path
+  LuminanceOptions *luminance_options;
+  
+	//selection start/stop left/right
+  //TODO: remove this rubbish, thanks!
+	int start_left;
+  int stop_left;
+  int start_right;
+  int stop_right;
+  
+	//Application-wide settings, loaded via QSettings
+	QString RecentDirHDRSetting, RecentPathLoadSaveTmoSettings, recentPathSaveLDR;  
+  
+  //data structure (model) for left-side list: HDRs
+	QStringList HDRs_list;
+  
+  // the class that performs regexp filtering
+  QSortFilterProxyModel * log_filter;
+  
+  // the model that holds the data
+	QStringListModel    * full_Log_Model;
+	TonemappingOptions  * opts;
+  
+  QMutex          m_add_log_message_mutex;
+  
+  QList< TonemappingOptions* > m_tm_options_list;
+  
+  // Davide Anastasia <davideanastasia@users.sourceforge.net>
+  //Max number of threads allowed
+  int             m_max_num_threads;
+  QSemaphore      m_thread_slot;
+  QMutex          m_thread_control_mutex;
+  QMutex          m_class_data_mutex;
+  bool            m_is_batch_running;
+  bool        *   m_available_threads;
+  int             m_next_hdr_file;
+  
+  int   get_available_thread_id();
+
+  void  init_batch_tm_ui();
+  //when removing we cycle through the list to grab the selected interval
+	void update_selection_interval(bool left);
+  //updates graphica widget (view) and data structure (model) for HDR list
+	void add_view_model_HDRs(QStringList);
+  //updates graphica widget (view) and data structure (model) for TM_opts list
+	void add_view_model_TM_OPTs(QStringList);
 };
 #endif

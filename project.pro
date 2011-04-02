@@ -129,6 +129,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/TonemappingOperators/mantiuk08/cqp/gsl_cqp.h \
 			src/TonemappingOperators/mantiuk08/cqp/initial_point.h \
 			src/Batch/BatchTMDialog.h \
+			src/Batch/BatchTMJob.h \
 			src/Exif/ExifOperations.h
 
 SOURCES +=  src/Libpfs/array2d.cpp \
@@ -233,6 +234,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/TonemappingOperators/mantiuk08/cqp/initial_point.c \
 			src/TonemappingOperators/mantiuk08/cqp/mg_pdip.c \
 			src/Batch/BatchTMDialog.cpp \
+			src/Batch/BatchTMJob.cpp \
 			src/Exif/ExifOperations.cpp
 
 RESOURCES = icons.qrc

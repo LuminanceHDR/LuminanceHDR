@@ -33,12 +33,17 @@
 
 LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname), RecentDirHDRSetting(RecentDirHDRSetting)
 {
-	luminance_options=LuminanceOptions::getInstance();
+	luminance_options = LuminanceOptions::getInstance();
+}
+
+LoadHdrThread::LoadHdrThread(QString fname) : QThread(0), fname(fname), RecentDirHDRSetting(QString())
+{
+	luminance_options = LuminanceOptions::getInstance();
 }
 
 LoadHdrThread::~LoadHdrThread()
 {
-	wait();
+	//this->wait(); // Risky!
 }
 
 void LoadHdrThread::run()
@@ -54,7 +59,7 @@ void LoadHdrThread::run()
 		return;
 	}
 	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-	if (RecentDirHDRSetting != qfi.path() )
+	if ( (!RecentDirHDRSetting.isNull()) && (RecentDirHDRSetting != qfi.path()) )
   {
 		emit updateRecentDirHDRSetting(qfi.path());
 	}
@@ -62,7 +67,7 @@ void LoadHdrThread::run()
 	QStringList rawextensions;
 	rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "3FR" << "RW2" << "MEF" << "MOS" << "ERF" << "NRW";
 	QString extension = qfi.suffix().toUpper();
-	bool rawinput = (rawextensions.indexOf(extension)!=-1);
+	bool rawinput = (rawextensions.indexOf(extension) != -1);
 	try
   {
 		char* encodedFileName = strdup(QFile::encodeName(qfi.filePath()).constData());
@@ -84,7 +89,7 @@ void LoadHdrThread::run()
 				return;
 			}
 			pfs::DOMIO pfsio;
-			hdrpfsframe=pfsio.readFrame( fd);
+			hdrpfsframe = pfsio.readFrame( fd);
 			fclose(fd);
 		}
     else if (extension.startsWith("TIF"))
@@ -122,5 +127,5 @@ void LoadHdrThread::run()
 		emit load_failed(tr("ERROR: Failed loading file: %1").arg(fname));
 		return;
 	}
-	emit hdr_ready(hdrpfsframe,fname);
+	emit hdr_ready(hdrpfsframe, fname);
 }

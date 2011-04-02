@@ -25,21 +25,17 @@
 #define IOTHREAD_H
 
 #include <QThread>
-//#include <QProgressDialog>
-
 #include "Common/options.h"
-
-namespace pfs {
-class Frame;
-}
+#include "Libpfs/pfs.h"
 
 class LoadHdrThread : public QThread {
 Q_OBJECT
 
 public:
 	LoadHdrThread(QString filename, QString RecentDirHDRSetting);
-	~LoadHdrThread();
-	QString getHdrFileName() {return fname;}
+  LoadHdrThread(QString filename);
+	virtual ~LoadHdrThread();
+	QString getHdrFileName() { return fname; }
 signals:
 	void updateRecentDirHDRSetting(QString);
 	void hdr_ready(pfs::Frame*, QString fname);

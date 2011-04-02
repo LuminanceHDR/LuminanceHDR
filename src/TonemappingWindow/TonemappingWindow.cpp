@@ -173,10 +173,10 @@ bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
 	}
 }
 
-void TonemappingWindow::addMDIResult(const QImage &image)
+void TonemappingWindow::addMDIResult(QImage* image)
 {
 	ldrNum++;
-	LdrViewer *n = new LdrViewer( image, this, false, false, tmoOptions);
+	LdrViewer *n = new LdrViewer( *image, this, false, false, tmoOptions);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 	n->normalSize();
 	n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
@@ -704,7 +704,7 @@ void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
 	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
 	progInd = new TMOProgressIndicator(this);
   
-	connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(addMDIResult(const QImage&)));
+	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addMDIResult(QImage*)));
 	connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
 	connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
 	connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));

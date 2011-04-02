@@ -40,7 +40,7 @@ static inline unsigned char clamp( const float v, const unsigned char minV, cons
     return (unsigned char)v;
 }
 
-QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
+QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
 #ifdef TIMER_PROFILING
   msec_timer __timer;
@@ -104,5 +104,6 @@ QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colo
   std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
 #endif
   
-	return QImage (const_cast<unsigned char*>(data), width, height, QImage::Format_ARGB32);
+  QImage * temp_qimage = new QImage (const_cast<unsigned char*>(data), width, height, QImage::Format_ARGB32);
+	return temp_qimage;
 }

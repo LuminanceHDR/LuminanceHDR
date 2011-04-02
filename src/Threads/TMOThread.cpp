@@ -73,20 +73,20 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 
 TMOThread::~TMOThread()
 {
-	wait();
+	//this->wait(); // risky!
 	delete ph;
-	std::cout << "TMOThread::~TMOThread()" << std::endl;
+	//std::cout << "TMOThread::~TMOThread()" << std::endl;
 }
 
 void TMOThread::terminateRequested()
 {
-	std::cout << "TMOThread::terminateRequested()" << std::endl;
+	//std::cout << "TMOThread::terminateRequested()" << std::endl;
 	ph->terminate(true);
 }
 
 void TMOThread::startTonemapping()
 {
-  start();
+  this->start();
 }
 
 void TMOThread::finalize()
@@ -95,19 +95,35 @@ void TMOThread::finalize()
   
 	if (!(ph->isTerminationRequested()))
   {
-		const QImage& res = fromLDRPFStoQImage(workingframe, out_CS);
-    emit imageComputed(res);
+		QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
     
-    if ( luminance_options->tmowindow_showprocessed )
-    {
-      emit processedFrame(workingframe);
-    }
-    else
-    {
-      // clean up workingframe in order not to waste much memory!
-      //delete workingframe;
-      pfs::DOMIO pfsio;
-      pfsio.freeFrame(workingframe);
+    switch (m_tmo_thread_mode) {
+      case TMO_BATCH:
+      {
+        // different emit signal
+        // I let the parent of this thread to delete working_frame
+        emit imageComputed(res, &opts);
+        
+      }
+        break;
+      case TMO_INTERACTIVE:
+      default:
+      {
+        emit imageComputed(res);
+        if ( luminance_options->tmowindow_showprocessed )
+        {
+          emit processedFrame(workingframe);
+        }
+        else
+        {
+          //clean up workingframe in order not to waste much memory!
+          //delete workingframe;
+          pfs::DOMIO pfsio;
+          pfsio.freeFrame(workingframe);
+        }
+        
+      }
+        break;
     }
 	}
 	emit finished();

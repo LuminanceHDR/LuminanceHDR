@@ -626,7 +626,8 @@ void MainWindow::preferences_called()
 	}
 }
 
-void MainWindow::transplant_called() {
+void MainWindow::transplant_called()
+{
 	TransplantExifDialog *transplant=new TransplantExifDialog(this);
 	transplant->setAttribute(Qt::WA_DeleteOnClose);
 	transplant->exec();

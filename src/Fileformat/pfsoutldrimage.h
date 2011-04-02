@@ -23,7 +23,7 @@
  *  Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
  * 
- * @author Davide Anastasia <davide.anastasia@gmail.com>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
@@ -34,6 +34,6 @@
 
 #include "Libpfs/colorspace.h"
 
-QImage fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace display_colorspace = pfs::CS_RGB );
+QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace display_colorspace = pfs::CS_RGB );
 
 #endif
