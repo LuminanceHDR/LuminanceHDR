@@ -674,6 +674,7 @@ delete lastFrame;*/
   void freeFrame( Frame *frame )
   {
     delete frame;
+    frame = NULL;
   }
 
 };
