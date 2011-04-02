@@ -577,7 +577,6 @@ void VEX_vreset(float* IO, const int N)
 
 void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
 {
-  val = 0.0f;
 #ifdef __APPLE__
   vDSP_dotpr(I1, 1, I2, 1, &val, N);
   //#elif __USE_SSE__
@@ -587,10 +586,12 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
   //    val += I1[idx] * I2[idx];
   //  }
 #else
-#pragma omp parallel for reduction(+:val) schedule(static, 5120)
+  float t_val = 0.0f;
+#pragma omp parallel for reduction(+:t_val) schedule(static, 5120)
   for (int idx = 0; idx < N; idx++)
   {
-    val += I1[idx] * I2[idx];
+    t_val += I1[idx] * I2[idx];
   }
+  val = t_val;
 #endif
 }
