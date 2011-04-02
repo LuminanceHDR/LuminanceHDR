@@ -34,9 +34,9 @@ m_file_name(filename),
 m_tm_options(tm_options),
 m_output_folder(output_folder)
 {
-  m_load_thread   = NULL;
+//  m_load_thread   = NULL;
   m_working_frame = NULL;
-  m_tmo_thread    = NULL;
+//  m_tmo_thread    = NULL;
   m_ldr_image     = NULL;
   
   m_ldr_output_format = LuminanceOptions::getInstance()->batch_ldr_format;
@@ -56,19 +56,18 @@ void BatchTMJob::run()
   emit add_log_message(tr("[T%1] Start %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
   
   // load frame
-  m_load_thread = new LoadHdrThread(m_file_name);
-  connect(m_load_thread, SIGNAL(finished()), 
-          m_load_thread, SLOT(deleteLater()));
+  LoadHdrThread * load_thread = new LoadHdrThread(m_file_name);
+  connect(load_thread, SIGNAL(finished()), 
+          load_thread, SLOT(deleteLater()));
   // in case it fails!
-  connect(m_load_thread, SIGNAL(load_failed(QString)),
+  connect(load_thread, SIGNAL(load_failed(QString)),
           this, SLOT(load_hdr_failed(QString)), Qt::DirectConnection);          
   // in case it passes
-  connect(m_load_thread, SIGNAL(hdr_ready(pfs::Frame*, QString)),
+  connect(load_thread, SIGNAL(hdr_ready(pfs::Frame*, QString)),
           this, SLOT(load_hdr_completed(pfs::Frame*, QString)), Qt::DirectConnection); 
   
-  m_load_thread->start();
-  m_load_thread->wait();
-  delete m_load_thread;
+  load_thread->start();
+  load_thread->wait();
   
   if ( m_working_frame != NULL )
   {    
@@ -79,19 +78,21 @@ void BatchTMJob::run()
       
       opts->tonemapSelection = false; // just to be sure!
       opts->origxsize = m_working_frame->getWidth();
-      //TODO: put it back!
-      opts->xsize = 1024; // opts->origxsize
+      //opts->xsize = 1024; // DEBUG
+      opts->xsize = opts->origxsize;
       
-      m_tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, *opts);
+      TMOThread * tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, *opts);
       
-      connect(m_tmo_thread, SIGNAL(imageComputed(QImage*, const TonemappingOptions*)),
+      // Thread deletes itself when it has done with its job
+      connect(tmo_thread, SIGNAL(finished()),
+              tmo_thread, SLOT(deleteLater()));
+      connect(tmo_thread, SIGNAL(imageComputed(QImage*, const TonemappingOptions*)),
               this, SLOT(tm_completed(QImage*, const TonemappingOptions*)), Qt::DirectConnection);
       
       //start thread
-      m_tmo_thread->set_batch_mode();
-      m_tmo_thread->start(); //Tonemapping();
-      
-      m_tmo_thread->wait();
+      tmo_thread->set_batch_mode();
+      tmo_thread->start();
+      tmo_thread->wait();
       
       if ( m_ldr_image != NULL )
       {
@@ -113,12 +114,10 @@ void BatchTMJob::run()
           emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
         }
         
-        m_ldr_image = NULL; // reset for the next TM
+        // reset for the next TM
+        delete m_ldr_image;
+        m_ldr_image = NULL; 
       }
-      
-      // I don't need it anymore!
-      // delete must be called AFTER the save of the image because m_ldr_image is a pointer to the space of this thread
-      delete m_tmo_thread; 
       
       // update progress bar
       emit increment_progress(1);
@@ -133,7 +132,7 @@ void BatchTMJob::load_hdr_failed(QString error_message)
 {
   // update message box
   emit add_log_message(error_message);
-  emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+  //emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
   
   // update progress bar!
   emit increment_progress(m_tm_options->size() + 1);

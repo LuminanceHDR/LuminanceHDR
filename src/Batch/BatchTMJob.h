@@ -62,9 +62,9 @@ private:
   QString         m_output_file_name_base;
   QString         m_ldr_output_format;
   
-  LoadHdrThread * m_load_thread;
+  //LoadHdrThread * m_load_thread;
   pfs::Frame    * m_working_frame;
-  TMOThread     * m_tmo_thread;
+  //TMOThread     * m_tmo_thread;
   QImage        * m_ldr_image;
 };
 

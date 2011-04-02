@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <QDebug>
 #include <limits.h>
+#include <assert.h>
 
 #include "BatchTMDialog.h"
 #include "Common/config.h"
@@ -44,7 +45,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
   
 	luminance_options = LuminanceOptions::getInstance();
   
-	Log_Widget->setWordWrap(true);
 	RecentDirHDRSetting = settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
 	RecentPathLoadSaveTmoSettings = settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 	recentPathSaveLDR = settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
@@ -61,13 +61,14 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 	connect(filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
 	connect(filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
   
-	full_Log_Model = new QStringListModel();
+  full_Log_Model = new QStringListModel();
 	log_filter = new QSortFilterProxyModel(this);
 	log_filter->setDynamicSortFilter(true);
 	log_filter->setSourceModel(full_Log_Model);
-	Log_Widget->setModel(log_filter);
-  
-	qRegisterMetaType<QImage>("QImage");
+  Log_Widget->setModel(log_filter);
+  Log_Widget->setWordWrap(true);
+
+	//qRegisterMetaType<QImage>("QImage");    // What's its meaning?!
   
   m_max_num_threads = luminance_options->num_threads;
   
@@ -75,11 +76,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
   m_available_threads = new bool[m_max_num_threads];
   for (int r = 0; r < m_max_num_threads; r++) m_available_threads[r] = TRUE;  // reset to true
   
-  //m_job_threads = new BatchTMJob*[m_max_num_threads];
   m_next_hdr_file = 0;
   m_is_batch_running  = false;
-  
-  
   
   add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
 	add_log_message(tr("Saving using file format: ")+luminance_options->batch_ldr_format);
@@ -274,7 +272,9 @@ void BatchTMDialog::remove_HDRs()
   
 	update_selection_interval(true);
 	if ( listWidget_HDRs->count()==0 || start_left==-1 || stop_left==-1 )
+  {
 		return;
+  }
   
 	for ( int i = (stop_left - start_left + 1); i > 0; i--)
   {
@@ -309,7 +309,7 @@ void BatchTMDialog::add_log_message(const QString& message)
   // Mutex lock!
   m_add_log_message_mutex.lock();
   
-  qDebug() << qPrintable(message);
+  //qDebug() << qPrintable(message);
 	full_Log_Model->insertRows(full_Log_Model->rowCount(), 1);
 	full_Log_Model->setData(full_Log_Model->index(full_Log_Model->rowCount()-1), message, Qt::DisplayRole);
 	Log_Widget->scrollToBottom();
