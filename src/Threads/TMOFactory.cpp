@@ -36,7 +36,8 @@
 #include "Reinhard02Thread.h"
 #include "Reinhard05Thread.h"
 
-TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator, pfs::Frame *workingPfsFrame, 
+TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator,
+                                     pfs::Frame *workingPfsFrame, 
                                      const TonemappingOptions &opts)
 {
 	switch (tmoOperator)
