@@ -65,7 +65,7 @@ pfs::Frame * readEXRfile( const char *filename )
   
   bool keepRGB = false;
   
-  FILE *fd = fopen(filename,"rb");
+  //FILE *fd = fopen(filename,"rb");
   InputFile file( filename );
   
   FrameBuffer frameBuffer;
@@ -214,6 +214,6 @@ pfs::Frame * readEXRfile( const char *filename )
   }    
   frame->getTags()->setString( "FILE_NAME", filename );
   
-  fclose(fd);
+  //fclose(fd);
   return frame;
 }
