@@ -41,7 +41,7 @@
 #include "Batch/BatchTMJob.h"
 #include "Common/options.h"
 #include "Common/global.h"
-#include "libpfs/pfs.h"
+#include "Libpfs/pfs.h"
 #include "Threads/LoadHdrThread.h"
 #include "Threads/TMOFactory.h"
 

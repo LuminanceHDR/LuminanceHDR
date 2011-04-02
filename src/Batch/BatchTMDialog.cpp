@@ -393,11 +393,11 @@ void BatchTMDialog::start_batch_thread()
       connect(job_thread, SIGNAL(finished()),
               job_thread, SLOT(deleteLater()));
       connect(job_thread, SIGNAL(done(int)),
-              this, SLOT(release_thread(int)), Qt::DirectConnection);
+              this, SLOT(release_thread(int))); //, Qt::DirectConnection);
       connect(job_thread, SIGNAL(add_log_message(const QString &)),
-              this, SLOT(add_log_message(const QString &)), Qt::DirectConnection);
-      connect(job_thread, SIGNAL(increment_progress(int)),
-              this, SLOT(increment_progress_bar(int)), Qt::DirectConnection);
+              this, SLOT(add_log_message(const QString &))); //, Qt::DirectConnection);
+      connect(job_thread, SIGNAL(increment_progress_bar(int)),
+              this, SLOT(increment_progress_bar(int))); //, Qt::DirectConnection);
       
       job_thread->start();
       m_next_hdr_file++;

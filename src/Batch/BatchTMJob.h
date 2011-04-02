@@ -31,7 +31,7 @@
 #include <QThread>
 #include <QMutex>
 
-#include "libpfs/pfs.h"
+#include "Libpfs/pfs.h"
 #include "Threads/LoadHdrThread.h"
 #include "Threads/TMOFactory.h"
 
@@ -43,8 +43,8 @@ public:
 signals:
 	void done(int thread_id);
   void add_log_message(QString);
-  void update_progress_bar();
-  void increment_progress(int);
+  //void update_progress_bar();
+  void increment_progress_bar(int);
 protected:
 	void run();
 private slots:

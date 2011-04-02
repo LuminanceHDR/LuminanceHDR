@@ -34,21 +34,19 @@ m_file_name(filename),
 m_tm_options(tm_options),
 m_output_folder(output_folder)
 {
-//  m_load_thread   = NULL;
+  //  m_load_thread   = NULL;
   m_working_frame = NULL;
-//  m_tmo_thread    = NULL;
+  //  m_tmo_thread    = NULL;
   m_ldr_image     = NULL;
   
   m_ldr_output_format = LuminanceOptions::getInstance()->batch_ldr_format;
   
   m_output_file_name_base  = m_output_folder + "/" + QFileInfo(m_file_name).completeBaseName();
-  
-  emit add_log_message(m_output_file_name_base);
 }
 
 BatchTMJob::~BatchTMJob()
 {
-
+  
 }
 
 void BatchTMJob::run()
@@ -57,35 +55,44 @@ void BatchTMJob::run()
   
   // load frame
   LoadHdrThread * load_thread = new LoadHdrThread(m_file_name);
-  connect(load_thread, SIGNAL(finished()), 
+  connect(load_thread, SIGNAL(finished()),
           load_thread, SLOT(deleteLater()));
   // in case it fails!
+  // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
   connect(load_thread, SIGNAL(load_failed(QString)),
-          this, SLOT(load_hdr_failed(QString)), Qt::DirectConnection);          
+          this, SLOT(load_hdr_failed(QString)), Qt::DirectConnection);
   // in case it passes
+  // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
   connect(load_thread, SIGNAL(hdr_ready(pfs::Frame*, QString)),
-          this, SLOT(load_hdr_completed(pfs::Frame*, QString)), Qt::DirectConnection); 
+          this, SLOT(load_hdr_completed(pfs::Frame*, QString)), Qt::DirectConnection);
   
   load_thread->start();
   load_thread->wait();
   
   if ( m_working_frame != NULL )
-  {    
+  {
+    // update message box
+    emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+    
+    // update progress bar!
+    emit increment_progress_bar(1);
+    
     TonemappingOptions* opts;
     for (int idx = 0; idx < m_tm_options->size(); idx++)
     {
-      opts = m_tm_options->at(idx); 
+      opts = m_tm_options->at(idx);
       
       opts->tonemapSelection = false; // just to be sure!
       opts->origxsize = m_working_frame->getWidth();
-      //opts->xsize = 1024; // DEBUG
-      opts->xsize = opts->origxsize;
+      opts->xsize = 250; // DEBUG
+      //opts->xsize = opts->origxsize;
       
       TMOThread * tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, *opts);
       
       // Thread deletes itself when it has done with its job
       connect(tmo_thread, SIGNAL(finished()),
               tmo_thread, SLOT(deleteLater()));
+      // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
       connect(tmo_thread, SIGNAL(imageComputed(QImage*, const TonemappingOptions*)),
               this, SLOT(tm_completed(QImage*, const TonemappingOptions*)), Qt::DirectConnection);
       
@@ -116,39 +123,35 @@ void BatchTMJob::run()
         
         // reset for the next TM
         delete m_ldr_image;
-        m_ldr_image = NULL; 
+        m_ldr_image = NULL;
       }
       
       // update progress bar
-      emit increment_progress(1);
+      emit increment_progress_bar(1);
     }
     delete m_working_frame;
+  }
+  else
+  {
+    // update message box
+    //emit add_log_message(error_message);
+    emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
+    
+    // update progress bar!
+    emit increment_progress_bar(m_tm_options->size() + 1);
   }
   
   emit done(m_thread_id);
 }
 
-void BatchTMJob::load_hdr_failed(QString error_message)
+void BatchTMJob::load_hdr_failed(QString /*error_message*/)
 {
-  // update message box
-  emit add_log_message(error_message);
-  //emit add_log_message(tr("[T%1] ERROR: Loading of %2 failed").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
-  
-  // update progress bar!
-  emit increment_progress(m_tm_options->size() + 1);
-  
   // better be sure that run() finds a null pointer
-  m_working_frame = NULL;  
+  m_working_frame = NULL;
 }
 
 void BatchTMJob::load_hdr_completed(pfs::Frame* hdr_loaded, QString /*filename*/)
 {
-  // update message box
-  emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
-  
-  // update progress bar!
-  emit increment_progress(1);
-  
   m_working_frame = hdr_loaded;
 }
 
