@@ -19,7 +19,7 @@
  *
  * http://msdn.microsoft.com/en-us/library/ms644904%28v=VS.85%29.aspx
  *
- * @author Davide Anastasia, <davide.anastasia@gmail.com>
+ * @author Davide Anastasia, <davideanastasia@users.sourceforge.net>
  *
  */
 

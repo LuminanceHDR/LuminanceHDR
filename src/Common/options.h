@@ -175,7 +175,7 @@ struct TonemappingOptions
 		} mantiuk08options;
 	} operator_options;
   
-  // Davide Anastasia <davide.anastasia@gmail.com>
+  // Davide Anastasia <davideanastasia@users.sourceforge.net>
   // Adding the coordinates of the crop inside this structure will allow TMOThread
   // to crop itself the region of interest, keeping the code tight and simple
   // and avoiding useless copy in memory of the frame to be processed.

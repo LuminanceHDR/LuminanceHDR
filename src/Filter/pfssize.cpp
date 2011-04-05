@@ -104,7 +104,7 @@ public:
 };
 
 // TODO: double checked! 
-// Davide Anastasia <davide.anastasia@gmail.com>
+// Davide Anastasia <davideanastasia@users.sourceforge.net>
 
 //class BoxFilter : public ResampleFilter
 //{

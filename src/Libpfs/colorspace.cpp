@@ -22,7 +22,7 @@
  * 
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
- * @author Davide Anastasia <davide.anastasia@gmail.com> (2010 10 13)
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 10 13)
  *  Reimplementation of most of the functions (in particular the ones involving RGB and XYZ)
  *
  * $Id: colorspace.cpp,v 1.6 2007/07/18 08:49:25 rafm Exp $

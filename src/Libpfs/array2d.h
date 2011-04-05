@@ -30,7 +30,7 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * $Id: array2d.h,v 1.1 2005/06/15 13:36:55 rafm Exp $
  *
- * @author Davide Anastasia <davide.anastasia@gmail.com>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *  This version is different then the one in the PFSTOOLS
  *
  */
@@ -162,7 +162,7 @@ namespace pfs
     Array2DImpl( int __cols, int __rows, float* __data);
     Array2DImpl(const Array2DImpl& other);
     Array2DImpl& operator = (const Array2DImpl& other);
-    ~Array2DImpl();
+    virtual ~Array2DImpl();
     
     float& operator()( int col, int row );
     const float& operator()( int col, int row ) const;

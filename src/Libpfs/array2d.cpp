@@ -31,7 +31,7 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  * $Id: array2d.h,v 1.1 2005/06/15 13:36:55 rafm Exp $
  *
- * @author Davide Anastasia <davide.anastasia@gmail.com>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *  This version is different then the one in the PFSTOOLS
  */
 
@@ -47,7 +47,11 @@ namespace pfs
   {
     cols = __cols;
     rows = __rows;
+#ifdef __APPLE__
+    data = (float*)malloc(cols*rows*sizeof(float));
+#else
     data = (float*)_mm_malloc(cols*rows*sizeof(float), 16); //new float[cols*rows];
+#endif
     data_owned = true;
   }
   
@@ -69,7 +73,11 @@ namespace pfs
   
   Array2DImpl& Array2DImpl::operator = (const Array2DImpl& other)
   {
+#ifdef __APPLE__
+    if (data_owned) free(data);
+#else
     if (data_owned) _mm_free(data); //delete[] data;
+#endif
     this->cols = other.cols;
     this->rows = other.rows;
     this->data = other.data;
@@ -79,8 +87,12 @@ namespace pfs
   
   Array2DImpl::~Array2DImpl()
   {
+#ifdef __APPLE__
+    if (data_owned) free(data);
+#else
     if (data_owned) _mm_free(data); //delete[] data;
-  }
+#endif
+}
   
   
   float& Array2DImpl::operator()( int col, int row )

@@ -372,7 +372,7 @@ inline void matrix_zero(int n, float* m)
   memset(m, 0, n*sizeof(float));
 }
 
-// Davide Anastasia <davide.anastasia@gmail.com> (2010 08 31)
+// Davide Anastasia <davideanastasia@users.sourceforge.net> (2010 08 31)
 // calculate divergence of two gradient maps (Gx and Gy)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
 inline void calculate_and_add_divergence(const int COLS, const int ROWS, const float* const Gx, const float* const Gy, float* const divG)

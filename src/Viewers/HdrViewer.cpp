@@ -144,7 +144,8 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe) {
   imageLabel.update();
 }
 
-void HdrViewer::setFlagUpdateImage(bool updateImage) {
+void HdrViewer::setFlagUpdateImage(bool updateImage)
+{
 	flagUpdateImage = updateImage;
 }
 
