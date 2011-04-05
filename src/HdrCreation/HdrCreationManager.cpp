@@ -164,14 +164,14 @@ void HdrCreationManager::ldrReady(QImage *newImage, int index, float expotime, Q
 	if (inputType==MDR_INPUT_TYPE) {
 		//qDebug("HCM: wrong format, bailing out.");
 		loadingError=true;
-		emit errorWhileLoading(QString("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
+                emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
 		return;
 	}
 	inputType=LDR_INPUT_TYPE;
 	if (!ldrsHaveSameSize(newImage->width(),newImage->height())) {
 		//qDebug("HCM: wrong size, bailing out.");
 		loadingError=true;
-		emit errorWhileLoading(QString("The image %1 has an invalid size.").arg(newfname));
+                emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
 	}
 
