@@ -35,6 +35,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <iostream>
 
 #include "pfs.h"
 
@@ -220,10 +221,11 @@ void copyTags( Frame *from, Frame *to )
 {
   copyTags( from->getTags(), to->getTags() );
   pfs::ChannelIterator *it = from->getChannels();
-  while( it->hasNext() ) {
+  while ( it->hasNext() )
+  {
     pfs::Channel *fromCh = it->getNext();
     pfs::Channel *toCh = to->getChannel( fromCh->getName() );
-    if( toCh == NULL ) // Skip if there is no corresponding channel
+    if ( toCh == NULL ) // Skip if there is no corresponding channel
       continue;
     copyTags( fromCh->getTags(), toCh->getTags() );
   }  
@@ -236,33 +238,40 @@ void copyTags( Frame *from, Frame *to )
 //------------------------------------------------------------------------------
 
   class DOMIOImpl;
-  
+
+  /* Empty Virtual Destructor for Channel */
+  Channel::~Channel()
+  { }
+
   class ChannelImpl: public Channel
   {
-    /* width = cols */
-    /* height = rows */
-    
-    const char *name;
-    Array2DImpl* channel_impl;
-    
+      /* width = cols */
+      /* height = rows */
+
+      std::string* name;
+      Array2DImpl* channel_impl;
+
   protected:
-    friend class DOMIOImpl;
-    
-    TagContainerImpl *tags;
+      friend class DOMIOImpl;
+
+      TagContainerImpl *tags;
     
   public:
-    ChannelImpl( int width, int height, const char *n_name )
+    ChannelImpl( int width, int height, std::string n_name) //const char *n_name )
     {
       channel_impl = new Array2DImpl( width, height );
       tags = new TagContainerImpl();
-      name = strdup( n_name );
+      name = new std::string( n_name );
+      std::cout << "Creazione canale " << name->data() << std::endl;
     }
     
     virtual ~ChannelImpl()
     {
+      std::cout << "Distruzione canale " << name->data() << std::endl;
+
       delete channel_impl;
       delete tags;
-      free( (void*)name );
+      delete name; //free( (void*)name );
     }
     
     // Channel implementation
@@ -305,10 +314,10 @@ void copyTags( Frame *from, Frame *to )
       return channel_impl->getRows();
     }
     
-    virtual const char *getName() const
+    virtual std::string getName() const
     {
-      return name;
-    }  
+      return name->data();
+    }
     
 //    inline float& operator()( int x, int y )
 //    {
@@ -340,15 +349,24 @@ void copyTags( Frame *from, Frame *to )
 //------------------------------------------------------------------------------
 // Map of channels
 //------------------------------------------------------------------------------
-
-struct str_cmp: public std::binary_function<const char*,const char*,bool>
-{
-  bool operator()(const char* s1, const char* s2) const
+  //TODO: check this!
+//struct str_cmp: public std::binary_function<const char*,const char*,bool>
+//{
+//  bool operator()(const char* s1, const char* s2) const
+//  {
+//    return strcmp(s1, s2) < 0;
+//  }
+//};
+//typedef std::map<const char*, ChannelImpl*, str_cmp> ChannelMap;
+  struct string_cmp: public std::binary_function<std::string,std::string,bool>
   {
-    return strcmp(s1, s2) < 0;
-  }
-};
-typedef std::map<const char*, ChannelImpl*, str_cmp> ChannelMap;
+      bool operator()(std::string s1, std::string s2) const
+      {
+          return (s1.compare(s2) < 0);
+      }
+  };
+
+  typedef std::map<std::string, ChannelImpl*, string_cmp> ChannelMap; //, str_cmp> ;
 
 //------------------------------------------------------------------------------
 // Channel Iterator implementation
@@ -413,7 +431,7 @@ public:
     tags = new TagContainerImpl();
   }
 
-  ~FrameImpl()
+  virtual ~FrameImpl()
   {
     delete tags;
     ChannelMap::iterator it;
@@ -428,7 +446,7 @@ public:
       channel.erase( itToDelete );
       delete ch;
     }
-    
+    std::cout << "FrameImpl::~FrameImpl()" << std::endl;
   }
 
   virtual int getWidth() const
@@ -461,7 +479,7 @@ public:
     Z = createChannel("Z");
   }
   
-  Channel* getChannel( const char *name )
+  Channel* getChannel( std::string name )//const char *name )
   {
     ChannelMap::iterator it = channel.find(name);
     if( it == channel.end() )
@@ -471,12 +489,12 @@ public:
     
   }
   
-  Channel *createChannel( const char *name )
+  Channel *createChannel( std::string name ) //const char *name )
   {
     ChannelImpl *ch;
     if( channel.find(name) == channel.end() ) {
       ch = new ChannelImpl( width, height, name );
-      channel.insert( pair<const char*, ChannelImpl*>(ch->getName(), ch) );
+      channel.insert( pair<std::string, ChannelImpl*>(ch->getName(), ch) );
     } else
       ch = channel[name];
     
@@ -650,7 +668,7 @@ delete lastFrame;*/
 
     //Write channel IDs and tags
     for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ ) {
-      fprintf( outputStream, "%s" PFSEOL, it->second->getName() );
+      fprintf( outputStream, "%s" PFSEOL, it->second->getName().c_str() );
       writeTags( it->second->tags, outputStream );
     }
 

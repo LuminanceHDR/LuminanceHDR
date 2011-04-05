@@ -43,6 +43,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <getopt.h> // struct option;
+#include <string>
 
 #include "array2d.h"
 
@@ -208,7 +209,7 @@ namespace pfs
     /**
      * Gets name of the channel. 
      */
-    virtual const char *getName() const = 0;
+    virtual std::string getName() const = 0;
         
     /**
      * Returns TagContainer that can be used to access or modify
@@ -227,6 +228,8 @@ namespace pfs
     virtual float *getRawData() = 0;
     
     virtual Array2DImpl* getChannelData() = 0;
+
+    virtual ~Channel() = 0;
   };
 
   /**
@@ -296,7 +299,7 @@ namespace pfs
      * character long.
      * @return channel or NULL if the channel does not exist
      */        
-    virtual Channel* getChannel( const char *name ) = 0;
+    virtual Channel* getChannel( std::string name ) = 0; //const char *name ) = 0;
 
     /**
      * Creates a named channel. If the channel already exists, returns
@@ -310,7 +313,7 @@ namespace pfs
      * character long.
      * @return existing or newly created channel
      */        
-    virtual Channel* createChannel( const char *name ) = 0;
+    virtual Channel* createChannel( std::string name ) = 0; //const char *name ) = 0;
 
 
     /**
@@ -322,7 +325,7 @@ namespace pfs
     virtual void removeChannel( Channel *channel ) = 0;
     
     /**
-     * DEPRECIATED!!! Use getIterator instead.
+     * DEPRECATED!!! Use getIterator instead.
      *
      * Returns iterator for all available channels.
      *
