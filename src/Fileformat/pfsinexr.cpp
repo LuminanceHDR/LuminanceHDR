@@ -63,9 +63,6 @@ pfs::Frame * readEXRfile( const char *filename )
 {
   pfs::DOMIO pfsio;
   
-  bool keepRGB = false;
-  
-  //FILE *fd = fopen(filename,"rb");
   InputFile file( filename );
   
   FrameBuffer frameBuffer;
@@ -76,7 +73,7 @@ pfs::Frame * readEXRfile( const char *filename )
   int height = dw.max.y - dw.min.y + 1;
   
   if( (dtw.min.x < dw.min.x && dtw.max.x > dw.max.x) ||
-	  (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
+          (dtw.min.y < dw.min.y && dtw.max.y > dw.max.y) )
   {
     throw pfs::Exception( "No support for OpenEXR files DataWidnow greater than DisplayWindow" );
   }
@@ -87,67 +84,69 @@ pfs::Frame * readEXRfile( const char *filename )
   
   bool processColorChannels = false;
   pfs::Channel *X, *Y, *Z;
-  if( !keepRGB )             // Keep RGB channels as they are
+
+  // This condition is always true! :|
+
+  const Channel *rChannel = channels.findChannel( "R" );
+  const Channel *gChannel = channels.findChannel( "G" );
+  const Channel *bChannel = channels.findChannel( "B" );
+  if( rChannel!=NULL && gChannel!=NULL && bChannel!=NULL )
   {
-    const Channel *rChannel = channels.findChannel( "R" );
-    const Channel *gChannel = channels.findChannel( "G" );
-    const Channel *bChannel = channels.findChannel( "B" );
-    if( rChannel!=NULL && gChannel!=NULL && bChannel!=NULL )
-    {
       frame->createXYZChannels( X, Y, Z );
       
       frameBuffer.insert( "R",                                // name
-                         Slice( FLOAT,                        // type
-                               (char*)(X->getRawData()),
-                               sizeof(float),                 // xStride
-                               sizeof(float) * width,         // yStride
-                               1, 1,                          // x/y sampling
-                               0.0));                         // fillValue
+                          Slice( FLOAT,                        // type
+                                 (char*)(X->getRawData()),
+                                 sizeof(float),                 // xStride
+                                 sizeof(float) * width,         // yStride
+                                 1, 1,                          // x/y sampling
+                                 0.0));                         // fillValue
       
       frameBuffer.insert( "G",                                // name
-                         Slice( FLOAT,                        // type
-                               (char*)(Y->getRawData()),
-                               sizeof(float),                 // xStride
-                               sizeof(float) * width,         // yStride
-                               1, 1,                          // x/y sampling
-                               0.0));                         // fillValue
+                          Slice( FLOAT,                        // type
+                                 (char*)(Y->getRawData()),
+                                 sizeof(float),                 // xStride
+                                 sizeof(float) * width,         // yStride
+                                 1, 1,                          // x/y sampling
+                                 0.0));                         // fillValue
       
       frameBuffer.insert( "B",                                // name
-                         Slice( FLOAT,                        // type
-                               (char*)(Z->getRawData()),
-                               sizeof(float),                 // xStride
-                               sizeof(float) * width,         // yStride
-                               1, 1,                          // x/y sampling
-                               0.0));                         // fillValue
+                          Slice( FLOAT,                        // type
+                                 (char*)(Z->getRawData()),
+                                 sizeof(float),                 // xStride
+                                 sizeof(float) * width,         // yStride
+                                 1, 1,                          // x/y sampling
+                                 0.0));                         // fillValue
       
       processColorChannels = true;
-    }
   }
     
+
   for ( ChannelList::ConstIterator i = channels.begin(); i != channels.end(); ++i )
   {
-    //const Channel &channel = i.channel();
-    
-    if( processColorChannels )  // Skip color channels
-    {
-      if( !strcmp( i.name(), "R" ) || !strcmp( i.name(), "G" ) || !strcmp( i.name(), "B" ) ) continue;
-    }
-    
-    const char *channelName = i.name();
-    if( !strcmp( channelName, "Z" ) )
-    {
-      channelName = "DEPTH";
-    }
-    
-    pfs::Channel *pfsCh = frame->createChannel( channelName );
-    frameBuffer.insert( i.name(),                             // name
-                       Slice( FLOAT,                          // type
-                             (char *)pfsCh->getRawData(),
-                             sizeof(float),                   // xStride
-                             sizeof(float) * width,           // yStride
-                             1, 1,                            // x/y sampling
-                             0.0));                           // fillValue
-  }     
+      //const Channel &channel = i.channel();
+
+      if( processColorChannels )  // Skip color channels
+      {
+          if( !strcmp( i.name(), "R" ) || !strcmp( i.name(), "G" ) || !strcmp( i.name(), "B" ) ) continue;
+      }
+
+      const char *channelName = i.name();
+      if( !strcmp( channelName, "Z" ) )
+      {
+          channelName = "DEPTH";
+      }
+
+      pfs::Channel *pfsCh = frame->createChannel( channelName );
+      frameBuffer.insert( i.name(),                             // name
+                          Slice( FLOAT,                          // type
+                                 (char *)pfsCh->getRawData(),
+                                 sizeof(float),                   // xStride
+                                 sizeof(float) * width,           // yStride
+                                 1, 1,                            // x/y sampling
+                                 0.0));                           // fillValue
+  }
+
 
   // Copy attributes to tags
   {
@@ -185,7 +184,7 @@ pfs::Frame * readEXRfile( const char *filename )
   file.readPixels( dw.min.y, dw.max.y );
   
   if( processColorChannels )
-  {      
+  {
     // Rescale values if WhiteLuminance is present
     if( hasWhiteLuminance( file.header() ) )
     {
@@ -204,16 +203,15 @@ pfs::Frame * readEXRfile( const char *filename )
         (*Zr)(i) *= scaleFactor;
       }
 /*      const StringAttribute *relativeLum = file.header().findTypedAttribute<StringAttribute>("RELATIVE_LUMINANCE");
- */    
+ */
       const char *luminanceTag = frame->getTags()->getString("LUMINANCE");
       if( luminanceTag == NULL )
       {
         frame->getTags()->setString("LUMINANCE", "ABSOLUTE");
       }
-    }  
-  }    
+    }
+  }
   frame->getTags()->setString( "FILE_NAME", filename );
   
-  //fclose(fd);
   return frame;
 }
