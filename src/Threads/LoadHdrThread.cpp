@@ -89,7 +89,7 @@ void LoadHdrThread::run()
 				return;
 			}
 			pfs::DOMIO pfsio;
-			hdrpfsframe = pfsio.readFrame( fd);
+                        hdrpfsframe = pfsio.readFrame(fd);
 			fclose(fd);
 		}
     else if (extension.startsWith("TIF"))

@@ -91,42 +91,43 @@ void TMOThread::startTonemapping()
 
 void TMOThread::finalize()
 {
-  LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
-  
-	if (!(ph->isTerminationRequested()))
-  {
-		QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
-    
-    switch (m_tmo_thread_mode) {
-      case TMO_BATCH:
-      {
-        // different emit signal
-        // I let the parent of this thread to delete working_frame
-        emit imageComputed(res, &opts);
-        
-      }
-        break;
-      case TMO_INTERACTIVE:
-      default:
-      {
-        emit imageComputed(res);
-        if ( luminance_options->tmowindow_showprocessed )
-        {
-          emit processedFrame(workingframe);
+    LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
+
+    if (!(ph->isTerminationRequested()))
+    {
+        QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
+
+        switch (m_tmo_thread_mode) {
+        case TMO_BATCH:
+            {
+                // different emit signal
+                // I let the parent of this thread to delete working_frame
+                pfs::DOMIO pfsio;
+                pfsio.freeFrame(workingframe);
+                emit imageComputed(res, &opts);
+            }
+            break;
+        case TMO_INTERACTIVE:
+        default:
+            {
+                emit imageComputed(res);
+                if ( luminance_options->tmowindow_showprocessed )
+                {
+                    emit processedFrame(workingframe);
+                }
+                else
+                {
+                    //clean up workingframe in order not to waste much memory!
+                    //delete workingframe;
+                    pfs::DOMIO pfsio;
+                    pfsio.freeFrame(workingframe);
+                }
+
+            }
+            break;
         }
-        else
-        {
-          //clean up workingframe in order not to waste much memory!
-          //delete workingframe;
-          pfs::DOMIO pfsio;
-          pfsio.freeFrame(workingframe);
-        }
-        
-      }
-        break;
     }
-	}
-	emit finished();
-	emit deleteMe(this);
+    emit finished();
+    emit deleteMe(this);
 }
 

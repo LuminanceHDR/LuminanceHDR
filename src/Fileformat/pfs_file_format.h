@@ -20,7 +20,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Davide Anastasia <davide.anastasia@gmail.com>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 

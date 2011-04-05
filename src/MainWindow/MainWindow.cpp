@@ -572,6 +572,7 @@ void MainWindow::openRecentFile() {
 
 void MainWindow::setupLoadThread(QString fname)
 {
+    //TODO: This function generates a leak... check it out! ;)
 	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 	MySubWindow *subWindow = new MySubWindow(this,this);
 	newhdr=new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
@@ -584,25 +585,22 @@ void MainWindow::setupLoadThread(QString fname)
 	subWindow->setAttribute(Qt::WA_DeleteOnClose);
 
 	LoadHdrThread *loadthread = new LoadHdrThread(fname, RecentDirHDRSetting);
+        //connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
 	connect(loadthread, SIGNAL(maximumValue(int)), newhdr, SLOT(setMaximum(int)));
 	connect(loadthread, SIGNAL(nextstep(int)), newhdr, SLOT(setValue(int)));
 	connect(loadthread, SIGNAL(updateRecentDirHDRSetting(QString)), this, SLOT(updateRecentDirHDRSetting(QString)));
 	connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), subWindow, SLOT(addHdrFrame(pfs::Frame*,QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(load_failed(QString)));
 	connect(loadthread, SIGNAL(load_failed(QString)), subWindow, SLOT(load_failed(QString)));
-
-  // add progress bar in the status bar and launch it
   
 	loadthread->start();
-  
-  // remove status bar
 }
 
 void MainWindow::load_failed(QString error_message)
 {
 	QMessageBox::critical(this,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
 	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
-	LoadHdrThread *lht=(LoadHdrThread *)(sender());
+        LoadHdrThread *lht=(LoadHdrThread *)(sender()); //Interesting method! :|
 	QString fname=lht->getHdrFileName();
 	delete lht;
 	files.removeAll(fname);
