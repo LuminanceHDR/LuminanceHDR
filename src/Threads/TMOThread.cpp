@@ -73,9 +73,11 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 
 TMOThread::~TMOThread()
 {
-	//this->wait(); // risky!
+
+        this->wait();   // waits that all the signals have been served
 	delete ph;
-	//std::cout << "TMOThread::~TMOThread()" << std::endl;
+
+        std::cout << "TMOThread::~TMOThread()" << std::endl;
 }
 
 void TMOThread::terminateRequested()

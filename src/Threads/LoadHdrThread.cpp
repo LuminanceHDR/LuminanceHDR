@@ -25,6 +25,7 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QCoreApplication>
+#include <iostream>
 
 #include "LoadHdrThread.h"
 #include "Fileformat/pfs_file_format.h"
@@ -43,7 +44,9 @@ LoadHdrThread::LoadHdrThread(QString fname) : QThread(0), fname(fname), RecentDi
 
 LoadHdrThread::~LoadHdrThread()
 {
-	//this->wait(); // Risky!
+        this->wait();   // waits that all the signals have been served
+
+        std::cout << "LoadHdrThread::~LoadHdrThread()" << std::endl;
 }
 
 void LoadHdrThread::run()
