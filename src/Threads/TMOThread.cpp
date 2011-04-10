@@ -35,22 +35,26 @@
 #include "Filter/pfssize.h"
 #include "Fileformat/pfsoutldrimage.h"
 
-TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions &opts) :
+TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions *opts) :
 QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 {  
 	ph = new ProgressHelper(0);
   
-  if ( opts.tonemapSelection )
+  if ( opts->tonemapSelection )
   {
     // workingframe = "crop"
     // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
     // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
-    workingframe = pfs::pfscut(frame, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+    workingframe = pfs::pfscut(frame,
+                               opts->selection_x_up_left,
+                               opts->selection_y_up_left,
+                               opts->selection_x_bottom_right,
+                               opts->selection_y_bottom_right);
   }
-	else if ( opts.xsize != opts.origxsize )
+        else if ( opts->xsize != opts->origxsize )
   {
     // workingframe = "resize"
-    workingframe = pfs::resizeFrame(frame, opts.xsize);
+    workingframe = pfs::resizeFrame(frame, opts->xsize);
 	}
   else
   {
@@ -64,9 +68,9 @@ QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 	pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                            pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());	
 
-  if (opts.pregamma != 1.0f)
+  if (opts->pregamma != 1.0f)
   {
-    pfs::applyGammaOnFrame( workingframe, opts.pregamma );
+    pfs::applyGammaOnFrame( workingframe, opts->pregamma );
 	}
   
 }
@@ -106,7 +110,7 @@ void TMOThread::finalize()
                 // I let the parent of this thread to delete working_frame
                 pfs::DOMIO pfsio;
                 pfsio.freeFrame(workingframe);
-                emit imageComputed(res, &opts);
+                emit imageComputed(res, opts);
             }
             break;
         case TMO_INTERACTIVE:

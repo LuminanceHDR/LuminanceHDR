@@ -29,7 +29,7 @@
 #include "Reinhard02Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-Reinhard02Thread::Reinhard02Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+Reinhard02Thread::Reinhard02Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;
@@ -42,12 +42,12 @@ void Reinhard02Thread::run()
 	try
   {
 		pfstmo_reinhard02(workingframe,
-                      opts.operator_options.reinhard02options.key,
-                      opts.operator_options.reinhard02options.phi,
-                      opts.operator_options.reinhard02options.range,
-                      opts.operator_options.reinhard02options.lower,
-                      opts.operator_options.reinhard02options.upper,
-                      opts.operator_options.reinhard02options.scales,
+                      opts->operator_options.reinhard02options.key,
+                      opts->operator_options.reinhard02options.phi,
+                      opts->operator_options.reinhard02options.range,
+                      opts->operator_options.reinhard02options.lower,
+                      opts->operator_options.reinhard02options.upper,
+                      opts->operator_options.reinhard02options.scales,
                       ph);
 	}
 	catch(pfs::Exception e)

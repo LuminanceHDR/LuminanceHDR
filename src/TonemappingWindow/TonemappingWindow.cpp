@@ -145,7 +145,7 @@ void TonemappingWindow::setupConnections()
   
 	connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(updateActions(QMdiSubWindow *)) );
   
-	connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions&)), this, SLOT(tonemapImage(TonemappingOptions&)));
+        connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
   
 	connect(originalHDR, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
 	connect(originalHDR, SIGNAL(closeRequested(bool)), actionShowHDR, SLOT(setChecked(bool)));
@@ -643,82 +643,90 @@ void TonemappingWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int&
 	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
-void TonemappingWindow::tonemapImage(TonemappingOptions &opts)
+void TonemappingWindow::tonemapImage(TonemappingOptions *opts)
 {
-	tmoOptions = &opts;	
-  
-	if ( opts.tonemapOriginal )
-  {
- 		workingPfsFrame = originalHDR->getHDRPfsFrame();
-    
-    if ( opts.tonemapSelection )
+    tmoOptions = opts;
+
+    if ( opts->tonemapOriginal )
     {
-      if ( originalHDR->hasSelection() )
-      {
-        getCropCoords(originalHDR, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
-      }
-      else
-      {
-        QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
-        return;
-      }
-    }
-	}
-	else // if ( !opts.tonemapOriginal )
-  {
-		if (!mdiArea->subWindowList().isEmpty())
-    {
-			GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-      
-			if ( viewer->isHDR() )
-      {
-        HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
-        workingPfsFrame = HDR->getHDRPfsFrame();
-			}		
-			else
-      {
-				QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-				return;
-			}
-      
-      if ( opts.tonemapSelection )
-      {
-        if ( originalHDR->hasSelection() )
+        workingPfsFrame = originalHDR->getHDRPfsFrame();
+
+        if ( opts->tonemapSelection )
         {
-          getCropCoords(originalHDR, opts.selection_x_up_left, opts.selection_y_up_left, opts.selection_x_bottom_right, opts.selection_y_bottom_right);
+            if ( originalHDR->hasSelection() )
+            {
+                getCropCoords(originalHDR,
+                              opts->selection_x_up_left,
+                              opts->selection_y_up_left,
+                              opts->selection_x_bottom_right,
+                              opts->selection_y_bottom_right);
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
+                return;
+            }
+        }
+    }
+    else // if ( !opts.tonemapOriginal )
+    {
+        if (!mdiArea->subWindowList().isEmpty())
+        {
+            GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
+
+            if ( viewer->isHDR() )
+            {
+                HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
+                workingPfsFrame = HDR->getHDRPfsFrame();
+            }
+            else
+            {
+                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
+                return;
+            }
+
+            if ( opts->tonemapSelection )
+            {
+                if ( originalHDR->hasSelection() )
+                {
+                    getCropCoords(originalHDR,
+                                  opts->selection_x_up_left,
+                                  opts->selection_y_up_left,
+                                  opts->selection_x_bottom_right,
+                                  opts->selection_y_bottom_right);
+                }
+                else
+                {
+                    QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
+                    return;
+                }
+            }
         }
         else
         {
-          QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
-          return;
+            QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
+            return;
         }
-      }
-		}
-		else
-    {
-			QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-			return;
-		}
-	} 
-  
-	TMOThread *thread = TMOFactory::getTMOThread(opts.tmoperator, workingPfsFrame, opts);
-	progInd = new TMOProgressIndicator(this);
-  
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addMDIResult(QImage*)));
-	connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
-	connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
-	connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
-	connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-	connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
-	connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
-  
-	//start thread
-	tmPanel->applyButton->setEnabled(false);
-	thread->startTonemapping();
-	statusbar->insertWidget(0,progInd,1);
-	//statusbar->addWidget(progInd);
+    }
+
+    TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, workingPfsFrame, opts);
+    progInd = new TMOProgressIndicator(this);
+
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addMDIResult(QImage*)));
+    connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
+    connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
+    connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+    connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
+    connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
+
+    //start thread
+    tmPanel->applyButton->setEnabled(false);
+    thread->startTonemapping();
+    statusbar->insertWidget(0,progInd,1);
+    //statusbar->addWidget(progInd);
 }
 
 void TonemappingWindow::showErrorMessage(const char *e)

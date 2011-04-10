@@ -31,7 +31,7 @@
 
 QMutex Fattal02Thread::fattal02_mutex;
 
-Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
+Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
 TMOThread(frame, opts)
 {
 }
@@ -45,11 +45,11 @@ void Fattal02Thread::run()
 		// pfstmo_fattal02 not reentrant AKA not thread-safe!
 		fattal02_mutex.lock();
 		pfstmo_fattal02(workingframe,
-                    opts.operator_options.fattaloptions.alpha,
-                    opts.operator_options.fattaloptions.beta,
-                    opts.operator_options.fattaloptions.color,
-                    opts.operator_options.fattaloptions.noiseredux,
-                    opts.operator_options.fattaloptions.newfattal,
+                    opts->operator_options.fattaloptions.alpha,
+                    opts->operator_options.fattaloptions.beta,
+                    opts->operator_options.fattaloptions.color,
+                    opts->operator_options.fattaloptions.noiseredux,
+                    opts->operator_options.fattaloptions.newfattal,
                     ph);
 		fattal02_mutex.unlock();
 	}

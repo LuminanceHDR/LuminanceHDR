@@ -29,7 +29,7 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Ashikhmin02Thread.h"
 
-Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions &opts): 
+Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
 TMOThread(frame, opts)
 {
 }
@@ -41,9 +41,9 @@ void Ashikhmin02Thread::run()
 	try
   {
 		pfstmo_ashikhmin02(workingframe,
-                       opts.operator_options.ashikhminoptions.simple,
-                       opts.operator_options.ashikhminoptions.lct,
-                       (opts.operator_options.ashikhminoptions.eq2 ? 2 : 4),
+                       opts->operator_options.ashikhminoptions.simple,
+                       opts->operator_options.ashikhminoptions.lct,
+                       (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
                        ph);
 	}
 	catch(pfs::Exception e)

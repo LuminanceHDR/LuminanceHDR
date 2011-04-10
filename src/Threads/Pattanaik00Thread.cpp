@@ -29,7 +29,7 @@
 #include "Pattanaik00Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-Pattanaik00Thread::Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+Pattanaik00Thread::Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;
@@ -41,11 +41,11 @@ void Pattanaik00Thread::run()
 	emit setMaximumSteps(100);
 	try {
 		pfstmo_pattanaik00(workingframe,
-                       opts.operator_options.pattanaikoptions.local,
-                       opts.operator_options.pattanaikoptions.multiplier,
-                       opts.operator_options.pattanaikoptions.cone,
-                       opts.operator_options.pattanaikoptions.rod,
-                       opts.operator_options.pattanaikoptions.autolum,
+                       opts->operator_options.pattanaikoptions.local,
+                       opts->operator_options.pattanaikoptions.multiplier,
+                       opts->operator_options.pattanaikoptions.cone,
+                       opts->operator_options.pattanaikoptions.rod,
+                       opts->operator_options.pattanaikoptions.autolum,
                        ph);
 	}
 	catch(pfs::Exception e)

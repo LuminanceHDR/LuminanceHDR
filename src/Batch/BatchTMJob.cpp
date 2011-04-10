@@ -87,7 +87,7 @@ void BatchTMJob::run()
             opts->xsize = 400; // DEBUG
             //opts->xsize = opts->origxsize;
 
-            TMOThread * tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, *opts);
+            TMOThread * tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, opts);
 
             // Thread deletes itself when it has done with its job
             connect(tmo_thread, SIGNAL(finished()),

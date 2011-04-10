@@ -460,7 +460,7 @@ void  CommandLineInterfaceManager::startTonemap()
 		if (tmopts->xsize == -2)	
 			tmopts->xsize = HDR->getWidth();
     
-		TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, *tmopts);
+                TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, tmopts);
 		connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(tonemapTerminated(const QImage&)));
     
     thread->startTonemapping();

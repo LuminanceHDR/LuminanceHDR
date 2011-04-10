@@ -36,7 +36,7 @@ class Mantiuk06Thread : public TMOThread {
   Q_OBJECT
   
 public:
-  Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts);
+  Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts);
 protected:
 	void run();
   

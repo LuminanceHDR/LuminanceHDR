@@ -34,7 +34,7 @@ class Reinhard05Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions &opts);
+        Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts);
 protected:
 	void run();
 };

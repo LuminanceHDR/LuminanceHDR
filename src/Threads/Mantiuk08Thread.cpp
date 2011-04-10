@@ -29,7 +29,7 @@
 #include "Mantiuk08Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)
 {
 }
@@ -40,10 +40,10 @@ void Mantiuk08Thread::run()
 	emit setMaximumSteps(100);
 	try {
 		pfstmo_mantiuk08(workingframe,
-                     opts.operator_options.mantiuk08options.colorsaturation,
-                     opts.operator_options.mantiuk08options.contrastenhancement,
-                     opts.operator_options.mantiuk08options.luminancelevel,
-                     opts.operator_options.mantiuk08options.setluminance,
+                     opts->operator_options.mantiuk08options.colorsaturation,
+                     opts->operator_options.mantiuk08options.contrastenhancement,
+                     opts->operator_options.mantiuk08options.luminancelevel,
+                     opts->operator_options.mantiuk08options.setluminance,
                      ph);
 	}
 	catch(pfs::Exception e)

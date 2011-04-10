@@ -104,7 +104,7 @@ protected slots:
 	void dispatch(GenericViewer *);
 	void openDocumentation(); 
 	void aboutLuminance();
-	void tonemapImage(TonemappingOptions&);
+        void tonemapImage(TonemappingOptions*);
 	void showErrorMessage(const char *e);
 	void tonemappingFinished();
 	void updateProgressbar();

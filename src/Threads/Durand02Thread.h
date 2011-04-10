@@ -35,7 +35,7 @@ class Durand02Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
+        Durand02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
 protected:
 	void run();
   

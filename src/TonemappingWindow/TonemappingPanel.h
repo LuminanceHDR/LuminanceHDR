@@ -44,7 +44,7 @@ public:
 	~TonemappingPanel();
 	void setSizes(int, int);
 signals:
-	void startTonemapping(TonemappingOptions&);
+        void startTonemapping(TonemappingOptions*);
 private:
 	Gang    *contrastfactorGang, //mantiuk06
 		*saturationfactorGang, 

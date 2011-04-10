@@ -34,7 +34,7 @@
 class TMOFactory {
 
 public:
-	static TMOThread * getTMOThread(const TMOperator &tmoOperator, pfs::Frame *frame, const TonemappingOptions &opt);
+        static TMOThread * getTMOThread(const TMOperator &tmoOperator, pfs::Frame *frame, const TonemappingOptions *opt);
 };
 
 #endif

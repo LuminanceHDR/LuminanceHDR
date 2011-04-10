@@ -29,7 +29,7 @@
 #include "Drago03Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opts): 
+Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opts):
 TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;  
@@ -41,7 +41,7 @@ void Drago03Thread::run()
 	emit setMaximumSteps(100);
 	try
   {
-		pfstmo_drago03(workingframe, opts.operator_options.dragooptions.bias, ph);
+                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, ph);
 	}
 	catch(pfs::Exception e)
   {

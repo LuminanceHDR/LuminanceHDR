@@ -36,7 +36,7 @@ class Fattal02Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Fattal02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
+        Fattal02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
 protected:
 	void run();
   

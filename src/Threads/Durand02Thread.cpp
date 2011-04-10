@@ -31,7 +31,7 @@
 
 QMutex Durand02Thread::durand02_mutex;
 
-Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions &opts):
+Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
 TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;
@@ -46,9 +46,9 @@ void Durand02Thread::run()
 		// pfstmo_durand02 not reentrant
 		durand02_mutex.lock();
 		pfstmo_durand02(workingframe,
-                    opts.operator_options.durandoptions.spatial,
-                    opts.operator_options.durandoptions.range,
-                    opts.operator_options.durandoptions.base,
+                    opts->operator_options.durandoptions.spatial,
+                    opts->operator_options.durandoptions.range,
+                    opts->operator_options.durandoptions.base,
                     ph);
 		durand02_mutex.unlock();
 	}

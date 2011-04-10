@@ -34,7 +34,7 @@ class Drago03Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Drago03Thread(pfs::Frame *frame, const TonemappingOptions &opt);
+        Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opt);
 protected:
 	void run();
 };

@@ -38,7 +38,7 @@
 
 TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator,
                                      pfs::Frame *workingPfsFrame, 
-                                     const TonemappingOptions &opts)
+                                     const TonemappingOptions *opts)
 {
 	switch (tmoOperator)
   {

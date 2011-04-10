@@ -34,7 +34,7 @@ class Ashikhmin02Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions &opt);
+        Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
 protected:
 	void run();
 };

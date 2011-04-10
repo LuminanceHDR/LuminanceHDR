@@ -31,7 +31,7 @@
 
 QMutex Mantiuk06Thread::mantiuk06_mutex;
 
-Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)
 {
   out_CS = pfs::CS_SRGB;
@@ -46,10 +46,10 @@ void Mantiuk06Thread::run()
 		// pfstmo_mantiuk06 not reentrant
     mantiuk06_mutex.lock();
 		pfstmo_mantiuk06(workingframe,
-                     opts.operator_options.mantiuk06options.contrastfactor,
-                     opts.operator_options.mantiuk06options.saturationfactor,
-                     opts.operator_options.mantiuk06options.detailfactor,
-                     opts.operator_options.mantiuk06options.contrastequalization,
+                     opts->operator_options.mantiuk06options.contrastfactor,
+                     opts->operator_options.mantiuk06options.saturationfactor,
+                     opts->operator_options.mantiuk06options.detailfactor,
+                     opts->operator_options.mantiuk06options.contrastequalization,
                      ph);
     mantiuk06_mutex.unlock();
 	}

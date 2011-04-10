@@ -43,7 +43,7 @@ class TMOThread : public QThread {
 Q_OBJECT
 
 public:
-  TMOThread(pfs::Frame *frame, const TonemappingOptions &opts);
+  TMOThread(pfs::Frame *frame, const TonemappingOptions *opts);
   virtual ~TMOThread();
   virtual void startTonemapping();
 
@@ -55,7 +55,7 @@ public slots:
   
 signals:
 	void imageComputed(QImage*);
-  void imageComputed(QImage*, const TonemappingOptions* opts);
+        void imageComputed(QImage*, const TonemappingOptions* opts);
 	void processedFrame(pfs::Frame *);
 	void setMaximumSteps(int);
 	void setValue(int);
@@ -68,7 +68,7 @@ protected:
 	virtual void run() = 0;
 	void finalize();
 	pfs::Frame *workingframe;
-	const TonemappingOptions &opts;
+        const TonemappingOptions *opts;
   TMOTHREAD_MODE m_tmo_thread_mode;
 	ProgressHelper *ph;
   

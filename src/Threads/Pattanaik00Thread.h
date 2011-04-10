@@ -34,7 +34,7 @@ class Pattanaik00Thread : public TMOThread {
 Q_OBJECT
 
 public:
-	Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions &opts);
+        Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions *opts);
 protected:
 	void run();
 };

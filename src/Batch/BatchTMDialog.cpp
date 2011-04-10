@@ -86,15 +86,13 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 BatchTMDialog::~BatchTMDialog()
 {
     //printf("BatchTMDialog::~BatchTMDialog()\n");
+    this->hide();
 
-    //delete full_Log_Model;
-    //delete log_filter;
+    delete log_filter;
+    delete full_Log_Model;
     delete [] m_available_threads;
 
     QApplication::restoreOverrideCursor();
-    // TO CHECK!
-    //	while (!tm_opt_list.isEmpty())
-    //		delete (tm_opt_list.takeFirst()).first;
 }
 
 void BatchTMDialog::add_dir_HDRs()

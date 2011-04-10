@@ -29,7 +29,7 @@
 #include "Reinhard05Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 
-Reinhard05Thread::Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions &opts) : 
+Reinhard05Thread::Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)
 {
 }
@@ -41,9 +41,9 @@ void Reinhard05Thread::run()
 	try
   {
 		pfstmo_reinhard05(workingframe,
-                      opts.operator_options.reinhard05options.brightness,
-                      opts.operator_options.reinhard05options.chromaticAdaptation,
-                      opts.operator_options.reinhard05options.lightAdaptation,
+                      opts->operator_options.reinhard05options.brightness,
+                      opts->operator_options.reinhard05options.chromaticAdaptation,
+                      opts->operator_options.reinhard05options.lightAdaptation,
                       ph);
 	}
 	catch(pfs::Exception e)

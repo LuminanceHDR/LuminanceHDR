@@ -303,7 +303,7 @@ void TonemappingPanel::on_applyButton_clicked()
 	fillToneMappingOptions();
 	setupUndo();
 
-	emit startTonemapping(toneMappingOptions);
+        emit startTonemapping(&toneMappingOptions);
 }
 
 void TonemappingPanel::fillToneMappingOptions()
