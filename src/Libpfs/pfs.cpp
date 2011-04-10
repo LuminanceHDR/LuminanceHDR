@@ -25,6 +25,9 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * $Id: pfs.cpp,v 1.11 2008/01/01 13:01:21 rafm Exp $
+ *
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * Different implementation for ChannelImpl and FrameImpl
  */
 
 
@@ -239,10 +242,6 @@ void copyTags( Frame *from, Frame *to )
 
   class DOMIOImpl;
 
-  /* Empty Virtual Destructor for Channel */
-  Channel::~Channel()
-  { }
-
   class ChannelImpl: public Channel
   {
       /* width = cols */
@@ -262,12 +261,13 @@ void copyTags( Frame *from, Frame *to )
       channel_impl = new Array2DImpl( width, height );
       tags = new TagContainerImpl();
       name = new std::string( n_name );
-      std::cout << "Creazione canale " << name->data() << std::endl;
+
+      //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
     }
     
     virtual ~ChannelImpl()
     {
-      std::cout << "Distruzione canale " << name->data() << std::endl;
+      //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 
       delete channel_impl;
       delete tags;
@@ -403,10 +403,6 @@ public:
 //------------------------------------------------------------------------------
 // Frame implementation  
 //------------------------------------------------------------------------------
-
-//A pure virtual destructor
-Frame::~Frame()
-  {}
 
 class FrameImpl: public Frame {
   int width, height;

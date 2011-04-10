@@ -35,6 +35,9 @@
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
  *
  * $Id: pfs.h,v 1.2 2006/03/01 17:21:16 rafm Exp $
+ *
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * Different implementation for ChannelImpl and FrameImpl
  */
 
 #ifndef PFS_H
@@ -229,7 +232,8 @@ namespace pfs
     
     virtual Array2DImpl* getChannelData() = 0;
 
-    virtual ~Channel() = 0;
+    /* Empty Virtual Destructor for Channel */
+    virtual ~Channel() { }
   };
 
   /**
@@ -363,7 +367,8 @@ namespace pfs
      */
     virtual TagContainer *getTags() = 0;
 
-    virtual ~Frame() = 0;
+    // A pure virtual destructor
+    virtual ~Frame() { }
     
   };
 
@@ -558,7 +563,7 @@ namespace pfs
           strcpy( msg, message );
 	}
 			
-      ~Exception() {};
+      ~Exception() {}
 
       /**
        * Returns the description of the problem.
