@@ -48,7 +48,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	maskColorButton->setVisible(false);
 	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-	maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue()));
+        maskColorButton->setStyleSheet(QString(tr("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue())));
 	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
@@ -61,7 +61,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	previewWidget->update();
 
 	cornerButton=new QToolButton(this);
-	cornerButton->setToolTip("Pan the image to a region");
+        cornerButton->setToolTip(tr("Pan the image to a region"));
 	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 	scrollArea->setCornerWidget(cornerButton);
 
