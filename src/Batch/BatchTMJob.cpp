@@ -34,9 +34,7 @@ BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingO
         m_tm_options(tm_options),
         m_output_folder(output_folder)
 {
-    //  m_load_thread   = NULL;
     m_working_frame = NULL;
-    //  m_tmo_thread    = NULL;
     m_ldr_image     = NULL;
 
     m_ldr_output_format = LuminanceOptions::getInstance()->batch_ldr_format;
@@ -116,8 +114,8 @@ void BatchTMJob::run()
                 {
                     // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData()
                     // trick to cope with local 8-bit encoding determined by the user's locale.
-                    ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(),
-                                                  operations.getExifComment().toStdString());
+                    ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
+
                     emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
                 }
 

@@ -43,6 +43,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
     //printf("BatchTMDialog::BatchTMDialog()\n");
     setupUi(this);
 
+    setWindowModality(Qt::WindowModal);   // Mac Mode
+
     luminance_options = LuminanceOptions::getInstance();
 
     RecentDirHDRSetting = settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
@@ -61,8 +63,8 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
     connect(filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 
-    full_Log_Model = new QStringListModel();
-    log_filter = new QSortFilterProxyModel(this);
+    full_Log_Model  = new QStringListModel();
+    log_filter      = new QSortFilterProxyModel(this);
     log_filter->setDynamicSortFilter(true);
     log_filter->setSourceModel(full_Log_Model);
     Log_Widget->setModel(log_filter);
