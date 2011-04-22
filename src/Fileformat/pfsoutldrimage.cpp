@@ -33,13 +33,6 @@
 #include "Libpfs/colorspace.h"
 #include "Common/msec_timer.h"
 
-static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
-{
-    if( v < /*(float)*/minV ) return minV;
-    if( v > /*(float)*/maxV ) return maxV;
-    return (unsigned char)v;
-}
-
 inline int clamp2int( const float v, const float minV, const float maxV )
 {
     if ( v < minV ) return (int)minV;
@@ -47,78 +40,8 @@ inline int clamp2int( const float v, const float minV, const float maxV )
     return (int)v;
 }
 
-//QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
-//{
-//#ifdef TIMER_PROFILING
-//    msec_timer __timer;
-//    __timer.start();
-//#endif
-
-//    assert(inpfsframe!=NULL);
-
-//    pfs::Channel *Xc, *Yc, *Zc;
-//    inpfsframe->getXYZChannels( Xc, Yc, Zc );
-//    assert( Xc != NULL && Yc != NULL && Zc != NULL );
-
-//    pfs::Array2DImpl  *X = Xc->getChannelData();
-//    pfs::Array2DImpl  *Y = Yc->getChannelData();
-//    pfs::Array2DImpl  *Z = Zc->getChannelData();
-
-//    // Back to CS_RGB for the Viewer
-//    pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z);
-
-//    const int width   = Xc->getWidth();
-//    const int height  = Xc->getHeight();
-//    const int elems   = width*height;
-
-//    unsigned char* data = new uchar[elems*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
-
-//    if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)
-//    {
-//        // Intel Processors
-//        float* p_Z = Z->getRawData();
-//        float* p_Y = Y->getRawData();
-//        float* p_X = X->getRawData();
-
-//        unsigned char* p_data = data;
-
-//        for ( int c = elems; c > 0; c-- )
-//        {
-//            (*p_data) = clamp((*p_Z)*255.f, 0, 255);  p_Z++;  p_data++;
-//            (*p_data) = clamp((*p_Y)*255.f, 0, 255);  p_Y++;  p_data++;
-//            (*p_data) = clamp((*p_X)*255.f, 0, 255);  p_X++;  p_data++;
-//            (*p_data) = 0xFF;                                 p_data++;
-//        }
-//    }
-//    else
-//    {
-//        // Motorola Processors
-//        // I have a feeling that this piece of code is not right!
-//        for( int y = 0; y < height; y++ ) // For each row of the image
-//        {
-//            for( int x = 0; x < width; x++ )
-//            {
-//                *(data + 3 + (y*width+x)*4) = ( clamp( (*X)( x, y )*255.f, 0, 255) );
-//                *(data + 2 + (y*width+x)*4) = ( clamp( (*Y)( x, y )*255.f, 0, 255) );
-//                *(data + 1 + (y*width+x)*4) = ( clamp( (*Z)( x, y )*255.f, 0, 255) );
-//                *(data + 0 + (y*width+x)*4) = 0xff;
-//            }
-//        }
-//    }
-
-//#ifdef TIMER_PROFILING
-//    __timer.stop_and_update();
-//    std::cout << "fromLDRPFStoQImage() = " << __timer.get_time() << " msec" << std::endl;
-//#endif
-
-//    QImage * temp_qimage = new QImage (const_cast<unsigned char*>(data), width, height, QImage::Format_ARGB32);
-//    delete data;
-//    return temp_qimage;
-//}
-
 // Davide Anastasia <davideanastasia@users.sourceforge.net>
-// This new implementation avoid the creation of a temporary buffer. This has a positive effect also on the memory
-// management, because QImage doesn't destroy the buffer after the creation of the object
+// This new implementation avoid the creation of a temporary buffer
 QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
 #ifdef TIMER_PROFILING
@@ -145,19 +68,28 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_col
 
     QImage * temp_qimage = new QImage (width, height, QImage::Format_ARGB32);
 
-    float* p_Z = Z->getRawData();
-    float* p_Y = Y->getRawData();
-    float* p_X = X->getRawData();
+    float* p_R = X->getRawData();
+    float* p_G = Y->getRawData();
+    float* p_B = Z->getRawData();
+
+    int red, green, blue;
 
     for (int r = 0; r < height; r++)
     {
+        QRgb* pixel   = (QRgb*)temp_qimage->scanLine(r);
+
         for ( int c = 0; c < width; c++ )
         {
-            int red = clamp2int(p_X[c + r*width]*255.f, 0.0f, 255.f);
-            int green = clamp2int(p_Y[c + r*width]*255.f, 0.0f, 255.f);
-            int blue = clamp2int(p_Z[c + r*width]*255.f, 0.0f, 255.f);
+            red = clamp2int((*p_R)*255.f, 0.0f, 255.f);
+            green = clamp2int((*p_G)*255.f, 0.0f, 255.f);
+            blue = clamp2int((*p_B)*255.f, 0.0f, 255.f);
 
-            temp_qimage->setPixel(c, r, qRgb(red, green, blue));
+            *pixel = qRgb(red, green, blue);
+
+            pixel++;
+            p_R++;
+            p_G++;
+            p_B++;
         }
     }
 
