@@ -19,6 +19,7 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
 #include <QFileInfo>
@@ -57,7 +58,7 @@ void LoadHdrThread::run()
     QFileInfo qfi(fname);
     if (!qfi.isReadable())
     {
-        qDebug("File %s is not readable.", fname.toAscii().constData());
+        qDebug("File %s is not readable.", fname.toLocal8Bit().constData());
         emit load_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
         return;
     }
@@ -73,7 +74,10 @@ void LoadHdrThread::run()
     bool rawinput = (rawextensions.indexOf(extension) != -1);
     try
     {
-        char* encodedFileName = strdup(QFile::encodeName(qfi.filePath()).constData());
+        QByteArray TempPath = (luminance_options->tempfilespath).toLocal8Bit();
+        QByteArray FilePath = qfi.absoluteFilePath().toLocal8Bit();
+        const char* encodedFileName = FilePath.constData(); // It will be surely needed... so I prefer to do it now
+        //char* encodedFileName = strdup(QFile::encodeName(qfi.filePath()).constData());
         if (extension=="EXR")
         {
             hdrpfsframe = readEXRfile(encodedFileName);
@@ -85,8 +89,8 @@ void LoadHdrThread::run()
         else if (extension=="PFS")
         {
             //TODO
-            const char *fname = encodedFileName;
-            FILE *fd = fopen(fname, "rb");
+            //const char *fname = encodedFileName;
+            FILE *fd = fopen(encodedFileName, "rb");
             if (!fd) {
                 emit load_failed(tr("ERROR: Cannot open file: %1").arg(fname));
                 return;
@@ -97,7 +101,7 @@ void LoadHdrThread::run()
         }
         else if (extension.startsWith("TIF"))
         {
-            TiffReader reader(encodedFileName, (luminance_options->tempfilespath).toAscii().constData(), false );
+            TiffReader reader(encodedFileName, TempPath.constData(), false );
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
             hdrpfsframe = reader.readIntoPfsFrame();
@@ -105,7 +109,7 @@ void LoadHdrThread::run()
         }
         else if (rawinput)
         {
-            hdrpfsframe = readRawIntoPfsFrame(fname.toAscii().constData(), (luminance_options->tempfilespath).toAscii().constData(), luminance_options, false);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false);
         } //raw file detected
         else
         {
@@ -113,7 +117,7 @@ void LoadHdrThread::run()
             emit load_failed(tr("ERROR: File %1 has unsupported extension.").arg(fname));
             return;
         }
-        free(encodedFileName);
+        //free(encodedFileName);
         if (hdrpfsframe == NULL)
         {
             throw "Error loading file";
