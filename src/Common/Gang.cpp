@@ -81,8 +81,9 @@ Gang::Gang(QSlider* slider, QDoubleSpinBox* doublespinbox,
 	setDefault();
 }
 
-Gang::~Gang() {
-	delete tmoSettingsList;
+Gang::~Gang()
+{
+    delete tmoSettingsList;
 } 
 
 float Gang::p2v(const int p) const
@@ -259,10 +260,8 @@ void Gang::setupUndo() {
 		isRb1Checked = rb1->isChecked();
 	if (rb2) 
 		isRb2Checked = rb2->isChecked();
-	
-	TmoSettings *tmoSettings = new  TmoSettings(this, v, isCbx1Checked, isCbx2Checked, 
-			isRb1Checked, isRb2Checked);
-	tmoSettingsList->append(*tmoSettings);
+
+        tmoSettingsList->append( TmoSettings(this, v, isCbx1Checked, isCbx2Checked, isRb1Checked, isRb2Checked) );
 	if (tmoSettingsList->index() == 1) {
 		emit enableUndo(true);
 		undoState = true;
@@ -376,7 +375,7 @@ void TmoSettings::apply() const {
 // TmoSettingsList Implementation
 //
 TmoSettingsList::TmoSettingsList(): QList<TmoSettings>(), m_index(-1) {}	
-TmoSettingsList::~TmoSettingsList() {}	
+TmoSettingsList::~TmoSettingsList() {}
 
 void TmoSettingsList::previous() {
 	if (m_index > 0) {
