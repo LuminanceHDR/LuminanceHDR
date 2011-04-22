@@ -48,7 +48,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	maskColorButton->setVisible(false);
 	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
-        maskColorButton->setStyleSheet(QString(tr("background: rgb(%1,%2,%3)").arg(maskcolor.red()).arg(maskcolor.green()).arg(maskcolor.blue())));
+        maskColorButton->setStyleSheet(QString("background: rgb("+QString(maskcolor.red())+","+QString(maskcolor.green())+","+QString(maskcolor.blue())+")"));
 	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
