@@ -566,7 +566,11 @@ void tmo_reinhard02(unsigned int width, unsigned int height,
   if (ph->isTerminationRequested())
 	  goto end;
   deallocate_memory();
-  clean_pyramid();
+  if( use_scales ) {
+#ifdef APPROXIMATE
+      clean_pyramid();
+#endif
+  }
 
   if (!ph->isTerminationRequested())
     ph->newValue( 100 );

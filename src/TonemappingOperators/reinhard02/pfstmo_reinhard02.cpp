@@ -40,7 +40,7 @@
 
 void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int low, int high, bool use_scales, ProgressHelper *ph )
 {
-  pfs::DOMIO pfsio;
+  //pfs::DOMIO pfsio;
   
   //--- default tone mapping parameters;
   //float key = 0.18;
@@ -51,13 +51,13 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   //bool use_scales = false;
   bool temporal_coherent = false;  
   
-	std::cout << "pfstmo_reinhard02" << std::endl;
-	std::cout << "key: " << key << std::endl;
-	std::cout << "phi: " << phi << std::endl;
-	std::cout << "range: " << num << std::endl;
-	std::cout << "lower scale: " << low << std::endl;
-	std::cout << "upper scale: " << high << std::endl;
-	std::cout << "use scales: " << use_scales << std::endl;
+  std::cout << "pfstmo_reinhard02 (";
+  std::cout << "key: " << key;
+  std::cout << ", phi: " << phi;
+  std::cout << ", range: " << num;
+  std::cout << ", lower scale: " << low;
+  std::cout << ", upper scale: " << high;
+  std::cout << ", use scales: " << use_scales << ")" << std::endl;
   
   
   pfs::Channel *X, *Y, *Z;
