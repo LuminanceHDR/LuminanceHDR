@@ -890,9 +890,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="51"/>
         <source>background: rgb(%1,%2,%3)</source>
-        <translation>Sfondo: rgb(%1,%2,%3)</translation>
+        <translation type="obsolete">Sfondo: rgb(%1,%2,%3)</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/EditingTools.cpp" line="64"/>

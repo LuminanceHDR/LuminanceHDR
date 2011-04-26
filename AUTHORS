@@ -5,15 +5,15 @@ Giuseppe Rota <grota@sourceforge.net>
 
 Main developer, improvements, bug fixing
 Franco Comida <fcomida@sourceforge.net>
+Davide Anastasia (code improvement, performance improvement, Mac OS support)
 
 Contributors:
-Davide Anastasia (code improvement, performance improvement, Mac OS support)
 Daniel Kaneider (windows setup, head of i18n efforts)
-Mandus (Mac OS X packager, Norwegian translator)
+Mandus (Norwegian translator)
 Nicholas Phillips (MTB alignment code)
 Mustafa GÜNAY (Turkish translator)
 Douglas E. Warner (fc6 packager and bug reports)
-Ralph Kaeppeli (German Translator)
+Christian Raue (German Translator)
 Jan Gemela (Cezk translator)
 Peter Gaal (Hungarian translator)
 Ignacy Gawedzki (tiff ldr bugfixes and suggestion)

@@ -1,6 +1,10 @@
+Changes 2.0.2
+* New BatchTM Processing engine
+* Sorted leaks in freeing memory from pfs::Channel
+
 Changes 2.0.2(-pre1)
 * Smaller memory footprint during the TM process
-* [Windows only] improved responsiveness of the UI
+* [Windows only] improved responsiveness of the UI during the Mantiuk TMO
 * [Windows only] update of the library in the package with the latest release (not yet completed)
 * libRaw is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
 * [Mac only] Luminance HDR 2.0.2 works on Mac OS X 10.5.X (64 bits version for Snow Leopard also planned, but not yet released)

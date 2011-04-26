@@ -705,11 +705,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>EditingTools</name>
     <message>
-        <location filename="../src/HdrWizard/EditingTools.cpp" line="51"/>
-        <source>background: rgb(%1,%2,%3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/EditingTools.cpp" line="64"/>
         <source>Pan the image to a region</source>
         <translation type="unfinished"></translation>

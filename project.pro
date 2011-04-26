@@ -5,10 +5,11 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 # Default compilation optimizations until Luminance HDR 2.0.1-1
 #QMAKE_CXXFLAGS += -funroll-loops -fstrength-reduce -fschedule-insns2 -felide-constructors -frerun-loop-opt -fexceptions -fno-strict-aliasing -fexpensive-optimizations -ffast-math -pipe -msse2
 # Compilation optimization from Luminance 2.0.2 on
-QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer -g3 
-QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer -g3 
+QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer
+QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer
 # Compilation in Debug mode
-#QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -fno-inline
+#QMAKE_CXXFLAGS += -g3 -fno-inline
+#QMAKE_CFLAGS += -g3 -fno-inline
 
 QT += xml webkit
 
@@ -243,6 +244,7 @@ TRANSLATIONS =  i18n/lang_cs.ts \
 				i18n/lang_de.ts \
 				i18n/lang_es.ts \
 				i18n/lang_fr.ts \
+				i18n/lang_fi.ts \
 				i18n/lang_hu.ts \
 				i18n/lang_id.ts \
 				i18n/lang_it.ts \
