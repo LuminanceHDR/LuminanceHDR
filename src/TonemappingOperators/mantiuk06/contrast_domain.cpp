@@ -84,11 +84,9 @@ typedef struct pyramid_s {
 void contrast_equalization( pyramid_t *pp, const float contrastFactor );
 
 void transform_to_luminance(pyramid_t* pyramid, float* const x, ProgressHelper *ph, const bool bcg);
-void matrix_add(const int n, const float* const a, float* const b);
 void matrix_subtract(const int n, const float* const a, float* const b);
 void matrix_copy(const int n, const float* const a, float* const b);
 void matrix_multiply_const(const int n, float* const a, const float val);
-void matrix_divide(const int n, const float* a, float* b);
 float* matrix_alloc(const int size);
 void matrix_free(float* m);
 float matrix_DotProduct(const int n, const float* const a, const float* const b);
@@ -302,20 +300,6 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
     matrix_downsample_full(inCols, inRows, data, res);
 }
 
-// return = a + b
-inline void matrix_add(const int n, const float* const a, float* const b)
-{
-#ifdef __SSE__
-  VEX_vadd(b, a, b, n);
-#else
-  #pragma omp parallel for schedule(static)
-  for(int i=0; i<n; i++)
-  {
-    b[i] += a[i];
-  }
-#endif
-}
-
 // return = a - b
 inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
@@ -350,20 +334,6 @@ inline void matrix_multiply_const(const int n, float* const a, const float val)
   for(int i=0; i<n; i++)
   {
     a[i] *= val;
-  }
-#endif
-}
-
-// b = a[i] / b[i]
-inline void matrix_divide(const int n, float* a, float* b)
-{
-#ifdef __SSE__  
-  VEX_vdiv(a, b, b, n);
-#else  
-  #pragma omp parallel for schedule(static)
-  for(int i=0; i<n; i++)
-  {
-    b[i] = a[i] / b[i];
   }
 #endif
 }
