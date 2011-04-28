@@ -273,5 +273,6 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   LibRaw::dcraw_clear_mem(image);
   RawProcessor.recycle();
+  free(image);
   return frame;
 }
