@@ -303,39 +303,19 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
 // return = a - b
 inline void matrix_subtract(const int n, const float* const a, float* const b)
 {
-#ifdef __SSE__  
   VEX_vsub(a, b, b, n);
-#else
-  #pragma omp parallel for schedule(static)
-  for(int i=0; i<n; i++)
-  {
-    b[i] = a[i] - b[i];
-  }
-#endif
 }
 
 // copy matix a to b, return = a 
 inline void matrix_copy(const int n, const float* const a, float* const b)
 {
-#ifdef __SSE__
   VEX_vcopy(a, b, n);
-#else
-  memcpy(b, a, sizeof(float)*n);
-#endif
 }
 
 // multiply matrix a by scalar val
 inline void matrix_multiply_const(const int n, float* const a, const float val)
 {
-#ifdef __SSE__
   VEX_vsmul(a, val, a, n);
-#else
-  #pragma omp parallel for schedule(static)
-  for(int i=0; i<n; i++)
-  {
-    a[i] *= val;
-  }
-#endif
 }
 
 // alloc memory for the float table
@@ -376,15 +356,7 @@ inline void matrix_free(float* m)
 float matrix_DotProduct(const int n, const float* const a, const float* const b)
 {
   float val = 0;
-#ifdef __SSE__
   VEX_dotpr(a, b, val, n);
-#else  
-  #pragma omp parallel for reduction(+:val) schedule(static)
-  for(int j=0; j<n; j++)
-  {
-    val += a[j] * b[j];
-  }
-#endif
   return val;
 }
 
@@ -519,15 +491,7 @@ void pyramid_calculate_scale_factor(pyramid_t* pyramid, pyramid_t* pC)
 // G = G * C
 inline void scale_gradient(const int n, float* G, const float* C)
 {
-#ifdef __SSE__  
   VEX_vmul(G, C, G, n);
-#else
-#pragma omp parallel for schedule(static)
-  for(int i=0; i<n; i++)
-  {
-    G[i] *= C[i];
-  }
-#endif
 }
 
 // scale gradients for the whole one pyramid with the use of (Cx,Cy) from the other pyramid
@@ -698,15 +662,7 @@ void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* Y /*lum_t
 // x = -0.25 * b
 inline void solveX(const int n, const float* const b, float* const x)
 {
-#ifdef __SSE__
   VEX_vsmul(b, (-0.25f), x, n);
-#else
-  #pragma omp parallel for schedule(static)
-  for (int i=0; i<n; i++)
-  {
-    x[i] = (-0.25f) * b[i];
-  }
-#endif
 }
 
 // divG_sum = A * x = sum(divG(x))
@@ -776,17 +732,8 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     else
     {
       const float bk = bknum / bkden; // beta = ...
-#ifdef __SSE__
       VEX_vadds(z, bk, p, p, n);
       VEX_vadds(zz, bk, pp, pp, n);
-#else
-      #pragma omp parallel for schedule(static)
-      for (int i = 0; i < n; i++)
-	    {
-	      p[i]  =  z[i] + bk *  p[i];
-	      pp[i] = zz[i] + bk * pp[i];
-	    }
-#endif
     }
 		
     bkden = bknum; // numerato becomes the dominator for the next iteration
@@ -796,17 +743,8 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
     
     const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
     
-#ifdef __SSE__
     VEX_vsubs(r, ak, z, r, n);
     VEX_vsubs(rr, ak, zz, rr, n);
-#else
-    #pragma omp parallel for schedule(static)
-    for(int i = 0 ; i < n ; i++ )
-    {
-      r[i]  -= ak *  z[i];	// r =  r - alfa * z
-      rr[i] -= ak * zz[i];	//rr = rr - alfa * zz
-    }
-#endif
     
     const float old_err2 = err2;
     err2 = matrix_DotProduct(n, r, r);
@@ -828,15 +766,7 @@ void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, c
       num_backwards = 0;
     }
     
-#ifdef __SSE__
     VEX_vadds(x, ak, p, x, n);
-#else
-    #pragma omp parallel for schedule(static)
-    for(int i = 0 ; i < n ; i++ )
-    {
-      x[i] += ak * p[i];	// x =  x + alfa * p
-    }
-#endif
     
     if (num_backwards > num_backwards_ceiling)
     {
@@ -1121,13 +1051,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
 //    const float alpha = rdotr / matrix_DotProduct(n, p, Ap);
 //    
 //    // r = r - alpha Ap
-//#ifdef __SSE__
 //    VEX_vsubs(r, alpha, Ap, r, n);
-//#else
-//    #pragma omp parallel for schedule(static)
-//    for (int i = 0; i < n; i++)
-//      r[i] -= alpha * Ap[i];
-//#endif
 //    
 //    // rdotr = r.r
 //    const float old_rdotr = rdotr;
@@ -1151,13 +1075,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
 //    }
 //    
 //    // x = x + alpha * p
-//#ifdef __SSE__
 //    VEX_vadds(x, alpha, p, x, n);
-//#else
-//    #pragma omp parallel for schedule(static)
-//    for (int i = 0; i < n; i++)
-//      x[i] += alpha * p[i];
-//#endif
 //    
 //    // Exit if we're done
 //    // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(rdotr/bnrm2));
@@ -1187,13 +1105,7 @@ void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const
 //    {
 //      // p = r + beta p
 //      const float beta = rdotr/old_rdotr;
-//#ifdef __SSE__
 //      VEX_vadds(r, beta, p, p, n);
-//#else
-//      #pragma omp parallel for schedule(static)
-//      for (int i = 0; i < n; i++)
-//        p[i] = r[i] + beta*p[i];
-//#endif
 //    }
 //  }
 //  
