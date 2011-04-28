@@ -418,7 +418,7 @@ inline void calculate_and_add_divergence(const int COLS, const int ROWS, const f
         }
 #pragma omp section
         {
-#pragma omp parallel for schedule(static, 5120) private(divGx, divGy)
+#pragma omp parallel for schedule(static) private(divGx, divGy)
             for (int ky=1; ky<ROWS; ky++)
             {
                 // kx = 0
@@ -1252,7 +1252,7 @@ inline void transform_to_R(const int n, float* const G, float detail_factor)
 {
   const float log10=2.3025850929940456840179914546844*detail_factor;
   
-  #pragma omp parallel for schedule(static, 1024)
+  #pragma omp parallel for schedule(static)
   for (int j=0; j<n; j++)
   {    
     // G to W
@@ -1282,7 +1282,7 @@ inline void transform_to_G(const int n, float* const R, float detail_factor)
   //here we are actually changing the base of logarithm
   const float log10 = 2.3025850929940456840179914546844*detail_factor; 
   
-#pragma omp parallel for schedule(static,1024)
+#pragma omp parallel for schedule(static)
   for(int j=0; j<n; j++)
   {
     float Curr_R = R[j];
