@@ -8,8 +8,8 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 QMAKE_CXXFLAGS += -ffast-math -msse -fomit-frame-pointer
 QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer
 # Compilation in Debug mode
-#QMAKE_CXXFLAGS += -g3 -fno-inline
-#QMAKE_CFLAGS += -g3 -fno-inline
+QMAKE_CXXFLAGS += -g3 -fno-inline
+QMAKE_CFLAGS += -g3 -fno-inline
 
 QT += xml webkit
 
@@ -534,7 +534,7 @@ macx {
 			message ("Please refer to the documentation if you require a Universal Binary")
 			message ("********************************************************************")
 			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
-			CONFIG += x86
+                        CONFIG += x86 x86_64
 
 			QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
 			MAKE_MAC_SDK=/Developer/SDKs/MacOSX10.5.sdk #/Developer/SDKs/MacOSX10.4u.sdk

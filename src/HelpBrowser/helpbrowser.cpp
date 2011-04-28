@@ -145,7 +145,7 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 {
         firstRun=true;
 	setupUi(this);
-	restoreGeometry(settings.value("HelpBrowserGeometry").toByteArray());
+	restoreGeometry(settings->value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
 
 	textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
@@ -180,7 +180,7 @@ HelpBrowser::~HelpBrowser()
 
 void HelpBrowser::closeEvent(QCloseEvent *)
 {
-	settings.setValue("HelpBrowserGeometry", saveGeometry());
+	settings->setValue("HelpBrowserGeometry", saveGeometry());
 	delete menuModel;
 
 	// no need to delete child widgets, Qt does it all for us

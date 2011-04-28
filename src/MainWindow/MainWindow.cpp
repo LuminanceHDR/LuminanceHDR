@@ -67,8 +67,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 		dir.mkdir(".LuminanceHDR");
 #endif
 
-	restoreState(settings.value("MainWindowState").toByteArray());
-	restoreGeometry(settings.value("MainWindowGeometry").toByteArray());
+	restoreState(settings->value("MainWindowState").toByteArray());
+	restoreGeometry(settings->value("MainWindowGeometry").toByteArray());
 
 	setAcceptDrops(true);
 	windowMapper = new QSignalMapper(this);
@@ -117,8 +117,8 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
 	setupConnections();
 
 	// SPLASH SCREEN
-	if (settings.contains("ShowSplashScreen")) {
-		if (settings.value("ShowSplashScreen").toInt())
+	if (settings->contains("ShowSplashScreen")) {
+		if (settings->value("ShowSplashScreen").toInt())
 			showSplash();
 	}
 	else 
@@ -224,7 +224,7 @@ void MainWindow::updateRecentDirHDRSetting(QString newvalue)
 {
 	// update internal field variable
 	RecentDirHDRSetting=newvalue;
-	settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
+	settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, RecentDirHDRSetting);
 }
 
 void MainWindow::fileSaveAs()
@@ -255,7 +255,7 @@ void MainWindow::fileSaveAs()
 		QFileInfo qfi(fname);
 		QString absoluteFileName=qfi.absoluteFilePath();
 		char* encodedName=strdup(QFile::encodeName(absoluteFileName).constData());
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
 		if (RecentDirHDRSetting != qfi.path() )
 			// update internal field variable
 			updateRecentDirHDRSetting(qfi.path());
@@ -538,18 +538,18 @@ void MainWindow::enterWhatsThis() {
 }
 
 void MainWindow::setCurrentFile(const QString &fileName) {
-        QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+        QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
         files.removeAll(fileName);
         files.prepend(fileName);
         while (files.size() > MaxRecentFiles)
                 files.removeLast();
 
-        settings.setValue(KEY_RECENT_FILES, files);
+        settings->setValue(KEY_RECENT_FILES, files);
         updateRecentFileActions();
 }
 
 void MainWindow::updateRecentFileActions() {
-	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+	QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
 
 	int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 	separatorRecentFiles->setVisible(numRecentFiles > 0);
@@ -599,12 +599,12 @@ void MainWindow::setupLoadThread(QString fname)
 void MainWindow::load_failed(QString error_message)
 {
 	QMessageBox::critical(this,tr("Aborting..."), error_message, QMessageBox::Ok,QMessageBox::NoButton);
-	QStringList files = settings.value(KEY_RECENT_FILES).toStringList();
+	QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
         LoadHdrThread *lht=(LoadHdrThread *)(sender()); //Interesting method! :|
 	QString fname=lht->getHdrFileName();
 	delete lht;
 	files.removeAll(fname);
-	settings.setValue(KEY_RECENT_FILES, files);
+	settings->setValue(KEY_RECENT_FILES, files);
 	updateRecentFileActions();
 }
 
@@ -633,12 +633,12 @@ void MainWindow::transplant_called()
 
 void MainWindow::load_options() {
 	//load from settings the path where hdrs have been previously opened/loaded
-	RecentDirHDRSetting=settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+	RecentDirHDRSetting=settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
 
 	//load from settings the main toolbar visualization mode
-	if (!settings.contains(KEY_TOOLBAR_MODE))
-		settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-	switch (settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+	if (!settings->contains(KEY_TOOLBAR_MODE))
+		settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
 	case Qt::ToolButtonIconOnly:
 		Icons_Only();
 		actionIcons_Only->setChecked(true);
@@ -689,7 +689,7 @@ MainWindow::~MainWindow() {
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		delete recentFileActs[i];
 	}
-	settings.setValue("MainWindowState", saveState());
+	settings->setValue("MainWindowState", saveState());
 }
 
 void MainWindow::fileExit() {
@@ -707,22 +707,22 @@ void MainWindow::fileExit() {
 
 void MainWindow::Text_Under_Icons() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+	settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+	settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only() {
 	toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-	settings.setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+	settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 
 
@@ -745,7 +745,7 @@ void MainWindow::splashShowDonationsPage() {
 }
 
 void MainWindow::splashClose() {
-	settings.setValue("ShowSplashScreen", 0);
+	settings->setValue("ShowSplashScreen", 0);
 	splash->close();
 }
 
@@ -884,7 +884,7 @@ void MainWindow::disableCrop() {
 }
 
 void MainWindow::closeEvent ( QCloseEvent *event ) {
-	settings.setValue("MainWindowGeometry", saveGeometry());
+	settings->setValue("MainWindowGeometry", saveGeometry());
 	QWidget::closeEvent(event);
 }
 

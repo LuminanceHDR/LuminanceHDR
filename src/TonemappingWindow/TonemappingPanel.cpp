@@ -127,7 +127,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent) : QWidget(parent), adding_cu
 
 	//--
 	connect(stackedWidget_operators, SIGNAL(currentChanged (int)), this, SLOT(updateCurrentTmoOperator(int)));
-	recentPathLoadSaveTmoSettings=settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
+	recentPathLoadSaveTmoSettings=settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
 
 }
 
@@ -568,9 +568,9 @@ void TonemappingPanel::on_loadsettingsbutton_clicked() {
 		}
 		// update internal field variable
 		recentPathLoadSaveTmoSettings=qfi.path();
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-		if (recentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString()) {
-			settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
+		if (recentPathLoadSaveTmoSettings != settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString()) {
+			settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
 		}
 		//update filename internal field, used by parsing function fromTxt2Gui()
 		tmoSettingsFilename = opened;
@@ -592,9 +592,9 @@ void TonemappingPanel::on_savesettingsbutton_clicked() {
 		}
 		// update internal field variable
 		recentPathLoadSaveTmoSettings=qfi.path();
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
-		if (recentPathLoadSaveTmoSettings != settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString()) {
-			settings.setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
+		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
+		if (recentPathLoadSaveTmoSettings != settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString()) {
+			settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
 		}
 		//write txt file
 		fromGui2Txt(fname);

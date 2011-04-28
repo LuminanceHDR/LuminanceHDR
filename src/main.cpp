@@ -55,6 +55,8 @@ int main( int argc, char ** argv )
 
 	//GUI application
 	QApplication application( argc, argv );
+	QSettings _settings("Luminance", "Luminance");
+	settings = &_settings;
 // 	qDebug() << "QDir::currentPath()=" << QDir::currentPath();
 // 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
 

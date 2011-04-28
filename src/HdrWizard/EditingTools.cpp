@@ -46,8 +46,8 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 
 	toolOptionsFrame->setVisible(false);
 	maskColorButton->setVisible(false);
-	QColor maskcolor=QColor(settings.value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
-	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+	QColor maskcolor=QColor(settings->value(KEY_MANUAL_AG_MASK_COLOR,0x00FF0000).toUInt());
+	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle) settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
         maskColorButton->setStyleSheet(QString("background: rgb("+QString(maskcolor.red())+","+QString(maskcolor.green())+","+QString(maskcolor.blue())+")"));
 	assert(original_ldrlist.size()==filelist.size());
 	QVBoxLayout *qvl=new QVBoxLayout;
@@ -391,7 +391,7 @@ void EditingTools::maskColorButtonClicked() {
 	if (returned.isValid()) {
 		previewWidget->setBrushColor(returned);
 		maskColorButton->setStyleSheet(QString("background: rgb(%1,%2,%3)").arg(returned.red()).arg(returned.green()).arg(returned.blue()));
-		settings.setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
+		settings->setValue(KEY_MANUAL_AG_MASK_COLOR,returned.rgb());
 	}
 }
 
@@ -403,14 +403,14 @@ void EditingTools::saveImagesButtonClicked() {
 	QString fnameprefix=QFileDialog::getSaveFileName(
 				this,
 				tr("Choose a directory and a prefix"),
-				settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
+				settings->value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR,QDir::currentPath()).toString());
 	if (fnameprefix.isEmpty())
 		return;
 
 	QFileInfo qfi(fnameprefix);
 	QFileInfo test(qfi.path());
 
-	settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
+	settings->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, qfi.path());
 
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		int counter=0;

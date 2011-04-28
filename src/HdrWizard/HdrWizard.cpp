@@ -144,17 +144,17 @@ void HdrWizard::loadImagesButtonClicked() {
     filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw");
     filetypes += tr("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)");
 
-    QString RecentDirInputLDRs = settings.value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
+    QString RecentDirInputLDRs = settings->value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
 
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
 
     if (!files.isEmpty() ) {
 	QFileInfo qfi(files.at(0));
-	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
 	if (RecentDirInputLDRs != qfi.path()) {
 		// update internal field variable
 		RecentDirInputLDRs = qfi.path();
-		settings.setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
+		settings->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
 	loadImagesButton->setEnabled(false);
 	confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");

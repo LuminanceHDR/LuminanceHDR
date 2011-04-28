@@ -32,14 +32,14 @@
 #include "global.h"
 #include "ImageQualityDialog.h"
 
-QSettings settings("Luminance", "Luminance");
+QSettings *settings = 0;
 
 /**
  * \return "" when fail, out file name when successful
  */
 QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage &image, bool batchMode)
 {
-	QString outfname = QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
+	QString outfname = QDir(settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
 	if (!batchMode)
   {
 		QString filetypes = QObject::tr("All LDR formats") + " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
@@ -50,7 +50,7 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
 
 		outfname = QFileDialog::getSaveFileName(parent,
                                             QObject::tr("Save the LDR image as..."),
-                                            QDir(settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
+                                            QDir(settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
                                             filetypes);
   }
 
@@ -58,7 +58,7 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
   {
 		QFileInfo qfi(outfname);
 		//save settings
-		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
+		settings->setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
 		QString format=qfi.suffix();
     
 		if ( qfi.suffix().isEmpty() )

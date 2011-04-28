@@ -47,9 +47,9 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
 
     luminance_options = LuminanceOptions::getInstance();
 
-    RecentDirHDRSetting = settings.value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
-    RecentPathLoadSaveTmoSettings = settings.value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
-    recentPathSaveLDR = settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
+    RecentPathLoadSaveTmoSettings = settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
+    recentPathSaveLDR = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 
     connect(add_dir_HDRs_Button,    SIGNAL(clicked()), this, SLOT(add_dir_HDRs())       );
     connect(add_HDRs_Button,        SIGNAL(clicked()), this, SLOT(add_HDRs())           );
@@ -188,7 +188,7 @@ void BatchTMDialog::out_folder_clicked()
 
     QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), recentPathSaveLDR);
 
-    settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dirname);
+    settings->setValue(KEY_RECENT_PATH_SAVE_LDR, dirname);
     recentPathSaveLDR=dirname;
 
     QFileInfo test(dirname);

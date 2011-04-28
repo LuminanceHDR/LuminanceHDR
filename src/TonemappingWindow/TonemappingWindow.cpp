@@ -59,11 +59,11 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	luminance_options=LuminanceOptions::getInstance();
 	//cachepath=LuminanceOptions::getInstance()->tempfilespath;
   
-	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
+	tmToolBar->setToolButtonStyle((Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt());
   
 	prefixname=QFileInfo(filename).completeBaseName();
 	setWindowTitle(windowTitle() + prefixname);
-	recentPathSaveLDR=settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+	recentPathSaveLDR=settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
 	
 	//main toolbar setup
 	QActionGroup *tmToolBarOptsGroup = new QActionGroup(this);
@@ -106,9 +106,9 @@ TonemappingWindow::TonemappingWindow(QWidget *parent, pfs::Frame* frame, QString
 	originalHdrSubWin->setWidget(originalHDR);
 	originalHdrSubWin->hide();
 	
-	restoreState( settings.value("TonemappingWindowState").toByteArray() );
-	restoreGeometry(settings.value("TonemappingWindowGeometry").toByteArray());
-	actionViewTMdock->setChecked( settings.value("actionViewTMdockState").toBool() );
+	restoreState( settings->value("TonemappingWindowState").toByteArray() );
+	restoreGeometry(settings->value("TonemappingWindowGeometry").toByteArray());
+	actionViewTMdock->setChecked( settings->value("actionViewTMdockState").toBool() );
   
 	qRegisterMetaType<QImage>("QImage");
 	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
@@ -334,9 +334,9 @@ void TonemappingWindow::updateActions(QMdiSubWindow *w)
 
 void TonemappingWindow::closeEvent ( QCloseEvent *event )
 {
-	settings.setValue("TonemappingWindowState", saveState());
-	settings.setValue("TonemappingWindowGeometry", saveGeometry());
-	settings.setValue("actionViewTMdockState",actionViewTMdock->isChecked());
+	settings->setValue("TonemappingWindowState", saveState());
+	settings->setValue("TonemappingWindowGeometry", saveGeometry());
+	settings->setValue("actionViewTMdockState",actionViewTMdock->isChecked());
 	QWidget::closeEvent(event);
 	emit closing();
 }
@@ -369,11 +369,11 @@ void TonemappingWindow::on_actionSaveAll_triggered()
 {
 	QString dir = QFileDialog::getExistingDirectory(0,
                                                   tr("Save files in"),
-                                                  settings.value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString());
+                                                  settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString());
   
 	if (!dir.isEmpty())
   {
-		settings.setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
+		settings->setValue(KEY_RECENT_PATH_SAVE_LDR, dir);
 		QList<QMdiSubWindow*> allLDRs = mdiArea->subWindowList();
     
 		foreach (QMdiSubWindow *p, allLDRs)
@@ -429,25 +429,25 @@ void TonemappingWindow::showHDR(bool toggled)
 void TonemappingWindow::Text_Under_Icons()
 {
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	settings->setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void TonemappingWindow::Icons_Only()
 {
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+	settings->setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
 }
 
 void TonemappingWindow::Text_Alongside_Icons()
 {
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+	settings->setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void TonemappingWindow::Text_Only()
 {
 	tmToolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-	settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+	settings->setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
 }
 
 void TonemappingWindow::current_mdi_zoomin()
@@ -510,9 +510,9 @@ void TonemappingWindow::current_mdi_original_size()
 void TonemappingWindow::load_options() 
 {
 	//load from settings the toolbar visualization mode
-	if (!settings.contains(KEY_TM_TOOLBAR_MODE))
-		settings.setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-	switch (settings.value(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+	if (!settings->contains(KEY_TM_TOOLBAR_MODE))
+		settings->setValue(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+	switch (settings->value(KEY_TM_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
 		case Qt::ToolButtonIconOnly:
 			Icons_Only();
 			actionIcons_Only->setChecked(true);

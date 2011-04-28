@@ -62,7 +62,7 @@ void LoadHdrThread::run()
         emit load_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
         return;
     }
-    // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings.
+    // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
     if ( (!RecentDirHDRSetting.isNull()) && (RecentDirHDRSetting != qfi.path()) )
     {
         emit updateRecentDirHDRSetting(qfi.path());
