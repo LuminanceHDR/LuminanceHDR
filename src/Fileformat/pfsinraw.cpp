@@ -161,7 +161,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     OUT.user_mul[3] = RGB[1];
   }
 
-  if(options->highlights < 3)
+  if (options->highlights < 3)
     OUT.highlight = options->highlights;
   else
     OUT.highlight = options->highlights + options->level; 
@@ -178,24 +178,28 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   if (options->use_noise)
     OUT.threshold = options->threshold;
 
-  if (options->use_chroma) {
+  if (options->use_chroma)
+  {
     OUT.aber[0] = options->aber_0;
     OUT.aber[2] = options->aber_2;
   }
 
-  if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
+  if ( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
+  {
     std::cout << "Error Opening RAW File" << std::endl;
     RawProcessor.recycle();
     return NULL;
   }
 
-  if( (ret = RawProcessor.unpack()) != LIBRAW_SUCCESS) {
+  if ( (ret = RawProcessor.unpack()) != LIBRAW_SUCCESS)
+  {
     std::cout << "Error Unpacking RAW File" << std::endl;
     RawProcessor.recycle();
     return NULL;
   }
 
-  if( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS) {
+  if ( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS)
+  {
     std::cout << "Error Processing RAW File" << std::endl;
     RawProcessor.recycle();
     return NULL;
@@ -238,13 +242,15 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   
   int d = 0;
 
-  for(int j = 0; j < H; j++) {
-    for(int i = 0; i < W; i++) {
-      (*X)(i,j) = image->data[d]   + 256.0*image->data[d+1]; 
-      (*Y)(i,j) = image->data[d+2] + 256.0*image->data[d+3];
-      (*Z)(i,j) = image->data[d+4] + 256.0*image->data[d+5];
-      d += 6;
-    }
+  for(int j = 0; j < H; j++)
+  {
+      for (int i = 0; i < W; i++)
+      {
+          (*X)(i,j) = image->data[d]   + 256.0*image->data[d+1];
+          (*Y)(i,j) = image->data[d+2] + 256.0*image->data[d+3];
+          (*Z)(i,j) = image->data[d+4] + 256.0*image->data[d+5];
+          d += 6;
+      }
   }
 
   std::cout << "Data size: " << image->data_size << " " << W*H*3*2 << std::endl;
@@ -273,6 +279,6 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   LibRaw::dcraw_clear_mem(image);
   RawProcessor.recycle();
-  free(image);
+
   return frame;
 }
