@@ -588,7 +588,7 @@ inline void calculate_gradient(const int COLS, const int ROWS, const float* cons
 { 
   int Y_IDX, IDX;
   
-  #pragma omp parallel for schedule(static, 64) private(Y_IDX, IDX)
+  #pragma omp parallel for schedule(static) private(Y_IDX, IDX)
   for (int ky = 0; ky < ROWS-1; ky++)
   {
     Y_IDX = ky*COLS;
@@ -596,7 +596,7 @@ inline void calculate_gradient(const int COLS, const int ROWS, const float* cons
     {
       IDX = Y_IDX + kx;
   
-			Gx[IDX] = lum[IDX + 1]    - lum[IDX];
+      Gx[IDX] = lum[IDX + 1]    - lum[IDX];
       Gy[IDX] = lum[IDX + COLS] - lum[IDX];
     }
     
