@@ -33,6 +33,8 @@
 #include <QMdiSubWindow>
 #include <QStringList>
 #include <QProgressDialog>
+#include <QSignalMapper>
+#include <QThread>
 
 #include "ui_MainWindow.h"
 #include "HdrWizard/HdrWizard.h"
@@ -40,9 +42,9 @@
 #include "Resize/ResizeDialog.h"
 #include "Projection/ProjectionsDialog.h"
 #include "HelpBrowser/helpbrowser.h"
-
-class HdrViewer;
-class QSignalMapper;
+#include "Viewers/HdrViewer.h"
+#include "UI/UMessageBox.h"
+#include "Core/IOWorker.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -51,12 +53,21 @@ Q_OBJECT
 public:
 	MainWindow(QWidget *parent=0);
 	~MainWindow();
-	friend class MySubWindow;
-	void showSaveDialog();
-        void hideSaveDialog(void);
-public slots: //For saveProgress Dialog
-        void setMaximum(int max);
-        void setValue(int value);
+public slots:
+        // For ProgressBar
+        void ProgressBarSetMaximum(int max);
+        void ProgressBarSetValue(int value);
+
+        // I/O
+        void save_success(HdrViewer* saved_hdr, QString fname);
+        void save_failed();
+
+        void load_failed(QString);
+        void load_success(pfs::Frame* new_hdr_frame, QString new_fname);
+
+        void IO_done();
+        void IO_start();
+
 protected slots:
 	void fileNewViaWizard(QStringList files = QStringList());
 	void fileOpen();//for File->Open, it then calls loadFile()
@@ -93,11 +104,11 @@ protected slots:
 	void openRecentFile();
 	void setCurrentFile(const QString &fileName);
 	void updateRecentDirHDRSetting(QString);
-	void load_failed(QString);
+
 	void aboutLuminance();
 	void showSplash();
 
-	void updateActions( QMdiSubWindow * w );
+        void updateActions(QMdiSubWindow * w);
 	void setActiveSubWindow(QWidget* w);
 	void cropToSelection();
 	void enableCrop(bool);
@@ -107,43 +118,47 @@ protected slots:
 	void splashShowDonationsPage();
 	void splashClose();
 
+signals:
+        // I/O
+        void save_frame(HdrViewer*, QString);
+        void open_frames(QStringList);
+        void open_frame(QString);
+
 protected:
+        enum { MaxRecentFiles = 5 };
+
+        QMdiArea* mdiArea;
+        QSignalMapper *windowMapper;
+        QAction *recentFileActs[MaxRecentFiles];
+        QAction *separatorRecentFiles;
+        QString RecentDirHDRSetting;
+        LuminanceOptions *luminance_options;
+        QDialog *splash;
+        QProgressBar* m_progressbar;
+
+        // I/O
+        QThread* IO_thread;
+        IOWorker* IO_Worker;
+
+        HdrViewer* currenthdr;
+        HelpBrowser *helpBrowser;
+
 	virtual void dragEnterEvent(QDragEnterEvent *);
 	virtual void dropEvent(QDropEvent *);
-	void closeEvent ( QCloseEvent * );
-	HdrViewer* currenthdr;
-	HdrViewer* newhdr; 
- 	QProgressDialog *saveProgress;
-	HelpBrowser *helpBrowser;
-//private:
+        void closeEvent ( QCloseEvent * );
+
+        void ProgressBarInit();
+        void ProgressBarFinish(void);
 	void setupConnections();
 	void dispatchrotate( bool clockwise);
 	void updateRecentFileActions();
 	void load_options();
-	void setupLoadThread(QString);
+
 	bool testTempDir(QString);
-	QMdiArea* mdiArea;
-	QSignalMapper *windowMapper;
-	enum { MaxRecentFiles = 5 };
-	QAction *recentFileActs[MaxRecentFiles];
-	QAction *separatorRecentFiles;
-	QString RecentDirHDRSetting;
-	LuminanceOptions *luminance_options;
-	QDialog *splash;
+
+        // I/O
+        void initIOThread();
 };
-//
-//=============== MySubWindow ==========================================================
-//
-class MySubWindow : public QMdiSubWindow {
-Q_OBJECT
-public:
-        MySubWindow(MainWindow * ptr, QWidget * parent = 0, Qt::WindowFlags flags = 0 );
-        ~MySubWindow();
-private slots:
-	void load_failed(QString);
-        void addHdrFrame(pfs::Frame* hdr_pfs_frame, QString fname);
-private:
-	MainWindow *mainGuiPtr;
-};
+
 
 #endif

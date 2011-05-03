@@ -59,6 +59,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Common/vex.h \
 			src/MainWindow/MainWindow.h \
 			src/MainWindow/DnDOption.h \
+                            src/UI/UMessageBox.h \
 			src/HelpBrowser/LuminancePaths.h \
 			src/HelpBrowser/schelptreemodel.h \
 			src/HelpBrowser/treeitem.h \
@@ -131,7 +132,8 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/TonemappingOperators/mantiuk08/cqp/initial_point.h \
 			src/Batch/BatchTMDialog.h \
 			src/Batch/BatchTMJob.h \
-			src/Exif/ExifOperations.h
+                        src/Exif/ExifOperations.h \
+                    src/Core/IOWorker.h
 
 SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Libpfs/pfs.cpp \
@@ -150,6 +152,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Common/vex.cpp \
 			src/MainWindow/MainWindow.cpp \
 			src/MainWindow/DnDOption.cpp \
+                        src/UI/UMessageBox.cpp \
 			src/HelpBrowser/LuminancePaths.cpp \
 			src/HelpBrowser/treeitem.cpp \
 			src/HelpBrowser/treemodel.cpp \
@@ -236,6 +239,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/TonemappingOperators/mantiuk08/cqp/mg_pdip.c \
 			src/Batch/BatchTMDialog.cpp \
 			src/Batch/BatchTMJob.cpp \
+                          src/Core/IOWorker.cpp \
 			src/Exif/ExifOperations.cpp
 
 RESOURCES = icons.qrc
