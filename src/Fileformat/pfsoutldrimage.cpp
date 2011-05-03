@@ -4,6 +4,7 @@
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006 Giuseppe Rota
+ * Copyright (C) 2010, 2011 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +22,11 @@
  * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  New implementation:
+ *  1) avoids the presence of a temporary buffer
+ *  2) returns QImage* instead than a QImage
+ *  3) has OpenMP (multi thread) capability)
  *
  */
 
@@ -40,8 +46,6 @@ inline int clamp2int( const float v, const float minV, const float maxV )
     return (int)v;
 }
 
-// Davide Anastasia <davideanastasia@users.sourceforge.net>
-// This new implementation avoid the creation of a temporary buffer
 QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
 {
 #ifdef TIMER_PROFILING
@@ -64,7 +68,6 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_col
 
     const int width   = Xc->getWidth();
     const int height  = Xc->getHeight();
-    //const int elems   = width*height;
 
     QImage * temp_qimage = new QImage (width, height, QImage::Format_ARGB32);
 
@@ -73,24 +76,16 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_col
     float* p_B = Z->getRawData();
 
     int red, green, blue;
+    QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
-    for (int r = 0; r < height; r++)
+#pragma omp parallel for private(red, green, blue) shared(pixels)
+    for (int idx = 0; idx < height*width; ++idx)
     {
-        QRgb* pixel   = (QRgb*)temp_qimage->scanLine(r);
+        red = clamp2int(p_R[idx]*255.f, 0.0f, 255.f);
+        green = clamp2int(p_G[idx]*255.f, 0.0f, 255.f);
+        blue = clamp2int(p_B[idx]*255.f, 0.0f, 255.f);
 
-        for ( int c = 0; c < width; c++ )
-        {
-            red = clamp2int((*p_R)*255.f, 0.0f, 255.f);
-            green = clamp2int((*p_G)*255.f, 0.0f, 255.f);
-            blue = clamp2int((*p_B)*255.f, 0.0f, 255.f);
-
-            *pixel = qRgb(red, green, blue);
-
-            pixel++;
-            p_R++;
-            p_G++;
-            p_B++;
-        }
+        pixels[idx] = qRgb(red, green, blue);
     }
 
 
