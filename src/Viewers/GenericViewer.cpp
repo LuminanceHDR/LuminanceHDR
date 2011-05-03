@@ -28,29 +28,31 @@
 #include <QMessageBox>
 
 #include "GenericViewer.h"
+#include "UI/UMessageBox.h"
 
-GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf): QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf) {
-	
-	VBL_L = new QVBoxLayout(this);
-	VBL_L->setSpacing(0);
-	VBL_L->setMargin(0);
+GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
+        QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf)
+{
+    VBL_L = new QVBoxLayout(this);
+    VBL_L->setSpacing(0);
+    VBL_L->setMargin(0);
 
-	toolBar = new QToolBar("",this);
-	toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-	toolBar->setFixedHeight(30);
-	VBL_L->addWidget(toolBar);
+    toolBar = new QToolBar("",this);
+    toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    toolBar->setFixedHeight(30);
+    VBL_L->addWidget(toolBar);
 
-	scrollArea = new SmartScrollArea(this, imageLabel);
-	scrollArea->setBackgroundRole(QPalette::Shadow);
-	VBL_L->addWidget(scrollArea);
+    scrollArea = new SmartScrollArea(this, imageLabel);
+    scrollArea->setBackgroundRole(QPalette::Shadow);
+    VBL_L->addWidget(scrollArea);
 
-	cornerButton=new QToolButton(this);
-	cornerButton->setToolTip(tr("Pan the image to a region"));
-	cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-	scrollArea->setCornerWidget(cornerButton);
-	connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-	connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
-	connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
+    cornerButton = new QToolButton(this);
+    cornerButton->setToolTip(tr("Pan the image to a region"));
+    cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+    scrollArea->setCornerWidget(cornerButton);
+    connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+    connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
 }
 
 void GenericViewer::setLabelPixmap(const QPixmap pix) {
@@ -123,77 +125,96 @@ void GenericViewer::setFileName(const QString fn) {
 	filename = fn;
 }
 
-void GenericViewer::slotCornerButtonPressed() {
-	panIconWidget=new PanIconWidget(this);
-	panIconWidget->setImage(image);
-	float zf=scrollArea->getScaleFactor();
-	float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
-	float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
-	float wps_w=(float)(scrollArea->maximumViewportSize().width());
-	float wps_h=(float)(scrollArea->maximumViewportSize().height());
-	QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
-	panIconWidget->setRegionSelection(r);
-	panIconWidget->setMouseFocus();
-	connect(panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
-	connect(panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
-	QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
-	g.setX(g.x()+ scrollArea->viewport()->size().width());
-	g.setY(g.y()+ scrollArea->viewport()->size().height());
-	panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, g.y() - panIconWidget->height()/2));
-	panIconWidget->setCursorToLocalRegionSelectionCenter();
+void GenericViewer::slotCornerButtonPressed()
+{
+    panIconWidget=new PanIconWidget(this);
+    panIconWidget->setImage(image);
+    float zf=scrollArea->getScaleFactor();
+    float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
+    float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
+    float wps_w=(float)(scrollArea->maximumViewportSize().width());
+    float wps_h=(float)(scrollArea->maximumViewportSize().height());
+    QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
+    panIconWidget->setRegionSelection(r);
+    panIconWidget->setMouseFocus();
+    connect(panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
+    connect(panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
+    QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
+    g.setX(g.x()+ scrollArea->viewport()->size().width());
+    g.setY(g.y()+ scrollArea->viewport()->size().height());
+    panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, g.y() - panIconWidget->height()/2));
+    panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
-void GenericViewer::slotPanIconSelectionMoved(QRect gotopos ) {
-		scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
-		scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
-		emit changed(this);
+void GenericViewer::slotPanIconSelectionMoved(QRect gotopos )
+{
+    scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
+    scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
+    emit changed(this);
 }
 
-void GenericViewer::slotPanIconHidden() {
-	panIconWidget->close();
-	cornerButton->blockSignals(true);
-	cornerButton->animateClick();
-	cornerButton->blockSignals(false);
+void GenericViewer::slotPanIconHidden()
+{
+    panIconWidget->close();
+    cornerButton->blockSignals(true);
+    cornerButton->animateClick();
+    cornerButton->blockSignals(false);
 }
 
-int  GenericViewer::getHorizScrollBarValue() {
-	return scrollArea->getHorizScrollBarValue();
+int  GenericViewer::getHorizScrollBarValue()
+{
+    return scrollArea->getHorizScrollBarValue();
 }
 
-int  GenericViewer::getVertScrollBarValue() {
-	return scrollArea->getVertScrollBarValue();
+int  GenericViewer::getVertScrollBarValue()
+{
+    return scrollArea->getVertScrollBarValue();
 }
 
-float  GenericViewer::getImageScaleFactor() {
-	return scrollArea->getImageScaleFactor();
+float  GenericViewer::getImageScaleFactor()
+{
+    return scrollArea->getImageScaleFactor();
 }
 
-void GenericViewer::setHorizScrollBarValue(int value) {
-	scrollArea->setHorizScrollBarValue(value);
+void GenericViewer::setHorizScrollBarValue(int value)
+{
+    scrollArea->setHorizScrollBarValue(value);
 }
 
-void GenericViewer::setVertScrollBarValue(int value) {
-	scrollArea->setVertScrollBarValue(value);
+void GenericViewer::setVertScrollBarValue(int value)
+{
+    scrollArea->setVertScrollBarValue(value);
 }
 
 void GenericViewer::route_changed() {
-	emit changed(this);
+    emit changed(this);
 }
 
-void GenericViewer::closeEvent ( QCloseEvent * event ) {
-	if (NeedsSaving) {
-		QMessageBox::StandardButton ret=QMessageBox::warning(this,tr("Unsaved changes..."),tr("This image has unsaved changes.<br>Are you sure you want to close it?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::No);
-		if (ret==QMessageBox::Yes)
-			event->accept();
-		else
-			event->ignore();
-	} 
-	else if (noCloseFlag) {
-		emit closeRequested(false);
-		event->ignore();
-	} 
-	else {
-		event->accept();
-	}
+void GenericViewer::closeEvent( QCloseEvent * event )
+{
+    if (NeedsSaving)
+    {
+        int ret = UMessageBox::warning(tr("Unsaved changes..."),
+                                       tr("This image has unsaved changes.<br>Are you sure you want to close it?"),
+                                       this);
+
+        if ( ret == QMessageBox::Yes )
+        {
+            event->accept();
+        }
+        else
+        {
+            event->ignore();
+        }
+    }
+    else if (noCloseFlag)
+    {
+        emit closeRequested(false);
+        event->ignore();
+    }
+    else
+    {
+        event->accept();
+    }
 }
 
