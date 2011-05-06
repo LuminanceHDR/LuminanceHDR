@@ -28,13 +28,8 @@
 #define LUMINANCERANGE_WIDGET_H
 
 #include <QFrame>
-
-class Histogram;
-
-namespace pfs 
-{
-  class Array2D;
-}
+#include "Viewers/Histogram.h"
+#include "Libpfs/array2d.h"
 
 class LuminanceRangeWidget : public QFrame {
   Q_OBJECT
@@ -105,8 +100,6 @@ public:
 
   void showValuePointer( float value );
   void hideValuePointer();
-  
-  
 };
 
 
