@@ -140,6 +140,8 @@ namespace pfs
     {
     }
     
+    virtual float*       getRawData()        = 0;
+    virtual const float* getRawData() const  = 0;
   };
   
   

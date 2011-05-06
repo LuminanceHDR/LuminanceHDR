@@ -42,6 +42,10 @@
  *  Added the detail factor slider which offers more control over contrast in details
  * Update 2010/10/06 by Axel Voitier <axel.voitier@gmail.com>
  *  detail_factor patch in order to remove potential issues in a multithreading environment
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Improvement & Clean up
+ * @author Bruce Guenter <bruce@untroubled.org>
+ *  Added trivial downsample and upsample functions when both dimension are even
  *
  * $Id: contrast_domain.cpp,v 1.14 2008/08/26 17:08:49 rafm Exp $
  */
@@ -147,7 +151,7 @@ inline int imin(int a, int b)
 // upsampled matrix is twice bigger in each direction than data[]
 // res should be a pointer to allocated memory for bigger matrix
 // cols and rows are the dimensions of the output matrix
-void matrix_upsample(const int outCols, const int outRows, const float* const in, float* const out)
+void matrix_upsample_full(const int outCols, const int outRows, const float* const in, float* const out)
 {
   const int inRows = outRows/2;
   const int inCols = outCols/2;
@@ -180,8 +184,32 @@ void matrix_upsample(const int outCols, const int outRows, const float* const in
   }
 }
 
+void matrix_upsample_simple(const int outCols, const int outRows, const float* const in, float* const out)
+{
+  #pragma omp parallel for schedule(static)
+  for (int y = 0; y < outRows; y++)
+  {
+    const int iy1 = y / 2;
+    float* outp = out + y*outCols;
+    const float* inp = in + iy1*(outCols/2);
+    for (int x = 0; x < outCols; x+=2)
+    {
+      const int ix1 = x / 2;
+      outp[x] = outp[x+1] = inp[ix1];
+    }
+  }
+}
+
+void matrix_upsample(const int outCols, const int outRows, const float* const in, float* const out)
+{
+  if (outRows%2 == 0 && outCols%2 == 0)
+    matrix_upsample_simple(outCols, outRows, in, out);
+  else
+    matrix_upsample_full(outCols, outRows, in, out);
+}
+
 // downsample the matrix
-void matrix_downsample(const int inCols, const int inRows, const float* const data, float* const res)
+void matrix_downsample_full(const int inCols, const int inRows, const float* const data, float* const res)
 {
   const int outRows = inRows / 2;
   const int outCols = inCols / 2;
@@ -206,53 +234,92 @@ void matrix_downsample(const int inCols, const int inRows, const float* const da
   // (fx2, fy2) is the fraction of the bottom right pixel showing.
   
   const float normalize = 1.0f/(dx*dy);
-  #pragma omp parallel for schedule(static)
+#pragma omp parallel for schedule(static)
   for (int y = 0; y < outRows; y++)
   {
-    const int iy1 = (  y   * inRows) / outRows;
-    const int iy2 = ((y+1) * inRows) / outRows;
-    const float fy1 = (iy1+1) - y * dy;
-    const float fy2 = (y+1) * dy - iy2;
-    
-    for (int x = 0; x < outCols; x++)
-    {
-      const int ix1 = (  x   * inCols) / outCols;
-      const int ix2 = ((x+1) * inCols) / outCols;
-      const float fx1 = (ix1+1) - x * dx;
-      const float fx2 = (x+1) * dx - ix2;
-      
-      float pixVal = 0.0f;
-      float factorx, factory;
-      for (int i = iy1; i <= iy2 && i < inRows; i++)
-	    {
+      const int iy1 = (  y   * inRows) / outRows;
+      const int iy2 = ((y+1) * inRows) / outRows;
+      const float fy1 = (iy1+1) - y * dy;
+      const float fy2 = (y+1) * dy - iy2;
+
+      for (int x = 0; x < outCols; x++)
+      {
+          const int ix1 = (  x   * inCols) / outCols;
+          const int ix2 = ((x+1) * inCols) / outCols;
+          const float fx1 = (ix1+1) - x * dx;
+          const float fx2 = (x+1) * dx - ix2;
+
+          float pixVal = 0.0f;
+          float factorx, factory;
+          for (int i = iy1; i <= iy2 && i < inRows; i++)
+          {
 	      if (i == iy1)
-          factory = fy1;  // We're just getting the bottom edge of this pixel
+                  factory = fy1;  // We're just getting the bottom edge of this pixel
 	      else if (i == iy2)
-          factory = fy2;  // We're just gettting the top edge of this pixel
+                  factory = fy2;  // We're just gettting the top edge of this pixel
 	      else
-          factory = 1.0f; // We've got the full height of this pixel
+                  factory = 1.0f; // We've got the full height of this pixel
 	      for (int j = ix1; j <= ix2 && j < inCols; j++)
-        {
-          if (j == ix1)
-            factorx = fx1;  // We've just got the right edge of this pixel
-          else if (j == ix2)
-            factorx = fx2; // We've just got the left edge of this pixel
-          else
-            factorx = 1.0f; // We've got the full width of this pixel
-          
-          pixVal += data[j + i*inCols] * factorx * factory;
-        }
-	    }
-      
-      res[x + y * outCols] = pixVal * normalize;  // Normalize by the area of the new pixel
-    }
+              {
+                  if (j == ix1)
+                      factorx = fx1;  // We've just got the right edge of this pixel
+                  else if (j == ix2)
+                      factorx = fx2; // We've just got the left edge of this pixel
+                  else
+                      factorx = 1.0f; // We've got the full width of this pixel
+
+                  pixVal += data[j + i*inCols] * factorx * factory;
+              }
+          }
+
+          res[x + y * outCols] = pixVal * normalize;  // Normalize by the area of the new pixel
+      }
   }
+}
+
+void matrix_downsample_simple(const int inCols, const int inRows, const float* const data, float* const res)
+{
+    const int outRows = inRows / 2;
+    const int outCols = inCols / 2;
+
+    // Simplified downsampling by Bruce Guenter:
+    //
+    // Follows exactly the same math as the full downsampling above,
+    // except that inRows and inCols are known to be even.  This allows
+    // for all of the boundary cases to be eliminated, reducing the
+    // sampling to a simple average.
+
+#pragma omp parallel for schedule(static)
+    for (int y = 0; y < outRows; y++)
+    {
+        const int iy1 = y * 2;
+        const float* datap = data + iy1 * inCols;
+        float* resp = res + y * outCols;
+
+        for (int x = 0; x < outCols; x++)
+        {
+            const int ix1 = x * 2;
+
+            resp[x] = ( datap[ix1]
+                        + datap[ix1+1]
+                        + datap[ix1   + inCols]
+                        + datap[ix1+1 + inCols]) / 4.0f;
+        }
+    }
+}
+
+void matrix_downsample(const int inCols, const int inRows, const float* const data, float* const res)
+{
+  if (inCols % 2 == 0 && inRows % 2 == 0)
+    matrix_downsample_simple(inCols, inRows, data, res);
+  else
+    matrix_downsample_full(inCols, inRows, data, res);
 }
 
 // return = a + b
 inline void matrix_add(const int n, const float* const a, float* const b)
 {
-#ifdef __SSE__  
+#ifdef __SSE__
   VEX_vadd(b, a, b, n);
 #else
   #pragma omp parallel for schedule(static)
@@ -377,35 +444,42 @@ inline void matrix_zero(int n, float* m)
 // divG(x,y) = Gx(x,y) - Gx(x-1,y) + Gy(x,y) - Gy(x,y-1)  
 inline void calculate_and_add_divergence(const int COLS, const int ROWS, const float* const Gx, const float* const Gy, float* const divG)
 {
-  float divGx, divGy;
-  
-  // kx = 0 AND ky = 0;
-  divG[0] += Gx[0] + Gy[0];                       // OUT
-  
-  // ky = 0
-  for(int kx=1; kx<COLS; kx++)
-  {
-    divGx = Gx[kx] - Gx[kx - 1];
-    divGy = Gy[kx];
-    divG[kx] += divGx + divGy;                    // OUT
-  }
-  
-#pragma omp parallel for schedule(static, 5120) private(divGx, divGy)
-  for(int ky=1; ky<ROWS; ky++)
-  {
-    // kx = 0
-    divGx = Gx[ky*COLS];
-    divGy = Gy[ky*COLS] - Gy[ky*COLS - COLS];			
-    divG[ky*COLS] += divGx + divGy;               // OUT
-    
-    // kx > 0
-    for(int kx=1; kx<COLS; kx++)
+    float divGx, divGy;
+#pragma omp parallel sections private(divGx, divGy)
     {
-      divGx = Gx[kx + ky*COLS] - Gx[kx + ky*COLS-1];
-      divGy = Gy[kx + ky*COLS] - Gy[kx + ky*COLS - COLS];			
-      divG[kx + ky*COLS] += divGx + divGy;        // OUT
-    }
-  }
+#pragma omp section
+        {
+            // kx = 0 AND ky = 0;
+            divG[0] += Gx[0] + Gy[0];                       // OUT
+
+            // ky = 0
+            for (int kx=1; kx<COLS; kx++)
+            {
+                divGx = Gx[kx] - Gx[kx - 1];
+                divGy = Gy[kx];
+                divG[kx] += divGx + divGy;                    // OUT
+            }
+        }
+#pragma omp section
+        {
+#pragma omp parallel for schedule(static, 5120) private(divGx, divGy)
+            for (int ky=1; ky<ROWS; ky++)
+            {
+                // kx = 0
+                divGx = Gx[ky*COLS];
+                divGy = Gy[ky*COLS] - Gy[ky*COLS - COLS];
+                divG[ky*COLS] += divGx + divGy;               // OUT
+
+                // kx > 0
+                for(int kx=1; kx<COLS; kx++)
+                {
+                    divGx = Gx[kx + ky*COLS] - Gx[kx + ky*COLS-1];
+                    divGy = Gy[kx + ky*COLS] - Gy[kx + ky*COLS - COLS];
+                    divG[kx + ky*COLS] += divGx + divGy;        // OUT
+                }
+            }
+        }
+    }   // END PARALLEL SECTIONS
 }
 
 // Calculate the sum of divergences for the all pyramid level

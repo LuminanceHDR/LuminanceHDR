@@ -43,13 +43,13 @@
 
 #include "Libpfs/pfs.h"
 #include "Libpfs/colorspace.h"
-#include "Common/msec_timer.h"
+//#include "Common/msec_timer.h"
 
 void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFactor, float detailFactor, bool cont_eq, ProgressHelper *ph)
 {
-#ifdef TIMER_PROFILING
-  msec_timer f_timer;
-#endif
+//#ifdef TIMER_PROFILING
+//  msec_timer f_timer;
+//#endif
   
   //--- default tone mapping parameters;
   //float scaleFactor = 0.1f;
@@ -60,23 +60,20 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   int itmax = 200;
   float tol = 1e-3;
   
-  std::cout << "pfstmo_mantiuk06" << std::endl;
+  std::cout << "pfstmo_mantiuk06 (";
   if (!cont_eq)
   {
-    //cont_map = true;
-    std::cout << "cont_map: TRUE (Contrast Mapping)" << std::endl;
+    std::cout << "Mode: Contrast Mapping, ";
   }
   else 
   {
     scaleFactor = -scaleFactor;
-    std::cout << "cont_map: FALSE (Contrast Equalization)" << std::endl;
+    std::cout << "Mode: Contrast Equalization, ";
   }
-  //std::cout << "cont_map: " << cont_map << std::endl;
-  //std::cout << "cont_eq: " << cont_eq << std::endl;
   
-  std::cout << "scaleFactor: " << scaleFactor << std::endl;
-  std::cout << "saturationFactor: " << saturationFactor << std::endl;
-  std::cout << "detailFactor: " << detailFactor << std::endl;
+  std::cout << "scaleFactor: " << scaleFactor;
+  std::cout << ", saturationFactor: " << saturationFactor;
+  std::cout << ", detailFactor: " << detailFactor << ")" << std::endl;
   
   pfs::Channel *inX, *inY, *inZ;
   frame->getXYZChannels(inX, inY, inZ);
@@ -84,31 +81,32 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   int cols = frame->getWidth();
   int rows = frame->getHeight();
   
-  pfs::Array2DImpl* Xr = inX->getChannelData();
-  pfs::Array2DImpl* Yr = inY->getChannelData();
-  pfs::Array2DImpl* Zr = inZ->getChannelData();
+  pfs::Array2D* Xr = inX->getChannelData();
+  pfs::Array2D* Yr = inY->getChannelData();
+  pfs::Array2D* Zr = inZ->getChannelData();
   
-  pfs::Array2DImpl G( cols, rows );
+  pfs::Array2D* G = new pfs::Array2DImpl( cols, rows );
    
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, &G, Zr );
+  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, G, Zr );
   
-#ifdef TIMER_PROFILING
-  f_timer.start();
-#endif
+//#ifdef TIMER_PROFILING
+//  f_timer.start();
+//#endif
   
-  tmo_mantiuk06_contmap(cols, rows, inX->getRawData(), G.getRawData(), inZ->getRawData(), inY->getRawData(),
+  tmo_mantiuk06_contmap(cols, rows, inX->getRawData(), G->getRawData(), inZ->getRawData(), inY->getRawData(),
                         scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
   
-#ifdef TIMER_PROFILING
-  f_timer.stop_and_update();
-#endif
+//#ifdef TIMER_PROFILING
+//  f_timer.stop_and_update();
+//#endif
   if ( !ph->isTerminationRequested() )
   {
-    pfs::transformColorSpace( pfs::CS_RGB, Xr, &G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
+    pfs::transformColorSpace( pfs::CS_RGB, Xr, G, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     frame->getTags()->setString("LUMINANCE", "RELATIVE");
   }
   
-#ifdef TIMER_PROFILING
-  std::cout << "pfstmo_mantiuk06() = " << f_timer.get_time() << " msec" << std::endl;
-#endif
+  delete G;
+//#ifdef TIMER_PROFILING
+//  std::cout << "pfstmo_mantiuk06() = " << f_timer.get_time() << " msec" << std::endl;
+//#endif
 }
