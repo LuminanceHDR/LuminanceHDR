@@ -1008,17 +1008,17 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GenericViewer</name>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="48"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="53"/>
         <source>Pan the image to a region</source>
         <translation>Bild auf einen Ausschnitt ausrichten</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="185"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="227"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen ...</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/GenericViewer.cpp" line="185"/>
+        <location filename="../src/Viewers/GenericViewer.cpp" line="228"/>
         <source>This image has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
         <translation>Für dieses Bild gibt es nichtgespeicherte Änderungen.&lt;br&gt;Soll es wirklich geschlossen werden?</translation>
     </message>
@@ -1063,47 +1063,42 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="108"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="145"/>
         <source>Linear</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="109"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="146"/>
         <source>Gamma 1.4</source>
         <translation>Gamma 1,4</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="110"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="147"/>
         <source>Gamma 1.8</source>
         <translation>Gamma 1,8</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="111"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="148"/>
         <source>Gamma 2.2</source>
         <translation>Gamma 2,2</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="112"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="149"/>
         <source>Gamma 2.6</source>
         <translation>Gamma 2,6</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="113"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="150"/>
         <source>Logarithmic</source>
         <translation>Logarithmisch</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="117"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="154"/>
         <source>Histogram:</source>
         <translation>Histogramm:</translation>
     </message>
     <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="126"/>
-        <source>Loading file...</source>
-        <translation>Lade Datei ...</translation>
-    </message>
-    <message>
-        <location filename="../src/Viewers/HdrViewer.cpp" line="100"/>
+        <location filename="../src/Viewers/HdrViewer.cpp" line="137"/>
         <source>&amp;Mapping:</source>
         <translation>Da&amp;rstellung:</translation>
     </message>
@@ -1872,6 +1867,34 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     </message>
 </context>
 <context>
+    <name>IOWorker</name>
+    <message>
+        <location filename="../src/Core/IOWorker.cpp" line="99"/>
+        <source>ERROR: The following file is not readable: %1</source>
+        <translation>FEHLER: Die folgende Datei ist nicht lesbar: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/IOWorker.cpp" line="128"/>
+        <source>ERROR: Cannot open file: %1</source>
+        <translation>FEHLER: Datei kann nicht geöffnet werden: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/IOWorker.cpp" line="151"/>
+        <source>ERROR: File %1 has unsupported extension.</source>
+        <translation>FEHLER: Datei %1 hat eine nicht unterstützte Erweiterung.</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/IOWorker.cpp" line="162"/>
+        <source>ERROR: %1</source>
+        <translation>FEHLER: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/Core/IOWorker.cpp" line="168"/>
+        <source>ERROR: Failed loading file: %1</source>
+        <translation>FEHLER: Datei konnte nicht geladen werden: %1</translation>
+    </message>
+</context>
+<context>
     <name>ImageQualityDialog</name>
     <message>
         <location filename="../src/Common/ImageQualityDialog.cpp" line="60"/>
@@ -1925,7 +1948,7 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
 <context>
     <name>LdrViewer</name>
     <message>
-        <location filename="../src/Viewers/LdrViewer.cpp" line="40"/>
+        <location filename="../src/Viewers/LdrViewer.cpp" line="45"/>
         <source>LDR image [%1 x %2]</source>
         <translation>LDR-Bild [%1 x %2]</translation>
     </message>
@@ -2048,8 +2071,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="384"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="388"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="399"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="403"/>
         <source>Luminance HDR</source>
         <translation></translation>
     </message>
@@ -2329,64 +2352,64 @@ p, li { white-space: pre-wrap; }
         <translation>Aus&amp;wahl aufheben</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="601"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="657"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="112"/>
-        <source>Saving file...</source>
-        <translation>Speichere Datei ...</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="110"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="116"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Fertig. Öffne jetzt ein bestehendes HDR-Bild oder erstell ein neues!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="203"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="238"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="216"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="260"/>
         <source>All HDR formats </source>
         <translation>Alle HDR-Formate</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="214"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="227"/>
         <source>Load one or more HDR images...</source>
         <translation>Ein oder mehrere HDR-Bilder laden ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="247"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="269"/>
         <source>Save the HDR image as...</source>
         <translation>HDR-Bild speichern als ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="388"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="403"/>
         <source>Error: Failed to Tonemap Image</source>
         <translation>Fehler: Dynamikkompression des Bildes fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="398"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
         <source>Error...</source>
         <translation>Fehler ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="398"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation>Luminance HDR speichert Ergebnisse in temporären Dateien zwischen, aber der dafür festgelegte Ordner ist ungültig.&lt;br&gt;Bitte einen gültigen Pfad wählen über Extras -&gt; Einstellungen ... -&gt; Dynamikkompression.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="702"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="812"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="702"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="813"/>
         <source>There is at least one HDR image with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
         <translation>Es gibt mindestens ein HDR-Bild mit nicht gespeicherten Änderungen.&lt;br&gt;Trotzdem beenden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="846"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="847"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="930"/>
+        <source>Done!</source>
+        <translation>Fertig!</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="944"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="945"/>
         <source>Cropped Image</source>
         <translation>zugeschnittenes Bild</translation>
     </message>
@@ -2717,18 +2740,12 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="790"/>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation>%1 Der Lizenztext wurde nicht gefunden. Sie können ihn online lesen: %2hier%3</translation>
-    </message>
-    <message>
         <location filename="../forms/MainWindow.ui" line="772"/>
         <source>&amp;Projective Transformation...</source>
         <translation>&amp;Projektive Transformation ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="800"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="885"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -2738,7 +2755,7 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Auf Auswahl zuschneiden</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="384"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="399"/>
         <source>Error: %1 </source>
         <translation>Fehler: %1 </translation>
     </message>
@@ -3767,12 +3784,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="68"/>
+        <location filename="../src/main.cpp" line="70"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="68"/>
+        <location filename="../src/main.cpp" line="70"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
     </message>
@@ -3899,7 +3916,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>TMOProgressIndicator</name>
     <message>
-        <location filename="../src/TonemappingWindow/TMOProgressIndicator.cpp" line="38"/>
+        <location filename="../src/TonemappingWindow/TMOProgressIndicator.cpp" line="44"/>
         <source>Abort computation</source>
         <translation>Berechnung abbrechen</translation>
     </message>
@@ -5094,6 +5111,15 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TransplantExif/TransplantExifDialog.cpp" line="216"/>
         <source>All Supported formats</source>
         <translation>Alle unterstützten Formate</translation>
+    </message>
+</context>
+<context>
+    <name>UMessageBox</name>
+    <message>
+        <location filename="../src/UI/UMessageBox.h" line="100"/>
+        <source>%1 License document not found, you can find it online: %2here%3</source>
+        <comment>%2 and %3 are html tags</comment>
+        <translation>%1 Der Lizenztext wurde nicht gefunden. Sie können ihn online lesen: %2hier%3</translation>
     </message>
 </context>
 </TS>
