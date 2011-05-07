@@ -29,82 +29,115 @@
 #include "Common/GammaAndLevels.h"
 #include "LdrViewer.h"
 
-LdrViewer::LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) :
-	GenericViewer(parent, ns, ncf), origimage(i) {
+LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) :
+        GenericViewer(parent, ns, ncf)
+{
+    setAttribute(Qt::WA_DeleteOnClose);
 
-	image = origimage;
-	setAttribute(Qt::WA_DeleteOnClose);
+    m_image = i;
 
-	QPixmap newImage = QPixmap::fromImage(origimage);
+    m_cols = m_image->width();
+    m_rows = m_image->height();
 
-	QLabel *informativeLabel = new QLabel( tr("LDR image [%1 x %2]")
-			.arg(newImage.width()).arg(newImage.height()),
-		toolBar
-	);
-	toolBar->addWidget(informativeLabel);
+    temp_image = NULL;
+    previewimage = NULL;
 
-	imageLabel.setPixmap(newImage);
+    QLabel *informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_rows).arg(m_cols), toolBar );
+    toolBar->addWidget(informativeLabel);
 
-	parseOptions(opts);
-	setWindowTitle(caption);
-	setToolTip(caption);
+    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+
+    parseOptions(opts);
+    setWindowTitle(caption);
+    setToolTip(caption);
 }
 
-LdrViewer::~LdrViewer() {
-	std::cout << "LdrViewer::~LdrViewer()" << std::endl;
-	delete [] origimage.bits();
+LdrViewer::~LdrViewer()
+{
+    std::cout << "LdrViewer::~LdrViewer()" << std::endl;
+
+    //delete origimage;
+    //delete [] origimage.bits();
 }
 
-void LdrViewer::parseOptions(const TonemappingOptions *opts) {
-	TMOptionsOperations tmopts(opts);
-	postfix=tmopts.getPostfix();
-	caption=tmopts.getCaption();
-	exif_comment=tmopts.getExifComment();
+void LdrViewer::parseOptions(const TonemappingOptions *opts)
+{
+    TMOptionsOperations tmopts(opts);
+    postfix=tmopts.getPostfix();
+    caption=tmopts.getCaption();
+    exif_comment=tmopts.getExifComment();
 }
 
-QString LdrViewer::getFilenamePostFix() {
-	return postfix;
+QString LdrViewer::getFilenamePostFix()
+{
+    return postfix;
 }
 
-const QImage LdrViewer::getQImage() {
-	return image;
+const QImage* LdrViewer::getQImage()
+{
+    return m_image;
 }
 
-QString LdrViewer::getExifComment() {
-	return exif_comment;
+QString LdrViewer::getExifComment()
+{
+    return exif_comment;
 }
 
 void LdrViewer::levelsRequested(bool /*a*/)
 {
-	//TODO assert(a); //a is always true
-	//copy original data
-	previewimage=image.copy();
-	GammaAndLevels *levels=new GammaAndLevels(this, origimage);
-	levels->setAttribute(Qt::WA_DeleteOnClose);
-	//when closing levels, inform the Tone Mapping dialog.
-	connect(levels,SIGNAL(closing()),this,SIGNAL(levels_closed()));
-	//refresh preview when a values changes
-	connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
-	//restore original on "cancel"
-	connect(levels,SIGNAL(rejected()),this,SLOT(restoreoriginal()));
-	levels->exec();
+    // TODO : Check this rubbish!
+
+    temp_image = m_image;
+    previewimage = new QImage( m_cols, m_rows, QImage::Format_RGB32 ); //image->copy() //copy original data
+
+    GammaAndLevels *levels = new GammaAndLevels(this, m_image);
+    levels->setAttribute(Qt::WA_DeleteOnClose);
+    //when closing levels, inform the Tone Mapping dialog.
+    connect(levels,SIGNAL(closing()), this, SIGNAL(levels_closed()));
+    //refresh preview when a values changes
+    connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
+    //restore original on "cancel"
+    connect(levels,SIGNAL(rejected()),this,SLOT(restore_original()));
+
+    levels->exec();
 }
 
-void LdrViewer::updatePreview(unsigned char *LUT) {
-	qDebug("LdrViewer::updatePreview\n");
-	for (int x=0; x < origimage.width(); x++) {
-		for (int y=0; y < origimage.height(); y++) {
-			QRgb rgb = origimage.pixel(x,y);
-			QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
-			previewimage.setPixel(x,y,withgamma);
-		}
-	}
-	imageLabel.setPixmap(QPixmap::fromImage(previewimage));
-	image=previewimage;
+void LdrViewer::updatePreview(unsigned char *LUT)
+{
+    //printf("LdrViewer::updatePreview\n");
+    // TODO : clean up this implementation... (in case I keep it in the final release)!!!
+    for (int x=0; x < m_cols; x++)
+    {
+        for (int y=0; y < m_rows; y++)
+        {
+            QRgb rgb = m_image->pixel(x,y);
+            QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
+            previewimage->setPixel(x,y,withgamma);
+        }
+    }
+    imageLabel.setPixmap(QPixmap::fromImage(*previewimage));
 }
 
-void LdrViewer::restoreoriginal() {
-	imageLabel.setPixmap(QPixmap::fromImage(origimage));
-	image = origimage;
+void LdrViewer::restore_original()
+{
+    //printf("LdrViewer::restoreoriginal() \n");
+    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+
+    delete previewimage;
+
+    temp_image = NULL;
+    previewimage = NULL;
+}
+
+void LdrViewer::finalize_levels()
+{
+    //printf("LdrViewer::finalize_levels() \n");
+    m_image = previewimage;
+    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+
+    delete temp_image;
+
+    temp_image = NULL;
+    previewimage = NULL;
 }
 

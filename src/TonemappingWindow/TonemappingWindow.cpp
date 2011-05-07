@@ -176,7 +176,7 @@ bool TonemappingWindow::eventFilter(QObject *obj, QEvent *event)
 void TonemappingWindow::addMDIResult(QImage* image)
 {
 	ldrNum++;
-	LdrViewer *n = new LdrViewer( *image, this, false, false, tmoOptions);
+        LdrViewer *n = new LdrViewer( image, this, false, false, tmoOptions);
 	connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 	n->normalSize();
 	n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
@@ -227,20 +227,20 @@ void TonemappingWindow::addProcessedFrame(pfs::Frame *frame)
 
 void TonemappingWindow::LevelsRequested(bool checked)
 {
-	if (checked)
-  {
-		GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
-		if (current==NULL)
-			return;
-		actionFix_Histogram->setDisabled(true);
-		current->levelsRequested(checked);
-	}
+    if (checked)
+    {
+        GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
+        if (current==NULL)
+            return;
+        actionFix_Histogram->setDisabled(true);
+        current->levelsRequested(checked);
+    }
 }
 
 void TonemappingWindow::levels_closed()
 {
-	actionFix_Histogram->setDisabled(false);
-	actionFix_Histogram->setChecked(false);
+    actionFix_Histogram->setDisabled(false);
+    actionFix_Histogram->setChecked(false);
 }
 
 void TonemappingWindow::on_actionSave_triggered()

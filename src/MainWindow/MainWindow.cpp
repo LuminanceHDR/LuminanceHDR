@@ -85,7 +85,14 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), currenthdr(NULL), helpBrows
     mdiArea = new QMdiArea(this);
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiArea->setBackground(QBrush(QColor::fromRgb(192, 192, 192)) );
+    mdiArea->setBackground(QBrush( QColor::fromRgb(192, 192, 192)) );
+
+    // Mac OS X only has tabbed images
+#ifdef Q_WS_MAC
+    mdiArea->setViewMode(QMdiArea::TabbedView);
+    mdiArea->setDocumentMode(true);
+#endif
+
     setCentralWidget(mdiArea);
 
     luminance_options = LuminanceOptions::getInstance();
@@ -656,10 +663,15 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname)
     QMdiSubWindow* subWindow = new QMdiSubWindow(this);
     HdrViewer * newhdr = new HdrViewer(subWindow, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 
+    this->mdiArea->addSubWindow(subWindow);
+    this->setCurrentFile(new_fname);
+
     newhdr->setAttribute(Qt::WA_DeleteOnClose);
     subWindow->setAttribute(Qt::WA_DeleteOnClose);
 
     subWindow->setWidget(newhdr);
+    subWindow->resize((int) (0.66 * this->mdiArea->width()),(int)(0.66 * this->mdiArea->height()));
+    subWindow->showMaximized();
 
     connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
     newhdr->setSelectionTool(true);
@@ -670,11 +682,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname)
 
     newhdr->normalSize();
     newhdr->fitToWindow(true);
-    subWindow->resize((int) (0.66 * this->mdiArea->width()),(int)(0.66 * this->mdiArea->height()));
-    this->mdiArea->addSubWindow(subWindow);
-    this->setCurrentFile(new_fname);
 
-    subWindow->showMaximized();
     newhdr->show();
 }
 

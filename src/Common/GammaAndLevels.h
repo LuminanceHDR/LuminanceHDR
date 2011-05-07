@@ -71,7 +71,7 @@ public:
 	~HistogramLDR();
 	QSize sizeHint () const;
 	QSize minimumSizeHint () const;
-	void setData(const QImage &data);
+        void setData(const QImage* data);
 protected:
 	void paintEvent( QPaintEvent * );
 // 	void resizeEvent ( QResizeEvent * );
@@ -88,7 +88,7 @@ private:
 	float gamma;
 	void refreshLUT();
 public:
-	GammaAndLevels(QWidget *parent,const QImage image);
+        GammaAndLevels(QWidget *parent, const QImage* image);
 	~GammaAndLevels();
 	GrayBar *gb1,*gb2;
 	HistogramLDR *histogram;
@@ -97,6 +97,7 @@ protected:
 signals:
 	void closing();
 	void LUTrefreshed(unsigned char *);
+
 private slots:
 	void resetValues();
 	void updateBlackIn(int);

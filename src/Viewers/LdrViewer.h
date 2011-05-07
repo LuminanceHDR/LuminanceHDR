@@ -28,31 +28,37 @@
 #ifndef IMAGELDRVIEWER_H
 #define IMAGELDRVIEWER_H
 
+#include <iostream>
+
 #include "Common/options.h"
 #include "GenericViewer.h"
 
-#include <iostream>
-
-class LdrViewer : public GenericViewer {
-	Q_OBJECT
+class LdrViewer : public GenericViewer
+{
+    Q_OBJECT
 public:
-	LdrViewer(const QImage &i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts);
-	~LdrViewer();
-	void levelsRequested(bool);
-	QString getFilenamePostFix();
-	QString getExifComment();
-	const QImage getQImage();
-	bool isHDR() { return false; }
+    LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts);
+    virtual ~LdrViewer();
+    void levelsRequested(bool);
+    QString getFilenamePostFix();
+    QString getExifComment();
+    const QImage* getQImage();
+    bool isHDR() { return false; }
+
 signals:
-	void levels_closed();
+    void levels_closed();
+
 private slots:
-	void updatePreview(unsigned char *);
-	void restoreoriginal();
+    void updatePreview(unsigned char *);
+    void restore_original();
+    void finalize_levels();
+
 private:
-	void parseOptions(const TonemappingOptions *opts);
-	QString caption,postfix,exif_comment;
-	const QImage origimage;
-	QImage previewimage;
+    void parseOptions(const TonemappingOptions *opts);
+    QString caption,postfix,exif_comment;
+
+    QImage *previewimage;
+    QImage *temp_image;
 };
 
 #endif

@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Improvements, new functionalities
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
@@ -31,7 +34,6 @@
 #include <QImage>
 #include <QComboBox>
 #include <QResizeEvent>
-#include <QProgressDialog>
 
 #include "Common/SelectionTool.h"
 #include "GenericViewer.h"
@@ -51,47 +53,63 @@ enum LumMappingMethod {
 };
 
 
-class HdrViewer : public GenericViewer {
-	Q_OBJECT
-public:
-	HdrViewer (QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
-	~HdrViewer();
-	void updateHDR(pfs::Frame*);
-	pfs::Frame* getHDRPfsFrame();
-	void saveHdrPreview();
-	void showLoadDialog();
-	void hideLoadDialog(void);
-	void setFlagUpdateImage(bool updateImage);
-	LuminanceRangeWidget* lumRange();
-	void update_colors(unsigned int negcol, unsigned int naninfcol);
-	void mapFrameToImage();
- 	void levelsRequested(bool); // do nothing but used by LdrViewer (its own implementation)
-	QString getFilenamePostFix(); // do nothing but used by LdrViewer (its own implementation)
-	QString getExifComment(); // do nothing but used by LdrViewer (its own implementation)
-	const QImage getQImage(); // do nothing but used by LdrViewer (its own implementation)
-	void setFreePfsFrameOnExit(bool b); 
-	bool isHDR() { return true; }
-public slots:
-	void updateRangeWindow();
-	int getLumMappingMethod();
-	void setLumMappingMethod( int method );
-	void setMaximum(int max);
-	void setValue(int value);
-protected:
-	LuminanceRangeWidget *m_lumRange;
-	QComboBox *mappingMethodCB;
-	pfs::Array2D *workArea[3];
-	pfs::Frame *pfsFrame;
-	LumMappingMethod mappingMethod;
-	float minValue;
-	float maxValue;
-	unsigned int naninfcol,negcol;
-	QProgressDialog *progress;
-	bool flagUpdateImage;
-	bool flagFreeOnExit;
+class HdrViewer : public GenericViewer
+{
+    Q_OBJECT
+private:
+    void init_ui();
+    void mapFrameToImage();
+    int getMapping(float x);
+    float getInverseMapping( float v );
 
-	void setRangeWindow( float min, float max );
-	const pfs::Array2D *getPrimaryChannel();
-	void updateImage();
+public:
+    HdrViewer(QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
+    virtual ~HdrViewer();
+
+    void updateHDR(pfs::Frame*);
+    pfs::Frame* getHDRPfsFrame();
+
+    void saveHdrPreview();
+    void setFlagUpdateImage(bool updateImage);
+    LuminanceRangeWidget* lumRange();
+    void update_colors(unsigned int negcol, unsigned int naninfcol);
+
+    void levelsRequested(bool);     // do nothing but used by LdrViewer (its own implementation)
+    QString getFilenamePostFix();   // do nothing but used by LdrViewer (its own implementation)
+    QString getExifComment();       // do nothing but used by LdrViewer (its own implementation)
+    const QImage* getQImage();       // do nothing but used by LdrViewer (its own implementation)
+    void setFreePfsFrameOnExit(bool b);
+    bool isHDR() { return true; }
+
+public Q_SLOTS:
+    void updateRangeWindow();
+    int getLumMappingMethod();
+    void setLumMappingMethod( int method );
+
+protected Q_SLOTS:
+    void updateImage();
+
+protected:
+    // Methods
+    void setRangeWindow( float min, float max );
+    const pfs::Array2D *getPrimaryChannel();
+
+    // UI
+    LuminanceRangeWidget *m_lumRange;
+    QComboBox *mappingMethodCB;
+
+    bool flagUpdateImage;
+    bool flagFreeOnExit;
+
+    // Current Visualization mode
+    LumMappingMethod mappingMethod;
+    float minValue;
+    float maxValue;
+    unsigned int naninfcol,negcol;
+
+    // Current HDR Frame
+    pfs::Array2D *workArea[3];
+    pfs::Frame *pfsFrame;
 };
+
 #endif

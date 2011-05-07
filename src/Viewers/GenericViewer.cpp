@@ -33,13 +33,16 @@
 GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
         QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf)
 {
+    // Set Minimum Dimension of the Viewer Window
+    setMinimumSize(450, 300);
+
     VBL_L = new QVBoxLayout(this);
     VBL_L->setSpacing(0);
     VBL_L->setMargin(0);
 
     toolBar = new QToolBar("",this);
-    toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
-    toolBar->setFixedHeight(30);
+    toolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    toolBar->setFixedHeight(40);
     VBL_L->addWidget(toolBar);
 
     scrollArea = new SmartScrollArea(this, imageLabel);
@@ -53,82 +56,108 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
     connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
     connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
+
+    statusBar = new QStatusBar(this);
+    VBL_L->addWidget(statusBar);
 }
 
-void GenericViewer::setLabelPixmap(const QPixmap pix) {
+GenericViewer::~GenericViewer()
+{
+    if ( m_image != NULL ) delete m_image;
+    this->deleteLater();
+}
+
+void GenericViewer::setLabelPixmap(const QPixmap pix)
+{
 	imageLabel.setPixmap(pix);
 	imageLabel.adjustSize();
 }
 
-void GenericViewer::fitToWindow(bool checked) {
+void GenericViewer::fitToWindow(bool checked)
+{
 	scrollArea->fitToWindow(checked);
 	emit changed(this);
 }
 
-void GenericViewer::zoomIn() {
+void GenericViewer::zoomIn()
+{
 	scrollArea->zoomIn();
 	emit changed(this);
 }
 
-void GenericViewer::zoomOut() {
+void GenericViewer::zoomOut()
+{
 	scrollArea->zoomOut();
 	emit changed(this);
 }
 
-void GenericViewer::zoomToFactor(float factor) {
+void GenericViewer::zoomToFactor(float factor)
+{
 	scrollArea->zoomToFactor(factor);
 	emit changed(this);
 }
 
-void GenericViewer::normalSize() {
+void GenericViewer::normalSize()
+{
 	scrollArea->normalSize();
 	emit changed(this);
 }
 
-bool GenericViewer::isFittedToWindow() {
+bool GenericViewer::isFittedToWindow()
+{
 	return scrollArea->isFittedToWindow();
 }
 
-float GenericViewer::getScaleFactor() {
+float GenericViewer::getScaleFactor()
+{
 	return scrollArea->getScaleFactor();
 }
 
-const QRect GenericViewer::getSelectionRect(void) {
+const QRect GenericViewer::getSelectionRect(void)
+{
 	return scrollArea->getSelectionRect();
 }
 
-void GenericViewer::setSelectionTool(bool toggled) {
+void GenericViewer::setSelectionTool(bool toggled)
+{
 	scrollArea->setSelectionTool( toggled );
 }
 
-void GenericViewer::removeSelection(void) {
+void GenericViewer::removeSelection(void)
+{
 	scrollArea->removeSelection();
 }
 
-bool GenericViewer::hasSelection(void) {
+bool GenericViewer::hasSelection(void)
+{
 	return scrollArea->hasSelection();
 }
 
-bool GenericViewer::needsSaving(void) {
+bool GenericViewer::needsSaving(void)
+{
 	return NeedsSaving;
 }
 
-void GenericViewer::setNeedsSaving(bool s) {
+void GenericViewer::setNeedsSaving(bool s)
+{
 	NeedsSaving = s;
 }
 
-const QString GenericViewer::getFileName(void) {
+const QString GenericViewer::getFileName(void)
+{
 	return filename;
 }
 
-void GenericViewer::setFileName(const QString fn) {
+void GenericViewer::setFileName(const QString fn)
+{
 	filename = fn;
 }
 
 void GenericViewer::slotCornerButtonPressed()
 {
     panIconWidget=new PanIconWidget(this);
-    panIconWidget->setImage(image);
+    // TODO: panIconWidget MUST get a Pointer!
+    panIconWidget->setImage(*m_image);
     float zf=scrollArea->getScaleFactor();
     float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
     float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
@@ -186,7 +215,8 @@ void GenericViewer::setVertScrollBarValue(int value)
     scrollArea->setVertScrollBarValue(value);
 }
 
-void GenericViewer::route_changed() {
+void GenericViewer::route_changed()
+{
     emit changed(this);
 }
 

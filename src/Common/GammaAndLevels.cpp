@@ -29,10 +29,12 @@
 
 #include "GammaAndLevels.h"
 
-GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage data) : QDialog(parent) {
+GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage* data) : QDialog(parent)
+{
 	setupUi(this);
 	connect(cancelButton,SIGNAL(clicked()),this,SIGNAL(closing()));
 	connect(okButton,SIGNAL(clicked()),this,SIGNAL(closing()));
+
 	LUT=new unsigned char[256];
 	blackin=0;
 	gamma=1.0f;
@@ -182,39 +184,40 @@ HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), acc
 	
 }
 
-void HistogramLDR::setData(const QImage &data) {
+void HistogramLDR::setData(const QImage *data)
+{
+    if (data->isNull()) {
+        for( int i = 0; i < 256; i++ )
+            P[i] = 0;
+        return;
+    }
 
-	if (data.isNull()) {
-		for( int i = 0; i < 256; i++ )
-			P[i] = 0;
-		return;
-	}
+    // 	if (data.format()==QImage::Format_Indexed8) {
+    // 		//increment bins
+    // 		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
+    // 			const unsigned char v=*((const unsigned char*)(data.bits())+i);
+    // 			P[v] += 1;
+    // 		}
+    //
+    // 	} else {
+    //increment bins
+    for (int i=0; i<data->width()*data->height(); i+=accuracy)
+    {
+        int v=qGray(*((QRgb*)(data->bits())+i));
+        assert(v>=0 && v<=255);
+        P[v] += 1;
+    }
+    // 	}
 
-// 	if (data.format()==QImage::Format_Indexed8) {
-// 		//increment bins
-// 		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
-// 			const unsigned char v=*((const unsigned char*)(data.bits())+i);
-// 			P[v] += 1;
-// 		}
-// 		
-// 	} else {
-		//increment bins
-		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
-			int v=qGray(*((QRgb*)(data.bits())+i));
-			assert(v>=0 && v<=255);
-			P[v] += 1;
-		}
-// 	}
+    //find max
+    float max=-1;
+    for( int i = 0; i < 256; i++ )
+        if (P[i]>max)
+            max=P[i];
 
-	//find max
-	float max=-1;
-	for( int i = 0; i < 256; i++ )
-		if (P[i]>max)
-			max=P[i];
-
-	//normalize to make maxvalue=1
-	for( int i = 0; i < 256; i++ )
-		P[i] /= max;
+    //normalize to make maxvalue=1
+    for( int i = 0; i < 256; i++ )
+        P[i] /= max;
 }
 
 void HistogramLDR::paintEvent( QPaintEvent * ) {

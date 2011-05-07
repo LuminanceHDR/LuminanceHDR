@@ -95,7 +95,7 @@ EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(p
 	}
 
 	histogram=new HistogramLDR(this);
-	histogram->setData(*(original_ldrlist.at(1)));
+        histogram->setData( original_ldrlist.at(1) );
 	histogram->adjustSize();
 	((QHBoxLayout*)(visualizationGroupBox->layout()))->insertWidget(0,histogram);
 	previewWidget->setFocus();
@@ -256,7 +256,7 @@ void EditingTools::updateMovable(int newidx) {
 	vertShiftSB->setValue(HV_offsets[newidx].second);
 	vertShiftSB->blockSignals(false);
 	previewWidget->update();
-	histogram->setData(*original_ldrlist[newidx]);
+        histogram->setData(original_ldrlist[newidx]);
 	histogram->update();
 }
 

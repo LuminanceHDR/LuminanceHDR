@@ -30,7 +30,7 @@
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(const QImage &img, QString fmt, QWidget *parent) : QDialog(parent), image(img)  {
+ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent) : QDialog(parent), image(img)  {
         setupUi(this);
 	format = fmt;
 	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
@@ -47,7 +47,7 @@ void ImageQualityDialog::on_getSizeButton_clicked() {
         QByteArray ba;
         QBuffer buffer(&ba);
         buffer.open(QIODevice::WriteOnly);
-        image.save(&buffer, (const char *) format.toLatin1(), quality);
+        image->save(&buffer, (const char *) format.toLatin1(), quality);
 	
 	QLocale def;
 	QString s = def.toString( ba.size() );	
