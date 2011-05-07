@@ -70,12 +70,12 @@ using namespace std;
 
 void downSample(pfs::Array2D* A, pfs::Array2D* B)
 {
-  int width = B->getCols();
-  int height = B->getRows();
-  int x,y;
+  const int width = B->getCols();
+  const int height = B->getRows();
 
-  for( y=0 ; y<height ; y++ )
-    for( x=0 ; x<width ; x++ )
+#pragma omp parallel for
+  for( int y=0 ; y<height ; y++ )
+    for( int x=0 ; x<width ; x++ )
     {
       float p = 0.0f;
       p += (*A)(2*x,2*y);
@@ -88,16 +88,16 @@ void downSample(pfs::Array2D* A, pfs::Array2D* B)
 	
 void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
 {
-  int width = I->getCols();
-  int height = I->getRows();
-  int x,y;
+  const int width = I->getCols();
+  const int height = I->getRows();
 
   pfs::Array2D* T = new pfs::Array2D(width,height);
 
   //--- X blur
-  for( y=0 ; y<height ; y++ )
+#pragma omp parallel for shared(I, T)
+  for( int y=0 ; y<height ; y++ )
   {
-    for( x=1 ; x<width-1 ; x++ )
+    for( int x=1 ; x<width-1 ; x++ )
     {
       float t = 2*(*I)(x,y);
       t += (*I)(x-1,y);
@@ -109,9 +109,10 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
   }
 
   //--- Y blur
-  for( x=0 ; x<width ; x++ )
+#pragma omp parallel for shared(T, L)
+  for( int x=0 ; x<width ; x++ )
   {
-    for( y=1 ; y<height-1 ; y++ )
+    for( int y=1 ; y<height-1 ; y++ )
     {
       float t = 2*(*T)(x,y);
       t += (*T)(x,y-1);
@@ -129,9 +130,10 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
 {
   int width = H->getCols();
   int height = H->getRows();
-  int size = width*height;
+  const int size = width*height;
 
   pyramids[0] = new pfs::Array2D(width,height);
+#pragma omp parallel for shared(pyramids, H)
   for( int i=0 ; i<size ; i++ )
     (*pyramids[0])(i) = (*H)(i);
 
@@ -157,11 +159,12 @@ void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nleve
 
 float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 {
-  int width = H->getCols();
-  int height = H->getRows();
-  float divider = pow( 2.0f, k+1 );
+  const int width = H->getCols();
+  const int height = H->getRows();
+  const float divider = pow( 2.0f, k+1 );
   float avgGrad = 0.0f;
 
+#pragma omp parallel for shared(G,H) reduction(+:avgGrad)
   for( int y=0 ; y<height ; y++ )
   {
     for( int x=0 ; x<width ; x++ )
@@ -189,14 +192,14 @@ float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 
 void upSample(pfs::Array2D* A, pfs::Array2D* B)
 {
-  int width = B->getCols();
-  int height = B->getRows();
-  int awidth = A->getCols();
-  int aheight = A->getRows();
-  int x,y;
+  const int width = B->getCols();
+  const int height = B->getRows();
+  const int awidth = A->getCols();
+  const int aheight = A->getRows();
 
-  for( y=0 ; y<height ; y++ )
-    for( x=0 ; x<width ; x++ )
+#pragma omp parallel for shared(A, B)
+  for( int y=0 ; y<height ; y++ )
+    for( int x=0 ; x<width ; x++ )
     {
       int ax = x/2;
       int ay = y/2;
@@ -226,19 +229,20 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
 {
   int width = gradients[nlevels-1]->getCols();
   int height = gradients[nlevels-1]->getRows();
-  int k;
   pfs::Array2D** fi = new pfs::Array2D*[nlevels];
 
   fi[nlevels-1] = new pfs::Array2D(width,height);
   if (newfattal)
-  	for( k=0 ; k<width*height ; k++ )
+#pragma omp parallel for shared(fi)
+	for( int k=0 ; k<width*height ; k++ )
     	(*fi[nlevels-1])(k) = 1.0f;
   
-  for( k=nlevels-1 ; k>=0 ; k-- )
+  for( int k=nlevels-1 ; k>=0 ; k-- )
   {
     width = gradients[k]->getCols();
     height = gradients[k]->getRows();
-		
+
+#pragma omp parallel for shared(fi,avgGrad)
     for( int y=0 ; y<height ; y++ )
       for( int x=0 ; x<width ; x++ )
       {
@@ -271,7 +275,7 @@ void calculateFiMatrix(pfs::Array2D* FI, pfs::Array2D* gradients[],
     }
   }
 	
-  for( k=1 ; k<nlevels ; k++ )
+  for( int k=1 ; k<nlevels ; k++ )
     delete fi[k];
   delete[] fi;
 }
@@ -320,6 +324,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
     maxLum = ( (*Y)(i)>maxLum ) ? (*Y)(i) : maxLum;
   }
   pfs::Array2D* H = new pfs::Array2D(width, height);
+#pragma omp parallel for private(i) shared(H, Y, maxLum)
   for( i=0 ; i<size ; i++ )
     (*H)(i) = log( 100.0f*(*Y)(i)/maxLum + 1e-4 );
 
@@ -352,6 +357,8 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   // attenuate gradients
   pfs::Array2D* Gx = new pfs::Array2D(width, height);
   pfs::Array2D* Gy = new pfs::Array2D(width, height);
+  //#pramga omp parallel for shared(Gx, Gy, H, FI, ph)
+  //FIXME: Only update ph in thread 0
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
@@ -372,6 +379,8 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   
   // calculate divergence
   pfs::Array2D* DivG = new pfs::Array2D(width, height);
+  //#pragma omp parallel for shared(ph, DivG, Gx, Gy)
+  //FIXME: Only update ph in thread 0
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
 	if (ph->isTerminationRequested())
