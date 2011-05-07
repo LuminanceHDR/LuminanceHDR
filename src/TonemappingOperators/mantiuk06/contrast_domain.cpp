@@ -83,7 +83,7 @@ typedef struct pyramid_s {
 
 void contrast_equalization( pyramid_t *pp, const float contrastFactor );
 
-void transform_to_luminance(pyramid_t* pyramid, float* const x, ProgressHelper *ph, const bool bcg);
+void transform_to_luminance(pyramid_t* pyramid, float* const x, ProgressHelper *ph);
 void matrix_subtract(const int n, const float* const a, float* const b);
 void matrix_copy(const int n, const float* const a, float* const b);
 void matrix_multiply_const(const int n, float* const a, const float val);
@@ -104,7 +104,6 @@ void calculate_gradient(const int cols, const int rows, const float* const lum, 
 void pyramid_calculate_gradient(const pyramid_t* pyramid, const float* lum);
 void solveX(const int n, const float* const b, float* const x);
 void multiplyA(pyramid_t* px, pyramid_t* pyramid, const float* const x, float* const divG_sum);
-void linbcg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
 void lincg(pyramid_t* pyramid, pyramid_t* pC, const float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph);
 float lookup_table(const int n, const float* const in_tab, const float* const out_tab, const float val);
 void transform_to_R(const int n, float* const G, float detail_factor);
@@ -674,158 +673,6 @@ inline void multiplyA(pyramid_t* px, pyramid_t* pC, const float* const x, float*
 } 
 
 
-// bi-conjugate linear equation solver
-// overwrites pyramid!
-void linbcg(pyramid_t* pyramid, pyramid_t* pC, float* const b, float* const x, const int itmax, const float tol, ProgressHelper *ph)
-{
-  const int rows = pyramid->rows;
-  const int cols = pyramid->cols;
-  const int n = rows*cols;
-  const float tol2 = tol*tol;
-	
-  float* const z = matrix_alloc(n);
-  float* const zz = matrix_alloc(n);
-  float* const p = matrix_alloc(n);
-  float* const pp = matrix_alloc(n);
-  float* const r = matrix_alloc(n);
-  float* const rr = matrix_alloc(n);	
-  float* const x_save = matrix_alloc(n);	
-	
-  const float bnrm2 = matrix_DotProduct(n, b, b);
-	
-  multiplyA(pyramid, pC, x, r);               // r = A*x = divergence(x)
-  matrix_subtract(n, b, r);                   // r = b - r
-  float err2 = matrix_DotProduct(n, r, r);    // err2 = r.r
-  
-  // matrix_copy(n, r, rr);                   // rr = r
-  multiplyA(pyramid, pC, r, rr);              // rr = A*r
-  
-  float bkden = 0;
-  float saved_err2 = err2;
-  matrix_copy(n, x, x_save);
-  
-  const float ierr2 = err2;
-  const float percent_sf = 100.0f/logf(tol2*bnrm2/ierr2);
-  
-  int iter = 0;
-  bool reset = true;
-  int num_backwards = 0;
-  const int num_backwards_ceiling = 3;
-  
-  for (; iter < itmax; iter++)
-  {
-	  ph->newValue( (int) (logf(err2/ierr2)*percent_sf) );
-    if (ph->isTerminationRequested()) //user request abort
-		  break;
-    
-    solveX(n, r, z);   //  z = ~A(-1) *  r = -0.25 *  r
-    solveX(n, rr, zz); // zz = ~A(-1) * rr = -0.25 * rr
-		
-    const float bknum = matrix_DotProduct(n, z, rr);
-		
-    if (reset)
-    {
-      reset = false;
-      matrix_copy(n, z, p);
-      matrix_copy(n, zz, pp); 
-    }
-    else
-    {
-      const float bk = bknum / bkden; // beta = ...
-      VEX_vadds(z, bk, p, p, n);
-      VEX_vadds(zz, bk, pp, pp, n);
-    }
-		
-    bkden = bknum; // numerato becomes the dominator for the next iteration
-    
-    multiplyA(pyramid, pC,  p,  z); //  z = A* p = divergence( p)
-    multiplyA(pyramid, pC, pp, zz); // zz = A*pp = divergence(pp)
-    
-    const float ak = bknum / matrix_DotProduct(n, z, pp); // alfa = ...
-    
-    VEX_vsubs(r, ak, z, r, n);
-    VEX_vsubs(rr, ak, zz, rr, n);
-    
-    const float old_err2 = err2;
-    err2 = matrix_DotProduct(n, r, r);
-    
-    // Have we gone unstable?
-    if (err2 > old_err2)
-    {
-      // Save where we've got to if it's the best yet
-      if (num_backwards == 0 && old_err2 < saved_err2)
-	    {
-	      saved_err2 = old_err2;
-	      matrix_copy(n, x, x_save);
-	    }
-      
-      num_backwards++;
-    }
-    else
-    {
-      num_backwards = 0;
-    }
-    
-    VEX_vadds(x, ak, p, x, n);
-    
-    if (num_backwards > num_backwards_ceiling)
-    {
-      // Reset
-      reset = true;
-      num_backwards = 0;
-      
-      // Recover saved value
-      matrix_copy(n, x_save, x);
-      
-      // r = Ax
-      multiplyA(pyramid, pC, x, r);
-      
-      // r = b - r
-      matrix_subtract(n, b, r);
-      
-      // err2 = r.r
-      err2 = matrix_DotProduct(n, r, r);
-      saved_err2 = err2;
-      
-      // rr = A*r
-      multiplyA(pyramid, pC, r, rr);
-    }
-    
-    // fprintf(stderr, "iter:%d err:%f\n", iter+1, sqrtf(err2/bnrm2));
-    if(err2/bnrm2 < tol2)
-      break;
-  }
-  
-  // Use the best version we found
-  if (err2 > saved_err2)
-  {
-    err2 = saved_err2;
-    matrix_copy(n, x_save, x);
-  }
-  
-  if (err2/bnrm2 > tol2)
-  {
-    // Not converged
-    ph->newValue( (int) (logf(err2/ierr2)*percent_sf));    
-    if (iter == itmax)
-      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (hit maximum iterations), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
-    else
-      fprintf(stderr, "\npfstmo_mantiuk06: Warning: Not converged (going unstable), error = %g (should be below %g).\n", sqrtf(err2/bnrm2), tol);  
-  }
-  else 
-    ph->newValue(100);
-  
-  
-  matrix_free(x_save);
-  matrix_free(p);
-  matrix_free(pp);
-  matrix_free(z);
-  matrix_free(zz);
-  matrix_free(r);
-  matrix_free(rr);
-}
-
-
 // conjugate linear equation solver
 // overwrites pyramid!
 // This version is a slightly modified version by Davide Anastasia <davideanastasia@users.sourceforge.net>
@@ -1272,7 +1119,7 @@ int sort_float(const void* const v1, const void* const v2)
 
 
 // transform gradients to luminance
-void transform_to_luminance(pyramid_t* pp, float* const x, ProgressHelper *ph, const bool bcg, const int itmax, const float tol)
+void transform_to_luminance(pyramid_t* pp, float* const x, ProgressHelper *ph, const int itmax, const float tol)
 {
   pyramid_t* pC = pyramid_allocate(pp->cols, pp->rows);
   pyramid_calculate_scale_factor(pp, pC);             // calculate (Cx,Cy)
@@ -1282,10 +1129,7 @@ void transform_to_luminance(pyramid_t* pp, float* const x, ProgressHelper *ph, c
   pyramid_calculate_divergence_sum(pp, b);            // calculate the sum of divergences (equal to b)
   
   // calculate luminances from gradients
-  if (bcg)
-    linbcg(pp, pC, b, x, itmax, tol, ph);
-  else
-    lincg(pp, pC, b, x, itmax, tol, ph);
+  lincg(pp, pC, b, x, itmax, tol, ph);
   
   matrix_free(b);
   pyramid_free(pC);
@@ -1391,7 +1235,7 @@ void contrast_equalization(pyramid_t *pp, const float contrastFactor)
 
 
 // tone mapping
-int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, float detailfactor, const bool bcg, const int itmax, const float tol, ProgressHelper *ph)
+int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const G, float* const B, float* const Y, const float contrastFactor, const float saturationFactor, float detailfactor, const int itmax, const float tol, ProgressHelper *ph)
 {
   const int n = c*r;
   
@@ -1439,7 +1283,7 @@ int tmo_mantiuk06_contmap(const int c, const int r, float* const R, float* const
   }
 	
   pyramid_transform_to_G(pp, detailfactor);               // transform R to gradients
-  transform_to_luminance(pp, Y, ph, bcg, itmax, tol);     // transform gradients to luminance Y
+  transform_to_luminance(pp, Y, ph, itmax, tol);     // transform gradients to luminance Y
   pyramid_free(pp);
   
   /* Renormalize luminance */

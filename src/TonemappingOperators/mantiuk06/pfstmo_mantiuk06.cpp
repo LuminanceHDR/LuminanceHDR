@@ -56,7 +56,6 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   //float saturationFactor = 0.8f;
   //bool cont_map = false, cont_eq = false
   //bool cont_map = false;
-  bool bcg = false;
   int itmax = 200;
   float tol = 1e-3f;
   
@@ -94,7 +93,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
 //#endif
   
   tmo_mantiuk06_contmap(cols, rows, inX->getRawData(), G->getRawData(), inZ->getRawData(), inY->getRawData(),
-                        scaleFactor, saturationFactor, detailFactor, bcg, itmax, tol, ph);	
+                        scaleFactor, saturationFactor, detailFactor, itmax, tol, ph);
   
 //#ifdef TIMER_PROFILING
 //  f_timer.stop_and_update();
