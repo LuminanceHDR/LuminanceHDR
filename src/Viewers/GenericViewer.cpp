@@ -156,8 +156,8 @@ void GenericViewer::setFileName(const QString fn)
 void GenericViewer::slotCornerButtonPressed()
 {
     panIconWidget=new PanIconWidget(this);
-    // TODO: panIconWidget MUST get a Pointer!
-    panIconWidget->setImage(*m_image);
+    panIconWidget->setImage(m_image);
+
     float zf=scrollArea->getScaleFactor();
     float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
     float topviewpos=(float)(scrollArea->verticalScrollBar()->value());

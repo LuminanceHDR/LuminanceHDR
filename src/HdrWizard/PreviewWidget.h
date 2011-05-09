@@ -45,9 +45,9 @@ public:
 	QRect getCropArea() const {
 		return rubberband;
 	}
-	QImage & getPreviewImage() {
+        QImage * getPreviewImage() {
 		renderPreviewImage(blendmode);
-		return *previewImage;
+                return previewImage;
 	}
 	void setPivot(QImage *p, int _px, int _py);
 	void setPivot(QImage *p);
