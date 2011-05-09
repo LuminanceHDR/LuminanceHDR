@@ -57,7 +57,7 @@ using namespace std;
 // precision
 #define EPS 1.0e-12
 
-void linbcg(unsigned long n, float b[], float x[], int itol, float tol,
+void linbcg(unsigned long n, float b[], float x[], float tol,
   int itmax, int *iter, float *err);
 
 inline float max( float a, float b )
@@ -316,7 +316,7 @@ void smooth( pfs::Array2D *U, pfs::Array2D *F )
   int iter;
   float err;
         
-  linbcg( n, F->getRawData()-1, U->getRawData()-1, 1, 0.001, BCG_STEPS, &iter, &err);
+  linbcg( n, F->getRawData()-1, U->getRawData()-1, 0.001, BCG_STEPS, &iter, &err);
 
 //   fprintf( stderr, "." );
 
@@ -640,32 +640,24 @@ void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
     - 2*x[idx(rows-1,cols-1)];  
 }
 
-float snrm(unsigned long n, float sx[], int itol)
+float snrm(unsigned long n, float sx[])
 {
-	unsigned long i,isamax;
+	unsigned long i;
 	float ans;
 
-	if (itol <= 3) {
-		ans = 0.0;
-		for (i=1;i<=n;i++) ans += sx[i]*sx[i];
-		return sqrt(ans);
-	} else {
-		isamax=1;
-		for (i=1;i<=n;i++) {
-			if (fabs(sx[i]) > fabs(sx[isamax])) isamax=i;
-		}
-		return fabs(sx[isamax]);
-	}
+	ans = 0.0;
+	for (i=1;i<=n;i++) ans += sx[i]*sx[i];
+	return sqrt(ans);
 }
 
 /**
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itmax, int *iter, float *err)
+void linbcg(unsigned long n, float b[], float x[], float tol,	int itmax, int *iter, float *err)
 {	
 	unsigned long j;
-	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,dxnrm,xnrm,zm1nrm,znrm;
+	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
 	p=new float[n+1];
@@ -683,17 +675,7 @@ void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itma
 		rr[j]=r[j];
 	atimes(n,r,rr,0);       // minimum residual
         znrm=1.0;
-	if (itol == 1) bnrm=snrm(n,b,itol);
-	else if (itol == 2) {
-		asolve(n,b,z,0);
-		bnrm=snrm(n,z,itol);
-	}
-	else if (itol == 3 || itol == 4) {
-		asolve(n,b,z,0);
-		bnrm=snrm(n,z,itol);
-		asolve(n,r,z,0);
-		znrm=snrm(n,z,itol);
-	} else printf("illegal itol in linbcg");
+	bnrm=snrm(n,b);
 	asolve(n,r,z,0);        
 
 	while (*iter <= itmax) {
@@ -726,25 +708,8 @@ void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itma
 		for (j=1;j<=n;j++)
 			rr[j] -= ak*zz[j];
 		asolve(n,r,z,0);
-		if (itol == 1 || itol == 2) {
-			znrm=1.0;
-			*err=snrm(n,r,itol)/bnrm;
-		} else if (itol == 3 || itol == 4) {
-			znrm=snrm(n,z,itol);
-			if (fabs(zm1nrm-znrm) > EPS*znrm) {
-				dxnrm=fabs(ak)*snrm(n,p,itol);
-				*err=znrm/fabs(zm1nrm-znrm)*dxnrm;
-			} else {
-				*err=znrm/bnrm;
-				continue;
-			}
-			xnrm=snrm(n,x,itol);
-			if (*err <= 0.5*xnrm) *err /= xnrm;
-			else {
-				*err=znrm/bnrm;
-				continue;
-			}
-		}
+		znrm=1.0;
+		*err=snrm(n,r)/bnrm;
 //		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
 	if (*err <= tol) break;
 	}
