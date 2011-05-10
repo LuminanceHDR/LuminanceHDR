@@ -198,68 +198,6 @@ void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
     } 
 }
 
-// to_level<from_level, from_size<to_size
-void prolongate_old( pfs::Array2D *F, pfs::Array2D *T )
-{
-//   DEBUG_STR << "prolongate" << endl;
-
-  int sxt = T->getCols();
-  int syt = T->getRows();
-  int sxf = F->getCols();
-  int syf = F->getRows();
-  int x,y;
-
-  // elements that are copies
-  for( x=0 ; x<sxf ; x++ )
-    for( y=0 ; y<syf ; y++ )
-    {
-      int x2 = x*2;            
-      int y2 = y*2;
-      if(x2<sxt && y2<syt)
-        (*T)(x2,y2) = (*F)(x,y);
-    }
-
-  // For odd number of dest cols/rows copy the last source col/row
-  if( sxt & 1 ) {
-    for( y=0 ; y<syf ; y++ ) {
-      int y2 = y*2;
-      if(y2<syt)
-        (*T)(sxt-1,y2) = (*F)(sxf-1,y);
-    }
-  }
-  if( syt & 1 ) {
-    for( x=0 ; x<sxf ; x++ ) {
-      int x2 = x*2;            
-      if(x2<sxt)
-        (*T)(x2,syt-1) = (*F)(x,syf-1);
-    }
-  }
-  if( (sxt & 1) && (syt & 1) )
-    (*T)(sxt-1,syt-1) = (*F)(sxf-1,syf-1);
-
-  // even columns interpolated horizontally (every second row)
-  for( x=1 ; x<sxt ; x+=2 )
-    for( y=0 ; y<syt ; y+=2 )
-    {
-      int xp1 = x+1;
-      int xm1 = x-1;
-      if( xp1>=sxt )
-        xp1 = xm1;
-      (*T)(x,y) = ( (*T)(xm1,y) + (*T)(xp1,y) ) * 0.5f;
-    }
-
-  // even rows interpolated vertically (every column)
-  for( x=0 ; x<sxt ; x++ )
-    for( y=1 ; y<syt ; y+=2 )
-    {
-      int yp1 = y+1;
-      int ym1 = y-1;
-      if( yp1>=syt )
-        yp1 = ym1;
-      (*T)(x,y) = ( (*T)(x,ym1) + (*T)(x,yp1) ) * 0.5f;
-    }
-}
-
 void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
@@ -540,67 +478,6 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
 }
 
-
-
-
-//////////////////////////////////////////////////////////////////////
-// SOR - Succesive Overrelaxation Algorithm
-//////////////////////////////////////////////////////////////////////
-
-void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
-{
-
-  int xmax = F->getCols();
-  int ymax = F->getRows();
-  
-  float rjac = 1.0 - 6.28/((xmax>ymax) ? xmax : ymax);
-  int	ipass, j, jsw, l, lsw, n;
-  float anorm, anormf = 0.0, omega = 1.0, resid;
-
-//	 Compute initial norm of residual and terminate iteration when
-//		 norm has been reduced by a factor EPS.
-  for (j = 0; j < xmax; j++)
-    for (l = 0; l < ymax; l++) {
-      anormf += fabs( (*F)(j,l) );
-      (*U)(j,l)=0.0f;
-    }
-
-//	Assumes initial u is zero.
-  for (n = 1; n <= maxits; n++)
-  {
-    anorm = 0.0;
-    jsw = 0;
-    for (ipass = 1; ipass <= 2; ipass++) {
-      // Odd - even ordering.
-      lsw = jsw;
-      for (j = 0; j < xmax; j++) {		// j<xmax-1 i l<ymax-1
-	for (l = lsw+1; l < ymax; l += 2)
-        {
-          int jp1 = j+1;
-          int jm1 = j-1;
-          int lp1 = l+1;
-          int lm1 = l-1;
-          if( jp1>=xmax ) jp1=jm1;
-          if( jm1<0 ) jm1=jp1;
-          if( lp1>=ymax ) lp1=lm1;
-          if( lm1<0 ) lm1=lp1;
-          
-	  resid = (*U)(jp1,l) + (*U)(jm1,l) + (*U)(j,lp1) + (*U)(j,lm1)
-            - 4.0* (*U)(j,l) - (*F)(j,l);
-	  anorm += fabs(resid);
-	  (*U)(j,l) -= omega * resid / -4.0;
-	}
-	lsw = 1 - lsw;
-      }
-      jsw = 1 - jsw;
-      omega = ( n==1 && ipass==1 ? 1.0 / (1.0 - 0.5 * rjac * rjac)
-        : 1.0 / (1.0 - 0.25 * rjac * rjac * omega));
-    }
-    if (anorm < EPS * anormf ) {
-      return;
-    }
-  }
-}
 
 //#define EPS 1.0e-14
 

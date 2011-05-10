@@ -34,9 +34,6 @@
 
 #include "TonemappingOperators/pfstmo.h"
 
-/// limit of iterations for successive overrelaxation
-#define SOR_MAXITS 5001
-
 /**
  * @brief solve pde using full multrigrid algorithm
  *
@@ -44,15 +41,6 @@
  * @param U [out] sollution
  */
 void solve_pde_multigrid(pfs::Array2D *F, pfs::Array2D *U);
-
-/**
- * @brief solve pde using successive overrelaxation
- *
- * @param F array with divergence
- * @param U [out] sollution
- * @param maxits limit of iterations
- */
-void solve_pde_sor(pfs::Array2D *F, pfs::Array2D *U, int maxits=SOR_MAXITS);
 
 #endif
 

@@ -399,7 +399,6 @@ void tmo_fattal02(unsigned int width, unsigned int height,
   // solve pde and exponentiate (ie recover compressed image)
   pfs::Array2D* U = new pfs::Array2D(width, height);
   solve_pde_multigrid( DivG, U );
-//  solve_pde_sor( DivG, U );
 
   for( y=0 ; y<height ; y++ ) {
 	ph->newValue(100*y/height);
