@@ -57,7 +57,7 @@ using namespace std;
 // precision
 #define EPS 1.0e-12
 
-void linbcg(unsigned long n, float b[], float x[], float tol,
+void linbcg(unsigned long n, const float b[], float x[], float tol,
   int itmax, int *iter, float *err);
 
 inline float max( float a, float b )
@@ -604,7 +604,7 @@ void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
 
 //#define EPS 1.0e-14
 
-void asolve(unsigned long /*n*/, float b[], float x[], int /*itrnsp*/)
+void asolve(unsigned long /*n*/, const float b[], float x[], int /*itrnsp*/)
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -612,7 +612,7 @@ void asolve(unsigned long /*n*/, float b[], float x[], int /*itrnsp*/)
       }
 }
 
-void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
+void atimes(unsigned long /*n*/, const float x[], float res[], int /*itrnsp*/)
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
@@ -640,7 +640,7 @@ void atimes(unsigned long /*n*/, float x[], float res[], int /*itrnsp*/)
     - 2*x[idx(rows-1,cols-1)];  
 }
 
-float snrm(unsigned long n, float sx[])
+float snrm(unsigned long n, const float sx[])
 {
 	unsigned long i;
 	float ans;
@@ -654,7 +654,7 @@ float snrm(unsigned long n, float sx[])
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-void linbcg(unsigned long n, float b[], float x[], float tol,	int itmax, int *iter, float *err)
+void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
 {	
 	unsigned long j;
 	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
