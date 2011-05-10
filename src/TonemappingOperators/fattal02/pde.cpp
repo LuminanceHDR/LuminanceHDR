@@ -300,7 +300,7 @@ static int rows, cols;
 
 inline int idx( int r, int c )
 {
-  return r*cols+c+1;
+  return r*cols+c;
 }
 
 // smooth u using f at level
@@ -316,7 +316,7 @@ void smooth( pfs::Array2D *U, pfs::Array2D *F )
   int iter;
   float err;
         
-  linbcg( n, F->getRawData()-1, U->getRawData()-1, 0.001, BCG_STEPS, &iter, &err);
+  linbcg( n, F->getRawData(), U->getRawData(), 0.001, BCG_STEPS, &iter, &err);
 
 //   fprintf( stderr, "." );
 
@@ -646,7 +646,7 @@ float snrm(unsigned long n, float sx[])
 	float ans;
 
 	ans = 0.0;
-	for (i=1;i<=n;i++) ans += sx[i]*sx[i];
+	for (i=0;i<n;i++) ans += sx[i]*sx[i];
 	return sqrt(ans);
 }
 
@@ -669,9 +669,9 @@ void linbcg(unsigned long n, float b[], float x[], float tol,	int itmax, int *it
 
 	*iter=0;
 	atimes(n,x,r,0);
-	for (j=1;j<=n;j++)
+	for (j=0;j<n;j++)
 		r[j]=b[j]-r[j];
-	for (j=1;j<=n;j++)
+	for (j=0;j<n;j++)
 		rr[j]=r[j];
 	atimes(n,r,rr,0);       // minimum residual
         znrm=1.0;
@@ -682,30 +682,30 @@ void linbcg(unsigned long n, float b[], float x[], float tol,	int itmax, int *it
 		++(*iter);
 		zm1nrm=znrm;
 		asolve(n,rr,zz,1);
-		for (bknum=0.0,j=1;j<=n;j++) bknum += z[j]*rr[j];
+		for (bknum=0.0,j=0;j<n;j++) bknum += z[j]*rr[j];
 		if (*iter == 1) {
-			for (j=1;j<=n;j++)
+			for (j=0;j<n;j++)
 				p[j]=z[j];
-			for (j=1;j<=n;j++)
+			for (j=0;j<n;j++)
 				pp[j]=zz[j];
 		}
 		else {
 			bk=bknum/bkden;
-			for (j=1;j<=n;j++)
+			for (j=0;j<n;j++)
 				p[j]=bk*p[j]+z[j];
-			for (j=1;j<=n;j++)
+			for (j=0;j<n;j++)
 				pp[j]=bk*pp[j]+zz[j];
 		}                
 		bkden=bknum;
 		atimes(n,p,z,0);
-		for (akden=0.0,j=1;j<=n;j++) akden += z[j]*pp[j];
+		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
 		atimes(n,pp,zz,1);
-		for (j=1;j<=n;j++)
+		for (j=0;j<n;j++)
 			x[j] += ak*p[j];
-		for (j=1;j<=n;j++)
+		for (j=0;j<n;j++)
 			r[j] -= ak*z[j];
-		for (j=1;j<=n;j++)
+		for (j=0;j<n;j++)
 			rr[j] -= ak*zz[j];
 		asolve(n,r,z,0);
 		znrm=1.0;
