@@ -481,7 +481,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
 //#define EPS 1.0e-14
 
-void asolve(unsigned long /*n*/, const float b[], float x[], int /*itrnsp*/)
+void asolve(const float b[], float x[])
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -489,7 +489,7 @@ void asolve(unsigned long /*n*/, const float b[], float x[], int /*itrnsp*/)
       }
 }
 
-void atimes(unsigned long /*n*/, const float x[], float res[], int /*itrnsp*/)
+void atimes(const float x[], float res[])
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
@@ -545,20 +545,20 @@ void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, i
 	zz=new float[n+1];
 
 	*iter=0;
-	atimes(n,x,r,0);
+	atimes(x,r);
 	for (j=0;j<n;j++)
 		r[j]=b[j]-r[j];
 	for (j=0;j<n;j++)
 		rr[j]=r[j];
-	atimes(n,r,rr,0);       // minimum residual
+	atimes(r,rr);       // minimum residual
         znrm=1.0;
 	bnrm=snrm(n,b);
-	asolve(n,r,z,0);        
+	asolve(r,z);
 
 	while (*iter <= itmax) {
 		++(*iter);
 		zm1nrm=znrm;
-		asolve(n,rr,zz,1);
+		asolve(rr,zz);
 		for (bknum=0.0,j=0;j<n;j++) bknum += z[j]*rr[j];
 		if (*iter == 1) {
 			for (j=0;j<n;j++)
@@ -574,17 +574,17 @@ void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, i
 				pp[j]=bk*pp[j]+zz[j];
 		}                
 		bkden=bknum;
-		atimes(n,p,z,0);
+		atimes(p,z);
 		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
-		atimes(n,pp,zz,1);
+		atimes(pp,zz);
 		for (j=0;j<n;j++)
 			x[j] += ak*p[j];
 		for (j=0;j<n;j++)
 			r[j] -= ak*z[j];
 		for (j=0;j<n;j++)
 			rr[j] -= ak*zz[j];
-		asolve(n,r,z,0);
+		asolve(r,z);
 		znrm=1.0;
 		*err=snrm(n,r)/bnrm;
 //		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
