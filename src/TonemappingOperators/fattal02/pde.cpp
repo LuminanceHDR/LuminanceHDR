@@ -57,7 +57,7 @@ using namespace std;
 // precision
 #define EPS 1.0e-12
 
-void linbcg(unsigned long n, const float b[], float x[], float tol,
+static void linbcg(unsigned long n, const float b[], float x[], float tol,
   int itmax, int *iter, float *err);
 
 inline float max( float a, float b )
@@ -95,7 +95,7 @@ inline float min( float a, float b )
 // Full Multigrid Algorithm for solving partial differential equations
 //////////////////////////////////////////////////////////////////////
 
-void restrict( const pfs::Array2D *in, pfs::Array2D *out )
+static void restrict( const pfs::Array2D *in, pfs::Array2D *out )
 {
     const float inRows = in->getRows();
     const float inCols = in->getCols();
@@ -160,7 +160,7 @@ void restrict( const pfs::Array2D *in, pfs::Array2D *out )
 // }
 
 
-void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
+static void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -198,7 +198,7 @@ void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
     } 
 }
 
-void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
+static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
@@ -236,13 +236,13 @@ void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 
 static int rows, cols;
 
-inline int idx( int r, int c )
+static inline int idx( int r, int c )
 {
   return r*cols+c;
 }
 
 // smooth u using f at level
-void smooth( pfs::Array2D *U, const pfs::Array2D *F )
+static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -291,7 +291,7 @@ void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 //   }
 }
 
-void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2D *F )
+static void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2D *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
@@ -317,7 +317,7 @@ void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2
   
 }
 
-void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
+static void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
@@ -481,7 +481,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
 //#define EPS 1.0e-14
 
-void asolve(const float b[], float x[])
+static void asolve(const float b[], float x[])
 {
     for( int r = 0; r < rows; r++ )
       for( int c = 0; c < cols; c++ ) {
@@ -489,7 +489,7 @@ void asolve(const float b[], float x[])
       }
 }
 
-void atimes(const float x[], float res[])
+static void atimes(const float x[], float res[])
 {
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
@@ -517,7 +517,7 @@ void atimes(const float x[], float res[])
     - 2*x[idx(rows-1,cols-1)];  
 }
 
-float snrm(unsigned long n, const float sx[])
+static float snrm(unsigned long n, const float sx[])
 {
 	unsigned long i;
 	float ans;
@@ -531,7 +531,7 @@ float snrm(unsigned long n, const float sx[])
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
+static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
 {	
 	unsigned long j;
 	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
