@@ -242,7 +242,7 @@ inline int idx( int r, int c )
 }
 
 // smooth u using f at level
-void smooth( pfs::Array2D *U, pfs::Array2D *F )
+void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -291,7 +291,7 @@ void smooth( pfs::Array2D *U, pfs::Array2D *F )
 //   }
 }
 
-void calculate_defect( pfs::Array2D *D, pfs::Array2D *U, pfs::Array2D *F )
+void calculate_defect( pfs::Array2D *D, const pfs::Array2D *U, const pfs::Array2D *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
@@ -317,7 +317,7 @@ void calculate_defect( pfs::Array2D *D, pfs::Array2D *U, pfs::Array2D *F )
   
 }
 
-void add_correction( pfs::Array2D *U, pfs::Array2D *C )
+void add_correction( pfs::Array2D *U, const pfs::Array2D *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
