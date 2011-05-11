@@ -461,7 +461,7 @@ void  CommandLineInterfaceManager::startTonemap()
 			tmopts->xsize = HDR->getWidth();
     
                 TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, tmopts);
-		connect(thread, SIGNAL(imageComputed(const QImage&)), this, SLOT(tonemapTerminated(const QImage&)));
+		connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(tonemapTerminated(QImage*)));
     
     thread->startTonemapping();
 	}
@@ -472,10 +472,10 @@ void  CommandLineInterfaceManager::startTonemap()
 	}
 }
 
-void CommandLineInterfaceManager::tonemapTerminated(const QImage& newimage)
+void CommandLineInterfaceManager::tonemapTerminated(QImage* newimage)
 {
 	QFileInfo qfi(saveLdrFilename);
-	if (!newimage.save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100))
+	if (!newimage->save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100))
   {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
 	}

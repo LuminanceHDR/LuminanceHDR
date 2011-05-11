@@ -75,7 +75,7 @@ private slots:
 	void createHDR();
 	void loadFinished(pfs::Frame*,QString);
 	void parseArgs();
-	void tonemapTerminated(const QImage&);
+	void tonemapTerminated(QImage*);
 
 signals:
 	void startParsing();
