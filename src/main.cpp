@@ -42,6 +42,8 @@ int main( int argc, char ** argv )
 	// running as a gui-app in Mac OS X, this messes up things.
 	if (argc>1) {
 		QCoreApplication cliApplication( argc, argv );
+		QSettings _settings("Luminance", "Luminance");
+		settings = &_settings;
 		QTranslator translator;
 		translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
 		cliApplication.installTranslator(&translator);
