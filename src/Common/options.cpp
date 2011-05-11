@@ -193,6 +193,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 	}
 
 	TonemappingOptions *toreturn=new TonemappingOptions;
+	memset(toreturn, 0, sizeof *toreturn);
 
 	QTextStream in(&file);
 	QString field,value;
@@ -312,6 +313,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 
 TonemappingOptions* TMOptionsOperations::getDefaultTMOptions() {
 	TonemappingOptions *toreturn=new TonemappingOptions;
+	memset(toreturn, 0, sizeof *toreturn);
 	//TODO when instantiating the tonemapperThread, check this value: if -2 => create thread with originalsize=-2 (to skip resize the step as we did with the batch tone mapping), else (the user wants to resize) create thread with true originalxsize
 	toreturn->xsize=-2;
 	toreturn->pregamma=1;
