@@ -236,11 +236,6 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 
 static int rows, cols;
 
-static inline int idx( int r, int c )
-{
-  return r*cols+c;
-}
-
 // smooth u using f at level
 static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 {
@@ -487,6 +482,8 @@ static void asolve(const float b[], float x[])
     x[j] = -4 * b[j];
 }
 
+#define idx(R,C) ((R)*cols+(C))
+
 static void atimes(const float x[], float res[])
 {
   for( int r = 1; r < rows-1; r++ )
@@ -514,6 +511,8 @@ static void atimes(const float x[], float res[])
   res[idx(rows-1,cols-1)] = x[idx(rows-2,cols-1)] + x[idx(rows-1,cols-2)]
     - 2*x[idx(rows-1,cols-1)];  
 }
+
+#undef idx
 
 static float snrm(unsigned long n, const float sx[])
 {
