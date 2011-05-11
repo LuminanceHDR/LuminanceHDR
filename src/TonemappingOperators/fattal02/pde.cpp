@@ -676,10 +676,10 @@ void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itma
 
 	*iter=0;
 	atimes(n,x,r,0);
-	for (j=1;j<=n;j++) {
+	for (j=1;j<=n;j++)
 		r[j]=b[j]-r[j];
+	for (j=1;j<=n;j++)
 		rr[j]=r[j];
-	}
 	atimes(n,r,rr,0);       // minimum residual
         znrm=1.0;
 	if (itol == 1) bnrm=snrm(n,b,itol);
@@ -701,28 +701,29 @@ void linbcg(unsigned long n, float b[], float x[], int itol, float tol,	int itma
 		asolve(n,rr,zz,1);
 		for (bknum=0.0,j=1;j<=n;j++) bknum += z[j]*rr[j];
 		if (*iter == 1) {
-			for (j=1;j<=n;j++) {
+			for (j=1;j<=n;j++)
 				p[j]=z[j];
+			for (j=1;j<=n;j++)
 				pp[j]=zz[j];
-			}
 		}
 		else {
 			bk=bknum/bkden;
-			for (j=1;j<=n;j++) {
+			for (j=1;j<=n;j++)
 				p[j]=bk*p[j]+z[j];
+			for (j=1;j<=n;j++)
 				pp[j]=bk*pp[j]+zz[j];
-			}
 		}                
 		bkden=bknum;
 		atimes(n,p,z,0);
 		for (akden=0.0,j=1;j<=n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
 		atimes(n,pp,zz,1);
-		for (j=1;j<=n;j++) {
+		for (j=1;j<=n;j++)
 			x[j] += ak*p[j];
+		for (j=1;j<=n;j++)
 			r[j] -= ak*z[j];
+		for (j=1;j<=n;j++)
 			rr[j] -= ak*zz[j];
-		}
 		asolve(n,r,z,0);
 		if (itol == 1 || itol == 2) {
 			znrm=1.0;
