@@ -483,10 +483,8 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
 static void asolve(const float b[], float x[])
 {
-    for( int r = 0; r < rows; r++ )
-      for( int c = 0; c < cols; c++ ) {
-        x[idx(r,c)] = -4 * b[idx(r,c)];
-      }
+  for( int j = 0; j < rows*cols; j++)
+    x[j] = -4 * b[j];
 }
 
 static void atimes(const float x[], float res[])
