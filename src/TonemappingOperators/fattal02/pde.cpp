@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "Libpfs/vex.h"
 #include "Libpfs/array2d.h"
 
 #include "pde.h"
@@ -56,6 +57,8 @@ using namespace std;
 
 // precision
 #define EPS 1.0e-12
+
+#define OMP_THRESHOLD 1000000
 
 static void linbcg(unsigned long n, const float b[], float x[], float tol,
   int itmax, int *iter, float *err);
@@ -486,6 +489,7 @@ static void asolve(const float b[], float x[])
 
 static void atimes(const float x[], float res[])
 {
+#pragma omp parallel for shared(x, res) if (rows*cols>OMP_THRESHOLD) schedule(static)
   for( int r = 1; r < rows-1; r++ )
     for( int c = 1; c < cols-1; c++ ) {
       res[idx(r,c)] = x[idx(r-1,c)] + x[idx(r+1,c)] +
@@ -516,11 +520,12 @@ static void atimes(const float x[], float res[])
 
 static float snrm(unsigned long n, const float sx[])
 {
-	unsigned long i;
 	float ans;
 
 	ans = 0.0;
-	for (i=0;i<n;i++) ans += sx[i]*sx[i];
+#pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
+	for (unsigned long i=0;i<n;i++)
+		ans += sx[i]*sx[i];
 	return sqrt(ans);
 }
 
@@ -556,7 +561,9 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		++(*iter);
 		zm1nrm=znrm;
 		asolve(rr,zz);
-		for (bknum=0.0,j=0;j<n;j++) bknum += z[j]*rr[j];
+		bknum=0.0;
+#pragma omp parallel for private(j) shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
+		for (j=0;j<n;j++) bknum += z[j]*rr[j];
 		if (*iter == 1) {
 			for (j=0;j<n;j++)
 				p[j]=z[j];
@@ -565,22 +572,19 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		}
 		else {
 			bk=bknum/bkden;
-			for (j=0;j<n;j++)
-				p[j]=bk*p[j]+z[j];
-			for (j=0;j<n;j++)
-				pp[j]=bk*pp[j]+zz[j];
+			VEX_vadds(z, bk, p, p, n);
+			VEX_vadds(zz, bk, pp, pp, n);
 		}                
 		bkden=bknum;
 		atimes(p,z);
-		for (akden=0.0,j=0;j<n;j++) akden += z[j]*pp[j];
+		akden=0.0;
+#pragma omp parallel for private(j) shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
+		for (j=0;j<n;j++) akden += z[j]*pp[j];
 		ak=bknum/akden;
 		atimes(pp,zz);
-		for (j=0;j<n;j++)
-			x[j] += ak*p[j];
-		for (j=0;j<n;j++)
-			r[j] -= ak*z[j];
-		for (j=0;j<n;j++)
-			rr[j] -= ak*zz[j];
+		VEX_vadds(x, ak, p, x, n);
+		VEX_vsubs(r, ak, z, r, n);
+		VEX_vsubs(rr, ak, zz, rr, n);
 		asolve(r,z);
 		znrm=1.0;
 		*err=snrm(n,r)/bnrm;
