@@ -146,7 +146,6 @@
    <addaction name="fileNewAction"/>
    <addaction name="fileOpenAction"/>
    <addaction name="fileSaveAsAction"/>
-   <addaction name="separator"/>
    <addaction name="TonemapAction"/>
   </widget>
   <action name="fileNewAction">

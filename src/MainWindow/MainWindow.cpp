@@ -142,6 +142,13 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), active_frame(NULL), helpBro
 
     testTempDir(luminance_options->tempfilespath);
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
+
+    // align on the right the tonemap action
+    QWidget* spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // toolBar is a pointer to an existing toolbar
+    toolBar->insertWidget(TonemapAction, spacer);
+
 }
 
 void MainWindow::setupConnections()
