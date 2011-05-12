@@ -642,5 +642,3 @@ win32 {
 	#LIBS        += -L../DEPs/lib/pthread  -lpthreadGC2
 	#LIBS        += -lpthread
 }
-
-

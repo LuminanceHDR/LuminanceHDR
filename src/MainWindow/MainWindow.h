@@ -34,6 +34,7 @@
 #include <QStringList>
 #include <QProgressDialog>
 #include <QSignalMapper>
+#include <QSplitter>
 #include <QThread>
 
 #include "ui_MainWindow.h"
@@ -43,121 +44,158 @@
 #include "Projection/ProjectionsDialog.h"
 #include "HelpBrowser/helpbrowser.h"
 #include "Viewers/HdrViewer.h"
+#include "Viewers/LdrViewer.h"
 #include "UI/UMessageBox.h"
 #include "Core/IOWorker.h"
+#include "TonemappingWindow/TonemappingPanel.h"
+#include "TonemappingWindow/TMOProgressIndicator.h"
+#include "Threads/TMOThread.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent=0);
-	~MainWindow();
+    MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 public slots:
-        // For ProgressBar
-        void ProgressBarSetMaximum(int max);
-        void ProgressBarSetValue(int value);
+    // For ProgressBar
+    void ProgressBarSetMaximum(int max);
+    void ProgressBarSetValue(int value);
 
-        // I/O
-        void save_success(HdrViewer* saved_hdr, QString fname);
-        void save_failed();
+    // I/O
+    void save_hdr_success(HdrViewer* saved_hdr, QString fname);
+    void save_hdr_failed();
+    void save_ldr_success(LdrViewer* saved_ldr, QString fname);
+    void save_ldr_failed();
 
-        void load_failed(QString);
-        void load_success(pfs::Frame* new_hdr_frame, QString new_fname);
+    void load_failed(QString);
+    void load_success(pfs::Frame* new_hdr_frame, QString new_fname);
 
-        void IO_done();
-        void IO_start();
+    void IO_done();
+    void IO_start();
+
+    void tonemapImage(TonemappingOptions *opts);
 
 protected slots:
-	void fileNewViaWizard(QStringList files = QStringList());
-	void fileOpen();//for File->Open, it then calls loadFile()
-	void fileSaveAs();
-	void saveHdrPreview();
-	void tonemap_requested();
-	void rotateccw_requested();
-	void rotatecw_requested();
-	void resize_requested();
-	void projectiveTransf_requested();
-	void batch_requested();
-	void current_mdi_increase_exp();
-	void current_mdi_decrease_exp();
-	void current_mdi_extend_exp();
-	void current_mdi_shrink_exp();
-	void current_mdi_fit_exp();
-	void current_mdi_ldr_exp();
-	void current_mdi_zoomin();
-	void current_mdi_zoomout();
-	void current_mdi_fit_to_win(bool checked);
-	void current_mdi_original_size();
-	void openDocumentation();
-	void enterWhatsThis();
-	void preferences_called();
-	void transplant_called();
-	void reEnableMainWin();
-	void fileExit();
-	void Text_Under_Icons();
-	void Icons_Only();
-	void Text_Alongside_Icons();
-	void Text_Only();
-	void updateWindowMenu();
+    void fileNewViaWizard(QStringList files = QStringList());
+    void fileOpen();    //for File->Open, it then calls loadFile()
+    void fileSaveAs();
+    void saveHdrPreview();
+    void tonemap_requested();
+    void rotateccw_requested();
+    void rotatecw_requested();
+    void resize_requested();
+    void projectiveTransf_requested();
+    void batch_requested();
+    void current_mdi_increase_exp();
+    void current_mdi_decrease_exp();
+    void current_mdi_extend_exp();
+    void current_mdi_shrink_exp();
+    void current_mdi_fit_exp();
+    void current_mdi_ldr_exp();
+    void current_mdi_zoomin();
+    void current_mdi_zoomout();
+    void current_mdi_fit_to_win(bool checked);
+    void current_mdi_original_size();
+    void openDocumentation();
+    void enterWhatsThis();
+    void preferences_called();
+    void transplant_called();
+    void reEnableMainWin();
+    void fileExit();
+    void Text_Under_Icons();
+    void Icons_Only();
+    void Text_Alongside_Icons();
+    void Text_Only();
+    void updateWindowMenu();
 
-	void openRecentFile();
-	void setCurrentFile(const QString &fileName);
-	void updateRecentDirHDRSetting(QString);
+    void openRecentFile();
+    void setCurrentFile(const QString &fileName);
 
-	void aboutLuminance();
-	void showSplash();
+    void updateRecentDirHDRSetting(QString);
+    void updateRecentDirLDRSetting(QString);
 
-        void updateActions(QMdiSubWindow * w);
-	void setActiveSubWindow(QWidget* w);
-	void cropToSelection();
-	void enableCrop(bool);
-	void disableCrop();
-	void helpBrowserClosed();
-	void showDonationsPage();
-	void splashShowDonationsPage();
-	void splashClose();
+    void aboutLuminance();
+    void showSplash();
+
+    void updateActions(QMdiSubWindow * w);
+    void setActiveSubWindow(QWidget* w);
+    void cropToSelection();
+    void enableCrop(bool);
+    void disableCrop();
+    void helpBrowserClosed();
+    void showDonationsPage();
+    void splashShowDonationsPage();
+    void splashClose();
+
+    // TM
+    void addProcessedFrame(pfs::Frame *);
+    void addMDIResult(QImage*);
+    void tonemappingFinished();
+    void tmDockVisibilityChanged(bool);
+    void deleteTMOThread(TMOThread *th);
+    void showErrorMessage(const char *e);
 
 signals:
-        // I/O
-        void save_frame(HdrViewer*, QString);
-        void open_frames(QStringList);
-        void open_frame(QString);
+    // I/O
+    void save_hdr_frame(HdrViewer*, QString);
+    void save_ldr_frame(LdrViewer*, QString, int);  // viewer, filename, quality level
+    void open_frames(QStringList);
+    void open_frame(QString);
 
 protected:
-        enum { MaxRecentFiles = 5 };
+    enum { MaxRecentFiles = 5 };
+    enum MWState { IO_STATE = 0, TM_STATE = 1 };
+    MWState current_state;
 
-        QMdiArea* mdiArea;
-        QSignalMapper *windowMapper;
-        QAction *recentFileActs[MaxRecentFiles];
-        QAction *separatorRecentFiles;
-        QString RecentDirHDRSetting;
-        LuminanceOptions *luminance_options;
-        QDialog *splash;
-        QProgressBar* m_progressbar;
+    QMdiArea* mdiArea;
+    QSignalMapper *windowMapper;
+    LuminanceOptions *luminance_options;
+    QDialog *splash;
+    QProgressBar* m_progressbar;
 
-        // I/O
-        QThread* IO_thread;
-        IOWorker* IO_Worker;
+    QString RecentDirHDRSetting;
+    QString RecentDirLDRSetting;
+    QAction *recentFileActs[MaxRecentFiles];
+    QAction *separatorRecentFiles;
 
-        HdrViewer* currenthdr;
-        HelpBrowser *helpBrowser;
+    // I/O
+    QThread* IO_thread;
+    IOWorker* IO_Worker;
 
-	virtual void dragEnterEvent(QDragEnterEvent *);
-	virtual void dropEvent(QDropEvent *);
-        void closeEvent ( QCloseEvent * );
+    GenericViewer* active_frame;    // ideally we should be remove this soon or later
+    HelpBrowser *helpBrowser;
 
-        void ProgressBarInit();
-        void ProgressBarFinish(void);
-	void setupConnections();
-	void dispatchrotate( bool clockwise);
-	void updateRecentFileActions();
-	void load_options();
+    virtual void dragEnterEvent(QDragEnterEvent *);
+    virtual void dropEvent(QDropEvent *);
+    void closeEvent ( QCloseEvent * );
 
-	bool testTempDir(QString);
+    void ProgressBarInit();
+    void ProgressBarFinish(void);
+    void setupConnections();
+    void dispatchrotate( bool clockwise);
+    void updateRecentFileActions();
+    void load_options();
 
-        // I/O
-        void initIOThread();
+    bool testTempDir(QString);
+
+    // I/O
+    void setup_io();
+
+    // Tone Mapping Panel
+    QDockWidget *dock;
+    TonemappingPanel *tmPanel;
+    TMOProgressIndicator *progInd;
+
+    void setup_tm();
+    void setup_tm_slots();
+
+    struct {
+        pfs::Frame* curr_tm_frame;
+        TonemappingOptions* curr_tm_options;
+        QList<QMdiSubWindow*> hidden_windows;
+    } tm_status;
 };
 
 

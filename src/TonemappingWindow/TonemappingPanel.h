@@ -97,7 +97,7 @@ private:
 	void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
 	QString recentPathLoadSaveTmoSettings, tmoSettingsFilename;
 	int out_ldr_cs;
-	QStatusBar *statusbar;
+        //QStatusBar *statusbar;
 	float heightToWidthRatio;
 	bool adding_custom_size;
 private slots:

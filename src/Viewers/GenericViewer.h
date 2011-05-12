@@ -37,6 +37,7 @@
 #include "SmartScrollArea.h"
 #include "Common/PanIconWidget.h"
 #include "Common/SelectionTool.h"
+#include "Libpfs/pfs.h"
 
 class GenericViewer : public QWidget 
 {
@@ -72,6 +73,11 @@ public Q_SLOTS:
     virtual QString getFilenamePostFix() = 0; // only used by LdrViewer
     virtual QString getExifComment() = 0; // only used by LdrViewer
     virtual const QImage* getQImage() = 0; // only used by LdrViewer
+
+    //TODO: this function will become virtual when I redevelop (Ldr/Hdr)Viewer
+    virtual pfs::Frame* getHDRPfsFrame() { return NULL; }
+    //TODO: check this function!
+    virtual void updateHDR(pfs::Frame*) { }
 
 protected Q_SLOTS:
     virtual void slotPanIconSelectionMoved(QRect);

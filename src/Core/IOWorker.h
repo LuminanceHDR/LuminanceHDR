@@ -36,6 +36,7 @@
 
 #include "Libpfs/pfs.h"
 #include "Viewers/HdrViewer.h"
+#include "Viewers/LdrViewer.h"
 #include "Common/options.h"
 
 class IOWorker : public QObject
@@ -54,14 +55,16 @@ public slots:
     void read_frame(QString filename);
     void read_frames(QStringList filenames);
 
-    void write_frame(HdrViewer* frame, QString filename);
-
+    void write_hdr_frame(HdrViewer* frame, QString filename);
+    void write_ldr_frame(LdrViewer* frame, QString filename, int quality);
 signals:
     void read_failed(QString error_message);
     void read_success(pfs::Frame*, QString fname);
 
-    void write_failed();
-    void write_success(HdrViewer*, QString);
+    void write_hdr_failed();
+    void write_hdr_success(HdrViewer*, QString);
+    void write_ldr_failed();
+    void write_ldr_success(LdrViewer*, QString);
 
     void setMaximum(int);
     void setValue(int);

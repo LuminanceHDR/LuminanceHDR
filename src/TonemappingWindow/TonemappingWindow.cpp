@@ -245,37 +245,37 @@ void TonemappingWindow::levels_closed()
 
 void TonemappingWindow::on_actionSave_triggered()
 {
-	GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
-	if (current==NULL)
-  {
-		return;
-  }
-	if (current->isHDR())
-  {
-		QMessageBox::critical(this, tr("Luminance HDR"), tr("Please select an LDR image to save."),	QMessageBox::Ok);
-		return;
-	}
-  
-	QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
-  
-	if (outfname == "")
-  {
-    //std::cout << "outfname == \"\"" << std::endl;
-    return;
-  }
-  
-	//if save is succesful
-	if ( outfname.endsWith("jpeg", Qt::CaseInsensitive) || outfname.endsWith("jpg", Qt::CaseInsensitive) )
-  {
-		//time to write the exif data...
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
-		ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), current->getExifComment().toStdString() );
-	}
-  
-	QFileInfo fi(outfname);	
-	mdiArea->currentSubWindow()->setWindowTitle(fi.fileName());
-	current->setFileName(fi.fileName());
-	updateWindowMenu();
+    GenericViewer* current = (GenericViewer*) mdiArea->currentSubWindow()->widget();
+    if (current==NULL)
+    {
+        return;
+    }
+    if (current->isHDR())
+    {
+        QMessageBox::critical(this, tr("Luminance HDR"), tr("Please select an LDR image to save."),	QMessageBox::Ok);
+        return;
+    }
+
+    QString outfname = saveLDRImage(this, prefixname + "_" + current->getFilenamePostFix()+ ".jpg",current->getQImage());
+
+    if (outfname == "")
+    {
+        //std::cout << "outfname == \"\"" << std::endl;
+        return;
+    }
+
+    //if save is succesful
+    if ( outfname.endsWith("jpeg", Qt::CaseInsensitive) || outfname.endsWith("jpg", Qt::CaseInsensitive) )
+    {
+        //time to write the exif data...
+        //ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+        ExifOperations::writeExifData( QFile::encodeName(outfname).constData(), current->getExifComment().toStdString() );
+    }
+
+    QFileInfo fi(outfname);
+    mdiArea->currentSubWindow()->setWindowTitle(fi.fileName());
+    current->setFileName(fi.fileName());
+    updateWindowMenu();
 }
 
 void TonemappingWindow::updateActions(QMdiSubWindow *w)

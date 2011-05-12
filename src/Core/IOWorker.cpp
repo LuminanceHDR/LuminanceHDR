@@ -15,7 +15,7 @@ IOWorker::~IOWorker()
     printf("IOWorker::~IOWorker()\n");
 }
 
-void IOWorker::write_frame(HdrViewer* hdr_input, QString filename)
+void IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
 {
     emit IO_init();
 
@@ -62,11 +62,30 @@ void IOWorker::write_frame(HdrViewer* hdr_input, QString filename)
 
         writeEXRfile(hdr_frame, encodedName_2);
     }
-    emit write_success(hdr_input, filename);
+    emit write_hdr_success(hdr_input, filename);
 
     emit IO_finish();
 }
 
+void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
+{
+    emit IO_init();
+    const QImage* image = ldr_input->getQImage();
+
+    QFileInfo qfi(filename);
+    QString format = qfi.suffix();
+
+    if ( image->save(filename, format.toAscii().constData(), quality) )
+    {
+        emit write_ldr_success(ldr_input, filename);
+    }
+    else
+    {
+        emit write_ldr_failed();
+    }
+
+    emit IO_finish();
+}
 
 void IOWorker::read_frame(QString filename)
 {
