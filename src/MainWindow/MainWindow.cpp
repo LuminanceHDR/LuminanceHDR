@@ -1093,15 +1093,17 @@ void MainWindow::aboutLuminance()
 
 void MainWindow::updateWindowMenu()
 {
+    // TODO: check again this function
     menuWindows->clear();
     QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
+    GenericViewer* c_v = (GenericViewer*)mdiArea->activeSubWindow()->widget();
     for (int i = 0; i < windows.size(); ++i)
     {
-        HdrViewer *child = qobject_cast<HdrViewer *>(windows.at(i)->widget());
-        QString text=QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
+        GenericViewer* child = (GenericViewer*)windows.at(i)->widget();
+        QString text = QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
         QAction *action  = menuWindows->addAction(text);
         action->setCheckable(true);
-        action->setChecked(child == active_frame);
+        action->setChecked(child == c_v);
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, child);
     }
