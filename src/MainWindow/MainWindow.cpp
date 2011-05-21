@@ -56,7 +56,8 @@
 #include "Common/ImageQualityDialog.h"
 
 
-MainWindow::MainWindow(QWidget *p) : QMainWindow(p), active_frame(NULL), helpBrowser(NULL), current_state(IO_STATE)
+MainWindow::MainWindow(QWidget *p) : QMainWindow(p), current_state(IO_STATE), active_frame(NULL), helpBrowser(NULL), 
+m_ldrsNum(0), m_hdrsNum(0)
 {
     setupUi(this);
 
@@ -140,15 +141,16 @@ MainWindow::MainWindow(QWidget *p) : QMainWindow(p), active_frame(NULL), helpBro
         showSplash();
     // END SPLASH SCREEN    ------------------------------------------------------------------
 
+    toolBar->show();
+
     testTempDir(luminance_options->tempfilespath);
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
 
     // align on the right the tonemap action
     QWidget* spacer = new QWidget(this);
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // toolBar is a pointer to an existing toolbar
-    toolBar->insertWidget(TonemapAction, spacer);
-
+    // toolBar_2 is a pointer to an existing toolbar
+    toolBar_2->insertWidget(TonemapAction, spacer);
 }
 
 void MainWindow::setupConnections()
@@ -186,6 +188,8 @@ void MainWindow::setupConnections()
     connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
     connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
     connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
+    connect(actionShowNext,SIGNAL(triggered()),mdiArea,SLOT(activateNextSubWindow()));
+    connect(actionShowPrevious,SIGNAL(triggered()),mdiArea,SLOT(activatePreviousSubWindow()));
 
     //QSignalMapper?
     connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
@@ -195,9 +199,8 @@ void MainWindow::setupConnections()
     connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
     connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
+    connect(actionShowHDRs,SIGNAL(toggled(bool)),this,SLOT(showHDRs(bool)));
 }
-
-
 
 void MainWindow::showDonationsPage()
 {
@@ -421,6 +424,7 @@ void MainWindow::updateActions( QMdiSubWindow * w )
             fitToWindowAct->setEnabled(false);
 
             TonemapAction->setEnabled(false);
+            TonemapAction->setChecked(false);
             action_Projective_Transformation->setEnabled(false);
             cropToSelectionAction->setEnabled(false);
 
@@ -479,6 +483,7 @@ void MainWindow::updateActions( QMdiSubWindow * w )
             {   // current selected file is an LDR
 
                 TonemapAction->setEnabled(false);
+                TonemapAction->setChecked(false);
                 // enable levels
 
                 // projective transformation
@@ -875,6 +880,7 @@ void MainWindow::load_failed(QString error_message)
 
 void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname)
 {
+    m_hdrsNum++;
     // Create new MdiSubWindow and HdrViewer
     QMdiSubWindow* subWindow = new QMdiSubWindow(this);
     HdrViewer * newhdr = new HdrViewer(subWindow, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
@@ -1247,6 +1253,7 @@ void MainWindow::setup_tm()
     tmPanel = new TonemappingPanel(dock);
     dock->setWidget(tmPanel);
     addDockWidget(Qt::LeftDockWidgetArea, dock);
+    dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 
     // by default, it is hidden!
     dock->hide();
@@ -1300,6 +1307,7 @@ void MainWindow::tonemap_requested()
         tmPanel->setSizes((tm_status.curr_tm_frame)->getWidth(), (tm_status.curr_tm_frame)->getHeight());
 
         dock->show(); // it must be the last line of this branch!
+	toolBar->hide();
     }
     else if ( !dock->isHidden() )
     {
@@ -1327,6 +1335,7 @@ void MainWindow::tonemap_requested()
         tmPanel->applyButton->setEnabled(false);
 
         dock->hide(); // It must be the last line of this branch!
+	toolBar->show();
     }
 
 //    if (currenthdr==NULL)
@@ -1362,33 +1371,28 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
     tm_status.curr_tm_options = opts;
 
-//    if ( opts->tonemapOriginal )
-//    {
-//        tm_status.curr_tm_frame = active_frame->getHDRPfsFrame();
+    if ( opts->tonemapOriginal )
+    {
+        tm_status.curr_tm_frame = active_frame->getHDRPfsFrame();
 
-//        if ( opts->tonemapSelection )
-//        {
-//            if ( originalHDR->hasSelection() )
-//            {
-//                getCropCoords(originalHDR,
-//                              opts->selection_x_up_left,
-//                              opts->selection_y_up_left,
-//                              opts->selection_x_bottom_right,
-//                              opts->selection_y_bottom_right);
-//            }
-//            else
-//            {
-//                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
-//                return;
-//            }
-//        }
-//    }
+        if ( active_frame->hasSelection() )
+        {
+	    opts->tonemapSelection = true;
+            getCropCoords((HdrViewer *) active_frame,
+                           opts->selection_x_up_left,
+                           opts->selection_y_up_left,
+                           opts->selection_x_bottom_right,
+                           opts->selection_y_bottom_right);
+        }
+        else
+           opts->tonemapSelection = false;
+    }
 //    else // if ( !opts.tonemapOriginal )
 //    {
 //        if (!mdiArea->subWindowList().isEmpty())
 //        {
 //            GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-
+//
 //            if ( viewer->isHDR() )
 //            {
 //                HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
@@ -1399,7 +1403,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 //                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
 //                return;
 //            }
-
+//
 //            if ( opts->tonemapSelection )
 //            {
 //                if ( originalHDR->hasSelection() )
@@ -1445,13 +1449,14 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
 void MainWindow::addMDIResult(QImage* image)
 {
+	m_ldrsNum++;
         LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
         n->normalSize();
         //n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
 
-//        if (actionFit_to_Window->isChecked())
-//                n->fitToWindow(true);
+        if (fitToWindowAct->isChecked())
+                n->fitToWindow(true);
         QMdiSubWindow *subwin = new QMdiSubWindow(this);
         subwin->setAttribute(Qt::WA_DeleteOnClose);
         subwin->setWidget(n);
@@ -1466,12 +1471,13 @@ void MainWindow::addMDIResult(QImage* image)
 
         subwin->installEventFilter(this);
 
-        //connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
         //connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
 {
+	m_hdrsNum++;
         HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
         HDR->setFreePfsFrameOnExit(true);
         HDR->updateHDR(frame);
@@ -1521,4 +1527,108 @@ void MainWindow::showErrorMessage(const char *e)
         tmPanel->applyButton->setEnabled(true);
 
         delete progInd;
+}
+
+
+pfs::Frame * MainWindow::getSelectedFrame(HdrViewer *hdr)
+{
+	assert( hdr != NULL );
+	pfs::Frame *frame = hdr->getHDRPfsFrame();
+	QRect cropRect = hdr->getSelectionRect();
+	int x_ul, y_ul, x_br, y_br;
+	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+	return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+}
+
+void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)
+{
+	assert( hdr != NULL );
+  
+	QRect cropRect = hdr->getSelectionRect();
+	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+	if (event->type() == QEvent::Close) {
+		QMdiSubWindow *w = (QMdiSubWindow *) obj;
+		GenericViewer *v = (GenericViewer *) w->widget();
+		if (v->isHDR()) {
+			m_hdrsNum--;
+		}
+		else {
+			m_ldrsNum--;
+		}
+		return true;
+	} else {
+    //Standard event processing
+		return QMainWindow::eventFilter(obj, event);
+	}
+}
+
+void MainWindow::lockImages(bool toggled)
+{
+	m_isLocked = toggled;
+	if (!mdiArea->subWindowList().isEmpty())
+		dispatch((GenericViewer *) mdiArea->currentSubWindow()->widget());
+}
+
+void MainWindow::updateImage(GenericViewer *viewer)
+{
+	assert(viewer!=NULL);
+	assert(m_changedImage!=NULL);
+	if (m_isLocked)
+  	{
+		m_scaleFactor = m_changedImage->getImageScaleFactor();
+		m_HSB_Value = m_changedImage->getHorizScrollBarValue();
+		m_VSB_Value = m_changedImage->getVertScrollBarValue();
+		viewer->normalSize();
+		if (fitToWindowAct->isChecked())
+			viewer->fitToWindow(true);
+		else
+			viewer->fitToWindow(false);
+		viewer->zoomToFactor(m_scaleFactor);	
+		viewer->setHorizScrollBarValue(m_HSB_Value);	
+		viewer->setVertScrollBarValue(m_VSB_Value);
+	}
+}
+
+void MainWindow::dispatch(GenericViewer *sender)
+{
+	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+	m_changedImage = sender;
+	foreach (QMdiSubWindow *p, allViewers)
+  	{
+		GenericViewer *viewer = (GenericViewer*)p->widget();
+		if (sender != viewer)
+    		{	
+			disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+			updateImage(viewer);
+			connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+		}
+	}
+}
+
+void MainWindow::showHDRs(bool toggled)
+{
+	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+	if (toggled)
+	{
+		foreach (QMdiSubWindow *p, allViewers)
+  		{
+			GenericViewer *viewer = (GenericViewer*)p->widget();
+			if (viewer->isHDR())
+				p->hide();
+		}
+	}
+	else
+	{
+		foreach (QMdiSubWindow *p, allViewers)
+  		{
+			GenericViewer *viewer = (GenericViewer*)p->widget();
+			if (viewer->isHDR())
+				p->show();
+		}
+		
+	}
 }

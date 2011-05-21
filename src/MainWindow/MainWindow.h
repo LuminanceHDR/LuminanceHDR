@@ -78,6 +78,7 @@ public slots:
     void tonemapImage(TonemappingOptions *opts);
 
 protected slots:
+    bool eventFilter(QObject *obj, QEvent *event);
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
     void fileSaveAs();
@@ -136,6 +137,10 @@ protected slots:
     void tmDockVisibilityChanged(bool);
     void deleteTMOThread(TMOThread *th);
     void showErrorMessage(const char *e);
+    void lockImages(bool);
+    void updateImage(GenericViewer *viewer);
+    void dispatch(GenericViewer *);
+    void showHDRs(bool);
 
 signals:
     // I/O
@@ -196,6 +201,18 @@ protected:
         TonemappingOptions* curr_tm_options;
         QList<QMdiSubWindow*> hidden_windows;
     } tm_status;
+
+    pfs::Frame * getSelectedFrame(HdrViewer *hdr);
+    void getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
+
+    int m_ldrsNum,
+	m_hdrsNum;
+    
+    bool m_isLocked;
+    GenericViewer *m_changedImage;
+    float m_scaleFactor;
+    int m_VSB_Value;
+    int m_HSB_Value;
 };
 
 

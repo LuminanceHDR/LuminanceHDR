@@ -311,7 +311,7 @@ void TonemappingPanel::fillToneMappingOptions()
 	toneMappingOptions.origxsize = sizes[0];
 	toneMappingOptions.xsize = sizes[sizeComboBox->currentIndex()];
 	toneMappingOptions.pregamma = pregammaGang->v();
-	toneMappingOptions.tonemapSelection = checkBoxSelection->isChecked();
+	//toneMappingOptions.tonemapSelection = checkBoxSelection->isChecked();
 	toneMappingOptions.tonemapOriginal = checkBoxOriginal->isChecked();
 	switch (currentTmoOperator) {
 		case ashikhmin:

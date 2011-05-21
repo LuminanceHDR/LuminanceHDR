@@ -2400,17 +2400,6 @@ Original HDR</string>
               </property>
              </spacer>
             </item>
-            <item>
-             <widget class="QCheckBox" name="checkBoxSelection">
-              <property name="toolTip">
-               <string>Process only selection of the original HDR image</string>
-              </property>
-              <property name="text">
-               <string>Process
-Selection</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
           <item>
