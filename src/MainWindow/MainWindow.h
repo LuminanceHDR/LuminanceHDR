@@ -103,7 +103,6 @@ protected slots:
     void enterWhatsThis();
     void preferences_called();
     void transplant_called();
-    void reEnableMainWin();
     void fileExit();
     void Text_Under_Icons();
     void Icons_Only();

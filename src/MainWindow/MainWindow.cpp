@@ -77,13 +77,20 @@ m_ldrsNum(0), m_hdrsNum(0)
     setAcceptDrops(true);
     windowMapper = new QSignalMapper(this);
 
-    //main toolbar setup
+    //main toolbars setup
     QActionGroup *toolBarOptsGroup = new QActionGroup(this);
     toolBarOptsGroup->addAction(actionText_Under_Icons);
     toolBarOptsGroup->addAction(actionIcons_Only);
     toolBarOptsGroup->addAction(actionText_Alongside_Icons);
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
+    QActionGroup *toolBar_2_OptsGroup = new QActionGroup(this);
+    toolBar_2_OptsGroup->addAction(actionText_Under_Icons);
+    toolBar_2_OptsGroup->addAction(actionIcons_Only);
+    toolBar_2_OptsGroup->addAction(actionText_Alongside_Icons);
+    toolBar_2_OptsGroup->addAction(actionText_Only);
+    menuToolbars->addAction(toolBar_2->toggleViewAction());
+
 
     setUnifiedTitleAndToolBarOnMac(true);
 
@@ -601,14 +608,6 @@ bool MainWindow::testTempDir(QString dirname)
     }
 }
 
-void MainWindow::reEnableMainWin()
-{
-    setEnabled(true);
-    show();
-    if (helpBrowser)
-        helpBrowser->show();
-}
-
 void MainWindow::rotateccw_requested()
 {
     dispatchrotate(false);
@@ -1045,25 +1044,33 @@ void MainWindow::fileExit()
 void MainWindow::Text_Under_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    toolBar_2->setToolButtonStyle(Qt::ToolButtonIconOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::showSplash()
@@ -1255,6 +1262,7 @@ void MainWindow::setup_tm()
     addDockWidget(Qt::LeftDockWidgetArea, dock);
     dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 
+
     // by default, it is hidden!
     dock->hide();
 }
@@ -1307,7 +1315,15 @@ void MainWindow::tonemap_requested()
         tmPanel->setSizes((tm_status.curr_tm_frame)->getWidth(), (tm_status.curr_tm_frame)->getHeight());
 
         dock->show(); // it must be the last line of this branch!
+
+	// hide main toolbar
 	toolBar->hide();
+
+    	// add action previous, next images
+    	toolBar_2->removeAction(TonemapAction);
+    	toolBar_2->addAction(actionShowPrevious);
+    	toolBar_2->addAction(actionShowNext);
+    	toolBar_2->addAction(TonemapAction);
     }
     else if ( !dock->isHidden() )
     {
@@ -1335,7 +1351,13 @@ void MainWindow::tonemap_requested()
         tmPanel->applyButton->setEnabled(false);
 
         dock->hide(); // It must be the last line of this branch!
+
+	// show main toolbar
 	toolBar->show();
+
+    	// remove action previous, next images
+    	toolBar_2->removeAction(actionShowPrevious);
+    	toolBar_2->removeAction(actionShowNext);
     }
 
 //    if (currenthdr==NULL)
