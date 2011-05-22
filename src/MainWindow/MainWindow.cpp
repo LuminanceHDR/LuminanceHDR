@@ -90,6 +90,12 @@ m_ldrsNum(0), m_hdrsNum(0)
     toolBar_2_OptsGroup->addAction(actionText_Alongside_Icons);
     toolBar_2_OptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar_2->toggleViewAction());
+    QActionGroup *toolBar_3_OptsGroup = new QActionGroup(this);
+    toolBar_3_OptsGroup->addAction(actionText_Under_Icons);
+    toolBar_3_OptsGroup->addAction(actionIcons_Only);
+    toolBar_3_OptsGroup->addAction(actionText_Alongside_Icons);
+    toolBar_3_OptsGroup->addAction(actionText_Only);
+    menuToolbars->addAction(toolBar_3->toggleViewAction());
 
 
     setUnifiedTitleAndToolBarOnMac(true);
@@ -1045,32 +1051,40 @@ void MainWindow::Text_Under_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     toolBar_2->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
     settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextUnderIcon);
+    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     toolBar_2->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    toolBar_3->setToolButtonStyle(Qt::ToolButtonIconOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
     settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonIconOnly);
+    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolBar_2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
     settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextBesideIcon);
+    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
     toolBar_2->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
     settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextOnly);
+    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::showSplash()
@@ -1165,6 +1179,8 @@ void MainWindow::cropToSelection()
 {
     // if active_frame != NULL
     // if active_frame is Type (HdrViewer)
+    if (!active_frame->hasSelection())
+	return;
 
     QRect cropRect = active_frame->getSelectionRect();
     int x_ul, y_ul, x_br, y_br;
@@ -1319,7 +1335,10 @@ void MainWindow::tonemap_requested()
 	// hide main toolbar
 	toolBar->hide();
 
-    	// add action previous, next images
+	// hide tools toolbar
+	toolBar_3->hide();
+
+    	// add action previous, next images to tonemapping toolbar
     	toolBar_2->removeAction(TonemapAction);
     	toolBar_2->addAction(actionShowPrevious);
     	toolBar_2->addAction(actionShowNext);
@@ -1355,7 +1374,10 @@ void MainWindow::tonemap_requested()
 	// show main toolbar
 	toolBar->show();
 
-    	// remove action previous, next images
+	// show tools toolbar
+	toolBar_3->show();
+
+    	// remove action previous, next images from tonemapping toolbar
     	toolBar_2->removeAction(actionShowPrevious);
     	toolBar_2->removeAction(actionShowNext);
     }
