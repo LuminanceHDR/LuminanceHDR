@@ -30,6 +30,8 @@
 
 #include "domio.h"
 #include "frame.h"
+#include "channel.h"
+#include "array2d.h"
 
 using namespace std;
 
@@ -68,12 +70,12 @@ namespace pfs
         if( read != 1 || channelCount < 0 || channelCount > MAX_CHANNEL_COUNT )
             throw Exception( "Corrupted PFS file: missing or wrong 'channelCount' tag" );
 
-        FrameImpl *frame = (FrameImpl*)createFrame( width, height );
+        //Frame *frame = (Frame*)createFrame( width, height );
+        Frame* frame = new Frame(width, height);
 
-        readTags( frame->tags, inputStream );
+        readTags( frame->m_tags, inputStream );
 
         //Read channel IDs and tags
-        //       FrameImpl::ChannelID *channelID = new FrameImpl::ChannelID[channelCount];
         std::list<ChannelImpl*> orderedChannel;
         for( int i = 0; i < channelCount; i++ )
         {
@@ -115,39 +117,31 @@ namespace pfs
 
     Frame* DOMIO::createFrame( int width, int height )
     {
-        /*    if( lastFrame != NULL && lastFrame->width() == width && lastFrame->height() == height ) {
-    // Reuse last frame
-    return lastFrame;
-    } else
-    delete lastFrame;*/
-
-        Frame *frame = new FrameImpl( width, height );
+        Frame *frame = new Frame( width, height );
         if ( frame == NULL ) throw Exception( "Out of memory" );
         return frame;
     }
 
 
-    void DOMIO::writeFrame( Frame *frame, FILE *outputStream )
+    void DOMIO::writeFrame( Frame *src_frame, FILE *outputStream )
     {
         assert( outputStream != NULL );
-        assert( frame != NULL );
+        assert( src_frame != NULL );
 #ifdef HAVE_SETMODE
         // Needed under MS windows (text translation IO for stdin/out)
         int old_mode = setmode( fileno( outputStream ), _O_BINARY );
 #endif
 
-        FrameImpl *frameImpl = (FrameImpl*)frame;
-
         fwrite( PFSFILEID, 1, 5, outputStream ); // Write header ID
 
-        fprintf( outputStream, "%d %d" PFSEOL, frame->getWidth(), frame->getHeight() );
-        //fprintf( outputStream, "%d" PFSEOL, frameImpl->channel.size() );
-        fprintf( outputStream, "%zd" PFSEOL, frameImpl->channel.size() );
+        fprintf( outputStream, "%d %d" PFSEOL, src_frame->getWidth(), src_frame->getHeight() );
+        //fprintf( outputStream, "%d" PFSEOL, src_frame->channel.size() );
+        fprintf( outputStream, "%zd" PFSEOL, src_frame->m_channels.size() );
 
-        writeTags( frameImpl->tags, outputStream );
+        writeTags( src_frame->m_tags, outputStream );
 
         //Write channel IDs and tags
-        for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ )
+        for ( ChannelMap::iterator it = src_frame->m_channels.begin(); it != src_frame->m_channels.end(); it++ )
         {
             fprintf( outputStream, "%s" PFSEOL, it->second->getName().c_str() );
             writeTags( it->second->tags, outputStream );
@@ -157,9 +151,9 @@ namespace pfs
 
         //Write channels
         {
-            for( ChannelMap::iterator it = frameImpl->channel.begin(); it != frameImpl->channel.end(); it++ )
+            for( ChannelMap::iterator it = src_frame->m_channels.begin(); it != src_frame->m_channels.end(); it++ )
             {
-                int size = frame->getWidth()*frame->getHeight();
+                int size = src_frame->getWidth()*src_frame->getHeight();
                 fwrite( it->second->getRawData(), sizeof( float ), size, outputStream );
             }
         }

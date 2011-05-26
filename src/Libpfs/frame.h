@@ -36,159 +36,141 @@
 
 namespace pfs
 {
+
+
     /**
- * Interface representing a single PFS frame. Frame may contain 0
- * or more channels (e.g. color XYZ, depth channel, alpha
- * channnel). All the channels are of the same size. Frame can
- * also contain additional information in tags (see getTags).
- */
+     * Interface representing a single PFS frame. Frame may contain 0
+     * or more channels (e.g. color XYZ, depth channel, alpha
+     * channnel). All the channels are of the same size. Frame can
+     * also contain additional information in tags (see getTags).
+     */
     class Frame
     {
-    public:
-        /**
-     * Gets width of the channels (in pixels).
-     */
-        virtual int getWidth() const = 0;
-
-        /**
-     * Gets height of the channels (in pixels).
-     */
-        virtual int getHeight() const = 0;
-
-        /**
-     * Gets color channels in XYZ color space. May return NULLs
-     * if such channels do not exist. Values assigned to
-     * X, Y, Z are always either all NULLs or valid pointers to
-     * channels.
-     *
-     * @param X [out] a pointer to store X channel in
-     * @param Y [out] a pointer to store Y channel in
-     * @param Z [out] a pointer to store Z channel in
-     */
-        virtual void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = 0;
-
-        /**
-     * Creates color channels in XYZ color space. If such channels
-     * already exists, returns existing channels, rather than
-     * creating new ones.  Note, that nothing can be assumed about
-     * the content of each channel.
-     *
-     * @param X [out] a pointer to store X channel in
-     * @param Y [out] a pointer to store Y channel in
-     * @param Z [out] a pointer to store Z channel in
-     */
-        virtual void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z ) = 0;
-
-        /**
-     * Gets a named channel.
-     *
-     * @param name [in] name of the channel. Name must be 8 or less
-     * character long.
-     * @return channel or NULL if the channel does not exist
-     */
-        virtual Channel* getChannel( std::string name ) = 0; //const char *name ) = 0;
-
-        /**
-     * Creates a named channel. If the channel already exists, returns
-     * existing channel.
-     *
-     * Note that new channels should be created only for the first
-     * frame. The channels should not changes for the subsequent
-     * frames of a sequence.
-     *
-     * @param name [in] name of the channel. Name must be 8 or less
-     * character long.
-     * @return existing or newly created channel
-     */
-        virtual Channel* createChannel( std::string name ) = 0; //const char *name ) = 0;
-
-
-        /**
-     * Removes a channel. It is safe to remove the channel pointed by
-     * the ChannelIterator.
-     *
-     * @param channel [in] channel that should be removed.
-     */
-        virtual void removeChannel( Channel *channel ) = 0;
-
-        /**
-     * DEPRECATED!!! Use getIterator instead.
-     *
-     * Returns iterator for all available channels.
-     *
-     * Note that only one iterator for particular frame can be used at
-     * a time. This method returns each time the same data structure,
-     * so the iterator from previous call is lost after the call. The
-     * iterator MUST NOT be deleted after use.
-     *
-     * Object ChannelIterator MUST NOT be freed. It's responsibility
-     * of a Frame object.
-     */
-        virtual ChannelIterator *getChannels() = 0;
-
-        /**
-     * Use ChannelIterator to iterate over all Channels in the Frame.
-     * ChannelIteratorPtr is a smart pointer, which destructs
-     * ChannelIterator when ChannelIteratorPtr is destructed. Use ->
-     * operator to access ChannelIterator members from a
-     * ChannelIteratorPtr object.
-     *
-     * To iterate over all channels, use the following code:
-     * <code>
-     * pfs::ChannelIteratorPtr it( frame->getChannelIterator() );
-     * while( it->hasNext() ) {
-     *   pfs::Channel *ch = cit->getNext();
-     *   //Do whatever is needed
-     * }
-     * </code>
-     */
-        virtual ChannelIteratorPtr getChannelIterator() = 0;
-
-        /**
-     * Returns TagContainer that can be used to access or modify
-     * tags associated with this Frame object.
-     */
-        virtual TagContainer *getTags() = 0;
-
-        // A pure virtual destructor
-        virtual ~Frame() { }
-
-    };
-
-
-    //------------------------------------------------------------------------------
-    // Frame implementation
-    //------------------------------------------------------------------------------
-    class FrameImpl: public Frame
-    {
-        int width, height;
-
-    protected:
         friend class DOMIO;
 
-        TagContainer *tags;
+    protected:
+        int m_width;
+        int m_height;
 
-        ChannelMap channel;
-        ChannelIterator channelIterator;
+        TagContainer *m_tags;
+
+        ChannelMap m_channels;
+        ChannelIterator m_channel_iter;
 
     public:
 
-        FrameImpl( int width, int height );
-        virtual ~FrameImpl();
+        Frame( int width, int height );
+        ~Frame();
 
-        virtual int getWidth() const;
-        virtual int getHeight() const;
+        /**
+         * Gets width of the channels (in pixels).
+         */
+        inline int getWidth() const
+        {
+            return m_width;
+        }
 
-        virtual void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
-        virtual void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
+        /**
+         * Gets height of the channels (in pixels).
+         */
+        inline int getHeight() const
+        {
+            return m_height;
+        }
 
-        Channel* getChannel( std::string name ); //const char *name )
-        Channel *createChannel( std::string name ); //const char *name )
+        /**
+         * Gets color channels in XYZ color space. May return NULLs
+         * if such channels do not exist. Values assigned to
+         * X, Y, Z are always either all NULLs or valid pointers to
+         * channels.
+         *
+         * @param X [out] a pointer to store X channel in
+         * @param Y [out] a pointer to store Y channel in
+         * @param Z [out] a pointer to store Z channel in
+         */
+        void getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
+
+        /**
+         * Creates color channels in XYZ color space. If such channels
+         * already exists, returns existing channels, rather than
+         * creating new ones.  Note, that nothing can be assumed about
+         * the content of each channel.
+         *
+         * @param X [out] a pointer to store X channel in
+         * @param Y [out] a pointer to store Y channel in
+         * @param Z [out] a pointer to store Z channel in
+         */
+        void createXYZChannels( Channel* &X, Channel* &Y, Channel* &Z );
+
+        /**
+         * Gets a named channel.
+         *
+         * @param name [in] name of the channel. Name must be 8 or less
+         * character long.
+         * @return channel or NULL if the channel does not exist
+         */
+        Channel* getChannel( std::string name );
+
+        /**
+         * Creates a named channel. If the channel already exists, returns
+         * existing channel.
+         *
+         * Note that new channels should be created only for the first
+         * frame. The channels should not changes for the subsequent
+         * frames of a sequence.
+         *
+         * @param name [in] name of the channel. Name must be 8 or less
+         * character long.
+         * @return existing or newly created channel
+         */
+        Channel *createChannel( std::string name );
+
+        /**
+         * Removes a channel. It is safe to remove the channel pointed by
+         * the ChannelIterator.
+         *
+         * @param channel [in] channel that should be removed.
+         */
         void removeChannel( Channel *ch );
 
-        ChannelIterator *getChannels();
+        /**
+         * Use ChannelIterator to iterate over all Channels in the Frame.
+         * ChannelIteratorPtr is a smart pointer, which destructs
+         * ChannelIterator when ChannelIteratorPtr is destructed. Use ->
+         * operator to access ChannelIterator members from a
+         * ChannelIteratorPtr object.
+         *
+         * To iterate over all channels, use the following code:
+         * <code>
+         * pfs::ChannelIteratorPtr it( frame->getChannelIterator() );
+         * while( it->hasNext() ) {
+         *   pfs::Channel *ch = cit->getNext();
+         *   //Do whatever is needed
+         * }
+         * </code>
+         */
         ChannelIteratorPtr getChannelIterator();
 
+        /**
+         * DEPRECATED!!! Use getChannelIterator instead.
+         *
+         * Returns iterator for all available channels.
+         *
+         * Note that only one iterator for particular frame can be used at
+         * a time. This method returns each time the same data structure,
+         * so the iterator from previous call is lost after the call. The
+         * iterator MUST NOT be deleted after use.
+         *
+         * Object ChannelIterator MUST NOT be freed. It's responsibility
+         * of a Frame object.
+         */
+        // TODO: remove this rubbish
+        ChannelIterator *getChannels();
+
+        /**
+         * Returns TagContainer that can be used to access or modify
+         * tags associated with this Frame object.
+         */
         TagContainer *getTags();
     };
 }
