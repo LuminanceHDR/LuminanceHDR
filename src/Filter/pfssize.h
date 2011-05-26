@@ -28,7 +28,7 @@
 #ifndef __PFSSIZE_H__
 #define __PFSSIZE_H__
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 namespace pfs
 {

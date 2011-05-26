@@ -35,53 +35,51 @@
 #include <cmath>
 
 #include "tmo_reinhard05.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 
 void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadaptation, float lightadaptation, ProgressHelper *ph)
-{
-  pfs::DOMIO pfsio;
-  
-  //--- default tone mapping parameters;
-  //float brightness = 0.0f;
-  //float chromaticadaptation = 0.5f;
-  //float lightadaptation = 0.75f;
-  
-	std::cout << "pfstmo_reinhard05" << std::endl;
-	std::cout << "brightness: " << brightness << std::endl;
-	std::cout << "chromatic adaptation: " << chromaticadaptation << std::endl;
-	std::cout << "light adaptation: " << lightadaptation << std::endl;
-  
-  pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
-  //---
-  
-  if( Y==NULL || X==NULL || Z==NULL)
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  
-  pfs::Array2DImpl* Xr = X->getChannelData();
-  pfs::Array2DImpl* Yr = Y->getChannelData();
-  pfs::Array2DImpl* Zr = Z->getChannelData();
-  
-  // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
-  
-  pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
-  
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
-  
-  tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
-  
-  pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
-  
-  if (!ph->isTerminationRequested())
-		ph->newValue( 100 );
-  
-  delete R;
-  delete G;
-  delete B;
+{  
+    //--- default tone mapping parameters;
+    //float brightness = 0.0f;
+    //float chromaticadaptation = 0.5f;
+    //float lightadaptation = 0.75f;
+
+    std::cout << "pfstmo_reinhard05 (";
+    std::cout << "brightness: " << brightness << ", ";
+    std::cout << "chromatic adaptation: " << chromaticadaptation << ", ";
+    std::cout << "light adaptation: " << lightadaptation << ") " << std::endl;
+
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    //---
+
+    if( Y==NULL || X==NULL || Z==NULL)
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+
+    pfs::Array2DImpl* Xr = X->getChannelData();
+    pfs::Array2DImpl* Yr = Y->getChannelData();
+    pfs::Array2DImpl* Zr = Z->getChannelData();
+
+    // tone mapping
+    int w = Y->getWidth();
+    int h = Y->getHeight();
+
+    pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
+
+    pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
+
+    tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
+
+    pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
+
+    if (!ph->isTerminationRequested())
+        ph->newValue( 100 );
+
+    delete R;
+    delete G;
+    delete B;
 }

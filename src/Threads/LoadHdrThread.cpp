@@ -30,8 +30,7 @@
 
 #include "LoadHdrThread.h"
 #include "Fileformat/pfs_file_format.h"
-//#include "Fileformat/pfstiff.h"
-
+#include "Libpfs/domio.h"
 
 LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname), RecentDirHDRSetting(RecentDirHDRSetting)
 {

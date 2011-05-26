@@ -28,7 +28,8 @@
 #include <stdlib.h>
 
 #include "rgbeio.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/domio.h"
 
 pfs::Frame* readRGBEfile (const char * filename)
 {

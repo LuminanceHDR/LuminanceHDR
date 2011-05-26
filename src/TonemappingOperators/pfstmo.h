@@ -31,7 +31,7 @@
 #include <assert.h>
 #include <string.h>
 #include "Libpfs/array2d.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Common/ProgressHelper.h"
 
 #ifdef BRANCH_PREDICTION

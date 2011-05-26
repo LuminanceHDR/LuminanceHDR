@@ -33,7 +33,7 @@
 #include <QFileInfo>
 #include <iostream>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/domio.h"
 #include "pfsinraw.h"
 
 /**************************** From UFRAW sourcecode ********************************

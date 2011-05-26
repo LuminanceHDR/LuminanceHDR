@@ -49,7 +49,6 @@ namespace pfs
    * major, 2D array, array of pointers, etc.). It also simplifies
    * indexing.
    *
-   * See also implementing classes.
    */
   class Array2D
   {
@@ -195,7 +194,7 @@ namespace pfs
     // Array2D manipulation
     friend void downsampleArray(const Array2D *from, Array2D *to);
     friend void applyGamma(Array2D *array, const float exponent, const float multiplier);
-    friend void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise);
+    friend void rotateArray(const Array2D *in, Array2D *out, bool clockwise);
   };
   
   void copyArray(const Array2D *from, Array2D *to);  

@@ -26,6 +26,7 @@
 #define READRAWINTOPFSFRAME
 
 #include "Common/options.h"
+#include "Libpfs/frame.h"
 
 pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk);
 

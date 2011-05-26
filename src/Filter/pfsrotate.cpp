@@ -29,6 +29,7 @@
 #include <assert.h>
 #include "pfsrotate.h"
 #include "Common/msec_timer.h"
+#include "Libpfs/domio.h"
 
 namespace pfs
 {

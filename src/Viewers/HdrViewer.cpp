@@ -25,6 +25,8 @@
  *
  */
 
+#include "HdrViewer.h"
+
 #include <cmath>
 #include <assert.h>
 #include <QApplication>
@@ -34,7 +36,7 @@
 
 #include "Common/global.h"
 #include "Common/msec_timer.h"
-#include "HdrViewer.h"
+#include "Libpfs/domio.h"
 
 template<class T>
 T clamp( T val, T min, T max )

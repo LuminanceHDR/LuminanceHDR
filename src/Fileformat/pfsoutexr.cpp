@@ -32,7 +32,8 @@
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
+
 
 #define min(x,y) ( (x)<(y) ? (x) : (y) )
 

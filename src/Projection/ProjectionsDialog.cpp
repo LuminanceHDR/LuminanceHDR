@@ -22,6 +22,7 @@
  */
 
 #include "ProjectionsDialog.h"
+#include "Libpfs/domio.h"
 
 ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent),original(orig),transformed(NULL) {
 	setupUi(this);

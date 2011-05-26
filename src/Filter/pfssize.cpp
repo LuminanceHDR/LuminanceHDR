@@ -28,9 +28,11 @@
 #include <cmath>
 #include <assert.h>
 
-#include "Libpfs/array2d.h"
-#include "Libpfs/pfs.h"
 #include "Common/msec_timer.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/domio.h"
+
 
 #define ROUNDING_ERROR 0.000001
 namespace pfs

@@ -33,8 +33,9 @@
 
 #include "Common/options.h"
 #include "Common/global.h"
-#include "Libpfs/pfs.h"
 #include "Common/ProgressHelper.h"
+#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 
 enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH };

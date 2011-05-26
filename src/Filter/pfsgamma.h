@@ -28,7 +28,8 @@
 #ifndef __PFSGAMMA_H__
 #define __PFSGAMMA_H__
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/frame.h"
 
 namespace pfs
 {

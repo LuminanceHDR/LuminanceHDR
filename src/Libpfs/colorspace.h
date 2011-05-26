@@ -31,7 +31,7 @@
 #ifndef __COLORSPACE_H__
 #define __COLORSPACE_H__
 
-#include "Libpfs/array2d.h"
+#include "array2d.h"
 
 namespace pfs
 {

@@ -41,17 +41,15 @@
 #include "array2d.h"
 #include "Common/vex.h"
 
+using namespace std;
+
 namespace pfs
 {  
   Array2DImpl::Array2DImpl( int __cols, int __rows )
   {
     cols = __cols;
     rows = __rows;
-#ifdef __APPLE__
-    data = (float*)malloc(cols*rows*sizeof(float));
-#else
     data = (float*)_mm_malloc(cols*rows*sizeof(float), 16); //new float[cols*rows];
-#endif
     data_owned = true;
   }
   
@@ -73,26 +71,19 @@ namespace pfs
   
   Array2DImpl& Array2DImpl::operator = (const Array2DImpl& other)
   {
-#ifdef __APPLE__
-    if (data_owned) free(data);
-#else
     if (data_owned) _mm_free(data); //delete[] data;
-#endif
+
     this->cols = other.cols;
     this->rows = other.rows;
     this->data = other.data;
     this->data_owned = false;
     return *this;
-  }
+}
   
   Array2DImpl::~Array2DImpl()
   {
-#ifdef __APPLE__
-    if (data_owned) free(data);
-#else
     if (data_owned) _mm_free(data); //delete[] data;
-#endif
-}
+  }
   
   
   float& Array2DImpl::operator()( int col, int row )
@@ -182,7 +173,7 @@ namespace pfs
     for (int r = 0; r < OUT_H; r++)
     {
       //NOTE: do NOT use VEX_vcopy
-      #pragma omp parallel for schedule(static, 5120)
+      #pragma omp parallel for
       for (int c = 0; c < OUT_W; c++)
       {
         to_2d_data[c] = from_2d_data[c];

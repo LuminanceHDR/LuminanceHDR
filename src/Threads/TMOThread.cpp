@@ -28,8 +28,9 @@
 #include <iostream>
 
 #include "TMOThread.h"
-#include "Libpfs/colorspace.h"
 #include "Common/config.h"
+#include "Libpfs/colorspace.h"
+#include "Libpfs/domio.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsgamma.h"
 #include "Filter/pfssize.h"

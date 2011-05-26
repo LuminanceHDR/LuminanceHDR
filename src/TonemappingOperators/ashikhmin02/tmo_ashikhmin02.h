@@ -30,7 +30,7 @@
 #define _tmo_ashikhmin02_h_
 
 #include "Libpfs/array2d.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Common/ProgressHelper.h"
 
 /**

@@ -34,79 +34,77 @@
 #include <iostream>
 #include <cmath>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 #include "tmo_pattanaik00.h"
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult );
 
 void pfstmo_pattanaik00(pfs::Frame* frame, bool local, float multiplier, float Acone, float Arod, bool autolum, ProgressHelper *ph)
-{
-  pfs::DOMIO pfsio;
-  
-  //--- default tone mapping parameters;
-  bool timedependence = false;
-  //bool local = false;
-  //float multiplier = 1.0f;
-  //Acone = -1.0f;
-  //Arod  = -1.0f;
-  float fps = 16.0f; //not used
-  
-  std::cout << "pfstmo_pattanaik00" << std::endl;
-  std::cout << "local: " << local << std::endl;
-  std::cout << "multiplier: " << multiplier << std::endl;
-  std::cout << "Acone: " << Acone << std::endl;
-  std::cout << "Arod: " << Arod << std::endl;
-  std::cout << "autolum: " << autolum << std::endl;
-  
-  VisualAdaptationModel* am = new VisualAdaptationModel();
-  
-  pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
-  //---
-  
-  if( Y==NULL || X==NULL || Z==NULL)
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  
-  pfs::Array2DImpl* Xr = X->getChannelData();
-  pfs::Array2DImpl* Yr = Y->getChannelData();
-  pfs::Array2DImpl* Zr = Z->getChannelData();
-  
-  // adaptation model
-  if( multiplier != 1.0f )
-    multiplyChannels(Xr, Yr, Zr, multiplier );
-  
-  if( !local )
-  {
-    if( !timedependence )
+{  
+    //--- default tone mapping parameters;
+    bool timedependence = false;
+    //bool local = false;
+    //float multiplier = 1.0f;
+    //Acone = -1.0f;
+    //Arod  = -1.0f;
+    float fps = 16.0f; //not used
+
+    std::cout << "pfstmo_pattanaik00 (";
+    std::cout << "local: " << local << ", ";
+    std::cout << "multiplier: " << multiplier << ", ";
+    std::cout << "Acone: " << Acone << ", ";
+    std::cout << "Arod: " << Arod << ", ";
+    std::cout << "autolum: " << autolum << ")" << std::endl;
+
+    VisualAdaptationModel* am = new VisualAdaptationModel();
+
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    //---
+
+    if( Y==NULL || X==NULL || Z==NULL)
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+
+    pfs::Array2DImpl* Xr = X->getChannelData();
+    pfs::Array2DImpl* Yr = Y->getChannelData();
+    pfs::Array2DImpl* Zr = Z->getChannelData();
+
+    // adaptation model
+    if( multiplier != 1.0f )
+        multiplyChannels(Xr, Yr, Zr, multiplier );
+
+    if( !local )
     {
-      if( !autolum )
-        am->setAdaptation(Acone,Arod);
-      else
-        am->setAdaptation(Yr);
+        if( !timedependence )
+        {
+            if( !autolum )
+                am->setAdaptation(Acone,Arod);
+            else
+                am->setAdaptation(Yr);
+        }
+        else
+            am->calculateAdaptation(Yr, 1.0f/fps);
     }
-    else
-      am->calculateAdaptation(Yr, 1.0f/fps);
-  }
-  // tone mapping
-  int w = Y->getWidth();
-  int h = Y->getHeight();
-  pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
-  
-  pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
-  tmo_pattanaik00( w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), am, local, ph );
-  pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
-  
-	if (!ph->isTerminationRequested())
-		ph->newValue(100);
-  
-  delete R;
-  delete G;
-  delete B;
-  delete am; // delete visual adaptation model
+    // tone mapping
+    int w = Y->getWidth();
+    int h = Y->getHeight();
+    pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
+    pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
+
+    pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
+    tmo_pattanaik00( w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), am, local, ph );
+    pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
+
+    if (!ph->isTerminationRequested())
+        ph->newValue(100);
+
+    delete R;
+    delete G;
+    delete B;
+    delete am; // delete visual adaptation model
 }
 
 void multiplyChannels( pfs::Array2D* X, pfs::Array2D* Y, pfs::Array2D* Z, float mult )

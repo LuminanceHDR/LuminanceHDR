@@ -25,6 +25,8 @@
  * $Id: pfsinexr.cpp,v 1.3 2008/01/01 13:01:21 rafm Exp $
  */
 
+// TODO: clean this file, there are leftovers
+
 #include <cstdlib>
 #include <iostream>
 #include <stdio.h>
@@ -36,8 +38,10 @@
 #include <ImfStringAttribute.h>
 #include <ImfStandardAttributes.h>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/domio.h"
 
+// TODO : leftover!
 #define PROG_NAME "pfsinexr"
 
 using namespace Imf;

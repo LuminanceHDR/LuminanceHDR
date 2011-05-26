@@ -37,7 +37,7 @@
 #include "SmartScrollArea.h"
 #include "Common/PanIconWidget.h"
 #include "Common/SelectionTool.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 class GenericViewer : public QWidget 
 {

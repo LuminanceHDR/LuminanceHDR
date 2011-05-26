@@ -30,11 +30,12 @@
 #include <cmath>
 #include <stdarg.h>
 
-#include "Libpfs/pfs.h"
 #include "responses.h"
 #include "robertson02.h"
 #include "icip06.h"
 #include "debevec.h"
+
+#include "Libpfs/frame.h"
 
 enum TWeight
 { TRIANGULAR, GAUSSIAN, PLATEAU };

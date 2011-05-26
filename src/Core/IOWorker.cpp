@@ -4,6 +4,7 @@
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
+#include "Libpfs/domio.h"
 
 IOWorker::IOWorker(QObject* parent): QObject(parent)
 {

@@ -27,7 +27,7 @@
 #include <QDialog>
 
 #include "ui_ResizeDialog.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 class ResizeDialog : public QDialog, private Ui::ResizeDialog
 {

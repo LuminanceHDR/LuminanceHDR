@@ -28,8 +28,9 @@
 #ifndef TMOFACTORY
 #define TMOFACTORY
 
-#include "Common/options.h"
 #include "TMOThread.h"
+#include "Common/options.h"
+#include "Libpfs/frame.h"
 
 class TMOFactory {
 

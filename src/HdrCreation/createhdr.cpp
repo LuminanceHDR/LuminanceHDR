@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 #include "createhdr.h"
+#include "Libpfs/domio.h"
 
 inline float max3( float a, float b, float c ) {
   float max = (a>b) ? a : b;

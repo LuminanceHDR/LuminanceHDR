@@ -28,24 +28,24 @@
 #include <QImage>
 
 #include "Common/options.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 class HdrInputLoader : public QThread {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	HdrInputLoader(QString filename, int image_idx);
-	~HdrInputLoader();
+    HdrInputLoader(QString filename, int image_idx);
+    ~HdrInputLoader();
 signals:
-	void ldrReady(QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
-	void mdrReady(pfs::Frame *mdrImage, int index, float expotime, QString new_fname);
-	void thumbReady(QImage *thumb);
-	void loadFailed(QString errormessage, int index);
+    void ldrReady(QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
+    void mdrReady(pfs::Frame *mdrImage, int index, float expotime, QString new_fname);
+    void thumbReady(QImage *thumb);
+    void loadFailed(QString errormessage, int index);
 protected:
-	void run();
+    void run();
 private:
-	int image_idx;
-	QString fname;
-	LuminanceOptions *luminance_options;
+    int image_idx;
+    QString fname;
+    LuminanceOptions *luminance_options;
 };
 #endif

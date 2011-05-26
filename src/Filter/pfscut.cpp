@@ -29,6 +29,8 @@
 
 #include "pfscut.h"
 #include "Common/msec_timer.h"
+#include "Libpfs/domio.h"
+
 namespace pfs
 {
   pfs::Frame *pfscut(pfs::Frame *inFrame, int x_ul, int y_ul, int x_br, int y_br)

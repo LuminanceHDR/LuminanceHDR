@@ -34,6 +34,9 @@
 
 #include "pfstiff.h"
 
+#include "Libpfs/frame.h"
+#include "Libpfs/domio.h"
+
 TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wod) {
   // read header containing width and height from file
   fileName = QString(filename);

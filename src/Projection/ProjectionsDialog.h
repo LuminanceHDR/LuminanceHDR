@@ -29,6 +29,7 @@
 #include "ui_ProjectionsDialog.h"
 ///the projective transformation interface
 #include "Filter/pfspanoramic.h"
+#include "Libpfs/frame.h"
 
 
 class ProjectionsDialog : public QDialog, private Ui::ProjectionsDialog

@@ -33,12 +33,14 @@
 #include <list>
 #include <iostream>
 
-#include "Libpfs/pfs.h"
-#include "Libpfs/array2d.h"
-#include "Libpfs/colorspace.h"
+#include "pfs.h"
+#include "array2d.h"
+#include "colorspace.h"
 
 #include "Common/msec_timer.h"
 #include "Common/vex.h"
+
+using namespace std;
 
 namespace pfs 
 {

@@ -34,7 +34,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "tmo_fattal02.h"
 
 void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float opt_saturation, float opt_noise, bool newfattal, ProgressHelper *ph)

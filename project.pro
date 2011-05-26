@@ -133,7 +133,11 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Batch/BatchTMDialog.h \
 			src/Batch/BatchTMJob.h \
                         src/Exif/ExifOperations.h \
-                    src/Core/IOWorker.h
+                    src/Core/IOWorker.h \
+    src/Libpfs/domio.h \
+    src/Libpfs/frame.h \
+    src/Libpfs/tag.h \
+    src/Libpfs/channel.h
 
 SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Libpfs/pfs.cpp \
@@ -240,7 +244,11 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Batch/BatchTMDialog.cpp \
 			src/Batch/BatchTMJob.cpp \
                           src/Core/IOWorker.cpp \
-			src/Exif/ExifOperations.cpp
+			src/Exif/ExifOperations.cpp \
+    src/Libpfs/domio.cpp \
+    src/Libpfs/frame.cpp \
+    src/Libpfs/tag.cpp \
+    src/Libpfs/channel.cpp
 
 RESOURCES = icons.qrc
 

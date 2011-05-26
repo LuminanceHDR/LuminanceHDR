@@ -31,6 +31,7 @@
 
 #include "pfsgamma.h"
 #include "Libpfs/colorspace.h"
+#include "Libpfs/domio.h"
 #include "Common/msec_timer.h"
 
 namespace pfs

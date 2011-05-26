@@ -34,7 +34,7 @@
 #include <tiffio.h>
 
 #include "Libpfs/array2d.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 class TiffReader : public QObject {
   Q_OBJECT

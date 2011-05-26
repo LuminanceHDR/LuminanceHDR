@@ -35,8 +35,11 @@
 #include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
 #include "commandline.h"
+
 #include "Libpfs/array2d.h"
 #include "Libpfs/colorspace.h"
+#include "Libpfs/domio.h"
+
 #include "Fileformat/pfstiff.h"
 #include "Fileformat/pfs_file_format.h"
 

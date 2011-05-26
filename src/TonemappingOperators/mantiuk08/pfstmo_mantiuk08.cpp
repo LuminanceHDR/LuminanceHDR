@@ -36,10 +36,11 @@
 #include <math.h>
 #include <fcntl.h>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 #include "display_adaptive_tmo.h"
 
+// TODO: remove this rubbish!
 #define PROG_NAME "pfstmo_mantiuk08"
 
 using namespace std;
@@ -61,11 +62,11 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if( saturation_factor < 0.0f || saturation_factor > 2.0f )
     throw pfs::Exception("incorrect saturation factor, accepted range is (0..2)");
   
-  std::cout << "pfstmo_mantiuk08" << std::endl;
-  std::cout << "saturation factor: " << saturation_factor << std::endl;
-  std::cout << "contrast enhancement factor: " << contrast_enhance_factor << std::endl;
-  std::cout << "white_y: " << white_y << std::endl;
-  std::cout << "setluminance: " << setluminance  << std::endl;
+  std::cout << "pfstmo_mantiuk08 (";
+  std::cout << "saturation factor: " << saturation_factor;
+  std::cout << ", contrast enhancement factor: " << contrast_enhance_factor;
+  std::cout << ", white_y: " << white_y;
+  std::cout << ", setluminance: " << setluminance << ")" << std::endl;
   
   DisplayFunction *df = NULL;
   DisplaySize *ds = NULL;
@@ -78,8 +79,6 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   
   df->print( stderr );
   ds->print( stderr );
-  
-  pfs::DOMIO pfsio;
   
   pfs::Channel *inX, *inY, *inZ;
   frame->getXYZChannels(inX, inY, inZ);

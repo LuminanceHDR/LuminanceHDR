@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/array2d.h"
 
 using std::map;
 using std::string;

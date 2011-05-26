@@ -35,7 +35,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
 #include "Common/msec_timer.h"
 

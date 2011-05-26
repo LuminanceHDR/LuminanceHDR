@@ -33,52 +33,50 @@
 #include <cmath>
 #include <iostream>
 
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 #include "tmo_drago03.h"
 
 void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
 {
-  std::cout << "pfstmo_drago03" << std::endl;
-  std::cout << "bias: " << biasValue << std::endl;
-  
-  pfs::DOMIO pfsio;
-  
-  pfs::Channel *X, *Y, *Z;
-  frame->getXYZChannels( X, Y, Z );
-  
-  frame->getTags()->setString("LUMINANCE", "RELATIVE");
-  //---
-  
-  if( Y == NULL )
-    throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
-  
-  pfs::Array2DImpl *Xr = X->getChannelData();
-  pfs::Array2DImpl *Yr = Y->getChannelData();
-  pfs::Array2DImpl *Zr = Z->getChannelData();
-  
-  int w = Yr->getCols();
-  int h = Yr->getRows();
-  
-  float maxLum,avLum;
-  calculateLuminance( w, h, Yr->getRawData(), avLum, maxLum );
-  
-  pfs::Array2DImpl* L = new pfs::Array2DImpl(w, h);
-  tmo_drago03(w, h, Yr->getRawData(), L->getRawData(), maxLum, avLum, biasValue, ph);
-  
-  for( int x=0 ; x<w ; x++ )
-  {
-    for( int y=0 ; y<h ; y++ )
+    std::cout << "pfstmo_drago03 (";
+    std::cout << "bias: " << biasValue << ")" << std::endl;
+
+    pfs::Channel *X, *Y, *Z;
+    frame->getXYZChannels( X, Y, Z );
+
+    frame->getTags()->setString("LUMINANCE", "RELATIVE");
+    //---
+
+    if( Y == NULL )
+        throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
+
+    pfs::Array2DImpl *Xr = X->getChannelData();
+    pfs::Array2DImpl *Yr = Y->getChannelData();
+    pfs::Array2DImpl *Zr = Z->getChannelData();
+
+    int w = Yr->getCols();
+    int h = Yr->getRows();
+
+    float maxLum,avLum;
+    calculateLuminance( w, h, Yr->getRawData(), avLum, maxLum );
+
+    pfs::Array2DImpl* L = new pfs::Array2DImpl(w, h);
+    tmo_drago03(w, h, Yr->getRawData(), L->getRawData(), maxLum, avLum, biasValue, ph);
+
+    for( int x=0 ; x<w ; x++ )
     {
-      float scale = (*L)(x,y) / (*Yr)(x,y);
-      (*Yr)(x,y) *= scale;
-      (*Xr)(x,y) *= scale;
-      (*Zr)(x,y) *= scale;
+        for( int y=0 ; y<h ; y++ )
+        {
+            float scale = (*L)(x,y) / (*Yr)(x,y);
+            (*Yr)(x,y) *= scale;
+            (*Xr)(x,y) *= scale;
+            (*Zr)(x,y) *= scale;
+        }
     }
-  }
-  
-	if (!ph->isTerminationRequested())
-    ph->newValue( 100 );
-  
-  delete L;
+
+    if (!ph->isTerminationRequested())
+        ph->newValue( 100 );
+
+    delete L;
 }
 

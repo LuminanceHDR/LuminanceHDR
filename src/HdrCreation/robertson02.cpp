@@ -305,8 +305,9 @@ float normalizeI( float* I, int M )
 {
   int Mmin, Mmax;
   // find min max
-  for( Mmin=0 ; Mmin<M && I[Mmin]==0 ; Mmin++ );
-  for( Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; Mmax-- );
+  // TODO: check this rubbish
+  for ( Mmin=0 ; Mmin<M && I[Mmin]==0 ; Mmin++ ) {}
+  for ( Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; Mmax-- ) {}
   
   int Mmid = Mmin+(Mmax-Mmin)/2;
   float mid = I[Mmid];

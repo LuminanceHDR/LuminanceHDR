@@ -26,27 +26,27 @@
 
 #include <QThread>
 #include "Common/options.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
 
 class LoadHdrThread : public QThread {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-	LoadHdrThread(QString filename, QString RecentDirHDRSetting);
-  LoadHdrThread(QString filename);
-	virtual ~LoadHdrThread();
-	QString getHdrFileName() { return fname; }
+    LoadHdrThread(QString filename, QString RecentDirHDRSetting);
+    LoadHdrThread(QString filename);
+    virtual ~LoadHdrThread();
+    QString getHdrFileName() { return fname; }
 signals:
-	void updateRecentDirHDRSetting(QString);
-	void hdr_ready(pfs::Frame*, QString fname);
-	void load_failed(QString error_message);
-	void maximumValue(int value);
-	void nextstep(int step);
+    void updateRecentDirHDRSetting(QString);
+    void hdr_ready(pfs::Frame*, QString fname);
+    void load_failed(QString error_message);
+    void maximumValue(int value);
+    void nextstep(int step);
 protected:
-	void run();
+    void run();
 private:
-	QString fname;
-  QString RecentDirHDRSetting;
-	LuminanceOptions *luminance_options;
+    QString fname;
+    QString RecentDirHDRSetting;
+    LuminanceOptions *luminance_options;
 };
 #endif

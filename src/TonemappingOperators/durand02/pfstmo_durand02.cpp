@@ -36,12 +36,11 @@
 #include <cmath>
 
 #include "Libpfs/colorspace.h"
+#include "Libpfs/frame.h"
 #include "tmo_durand02.h"
 
 void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float baseContrast, ProgressHelper *ph)
-{
-  pfs::DOMIO pfsio;
-  
+{ 
   //--- default tone mapping parameters;
   //#ifdef HAVE_FFTW3F
   //  float sigma_s = 40.0f;
@@ -53,13 +52,15 @@ void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float base
   int downsample=1;
   bool original_algorithm = false;
   
-  std::cout << "pfstmo_durand02" << std::endl;
+  std::cout << "pfstmo_durand02 (";
 #ifdef HAVE_FFTW3F
-  std::cout << "using fftw3f" << std::endl;
+  std::cout << "fftw3f ON";
+#else
+  std::cout << "fftw3f OFF";
 #endif
-  std::cout << "sigma_s: " << sigma_s << std::endl;
-  std::cout << "sigma_r: " << sigma_r << std::endl;
-  std::cout << "base contrast: " << baseContrast << std::endl;
+  std::cout << ", sigma_s: " << sigma_s;
+  std::cout << ", sigma_r: " << sigma_r;
+  std::cout << ", base contrast: " << baseContrast << ")" << std::endl;
   
   pfs::Channel *X, *Y, *Z;
   
