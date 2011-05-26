@@ -140,7 +140,7 @@ namespace pfs
 
     ChannelIteratorPtr FrameImpl::getChannelIterator()
     {
-        return ChannelIteratorPtr( new ChannelIteratorImpl( &channel ) );
+        return ChannelIteratorPtr( new ChannelIterator( &channel ) );
     }
 
     TagContainer* FrameImpl::getTags()

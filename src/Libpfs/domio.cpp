@@ -37,8 +37,11 @@ namespace pfs
 {
     const char *PFSFILEID="PFS1\x0a";
 
-    DOMIO::DOMIO() { };
-    DOMIO::~DOMIO() { };
+    DOMIO::DOMIO()
+    { }
+
+    DOMIO::~DOMIO()
+    { }
 
     Frame* DOMIO::readFrame( FILE *inputStream )
     {

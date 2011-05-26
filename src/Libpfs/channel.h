@@ -89,7 +89,7 @@ namespace pfs
       /* width = cols */
       /* height = rows */
 
-      std::string* name;
+      std::string name;
       Array2DImpl* channel_impl;
 
   protected:
@@ -144,47 +144,36 @@ namespace pfs
    * Iterator that allows to get the list of available channels in a frame.
    */
   class ChannelIterator
-    {
-    public:
-      /**
-       * Get next item on the list.
-       */
-      virtual Channel *getNext() = 0;
-      /**
-       * Returns true if there is still an item left on the list.
-       */
-      virtual bool hasNext() const = 0;
-    };
-
-  //------------------------------------------------------------------------------
-  // Channel Iterator implementation
-  //-----------------------------------------------------------------------------
-  class ChannelIteratorImpl: public ChannelIterator
   {
       ChannelMap::iterator it;
       ChannelMap *cm;
   public:
-      ChannelIteratorImpl( ChannelMap *cm ) : cm(cm)
+      inline ChannelIterator( ChannelMap *cm ) : cm(cm)
       {
           reset();
       }
 
-      void reset()
+      inline void reset()
       {
           it = cm->begin();
       }
 
-      Channel *getNext()
+      /**
+       * Get next item on the list.
+       */
+      inline Channel *getNext()
       {
           if ( !hasNext() ) return NULL;
           return (it++)->second;
       }
 
-      bool hasNext() const
+      /**
+       * Returns true if there is still an item left on the list.
+       */
+      inline bool hasNext() const
       {
           return it != cm->end();
       }
-
   };
 
   typedef SelfDestructPtr<ChannelIterator> ChannelIteratorPtr;

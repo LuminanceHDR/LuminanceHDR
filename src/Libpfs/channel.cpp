@@ -42,7 +42,7 @@ namespace pfs
     {
         channel_impl = new Array2DImpl( width, height );
         tags = new TagContainerImpl();
-        name = new std::string( n_name );
+        name = n_name;
 
         //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
     }
@@ -53,7 +53,6 @@ namespace pfs
 
         delete channel_impl;
         delete tags;
-        delete name; //free( (void*)name );
     }
 
     // Channel implementation
@@ -98,7 +97,7 @@ namespace pfs
 
     std::string ChannelImpl::getName() const
     {
-        return name->data();
+        return name;
     }
 
     //    inline float& operator()( int x, int y )

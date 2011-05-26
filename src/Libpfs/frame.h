@@ -169,7 +169,7 @@ namespace pfs
         TagContainerImpl *tags;
 
         ChannelMap channel;
-        ChannelIteratorImpl channelIterator;
+        ChannelIterator channelIterator;
 
     public:
 
