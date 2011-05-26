@@ -33,20 +33,14 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- *
- * $Id: pfs.h,v 1.2 2006/03/01 17:21:16 rafm Exp $
- *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- * Different implementation for ChannelImpl and FrameImpl
+ *
  */
 
 #ifndef PFS_H
 #define PFS_H
 
-//#include <stdio.h>
 #include <string.h>
-//#include <getopt.h> // struct option;
-//#include <string>
 
 #define PFSEOL "\x0a"
 #define PFSEOLCH '\x0a'

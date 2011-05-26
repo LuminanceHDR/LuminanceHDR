@@ -21,11 +21,8 @@
  * ---------------------------------------------------------------------- 
  * 
  * @author Rafal Mantiuk, <mantiuk@mpi-sb.mpg.de>
- *
- * $Id: pfs.cpp,v 1.11 2008/01/01 13:01:21 rafm Exp $
- *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- * Different implementation for ChannelImpl and FrameImpl
+ *
  */
 
 #include "pfs.h"
