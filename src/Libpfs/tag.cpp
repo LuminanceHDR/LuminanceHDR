@@ -28,6 +28,7 @@
 #include "tag.h"
 #include "frame.h"
 
+#include <stdio.h>
 #include <list>
 #include <string>
 

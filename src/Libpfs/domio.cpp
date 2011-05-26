@@ -25,6 +25,7 @@
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  */
 
+#include <stdio.h>
 #include <list>
 
 #include "domio.h"

@@ -28,6 +28,8 @@
 #ifndef PYRAMID_ASHIKHMIN_H
 #define PYRAMID_ASHIKHMIN_H
 
+#include <stdio.h>
+
 #include "Libpfs/array2d.h"
 
 class Pyramid { // each level of a Gaussian pyramid
