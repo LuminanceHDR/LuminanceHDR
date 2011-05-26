@@ -41,7 +41,7 @@ namespace pfs
     ChannelImpl::ChannelImpl( int width, int height, std::string n_name) //const char *n_name )
     {
         channel_impl = new Array2DImpl( width, height );
-        tags = new TagContainerImpl();
+        tags = new TagContainer();
         name = n_name;
 
         //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;

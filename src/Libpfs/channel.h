@@ -86,16 +86,15 @@ namespace pfs
 
   class ChannelImpl: public Channel
   {
+      friend class DOMIO;
+
       /* width = cols */
       /* height = rows */
-
+  protected:
       std::string name;
       Array2DImpl* channel_impl;
 
-  protected:
-      friend class DOMIO;
-
-      TagContainerImpl *tags;
+      TagContainer *tags;
 
   public:
       ChannelImpl( int width, int height, std::string n_name); //const char *n_name )

@@ -166,7 +166,7 @@ namespace pfs
     protected:
         friend class DOMIO;
 
-        TagContainerImpl *tags;
+        TagContainer *tags;
 
         ChannelMap channel;
         ChannelIterator channelIterator;

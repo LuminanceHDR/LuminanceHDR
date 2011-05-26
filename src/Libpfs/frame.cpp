@@ -41,7 +41,7 @@ namespace pfs
     FrameImpl::FrameImpl( int width, int height ): width( width ), height( height ),
     channelIterator( &channel )
     {
-        tags = new TagContainerImpl();
+        tags = new TagContainer();
     }
 
     FrameImpl::~FrameImpl()

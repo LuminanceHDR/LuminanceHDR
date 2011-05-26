@@ -37,156 +37,154 @@ using namespace std;
 namespace pfs
 {
 
-//   TagContainerImpl::~TagContainerImpl()
-//   {
-//     tagList.clear();
-//   }
-
-    TagList::const_iterator TagContainerImpl::tagsBegin() const
-  {
-    return tagList.begin();
-  }
-
-    TagList::const_iterator TagContainerImpl::tagsEnd() const
-  {
-    return tagList.end();
-  }
-
-  int TagContainerImpl::getSize() const
-  {
-    return (int)tagList.size();
-  }
-
-  void TagContainerImpl::appendTagEOL( const char *tagValue )
-  {
-    assert( tagValue[strlen( tagValue ) -1] == PFSEOLCH );
-    tagList.push_back( string( tagValue, strlen( tagValue ) -1 ) );
-  }
-
-  void TagContainerImpl::appendTag( const string &tagValue )
-  {
-    tagList.push_back( tagValue );
-  }
-
-  TagList::iterator TagContainerImpl::findTag( const char *tagName )
-  {
-    size_t tagNameLen = strlen( tagName );
-    TagList::iterator it;
-    for( it = tagList.begin(); it != tagList.end(); it++ )
+    TagList::const_iterator TagContainer::tagsBegin() const
     {
-      if( !memcmp( tagName, it->c_str(), tagNameLen ) ) break; // Found
+        return m_tags.begin();
     }
-    return it;
-  }
 
-  void TagContainerImpl::setTag( const char *tagName, const char *tagValue )
-  {
-    string tagVal( tagName );
-    tagVal += "=";
-    tagVal += tagValue;
-
-    TagList::iterator element = findTag( tagName );
-    if( element == tagList.end() ) { // Does not exist
-      tagList.push_back( tagVal );
-    } else {                // Already exist
-      *element = tagVal;
+    TagList::const_iterator TagContainer::tagsEnd() const
+    {
+        return m_tags.end();
     }
-  }
 
-  const char *TagContainerImpl::getTag( const char *tagName )
-  {
-    TagList::iterator element = findTag( tagName );
-    if( element == tagList.end() ) return NULL;
+    int TagContainer::getSize() const
+    {
+        return (int)m_tags.size();
+    }
 
-    std::string::size_type equalSign = element->find( '=' );
-    assert( equalSign != string::npos );
+    void TagContainer::appendTagEOL( const char *tagValue )
+    {
+        assert( tagValue[strlen( tagValue ) -1] == PFSEOLCH );
+        m_tags.push_back( string( tagValue, strlen( tagValue ) -1 ) );
+    }
 
-    return element->c_str() + equalSign + 1;
-  }
+    void TagContainer::appendTag( const string &tagValue )
+    {
+        m_tags.push_back( tagValue );
+    }
 
+    TagList::iterator TagContainer::findTag( const char *tagName )
+    {
+        size_t tagNameLen = strlen( tagName );
+        TagList::iterator it;
+        for( it = m_tags.begin(); it != m_tags.end(); it++ )
+        {
+            if ( !memcmp( tagName, it->c_str(), tagNameLen ) ) break; // Found
+        }
+        return it;
+    }
 
-  //Implementation of TagContainer
-  const char* TagContainerImpl::getString( const char *tagName )
-  {
-    return getTag( tagName );
-  }
+    void TagContainer::setTag( const char *tagName, const char *tagValue )
+    {
+        string tagVal( tagName );
+        tagVal += "=";
+        tagVal += tagValue;
 
-  void TagContainerImpl::setString( const char *tagName, const char *tagValue )
-  {
-    setTag( tagName, tagValue );
-  }
+        TagList::iterator element = findTag( tagName );
+        if ( element == m_tags.end() )
+        {
+            // Does not exist
+            m_tags.push_back( tagVal );
+        }
+        else
+        {
+            // Already exist
+            *element = tagVal;
+        }
+    }
 
-  void TagContainerImpl::removeTag( const char *tagName )
-  {
-    TagList::iterator element = findTag( tagName );
-    if( element != tagList.end() ) tagList.erase( element );
-  }
+    const char *TagContainer::getTag( const char *tagName )
+    {
+        TagList::iterator element = findTag( tagName );
+        if ( element == m_tags.end() ) return NULL;
 
-  TagIteratorPtr TagContainerImpl::getIterator() const
-  {
-    return TagIteratorPtr( new TagIteratorImpl( tagList ) );
-  }
+        std::string::size_type equalSign = element->find( '=' );
+        assert( equalSign != string::npos );
 
-  void TagContainerImpl::removeAllTags()
-  {
-    tagList.clear();
-  }
+        return element->c_str() + equalSign + 1;
+    }
 
-  void copyTags( Frame *from, Frame *to )
-  {
-      copyTags( from->getTags(), to->getTags() );
-      pfs::ChannelIterator *it = from->getChannels();
-      while ( it->hasNext() )
-      {
-          pfs::Channel *fromCh = it->getNext();
-          pfs::Channel *toCh = to->getChannel( fromCh->getName() );
-          if ( toCh == NULL ) // Skip if there is no corresponding channel
-              continue;
-          copyTags( fromCh->getTags(), toCh->getTags() );
-      }
+    const char* TagContainer::getString( const char *tagName )
+    {
+        return getTag( tagName );
+    }
 
-  }
+    void TagContainer::setString( const char *tagName, const char *tagValue )
+    {
+        setTag( tagName, tagValue );
+    }
 
-  void copyTags( const TagContainer *from, TagContainer *to )
-  {
-      TagContainerImpl *f = (TagContainerImpl*)from;
-      TagContainerImpl *t = (TagContainerImpl*)to;
+    void TagContainer::removeTag( const char *tagName )
+    {
+        TagList::iterator element = findTag( tagName );
+        if( element != m_tags.end() ) m_tags.erase( element );
+    }
 
-      t->removeAllTags();
+    TagIteratorPtr TagContainer::getIterator() const
+    {
+        return TagIteratorPtr( new TagIterator( m_tags ) );
+    }
 
-      TagList::const_iterator it;
-      for( it = f->tagsBegin(); it != f->tagsEnd(); it++ ) {
-          t->appendTag( *it );
-      }
-  }
+    void TagContainer::removeAllTags()
+    {
+        m_tags.clear();
+    }
 
-  void readTags( TagContainerImpl *tags, FILE *in )
-  {
-      int readItems;
-      int tagCount;
-      readItems = fscanf( in, "%d" PFSEOL, &tagCount );
-      if( readItems != 1 || tagCount < 0 || tagCount > 1024 )
-          throw Exception( "Corrupted PFS tag section: missing or wrong number of tags" );
+    void copyTags( Frame *from, Frame *to )
+    {
+        copyTags( from->getTags(), to->getTags() );
+        pfs::ChannelIterator *it = from->getChannels();
+        while ( it->hasNext() )
+        {
+            pfs::Channel *fromCh = it->getNext();
+            pfs::Channel *toCh = to->getChannel( fromCh->getName() );
+            if ( toCh == NULL ) // Skip if there is no corresponding channel
+                continue;
+            copyTags( fromCh->getTags(), toCh->getTags() );
+        }
 
-      char buf[MAX_TAG_STRING+1];
-      for( int i = 0; i < tagCount; i++ ) {
-          char *read = fgets( buf, MAX_TAG_STRING, in );
-          if( read == NULL ) throw Exception( "Corrupted PFS tag section: missing tag" );
-          char *equalSign = strstr( buf, "=" );
-          if( equalSign == NULL ) throw Exception( "Corrupted PFS tag section ('=' sign missing)" );
-          tags->appendTagEOL( buf );
-      }
-  }
+    }
 
-  void writeTags( const TagContainerImpl *tags, FILE *out )
-  {
-      TagList::const_iterator it;
-      fprintf( out, "%d" PFSEOL, tags->getSize() );
-      for( it = tags->tagsBegin(); it != tags->tagsEnd(); it++ ) {
-          fprintf( out, "%s", it->c_str() );
-          fprintf( out, PFSEOL );
-      }
-  }
+    void copyTags( const TagContainer *f, TagContainer *t )
+    {
+        t->removeAllTags();
+
+        for ( TagList::const_iterator it = f->tagsBegin(); it != f->tagsEnd(); it++ )
+        {
+            t->appendTag( *it );
+        }
+    }
+
+    void readTags( TagContainer *tags, FILE *in )
+    {
+        int readItems;
+        int tagCount;
+        readItems = fscanf( in, "%d" PFSEOL, &tagCount );
+        if ( readItems != 1 || tagCount < 0 || tagCount > 1024 )
+        {
+            throw Exception( "Corrupted PFS tag section: missing or wrong number of tags" );
+        }
+
+        char buf[MAX_TAG_STRING+1];
+        for( int i = 0; i < tagCount; i++ )
+        {
+            char *read = fgets( buf, MAX_TAG_STRING, in );
+            if( read == NULL ) throw Exception( "Corrupted PFS tag section: missing tag" );
+            char *equalSign = strstr( buf, "=" );
+            if( equalSign == NULL ) throw Exception( "Corrupted PFS tag section ('=' sign missing)" );
+            tags->appendTagEOL( buf );
+        }
+    }
+
+    void writeTags( const TagContainer *tags, FILE *out )
+    {
+        fprintf( out, "%d" PFSEOL, tags->getSize() );
+        for (TagList::const_iterator it = tags->tagsBegin(); it != tags->tagsEnd(); it++ )
+        {
+            fprintf( out, "%s", it->c_str() );
+            fprintf( out, PFSEOL );
+        }
+    }
 
 }
 
