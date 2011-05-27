@@ -122,8 +122,8 @@ namespace pfs
         }
         else
         {
-            ChannelImpl *ch = new ChannelImpl( m_width, m_height, name );
-            m_channels.insert( std::pair<std::string, ChannelImpl*>(name, ch) );
+            Channel *ch = new Channel( m_width, m_height, name );
+            m_channels.insert( std::pair<std::string, Channel*>(name, ch) );
 
             return ch;
         }

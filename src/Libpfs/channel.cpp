@@ -38,7 +38,7 @@ namespace pfs
     // Channel implementation
     //------------------------------------------------------------------------------
 
-    ChannelImpl::ChannelImpl( int width, int height, std::string n_name) //const char *n_name )
+    Channel::Channel( int width, int height, std::string n_name)
     {
         channel_impl = new Array2DImpl( width, height );
         tags = new TagContainer();
@@ -47,7 +47,7 @@ namespace pfs
         //std::cout << "Channel constructor (" << name->data() << ")" << std::endl;
     }
 
-    ChannelImpl::~ChannelImpl()
+    Channel::~Channel()
     {
         //std::cout << "Channel destructor (" << name->data() << ")" << std::endl;
 
@@ -56,12 +56,12 @@ namespace pfs
     }
 
     // Channel implementation
-    TagContainer* ChannelImpl::getTags()
+    TagContainer* Channel::getTags()
     {
         return tags;
     }
 
-    float* ChannelImpl::getRawData()
+    float* Channel::getRawData()
     {
         return channel_impl->getRawData();
     }
@@ -81,7 +81,7 @@ namespace pfs
      * Gets width of the channel (in pixels).
      * This is a synonym for Array2D::getCols().
      */
-    int ChannelImpl::getWidth() const
+    int Channel::getWidth() const
     {
         return channel_impl->getCols();
     }
@@ -90,12 +90,12 @@ namespace pfs
      * Gets height of the channel (in pixels).
      * This is a synonym for Array2D::getRows().
      */
-    int ChannelImpl::getHeight() const
+    int Channel::getHeight() const
     {
         return channel_impl->getRows();
     }
 
-    std::string ChannelImpl::getName() const
+    std::string Channel::getName() const
     {
         return name;
     }
@@ -120,7 +120,7 @@ namespace pfs
     //      return channel_map->operator()(rowMajorIndex);
     //    }
 
-    Array2DImpl* ChannelImpl::getChannelData()
+    Array2DImpl* Channel::getChannelData()
     {
         return channel_impl;
     }

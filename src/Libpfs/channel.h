@@ -39,52 +39,25 @@ namespace pfs
 {
 
 /**
+  * TODO: change it!
  * Channel interface represents a 2D rectangular array with
  * associated tags.
  */
-  class Channel /*: public Array2D */
-  {
-  public:
-    /**
-     * Gets width of the channel (in pixels).
-     * This is a synonym for Array2D::getCols().
-     */
-    virtual int getWidth() const = 0;
+//  class Channel /*: public Array2D */
+//  {
+//  public:
+//    virtual int getWidth() const = 0;
+//    virtual int getHeight() const = 0;
+//    virtual std::string getName() const = 0;
+//    virtual TagContainer *getTags() = 0;
+//    virtual float *getRawData() = 0;
+//    virtual Array2DImpl* getChannelData() = 0;
+//    /* Empty Virtual Destructor for Channel */
+//    virtual ~Channel() { }
+//  };
 
-    /**
-     * Gets height of the channel (in pixels).
-     * This is a synonym for Array2D::getRows().
-     */
-    virtual int getHeight() const = 0;
-
-    /**
-     * Gets name of the channel.
-     */
-    virtual std::string getName() const = 0;
-
-    /**
-     * Returns TagContainer that can be used to access or modify
-     * tags associated with this Channel object.
-     */
-    virtual TagContainer *getTags() = 0;
-
-    /**
-     * For performance reasons, the channels can be accessed as a
-     * table of float values. Data is given in row-major order, i.e.
-     * it is indexed data[x+y*width]. If performance is not crucial,
-     * use Array2D interface instead.
-     *
-     * @return a table of floats of the size width*height
-     */
-    virtual float *getRawData() = 0;
-
-    virtual Array2DImpl* getChannelData() = 0;
-
-    /* Empty Virtual Destructor for Channel */
-    virtual ~Channel() { }
-  };
-
-  class ChannelImpl: public Channel
+  //class ChannelImpl: public Channel
+  class Channel
   {
       friend class DOMIO;
 
@@ -97,27 +70,41 @@ namespace pfs
       TagContainer *tags;
 
   public:
-      ChannelImpl( int width, int height, std::string n_name); //const char *n_name )
+      Channel( int width, int height, std::string n_name);
 
-      virtual ~ChannelImpl();
+      virtual ~Channel();
 
-      // Channel implementation
+      /**
+       * Returns TagContainer that can be used to access or modify
+       * tags associated with this Channel object.
+       */
       TagContainer *getTags();
 
+      /**
+       * For performance reasons, the channels can be accessed as a
+       * table of float values. Data is given in row-major order, i.e.
+       * it is indexed data[x+y*width]. If performance is not crucial,
+       * use Array2D interface instead.
+       *
+       * @return a table of floats of the size width*height
+       */
       float *getRawData();
 
       /**
-   * Gets width of the channel (in pixels).
-   * This is a synonym for Array2D::getCols().
-   */
+       * Gets width of the channel (in pixels).
+       * This is a synonym for Array2D::getCols().
+       */
       virtual int getWidth() const;
 
       /**
-   * Gets height of the channel (in pixels).
-   * This is a synonym for Array2D::getRows().
-   */
+       * Gets height of the channel (in pixels).
+       * This is a synonym for Array2D::getRows().
+       */
       virtual int getHeight() const;
 
+      /**
+       * Gets name of the channel.
+       */
       virtual std::string getName() const;
 
       Array2DImpl* getChannelData();
@@ -134,7 +121,7 @@ namespace pfs
       }
   };
 
-  typedef std::map<std::string, ChannelImpl*, string_cmp> ChannelMap; //, str_cmp> ;
+  typedef std::map<std::string, Channel*, string_cmp> ChannelMap; //, str_cmp> ;
 
   //------------------------------------------------------------------------------
   // Channel Iterator Interface

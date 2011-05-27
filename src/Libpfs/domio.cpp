@@ -76,7 +76,7 @@ namespace pfs
         readTags( frame->m_tags, inputStream );
 
         //Read channel IDs and tags
-        std::list<ChannelImpl*> orderedChannel;
+        std::list<Channel*> orderedChannel;
         for( int i = 0; i < channelCount; i++ )
         {
             char channelName[MAX_CHANNEL_NAME+1], *rs;
@@ -88,7 +88,7 @@ namespace pfs
             if( len < 1 || channelName[len-1] != PFSEOLCH )
                 throw Exception( "Corrupted PFS file: bad channel name" );
             channelName[len-1] = 0;
-            ChannelImpl *ch = (ChannelImpl*)frame->createChannel( channelName );
+            Channel *ch = frame->createChannel( channelName );
             readTags( ch->tags, inputStream );
             orderedChannel.push_back( ch );
         }
@@ -99,10 +99,10 @@ namespace pfs
 
 
         //Read channels
-        std::list<ChannelImpl*>::iterator it;
+        std::list<Channel*>::iterator it;
         for ( it = orderedChannel.begin(); it != orderedChannel.end(); it++ )
         {
-            ChannelImpl *ch = *it;
+            Channel *ch = *it;
             unsigned int size = frame->getWidth()*frame->getHeight();
             read = fread( ch->getRawData(), sizeof( float ), size, inputStream );
             if ( read != size )
