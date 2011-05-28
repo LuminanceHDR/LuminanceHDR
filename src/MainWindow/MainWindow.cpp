@@ -84,21 +84,10 @@ m_ldrsNum(0), m_hdrsNum(0)
     toolBarOptsGroup->addAction(actionText_Alongside_Icons);
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
-    QActionGroup *toolBar_2_OptsGroup = new QActionGroup(this);
-    toolBar_2_OptsGroup->addAction(actionText_Under_Icons);
-    toolBar_2_OptsGroup->addAction(actionIcons_Only);
-    toolBar_2_OptsGroup->addAction(actionText_Alongside_Icons);
-    toolBar_2_OptsGroup->addAction(actionText_Only);
-    menuToolbars->addAction(toolBar_2->toggleViewAction());
-    QActionGroup *toolBar_3_OptsGroup = new QActionGroup(this);
-    toolBar_3_OptsGroup->addAction(actionText_Under_Icons);
-    toolBar_3_OptsGroup->addAction(actionIcons_Only);
-    toolBar_3_OptsGroup->addAction(actionText_Alongside_Icons);
-    toolBar_3_OptsGroup->addAction(actionText_Only);
-    menuToolbars->addAction(toolBar_3->toggleViewAction());
 
-
+#ifdef Q_WS_MAC
     setUnifiedTitleAndToolBarOnMac(true);
+#endif
 
     mdiArea = new QMdiArea(this);
     mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -154,16 +143,8 @@ m_ldrsNum(0), m_hdrsNum(0)
         showSplash();
     // END SPLASH SCREEN    ------------------------------------------------------------------
 
-    toolBar->show();
-
     testTempDir(luminance_options->tempfilespath);
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
-
-    // align on the right the tonemap action
-    QWidget* spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // toolBar_2 is a pointer to an existing toolbar
-    toolBar_2->insertWidget(TonemapAction, spacer);
 }
 
 void MainWindow::setupConnections()
@@ -1050,41 +1031,25 @@ void MainWindow::fileExit()
 void MainWindow::Text_Under_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextUnderIcon);
-    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    toolBar_2->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    toolBar_3->setToolButtonStyle(Qt::ToolButtonIconOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
-    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonIconOnly);
-    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
-    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextBesideIcon);
-    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-    toolBar_2->setToolButtonStyle(Qt::ToolButtonTextOnly);
-    toolBar_3->setToolButtonStyle(Qt::ToolButtonTextOnly);
     settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
-    settings->setValue(KEY_TOOLBAR_2_MODE,Qt::ToolButtonTextOnly);
-    settings->setValue(KEY_TOOLBAR_3_MODE,Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::showSplash()
@@ -1265,6 +1230,8 @@ void MainWindow::closeEvent ( QCloseEvent *event )
 
 void MainWindow::setup_tm()
 {
+    // TODO: Building TM Thread
+
     // create tonemapping panel
     dock = new QDockWidget(tr("Tone Mapping Options"), this);
     dock->setObjectName("Tone Mapping Options"); // for save and restore docks state
@@ -1286,13 +1253,6 @@ void MainWindow::setup_tm()
 void MainWindow::setup_tm_slots()
 {
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-    //connect(dock, SIGNAL(visibilityChanged(bool)), this, SLOT(tmDockVisibilityChanged(bool)));
-}
-
-void MainWindow::tmDockVisibilityChanged(bool /*b*/)
-{
-    //printf("tmDockVisibilityChanged() \n");
-    //tonemap_requested();
 }
 
 void MainWindow::tonemap_requested()
@@ -1331,18 +1291,6 @@ void MainWindow::tonemap_requested()
         tmPanel->setSizes((tm_status.curr_tm_frame)->getWidth(), (tm_status.curr_tm_frame)->getHeight());
 
         dock->show(); // it must be the last line of this branch!
-
-	// hide main toolbar
-	toolBar->hide();
-
-	// hide tools toolbar
-	toolBar_3->hide();
-
-    	// add action previous, next images to tonemapping toolbar
-    	toolBar_2->removeAction(TonemapAction);
-    	toolBar_2->addAction(actionShowPrevious);
-    	toolBar_2->addAction(actionShowNext);
-    	toolBar_2->addAction(TonemapAction);
     }
     else if ( !dock->isHidden() )
     {
@@ -1370,42 +1318,7 @@ void MainWindow::tonemap_requested()
         tmPanel->applyButton->setEnabled(false);
 
         dock->hide(); // It must be the last line of this branch!
-
-	// show main toolbar
-	toolBar->show();
-
-	// show tools toolbar
-	toolBar_3->show();
-
-    	// remove action previous, next images from tonemapping toolbar
-    	toolBar_2->removeAction(actionShowPrevious);
-    	toolBar_2->removeAction(actionShowNext);
     }
-
-//    if (currenthdr==NULL)
-//        return;
-//    this->setDisabled(true);
-//    try {
-//        TonemappingWindow *tmodialog=new TonemappingWindow(this, currenthdr->getHDRPfsFrame(), currenthdr->getFileName());
-//        tmodialog->setAttribute(Qt::WA_DeleteOnClose);
-//        //tmodialog->setAttribute(Qt::WA_Window);
-//        connect(tmodialog,SIGNAL(closing()),this,SLOT(reEnableMainWin()));
-//        tmodialog->show();
-//#ifndef WIN32
-//        // Why only windows?
-//        hide();
-//#endif
-//        if (helpBrowser)
-//            helpBrowser->hide();
-//    }
-//    catch (pfs::Exception e) {
-//        QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: %1 ").arg(e.getMessage()));
-//        reEnableMainWin();
-//    }
-//    catch (...) {
-//        QMessageBox::warning(this,tr("Luminance HDR"),tr("Error: Failed to Tonemap Image"));
-//        reEnableMainWin();
-//    }
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1493,186 +1406,244 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
 void MainWindow::addMDIResult(QImage* image)
 {
-	m_ldrsNum++;
-        LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
+    m_ldrsNum++;
+    LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
-        n->normalSize();
-        //n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
+    n->normalSize();
+    //n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
 
-        if (fitToWindowAct->isChecked())
-                n->fitToWindow(true);
-        QMdiSubWindow *subwin = new QMdiSubWindow(this);
-        subwin->setAttribute(Qt::WA_DeleteOnClose);
-        subwin->setWidget(n);
-        mdiArea->addSubWindow(subwin);
+    if (fitToWindowAct->isChecked())
+        n->fitToWindow(true);
+    QMdiSubWindow *subwin = new QMdiSubWindow(this);
+    subwin->setAttribute(Qt::WA_DeleteOnClose);
+    subwin->setWidget(n);
+    mdiArea->addSubWindow(subwin);
 
-        //n->showMaximized();
+    //n->showMaximized();
 
-        if (luminance_options->tmowindow_max)
-                n->showMaximized();
-        else
-                n->showNormal();
+    if (luminance_options->tmowindow_max)
+        n->showMaximized();
+    else
+        n->showNormal();
 
-        subwin->installEventFilter(this);
+    subwin->installEventFilter(this);
 
-	connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-        //connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
+    connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+    //connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
 {
-	m_hdrsNum++;
-        HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
-        HDR->setFreePfsFrameOnExit(true);
-        HDR->updateHDR(frame);
-        HDR->setFileName(QString(tr("Processed HDR")));
-        HDR->setWindowTitle(QString(tr("Processed HDR")));
-        HDR->setSelectionTool(true);
-        HDR->normalSize();
-        HDR->showMaximized();
-//        if (actionFit_to_Window->isChecked())
-//                HDR->fitToWindow(true);
-        QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
-        HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
-        HdrSubWin->setWidget(HDR);
-        mdiArea->addSubWindow(HdrSubWin);
-        HDR->showMaximized();
+    m_hdrsNum++;
+    HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
+    HDR->setFreePfsFrameOnExit(true);
+    HDR->updateHDR(frame);
+    HDR->setFileName(QString(tr("Processed HDR")));
+    HDR->setWindowTitle(QString(tr("Processed HDR")));
+    HDR->setSelectionTool(true);
+    HDR->normalSize();
+    HDR->showMaximized();
+    //        if (actionFit_to_Window->isChecked())
+    //                HDR->fitToWindow(true);
+    QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
+    HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
+    HdrSubWin->setWidget(HDR);
+    mdiArea->addSubWindow(HdrSubWin);
+    HDR->showMaximized();
 
-        if (luminance_options->tmowindow_max)
-                mdiArea->activeSubWindow()->showMaximized();
-        else
-                mdiArea->activeSubWindow()->showNormal();
+    if (luminance_options->tmowindow_max)
+        mdiArea->activeSubWindow()->showMaximized();
+    else
+        mdiArea->activeSubWindow()->showNormal();
 
-        HdrSubWin->installEventFilter(this);
+    HdrSubWin->installEventFilter(this);
 
-        //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
 void MainWindow::tonemappingFinished()
 {
-        std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
-        statusBar()->removeWidget(progInd);
-        tmPanel->applyButton->setEnabled(true);
+    std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
+    statusBar()->removeWidget(progInd);
+    tmPanel->applyButton->setEnabled(true);
 
-        delete progInd;
+    delete progInd;
 }
 
 void MainWindow::deleteTMOThread(TMOThread *th)
 {
-        delete th;
+    delete th;
 }
 
 void MainWindow::showErrorMessage(const char *e)
 {
-        QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
-                        QMessageBox::Ok,QMessageBox::NoButton);
+    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
+                          QMessageBox::Ok,QMessageBox::NoButton);
 
-        statusBar()->removeWidget(progInd);
-        tmPanel->applyButton->setEnabled(true);
+    statusBar()->removeWidget(progInd);
+    tmPanel->applyButton->setEnabled(true);
 
-        delete progInd;
+    delete progInd;
 }
 
 
 pfs::Frame * MainWindow::getSelectedFrame(HdrViewer *hdr)
 {
-	assert( hdr != NULL );
-	pfs::Frame *frame = hdr->getHDRPfsFrame();
-	QRect cropRect = hdr->getSelectionRect();
-	int x_ul, y_ul, x_br, y_br;
-	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-	return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
+    assert( hdr != NULL );
+    pfs::Frame *frame = hdr->getHDRPfsFrame();
+    QRect cropRect = hdr->getSelectionRect();
+    int x_ul, y_ul, x_br, y_br;
+    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+    return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
 }
 
 void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)
 {
-	assert( hdr != NULL );
-  
-	QRect cropRect = hdr->getSelectionRect();
-	cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+    assert( hdr != NULL );
+
+    QRect cropRect = hdr->getSelectionRect();
+    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-	if (event->type() == QEvent::Close) {
-		QMdiSubWindow *w = (QMdiSubWindow *) obj;
-		GenericViewer *v = (GenericViewer *) w->widget();
-		if (v->isHDR()) {
-			m_hdrsNum--;
-		}
-		else {
-			m_ldrsNum--;
-		}
-		return true;
-	} else {
-    //Standard event processing
-		return QMainWindow::eventFilter(obj, event);
-	}
+    if (event->type() == QEvent::Close) {
+        QMdiSubWindow *w = (QMdiSubWindow *) obj;
+        GenericViewer *v = (GenericViewer *) w->widget();
+        if (v->isHDR()) {
+            m_hdrsNum--;
+        }
+        else {
+            m_ldrsNum--;
+        }
+        return true;
+    } else {
+        //Standard event processing
+        return QMainWindow::eventFilter(obj, event);
+    }
 }
 
 void MainWindow::lockImages(bool toggled)
 {
-	m_isLocked = toggled;
-	if (!mdiArea->subWindowList().isEmpty())
-		dispatch((GenericViewer *) mdiArea->currentSubWindow()->widget());
+    m_isLocked = toggled;
+    if (!mdiArea->subWindowList().isEmpty())
+    {
+        dispatch((GenericViewer *) mdiArea->currentSubWindow()->widget());
+    }
 }
 
 void MainWindow::updateImage(GenericViewer *viewer)
 {
-	assert(viewer!=NULL);
-	assert(m_changedImage!=NULL);
-	if (m_isLocked)
-  	{
-		m_scaleFactor = m_changedImage->getImageScaleFactor();
-		m_HSB_Value = m_changedImage->getHorizScrollBarValue();
-		m_VSB_Value = m_changedImage->getVertScrollBarValue();
-		viewer->normalSize();
-		if (fitToWindowAct->isChecked())
-			viewer->fitToWindow(true);
-		else
-			viewer->fitToWindow(false);
-		viewer->zoomToFactor(m_scaleFactor);	
-		viewer->setHorizScrollBarValue(m_HSB_Value);	
-		viewer->setVertScrollBarValue(m_VSB_Value);
-	}
+    assert(viewer!=NULL);
+    assert(m_changedImage!=NULL);
+    if (m_isLocked)
+    {
+        m_scaleFactor = m_changedImage->getImageScaleFactor();
+        m_HSB_Value = m_changedImage->getHorizScrollBarValue();
+        m_VSB_Value = m_changedImage->getVertScrollBarValue();
+        viewer->normalSize();
+        if (fitToWindowAct->isChecked())
+        {
+            viewer->fitToWindow(true);
+        }
+        else
+        {
+            viewer->fitToWindow(false);
+        }
+        viewer->zoomToFactor(m_scaleFactor);
+        viewer->setHorizScrollBarValue(m_HSB_Value);
+        viewer->setVertScrollBarValue(m_VSB_Value);
+    }
 }
 
 void MainWindow::dispatch(GenericViewer *sender)
 {
-	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-	m_changedImage = sender;
-	foreach (QMdiSubWindow *p, allViewers)
-  	{
-		GenericViewer *viewer = (GenericViewer*)p->widget();
-		if (sender != viewer)
-    		{	
-			disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-			updateImage(viewer);
-			connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-		}
-	}
+    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+    m_changedImage = sender;
+    foreach (QMdiSubWindow *p, allViewers)
+    {
+        GenericViewer *viewer = (GenericViewer*)p->widget();
+        if (sender != viewer)
+        {
+            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+            updateImage(viewer);
+            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+        }
+    }
 }
 
 void MainWindow::showHDRs(bool toggled)
 {
-	QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-	if (toggled)
-	{
-		foreach (QMdiSubWindow *p, allViewers)
-  		{
-			GenericViewer *viewer = (GenericViewer*)p->widget();
-			if (viewer->isHDR())
-				p->hide();
-		}
-	}
-	else
-	{
-		foreach (QMdiSubWindow *p, allViewers)
-  		{
-			GenericViewer *viewer = (GenericViewer*)p->widget();
-			if (viewer->isHDR())
-				p->show();
-		}
-		
-	}
+    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+    if (toggled)
+    {
+        foreach (QMdiSubWindow *p, allViewers)
+        {
+            GenericViewer *viewer = (GenericViewer*)p->widget();
+            if (viewer->isHDR())
+                p->hide();
+        }
+    }
+    else
+    {
+        foreach (QMdiSubWindow *p, allViewers)
+        {
+            GenericViewer *viewer = (GenericViewer*)p->widget();
+            if (viewer->isHDR())
+                p->show();
+        }
+
+    }
+}
+
+void MainWindow::updateMenu()
+{
+    // update toolbar based on the current status
+    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
+    int num_active_viewers = allViewers.count();
+
+    GenericViewer* c_v = (GenericViewer*)mdiArea->activeSubWindow()->widget();
+    bool is_current_hdr = false;
+    if ( c_v != NULL )
+    {
+        is_current_hdr = (c_v->isHDR()) ? true : false;
+    }
+
+    switch (current_state) {
+    case IO_STATE: {
+            if (num_active_viewers == 0)
+            {
+                // No viewer open on the mdiArea
+            } else {
+                // There is at least one viewer open
+            }
+        }
+        break;
+    case TM_STATE: {
+            if (num_active_viewers == 0)
+            {
+                // if this case happens, the current hdr viewer has been closed
+                // so we need to get out of the TM_STATE
+            } else {
+                // There is at least one viewer open
+            }
+        }
+        break;
+    }
+}
+
+void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
+{
+    // based on the scaling factor of the current viewer
+    // I set correctly the status of the magnification buttons
+    float current_scale_factor = c_v->getScaleFactor();
+    if ( current_scale_factor == 1.0f )
+    {
+
+    } else if ( current_scale_factor == 0.0f )
+    {
+
+    } else {
+
+    }
 }

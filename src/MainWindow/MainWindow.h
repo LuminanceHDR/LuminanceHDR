@@ -133,7 +133,7 @@ protected slots:
     void addProcessedFrame(pfs::Frame *);
     void addMDIResult(QImage*);
     void tonemappingFinished();
-    void tmDockVisibilityChanged(bool);
+    //void tmDockVisibilityChanged(bool);
     void deleteTMOThread(TMOThread *th);
     void showErrorMessage(const char *e);
     void lockImages(bool);
@@ -186,6 +186,10 @@ protected:
 
     // I/O
     void setup_io();
+
+    // Menu & Toolbar Handling
+    void updateMenu();
+    void updateMagnificationButtons(GenericViewer*);
 
     // Tone Mapping Panel
     QDockWidget *dock;

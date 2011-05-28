@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1014</width>
-    <height>573</height>
+    <width>1238</width>
+    <height>756</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,8 +29,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1014</width>
-     <height>24</height>
+     <width>1238</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -150,40 +150,15 @@
    <addaction name="fileOpenAction"/>
    <addaction name="fileSaveAsAction"/>
    <addaction name="separator"/>
+   <addaction name="TonemapAction"/>
    <addaction name="actionShowHDRs"/>
-   <addaction name="actionShowPrevious"/>
-   <addaction name="actionShowNext"/>
    <addaction name="actionLock"/>
    <addaction name="separator"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar_2">
-   <property name="windowTitle">
-    <string>Tonemapping Toolbar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="TonemapAction"/>
-  </widget>
-  <widget class="QToolBar" name="toolBar_3">
-   <property name="windowTitle">
-    <string>Tools</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="cropToSelectionAction"/>
+   <addaction name="actionShowPrevious"/>
+   <addaction name="actionShowNext"/>
    <addaction name="zoomInAct"/>
    <addaction name="zoomOutAct"/>
    <addaction name="normalSizeAct"/>
-   <addaction name="rotatecw"/>
-   <addaction name="rotateccw"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
