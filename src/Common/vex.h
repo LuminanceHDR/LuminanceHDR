@@ -1,7 +1,7 @@
 /**
  * @brief SSE for high performance vector operations (Vector EXtension - VEX)
  *
- * This file is a part of LuminanceHDR package
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -29,10 +29,6 @@
 #include <omp.h>
 #endif
 
-#ifdef __APPLE__
-#include <Accelerate/Accelerate.h>
-#endif
-
 // Prefetch definition taken from:
 // http://software.intel.com/en-us/forums/showthread.php?t=46284
 // tune FETCH_DISTANCE according to real world experiments
@@ -577,21 +573,11 @@ void VEX_vreset(float* IO, const int N)
 
 void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
 {
-#ifdef __APPLE__
-  vDSP_dotpr(I1, 1, I2, 1, &val, N);
-  //#elif __USE_SSE__
-  //  #pragma omp parallel for reduction(+:val) schedule(static, 5120)
-  //  for (int idx = 0; idx < N; idx++)
-  //  {
-  //    val += I1[idx] * I2[idx];
-  //  }
-#else
   float t_val = 0.0f;
-#pragma omp parallel for reduction(+:t_val) schedule(static, 5120)
+#pragma omp parallel for reduction(+:t_val)
   for (int idx = 0; idx < N; idx++)
   {
     t_val += I1[idx] * I2[idx];
   }
   val = t_val;
-#endif
 }
