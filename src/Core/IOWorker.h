@@ -55,7 +55,7 @@ public slots:
     void read_frame(QString filename);
     void read_frames(QStringList filenames);
 
-    void write_hdr_frame(HdrViewer* frame, QString filename);
+    bool write_hdr_frame(HdrViewer* frame, QString filename);
     void write_ldr_frame(LdrViewer* frame, QString filename, int quality);
 signals:
     void read_failed(QString error_message);

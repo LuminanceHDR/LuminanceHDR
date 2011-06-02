@@ -13,11 +13,12 @@ IOWorker::IOWorker(QObject* parent): QObject(parent)
 
 IOWorker::~IOWorker()
 {
-    printf("IOWorker::~IOWorker()\n");
+    qDebug() << "IOWorker::~IOWorker()";
 }
 
-void IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
+bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
 {
+    bool status = true;
     emit IO_init();
 
     QFileInfo qfi(filename);
@@ -66,6 +67,8 @@ void IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     emit write_hdr_success(hdr_input, filename);
 
     emit IO_finish();
+
+    return status;
 }
 
 void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
