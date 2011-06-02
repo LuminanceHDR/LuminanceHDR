@@ -31,15 +31,17 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
 
-#ifdef __cplusplus
-# define __BEGIN_DECLS extern "C" {
-# define __END_DECLS }
-#else
-# define __BEGIN_DECLS /* empty */
-# define __END_DECLS /* empty */
-#endif
+//#ifdef __cplusplus
+//# define __BEGIN_DECLS extern "C" {
+//# define __END_DECLS }
+//#else
+//# define __BEGIN_DECLS /* empty */
+//# define __END_DECLS /* empty */
+//#endif
 
-__BEGIN_DECLS
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct
 {
@@ -143,6 +145,8 @@ gsl_cqpminimizer_minimum (gsl_cqpminimizer * minimizer);
 GSL_VAR const gsl_cqpminimizer_type *gsl_cqpminimizer_mg_pdip;
 /*GSL_VAR const gsl_cqpminimizer_type *gsl_cqpminimizer_pdip_mpc_eqc;*/
 
-__END_DECLS
+#ifdef __cplusplus
+}
+#endif
 
 #endif
