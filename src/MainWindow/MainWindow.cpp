@@ -1585,30 +1585,40 @@ void MainWindow::removeTab(int t)
                 tmPanel->applyButton->setEnabled(false);
 
                 m_tabwidget->removeTab(t);
-                delete w;
+                w->deleteLater();   // delete yourself whenever you want
 
                 setWindowModified(false);
+
+                tm_status.is_hdr_ready = false;
+                tm_status.curr_tm_frame = NULL;
+                tm_status.curr_tm_options = NULL;
+
+                tmPanel->applyButton->setEnabled(false);
             }
+            // else { }
             // if FALSE, it means that the user said "Cancel"
             // or the saving operation went wrong
+            // and we don't need to do anything
         }
         else
         {
             // if discard OR saved
+            m_tabwidget->removeTab(t);
+            w->deleteLater();   // delete yourself whenever you want
+
+            setWindowModified(false);
+
             tm_status.is_hdr_ready = false;
             tm_status.curr_tm_frame = NULL;
             tm_status.curr_tm_options = NULL;
 
-            m_tabwidget->removeTab(t);
-            delete w;
-
-            setWindowModified(false);
+            tmPanel->applyButton->setEnabled(false);
         }
     }
     else
     {
         m_tabwidget->removeTab(t);
-        delete w;
+        w->deleteLater();   // delete yourself whenever you want
     }
     updatePreviousNextActions();
 }
