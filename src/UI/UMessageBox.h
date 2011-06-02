@@ -36,6 +36,7 @@
 #include <QStringList>
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 #include "ui_about.h"
 #include "Common/config.h"
@@ -112,6 +113,49 @@ public:
       WarningMsgBox.setIcon(QMessageBox::Warning);
 
       return WarningMsgBox.exec();
+  }
+
+  static int saveDialog(QString title, QString description, QWidget* parent = 0)
+  {
+      UMessageBox WarningMsgBox(parent);
+      WarningMsgBox.setText(title);
+      WarningMsgBox.setInformativeText(description);
+      WarningMsgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+      WarningMsgBox.setDefaultButton(QMessageBox::Cancel);
+      WarningMsgBox.setIcon(QMessageBox::Warning);
+
+      return WarningMsgBox.exec();
+  }
+
+  /*
+   * Function not yet used, it will... :)
+   */
+  static void donationSplashMB(QWidget* parent = 0)
+  {
+      UMessageBox donationMB(parent);
+      donationMB.setText(tr("Donation"));
+      donationMB.setInformativeText(tr("Would you like to donate?"));
+      donationMB.setIcon(QMessageBox::Question);
+
+      QPushButton *yes = donationMB.addButton(tr("Yes, I'd love to!"), QMessageBox::ActionRole);
+      QPushButton *dontBother = donationMB.addButton(tr("Stop Bothering Me"), QMessageBox::ActionRole);
+      QPushButton *later = donationMB.addButton(tr("Remind me later"),  QMessageBox::ActionRole);
+
+      donationMB.exec();
+
+      if (donationMB.clickedButton() == yes)
+      {
+          qDebug() << "Open Donation Web page";
+      }
+      else if (donationMB.clickedButton() == dontBother)
+      {
+          qDebug() << "Stop bother me";
+
+      } else if (donationMB.clickedButton() == later)
+      {
+          qDebug() << "Remind me later";
+      }
+
   }
 };
 
