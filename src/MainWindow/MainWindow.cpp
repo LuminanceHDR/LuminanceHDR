@@ -1253,6 +1253,10 @@ bool MainWindow::maybeSave()
                     // TODO : can I launch a signal and wait that it gets executed fully?
                     return IO_Worker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
                 }
+                else
+                {
+                    return false;
+                }
             }
             break;
         case QMessageBox::Cancel:
