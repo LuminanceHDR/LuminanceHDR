@@ -28,8 +28,6 @@
 #define TMOSETTINGSVERSION "0.5"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
-#define KEY_TOOLBAR_2_MODE "MainWindowToolbar_2_VisualizationMode"
-#define KEY_TOOLBAR_3_MODE "MainWindowToolbar_3_VisualizationMode"
 #define KEY_TM_TOOLBAR_MODE "TonemappingWindowToolbarVisualizationMode"
 #define KEY_MANUAL_AG_MASK_COLOR "ManualAntiGhostingMaskColor"
 #define KEY_GUI_LANG "UserInterfaceLanguage"
