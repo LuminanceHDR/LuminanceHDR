@@ -34,7 +34,7 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
         QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf)
 {
     // Set Minimum Dimension of the Viewer Window
-    setMinimumSize(450, 300);
+    // setMinimumSize(450, 300);
 
     VBL_L = new QVBoxLayout(this);
     VBL_L->setSpacing(0);
@@ -58,6 +58,7 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
 
     statusBar = new QStatusBar(this);
+    statusBar->setSizeGripEnabled(false);
     VBL_L->addWidget(statusBar);
 }
 

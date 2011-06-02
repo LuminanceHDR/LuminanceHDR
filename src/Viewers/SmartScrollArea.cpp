@@ -101,14 +101,14 @@ bool SmartScrollArea::isFittedToWindow() {
 void SmartScrollArea::normalSize() {
 	//use the image size for the label
 	imageLabel.adjustSize();
-	scaleFactor = 1.0;
+        scaleFactor = 1.0f;
 }
 
 void SmartScrollArea::scaleLabelToFit() {
 	int sa_width=size().width();
 	int sa_height=size().height();
 	float imageratio=float(imageLabel.pixmap()->size().width())/float(imageLabel.pixmap()->size().height());
-	float factor = 1;
+        float factor = 1.0f;
 	if (sa_width<imageratio*sa_height) {
 		factor=float(sa_width)/float(imageLabel.pixmap()->size().width());
 	} else {
@@ -230,9 +230,10 @@ float SmartScrollArea::getScaleFactor() {
 	return scaleFactor;
 }
 
-float SmartScrollArea::getImageScaleFactor() {
-	float scaleFactor = float(imageLabel.size().width()) / (float) (imageLabel.pixmap()->size().width());
-	return scaleFactor;
+float SmartScrollArea::getImageScaleFactor()
+{
+    float scale_factor = float(imageLabel.size().width()) / (float) (imageLabel.pixmap()->size().width());
+    return scale_factor;
 }
 
 void SmartScrollArea::setHorizScrollBarValue(int value) {
