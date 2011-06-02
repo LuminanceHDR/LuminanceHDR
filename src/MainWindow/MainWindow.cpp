@@ -2,6 +2,7 @@
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +19,16 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing
+ * Original Work
+ *
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Improvements, bugfixing
+ *
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ * Implementation of the SDI functionalities
+ * New Central Widget based on QTabWidget
+ * Division of the Central Widget using QSplitter
  *
  */
 
@@ -29,9 +36,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
-#include <QMdiSubWindow>
 #include <QMessageBox>
-#include <QProgressDialog>
 #include <QWhatsThis>
 #include <QSignalMapper>
 #include <QTextStream>
@@ -54,12 +59,66 @@
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
 #include "Common/ImageQualityDialog.h"
+#include "Libpfs/frame.h"
+#include "UI/UMessageBox.h"
 
 
-MainWindow::MainWindow(QWidget *p) : QMainWindow(p), current_state(IO_STATE), active_frame(NULL), helpBrowser(NULL), 
-m_ldrsNum(0), m_hdrsNum(0)
+MainWindow::MainWindow(QWidget *parent):
+        QMainWindow(parent)
+{
+    init();
+
+    // SPLASH SCREEN    ----------------------------------------------------------------------
+    if (settings->contains("ShowSplashScreen"))
+    {
+        if (settings->value("ShowSplashScreen").toInt())
+            showSplash();
+            //UMessageBox::donationSplashMB();
+    }
+    else
+        showSplash();
+    // END SPLASH SCREEN    ------------------------------------------------------------------
+
+    testTempDir(luminance_options->tempfilespath);
+}
+
+MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
+        QMainWindow(parent)
+{
+    init();
+    emit load_success(curr_frame, new_file, needSaving);
+}
+
+MainWindow::~MainWindow()
+{
+    qDebug() << "MainWindow::~MainWindow()";
+
+    clearRecentFileActions();
+
+    settings->setValue("MainWindowState", saveState());
+    settings->setValue("MainWindowGeometry", saveGeometry());
+}
+
+void MainWindow::init()
+{
+    helpBrowser = NULL;
+    num_ldr_generated = 0;
+
+    createUI();
+    loadOptions();
+    createMenus();
+    createToolBar();
+    createCentralWidget();
+    createStatusBar();
+    setupIO();
+    setupTM();
+    createConnections();
+}
+
+void MainWindow::createUI()
 {
     setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 
     QDir dir(QDir::homePath());
 
@@ -75,8 +134,40 @@ m_ldrsNum(0), m_hdrsNum(0)
     restoreGeometry(settings->value("MainWindowGeometry").toByteArray());
 
     setAcceptDrops(true);
-    windowMapper = new QSignalMapper(this);
+    setWindowModified(false);
+    setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+}
 
+void MainWindow::createCentralWidget()
+{
+    // Central Widget Area
+    m_centralwidget_splitter = new QSplitter(this);
+
+    // create tonemapping panel
+    tmPanel = new TonemappingPanel(m_centralwidget_splitter);
+    m_tabwidget = new QTabWidget(m_centralwidget_splitter);
+
+    m_tabwidget->setDocumentMode(true);
+    m_tabwidget->setTabsClosable(true);
+    m_tabwidget->setMinimumWidth(700);  // to be changed!
+
+    m_centralwidget_splitter->addWidget(tmPanel);
+    m_centralwidget_splitter->addWidget(m_tabwidget);
+    // add here a third widget?
+
+    m_centralwidget_splitter->setStretchFactor(0, 1);
+    m_centralwidget_splitter->setStretchFactor(1, 2);
+    //m_centralwidget_splitter->setStyleSheet();
+    //m_centralwidget_splitter->setHandleWidth(1);
+
+    setCentralWidget(m_centralwidget_splitter);
+
+    connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
+    connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
+}
+
+void MainWindow::createToolBar()
+{
     //main toolbars setup
     QActionGroup *toolBarOptsGroup = new QActionGroup(this);
     toolBarOptsGroup->addAction(actionText_Under_Icons);
@@ -85,115 +176,91 @@ m_ldrsNum(0), m_hdrsNum(0)
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
 
-#ifdef Q_WS_MAC
-    setUnifiedTitleAndToolBarOnMac(true);
-#endif
+    connect(actionShowHDRs, SIGNAL(triggered()), this, SLOT(showHDR()));
+    connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockImages(bool)));
 
-    mdiArea = new QMdiArea(this);
-    mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiArea->setBackground(QBrush( QColor::fromRgb(192, 192, 192)) );
+    connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
+    connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
+    connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
+    connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+}
 
-    // Mac OS X only has tabbed images
-#ifdef Q_WS_MAC
-    mdiArea->setViewMode(QMdiArea::TabbedView);
-    mdiArea->setDocumentMode(true);
-#endif
+void MainWindow::createMenus()
+{
+    // About(s)
+    connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+    connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
+    connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
-    setCentralWidget(mdiArea);
+    connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
+    connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
+    connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
-    luminance_options = LuminanceOptions::getInstance();
-    load_options();
+    // I/O
+    connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
+    connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
+    connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
+    connect(fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
 
-    setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+    // HDR Editing
+    connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
+    connect(action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
+
+    // HDR Exposure Control
+    connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_ldr_exp()));
+    connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_fit_exp()));
+    connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_shrink_exp()));
+    connect(Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_extend_exp()));
+    connect(Decrease_exposure,SIGNAL(triggered()),this,SLOT(hdr_decrease_exp()));
+    connect(Increase_exposure,SIGNAL(triggered()),this,SLOT(hdr_increase_exp()));
+
+    // Crop & Rotation
+    connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+    connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
+    connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
+    connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
+
+    // Zoom
+    connect(zoomInAct,SIGNAL(triggered()),this,SLOT(viewerZoomIn()));
+    connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(viewerZoomOut()));
+    // TODO: this one should be triggered()
+    connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(viewerFitToWin(bool)));
+    connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(viewerOriginalSize()));
+
+    // Tools
+    connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
+    connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
+
+    cropToSelectionAction->setEnabled(false);
+
+    connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+    connect(actionMinimize, SIGNAL(triggered()), this, SLOT(minimizeMW()));
+    connect(actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
+    connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
 
     //recent files
-    for (int i = 0; i < MaxRecentFiles; ++i)
-    {
-        recentFileActs[i] = new QAction(this);
-        recentFileActs[i]->setVisible(false);
-        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
-    }
-    separatorRecentFiles = menuFile->addSeparator();
-    for (int i = 0; i < MaxRecentFiles; ++i)
-        menuFile->addAction(recentFileActs[i]);
+    initRecentFileActions();
     updateRecentFileActions();
+}
 
+void MainWindow::createStatusBar()
+{
     // progress bar
     m_progressbar = new QProgressBar(this);
     m_progressbar->hide();
     statusBar()->addWidget(m_progressbar);
 
-    // I/O
-    setup_io();
-
-    setup_tm();
-    setup_tm_slots();
-
-    setupConnections();
-    cropToSelectionAction->setEnabled(false);
-
-    // SPLASH SCREEN    ----------------------------------------------------------------------
-    if (settings->contains("ShowSplashScreen"))
-    {
-        if (settings->value("ShowSplashScreen").toInt())
-            showSplash();
-    }
-    else
-        showSplash();
-    // END SPLASH SCREEN    ------------------------------------------------------------------
-
-    testTempDir(luminance_options->tempfilespath);
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
 }
 
-void MainWindow::setupConnections()
+void MainWindow::createConnections()
 {
-    connect(mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(updateActions(QMdiSubWindow*)));
-    connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
-    connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
-    connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
-    connect(TonemapAction, SIGNAL(triggered()), this, SLOT(tonemap_requested()));
-    connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
-    connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
-    connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
-    connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
-    connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
-    connect(action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
-    connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
-    connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_ldr_exp()));
-    connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_fit_exp()));
-    connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_shrink_exp()));
-    connect(Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(current_mdi_extend_exp()));
-    connect(Decrease_exposure,SIGNAL(triggered()),this,SLOT(current_mdi_decrease_exp()));
-    connect(Increase_exposure,SIGNAL(triggered()),this,SLOT(current_mdi_increase_exp()));
-    connect(zoomInAct,SIGNAL(triggered()),this,SLOT(current_mdi_zoomin()));
-    connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(current_mdi_zoomout()));
-    connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(current_mdi_fit_to_win(bool)));
-    connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(current_mdi_original_size()));
-    connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
-    connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
-    connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-    connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
-    connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
-    connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-    connect(actionTile,SIGNAL(triggered()),mdiArea,SLOT(tileSubWindows()));
-    connect(actionCascade,SIGNAL(triggered()),mdiArea,SLOT(cascadeSubWindows()));
-    connect(fileExitAction, SIGNAL(triggered()), this, SLOT(fileExit()));
-    connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
-    connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
-    connect(actionShowNext,SIGNAL(triggered()),mdiArea,SLOT(activateNextSubWindow()));
-    connect(actionShowPrevious,SIGNAL(triggered()),mdiArea,SLOT(activatePreviousSubWindow()));
+    connect(actionShowNext, SIGNAL(triggered()), this, SLOT(activateNextViewer()));
+    connect(actionShowPrevious, SIGNAL(triggered()), this, SLOT(activatePreviousViewer()));
 
-    //QSignalMapper?
-    connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
-    connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
-    connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
-    connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
-    connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
-
-    connect(windowMapper,SIGNAL(mapped(QWidget*)),this,SLOT(setActiveSubWindow(QWidget*)));
-    connect(actionShowHDRs,SIGNAL(toggled(bool)),this,SLOT(showHDRs(bool)));
+    windowMapper = new QSignalMapper(this);
+    connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
 }
 
 void MainWindow::showDonationsPage()
@@ -201,23 +268,14 @@ void MainWindow::showDonationsPage()
   QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
 }
 
-
 void MainWindow::fileNewViaWizard(QStringList files)
-{
-    HdrWizard *wizard;
+{    
     if (testTempDir(luminance_options->tempfilespath))
     {
-        wizard=new HdrWizard (this, files);
+        HdrWizard *wizard = new HdrWizard (this, files);
         if (wizard->exec() == QDialog::Accepted)
         {
-            HdrViewer *newmdi=new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor); //true means needs saving
-            connect(newmdi, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
-            newmdi->updateHDR(wizard->getPfsFrameHDR());
-            mdiArea->addSubWindow(newmdi);
-            newmdi->setWindowTitle(wizard->getCaptionTEXT());
-            newmdi->fitToWindow(true);
-            newmdi->showMaximized();
-            newmdi->setSelectionTool(true);
+            emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
         }
         delete wizard;
     }
@@ -271,11 +329,9 @@ void MainWindow::updateRecentDirLDRSetting(QString newvalue)
 
 void MainWindow::fileSaveAs()
 {
-    QMdiSubWindow* c_f = mdiArea->activeSubWindow();
-    if (c_f == NULL) return; // could happen if the mdi area is empty. Ideally MainWindow should have this disabled if no file is open
+    if (m_tabwidget->count() <= 0) return;
 
-    GenericViewer* g_v = (GenericViewer*)c_f->widget();
-    if ( g_v == NULL ) return; // should never happen
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
     if ( g_v->isHDR() )
     {
@@ -369,6 +425,10 @@ void MainWindow::save_hdr_success(HdrViewer* saved_hdr, QString fname)
     setCurrentFile(absoluteFileName);
     saved_hdr->setFileName(fname);
     saved_hdr->setWindowTitle(absoluteFileName);
+
+    // update name on the tab label
+    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), fname);
+    setWindowModified(false);
 }
 
 void MainWindow::save_hdr_failed()
@@ -381,201 +441,123 @@ void MainWindow::save_ldr_success(LdrViewer* saved_ldr, QString fname)
 {
     saved_ldr->setFileName(fname);
     saved_ldr->setWindowTitle(QFileInfo(fname).absoluteFilePath());
+
+    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), fname);
 }
 
 void MainWindow::save_ldr_failed()
 {
     // TODO give some kind of feedback to the user!
     // TODO pass the name of the file, so the user know which file didn't save correctly
-    QMessageBox::warning(0,"",QObject::tr("Failed to save"), QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::warning(0,"", tr("Failed to save"), QMessageBox::Ok, QMessageBox::NoButton);
     //QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 }
 
 void MainWindow::saveHdrPreview()
 {
-    // TODO : rewrite this function!
-    //if (active_frame==NULL)
-    //    return;
-    //active_frame->saveHdrPreview();
+    // TODO : This function is just rubbish, and should be changed!
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
+
+    if (hdr_v==NULL) return;
+        hdr_v->saveHdrPreview();
 }
 
-void MainWindow::updateActions( QMdiSubWindow * w )
+void MainWindow::updateActionsNoImage()
 {
-    if ( w == NULL )
+    updateMagnificationButtons(NULL);
+
+    fileSaveAsAction->setEnabled(false);
+    actionSave_Hdr_Preview->setEnabled(false);
+    actionShowHDRs->setEnabled(false);
+
+    // Histogram
+    menuHDR_Histogram->setEnabled(false);
+    Low_dynamic_range->setEnabled(false);
+    Fit_to_dynamic_range->setEnabled(false);
+    Shrink_dynamic_range->setEnabled(false);
+    Extend_dynamic_range->setEnabled(false);
+    Decrease_exposure->setEnabled(false);
+    Increase_exposure->setEnabled(false);
+
+    actionResizeHDR->setEnabled(false);
+    action_Projective_Transformation->setEnabled(false);
+    cropToSelectionAction->setEnabled(false);
+    rotateccw->setEnabled(false);
+    rotatecw->setEnabled(false);
+}
+
+void MainWindow::updateActionsLdrImage()
+{
+    fileSaveAsAction->setEnabled(true);
+    actionSave_Hdr_Preview->setEnabled(true);
+
+    if ( tm_status.is_hdr_ready ) actionShowHDRs->setEnabled(true);
+
+    // Histogram
+    menuHDR_Histogram->setEnabled(false);
+    Low_dynamic_range->setEnabled(false);
+    Fit_to_dynamic_range->setEnabled(false);
+    Shrink_dynamic_range->setEnabled(false);
+    Extend_dynamic_range->setEnabled(false);
+    Decrease_exposure->setEnabled(false);
+    Increase_exposure->setEnabled(false);
+
+    actionResizeHDR->setEnabled(false);
+    action_Projective_Transformation->setEnabled(false);
+    cropToSelectionAction->setEnabled(false);
+    rotateccw->setEnabled(false);
+    rotatecw->setEnabled(false);
+}
+
+void MainWindow::updateActionsHdrImage()
+{
+    fileSaveAsAction->setEnabled(true);
+    actionSave_Hdr_Preview->setEnabled(true);
+    actionShowHDRs->setEnabled(false);
+
+    // Histogram
+    menuHDR_Histogram->setEnabled(true);
+    Low_dynamic_range->setEnabled(true);
+    Fit_to_dynamic_range->setEnabled(true);
+    Shrink_dynamic_range->setEnabled(true);
+    Extend_dynamic_range->setEnabled(true);
+    Decrease_exposure->setEnabled(true);
+    Increase_exposure->setEnabled(true);
+
+    actionResizeHDR->setEnabled(true);
+    action_Projective_Transformation->setEnabled(true);
+    cropToSelectionAction->setEnabled(false);
+    rotateccw->setEnabled(true);
+    rotatecw->setEnabled(true);
+}
+
+void MainWindow::updateActions( int w )
+{
+    qDebug() << "MainWindow::updateActions(" << w << ")";
+    updatePreviousNextActions();
+    if ( w < 0 )
     {
-        //no file open currently! (is it true?!)
-        if (mdiArea->subWindowList().empty())
-        {
-            active_frame = NULL;
-            if ( current_state == TM_STATE ) tonemap_requested();
-
-            fileSaveAsAction->setEnabled(false);
-            actionSave_Hdr_Preview->setEnabled(false);
-
-            normalSizeAct->setEnabled(false);
-            zoomInAct->setEnabled(false);
-            zoomOutAct->setEnabled(false);
-            fitToWindowAct->setEnabled(false);
-
-            TonemapAction->setEnabled(false);
-            TonemapAction->setChecked(false);
-            action_Projective_Transformation->setEnabled(false);
-            cropToSelectionAction->setEnabled(false);
-
-            rotateccw->setEnabled(false);
-            rotatecw->setEnabled(false);
-
-            menuHDR_Histogram->setEnabled(false);
-            Low_dynamic_range->setEnabled(false);
-            Fit_to_dynamic_range->setEnabled(false);
-            Shrink_dynamic_range->setEnabled(false);
-            Extend_dynamic_range->setEnabled(false);
-            Decrease_exposure->setEnabled(false);
-            Increase_exposure->setEnabled(false);
-            actionResizeHDR->setEnabled(false);
-        }
-        // else I consider the previous state, because there is still a file open but it is not "on focus"
+        // something wrong happened?
+        updateActionsNoImage();
     }
     else
     {
-        if ( current_state == IO_STATE )
+        GenericViewer* g_v = (GenericViewer*)m_tabwidget->widget(w);
+        updateMagnificationButtons(g_v);
+        if ( g_v->isHDR() )
         {
-            fileSaveAsAction->setEnabled(true);
-            rotateccw->setEnabled(true);
-            rotatecw->setEnabled(true);
-
-            normalSizeAct->setEnabled(true);
-            zoomInAct->setEnabled(true);
-            zoomOutAct->setEnabled(true);
-            fitToWindowAct->setEnabled(true);
-
-            // IO_STATE
-            active_frame = (GenericViewer*)(mdiArea->activeSubWindow()->widget());
-            if ( active_frame->isHDR() )
-            {   // current selected file is an HDR
-
-                TonemapAction->setEnabled(true);
-                // disable levels
-
-                action_Projective_Transformation->setEnabled(true);
-                actionSave_Hdr_Preview->setEnabled(true);
-                cropToSelectionAction->setEnabled(true);
-
-                rotateccw->setEnabled(true);
-                rotatecw->setEnabled(true);
-
-                menuHDR_Histogram->setEnabled(true);
-                Low_dynamic_range->setEnabled(true);
-                Fit_to_dynamic_range->setEnabled(true);
-                Shrink_dynamic_range->setEnabled(true);
-                Extend_dynamic_range->setEnabled(true);
-                Decrease_exposure->setEnabled(true);
-                Increase_exposure->setEnabled(true);
-                actionResizeHDR->setEnabled(true);
-            }
-            else
-            {   // current selected file is an LDR
-
-                TonemapAction->setEnabled(false);
-                TonemapAction->setChecked(false);
-                // enable levels
-
-                // projective transformation
-                action_Projective_Transformation->setEnabled(false);
-                // hdr preview save
-                actionSave_Hdr_Preview->setEnabled(false);
-                cropToSelectionAction->setEnabled(false);
-
-                rotateccw->setEnabled(false);
-                rotatecw->setEnabled(false);
-
-                menuHDR_Histogram->setEnabled(false);
-                Low_dynamic_range->setEnabled(false);
-                Fit_to_dynamic_range->setEnabled(false);
-                Shrink_dynamic_range->setEnabled(false);
-                Extend_dynamic_range->setEnabled(false);
-                Decrease_exposure->setEnabled(false);
-                Increase_exposure->setEnabled(false);
-                actionResizeHDR->setEnabled(false);
-            }
+            // current selected frame is an HDR
+            updateActionsHdrImage();
         }
         else
         {
-            // If I'm here, some features have been already disable by tonemap_request()
-
-            // TM_STATE
-            GenericViewer* curr_file = (GenericViewer*)(mdiArea->activeSubWindow()->widget());
-            if (curr_file->isHDR())
-            {
-                // Do nothing: in TM_STATE, there is only one HDR frame open, the one currently under Tonemapping
-            }
-            else
-            {
-                // update the preview frame, so that at the next tonemapping this one will be refreshed!
-                // preview_frame = curr_frame;
-            }
-
+            // current selected frame is not an HDR
+            updateActionsLdrImage();
         }
     }
-
-//    bool state = (w != NULL);
-
-//    action_Projective_Transformation->setEnabled(state);
-//    actionSave_Hdr_Preview->setEnabled(state);
-//
-//
-//
-//
-//    menuHDR_Histogram->setEnabled(state);
-//    Low_dynamic_range->setEnabled(state);
-//    Fit_to_dynamic_range->setEnabled(state);
-//    Shrink_dynamic_range->setEnabled(state);
-//    Extend_dynamic_range->setEnabled(state);
-//    Decrease_exposure->setEnabled(state);
-//    Increase_exposure->setEnabled(state);
-//    actionResizeHDR->setEnabled(state);
-
-//    if (state)
-//    {
-//        currenthdr = (HdrViewer*)(mdiArea->activeSubWindow()->widget());
-//        if (currenthdr->isFittedToWindow())
-//        {
-//            normalSizeAct->setEnabled(false);
-//            zoomInAct->setEnabled(false);
-//            zoomOutAct->setEnabled(false);
-//            fitToWindowAct->setEnabled(true);
-//        }
-//        else
-//        {
-//            zoomOutAct->setEnabled(currenthdr->getScaleFactor() > 0.222);
-//            zoomInAct->setEnabled(currenthdr->getScaleFactor() < 3.0);
-//            fitToWindowAct->setEnabled(true);
-//            normalSizeAct->setEnabled(true);
-//        }
-//        if (currenthdr->hasSelection())
-//        {
-//            cropToSelectionAction->setEnabled(true);
-//            removeSelectionAction->setEnabled(true);
-//        }
-//        else
-//        {
-//            cropToSelectionAction->setEnabled(false);
-//            removeSelectionAction->setEnabled(false);
-//        }
-//    }
-//    else
-//    {
-
-//    }
-}
-
-void MainWindow::setActiveSubWindow(QWidget* w)
-{
-    // This function sets the active window in the mdi area when the file name is selected inside the "Window" menu
-    QList<QMdiSubWindow*> allhdrs=mdiArea->subWindowList();
-    foreach(QMdiSubWindow *p,allhdrs)
-        if (p->widget() == w)
-            mdiArea->setActiveSubWindow(p);
 }
 
 bool MainWindow::testTempDir(QString dirname)
@@ -588,9 +570,11 @@ bool MainWindow::testTempDir(QString dirname)
     else
     {
         // TODO: Universal Message Box!
-
-        QMessageBox::critical(this,tr("Error..."),tr("Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
-                              QMessageBox::Ok,QMessageBox::NoButton);
+        QMessageBox::critical(this,
+                              tr("Error..."),
+                              tr("Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
+                              QMessageBox::Ok,
+                              QMessageBox::NoButton);
         return false;
     }
 }
@@ -607,40 +591,48 @@ void MainWindow::rotatecw_requested()
 
 void MainWindow::dispatchrotate(bool clockwise)
 {
-    if (active_frame == NULL)
-        return;
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
     rotateccw->setEnabled(false);
     rotatecw->setEnabled(false);
+
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    pfs::Frame *rotated = pfs::rotateFrame(active_frame->getHDRPfsFrame(), clockwise);
+    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getHDRPfsFrame(), clockwise);
     //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-    active_frame->updateHDR(rotated);
-    if ( !active_frame->needsSaving() )
+    curr_g_v->updateHDR(rotated);
+    if ( !curr_g_v->needsSaving() )
     {
-        active_frame->setNeedsSaving(true);
-        active_frame->setWindowTitle(active_frame->windowTitle().prepend("(*) "));
+        curr_g_v->setNeedsSaving(true);
+        curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+        setWindowModified(true);
     }
     QApplication::restoreOverrideCursor();
+
     rotateccw->setEnabled(true);
     rotatecw->setEnabled(true);
 }
 
 void MainWindow::resize_requested()
 {
-    if (active_frame == NULL)
-        return;
+    if (m_tabwidget->count() <= 0) return;
 
-    ResizeDialog *resizedialog = new ResizeDialog(this, active_frame->getHDRPfsFrame());
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getHDRPfsFrame());
     if (resizedialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        active_frame->updateHDR(resizedialog->getResizedFrame());
-        if (! active_frame->needsSaving())
+        curr_g_v->updateHDR(resizedialog->getResizedFrame());
+        if (! curr_g_v->needsSaving())
         {
-            active_frame->setNeedsSaving(true);
-            active_frame->setWindowTitle(active_frame->windowTitle().prepend("(*) "));
+            curr_g_v->setNeedsSaving(true);
+            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            setWindowModified(true);
         }
         QApplication::restoreOverrideCursor();
     }
@@ -649,119 +641,126 @@ void MainWindow::resize_requested()
 
 void MainWindow::projectiveTransf_requested()
 {
-    if (active_frame==NULL)
-        return;
+    if (m_tabwidget->count() <= 0) return;
 
-    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this,active_frame->getHDRPfsFrame());
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this, curr_g_v->getHDRPfsFrame());
     if (projTranfsDialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        active_frame->updateHDR(projTranfsDialog->getTranformedFrame());
-        if (! active_frame->needsSaving()) {
-            active_frame->setNeedsSaving(true);
-            active_frame->setWindowTitle(active_frame->windowTitle().prepend("(*) "));
+        curr_g_v->updateHDR(projTranfsDialog->getTranformedFrame());
+        if ( !curr_g_v->needsSaving() )
+        {
+            curr_g_v->setNeedsSaving(true);
+            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            setWindowModified(true);
         }
         QApplication::restoreOverrideCursor();
     }
     delete projTranfsDialog;
 }
 
-void MainWindow::current_mdi_decrease_exp()
+void MainWindow::hdr_decrease_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->decreaseExposure();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->decreaseExposure();
 }
 
-void MainWindow::current_mdi_extend_exp()
+void MainWindow::hdr_extend_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->extendRange();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->extendRange();
 }
 
-void MainWindow::current_mdi_fit_exp()
+void MainWindow::hdr_fit_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->fitToDynamicRange();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->fitToDynamicRange();
 }
 
-void MainWindow::current_mdi_increase_exp()
+void MainWindow::hdr_increase_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->increaseExposure();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->increaseExposure();
 }
 
-void MainWindow::current_mdi_shrink_exp()
+void MainWindow::hdr_shrink_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->shrinkRange();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->shrinkRange();
 }
 
-void MainWindow::current_mdi_ldr_exp()
+void MainWindow::hdr_ldr_exp()
 {
-    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(active_frame);
-    if ( hdr_viewer != NULL )
-        hdr_viewer->lumRange()->lowDynamicRange();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+    HdrViewer* curr_hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    if ( curr_hdr_v != NULL )
+        curr_hdr_v->lumRange()->lowDynamicRange();
 }
 
-// This bunch of functions need revision because
-// when the focus changes to a new function, we need to update the scale factor actions
-void MainWindow::current_mdi_zoomin()
+void MainWindow::viewerZoomIn()
 {
-    QMdiSubWindow* c_f = mdiArea->activeSubWindow();
-    if ( c_f != NULL )
-    {
-        GenericViewer* g_v = (GenericViewer*)c_f->widget();
+    if (m_tabwidget->count() <= 0) return;
 
-        g_v->zoomIn();
-        zoomOutAct->setEnabled(true);
-        zoomInAct->setEnabled(g_v->getScaleFactor() < 3.0);
-    }
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    g_v->zoomIn();
+    updateMagnificationButtons(g_v);
 }
 
-void MainWindow::current_mdi_zoomout()
+void MainWindow::viewerZoomOut()
 {
-    QMdiSubWindow* c_f = mdiArea->activeSubWindow();
-    if ( c_f != NULL )
-    {
-        GenericViewer* g_v = (GenericViewer*)c_f->widget();
+    if (m_tabwidget->count() <= 0) return;
 
-        g_v->zoomOut();
-        zoomInAct->setEnabled(true);
-        zoomOutAct->setEnabled(g_v->getScaleFactor() > 0.222);
-    }
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    g_v->zoomOut();
+    updateMagnificationButtons(g_v);
 }
 
-void MainWindow::current_mdi_fit_to_win(bool checked)
+void MainWindow::viewerFitToWin(bool checked)
 {
-    QMdiSubWindow* c_f = mdiArea->activeSubWindow();
-    if ( c_f != NULL )
-    {
-        GenericViewer* g_v = (GenericViewer*)c_f->widget();
+    if (m_tabwidget->count() <= 0) return;
 
-        g_v->fitToWindow(checked);
-        zoomInAct->setEnabled(!checked);
-        zoomOutAct->setEnabled(!checked);
-        normalSizeAct->setEnabled(!checked);
-    }
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    g_v->fitToWindow(checked);
+    updateMagnificationButtons(g_v);
 }
 
-void MainWindow::current_mdi_original_size()
+void MainWindow::viewerOriginalSize()
 {
-    QMdiSubWindow* c_f = mdiArea->activeSubWindow();
-    if ( c_f != NULL )
-    {
-        GenericViewer* g_v = (GenericViewer*)c_f->widget();
+    if (m_tabwidget->count() <= 0) return;
 
-        g_v->normalSize();
-        zoomInAct->setEnabled(true);
-        zoomOutAct->setEnabled(true);
-    }
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    g_v->normalSize();
+    updateMagnificationButtons(g_v);
 }
 
 void MainWindow::openDocumentation()
@@ -782,40 +781,6 @@ void MainWindow::enterWhatsThis()
     QWhatsThis::enterWhatsThisMode();
 }
 
-void MainWindow::setCurrentFile(const QString &fileName)
-{
-    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
-    files.removeAll(fileName);
-    files.prepend(fileName);
-    while (files.size() > MaxRecentFiles)
-    {
-        files.removeLast();
-    }
-
-    settings->setValue(KEY_RECENT_FILES, files);
-    updateRecentFileActions();
-}
-
-void MainWindow::updateRecentFileActions()
-{
-    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
-
-    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
-    separatorRecentFiles->setVisible(numRecentFiles > 0);
-
-    for (int i = 0; i < numRecentFiles; ++i)
-    {
-        QString text = QString("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
-        recentFileActs[i]->setText(text);
-        recentFileActs[i]->setData(files[i]);
-        recentFileActs[i]->setVisible(true);
-    }
-    for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
-    {
-        recentFileActs[j]->setVisible(false);
-    }
-}
-
 void MainWindow::openRecentFile()
 {
     QAction *action = qobject_cast<QAction *>(sender());
@@ -825,13 +790,17 @@ void MainWindow::openRecentFile()
     }
 }
 
-void MainWindow::setup_io()
+void MainWindow::setupIO()
 {
     // Init Object/Thread
     IO_thread = new QThread;
     IO_Worker = new IOWorker;
 
     IO_Worker->moveToThread(IO_thread);
+
+    // Memory Management
+    connect(this, SIGNAL(destroyed()), IO_Worker, SLOT(deleteLater()));
+    connect(IO_Worker, SIGNAL(destroyed()), IO_thread, SLOT(deleteLater()));
 
     // Open
     connect(this, SIGNAL(open_frame(QString)), IO_Worker, SLOT(read_frame(QString)));
@@ -861,37 +830,53 @@ void MainWindow::setup_io()
 void MainWindow::load_failed(QString error_message)
 {
     // TODO: use unified style?
-    QMessageBox::critical(this,tr("Aborting..."), error_message, QMessageBox::Ok, QMessageBox::NoButton);
+    QMessageBox::critical(this, tr("Aborting..."), error_message, QMessageBox::Ok, QMessageBox::NoButton);
 }
 
-void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname)
+void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving)
 {
-    m_hdrsNum++;
-    // Create new MdiSubWindow and HdrViewer
-    QMdiSubWindow* subWindow = new QMdiSubWindow(this);
-    HdrViewer * newhdr = new HdrViewer(subWindow, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
+    if ( tm_status.is_hdr_ready )
+    {
+        MainWindow *other = new MainWindow(new_hdr_frame, new_fname, needSaving);
+        other->move(x() + 40, y() + 40);
+        other->show();
+    }
+    else
+    {
+        HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 
-    this->mdiArea->addSubWindow(subWindow);
-    this->setCurrentFile(new_fname);
+        newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
-    newhdr->setAttribute(Qt::WA_DeleteOnClose);
-    subWindow->setAttribute(Qt::WA_DeleteOnClose);
+        connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
+        newhdr->setSelectionTool(true);
 
-    subWindow->setWidget(newhdr);
-    subWindow->resize((int) (0.66 * this->mdiArea->width()),(int)(0.66 * this->mdiArea->height()));
-    subWindow->showMaximized();
+        newhdr->updateHDR(new_hdr_frame);
+        newhdr->setFileName(new_fname);
+        newhdr->setWindowTitle(new_fname);
 
-    connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
-    newhdr->setSelectionTool(true);
+        newhdr->normalSize();
+        newhdr->fitToWindow(true);
 
-    newhdr->updateHDR(new_hdr_frame);
-    newhdr->setFileName(new_fname);
-    newhdr->setWindowTitle(new_fname);
+        m_tabwidget->addTab(newhdr, new_fname);
 
-    newhdr->normalSize();
-    newhdr->fitToWindow(true);
+        tm_status.is_hdr_ready = true;
+        tm_status.curr_tm_frame = newhdr;
+        tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
+                          newhdr->getHDRPfsFrame()->getHeight());
 
-    newhdr->show();
+        tmPanel->applyButton->setEnabled(true);
+
+        m_tabwidget->setCurrentWidget(newhdr);
+
+        if ( needSaving )
+        {
+            setMainWindowModified(true);
+        }
+        else
+        {
+            setCurrentFile(new_fname);
+        }
+    }
 }
 
 void MainWindow::IO_start()
@@ -912,56 +897,66 @@ void MainWindow::IO_done()
 
 void MainWindow::preferences_called()
 {
-    unsigned int negcol=luminance_options->negcolor;
-    unsigned int naninfcol=luminance_options->naninfcolor;
-    PreferencesDialog *opts=new PreferencesDialog(this);
+    unsigned int negcol = luminance_options->negcolor;
+    unsigned int naninfcol = luminance_options->naninfcolor;
+    PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
-    if (opts->exec() == QDialog::Accepted && (negcol!=luminance_options->negcolor || naninfcol!=luminance_options->naninfcolor) )
+    if ( opts->exec() == QDialog::Accepted
+        && (negcol != luminance_options->negcolor || naninfcol != luminance_options->naninfcolor) )
     {
-        QList<QMdiSubWindow*> allhdrs = mdiArea->subWindowList();
-        foreach (QMdiSubWindow *p, allhdrs)
+        for (int idx = 0; idx < m_tabwidget->count(); idx++)
         {
-            ((HdrViewer*)p->widget())->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
+            GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
+            HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
+            if ( hdr_v != NULL )
+            {
+                hdr_v->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
+            }
         }
     }
 }
 
 void MainWindow::transplant_called()
 {
-	TransplantExifDialog *transplant=new TransplantExifDialog(this);
-	transplant->setAttribute(Qt::WA_DeleteOnClose);
-	transplant->exec();
+    TransplantExifDialog *transplant=new TransplantExifDialog(this);
+    transplant->setAttribute(Qt::WA_DeleteOnClose);
+    transplant->exec();
 }
 
-void MainWindow::load_options() {
-	//load from settings the path where hdrs have been previously opened/loaded
-	RecentDirHDRSetting=settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+void MainWindow::loadOptions()
+{
+    luminance_options = LuminanceOptions::getInstance();
 
-	//load from settings the main toolbar visualization mode
-	if (!settings->contains(KEY_TOOLBAR_MODE))
-		settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-	switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
-	case Qt::ToolButtonIconOnly:
-		Icons_Only();
-		actionIcons_Only->setChecked(true);
+    //load from settings the path where hdrs have been previously opened/loaded
+    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+    RecentDirLDRSetting = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+
+    //load from settings the main toolbar visualization mode
+    if (!settings->contains(KEY_TOOLBAR_MODE))
+        settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+    switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+    case Qt::ToolButtonIconOnly:
+        Icons_Only();
+        actionIcons_Only->setChecked(true);
 	break;
-	case Qt::ToolButtonTextOnly:
-		Text_Only();
-		actionText_Only->setChecked(true);
+    case Qt::ToolButtonTextOnly:
+        Text_Only();
+        actionText_Only->setChecked(true);
 	break;
-	case Qt::ToolButtonTextBesideIcon:
-		Text_Alongside_Icons();
-		actionText_Alongside_Icons->setChecked(true);
+    case Qt::ToolButtonTextBesideIcon:
+        Text_Alongside_Icons();
+        actionText_Alongside_Icons->setChecked(true);
 	break;
-	case Qt::ToolButtonTextUnderIcon:
-		Text_Under_Icons();
-		actionText_Under_Icons->setChecked(true);
+    case Qt::ToolButtonTextUnderIcon:
+        Text_Under_Icons();
+        actionText_Under_Icons->setChecked(true);
 	break;
-	}
+    }
 }
 
-void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
-	event->acceptProposedAction();
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
 }
 
 void MainWindow::dropEvent(QDropEvent *event)
@@ -985,47 +980,6 @@ void MainWindow::dropEvent(QDropEvent *event)
         }
     }
     event->acceptProposedAction();
-}
-
-MainWindow::~MainWindow()
-{
-    // let them delete themself
-    IO_Worker->deleteLater();
-    IO_thread->deleteLater();
-
-    for (int i = 0; i < MaxRecentFiles; ++i)
-    {
-        delete recentFileActs[i];
-    }
-    settings->setValue("MainWindowState", saveState());
-}
-
-void MainWindow::fileExit()
-{
-    QList<QMdiSubWindow*> allhdrs = mdiArea->subWindowList();
-    bool closeok = true;
-    foreach (QMdiSubWindow *p, allhdrs)
-    {
-        if (((HdrViewer*)p->widget())->needsSaving())
-        {
-            closeok = false;
-        }
-    }
-    if (closeok)
-    {
-        emit close();
-    }
-    else
-    {
-        int ret = UMessageBox::warning(tr("Unsaved changes..."),
-                                       tr("There is at least one HDR image with unsaved changes.<br>Do you still want to quit?"),
-                                       this);
-
-        if ( ret == QMessageBox::Yes )
-        {
-            emit close();
-        }
-    }
 }
 
 void MainWindow::Text_Under_Icons()
@@ -1055,7 +1009,7 @@ void MainWindow::Text_Only()
 void MainWindow::showSplash()
 {
     // TODO: change implementation with a static member of UMessageBox
-    splash=new QDialog(this);
+    splash = new QDialog(this);
     splash->setAttribute(Qt::WA_DeleteOnClose);
     Ui::SplashLuminance ui;
     ui.setupUi(splash);
@@ -1083,25 +1037,83 @@ void MainWindow::aboutLuminance()
     UMessageBox::about();
 }
 
+/*
+ * Window Menu Display and Functionalities
+ */
 void MainWindow::updateWindowMenu()
 {
-    // TODO: check again this function
-    menuWindows->clear();
-    QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
-    GenericViewer* c_v = (GenericViewer*)mdiArea->activeSubWindow()->widget();
-    for (int i = 0; i < windows.size(); ++i)
+    // Remove current elements inside the menuWindows
+    foreach (QAction* Action_MW, openMainWindows)
     {
-        GenericViewer* child = (GenericViewer*)windows.at(i)->widget();
-        QString text = QString((i < 9)?"&":"") + QString("%1 %2").arg(i + 1).arg(QFileInfo((child->getFileName().isEmpty())? tr("Untitled"):child->getFileName()).fileName());
-        QAction *action  = menuWindows->addAction(text);
-        action->setCheckable(true);
-        action->setChecked(child == c_v);
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, child);
+        openMainWindows.removeAll(Action_MW);
+        menuWindows->removeAction( Action_MW );
+        delete Action_MW;
     }
-    menuWindows->addSeparator();
-    menuWindows->addAction(actionTile);
-    menuWindows->addAction(actionCascade);
+
+//    QVector<MainWindow*> openMW; // openMainWindows
+    foreach (QWidget *widget, qApp->topLevelWidgets())
+    {
+        MainWindow *MW = qobject_cast<MainWindow *>(widget);
+        if (MW != NULL)
+        {
+            QAction *action  = menuWindows->addAction( MW->getCurrentHDRName() );
+
+            action->setCheckable(true);
+            action->setChecked(MW == this);
+            connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+            windowMapper->setMapping(action, MW);
+
+            openMainWindows.push_back(action);
+        }
+    }
+
+//    openMainWindows.clear();
+//    // should be true in any case, because there should be at least one MainWindow open
+//    if ( openMW.count() > 0 )
+//    {
+//        //menuWindows->addSeparator();
+//        foreach (MainWindow* MW, openMW)
+//        {
+
+//        }
+//    }
+}
+
+/*
+ * This function sets the active Main Window
+ * when the file name is selected inside the "Window" menu
+ */
+void MainWindow::setActiveMainWindow(QWidget* w)
+{
+    MainWindow *MW = qobject_cast<MainWindow *>(w);
+
+    if ( MW == NULL ) return;
+
+    MW->raise();
+    MW->activateWindow();
+    return;
+}
+
+void MainWindow::minimizeMW()
+{
+    this->showMinimized();
+}
+
+void MainWindow::maximizeMW()
+{
+    this->showMaximized();
+}
+
+void MainWindow::bringAllMWToFront()
+{
+    foreach (QWidget *widget, qApp->topLevelWidgets())
+    {
+        MainWindow *MW = qobject_cast<MainWindow *>(widget);
+        if (MW != NULL)
+        {
+            MW->raise();
+        }
+    }
 }
 
 void MainWindow::batch_requested()
@@ -1126,6 +1138,7 @@ void MainWindow::ProgressBarInit(void)
     statusBar()->clearMessage();
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
     //m_progressbar->setValue( -1 );
     m_progressbar->setMaximum( 0 );
     m_progressbar->show();
@@ -1135,6 +1148,7 @@ void MainWindow::ProgressBarFinish(void)
 {
     m_progressbar->hide();
     m_progressbar->reset();
+
     QApplication::restoreOverrideCursor();
 
     statusBar()->showMessage(tr("Done!"), 10000);
@@ -1142,43 +1156,23 @@ void MainWindow::ProgressBarFinish(void)
 
 void MainWindow::cropToSelection()
 {
-    // if active_frame != NULL
-    // if active_frame is Type (HdrViewer)
-    if (!active_frame->hasSelection())
-	return;
+    if (m_tabwidget->count() <= 0) return;
 
-    QRect cropRect = active_frame->getSelectionRect();
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    if ( !curr_g_v->isHDR() ) return;
+    if ( !curr_g_v->hasSelection() ) return;
+
+    QRect cropRect = curr_g_v->getSelectionRect();
     int x_ul, y_ul, x_br, y_br;
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
     disableCrop();
-    pfs::Frame *original_frame = active_frame->getHDRPfsFrame();
-    HdrViewer *newHdrViewer = new HdrViewer(this, true, false, luminance_options->negcolor, luminance_options->naninfcolor);
+    pfs::Frame *original_frame = curr_g_v->getHDRPfsFrame();
     pfs::Frame *cropped_frame = pfs::pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
-    newHdrViewer->updateHDR(cropped_frame);
-    newHdrViewer->setFileName(QString(tr("Cropped Image")));
-    newHdrViewer->setWindowTitle(QString(tr("Cropped Image")));
-    newHdrViewer->setSelectionTool(true);
+    emit load_success(cropped_frame, QString(tr("Cropped Image")), true);
 
-    newHdrViewer->setFlagUpdateImage(false); // disable updating image for performance
-
-    //TODO: check this!
-    //float min =0.0f, max= 0.0f;
-    //float min = active_frame->lumRange()->getRangeWindowMin();
-    //float max = active_frame->lumRange()->getRangeWindowMax();
-    //int lumMappingMode = active_frame->getLumMappingMethod();
-    //newHdrViewer->lumRange()->setRangeWindowMinMax(min, max);
-    //newHdrViewer->setLumMappingMethod(lumMappingMode);
-
-    newHdrViewer->setFlagUpdateImage(true); // reenabling updating image
-
-    newHdrViewer->updateRangeWindow();
-
-    connect(newHdrViewer, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
-    mdiArea->addSubWindow(newHdrViewer);
-    newHdrViewer->fitToWindow(true);
-    newHdrViewer->showMaximized();
-    newHdrViewer->show();
+    curr_g_v->removeSelection();
 }
 
 void MainWindow::enableCrop(bool isReady)
@@ -1189,136 +1183,103 @@ void MainWindow::enableCrop(bool isReady)
 
 void MainWindow::disableCrop()
 {
-    active_frame->removeSelection();
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    if ( !curr_g_v->isHDR() ) return;
+
+    curr_g_v->removeSelection();
     cropToSelectionAction->setEnabled(false);
     removeSelectionAction->setEnabled(false);
 }
 
-void MainWindow::closeEvent ( QCloseEvent *event )
+void MainWindow::closeEvent( QCloseEvent *event )
 {
-    QList<QMdiSubWindow*> allhdrs = mdiArea->subWindowList();
-    bool closeok = true;
-    foreach (QMdiSubWindow *p, allhdrs)
+    if ( maybeSave() )
     {
-        // TODO: check this stuff!
-        if (((HdrViewer*)p->widget())->needsSaving())
-        {
-            closeok = false;
-        }
-    }
-    if (closeok)
-    {
-        settings->setValue("MainWindowGeometry", saveGeometry());
-        QWidget::closeEvent(event);
-        emit close();
+        event->accept();
     }
     else
     {
-        int ret = UMessageBox::warning(tr("Unsaved changes..."),
-                                       tr("There is at least one HDR image with unsaved changes.<br>Do you still want to quit?"),
-                                       this);
-
-        if ( ret == QMessageBox::Yes )
-        {
-            settings->setValue("MainWindowGeometry", saveGeometry());
-            QWidget::closeEvent(event);
-            emit close();
-        }
+        event->ignore();
     }
 }
 
+bool MainWindow::maybeSave()
+{
+    // if no HDR is open, return true
+    if ( !tm_status.is_hdr_ready ) return true;
 
-void MainWindow::setup_tm()
+    if ( tm_status.curr_tm_frame->needsSaving() )
+    {
+        int ret = UMessageBox::saveDialog(
+                tr("Unsaved changes..."),
+                tr("This HDR image has unsaved changes.<br>Do you want to save it?"),
+                this);
+        switch(ret)
+        {
+        case QMessageBox::Save:
+            {
+                  /* if save == success return true;
+                   * else return false;
+                   */
+                qDebug() << "HDR need to be saved";
+
+                QString filetypes = tr("All HDR formats ");
+                filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
+                filetypes += "OpenEXR (*.exr *.EXR);;" ;
+                filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
+                filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
+                filetypes += "PFS Stream (*.pfs *.PFS)";
+
+                QString fname = QFileDialog::getSaveFileName(this,
+                                                             tr("Save the HDR image as..."),
+                                                             RecentDirHDRSetting,
+                                                             filetypes);
+
+                if ( !fname.isEmpty() )
+                {
+                    // Update working folder
+                    QFileInfo qfi(fname);
+                    if ( RecentDirHDRSetting != qfi.path() )
+                    {
+                        // if the new dir (the one just chosen by the user)
+                        // is different from the one stored in the settings
+                        // update the settings
+                        updateRecentDirHDRSetting(qfi.path());
+                    }
+
+                    // TODO : can I launch a signal and wait that it gets executed fully?
+                    return IO_Worker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
+                }
+            }
+            break;
+        case QMessageBox::Cancel:
+            {
+                return false;
+            }
+            break;
+        case QMessageBox::Discard:
+            {
+                return true;
+            }
+            break;
+        }
+    }
+    else return true;
+}
+
+void MainWindow::setupTM()
 {
     // TODO: Building TM Thread
+    tm_status.is_hdr_ready = false;
+    tm_status.curr_tm_frame = NULL;
+    tm_status.curr_tm_options = NULL;
 
-    // create tonemapping panel
-    dock = new QDockWidget(tr("Tone Mapping Options"), this);
-    dock->setObjectName("Tone Mapping Options"); // for save and restore docks state
+    tmPanel->applyButton->setEnabled(false);
 
-    //dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    //dock->setFeatures(QDockWidget::DockWidgetClosable);
-    dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-
-    tmPanel = new TonemappingPanel(dock);
-    dock->setWidget(tmPanel);
-    addDockWidget(Qt::LeftDockWidgetArea, dock);
-    dock->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-
-
-    // by default, it is hidden!
-    dock->hide();
-}
-
-void MainWindow::setup_tm_slots()
-{
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-}
-
-void MainWindow::tonemap_requested()
-{
-    //printf("tonemap_requested() \n");
-    if ( dock->isHidden() )
-    {
-        // set state to TM_STATE
-        current_state = TM_STATE;
-
-        // update TM struct
-        tm_status.curr_tm_frame = active_frame->getHDRPfsFrame();
-
-        // go through the list of open files and remove them from the MDI, except the current one
-        QList<QMdiSubWindow*> allhdrs = mdiArea->subWindowList();
-        foreach(QMdiSubWindow *p, allhdrs)
-        {
-            GenericViewer* c_v = (GenericViewer*)p->widget();
-            if ( c_v != active_frame )
-            {
-                // it's not the current HDR frame, so I remove it from the MDI area...
-                mdiArea->removeSubWindow(p);
-                // ...and I add the current pointer into my temp QList<GenericViewer*>
-                tm_status.hidden_windows.push_back(p);
-            }
-        }
-
-        // disable Input
-        fileNewAction->setEnabled(false);
-        fileOpenAction->setEnabled(false);
-
-        // enable TM
-        tmPanel->applyButton->setEnabled(true);
-
-        // set sizes into tonemapping panel
-        tmPanel->setSizes((tm_status.curr_tm_frame)->getWidth(), (tm_status.curr_tm_frame)->getHeight());
-
-        dock->show(); // it must be the last line of this branch!
-    }
-    else if ( !dock->isHidden() )
-    {
-        // set state to IO
-        current_state = IO_STATE;
-
-        // reset TM struct
-        tm_status.curr_tm_frame = NULL;
-
-        // go through the list of SubMdi that I currently hold into the temporary QList
-        // and I insert them into the MDI area
-        foreach(QMdiSubWindow *p, tm_status.hidden_windows)
-        {
-            mdiArea->addSubWindow(p);
-            p->show();
-        }
-        // I clear the QList, to it will be empty next time I use it
-        tm_status.hidden_windows.clear();
-
-        // enable Input
-        fileNewAction->setEnabled(true);
-        fileOpenAction->setEnabled(true);
-
-        // disable TM
-        tmPanel->applyButton->setEnabled(false);
-
-        dock->hide(); // It must be the last line of this branch!
-    }
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1330,12 +1291,10 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
     if ( opts->tonemapOriginal )
     {
-        tm_status.curr_tm_frame = active_frame->getHDRPfsFrame();
-
-        if ( active_frame->hasSelection() )
+        if ( tm_status.curr_tm_frame->hasSelection() )
         {
-	    opts->tonemapSelection = true;
-            getCropCoords((HdrViewer *) active_frame,
+            opts->tonemapSelection = true;
+            getCropCoords((HdrViewer *)tm_status.curr_tm_frame,
                            opts->selection_x_up_left,
                            opts->selection_y_up_left,
                            opts->selection_x_bottom_right,
@@ -1344,6 +1303,9 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         else
            opts->tonemapSelection = false;
     }
+
+
+
 //    else // if ( !opts.tonemapOriginal )
 //    {
 //        if (!mdiArea->subWindowList().isEmpty())
@@ -1385,85 +1347,91 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 //        }
 //    }
 
-    TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, tm_status.curr_tm_frame, opts);
-    progInd = new TMOProgressIndicator(this);
+    HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
+    if ( hdr_viewer )
+    {
+        // TODO : can you clean up this thing?!
+        // getHDRPfsFrame() is only available in HdrViewer
+        TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
+        progInd = new TMOProgressIndicator(this);
 
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addMDIResult(QImage*)));
-    connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
-    connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
-    connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
-    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-    connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
-    connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
-    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-    connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
+        connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addLDRResult(QImage*)));
+        connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
+        connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
+        connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
+        connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
+        connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
+        connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
+        connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+        connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
-    //start thread
-    tmPanel->applyButton->setEnabled(false);
-    thread->startTonemapping();
-    statusBar()->addWidget(progInd);
+        //start thread
+        tmPanel->applyButton->setEnabled(false);
+        thread->startTonemapping();
+        statusBar()->addWidget(progInd);
+    }
 }
 
-void MainWindow::addMDIResult(QImage* image)
+void MainWindow::addLDRResult(QImage* image)
 {
-    m_ldrsNum++;
-    LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
+    num_ldr_generated++;
 
-    n->normalSize();
-    //n->showMaximized(); // That's to have mdi subwin size right (don't ask me why)
+    LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
     if (fitToWindowAct->isChecked())
         n->fitToWindow(true);
-    QMdiSubWindow *subwin = new QMdiSubWindow(this);
-    subwin->setAttribute(Qt::WA_DeleteOnClose);
-    subwin->setWidget(n);
-    mdiArea->addSubWindow(subwin);
-
-    //n->showMaximized();
 
     if (luminance_options->tmowindow_max)
         n->showMaximized();
     else
         n->showNormal();
 
-    subwin->installEventFilter(this);
+    connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
+    //connect(n, SIGNAL(levels_closed()), this, SLOT(levels_closed()));
 
-    connect(n,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-    //connect(n,SIGNAL(levels_closed()),this,SLOT(levels_closed()));
+    // TODO : progressive numbering of the open LDR tabs
+    if (num_ldr_generated == 1)
+        m_tabwidget->addTab(n, tr("Untitled"));
+    else
+        m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+    m_tabwidget->setCurrentWidget(n);
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
 {
-    m_hdrsNum++;
-    HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
-    HDR->setFreePfsFrameOnExit(true);
-    HDR->updateHDR(frame);
-    HDR->setFileName(QString(tr("Processed HDR")));
-    HDR->setWindowTitle(QString(tr("Processed HDR")));
-    HDR->setSelectionTool(true);
-    HDR->normalSize();
-    HDR->showMaximized();
-    //        if (actionFit_to_Window->isChecked())
-    //                HDR->fitToWindow(true);
-    QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
-    HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
-    HdrSubWin->setWidget(HDR);
-    mdiArea->addSubWindow(HdrSubWin);
-    HDR->showMaximized();
+    // TODO : currently, I'm thinking to remove this function
+    // Even the LDR viewer needs to be build using the pfs::Frame
+    // When the LDR hold the floating-point data, it can create a 16bit/channel version for high quality TIFF save
+    qDebug() << "MainWindow::addProcessedFrame(pfs::Frame *frame)";
+    qDebug() << "This function needs cleaning";
 
-    if (luminance_options->tmowindow_max)
-        mdiArea->activeSubWindow()->showMaximized();
-    else
-        mdiArea->activeSubWindow()->showNormal();
+//    HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
+//    HDR->setFreePfsFrameOnExit(true);
+//    HDR->updateHDR(frame);
+//    HDR->setFileName(QString(tr("Processed HDR")));
+//    HDR->setWindowTitle(QString(tr("Processed HDR")));
+//    HDR->setSelectionTool(true);
+//    HDR->normalSize();
+//    HDR->showMaximized();
+//    //        if (actionFit_to_Window->isChecked())
+//    //                HDR->fitToWindow(true);
+//    QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
+//    HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
+//    HdrSubWin->setWidget(HDR);
+//    mdiArea->addSubWindow(HdrSubWin);
+//    //HDR->showMaximized();
 
-    HdrSubWin->installEventFilter(this);
+//    if (luminance_options->tmowindow_max)
+//        HDR->showMaximized();
+//    else
+//        HDR->showNormal();
 
-    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+//    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
 }
 
 void MainWindow::tonemappingFinished()
 {
-    std::cout << "TonemappingWindow::tonemappingFinished()" << std::endl;
+    qDebug() << "TonemappingWindow::tonemappingFinished()";
     statusBar()->removeWidget(progInd);
     tmPanel->applyButton->setEnabled(true);
 
@@ -1505,37 +1473,39 @@ void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, 
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::Close) {
-        QMdiSubWindow *w = (QMdiSubWindow *) obj;
-        GenericViewer *v = (GenericViewer *) w->widget();
-        if (v->isHDR()) {
-            m_hdrsNum--;
-        }
-        else {
-            m_ldrsNum--;
-        }
-        return true;
-    } else {
-        //Standard event processing
-        return QMainWindow::eventFilter(obj, event);
-    }
-}
-
+/*
+ * Lock Handling
+ */
 void MainWindow::lockImages(bool toggled)
 {
     m_isLocked = toggled;
-    if (!mdiArea->subWindowList().isEmpty())
+    if (m_tabwidget->count())
     {
-        dispatch((GenericViewer *) mdiArea->currentSubWindow()->widget());
+
+        dispatch((GenericViewer*)m_tabwidget->currentWidget());
+    }
+}
+
+void MainWindow::dispatch(GenericViewer *sender)
+{
+    // TODO : is there a better way to implement this functionality?
+    m_changedImage = sender;
+    for (int idx = 0; idx < m_tabwidget->count(); idx++)
+    {
+        GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
+        if (sender != viewer)
+        {
+            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+            updateImage(viewer);
+            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+        }
     }
 }
 
 void MainWindow::updateImage(GenericViewer *viewer)
 {
-    assert(viewer!=NULL);
-    assert(m_changedImage!=NULL);
+    Q_ASSERT(viewer != NULL);
+    Q_ASSERT(m_changedImage != NULL);
     if (m_isLocked)
     {
         m_scaleFactor = m_changedImage->getImageScaleFactor();
@@ -1556,94 +1526,231 @@ void MainWindow::updateImage(GenericViewer *viewer)
     }
 }
 
-void MainWindow::dispatch(GenericViewer *sender)
+void MainWindow::showHDR()
 {
-    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-    m_changedImage = sender;
-    foreach (QMdiSubWindow *p, allViewers)
-    {
-        GenericViewer *viewer = (GenericViewer*)p->widget();
-        if (sender != viewer)
-        {
-            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-            updateImage(viewer);
-            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-        }
-    }
-}
+    if ( !tm_status.is_hdr_ready ) return;
 
-void MainWindow::showHDRs(bool toggled)
-{
-    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-    if (toggled)
-    {
-        foreach (QMdiSubWindow *p, allViewers)
-        {
-            GenericViewer *viewer = (GenericViewer*)p->widget();
-            if (viewer->isHDR())
-                p->hide();
-        }
-    }
-    else
-    {
-        foreach (QMdiSubWindow *p, allViewers)
-        {
-            GenericViewer *viewer = (GenericViewer*)p->widget();
-            if (viewer->isHDR())
-                p->show();
-        }
-
-    }
-}
-
-void MainWindow::updateMenu()
-{
-    // update toolbar based on the current status
-    QList<QMdiSubWindow*> allViewers = mdiArea->subWindowList();
-    int num_active_viewers = allViewers.count();
-
-    GenericViewer* c_v = (GenericViewer*)mdiArea->activeSubWindow()->widget();
-    bool is_current_hdr = false;
-    if ( c_v != NULL )
-    {
-        is_current_hdr = (c_v->isHDR()) ? true : false;
-    }
-
-    switch (current_state) {
-    case IO_STATE: {
-            if (num_active_viewers == 0)
-            {
-                // No viewer open on the mdiArea
-            } else {
-                // There is at least one viewer open
-            }
-        }
-        break;
-    case TM_STATE: {
-            if (num_active_viewers == 0)
-            {
-                // if this case happens, the current hdr viewer has been closed
-                // so we need to get out of the TM_STATE
-            } else {
-                // There is at least one viewer open
-            }
-        }
-        break;
-    }
+    m_tabwidget->setCurrentWidget(tm_status.curr_tm_frame);
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
-    // based on the scaling factor of the current viewer
-    // I set correctly the status of the magnification buttons
-    float current_scale_factor = c_v->getScaleFactor();
-    if ( current_scale_factor == 1.0f )
+    // TODO : this function needs double-check!
+    if ( c_v == NULL )
     {
-
-    } else if ( current_scale_factor == 0.0f )
+        normalSizeAct->setEnabled( false );
+        zoomInAct->setEnabled( false );
+        zoomOutAct->setEnabled( false );
+        fitToWindowAct->setEnabled( false );
+    }
+    else
     {
+        // based on the scaling factor of the current viewer
+        // I set correctly the status of the magnification buttons
+        float current_scale_factor = c_v->getScaleFactor();
 
-    } else {
-
+        normalSizeAct->setEnabled( !(current_scale_factor == 1.0f) );
+        zoomInAct->setEnabled( (current_scale_factor < 1.0f) );
+        zoomOutAct->setEnabled( (current_scale_factor > 0.15f) );
+        fitToWindowAct->setEnabled( true );
     }
 }
+
+/*
+ * Next/Previous Buttons
+ */
+void MainWindow::removeTab(int t)
+{
+    qDebug() << "MainWindow::remove_image("<< t <<")";
+
+    if (t < 0) return;
+
+    GenericViewer* w = (GenericViewer*)m_tabwidget->widget(t);
+    if (w->isHDR())
+    {
+        qDebug() << "Remove HDR from MainWindow";
+        if ( w->needsSaving() )
+        {
+            if ( maybeSave() )
+            {
+                // if discard OR saved
+                tm_status.is_hdr_ready = false;
+                tm_status.curr_tm_frame = NULL;
+                tm_status.curr_tm_options = NULL;
+
+                tmPanel->applyButton->setEnabled(false);
+
+                m_tabwidget->removeTab(t);
+                delete w;
+
+                setWindowModified(false);
+            }
+            // if FALSE, it means that the user said "Cancel"
+            // or the saving operation went wrong
+        }
+        else
+        {
+            // if discard OR saved
+            tm_status.is_hdr_ready = false;
+            tm_status.curr_tm_frame = NULL;
+            tm_status.curr_tm_options = NULL;
+
+            m_tabwidget->removeTab(t);
+            delete w;
+
+            setWindowModified(false);
+        }
+    }
+    else
+    {
+        m_tabwidget->removeTab(t);
+        delete w;
+    }
+    updatePreviousNextActions();
+}
+
+void MainWindow::activateNextViewer()
+{
+    int curr_num_viewers = m_tabwidget->count();
+    int curr_viewer = m_tabwidget->currentIndex();
+
+    if ( curr_viewer < curr_num_viewers-1 )
+    {
+        m_tabwidget->setCurrentIndex(curr_viewer+1);
+    }
+}
+
+void MainWindow::activatePreviousViewer()
+{
+    int curr_viewer = m_tabwidget->currentIndex();
+
+    if ( curr_viewer > 0 )
+    {
+        m_tabwidget->setCurrentIndex(curr_viewer-1);
+    }
+}
+
+void MainWindow::updatePreviousNextActions()
+{
+    int curr_num_viewers = m_tabwidget->count();
+    if (curr_num_viewers <= 1)
+    {
+        actionShowNext->setEnabled(false);
+        actionShowPrevious->setEnabled(false);
+        actionLock->setEnabled(false);
+    }
+    else
+    {
+        actionLock->setEnabled(true);
+        int curr_viewer = m_tabwidget->currentIndex();
+        if ( curr_viewer == 0 )
+        {
+            actionShowNext->setEnabled(true);
+            actionShowPrevious->setEnabled(false);
+        }
+        else if (curr_viewer == (curr_num_viewers-1))
+        {
+            actionShowNext->setEnabled(false);
+            actionShowPrevious->setEnabled(true);
+        }
+        else
+        {
+            actionShowNext->setEnabled(true);
+            actionShowPrevious->setEnabled(true);
+        }
+    }
+}
+
+QString MainWindow::getCurrentHDRName()
+{
+    if (tm_status.is_hdr_ready)
+    {
+        return tm_status.curr_tm_frame->getFileName();
+    }
+    else
+    {
+        return QString("Untitled HDR");
+    }
+}
+
+void MainWindow::setMainWindowModified(bool b)
+{
+    if (b)
+    {
+        if ( tm_status.is_hdr_ready )
+        {
+            tm_status.curr_tm_frame->setNeedsSaving(true);
+            setWindowModified(true);
+        }
+    }
+    else
+    {
+        if ( tm_status.is_hdr_ready )
+        {
+            tm_status.curr_tm_frame->setNeedsSaving(false);
+        }
+        setWindowModified(false);
+    }
+}
+
+/*
+ * Recent File Handling
+ */
+void MainWindow::setCurrentFile(const QString &fileName)
+{
+    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
+    files.removeAll(fileName);
+    files.prepend(fileName);
+    while (files.size() > MAX_RECENT_FILES)
+    {
+        files.removeLast();
+    }
+
+    settings->setValue(KEY_RECENT_FILES, files);
+
+    updateRecentFileActions();
+}
+
+void MainWindow::updateRecentFileActions()
+{
+    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
+
+    int numRecentFiles = qMin(files.size(), (int)MAX_RECENT_FILES);
+    separatorRecentFiles->setVisible(numRecentFiles > 0);
+
+    for (int i = 0; i < numRecentFiles; ++i)
+    {
+        QString text = QString("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
+        recentFileActs[i]->setText(text);
+        recentFileActs[i]->setData(files[i]);
+        recentFileActs[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < MAX_RECENT_FILES; ++j)
+    {
+        recentFileActs[j]->setVisible(false);
+    }
+}
+
+void MainWindow::initRecentFileActions()
+{
+    separatorRecentFiles = menuFile->addSeparator();
+
+    for (int i = 0; i < MAX_RECENT_FILES; ++i)
+    {
+        recentFileActs[i] = new QAction(this);
+        recentFileActs[i]->setVisible(false);
+        menuFile->addAction(recentFileActs[i]);
+        connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+    }
+}
+
+void MainWindow::clearRecentFileActions()
+{
+    for (int i = 0; i < MAX_RECENT_FILES; ++i)
+    {
+        delete recentFileActs[i];
+    }
+}
+
+
+

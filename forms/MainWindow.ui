@@ -57,6 +57,11 @@
     <property name="title">
      <string>&amp;Windows</string>
     </property>
+    <addaction name="actionMinimize"/>
+    <addaction name="actionMaximize"/>
+    <addaction name="separator"/>
+    <addaction name="actionBring_All_to_Front"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -112,12 +117,11 @@
     <addaction name="rotateccw"/>
     <addaction name="rotatecw"/>
     <addaction name="separator"/>
-    <addaction name="action_Projective_Transformation"/>
-    <addaction name="actionResizeHDR"/>
-    <addaction name="separator"/>
     <addaction name="cropToSelectionAction"/>
     <addaction name="removeSelectionAction"/>
-    <addaction name="TonemapAction"/>
+    <addaction name="separator"/>
+    <addaction name="actionResizeHDR"/>
+    <addaction name="action_Projective_Transformation"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -150,15 +154,13 @@
    <addaction name="fileOpenAction"/>
    <addaction name="fileSaveAsAction"/>
    <addaction name="separator"/>
-   <addaction name="TonemapAction"/>
    <addaction name="actionShowHDRs"/>
    <addaction name="actionLock"/>
-   <addaction name="separator"/>
-   <addaction name="actionShowPrevious"/>
-   <addaction name="actionShowNext"/>
    <addaction name="zoomInAct"/>
    <addaction name="zoomOutAct"/>
    <addaction name="normalSizeAct"/>
+   <addaction name="actionShowPrevious"/>
+   <addaction name="actionShowNext"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -837,7 +839,7 @@
   </action>
   <action name="actionShowNext">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
@@ -855,7 +857,7 @@
   </action>
   <action name="actionShowPrevious">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
@@ -872,24 +874,21 @@
    </property>
   </action>
   <action name="actionShowHDRs">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="checked">
     <bool>false</bool>
    </property>
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/new/prefix1/images/games-config-background.png</normaloff>:/new/prefix1/images/games-config-background.png</iconset>
    </property>
    <property name="text">
-    <string>Show/Hide HDRs</string>
+    <string>Show HDR</string>
    </property>
    <property name="toolTip">
-    <string>Show/Hide HDRs images</string>
+    <string>Show Current Tonemapped HDR image</string>
    </property>
   </action>
   <action name="actionLock">
@@ -897,7 +896,7 @@
     <bool>true</bool>
    </property>
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
@@ -909,6 +908,21 @@
    </property>
    <property name="shortcut">
     <string>L</string>
+   </property>
+  </action>
+  <action name="actionMinimize">
+   <property name="text">
+    <string>Minimize</string>
+   </property>
+  </action>
+  <action name="actionMaximize">
+   <property name="text">
+    <string>Maximize</string>
+   </property>
+  </action>
+  <action name="actionBring_All_to_Front">
+   <property name="text">
+    <string>Bring All to Front</string>
    </property>
   </action>
  </widget>

@@ -34,57 +34,70 @@
 
 int main( int argc, char ** argv )
 {
-	int rc=-1;
+    int rc=-1;
 #ifndef Q_WS_MAC
-	//CLI application
-	// Do not try to run the CLI app on Mac -
-	// FIXME: the problem is that some args are supplied when
-	// running as a gui-app in Mac OS X, this messes up things.
-	if (argc>1) {
-		QCoreApplication cliApplication( argc, argv );
-		QSettings _settings("Luminance", "Luminance");
-		settings = &_settings;
-		QTranslator translator;
-		translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-		cliApplication.installTranslator(&translator);
-		CommandLineInterfaceManager cli( argc, argv );
-		cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
-		rc = cliApplication.exec();
-		LuminanceOptions::deleteInstance();
-		return rc;
-	}
+    //CLI application
+    // Do not try to run the CLI app on Mac -
+    // FIXME: the problem is that some args are supplied when
+    // running as a gui-app in Mac OS X, this messes up things.
+    if (argc>1)
+    {
+        QCoreApplication cliApplication( argc, argv );
+        QSettings _settings("Luminance", "Luminance");
+        settings = &_settings;
+        QTranslator translator;
+        translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+        cliApplication.installTranslator(&translator);
+        CommandLineInterfaceManager cli( argc, argv );
+        cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
+        rc = cliApplication.exec();
+        LuminanceOptions::deleteInstance();
+        return rc;
+    }
 #endif
 
-	//GUI application
-	QApplication application( argc, argv );
-	QSettings _settings("Luminance", "Luminance");
-	settings = &_settings;
-// 	qDebug() << "QDir::currentPath()=" << QDir::currentPath();
-// 	qDebug() << "QCoreApplication::applicationDirPath()=" << QCoreApplication::applicationDirPath();
+    //GUI application
+    Q_INIT_RESOURCE(icons);
+    QApplication application( argc, argv );
+
+    //QSettings _settings("Luminance", "Luminance");
+    //settings = &_settings;
+    settings = new QSettings("Luminance", "Luminance");
+
+    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
 
 #ifdef WIN32
-	bool found_DLL=false;
-	foreach (QString path, application.libraryPaths()) {
-		if (QFile::exists(path+"/imageformats/qjpeg4.dll"))
-			found_DLL=true;
-	}
-	if (!found_DLL) {
-		QMessageBox::critical(0,QObject::tr("Aborting..."),QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
-		return 1;
-	}
+    bool found_DLL = false;
+    foreach (QString path, application.libraryPaths())
+    {
+        if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
+        {
+            found_DLL = true;
+        }
+    }
+    if (!found_DLL)
+    {
+        QMessageBox::critical(NULL,
+                              tr("Aborting..."),
+                              tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
+        return 1;
+    }
 #endif
-	QTranslator guiTranslator;
-	QTranslator qtTranslator;
-// 	qDebug( "Looking for i18n files in: " I18NDIR );
-	qtTranslator.load(QString("qt_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-	guiTranslator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-	application.installTranslator(&qtTranslator);
-	application.installTranslator(&guiTranslator);
-	MainWindow mainWindow;
-	application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
-	mainWindow.show();
-	rc=application.exec();
-	LuminanceOptions::deleteInstance();
-	return rc;
+
+
+    QTranslator guiTranslator;
+    QTranslator qtTranslator;
+    // 	qDebug( "Looking for i18n files in: " I18NDIR );
+    qtTranslator.load(QString("qt_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+    guiTranslator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+    application.installTranslator(&qtTranslator);
+    application.installTranslator(&guiTranslator);
+    MainWindow* MW = new MainWindow;
+    //application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
+    MW->show();
+    rc = application.exec();
+    LuminanceOptions::deleteInstance();
+    return rc;
 }
 
