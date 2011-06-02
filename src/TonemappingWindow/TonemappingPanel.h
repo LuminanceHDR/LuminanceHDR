@@ -99,7 +99,7 @@ private:
 	int out_ldr_cs;
 
 	float heightToWidthRatio;
-
+        bool adding_custom_size;
 private slots:
 	void on_pregammadefault_clicked();
 	void on_defaultButton_clicked();
