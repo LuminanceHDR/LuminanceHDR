@@ -24,6 +24,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <QObject>
 
 #include "Common/commandline.h"
 #include "MainWindow/MainWindow.h"
