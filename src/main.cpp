@@ -80,8 +80,8 @@ int main( int argc, char ** argv )
     if (!found_DLL)
     {
         QMessageBox::critical(NULL,
-                              tr("Aborting..."),
-                              tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
+                              QObject::tr("Aborting..."),
+                              QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
         return 1;
     }
 #endif
