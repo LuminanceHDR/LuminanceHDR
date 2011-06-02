@@ -1259,14 +1259,15 @@ bool MainWindow::maybeSave()
                 }
             }
             break;
-        case QMessageBox::Cancel:
-            {
-                return false;
-            }
-            break;
         case QMessageBox::Discard:
             {
                 return true;
+            }
+            break;
+        case QMessageBox::Cancel:
+        default:
+            {
+                return false;
             }
             break;
         }
