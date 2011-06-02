@@ -17,7 +17,7 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 
-FIND_PATH(EXIV2_INCLUDE_DIR exiv2/exiv2.hpp
+FIND_PATH(EXIV2_INCLUDE_DIR exiv2/exif.hpp
   /usr/local/include
   /usr/include
   /opt/local/include
