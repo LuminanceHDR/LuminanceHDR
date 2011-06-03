@@ -1823,6 +1823,7 @@ void MainWindow::generatePreviews()
 
 	TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1835,6 +1836,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1848,6 +1850,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1856,6 +1859,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1867,6 +1871,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1881,6 +1886,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1892,6 +1898,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1903,6 +1910,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 
@@ -1916,6 +1924,7 @@ void MainWindow::generatePreviews()
 
 	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
 }
@@ -1955,6 +1964,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 1:
@@ -1968,6 +1978,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 2:
@@ -1982,6 +1993,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		case 3:
 			opts->tmoperator = drago;
@@ -1991,6 +2003,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 4:
@@ -2003,6 +2016,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 5:
@@ -2018,6 +2032,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 6:
@@ -2030,6 +2045,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 7:
@@ -2042,6 +2058,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 		case 8:
@@ -2056,6 +2073,7 @@ void MainWindow::tonemapPreview(int n)
 
 			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
 			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
+			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 			thread->start();
 		break;
 	}
