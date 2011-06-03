@@ -218,6 +218,8 @@ SET(LUMINANCE_HDR_SRC
 	src/MainWindow/DnDOption.cpp
 	src/MainWindow/MainWindow.cpp
 	src/Preferences/PreferencesDialog.cpp
+	src/PreviewPanel/PreviewLabel.cpp
+	src/PreviewPanel/PreviewPanel.cpp
 	src/Projection/ProjectionsDialog.cpp
 	src/Resize/ResizeDialog.cpp
 	src/Threads/Ashikhmin02Thread.cpp
@@ -272,6 +274,8 @@ SET(LUMINANCE_HDR_MOC
 	src/MainWindow/DnDOption.h
 	src/MainWindow/MainWindow.h
 	src/Preferences/PreferencesDialog.h
+	src/PreviewPanel/PreviewLabel.h
+	src/PreviewPanel/PreviewPanel.h
 	src/Projection/ProjectionsDialog.h
 	src/Resize/ResizeDialog.h
 	src/Threads/Ashikhmin02Thread.h
@@ -316,6 +320,7 @@ SET(LUMINANCE_HDR_UI
 	forms/ImageQualityDialog.ui
 	forms/MainWindow.ui
 	forms/PreferencesDialog.ui
+	forms/PreviewPanel.ui
 	forms/ProjectionsDialog.ui
 	forms/ResizeDialog.ui
 	forms/Splash.ui
