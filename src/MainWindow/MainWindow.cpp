@@ -112,6 +112,7 @@ MainWindow::~MainWindow()
     clearRecentFileActions();
 
     delete opts;
+    delete previewViewer;
 
     settings->setValue("MainWindowState", saveState());
     settings->setValue("MainWindowGeometry", saveGeometry());
