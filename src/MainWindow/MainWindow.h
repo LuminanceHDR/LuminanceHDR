@@ -55,6 +55,7 @@
 #include "TonemappingWindow/TMOProgressIndicator.h"
 #include "Threads/TMOThread.h"
 #include "Libpfs/frame.h"
+#include "PreviewPanel/PreviewPanel.h"
 
 #define MAX_RECENT_FILES (5)
 
@@ -89,7 +90,7 @@ public Q_SLOTS:
     void setMainWindowModified(bool b);
 
 protected Q_SLOTS:
-
+    bool eventFilter(QObject *obj, QEvent *event);
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
     void fileSaveAs();
@@ -171,6 +172,12 @@ protected Q_SLOTS:
     void removeTab(int);
     void activateNextViewer();
     void activatePreviousViewer();
+
+    // Preview Panel
+    void tonemapPreview(int n);
+    void generatePreviews();
+    void addSmallPreviewResult(QImage *img);
+    void addPreviewResult(QImage *img);
 
 Q_SIGNALS:
     // I/O
@@ -259,6 +266,14 @@ protected:
     QString getCurrentHDRName();
 
     bool maybeSave();
+
+    // Preview Panel
+    PreviewPanel *previewPanel;
+    TonemappingOptions *opts;
+    int m_previewImgNum;
+
+    // Preview Viewer
+    LdrViewer *previewViewer;
 };
 
 

@@ -30,20 +30,29 @@
 #include "LdrViewer.h"
 
 LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) :
-        GenericViewer(parent, ns, ncf)
+        GenericViewer(parent, ns, ncf), informativeLabel(NULL)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_image = i;
 
-    m_cols = m_image->width();
-    m_rows = m_image->height();
+    if (m_image == 0) {
+	m_cols = 0;
+	m_rows = 0;
+    }
+    else {
+    	m_cols = m_image->width();
+    	m_rows = m_image->height();
+    }
 
     temp_image = NULL;
     previewimage = NULL;
 
-    QLabel *informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_rows).arg(m_cols), toolBar );
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_rows).arg(m_cols), toolBar );
     toolBar->addWidget(informativeLabel);
+
+    if (m_image == 0)
+	return;
 
     imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
 
@@ -141,3 +150,17 @@ void LdrViewer::finalize_levels()
     previewimage = NULL;
 }
 
+void LdrViewer::setImage(QImage *i)
+{
+    if (m_image != NULL)
+        delete m_image;
+    if (informativeLabel != NULL)
+	delete informativeLabel;
+    m_image = new QImage(*i);
+    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+    imageLabel.adjustSize();
+    m_cols = m_image->width();
+    m_rows = m_image->height();
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_rows).arg(m_cols), toolBar );
+    toolBar->addWidget(informativeLabel);
+}

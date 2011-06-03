@@ -40,7 +40,8 @@ FORMS = forms/MainWindow.ui \
 		forms/ImageQualityDialog.ui \
 		forms/HelpBrowser.ui \
 		forms/HelpSideBar.ui \
-		forms/TonemappingWarnDialog.ui
+		forms/TonemappingWarnDialog.ui \
+		forms/PreviewPanel.ui
 
 HEADERS +=  src/Libpfs/array2d.h \
 			src/Libpfs/colorspace.h \
@@ -137,7 +138,9 @@ HEADERS +=  src/Libpfs/array2d.h \
     src/Libpfs/domio.h \
     src/Libpfs/frame.h \
     src/Libpfs/tag.h \
-    src/Libpfs/channel.h
+    src/Libpfs/channel.h \
+			src/PreviewPanel/PreviewLabel.h \ 
+			src/PreviewPanel/PreviewPanel.h
 
 SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Libpfs/pfs.cpp \
@@ -248,7 +251,9 @@ SOURCES +=  src/Libpfs/array2d.cpp \
     src/Libpfs/domio.cpp \
     src/Libpfs/frame.cpp \
     src/Libpfs/tag.cpp \
-    src/Libpfs/channel.cpp
+    src/Libpfs/channel.cpp \
+			src/PreviewPanel/PreviewLabel.cpp \
+			src/PreviewPanel/PreviewPanel.cpp
 
 RESOURCES = icons.qrc
 

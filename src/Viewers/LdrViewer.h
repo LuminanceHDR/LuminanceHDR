@@ -44,6 +44,7 @@ public:
     QString getExifComment();
     const QImage* getQImage();
     bool isHDR() { return false; }
+    void setImage(QImage *i);
 
 signals:
     void levels_closed();
@@ -56,7 +57,7 @@ private slots:
 private:
     void parseOptions(const TonemappingOptions *opts);
     QString caption,postfix,exif_comment;
-
+    QLabel *informativeLabel;
     QImage *previewimage;
     QImage *temp_image;
 };
