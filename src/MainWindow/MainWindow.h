@@ -166,7 +166,7 @@ protected Q_SLOTS:
     void updateImage(GenericViewer *viewer);
     void dispatch(GenericViewer *);
 
-    void showHDR();
+    void showPreviewPanel(bool b);
 
     // QTabWidget
     void removeTab(int);

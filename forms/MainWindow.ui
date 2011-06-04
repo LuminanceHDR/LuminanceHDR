@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -98,6 +98,7 @@
     <addaction name="menuHDR_Histogram"/>
     <addaction name="separator"/>
     <addaction name="menuToolbars"/>
+    <addaction name="actionShowPreviewPanel"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -154,7 +155,6 @@
    <addaction name="fileOpenAction"/>
    <addaction name="fileSaveAsAction"/>
    <addaction name="separator"/>
-   <addaction name="actionShowHDRs"/>
    <addaction name="actionLock"/>
    <addaction name="zoomInAct"/>
    <addaction name="zoomOutAct"/>
@@ -873,24 +873,6 @@
     <string>PgUp</string>
    </property>
   </action>
-  <action name="actionShowHDRs">
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/games-config-background.png</normaloff>:/new/prefix1/images/games-config-background.png</iconset>
-   </property>
-   <property name="text">
-    <string>Show HDR</string>
-   </property>
-   <property name="toolTip">
-    <string>Show Current Tonemapped HDR image</string>
-   </property>
-  </action>
   <action name="actionLock">
    <property name="checkable">
     <bool>true</bool>
@@ -923,6 +905,23 @@
   <action name="actionBring_All_to_Front">
    <property name="text">
     <string>Bring All to Front</string>
+   </property>
+  </action>
+  <action name="actionShowPreviewPanel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Preview Panel</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/Hide Preview Panel</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

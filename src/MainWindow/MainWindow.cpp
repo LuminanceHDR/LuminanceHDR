@@ -201,7 +201,7 @@ void MainWindow::createToolBar()
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
 
-    connect(actionShowHDRs, SIGNAL(triggered()), this, SLOT(showHDR()));
+    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
     connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockImages(bool)));
 
     connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
@@ -496,7 +496,7 @@ void MainWindow::updateActionsNoImage()
 
     fileSaveAsAction->setEnabled(false);
     actionSave_Hdr_Preview->setEnabled(false);
-    actionShowHDRs->setEnabled(false);
+    //actionShowHDRs->setEnabled(false);
 
     // Histogram
     menuHDR_Histogram->setEnabled(false);
@@ -519,7 +519,7 @@ void MainWindow::updateActionsLdrImage()
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
 
-    if ( tm_status.is_hdr_ready ) actionShowHDRs->setEnabled(true);
+    //if ( tm_status.is_hdr_ready ) actionShowHDRs->setEnabled(true);
 
     // Histogram
     menuHDR_Histogram->setEnabled(false);
@@ -541,7 +541,7 @@ void MainWindow::updateActionsHdrImage()
 {
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
-    actionShowHDRs->setEnabled(false);
+    //actionShowHDRs->setEnabled(false);
 
     // Histogram
     menuHDR_Histogram->setEnabled(true);
@@ -901,8 +901,11 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-	generatePreviews();
-	previewPanel->show();
+	if (actionShowPreviewPanel->isChecked())
+	{
+		generatePreviews();
+		previewPanel->show();
+	}
     }
 }
 
@@ -1560,11 +1563,18 @@ void MainWindow::updateImage(GenericViewer *viewer)
     }
 }
 
-void MainWindow::showHDR()
+void MainWindow::showPreviewPanel(bool b)
 {
-    if ( !tm_status.is_hdr_ready ) return;
-
-    m_tabwidget->setCurrentWidget(tm_status.curr_tm_frame);
+	if (b)
+	{
+		if (tm_status.is_hdr_ready)
+		{
+			generatePreviews();
+			previewPanel->show();
+		}
+	}
+	else
+		previewPanel->hide();
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
@@ -1806,6 +1816,8 @@ void MainWindow::generatePreviews()
 	if (hdr_viewer == NULL)
 		return;
 
+	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
 	pfs::Frame *pfs_frame = hdr_viewer->getHDRPfsFrame();
 
 	opts->origxsize = 0;
@@ -1927,6 +1939,8 @@ void MainWindow::generatePreviews()
 	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
 	thread->start();
 	thread->wait();
+
+	QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::addSmallPreviewResult(QImage *img)
@@ -1941,6 +1955,8 @@ void MainWindow::tonemapPreview(int n)
 	HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
 	if (hdr_viewer == NULL)
 		return;
+
+	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
 	pfs::Frame *pfs_frame = hdr_viewer->getHDRPfsFrame();
 
@@ -2077,6 +2093,7 @@ void MainWindow::tonemapPreview(int n)
 			thread->start();
 		break;
 	}
+	QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::addPreviewResult(QImage *img)
