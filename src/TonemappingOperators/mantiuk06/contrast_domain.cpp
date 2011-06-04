@@ -55,6 +55,7 @@
 #include <string.h>
 #include <math.h>
 #include <iostream>
+#include <mm_malloc.h>
 
 #ifdef _OPENMP
 #include <omp.h>

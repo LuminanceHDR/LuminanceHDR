@@ -32,6 +32,7 @@
 #define __USE_SSE__
 #include <mm_malloc.h>
 #include <xmmintrin.h>
+#include <mm_malloc.h>
 //#include <pmmintrin.h>
 //#include <tmmintrin.h>
 #else

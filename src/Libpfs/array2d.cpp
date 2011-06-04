@@ -37,6 +37,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <mm_malloc.h>
 
 #include "array2d.h"
 #include "Common/vex.h"
