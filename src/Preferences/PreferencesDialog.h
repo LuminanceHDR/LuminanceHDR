@@ -45,11 +45,11 @@ private:
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
 	QStringList sanitizeAISparams();
-	QStringList sanitizeDCRAWparams();
 private slots:
 	void negative_clicked();
 	void infnan_clicked();
 	void ok_clicked();
+	void cancel_clicked();
 	void updateLineEditString();
 	void enterWhatsThis();
 	
@@ -88,5 +88,11 @@ private slots:
 	void red_toolButton_clicked();
 	void blue_toolButton_clicked();
 	void green_toolButton_clicked();
+
+	void pushButtonInterface_clicked();
+	void pushButtonHDR_clicked();
+	void pushButtonTM_clicked();
+	void pushButtonRAW_clicked();
+	void pushButtonExtTool_clicked();
 };
 #endif

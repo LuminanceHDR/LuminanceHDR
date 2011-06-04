@@ -85,6 +85,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
 	connect(ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
+	connect(cancelButton,SIGNAL(clicked()),this,SLOT(cancel_clicked()));
 	connect(chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
 
 	connect(user_qual_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(user_qual_comboBox_currentIndexChanged(int)));
@@ -122,6 +123,13 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(red_toolButton,SIGNAL(clicked()),this,SLOT(red_toolButton_clicked()));
 	connect(blue_toolButton,SIGNAL(clicked()),this,SLOT(blue_toolButton_clicked()));
 	connect(green_toolButton,SIGNAL(clicked()),this,SLOT(green_toolButton_clicked()));
+
+
+	connect(pushButtonInterface,SIGNAL(clicked()),this,SLOT(pushButtonInterface_clicked()));
+	connect(pushButtonHDR,SIGNAL(clicked()),this,SLOT(pushButtonHDR_clicked()));
+	connect(pushButtonTM,SIGNAL(clicked()),this,SLOT(pushButtonTM_clicked()));
+	connect(pushButtonRAW,SIGNAL(clicked()),this,SLOT(pushButtonRAW_clicked()));
+	connect(pushButtonExtTool,SIGNAL(clicked()),this,SLOT(pushButtonExtTool_clicked()));
 
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
@@ -314,6 +322,10 @@ void PreferencesDialog::ok_clicked() {
 	settings->endGroup();
 	
 	accept();
+}
+
+void PreferencesDialog::cancel_clicked() {
+	reject();
 }
 
 void PreferencesDialog::user_qual_comboBox_currentIndexChanged(int i) {
@@ -620,6 +632,26 @@ void PreferencesDialog::green_toolButton_clicked() {
 	green_horizontalSlider->setValue(pos);
 	green_doubleSpinBox->setValue(1.0);
 	green_toolButton->setEnabled(false);
+}
+
+void PreferencesDialog::pushButtonInterface_clicked() {
+	stackedPagesWidget->setCurrentIndex(0);
+}
+
+void PreferencesDialog::pushButtonHDR_clicked() {
+	stackedPagesWidget->setCurrentIndex(1);
+}
+
+void PreferencesDialog::pushButtonTM_clicked() {
+	stackedPagesWidget->setCurrentIndex(2);
+}
+
+void PreferencesDialog::pushButtonRAW_clicked() {
+	stackedPagesWidget->setCurrentIndex(3);
+}
+
+void PreferencesDialog::pushButtonExtTool_clicked() {
+	stackedPagesWidget->setCurrentIndex(4);
 }
 
 /********************************************************/
