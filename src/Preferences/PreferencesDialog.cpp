@@ -82,6 +82,9 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	infnancolor=luminance_options->naninfcolor;
 
 	from_options_to_gui(); //update the gui in order to show the options
+
+	framePreferences->setStyleSheet("QFrame { background-color: lightgray; }");
+
 	connect(negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
 	connect(ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
 	connect(okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
