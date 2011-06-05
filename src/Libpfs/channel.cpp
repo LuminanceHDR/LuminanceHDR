@@ -66,6 +66,11 @@ namespace pfs
         return channel_impl->getRawData();
     }
 
+    const float* Channel::getRawData() const
+    {
+        return channel_impl->getRawData();
+    }
+
     //Array2D implementation
     //    virtual int getCols() const
     //    {

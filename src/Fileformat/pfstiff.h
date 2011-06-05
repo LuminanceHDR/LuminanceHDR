@@ -80,7 +80,6 @@ class TiffWriter : public QObject {
 private:
   TIFF* tif;
   pfs::Channel *Xc, *Yc, *Zc;
-  pfs::Array2D  *X,  *Y,  *Z;
   
   QImage *ldrimage;
   uint32 width,height;

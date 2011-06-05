@@ -39,11 +39,6 @@ using namespace std;
 /// constant to change between radiance and luminance
 #define WHITE_EFFICACY 179.0
 
-void readRadianceHeader( FILE *file, int &width, int &height, float &exposure );
-void readRadiance( FILE *file, int width, int height, float exposure,
-		   pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
-void writeRadiance( FILE *file, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
-
 // RGBE IO classes implementation
 
 RGBEReader::RGBEReader( FILE *fh ) : fh(fh)

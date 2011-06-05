@@ -135,9 +135,7 @@ namespace pfs
     /**
      * Each implementing class should provide its own destructor.
      */
-    virtual ~Array2D()
-    {
-    }
+    virtual ~Array2D() { }
     
     virtual float*       getRawData()        = 0;
     virtual const float* getRawData() const  = 0;

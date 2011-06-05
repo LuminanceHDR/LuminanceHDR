@@ -59,9 +59,9 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_col
     inpfsframe->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    pfs::Array2DImpl  *X = Xc->getChannelData();
-    pfs::Array2DImpl  *Y = Yc->getChannelData();
-    pfs::Array2DImpl  *Z = Zc->getChannelData();
+    pfs::Array2D  *X = Xc->getChannelData();
+    pfs::Array2D  *Y = Yc->getChannelData();
+    pfs::Array2D  *Z = Zc->getChannelData();
 
     // Back to CS_RGB for the Viewer
     pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z);
@@ -71,9 +71,9 @@ QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_col
 
     QImage * temp_qimage = new QImage (width, height, QImage::Format_ARGB32);
 
-    float* p_R = X->getRawData();
-    float* p_G = Y->getRawData();
-    float* p_B = Z->getRawData();
+    const float* p_R = X->getRawData();
+    const float* p_G = Y->getRawData();
+    const float* p_B = Z->getRawData();
 
     int red, green, blue;
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());

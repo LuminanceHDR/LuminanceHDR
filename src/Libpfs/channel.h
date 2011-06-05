@@ -89,6 +89,7 @@ namespace pfs
        * @return a table of floats of the size width*height
        */
       float *getRawData();
+      const float* getRawData() const;
 
       /**
        * Gets width of the channel (in pixels).

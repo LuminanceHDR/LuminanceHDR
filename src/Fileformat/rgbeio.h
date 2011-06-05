@@ -32,6 +32,9 @@
 
 #include "Libpfs/array2d.h"
 
+void readRadianceHeader( FILE *file, int &width, int &height, float &exposure );
+void readRadiance( FILE *file, int width, int height, float exposure, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
+void writeRadiance( FILE *file, pfs::Array2D *X, pfs::Array2D *Y, pfs::Array2D *Z );
 
 class RGBEReader 
 {
