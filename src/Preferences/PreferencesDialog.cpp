@@ -128,11 +128,11 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(green_toolButton,SIGNAL(clicked()),this,SLOT(green_toolButton_clicked()));
 
 
-	connect(pushButtonInterface,SIGNAL(clicked()),this,SLOT(pushButtonInterface_clicked()));
-	connect(pushButtonHDR,SIGNAL(clicked()),this,SLOT(pushButtonHDR_clicked()));
-	connect(pushButtonTM,SIGNAL(clicked()),this,SLOT(pushButtonTM_clicked()));
-	connect(pushButtonRAW,SIGNAL(clicked()),this,SLOT(pushButtonRAW_clicked()));
-	connect(pushButtonExtTool,SIGNAL(clicked()),this,SLOT(pushButtonExtTool_clicked()));
+	connect(toolButtonInterface,SIGNAL(clicked()),this,SLOT(toolButtonInterface_clicked()));
+	connect(toolButtonHDR,SIGNAL(clicked()),this,SLOT(toolButtonHDR_clicked()));
+	connect(toolButtonTM,SIGNAL(clicked()),this,SLOT(toolButtonTM_clicked()));
+	connect(toolButtonRAW,SIGNAL(clicked()),this,SLOT(toolButtonRAW_clicked()));
+	connect(toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
 
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
@@ -637,23 +637,23 @@ void PreferencesDialog::green_toolButton_clicked() {
 	green_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::pushButtonInterface_clicked() {
+void PreferencesDialog::toolButtonInterface_clicked() {
 	stackedPagesWidget->setCurrentIndex(0);
 }
 
-void PreferencesDialog::pushButtonHDR_clicked() {
+void PreferencesDialog::toolButtonHDR_clicked() {
 	stackedPagesWidget->setCurrentIndex(1);
 }
 
-void PreferencesDialog::pushButtonTM_clicked() {
+void PreferencesDialog::toolButtonTM_clicked() {
 	stackedPagesWidget->setCurrentIndex(2);
 }
 
-void PreferencesDialog::pushButtonRAW_clicked() {
+void PreferencesDialog::toolButtonRAW_clicked() {
 	stackedPagesWidget->setCurrentIndex(3);
 }
 
-void PreferencesDialog::pushButtonExtTool_clicked() {
+void PreferencesDialog::toolButtonExtTool_clicked() {
 	stackedPagesWidget->setCurrentIndex(4);
 }
 

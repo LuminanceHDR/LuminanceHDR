@@ -89,10 +89,10 @@ private slots:
 	void blue_toolButton_clicked();
 	void green_toolButton_clicked();
 
-	void pushButtonInterface_clicked();
-	void pushButtonHDR_clicked();
-	void pushButtonTM_clicked();
-	void pushButtonRAW_clicked();
-	void pushButtonExtTool_clicked();
+	void toolButtonInterface_clicked();
+	void toolButtonHDR_clicked();
+	void toolButtonTM_clicked();
+	void toolButtonRAW_clicked();
+	void toolButtonExtTool_clicked();
 };
 #endif

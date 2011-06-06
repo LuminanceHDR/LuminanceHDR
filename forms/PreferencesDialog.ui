@@ -75,12 +75,9 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_16">
             <item>
-             <widget class="QPushButton" name="pushButtonInterface">
-              <property name="toolTip">
-               <string/>
-              </property>
+             <widget class="QToolButton" name="toolButtonInterface">
               <property name="text">
-               <string/>
+               <string>Interface</string>
               </property>
               <property name="icon">
                <iconset resource="../icons.qrc">
@@ -92,19 +89,20 @@
                 <height>48</height>
                </size>
               </property>
-              <property name="flat">
+              <property name="checkable">
                <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Interface&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -126,12 +124,9 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_17">
             <item>
-             <widget class="QPushButton" name="pushButtonHDR">
-              <property name="toolTip">
-               <string/>
-              </property>
+             <widget class="QToolButton" name="toolButtonHDR">
               <property name="text">
-               <string/>
+               <string>HDR Options</string>
               </property>
               <property name="icon">
                <iconset resource="../icons.qrc">
@@ -143,15 +138,17 @@ p, li { white-space: pre-wrap; }
                 <height>48</height>
                </size>
               </property>
-              <property name="flat">
+              <property name="checkable">
                <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>HDR Options</string>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -173,12 +170,9 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_18">
             <item>
-             <widget class="QPushButton" name="pushButtonTM">
-              <property name="toolTip">
-               <string/>
-              </property>
+             <widget class="QToolButton" name="toolButtonTM">
               <property name="text">
-               <string/>
+               <string>Tone Mapping</string>
               </property>
               <property name="icon">
                <iconset resource="../icons.qrc">
@@ -190,15 +184,17 @@ p, li { white-space: pre-wrap; }
                 <height>48</height>
                </size>
               </property>
-              <property name="flat">
+              <property name="checkable">
                <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_9">
-              <property name="text">
-               <string>Tone Mapping</string>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -220,16 +216,13 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_19">
             <item>
-             <widget class="QPushButton" name="pushButtonRAW">
-              <property name="toolTip">
-               <string/>
-              </property>
+             <widget class="QToolButton" name="toolButtonRAW">
               <property name="text">
-               <string/>
+               <string>RAW Conversion</string>
               </property>
               <property name="icon">
                <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/raw-icon.png</normaloff>:/new/prefix1/images/raw-icon.png</iconset>
+                <normaloff>:/new/prefix1/images/rawconverter.png</normaloff>:/new/prefix1/images/rawconverter.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -237,15 +230,20 @@ p, li { white-space: pre-wrap; }
                 <height>48</height>
                </size>
               </property>
-              <property name="flat">
+              <property name="checkable">
                <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>RAW Conversion</string>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -267,12 +265,9 @@ p, li { white-space: pre-wrap; }
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_20">
             <item>
-             <widget class="QPushButton" name="pushButtonExtTool">
-              <property name="toolTip">
-               <string/>
-              </property>
+             <widget class="QToolButton" name="toolButtonExtTool">
               <property name="text">
-               <string/>
+               <string>External Tools</string>
               </property>
               <property name="icon">
                <iconset resource="../icons.qrc">
@@ -284,15 +279,17 @@ p, li { white-space: pre-wrap; }
                 <height>48</height>
                </size>
               </property>
-              <property name="flat">
+              <property name="checkable">
                <bool>true</bool>
               </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_11">
-              <property name="text">
-               <string>External Tools</string>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="autoRaise">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -905,8 +902,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>554</width>
-              <height>333</height>
+              <width>269</width>
+              <height>133</height>
              </rect>
             </property>
             <attribute name="label">
