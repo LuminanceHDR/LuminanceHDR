@@ -902,8 +902,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>269</width>
-              <height>133</height>
+              <width>554</width>
+              <height>333</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2571,6 +2571,79 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>languageComboBox</tabstop>
+  <tabstop>checkBoxTMOWindowsMax</tabstop>
+  <tabstop>checkBoxTMOWindowsHDR</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>toolButtonInterface</tabstop>
+  <tabstop>toolButtonHDR</tabstop>
+  <tabstop>toolButtonTM</tabstop>
+  <tabstop>toolButtonRAW</tabstop>
+  <tabstop>toolButtonExtTool</tabstop>
+  <tabstop>logLuvRadioButton</tabstop>
+  <tabstop>floatTiffRadioButton</tabstop>
+  <tabstop>negativeColorButton</tabstop>
+  <tabstop>ifnanColorButton</tabstop>
+  <tabstop>lineEditTempPath</tabstop>
+  <tabstop>chooseCachePathButton</tabstop>
+  <tabstop>batchLdrFormatComboBox</tabstop>
+  <tabstop>numThreadspinBox</tabstop>
+  <tabstop>four_color_rgb_CB</tabstop>
+  <tabstop>do_not_use_fuji_rotate_CB</tabstop>
+  <tabstop>user_qual_comboBox</tabstop>
+  <tabstop>med_passes_horizontalSlider</tabstop>
+  <tabstop>med_passes_spinBox</tabstop>
+  <tabstop>user_qual_toolButton</tabstop>
+  <tabstop>med_passes_toolButton</tabstop>
+  <tabstop>aisParamsLineEdit</tabstop>
+  <tabstop>TK_spinBox</tabstop>
+  <tabstop>TK_toolButton</tabstop>
+  <tabstop>green_horizontalSlider</tabstop>
+  <tabstop>green_doubleSpinBox</tabstop>
+  <tabstop>green_toolButton</tabstop>
+  <tabstop>highlights_comboBox</tabstop>
+  <tabstop>highlights_toolButton</tabstop>
+  <tabstop>level_horizontalSlider</tabstop>
+  <tabstop>level_spinBox</tabstop>
+  <tabstop>level_toolButton</tabstop>
+  <tabstop>false_colors_CB</tabstop>
+  <tabstop>auto_bright_CB</tabstop>
+  <tabstop>brightness_horizontalSlider</tabstop>
+  <tabstop>brightness_doubleSpinBox</tabstop>
+  <tabstop>brightness_toolButton</tabstop>
+  <tabstop>use_black_CB</tabstop>
+  <tabstop>use_sat_CB</tabstop>
+  <tabstop>user_black_horizontalSlider</tabstop>
+  <tabstop>user_black_spinBox</tabstop>
+  <tabstop>user_black_toolButton</tabstop>
+  <tabstop>user_sat_horizontalSlider</tabstop>
+  <tabstop>user_sat_spinBox</tabstop>
+  <tabstop>user_sat_toolButton</tabstop>
+  <tabstop>use_noise_CB</tabstop>
+  <tabstop>threshold_horizontalSlider</tabstop>
+  <tabstop>threshold_spinBox</tabstop>
+  <tabstop>threshold_toolButton</tabstop>
+  <tabstop>use_chroma_CB</tabstop>
+  <tabstop>red_horizontalSlider</tabstop>
+  <tabstop>red_doubleSpinBox</tabstop>
+  <tabstop>red_toolButton</tabstop>
+  <tabstop>blue_horizontalSlider</tabstop>
+  <tabstop>blue_doubleSpinBox</tabstop>
+  <tabstop>blue_toolButton</tabstop>
+  <tabstop>camera_comboBox</tabstop>
+  <tabstop>toolButton_16</tabstop>
+  <tabstop>camera_lineEdit</tabstop>
+  <tabstop>camera_toolButton</tabstop>
+  <tabstop>colorspace_comboBox</tabstop>
+  <tabstop>toolButton_17</tabstop>
+  <tabstop>colorspace_lineEdit</tabstop>
+  <tabstop>colorspace_toolButton</tabstop>
+  <tabstop>TK_horizontalSlider</tabstop>
+  <tabstop>wb_method_toolButton</tabstop>
+  <tabstop>wb_method_comboBox</tabstop>
+ </tabstops>
  <resources>
   <include location="../icons.qrc"/>
  </resources>
