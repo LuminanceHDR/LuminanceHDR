@@ -21,97 +21,317 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  */
 
+#include <QDebug>
+
 #include "PreviewPanel.h"
+#include "Threads/TMOFactory.h"
+#include "Threads/TMOThread.h"
+#include "Filter/pfssize.h"
 
-PreviewPanel::PreviewPanel(QWidget *parent) : QWidget(parent)
+#define PREVIEW_WIDTH 128
+
+PreviewPanel::PreviewPanel(QWidget *parent):
+        QWidget(parent)
 {
-	setupUi(this);
+    setupUi(this);
 
-	labelMantiuk06 = new PreviewLabel(frameMantiuk06, 0);
-	labelMantiuk06->setText("Mantiuk '06");
+    labelMantiuk06 = new PreviewLabel(frameMantiuk06, 0);
+    labelMantiuk06->setText("Mantiuk '06");
 
-	labelMantiuk08 = new PreviewLabel(frameMantiuk08, 1);
-	labelMantiuk08->setText("Mantiuk '08");
+    labelMantiuk08 = new PreviewLabel(frameMantiuk08, 1);
+    labelMantiuk08->setText("Mantiuk '08");
 
-	labelFattal = new PreviewLabel(frameFattal, 2);
-	labelFattal->setText("Fattal");
+    labelFattal = new PreviewLabel(frameFattal, 2);
+    labelFattal->setText("Fattal");
 
-	labelDrago = new PreviewLabel(frameDrago, 3);
-	labelDrago->setText("Drago");
+    labelDrago = new PreviewLabel(frameDrago, 3);
+    labelDrago->setText("Drago");
 
-	labelDurand = new PreviewLabel(frameDurand, 4);
-	labelDurand->setText("Durand");
+    labelDurand = new PreviewLabel(frameDurand, 4);
+    labelDurand->setText("Durand");
 
-	labelReinhard02= new PreviewLabel(frameReinhard02, 5);
-	labelReinhard02->setText("Reinhard '02");
+    labelReinhard02= new PreviewLabel(frameReinhard02, 5);
+    labelReinhard02->setText("Reinhard '02");
 
-	labelReinhard05 = new PreviewLabel(frameReinhard05, 6);
-	labelReinhard05->setText("Reinhard '05");
+    labelReinhard05 = new PreviewLabel(frameReinhard05, 6);
+    labelReinhard05->setText("Reinhard '05");
 
-	labelAshikhmin = new PreviewLabel(frameAshikhmin, 7);
-	labelAshikhmin->setText("Ashikhmin");
+    labelAshikhmin = new PreviewLabel(frameAshikhmin, 7);
+    labelAshikhmin->setText("Ashikhmin");
 
-	labelPattanaik = new PreviewLabel(framePattanaik, 8);
-	labelPattanaik->setText("Pattanaik");
+    labelPattanaik = new PreviewLabel(framePattanaik, 8);
+    labelPattanaik->setText("Pattanaik");
 
-	setupConnections();
-}
+    setupConnections();
+    buildPreviewsDataStructure();
 
-void PreviewPanel::setupConnections()
-{
-	connect(labelMantiuk06,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelMantiuk08,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelFattal,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelDrago,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelDurand,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelReinhard02,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelReinhard05,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelAshikhmin,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-	connect(labelPattanaik,SIGNAL(clicked(int)),this,SIGNAL(clicked(int)));
-}
-
-void PreviewPanel::setPixmap(const QPixmap &p, int n)
-{
-	switch (n) {
-		case 0:
-			labelMantiuk06->setPixmap(p);
-			labelMantiuk06->adjustSize();
-		break;
-		case 1:
-			labelMantiuk08->setPixmap(p);
-			labelMantiuk08->adjustSize();
-		break;
-		case 2:
-			labelFattal->setPixmap(p);
-			labelFattal->adjustSize();
-		break;
-		case 3:
-			labelDrago->setPixmap(p);
-			labelDrago->adjustSize();
-		break;
-		case 4:
-			labelDurand->setPixmap(p);
-			labelDurand->adjustSize();
-		break;
-		case 5:
-			labelReinhard02->setPixmap(p);
-			labelReinhard02->adjustSize();
-		break;
-		case 6:
-			labelReinhard05->setPixmap(p);
-			labelReinhard05->adjustSize();
-		break;
-		case 7:
-			labelAshikhmin->setPixmap(p);
-			labelAshikhmin->adjustSize();
-		break;
-		case 8:
-			labelPattanaik->setPixmap(p);
-			labelPattanaik->adjustSize();
-		break;
-	}
+    is_frame_set = false;
+    current_frame = NULL;
+    opts = new TonemappingOptions;
+    original_width_frame = 0;
+    m_previewImgNum = 0;
 }
 
 PreviewPanel::~PreviewPanel()
 {
+    if (is_frame_set)
+        delete current_frame;
+}
+
+void PreviewPanel::buildPreviewsDataStructure()
+{
+    //id_tm_operator.insert()
+}
+
+void PreviewPanel::setupConnections()
+{
+    connect(labelMantiuk06, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelMantiuk08, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelFattal, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelDrago, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelDurand, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelReinhard02, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelReinhard05, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelAshikhmin, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+    connect(labelPattanaik, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
+}
+
+void PreviewPanel::setPixmap(const QPixmap &p, int n)
+{
+    switch (n) {
+    case 0:
+        labelMantiuk06->setPixmap(p);
+        labelMantiuk06->adjustSize();
+        break;
+    case 1:
+        labelMantiuk08->setPixmap(p);
+        labelMantiuk08->adjustSize();
+        break;
+    case 2:
+        labelFattal->setPixmap(p);
+        labelFattal->adjustSize();
+        break;
+    case 3:
+        labelDrago->setPixmap(p);
+        labelDrago->adjustSize();
+        break;
+    case 4:
+        labelDurand->setPixmap(p);
+        labelDurand->adjustSize();
+        break;
+    case 5:
+        labelReinhard02->setPixmap(p);
+        labelReinhard02->adjustSize();
+        break;
+    case 6:
+        labelReinhard05->setPixmap(p);
+        labelReinhard05->adjustSize();
+        break;
+    case 7:
+        labelAshikhmin->setPixmap(p);
+        labelAshikhmin->adjustSize();
+        break;
+    case 8:
+        labelPattanaik->setPixmap(p);
+        labelPattanaik->adjustSize();
+        break;
+    }
+}
+
+void PreviewPanel::updatePreviews(pfs::Frame* frame)
+{
+
+    // I get as a parameter a pfs::Frame
+    if (is_frame_set)
+        delete current_frame;
+
+    original_width_frame = frame->getWidth();
+    current_frame = pfs::resizeFrame(frame, PREVIEW_WIDTH);
+
+    // TODO : implementation using Concurrent::map
+    generatePreviews();
+    // 1. make a resized copy
+    // 2. set again all the parameters
+    // 3. call a function that
+    // for each TM operator does:
+    // a/ copy of the reference frame
+    // b/ tm
+    // c/ updates the previewer
+}
+
+void PreviewPanel::generatePreviews()
+{
+    qDebug() << "MainWindow::generatePreviews()";
+
+    if (current_frame == NULL)
+        return;
+
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
+    opts->origxsize = PREVIEW_WIDTH;
+    opts->xsize = PREVIEW_WIDTH;
+    opts->pregamma = 1.0;
+    opts->tonemapSelection = false;
+    opts->tonemapOriginal = false;
+
+    opts->tmoperator = mantiuk06;
+    opts->tmoperator_str = "Mantiuk '06";
+
+    TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = mantiuk08;
+    opts->tmoperator_str = "Mantiuk '08";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = fattal;
+    opts->tmoperator_str = "Fattal";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = drago;
+    opts->tmoperator_str = "Drago";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = durand;
+    opts->tmoperator_str = "Durand";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = reinhard02;
+    opts->tmoperator_str = "Reinhard '02";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = reinhard05;
+    opts->tmoperator_str = "Reinhard '05";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = ashikhmin;
+    opts->tmoperator_str = "Ashikhmin";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    opts->tmoperator = pattanaik;
+    opts->tmoperator_str = "Pattanaik";
+
+    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
+    thread->start();
+    thread->wait();
+
+    QApplication::restoreOverrideCursor();
+}
+
+void PreviewPanel::deleteTMOThread(TMOThread *th)
+{
+    delete th;
+}
+
+void PreviewPanel::addSmallPreviewResult(QImage *img)
+{
+    qDebug() << "addSmallPreviewResult(" << m_previewImgNum << ")";
+
+    this->setPixmap( QPixmap::fromImage(*img), m_previewImgNum);
+    m_previewImgNum++;
+
+    m_previewImgNum = m_previewImgNum%9;
+
+    //if (m_previewImgNum == 9)
+    //    m_previewImgNum = 0;
+}
+
+void PreviewPanel::tonemapPreview(int n)
+{
+    if (current_frame == NULL)
+        return;
+
+    opts->origxsize = original_width_frame;
+    opts->xsize = 400;
+    opts->pregamma = 1.0;
+    opts->tonemapSelection = false;
+    opts->tonemapOriginal = false;
+
+    switch (n) {
+    case 0:
+        opts->tmoperator = mantiuk06;
+        opts->tmoperator_str = "Mantiuk '06";
+        emit startTonemapping(opts);
+        break;
+    case 1:
+        opts->tmoperator = mantiuk08;
+        opts->tmoperator_str = "Mantiuk '08";
+        emit startTonemapping(opts);
+        break;
+    case 2:
+        opts->tmoperator = fattal;
+        opts->tmoperator_str = "Fattal";
+        emit startTonemapping(opts);
+        break;
+    case 3:
+        opts->tmoperator = drago;
+        opts->tmoperator_str = "Drago";
+        emit startTonemapping(opts);
+        break;
+    case 4:
+        opts->tmoperator = durand;
+        opts->tmoperator_str = "Durand";
+        emit startTonemapping(opts);
+        break;
+    case 5:
+        opts->tmoperator = reinhard02;
+        opts->tmoperator_str = "Reinhard '02";
+        emit startTonemapping(opts);
+        break;
+    case 6:
+        opts->tmoperator = reinhard05;
+        opts->tmoperator_str = "Reinhard '05";
+        emit startTonemapping(opts);
+        break;
+    case 7:
+        opts->tmoperator = ashikhmin;
+        opts->tmoperator_str = "Ashikhmin";
+        emit startTonemapping(opts);
+        break;
+    case 8:
+        opts->tmoperator = pattanaik;
+        opts->tmoperator_str = "Pattanaik";
+        emit startTonemapping(opts);
+        break;
+    }
 }

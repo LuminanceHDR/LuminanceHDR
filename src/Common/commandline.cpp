@@ -90,7 +90,7 @@ void CommandLineInterfaceManager::parseArgs() {
 	hdrcreationconfig.response_curve=LINEAR;
 	hdrcreationconfig.model=DEBEVEC;
 	QString loadHdrFilename;
-	tmopts=TMOptionsOperations::getDefaultTMOptions();
+        tmopts = TMOptionsOperations::getDefaultTMOptions();
 	QStringList inputFiles;
 
 	int optionIndex = 0, c;

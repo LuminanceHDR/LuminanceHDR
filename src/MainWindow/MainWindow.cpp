@@ -63,7 +63,7 @@
 
 
 MainWindow::MainWindow(QWidget *parent):
-        QMainWindow(parent), m_previewImgNum(0)
+        QMainWindow(parent)
 {
     init();
 
@@ -78,29 +78,14 @@ MainWindow::MainWindow(QWidget *parent):
         showSplash();
     // END SPLASH SCREEN    ------------------------------------------------------------------
 
-    opts = new TonemappingOptions;
-
-    previewViewer = new LdrViewer( NULL, NULL, false, false, opts);
-    previewViewer->setWindowTitle("Preview Window");
-    previewViewer->setWindowFlags(Qt::WindowStaysOnTopHint);
-    previewViewer->hide();
-    previewViewer->installEventFilter(this);
-
     testTempDir(luminance_options->tempfilespath);
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
-        QMainWindow(parent), m_previewImgNum(0)
+        QMainWindow(parent)
 
 {
     init();
-    opts = new TonemappingOptions;
-
-    previewViewer = new LdrViewer( NULL, NULL, false, false, opts);
-    previewViewer->setWindowTitle("Preview Window");
-    previewViewer->setWindowFlags(Qt::WindowStaysOnTopHint);
-    previewViewer->hide();
-    previewViewer->installEventFilter(this);
 
     emit load_success(curr_frame, new_file, needSaving);
 }
@@ -110,9 +95,6 @@ MainWindow::~MainWindow()
     qDebug() << "MainWindow::~MainWindow()";
 
     clearRecentFileActions();
-
-    delete opts;
-    delete previewViewer;
 
     settings->setValue("MainWindowState", saveState());
     settings->setValue("MainWindowGeometry", saveGeometry());
@@ -160,35 +142,27 @@ void MainWindow::createUI()
 void MainWindow::createCentralWidget()
 {
     // Central Widget Area
-    m_centralwidget_splitter = new QSplitter(this);
+    m_centralwidget_splitter = new QSplitter; //(this);
+    setCentralWidget(m_centralwidget_splitter);
 
     // create tonemapping panel
-    tmPanel = new TonemappingPanel(m_centralwidget_splitter);
-    
-    // create preview panel
-    previewPanel = new PreviewPanel(m_centralwidget_splitter);
+    tmPanel = new TonemappingPanel; //(m_centralwidget_splitter);
 
-    m_tabwidget = new QTabWidget(m_centralwidget_splitter);
+    m_tabwidget = new QTabWidget; //(m_centralwidget_splitter);
 
     m_tabwidget->setDocumentMode(true);
     m_tabwidget->setTabsClosable(true);
-    m_tabwidget->setMinimumWidth(700);  // to be changed!
 
     m_centralwidget_splitter->addWidget(tmPanel);
     m_centralwidget_splitter->addWidget(m_tabwidget);
-    // add here a third widget?
-    m_centralwidget_splitter->addWidget(previewPanel);
-    previewPanel->hide();
 
-    m_centralwidget_splitter->setStretchFactor(0, 1);
-    m_centralwidget_splitter->setStretchFactor(1, 2);
-    //m_centralwidget_splitter->setStyleSheet();
-    //m_centralwidget_splitter->setHandleWidth(1);
-
-    setCentralWidget(m_centralwidget_splitter);
+    m_centralwidget_splitter->setStretchFactor(0, 2);
+    m_centralwidget_splitter->setStretchFactor(1, 5);
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
+    connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
 }
 
 void MainWindow::createToolBar()
@@ -201,9 +175,7 @@ void MainWindow::createToolBar()
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
 
-    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
     connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockImages(bool)));
-
     connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
     connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
     connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
@@ -242,6 +214,8 @@ void MainWindow::createMenus()
 
     // Crop & Rotation
     connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+    cropToSelectionAction->setEnabled(false);
+
     connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
     connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
     connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
@@ -257,12 +231,11 @@ void MainWindow::createMenus()
     connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
     connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 
-    cropToSelectionAction->setEnabled(false);
-
     connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
     connect(actionMinimize, SIGNAL(triggered()), this, SLOT(minimizeMW()));
     connect(actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
     connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
+    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
 
     //recent files
     initRecentFileActions();
@@ -397,7 +370,8 @@ void MainWindow::fileSaveAs()
          */
         LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
 
-        QString filetypes = QObject::tr("All LDR formats") + " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
+        QString filetypes = QObject::tr("All LDR formats");
+        filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
         filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
         filetypes += "PNG (*.png *.PNG);;" ;
         filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
@@ -486,8 +460,8 @@ void MainWindow::saveHdrPreview()
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
     HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
 
-    if (hdr_v==NULL) return;
-        hdr_v->saveHdrPreview();
+    if (hdr_v == NULL) return;
+    else hdr_v->saveHdrPreview();
 }
 
 void MainWindow::updateActionsNoImage()
@@ -634,6 +608,7 @@ void MainWindow::dispatchrotate(bool clockwise)
 
         setWindowModified(true);
     }
+    emit updatedHDR(curr_g_v->getHDRPfsFrame());
     QApplication::restoreOverrideCursor();
 
     rotateccw->setEnabled(true);
@@ -659,6 +634,7 @@ void MainWindow::resize_requested()
 
             setWindowModified(true);
         }
+        emit updatedHDR(curr_g_v->getHDRPfsFrame());
         QApplication::restoreOverrideCursor();
     }
     delete resizedialog;
@@ -683,6 +659,7 @@ void MainWindow::projectiveTransf_requested()
 
             setWindowModified(true);
         }
+        emit updatedHDR(curr_g_v->getHDRPfsFrame());
         QApplication::restoreOverrideCursor();
     }
     delete projTranfsDialog;
@@ -886,10 +863,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
-        tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
-                          newhdr->getHDRPfsFrame()->getHeight());
 
-        tmPanel->applyButton->setEnabled(true);
+        tmPanel->setEnabled(true);
 
         m_tabwidget->setCurrentWidget(newhdr);
 
@@ -901,11 +876,13 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-	if (actionShowPreviewPanel->isChecked())
-	{
-		generatePreviews();
-		previewPanel->show();
-	}
+        actionShowPreviewPanel->setEnabled(true);
+
+        emit updatedHDR(newhdr->getHDRPfsFrame());  // I signal I have a new HDR open
+
+        // done by SIGNAL(updatedHDR( ))
+        //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
+        //                  newhdr->getHDRPfsFrame()->getHeight());
     }
 }
 
@@ -1080,7 +1057,6 @@ void MainWindow::updateWindowMenu()
         delete Action_MW;
     }
 
-//    QVector<MainWindow*> openMW; // openMainWindows
     foreach (QWidget *widget, qApp->topLevelWidgets())
     {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
@@ -1096,17 +1072,6 @@ void MainWindow::updateWindowMenu()
             openMainWindows.push_back(action);
         }
     }
-
-//    openMainWindows.clear();
-//    // should be true in any case, because there should be at least one MainWindow open
-//    if ( openMW.count() > 0 )
-//    {
-//        //menuWindows->addSeparator();
-//        foreach (MainWindow* MW, openMW)
-//        {
-
-//        }
-//    }
 }
 
 /*
@@ -1312,11 +1277,7 @@ void MainWindow::setupTM()
     tm_status.curr_tm_frame = NULL;
     tm_status.curr_tm_options = NULL;
 
-    tmPanel->applyButton->setEnabled(false);
-
-    connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-    connect(previewPanel, SIGNAL(clicked(int)), this, SLOT(tonemapPreview(int)));
-    connect(previewPanel,SIGNAL(clicked(int)),tmPanel->stackedWidget_operators,SLOT(setCurrentIndex(int)));
+    tmPanel->setEnabled(false);
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1403,7 +1364,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
         //start thread
-        tmPanel->applyButton->setEnabled(false);
+        tmPanel->setEnabled(false);
         thread->startTonemapping();
         statusBar()->addWidget(progInd);
     }
@@ -1470,7 +1431,7 @@ void MainWindow::tonemappingFinished()
 {
     qDebug() << "TonemappingWindow::tonemappingFinished()";
     statusBar()->removeWidget(progInd);
-    tmPanel->applyButton->setEnabled(true);
+    tmPanel->setEnabled(true);
 
     delete progInd;
 }
@@ -1486,7 +1447,7 @@ void MainWindow::showErrorMessage(const char *e)
                           QMessageBox::Ok,QMessageBox::NoButton);
 
     statusBar()->removeWidget(progInd);
-    tmPanel->applyButton->setEnabled(true);
+    tmPanel->setEnabled(true);
 
     delete progInd;
 }
@@ -1565,16 +1526,29 @@ void MainWindow::updateImage(GenericViewer *viewer)
 
 void MainWindow::showPreviewPanel(bool b)
 {
-	if (b)
-	{
-		if (tm_status.is_hdr_ready)
-		{
-			generatePreviews();
-			previewPanel->show();
-		}
-	}
-	else
-		previewPanel->hide();
+    if (b)
+    {
+        if (tm_status.is_hdr_ready)
+        {
+            // create preview panel
+            previewPanel = new PreviewPanel(m_centralwidget_splitter);
+
+            // add panel to central widget
+            m_centralwidget_splitter->addWidget(previewPanel);
+            m_centralwidget_splitter->setStretchFactor(2, 1);
+
+            // ask panel to refresh itself
+            previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
+
+            // TODO : connect panel to new refresh requests
+            connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+            connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
+            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+        }
+    }
+    else
+        delete previewPanel;
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
@@ -1622,7 +1596,7 @@ void MainWindow::removeTab(int t)
                 tm_status.curr_tm_frame = NULL;
                 tm_status.curr_tm_options = NULL;
 
-                tmPanel->applyButton->setEnabled(false);
+                tmPanel->setEnabled(false);
 
                 m_tabwidget->removeTab(t);
                 w->deleteLater();   // delete yourself whenever you want
@@ -1633,8 +1607,8 @@ void MainWindow::removeTab(int t)
                 tm_status.curr_tm_frame = NULL;
                 tm_status.curr_tm_options = NULL;
 
-                tmPanel->applyButton->setEnabled(false);
-		previewPanel->hide();
+                tmPanel->setEnabled(false);
+                actionShowPreviewPanel->setEnabled(false);
             }
             // else { }
             // if FALSE, it means that the user said "Cancel"
@@ -1653,8 +1627,8 @@ void MainWindow::removeTab(int t)
             tm_status.curr_tm_frame = NULL;
             tm_status.curr_tm_options = NULL;
 
-            tmPanel->applyButton->setEnabled(false);
-	    previewPanel->hide();
+            tmPanel->setEnabled(false);
+            actionShowPreviewPanel->setEnabled(false);
         }
     }
     else
@@ -1809,314 +1783,21 @@ void MainWindow::clearRecentFileActions()
 }
 
 
-// Previews
-void MainWindow::generatePreviews()
-{
-	HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
-	if (hdr_viewer == NULL)
-		return;
-
-	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-	pfs::Frame *pfs_frame = hdr_viewer->getHDRPfsFrame();
-
-	opts->origxsize = 0;
-	opts->xsize = 128;
-	opts->pregamma = 1.0;
-	opts->tonemapSelection = false;
-	opts->tonemapOriginal = false;
-
-	opts->tmoperator = mantiuk06;
-	opts->tmoperator_str = "Mantiuk '06";
-        opts->operator_options.mantiuk06options.contrastfactor = 0.1;
-        opts->operator_options.mantiuk06options.saturationfactor = 0.8;
-        opts->operator_options.mantiuk06options.detailfactor = 1.0;
-        opts->operator_options.mantiuk06options.contrastequalization = false;
-
-	TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = mantiuk08;
-	opts->tmoperator_str = "Mantiuk '08";
-        opts->operator_options.mantiuk08options.colorsaturation = 1.0;
-        opts->operator_options.mantiuk08options.contrastenhancement = 1.0 ;
-        opts->operator_options.mantiuk08options.luminancelevel = 1.0;
-        opts->operator_options.mantiuk08options.setluminance = false;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = fattal;
-	opts->tmoperator_str = "Fattal";
-        opts->operator_options.fattaloptions.alpha = 1.0;
-        opts->operator_options.fattaloptions.beta = 0.9 ;
-        opts->operator_options.fattaloptions.color = 1.0;
-        opts->operator_options.fattaloptions.noiseredux = 0.0;
-        opts->operator_options.fattaloptions.newfattal = true;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator_str = "Drago";
-        opts->operator_options.dragooptions.bias = 0.85;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = durand;
-	opts->tmoperator_str = "Durand";
-        opts->operator_options.durandoptions.spatial = 2.0;
-        opts->operator_options.durandoptions.range = 0.4;
-        opts->operator_options.durandoptions.base = 5.0;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = reinhard02;
-	opts->tmoperator_str = "Reinhard '02";
-        opts->operator_options.reinhard02options.scales = false;
-        opts->operator_options.reinhard02options.key = 0.18;
-        opts->operator_options.reinhard02options.phi = 1.0;
-        opts->operator_options.reinhard02options.range = 8;
-        opts->operator_options.reinhard02options.lower = 1;
-        opts->operator_options.reinhard02options.upper = 43;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = reinhard05;
-	opts->tmoperator_str = "Reinhard '05";
-        opts->operator_options.reinhard05options.brightness = -10.0;
-        opts->operator_options.reinhard05options.chromaticAdaptation = 0.0;
-        opts->operator_options.reinhard05options.lightAdaptation = 1.0;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = ashikhmin;
-	opts->tmoperator_str = "Ashikhmin";
-        opts->operator_options.ashikhminoptions.simple = false;
-        opts->operator_options.ashikhminoptions.eq2 = true;
-        opts->operator_options.ashikhminoptions.lct = 0.5;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	opts->tmoperator = pattanaik;
-	opts->tmoperator_str = "Pattanaik";
-        opts->operator_options.pattanaikoptions.autolum = true;
-        opts->operator_options.pattanaikoptions.local = false;
-        opts->operator_options.pattanaikoptions.cone = 0.5;
-        opts->operator_options.pattanaikoptions.rod = 0.5;
-        opts->operator_options.pattanaikoptions.multiplier = 1.0;
-
-	thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-	connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
-	connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-	thread->start();
-	thread->wait();
-
-	QApplication::restoreOverrideCursor();
-}
-
-void MainWindow::addSmallPreviewResult(QImage *img)
-{
-	previewPanel->setPixmap( QPixmap::fromImage(*img), m_previewImgNum++);
-	if (m_previewImgNum == 9)
-		m_previewImgNum = 0;
-}
-
-void MainWindow::tonemapPreview(int n)
-{
-	HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
-	if (hdr_viewer == NULL)
-		return;
-
-	QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-	pfs::Frame *pfs_frame = hdr_viewer->getHDRPfsFrame();
-
-	opts->origxsize = 0;
-	opts->xsize = 400;
-	opts->pregamma = 1.0;
-	opts->tonemapSelection = false;
-	opts->tonemapOriginal = false;
-
-	TMOThread *thread;
-
-	switch (n) {
-		case 0:
-			opts->tmoperator = mantiuk06;
-			opts->tmoperator_str = "Mantiuk '06";
-        		opts->operator_options.mantiuk06options.contrastfactor = 0.1;
-        		opts->operator_options.mantiuk06options.saturationfactor = 0.8;
-        		opts->operator_options.mantiuk06options.detailfactor = 1.0;
-        		opts->operator_options.mantiuk06options.contrastequalization = false;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 1:
-			opts->tmoperator = mantiuk08;
-			opts->tmoperator_str = "Mantiuk '08";
-        		opts->operator_options.mantiuk08options.colorsaturation = 1.0;
-        		opts->operator_options.mantiuk08options.contrastenhancement = 1.0 ;
-        		opts->operator_options.mantiuk08options.luminancelevel = 1.0;
-        		opts->operator_options.mantiuk08options.setluminance = false;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 2:
-			opts->tmoperator = fattal;
-			opts->tmoperator_str = "Fattal";
-        		opts->operator_options.fattaloptions.alpha = 1.0;
-        		opts->operator_options.fattaloptions.beta = 0.9 ;
-        		opts->operator_options.fattaloptions.color = 1.0;
-       			opts->operator_options.fattaloptions.noiseredux = 0.0;
-        		opts->operator_options.fattaloptions.newfattal = true;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		case 3:
-			opts->tmoperator = drago;
-			opts->tmoperator_str = "Drago";
-        		opts->operator_options.dragooptions.bias = 0.85;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 4:
-			opts->tmoperator = durand;
-			opts->tmoperator_str = "Durand";
-        		opts->operator_options.durandoptions.spatial = 2.0;
-		        opts->operator_options.durandoptions.range = 0.4;
-		        opts->operator_options.durandoptions.base = 5.0;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 5:
-			opts->tmoperator = reinhard02;
-			opts->tmoperator_str = "Reinhard '02";
-		        opts->operator_options.reinhard02options.scales = false;
-		        opts->operator_options.reinhard02options.key = 0.18;
-		        opts->operator_options.reinhard02options.phi = 1.0;
-		        opts->operator_options.reinhard02options.range = 8;
-		        opts->operator_options.reinhard02options.lower = 1;
-		        opts->operator_options.reinhard02options.upper = 43;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 6:
-			opts->tmoperator = reinhard05;
-			opts->tmoperator_str = "Reinhard '05";
-		        opts->operator_options.reinhard05options.brightness = -10.0;
-		        opts->operator_options.reinhard05options.chromaticAdaptation = 0.0;
-		        opts->operator_options.reinhard05options.lightAdaptation = 1.0;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 7:
-			opts->tmoperator = ashikhmin;
-			opts->tmoperator_str = "Ashikhmin";
-		        opts->operator_options.ashikhminoptions.simple = false;
-		        opts->operator_options.ashikhminoptions.eq2 = true;
-		        opts->operator_options.ashikhminoptions.lct = 0.5;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-		case 8:
-			opts->tmoperator = pattanaik;
-			opts->tmoperator_str = "Pattanaik";
-		        opts->operator_options.pattanaikoptions.autolum = true;
-		        opts->operator_options.pattanaikoptions.local = false;
-		        opts->operator_options.pattanaikoptions.cone = 0.5;
-		        opts->operator_options.pattanaikoptions.rod = 0.5;
-		        opts->operator_options.pattanaikoptions.multiplier = 1.0;
-			tm_status.curr_tm_options = opts;
-
-			thread = TMOFactory::getTMOThread(opts->tmoperator, pfs_frame, opts);
-			connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addPreviewResult(QImage*)));
-			connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-			thread->start();
-		break;
-	}
-	QApplication::restoreOverrideCursor();
-}
-
-void MainWindow::addPreviewResult(QImage *img)
-{
-    previewViewer->setImage(img);
-    previewViewer->show();
-}
-
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::Close) 
-    {
-        if (obj == previewViewer) 
-        {
-                previewViewer->hide();
-                event->ignore();
-		return true;
-        }
-        return false;
-    } 
-    else 
-    {
-        //Standard event processing
-        return QMainWindow::eventFilter(obj, event);
-    }
-}
+//bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+//{
+//    if (event->type() == QEvent::Close)
+//    {
+//        if (obj == previewViewer)
+//        {
+//            previewViewer->hide();
+//            event->ignore();
+//            return true;
+//        }
+//        return false;
+//    }
+//    else
+//    {
+//        //Standard event processing
+//        return QMainWindow::eventFilter(obj, event);
+//    }
+//}

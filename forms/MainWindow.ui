@@ -30,15 +30,16 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="Transplant_Exif_Data_action"/>
+    <addaction name="actionShowPreviewPanel"/>
     <addaction name="separator"/>
+    <addaction name="Transplant_Exif_Data_action"/>
     <addaction name="actionBatch_Tone_Mapping"/>
     <addaction name="OptionsAction"/>
    </widget>
@@ -98,7 +99,6 @@
     <addaction name="menuHDR_Histogram"/>
     <addaction name="separator"/>
     <addaction name="menuToolbars"/>
-    <addaction name="actionShowPreviewPanel"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -912,7 +912,10 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Show Preview Panel</string>

@@ -32,6 +32,7 @@
 #include <QProcess>
 #include <QDir>
 
+#include "Core/TonemappingOptions.h"
 #include "HdrCreation/HdrCreationManager.h"
 
 class CommandLineInterfaceManager : public QObject {

@@ -723,7 +723,7 @@ void TonemappingWindow::tonemapImage(TonemappingOptions *opts)
     connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
 
     //start thread
-    tmPanel->applyButton->setEnabled(false);
+    tmPanel->setEnabled(false);
     thread->startTonemapping();
     statusbar->insertWidget(0,progInd,1);
     //statusbar->addWidget(progInd);
@@ -750,7 +750,7 @@ void TonemappingWindow::deleteTMOThread(TMOThread *th)
 void TonemappingWindow::updateProgressbar()
 {
 	statusbar->removeWidget(progInd);
-	tmPanel->applyButton->setEnabled(true);
+        tmPanel->setEnabled(true);
 }
 
 void TonemappingWindow::updateWindowMenu()

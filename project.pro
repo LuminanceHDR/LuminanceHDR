@@ -135,12 +135,14 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Batch/BatchTMJob.h \
                         src/Exif/ExifOperations.h \
                     src/Core/IOWorker.h \
+                                              src/Core/TonemappingOptions.h \
     src/Libpfs/domio.h \
     src/Libpfs/frame.h \
     src/Libpfs/tag.h \
     src/Libpfs/channel.h \
 			src/PreviewPanel/PreviewLabel.h \ 
-			src/PreviewPanel/PreviewPanel.h
+			src/PreviewPanel/PreviewPanel.h \
+			src/TonemappingOperators/pfstmdefaultparams.h
 
 SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Libpfs/pfs.cpp \
@@ -247,6 +249,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Batch/BatchTMDialog.cpp \
 			src/Batch/BatchTMJob.cpp \
                           src/Core/IOWorker.cpp \
+                          src/Core/TonemappingOptions.cpp \
 			src/Exif/ExifOperations.cpp \
     src/Libpfs/domio.cpp \
     src/Libpfs/frame.cpp \
@@ -551,8 +554,8 @@ macx {
 			message ("Please refer to the documentation if you require a Universal Binary")
 			message ("********************************************************************")
 			# Is this next line strictly necessary? gcc should compile for the correct architecture by default.
-                        CONFIG += x86 x86_64
-
+                        CONFIG += x86_64
+#                        CONFIG += x86 x86_64
 			QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.5
 			MAKE_MAC_SDK=/Developer/SDKs/MacOSX10.5.sdk #/Developer/SDKs/MacOSX10.4u.sdk
 

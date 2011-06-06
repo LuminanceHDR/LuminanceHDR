@@ -31,6 +31,7 @@
 #include <QThread>
 #include <QImage>
 
+#include "Core/TonemappingOptions.h"
 #include "Common/options.h"
 #include "Common/global.h"
 #include "Common/ProgressHelper.h"

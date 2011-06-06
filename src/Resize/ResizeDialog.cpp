@@ -24,7 +24,7 @@
 #include "Filter/pfssize.h"
 #include "ResizeDialog.h"
 
-ResizeDialog::ResizeDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent),original(orig) {
+ResizeDialog::ResizeDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent), original(orig) {
 	setupUi(this);
 	orig_width=original->getWidth();
 	orig_height=original->getHeight();

@@ -22,12 +22,24 @@
     <height>530</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>160</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QScrollArea" name="scrollArea">
+     <property name="maximumSize">
+      <size>
+       <width>160</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -41,10 +53,16 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-419</y>
-        <width>137</width>
-        <height>942</height>
+        <y>0</y>
+        <width>146</width>
+        <height>1006</height>
        </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>160</width>
+        <height>16777215</height>
+       </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">

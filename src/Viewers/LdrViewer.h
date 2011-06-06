@@ -30,7 +30,7 @@
 
 #include <iostream>
 
-#include "Common/options.h"
+#include "Core/TonemappingOptions.h"
 #include "GenericViewer.h"
 
 class LdrViewer : public GenericViewer

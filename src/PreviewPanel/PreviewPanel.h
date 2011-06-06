@@ -25,33 +25,61 @@
 #define PREVIEWPANEL_IMPL_H
 
 #include <QWidget>
+#include <QPixmap>
+#include <QImage>
 
 #include "PreviewLabel.h"
 #include "ui_PreviewPanel.h"
 
+#include "Libpfs/frame.h"
+#include "Core/TonemappingOptions.h"
+#include "Threads/TMOThread.h"
+
 class PreviewPanel : public QWidget, private Ui::PreviewPanel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-        PreviewPanel(QWidget *parent = 0);
-	~PreviewPanel();
-	void setPixmap(const QPixmap &p, int n);
+    PreviewPanel(QWidget *parent = 0);
+    ~PreviewPanel();
+
+public Q_SLOTS:
+    void updatePreviews(pfs::Frame* frame);
+
+protected Q_SLOTS:
+    void addSmallPreviewResult(QImage*);
+    void setPixmap(const QPixmap &p, int n);
+    void tonemapPreview(int n);
+    void deleteTMOThread(TMOThread *th);
 
 protected:
-	PreviewLabel *labelMantiuk06;
-	PreviewLabel *labelMantiuk08;
-	PreviewLabel *labelFattal;
-	PreviewLabel *labelDrago;
-	PreviewLabel *labelDurand;
-	PreviewLabel *labelReinhard02;
-	PreviewLabel *labelReinhard05;
-	PreviewLabel *labelAshikhmin;
-	PreviewLabel *labelPattanaik;
-//
-	void setupConnections();
+    PreviewLabel *labelMantiuk06;
+    PreviewLabel *labelMantiuk08;
+    PreviewLabel *labelFattal;
+    PreviewLabel *labelDrago;
+    PreviewLabel *labelDurand;
+    PreviewLabel *labelReinhard02;
+    PreviewLabel *labelReinhard05;
+    PreviewLabel *labelAshikhmin;
+    PreviewLabel *labelPattanaik;
 
-signals:
-	void clicked(int n);
+    void setupConnections();
+
+Q_SIGNALS:
+    void startTonemapping(TonemappingOptions*);
+
+private:
+    bool is_frame_set;
+    int original_width_frame;
+    pfs::Frame* current_frame;
+    TonemappingOptions *opts;
+    int m_previewImgNum;
+
+    void generatePreviews();
+
+    QList<TonemappingOptions> list_previews;
+    QHash<int, TMOperator> id_tm_operator;
+
+    void buildPreviewsDataStructure();
 };
 #endif

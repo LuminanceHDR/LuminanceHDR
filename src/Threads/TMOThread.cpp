@@ -37,63 +37,63 @@
 #include "Fileformat/pfsoutldrimage.h"
 
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions *opts) :
-QThread(0), opts(opts), out_CS(pfs::CS_RGB)
+        QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 {  
-	ph = new ProgressHelper(0);
-  
-  if ( opts->tonemapSelection )
-  {
-    // workingframe = "crop"
-    // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
-    // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
-    workingframe = pfs::pfscut(frame,
-                               opts->selection_x_up_left,
-                               opts->selection_y_up_left,
-                               opts->selection_x_bottom_right,
-                               opts->selection_y_bottom_right);
-  }
-        else if ( opts->xsize != opts->origxsize )
-  {
-    // workingframe = "resize"
-    workingframe = pfs::resizeFrame(frame, opts->xsize);
-	}
-  else
-  {
-    // workingframe = "full res"
-    workingframe = pfs::pfscopy(frame); 
-  }
-  
-	// Convert to CS_XYZ: tm operator now use this colorspace
-	pfs::Channel *X, *Y, *Z;
-	workingframe->getXYZChannels( X, Y, Z );
-	pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                           pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());	
+    ph = new ProgressHelper(0);
 
-  if (opts->pregamma != 1.0f)
-  {
-    pfs::applyGammaOnFrame( workingframe, opts->pregamma );
-	}
-  
+    if ( opts->tonemapSelection )
+    {
+        // workingframe = "crop"
+        // std::cout << "crop:[" << opts.selection_x_up_left <<", " << opts.selection_y_up_left <<"],";
+        // std::cout << "[" << opts.selection_x_bottom_right <<", " << opts.selection_y_bottom_right <<"]" << std::endl;
+        workingframe = pfs::pfscut(frame,
+                                   opts->selection_x_up_left,
+                                   opts->selection_y_up_left,
+                                   opts->selection_x_bottom_right,
+                                   opts->selection_y_bottom_right);
+    }
+    else if ( opts->xsize != opts->origxsize )
+    {
+        // workingframe = "resize"
+        workingframe = pfs::resizeFrame(frame, opts->xsize);
+    }
+    else
+    {
+        // workingframe = "full res"
+        workingframe = pfs::pfscopy(frame);
+    }
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    if (opts->pregamma != 1.0f)
+    {
+        pfs::applyGammaOnFrame( workingframe, opts->pregamma );
+    }
+
 }
 
 TMOThread::~TMOThread()
 {
 
-        this->wait();   // waits that all the signals have been served
-	delete ph;
+    this->wait();   // waits that all the signals have been served
+    delete ph;
 
-        std::cout << "TMOThread::~TMOThread()" << std::endl;
+    std::cout << "TMOThread::~TMOThread()" << std::endl;
 }
 
 void TMOThread::terminateRequested()
 {
-	//std::cout << "TMOThread::terminateRequested()" << std::endl;
-	ph->terminate(true);
+    //std::cout << "TMOThread::terminateRequested()" << std::endl;
+    ph->terminate(true);
 }
 
 void TMOThread::startTonemapping()
 {
-  this->start();
+    this->start();
 }
 
 void TMOThread::finalize()

@@ -113,6 +113,7 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/pfsoutldrimage.h
 # PFS TMO
 	src/TonemappingOperators/pfstmo.h
+        src/TonemappingOperators/pfstmdefaultparams.h
 	src/TonemappingOperators/ashikhmin02/pyramid.h
 	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h
 	src/TonemappingOperators/drago03/tmo_drago03.h
@@ -211,6 +212,7 @@ SET(LIB_HDR_MOC
 )
 
 SET(LUMINANCE_HDR_INCLUDE
+        src/Core/TonemappingOptions.h
 	src/arch/freebsd/math.h
 	src/Common/archs.h
 	src/Exif/ExifOperations.h
@@ -230,6 +232,7 @@ SET(LUMINANCE_HDR_SRC
 	src/Batch/BatchTMDialog.cpp
 	src/Batch/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
+        src/Core/TonemappingOptions.cpp
 	src/Exif/ExifOperations.cpp
 	src/HdrCreation/HdrCreationManager.cpp
 	src/HdrWizard/EditingTools.cpp

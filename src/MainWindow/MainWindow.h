@@ -90,7 +90,7 @@ public Q_SLOTS:
     void setMainWindowModified(bool b);
 
 protected Q_SLOTS:
-    bool eventFilter(QObject *obj, QEvent *event);
+    //bool eventFilter(QObject *obj, QEvent *event);
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
     void fileSaveAs();
@@ -173,18 +173,15 @@ protected Q_SLOTS:
     void activateNextViewer();
     void activatePreviousViewer();
 
-    // Preview Panel
-    void tonemapPreview(int n);
-    void generatePreviews();
-    void addSmallPreviewResult(QImage *img);
-    void addPreviewResult(QImage *img);
-
 Q_SIGNALS:
     // I/O
     void save_hdr_frame(HdrViewer*, QString);
     void save_ldr_frame(LdrViewer*, QString, int);  // viewer, filename, quality level
     void open_frames(QStringList);
     void open_frame(QString);
+
+    // update HDR
+    void updatedHDR(pfs::Frame*);
 
 protected:
     QSplitter *m_centralwidget_splitter;
@@ -269,11 +266,6 @@ protected:
 
     // Preview Panel
     PreviewPanel *previewPanel;
-    TonemappingOptions *opts;
-    int m_previewImgNum;
-
-    // Preview Viewer
-    LdrViewer *previewViewer;
 };
 
 
