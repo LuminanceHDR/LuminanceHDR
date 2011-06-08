@@ -1,5 +1,5 @@
 /*
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -20,6 +20,7 @@
  *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ *
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
@@ -60,6 +61,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
     // mantiuk08
     colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, 1.f);
+
     connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
@@ -68,6 +70,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
     // fattal02
     alphaGang = new Gang(alphaSlider, alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
+
     connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
@@ -78,27 +81,34 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
     // ashikhmin02
     contrastGang = new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+
     connect(contrastGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(contrastGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
     simpleGang = new Gang(NULL, NULL, simpleCheckBox);
     eq2Gang = new Gang(NULL, NULL,NULL, NULL, eq2RadioButton, eq4RadioButton);
 
     // drago03
     biasGang = new Gang(biasSlider, biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.85f);
+
     connect(biasGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
     // durand02
     spatialGang = new Gang(spatialSlider, spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, 2.f);
+
     connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
     rangeGang = new Gang(rangeSlider, rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
     baseGang = new Gang(baseSlider, basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, 5.0f);
 
     // pattanaik00
     multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, 1.f, true);
+
     connect(multiplierGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(multiplierGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
     coneGang = new Gang(coneSlider, conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
     rodGang = new Gang(rodSlider, roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
     autoYGang = new Gang(NULL,NULL, autoYcheckbox);
@@ -106,8 +116,10 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
     // reinhard02
     keyGang = new Gang(keySlider, keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
+
     connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
     phiGang = new Gang(phiSlider, phidsb,NULL,NULL,NULL,NULL, 0.f, 100.f, 1.f);
     range2Gang = new Gang(range2Slider, range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, 8.f);
     lowerGang = new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, 1.f);
@@ -116,8 +128,10 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
     // reinhard05
     brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, 0.f);
+
     connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+
     chromaticGang = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.f);
     lightGang = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 1.f);
 
@@ -132,6 +146,8 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 
 TonemappingPanel::~TonemappingPanel()
 {
+    qDebug() << "TonemappingPanel::~TonemappingPanel()";
+
     delete contrastfactorGang;
     delete saturationfactorGang;
     delete detailfactorGang;
@@ -870,9 +886,15 @@ void TonemappingPanel::setEnabled(bool b)
     loadsettingsbutton->setEnabled(b);
     savesettingsbutton->setEnabled(b);
     defaultButton->setEnabled(b);
-    undoButton->setEnabled(b);
-    redoButton->setEnabled(b);
-
+    if (b) 
+    {
+    	updateUndoState();
+    }
+    else
+    {
+        undoButton->setEnabled(false);
+        redoButton->setEnabled(false);
+    }
     // Size
     sizeComboBox->setEnabled(b);
     addCustomSizeButton->setEnabled(b);
