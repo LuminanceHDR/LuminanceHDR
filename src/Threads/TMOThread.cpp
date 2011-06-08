@@ -115,6 +115,15 @@ void TMOThread::finalize()
                 emit imageComputed(res, opts);
             }
             break;
+        case TMO_PREVIEW:
+            {
+                // different emit signal
+                // I let the parent of this thread to delete working_frame
+                pfs::DOMIO pfsio;
+                pfsio.freeFrame(workingframe);
+                emit imageComputed(res, m_image_num);
+            }
+            break;
         case TMO_INTERACTIVE:
         default:
             {

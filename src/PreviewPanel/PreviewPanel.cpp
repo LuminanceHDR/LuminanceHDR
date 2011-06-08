@@ -69,7 +69,6 @@ PreviewPanel::PreviewPanel(QWidget *parent):
     current_frame = NULL;
     opts = new TonemappingOptions;
     original_width_frame = 0;
-    m_previewImgNum = 0;
 }
 
 PreviewPanel::~PreviewPanel()
@@ -169,8 +168,6 @@ void PreviewPanel::generatePreviews()
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-    m_previewImgNum = 0;
-
     opts->origxsize = PREVIEW_WIDTH;
     opts->xsize = PREVIEW_WIDTH;
     opts->pregamma = 1.0;
@@ -181,91 +178,100 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator_str = "Mantiuk '06";
 
     TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(0);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = mantiuk08;
     opts->tmoperator_str = "Mantiuk '08";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(1);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = fattal;
     opts->tmoperator_str = "Fattal";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(2);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = drago;
     opts->tmoperator_str = "Drago";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(3);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = durand;
     opts->tmoperator_str = "Durand";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(4);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = reinhard02;
     opts->tmoperator_str = "Reinhard '02";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(5);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = reinhard05;
     opts->tmoperator_str = "Reinhard '05";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(6);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = ashikhmin;
     opts->tmoperator_str = "Ashikhmin";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(7);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     opts->tmoperator = pattanaik;
     opts->tmoperator_str = "Pattanaik";
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
-    connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    thread->set_image_number(8);
+    thread->set_mode(TMO_PREVIEW);
+    connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
-    thread->wait();
 
     QApplication::restoreOverrideCursor();
 }
@@ -275,14 +281,11 @@ void PreviewPanel::deleteTMOThread(TMOThread *th)
     delete th;
 }
 
-void PreviewPanel::addSmallPreviewResult(QImage *img)
+void PreviewPanel::addSmallPreviewResult(QImage *img, int n)
 {
-    qDebug() << "addSmallPreviewResult(" << m_previewImgNum << ")";
+    qDebug() << "addSmallPreviewResult(" << n << ")";
 
-    this->setPixmap( QPixmap::fromImage(*img), m_previewImgNum);
-    m_previewImgNum++;
-
-    m_previewImgNum = m_previewImgNum%9;
+    this->setPixmap( QPixmap::fromImage(*img), n);
 }
 
 void PreviewPanel::tonemapPreview(int n)

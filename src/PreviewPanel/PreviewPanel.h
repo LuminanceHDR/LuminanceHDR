@@ -47,7 +47,7 @@ public Q_SLOTS:
     void updatePreviews(pfs::Frame* frame);
 
 protected Q_SLOTS:
-    void addSmallPreviewResult(QImage*);
+    void addSmallPreviewResult(QImage*, int n);
     void setPixmap(const QPixmap &p, int n);
     void tonemapPreview(int n);
     void deleteTMOThread(TMOThread *th);
@@ -74,7 +74,6 @@ private:
     int original_width_frame;
     pfs::Frame* current_frame;
     TonemappingOptions *opts;
-    int m_previewImgNum;
 
     void generatePreviews();
 
