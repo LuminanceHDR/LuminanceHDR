@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
+    <width>650</width>
     <height>620</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>580</width>
+    <width>650</width>
     <height>620</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>580</width>
+    <width>650</width>
     <height>620</height>
    </size>
   </property>
@@ -481,6 +481,16 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
+              <property name="text">
+               <string>Always show Preview Panel</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -902,8 +912,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>554</width>
-              <height>333</height>
+              <width>269</width>
+              <height>133</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2575,13 +2585,9 @@ p, li { white-space: pre-wrap; }
   <tabstop>languageComboBox</tabstop>
   <tabstop>checkBoxTMOWindowsMax</tabstop>
   <tabstop>checkBoxTMOWindowsHDR</tabstop>
+  <tabstop>checkBoxTMOWindowsPreviewPanel</tabstop>
   <tabstop>cancelButton</tabstop>
   <tabstop>okButton</tabstop>
-  <tabstop>toolButtonInterface</tabstop>
-  <tabstop>toolButtonHDR</tabstop>
-  <tabstop>toolButtonTM</tabstop>
-  <tabstop>toolButtonRAW</tabstop>
-  <tabstop>toolButtonExtTool</tabstop>
   <tabstop>logLuvRadioButton</tabstop>
   <tabstop>floatTiffRadioButton</tabstop>
   <tabstop>negativeColorButton</tabstop>
@@ -2593,12 +2599,16 @@ p, li { white-space: pre-wrap; }
   <tabstop>four_color_rgb_CB</tabstop>
   <tabstop>do_not_use_fuji_rotate_CB</tabstop>
   <tabstop>user_qual_comboBox</tabstop>
+  <tabstop>user_qual_toolButton</tabstop>
   <tabstop>med_passes_horizontalSlider</tabstop>
   <tabstop>med_passes_spinBox</tabstop>
-  <tabstop>user_qual_toolButton</tabstop>
   <tabstop>med_passes_toolButton</tabstop>
   <tabstop>aisParamsLineEdit</tabstop>
-  <tabstop>TK_spinBox</tabstop>
+  <tabstop>toolButtonInterface</tabstop>
+  <tabstop>toolButtonHDR</tabstop>
+  <tabstop>toolButtonTM</tabstop>
+  <tabstop>toolButtonRAW</tabstop>
+  <tabstop>toolButtonExtTool</tabstop>
   <tabstop>TK_toolButton</tabstop>
   <tabstop>green_horizontalSlider</tabstop>
   <tabstop>green_doubleSpinBox</tabstop>
@@ -2643,6 +2653,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>TK_horizontalSlider</tabstop>
   <tabstop>wb_method_toolButton</tabstop>
   <tabstop>wb_method_comboBox</tabstop>
+  <tabstop>TK_spinBox</tabstop>
  </tabstops>
  <resources>
   <include location="../icons.qrc"/>
