@@ -25,6 +25,7 @@
  *
  */
 
+#include <QDebug>
 #include <iostream>
 
 #include "TMOThread.h"
@@ -117,6 +118,7 @@ void TMOThread::finalize()
         case TMO_INTERACTIVE:
         default:
             {
+		qDebug() << "emit imageComputed(res)";
                 emit imageComputed(res);
                 if ( luminance_options->tmowindow_showprocessed )
                 {

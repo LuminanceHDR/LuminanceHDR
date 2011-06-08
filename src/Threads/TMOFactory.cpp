@@ -41,7 +41,7 @@ TMOThread * TMOFactory::getTMOThread(const TMOperator &tmoOperator,
                                      const TonemappingOptions *opts)
 {
 	switch (tmoOperator)
-  {
+  	{
 		case ashikhmin:
 			return new Ashikhmin02Thread(workingPfsFrame, opts); 
 		case drago:

@@ -49,13 +49,13 @@ void Pattanaik00Thread::run()
                        ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

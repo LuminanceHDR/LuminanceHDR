@@ -39,7 +39,7 @@ void Reinhard05Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		pfstmo_reinhard05(workingframe,
                       opts->operator_options.reinhard05options.brightness,
                       opts->operator_options.reinhard05options.chromaticAdaptation,
@@ -47,13 +47,13 @@ void Reinhard05Thread::run()
                       ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

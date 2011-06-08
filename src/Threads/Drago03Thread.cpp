@@ -40,17 +40,17 @@ void Drago03Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
                 pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+  	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

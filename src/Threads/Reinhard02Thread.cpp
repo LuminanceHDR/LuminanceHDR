@@ -40,7 +40,7 @@ void Reinhard02Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		pfstmo_reinhard02(workingframe,
                       opts->operator_options.reinhard02options.key,
                       opts->operator_options.reinhard02options.phi,
@@ -51,13 +51,13 @@ void Reinhard02Thread::run()
                       ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+  	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

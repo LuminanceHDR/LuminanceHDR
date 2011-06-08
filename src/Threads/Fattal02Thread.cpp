@@ -41,7 +41,7 @@ void Fattal02Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		// pfstmo_fattal02 not reentrant AKA not thread-safe!
 		fattal02_mutex.lock();
 		pfstmo_fattal02(workingframe,
@@ -54,7 +54,7 @@ void Fattal02Thread::run()
 		fattal02_mutex.unlock();
 	}
 	catch(...)
-  {
+	{
 		fattal02_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);

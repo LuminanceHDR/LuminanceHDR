@@ -47,15 +47,15 @@ void Mantiuk08Thread::run()
                      ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		if (strcmp("failed to analyse the image", e.getMessage())) 
-      return;
+			return;
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

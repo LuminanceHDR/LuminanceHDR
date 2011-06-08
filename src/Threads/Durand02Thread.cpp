@@ -42,7 +42,7 @@ void Durand02Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		// pfstmo_durand02 not reentrant
 		durand02_mutex.lock();
 		pfstmo_durand02(workingframe,
@@ -53,7 +53,7 @@ void Durand02Thread::run()
 		durand02_mutex.unlock();
 	}
 	catch(...)
-  {
+  	{
 		durand02_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);

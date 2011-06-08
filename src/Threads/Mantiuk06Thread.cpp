@@ -42,20 +42,20 @@ void Mantiuk06Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		// pfstmo_mantiuk06 not reentrant
-    mantiuk06_mutex.lock();
+		mantiuk06_mutex.lock();
 		pfstmo_mantiuk06(workingframe,
                      opts->operator_options.mantiuk06options.contrastfactor,
                      opts->operator_options.mantiuk06options.saturationfactor,
                      opts->operator_options.mantiuk06options.detailfactor,
                      opts->operator_options.mantiuk06options.contrastequalization,
                      ph);
-    mantiuk06_mutex.unlock();
+		mantiuk06_mutex.unlock();
 	}
 	catch(...)
-  {
-    mantiuk06_mutex.unlock();
+  	{
+    		mantiuk06_mutex.unlock();
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;

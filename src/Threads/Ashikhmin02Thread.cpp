@@ -39,7 +39,7 @@ void Ashikhmin02Thread::run()
 	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 	emit setMaximumSteps(100);
 	try
-  {
+	{
 		pfstmo_ashikhmin02(workingframe,
                        opts->operator_options.ashikhminoptions.simple,
                        opts->operator_options.ashikhminoptions.lct,
@@ -47,13 +47,13 @@ void Ashikhmin02Thread::run()
                        ph);
 	}
 	catch(pfs::Exception e)
-  {
+	{
 		emit tmo_error(e.getMessage());
 		emit deleteMe(this);
 		return;
 	}
 	catch(...)
-  {
+	{
 		emit tmo_error("Failed to tonemap image");
 		emit deleteMe(this);
 		return;
