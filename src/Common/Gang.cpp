@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * Copyright (C) 2002-2005 Nicholas Phillips
@@ -20,8 +20,10 @@
  * ---------------------------------------------------------------------- 
  *
  * based on previous GPL code from qpfstmo, by Nicholas Phillips.
+ *
  * Original Work
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * 
  * Improvements, bugfixing
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *

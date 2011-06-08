@@ -242,6 +242,10 @@ void PreferencesDialog::ok_clicked() {
 			luminance_options->tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
 			settings->setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
 		}
+		if (checkBoxTMOWindowsPreviewPanel->isChecked() != luminance_options->tmowindow_showpreviewpanel) {
+			luminance_options->tmowindow_showpreviewpanel = checkBoxTMOWindowsPreviewPanel->isChecked();
+			settings->setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL,checkBoxTMOWindowsPreviewPanel->isChecked());
+		}
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
@@ -684,6 +688,7 @@ void PreferencesDialog::from_options_to_gui() {
 	change_color_of(ifnanColorButton,&infnancolor);
 	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
+	checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
 
 	four_color_rgb_CB->setChecked(luminance_options->four_color_rgb);
 	do_not_use_fuji_rotate_CB->setChecked(luminance_options->do_not_use_fuji_rotate);

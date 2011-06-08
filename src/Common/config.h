@@ -50,6 +50,7 @@
 #define GROUP_TMOWINDOW "TMOWindow_Options"
 #define KEY_TMOWINDOW_MAX "TMOWindow_Max"
 #define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_ShowProcessed"
+#define KEY_TMOWINDOW_SHOWPREVIEWPANEL "TMOWindow_ShowPreviewPanel"
 
 #define GROUP_TMOWARNING "TMOWarning_Options"
 #define KEY_TMOWARNING_FATTALSMALL "TMOWarning_fattalsmall"

@@ -47,8 +47,10 @@ public:
 	bool saveLogLuvTiff;
 	// if true, tmo result windows should come up maximized
 	bool tmowindow_max;
-	//if true also show processed hdr
+	//if true always show processed hdr
 	bool tmowindow_showprocessed;
+	//if true always show preview panel
+	bool tmowindow_showpreviewpanel;
 	// if true (default) warn user about differing results with small frames
 	bool tmowarning_fattalsmall;
 	//path to save temporary cached pfs files.

@@ -98,13 +98,17 @@ void LuminanceOptions::loadFromQSettings()
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWINDOW);
-	if (!settings->contains(KEY_TMOWINDOW_MAX))
+	        if (!settings->contains(KEY_TMOWINDOW_MAX))
 			settings->setValue(KEY_TMOWINDOW_MAX,false);
 		tmowindow_max=settings->value(KEY_TMOWINDOW_MAX,false).toBool();
 		
 		if (!settings->contains(KEY_TMOWINDOW_SHOWPROCESSED))
 			settings->setValue(KEY_TMOWINDOW_SHOWPROCESSED,false);
 		tmowindow_showprocessed=settings->value(KEY_TMOWINDOW_SHOWPROCESSED,false).toBool();
+
+		if (!settings->contains(KEY_TMOWINDOW_SHOWPREVIEWPANEL))
+			settings->setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL,true);
+		tmowindow_showpreviewpanel=settings->value(KEY_TMOWINDOW_SHOWPREVIEWPANEL,true).toBool();
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWARNING);
