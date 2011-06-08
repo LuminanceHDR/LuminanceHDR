@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2011 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@ protected Q_SLOTS:
     void setPixmap(const QPixmap &p, int n);
     void tonemapPreview(int n);
     void deleteTMOThread(TMOThread *th);
+    void showError(const char *);
 
 protected:
     PreviewLabel *labelMantiuk06;

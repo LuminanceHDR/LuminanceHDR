@@ -1,7 +1,7 @@
 /**
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2011 Franco Comida
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -74,6 +74,7 @@ PreviewPanel::PreviewPanel(QWidget *parent):
 
 PreviewPanel::~PreviewPanel()
 {
+    qDebug() << "PreviewPanel::~PreviewPanel()";
     if (is_frame_set)
         delete current_frame;
 }
@@ -168,6 +169,8 @@ void PreviewPanel::generatePreviews()
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
+    m_previewImgNum = 0;
+
     opts->origxsize = PREVIEW_WIDTH;
     opts->xsize = PREVIEW_WIDTH;
     opts->pregamma = 1.0;
@@ -179,6 +182,7 @@ void PreviewPanel::generatePreviews()
 
     TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -188,6 +192,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -197,6 +202,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -206,6 +212,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -215,6 +222,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -224,6 +232,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -233,6 +242,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -242,6 +252,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -251,6 +262,7 @@ void PreviewPanel::generatePreviews()
 
     thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
     connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addSmallPreviewResult(QImage*)));
+    connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
     thread->wait();
@@ -271,9 +283,6 @@ void PreviewPanel::addSmallPreviewResult(QImage *img)
     m_previewImgNum++;
 
     m_previewImgNum = m_previewImgNum%9;
-
-    //if (m_previewImgNum == 9)
-    //    m_previewImgNum = 0;
 }
 
 void PreviewPanel::tonemapPreview(int n)
@@ -334,4 +343,9 @@ void PreviewPanel::tonemapPreview(int n)
         emit startTonemapping(opts);
         break;
     }
+}
+
+void PreviewPanel::showError(const char *error)
+{
+	qDebug() << error;
 }

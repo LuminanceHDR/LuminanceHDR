@@ -159,10 +159,25 @@ void MainWindow::createCentralWidget()
     m_centralwidget_splitter->setStretchFactor(0, 2);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
+    // create preview panel
+    previewPanel = new PreviewPanel(m_centralwidget_splitter);
+
+    // add panel to central widget
+    m_centralwidget_splitter->addWidget(previewPanel);
+    m_centralwidget_splitter->setStretchFactor(2, 1);
+    
+    previewPanel->hide();
+
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
+    
+    // TODO : connect panel to new refresh requests
+    connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
+    connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+    connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
 }
 
 void MainWindow::createToolBar()
@@ -259,6 +274,38 @@ void MainWindow::createConnections()
 
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
+}
+
+void MainWindow::loadOptions()
+{
+    luminance_options = LuminanceOptions::getInstance();
+
+    //load from settings the path where hdrs have been previously opened/loaded
+    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
+    RecentDirLDRSetting = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+
+    //load from settings the main toolbar visualization mode
+    if (!settings->contains(KEY_TOOLBAR_MODE))
+        settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+    switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+    case Qt::ToolButtonIconOnly:
+        Icons_Only();
+        actionIcons_Only->setChecked(true);
+	break;
+    case Qt::ToolButtonTextOnly:
+        Text_Only();
+        actionText_Only->setChecked(true);
+	break;
+    case Qt::ToolButtonTextBesideIcon:
+        Text_Alongside_Icons();
+        actionText_Alongside_Icons->setChecked(true);
+	break;
+    case Qt::ToolButtonTextUnderIcon:
+        Text_Under_Icons();
+        actionText_Under_Icons->setChecked(true);
+	break;
+    }
+    actionShowPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
 }
 
 void MainWindow::showDonationsPage()
@@ -876,9 +923,11 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-        actionShowPreviewPanel->setEnabled(true);
-
         emit updatedHDR(newhdr->getHDRPfsFrame());  // I signal I have a new HDR open
+
+        actionShowPreviewPanel->setEnabled(true);
+	if (actionShowPreviewPanel->isChecked())
+            previewPanel->show();
 
         // done by SIGNAL(updatedHDR( ))
         //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
@@ -908,18 +957,21 @@ void MainWindow::preferences_called()
     unsigned int naninfcol = luminance_options->naninfcolor;
     PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
-    if ( opts->exec() == QDialog::Accepted
-        && (negcol != luminance_options->negcolor || naninfcol != luminance_options->naninfcolor) )
+    if ( opts->exec() == QDialog::Accepted )
     {
-        for (int idx = 0; idx < m_tabwidget->count(); idx++)
+        if (negcol != luminance_options->negcolor || naninfcol != luminance_options->naninfcolor)
         {
-            GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
-            HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
-            if ( hdr_v != NULL )
+            for (int idx = 0; idx < m_tabwidget->count(); idx++)
             {
-                hdr_v->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
+                GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
+                HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
+                if ( hdr_v != NULL )
+                {
+                    hdr_v->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
+                }
             }
         }
+	actionShowPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
     }
 }
 
@@ -928,37 +980,6 @@ void MainWindow::transplant_called()
     TransplantExifDialog *transplant=new TransplantExifDialog(this);
     transplant->setAttribute(Qt::WA_DeleteOnClose);
     transplant->exec();
-}
-
-void MainWindow::loadOptions()
-{
-    luminance_options = LuminanceOptions::getInstance();
-
-    //load from settings the path where hdrs have been previously opened/loaded
-    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
-    RecentDirLDRSetting = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
-
-    //load from settings the main toolbar visualization mode
-    if (!settings->contains(KEY_TOOLBAR_MODE))
-        settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-    switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
-    case Qt::ToolButtonIconOnly:
-        Icons_Only();
-        actionIcons_Only->setChecked(true);
-	break;
-    case Qt::ToolButtonTextOnly:
-        Text_Only();
-        actionText_Only->setChecked(true);
-	break;
-    case Qt::ToolButtonTextBesideIcon:
-        Text_Alongside_Icons();
-        actionText_Alongside_Icons->setChecked(true);
-	break;
-    case Qt::ToolButtonTextUnderIcon:
-        Text_Under_Icons();
-        actionText_Under_Icons->setChecked(true);
-	break;
-    }
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -1530,25 +1551,13 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
-            // create preview panel
-            previewPanel = new PreviewPanel(m_centralwidget_splitter);
-
-            // add panel to central widget
-            m_centralwidget_splitter->addWidget(previewPanel);
-            m_centralwidget_splitter->setStretchFactor(2, 1);
-
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
-
-            // TODO : connect panel to new refresh requests
-            connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
-            connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
-            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+            previewPanel->show();
         }
     }
     else
-        delete previewPanel;
+        previewPanel->hide();
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
@@ -1630,6 +1639,7 @@ void MainWindow::removeTab(int t)
             tmPanel->setEnabled(false);
             actionShowPreviewPanel->setEnabled(false);
         }
+        previewPanel->hide();
     }
     else
     {
