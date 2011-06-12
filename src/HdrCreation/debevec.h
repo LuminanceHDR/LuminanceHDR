@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -22,6 +22,7 @@
  */
 
 #include <QList>
+#include <QVector>
 #include <QImage>
 #include "responses.h"
 
@@ -42,5 +43,6 @@
  * @param M  number of levels of the input images
  * @param ldrinput if true listldr is used for the input images otherwise listhdrR, listhdrG, listhdrB are used
  */
-void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, 
+//void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, 
+void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, 
     const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );

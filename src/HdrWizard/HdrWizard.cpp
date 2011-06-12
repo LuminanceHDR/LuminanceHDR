@@ -24,6 +24,7 @@
  * @author Franco Comida <fcomida@users.sourceforge.net>
  *
  */
+#include <QDebug>
 
 #include <QStringList>
 #include <QFileDialog>
@@ -38,8 +39,6 @@
 #include "Common/config.h"
 #include "EditingTools.h"
 #include "HdrWizard.h"
-
-#include <iostream>
 
 HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
@@ -68,11 +67,13 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 
 	luminance_options = LuminanceOptions::getInstance();
 
+	progressBar->hide();
+
 	setupConnections();
 }
 
 HdrWizard::~HdrWizard() {
-	std::cout << "HdrWizard::~HdrWizard()" << std::endl;
+	qDebug() << "HdrWizard::~HdrWizard()";
 	
 	QStringList  fnames = hdrCreationManager->getFileList();
 	int n = fnames.size();
@@ -123,6 +124,8 @@ void HdrWizard::setupConnections() {
 	connect(RespCurveFileLoadedLineEdit,SIGNAL(textChanged(const QString&)),this,
 	SLOT(loadRespCurveFilename(const QString&)));
 	connect(loadImagesButton,SIGNAL(clicked()),this,SLOT(loadImagesButtonClicked()));
+	connect(removeImageButton,SIGNAL(clicked()),this,SLOT(removeImageButtonClicked()));
+	connect(clearListButton,SIGNAL(clicked()),this,SLOT(clearListButtonClicked()));
 	connect(hdrCreationManager, SIGNAL(fileLoaded(int,QString,float)), this, SLOT(fileLoaded(int,QString,float)));
 	connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
 	connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
@@ -156,11 +159,61 @@ void HdrWizard::loadImagesButtonClicked() {
 		RecentDirInputLDRs = qfi.path();
 		settings->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
 	}
-	loadImagesButton->setEnabled(false);
+	//loadImagesButton->setEnabled(false);
 	confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
 	loadInputFiles(files, files.count());
 	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
     } //if (!files.isEmpty())
+}
+
+void HdrWizard::removeImageButtonClicked()
+{
+	disconnect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+	int index = tableWidget->currentRow();
+
+	if (tableWidget->rowCount() == 1) 
+	{
+		clearListButtonClicked();
+	}
+	else 
+	{
+		hdrCreationManager->remove(index);
+		tableWidget->removeRow(index);
+		inputHdrFileSelected(tableWidget->currentRow());
+	}
+	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+}
+
+void HdrWizard::clearListButtonClicked()
+{
+	disconnect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
+	previewLabel->clear();
+	for (int i = tableWidget->rowCount()-1; i >= 0; --i)
+ 		tableWidget->removeRow(i);
+
+	QStringList  fnames = hdrCreationManager->getFileList();
+	int n = fnames.size();
+	
+	for (int i = 0; i < n; i++) {
+		QString fname = hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+		QFile::remove(thumb_name);
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+		QFile::remove(thumb_name);
+	}
+
+	hdrCreationManager->reset();
+	removeImageButton->setEnabled(false);
+	clearListButton->setEnabled(false);
+	EVgroupBox->setEnabled(false);
+	alignGroupBox->setEnabled(false);
+	//EVSlider->setValue(0);
+	NextFinishButton->setEnabled(false);
+	progressBar->setValue(0);
+	progressBar->hide();
+	confirmloadlabel->setText("<center><h3><b>"+tr("Start loading a set of images with different exposure")+"</b></h3></center>");
+	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
 
 void HdrWizard::dragEnterEvent(QDragEnterEvent *event) {
@@ -179,11 +232,14 @@ void HdrWizard::dropEvent(QDropEvent *event) {
 }
 
 void HdrWizard::loadInputFiles(QStringList files, int count) {
+	int shift = tableWidget->rowCount();
 	tableWidget->setEnabled(false);
-	tableWidget->setRowCount(count);
+	tableWidget->setRowCount(shift + count);
 	progressBar->setMaximum(count);
 	progressBar->setValue(0);
-
+	progressBar->show();
+	
+	hdrCreationManager->setShift(shift);
 	hdrCreationManager->setFileList(files);
 	hdrCreationManager->loadInputFiles();
 }
@@ -206,7 +262,7 @@ void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
 		Luminance HDR was not able to find the relevant <i>EXIF</i> tags\nfor the following images:\n <ul>\
 		%1</ul>\
 		<hr>You can still proceed creating an Hdr. To do so you have to insert <b>manually</b> the EV (exposure values) or stop difference values.\
-		<hr>If you want Qtfsgui to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
+		<hr>If you want Luminance HDR to do this <b>automatically</b>, you have to load images that have at least\nthe following exif data: \
 		<ul><li>Shutter Speed (seconds)</li>\
 		<li>Aperture (f-number)</li></ul>\
 		<hr><b>HINT:</b> Losing EXIF data usually happens when you preprocess your pictures.<br>\
@@ -233,19 +289,29 @@ void HdrWizard::finishedLoadingInputFiles(QStringList filesLackingExif) {
 		alignGroupBox->setEnabled(true);
 		mtb_radioButton->setEnabled(false);
 	}
+	removeImageButton->setEnabled(true);
+	clearListButton->setEnabled(true);
+	progressBar->hide();
 	QApplication::restoreOverrideCursor();
 }
 
 void HdrWizard::errorWhileLoading(QString error) {
+	disconnect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 	tableWidget->clear();
 	tableWidget->setRowCount(0);
 	tableWidget->setEnabled(true);
 	progressBar->setValue(0);
-	QMessageBox::critical(this,tr("Loading Error"), error);
+	progressBar->hide();
+	previewLabel->clear();
+	removeImageButton->setEnabled(false);
+	clearListButton->setEnabled(false);
+	NextFinishButton->setEnabled(false);
+	EVgroupBox->setEnabled(false);
+	QMessageBox::critical(this,tr("Loading Error: "), error);
 	hdrCreationManager->clearlists(true);
 	QApplication::restoreOverrideCursor();
 	confirmloadlabel->setText("<center><h3><b>"+tr("Start loading a set of images with different exposure")+"</b></h3></center>");
-	loadImagesButton->setEnabled(true);
+	connect(tableWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(inputHdrFileSelected(int)));
 }
 
 void HdrWizard::updateGraphicalEVvalue(float expotime, int index_in_table) {
@@ -589,6 +655,7 @@ void HdrWizard::inputHdrFileSelected(int i) {
 }
 
 void HdrWizard::resizeEvent ( QResizeEvent * ) {
+	//qDebug() << "void HdrWizard::resizeEvent ( QResizeEvent * )";
 	//make sure we ask for a thumbnail only when we need it
 	if (pagestack->currentIndex() == 0 && tableWidget->currentRow() != -1 && hdrCreationManager->inputImageType() == HdrCreationManager::LDR_INPUT_TYPE) {
 		QImage *image = hdrCreationManager->getLDRList().at(tableWidget->currentRow());

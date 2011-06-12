@@ -1,7 +1,7 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -30,6 +30,7 @@
 #ifndef _robertson02_h_
 #define _robertson02_h_
 #include <QList>
+#include <QVector>
 #include <QImage>
 #include "responses.h"
 
@@ -50,7 +51,8 @@
  * @param M  number of levels of the input images
  * @param ldrinput if true listldr is used for the input images otherwise listhdrR, listhdrG, listhdrB are used
  */
-void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
+//void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
+void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
 
 /**
  * @brief Calculate camera response using Robertson02 algorithm
@@ -62,6 +64,7 @@ void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array
  * @param M max camera output (no of discrete steps)
  * @return number of saturated pixels in the HDR image (0: all OK)
  */
-void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
+//void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
+void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
 
 #endif /* #ifndef _robertson02_h_ */

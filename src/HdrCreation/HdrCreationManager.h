@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -19,6 +19,9 @@
  * ---------------------------------------------------------------------- 
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * Improvements, bugfixing
+ * @author Franco Comida <fcomida@users.sourceforge.net>
+ *
  */
 
 #ifndef HDRCREATIONMANAGER_H
@@ -85,8 +88,11 @@ public:
 	void makeSureLDRsHaveAlpha();
 	void applyShiftsToImageStack(QList< QPair<int,int> > HV_offsets);
 	void cropLDR (QRect ca);
+	void reset();
+	void remove(int index);
+	void setShift(int shift) { m_shift = shift; }
 public slots:
-	//remove temp 8or16 bit tiff files created by dcraw upon raw input.
+	//remove temp 8or16 bit tiff files created by libRaw upon raw input.
 	void removeTempFiles();
 signals:
 	void finishedLoadingInputFiles(QStringList filesLackingExif);
@@ -108,7 +114,8 @@ private:
 	//if startedProcessing[i]==true, we started a thread for the i-th file
 	QList<bool> startedProcessing;
 	//time equivalent array (from exif data)
-	float *expotimes;
+	//float *expotimes;
+	QVector<float> expotimes;
 
 	//Filled on every successful load and left untouched afterwards.
 	//Value emitted after all the loading has been completed
@@ -130,6 +137,8 @@ private:
 
 	//align_image_stack
 	QProcess *ais;
+
+	int m_shift;
 
 	bool ldrsHaveSameSize(int,int);
 	bool mdrsHaveSameSize(int,int);

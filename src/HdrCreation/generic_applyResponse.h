@@ -1,7 +1,7 @@
 /**
  * @brief Generic algorithm for applying response curve and combining images.
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -30,6 +30,7 @@
 #ifndef _gerneric_applyResponse_h_
 #define _gerneric_applyResponse_h_
 #include <QList>
+#include <QVector>
 #include <QImage>
 #include "responses.h"
 
@@ -54,9 +55,14 @@
  * @param listhdrG stack of input images for green chanel in PFS-Format (may be null if ldrinput is true)
  * @param listhdrB stack of input images for blue chanel in PFS-Format (may be null if ldrinput is true)
  */
+//void generic_applyResponse( 
+//    float (*sumf)(float, float, float, float), float (*divf)(float, float, float, float), float (*outf)(float), 
+//    pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, 
+//    const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, 
+//    const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
 void generic_applyResponse( 
     float (*sumf)(float, float, float, float), float (*divf)(float, float, float, float), float (*outf)(float), 
-    pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, 
+    pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const QVector<float> arrayofexptime, 
     const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, 
     const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
 

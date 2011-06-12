@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -40,7 +40,8 @@ inline float min3( float a, float b, float c ) {
   return (c<min) ? c : min;
 }
 
-pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool /*antighosting*/, int /*iterations*/, const bool ldrinput, ...)
+//pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool /*antighosting*/, int /*iterations*/, const bool ldrinput, ...)
+pfs::Frame* createHDR(const QVector<float>  arrayofexptime, const config_triple* const chosen_config, bool /*antighosting*/, int /*iterations*/, const bool ldrinput, ...)
 {
   //only one of these two is used by casting extra parameters:
   //listldr is used when input is a list of LDRs (jpegs or LDR tiffs).

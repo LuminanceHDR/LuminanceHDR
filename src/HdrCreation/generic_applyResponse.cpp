@@ -1,7 +1,7 @@
 /**
  * @brief Generic algorithm for combining images.
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -28,6 +28,7 @@
  */
 
 #include <iostream>
+#include <QVector>
 #include <vector>
 #include <math.h>
 
@@ -46,8 +47,12 @@ int getN(const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Ar
 int getFrameSize(const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList* , Array2DList*);
 
 
+//void generic_applyResponse(float (*sumf)(float, float, float, float), float (*divf)(float, float, float, float), float (*outf)(float), 
+//                           pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, 
+//                           const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, 
+//                           const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB)
 void generic_applyResponse(float (*sumf)(float, float, float, float), float (*divf)(float, float, float, float), float (*outf)(float), 
-                           pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, 
+                           pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const QVector<float> arrayofexptime, 
                            const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, 
                            const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB)
 {

@@ -1,7 +1,7 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -57,7 +57,8 @@ float robertson02_out(float quotient) {
 	return quotient;
 }
 
-void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...) {
+//void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...) {
+void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const QVector<float> arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...) {
 	QList<QImage*> *listldr=NULL;
 	Array2DList *listhdrR=NULL;
 	Array2DList *listhdrG=NULL;
@@ -81,7 +82,8 @@ void robertson02_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Arra
 }
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////
-void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir, float* Ig, float* Ib, const float* w, const int M, const bool ldrinput, ... )
+//void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir, float* Ig, float* Ib, const float* w, const int M, const bool ldrinput, ... )
+void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, float* Ir, float* Ig, float* Ib, const float* w, const int M, const bool ldrinput, ... )
 {
 va_list arg_pointer;
 va_start(arg_pointer,ldrinput); /* Initialize the argument list. */

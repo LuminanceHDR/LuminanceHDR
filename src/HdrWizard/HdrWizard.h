@@ -83,6 +83,8 @@ private slots:
 	void finishedAligning();
 
 	void loadImagesButtonClicked();
+	void removeImageButtonClicked();
+	void clearListButtonClicked();
 	void inputHdrFileSelected(int);
 	void predefConfigsComboBoxActivated(int);
 	void antighostRespCurveComboboxActivated(int);

@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -41,7 +41,8 @@ inline float debevec_out(float quotient)
 	return quotient;
 }
 
-void debevec_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...)
+//void debevec_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...)
+void debevec_applyResponse(pfs::Array2D* Rout, pfs::Array2D* Gout, pfs::Array2D* Bout, const QVector<float> arrayofexptime, const float* Ir,  const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ...)
 {
 	QList<QImage*> *listldr = NULL;
 	Array2DList* listhdrR = NULL;
