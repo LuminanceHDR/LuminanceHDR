@@ -90,7 +90,6 @@ public Q_SLOTS:
     void setMainWindowModified(bool b);
 
 protected Q_SLOTS:
-    //bool eventFilter(QObject *obj, QEvent *event);
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
     void fileSaveAs();
@@ -121,6 +120,9 @@ protected Q_SLOTS:
 
     void preferences_called();
     void transplant_called();
+
+    void levelsRequested(bool checked);
+    void levelsClosed();
 
     // Tool Bar Handling
     void Text_Under_Icons();

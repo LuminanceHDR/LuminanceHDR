@@ -251,6 +251,7 @@ void MainWindow::createMenus()
     connect(actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
     connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
     connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
+    connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
 
     //recent files
     initRecentFileActions();
@@ -426,7 +427,7 @@ void MainWindow::fileSaveAs()
 
         QString outfname = QFileDialog::getSaveFileName(this,
                                                 QObject::tr("Save the LDR image as..."),
-                                                RecentDirLDRSetting,
+                                                RecentDirLDRSetting, 
                                                 filetypes);
 
         if ( !outfname.isEmpty() )
@@ -517,7 +518,6 @@ void MainWindow::updateActionsNoImage()
 
     fileSaveAsAction->setEnabled(false);
     actionSave_Hdr_Preview->setEnabled(false);
-    //actionShowHDRs->setEnabled(false);
 
     // Histogram
     menuHDR_Histogram->setEnabled(false);
@@ -533,6 +533,7 @@ void MainWindow::updateActionsNoImage()
     cropToSelectionAction->setEnabled(false);
     rotateccw->setEnabled(false);
     rotatecw->setEnabled(false);
+    actionFix_Histogram->setEnabled(false);
 }
 
 void MainWindow::updateActionsLdrImage()
@@ -540,8 +541,6 @@ void MainWindow::updateActionsLdrImage()
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
 
-    //if ( tm_status.is_hdr_ready ) actionShowHDRs->setEnabled(true);
-
     // Histogram
     menuHDR_Histogram->setEnabled(false);
     Low_dynamic_range->setEnabled(false);
@@ -556,6 +555,7 @@ void MainWindow::updateActionsLdrImage()
     cropToSelectionAction->setEnabled(false);
     rotateccw->setEnabled(false);
     rotatecw->setEnabled(false);
+    actionFix_Histogram->setEnabled(true);
 }
 
 void MainWindow::updateActionsHdrImage()
@@ -578,6 +578,7 @@ void MainWindow::updateActionsHdrImage()
     cropToSelectionAction->setEnabled(false);
     rotateccw->setEnabled(true);
     rotatecw->setEnabled(true);
+    actionFix_Histogram->setEnabled(false);
 }
 
 void MainWindow::updateActions( int w )
@@ -1406,7 +1407,7 @@ void MainWindow::addLDRResult(QImage* image)
         n->showNormal();
 
     connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
-    //connect(n, SIGNAL(levels_closed()), this, SLOT(levels_closed()));
+    connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
     // TODO : progressive numbering of the open LDR tabs
     if (num_ldr_generated == 1)
@@ -1551,9 +1552,9 @@ void MainWindow::showPreviewPanel(bool b)
     {
         if (tm_status.is_hdr_ready)
         {
+            previewPanel->show();
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
-            previewPanel->show();
         }
     }
     else
@@ -1792,22 +1793,22 @@ void MainWindow::clearRecentFileActions()
     }
 }
 
+void MainWindow::levelsRequested(bool checked)
+{
+    if (checked)
+    {
+        GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
+        if (current==NULL)
+            return;
+        actionFix_Histogram->setDisabled(true);
+        current->levelsRequested(checked);
+    }
+}
 
-//bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-//{
-//    if (event->type() == QEvent::Close)
-//    {
-//        if (obj == previewViewer)
-//        {
-//            previewViewer->hide();
-//            event->ignore();
-//            return true;
-//        }
-//        return false;
-//    }
-//    else
-//    {
-//        //Standard event processing
-//        return QMainWindow::eventFilter(obj, event);
-//    }
-//}
+void MainWindow::levelsClosed()
+{
+    actionFix_Histogram->setDisabled(false);
+    actionFix_Histogram->setChecked(false);
+}
+
+
