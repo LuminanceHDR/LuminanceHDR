@@ -232,6 +232,7 @@ SET(LUMINANCE_HDR_SRC
 	src/Batch/BatchTMDialog.cpp
 	src/Batch/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
+#        src/Core/TMWorker.cpp
         src/Core/TonemappingOptions.cpp
 	src/Exif/ExifOperations.cpp
 	src/HdrCreation/HdrCreationManager.cpp
@@ -294,6 +295,7 @@ SET(LUMINANCE_HDR_MOC
 	src/Batch/BatchTMDialog.h
 	src/Batch/BatchTMJob.h
 	src/Core/IOWorker.h
+#        src/Core/TMWorker.h
 	src/HdrCreation/HdrCreationManager.h
 	src/HdrWizard/EditingTools.h
 	src/HdrWizard/HdrWizard.h
@@ -361,6 +363,21 @@ SET(LUMINANCE_HDR_UI
 	forms/about.ui
 )
 
+SET(LUMINANCE_TS
+        i18n/lang_cs.ts
+        i18n/lang_de.ts
+        i18n/lang_es.ts
+        i18n/lang_fr.ts
+        i18n/lang_fi.ts
+        i18n/lang_hu.ts
+        i18n/lang_id.ts
+        i18n/lang_it.ts
+        i18n/lang_pl.ts
+        i18n/lang_ro.ts
+        i18n/lang_ru.ts
+        i18n/lang_tr.ts
+)
+
 SET(LUMINANCE_HDR_RCCS icons.qrc)
 
 QT4_WRAP_CPP(LIB_HDR_MOC_SRC ${LIB_HDR_MOC})
@@ -369,6 +386,8 @@ QT4_WRAP_CPP(LUMINANCE_HDR_MOC_SRC ${LUMINANCE_HDR_MOC})
 QT4_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 
 QT4_WRAP_UI(LUMINANCE_HDR_UI_HEADERS ${LUMINANCE_HDR_UI})
+
+QT4_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
 
 SET(LUMINANCE_FILES
 	${LIB_HDR_INCLUDE}
@@ -379,14 +398,16 @@ SET(LUMINANCE_FILES
 	${LUMINANCE_HDR_SRC}
 	${LUMINANCE_HDR_MOC_SRC}
 	${LUMINANCE_HDR_RCCS_SRCS}
+        ${LUMINANCE_QM}
 )
-
 
 IF(APPLE)
   # icon files to copy in the bundle
   SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
   # set where in the bundle to put the icns files
   SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  # set where in the bundle to put the translation files
+  SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
   # include the icns files in the target
   SET( LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES} )
 
