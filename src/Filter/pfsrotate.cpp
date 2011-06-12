@@ -27,6 +27,8 @@
  */
 
 #include <assert.h>
+#include <iostream>
+
 #include "pfsrotate.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"

@@ -27,6 +27,8 @@
 #include <climits>
 #include <cstdlib>
 
+#include <iostream>
+
 #include "pfscut.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"

@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <assert.h>
+#include <iostream>
 
 #include "Common/msec_timer.h"
 #include "Libpfs/array2d.h"
