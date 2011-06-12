@@ -26,7 +26,6 @@
 #define _MSVC_MATH_H
 
 	#define _USE_MATH_DEFINES
-	#include <math.h>
 
 	#define exp2f(x)        (powf(2.0f, x))
 	#define log2(x)        (log(x)  / 0.693147180559945309417)

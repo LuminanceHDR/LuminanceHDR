@@ -26,8 +26,6 @@
 
 #if defined(__FreeBSD__)
 
-#include <math.h>
-
 #if __FreeBSD__ < 6
 #define exp2f(x)       ( (float)( exp2(x) ) )
 #endif

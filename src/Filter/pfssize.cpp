@@ -28,7 +28,6 @@
 #include <cmath>
 #include <assert.h>
 
-#include "arch/minmax.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/array2d.h"
 #include "Libpfs/frame.h"
@@ -60,6 +59,19 @@ void resize( const pfs::Array2D *src, pfs::Array2D *dest );
 void resampleMitchell( const pfs::Array2D *in, pfs::Array2D *out );
 void resampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter );
 
+#if defined(_MSC_VER)
+    #include "minmax.h"
+#else
+    inline float max( float a, float b )
+    {
+      return a > b ? a : b;
+    }
+
+    inline float min( float a, float b )
+    {
+      return a < b ? a : b;
+    }
+#endif
 // --------- Filters --------
 
 class MitchellFilter : public ResampleFilter
