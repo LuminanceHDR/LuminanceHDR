@@ -161,6 +161,7 @@
    <addaction name="normalSizeAct"/>
    <addaction name="actionShowPrevious"/>
    <addaction name="actionShowNext"/>
+   <addaction name="actionFix_Histogram"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
@@ -925,6 +926,36 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionFix_Histogram">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/new/prefix1/images/histogram.png</normaloff>:/new/prefix1/images/histogram.png</iconset>
+   </property>
+   <property name="text">
+    <string>Adjust &amp;Levels</string>
+   </property>
+   <property name="iconText">
+    <string>Adjust Levels</string>
+   </property>
+   <property name="toolTip">
+    <string>Adjust Levels</string>
+   </property>
+   <property name="statusTip">
+    <string>Tune the histogram for the current LDR</string>
+   </property>
+   <property name="whatsThis">
+    <string>Tune the histogram for the current LDR</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>
