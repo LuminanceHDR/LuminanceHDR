@@ -37,7 +37,7 @@
 #define TIMER_PROFILING 
 
 #include <stdio.h>
-#include <iostream>
+//#include <iostream>
 
 // TIMER -----
 #ifdef WIN_TIMER
