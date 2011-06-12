@@ -301,6 +301,13 @@
       </widget>
      </item>
      <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QStackedWidget" name="stackedPagesWidget">
        <property name="minimumSize">
         <size>
@@ -331,24 +338,6 @@
          <property name="margin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QLabel" name="titleLanguagePageLabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QGroupBox" name="languageGroupBox">
            <property name="font">
@@ -518,27 +507,6 @@ p, li { white-space: pre-wrap; }
           <number>0</number>
          </property>
          <item>
-          <widget class="QLabel" name="titleHdrTiffLabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>HDR Options</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="hdrTiffTitleSeparatorLine">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QGroupBox" name="hdrTiffGroupBox">
            <property name="toolTip">
             <string>Choose what type of HDR TIFF to save to</string>
@@ -694,27 +662,6 @@ p, li { white-space: pre-wrap; }
          <property name="margin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QLabel" name="titleTonemappingPageLabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Tone Mapping Options</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="TMtitleSeparatorLine">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QGroupBox" name="tempDirGroupBox">
            <property name="title">
@@ -900,9 +847,9 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="page">
+       <widget class="QWidget" name="rawConversionPage">
         <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QToolBox" name="toolBox">
            <property name="currentIndex">
             <number>0</number>
@@ -912,8 +859,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>269</width>
-              <height>133</height>
+              <width>624</width>
+              <height>326</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2456,20 +2403,6 @@ p, li { white-space: pre-wrap; }
          <property name="margin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QLabel" name="dcrawTitleLabel">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>External Tools</string>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QGroupBox" name="aisGroupBox">
            <property name="title">
