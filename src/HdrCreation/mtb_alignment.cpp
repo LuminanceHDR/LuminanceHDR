@@ -28,7 +28,10 @@
 #include <QVector>
 #include "mtb_alignment.h"
 
-#include "arch/freebsd/math.h"
+#if defined(_MSC_VER)
+	#include <iso646.h>
+#endif
+#include "arch/math.h"
 
 QImage* shiftQImage(const QImage *in, int dx, int dy)
 {
@@ -58,7 +61,7 @@ void mtb_alignment(QList<QImage*> &ImagePtrList, QList<bool> &ldr_tiff_input)
 	int height=ImagePtrList.at(0)->height();
 	double quantile = 0.5;
 	int noise = 4;
-	int shift_bits = qMax((int)floor(log2(qMin(width,height)))-6 , 0);
+	int shift_bits = qMax((int)floor(log2((long double)qMin(width,height)))-6 , 0);
 	//qDebug("::mtb_alignment: width=%d, height=%d, shift_bits=%d",width,height,shift_bits);
 
 	//these arrays contain the shifts of each image (except the 0-th) wrt the previous one

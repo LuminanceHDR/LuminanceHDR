@@ -33,7 +33,7 @@
 #include <QProcess>
 #include <QTextStream>
 
-#include "arch/freebsd/math.h"
+#include "arch/math.h"
 
 #include "Common/config.h"
 #include "EditingTools.h"

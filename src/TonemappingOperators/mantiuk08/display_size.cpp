@@ -31,10 +31,10 @@
 
 
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
 #include <assert.h>
 
+#include "arch/math.h"
 #include "display_size.h"
 #include "Libpfs/pfs.h"
 

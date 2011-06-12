@@ -34,6 +34,8 @@
 #include <QtConcurrentRun>
  #include <QFuture>
 
+#include "arch/math.h"
+
 #include "Common/global.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"

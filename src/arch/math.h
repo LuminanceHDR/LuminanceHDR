@@ -17,24 +17,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * 
+ * @author Daniel Kaneider <danielkaneider@users.sourceforge.net>
+ *  
  */
 
-#ifndef _FREEBSDMATH_H
-#define _FREEBSDMATH_H
-
+#if defined(_MSC_VER)
+	#include "msvc/math.h"
+#endif
 #if defined(__FreeBSD__)
-
-#include <math.h>
-
-#if __FreeBSD__ < 6
-#define exp2f(x)       ( (float)( exp2(x) ) )
-#endif
-
-#define log2(x)        (log(x)  / M_LN2)
-#define log2f(x)       (logf(x) / M_LN2)
-
-#endif
-
+	#include "freebsd/math.h"
 #endif

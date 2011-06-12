@@ -17,7 +17,7 @@
  */
 
 #include <stdlib.h>
-#include <math.h>
+#include "arch/math.h"
 
 #include "TonemappingOperators/pfstmo.h"
 #include "Common/ProgressHelper.h"
@@ -513,8 +513,8 @@ void tmo_reinhard02(unsigned int width, unsigned int height,
   cvts.xmax = Y->getCols();
   cvts.ymax = Y->getRows();
 
-  sigma_0      = log (scale_low);
-  sigma_1      = log (scale_high);
+  sigma_0      = log ((double)scale_low);
+  sigma_1      = log ((double)scale_high);
 
   compute_bessel();
   allocate_memory ();

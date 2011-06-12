@@ -28,6 +28,7 @@
 #include <libraw/libraw.h>
 #endif
 
+#include <vector>
 #include <cmath>
 #include <QString>
 #include <QFileInfo>
@@ -137,7 +138,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
     
     int numcolors = P1.colors;
-    double daylightMult[numcolors];
+	std::vector<double> daylightMult(numcolors);
 
     for(int c = 0 ; c < numcolors ; c++)
       daylightMult[c] = C.pre_mul[c];

@@ -29,7 +29,7 @@
 
 #include <iostream>
 #include <vector>
-#include <math.h>
+#include <arch/math.h>
 
 #include "responses.h"
 #include "robertson02.h"

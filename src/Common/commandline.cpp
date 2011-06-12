@@ -25,7 +25,12 @@
  *
  */
 
-#include <getopt.h>
+#if defined(_MSC_VER)
+	#include <getopt_win32.h>
+#else
+	#include <getopt.h>
+#endif
+
 
 #include "global.h"
 #include "options.h"

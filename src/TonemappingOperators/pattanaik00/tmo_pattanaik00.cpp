@@ -271,7 +271,7 @@ void calculateLocalAdaptation(const pfs::Array2DImpl* Y, int x, int y, float& Ac
   int height = Y->getRows();
   
   int kernel_size = 4;
-  static float LOG5 = log(5);
+  static float LOG5 = log(5.f);
   float logLc = log((*Y)(x,y))/LOG5;
 
   float pix_num = 0.0;
@@ -282,7 +282,7 @@ void calculateLocalAdaptation(const pfs::Array2DImpl* Y, int x, int y, float& Ac
         x+kx>0 && x+kx<width && y+ky>0 && y+ky<height )
       {
 	float L = (*Y)(x+kx,y+ky);
-	float w = exp( -pow(fabs(log(L)/LOG5-logLc),6.0) );
+	float w = exp( -pow(fabs(log(L)/LOG5-logLc),6.0f) );
 	pix_sum +=  w*L;
 	pix_num +=  w;
       }

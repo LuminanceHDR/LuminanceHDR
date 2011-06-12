@@ -97,7 +97,7 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
     const char *white_y_str = frame->getTags()->getString( "WHITE_Y" );
     if( white_y_str != NULL )
     {
-      white_y = strtof( white_y_str, NULL );
+      white_y = strtod( white_y_str, NULL );
       if( white_y == 0 )
       {
         white_y = -1;

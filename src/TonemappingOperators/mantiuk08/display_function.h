@@ -33,6 +33,7 @@
 #define DISPLAY_FUNCTION_H
 
 #include <stdio.h>
+#include "arch/math.h"
 
 class DisplayFunction
 {

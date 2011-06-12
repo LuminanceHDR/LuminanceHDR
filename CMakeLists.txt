@@ -213,7 +213,12 @@ SET(LIB_HDR_MOC
 
 SET(LUMINANCE_HDR_INCLUDE
         src/Core/TonemappingOptions.h
+	src/arch/string.h
+	src/arch/math.h
+	src/arch/minmax.h
+	src/arch/malloc.h
 	src/arch/freebsd/math.h
+	src/arch/msvc/math.h
 	src/Common/archs.h
 	src/Exif/ExifOperations.h
 	src/HelpBrowser/LuminancePaths.h	

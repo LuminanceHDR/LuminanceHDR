@@ -26,7 +26,7 @@
 #include <iostream>
 
 #include "ExifOperations.h"
-#include "arch/freebsd/math.h"
+#include "arch/math.h"
 
 namespace ExifOperations
 {

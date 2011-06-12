@@ -29,6 +29,7 @@
  * $Id: display_adaptive_tmo.cpp,v 1.19 2009/02/23 18:46:36 rafm Exp $
  */
 
+#include <vector>
 #include <stdlib.h>
 #include <math.h>
 #include <algorithm>
@@ -366,7 +367,7 @@ void print_vector( gsl_vector *v )
 class conditional_density: public datmoConditionalDensity
 {
 public:
-  static const double l_min = -8.f, l_max = 8.f, delta = 0.1f;
+  static const double l_min, l_max, delta;
   static double x_scale[X_COUNT];    // input log luminance scale
   double *g_scale;    // contrast scale
   double *f_scale;    // frequency scale
@@ -433,7 +434,7 @@ datmoConditionalDensity::~datmoConditionalDensity()
 {
 }
 
-const double conditional_density::l_min, conditional_density::l_max, conditional_density::delta;
+const double conditional_density::l_min = -8.f, conditional_density::l_max = 8.f, conditional_density::delta = 0.1f;
 double conditional_density::x_scale[X_COUNT] = { 0 };    // input log luminance scale
 
 
@@ -755,7 +756,7 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
   double d_dr = log10( dm->display( 1.f )/dm->display( 0.f ) ); // display dynamic range
 
   // Create LUTs for CSF to speed up computations
-  UniformArrayLUT csf_lut[C->f_count];
+  std::vector<UniformArrayLUT> csf_lut(C->f_count);
   for( int f = 0; f < C->f_count; f++ ) {
     csf_lut[f] = UniformArrayLUT( C->x_count, C->x_scale );
     for( int i=0; i < C->x_count; i++ )
@@ -767,9 +768,10 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
   // count number of needed equations and remove not used variables
   // Create a structure of disconnected frameworks, which can be connected later
   int k = 0;
-  int skip_lut[C->x_count-1]; // LUT used to skip unused nodes
-  int used_var[C->x_count-1]; // Used / unused variables
-  memset( used_var, 0, sizeof( int )*(C->x_count-1) );
+  std::vector<int> skip_lut(C->x_count-1);  // LUT used to skip unused nodes
+  std::vector<int> used_var(C->x_count-1); // Used / unused variables
+  memset( &used_var[0], 0, sizeof( used_var[0] )*(C->x_count-1) );
+
   int minmax_i[2] = { C->x_count-1, 0 };
   
   for( int f=0; f < C->f_count; f++ )
@@ -842,8 +844,9 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
   auto_matrix A(gsl_matrix_calloc(M, L));
   auto_vector B(gsl_vector_alloc(M));
   auto_vector N(gsl_vector_alloc(M));
-  size_t band[M]; // Frequency band (index)
-  size_t back_x[M]; // Background luminance (index) 
+
+  std::vector<size_t> band(M);  // Frequency band (index)
+  std::vector<size_t> back_x(M); // Background luminance (index) 
   
   k = 0;
   for( int f=0; f < C->f_count; f++ ) {
@@ -931,7 +934,7 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
 //    fprintf( stderr, "Iteration #%d\n", it );
 
     // Compute y values for the current solution
-    compute_y( y, x, skip_lut, C->x_count, L, dm->display(0), dm->display(1) );
+    compute_y( y, x, &skip_lut[0], C->x_count, L, dm->display(0), dm->display(1) );
 
     // Ax = A*x
     gsl_blas_dgemv( CblasNoTrans, 1, A, x, 0, Ax ); 
@@ -981,7 +984,7 @@ int optimize_tonecurve( datmoConditionalDensity *C_pub, DisplayFunction *dm, Dis
 //     fprintf( stderr, "%9.6f ", gsl_vector_get( x, i ) );
 //   fprintf( stderr, "\n" );
 
-  compute_y( y, x, skip_lut, C->x_count, L, dm->display(0), dm->display(1) );
+  compute_y( y, x, &skip_lut[0], C->x_count, L, dm->display(0), dm->display(1) );
 
   return PFSTMO_OK;
 }

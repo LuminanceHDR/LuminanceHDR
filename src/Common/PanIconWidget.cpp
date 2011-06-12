@@ -28,6 +28,8 @@
 #include <QApplication>
 #include <cmath>
 
+#include "arch/math.h"
+
 #include "PanIconWidget.h"
 
 PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(parent,flags) {

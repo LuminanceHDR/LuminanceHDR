@@ -36,6 +36,7 @@
 
 #include "Libpfs/pfs.h"
 
+#include "arch/string.h"
 #include "display_function.h"
 
 

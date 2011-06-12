@@ -28,7 +28,7 @@
 #include <QPair>
 
 #include "Common/options.h"
-#include "arch/freebsd/math.h"
+#include "arch/math.h"
 #include "createhdr.h"
 
 const config_triple predef_confs[6]= {

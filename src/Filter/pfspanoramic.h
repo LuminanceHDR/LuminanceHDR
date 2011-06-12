@@ -31,6 +31,7 @@
 #include <stdlib.h>
 
 #include "Libpfs/array2d.h"
+#include "arch/math.h"
 
 using std::map;
 using std::string;

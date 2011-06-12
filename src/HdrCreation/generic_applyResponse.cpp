@@ -148,8 +148,8 @@ void generic_applyResponse(float (*sumf)(float, float, float, float), float (*di
       // this needs to be done separately for each channel
       for (int chan = 0; chan < CHANNEL_NUM; ++chan )
       {
-        if (m[chan]>maxM) minti[chan] = fminf(minti[chan],ti);
-        if (m[chan]<minM) maxti[chan] = fmaxf(maxti[chan],ti);
+        if (m[chan]>maxM) minti[chan] = qMin(minti[chan],ti);
+        if (m[chan]<minM) maxti[chan] = qMax(maxti[chan],ti);
       }
       
       // --- anti ghosting: monotonous increase in time should result

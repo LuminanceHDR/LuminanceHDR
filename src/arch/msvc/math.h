@@ -17,24 +17,33 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ---------------------------------------------------------------------- 
- *
- * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * 
+ * @author Daniel Kaneider <danielkaneider@users.sourceforge.net>
+ *  
  */
 
-#ifndef _FREEBSDMATH_H
-#define _FREEBSDMATH_H
+#ifndef _MSVC_MATH_H
+#define _MSVC_MATH_H
 
-#if defined(__FreeBSD__)
+	#define _USE_MATH_DEFINES
+	#include <math.h>
 
-#include <math.h>
+	#define exp2f(x)        (powf(2.0f, x))
+	#define log2(x)        (log(x)  / 0.693147180559945309417)
+	#define log2f(x)       (logf(x) / 0.693147180559945309417)
 
-#if __FreeBSD__ < 6
-#define exp2f(x)       ( (float)( exp2(x) ) )
-#endif
+	#define lround(d)       ((long)(d>0 ? d+0.5 : ceil(d-0.5)))
+	#define round(d)       ((d>0) ? int(d+0.5) : int(d-0.5))
+	#define finite(x)       (_finite(x))
 
-#define log2(x)        (log(x)  / M_LN2)
-#define log2f(x)       (logf(x) / M_LN2)
+	#define isnan(x) (x != x)
+	#define isnanf(x) (x != x)
 
-#endif
+	#define fmax max
+	#define fmaxf max
+	#define fmin min
+	#define fminf min
+	#pragma warning (disable:4996)
+	#define snprintf sprintf_s
 
 #endif
