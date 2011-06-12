@@ -55,6 +55,9 @@
     <file>images/HDR_icon.png</file>
     <file>images/preferences-desktop-theme.png</file>
     <file>images/rawconverter.png</file>
+    <file>images/list-add.png</file>
+    <file>images/list-remove.png</file>
+    <file>images/edit-clear-list.png</file>
   </qresource>
   <qresource prefix="/help">
     <file alias="document-print.png">icons/help/document-print.png</file>
