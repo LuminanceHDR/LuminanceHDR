@@ -4,44 +4,78 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # find and setup Qt4 for this project
-FIND_PACKAGE(Qt4 REQUIRED)
+FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit REQUIRED)
 
 # add Qt modules here, the include will setup QT_LIBRARIES
 SET(QT_USE_QTXML TRUE)
 SET(QT_USE_QTWEBKIT TRUE)
 
+# Include the qtmain lib if we are on the windows platform
+IF(WIN32)
+	LINK_LIBRARIES(
+		${QT_QTMAIN_LIBRARY}
+	)
+ENDIF(WIN32)
+
 INCLUDE(${QT_USE_FILE})
 
 set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES})
 
-IF(WIN32)
+IF(WIN32 AND NOT MSVC)
   set(LIBS ${LIBS} ${QT_JPEG_PLUGIN})
 ENDIF()
 
 IF(WIN32)
 
-SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
-SET(OPENEXR_LIBRARIES "-lIlmImf.dll -lHalf.dll -lIex.dll -L${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR")
+	SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
+	SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
+	SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
+	SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
+	SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
+	SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
+	SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
+		
+	IF(MSVC)
+		
+		# Enable multi processor compilation
+		ADD_DEFINITIONS(/MP)
 
-SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
-SET(TIFF_LIBRARIES "-L../DEPs/lib/libtiff -ltiff")
+		# Enable SSE2
+		ADD_DEFINITIONS(/arch:SSE2)
+		
+		ADD_DEFINITIONS(-DUNICODE )
+		ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
+		SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
+		
+		SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
+		SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
+		SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
+		
+		SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
+		
+		SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+		
+		SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
+		SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
+		
+		SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
+		
+	ELSE()
+		SET(OPENEXR_LIBRARIES "-lIlmImf.dll -lHalf.dll -lIex.dll -L${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR")
 
-SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
-SET(LIBRAW_LIBRARIES "-L../DEPs/lib/libraw -lraw_r -lws2_32 -lm")
-ADD_DEFINITIONS(-DLIBRAW_NODLL -D_REENTRANT)
+		SET(TIFF_LIBRARIES "-L../DEPs/lib/libtiff -ltiff")
 
-SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
-SET(FFTWF_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3 -lfftw3f-3 -lm")
+		SET(LIBRAW_LIBRARIES "-L../DEPs/lib/libraw -lraw_r -lws2_32 -lm")
+		ADD_DEFINITIONS(-DLIBRAW_NODLL -D_REENTRANT)
 
-SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
-SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
-SET(GSL_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgsl")
-SET(GSLCBLAS_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgslcblas")
+		SET(FFTWF_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3 -lfftw3f-3 -lm")
 
-SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
-SET(EXIV2_LIBRARIES "-lexiv2 -L${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2")
+		SET(GSL_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgsl")
+		SET(GSLCBLAS_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgslcblas")
 
-ELSE(WIN32)
+		SET(EXIV2_LIBRARIES "-lexiv2 -L${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2")
+	ENDIF()
+ELSE()
 
 FIND_PACKAGE(OpenEXR REQUIRED)
 FIND_PACKAGE(TIFF REQUIRED)
@@ -85,7 +119,7 @@ ENDIF()
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/" ${INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-IF(WIN32)
+IF(WIN32 AND NOT MSVC)
 #  FIND_LIBRARY(QT_GIF_PLUGIN qgif PATHS ${QT_PLUGINS_DIR} PATH_SUFFIXES imageformats)
   FIND_LIBRARY(QT_JPEG_PLUGIN qjpeg PATHS ${QT_PLUGINS_DIR} PATH_SUFFIXES imageformats)
 ENDIF()
@@ -140,6 +174,12 @@ SET(LIB_HDR_INCLUDE
 	src/HdrCreation/robertson02.h
 	src/HdrCreation/mtb_alignment.h	
 )
+
+IF(MSVC)
+	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
+		src/Common/getopt_win32.h
+	)
+ENDIF()
 
 SET(LIB_HDR_SRC
 	src/Common/msec_timer.cpp
@@ -205,6 +245,11 @@ SET(LIB_HDR_SRC
 	src/HdrCreation/robertson02.cpp	
 	src/HdrCreation/mtb_alignment.cpp
 )
+IF(MSVC)
+	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
+		src/Common/getopt_win32.c
+	)
+ENDIF()
 
 SET(LIB_HDR_MOC
 # PFS I/O
@@ -215,7 +260,6 @@ SET(LUMINANCE_HDR_INCLUDE
         src/Core/TonemappingOptions.h
 	src/arch/string.h
 	src/arch/math.h
-	src/arch/minmax.h
 	src/arch/malloc.h
 	src/arch/freebsd/math.h
 	src/arch/msvc/math.h
@@ -424,6 +468,9 @@ ELSEIF(UNIX)
   ADD_DEFINITIONS(-DI18NDIR="${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n")
   ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})  
 ELSEIF(WIN32)
+  # icon files to copy in the bundle
+  SET( LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc" )
+  
   ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
   ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
   # Set icon!

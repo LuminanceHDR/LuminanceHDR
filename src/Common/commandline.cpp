@@ -26,7 +26,7 @@
  */
 
 #if defined(_MSC_VER)
-	#include <getopt_win32.h>
+	#include "getopt_win32.h"
 #else
 	#include <getopt.h>
 #endif
@@ -62,6 +62,7 @@ if (verbose) { \
 	fprintf(stdout, "%s", qPrintable(tr( string "\n" ).arg( argument )) ); \
 }
 
+
 static struct option cmdLineOptions[] = {
 	{ "verbose", no_argument, NULL, 'v' },
 	{ "help", no_argument, NULL, 'h' },
@@ -77,6 +78,7 @@ static struct option cmdLineOptions[] = {
 	{ "output", required_argument, NULL, 'o' },
 	{ NULL, 0, NULL, 0 }
 };
+
 
 CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv) : argc(argc), argv(argv) {
 	hdrCreationManager=NULL;
