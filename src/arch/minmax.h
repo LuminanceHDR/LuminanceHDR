@@ -1,4 +1,4 @@
-h/**
+/**
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007,2008 Giuseppe Rota
