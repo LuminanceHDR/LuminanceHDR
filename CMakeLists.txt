@@ -126,7 +126,7 @@ ENDIF()
 
 SET(LIB_HDR_INCLUDE
 	src/Common/msec_timer.h
-	src/Common/vex.h
+        src/Libpfs/vex.h
 	src/Libpfs/array2d.h
 	src/Libpfs/channel.h
 	src/Libpfs/colorspace.h
@@ -183,7 +183,7 @@ ENDIF()
 
 SET(LIB_HDR_SRC
 	src/Common/msec_timer.cpp
-	src/Common/vex.cpp
+        src/Libpfs/vex.cpp
 	src/Libpfs/array2d.cpp
 	src/Libpfs/channel.cpp
 	src/Libpfs/colorspace.cpp

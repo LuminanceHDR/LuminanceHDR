@@ -38,7 +38,7 @@
 #include "colorspace.h"
 
 #include "Common/msec_timer.h"
-#include "Common/vex.h"
+#include "vex.h"
 
 using namespace std;
 

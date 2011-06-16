@@ -40,7 +40,7 @@
 #include <arch/malloc.h>
 
 #include "array2d.h"
-#include "Common/vex.h"
+#include "vex.h"
 
 using namespace std;
 

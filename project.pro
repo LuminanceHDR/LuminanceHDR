@@ -57,7 +57,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Common/SelectionTool.h \
 			src/Common/ProgressHelper.h \
 			src/Common/msec_timer.h \
-			src/Common/vex.h \
+			src/Libpfs/vex.h \
 			src/MainWindow/MainWindow.h \
 			src/MainWindow/DnDOption.h \
                             src/UI/UMessageBox.h \
@@ -158,7 +158,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Common/SelectionTool.cpp \
 			src/Common/ProgressHelper.cpp \
 			src/Common/msec_timer.cpp \
-			src/Common/vex.cpp \
+			src/Libpfs/vex.cpp \
 			src/MainWindow/MainWindow.cpp \
 			src/MainWindow/DnDOption.cpp \
                         src/UI/UMessageBox.cpp \
