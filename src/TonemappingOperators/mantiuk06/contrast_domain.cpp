@@ -63,7 +63,7 @@
 #include "arch/minmax.h"
 #include "arch/math.h"
 #include "contrast_domain.h"
-#include "vex.h"
+#include "Libpfs/vex.h"
 #include "Common/msec_timer.h"
 
 #ifdef BRANCH_PREDICTION
