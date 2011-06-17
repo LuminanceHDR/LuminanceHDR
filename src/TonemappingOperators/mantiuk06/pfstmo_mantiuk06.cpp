@@ -85,7 +85,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   pfs::Array2D* Yr = inY->getChannelData();
   pfs::Array2D* Zr = inZ->getChannelData();
   
-  pfs::Array2D* G = new pfs::Array2DImpl( cols, rows );
+  pfs::Array2D* G = new pfs::Array2D( cols, rows );
    
   pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, Xr, G, Zr );
   

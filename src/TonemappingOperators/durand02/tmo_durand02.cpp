@@ -47,18 +47,9 @@
 #include "bilateral.h"
 #endif
 
-#ifdef BRANCH_PREDICTION
-#define likely(x)       __builtin_expect((x),1)
-#define unlikely(x)     __builtin_expect((x),0)
-#else
-#define likely(x)       (x)
-#define unlikely(x)     (x)
-#endif
-
-
-static void findMaxMinPercentile(pfs::Array2DImpl* I, float minPrct, float& minLum, 
-  float maxPrct, float& maxLum);
-
+static void findMaxMinPercentile(pfs::Array2D* I,
+                                 float minPrct, float& minLum,
+                                 float maxPrct, float& maxLum);
 
 /*
 
@@ -83,17 +74,17 @@ void tmo_durand02(unsigned int width, unsigned int height,
   const bool color_correction,
   ProgressHelper *ph) 
 {
-  pfs::Array2DImpl* R = new pfs::Array2DImpl(width, height, nR);
-  pfs::Array2DImpl* G = new pfs::Array2DImpl(width, height, nG);
-  pfs::Array2DImpl* B = new pfs::Array2DImpl(width, height, nB);
+  pfs::Array2D* R = new pfs::Array2D(width, height, nR);
+  pfs::Array2D* G = new pfs::Array2D(width, height, nG);
+  pfs::Array2D* B = new pfs::Array2D(width, height, nB);
 
   int i;
   int w = R->getCols();
   int h = R->getRows();
   int size = w*h;
-  pfs::Array2DImpl* I = new pfs::Array2DImpl(w,h); // intensities
-  pfs::Array2DImpl* BASE = new pfs::Array2DImpl(w,h); // base layer
-  pfs::Array2DImpl* DETAIL = new pfs::Array2DImpl(w,h); // detail layer
+  pfs::Array2D* I = new pfs::Array2D(w,h); // intensities
+  pfs::Array2D* BASE = new pfs::Array2D(w,h); // base layer
+  pfs::Array2D* DETAIL = new pfs::Array2D(w,h); // detail layer
 
   float min_pos = 1e10f; // minimum positive value (to avoid log(0))
   for( i=0 ; i<size ; i++ )
@@ -174,8 +165,9 @@ void tmo_durand02(unsigned int width, unsigned int height,
  * @brief Find minimum and maximum value skipping the extreems
  *
  */
-static void findMaxMinPercentile(pfs::Array2DImpl* I, float minPrct, float& minLum, 
-  float maxPrct, float& maxLum)
+static void findMaxMinPercentile(pfs::Array2D* I,
+                                 float minPrct, float& minLum,
+                                 float maxPrct, float& maxLum)
 {
   int size = I->getRows() * I->getCols();
   std::vector<float> vI;

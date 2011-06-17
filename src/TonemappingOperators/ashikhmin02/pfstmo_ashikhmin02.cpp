@@ -55,9 +55,9 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
     inpfsframe->getXYZChannels(X,Y,Z);
     assert( X!=NULL && Y!=NULL && Z!=NULL );
 
-    pfs::Array2DImpl* Xr = X->getChannelData();
-    pfs::Array2DImpl* Yr = Y->getChannelData();
-    pfs::Array2DImpl* Zr = Z->getChannelData();
+    pfs::Array2D* Xr = X->getChannelData();
+    pfs::Array2D* Yr = Y->getChannelData();
+    pfs::Array2D* Zr = Z->getChannelData();
 
     pfs::transformColorSpace( pfs::CS_RGB, Xr, Yr, Zr, pfs::CS_XYZ, Xr, Yr, Zr );
     float maxLum, avLum, minLum;
@@ -66,7 +66,7 @@ void pfstmo_ashikhmin02(pfs::Frame* inpfsframe,  bool simple_flag, float lc_valu
     int w = Yr->getCols();
     int h = Yr->getRows();
 
-    pfs::Array2D* L = new pfs::Array2DImpl(w,h);
+    pfs::Array2D* L = new pfs::Array2D(w,h);
     tmo_ashikhmin02(Yr, L, maxLum, minLum, avLum, simple_flag, lc_value, eq, ph);
 
     // TODO: this section can be rewritten using SSE Function

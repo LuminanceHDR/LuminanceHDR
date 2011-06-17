@@ -124,30 +124,30 @@ namespace pfs
     f_timer.start();
 #endif
     
-    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
-    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
-    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
+//    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
+//    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
+//    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
     
-    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
-    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
-    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
+//    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
+//    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
+//    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
     
-    assert ( X != NULL && Y != NULL && Z != NULL );
-    assert ( R != NULL && G != NULL && B != NULL );
+//    assert ( X != NULL && Y != NULL && Z != NULL );
+//    assert ( R != NULL && G != NULL && B != NULL );
     
-    const float* __r = R->data;
-    const float* __g = G->data;
-    const float* __b = B->data;
+    const float* __r = inC1->data;
+    const float* __g = inC2->data;
+    const float* __b = inC3->data;
     
-    float* __x = X->data;
-    float* __y = Y->data;
-    float* __z = Z->data;
+    float* __x = outC1->data;
+    float* __y = outC2->data;
+    float* __z = outC3->data;
     
     float i1, i2, i3;
     float t1, t2, t3;
     
     int elems = inC1->getRows()*inC1->getCols();
-    #pragma omp parallel for schedule(static, 5120) private(i1,i2,i3,t1,t2,t3)
+    #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
     for( int idx = 0; idx < elems ; idx++ )
     {
       i1 = clamp(__r[idx], 0, 1);
@@ -177,30 +177,30 @@ namespace pfs
     f_timer.start();
 #endif
     
-    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
-    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
-    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
+//    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
+//    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
+//    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
     
-    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
-    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
-    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
+//    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
+//    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
+//    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
     
-    assert ( X != NULL && Y != NULL && Z != NULL );
-    assert ( R != NULL && G != NULL && B != NULL );
+//    assert ( X != NULL && Y != NULL && Z != NULL );
+//    assert ( R != NULL && G != NULL && B != NULL );
     
-    const float* __x = X->data;
-    const float* __y = Y->data;
-    const float* __z = Z->data;
+    const float* __x = inC1->data;
+    const float* __y = inC2->data;
+    const float* __z = inC3->data;
     
-    float* __r = R->data;
-    float* __g = G->data;
-    float* __b = B->data;
+    float* __r = outC1->data;
+    float* __g = outC2->data;
+    float* __b = outC3->data;
     
     float i1, i2, i3;
     float t1, t2, t3;
     
     const int ELEMS = inC1->getRows()*inC1->getCols();
-    #pragma omp parallel for schedule(static, 5120) private(i1,i2,i3,t1,t2,t3)
+    #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
     for( int idx = 0; idx < ELEMS; idx++ )
     {
       i1 = __x[idx];
@@ -304,29 +304,29 @@ namespace pfs
     f_timer.start();
 #endif
 
-    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
-    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
-    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
+//    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
+//    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
+//    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
     
-    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
-    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
-    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
+//    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
+//    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
+//    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
     
-    assert ( X != NULL && Y != NULL && Z != NULL );
-    assert ( R != NULL && G != NULL && B != NULL );
+//    assert ( X != NULL && Y != NULL && Z != NULL );
+//    assert ( R != NULL && G != NULL && B != NULL );
     
-    const float* __r = R->data;
-    const float* __g = G->data;
-    const float* __b = B->data;
+    const float* __r = inC1->data;
+    const float* __g = inC2->data;
+    const float* __b = inC3->data;
     
-    float* __x = X->data;
-    float* __y = Y->data;
-    float* __z = Z->data;
+    float* __x = outC1->data;
+    float* __y = outC2->data;
+    float* __z = outC3->data;
     
     float i1, i2, i3;
     const int ELEMS = inC1->getRows()*inC1->getCols();
     
-    #pragma omp parallel for schedule(static, 5120) private(i1,i2,i3)
+    #pragma omp parallel for private(i1,i2,i3)
     for( int idx = 0; idx < ELEMS; idx++ )
     {
       i1 = __r[idx];
@@ -351,24 +351,24 @@ namespace pfs
     f_timer.start();
 #endif
     
-    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
-    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
-    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
+//    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
+//    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
+//    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
         
-    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
-    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
-    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
+//    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
+//    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
+//    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
     
-    assert ( X != NULL && Y != NULL && Z != NULL );
-    assert ( R != NULL && G != NULL && B != NULL );
+//    assert ( X != NULL && Y != NULL && Z != NULL );
+//    assert ( R != NULL && G != NULL && B != NULL );
     
-    const float* __x = X->data;
-    const float* __y = Y->data;
-    const float* __z = Z->data;
+    const float* __x = inC1->data;
+    const float* __y = inC2->data;
+    const float* __z = inC3->data;
     
-    float* __r = R->data;
-    float* __g = G->data;
-    float* __b = B->data;
+    float* __r = outC1->data;
+    float* __g = outC2->data;
+    float* __b = outC3->data;
     
     float i1, i2, i3;
     const int ELEMS = inC1->getRows()*inC1->getCols();

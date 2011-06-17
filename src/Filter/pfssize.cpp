@@ -210,13 +210,13 @@ void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *f
 
 void downsampleArray(const pfs::Array2D *in, pfs::Array2D *out)
 {  
-  const pfs::Array2DImpl* in__ = dynamic_cast<const pfs::Array2DImpl*> (in);
-  pfs::Array2DImpl* out__      = dynamic_cast<pfs::Array2DImpl*> (out);
+  //const pfs::Array2DImpl* in__ = dynamic_cast<const pfs::Array2DImpl*> (in);
+  //pfs::Array2DImpl* out__      = dynamic_cast<pfs::Array2DImpl*> (out);
   
-  assert( out__ != NULL && in__ != NULL );
+  //assert( out__ != NULL && in__ != NULL );
   
-  const float* Vin  = in__->data;
-  float* Vout       = out__->data;
+  const float* Vin  = in->data;
+  float* Vout       = out->data;
   
   const unsigned int inRows = in->getRows();
   const unsigned int inCols = in->getCols();

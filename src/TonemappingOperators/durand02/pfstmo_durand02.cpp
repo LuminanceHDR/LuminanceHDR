@@ -71,9 +71,9 @@ void pfstmo_durand02(pfs::Frame* frame, float sigma_s, float sigma_r, float base
   if( Y==NULL || X==NULL || Z==NULL)
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   
-  pfs::Array2DImpl* Xr = X->getChannelData();
-  pfs::Array2DImpl* Yr = Y->getChannelData();
-  pfs::Array2DImpl* Zr = Z->getChannelData();
+  pfs::Array2D* Xr = X->getChannelData();
+  pfs::Array2D* Yr = Y->getChannelData();
+  pfs::Array2D* Zr = Z->getChannelData();
   
   // tone mapping
   int w = Y->getWidth();

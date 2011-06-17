@@ -69,15 +69,15 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
     throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
   }
   
-  pfs::Array2DImpl* Xr = X->getChannelData();
-  pfs::Array2DImpl* Yr = Y->getChannelData();
-  pfs::Array2DImpl* Zr = Z->getChannelData();
+  pfs::Array2D* Xr = X->getChannelData();
+  pfs::Array2D* Yr = Y->getChannelData();
+  pfs::Array2D* Zr = Z->getChannelData();
   
   // tone mapping
   int w = Y->getWidth();
   int h = Y->getHeight();
   
-  pfs::Array2DImpl* L = new pfs::Array2DImpl(w,h);
+  pfs::Array2D* L = new pfs::Array2D(w,h);
   tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
 
   if ( !ph->isTerminationRequested() )

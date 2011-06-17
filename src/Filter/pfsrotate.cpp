@@ -72,13 +72,13 @@ namespace pfs
   // but it is not strictly necessary at the moment
   void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
   {
-    const pfs::Array2DImpl* Ain = dynamic_cast<const pfs::Array2DImpl*> (in);
-    pfs::Array2DImpl* Aout      = dynamic_cast<pfs::Array2DImpl*> (out);
+    //const pfs::Array2DImpl* Ain = dynamic_cast<const pfs::Array2DImpl*> (in);
+    //pfs::Array2DImpl* Aout      = dynamic_cast<pfs::Array2DImpl*> (out);
     
-    assert( Aout != NULL && Ain != NULL );
+    //assert( Aout != NULL && Ain != NULL );
     
-    const float* Vin  = Ain->data;
-    float* Vout       = Aout->data;
+    const float* Vin  = in->data;
+    float* Vout       = out->data;
     
     const int I_ROWS = in->getRows();
     const int I_COLS = in->getCols();
@@ -91,7 +91,7 @@ namespace pfs
       for (int j = 0; j < I_ROWS; j++)
         for (int i = 0; i < I_COLS; i++)
         {
-          Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS+i];
+          Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
         }
     }
     else
@@ -99,7 +99,7 @@ namespace pfs
       for (int j = 0; j < I_ROWS; j++)
         for (int i = 0; i < I_COLS; i++)
         {
-          Vout[(I_COLS - i - 1)*O_COLS+j] = Vin[j*I_COLS+i];
+          Vout[(I_COLS - i - 1)*O_COLS+j] = Vin[j*I_COLS + i];
         }
     }
   }

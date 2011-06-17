@@ -65,7 +65,7 @@ namespace pfs
       /* height = rows */
   protected:
       std::string name;
-      Array2DImpl* channel_impl;
+      Array2D* channel_impl;
 
       TagContainer *tags;
 
@@ -108,7 +108,7 @@ namespace pfs
        */
       virtual std::string getName() const;
 
-      Array2DImpl* getChannelData();
+      Array2D* getChannelData();
   };
 
   //------------------------------------------------------------------------------

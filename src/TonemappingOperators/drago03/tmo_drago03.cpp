@@ -73,8 +73,8 @@ void tmo_drago03(unsigned int width, unsigned int height,
   assert(nY!=NULL);
   assert(nL!=NULL);
 
-  const pfs::Array2DImpl* Y = new pfs::Array2DImpl(width, height, const_cast<float*>(nY));
-  pfs::Array2DImpl* L = new pfs::Array2DImpl(width, height, nL);
+  const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
+  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
 
   int nrows = Y->getRows();			// image size
   int ncols = Y->getCols();

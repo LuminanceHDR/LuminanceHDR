@@ -497,8 +497,8 @@ void tmo_reinhard02(unsigned int width, unsigned int height,
   int num, int low, int high, bool temporal_coherent, ProgressHelper *ph )
 {
   ph->newValue( 0 );
-  const pfs::Array2DImpl* Y = new pfs::Array2DImpl(width, height, const_cast<float*>(nY));
-  pfs::Array2DImpl* L = new pfs::Array2DImpl(width, height, nL);
+  const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
+  pfs::Array2D* L = new pfs::Array2D(width, height, nL);
 
   int x,y;
 

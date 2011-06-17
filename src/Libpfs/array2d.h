@@ -50,7 +50,7 @@ namespace pfs
    * indexing.
    *
    */
-  class Array2D
+  class Array2DXXX
   {
     
   public:
@@ -135,7 +135,7 @@ namespace pfs
     /**
      * Each implementing class should provide its own destructor.
      */
-    virtual ~Array2D() { }
+    virtual ~Array2DXXX() { }
     
     virtual float*       getRawData()        = 0;
     virtual const float* getRawData() const  = 0;
@@ -148,7 +148,8 @@ namespace pfs
    * Holds 2D data in column-major order. Allows easy indexing
    * and retrieving array dimensions.
    */
-  class Array2DImpl: public Array2D
+  //class Array2DImpl: public Array2D
+  class Array2D
   {
   private:
     float*  data;
@@ -157,11 +158,11 @@ namespace pfs
     bool    data_owned;
     
   public:
-    Array2DImpl( int __cols, int __rows );
-    Array2DImpl( int __cols, int __rows, float* __data);
-    Array2DImpl(const Array2DImpl& other);
-    Array2DImpl& operator = (const Array2DImpl& other);
-    virtual ~Array2DImpl();
+    Array2D( int __cols, int __rows );
+    Array2D( int __cols, int __rows, float* __data);
+    Array2D(const Array2D& other);
+    Array2D& operator = (const Array2D& other);
+    virtual ~Array2D();
     
     float& operator()( int col, int row );
     const float& operator()( int col, int row ) const;

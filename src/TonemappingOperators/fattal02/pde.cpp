@@ -70,10 +70,9 @@ inline float min( float a, float b )
   return a < b ? a : b;
 }
 
-
 //!! TODO: for debugging purposes
 // #define PFSEOL "\x0a"
-// static void dumpPFS( const char *fileName, const pfs::Array2DImpl *data, const char *channelName )
+// static void dumpPFS( const char *fileName, const pfs::Array2D *data, const char *channelName )
 // {
 //   FILE *fh = fopen( fileName, "wb" );
 //   assert( fh != NULL );
@@ -96,38 +95,40 @@ inline float min( float a, float b )
 // Full Multigrid Algorithm for solving partial differential equations
 //////////////////////////////////////////////////////////////////////
 
-void restrict( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
+void restrict( const pfs::Array2D *in, pfs::Array2D *out )
 {
-  const float inRows = in->getRows();
-  const float inCols = in->getCols();
+    const float inRows = in->getRows();
+    const float inCols = in->getCols();
 
-  const int outRows = out->getRows();
-  const int outCols = out->getCols();
+    const int outRows = out->getRows();
+    const int outCols = out->getCols();
 
-  const float dx = (float)in->getCols() / (float)out->getCols();
-  const float dy = (float)in->getRows() / (float)out->getRows();
+    const float dx = (float)in->getCols() / (float)out->getCols();
+    const float dy = (float)in->getRows() / (float)out->getRows();
 
-  const float filterSize = 0.5;
-  
-  float sx, sy;
-  int x, y;
-  
-  for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
-    for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+    const float filterSize = 0.5;
 
-      float pixVal = 0;
-      float w = 0;
-      for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
-        for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
-          pixVal += (*in)( (int)ix, (int)iy );
-          w += 1;
-        }     
-      (*out)(x,y) = pixVal/w;      
+    float sx, sy;
+    int x, y;
+
+    for( y = 0, sy = dy/2-0.5; y < outRows; y++, sy += dy )
+    {
+        for( x = 0, sx = dx/2-0.5; x < outCols; x++, sx += dx ) {
+
+            float pixVal = 0;
+            float w = 0;
+            for( float ix = max( 0, ceilf( sx-dx*filterSize ) ); ix <= min( floorf( sx+dx*filterSize ), inCols-1 ); ix++ )
+                for( float iy = max( 0, ceilf( sy-dx*filterSize ) ); iy <= min( floorf( sy+dx*filterSize), inRows-1 ); iy++ ) {
+                pixVal += (*in)( (int)ix, (int)iy );
+                w += 1;
+            }
+            (*out)(x,y) = pixVal/w;
+        }
     }
 }
 
 // from_level>to_level, from_size>to_size
-// void restrict( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
+// void restrict( pfs::Array2D *F, pfs::Array2D *T )
 // {
 // //   DEBUG_STR << "restrict" << endl;
   
@@ -159,7 +160,7 @@ void restrict( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
 // }
 
 
-void prolongate( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
+void prolongate( const pfs::Array2D *in, pfs::Array2D *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -198,7 +199,7 @@ void prolongate( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
 }
 
 // to_level<from_level, from_size<to_size
-void prolongate_old( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
+void prolongate_old( pfs::Array2D *F, pfs::Array2D *T )
 {
 //   DEBUG_STR << "prolongate" << endl;
 
@@ -259,7 +260,7 @@ void prolongate_old( pfs::Array2DImpl *F, pfs::Array2DImpl *T )
     }
 }
 
-void exact_sollution( pfs::Array2DImpl */*F*/, pfs::Array2DImpl *U )
+void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 {
 //   DEBUG_STR << "exact sollution" << endl;
 
@@ -303,7 +304,7 @@ inline int idx( int r, int c )
 }
 
 // smooth u using f at level
-void smooth( pfs::Array2DImpl *U, pfs::Array2DImpl *F )
+void smooth( pfs::Array2D *U, pfs::Array2D *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
@@ -352,7 +353,7 @@ void smooth( pfs::Array2DImpl *U, pfs::Array2DImpl *F )
 //   }
 }
 
-void calculate_defect( pfs::Array2DImpl *D, pfs::Array2DImpl *U, pfs::Array2DImpl *F )
+void calculate_defect( pfs::Array2D *D, pfs::Array2D *U, pfs::Array2D *F )
 {
 //   DEBUG_STR << "calculate defect" << endl;
 
@@ -378,7 +379,7 @@ void calculate_defect( pfs::Array2DImpl *D, pfs::Array2DImpl *U, pfs::Array2DImp
   
 }
 
-void add_correction( pfs::Array2DImpl *U, pfs::Array2DImpl *C )
+void add_correction( pfs::Array2D *U, pfs::Array2D *C )
 {
 //   DEBUG_STR << "add_correction" << endl;
 
@@ -390,7 +391,7 @@ void add_correction( pfs::Array2DImpl *U, pfs::Array2DImpl *C )
 }
 
 
-void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
+void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 {
   int xmax = F->getCols();
   int ymax = F->getRows();
@@ -411,16 +412,16 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
   }
 
   // given function f restricted on levels
-  pfs::Array2DImpl** RHS = new pfs::Array2DImpl*[levels+1];
+  pfs::Array2D** RHS = new pfs::Array2D*[levels+1];
 
   // approximate initial sollutions on levels
-  pfs::Array2DImpl** IU = new pfs::Array2DImpl*[levels+1];
+  pfs::Array2D** IU = new pfs::Array2D*[levels+1];
   // target functions in cycles (approximate sollution error (uh - ~uh) )
-  pfs::Array2DImpl** VF = new pfs::Array2DImpl*[levels+1];
+  pfs::Array2D** VF = new pfs::Array2D*[levels+1];
 
-  VF[0] = new pfs::Array2DImpl(xmax,ymax);
+  VF[0] = new pfs::Array2D(xmax,ymax);
   RHS[0] = F;
-  IU[0] = new pfs::Array2DImpl(xmax,ymax);
+  IU[0] = new pfs::Array2D(xmax,ymax);
   pfs::copyArray( U, IU[0] );
 
   int sx=xmax;
@@ -431,9 +432,9 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
     sx=sx/2+MODYF;
     sy=sy/2+MODYF;
     
-    RHS[k+1] = new pfs::Array2DImpl(sx,sy);
-    IU[k+1] = new pfs::Array2DImpl(sx,sy);
-    VF[k+1] = new pfs::Array2DImpl(sx,sy);
+    RHS[k+1] = new pfs::Array2D(sx,sy);
+    IU[k+1] = new pfs::Array2D(sx,sy);
+    VF[k+1] = new pfs::Array2D(sx,sy);
 
     // restrict from level k to level k+1 (coarser-grid)
     restrict( RHS[k], RHS[k+1] );
@@ -472,7 +473,7 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
 
         // 8. calculate defect at level
         //    d[k2] = Lh * ~u[k2] - f[k2]
-        pfs::Array2DImpl* D = new pfs::Array2DImpl(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2D* D = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
 	calculate_defect( D, IU[k2], VF[k2] );
 
         // 9. restrict deffect as target function for next coarser-grid
@@ -491,7 +492,7 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
       {
         // 12. interpolate correction from last coarser-grid to finer-grid
         //     iu[k2+1] -> cor
-        pfs::Array2DImpl* C = new pfs::Array2DImpl(IU[k2]->getCols(), IU[k2]->getRows());
+        pfs::Array2D* C = new pfs::Array2D(IU[k2]->getCols(), IU[k2]->getRows());
 	prolongate( IU[k2+1], C );
 
         // 13. add interpolated correction to initial sollution at level k2
@@ -546,7 +547,7 @@ void solve_pde_multigrid( pfs::Array2DImpl *F, pfs::Array2DImpl *U )
 // SOR - Succesive Overrelaxation Algorithm
 //////////////////////////////////////////////////////////////////////
 
-void solve_pde_sor( pfs::Array2DImpl *F, pfs::Array2DImpl *U, int maxits)
+void solve_pde_sor( pfs::Array2D *F, pfs::Array2D *U, int maxits)
 {
 
   int xmax = F->getCols();

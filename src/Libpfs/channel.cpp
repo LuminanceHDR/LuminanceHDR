@@ -40,7 +40,7 @@ namespace pfs
 
     Channel::Channel( int width, int height, std::string n_name)
     {
-        channel_impl = new Array2DImpl( width, height );
+        channel_impl = new Array2D( width, height );
         tags = new TagContainer();
         name = n_name;
 
@@ -125,7 +125,7 @@ namespace pfs
     //      return channel_map->operator()(rowMajorIndex);
     //    }
 
-    Array2DImpl* Channel::getChannelData()
+    Array2D* Channel::getChannelData()
     {
         return channel_impl;
     }

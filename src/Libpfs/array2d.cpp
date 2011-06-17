@@ -46,7 +46,7 @@ using namespace std;
 
 namespace pfs
 {  
-  Array2DImpl::Array2DImpl( int __cols, int __rows )
+  Array2D::Array2D( int __cols, int __rows )
   {
     cols = __cols;
     rows = __rows;
@@ -54,7 +54,7 @@ namespace pfs
     data_owned = true;
   }
   
-  Array2DImpl::Array2DImpl( int __cols, int __rows, float* __data)
+  Array2D::Array2D( int __cols, int __rows, float* __data)
   {
     cols = __cols;
     rows = __rows;
@@ -62,7 +62,7 @@ namespace pfs
     data_owned = false;
   }
   
-  Array2DImpl::Array2DImpl(const Array2DImpl& other) : Array2D()
+  Array2D::Array2D(const Array2D& other) //: Array2D()
   {
     this->cols = other.cols;
     this->rows = other.rows;
@@ -70,7 +70,7 @@ namespace pfs
     this->data_owned = false;
   }
   
-  Array2DImpl& Array2DImpl::operator = (const Array2DImpl& other)
+  Array2D& Array2D::operator = (const Array2D& other)
   {
     if (data_owned) _mm_free(data); //delete[] data;
 
@@ -81,33 +81,33 @@ namespace pfs
     return *this;
 }
   
-  Array2DImpl::~Array2DImpl()
+  Array2D::~Array2D()
   {
     if (data_owned) _mm_free(data); //delete[] data;
   }
   
   
-  float& Array2DImpl::operator()( int col, int row )
+  float& Array2D::operator()( int col, int row )
   {
     assert( col >= 0 && col < cols );
     assert( row >= 0 && row < rows );
     return data[ col+row*cols ];
   }
   
-  const float& Array2DImpl::operator()( int col, int row ) const
+  const float& Array2D::operator()( int col, int row ) const
   {
     assert( col >= 0 && col < cols );
     assert( row >= 0 && row < rows );
     return data[ col+row*cols ];
   }
   
-  float& Array2DImpl::operator()( int index )
+  float& Array2D::operator()( int index )
   {
     assert( index >= 0 && index < rows*cols );
     return data[index];
   }
   
-  const float& Array2DImpl::operator()( int index ) const
+  const float& Array2D::operator()( int index ) const
   {
     assert( index >= 0 && index <= rows*cols );        
     return data[index];
@@ -127,15 +127,18 @@ namespace pfs
     assert( from->getRows() == to->getRows() );
     assert( from->getCols() == to->getCols() );
     
-    const Array2DImpl* f_x = dynamic_cast<const Array2DImpl*> (from);
-          Array2DImpl* t_x = dynamic_cast<Array2DImpl*> (to);
+    //const Array2DImpl* f_x = dynamic_cast<const Array2DImpl*> (from);
+    //      Array2DImpl* t_x = dynamic_cast<Array2DImpl*> (to);
     
-    assert( f_x != NULL && t_x != NULL );
+    //assert( f_x != NULL && t_x != NULL );
     
-    const float* __f = f_x->data;
-          float* __t = t_x->data;
+    //const float* __f = f_x->data;
+    //      float* __t = t_x->data;
     
-    const int V_ELEMS = f_x->rows*f_x->cols;
+    const float* __f = from->data;
+          float* __t = to->data;
+
+    const int V_ELEMS = from->rows*from->cols;
 #ifdef __SSE__
     VEX_vcopy(__f, __t, V_ELEMS);
 #else
@@ -148,18 +151,18 @@ namespace pfs
   
   void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
   {
-    const Array2DImpl* from_2d  = dynamic_cast<const Array2DImpl*> (from);
-    Array2DImpl* to_2d          = dynamic_cast<Array2DImpl*> (to);
+    //const Array2DImpl* from_2d  = dynamic_cast<const Array2DImpl*> (from);
+    //Array2DImpl* to_2d          = dynamic_cast<Array2DImpl*> (to);
     
-    assert( from_2d != NULL && to_2d != NULL );
+    //assert( from_2d != NULL && to_2d != NULL );
     
-    const float* from_2d_data   = from_2d->data;
-    float* to_2d_data           = to_2d->data;
+    const float* from_2d_data   = from->data;
+    float* to_2d_data           = to->data;
     
-    const int IN_W    = from_2d->cols;
-    const int IN_H    = from_2d->rows;
-    const int OUT_W   = to_2d->cols;
-    const int OUT_H   = to_2d->rows;
+    const int IN_W    = from->cols;
+    const int IN_H    = from->rows;
+    const int OUT_W   = to->cols;
+    const int OUT_H   = to->rows;
     
     assert( OUT_H <= IN_H );
     assert( OUT_H <= IN_H );
@@ -193,13 +196,13 @@ namespace pfs
    */
   void setArray(Array2D *array, const float value)
   {
-    Array2DImpl* array_t = dynamic_cast<Array2DImpl*> (array);
+    //Array2DImpl* array_t = dynamic_cast<Array2DImpl*> (array);
     
-    assert( array_t != NULL );
+    //assert( array_t != NULL );
     
-    float* __array = array_t->data;
+    float* __array = array->data;
     
-    const int V_ELEMS = (array_t->rows*array_t->cols);
+    const int V_ELEMS = (array->rows*array->cols);
 #ifdef __SSE__
     VEX_vset(__array, value, V_ELEMS);
 #else
@@ -217,6 +220,7 @@ namespace pfs
    * @param x first element of the multiplication
    * @param y second element of the multiplication
    */
+  // TODO : to improve
   void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
   {    
     assert( x->getRows() == y->getRows() );
@@ -238,6 +242,7 @@ namespace pfs
    * @param x first element of the division
    * @param y second element of the division
    */
+  // TODO : to improve
   void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
   {    
     assert( x->getRows() == y->getRows() );

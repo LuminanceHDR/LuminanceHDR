@@ -190,7 +190,7 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   GaussianPyramid *myPyramid = new GaussianPyramid(Y, nrows, ncols);
 
   // LAL calculation
-  pfs::Array2D* la = new pfs::Array2DImpl(ncols, nrows);
+  pfs::Array2D* la = new pfs::Array2D(ncols, nrows);
   for(int y=0; y<nrows; y++) {
 	ph->newValue(100*y/nrows);
 	if (ph->isTerminationRequested())
@@ -204,7 +204,7 @@ int tmo_ashikhmin02(pfs::Array2D* Y, pfs::Array2D* L, float maxLum, float minLum
   delete(myPyramid);
 
   // TM function
-  pfs::Array2D* tm = new pfs::Array2DImpl(ncols, nrows);
+  pfs::Array2D* tm = new pfs::Array2D(ncols, nrows);
   for(int y=0; y<nrows; y++) {
 	ph->newValue(100*y/nrows);
 	if (ph->isTerminationRequested())

@@ -31,7 +31,7 @@
 #ifndef _fastbilateral_h_
 #define _fastbilateral_h_
 
-#include "TonemappingOperators/pfstmo.h"
+#include "Libpfs/array2d.h"
 #include "Common/ProgressHelper.h"
 
 /**
@@ -44,9 +44,8 @@
  * @param sigma_s sigma value for spatial kernel
  * @param sigma_r sigma value for range kernel
  */
-void fastBilateralFilter( const pfs::Array2DImpl *I,
-  pfs::Array2DImpl *J, float sigma_s, float sigma_r, int downsample,
-  ProgressHelper *ph );
-
+void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
+                          float sigma_s, float sigma_r, int downsample,
+                          ProgressHelper *ph );
 
 #endif /* #ifndef _fastbilateral_h_ */

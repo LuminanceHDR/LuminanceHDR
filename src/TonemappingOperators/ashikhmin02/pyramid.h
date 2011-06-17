@@ -230,7 +230,7 @@ class GaussianPyramid {
     p[index].size = w * h;
     p[index].kernel_size = k_size;
     p[index].lambda = lambda;
-    p[index].GP = new pfs::Array2DImpl(w, h);
+    p[index].GP = new pfs::Array2D(w, h);
     p[index].flag = 1;
   }
 

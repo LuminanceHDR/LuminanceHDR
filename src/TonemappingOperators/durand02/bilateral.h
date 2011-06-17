@@ -33,6 +33,7 @@
 #define _bilateral_h_
 
 #include "Common/progressHelper.h"
+#include "Libpfs/array2d.h"
 
 /**
  * @brief Bilateral filtering
@@ -46,9 +47,8 @@
  *
  * $Id: bilateral.h,v 1.3 2008/09/09 00:56:49 rafm Exp $
  */
-void bilateralFilter( const pfs::Array2DImpl *I,
-  pfs::Array2DImpl *J, float sigma_s, float sigma_r,
-  ProgressHelper *ph );
-
+void bilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
+                      float sigma_s, float sigma_r,
+                      ProgressHelper *ph );
 
 #endif /* #ifndef _bilateral_h_ */

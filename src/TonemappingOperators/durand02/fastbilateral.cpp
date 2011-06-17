@@ -84,7 +84,7 @@ public:
   }
 
 
-  void blur( const pfs::Array2DImpl *I, pfs::Array2DImpl *J )
+  void blur( const pfs::Array2D *I, pfs::Array2D *J )
   {
     int x,y;
 
@@ -147,7 +147,7 @@ public:
  *
  * original code from pfssize
  */
-void upsampleArray( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
+void upsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
 {
   float dx = (float)in->getCols() / (float)out->getCols();
   float dy = (float)in->getRows() / (float)out->getRows();
@@ -193,7 +193,7 @@ void upsampleArray( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
     } 
 }
 
-void downsampleArray( const pfs::Array2DImpl *in, pfs::Array2DImpl *out )
+void downsampleArray( const pfs::Array2D *in, pfs::Array2D *out )
 {
   const float inRows = in->getRows();
   const float inCols = in->getCols();
@@ -240,9 +240,9 @@ PiecewiseBilateral (Image I, spatial kernel fs , intensity influence gr )
     J=J+Jj .*  InterpolationWeight(I, ij )
 */
 
-void fastBilateralFilter( const pfs::Array2DImpl *I,
-  pfs::Array2DImpl *J, float sigma_s, float sigma_r, int /*downsample*/,
-  ProgressHelper *ph )
+void fastBilateralFilter( const pfs::Array2D *I, pfs::Array2D *J,
+                          float sigma_s, float sigma_r, int /*downsample*/,
+                          ProgressHelper *ph )
 {
   int i;
   int w = I->getCols();
@@ -260,23 +260,23 @@ void fastBilateralFilter( const pfs::Array2DImpl *I,
     (*J)(i) = 0.0f;             // zero output
   }
 
-  pfs::Array2DImpl* JJ;
+  pfs::Array2D* JJ;
 //  if( downsample != 1 )
-//    JJ = new pfs::Array2DImpl(w,h);
+//    JJ = new pfs::Array2D(w,h);
   
 //  w /= downsample;
 //  h /= downsample;
   
   int sizeZ = w*h;
-//  pfs::Array2DImpl* Iz = new pfs::Array2DImpl(w,h);
+//  pfs::Array2D* Iz = new pfs::Array2D(w,h);
 //  downsampleArray(I,Iz);
-  const pfs::Array2DImpl* Iz = I;
+  const pfs::Array2D* Iz = I;
 //  sigma_s /= downsample;
   
-  pfs::Array2DImpl* jJ = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jG = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jK = new pfs::Array2DImpl(w,h);
-  pfs::Array2DImpl* jH = new pfs::Array2DImpl(w,h);
+  pfs::Array2D* jJ = new pfs::Array2D(w,h);
+  pfs::Array2D* jG = new pfs::Array2D(w,h);
+  pfs::Array2D* jK = new pfs::Array2D(w,h);
+  pfs::Array2D* jH = new pfs::Array2D(w,h);
 
   const int NB_SEGMENTS = (int)ceil((maxI-minI)/sigma_r);
   float stepI = (maxI-minI)/NB_SEGMENTS;

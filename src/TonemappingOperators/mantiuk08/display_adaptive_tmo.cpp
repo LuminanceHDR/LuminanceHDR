@@ -281,7 +281,7 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
 #endif
 
 
-void compute_gaussian_level( const int width, const int height, const pfs::Array2DImpl& in, pfs::Array2DImpl& out, int level, pfs::Array2DImpl& temp )
+void compute_gaussian_level( const int width, const int height, const pfs::Array2D& in, pfs::Array2D& out, int level, pfs::Array2D& temp )
 {
 
   float kernel_a = 0.4;
@@ -442,9 +442,9 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
 {
   ph->newValue( 0 );
 
-  pfs::Array2DImpl buf_1(width, height);
-  pfs::Array2DImpl buf_2(width, height);
-  pfs::Array2DImpl temp(width, height);
+  pfs::Array2D buf_1(width, height);
+  pfs::Array2D buf_2(width, height);
+  pfs::Array2D temp(width, height);
   
   std::auto_ptr<conditional_density> C(new conditional_density());
 
@@ -452,8 +452,8 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   const int pix_count = width*height;
 
     
-  pfs::Array2DImpl* LP_low = &buf_1;
-  pfs::Array2DImpl* LP_high = &buf_2;
+  pfs::Array2D* LP_low = &buf_1;
+  pfs::Array2D* LP_high = &buf_2;
 
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
   

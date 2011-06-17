@@ -58,17 +58,17 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     if( Y==NULL || X==NULL || Z==NULL)
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
 
-    pfs::Array2DImpl* Xr = X->getChannelData();
-    pfs::Array2DImpl* Yr = Y->getChannelData();
-    pfs::Array2DImpl* Zr = Z->getChannelData();
+    pfs::Array2D* Xr = X->getChannelData();
+    pfs::Array2D* Yr = Y->getChannelData();
+    pfs::Array2D* Zr = Z->getChannelData();
 
     // tone mapping
     int w = Y->getWidth();
     int h = Y->getHeight();
 
-    pfs::Array2DImpl* R = new pfs::Array2DImpl(w,h);
-    pfs::Array2DImpl* G = new pfs::Array2DImpl(w,h);
-    pfs::Array2DImpl* B = new pfs::Array2DImpl(w,h);
+    pfs::Array2D* R = new pfs::Array2D(w,h);
+    pfs::Array2D* G = new pfs::Array2D(w,h);
+    pfs::Array2D* B = new pfs::Array2D(w,h);
 
     pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
 

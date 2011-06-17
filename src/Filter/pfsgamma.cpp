@@ -100,11 +100,11 @@ namespace pfs
     f_timer.start();
 #endif
     
-    pfs::Array2DImpl* v_in = dynamic_cast<pfs::Array2DImpl*> (array);
+    //pfs::Array2DImpl* v_in = dynamic_cast<pfs::Array2DImpl*> (array);
     
-    assert( v_in != NULL );
+    //assert( v_in != NULL );
     
-    float* Vin  = v_in->data;
+    float* Vin  = array->data;
     
     const unsigned int V_ELEMS = array->getRows()*array->getCols();
     for (unsigned int idx = 0; idx < V_ELEMS; idx++)

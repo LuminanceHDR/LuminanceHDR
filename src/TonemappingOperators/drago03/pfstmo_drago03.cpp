@@ -50,9 +50,9 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
     if( Y == NULL )
         throw pfs::Exception( "Missing X, Y, Z channels in the PFS stream" );
 
-    pfs::Array2DImpl *Xr = X->getChannelData();
-    pfs::Array2DImpl *Yr = Y->getChannelData();
-    pfs::Array2DImpl *Zr = Z->getChannelData();
+    pfs::Array2D *Xr = X->getChannelData();
+    pfs::Array2D *Yr = Y->getChannelData();
+    pfs::Array2D *Zr = Z->getChannelData();
 
     int w = Yr->getCols();
     int h = Yr->getRows();
@@ -60,7 +60,7 @@ void pfstmo_drago03(pfs::Frame *frame, float biasValue, ProgressHelper *ph)
     float maxLum,avLum;
     calculateLuminance( w, h, Yr->getRawData(), avLum, maxLum );
 
-    pfs::Array2DImpl* L = new pfs::Array2DImpl(w, h);
+    pfs::Array2D* L = new pfs::Array2D(w, h);
     tmo_drago03(w, h, Yr->getRawData(), L->getRawData(), maxLum, avLum, biasValue, ph);
 
     for( int x=0 ; x<w ; x++ )
