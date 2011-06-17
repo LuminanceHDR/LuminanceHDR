@@ -46,74 +46,80 @@ using namespace std;
 
 namespace pfs
 {  
-  Array2D::Array2D( int __cols, int __rows )
+    Array2D::Array2D( int cols, int rows ):
+            m_cols(cols), m_rows(rows)
   {
-    cols = __cols;
-    rows = __rows;
-    data = (float*)_mm_malloc(cols*rows*sizeof(float), 16); //new float[cols*rows];
-    data_owned = true;
+    m_cols = cols;
+    m_rows = rows;
+    // Aligned memory allocation allows faster vectorized access
+    m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16); //new float[cols*rows];
+    m_is_data_owned = true;
   }
   
-  Array2D::Array2D( int __cols, int __rows, float* __data)
+  Array2D::Array2D( int cols, int rows, float* data)
   {
-    cols = __cols;
-    rows = __rows;
-    data = __data;
-    data_owned = false;
+    m_cols = cols;
+    m_rows = rows;
+    m_data = data;
+    m_is_data_owned = false;
   }
   
+  // copy constructor?
   Array2D::Array2D(const Array2D& other) //: Array2D()
   {
-    this->cols = other.cols;
-    this->rows = other.rows;
-    this->data = other.data;
-    this->data_owned = false;
+    this->m_cols = other.m_cols;
+    this->m_rows = other.m_rows;
+    this->m_data = other.m_data;
+    this->m_is_data_owned = false;
   }
   
-  Array2D& Array2D::operator = (const Array2D& other)
+  // Assignment operator
+  Array2D& Array2D::operator=(const Array2D& other)
   {
-    if (data_owned) _mm_free(data); //delete[] data;
+    if (m_is_data_owned) _mm_free(m_data); //delete[] data;
 
-    this->cols = other.cols;
-    this->rows = other.rows;
-    this->data = other.data;
-    this->data_owned = false;
+    this->m_cols = other.m_cols;
+    this->m_rows = other.m_rows;
+    this->m_data = other.m_data;
+    this->m_is_data_owned = false;
     return *this;
 }
   
   Array2D::~Array2D()
   {
-    if (data_owned) _mm_free(data); //delete[] data;
+    if (m_is_data_owned) _mm_free(m_data); //delete[] data;
   }
   
-  
-  float& Array2D::operator()( int col, int row )
+  float& Array2D::operator()( int cols, int rows )
   {
-    assert( col >= 0 && col < cols );
-    assert( row >= 0 && row < rows );
-    return data[ col+row*cols ];
+      assert( cols >= 0 && cols < m_cols );
+      assert( rows >= 0 && rows < m_rows );
+      return m_data[ rows*m_cols + cols ];
   }
   
-  const float& Array2D::operator()( int col, int row ) const
+  const float& Array2D::operator()( int cols, int rows ) const
   {
-    assert( col >= 0 && col < cols );
-    assert( row >= 0 && row < rows );
-    return data[ col+row*cols ];
+      assert( cols >= 0 && cols < m_cols );
+      assert( rows >= 0 && rows < m_rows );
+      return m_data[ rows*m_cols + cols ];
   }
   
   float& Array2D::operator()( int index )
   {
-    assert( index >= 0 && index < rows*cols );
-    return data[index];
+    assert( index >= 0 && index < m_rows*m_cols );
+    return m_data[index];
   }
   
   const float& Array2D::operator()( int index ) const
   {
-    assert( index >= 0 && index <= rows*cols );        
-    return data[index];
+    assert( index >= 0 && index <= m_rows*m_cols );
+    return m_data[index];
   }
   
-  
+  void Array2D::reset(const float value)
+  {
+      VEX_vset(m_data, value, this->m_rows*this->m_cols);
+  }
   
   
   /**
@@ -124,70 +130,51 @@ namespace pfs
    */
   void copyArray(const Array2D *from, Array2D *to)
   {
-    assert( from->getRows() == to->getRows() );
-    assert( from->getCols() == to->getCols() );
-    
-    //const Array2DImpl* f_x = dynamic_cast<const Array2DImpl*> (from);
-    //      Array2DImpl* t_x = dynamic_cast<Array2DImpl*> (to);
-    
-    //assert( f_x != NULL && t_x != NULL );
-    
-    //const float* __f = f_x->data;
-    //      float* __t = t_x->data;
-    
-    const float* __f = from->data;
-          float* __t = to->data;
+      assert( from->getRows() == to->getRows() );
+      assert( from->getCols() == to->getCols() );
 
-    const int V_ELEMS = from->rows*from->cols;
-#ifdef __SSE__
-    VEX_vcopy(__f, __t, V_ELEMS);
-#else
-    for (int idx = 0; idx < V_ELEMS; idx++ )
-    {
-      __t[idx] = __f[idx];
-    }
-#endif
+      const float* f = from->getRawData();
+      float* t = to->getRawData();
+
+      const int V_ELEMS = from->getRows()*from->getCols();
+
+      VEX_vcopy(f, t, V_ELEMS);
   }
   
   void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
-  {
-    //const Array2DImpl* from_2d  = dynamic_cast<const Array2DImpl*> (from);
-    //Array2DImpl* to_2d          = dynamic_cast<Array2DImpl*> (to);
-    
-    //assert( from_2d != NULL && to_2d != NULL );
-    
-    const float* from_2d_data   = from->data;
-    float* to_2d_data           = to->data;
-    
-    const int IN_W    = from->cols;
-    const int IN_H    = from->rows;
-    const int OUT_W   = to->cols;
-    const int OUT_H   = to->rows;
-    
-    assert( OUT_H <= IN_H );
-    assert( OUT_H <= IN_H );
-    assert( x_ul >= 0 );
-    assert( y_ul >= 0 );
-    assert( x_br <= IN_W );
-    assert( y_br <= IN_H );
-    
-    // move to row (x_ul, y_ul)
-    from_2d_data = &from_2d_data[IN_W*y_ul + x_ul];
-    
-    for (int r = 0; r < OUT_H; r++)
-    {
-      //NOTE: do NOT use VEX_vcopy
-      #pragma omp parallel for
-      for (int c = 0; c < OUT_W; c++)
+  {    
+      const float* from_2d_data   = from->getRawData();
+      float* to_2d_data           = to->getRawData();
+
+      const int IN_W    = from->getCols();
+      const int IN_H    = from->getRows();
+      const int OUT_W   = to->getCols();
+      const int OUT_H   = to->getRows();
+
+      assert( OUT_H <= IN_H );
+      assert( OUT_H <= IN_H );
+      assert( x_ul >= 0 );
+      assert( y_ul >= 0 );
+      assert( x_br <= IN_W );
+      assert( y_br <= IN_H );
+
+      // move to row (x_ul, y_ul)
+      from_2d_data = &from_2d_data[IN_W*y_ul + x_ul];
+
+      for (int r = 0; r < OUT_H; r++)
       {
-        to_2d_data[c] = from_2d_data[c];
+          //NOTE: do NOT use VEX_vcopy
+#pragma omp parallel for
+          for (int c = 0; c < OUT_W; c++)
+          {
+              to_2d_data[c] = from_2d_data[c];
+          }
+
+          from_2d_data  += IN_W;
+          to_2d_data    += OUT_W;
       }
-      
-      from_2d_data  += IN_W;
-      to_2d_data    += OUT_W;
-    }
   }
-  
+
   /**
    * Set all elements of the array to a give value.
    *
@@ -196,21 +183,7 @@ namespace pfs
    */
   void setArray(Array2D *array, const float value)
   {
-    //Array2DImpl* array_t = dynamic_cast<Array2DImpl*> (array);
-    
-    //assert( array_t != NULL );
-    
-    float* __array = array->data;
-    
-    const int V_ELEMS = (array->rows*array->cols);
-#ifdef __SSE__
-    VEX_vset(__array, value, V_ELEMS);
-#else
-    for( int i = 0; i < V_ELEMS; i++ )
-    {
-      __array[i] = value;
-    }
-#endif
+      array->reset(value);
   }
   
   /**
@@ -223,16 +196,16 @@ namespace pfs
   // TODO : to improve
   void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
   {    
-    assert( x->getRows() == y->getRows() );
-    assert( x->getCols() == y->getCols() );
-    assert( x->getRows() == z->getRows() );
-    assert( x->getCols() == z->getCols() );
-    
-    const int elements = x->getRows()*x->getCols();
-    for( int i = 0; i < elements; i++ )
-    {
-      (*z)(i) = (*x)(i) * (*y)(i);
-    }
+      assert( x->getRows() == y->getRows() );
+      assert( x->getCols() == y->getCols() );
+      assert( x->getRows() == z->getRows() );
+      assert( x->getCols() == z->getCols() );
+
+      const int elements = x->getRows()*x->getCols();
+      for( int i = 0; i < elements; i++ )
+      {
+          (*z)(i) = (*x)(i) * (*y)(i);
+      }
   }
   
   /**

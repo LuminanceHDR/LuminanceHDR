@@ -68,40 +68,39 @@ namespace pfs
     return resizedFrame;
   }
   
-  //TODO: it is possible to implement this function in block-major format to lower the execution time,
-  // but it is not strictly necessary at the moment
   void rotateArray(const pfs::Array2D *in, pfs::Array2D *out, bool clockwise)
   {
-    //const pfs::Array2DImpl* Ain = dynamic_cast<const pfs::Array2DImpl*> (in);
-    //pfs::Array2DImpl* Aout      = dynamic_cast<pfs::Array2DImpl*> (out);
-    
-    //assert( Aout != NULL && Ain != NULL );
-    
-    const float* Vin  = in->data;
-    float* Vout       = out->data;
-    
-    const int I_ROWS = in->getRows();
-    const int I_COLS = in->getCols();
-    
-    //const int O_ROWS = out->getRows();
-    const int O_COLS = out->getCols();
-    
-    if (clockwise)
-    {
-      for (int j = 0; j < I_ROWS; j++)
-        for (int i = 0; i < I_COLS; i++)
-        {
-          Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
-        }
-    }
-    else
-    {
-      for (int j = 0; j < I_ROWS; j++)
-        for (int i = 0; i < I_COLS; i++)
-        {
-          Vout[(I_COLS - i - 1)*O_COLS+j] = Vin[j*I_COLS + i];
-        }
-    }
+      const float* Vin  = in->getRawData();
+      float* Vout       = out->getRawData();
+
+      const int I_ROWS = in->getRows();
+      const int I_COLS = in->getCols();
+
+      //const int O_ROWS = out->getRows();
+      const int O_COLS = out->getCols();
+
+      if (clockwise)
+      {
+#pragma omp parallel for
+          for (int j = 0; j < I_ROWS; j++)
+          {
+              for (int i = 0; i < I_COLS; i++)
+              {
+                  Vout[(i+1)*O_COLS - 1 - j] = Vin[j*I_COLS + i];
+              }
+          }
+      }
+      else
+      {
+#pragma omp parallel for
+          for (int j = 0; j < I_ROWS; j++)
+          {
+              for (int i = 0; i < I_COLS; i++)
+              {
+                  Vout[(I_COLS - i - 1)*O_COLS + j] = Vin[j*I_COLS + i];
+              }
+          }
+      }
   }
   
 }

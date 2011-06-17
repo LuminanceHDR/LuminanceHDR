@@ -1,16 +1,11 @@
 /**
  * @file
  * @brief PFS library - general 2d array interface
- *
- * All pfs::Array2D classes are part of pfs library. However, to
- * lessen coupling of the code with pfs library, Array2D classes are
- * declared in this separate file. Therefore it is possible to write
- * the code that implements or uses Array2D interface while it has no
- * knowledge of other pfs library classes.
  * 
  * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2003,2004 Rafal Mantiuk and Grzegorz Krawczyk
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -32,6 +27,9 @@
  *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *  This version is different then the one in the PFSTOOLS
+ *  Classes Array2D and Array2DImpl are joined to create a clean class,
+ *  which allows faster access to vector data, in order to create high performance
+ *  routines. Old access functions are still available.
  *
  */
 
@@ -41,31 +39,33 @@
 namespace pfs
 { 
   /**
-   * @brief Interface for 2 dimensional array of floats.
+   * @brief Two dimensional array of floats
    *
-   * This is a thin interface of classes that hold 2 dimensional arrays
-   * of floats. The interface lets to access all types of arrays in the
-   * same way, regardless how data is really stored (row major, column
-   * major, 2D array, array of pointers, etc.). It also simplifies
-   * indexing.
-   *
+   * This class holds 2 dimensional arrays of floats in column-major order.
+   * Allows easy indexing and retrieving array dimensions. It offers an undirect
+   * access to the data (using (x)(y) or (elem) ) or a direct access to the data
+   * (using getRawData()).
    */
-  class Array2DXXX
+  class Array2D
   {
+  private:
+    float*  m_data;
+    int     m_cols;
+    int     m_rows;
+    bool    m_is_data_owned;
     
   public:
-    
+    Array2D( int cols, int rows );
+    Array2D( int cols, int rows, float* data);
+    Array2D(const Array2D& other);
+    Array2D& operator = (const Array2D& other);
+
     /**
-     * Get number of columns or, in case of an image, width.
+     * Each implementing class should provide its own destructor.
+     * It must be virtual to allow derived class to call their destructor as well.
      */
-    virtual int getCols() const = 0;
-    
-    /**
-     * Get number of rows or, in case of an image, height.
-     */
-    virtual int getRows() const = 0;
-    
-    
+    virtual ~Array2D();
+
     /**
      * Access an element of the array for reading and
      * writing. Whether the given row and column are checked against
@@ -78,8 +78,8 @@ namespace pfs
      * @param col number of a column (x) within the range 0..(getCols()-1)
      * @param row number of a row (y) within the range 0..(getRows()-1)
      */
-    virtual float& operator()( int col, int row ) = 0;
-    
+    float& operator()( int cols, int rows );
+
     /**
      * Access an element of the array for reading. Whether the given
      * row and column are checked against array bounds depends on an
@@ -92,8 +92,8 @@ namespace pfs
      * @param col number of a column (x) within the range 0..(getCols()-1)
      * @param row number of a row (y) within the range 0..(getRows()-1)
      */
-    virtual const float& operator()( int col, int row ) const = 0;
-    
+    const float& operator()( int cols, int rows ) const;
+
     /**
      * Access an element of the array for reading and writing. This
      * is probably faster way of accessing elements than
@@ -110,9 +110,9 @@ namespace pfs
      * somewhat strange syntax: (*array)(index).
      *
      * @param index index of an element within the range 0..(getCols()*getRows()-1)
-     */      
-    virtual float& operator()( int index ) = 0;
-    
+     */
+    float& operator()( int index );
+
     /**
      * Access an element of the array for reading. This
      * is probably faster way of accessing elements than
@@ -129,71 +129,33 @@ namespace pfs
      * somewhat strange syntax: (*array)(index).
      *
      * @param index index of an element within the range 0..(getCols()*getRows()-1)
-     */      
-    virtual const float& operator()( int index ) const = 0;
-    
-    /**
-     * Each implementing class should provide its own destructor.
      */
-    virtual ~Array2DXXX() { }
-    
-    virtual float*       getRawData()        = 0;
-    virtual const float* getRawData() const  = 0;
-  };
-  
-  
-  /**
-   * @brief Two dimensional array of floats
-   *
-   * Holds 2D data in column-major order. Allows easy indexing
-   * and retrieving array dimensions.
-   */
-  //class Array2DImpl: public Array2D
-  class Array2D
-  {
-  private:
-    float*  data;
-    int     cols;
-    int     rows;
-    bool    data_owned;
-    
-  public:
-    Array2D( int __cols, int __rows );
-    Array2D( int __cols, int __rows, float* __data);
-    Array2D(const Array2D& other);
-    Array2D& operator = (const Array2D& other);
-    virtual ~Array2D();
-    
-    float& operator()( int col, int row );
-    const float& operator()( int col, int row ) const;
-    float& operator()( int index );
     const float& operator()( int index ) const;
-    
-    inline int getCols() const { return cols; }
-    inline int getRows() const { return rows; }
-    
-    inline float*       getRawData()        { return data; }
-    inline const float* getRawData() const  { return data; }
-    
-    // Data manipulation
-    friend void copyArray(const Array2D *from, Array2D *to);
-    friend void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br);
+
+    /**
+     * Get number of columns or, in case of an image, width.
+     */
+    inline int getCols() const { return m_cols; }
+
+    /**
+     * Get number of rows or, in case of an image, height.
+     */
+    inline int getRows() const { return m_rows; }
+
+    /**
+      * Direct access to the raw data
+      */
+    inline float*       getRawData()        { return m_data; }
+
+    /**
+      * Direct access to the raw data
+      */
+    inline const float* getRawData() const  { return m_data; }
         
-    friend void setArray(Array2D *array, const float value);
-    friend void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y);
-    friend void divideArray(Array2D *z, const Array2D *x, const Array2D *y);
-    
-    // Colorspace Conversions
-    friend void transformRGB2XYZ(const Array2D *R, const Array2D *G, const Array2D *B, Array2D *X, Array2D *Y, Array2D *Z);
-    friend void transformXYZ2RGB(const Array2D *X, const Array2D *Y, const Array2D *Z, Array2D *R, Array2D *G, Array2D *B);
-    
-    friend void transformSRGB2XYZ(const Array2D *R, const Array2D *G, const Array2D *B, Array2D *X, Array2D *Y, Array2D *Z);
-    friend void transformXYZ2SRGB(const Array2D *X, const Array2D *Y, const Array2D *Z, Array2D *R, Array2D *G, Array2D *B);
-    
-    // Array2D manipulation
-    friend void downsampleArray(const Array2D *from, Array2D *to);
-    friend void applyGamma(Array2D *array, const float exponent, const float multiplier);
-    friend void rotateArray(const Array2D *in, Array2D *out, bool clockwise);
+    /**
+      * Reset the entire vector data to the value "value"
+      */
+    void reset(const float value = 0.0f);
   };
   
   void copyArray(const Array2D *from, Array2D *to);  

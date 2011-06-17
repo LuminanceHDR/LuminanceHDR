@@ -96,32 +96,29 @@ namespace pfs
   void applyGamma(pfs::Array2D *array, const float exponent, const float multiplier)
   {
 #ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
+      msec_timer f_timer;
+      f_timer.start();
 #endif
-    
-    //pfs::Array2DImpl* v_in = dynamic_cast<pfs::Array2DImpl*> (array);
-    
-    //assert( v_in != NULL );
-    
-    float* Vin  = array->data;
-    
-    const unsigned int V_ELEMS = array->getRows()*array->getCols();
-    for (unsigned int idx = 0; idx < V_ELEMS; idx++)
-    {
-      if (Vin[idx] > 0.0f)
+
+      float* Vin  = array->getRawData();
+
+      const unsigned int V_ELEMS = array->getRows()*array->getCols();
+
+      for (unsigned int idx = 0; idx < V_ELEMS; idx++)
       {
-        Vin[idx] = powf(Vin[idx]*multiplier, exponent);
+          if (Vin[idx] > 0.0f)
+          {
+              Vin[idx] = powf(Vin[idx]*multiplier, exponent);
+          }
+          else
+          {
+              Vin[idx] = 0.0f;
+          }
       }
-      else 
-      {
-        Vin[idx] = 0.0f;
-      }
-    }
-    
+
 #ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "applyGamma() = " << f_timer.get_time() << " msec" << std::endl;
+      f_timer.stop_and_update();
+      std::cout << "applyGamma() = " << f_timer.get_time() << " msec" << std::endl;
 #endif 
   }
   

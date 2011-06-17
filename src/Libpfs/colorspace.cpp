@@ -116,56 +116,46 @@ namespace pfs
   //-----------------------------------------------------------
   // sRGB conversion functions
   //-----------------------------------------------------------
-  void transformSRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                         Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformSRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                         Array2D *outC1, Array2D *outC2, Array2D *outC3)
   {
 #ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
+      msec_timer f_timer;
+      f_timer.start();
 #endif
-    
-//    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
-//    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
-//    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
-    
-//    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
-//    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
-//    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
-    
-//    assert ( X != NULL && Y != NULL && Z != NULL );
-//    assert ( R != NULL && G != NULL && B != NULL );
-    
-    const float* __r = inC1->data;
-    const float* __g = inC2->data;
-    const float* __b = inC3->data;
-    
-    float* __x = outC1->data;
-    float* __y = outC2->data;
-    float* __z = outC3->data;
-    
-    float i1, i2, i3;
-    float t1, t2, t3;
-    
-    int elems = inC1->getRows()*inC1->getCols();
-    #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
-    for( int idx = 0; idx < elems ; idx++ )
-    {
-      i1 = clamp(__r[idx], 0, 1);
-      i2 = clamp(__g[idx], 0, 1);
-      i3 = clamp(__b[idx], 0, 1);
-      
-      t1 = (i1 <= 0.04045 ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
-      t2 = (i2 <= 0.04045 ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
-      t3 = (i3 <= 0.04045 ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
-      
-      __x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
-      __y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
-      __z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
-    }    
-    
+
+      const float* __r = inC1->getRawData();
+      const float* __g = inC2->getRawData();
+      const float* __b = inC3->getRawData();
+
+      float* __x = outC1->getRawData();
+      float* __y = outC2->getRawData();
+      float* __z = outC3->getRawData();
+
+      float i1, i2, i3;
+      float t1, t2, t3;
+
+      int elems = inC1->getRows()*inC1->getCols();
+
+#pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
+      for( int idx = 0; idx < elems ; idx++ )
+      {
+          i1 = clamp(__r[idx], 0, 1);
+          i2 = clamp(__g[idx], 0, 1);
+          i3 = clamp(__b[idx], 0, 1);
+
+          t1 = (i1 <= 0.04045 ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
+          t2 = (i2 <= 0.04045 ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
+          t3 = (i3 <= 0.04045 ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
+
+          __x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
+          __y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
+          __z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
+      }
+
 #ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
+      f_timer.stop_and_update();
+      std::cout << "transformSRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
   }
   
@@ -173,56 +163,46 @@ namespace pfs
                          Array2D *outC1, Array2D *outC2, Array2D *outC3)
   {
 #ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
+      msec_timer f_timer;
+      f_timer.start();
 #endif
-    
-//    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
-//    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
-//    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
-    
-//    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
-//    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
-//    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
-    
-//    assert ( X != NULL && Y != NULL && Z != NULL );
-//    assert ( R != NULL && G != NULL && B != NULL );
-    
-    const float* __x = inC1->data;
-    const float* __y = inC2->data;
-    const float* __z = inC3->data;
-    
-    float* __r = outC1->data;
-    float* __g = outC2->data;
-    float* __b = outC3->data;
-    
-    float i1, i2, i3;
-    float t1, t2, t3;
-    
-    const int ELEMS = inC1->getRows()*inC1->getCols();
-    #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
-    for( int idx = 0; idx < ELEMS; idx++ )
-    {
-      i1 = __x[idx];
-      i2 = __y[idx];
-      i3 = __z[idx];
-      
-      t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-      t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-      t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
-      
-      t1 = clamp( t1, 0, 1 );
-      t2 = clamp( t2, 0, 1 );
-      t3 = clamp( t3, 0, 1 );
-      
-      __r[idx] = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
-      __g[idx] = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
-      __b[idx] = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);
-    }
-    
+
+      const float* __x = inC1->getRawData();
+      const float* __y = inC2->getRawData();
+      const float* __z = inC3->getRawData();
+
+      float* __r = outC1->getRawData();
+      float* __g = outC2->getRawData();
+      float* __b = outC3->getRawData();
+
+      float i1, i2, i3;
+      float t1, t2, t3;
+
+      const int ELEMS = inC1->getRows()*inC1->getCols();
+
+#pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
+      for( int idx = 0; idx < ELEMS; idx++ )
+      {
+          i1 = __x[idx];
+          i2 = __y[idx];
+          i3 = __z[idx];
+
+          t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+          t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+          t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+
+          t1 = clamp( t1, 0, 1 );
+          t2 = clamp( t2, 0, 1 );
+          t3 = clamp( t3, 0, 1 );
+
+          __r[idx] = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
+          __g[idx] = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
+          __b[idx] = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);
+      }
+
 #ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "transformXYZ2SRGB() = " << f_timer.get_time() << " msec" << std::endl;
+      f_timer.stop_and_update();
+      std::cout << "transformXYZ2SRGB() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
   }
   
@@ -297,97 +277,77 @@ namespace pfs
     }
   }
   
-  void transformRGB2XYZ( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformRGB2XYZ(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3)
   {
 #ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
+      msec_timer f_timer;
+      f_timer.start();
 #endif
 
-//    const Array2DImpl* R = dynamic_cast<const Array2DImpl*> (inC1);
-//    const Array2DImpl* G = dynamic_cast<const Array2DImpl*> (inC2);
-//    const Array2DImpl* B = dynamic_cast<const Array2DImpl*> (inC3);
-    
-//    Array2DImpl* X = dynamic_cast<Array2DImpl*> (outC1);
-//    Array2DImpl* Y = dynamic_cast<Array2DImpl*> (outC2);
-//    Array2DImpl* Z = dynamic_cast<Array2DImpl*> (outC3);
-    
-//    assert ( X != NULL && Y != NULL && Z != NULL );
-//    assert ( R != NULL && G != NULL && B != NULL );
-    
-    const float* __r = inC1->data;
-    const float* __g = inC2->data;
-    const float* __b = inC3->data;
-    
-    float* __x = outC1->data;
-    float* __y = outC2->data;
-    float* __z = outC3->data;
-    
-    float i1, i2, i3;
-    const int ELEMS = inC1->getRows()*inC1->getCols();
-    
-    #pragma omp parallel for private(i1,i2,i3)
-    for( int idx = 0; idx < ELEMS; idx++ )
-    {
-      i1 = __r[idx];
-      i2 = __g[idx];
-      i3 = __b[idx];
-      
-      __x[idx] = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
-      __y[idx] = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
-      __z[idx] = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
-    }
-    
+      const float* __r = inC1->getRawData();
+      const float* __g = inC2->getRawData();
+      const float* __b = inC3->getRawData();
+
+      float* __x = outC1->getRawData();
+      float* __y = outC2->getRawData();
+      float* __z = outC3->getRawData();
+
+      float i1, i2, i3;
+      const int ELEMS = inC1->getRows()*inC1->getCols();
+
+#pragma omp parallel for private(i1,i2,i3)
+      for( int idx = 0; idx < ELEMS; idx++ )
+      {
+          i1 = __r[idx];
+          i2 = __g[idx];
+          i3 = __b[idx];
+
+          __x[idx] = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
+          __y[idx] = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
+          __z[idx] = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+      }
+
 #ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "transformRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
+      f_timer.stop_and_update();
+      std::cout << "transformRGB2XYZ() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
   }
   
-  void transformXYZ2RGB( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformXYZ2RGB(const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                        Array2D *outC1, Array2D *outC2, Array2D *outC3 )
   {
 #ifdef TIMER_PROFILING
-    msec_timer f_timer;
-    f_timer.start();
+      msec_timer f_timer;
+      f_timer.start();
 #endif
-    
-//    const Array2DImpl* X = dynamic_cast<const Array2DImpl*> (inC1);
-//    const Array2DImpl* Y = dynamic_cast<const Array2DImpl*> (inC2);
-//    const Array2DImpl* Z = dynamic_cast<const Array2DImpl*> (inC3);
-        
-//    Array2DImpl* R = dynamic_cast<Array2DImpl*> (outC1);
-//    Array2DImpl* G = dynamic_cast<Array2DImpl*> (outC2);
-//    Array2DImpl* B = dynamic_cast<Array2DImpl*> (outC3);
-    
-//    assert ( X != NULL && Y != NULL && Z != NULL );
-//    assert ( R != NULL && G != NULL && B != NULL );
-    
-    const float* __x = inC1->data;
-    const float* __y = inC2->data;
-    const float* __z = inC3->data;
-    
-    float* __r = outC1->data;
-    float* __g = outC2->data;
-    float* __b = outC3->data;
-    
-    float i1, i2, i3;
-    const int ELEMS = inC1->getRows()*inC1->getCols();
-    
-    #pragma omp parallel for schedule(static, 5120) private(i1,i2,i3)
-    for( int idx = 0; idx < ELEMS; idx++ )
-    {
-      i1 = __x[idx];
-      i2 = __y[idx];
-      i3 = __z[idx];
-      
-      __r[idx] = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-      __g[idx] = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-      __b[idx] = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
-    }
-    
+
+      const float* __x = inC1->getRawData();
+      const float* __y = inC2->getRawData();
+      const float* __z = inC3->getRawData();
+
+      float* __r = outC1->getRawData();
+      float* __g = outC2->getRawData();
+      float* __b = outC3->getRawData();
+
+      float i1, i2, i3;
+      const int ELEMS = inC1->getRows()*inC1->getCols();
+
+#pragma omp parallel for schedule(static, 5120) private(i1,i2,i3)
+      for( int idx = 0; idx < ELEMS; idx++ )
+      {
+          i1 = __x[idx];
+          i2 = __y[idx];
+          i3 = __z[idx];
+
+          __r[idx] = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+          __g[idx] = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+          __b[idx] = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+      }
+
 #ifdef TIMER_PROFILING
-    f_timer.stop_and_update();
-    std::cout << "transformXYZ2RGB() = " << f_timer.get_time() << " msec" << std::endl;
+      f_timer.stop_and_update();
+      std::cout << "transformXYZ2RGB() = " << f_timer.get_time() << " msec" << std::endl;
 #endif
   }
   
