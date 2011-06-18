@@ -48,186 +48,194 @@ namespace pfs
 {  
     Array2D::Array2D( int cols, int rows ):
             m_cols(cols), m_rows(rows)
-  {
-    m_cols = cols;
-    m_rows = rows;
-    // Aligned memory allocation allows faster vectorized access
-    m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16); //new float[cols*rows];
-    m_is_data_owned = true;
-  }
-  
-  Array2D::Array2D( int cols, int rows, float* data)
-  {
-    m_cols = cols;
-    m_rows = rows;
-    m_data = data;
-    m_is_data_owned = false;
-  }
-  
-  // copy constructor?
-  Array2D::Array2D(const Array2D& other) //: Array2D()
-  {
-    this->m_cols = other.m_cols;
-    this->m_rows = other.m_rows;
-    this->m_data = other.m_data;
-    this->m_is_data_owned = false;
-  }
-  
-  // Assignment operator
-  Array2D& Array2D::operator=(const Array2D& other)
-  {
-    if (m_is_data_owned) _mm_free(m_data); //delete[] data;
+    {
+        m_cols = cols;
+        m_rows = rows;
+        // Aligned memory allocation allows faster vectorized access
+        m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16); //new float[cols*rows];
+        m_is_data_owned = true;
+    }
 
-    this->m_cols = other.m_cols;
-    this->m_rows = other.m_rows;
-    this->m_data = other.m_data;
-    this->m_is_data_owned = false;
-    return *this;
-}
-  
-  Array2D::~Array2D()
-  {
-    if (m_is_data_owned) _mm_free(m_data); //delete[] data;
-  }
-  
-  float& Array2D::operator()( int cols, int rows )
-  {
-      assert( cols >= 0 && cols < m_cols );
-      assert( rows >= 0 && rows < m_rows );
-      return m_data[ rows*m_cols + cols ];
-  }
-  
-  const float& Array2D::operator()( int cols, int rows ) const
-  {
-      assert( cols >= 0 && cols < m_cols );
-      assert( rows >= 0 && rows < m_rows );
-      return m_data[ rows*m_cols + cols ];
-  }
-  
-  float& Array2D::operator()( int index )
-  {
-    assert( index >= 0 && index < m_rows*m_cols );
-    return m_data[index];
-  }
-  
-  const float& Array2D::operator()( int index ) const
-  {
-    assert( index >= 0 && index <= m_rows*m_cols );
-    return m_data[index];
-  }
-  
-  void Array2D::reset(const float value)
-  {
-      VEX_vset(m_data, value, this->m_rows*this->m_cols);
-  }
-  
-  
-  /**
+    Array2D::Array2D( int cols, int rows, float* data)
+    {
+        m_cols = cols;
+        m_rows = rows;
+        m_data = data;
+        m_is_data_owned = false;
+    }
+
+    // copy constructor?
+    Array2D::Array2D(const Array2D& other) //: Array2D()
+    {
+        this->m_cols = other.m_cols;
+        this->m_rows = other.m_rows;
+        this->m_data = other.m_data;
+        this->m_is_data_owned = false;
+    }
+
+    // Assignment operator
+    Array2D& Array2D::operator=(const Array2D& other)
+                               {
+        if (m_is_data_owned) _mm_free(m_data); //delete[] data;
+
+        this->m_cols = other.m_cols;
+        this->m_rows = other.m_rows;
+        this->m_data = other.m_data;
+        this->m_is_data_owned = false;
+        return *this;
+    }
+
+    Array2D::~Array2D()
+    {
+        if (m_is_data_owned) _mm_free(m_data); //delete[] data;
+    }
+
+    float& Array2D::operator()( int cols, int rows )
+    {
+        assert( cols >= 0 && cols < m_cols );
+        assert( rows >= 0 && rows < m_rows );
+        return m_data[ rows*m_cols + cols ];
+    }
+
+    const float& Array2D::operator()( int cols, int rows ) const
+    {
+        assert( cols >= 0 && cols < m_cols );
+        assert( rows >= 0 && rows < m_rows );
+        return m_data[ rows*m_cols + cols ];
+    }
+
+    float& Array2D::operator()( int index )
+    {
+        assert( index >= 0 && index < m_rows*m_cols );
+        return m_data[index];
+    }
+
+    const float& Array2D::operator()( int index ) const
+    {
+        assert( index >= 0 && index <= m_rows*m_cols );
+        return m_data[index];
+    }
+
+    void Array2D::reset(const float value)
+    {
+        VEX_vset(this->m_data, value, this->m_rows*this->m_cols);
+    }
+
+    void Array2D::scale(const float value)
+    {
+        // O[i] = c * I[i]
+        VEX_vsmul(this->m_data, value, this->m_data, this->m_rows*this->m_cols);
+    }
+
+
+    /**
    * Copy data from one Array2D to another. Dimensions of the arrays must be the same.
    *
    * @param from array to copy from
    * @param to array to copy to
    */
-  void copyArray(const Array2D *from, Array2D *to)
-  {
-      assert( from->getRows() == to->getRows() );
-      assert( from->getCols() == to->getCols() );
+    void copyArray(const Array2D *from, Array2D *to)
+    {
+        assert( from->getRows() == to->getRows() );
+        assert( from->getCols() == to->getCols() );
 
-      const float* f = from->getRawData();
-      float* t = to->getRawData();
+        const float* f = from->getRawData();
+        float* t = to->getRawData();
 
-      const int V_ELEMS = from->getRows()*from->getCols();
+        const int V_ELEMS = from->getRows()*from->getCols();
 
-      VEX_vcopy(f, t, V_ELEMS);
-  }
-  
-  void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
-  {    
-      const float* from_2d_data   = from->getRawData();
-      float* to_2d_data           = to->getRawData();
+        VEX_vcopy(f, t, V_ELEMS);
+    }
 
-      const int IN_W    = from->getCols();
-      const int IN_H    = from->getRows();
-      const int OUT_W   = to->getCols();
-      const int OUT_H   = to->getRows();
+    void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br)
+    {
+        const float* fv = from->getRawData();
+        float* tv       = to->getRawData();
 
-      assert( OUT_H <= IN_H );
-      assert( OUT_H <= IN_H );
-      assert( x_ul >= 0 );
-      assert( y_ul >= 0 );
-      assert( x_br <= IN_W );
-      assert( y_br <= IN_H );
+        const int IN_W    = from->getCols();
+        const int IN_H    = from->getRows();
+        const int OUT_W   = to->getCols();
+        const int OUT_H   = to->getRows();
 
-      // move to row (x_ul, y_ul)
-      from_2d_data = &from_2d_data[IN_W*y_ul + x_ul];
+        assert( OUT_H <= IN_H );
+        assert( OUT_H <= IN_H );
+        assert( x_ul >= 0 );
+        assert( y_ul >= 0 );
+        assert( x_br <= IN_W );
+        assert( y_br <= IN_H );
 
-      for (int r = 0; r < OUT_H; r++)
-      {
-          //NOTE: do NOT use VEX_vcopy
+        // move to row (x_ul, y_ul)
+        fv = &fv[IN_W*y_ul + x_ul];
+
 #pragma omp parallel for
-          for (int c = 0; c < OUT_W; c++)
-          {
-              to_2d_data[c] = from_2d_data[c];
-          }
+        for (int r = 0; r < OUT_H; r++)
+        {
+            //NOTE: do NOT use VEX_vcopy
+            for (int c = 0; c < OUT_W; c++)
+            {
+                tv[r*OUT_W + c] = fv[r*IN_W + c];
+            }
+        }
+    }
 
-          from_2d_data  += IN_W;
-          to_2d_data    += OUT_W;
-      }
-  }
-
-  /**
+    /**
    * Set all elements of the array to a give value.
    *
    * @param array array to modify
    * @param value all elements of the array will be set to this value
    */
-  void setArray(Array2D *array, const float value)
-  {
-      array->reset(value);
-  }
-  
-  /**
+    void setArray(Array2D *array, const float value)
+    {
+        array->reset(value);
+    }
+
+    /**
    * Perform element-by-element multiplication: z = x * y. z must be the same as x or y.
    *
    * @param z array where the result is stored
    * @param x first element of the multiplication
    * @param y second element of the multiplication
    */
-  // TODO : to improve
-  void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
-  {    
-      assert( x->getRows() == y->getRows() );
-      assert( x->getCols() == y->getCols() );
-      assert( x->getRows() == z->getRows() );
-      assert( x->getCols() == z->getCols() );
+    void multiplyArray(Array2D *z, const Array2D *x, const Array2D *y)
+    {
+        assert( x->getRows() == y->getRows() );
+        assert( x->getCols() == y->getCols() );
+        assert( x->getRows() == z->getRows() );
+        assert( x->getCols() == z->getCols() );
 
-      const int elements = x->getRows()*x->getCols();
-      for( int i = 0; i < elements; i++ )
-      {
-          (*z)(i) = (*x)(i) * (*y)(i);
-      }
-  }
-  
-  /**
+        const float* xv = x->getRawData();
+        const float* yv = y->getRawData();
+        float* zv = z->getRawData();
+
+        const int elements = x->getRows()*x->getCols();
+
+        VEX_vmul(xv, yv, zv, elements);
+    }
+
+    /**
    * Perform element-by-element division: z = x / y. z must be the same as x or y.
    *
    * @param z array where the result is stored
    * @param x first element of the division
    * @param y second element of the division
    */
-  // TODO : to improve
-  void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
-  {    
-    assert( x->getRows() == y->getRows() );
-    assert( x->getCols() == y->getCols() );
-    assert( x->getRows() == z->getRows() );
-    assert( x->getCols() == z->getCols() );
-    
-    const int elements = x->getRows()*x->getCols();
-    for( int i = 0; i < elements; i++ )
+    void divideArray(Array2D *z, const Array2D *x, const Array2D *y)
     {
-      (*z)(i) = (*x)(i) / (*y)(i);
+        assert( x->getRows() == y->getRows() );
+        assert( x->getCols() == y->getCols() );
+        assert( x->getRows() == z->getRows() );
+        assert( x->getCols() == z->getCols() );
+
+        const float* xv = x->getRawData();
+        const float* yv = y->getRawData();
+        float* zv = z->getRawData();
+
+        const int elements = x->getRows()*x->getCols();
+
+        VEX_vdiv(xv, yv, zv, elements);
     }
-  }
-  
 }
+
+
+
+

@@ -56,7 +56,7 @@ void VEX_vmul(const float* A, const float* B, float* C, const int N);
 void VEX_vsmul(const float* I, const float c, float* O, const int N);
 
 // C[i] = A[i] / B[i]
-void VEX_vdiv(float* A, float* B, float* C, const int N);
+void VEX_vdiv(const float* A, const float* B, float* C, const int N);
 
 // O[i] = i[i]
 void VEX_vcopy(const float* I, float* O, const int N);

@@ -287,9 +287,6 @@ void VEX_vadds(const float* A, const float val, const float* B, float* C, const 
 
 void VEX_vsmul(const float* I, const float val, float* O, const int N)
 {
-  //#ifdef __APPLE__
-  //  vDSP_vsmul (I, 1, &c, O, 1, N);
-  //#elif __USE_SSE__
 #ifdef __USE_SSE__
   const __m128 __val = _mm_set1_ps(val);
   __m128 t;
@@ -342,9 +339,6 @@ void VEX_vsmul(const float* I, const float val, float* O, const int N)
 
 void VEX_vmul(const float* A, const float* B, float* C, const int N)
 {
-  //#ifdef __APPLE__  
-  //vDSP_vmul(B, 1, A, 1, C, 1, N);
-  //#elif __USE_SSE__
 #ifdef __USE_SSE__
   __m128 a, b;
   
@@ -401,11 +395,8 @@ void VEX_vmul(const float* A, const float* B, float* C, const int N)
 #endif
 }
 
-void VEX_vdiv(float* A, float* B, float* C, const int N)
+void VEX_vdiv(const float* A, const float* B, float* C, const int N)
 {
-  //#ifdef __APPLE__  
-  //  vDSP_vdiv(B, 1, A, 1, C, 1, N);
-  //#elif __USE_SSE__
 #ifdef __USE_SSE__   
   __m128 a, b;
   
