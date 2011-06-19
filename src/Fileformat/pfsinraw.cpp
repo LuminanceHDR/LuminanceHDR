@@ -255,7 +255,6 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   }
 
   std::cout << "Data size: " << image->data_size << " " << W*H*3*2 << std::endl;
-  std::cout << "d: " << d << std::endl;
   std::cout << "W: " << image->width << " H: " << image->height << std::endl;
 
 

@@ -55,6 +55,7 @@ void HdrCreationManager::setFileList(QStringList &l) {
 	fileList.append(l);
 
 	expotimes.resize(fileList.count());
+	filesToRemove.resize(fileList.count());
 
 	//add default values
 	for (int i = 0; i < l.count(); i++) {
@@ -193,8 +194,10 @@ void HdrCreationManager::newResult(int index, float expotime, QString newfname) 
 	processedFiles++;
 
 	//update filesToRemove
-	if ( fileList.at(index) != newfname )
-		filesToRemove.append(newfname);
+	if ( fileList.at(index) != newfname ) {
+		qDebug() << "Files to remove " << index << " " << newfname;
+		filesToRemove[index] = newfname;
+	}
 
 	//update expotimes[i]
 	expotimes[index] = expotime;
@@ -259,7 +262,14 @@ void HdrCreationManager::align_with_ais() {
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
 	
 	QStringList ais_parameters = luminance_options->align_image_stack_options;
-	ais_parameters << (filesToRemove.empty() ? fileList : filesToRemove);
+	if (filesToRemove[0] == "") {
+		ais_parameters << fileList;
+	}
+	else {
+		foreach(QString fname, filesToRemove) 
+			ais_parameters << fname;	
+	}
+	qDebug() << "ais_parameters " << ais_parameters;
 	#ifdef Q_WS_MAC
 	ais->start(QCoreApplication::applicationDirPath()+"/align_image_stack", ais_parameters );
 	#else
@@ -300,6 +310,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
         			//pfs::DOMIO pfsio;
 				//pfsio.freeFrame(newFrame);
 			}
+			qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
 			QFile::remove(fname);
 			free(fname);
 		}
@@ -310,9 +321,9 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 
 void HdrCreationManager::removeTempFiles() {
 	foreach (QString tempfname, filesToRemove) {
-		//qDebug("removing temp file: %s",qPrintable(tempfname));
-		QFile::remove(tempfname);
-		qDebug() << tempfname.toAscii().constData();
+		qDebug() << "void HdrCreationManager::removeTempFiles(): " << tempfname.toAscii().constData();
+		if (tempfname != "")
+			QFile::remove(tempfname);
 	}
 }
 
@@ -374,9 +385,9 @@ HdrCreationManager::~HdrCreationManager() {
 void HdrCreationManager::clearlists(bool deleteExpotimeAsWell) {
 	startedProcessing.clear();
 	filesLackingExif.clear();
-	fileList.clear();
 
 	if (deleteExpotimeAsWell) {
+		fileList.clear();
 		expotimes.clear();
 	}
 	if (ldrImagesList.size() != 0) {
@@ -488,9 +499,14 @@ void HdrCreationManager::remove(int index) {
 			Array2DList::iterator itB = listmdrB.begin() + index;
 			delete *itB;
 			listmdrB.erase(itB);
+			
+			QString fname = filesToRemove.at(index);
+			qDebug() << "void HdrCreationManager::remove(int index): filename " << fname;
+			QFile::remove(fname);
 		break;
 	}
 	fileList.removeAt(index);
+	filesToRemove.remove(index);
 	expotimes.remove(index);
 	startedProcessing.removeAt(index);
 }

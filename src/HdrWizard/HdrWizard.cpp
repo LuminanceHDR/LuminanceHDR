@@ -177,6 +177,13 @@ void HdrWizard::removeImageButtonClicked()
 	}
 	else 
 	{
+		QString fname = hdrCreationManager->getFileList().at(index);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+		QFile::remove(thumb_name);
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+		QFile::remove(thumb_name);
+
 		hdrCreationManager->remove(index);
 		tableWidget->removeRow(index);
 		inputHdrFileSelected(tableWidget->currentRow());
@@ -462,6 +469,10 @@ void HdrWizard::NextFinishButtonClicked() {
 		if (alignCheckBox->isChecked()) {
 			QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 			confirmloadlabel->setText("<center><h3><b>"+tr("Aligning...")+"</b></h3></center>");
+			loadImagesButton->setDisabled(true);
+			removeImageButton->setDisabled(true);
+			clearListButton->setDisabled(true);
+			previewLabel->setDisabled(true);
 			NextFinishButton->setDisabled(true);
 			alignGroupBox->setDisabled(true);
 			EVgroupBox->setDisabled(true);

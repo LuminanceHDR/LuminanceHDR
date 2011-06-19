@@ -121,7 +121,8 @@ private:
 	//Value emitted after all the loading has been completed
 	QStringList filesLackingExif;
 	//Filled when we have raw files as input.
-	QStringList filesToRemove;
+	//QStringList filesToRemove;
+	QVector<QString>  filesToRemove;
 	//set to true as soon as we find out that we cannot load a file or when we find out that a file has a different width/height than the other previously loaded ones.
 	//This variable prevents "incoming" threads to do anything.
 	bool loadingError;
