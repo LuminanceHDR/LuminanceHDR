@@ -25,6 +25,21 @@
 #include <iostream>
 #include "vex.h"
 
+#ifdef __SSE__
+//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
+//#include <ppc_intrinsics.h>
+#if __i386__ || __x86_64__
+#define __USE_SSE__
+#include <mm_malloc.h>
+#include <xmmintrin.h>
+#include <mm_malloc.h>
+//#include <pmmintrin.h>
+//#include <tmmintrin.h>
+#else
+#error unsupported architecture
+#endif
+#endif
+
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -37,9 +52,6 @@
 
 void VEX_vsub(const float* A, const float* B, float* C, const int N)
 {
-  //#ifdef __APPLE__  
-  //  vDSP_vsub(B, 1, A, 1, C, 1, N); // http://developer.apple.com/hardwaredrivers/ve/errata.html#vsub
-  //#elif __USE_SSE__
 #ifdef __USE_SSE__
   __m128 a, b, c;
   
@@ -88,8 +100,8 @@ void VEX_vsub(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] - B[idx];
   }
@@ -152,8 +164,8 @@ void VEX_vsubs(const float* A, const float val, const float* B, float* C, const 
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] - val * B[idx];
   }
@@ -162,9 +174,6 @@ void VEX_vsubs(const float* A, const float val, const float* B, float* C, const 
 
 void VEX_vadd(const float* A, const float* B, float* C, const int N)
 {
-  //#ifdef __APPLE__  
-  //  vDSP_vadd(A, 1, B, 1, C, 1, N);
-  //#elif __USE_SSE__
 #ifdef __USE_SSE__
   __m128 a, b, c;
   
@@ -213,8 +222,8 @@ void VEX_vadd(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] + B[idx];
   }
@@ -277,8 +286,8 @@ void VEX_vadds(const float* A, const float val, const float* B, float* C, const 
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] + val * B[idx];
   }
@@ -329,8 +338,8 @@ void VEX_vsmul(const float* I, const float val, float* O, const int N)
   }
 #else 
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for(int idx = 0; idx < N; idx++)
+#pragma omp parallel for
+  for(int idx = 0; idx < N; ++idx)
   {
     O[idx] = val * I[idx];
   }
@@ -387,8 +396,8 @@ void VEX_vmul(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] * B[idx];
   }
@@ -445,8 +454,8 @@ void VEX_vdiv(const float* A, const float* B, float* C, const int N)
   }
 #else
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++ )
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx )
   {
     C[idx] = A[idx] / B[idx];
   }
@@ -482,8 +491,8 @@ void VEX_vcopy(const float* I, float* O, const int N)
   _mm_sfence();
 #else 
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for(int idx = 0; idx < N; idx++)
+#pragma omp parallel for
+  for(int idx = 0; idx < N; ++idx)
   {
     O[idx] = I[idx];
   }
@@ -518,8 +527,8 @@ void VEX_vset(float* IO, const float val, const int N)
   }
 #else 
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for(int idx = 0; idx < N; idx++)
+#pragma omp parallel for
+  for(int idx = 0; idx < N; ++idx)
   {
     IO[idx] = val;
   }
@@ -554,8 +563,8 @@ void VEX_vreset(float* IO, const int N)
   }
 #else 
   // plain code
-#pragma omp parallel for schedule(static, 5120)
-  for (int idx = 0; idx < N; idx++)
+#pragma omp parallel for
+  for (int idx = 0; idx < N; ++idx)
   {
     IO[idx] = 0.0f;
   }
@@ -566,7 +575,7 @@ void VEX_dotpr(const float* I1, const float* I2, float& val, const int N)
 {
   float t_val = 0.0f;
 #pragma omp parallel for reduction(+:t_val)
-  for (int idx = 0; idx < N; idx++)
+  for (int idx = 0; idx < N; ++idx)
   {
     t_val += I1[idx] * I2[idx];
   }

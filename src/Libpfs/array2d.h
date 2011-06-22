@@ -54,11 +54,13 @@ namespace pfs
         int     m_rows;
         bool    m_is_data_owned;
 
-    public:
-        Array2D( int cols, int rows );
-        Array2D( int cols, int rows, float* data);
-        Array2D(const Array2D& other);
         Array2D& operator = (const Array2D& other);
+        Array2D(const Array2D& other);
+
+    public:
+        Array2D(int cols, int rows);
+        Array2D(int cols, int rows, float* data);
+
 
         /**
          * Each implementing class should provide its own destructor.

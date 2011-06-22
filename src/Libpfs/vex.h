@@ -25,21 +25,6 @@
 #ifndef __VEX_H__
 #define __VEX_H__
 
-#ifdef __SSE__
-//#if __ppc__ || __ppc7400__ || __ppc64__ || __ppc970__
-//#include <ppc_intrinsics.h>
-#if __i386__ || __x86_64__
-#define __USE_SSE__
-#include <mm_malloc.h>
-#include <xmmintrin.h>
-#include <mm_malloc.h>
-//#include <pmmintrin.h>
-//#include <tmmintrin.h>
-#else
-#error unsupported architecture
-#endif
-#endif
-
 // C[i] = A[i] - B[i]
 void VEX_vsub(const float* A, const float* B, float* C, const int N);
 // C[i] = A[i] - val * B[i]

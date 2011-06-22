@@ -52,7 +52,7 @@ namespace pfs
         m_cols = cols;
         m_rows = rows;
         // Aligned memory allocation allows faster vectorized access
-        m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16); //new float[cols*rows];
+        m_data = (float*)_mm_malloc(m_cols*m_rows*sizeof(float), 16);
         m_is_data_owned = true;
     }
 
@@ -65,7 +65,7 @@ namespace pfs
     }
 
     // copy constructor?
-    Array2D::Array2D(const Array2D& other) //: Array2D()
+    Array2D::Array2D(const Array2D& other)
     {
         this->m_cols = other.m_cols;
         this->m_rows = other.m_rows;
@@ -76,7 +76,7 @@ namespace pfs
     // Assignment operator
     Array2D& Array2D::operator=(const Array2D& other)
                                {
-        if (m_is_data_owned) _mm_free(m_data); //delete[] data;
+        if (m_is_data_owned) _mm_free(m_data);
 
         this->m_cols = other.m_cols;
         this->m_rows = other.m_rows;
