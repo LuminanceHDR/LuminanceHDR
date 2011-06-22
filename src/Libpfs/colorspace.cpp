@@ -58,9 +58,9 @@ namespace pfs
     { 0.019332f, 0.119193f, 0.950444f } };
   
   static const float xyz2rgbD65Mat[3][3] =
-  { {  3.240708, -1.537259, -0.498570 },
-    { -0.969257,  1.875995,  0.041555 },
-    {  0.055636, -0.203996,  1.057069 } };
+  { {  3.240708f, -1.537259f, -0.498570f },
+    { -0.969257f,  1.875995f,  0.041555f },
+    {  0.055636f, -0.203996f,  1.057069f } };
   
   // //--- precise values for matrix convertion (above float precission)
   // static const float rgb2xyzD65Mat[3][3] =
@@ -83,35 +83,6 @@ namespace pfs
   // { { 3.2406f, -1.5372f, -0.4986f },
   //   { -0.9689f, 1.8758f,  0.0415f },
   //   { 0.0557f, -0.2040f,  1.0570f } };
-  
-  
-  //  void multiplyByMatrix( const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-  //                               Array2D *outC1, Array2D *outC2, Array2D *outC3, const float mat[3][3] )
-  //  {
-  //#ifdef TIMER_PROFILING
-  //    msec_timer f_timer;
-  //    f_timer.start();
-  //#endif
-  //
-  //    float i1, i2, i3;
-  //    const int elems = inC1->getRows()*inC1->getCols();
-  //    
-  //    for( int idx = 0; idx < elems; idx++ )
-  //    {
-  //      i1 = (*inC1)(idx);
-  //      i2 = (*inC2)(idx);
-  //      i3 = (*inC3)(idx);
-  //      
-  //      (*outC1)(idx) = mat[0][0]*i1 + mat[0][1]*i2 + mat[0][2]*i3;
-  //      (*outC2)(idx) = mat[1][0]*i1 + mat[1][1]*i2 + mat[1][2]*i3;
-  //      (*outC3)(idx) = mat[2][0]*i1 + mat[2][1]*i2 + mat[2][2]*i3;
-  //    }
-  //    
-  //#ifdef TIMER_PROFILING
-  //    f_timer.stop_and_update();
-  //    std::cout << "multiplyByMatrix() = " << f_timer.get_time() << " msec" << std::endl;
-  //#endif
-  //  }
   
   //-----------------------------------------------------------
   // sRGB conversion functions
@@ -144,9 +115,9 @@ namespace pfs
           i2 = clamp(__g[idx], 0, 1);
           i3 = clamp(__b[idx], 0, 1);
 
-          t1 = (i1 <= 0.04045 ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
-          t2 = (i2 <= 0.04045 ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
-          t3 = (i3 <= 0.04045 ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
+          t1 = (i1 <= 0.04045f ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
+          t2 = (i2 <= 0.04045f ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
+          t3 = (i3 <= 0.04045f ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
 
           __x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
           __y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
@@ -195,9 +166,9 @@ namespace pfs
           t2 = clamp( t2, 0, 1 );
           t3 = clamp( t3, 0, 1 );
 
-          __r[idx] = (t1 <= 0.0031308 ? t1 *= 12.92f : 1.055f * powf( t1, 1./2.4 ) - 0.055);
-          __g[idx] = (t2 <= 0.0031308 ? t2 *= 12.92f : 1.055f * powf( t2, 1./2.4 ) - 0.055);
-          __b[idx] = (t3 <= 0.0031308 ? t3 *= 12.92f : 1.055f * powf( t3, 1./2.4 ) - 0.055);
+          __r[idx] = (t1 <= 0.0031308f ? t1 *= 12.92f : 1.055f * powf( t1, 1.f/2.4f ) - 0.055f);
+          __g[idx] = (t2 <= 0.0031308f ? t2 *= 12.92f : 1.055f * powf( t2, 1.f/2.4f ) - 0.055f);
+          __b[idx] = (t3 <= 0.0031308f ? t3 *= 12.92f : 1.055f * powf( t3, 1.f/2.4f ) - 0.055f);
       }
 
 #ifdef TIMER_PROFILING
@@ -383,9 +354,8 @@ namespace pfs
     &TN_Yxy2XYZ
   };
   
-  void transformColorSpace( ColorSpace inCS,
-                           const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
-                           ColorSpace outCS, Array2D *outC1, Array2D *outC2, Array2D *outC3 )
+  void transformColorSpace(ColorSpace inCS, const Array2D *inC1, const Array2D *inC2, const Array2D *inC3,
+                           ColorSpace outCS, Array2D *outC1, Array2D *outC2, Array2D *outC3)
   {
     assert( inC1->getCols() == inC2->getCols() &&
            inC2->getCols() == inC3->getCols() &&
@@ -456,7 +426,6 @@ namespace pfs
           (*it)->func( outC1, outC2, outC3, outC1, outC2, outC3 );      
       }
     }
-  }
-  
-  
+  } 
 }
+
