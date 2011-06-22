@@ -58,7 +58,7 @@ void pfstmo_mantiuk06(pfs::Frame* frame, float scaleFactor, float saturationFact
   //bool cont_map = false;
   bool bcg = false;
   int itmax = 200;
-  float tol = 1e-3;
+  float tol = 1e-3f;
   
   std::cout << "pfstmo_mantiuk06 (";
   if (!cont_eq)
