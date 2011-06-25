@@ -16,12 +16,12 @@ This build process works for 32 and 64 bit compilation.
 
 This build process requires:
 * Windows
-* MS Visual Studio 2010 or higher
+* MS Visual Studio 2008 or higher
 * Qt for MSVC installed
   - official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
   - working 64 bit and 32 bit Qt from: http://code.google.com/p/qt-msvc-installer/
 * CMake
-* Cygwin installed with: cvs, gzip, svn, tar, unzip, wget
+* Cygwin installed with: sed, cvs, gzip, svn, tar, unzip, wget
 
 
 2. Compilation
@@ -45,8 +45,9 @@ The build process should download and build all the required libraries.
 In  'LuminanceHdrStuff\DEPs' you should find all the compilated DLLs,
 librarys and include header files.
 
-In 'LuminanceHdrStuff\qtpfsgui' you find the LuminanceHdr SVN directory,
-where the compiled .exe file should be under 
-'LuminanceHdrStuff\qtpfsgui\Release'
+In  'LuminanceHdrStuff\qtpfsgui.build' you should find all the binary
+related files.
+
+In 'LuminanceHdrStuff\qtpfsgui' you find the LuminanceHdr SVN directory.
 
 

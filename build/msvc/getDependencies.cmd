@@ -22,6 +22,7 @@ IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
 GOTO cygwin_ok
@@ -31,6 +32,7 @@ echo ERROR: Cygwin with
 echo    cvs
 echo    gzip 
 echo    svn 
+echo    sed 
 echo    tar 
 echo    unzip 
 echo    wget
@@ -52,9 +54,22 @@ IF ERRORLEVEL 1 (
 	set Platform=x64
 	set RawPlatform=x64
 )
+IF DEFINED VS100COMNTOOLS (
+	REM Visual Studio 2010
+	set VS_SHORT=vc10
+	set VS_CMAKE=Visual Studio 10
+) ELSE (
+	REM Visual Studio 2008
+	set VS_SHORT=vc9
+	set VS_CMAKE=Visual Studio 9 2008
+)
+IF %Platform% EQU x64 (
+	set VS_CMAKE=%VS_CMAKE% Win64
+)
 
 cls
 echo.
+echo.--- %VS_CMAKE% ---
 echo.Configuration = %Configuration%
 echo.Platform = %Platform% (%RawPlatform%)
 echo.
@@ -72,7 +87,7 @@ IF NOT EXIST zlib-1.2.5 (
 	call bld_ml64.bat
 	cd ..\masmx86
 	call bld_ml32.bat
-	cd ..\vstudio\vc10
+	cd ..\vstudio\%VS_SHORT%
 	devenv zlibvc.sln /build "%Configuration%|%Platform%"
 	popd
 )
@@ -138,7 +153,7 @@ IF NOT EXIST tiff-4.0.0beta7 (
 	echo.JPEG_LIB = $^(JPEGDIR^)/libjpeg.lib  >> tiff-4.0.0beta7\nmake.opt
 	echo.  >> tiff-4.0.0beta7\nmake.opt
 	echo.ZIP_SUPPORT	= 1  >> tiff-4.0.0beta7\nmake.opt
-	echo.ZLIBDIR 	= ..\zlib-1.2.5\contrib\vstudio\vc10\%RawPlatform%\ZlibDll%Configuration%  >> tiff-4.0.0beta7\nmake.opt
+	echo.ZLIBDIR 	= ..\zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%  >> tiff-4.0.0beta7\nmake.opt
 	echo.ZLIB_INCLUDE	= -I$^(ZLIBDIR^)  >> tiff-4.0.0beta7\nmake.opt
 	echo.ZLIB_LIB 	= $^(ZLIBDIR^)/zlibwapi.lib  >> tiff-4.0.0beta7\nmake.opt
 
@@ -170,6 +185,10 @@ IF NOT EXIST gsl-1.15 (
 	%CYGWIN_DIR%\bin\unzip.exe -o -q -d gsl-1.15 %TEMP_DIR%/gsl-1.15-vc10.zip
 
 	pushd gsl-1.15\build.vc10
+	IF %VS_SHORT% EQU vc9 (
+		%CYGWIN_DIR%\bin\sed.exe -i 's/Format Version 11.00/Format Version 10.00/g' gsl.lib.sln
+	)
+	devenv gsl.lib.sln /Upgrade
 	devenv gsl.lib.sln /build "%Configuration%|%Platform%" /Project gslhdrs
 	gslhdrs\%Platform%\%Configuration%\gslhdrs.exe
 	devenv gsl.lib.sln /build "%Configuration%|%Platform%" /Project gsllib
@@ -187,8 +206,8 @@ IF NOT EXIST OpenExrStuff (
 	popd
 	
 	copy zlib-1.2.5\*.h OpenExrStuff\Deploy\include
-	copy zlib-1.2.5\contrib\vstudio\vc10\%RawPlatform%\ZlibDll%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
-	copy zlib-1.2.5\contrib\vstudio\vc10\%RawPlatform%\ZlibDll%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
+	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.lib OpenExrStuff\Deploy\lib\%Platform%\%Configuration%
+	copy zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%\*.dll OpenExrStuff\Deploy\bin\%Platform%\%Configuration%
 )
 	
 pushd OpenExrStuff\openexr-cvs
@@ -206,7 +225,7 @@ IF NOT EXIST OpenEXR (
 )
 popd
 
-IF DEFINED exiv2-compile (
+IF DEFINED openexr-compile (
 	pushd OpenExrStuff\openexr-cvs\IlmBase\vc\vc9\IlmBase
 	devenv IlmBase.sln /Upgrade
 	devenv IlmBase.sln /build "%Configuration%|%Platform%"
@@ -295,17 +314,15 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	
 )
 
-IF NOT EXIST LuminanceHdrStuff\qtpfsgui\CMakeCache.txt (
-	IF %Platform% EQU Win32 (
-		%CMAKE_DIR%\bin\cmake.exe -G "Visual Studio 10" LuminanceHdrStuff\qtpfsgui\CMakeLists.txt
-	) ELSE (
-		%CMAKE_DIR%\bin\cmake.exe -G "Visual Studio 10 Win64" LuminanceHdrStuff\qtpfsgui\CMakeLists.txt
-	)
-
+IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
+	mkdir LuminanceHdrStuff\qtpfsgui.build
+	pushd LuminanceHdrStuff\qtpfsgui.build
+	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui
+	popd
 )
 
-IF EXIST LuminanceHdrStuff\qtpfsgui\luminance-hdr.sln (
-	pushd LuminanceHdrStuff\qtpfsgui
+IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
+	pushd LuminanceHdrStuff\qtpfsgui.build	
 	devenv luminance-hdr.sln /Upgrade
 	devenv luminance-hdr.sln /build "%Configuration%|%Platform%"
 	popd
