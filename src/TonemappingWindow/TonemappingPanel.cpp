@@ -653,6 +653,7 @@ void TonemappingPanel::fromGui2Txt(QString destination)
     out << "# Editing this file by hand is risky, worst case scenario is Luminance crashing." << endl;
     out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
     out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
+	out << "XSIZE=" << sizes[sizeComboBox->currentIndex()] << endl;
 
     QWidget *current_page = stackedWidget_operators->currentWidget();
     if (current_page == page_mantiuk06)
@@ -759,6 +760,16 @@ void TonemappingPanel::fromTxt2Gui()
                 return;
             }
         }
+		else if (field == "XSIZE")
+		{
+			int idx;
+			for (idx = 0; idx < sizeComboBox->count(); idx++)
+			{
+					if (sizes[idx] == value.toInt())
+						break;
+			}
+			sizeComboBox->setCurrentIndex(idx);
+		}
         else if (field == "TMO")
         {
             if (value == "Ashikhmin02") {

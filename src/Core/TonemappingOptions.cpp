@@ -140,7 +140,9 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
                                 throw (QApplication::tr("ERROR: File too old, cannot parse Tone Mapping Setting file: ")+fname);
 // 				return NULL;
                         }
-                } else if (field=="TMO") {
+                } else if (field=="XSIZE") {
+						toreturn->xsize=value.toInt();
+				} else if (field=="TMO") {
                         if (value=="Ashikhmin02") {
                                 toreturn->tmoperator=ashikhmin;
                         } else if (value == "Drago03") {

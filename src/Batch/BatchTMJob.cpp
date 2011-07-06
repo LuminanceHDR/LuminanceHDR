@@ -83,7 +83,7 @@ void BatchTMJob::run()
             opts->tonemapSelection = false; // just to be sure!
             opts->origxsize = m_working_frame->getWidth();
             //opts->xsize = 400; // DEBUG
-            opts->xsize = opts->origxsize;
+            //opts->xsize = opts->origxsize;
 
             TMOThread * tmo_thread = TMOFactory::getTMOThread(opts->tmoperator, m_working_frame, opts);
 
