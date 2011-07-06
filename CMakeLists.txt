@@ -121,7 +121,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LIB_HDR_INCLUDE
 	src/Common/msec_timer.h
-        src/Libpfs/vex.h
+    src/Libpfs/vex.h
 	src/Libpfs/array2d.h
 	src/Libpfs/channel.h
 	src/Libpfs/colorspace.h
@@ -142,7 +142,7 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/pfsoutldrimage.h
 # PFS TMO
 	src/TonemappingOperators/pfstmo.h
-        src/TonemappingOperators/pfstmdefaultparams.h
+    src/TonemappingOperators/pfstmdefaultparams.h
 	src/TonemappingOperators/ashikhmin02/pyramid.h
 	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h
 	src/TonemappingOperators/drago03/tmo_drago03.h
@@ -178,7 +178,7 @@ ENDIF()
 
 SET(LIB_HDR_SRC
 	src/Common/msec_timer.cpp
-        src/Libpfs/vex.cpp
+    src/Libpfs/vex.cpp
 	src/Libpfs/array2d.cpp
 	src/Libpfs/channel.cpp
 	src/Libpfs/colorspace.cpp
@@ -252,7 +252,7 @@ SET(LIB_HDR_MOC
 )
 
 SET(LUMINANCE_HDR_INCLUDE
-        src/Core/TonemappingOptions.h
+    src/Core/TonemappingOptions.h
 	src/arch/math.h
 	src/arch/malloc.h
 	src/arch/minmax.h
@@ -269,16 +269,16 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
-        src/Common/options.h
-        src/Common/config.h
+    src/Common/options.h
+    src/Common/config.h
 )
 
 SET(LUMINANCE_HDR_SRC
 	src/Batch/BatchTMDialog.cpp
 	src/Batch/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
-#        src/Core/TMWorker.cpp
-        src/Core/TonemappingOptions.cpp
+#   src/Core/TMWorker.cpp
+    src/Core/TonemappingOptions.cpp
 	src/Exif/ExifOperations.cpp
 	src/HdrCreation/HdrCreationManager.cpp
 	src/HdrWizard/EditingTools.cpp
@@ -311,10 +311,9 @@ SET(LUMINANCE_HDR_SRC
 	src/Threads/Reinhard05Thread.cpp
 	src/Threads/TMOThread.cpp
 	src/Threads/TMOFactory.cpp
-	src/TonemappingWindow/TMOProgressIndicator.cpp
-	src/TonemappingWindow/TonemappingPanel.cpp
-	src/TonemappingWindow/TonemappingWarnDialog.cpp
-	src/TonemappingWindow/TonemappingWindow.cpp
+	src/TonemappingPanel/TMOProgressIndicator.cpp
+	src/TonemappingPanel/TonemappingPanel.cpp
+	src/TonemappingPanel/TonemappingWarnDialog.cpp
 	src/TransplantExif/TransplantExifDialog.cpp
 	src/UI/UMessageBox.cpp
 	src/Viewers/GenericViewer.cpp
@@ -367,10 +366,9 @@ SET(LUMINANCE_HDR_MOC
 	src/Threads/Reinhard02Thread.h
 	src/Threads/Reinhard05Thread.h
 	src/Threads/TMOThread.h
-	src/TonemappingWindow/TMOProgressIndicator.h
-	src/TonemappingWindow/TonemappingPanel.h
-	src/TonemappingWindow/TonemappingWarnDialog.h
-	src/TonemappingWindow/TonemappingWindow.h
+	src/TonemappingPanel/TMOProgressIndicator.h
+	src/TonemappingPanel/TonemappingPanel.h
+	src/TonemappingPanel/TonemappingWarnDialog.h
 	src/TransplantExif/TransplantExifDialog.h
 	src/Viewers/GenericViewer.h
 	src/Viewers/HdrViewer.h
@@ -403,7 +401,6 @@ SET(LUMINANCE_HDR_UI
 	forms/Splash.ui
 	forms/TonemappingPanel.ui
 	forms/TonemappingWarnDialog.ui
-	forms/TonemappingWindow.ui
 	forms/TransplantExifDialog.ui
 	forms/about.ui
 )

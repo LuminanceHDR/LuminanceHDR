@@ -60,7 +60,7 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/Libpfs/vex.h \
 			src/MainWindow/MainWindow.h \
 			src/MainWindow/DnDOption.h \
-                            src/UI/UMessageBox.h \
+            src/UI/UMessageBox.h \
 			src/HelpBrowser/LuminancePaths.h \
 			src/HelpBrowser/schelptreemodel.h \
 			src/HelpBrowser/treeitem.h \
@@ -68,10 +68,9 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/HelpBrowser/sctextbrowser.h \
 			src/HelpBrowser/helpbrowser.h \
 			src/HelpBrowser/HelpSideBar.h \
-			src/TonemappingWindow/TonemappingWindow.h \
-			src/TonemappingWindow/TonemappingPanel.h \
-			src/TonemappingWindow/TMOProgressIndicator.h \
-			src/TonemappingWindow/TonemappingWarnDialog.h \
+			src/TonemappingPanel/TonemappingPanel.h \
+			src/TonemappingPanel/TMOProgressIndicator.h \
+			src/TonemappingPanel/TonemappingWarnDialog.h \
 			src/Viewers/GenericViewer.h \
 			src/Viewers/HdrViewer.h \
 			src/Viewers/LdrViewer.h \
@@ -133,13 +132,13 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/TonemappingOperators/mantiuk08/cqp/initial_point.h \
 			src/Batch/BatchTMDialog.h \
 			src/Batch/BatchTMJob.h \
-                        src/Exif/ExifOperations.h \
-                    src/Core/IOWorker.h \
-                                              src/Core/TonemappingOptions.h \
-    src/Libpfs/domio.h \
-    src/Libpfs/frame.h \
-    src/Libpfs/tag.h \
-    src/Libpfs/channel.h \
+            src/Exif/ExifOperations.h \
+            src/Core/IOWorker.h \
+            src/Core/TonemappingOptions.h \
+    		src/Libpfs/domio.h \
+    		src/Libpfs/frame.h \
+    		src/Libpfs/tag.h \
+    		src/Libpfs/channel.h \
 			src/PreviewPanel/PreviewLabel.h \ 
 			src/PreviewPanel/PreviewPanel.h \
 			src/TonemappingOperators/pfstmdefaultparams.h
@@ -161,7 +160,7 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/Libpfs/vex.cpp \
 			src/MainWindow/MainWindow.cpp \
 			src/MainWindow/DnDOption.cpp \
-                        src/UI/UMessageBox.cpp \
+            src/UI/UMessageBox.cpp \
 			src/HelpBrowser/LuminancePaths.cpp \
 			src/HelpBrowser/treeitem.cpp \
 			src/HelpBrowser/treemodel.cpp \
@@ -169,10 +168,9 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/HelpBrowser/sctextbrowser.cpp \
 			src/HelpBrowser/helpbrowser.cpp \
 			src/HelpBrowser/HelpSideBar.cpp \
-			src/TonemappingWindow/TonemappingWindow.cpp \
-			src/TonemappingWindow/TonemappingPanel.cpp \
-			src/TonemappingWindow/TMOProgressIndicator.cpp \
-			src/TonemappingWindow/TonemappingWarnDialog.cpp \
+			src/TonemappingPanel/TonemappingPanel.cpp \
+			src/TonemappingPanel/TMOProgressIndicator.cpp \
+			src/TonemappingPanel/TonemappingWarnDialog.cpp \
 			src/Viewers/GenericViewer.cpp \
 			src/Viewers/HdrViewer.cpp \
 			src/Viewers/LdrViewer.cpp \
@@ -248,13 +246,13 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/TonemappingOperators/mantiuk08/cqp/mg_pdip.c \
 			src/Batch/BatchTMDialog.cpp \
 			src/Batch/BatchTMJob.cpp \
-                          src/Core/IOWorker.cpp \
-                          src/Core/TonemappingOptions.cpp \
+            src/Core/IOWorker.cpp \
+            src/Core/TonemappingOptions.cpp \
 			src/Exif/ExifOperations.cpp \
-    src/Libpfs/domio.cpp \
-    src/Libpfs/frame.cpp \
-    src/Libpfs/tag.cpp \
-    src/Libpfs/channel.cpp \
+		    src/Libpfs/domio.cpp \
+    		src/Libpfs/frame.cpp \
+		    src/Libpfs/tag.cpp \
+		    src/Libpfs/channel.cpp \
 			src/PreviewPanel/PreviewLabel.cpp \
 			src/PreviewPanel/PreviewPanel.cpp
 
