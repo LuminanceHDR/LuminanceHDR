@@ -53,7 +53,6 @@
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
 #include "Threads/LoadHdrThread.h"
-#include "TonemappingWindow/TonemappingWindow.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
