@@ -542,6 +542,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
   "\t" + tr("-p --tmoptions         Tone mapping operator options. Legal values are: ") + "\n" +
   "\t\t" + tr("alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)") + "\n" +
   "\t\t" + tr("contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)") + "\n" +
+  "\t\t" + tr("colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)") + "\n" +
   "\t\t" + tr("localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)") + "\n" +
   "\t\t" + tr("sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand)") + "\n" +
   "\t\t" + tr("bias=VALUE (for drago)") + "\n" +
