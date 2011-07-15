@@ -248,6 +248,13 @@ void PreferencesDialog::ok_clicked() {
 		}
 	settings->endGroup();
 
+	settings->beginGroup(GROUP_HDR_WIZARD);
+		if (checkBoxWizardShowFirstPage->isChecked() != luminance_options->wizard_show_firstpage) {
+			luminance_options->wizard_show_firstpage = checkBoxWizardShowFirstPage->isChecked();
+			settings->setValue(KEY_WIZARD_SHOWFIRSTPAGE,checkBoxWizardShowFirstPage->isChecked());
+		}
+	settings->endGroup();
+
 	settings->beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
 		
 		luminance_options->four_color_rgb = four_color_rgb_CB->isChecked();
@@ -689,6 +696,7 @@ void PreferencesDialog::from_options_to_gui() {
 	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
 	checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
+	checkBoxWizardShowFirstPage->setChecked(luminance_options->wizard_show_firstpage);
 
 	four_color_rgb_CB->setChecked(luminance_options->four_color_rgb);
 	do_not_use_fuji_rotate_CB->setChecked(luminance_options->do_not_use_fuji_rotate);

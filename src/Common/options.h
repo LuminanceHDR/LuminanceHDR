@@ -51,6 +51,8 @@ public:
 	bool tmowindow_showprocessed;
 	//if true always show preview panel
 	bool tmowindow_showpreviewpanel;
+	//if true always show first page of hdr wizard
+	bool wizard_show_firstpage;
 	// if true (default) warn user about differing results with small frames
 	bool tmowarning_fattalsmall;
 	//path to save temporary cached pfs files.

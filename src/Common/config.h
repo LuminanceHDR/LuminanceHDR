@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
  *
@@ -24,7 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define LUMINANCEVERSION "2.1.0-alpha1"
+#define LUMINANCEVERSION "2.1.0-beta1"
 #define TMOSETTINGSVERSION "0.5"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
@@ -48,9 +48,11 @@
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
 
 #define GROUP_TMOWINDOW "TMOWindow_Options"
+#define GROUP_HDR_WIZARD "HDR_Wizard_Options"
 #define KEY_TMOWINDOW_MAX "TMOWindow_Max"
 #define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_ShowProcessed"
 #define KEY_TMOWINDOW_SHOWPREVIEWPANEL "TMOWindow_ShowPreviewPanel"
+#define KEY_WIZARD_SHOWFIRSTPAGE "Wizard_ShowFirstPage"
 
 #define GROUP_TMOWARNING "TMOWarning_Options"
 #define KEY_TMOWARNING_FATTALSMALL "TMOWarning_fattalsmall"

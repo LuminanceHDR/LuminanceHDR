@@ -98,7 +98,7 @@ void LuminanceOptions::loadFromQSettings()
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWINDOW);
-	        if (!settings->contains(KEY_TMOWINDOW_MAX))
+        if (!settings->contains(KEY_TMOWINDOW_MAX))
 			settings->setValue(KEY_TMOWINDOW_MAX,false);
 		tmowindow_max=settings->value(KEY_TMOWINDOW_MAX,false).toBool();
 		
@@ -109,6 +109,12 @@ void LuminanceOptions::loadFromQSettings()
 		if (!settings->contains(KEY_TMOWINDOW_SHOWPREVIEWPANEL))
 			settings->setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL,true);
 		tmowindow_showpreviewpanel=settings->value(KEY_TMOWINDOW_SHOWPREVIEWPANEL,true).toBool();
+	settings->endGroup();
+
+	settings->beginGroup(GROUP_HDR_WIZARD);
+		if (!settings->contains(KEY_WIZARD_SHOWFIRSTPAGE))
+			settings->setValue(KEY_WIZARD_SHOWFIRSTPAGE,true);
+		wizard_show_firstpage=settings->value(KEY_WIZARD_SHOWFIRSTPAGE,true).toBool();
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWARNING);

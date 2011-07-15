@@ -66,6 +66,11 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 	}
 
 	luminance_options = LuminanceOptions::getInstance();
+	
+	if (luminance_options->wizard_show_firstpage == false) {
+		NextFinishButton->setEnabled(false);
+    	pagestack->setCurrentIndex(1);		
+	}
 
 	progressBar->hide();
 
@@ -345,6 +350,7 @@ void HdrWizard::finishedAligning() {
 	QApplication::restoreOverrideCursor();
 	NextFinishButton->setEnabled(true);
 	pagestack->setCurrentIndex(2);
+	progressBar->hide();
 }
 
 void HdrWizard::ais_failed(QProcess::ProcessError e) {
@@ -478,6 +484,9 @@ void HdrWizard::NextFinishButtonClicked() {
 			EVgroupBox->setDisabled(true);
 			tableWidget->setDisabled(true);
 			repaint();
+			progressBar->setMaximum(0);
+			progressBar->setMinimum(0);
+			progressBar->show();
 			if (ais_radioButton->isChecked())
 				hdrCreationManager->align_with_ais();
 			else
