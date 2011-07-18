@@ -211,6 +211,7 @@ void MainWindow::createMenus()
     connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
     connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
     connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
+    connect(fileSaveAllAction, SIGNAL(triggered()), this, SLOT(fileSaveAll()));
     connect(fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
 
@@ -372,6 +373,37 @@ void MainWindow::updateRecentDirLDRSetting(QString newvalue)
     settings->setValue(KEY_RECENT_PATH_SAVE_LDR, newvalue); // update settings
 }
 
+void MainWindow::fileSaveAll()
+{
+    if (m_tabwidget->count() <= 0) return;
+	
+	QWidget *wgt;
+	GenericViewer *g_v;
+	LdrViewer *l_v; 
+
+	QString dir = QFileDialog::getExistingDirectory(0, tr("Save files in"), RecentDirLDRSetting);
+
+	if (!dir.isEmpty())
+	{
+		updateRecentDirLDRSetting(dir);
+		for (int i = 0; i < m_tabwidget->count(); i++)
+		{
+			wgt = m_tabwidget->widget(i);
+			g_v = (GenericViewer *)wgt;	
+
+    		if ( !g_v->isHDR() )
+    		{
+        		l_v = dynamic_cast<LdrViewer*>(g_v);
+
+				QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+				QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
+				
+            	emit save_ldr_frame(l_v, outfname, 100);
+			}
+		}
+	}
+}
+
 void MainWindow::fileSaveAs()
 {
     if (m_tabwidget->count() <= 0) return;
@@ -424,9 +456,11 @@ void MainWindow::fileSaveAs()
         filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
         filetypes += "BMP (*.bmp *.BMP)";
 
+		QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+		
         QString outfname = QFileDialog::getSaveFileName(this,
                                                 QObject::tr("Save the LDR image as..."),
-                                                RecentDirLDRSetting, 
+                                                RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg", 
                                                 filetypes);
 
         if ( !outfname.isEmpty() )
@@ -538,6 +572,8 @@ void MainWindow::updateActionsNoImage()
 void MainWindow::updateActionsLdrImage()
 {
     fileSaveAsAction->setEnabled(true);
+	if (num_ldr_generated >= 2)
+	    fileSaveAllAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
 
     // Histogram
@@ -1643,8 +1679,11 @@ void MainWindow::removeTab(int t)
     }
     else
     {
+		num_ldr_generated--;
         m_tabwidget->removeTab(t);
         w->deleteLater();   // delete yourself whenever you want
+		if (num_ldr_generated == 1)
+			fileSaveAllAction->setEnabled(false);
     }
     updatePreviousNextActions();
 }

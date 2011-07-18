@@ -154,6 +154,7 @@
    <addaction name="fileNewAction"/>
    <addaction name="fileOpenAction"/>
    <addaction name="fileSaveAsAction"/>
+   <addaction name="fileSaveAllAction"/>
    <addaction name="separator"/>
    <addaction name="actionLock"/>
    <addaction name="zoomInAct"/>
@@ -956,6 +957,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="fileSaveAllAction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/new/prefix1/images/filesaveall.png</normaloff>:/new/prefix1/images/filesaveall.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save All</string>
+   </property>
+   <property name="toolTip">
+    <string>Save All LDR files</string>
    </property>
   </action>
  </widget>

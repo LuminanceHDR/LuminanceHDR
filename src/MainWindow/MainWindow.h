@@ -93,6 +93,7 @@ protected Q_SLOTS:
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
     void fileSaveAs();
+    void fileSaveAll();
     void saveHdrPreview();
 
     void rotateccw_requested();
