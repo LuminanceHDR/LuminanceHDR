@@ -103,6 +103,7 @@ signals:
 	void finishedAligning();
 	void expotimeValueChanged(float,int);
 	void ais_failed(QProcess::ProcessError);
+	void aisDataReady(QByteArray data);
 
 private:
 	//List of input files (absolute pathnames)
@@ -149,5 +150,6 @@ private slots:
 	void ldrReady(    QImage *, int, float, QString, bool);
 	void mdrReady(pfs::Frame *, int, float, QString);
 	void loadFailed(QString fname, int index);
+	void readData();
 };
 #endif

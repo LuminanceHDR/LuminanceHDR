@@ -260,6 +260,7 @@ void HdrCreationManager::align_with_ais() {
 	ais->setEnvironment(env);
 	connect(ais, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(ais_finished(int,QProcess::ExitStatus)));
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
+	connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
 	
 	QStringList ais_parameters = luminance_options->align_image_stack_options;
 	if (filesToRemove[0] == "") {
@@ -511,3 +512,8 @@ void HdrCreationManager::remove(int index) {
 	startedProcessing.removeAt(index);
 }
 
+void HdrCreationManager::readData()
+{
+	QByteArray data = ais->readAll();
+	emit aisDataReady(data);
+}

@@ -179,11 +179,20 @@ QStringList PreferencesDialog::sanitizeAISparams() {
 		}
 // 		qDebug("now adding");
 		temp_ais_options.insert(idx_a+1,"aligned_");
-	} else {
+	} 
+	//check if we have '-v'
+	temp_ais_options=aisParamsLineEdit->text().split(" ",QString::SkipEmptyParts);
+	idx_a=temp_ais_options.indexOf("-v");
+	if (idx_a==-1) {
+// 		qDebug("missing, adding");
+		temp_ais_options+="-v";
+	}
+	else
+	{
 		align_opt_was_ok=true;
 	}
 	if (!align_opt_was_ok) {
-		QMessageBox::information(this,tr("Option -a..."),tr("LuminanceHDR requires align_image_stack to be executed with the \"-a aligned_\" option. Command line options have been corrected."));
+		QMessageBox::information(this,tr("Option -v -a..."),tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
 	}
 	return temp_ais_options;
 }

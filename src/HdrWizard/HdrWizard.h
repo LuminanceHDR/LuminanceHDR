@@ -103,6 +103,7 @@ private slots:
 	void editingEVfinished();
 	void reject();
 	void ais_failed(QProcess::ProcessError);
+	void writeAisData(QByteArray data);
 	void setupConnections();
 };
 #endif

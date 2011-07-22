@@ -73,6 +73,7 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 	}
 
 	progressBar->hide();
+	textEdit->hide();
 
 	setupConnections();
 }
@@ -137,6 +138,7 @@ void HdrWizard::setupConnections() {
 	connect(hdrCreationManager,SIGNAL(expotimeValueChanged(float,int)),this, SLOT(updateGraphicalEVvalue(float,int)));
 	connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(finishedAligning()));
 	connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+	connect(hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
 
 	connect(this,SIGNAL(rejected()),hdrCreationManager,SLOT(removeTempFiles()));
 
@@ -487,8 +489,10 @@ void HdrWizard::NextFinishButtonClicked() {
 			progressBar->setMaximum(0);
 			progressBar->setMinimum(0);
 			progressBar->show();
-			if (ais_radioButton->isChecked())
+			if (ais_radioButton->isChecked()) {
+				textEdit->show();
 				hdrCreationManager->align_with_ais();
+			}
 			else
 				hdrCreationManager->align_with_mtb();
 			return;
@@ -713,3 +717,10 @@ void HdrWizard::keyPressEvent(QKeyEvent *event) {
 		emit reject();
 	}
 }
+
+void HdrWizard::writeAisData(QByteArray data)
+{
+	qDebug() << data;
+	textEdit->append(data);
+}
+
