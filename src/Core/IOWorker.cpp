@@ -195,7 +195,7 @@ void IOWorker::get_frame(QString fname)
         else if (rawinput)
         {
             // raw file detected
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false, progress_cb, this);
         }
         else
         {
@@ -223,5 +223,21 @@ void IOWorker::get_frame(QString fname)
     emit read_success(hdrpfsframe, fname);
 }
 
+void IOWorker::emitNextStep(int iteration)
+{
+	emit setValue(iteration);
+}
 
+void IOWorker::emitMaximumValue(int expected)
+{
+	emit setMaximum(expected);
+}
+
+int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
+{
+	IOWorker *ptr = (IOWorker *) data;
+	ptr->emitMaximumValue(expected);
+	ptr->emitNextStep(iteration);
+	return 0;
+}
 

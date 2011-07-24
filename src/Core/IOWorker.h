@@ -34,19 +34,30 @@
 #include <QString>
 #include <QStringList>
 
+#ifdef __APPLE__
+#include <libraw.h>
+#else
+#include <libraw/libraw.h>
+#endif
+
 #include "Libpfs/pfs.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
 #include "Common/options.h"
+
+int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
 
 class IOWorker : public QObject
 {
     Q_OBJECT
 
 private:
+	friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
     LuminanceOptions* luminance_options;
 
     void get_frame(QString fname);
+	void emitNextStep(int iteration);
+	void emitMaximumValue(int iteration);
 public:
     IOWorker(QObject* parent = 0);
     virtual ~IOWorker();
@@ -57,6 +68,7 @@ public slots:
 
     bool write_hdr_frame(HdrViewer* frame, QString filename);
     void write_ldr_frame(LdrViewer* frame, QString filename, int quality);
+
 signals:
     void read_failed(QString error_message);
     void read_success(pfs::Frame*, QString fname);

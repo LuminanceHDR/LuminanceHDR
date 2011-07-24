@@ -26,9 +26,18 @@
 
 #include <QThread>
 #include <QImage>
+#include <QDebug>
+
+#ifdef __APPLE__
+#include <libraw.h>
+#else
+#include <libraw/libraw.h>
+#endif
 
 #include "Common/options.h"
 #include "Libpfs/frame.h"
+
+int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected);
 
 class HdrInputLoader : public QThread {
     Q_OBJECT
@@ -41,9 +50,14 @@ signals:
     void mdrReady(pfs::Frame *mdrImage, int index, float expotime, QString new_fname);
     void thumbReady(QImage *thumb);
     void loadFailed(QString errormessage, int index);
+	void maximumValue(int);
+	void nextstep(int);
 protected:
     void run();
 private:
+	friend int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected);
+	void emitNextStep(int iteration);
+	void emitMaximumValue(int iteration);
     int image_idx;
     QString fname;
     LuminanceOptions *luminance_options;

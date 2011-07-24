@@ -249,8 +249,10 @@ void HdrWizard::loadInputFiles(QStringList files, int count) {
 	int shift = tableWidget->rowCount();
 	tableWidget->setEnabled(false);
 	tableWidget->setRowCount(shift + count);
-	progressBar->setMaximum(count);
-	progressBar->setValue(0);
+	//progressBar->setMaximum(count);
+	//progressBar->setValue(0);
+	connect(hdrCreationManager, SIGNAL(maximumValue(int)), progressBar, SLOT(setMaximum(int)));
+	connect(hdrCreationManager, SIGNAL(nextstep(int)), progressBar, SLOT(setValue(int)));
 	progressBar->show();
 	
 	hdrCreationManager->setShift(shift);

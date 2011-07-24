@@ -109,6 +109,8 @@ void HdrCreationManager::loadInputFiles() {
 			connect(thread, SIGNAL(loadFailed(QString,int)), this, SLOT(loadFailed(QString,int)));
 			connect(thread, SIGNAL(ldrReady(QImage *, int, float, QString, bool)), this, SLOT(ldrReady(QImage *, int, float, QString, bool)));
 			connect(thread, SIGNAL(mdrReady(pfs::Frame *, int, float, QString)), this, SLOT(mdrReady(pfs::Frame *, int, float, QString)));
+			connect(thread, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
+			connect(thread, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			thread->start();
 			firstNotStarted++;
 			runningThreads++;

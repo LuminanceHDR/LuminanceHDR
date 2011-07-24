@@ -105,6 +105,9 @@ signals:
 	void ais_failed(QProcess::ProcessError);
 	void aisDataReady(QByteArray data);
 
+	void maximumValue(int);
+	void nextstep(int);
+
 private:
 	//List of input files (absolute pathnames)
 	QStringList fileList;

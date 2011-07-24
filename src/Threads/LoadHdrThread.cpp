@@ -108,7 +108,7 @@ void LoadHdrThread::run()
         }
         else if (rawinput)
         {
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false, prog_cb, this);
         } //raw file detected
         else
         {
@@ -135,3 +135,22 @@ void LoadHdrThread::run()
     }
     emit hdr_ready(hdrpfsframe, fname);
 }
+
+void LoadHdrThread::emitNextStep(int iteration)
+{
+	emit nextstep(iteration);
+}
+
+void LoadHdrThread::emitMaximumValue(int expected)
+{
+	emit maximumValue(expected);
+}
+
+int prog_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
+{
+	LoadHdrThread *ptr = (LoadHdrThread *) data;
+	ptr->emitMaximumValue(expected);
+	ptr->emitNextStep(iteration);
+	return 0;
+}
+

@@ -25,8 +25,18 @@
 #define IOTHREAD_H
 
 #include <QThread>
+#include <QDebug>
+
+#ifdef __APPLE__
+#include <libraw.h>
+#else
+#include <libraw/libraw.h>
+#endif
+
 #include "Common/options.h"
 #include "Libpfs/frame.h"
+
+int prog_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
 
 class LoadHdrThread : public QThread {
     Q_OBJECT
@@ -45,6 +55,9 @@ signals:
 protected:
     void run();
 private:
+	friend int prog_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+	void emitNextStep(int iteration);
+	void emitMaximumValue(int iteration);
     QString fname;
     QString RecentDirHDRSetting;
     LuminanceOptions *luminance_options;

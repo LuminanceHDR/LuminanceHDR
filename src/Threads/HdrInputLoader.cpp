@@ -89,7 +89,7 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),luminance_options, true);
+			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),luminance_options, true, prog_callback, this);
 			if (frame == NULL)
 				throw "Failed Loading Image";
 
@@ -109,3 +109,23 @@ void HdrInputLoader::run() {
 		return;
 	}
 }
+
+void HdrInputLoader::emitNextStep(int iteration)
+{
+	emit nextstep(iteration);
+}
+
+void HdrInputLoader::emitMaximumValue(int expected)
+{
+	emit maximumValue(expected);
+}
+
+int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected)
+{
+	qDebug() << iteration << expected;
+	HdrInputLoader *ptr = (HdrInputLoader *) data;
+	ptr->emitMaximumValue(expected);
+	ptr->emitNextStep(iteration);
+	return 0;
+}
+

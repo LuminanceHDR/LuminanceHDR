@@ -22,11 +22,6 @@
  *
  */
 
-#ifdef __APPLE__
-#include <libraw.h>
-#else
-#include <libraw/libraw.h>
-#endif
 
 #include <vector>
 #include <cmath>
@@ -84,6 +79,7 @@ void Temperature_to_RGB(double T, double RGB[3])
 }
 /*********** END UFRAW CODE *****************************************************/
 
+
 #define P1 RawProcessor.imgdata.idata
 #define S RawProcessor.imgdata.sizes
 #define C RawProcessor.imgdata.color
@@ -91,9 +87,11 @@ void Temperature_to_RGB(double T, double RGB[3])
 #define P2 RawProcessor.imgdata.other
 #define OUT RawProcessor.imgdata.params
 
-pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk)
+pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk, progress_callback cb,\
+	void *callback_data)
 {  
   LibRaw RawProcessor;
+  RawProcessor.set_progress_handler(cb, callback_data);
   int ret;
 
   OUT.filtering_mode = LIBRAW_FILTERING_AUTOMATIC;
@@ -123,8 +121,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     Temperature_to_RGB(Temp, RGB);
 
     RGB[1] = RGB[1] / options->green;	
-    
-    if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
+
+   if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
       std::cout << "Error Opening RAW File" << std::endl;
       RawProcessor.recycle();
       return NULL;
