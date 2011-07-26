@@ -223,7 +223,7 @@ void TonemappingPanel::createDatabase()
 	if (res == false)
 		qDebug() << query.lastError();
 	// Mantiuk 08
-	res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, colorEnhancement real, luminanceLevel real, manualLuminanceLevel boolean NOT NULL, pregamma real, comment varchar(150));");
+	res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk08 (colorSaturation real, contrastEnhancement real, luminanceLevel real, manualLuminanceLevel boolean NOT NULL, pregamma real, comment varchar(150));");
 	if (res == false)
 		qDebug() << query.lastError();
 	// Ashikhmin
