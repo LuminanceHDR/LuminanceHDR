@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -63,6 +63,8 @@ void HdrInputLoader::run() {
 		//if tiff
 		else if(extension.startsWith("TIF")) {
 			TiffReader reader(QFile::encodeName(qfi.filePath()).constData(), (luminance_options->tempfilespath).toAscii().constData(), true);
+            connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
+            connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
 				QImage *newimage=reader.readIntoQImage();
