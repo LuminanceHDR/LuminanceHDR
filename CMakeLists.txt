@@ -9,6 +9,7 @@ FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit REQUIRED)
 # add Qt modules here, the include will setup QT_LIBRARIES
 SET(QT_USE_QTXML TRUE)
 SET(QT_USE_QTWEBKIT TRUE)
+SET(QT_USE_QTSQL TRUE)
 
 # Include the qtmain lib if we are on the windows platform
 IF(WIN32)
@@ -18,7 +19,7 @@ ENDIF(WIN32)
 
 INCLUDE(${QT_USE_FILE})
 
-set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES})
+set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
 #IF(WIN32 AND NOT MSVC)
 #  FIND_LIBRARY(QT_GIF_PLUGIN qgif PATHS ${QT_PLUGINS_DIR} PATH_SUFFIXES imageformats)
@@ -314,6 +315,8 @@ SET(LUMINANCE_HDR_SRC
 	src/TonemappingPanel/TMOProgressIndicator.cpp
 	src/TonemappingPanel/TonemappingPanel.cpp
 	src/TonemappingPanel/TonemappingWarnDialog.cpp
+	src/TonemappingPanel/SavedParametersDialog.cpp
+	src/TonemappingPanel/SavingParametersDialog.cpp
 	src/TransplantExif/TransplantExifDialog.cpp
 	src/UI/UMessageBox.cpp
 	src/Viewers/GenericViewer.cpp
@@ -369,6 +372,8 @@ SET(LUMINANCE_HDR_MOC
 	src/TonemappingPanel/TMOProgressIndicator.h
 	src/TonemappingPanel/TonemappingPanel.h
 	src/TonemappingPanel/TonemappingWarnDialog.h
+	src/TonemappingPanel/SavedParametersDialog.h
+	src/TonemappingPanel/SavingParametersDialog.h
 	src/TransplantExif/TransplantExifDialog.h
 	src/Viewers/GenericViewer.h
 	src/Viewers/HdrViewer.h
@@ -403,6 +408,8 @@ SET(LUMINANCE_HDR_UI
 	forms/TonemappingWarnDialog.ui
 	forms/TransplantExifDialog.ui
 	forms/about.ui
+	forms/SavedParametersDialog.ui
+	forms/SavingParametersDialog.ui
 )
 
 SET(LUMINANCE_TS

@@ -97,6 +97,7 @@ protected:
 
     float heightToWidthRatio;
     bool adding_custom_size;
+	void createDatabase();
 
 protected Q_SLOTS:
     void on_pregammadefault_clicked();
@@ -113,6 +114,18 @@ protected Q_SLOTS:
     void fillCustomSizeComboBox();
     void updateCurrentTmoOperator(int);
     void updateUndoState();
+	void loadParameters();
+	void saveParameters();
+	void loadComments();
+	void execMantiuk06Query(bool, float, float,	float, QString);
+	void execMantiuk08Query(float, float, float, bool, QString);
+	void execAshikhminQuery(bool, bool, float, QString);
+	void execDragoQuery(float, QString);
+	void execDurandQuery(float, float, float, QString);
+	void execFattalQuery(float, float, float, float, bool, QString);
+	void execPattanaikQuery(bool, bool, float, float, float, QString);
+	void execReinhard02Query(bool, float, float, int, int, int, QString);
+	void execReinhard05Query(float, float, float, QString);
 
 public:
     TonemappingPanel(QWidget *parent = 0);

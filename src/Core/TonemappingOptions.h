@@ -35,7 +35,8 @@
 #include <QString>
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
-enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
+// all is used by SavedParametersDialog to select comments from all operators
+enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik, all};
 
 class TonemappingOptions
 {
