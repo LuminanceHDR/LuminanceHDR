@@ -249,10 +249,10 @@ void HdrWizard::loadInputFiles(QStringList files, int count) {
 	int shift = tableWidget->rowCount();
 	tableWidget->setEnabled(false);
 	tableWidget->setRowCount(shift + count);
-	//progressBar->setMaximum(count);
-	//progressBar->setValue(0);
-	connect(hdrCreationManager, SIGNAL(maximumValue(int)), progressBar, SLOT(setMaximum(int)));
-	connect(hdrCreationManager, SIGNAL(nextstep(int)), progressBar, SLOT(setValue(int)));
+	progressBar->setMaximum(count);
+	progressBar->setValue(0);
+	//connect(hdrCreationManager, SIGNAL(maximumValue(int)), progressBar, SLOT(setMaximum(int)));
+	//connect(hdrCreationManager, SIGNAL(nextstep(int)), progressBar, SLOT(setValue(int)));
 	progressBar->show();
 	
 	hdrCreationManager->setShift(shift);
@@ -372,6 +372,8 @@ void HdrWizard::ais_failed(QProcess::ProcessError e) {
 		QMessageBox::warning(this,tr("Error..."),tr("An unknown error occurred while executing the \"<em>align_image_stack</em>\" application..."));
 	break;
 	}
+	progressBar->hide();
+	textEdit->hide();
 	QApplication::restoreOverrideCursor();
 	alignGroupBox->setEnabled(true);
 	alignCheckBox->setChecked(false);
