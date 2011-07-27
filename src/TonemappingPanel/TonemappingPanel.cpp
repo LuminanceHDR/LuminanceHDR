@@ -216,7 +216,15 @@ void TonemappingPanel::createDatabase()
     db.setDatabaseName(filename);
     db.setHostName("localhost");
 	bool ok = db.open();
-	qDebug() << ok;
+	if (!ok)
+	{
+		QMessageBox::warning(this,tr("TM Database Problem"),
+                                  tr("The database used for saving TM parameters cannot be opened"),
+                                  QMessageBox::Ok,QMessageBox::NoButton);
+		return;
+	}
+	qDebug() << "Database opened";
+
 	QSqlQuery query;
 	// Mantiuk 06
 	bool res = query.exec(" CREATE TABLE IF NOT EXISTS mantiuk06 (contrastEqualization boolean NOT NULL, contrastFactor real, saturationFactor real, detailFactor real, pregamma real, comment varchar(150));");
@@ -1132,6 +1140,8 @@ void TonemappingPanel::loadParameters()
 	if (dialog.exec())
 	{
 		QSqlTableModel *model = dialog.getModel();
+		if (model->rowCount() == 0)
+			return;
 		int selectedRow = dialog.getCurrentIndex().row();
 		// Ashikhmin
 		bool simple,
@@ -1356,10 +1366,6 @@ void TonemappingPanel::loadComments()
 				contrastdsb->setValue(query.value(2).toFloat());
 				pregammaSlider->setValue(query.value(3).toFloat());
 				pregammadsb->setValue(query.value(3).toFloat());
-				qDebug() << query.value(0).toBool();
-				qDebug() << query.value(1).toBool();
-				qDebug() << query.value(2).toFloat();
-				qDebug() << query.value(3).toFloat();
 			}
 		}
 		else if (tmOperator == "drago")
@@ -1507,7 +1513,6 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization, float contr
 {
 	qDebug() << "TonemappingPanel::execMantiuk06Query";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, saturationFactor, detailFactor, pregamma, comment) "
@@ -1528,10 +1533,6 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation, float contrastE
 {
 	qDebug() << "TonemappingPanel::execMantiuk08Query";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
-	qDebug() << db.tables();
-	qDebug() << db.record("mantiuk06");
-	qDebug() << db.record("mantiuk08");
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, luminanceLevel, manualLuminanceLevel, pregamma, comment) "
@@ -1551,7 +1552,6 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct, QStr
 {
 	qDebug() << "TonemappingPanel::execAshikhminQuery";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment) "
@@ -1570,7 +1570,6 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment)
 {
 	qDebug() << "TonemappingPanel::execDragoQuery";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO drago (bias, pregamma, comment) "
@@ -1587,7 +1586,6 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base, Q
 {
 	qDebug() << "TonemappingPanel::execDurandQuery";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO durand (spatial, range, base, pregamma, comment) "
@@ -1606,7 +1604,6 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
 {
 	qDebug() << "TonemappingPanel::execFattalQuery";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, oldFattal, pregamma, comment) "
@@ -1627,7 +1624,6 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, 
 {
 	qDebug() << "TonemappingPanel::execPattanaikQuery";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, pregamma, comment) "
@@ -1648,7 +1644,6 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi, in
 {
 	qDebug() << "TonemappingPanel::execReinhard02Query";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, pregamma, comment) "
@@ -1670,7 +1665,6 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 {
 	qDebug() << "TonemappingPanel::execReinhard05Query";
 	QSqlDatabase db = QSqlDatabase::database();
-	qDebug() << db;
 	QSqlQuery query(db);
 	float pregamma = pregammadsb->value();
 	query.prepare("INSERT INTO reinhard05 (brightness, chromaticAdaptation, lightAdaptation, pregamma, comment) "
