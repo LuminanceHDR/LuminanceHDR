@@ -97,6 +97,9 @@ MainWindow::~MainWindow()
 
     settings->setValue("MainWindowState", saveState());
     settings->setValue("MainWindowGeometry", saveGeometry());
+
+	qRegisterMetaType<QImage>("QImage");
+	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
 }
 
 void MainWindow::init()
@@ -164,7 +167,8 @@ void MainWindow::createCentralWidget()
     // add panel to central widget
     m_centralwidget_splitter->addWidget(previewPanel);
     m_centralwidget_splitter->setStretchFactor(2, 1);
-    
+
+	tmPanel->hide();
     previewPanel->hide();
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
@@ -928,6 +932,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
     else
     {
+		tmPanel->show();
         HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1424,6 +1429,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         tmPanel->setEnabled(false);
         thread->startTonemapping();
         statusBar()->addWidget(progInd);
+		progInd->show();
     }
 }
 
@@ -1675,6 +1681,7 @@ void MainWindow::removeTab(int t)
             tmPanel->setEnabled(false);
             actionShowPreviewPanel->setEnabled(false);
         }
+		tmPanel->hide();
         previewPanel->hide();
     }
     else
