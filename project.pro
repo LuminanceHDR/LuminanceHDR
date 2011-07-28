@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += qt release thread
+CONFIG += qt release thread console
 DEFINES += QT_NO_DEBUG_OUTPUT
 
 # Default compilation optimizations until Luminance HDR 2.0.1-1
@@ -11,7 +11,7 @@ QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer
 QMAKE_CXXFLAGS += -g3 -fno-inline
 QMAKE_CFLAGS += -g3 -fno-inline
 
-QT += xml webkit sql console
+QT += xml webkit sql
 
 TARGET = luminance-hdr
 
