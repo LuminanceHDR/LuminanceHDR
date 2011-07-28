@@ -2123,7 +2123,7 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QToolButton" name="loadCommentsButton">
             <property name="toolTip">
-             <string>Load parameter by comment</string>
+             <string>Load parameters by comment</string>
             </property>
             <property name="text">
              <string>...</string>
