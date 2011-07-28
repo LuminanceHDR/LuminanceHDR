@@ -11,7 +11,7 @@ QMAKE_CFLAGS += -ffast-math -msse -fomit-frame-pointer
 QMAKE_CXXFLAGS += -g3 -fno-inline
 QMAKE_CFLAGS += -g3 -fno-inline
 
-QT += xml webkit
+QT += xml webkit sql console
 
 TARGET = luminance-hdr
 
@@ -41,7 +41,10 @@ FORMS = forms/MainWindow.ui \
 		forms/HelpBrowser.ui \
 		forms/HelpSideBar.ui \
 		forms/TonemappingWarnDialog.ui \
-		forms/PreviewPanel.ui
+		forms/PreviewPanel.ui \
+		forms/SavedParametersDialog.ui \
+		forms/SavingParametersDialog.ui
+
 
 HEADERS +=  src/Libpfs/array2d.h \
 			src/Libpfs/colorspace.h \
@@ -71,6 +74,8 @@ HEADERS +=  src/Libpfs/array2d.h \
 			src/TonemappingPanel/TonemappingPanel.h \
 			src/TonemappingPanel/TMOProgressIndicator.h \
 			src/TonemappingPanel/TonemappingWarnDialog.h \
+			src/TonemappingPanel/SavedParametersDialog.h \
+			src/TonemappingPanel/SavingParametersDialog.h \
 			src/Viewers/GenericViewer.h \
 			src/Viewers/HdrViewer.h \
 			src/Viewers/LdrViewer.h \
@@ -171,6 +176,8 @@ SOURCES +=  src/Libpfs/array2d.cpp \
 			src/TonemappingPanel/TonemappingPanel.cpp \
 			src/TonemappingPanel/TMOProgressIndicator.cpp \
 			src/TonemappingPanel/TonemappingWarnDialog.cpp \
+			src/TonemappingPanel/SavedParametersDialog.cpp \
+			src/TonemappingPanel/SavingParametersDialog.cpp \
 			src/Viewers/GenericViewer.cpp \
 			src/Viewers/HdrViewer.cpp \
 			src/Viewers/LdrViewer.cpp \
