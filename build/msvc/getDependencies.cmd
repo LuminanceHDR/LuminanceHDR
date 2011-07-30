@@ -268,6 +268,10 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	pushd LuminanceHdrStuff
 	%CYGWIN_DIR%\bin\svn.exe co https://qtpfsgui.svn.sourceforge.net/svnroot/qtpfsgui/trunk/qtpfsgui 
 	popd
+) ELSE (
+	pushd LuminanceHdrStuff
+	%CYGWIN_DIR%\bin\svn.exe update qtpfsgui 
+	popd
 )
 
 IF NOT EXIST LuminanceHdrStuff\DEPs (

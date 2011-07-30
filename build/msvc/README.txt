@@ -20,6 +20,17 @@ This build process requires:
 * Qt for MSVC installed
   - official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
   - working 64 bit and 32 bit Qt from: http://code.google.com/p/qt-msvc-installer/
+  ATTENTION: Do not mix the compilation with different versions of MSVC. If you 
+             compile Luminance with VC2010 you should also have Qt compiled
+             with VC2010. If you don't find any precompiled Qt with a 
+             specific MSVC or platform version, you can just download the 
+             latest version of a precompiled Qt with any VC compiler, 
+             open the VC command prompt in the Qt main directory and then run:
+             > configure.exe -sse2 -mp -fast
+             > nmake sub-src
+             This recompiles the whole Qt and takes from 30 minutes to several hours...
+             This reconfiguration can also be applied for generating x64 Qt versions!
+             
 * CMake
 * Cygwin installed with: sed, cvs, gzip, svn, tar, unzip, wget
 
