@@ -40,7 +40,6 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
-#include <QDir>
 
 #include "Common/config.h"
 #include "TonemappingPanel.h"
@@ -213,13 +212,14 @@ void TonemappingPanel::createDatabase()
 	qDebug() << filename;
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(filename);
-    db.setHostName("localhost");
+	db.setDatabaseName(filename);
+	db.setHostName("localhost");
 	bool ok = db.open();
 	if (!ok)
 	{
 		QMessageBox::warning(this,tr("TM Database Problem"),
-                                  tr("The database used for saving TM parameters cannot be opened"),
+                                  tr("The database used for saving TM parameters cannot be opened.\n"
+									"Error: %1").arg(db.lastError().databaseText()),
                                   QMessageBox::Ok,QMessageBox::NoButton);
 		return;
 	}
