@@ -772,8 +772,13 @@ void HelpBrowser::zoomOut_clicked() {
 }
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {
-	if ((url.scheme() == "http") || url.scheme() == "https")
+	if ((url.scheme() == "http") || url.scheme() == "https") {
+#ifdef WIN32
+		QDesktopServices::openUrl(url);
+#else
 		textBrowser->load(url);
+#endif
+	}
 	else {
 		QApplication::restoreOverrideCursor();
 		if ( QMessageBox::warning(this, tr("LuminanceHDR - Help Browser"),
