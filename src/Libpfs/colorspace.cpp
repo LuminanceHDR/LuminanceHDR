@@ -95,13 +95,13 @@ namespace pfs
       f_timer.start();
 #endif
 
-      const float* __r = inC1->getRawData();
-      const float* __g = inC2->getRawData();
-      const float* __b = inC3->getRawData();
+      const float* r = inC1->getRawData();
+      const float* g = inC2->getRawData();
+      const float* b = inC3->getRawData();
 
-      float* __x = outC1->getRawData();
-      float* __y = outC2->getRawData();
-      float* __z = outC3->getRawData();
+      float* x = outC1->getRawData();
+      float* y = outC2->getRawData();
+      float* z = outC3->getRawData();
 
       float i1, i2, i3;
       float t1, t2, t3;
@@ -111,17 +111,17 @@ namespace pfs
 #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
       for( int idx = 0; idx < elems ; idx++ )
       {
-          i1 = clamp(__r[idx], 0, 1);
-          i2 = clamp(__g[idx], 0, 1);
-          i3 = clamp(__b[idx], 0, 1);
+          i1 = clamp(r[idx], 0.f, 1.f);
+          i2 = clamp(g[idx], 0.f, 1.f);
+          i3 = clamp(b[idx], 0.f, 1.f);
 
           t1 = (i1 <= 0.04045f ? i1 / 12.92f : powf( (i1 + 0.055f) / 1.055f, 2.4f )  );
           t2 = (i2 <= 0.04045f ? i2 / 12.92f : powf( (i2 + 0.055f) / 1.055f, 2.4f )  );
           t3 = (i3 <= 0.04045f ? i3 / 12.92f : powf( (i3 + 0.055f) / 1.055f, 2.4f )  );
 
-          __x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
-          __y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
-          __z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
+          x[idx] = rgb2xyzD65Mat[0][0]*t1 + rgb2xyzD65Mat[0][1]*t2 + rgb2xyzD65Mat[0][2]*t3;
+          y[idx] = rgb2xyzD65Mat[1][0]*t1 + rgb2xyzD65Mat[1][1]*t2 + rgb2xyzD65Mat[1][2]*t3;
+          z[idx] = rgb2xyzD65Mat[2][0]*t1 + rgb2xyzD65Mat[2][1]*t2 + rgb2xyzD65Mat[2][2]*t3;
       }
 
 #ifdef TIMER_PROFILING
@@ -138,13 +138,13 @@ namespace pfs
       f_timer.start();
 #endif
 
-      const float* __x = inC1->getRawData();
-      const float* __y = inC2->getRawData();
-      const float* __z = inC3->getRawData();
+      const float* x = inC1->getRawData();
+      const float* y = inC2->getRawData();
+      const float* z = inC3->getRawData();
 
-      float* __r = outC1->getRawData();
-      float* __g = outC2->getRawData();
-      float* __b = outC3->getRawData();
+      float* r = outC1->getRawData();
+      float* g = outC2->getRawData();
+      float* b = outC3->getRawData();
 
       float i1, i2, i3;
       float t1, t2, t3;
@@ -154,21 +154,21 @@ namespace pfs
 #pragma omp parallel for private(i1,i2,i3,t1,t2,t3)
       for( int idx = 0; idx < ELEMS; idx++ )
       {
-          i1 = __x[idx];
-          i2 = __y[idx];
-          i3 = __z[idx];
+          i1 = x[idx];
+          i2 = y[idx];
+          i3 = z[idx];
 
           t1 = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
           t2 = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
           t3 = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
 
-          t1 = clamp( t1, 0, 1 );
-          t2 = clamp( t2, 0, 1 );
-          t3 = clamp( t3, 0, 1 );
+          t1 = clamp( t1, 0.f, 1.f );
+          t2 = clamp( t2, 0.f, 1.f );
+          t3 = clamp( t3, 0.f, 1.f );
 
-          __r[idx] = (t1 <= 0.0031308f ? t1 *= 12.92f : 1.055f * powf( t1, 1.f/2.4f ) - 0.055f);
-          __g[idx] = (t2 <= 0.0031308f ? t2 *= 12.92f : 1.055f * powf( t2, 1.f/2.4f ) - 0.055f);
-          __b[idx] = (t3 <= 0.0031308f ? t3 *= 12.92f : 1.055f * powf( t3, 1.f/2.4f ) - 0.055f);
+          r[idx] = (t1 <= 0.0031308f ? t1 *= 12.92f : 1.055f * powf( t1, 1.f/2.4f ) - 0.055f);
+          g[idx] = (t2 <= 0.0031308f ? t2 *= 12.92f : 1.055f * powf( t2, 1.f/2.4f ) - 0.055f);
+          b[idx] = (t3 <= 0.0031308f ? t3 *= 12.92f : 1.055f * powf( t3, 1.f/2.4f ) - 0.055f);
       }
 
 #ifdef TIMER_PROFILING
@@ -256,13 +256,13 @@ namespace pfs
       f_timer.start();
 #endif
 
-      const float* __r = inC1->getRawData();
-      const float* __g = inC2->getRawData();
-      const float* __b = inC3->getRawData();
+      const float* r = inC1->getRawData();
+      const float* g = inC2->getRawData();
+      const float* b = inC3->getRawData();
 
-      float* __x = outC1->getRawData();
-      float* __y = outC2->getRawData();
-      float* __z = outC3->getRawData();
+      float* x = outC1->getRawData();
+      float* y = outC2->getRawData();
+      float* z = outC3->getRawData();
 
       float i1, i2, i3;
       const int ELEMS = inC1->getRows()*inC1->getCols();
@@ -270,13 +270,13 @@ namespace pfs
 #pragma omp parallel for private(i1,i2,i3)
       for( int idx = 0; idx < ELEMS; idx++ )
       {
-          i1 = __r[idx];
-          i2 = __g[idx];
-          i3 = __b[idx];
+          i1 = r[idx];
+          i2 = g[idx];
+          i3 = b[idx];
 
-          __x[idx] = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
-          __y[idx] = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
-          __z[idx] = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
+          x[idx] = rgb2xyzD65Mat[0][0]*i1 + rgb2xyzD65Mat[0][1]*i2 + rgb2xyzD65Mat[0][2]*i3;
+          y[idx] = rgb2xyzD65Mat[1][0]*i1 + rgb2xyzD65Mat[1][1]*i2 + rgb2xyzD65Mat[1][2]*i3;
+          z[idx] = rgb2xyzD65Mat[2][0]*i1 + rgb2xyzD65Mat[2][1]*i2 + rgb2xyzD65Mat[2][2]*i3;
       }
 
 #ifdef TIMER_PROFILING
@@ -293,13 +293,13 @@ namespace pfs
       f_timer.start();
 #endif
 
-      const float* __x = inC1->getRawData();
-      const float* __y = inC2->getRawData();
-      const float* __z = inC3->getRawData();
+      const float* x = inC1->getRawData();
+      const float* y = inC2->getRawData();
+      const float* z = inC3->getRawData();
 
-      float* __r = outC1->getRawData();
-      float* __g = outC2->getRawData();
-      float* __b = outC3->getRawData();
+      float* r = outC1->getRawData();
+      float* g = outC2->getRawData();
+      float* b = outC3->getRawData();
 
       float i1, i2, i3;
       const int ELEMS = inC1->getRows()*inC1->getCols();
@@ -307,13 +307,13 @@ namespace pfs
 #pragma omp parallel for schedule(static, 5120) private(i1,i2,i3)
       for( int idx = 0; idx < ELEMS; idx++ )
       {
-          i1 = __x[idx];
-          i2 = __y[idx];
-          i3 = __z[idx];
+          i1 = x[idx];
+          i2 = y[idx];
+          i3 = z[idx];
 
-          __r[idx] = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
-          __g[idx] = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
-          __b[idx] = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
+          r[idx] = xyz2rgbD65Mat[0][0]*i1 + xyz2rgbD65Mat[0][1]*i2 + xyz2rgbD65Mat[0][2]*i3;
+          g[idx] = xyz2rgbD65Mat[1][0]*i1 + xyz2rgbD65Mat[1][1]*i2 + xyz2rgbD65Mat[1][2]*i3;
+          b[idx] = xyz2rgbD65Mat[2][0]*i1 + xyz2rgbD65Mat[2][1]*i2 + xyz2rgbD65Mat[2][2]*i3;
       }
 
 #ifdef TIMER_PROFILING
