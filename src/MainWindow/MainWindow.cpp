@@ -106,6 +106,7 @@ void MainWindow::init()
 {
     helpBrowser = NULL;
     num_ldr_generated = 0;
+    curr_num_ldr_open = 0;
 
     createUI();
     loadOptions();
@@ -460,11 +461,11 @@ void MainWindow::fileSaveAs()
         filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
         filetypes += "BMP (*.bmp *.BMP)";
 
-		QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-		
+                QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+
         QString outfname = QFileDialog::getSaveFileName(this,
                                                 QObject::tr("Save the LDR image as..."),
-                                                RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg", 
+                                                RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg",
                                                 filetypes);
 
         if ( !outfname.isEmpty() )
@@ -575,10 +576,11 @@ void MainWindow::updateActionsNoImage()
 
 void MainWindow::updateActionsLdrImage()
 {
+    // Read/Save
     fileSaveAsAction->setEnabled(true);
-	if (num_ldr_generated >= 2)
-	    fileSaveAllAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
+    if (curr_num_ldr_open >= 2)
+        fileSaveAllAction->setEnabled(true);
 
     // Histogram
     menuHDR_Histogram->setEnabled(false);
@@ -1436,16 +1438,19 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 void MainWindow::addLDRResult(QImage* image)
 {
     num_ldr_generated++;
+    curr_num_ldr_open++;
 
     LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
     if (fitToWindowAct->isChecked())
         n->fitToWindow(true);
 
+    /*
     if (luminance_options->tmowindow_max)
         n->showMaximized();
     else
         n->showNormal();
+    */
 
     connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
     connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
@@ -1681,16 +1686,18 @@ void MainWindow::removeTab(int t)
             tmPanel->setEnabled(false);
             actionShowPreviewPanel->setEnabled(false);
         }
-		tmPanel->hide();
+
+        tmPanel->hide();
         previewPanel->hide();
     }
     else
     {
-		num_ldr_generated--;
+        curr_num_ldr_open--;
         m_tabwidget->removeTab(t);
         w->deleteLater();   // delete yourself whenever you want
-		if (num_ldr_generated == 1)
-			fileSaveAllAction->setEnabled(false);
+
+        if (curr_num_ldr_open == 1)
+            fileSaveAllAction->setEnabled(false);
     }
     updatePreviousNextActions();
 }

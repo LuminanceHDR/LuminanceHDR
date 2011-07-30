@@ -236,6 +236,7 @@ protected:
         TonemappingOptions* curr_tm_options;
     } tm_status;
     int num_ldr_generated;
+    int curr_num_ldr_open;
 
     pfs::Frame * getSelectedFrame(HdrViewer *hdr);
     void getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
