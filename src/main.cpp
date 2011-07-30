@@ -31,6 +31,7 @@
 
 #ifdef WIN32
 #include <QMessageBox>
+#include <windows.h>
 #endif
 
 int main( int argc, char ** argv )
@@ -58,6 +59,9 @@ int main( int argc, char ** argv )
 #endif
 
     //GUI application
+#ifdef WIN32
+		FreeConsole();
+#endif
     Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
 
