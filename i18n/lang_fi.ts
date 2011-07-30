@@ -2392,6 +2392,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>ParametersDialog</name>
+    <message>
+        <source>Saved Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Preferences</source>
@@ -3143,11 +3150,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Option -a...</source>
-        <translation>Asetus -a...</translation>
+        <translation type="obsolete">Asetus -a...</translation>
     </message>
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
-        <translation>LuminanceHDR vaatii että align_image_stack suoritetaan &quot;-a aligned_&quot; asetuksella. Komentoriviasetukset on korjattu.</translation>
+        <translation type="obsolete">LuminanceHDR vaatii että align_image_stack suoritetaan &quot;-a aligned_&quot; asetuksella. Komentoriviasetukset on korjattu.</translation>
     </message>
     <message>
         <source>Please restart...</source>
@@ -3183,6 +3190,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Always show Wizard first page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Option -v -a...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3395,6 +3410,164 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Scale</source>
         <translation>&amp;Muuta kuvan kokoa</translation>
+    </message>
+</context>
+<context>
+    <name>SavedParameters</name>
+    <message>
+        <source>Simple</source>
+        <translation type="unfinished">Yksinkertainen</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local Contrast Threshold</source>
+        <translation type="unfinished">Paikallisen kontrastin kynnysarvo</translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="unfinished">Bias</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation type="unfinished">Spatial Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation type="unfinished">Range Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation type="unfinished">Base Contrast</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="unfinished">Alpha</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished">Beta</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="unfinished">Värin saturaatio</translation>
+    </message>
+    <message>
+        <source>Noise Reduction</source>
+        <translation type="unfinished">Kohinanpoisto</translation>
+    </message>
+    <message>
+        <source>Old Fattal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="unfinished">Kontrastin tasoitus</translation>
+    </message>
+    <message>
+        <source>Contrast Factor</source>
+        <translation type="unfinished">Kontrastin kerroin</translation>
+    </message>
+    <message>
+        <source>Saturation Factor</source>
+        <translation type="unfinished">Värikylläisyyden kerroin</translation>
+    </message>
+    <message>
+        <source>Detail Factor</source>
+        <translation type="unfinished">Yksityiskohtien kerroin</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished">Kontrastin parannus</translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished">Luminanssin taso</translation>
+    </message>
+    <message>
+        <source>Manual Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="unfinished">Cone and Rod based on Luminance</translation>
+    </message>
+    <message>
+        <source>Local Tonemapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="unfinished">Cone Level</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="unfinished">Rod Level</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="unfinished">Kerroin</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="unfinished">Use Sclaes</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="unfinished">Key Value</translation>
+    </message>
+    <message>
+        <source>Phi Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="unfinished">Range</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="unfinished">Lower Scale</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="unfinished">Upper Scale</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="unfinished">Kirkkaus</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="unfinished">Kromaattinen adaptaatio</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="unfinished">Valon adaptaatio</translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SavingParameters</name>
+    <message>
+        <source>Saving Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a short comment for the saved parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3913,6 +4086,27 @@ Valinta</translation>
     <message>
         <source>Enter the width of the new size:</source>
         <translation>Sytö uuden koon leveys:</translation>
+    </message>
+    <message>
+        <source>Load parameters by comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load saved parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save current parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TM Database Problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database used for saving TM parameters cannot be opened.
+Error: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
