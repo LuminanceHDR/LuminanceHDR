@@ -107,6 +107,7 @@ void MainWindow::init()
     helpBrowser = NULL;
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
+    m_isLocked = false;
 
     createUI();
     loadOptions();
