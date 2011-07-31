@@ -169,7 +169,7 @@ void MainWindow::createCentralWidget()
     m_centralwidget_splitter->addWidget(previewPanel);
     m_centralwidget_splitter->setStretchFactor(2, 1);
 
-	tmPanel->hide();
+    tmPanel->hide();
     previewPanel->hide();
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
@@ -1442,16 +1442,6 @@ void MainWindow::addLDRResult(QImage* image)
 
     LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
-    if (fitToWindowAct->isChecked())
-        n->fitToWindow(true);
-
-    /*
-    if (luminance_options->tmowindow_max)
-        n->showMaximized();
-    else
-        n->showNormal();
-    */
-
     connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
     connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
@@ -1461,6 +1451,12 @@ void MainWindow::addLDRResult(QImage* image)
     else
         m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
     m_tabwidget->setCurrentWidget(n);
+
+    // This portion of code MUST appear after addTab() and setCurrentWidget()
+    //if (fitToWindowAct->isChecked())
+    n->fitToWindow(true);
+    //if ( n->getScaleFactor() > 1.0f )
+    //    n->zoomToFactor(1.0f);
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
