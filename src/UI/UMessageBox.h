@@ -74,7 +74,7 @@ public:
       bool license_file_not_found=true;
       QString docDir = QCoreApplication::applicationDirPath();
       docDir.append("/../Resources");
-      QStringList paths = QStringList( BASEDIR "/share/doc/luminance") << BASEDIR "/share/luminance" << docDir << "/Applications/luminance.app/Contents/Resources" << "./";
+      QStringList paths = QStringList( BASEDIR "/share/doc/luminance-hdr") << BASEDIR "/share/luminance-hdr" << docDir << "/Applications/luminance.app/Contents/Resources" << "./" << QCoreApplication::applicationDirPath();
       foreach (QString path,paths)
       {
           QString fname(path+QString("/LICENSE"));
