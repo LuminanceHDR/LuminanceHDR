@@ -456,6 +456,9 @@
                <layout class="QVBoxLayout" name="verticalLayout_22">
                 <item>
                  <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Maximize result</string>
                   </property>
@@ -463,6 +466,9 @@
                 </item>
                 <item>
                  <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
                   <property name="text">
                    <string>Always show Processed HDR</string>
                   </property>
@@ -520,347 +526,321 @@
         </layout>
        </widget>
        <widget class="QWidget" name="hdrOptionsPage">
-        <layout class="QGridLayout" name="gridLayout_13">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_24">
-           <item>
-            <widget class="QGroupBox" name="hdrTiffGroupBox">
-             <property name="toolTip">
-              <string>Choose what type of HDR TIFF to save to</string>
-             </property>
-             <property name="title">
-              <string>HDR TIFF File Format</string>
-             </property>
-             <layout class="QVBoxLayout" name="_4">
-              <property name="spacing">
-               <number>8</number>
+        <layout class="QVBoxLayout" name="_3">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="hdrTiffGroupBox">
+           <property name="toolTip">
+            <string>Choose what type of HDR TIFF to save to</string>
+           </property>
+           <property name="title">
+            <string>HDR TIFF File Format</string>
+           </property>
+           <layout class="QVBoxLayout" name="_4">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="margin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QRadioButton" name="logLuvRadioButton">
+              <property name="toolTip">
+               <string>Good quality and smaller file size</string>
               </property>
-              <property name="margin">
-               <number>5</number>
+              <property name="text">
+               <string>LogLuv TIFF (float, 16bit per color channel)</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="floatTiffRadioButton">
+              <property name="toolTip">
+               <string>Better quality, larger file size, better compatibility with other applications</string>
+              </property>
+              <property name="text">
+               <string>Float TIFF (float, 32bit per color channel)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="colorsGroupBox">
+           <property name="title">
+            <string>Colors</string>
+           </property>
+           <layout class="QVBoxLayout" name="_5">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="margin">
+             <number>5</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="_6">
               <item>
-               <widget class="QRadioButton" name="logLuvRadioButton">
-                <property name="toolTip">
-                 <string>Good quality and smaller file size</string>
-                </property>
+               <widget class="QLabel" name="negativeColorsLabel">
                 <property name="text">
-                 <string>LogLuv TIFF (float, 16bit per color channel)</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
+                 <string>Show negative numbers as:</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="floatTiffRadioButton">
-                <property name="toolTip">
-                 <string>Better quality, larger file size, better compatibility with other applications</string>
+               <spacer>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="negativeColorButton">
                 <property name="text">
-                 <string>Float TIFF (float, 32bit per color channel)</string>
+                 <string/>
                 </property>
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="colorsGroupBox">
-             <property name="title">
-              <string>Colors</string>
-             </property>
-             <layout class="QVBoxLayout" name="_5">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <property name="margin">
-               <number>5</number>
-              </property>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="_7">
               <item>
-               <layout class="QHBoxLayout" name="_6">
-                <property name="spacing">
-                 <number>6</number>
+               <widget class="QLabel" name="ifnanColorLabel">
+                <property name="text">
+                 <string>Show nan and +/-Inf values as:</string>
                 </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLabel" name="negativeColorsLabel">
-                  <property name="text">
-                   <string>Show negative numbers as:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="negativeColorButton">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="_7">
-                <property name="spacing">
-                 <number>6</number>
+               <spacer>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
                 </property>
-                <property name="margin">
-                 <number>0</number>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <item>
-                 <widget class="QLabel" name="ifnanColorLabel">
-                  <property name="text">
-                   <string>Show nan and +/-Inf values as:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="ifnanColorButton">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QPushButton" name="ifnanColorButton">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>30</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>30</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tonemappingPage">
-        <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_25">
-           <item>
-            <widget class="QGroupBox" name="tempDirGroupBox">
-             <property name="title">
-              <string>Cache</string>
-             </property>
-             <layout class="QVBoxLayout" name="_9">
-              <property name="spacing">
-               <number>8</number>
+        <layout class="QVBoxLayout" name="_8">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="tempDirGroupBox">
+           <property name="title">
+            <string>Cache</string>
+           </property>
+           <layout class="QVBoxLayout" name="_9">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="margin">
+             <number>5</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="tempDirDescriptionLabel">
+              <property name="text">
+               <string>Where to store temporary data:</string>
               </property>
-              <property name="margin">
-               <number>5</number>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="_10">
               <item>
-               <widget class="QLabel" name="tempDirDescriptionLabel">
-                <property name="text">
-                 <string>Where to store temporary data:</string>
+               <widget class="QLineEdit" name="lineEditTempPath">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="wordWrap">
+                <property name="readOnly">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="_10">
-                <property name="spacing">
-                 <number>6</number>
+               <widget class="QPushButton" name="chooseCachePathButton">
+                <property name="text">
+                 <string>C&amp;hoose</string>
                 </property>
-                <property name="margin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QLineEdit" name="lineEditTempPath">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="chooseCachePathButton">
-                  <property name="text">
-                   <string>C&amp;hoose</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="batchGroupBox">
-             <property name="title">
-              <string>Batch Tone Mapping</string>
-             </property>
-             <layout class="QVBoxLayout" name="_11">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <property name="margin">
-               <number>5</number>
-              </property>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="batchGroupBox">
+           <property name="title">
+            <string>Batch Tone Mapping</string>
+           </property>
+           <layout class="QVBoxLayout" name="_11">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <property name="margin">
+             <number>5</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="_12">
               <item>
-               <layout class="QHBoxLayout" name="_12">
-                <property name="spacing">
-                 <number>6</number>
+               <widget class="QLabel" name="batchLdrFormatLabel">
+                <property name="toolTip">
+                 <string>Which LDR image format to save to</string>
                 </property>
-                <property name="margin">
-                 <number>0</number>
+                <property name="text">
+                 <string>LDR image &amp;format:</string>
                 </property>
-                <item>
-                 <widget class="QLabel" name="batchLdrFormatLabel">
-                  <property name="toolTip">
-                   <string>Which LDR image format to save to</string>
-                  </property>
-                  <property name="text">
-                   <string>LDR image &amp;format:</string>
-                  </property>
-                  <property name="buddy">
-                   <cstring>batchLdrFormatComboBox</cstring>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="batchLdrFormatComboBox">
-                  <property name="toolTip">
-                   <string>Which LDR image format to save to</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>JPEG</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PNG</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PPM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PBM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>BMP</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
+                <property name="buddy">
+                 <cstring>batchLdrFormatComboBox</cstring>
+                </property>
+               </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="_13">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <property name="margin">
-                 <number>0</number>
+               <widget class="QComboBox" name="batchLdrFormatComboBox">
+                <property name="toolTip">
+                 <string>Which LDR image format to save to</string>
                 </property>
                 <item>
-                 <widget class="QLabel" name="numThreadsLabel">
-                  <property name="toolTip">
-                   <string>Amount of threads to use on multicore/SMP machines</string>
-                  </property>
-                  <property name="text">
-                   <string>Number of &amp;threads:</string>
-                  </property>
-                  <property name="wordWrap">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buddy">
-                   <cstring>numThreadspinBox</cstring>
-                  </property>
-                 </widget>
+                 <property name="text">
+                  <string>JPEG</string>
+                 </property>
                 </item>
                 <item>
-                 <widget class="QSpinBox" name="numThreadspinBox">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="toolTip">
-                   <string>Amount of threads to use on multicore/SMP machines</string>
-                  </property>
-                  <property name="minimum">
-                   <number>1</number>
-                  </property>
-                  <property name="maximum">
-                   <number>10</number>
-                  </property>
-                 </widget>
+                 <property name="text">
+                  <string>PNG</string>
+                 </property>
                 </item>
-               </layout>
+                <item>
+                 <property name="text">
+                  <string>PPM</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>PBM</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>BMP</string>
+                 </property>
+                </item>
+               </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="_13">
+              <item>
+               <widget class="QLabel" name="numThreadsLabel">
+                <property name="toolTip">
+                 <string>Amount of threads to use on multicore/SMP machines</string>
+                </property>
+                <property name="text">
+                 <string>Number of &amp;threads:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+                <property name="buddy">
+                 <cstring>numThreadspinBox</cstring>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="numThreadspinBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>Amount of threads to use on multicore/SMP machines</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -876,8 +856,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>624</width>
-              <height>326</height>
+              <width>291</width>
+              <height>163</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1091,8 +1071,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>341</width>
-              <height>344</height>
+              <width>367</width>
+              <height>408</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1815,8 +1795,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>405</width>
-              <height>166</height>
+              <width>446</width>
+              <height>198</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2188,8 +2168,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>264</width>
-              <height>140</height>
+              <width>276</width>
+              <height>186</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2413,73 +2393,75 @@ p, li { white-space: pre-wrap; }
         </layout>
        </widget>
        <widget class="QWidget" name="externalToolsPage">
-        <layout class="QGridLayout" name="gridLayout_15">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_26">
-           <item>
-            <widget class="QGroupBox" name="aisGroupBox">
-             <property name="title">
-              <string>align_image_stack commandline arguments:</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_10">
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_26">
-                <item>
-                 <spacer name="horizontalSpacer_13">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="aisParamsLineEdit">
-                  <property name="toolTip">
-                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <layout class="QVBoxLayout" name="_14">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="aisGroupBox">
+           <property name="title">
+            <string>align_image_stack commandline arguments:</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_26">
+              <item>
+               <spacer name="horizontalSpacer_13">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="aisParamsLineEdit">
+                <property name="toolTip">
+                 <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_14">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_14">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>121</width>
-               <height>51</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="spacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>121</width>
+             <height>51</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -2487,12 +2469,6 @@ p, li { white-space: pre-wrap; }
      </item>
      <item>
       <layout class="QHBoxLayout" name="_2">
-       <property name="spacing">
-        <number>6</number>
-       </property>
-       <property name="margin">
-        <number>0</number>
-       </property>
        <item>
         <spacer name="spacer_3">
          <property name="orientation">
