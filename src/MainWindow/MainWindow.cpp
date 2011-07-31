@@ -821,6 +821,8 @@ void MainWindow::viewerZoomIn()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
+	fitToWindowAct->setChecked(false);
+
     g_v->zoomIn();
     updateMagnificationButtons(g_v);
 }
@@ -830,6 +832,8 @@ void MainWindow::viewerZoomOut()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+	fitToWindowAct->setChecked(false);
 
     g_v->zoomOut();
     updateMagnificationButtons(g_v);
@@ -850,6 +854,8 @@ void MainWindow::viewerOriginalSize()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+	fitToWindowAct->setChecked(false);
 
     g_v->normalSize();
     updateMagnificationButtons(g_v);
