@@ -468,12 +468,30 @@ ELSEIF(UNIX)
   ADD_DEFINITIONS(-DI18NDIR="${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n")
   ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})  
 ELSEIF(WIN32)
-  # icon files to copy in the bundle
-  SET( LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc" )
+	# icon files to copy in the bundle
+	SET( LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc" )
+
+	ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
+	ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
+	# Set icon!
   
-  ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
-  ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
-  # Set icon!
+	# copies all necessary Qt dlls from the Qt binary dir to the output folder
+	SET(QT_RELEASE_DLLS
+        phonon4.dll
+        QtCore4.dll
+        QtGui4.dll
+        QtMultimedia4.dll
+        QtNetwork4.dll
+        QtSql4.dll
+        QtWebKit4.dll
+        QtXml4.dll
+        QtXmlPatterns4.dll
+	)
+	FOREACH (dll ${QT_RELEASE_DLLS})
+		file(COPY "${QT_BINARY_DIR}/${dll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release")
+		string(REPLACE "4" "d4" debugdll ${dll})
+		file(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
+	ENDFOREACH()
 ENDIF()
 
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})

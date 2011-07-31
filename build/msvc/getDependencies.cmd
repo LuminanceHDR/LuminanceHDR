@@ -102,7 +102,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2476 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2571 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
@@ -331,6 +331,30 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 	devenv luminance-hdr.sln /build "%Configuration%|%Platform%"
 	popd
 )
+
+IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
+	IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
+			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%
+		)
+	)
+
+	pushd LuminanceHdrStuff\DEPs\bin
+	for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+		copy %%v ..\..\qtpfsgui.build\%Configuration%
+	)
+	popd
+	
+	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
+		mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
+		copy LuminanceHdrStuff\qtpfsgui.build\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
+	)
+	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
+		mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
+		xcopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /D /E /C /R /H /I /K /Y
+	)
+)
+
 
 goto end
 
