@@ -25,7 +25,7 @@
 #define CONFIG_H
 
 #define LUMINANCEVERSION "2.1.0"
-#define TMOSETTINGSVERSION "0.5"
+#define TMOSETTINGSVERSION "0.6"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
 #define KEY_TM_TOOLBAR_MODE "TonemappingWindowToolbarVisualizationMode"
