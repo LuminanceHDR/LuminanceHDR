@@ -10,27 +10,26 @@
 
 <h3>Interactive Tone Mapping</h3>
 
-<p>To start tonemapping an HDR file click the "Tonemap HDR image" button in the mail toolbar or use <strong>Ctrl+T</strong> shortcut. This will open a new dialog.</p>
+<p>To start tonemapping an HDR file click the "Tonemap" button in the tonemappimg panel or use <strong>Ctrl+T</strong> shortcut.</p>
 
-<p>The dialog contains a menu bar, a toolbar, a status bar that displays advanced tooltips, a sidebar with various options and an area for tonemapped images.</p>
-
-<p><img src="images/tonemapdialog.jpg" /></p>
+<p><img src="images/mainwin.jpeg" /></p>
 
 <p>The tone mapping step first applies to the HDR the gamma value specified by the pregamma value, then the tone mapping operator is applied.</p>
 
 <p>Adjusting pregamma is an optional step, so you can safely start with picking an operator. The available operators are listed in a combobox on top of Tone Mapping Panel. Most useful operators are listed first. The last two operators, Ashikhmin and Pattanaik, have less practical use for photography, but can be of interest for robotic vision specialists.</p>
 
-<p>Having chosen the operator, tweak its settings, choose resulting size and click <strong>Apply</strong> button in the bottom to tonemap an HDR image to an LDR image. Please see the "Tonemapping operators reference" chapter for details on using a particular operator.</p>
+<p>Having chosen the operator, tweak its settings, choose resulting size and click <strong>Tonemap</strong> button in the bottom to tonemap an HDR image to an LDR image. Please see the "Tonemapping operators reference" chapter for details on using a particular operator.</p>
 
-<p>Because three of nine available operators (both Mantiuks and Fattal) are gradient domain operators that cannot provide consistent results on all result sizes by design, Luminance HDR has no preview function. However you can click the <strong>HDR Image</strong> button in the toolbar, drag a rectangle to select a small portion of the original image and enable the "Tonemap Selection" checkbox on the Tonemapping Panel to try your settings on just that part of the image. Then, when results are satisfying, disable the checkbox and process the whole image.</p>
+<p>To tonemap only a part of the HDR for a quick preview you can select a rectangle of the image using the mouse and click the <strong>Tonemap</strong> button.
+Alternatively you can click on the small preview images on the right panel.<br />
+Because three of nine available operators (both Mantiuks and Fattal) are gradient domain operators that cannot provide consistent results on all result sizes by design, the preview function is not very accurtate for those operators, so the selection method is preferred.</p>
 
-<p>By default windows of every new tonemapped LDR image are maximized. If you wish to compare several results with different settings, unmaximize the window of the last tonemapped image, click <strong>Lock Images</strong> button in the toolbar and use navigation widget in the lower right corner of an image to pan around full-size version. Note that contents of every image window will be synced.</p>
-
-<p><strong>Previous Image</strong> and <strong>Next Image</strong> buttons in the toolbar are most useful for switching between several results when image windows are maximized.</p>
+<p>If you wish to compare several results with different settings, click the <strong>Lock Images</strong> button in the toolbar and use navigation widget in the lower right corner of an image to pan around. Select another image with the <strong>Previous</strong> and <strong>Next</strong> buttons and note that contents of every image window will be synced.</p>
 
 <p>Sometimes the tonemapped LDR image is either too bright or too dark. You can adjust brightness using Levels dialog (<strong>Adjust Levels</strong> button in the toolbar) that works just like in GIMP, Krita, Photoshop or any similar raster graphics editor with the only exception that it works on luminance channel only.</p>
 
-<p>If you have a lot of pictures shot in same lighting conditions or just wish to save current tonemapping settings for future use, you can save them to a text file. Use "Save..." button in the Tone Mapping Panel for that. Such a file contains:</p>
+<p>If you have a lot of pictures shot in same lighting conditions or just wish to save current tonemapping settings for future use, you can save them to a text file or in a centralized database. Use "Save..." button in the Tone Mapping Panel under Tonemapping Settings for save to a file or the small "save" button above to save in the database. You then can add a comment that describe your settings. Use the "Load" buttons to reload the previously saved settings.<br />
+The text file contains:</p>
 
 <ul>
 <li>the currently selected tone mapping operator and its related settings.</li>

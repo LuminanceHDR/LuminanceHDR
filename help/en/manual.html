@@ -42,7 +42,7 @@ Current supported features include:
 <li>Copy exif data between sets of images.</li>
 </ol>
 The <strong>first feature</strong> is accessible via the "File -> New Hdr..." wizard: in order to create an HDR the user can either load a set of JPEG files, a set of RAW files, or a set of TIFF files (8bit or 16bit).<br>
-Raw files are processed with dcraw in order to obtain a (8 or 16 bit) tiff file. For more information read <A href="dcraw.html">this page</A>.<br>
+     Raw files are processed with LibRaw in order to obtain a (8 or 16 bit) tiff file. For more information read <A href="dcraw.html">this page</A>.<br>
 The pictures must have been taken at the same scene, with different exposure settings (change the exposure time and/or aperture, and use a tripod if you have one). The newly created HDR will be available in the workspace as soon as the HDR creation wizard has ended.<br>
 The input files can be aligned via two alignment engines: align_image_stack and MTB.<br>
 The set of images can contain moving objects. This can result in an (unwanted) effect called ghosting. Luminance HDR provides an interactive anti-ghosting tool that can help avoid such artifacts.<br>
@@ -58,7 +58,7 @@ In order to create an HDR image Luminance HDR requires to have a set of images w
 This chapter describes the most important elements of Luminance HDR: the Main window, the "New Hdr..." wizard procedure, the Resize tool, the interactive tone mapping window, the batch tone mapping , the copy exif data tool and the Preferences panel.
 
 <A name="mainwindow"><h3>The main window</h3></A>
-Here's the main window that you can see once the program has launched.<br>
+Here's the main window that you can see once the program has launched and an image has been loaded.<br>
 <img src="images/mainwin.jpeg" width="850" height="501">
 
 <br>
@@ -67,7 +67,7 @@ At the very top you can see the menubar which, as its name implies, contains the
 In case the text describing an item in a menu is not clear enough, below you can find a <A href="#menuref">complete reference</A> of all the items contained in all the menus.
 
 <A name="toolbar"><h4>The toolbar</h4></A>
-Below the menubar you can see the toolbar. It simply contains some of the most frequently used functions listed in the menus: "New HDR...", "Open HDR...", "Save HDR as...", "Tonemap the HDR" and "Exit". Again, if an item is "grayed out" it means that you cannot use (because it doesn't make sense) that particular function at that time.
+Below the menubar you can see the toolbar. It simply contains some of the most frequently used functions listed in the menus: "New HDR...", "Open HDR...", "Save as...", "Save All" and "Exit". Again, if an item is "grayed out" it means that you cannot use (because it doesn't make sense) that particular function at that time.
 
 <A name="workspace"><h4>The workspace</h4></A>
 The main gray area is the workspace. Here you can see all the HDR images which you can work on. As soon as the program is launched the workspace is empty. To have an HDR in the workspace you can either load an existing one (File->Open Hdr...) or create a new one (File->New Hdr...).

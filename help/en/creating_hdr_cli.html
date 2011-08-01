@@ -8,9 +8,46 @@
 </head>
 <body>
 
-<h2>Creating HDR images from console</h2>
+<h2>
+      Creating HDR images from console
+      <br />
+    </h2>
+<p>
+	Below are shown the command line switches used to create an HDR image and tonemap it. The relevant ones to just create an HDR are: -a to select the automatic alignment engine, -e to enter the EV values (one per image) if the images do not contain Exif data, -c to select the creation profile and -s to save the resulting HDR
+</p>
 
-<p>TODO</p>
+<p>
+      Usage: luminance-hdr [OPTIONS]... [INPUTFILES]... 
+      <br />
+      <br />
+       Commandline interface to luminance-hdr.
+      <br />
+        
+      <br />
+       -h --help Display this help. 
+      <br />
+      -v --verbose Print more messages during execution. 
+      <br />
+      -a --align AIS|MTB Align Engine to use during HDR creation (default: no alignment). 
+      <br />
+      -e --ev EV1,EV2,... Specify numerical EV values (as many as INPUTFILES). 
+      <br />
+      -c --config HDR creation config. Possible values: weight=triangular|gaussian|plateau:response_curve=from_file|linear|gamma|log|robertson:model=robertson|debevec:curve_filename=your_file_here.m (Default is weight=triangular:response_curve=linear:model=debevec) 
+      <br />
+      -l --load HDR_FILE Load an HDR instead of creating a new one. 
+      <br />
+      -s --save HDR_FILE Save to a HDR file format. (default: don't save) 
+      <br />
+      -g --gamma VALUE Gamma value to use during tone mapping. (default: 1) 
+      <br />
+      -r --resize VALUE Width you want to resize your HDR to (resized before gamma and tone mapping) 
+      <br />
+      -t --tmo Tone mapping operator. Legal values are: ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08 (Default is mantiuk06) 
+      <br />
+      -p --tmoptions Tone mapping operator options. Legal values are: alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal) contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06) colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08) localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin) sigma_s=VALUE:sigma_r=VALUE:base=VALUE (for durand) bias=VALUE (for drago) local=true|false:autolum=true|false:cone=VALUE:rod=VALUE:multiplier=VALUE (for pattanaik) scales=true|false:key=VALUE:phi=VALUE:num=VALUE:low=VALUE:high=VALUE (for reinhard02) brightness=VALUE:chroma=VALUE:lightness=VALUE (for reinhard05) (default is contrast=0.3:equalization=false:saturation=1.8, see also -o) 
+      <br />
+      -o --output LDR_FILE File name you want to save your tone mapped LDR to. (No tonemapping is performed unless -o is specified). You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
+    </p>
 
 </body>
 </html>
