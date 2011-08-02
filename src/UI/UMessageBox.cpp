@@ -36,6 +36,7 @@ UMessageBox::UMessageBox(QWidget *parent) : QMessageBox(parent)
     m_layout = (QGridLayout*)this->layout();
     m_layout->addItem(m_horizontalSpacer, m_layout->rowCount(), 0, 1, m_layout->columnCount());
 
+	this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
@@ -51,6 +52,7 @@ QMessageBox(title, text, icon, button0, button1, button2, parent, f)
     m_layout = (QGridLayout*)this->layout();
     m_layout->addItem(m_horizontalSpacer, m_layout->rowCount(), 0, 1, m_layout->columnCount());
 
+	this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
