@@ -29,7 +29,55 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, Giuseppe Rota, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, 2011, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../forms/about.ui" line="154"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="230"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../forms/about.ui" line="302"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
@@ -37,63 +85,15 @@ p, li { white-space: pre-wrap; }
         <source>A&amp;uthors</source>
         <translation>&amp;Autoren</translation>
     </message>
-    <message utf8="true">
-        <location filename="../forms/about.ui" line="154"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Main developer QtPfsGui&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;   Giuseppe Rota&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Main Developers Luminance HDR&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    Franco Comida&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:fcomida@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;fcomida@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    Davide Anastasia&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:davideanastasia@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;davideanastasia@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Improvements, bugfixing&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    Daniel Kaneider&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../forms/about.ui" line="184"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Dank an</translation>
     </message>
     <message>
-        <location filename="../forms/about.ui" line="230"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../forms/about.ui" line="248"/>
         <source>&amp;License Agreement</source>
         <translation>&amp;Lizenzvereinbarung</translation>
-    </message>
-    <message>
-        <location filename="../forms/about.ui" line="302"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../forms/about.ui" line="332"/>
@@ -519,7 +519,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Common/commandline.cpp" line="545"/>
         <source>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</source>
-        <translation type="unfinished"></translation>
+        <translation>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (für  mantiuk08)</translation>
     </message>
     <message>
         <location filename="../src/Common/commandline.cpp" line="553"/>
@@ -609,7 +609,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/DnDOption.ui" line="57"/>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Was soll mit der Datei bzw. den Dateien gemachen werden?&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Was soll mit der Datei bzw. den Dateien gemacht werden?&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../forms/DnDOption.ui" line="71"/>
@@ -1025,7 +1025,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/Viewers/GenericViewer.cpp" line="229"/>
         <source>This image has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation>Für dieses Bild gibt es nichtgespeicherte Änderungen.&lt;br&gt;Soll es wirklich geschlossen werden?</translation>
+        <translation>Für dieses Bild gibt es nicht gespeicherte Änderungen.&lt;br&gt;Soll es wirklich geschlossen werden?</translation>
     </message>
 </context>
 <context>
@@ -1121,14 +1121,6 @@ p, li { white-space: pre-wrap; }
         <translation>Derzeit geladene &amp;Dateien</translation>
     </message>
     <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Quellbilder laden</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">Bilder &amp;laden ...</translation>
-    </message>
-    <message>
         <location filename="../forms/HdrWizard.ui" line="379"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
@@ -1208,24 +1200,24 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/HdrWizard.ui" line="296"/>
         <source>Add Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder hinzufügen</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="299"/>
         <location filename="../forms/HdrWizard.ui" line="322"/>
         <location filename="../forms/HdrWizard.ui" line="345"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="319"/>
         <source>Remove Selected Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewähltes Bild entfernen</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="342"/>
         <source>Clear List</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste leeren</translation>
     </message>
     <message>
         <location filename="../forms/HdrWizard.ui" line="556"/>
@@ -1547,14 +1539,6 @@ p, li { white-space: pre-wrap; }
         <translation>Lade ...</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR konnte die relevanten &lt;i&gt;EXIF&lt;/i&gt;-Tags in den folgenden Bildern nicht finden:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden.		&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: 		&lt;ul&gt;&lt;li&gt;Verschlusszeit (in Sekunden)&lt;/li&gt;		&lt;li&gt;Blende (f-Wert)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;		Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;i&gt;&lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt;&lt;/i&gt; zur Verfügung.</translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="286"/>
         <source>EXIF data not found</source>
         <translation>EXIF-Daten nicht gefunden</translation>
@@ -1564,10 +1548,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="654"/>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;h3&gt;&lt;b&gt;Um fortzufahren, müssen die Belichtungswerte manuell festgelegt werden.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; Werte sind noch erforderlich.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Fehler beim Laden</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="229"/>
@@ -1581,12 +1561,13 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
 for the following images:
  &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Luminance HDR to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
 the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNUNG:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR konnte die relevanten &lt;i&gt;EXIF&lt;/i&gt;-Tags in den folgenden Bildern nicht finden:
+ &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Es kann dennoch ein HDR-Bild erzeugt werden. Dazu müssen die Belichtungswerte (EV) oder die Blendenstufenabstände &lt;b&gt;manuell&lt;/b&gt; festgelegt werden.		&lt;hr&gt;Falls dies &lt;b&gt;automatisch&lt;/b&gt; geschehen soll, müssen in den Bilddateien zumindest die folgenden EXIF-Daten vorhanden sein: 		&lt;ul&gt;&lt;li&gt;Verschlusszeit (in Sekunden)&lt;/li&gt;		&lt;li&gt;Blende (f-Wert)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINWEIS:&lt;/b&gt; EXIF-Daten gehen meist bei der Vorverarbeitung der Bilder verloren.&lt;br&gt;		Zum &lt;b&gt;Kopieren der EXIF-Daten&lt;/b&gt; zwischen zwei Gruppen von Dateien steht der Menüpunkt &lt;i&gt;&lt;b&gt;&quot;Extras -&gt; EXIF-Daten kopieren ...&quot;&lt;/b&gt;&lt;/i&gt; zur Verfügung.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="326"/>
         <source>Loading Error: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden: </translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="345"/>
@@ -1601,10 +1582,13 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <translation>Fehler ...</translation>
     </message>
     <message>
+        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up &gt; External Tools&quot; for more information.</source>
+        <translation type="obsolete">Konnte externes Programm &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; nicht starten.&lt;br&gt;Bitte lies unter &quot;Hilfe -&gt; Inhalt ...&quot; den Abschnitt &quot;Setting up -&gt; External Tools&quot; für weitere Informationen.</translation>
+    </message>
+    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translatorcomment>[Christian Raue] TODO: Maybe needs correction when the corresponding section in the documentation has been created.</translatorcomment>
-        <translation type="unfinished">Konnte externes Programm &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; nicht starten.&lt;br&gt;Bitte lies in der Hilfe den Abschnitt &quot;Hints and tips&quot; für weitere Informationen.</translation>
+        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
+        <translation>Konnte externes Programm &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; nicht starten.&lt;br&gt;Bitte lies unter &quot;Hilfe -&gt; Inhalt ...&quot; den Abschnitt &quot;Setting up -&gt; External Tools&quot; für weitere Informationen.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="366"/>
@@ -1614,7 +1598,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="372"/>
         <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation>Ein unbekannter Fehler trat auf während das Programm &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; ausgeführt wurde ...</translation>
+        <translation>Ein unbekannter Fehler trat während der Ausführung des Programms &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; auf ...</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="381"/>
@@ -2109,7 +2093,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1509"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1517"/>
         <source>Luminance HDR</source>
         <translation></translation>
     </message>
@@ -2124,11 +2108,6 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../forms/MainWindow.ui" line="140"/>
-        <source>Main Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../forms/MainWindow.ui" line="188"/>
         <source>Ctrl+N</source>
         <translation>Strg+N</translation>
@@ -2141,19 +2120,19 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="224"/>
         <source>&amp;Save as...</source>
-        <translation type="unfinished">&amp;Speichern als ...</translation>
+        <translation>&amp;Speichern als ...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="227"/>
         <source>Save as...</source>
-        <translation type="unfinished">Speichern als ...</translation>
+        <translation>Speichern als ...</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="230"/>
         <location filename="../forms/MainWindow.ui" line="233"/>
         <location filename="../forms/MainWindow.ui" line="236"/>
         <source>Save image (HDR or LDR)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild speichern (HDR oder LDR)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="239"/>
@@ -2414,185 +2393,177 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/MainWindow.ui" line="851"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächstes</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="854"/>
         <source>Next Image</source>
-        <translation type="unfinished">Nächstes Bild</translation>
+        <translation>Nächstes Bild</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="857"/>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild ab</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="869"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorheriges</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="872"/>
         <source>Previous Image</source>
-        <translation type="unfinished">Vorheriges Bild</translation>
+        <translation>Vorheriges Bild</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="875"/>
         <source>PgUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/MainWindow.ui" line="891"/>
-        <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild auf</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="899"/>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimieren</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="904"/>
         <source>Maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximieren</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="909"/>
         <source>Bring All to Front</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle in den Vordergrund bringen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="923"/>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschaubereich anzeigen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="926"/>
         <source>Show/Hide Preview Panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschaubereich anzeigen bzw. verstecken</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="929"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+V</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="944"/>
         <source>Adjust &amp;Levels</source>
-        <translation type="unfinished">&amp;Werte anpassen</translation>
+        <translation>&amp;Werte anpassen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="947"/>
         <location filename="../forms/MainWindow.ui" line="950"/>
         <source>Adjust Levels</source>
-        <translation type="unfinished">Werte anpassen</translation>
+        <translation>Werte anpassen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="953"/>
         <location filename="../forms/MainWindow.ui" line="956"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation type="unfinished">Histogramm für das aktuelle LDR-Bild anpassen</translation>
+        <translation>Histogramm für das aktuelle LDR-Bild anpassen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="959"/>
         <source>Ctrl+L</source>
-        <translation type="unfinished">Strg+L</translation>
+        <translation>Strg+L</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="971"/>
         <source>Save All</source>
-        <translation type="unfinished">Alle speichern</translation>
+        <translation>Alle speichern</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="974"/>
         <source>Save All LDR files</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle LDR-Dateien speichern</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="922"/>
+        <location filename="../forms/MainWindow.ui" line="891"/>
+        <source>Lock</source>
+        <translation>Ausrichtung angleichen</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="931"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="272"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="274"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Fertig. Öffne jetzt ein bestehendes HDR-Bild oder erstell ein neues!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="336"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="422"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1286"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="338"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="424"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1295"/>
         <source>All HDR formats </source>
         <translation>Alle HDR-Formate</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="347"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="349"/>
         <source>Load one or more HDR images...</source>
         <translation>Ein oder mehrere HDR-Bilder laden ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="388"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="390"/>
         <source>Save files in</source>
-        <translation type="unfinished">Dateien speichern in</translation>
+        <translation>Dateien speichern in</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="430"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1294"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="432"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1303"/>
         <source>Save the HDR image as...</source>
         <translation>HDR-Bild speichern als ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="536"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="538"/>
         <source>Failed to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1275"/>
-        <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1457"/>
-        <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1509"/>
-        <source>Error: %1</source>
-        <translation type="unfinished">Fehler: %1</translation>
-    </message>
-    <message>
-        <source>Error: Failed to Tonemap Image</source>
-        <translation type="obsolete">Fehler: Dynamikkompression des Bildes fehlgeschlagen</translation>
-    </message>
-    <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="660"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="663"/>
         <source>Error...</source>
         <translation>Fehler ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="661"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="664"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation>Luminance HDR speichert Ergebnisse in temporären Dateien zwischen, aber der dafür festgelegte Ordner ist ungültig.&lt;br&gt;Bitte einen gültigen Pfad wählen über Extras -&gt; Einstellungen ... -&gt; Dynamikkompression.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1274"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1283"/>
         <source>Unsaved changes...</source>
         <translation>Nicht gespeicherte Änderungen ...</translation>
     </message>
     <message>
-        <source>There is at least one HDR image with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Es gibt mindestens ein HDR-Bild mit nicht gespeicherten Änderungen.&lt;br&gt;Trotzdem beenden?</translation>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1284"/>
+        <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
+        <translation>Für dieses Bild gibt es nicht gespeicherte Änderungen.&lt;br&gt;Sollen sie gespeichert werden?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1211"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1459"/>
+        <source>Untitled %1</source>
+        <translation>Unbenannt %1</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1220"/>
         <source>Done!</source>
         <translation>Fertig!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1230"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1239"/>
         <source>Cropped Image</source>
         <translation>zugeschnittenes Bild</translation>
+    </message>
+    <message>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1517"/>
+        <source>Error: %1</source>
+        <translation>Fehler: %1</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="675"/>
@@ -2603,6 +2574,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/MainWindow.ui" line="557"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Einstellungen ...</translation>
+    </message>
+    <message>
+        <location filename="../forms/MainWindow.ui" line="140"/>
+        <source>Main Toolbar</source>
+        <translation>Hauptsymbolleiste</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="691"/>
@@ -2633,10 +2609,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/MainWindow.ui" line="116"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
-    </message>
-    <message>
-        <source>Show Main Toolbar</source>
-        <translation type="obsolete">Hauptsymbolleiste zeigen</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="173"/>
@@ -2675,18 +2647,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/MainWindow.ui" line="209"/>
         <source>Load an existing HDR image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
         <translation>Lädt ein bestehendes HDR-Bild (OpenEXR, Radiance RGBE, PFS stream, RAW oder TIFF)</translation>
-    </message>
-    <message>
-        <source>&amp;Save HDR image as...</source>
-        <translation type="obsolete">HDR-Bild spei&amp;chern als ...</translation>
-    </message>
-    <message>
-        <source>Save HDR image as...</source>
-        <translation type="obsolete">HDR-Bild speichern als ...</translation>
-    </message>
-    <message>
-        <source>Save HDR image (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Speichert ein HDR-Bild (OpenEXR, Radiance RGBE, PFS stream, 32-Bit- oder LogLuv-TIFF)</translation>
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="257"/>
@@ -2920,7 +2880,7 @@ p, li { white-space: pre-wrap; }
         <translation>&amp;Projektive Transformation ...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1455"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1457"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
@@ -2929,17 +2889,13 @@ p, li { white-space: pre-wrap; }
         <source>&amp;Crop to Selection</source>
         <translation>&amp;Auf Auswahl zuschneiden</translation>
     </message>
-    <message>
-        <source>Error: %1 </source>
-        <translation type="obsolete">Fehler: %1 </translation>
-    </message>
 </context>
 <context>
     <name>ParametersDialog</name>
     <message>
         <location filename="../forms/SavedParametersDialog.ui" line="17"/>
         <source>Saved Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Gespeicherte Parameter</translation>
     </message>
 </context>
 <context>
@@ -2956,32 +2912,32 @@ p, li { white-space: pre-wrap; }
         <translation>Externe Programme</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="689"/>
+        <location filename="../forms/PreferencesDialog.ui" line="677"/>
         <source>Cache</source>
         <translation>Zwischenspeicher</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="781"/>
+        <location filename="../forms/PreferencesDialog.ui" line="757"/>
         <source>JPEG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="786"/>
+        <location filename="../forms/PreferencesDialog.ui" line="762"/>
         <source>PNG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="791"/>
+        <location filename="../forms/PreferencesDialog.ui" line="767"/>
         <source>PPM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="796"/>
+        <location filename="../forms/PreferencesDialog.ui" line="772"/>
         <source>PBM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="801"/>
+        <location filename="../forms/PreferencesDialog.ui" line="777"/>
         <source>BMP</source>
         <translation></translation>
     </message>
@@ -2994,22 +2950,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../forms/PreferencesDialog.ui" line="80"/>
         <source>Interface</source>
         <translation>Oberfläche</translation>
-    </message>
-    <message>
-        <source>Raw Conversion</source>
-        <translation type="obsolete">RAW-Konvertierung</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Oberfläche&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="345"/>
@@ -3077,16 +3017,12 @@ p, li { white-space: pre-wrap; }
         <translation>Türkisch</translation>
     </message>
     <message>
-        <source>Tonemapping Windows</source>
-        <translation type="obsolete">Fenster zur Dynamikkompression</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="460"/>
+        <location filename="../forms/PreferencesDialog.ui" line="463"/>
         <source>Maximize result</source>
         <translation>Ausgabe maximieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="467"/>
+        <location filename="../forms/PreferencesDialog.ui" line="473"/>
         <source>Always show Processed HDR</source>
         <translation>Verarbeitetes HDR-Bild immer anzeigen</translation>
     </message>
@@ -3096,88 +3032,84 @@ p, li { white-space: pre-wrap; }
         <translation>HDR-Optionen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="533"/>
+        <location filename="../forms/PreferencesDialog.ui" line="535"/>
         <source>Choose what type of HDR TIFF to save to</source>
         <translation>Auswahl des zu speichernden HDR-TIFF-Typs</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="536"/>
+        <location filename="../forms/PreferencesDialog.ui" line="538"/>
         <source>HDR TIFF File Format</source>
         <translation>HDR-TIFF-Dateiformat</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="548"/>
+        <location filename="../forms/PreferencesDialog.ui" line="550"/>
         <source>Good quality and smaller file size</source>
         <translation>Gute Qualität und geringere Dateigröße</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="551"/>
+        <location filename="../forms/PreferencesDialog.ui" line="553"/>
         <source>LogLuv TIFF (float, 16bit per color channel)</source>
         <translation>LogLuv-TIFF (Gleitkommazahl, 16 Bit pro Farbkanal)</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="561"/>
+        <location filename="../forms/PreferencesDialog.ui" line="563"/>
         <source>Better quality, larger file size, better compatibility with other applications</source>
         <translation>Bessere Qualität, höhere Dateigröße, bessere Kompatibilität mit anderen Anwendungen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="564"/>
+        <location filename="../forms/PreferencesDialog.ui" line="566"/>
         <source>Float TIFF (float, 32bit per color channel)</source>
         <translation>Float-TIFF (Gleitkommazahl, 32 Bit pro Farbkanal)</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="594"/>
+        <location filename="../forms/PreferencesDialog.ui" line="590"/>
         <source>Show negative numbers as:</source>
         <translation>Negative Werte anzeigen als:</translation>
     </message>
     <message>
-        <source>Tone Mapping Options</source>
-        <translation type="obsolete">Dynamikkompressionsoptionen</translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="701"/>
+        <location filename="../forms/PreferencesDialog.ui" line="689"/>
         <source>Where to store temporary data:</source>
         <translation>Ablageort für temporäre Daten:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="732"/>
+        <location filename="../forms/PreferencesDialog.ui" line="714"/>
         <source>C&amp;hoose</source>
         <translation>wä&amp;hlen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="744"/>
+        <location filename="../forms/PreferencesDialog.ui" line="726"/>
         <source>Batch Tone Mapping</source>
         <translation>Stapel-Dynamikkompression</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="764"/>
-        <location filename="../forms/PreferencesDialog.ui" line="777"/>
+        <location filename="../forms/PreferencesDialog.ui" line="740"/>
+        <location filename="../forms/PreferencesDialog.ui" line="753"/>
         <source>Which LDR image format to save to</source>
         <translation>Auswahl des zu speichernden LDR-Bildformats</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="767"/>
+        <location filename="../forms/PreferencesDialog.ui" line="743"/>
         <source>LDR image &amp;format:</source>
         <translation>LDR-Bild&amp;format:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="819"/>
-        <location filename="../forms/PreferencesDialog.ui" line="841"/>
+        <location filename="../forms/PreferencesDialog.ui" line="789"/>
+        <location filename="../forms/PreferencesDialog.ui" line="811"/>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation>Anzahl zu verwendender Threads auf Mehrkern- bzw. Mehrprozessormaschinen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="822"/>
+        <location filename="../forms/PreferencesDialog.ui" line="792"/>
         <source>Number of &amp;threads:</source>
         <translation>Anzahl &amp;Threads:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="888"/>
+        <location filename="../forms/PreferencesDialog.ui" line="860"/>
         <source>Demosaicing</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="898"/>
+        <location filename="../forms/PreferencesDialog.ui" line="870"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3194,12 +3126,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Diese Option verwischt das Bild ein wenig, aber entfernt falsche 2x2-Gittermuster mit der VNG-Qualitätsmethode bzw. Labyrinthe mit der AHD-Qualitätsmethode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="907"/>
+        <location filename="../forms/PreferencesDialog.ui" line="879"/>
         <source>Interpolate RGB using 4 colours</source>
         <translation>RGB durch vier Farben interpolieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="914"/>
+        <location filename="../forms/PreferencesDialog.ui" line="886"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3214,58 +3146,58 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Für Fuji-SuperCCD-Kameras wird das Bild um 45 Grad gekippt angezeigt. Für Kameras mit nicht-quadratischen Pixeln wird das Bild nicht auf das korrekte Seitenverhältnis gedehnt. Auf jeden Fall garantiert diese Option, dass jedes Ausgabepixel einem RAW-Pixel entspricht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="922"/>
+        <location filename="../forms/PreferencesDialog.ui" line="894"/>
         <source>Do not stretch or rotate pixels</source>
         <translation>Pixel weder dehnen noch drehen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="935"/>
+        <location filename="../forms/PreferencesDialog.ui" line="907"/>
         <source>Quality:</source>
         <translation>Qualität:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="981"/>
+        <location filename="../forms/PreferencesDialog.ui" line="953"/>
         <source>Bilinear</source>
         <translation>Bilinear</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="986"/>
+        <location filename="../forms/PreferencesDialog.ui" line="958"/>
         <source>VNG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="991"/>
+        <location filename="../forms/PreferencesDialog.ui" line="963"/>
         <source>PPG</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="996"/>
+        <location filename="../forms/PreferencesDialog.ui" line="968"/>
         <source>AHD</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1007"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1062"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1206"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1279"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1347"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1443"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1495"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1605"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1719"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1786"/>
-        <location filename="../forms/PreferencesDialog.ui" line="1942"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2080"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2159"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2256"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2281"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2363"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2388"/>
+        <location filename="../forms/PreferencesDialog.ui" line="979"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1034"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1178"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1251"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1319"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1415"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1467"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1577"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1691"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1758"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1914"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2052"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2131"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2228"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2253"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2335"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2360"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2129"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2101"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3280,12 +3212,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Festlegen des Vergrößerungsfaktors der blauen Ebene&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="942"/>
+        <location filename="../forms/PreferencesDialog.ui" line="914"/>
         <source>Median:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1044"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1016"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3300,17 +3232,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Anzahl der Durchläufe des Median-Filters, der nach der Interpolation zu Rot-Grün- und Blau-Grün-Kanälen angewendet wird.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1103"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1075"/>
         <source>White Balance</source>
         <translation>Weißabgleich</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1115"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1087"/>
         <source>Method:</source>
         <translation>Methode:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1164"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1136"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3333,32 +3265,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;manuell&lt;/span&gt;: Temperatur und Grünwert selbst festlegen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1180"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1152"/>
         <source>Predefined D65</source>
         <translation>D65-Standard</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1185"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1157"/>
         <source>Camera</source>
         <translation>Kamera</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1190"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1162"/>
         <source>Auto</source>
         <translation>automatisch</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1195"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1167"/>
         <source>Manual</source>
         <translation>manuell</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1125"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1097"/>
         <source>T(K):      </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1252"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1224"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3373,17 +3305,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Angabe der Farbtemperatur in Kelvin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1325"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1297"/>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation>Grün-Komponente für die Magenta-Farbstichentfernung angeben</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1368"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1340"/>
         <source>Highlights:</source>
         <translation>Glanzlichter:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1404"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1376"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3406,32 +3338,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;rekonstruieren&lt;/span&gt;: Glanzlichter mit einem Stärkewert rekonstruieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1417"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1389"/>
         <source>Solid White</source>
         <translation>klares Weiß</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1422"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1394"/>
         <source>Do not transform</source>
         <translation>nicht transformieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1427"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1399"/>
         <source>Blend</source>
         <translation>vermischen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1432"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1404"/>
         <source>Reconstruct</source>
         <translation>rekonstruieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1375"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1347"/>
         <source>Level:</source>
         <translation>Stärke:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1477"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1449"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3446,22 +3378,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Stärke der Glanzlichtrekonstruktion festlegen. Niedrige Werte bevorzugen weiß, hohe Werte bevorzugen Farben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1515"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1487"/>
         <source>Correct false colors in highlights</source>
         <translation>Farbverfälschung in Glanzlichtern korrigieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1522"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1494"/>
         <source>Auto Brightness</source>
         <translation>Automatische Helligkeit</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1534"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1506"/>
         <source>Brightness:</source>
         <translation>Helligkeit:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1581"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1553"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3476,7 +3408,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Angabe des Helligkeitswertes des Ausgabebildes. Der Standardwert ist 1,0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1624"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1596"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3491,12 +3423,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Einen bestimmten Schwarz-Punkt-Wert zum Dekodieren von RAW-Bildern benutzen. Falls deaktiviert, wird der Schwarz-Punkt-Wert automatisch berechnet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1632"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1604"/>
         <source>Black</source>
         <translation>Schwarz</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1701"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1673"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3511,7 +3443,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bestimmten Wert für Schwarz-Punkt des Ausgabebildes festlegen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1639"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1611"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3526,12 +3458,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Einen bestimmten Weiß-Punkt-Wert zum Dekodieren von RAW-Bildern benutzen. Falls deaktiviert, wird der Weiß-Punkt-Wert automatisch berechnet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1647"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1619"/>
         <source>White</source>
         <translation>Weiß</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1762"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1734"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3546,12 +3478,12 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Bestimmten Wert für Weiß-Punkt des Ausgabebildes festlegen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1827"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1799"/>
         <source>Corrections</source>
         <translation>Korrekturen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1835"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1807"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3566,17 +3498,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Wavelets zur Rauschentfernung (mit Erhalt der Details) benutzen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1843"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1815"/>
         <source>Enable noise reduction</source>
         <translation>Rauschunterdrückung aktivieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1858"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1830"/>
         <source>Threshold:</source>
         <translation>Schwellenwert:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1915"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1887"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3591,7 +3523,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Angabe des zu verwendenden Schwellenwertes für die Rauschunterdrückung.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1955"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1927"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3606,22 +3538,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Rote und blaue RAW-Ebene durch angegebenen Faktor (üblicherweise 0,999 bis 1,001) vergrößern, um chromatische Aberration zu korrigieren.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1963"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1935"/>
         <source>Enable Chromatic Aberration correction</source>
         <translation>Chromatische Aberrationskorrektur aktivieren</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1135"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1107"/>
         <source>Green:</source>
         <translation>Grün:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1977"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1949"/>
         <source>Red:  </source>
         <translation>Rot:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2050"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2022"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3636,32 +3568,32 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Festlegen des Vergrößerungsfaktors der roten Ebene&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="1987"/>
+        <location filename="../forms/PreferencesDialog.ui" line="1959"/>
         <source>Blue:</source>
         <translation>Blau:</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="221"/>
         <source>RAW Conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>RAW-Konvertierung</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="474"/>
+        <location filename="../forms/PreferencesDialog.ui" line="480"/>
         <source>Always show Preview Panel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/PreferencesDialog.ui" line="489"/>
-        <source>HDR Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorschaubereich immer anzeigen</translation>
     </message>
     <message>
         <location filename="../forms/PreferencesDialog.ui" line="495"/>
-        <source>Always show Wizard first page</source>
-        <translation type="unfinished"></translation>
+        <source>HDR Wizard</source>
+        <translation>HDR-Assistent</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="968"/>
+        <location filename="../forms/PreferencesDialog.ui" line="501"/>
+        <source>Always show Wizard first page</source>
+        <translation>Erste Seite des Assistenten immer anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../forms/PreferencesDialog.ui" line="940"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3684,17 +3616,17 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Interpolation mittels AHD-Methode. Dabei wird die Richtung der Interpolation so gewählt, dass eine größtmöglich homogene Metrik entsteht und dadurch üblicherweise Farbartefakte minimiert werden.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2200"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2172"/>
         <source>Color Management</source>
         <translation>Farbverwaltung</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2213"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2185"/>
         <source>Camera profile:</source>
         <translation>Kameraprofil:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2223"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2195"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3715,28 +3647,28 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;eigenes&lt;/span&gt;: ein eigenes Eingabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2235"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2207"/>
         <source>None</source>
         <translation>keines</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2240"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2212"/>
         <source>Built in</source>
         <translation>eingebettet</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2245"/>
-        <location filename="../forms/PreferencesDialog.ui" line="2352"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2217"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2324"/>
         <source>Custom</source>
         <translation>eigenes</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2299"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2271"/>
         <source>Color Space:</source>
         <translation>Farbraum:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2309"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2281"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3763,37 +3695,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;eigenes&lt;/span&gt;: ein eigenes Ausgabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2327"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2299"/>
         <source>RAW</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2332"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2304"/>
         <source>sRGB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2337"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2309"/>
         <source>Adobe RGB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2342"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2314"/>
         <source>Wide Gamut</source>
         <translation>breiter Gamut</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2347"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2319"/>
         <source>Pro Photo</source>
         <translation>ProPhoto</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2430"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2398"/>
         <source>align_image_stack commandline arguments:</source>
         <translation>Argumente des Befehls align_image_stack:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2451"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2419"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3806,22 +3738,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Für weitere Informationen zu den Argumenten des Befehls align_image_stack siehe &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Hilfe &amp;gt; Inhalt ... &amp;gt; Setting up &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="574"/>
+        <location filename="../forms/PreferencesDialog.ui" line="576"/>
         <source>Colors</source>
         <translation>Farben</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="631"/>
+        <location filename="../forms/PreferencesDialog.ui" line="621"/>
         <source>Show nan and +/-Inf values as:</source>
         <translation>Werte NaN und +/- unendlich anzeigen als:</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2518"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2482"/>
         <source>&amp;Cancel</source>
         <translation>Abbre&amp;chen</translation>
     </message>
     <message>
-        <location filename="../forms/PreferencesDialog.ui" line="2525"/>
+        <location filename="../forms/PreferencesDialog.ui" line="2489"/>
         <source>&amp;OK</source>
         <translation></translation>
     </message>
@@ -3831,27 +3763,19 @@ p, li { white-space: pre-wrap; }
         <translation>Ungarisch</translation>
     </message>
     <message>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
-        <translation type="obsolete">Luminance HDR erfordert, dass align_image_stack mit der Option &quot;-a aligned_&quot; ausgeführt wird. Die Kommandozeilenoptionen wurden angepasst.</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="202"/>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation>Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
     </message>
     <message>
-        <source>Option -a...</source>
-        <translation type="obsolete">Option -a ...</translation>
-    </message>
-    <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="195"/>
         <source>Option -v -a...</source>
-        <translation type="unfinished"></translation>
+        <translation>Option -v -a ...</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="195"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminance HDR erfordert, dass align_image_stack mit den Optionen &quot;-v -a aligned_&quot; ausgeführt wird. Die Kommandozeilenoptionen wurden angepasst.</translation>
     </message>
     <message>
         <location filename="../src/Preferences/PreferencesDialog.cpp" line="202"/>
@@ -3874,47 +3798,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/PreviewPanel.ui" line="85"/>
         <source>Mantiuk &apos;06</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="110"/>
         <source>Mantiuk &apos;08</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="135"/>
         <source>Fattal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="160"/>
         <source>Drago</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="185"/>
         <source>Durand</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="210"/>
         <source>Reinhard &apos;02</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="235"/>
         <source>Reinhard &apos;05</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="260"/>
         <source>Ashikhmin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../forms/PreviewPanel.ui" line="285"/>
         <source>Pattanaik</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4038,12 +3962,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="83"/>
+        <location filename="../src/main.cpp" line="87"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="84"/>
+        <location filename="../src/main.cpp" line="88"/>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
     </message>
@@ -4054,19 +3978,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="456"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="458"/>
         <source>All LDR formats</source>
         <translation>Alle LDR-Formate</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="466"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="468"/>
         <source>Save the LDR image as...</source>
         <translation>LDR-Bild speichern als ...</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="491"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="493"/>
         <source>Save as...</source>
         <translation>Speichern als ...</translation>
     </message>
@@ -4139,7 +4063,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="44"/>
         <source>Simple</source>
-        <translation type="unfinished">Einfach</translation>
+        <translation>Einfach</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="45"/>
@@ -4149,7 +4073,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="46"/>
         <source>Local Contrast Threshold</source>
-        <translation type="unfinished">Schwellenwert für lokalen Kontrast</translation>
+        <translation>Schwellenwert für lokalen Kontrast</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="47"/>
@@ -4162,7 +4086,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="117"/>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="126"/>
         <source>Pre-gamma</source>
-        <translation type="unfinished"></translation>
+        <translation>Pre-Gamma</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="48"/>
@@ -4176,12 +4100,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="127"/>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="290"/>
         <source>Comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommentar</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="53"/>
         <source>Bias</source>
-        <translation type="unfinished">Bias</translation>
+        <translation>Bias</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="60"/>
@@ -4196,143 +4120,143 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="62"/>
         <source>Base Contrast</source>
-        <translation type="unfinished">Basiskontrast</translation>
+        <translation>Basiskontrast</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="69"/>
         <source>Alpha</source>
-        <translation type="unfinished">Alpha</translation>
+        <translation>Alpha</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="70"/>
         <source>Beta</source>
-        <translation type="unfinished">Beta</translation>
+        <translation>Beta</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="71"/>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="90"/>
         <source>Color Saturation</source>
-        <translation type="unfinished">Farbsättigung</translation>
+        <translation>Farbsättigung</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="72"/>
         <source>Noise Reduction</source>
-        <translation type="unfinished">Rauschunterdrückung</translation>
+        <translation>Rauschunterdrückung</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="73"/>
         <source>Old Fattal</source>
-        <translation type="unfinished"></translation>
+        <translation>altes Fattal</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="80"/>
         <source>Contrast Equalization</source>
-        <translation type="unfinished">Kontrastausgleich</translation>
+        <translation>Kontrastausgleich</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="81"/>
         <source>Contrast Factor</source>
-        <translation type="unfinished">Kontrastfaktor</translation>
+        <translation>Kontrastfaktor</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="82"/>
         <source>Saturation Factor</source>
-        <translation type="unfinished">Sättigungsfaktor</translation>
+        <translation>Sättigungsfaktor</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="83"/>
         <source>Detail Factor</source>
-        <translation type="unfinished">Detailfaktor</translation>
+        <translation>Detailfaktor</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="91"/>
         <source>Contrast Enhancement</source>
-        <translation type="unfinished">Kontrasterhöhung</translation>
+        <translation>Kontrasterhöhung</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="92"/>
         <source>Luminance Level</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="93"/>
         <source>Manual Luminance Level</source>
-        <translation type="unfinished"></translation>
+        <translation>manuelle Helligkeit</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="100"/>
         <source>Cone and Rod based on Luminance</source>
-        <translation type="unfinished">Zapfen und Stäbchen basierend auf Helligkeit</translation>
+        <translation>Zapfen und Stäbchen basierend auf Helligkeit</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="101"/>
         <source>Local Tonemapping</source>
-        <translation type="unfinished"></translation>
+        <translation>lokale Dynamikkompression</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="102"/>
         <source>Cone Level</source>
-        <translation type="unfinished">Zapfen-Level</translation>
+        <translation>Zapfen-Level</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="103"/>
         <source>Rod Level</source>
-        <translation type="unfinished">Stäbchen-Level</translation>
+        <translation>Stäbchen-Level</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="104"/>
         <source>Multiplier</source>
-        <translation type="unfinished">Multiplikator</translation>
+        <translation>Multiplikator</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="111"/>
         <source>Use Scales</source>
-        <translation type="unfinished">Skalen verwenden</translation>
+        <translation>Skalen verwenden</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="112"/>
         <source>Key Value</source>
-        <translation type="unfinished">Hauptwert</translation>
+        <translation>Hauptwert</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="113"/>
         <source>Phi Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Phi-Wert</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="114"/>
         <source>Range</source>
-        <translation type="unfinished">Bereich</translation>
+        <translation>Bereich</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="115"/>
         <source>Lower Scale</source>
-        <translation type="unfinished">Untere Skala</translation>
+        <translation>Untere Skala</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="116"/>
         <source>Upper Scale</source>
-        <translation type="unfinished">Obere Skala</translation>
+        <translation>Obere Skala</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="123"/>
         <source>Brightness</source>
-        <translation type="unfinished">Helligkeit</translation>
+        <translation>Helligkeit</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="124"/>
         <source>Chromatic Adaptation</source>
-        <translation type="unfinished">Chromatische Anpassung</translation>
+        <translation>Chromatische Anpassung</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="125"/>
         <source>Light Adaptation</source>
-        <translation type="unfinished">Lichtanpassung</translation>
+        <translation>Lichtanpassung</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/SavedParametersDialog.cpp" line="291"/>
         <source>TM Operator</source>
-        <translation type="unfinished"></translation>
+        <translation>Dynamikkompressionsoperator</translation>
     </message>
 </context>
 <context>
@@ -4340,12 +4264,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/SavingParametersDialog.ui" line="35"/>
         <source>Saving Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter speichern</translation>
     </message>
     <message>
         <location filename="../forms/SavingParametersDialog.ui" line="43"/>
         <source>Enter a short comment for the saved parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Gib einen kurzen Kommentar für die zu speichernden Parameter ein</translation>
     </message>
 </context>
 <context>
@@ -4397,13 +4321,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="220"/>
         <source>TM Database Problem</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbank-Problem</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="221"/>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datenbank zum Speichern von Dynamikkompressionsparametern konnte nicht geöffnet werden. Fehler: %1</translation>
     </message>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="671"/>
@@ -4557,7 +4481,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1914"/>
         <source>Local Tone Mapping</source>
-        <translation>lokale Dynamikkompression</translation>
+        <translation>Lokale Dynamikkompression</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="1921"/>
@@ -4685,17 +4609,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2126"/>
         <source>Load parameters by comment</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameter per Kommentar laden</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2140"/>
         <source>Load saved parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>gespeicherte Parameter laden</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2154"/>
         <source>Save current parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>derzeitige Parameter speichern</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2171"/>
@@ -4733,16 +4657,6 @@ p, li { white-space: pre-wrap; }
 Original HDR</source>
         <translation>Original-HDR-
 Bild verwenden</translation>
-    </message>
-    <message>
-        <source>Process only selection of the original HDR image</source>
-        <translation type="obsolete">Falls aktiviert, wird nur der ausgewählte Bereich des originalen HDR-Bildes verwendet</translation>
-    </message>
-    <message>
-        <source>Process
-Selection</source>
-        <translation type="obsolete">Auswahl
-verwenden</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2427"/>
@@ -4944,7 +4858,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="379"/>
         <source>Predefined Display</source>
-        <translation>vordefinierte Anzeige</translation>
+        <translation>Vordefinierte Anzeige</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="400"/>
@@ -5192,10 +5106,6 @@ Wollen Sie ihn dennoch anwenden?</translation>
         <translation>Strg+Shift+S</translation>
     </message>
     <message>
-        <source>Save files in</source>
-        <translation type="obsolete">Dateien speichern in</translation>
-    </message>
-    <message>
         <location filename="../forms/TonemappingWindow.ui" line="50"/>
         <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
@@ -5423,39 +5333,6 @@ Wollen Sie ihn dennoch anwenden?</translation>
         <source>About Qt</source>
         <translation>Über Qt</translation>
     </message>
-    <message>
-        <source>Original HDR</source>
-        <translation type="obsolete">Original-HDR-Bild</translation>
-    </message>
-    <message>
-        <source>Processed HDR</source>
-        <translation type="obsolete">Verarbeitetes HDR-Bild</translation>
-    </message>
-    <message>
-        <source>Please select an LDR image to save.</source>
-        <translation type="obsolete">Bitte wähl ein LDR-Bild zum Speichern aus.</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Der Lizenztext wurde nicht gefunden. Sie können ihn online lesen: %2hier%3</translation>
-    </message>
-    <message>
-        <source>Please select an HDR image to tonemap.</source>
-        <translation type="obsolete">Bitte wähl ein HDR-Bild zur Dynamikkompression aus.</translation>
-    </message>
-    <message>
-        <source>Please make a selection of the HDR image to tonemap.</source>
-        <translation type="obsolete">Bitte leg eine Auswahl in dem HDR-Bild zur Dynamikkompression fest.</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="obsolete">Unbenannt</translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translation type="obsolete">Fehler: %1</translation>
-    </message>
 </context>
 <context>
     <name>TransplantExifDialog</name>
@@ -5598,27 +5475,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/UI/UMessageBox.h" line="136"/>
         <source>Donation</source>
-        <translation type="unfinished"></translation>
+        <translation>Spende</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.h" line="137"/>
         <source>Would you like to donate?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest du spenden?</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.h" line="140"/>
         <source>Yes, I&apos;d love to!</source>
-        <translation type="unfinished">Ja, mache ich gern!</translation>
+        <translation>Ja, mache ich gern!</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.h" line="141"/>
         <source>Stop Bothering Me</source>
-        <translation type="unfinished"></translation>
+        <translation>nicht erneut fragen</translation>
     </message>
     <message>
         <location filename="../src/UI/UMessageBox.h" line="142"/>
         <source>Remind me later</source>
-        <translation type="unfinished"></translation>
+        <translation>später erinnern</translation>
     </message>
 </context>
 </TS>
