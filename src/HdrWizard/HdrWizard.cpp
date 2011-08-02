@@ -360,7 +360,7 @@ void HdrWizard::finishedAligning() {
 void HdrWizard::ais_failed(QProcess::ProcessError e) {
 	switch (e) {
 	case QProcess::FailedToStart:
-		QMessageBox::warning(this,tr("Error..."),tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Documentation... -> Hints and tips\" for more information."));
+		QMessageBox::warning(this,tr("Error..."),tr("Failed to start external application \"<em>align_image_stack</em>\".<br>Please read \"Help -> Contents... -> Setting up > External Tools\" for more information."));
 	break;
 	case QProcess::Crashed:
 		QMessageBox::warning(this,tr("Error..."),tr("The external application \"<em>align_image_stack</em>\" crashed..."));
