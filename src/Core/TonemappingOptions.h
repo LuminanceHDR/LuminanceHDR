@@ -45,6 +45,7 @@ private:
 public:
     int origxsize;          // this parameter should be coming from the UI
     int xsize;              // this parameter should be coming from the frame
+	int quality;
     float pregamma;
     bool tonemapSelection;  // we should let do this thing to the tonemapping thread
     bool tonemapOriginal;   // ?

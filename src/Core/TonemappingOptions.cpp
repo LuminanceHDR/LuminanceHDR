@@ -142,6 +142,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
                         }
                 } else if (field=="XSIZE") {
 						toreturn->xsize=value.toInt();
+				} else if (field=="QUALITY") {
+						toreturn->quality=value.toInt();
 				} else if (field=="TMO") {
                         if (value=="Ashikhmin02") {
                                 toreturn->tmoperator=ashikhmin;

@@ -106,7 +106,8 @@ void BatchTMJob::run()
 
                 QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
 
-                if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toAscii().constData(), 100))
+				qDebug() << "Batch saved quality: " << opts->quality;
+                if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toAscii().constData(), opts->quality))
                 {
                     emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
                 }

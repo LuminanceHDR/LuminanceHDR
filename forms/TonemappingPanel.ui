@@ -223,7 +223,7 @@ p, li { white-space: pre-wrap; }
                   <number>0</number>
                  </property>
                  <property name="maximum">
-                  <number>100</number>
+                  <number>1000</number>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -259,7 +259,7 @@ p, li { white-space: pre-wrap; }
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="maximum">
-                  <number>100</number>
+                  <number>1000</number>
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -2296,6 +2296,35 @@ p, li { white-space: pre-wrap; }
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QSlider" name="qualityHS">
+            <property name="toolTip">
+             <string>Saved Quality for JPG or PNG</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="qualitySB">
+            <property name="toolTip">
+             <string>Saved Quality for JPG or PNG</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -2617,12 +2646,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>70</y>
+     <x>79</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>68</x>
-     <y>70</y>
+     <x>49</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>
@@ -2633,12 +2662,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>89</x>
-     <y>70</y>
+     <x>98</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>64</y>
     </hint>
    </hints>
   </connection>
@@ -2649,12 +2678,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>64</y>
     </hint>
    </hints>
   </connection>
@@ -2665,12 +2694,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>70</y>
+     <x>94</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>93</x>
-     <y>70</y>
+     <x>49</x>
+     <y>64</y>
     </hint>
    </hints>
   </connection>
@@ -2681,12 +2710,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -2697,12 +2726,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -2713,12 +2742,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>55</x>
-     <y>70</y>
+     <x>49</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -2729,12 +2758,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -2745,12 +2774,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>100</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>66</y>
     </hint>
    </hints>
   </connection>
@@ -2761,12 +2790,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>77</x>
-     <y>70</y>
+     <x>50</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>80</y>
+     <x>95</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
@@ -2777,12 +2806,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>91</x>
-     <y>70</y>
+     <x>50</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>41</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -2793,12 +2822,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>63</x>
-     <y>70</y>
+     <x>50</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>64</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -2809,12 +2838,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>82</x>
-     <y>70</y>
+     <x>50</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -2825,12 +2854,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>88</x>
-     <y>70</y>
+     <x>98</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>88</x>
-     <y>70</y>
+     <x>49</x>
+     <y>62</y>
     </hint>
    </hints>
   </connection>
@@ -2841,12 +2870,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>99</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>
@@ -2857,12 +2886,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>99</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>
@@ -2873,12 +2902,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>99</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>58</x>
-     <y>70</y>
+     <x>49</x>
+     <y>64</y>
     </hint>
    </hints>
   </connection>
@@ -2889,12 +2918,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>99</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -2905,12 +2934,12 @@ Original HDR</string>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>70</y>
+     <x>99</x>
+     <y>58</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
@@ -2921,12 +2950,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>36</x>
-     <y>70</y>
+     <x>45</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>97</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -2937,12 +2966,12 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>70</y>
+     <x>96</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
-     <x>104</x>
-     <y>70</y>
+     <x>75</x>
+     <y>60</y>
     </hint>
    </hints>
   </connection>
@@ -2953,12 +2982,44 @@ Original HDR</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>64</x>
-     <y>70</y>
+     <x>73</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
-     <x>59</x>
-     <y>70</y>
+     <x>49</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qualitySB</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>qualityHS</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>424</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>332</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>qualityHS</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>qualitySB</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>369</x>
+     <y>439</y>
     </hint>
    </hints>
   </connection>
