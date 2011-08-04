@@ -78,6 +78,10 @@ IF NOT EXIST %TEMP_DIR% (
 	mkdir %TEMP_DIR%
 )
 
+IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/align_image_stack_%RawPlatform%.exe qtpfsgui.sourceforge.net/win/align_image_stack_%RawPlatform%.exe
+)
+
 IF NOT EXIST %TEMP_DIR%\zlib125.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib125.zip http://zlib.net/zlib125.zip
 )
@@ -274,6 +278,7 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	popd
 )
 
+
 IF NOT EXIST LuminanceHdrStuff\DEPs (
 	pushd LuminanceHdrStuff
 	mkdir DEPs
@@ -335,6 +340,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
 	
 	copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
+	copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
 	
 	IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
