@@ -344,17 +344,17 @@ p, li { white-space: pre-wrap; }
         <translation>[T%1] Erfolgreich geladen: %2</translation>
     </message>
     <message>
-        <location filename="../src/Batch/BatchTMJob.cpp" line="111"/>
+        <location filename="../src/Batch/BatchTMJob.cpp" line="112"/>
         <source>[T%1] ERROR: Cannot save to file: %2</source>
         <translation>[T%1] FEHLER: Datei kann nicht gespeichert werden: %2</translation>
     </message>
     <message>
-        <location filename="../src/Batch/BatchTMJob.cpp" line="119"/>
+        <location filename="../src/Batch/BatchTMJob.cpp" line="120"/>
         <source>[T%1] Successfully saved LDR file: %2</source>
         <translation>[T%1] LDR-Datei wurde erfolgreich gespeichert: %2</translation>
     </message>
     <message>
-        <location filename="../src/Batch/BatchTMJob.cpp" line="136"/>
+        <location filename="../src/Batch/BatchTMJob.cpp" line="137"/>
         <source>[T%1] ERROR: Loading of %2 failed</source>
         <translation>[T%1] FEHLER: Laden von %2 fehlgeschlagen</translation>
     </message>
@@ -1580,10 +1580,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="372"/>
         <source>Error...</source>
         <translation>Fehler ...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up &gt; External Tools&quot; for more information.</source>
-        <translation type="obsolete">Konnte externes Programm &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; nicht starten.&lt;br&gt;Bitte lies unter &quot;Hilfe -&gt; Inhalt ...&quot; den Abschnitt &quot;Setting up -&gt; External Tools&quot; für weitere Informationen.</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
@@ -3954,7 +3950,7 @@ p, li { white-space: pre-wrap; }
         <translation>FEHLER: Datei mit Dynamikkompressionsvorgaben ist zu alt und kann nicht verarbeitet werden: </translation>
     </message>
     <message>
-        <location filename="../src/Core/TonemappingOptions.cpp" line="237"/>
+        <location filename="../src/Core/TonemappingOptions.cpp" line="239"/>
         <source>ERROR: cannot parse Tone Mapping Setting file: </source>
         <translation>FEHLER: Datei mit Dynamikkompressionsvorgaben kann nicht verarbeitet werden: </translation>
     </message>
@@ -4343,8 +4339,8 @@ Error: %1</source>
     <message>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="679"/>
         <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="728"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="819"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="839"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="820"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="840"/>
         <source>Aborting...</source>
         <translation>Abbrechen ...</translation>
     </message>
@@ -4364,23 +4360,23 @@ Error: %1</source>
         <translation>Datei ist nicht beschreibbar (prüf deren Zugriffsrechte, Pfad, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="819"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="820"/>
         <source>File is not readable (check permissions, path...)</source>
         <translation>Datei ist nicht lesbar (prüf deren Zugriffsrechte, Pfad, ...)</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="839"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="840"/>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Fehler: Das Dateiformat für Dynamikkompressionsvorgaben hat sich geändert. Diese (alte) Datei kann mit dieser Version von Luminance HDR nicht verwendet werden. Erstell eine neue.</translation>
     </message>
     <message>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="953"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="966"/>
         <source>Enter the width of the new size:</source>
         <translation>Die Breite der neuen Größe eingeben:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2376"/>
-        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="952"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2405"/>
+        <location filename="../src/TonemappingPanel/TonemappingPanel.cpp" line="965"/>
         <source>Custom LDR size</source>
         <translation>Benutzerdefinierte LDR-Größe</translation>
     </message>
@@ -4637,50 +4633,56 @@ p, li { white-space: pre-wrap; }
         <translation>Dynamikkompressionsvorgaben</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2341"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2302"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2318"/>
+        <source>Saved Quality for JPG or PNG</source>
+        <translation>Qualität für JPG bzw. PNG</translation>
+    </message>
+    <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2370"/>
         <source>&amp;Result Size:</source>
         <translation>Ausgabe&amp;größe:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2360"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2389"/>
         <source>Size of the resulting LDR image</source>
         <translation>Größe des resultierenden LDR-Bildes</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2406"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2435"/>
         <source>If checked process the original HDR image, if not process the previously tonemapped image</source>
         <translation>Falls aktiviert, wird das originale HDR-Bild verwendet, anderenfalls das zuvor dynamikkomprimierte Bild</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2409"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2438"/>
         <source>Process
 Original HDR</source>
         <translation>Original-HDR-
 Bild verwenden</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2427"/>
-        <location filename="../forms/TonemappingPanel.ui" line="2485"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2456"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2514"/>
         <source>Gamma applied before tonemapping</source>
         <translation>vor Dynamikkompression angewandte Gammakorrektur</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2430"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2459"/>
         <source>Pre-gamma:</source>
         <translation>Pre-Gamma:</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2525"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2554"/>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
         <translation>LDR-Bild mithilfe der festgelegten Parameter (Pre-Gamma und Operator) berechnen</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2528"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2557"/>
         <source>&amp;Tonemap</source>
         <translation>&amp;anwenden</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2541"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2570"/>
         <source>Ctrl+A</source>
         <translation>Strg+A</translation>
     </message>
@@ -4695,22 +4697,22 @@ Bild verwenden</translation>
         <translation>Beta</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2363"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2392"/>
         <source>Here you can choose the size of the resulting LDR image.</source>
         <translation>Hier kann die Größe des resultierenden LDR-Bildes ausgewählt werden.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2379"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2408"/>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation>Durch Klick kann die &lt;i&gt;Breite&lt;/i&gt; des resultierenden LDR-Bildes manuell festgelegt werden.&lt;br&gt;Nach Bestätigung durch Enter (oder Return) wird die Höhe automatisch berechnet und die neue Größe der Liste hinzugefügt.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2316"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2345"/>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation>Hier kann eine Gammakorrektur auf das HDR-Bild angewendet werden.&lt;br&gt;Die Gammakorrektur wird vor der Dynamikkompression durchgeführt.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2452"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2481"/>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation>Standardwert für Pre-Gamma setzen (1)</translation>
     </message>
@@ -4801,7 +4803,7 @@ p, li { white-space: pre-wrap; }
         <translation>Detailfaktor</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2319"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2348"/>
         <source>Process</source>
         <translation>Vorgang</translation>
     </message>
@@ -4905,17 +4907,17 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2522"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2551"/>
         <source>Start tonemapping (CTRL+T)</source>
         <translation>Dynamikkompression starten (Strg+T)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2593"/>
         <source>undo</source>
         <translation>rückgängig</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2573"/>
+        <location filename="../forms/TonemappingPanel.ui" line="2602"/>
         <source>redo</source>
         <translation>wiederherstellen</translation>
     </message>
