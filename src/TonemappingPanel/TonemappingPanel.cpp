@@ -850,7 +850,14 @@ void TonemappingPanel::fromTxt2Gui()
 					if (sizes[idx] == value.toInt())
 						break;
 			}
-			sizeComboBox->setCurrentIndex(idx);
+			if (idx == sizeComboBox->count()) // Custom XSIZE
+			{
+				sizes.push_back(value.toInt());
+				fillCustomSizeComboBox();
+				sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
+			}	
+			else
+				sizeComboBox->setCurrentIndex(idx);
 		}
 		else if (field == "QUALITY")
 		{
