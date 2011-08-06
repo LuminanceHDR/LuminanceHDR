@@ -339,8 +339,12 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
 	
-	copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
-	copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
+	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt (
+		copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
+	)
+	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe (
+		copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
+	)
 	
 	IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
@@ -352,12 +356,13 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
 		)
 	)
 
-	pushd LuminanceHdrStuff\DEPs\bin
-	for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
-		copy %%v ..\..\qtpfsgui.build\%Configuration%
+	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
+		pushd LuminanceHdrStuff\DEPs\bin
+		for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+			copy %%v ..\..\qtpfsgui.build\%Configuration%
+		)
+		popd
 	)
-	popd
-	
 	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
 		mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
 		copy LuminanceHdrStuff\qtpfsgui.build\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
