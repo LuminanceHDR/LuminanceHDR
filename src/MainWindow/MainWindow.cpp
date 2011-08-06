@@ -160,7 +160,7 @@ void MainWindow::createCentralWidget()
     m_centralwidget_splitter->addWidget(tmPanel);
     m_centralwidget_splitter->addWidget(m_tabwidget);
 
-    m_centralwidget_splitter->setStretchFactor(0, 2);
+    m_centralwidget_splitter->setStretchFactor(0, 1);
     m_centralwidget_splitter->setStretchFactor(1, 5);
 
     // create preview panel
@@ -168,7 +168,7 @@ void MainWindow::createCentralWidget()
 
     // add panel to central widget
     m_centralwidget_splitter->addWidget(previewPanel);
-    m_centralwidget_splitter->setStretchFactor(2, 1);
+    m_centralwidget_splitter->setStretchFactor(2, 0);
 
     tmPanel->hide();
     previewPanel->hide();

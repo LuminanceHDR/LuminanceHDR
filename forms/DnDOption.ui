@@ -1,126 +1,106 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>DnDOption</class>
- <widget class="QDialog" name="DnDOption" >
-  <property name="windowModality" >
+ <widget class="QDialog" name="DnDOption">
+  <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
-    <height>246</height>
+    <width>414</width>
+    <height>244</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Drag and Drop</string>
   </property>
-  <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >
+  <property name="windowIcon">
+   <iconset resource="../icons.qrc">
     <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
   </property>
-  <property name="styleSheet" >
-   <string notr="true" >background-color:rgb(212,210,200)</string>
-  </property>
-  <property name="modal" >
+  <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" >
-   <property name="spacing" >
-    <number>1</number>
-   </property>
-   <property name="margin" >
-    <number>4</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label" >
-     <property name="maximumSize" >
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="font" >
+    <widget class="QLabel" name="label">
+     <property name="font">
       <font>
        <weight>50</weight>
        <bold>false</bold>
        <kerning>false</kerning>
       </font>
      </property>
-     <property name="text" >
-      <string>&lt;b>What would you like to do with the file(s)?&lt;/b></string>
+     <property name="text">
+      <string>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="Line" name="line" >
-     <property name="orientation" >
+    <widget class="Line" name="line">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="btnOpenHDR" >
-     <property name="text" >
+    <widget class="QCommandLinkButton" name="btnOpenHDR">
+     <property name="text">
       <string>&amp;Open</string>
      </property>
-     <property name="icon" >
-      <iconset resource="../icons.qrc" >
+     <property name="icon">
+      <iconset resource="../icons.qrc">
        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
      </property>
-     <property name="iconSize" >
+     <property name="iconSize">
       <size>
        <width>36</width>
        <height>36</height>
       </size>
      </property>
-     <property name="description" >
+     <property name="description">
       <string>Open an existing HDR image</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="btnCreateNewHDR" >
-     <property name="text" >
+    <widget class="QCommandLinkButton" name="btnCreateNewHDR">
+     <property name="text">
       <string>&amp;New</string>
      </property>
-     <property name="icon" >
-      <iconset resource="../icons.qrc" >
+     <property name="icon">
+      <iconset resource="../icons.qrc">
        <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
      </property>
-     <property name="iconSize" >
+     <property name="iconSize">
       <size>
        <width>36</width>
        <height>36</height>
       </size>
      </property>
-     <property name="description" >
+     <property name="description">
       <string>Create a new HDR image from one or more images</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCommandLinkButton" name="btnCancel" >
-     <property name="text" >
+    <widget class="QCommandLinkButton" name="btnCancel">
+     <property name="text">
       <string>&amp;Cancel</string>
      </property>
-     <property name="icon" >
-      <iconset resource="../icons.qrc" >
+     <property name="icon">
+      <iconset resource="../icons.qrc">
        <normaloff>:/new/prefix1/images/cancel.png</normaloff>:/new/prefix1/images/cancel.png</iconset>
      </property>
-     <property name="iconSize" >
+     <property name="iconSize">
       <size>
        <width>36</width>
        <height>36</height>
       </size>
      </property>
-     <property name="description" >
+     <property name="description">
       <string>Cancel the drag and drop process and return to the main window</string>
      </property>
     </widget>
@@ -128,7 +108,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc" />
+  <include location="../icons.qrc"/>
  </resources>
  <connections/>
 </ui>

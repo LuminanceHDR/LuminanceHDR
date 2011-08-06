@@ -6,27 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>620</height>
+    <width>548</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>650</width>
-    <height>620</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>650</width>
-    <height>620</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Preferences</string>
@@ -40,22 +28,10 @@
      <item>
       <widget class="QFrame" name="framePreferences">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>
-         <verstretch>70</verstretch>
+         <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>100</height>
-        </size>
        </property>
        <property name="autoFillBackground">
         <bool>true</bool>
@@ -115,8 +91,8 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -161,8 +137,8 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -207,8 +183,8 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -256,8 +232,8 @@
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
            </spacer>
@@ -301,20 +277,7 @@
       </widget>
      </item>
      <item>
-      <widget class="Line" name="line_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QStackedWidget" name="stackedPagesWidget">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
@@ -852,8 +815,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>624</width>
-              <height>326</height>
+              <width>526</width>
+              <height>241</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1067,8 +1030,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>341</width>
-              <height>344</height>
+              <width>508</width>
+              <height>332</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1791,8 +1754,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>405</width>
-              <height>166</height>
+              <width>524</width>
+              <height>199</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2164,8 +2127,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>264</width>
-              <height>140</height>
+              <width>524</width>
+              <height>199</height>
              </rect>
             </property>
             <attribute name="label">

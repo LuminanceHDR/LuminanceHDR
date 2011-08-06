@@ -6,38 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>160</width>
-    <height>531</height>
+    <width>230</width>
+    <height>430</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>160</width>
-    <height>530</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>160</width>
-    <height>16777215</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item row="0" column="0">
     <widget class="QScrollArea" name="scrollArea">
-     <property name="maximumSize">
+     <property name="minimumSize">
       <size>
-       <width>160</width>
-       <height>16777215</height>
+       <width>120</width>
+       <height>0</height>
       </size>
      </property>
      <property name="frameShape">
@@ -46,25 +40,40 @@
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>146</width>
-        <height>1006</height>
+        <width>214</width>
+        <height>950</height>
        </rect>
       </property>
-      <property name="maximumSize">
+      <property name="minimumSize">
        <size>
-        <width>160</width>
-        <height>16777215</height>
+        <width>120</width>
+        <height>0</height>
        </size>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
+       <property name="horizontalSpacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
