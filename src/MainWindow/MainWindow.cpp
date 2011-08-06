@@ -1688,10 +1688,10 @@ void MainWindow::removeTab(int t)
 
             tmPanel->setEnabled(false);
             actionShowPreviewPanel->setEnabled(false);
-        }
 
-        tmPanel->hide();
-        previewPanel->hide();
+            tmPanel->hide();
+            previewPanel->hide();
+        }
     }
     else
     {
