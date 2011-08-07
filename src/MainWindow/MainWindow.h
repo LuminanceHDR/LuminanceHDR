@@ -173,6 +173,7 @@ protected Q_SLOTS:
 
     // QTabWidget
     void removeTab(int);
+    void removeCurrentTab();
     void activateNextViewer();
     void activatePreviousViewer();
 

@@ -258,7 +258,7 @@ void MainWindow::createMenus()
     connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
     connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
     connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
-    connect(actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeTab()));
+    connect(actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
 
     //recent files
     initRecentFileActions();
@@ -1652,6 +1652,12 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 /*
  * Next/Previous Buttons
  */
+
+void MainWindow::removeCurrentTab() 
+{
+	removeTab(m_tabwidget->currentIndex());
+}
+
 void MainWindow::removeTab(int t)
 {
     qDebug() << "MainWindow::remove_image("<< t <<")";
@@ -1684,6 +1690,9 @@ void MainWindow::removeTab(int t)
 
                 tmPanel->setEnabled(false);
                 actionShowPreviewPanel->setEnabled(false);
+    
+	        	tmPanel->hide();
+	            previewPanel->hide();
             }
             // else { }
             // if FALSE, it means that the user said "Cancel"
@@ -1881,5 +1890,4 @@ void MainWindow::levelsClosed()
     actionFix_Histogram->setDisabled(false);
     actionFix_Histogram->setChecked(false);
 }
-
 
