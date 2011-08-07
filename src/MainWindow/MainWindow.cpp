@@ -258,6 +258,7 @@ void MainWindow::createMenus()
     connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
     connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
     connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
+    connect(actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeTab()));
 
     //recent files
     initRecentFileActions();

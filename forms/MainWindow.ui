@@ -63,6 +63,7 @@
     <addaction name="separator"/>
     <addaction name="actionBring_All_to_Front"/>
     <addaction name="separator"/>
+    <addaction name="actionRemove_Tab"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -987,6 +988,14 @@
    </property>
    <property name="whatsThis">
     <string>Save All LDR files</string>
+   </property>
+  </action>
+  <action name="actionRemove_Tab">
+   <property name="text">
+    <string>Remove Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
   </action>
  </widget>
