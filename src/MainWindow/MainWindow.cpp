@@ -595,6 +595,7 @@ void MainWindow::updateActionsLdrImage()
     actionResizeHDR->setEnabled(false);
     action_Projective_Transformation->setEnabled(false);
     cropToSelectionAction->setEnabled(false);
+	removeSelectionAction->setEnabled(false);
     rotateccw->setEnabled(false);
     rotatecw->setEnabled(false);
     actionFix_Histogram->setEnabled(true);
@@ -602,6 +603,7 @@ void MainWindow::updateActionsLdrImage()
 
 void MainWindow::updateActionsHdrImage()
 {
+	qDebug() << "MainWindow::updateActionsHdrImage()";
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
     //actionShowHDRs->setEnabled(false);
@@ -617,7 +619,17 @@ void MainWindow::updateActionsHdrImage()
 
     actionResizeHDR->setEnabled(true);
     action_Projective_Transformation->setEnabled(true);
-    cropToSelectionAction->setEnabled(false);
+	if (tm_status.curr_tm_frame)
+		if (!tm_status.curr_tm_frame->hasSelection()) 
+		{ 
+		    cropToSelectionAction->setEnabled(false);
+			removeSelectionAction->setEnabled(false);
+		}
+		else 
+		{
+		    cropToSelectionAction->setEnabled(true);
+			removeSelectionAction->setEnabled(true);
+		}
     rotateccw->setEnabled(true);
     rotatecw->setEnabled(true);
     actionFix_Histogram->setEnabled(false);
