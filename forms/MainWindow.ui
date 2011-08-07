@@ -853,6 +853,9 @@
    <property name="toolTip">
     <string>Next Image</string>
    </property>
+   <property name="whatsThis">
+    <string>Show Next Image</string>
+   </property>
    <property name="shortcut">
     <string>PgDown</string>
    </property>
@@ -870,6 +873,9 @@
    </property>
    <property name="toolTip">
     <string>Previous Image</string>
+   </property>
+   <property name="whatsThis">
+    <string>Show Previous Image</string>
    </property>
    <property name="shortcut">
     <string>PgUp</string>
@@ -889,6 +895,12 @@
    </property>
    <property name="text">
     <string>Lock</string>
+   </property>
+   <property name="toolTip">
+    <string>Lock the images for sync view</string>
+   </property>
+   <property name="whatsThis">
+    <string>Lock the images for sync view</string>
    </property>
    <property name="shortcut">
     <string>L</string>
@@ -971,6 +983,9 @@
     <string>Save All</string>
    </property>
    <property name="toolTip">
+    <string>Save All LDR files</string>
+   </property>
+   <property name="whatsThis">
     <string>Save All LDR files</string>
    </property>
   </action>
