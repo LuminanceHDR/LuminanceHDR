@@ -53,6 +53,9 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
 {
     setupUi(this);
 
+	// This is hided at moment 
+	checkBoxOriginal->hide();	
+
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06
