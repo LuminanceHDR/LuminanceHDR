@@ -1356,6 +1356,8 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     //printf("ToneMapping!\n");
     // This function needs an heavy clean up!
 
+	previewPanel->setEnabled(false);
+
     tm_status.curr_tm_options = opts;
 
     if ( opts->tonemapOriginal )
@@ -1464,6 +1466,7 @@ void MainWindow::addLDRResult(QImage* image)
     n->fitToWindow(true);
     //if ( n->getScaleFactor() > 1.0f )
     //    n->zoomToFactor(1.0f);
+	previewPanel->setEnabled(true);
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
