@@ -3786,27 +3786,27 @@ p, li { white-space: pre-wrap; }
         <translation>Ungarisch</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="202"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="206"/>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation>Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="195"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="199"/>
         <source>Option -v -a...</source>
         <translation>Option -v -a ...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="195"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="199"/>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation>Luminance HDR erfordert, dass align_image_stack mit den Optionen &quot;-v -a aligned_&quot; ausgeführt wird. Die Kommandozeilenoptionen wurden angepasst.</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="202"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="206"/>
         <source>Please restart...</source>
         <translation>Bitte neu starten ...</translation>
     </message>
     <message>
-        <location filename="../src/Preferences/PreferencesDialog.cpp" line="832"/>
+        <location filename="../src/Preferences/PreferencesDialog.cpp" line="836"/>
         <source>Choose a directory</source>
         <translation>Ordner wählen</translation>
     </message>

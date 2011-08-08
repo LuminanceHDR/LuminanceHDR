@@ -2394,6 +2394,26 @@ p, li { white-space: pre-wrap; }
         <source>Error: %1</source>
         <translation type="unfinished">Virhe: %1</translation>
     </message>
+    <message>
+        <source>Show Next Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Previous Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock the images for sync view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+W</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParametersDialog</name>
@@ -4110,6 +4130,10 @@ Valinta</translation>
     <message>
         <source>The database used for saving TM parameters cannot be opened.
 Error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saved Quality for JPG or PNG</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
