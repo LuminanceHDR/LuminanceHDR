@@ -106,7 +106,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2571 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2574 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
@@ -166,13 +166,13 @@ IF NOT EXIST tiff-4.0.0beta7 (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-0.13.5.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.13.5.zip http://www.libraw.org/data/LibRaw-0.13.5.zip
+IF NOT EXIST %TEMP_DIR%\LibRaw-0.13.7.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.13.7.zip http://www.libraw.org/data/LibRaw-0.13.7.zip
 )
-IF NOT EXIST LibRaw-0.13.5 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.13.5.zip
+IF NOT EXIST LibRaw-0.13.7 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.13.7.zip
 
-	pushd LibRaw-0.13.5
+	pushd LibRaw-0.13.7
 	nmake /f Makefile.msvc
 	popd
 )
@@ -242,23 +242,23 @@ IF DEFINED openexr-compile (
 )
 
 IF %Platform% EQU Win32 (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.2.2.pl1-dll32.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.2.2.pl1-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.2.2.pl1-dll32.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3-dll32.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3-dll32.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3-dll32.zip
 	)
 ) ELSE (
-	IF NOT EXIST %TEMP_DIR%\fftw-3.2.2-dll64.zip (
-		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.2.2-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.2.2-dll64.zip
+	IF NOT EXIST %TEMP_DIR%\fftw-3.3-dll64.zip (
+		%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/fftw-3.3-dll64.zip ftp://ftp.fftw.org/pub/fftw/fftw-3.3-dll64.zip
 	)
 )
 
-IF NOT EXIST fftw-3.2.2-dll (
+IF NOT EXIST fftw-3.3-dll (
 	IF %Platform% EQU Win32 (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.2.2-dll %TEMP_DIR%/fftw-3.2.2.pl1-dll32.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3-dll %TEMP_DIR%/fftw-3.3-dll32.zip
 	) ELSE (
-		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.2.2-dll %TEMP_DIR%/fftw-3.2.2-dll64.zip
+		%CYGWIN_DIR%\bin\unzip.exe -q -d fftw-3.3-dll %TEMP_DIR%/fftw-3.3-dll64.zip
 	)
 
-	pushd fftw-3.2.2-dll
+	pushd fftw-3.3-dll
 	lib /def:libfftw3-3.def
 	lib /def:libfftw3f-3.def
 	lib /def:libfftw3l-3.def
@@ -304,17 +304,17 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy tiff-4.0.0beta7\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.13.5\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.13.5\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
-	copy LibRaw-0.13.5\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
+	copy LibRaw-0.13.7\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
+	copy LibRaw-0.13.7\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
+	copy LibRaw-0.13.7\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
 	
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
 	copy OpenExrStuff\Deploy\bin\%Platform%\%Configuration%\*.dll LuminanceHdrStuff\DEPs\bin\OpenEXR
 
-	copy fftw-3.2.2-dll\*.h LuminanceHdrStuff\DEPs\include\fftw3
-	copy fftw-3.2.2-dll\*.lib LuminanceHdrStuff\DEPs\lib\fftw3
-	copy fftw-3.2.2-dll\*.dll LuminanceHdrStuff\DEPs\bin\fftw3
+	copy fftw-3.3-dll\*.h LuminanceHdrStuff\DEPs\include\fftw3
+	copy fftw-3.3-dll\*.lib LuminanceHdrStuff\DEPs\lib\fftw3
+	copy fftw-3.3-dll\*.dll LuminanceHdrStuff\DEPs\bin\fftw3
 
 	mkdir LuminanceHdrStuff\DEPs\include\gsl\gsl
 	copy gsl-1.15\gsl\*.h LuminanceHdrStuff\DEPs\include\gsl\gsl
