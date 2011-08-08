@@ -137,6 +137,10 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
 	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
 *	whatsThisButton->setToolButtonStyle(style); */
+
+	// Hide unused check boxes
+	checkBoxTMOWindowsMax->hide();
+	checkBoxTMOWindowsHDR->hide();
 }
 
 void PreferencesDialog::negative_clicked() {
