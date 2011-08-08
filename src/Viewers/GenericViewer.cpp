@@ -59,7 +59,7 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
 
     statusBar = new QStatusBar(this);
     statusBar->setSizeGripEnabled(false);
-    VBL_L->addWidget(statusBar);
+    //VBL_L->addWidget(statusBar);
 }
 
 GenericViewer::~GenericViewer()
