@@ -96,6 +96,7 @@ void CommandLineInterfaceManager::parseArgs() {
 	hdrcreationconfig.weights=TRIANGULAR;
 	hdrcreationconfig.response_curve=LINEAR;
 	hdrcreationconfig.model=DEBEVEC;
+	hdrcreationconfig.SaveCurveToFilename="";
 	QString loadHdrFilename;
         tmopts = TMOptionsOperations::getDefaultTMOptions();
 	QStringList inputFiles;
