@@ -42,7 +42,7 @@
 #define   BLUE_CHANNEL_IDX      2
 #define   ALPHA_CHANNEL_IDX     3
 
-inline int getChannelValue( const int index, const int pixel_offset, const int channel, const int M, const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
+inline void getChannelValues( int values[][CHANNEL_NUM+1], const int pixel_offset, const int N, const int M, const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB);
 int getN(const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList*, Array2DList*);
 int getFrameSize(const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList* , Array2DList*);
 
@@ -135,16 +135,14 @@ void generic_applyResponse(float (*sumf)(float, float, float, float), float (*di
     float minti[CHANNEL_NUM]  = {+1e6f, +1e6f, +1e6f};
 
     float out[CHANNEL_NUM];
-    
+    int m_all[N][CHANNEL_NUM+1];
+    getChannelValues(m_all, j, N, M, ldrinput, listldr, listhdrR, listhdrG, listhdrB);
+
     //for all exposures
     for (int i=0 ; i < N; i++) 
     {
       //pick the 4 channels' values (red, green, blue, and alpha)
-      int m[CHANNEL_NUM+1];
-      for (int chan = 0; chan < (CHANNEL_NUM+1); ++chan)
-      {
-        m[chan] = getChannelValue(i, j, chan, M, ldrinput, listldr, listhdrR, listhdrG, listhdrB);
-      }
+      int* m = m_all[i];
       
       float ti = arrayofexptime[i];
       // --- anti saturation: observe minimum exposure time at which
@@ -161,13 +159,8 @@ void generic_applyResponse(float (*sumf)(float, float, float, float), float (*di
       // in monotonous increase in intensity; make forward and
       // backward check, ignore value if condition not satisfied
       // if this is violated for one channel then the pixel is ignored for all channels
-      int lower[CHANNEL_NUM];
-      int upper[CHANNEL_NUM];
-      for (int chan = 0; chan < CHANNEL_NUM; ++chan)
-      {
-        lower[chan] = getChannelValue( i_lower[i], j, chan, M, ldrinput, listldr, listhdrR, listhdrG, listhdrB);
-        upper[chan] = getChannelValue( i_upper[i], j, chan, M, ldrinput, listldr, listhdrR, listhdrG, listhdrB);
-      }
+      int* lower = m_all[i_lower[i]];
+      int* upper = m_all[i_upper[i]];
       if ((lower[0]>m[0] || upper[0]<m[0])||(lower[1]>m[1] || upper[1]<m[1])||(lower[2]>m[2] || upper[2]<m[2]))
       {
         continue;
@@ -239,51 +232,30 @@ void generic_applyResponse(float (*sumf)(float, float, float, float), float (*di
  * 3 = alpha
  */
 
-inline int getChannelValue(const int index, const int pixel_offset, const int channel, const int M, const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB)
+inline void getChannelValues(int values[][CHANNEL_NUM+1], const int pixel_offset, const int N, const int M, const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList *listhdrG, Array2DList *listhdrB)
 {
 	if (ldrinput)
   {
-		QRgb* pixel;
-		pixel = (QRgb*)( (listldr->at(index) )->bits() ) + pixel_offset;
-    switch (channel) {
-      case 3:
-        return qAlpha(*pixel);
-        break;
-      case 2:
-        return qBlue(*pixel);
-        break;
-      case 1:
-        return qGreen(*pixel);
-        break;
-      case 0:
-      default:
-        return qRed(*pixel);
-        break;
-    }
-//		if (channel == 0) return qRed(*pixel); 
-//    if (channel == 1) return qGreen(*pixel);
-//		if (channel == 2) return qBlue(*pixel);
-//		if (channel == 3) return qAlpha(*pixel);
+		for (int index = 0; index < N; index++) {
+			QRgb* pixel = (QRgb*)( (listldr->at(index) )->bits() ) + pixel_offset;
+			values[index][0] = qRed(*pixel);
+			values[index][1] = qGreen(*pixel);
+			values[index][2] = qBlue(*pixel);
+			values[index][3] = qAlpha(*pixel);
+		}
 	}
   else
   {
-		Array2DList* listhdr = NULL;
-    
-		if (channel == 0) {
-			listhdr=listhdrR;
-		} else if (channel == 1) {
-			listhdr=listhdrG;
-		} else if (channel == 2) {
-			listhdr=listhdrB;
-		} else if (channel == 3) {
-			// As of now there is no listhdr for the alpha channel so we return M (fully opaque)
-			return M;
+		for (int index = 0; index < N; index++) {
+			values[index][0] = ( *( ( (*listhdrR)[index] ) ) ) (pixel_offset);
+			values[index][1] = ( *( ( (*listhdrG)[index] ) ) ) (pixel_offset);
+			values[index][2] = ( *( ( (*listhdrB)[index] ) ) ) (pixel_offset);
 		}
-		
-		return (int) ( ( *( ( (*listhdr)[index] ) ) ) (pixel_offset) );
+		for (int index = 0; index < N; index++) {
+			// As of now there is no listhdr for the alpha channel so we return M (fully opaque)
+			values[index][3] = M;
+		}
 	}
-  
-	return 0;
 }
 
 int getN(const bool ldrinput, QList<QImage*> *listldr, Array2DList *listhdrR, Array2DList*, Array2DList*)
