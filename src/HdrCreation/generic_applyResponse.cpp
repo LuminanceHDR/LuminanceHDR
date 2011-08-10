@@ -91,8 +91,8 @@ void generic_applyResponse(float (*sumf)(float, float, float, float), float (*di
     i_lower[i]=-1;
     i_upper[i]=-1;
     float ti        = arrayofexptime[i];
-    float ti_upper  = arrayofexptime[0];
-    float ti_lower  = arrayofexptime[0];
+    float ti_upper  = 1.0e8;
+    float ti_lower  = 0;
     
     for ( int j=0 ; j<N ; j++ )
     {
