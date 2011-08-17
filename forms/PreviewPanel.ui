@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>230</width>
+    <width>140</width>
     <height>430</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -28,6 +28,12 @@
    </property>
    <item row="0" column="0">
     <widget class="QScrollArea" name="scrollArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>120</width>
@@ -57,8 +63,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>214</width>
-        <height>950</height>
+        <width>125</width>
+        <height>934</height>
        </rect>
       </property>
       <property name="minimumSize">
@@ -76,6 +82,9 @@
        </property>
        <item row="0" column="0">
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
          <item>
           <widget class="QFrame" name="frameMantiuk06">
            <property name="sizePolicy">
