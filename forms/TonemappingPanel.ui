@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>573</height>
+    <width>437</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2561,7 +2561,7 @@ Original HDR</string>
                </size>
               </property>
               <property name="shortcut">
-               <string>Ctrl+A</string>
+               <string>Ctrl+T</string>
               </property>
               <property name="toolButtonStyle">
                <enum>Qt::ToolButtonTextBesideIcon</enum>
