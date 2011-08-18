@@ -177,12 +177,6 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
-    
-    // TODO : connect panel to new refresh requests
-    connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
-    connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
-    connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
-    connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
 }
 
 void MainWindow::createToolBar()
@@ -954,7 +948,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
     else
     {
-		tmPanel->show();
+        tmPanel->show();
         HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -986,11 +980,13 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-        emit updatedHDR(newhdr->getHDRPfsFrame());  // I signal I have a new HDR open
+        emit updatedHDR(newhdr->getHDRPfsFrame());  // signal: I have a new HDR open
 
         actionShowPreviewPanel->setEnabled(true);
-	if (actionShowPreviewPanel->isChecked())
-            previewPanel->show();
+        //if (actionShowPreviewPanel->isChecked())
+        //  previewPanel->show();
+
+        showPreviewPanel(actionShowPreviewPanel->isChecked());
 
         // done by SIGNAL(updatedHDR( ))
         //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
@@ -1453,7 +1449,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         tmPanel->setEnabled(false);
         thread->startTonemapping();
         statusBar()->addWidget(progInd);
-		progInd->show();
+        progInd->show();
     }
 }
 
@@ -1479,7 +1475,7 @@ void MainWindow::addLDRResult(QImage* image)
     n->fitToWindow(true);
     //if ( n->getScaleFactor() > 1.0f )
     //    n->zoomToFactor(1.0f);
-	previewPanel->setEnabled(true);
+    previewPanel->setEnabled(true);
 }
 
 void MainWindow::addProcessedFrame(pfs::Frame *frame)
@@ -1618,12 +1614,27 @@ void MainWindow::showPreviewPanel(bool b)
         if (tm_status.is_hdr_ready)
         {
             previewPanel->show();
+
             // ask panel to refresh itself
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
+
+            // connect signals
+            connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+            connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
+            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+            connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
         }
     }
     else
+    {
         previewPanel->hide();
+
+        // disconnect signals
+        disconnect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+        disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
+        disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
+        disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
+    }
 }
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
@@ -1690,9 +1701,9 @@ void MainWindow::removeTab(int t)
 
                 tmPanel->setEnabled(false);
                 actionShowPreviewPanel->setEnabled(false);
-    
-	        	tmPanel->hide();
-	            previewPanel->hide();
+
+                tmPanel->hide();
+                previewPanel->hide();
             }
             // else { }
             // if FALSE, it means that the user said "Cancel"
