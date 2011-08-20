@@ -1,3 +1,14 @@
+Changes 2.1.0
+* Merge MainWindow and TonemappingWindow
+* MainWindow works using the SDI concept, instead then MDI (multiple MainWindow can be open at the same time and work in parallel)
+* Tabbed images (HDR or LDR) inside the MainWindow
+* New preview widget (PreviewPanel)
+* Improved HDR creation Wizard (images can be removed and added)
+* Improved Batch Tonemapping: the final size of the tonemapping is read from file, allowing custom output size
+* New I/O engine (runs in a separated thread and shows the status during the operation)
+* Improved RAW conversion
+* Improved Help
+
 Changes 2.0.2
 * New BatchTM Processing engine
 * Sorted leaks in freeing memory from pfs::Channel
@@ -16,7 +27,7 @@ Changes 2.0.2(-pre1)
 TODO: Redesign of the UI
 
 Changes 2.0.1
-* Resolution of a colorspace conversion in Mantiuk06
+* Proper colorspace conversion in Mantiuk06
 * OpenMP support disabled
 
 Changes 2.0.0
