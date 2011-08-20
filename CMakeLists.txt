@@ -41,6 +41,9 @@ IF(WIN32)
 		# Enable multi processor compilation
 		ADD_DEFINITIONS(/MP)
 
+		# Enable OpenMP
+		ADD_DEFINITIONS(/openmp)
+
 		# Enable SSE2
 		ADD_DEFINITIONS(/arch:SSE2)
 		
@@ -472,7 +475,10 @@ ELSEIF(WIN32)
 	SET( LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc" )
 
 	ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
-	ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
+	
+	# Subsystem console:
+	ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
+	
 	# Set icon!
   
 	# copies all necessary Qt dlls from the Qt binary dir to the output folder
