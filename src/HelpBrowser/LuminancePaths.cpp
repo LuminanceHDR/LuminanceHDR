@@ -30,8 +30,8 @@ QString LuminancePaths::HelpDir()
 	QString hf;
 	QString dirsep(QDir::separator());
   
-#ifdef PLATFORM_APPLE
-  hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
+#ifdef Q_WS_MAC
+  hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "../Resources/help/en" + dirsep);
 #elif _WIN32
   hf = LocalizedDirPath(QApplication::applicationDirPath() + dirsep + "help" + dirsep);
 #elif __FreeBSD__
