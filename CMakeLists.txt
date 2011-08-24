@@ -21,12 +21,6 @@ INCLUDE(${QT_USE_FILE})
 
 set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
-#IF(WIN32 AND NOT MSVC)
-#  FIND_LIBRARY(QT_GIF_PLUGIN qgif PATHS ${QT_PLUGINS_DIR} PATH_SUFFIXES imageformats)
-#  FIND_LIBRARY(QT_JPEG_PLUGIN qjpeg PATHS ${QT_PLUGINS_DIR} PATH_SUFFIXES imageformats)
-#  SET(LIBS ${LIBS} ${QT_JPEG_PLUGIN})
-#ENDIF()
-
 IF(WIN32)
 # Windows Section
 	SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
@@ -110,22 +104,32 @@ SET(LIBS ${LIBS} ${GSL_LIBRARIES} ${GSLCBLAS_LIBRARIES})
 SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${EXIV2_INCLUDE_DIR} "${EXIV2_INCLUDE_DIR}/exiv2")
 SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
 
-#OpenMP support under Linux (on Windows & MacOS X soon)
-IF(NOT APPLE)
-IF(UNIX OR MSVC)
+#OpenMP Support under Linux, Windows with MSVC & MacOS X with GCC >= 4.3
+IF(MSVC)
 FIND_PACKAGE(OpenMP REQUIRED)
 SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS})
 SET(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS})
 ENDIF()
-ENDIF()
 
+IF(CMAKE_COMPILER_IS_GNUCC AND UNIX)
+execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+                OUTPUT_VARIABLE GCC_VERSION)
+#MESSAGE(STATUS ${GCC_VERSION})
+IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
+    message(STATUS "GCC >= 4.3")
+    FIND_PACKAGE(OpenMP REQUIRED)
+    SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS})
+    SET(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS})
+endif()
+ENDIF()
+# END OpenMP Support
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/" ${INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LIB_HDR_INCLUDE
 	src/Common/msec_timer.h
-    src/Libpfs/vex.h
+        src/Libpfs/vex.h
 	src/Libpfs/array2d.h
 	src/Libpfs/channel.h
 	src/Libpfs/colorspace.h
@@ -146,7 +150,7 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/pfsoutldrimage.h
 # PFS TMO
 	src/TonemappingOperators/pfstmo.h
-    src/TonemappingOperators/pfstmdefaultparams.h
+        src/TonemappingOperators/pfstmdefaultparams.h
 	src/TonemappingOperators/ashikhmin02/pyramid.h
 	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h
 	src/TonemappingOperators/drago03/tmo_drago03.h
@@ -182,7 +186,7 @@ ENDIF()
 
 SET(LIB_HDR_SRC
 	src/Common/msec_timer.cpp
-    src/Libpfs/vex.cpp
+        src/Libpfs/vex.cpp
 	src/Libpfs/array2d.cpp
 	src/Libpfs/channel.cpp
 	src/Libpfs/colorspace.cpp
@@ -256,7 +260,7 @@ SET(LIB_HDR_MOC
 )
 
 SET(LUMINANCE_HDR_INCLUDE
-    src/Core/TonemappingOptions.h
+        src/Core/TonemappingOptions.h
 	src/arch/math.h
 	src/arch/malloc.h
 	src/arch/minmax.h
@@ -273,16 +277,16 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
-    src/Common/options.h
-    src/Common/config.h
+        src/Common/options.h
+        src/Common/config.h
 )
 
 SET(LUMINANCE_HDR_SRC
 	src/Batch/BatchTMDialog.cpp
 	src/Batch/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
-#   src/Core/TMWorker.cpp
-    src/Core/TonemappingOptions.cpp
+#       src/Core/TMWorker.cpp
+        src/Core/TonemappingOptions.cpp
 	src/Exif/ExifOperations.cpp
 	src/HdrCreation/HdrCreationManager.cpp
 	src/HdrWizard/EditingTools.cpp
