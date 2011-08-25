@@ -29,6 +29,7 @@
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QDebug>
 #include <iostream>
 #include <assert.h>
 
@@ -224,9 +225,11 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 
         QFileInfo fi(fileName);
         QString fname = fi.baseName() + ".thumb.jpg";
-        //std::cout << fileName.toAscii().constData() << std::endl;
-        //std::cout << fname.toAscii().constData() << std::endl;
-        //std::cout << tempFilesPath.toAscii().constData() << std::endl;
+//#ifndef QT_NO_DEBUG
+//        std::cout << qPrintable(fileName) << std::endl;
+//        std::cout << qPrintable(fname) << std::endl;
+//        std::cout << qPrintable(tempFilesPath) << std::endl;
+//#endif
         remapped.scaledToHeight(imagelength/10).save(tempFilesPath + "/" + fname);
     }
     //--- free buffers and close files

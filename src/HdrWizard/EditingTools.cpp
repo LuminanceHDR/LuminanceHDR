@@ -415,7 +415,7 @@ void EditingTools::saveImagesButtonClicked() {
 	if (test.isWritable() && test.exists() && test.isDir()) {
 		int counter=0;
 		foreach(QImage *p, original_ldrlist) {
-			TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))).constData(), p);
+                        TiffWriter tiffwriter( QFile::encodeName((qfi.path() + "/" + qfi.fileName() + QString("_%1.tiff").arg(counter))), p);
 			tiffwriter.write8bitTiff();
 			counter++;
 		}

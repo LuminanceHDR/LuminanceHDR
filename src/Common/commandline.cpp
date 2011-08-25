@@ -406,55 +406,54 @@ void CommandLineInterfaceManager::createHDR() {
 
 void CommandLineInterfaceManager::saveHDR()
 {
-	if (!saveHdrFilename.isEmpty())
-  {
-		VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
-		QFileInfo qfi(saveHdrFilename);
-		char* encodedName=strdup(QFile::encodeName(qfi.filePath()).constData());
-		if (qfi.suffix().toUpper()=="EXR")
+    if (!saveHdrFilename.isEmpty())
     {
-			writeEXRfile(HDR,encodedName);
-		}
-    else if (qfi.suffix().toUpper()=="HDR")
-    {
-			writeRGBEfile(HDR, encodedName);
-		}
-    else if (qfi.suffix().toUpper().startsWith("TIF"))
-    {
-			TiffWriter tiffwriter(encodedName, HDR);
-			if (luminance_options->saveLogLuvTiff)
-      {
-				tiffwriter.writeLogLuvTiff();
-      }
-			else
-      {
-				tiffwriter.writeFloatTiff();
-      }
-		}
-    else if (qfi.suffix().toUpper()=="PFS")
-    {
-			// Convert to CS_XYZ: 
-			pfs::Channel *X, *Y, *Z;
-			HDR->getXYZChannels( X, Y, Z );
-			pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                               pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());	
-			FILE *fd = fopen(encodedName, "wb");
-			pfs::DOMIO pfsio;
-			pfsio.writeFrame(HDR, fd);
-			fclose(fd);
-		}
+        VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
+        QFileInfo qfi(saveHdrFilename);
+        QByteArray encodedName(QFile::encodeName(qfi.filePath()));
+        if (qfi.suffix().toUpper()=="EXR")
+        {
+            writeEXRfile(HDR, encodedName);
+        }
+        else if (qfi.suffix().toUpper()=="HDR")
+        {
+            writeRGBEfile(HDR, encodedName);
+        }
+        else if (qfi.suffix().toUpper().startsWith("TIF"))
+        {
+            TiffWriter tiffwriter(encodedName, HDR);
+            if (luminance_options->saveLogLuvTiff)
+            {
+                tiffwriter.writeLogLuvTiff();
+            }
+            else
+            {
+                tiffwriter.writeFloatTiff();
+            }
+        }
+        else if (qfi.suffix().toUpper()=="PFS")
+        {
+            // Convert to CS_XYZ:
+            pfs::Channel *X, *Y, *Z;
+            HDR->getXYZChannels( X, Y, Z );
+            pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                                     pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+            FILE *fd = fopen(encodedName, "wb");
+            pfs::DOMIO pfsio;
+            pfsio.writeFrame(HDR, fd);
+            fclose(fd);
+        }
+        else
+        {
+            error("Error, please specify a supported HDR file format.");
+        }
+    }
     else
     {
-			error("Error, please specify a supported HDR file format.");
-		}
-		free(encodedName);
-	}
-  else
-  {
-		VERBOSEPRINT("NOT Saving HDR image to file. %1","");
-	}
+        VERBOSEPRINT("NOT Saving HDR image to file. %1","");
+    }
 
-	startTonemap();
+    startTonemap();
 }
 
 void  CommandLineInterfaceManager::startTonemap()
@@ -486,7 +485,7 @@ void  CommandLineInterfaceManager::startTonemap()
 void CommandLineInterfaceManager::tonemapTerminated(QImage* newimage)
 {
 	QFileInfo qfi(saveLdrFilename);
-	if (!newimage->save(saveLdrFilename, qfi.suffix().toAscii().constData(), 100))
+        if (!newimage->save(saveLdrFilename, qfi.suffix().toLocal8Bit().constData(), 100))
   {
 		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
 	}

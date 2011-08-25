@@ -57,7 +57,7 @@ void LoadHdrThread::run()
     QFileInfo qfi(fname);
     if (!qfi.isReadable())
     {
-        qDebug("File %s is not readable.", fname.toLocal8Bit().constData());
+        qDebug("File %s is not readable.", qPrintable(fname));
         emit load_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
         return;
     }
@@ -73,10 +73,9 @@ void LoadHdrThread::run()
     bool rawinput = (rawextensions.indexOf(extension) != -1);
     try
     {
-        QByteArray TempPath = (luminance_options->tempfilespath).toLocal8Bit();
-        QByteArray FilePath = qfi.absoluteFilePath().toLocal8Bit();
-        const char* encodedFileName = FilePath.constData(); // It will be surely needed... so I prefer to do it now
-        //char* encodedFileName = strdup(QFile::encodeName(qfi.filePath()).constData());
+        QByteArray TempPath = QFile::encodeName(luminance_options->tempfilespath);
+        QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
+
         if (extension=="EXR")
         {
             hdrpfsframe = readEXRfile(encodedFileName);
@@ -100,7 +99,7 @@ void LoadHdrThread::run()
         }
         else if (extension.startsWith("TIF"))
         {
-            TiffReader reader(encodedFileName, TempPath.constData(), false );
+            TiffReader reader(encodedFileName, TempPath, false );
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
             hdrpfsframe = reader.readIntoPfsFrame();
@@ -108,7 +107,7 @@ void LoadHdrThread::run()
         }
         else if (rawinput)
         {
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false, prog_cb, this);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, luminance_options, false, prog_cb, this);
         } //raw file detected
         else
         {
@@ -116,7 +115,6 @@ void LoadHdrThread::run()
             emit load_failed(tr("ERROR: File %1 has unsupported extension.").arg(fname));
             return;
         }
-        //free(encodedFileName);
         if (hdrpfsframe == NULL)
         {
             throw "Error loading file";

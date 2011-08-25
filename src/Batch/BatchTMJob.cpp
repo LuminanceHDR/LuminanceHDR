@@ -106,14 +106,14 @@ void BatchTMJob::run()
 
                 QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
 
-				qDebug() << "Batch saved quality: " << opts->quality;
-                if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toAscii().constData(), opts->quality))
+                qDebug() << "Batch saved quality: " << opts->quality;
+                if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toLocal8Bit(), opts->quality))
                 {
                     emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
                 }
                 else
                 {
-                    // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData()
+                    // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString)[.constData()] (constData() is implicit if you omit it)
                     // trick to cope with local 8-bit encoding determined by the user's locale.
                     ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
 

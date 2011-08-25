@@ -176,8 +176,8 @@ void LuminanceOptions::loadFromQSettings()
 	four_color_rgb = settings->value(KEY_FOUR_COLOR_RGB).toBool();
 	wb_method = settings->value(KEY_WB_METHOD).toInt();
 	output_color = settings->value(KEY_OUTPUT_COLOR).toInt();
-	output_profile = settings->value(KEY_OUTPUT_PROFILE).toString().toAscii().constData();
-	camera_profile = settings->value(KEY_CAMERA_PROFILE).toString().toAscii().constData();
+        output_profile = QFile::encodeName(settings->value(KEY_OUTPUT_PROFILE).toString()).constData();
+        camera_profile = QFile::encodeName(settings->value(KEY_CAMERA_PROFILE).toString()).constData();
 	user_flip = settings->value(KEY_USER_FLIP).toInt();
 	user_qual = settings->value(KEY_USER_QUAL).toInt();
 	user_black = settings->value(KEY_USER_BLACK).toInt();

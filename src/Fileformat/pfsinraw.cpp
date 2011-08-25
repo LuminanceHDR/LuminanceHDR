@@ -227,7 +227,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   pfs::DOMIO pfsio;
   pfs::Frame *frame = pfsio.createFrame( W, H );
 
-  if( frame == NULL) {
+  if (frame == NULL) {
     RawProcessor.recycle();
     return NULL;
   }
@@ -258,21 +258,21 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   if (writeOnDisk)   // for align_image_stack and thumbnails
   {
-    QString fname(filename);
-    QString tmpdir(tempdir);
+    QString fname = QFile::decodeName(filename);
+    QString tmpdir = QFile::decodeName(tempdir);
     QFileInfo qfi(fname);
     QString outname = tmpdir + "/" + qfi.baseName() + ".tiff";
 
-    RawProcessor.dcraw_ppm_tiff_writer(outname.toAscii().constData());
+    RawProcessor.dcraw_ppm_tiff_writer(QFile::encodeName(outname));
 
     if( (ret = RawProcessor.unpack_thumb() ) == LIBRAW_SUCCESS)
     {
       QString suffix = T.tformat == LIBRAW_THUMBNAIL_JPEG ? "thumb.jpg" : "thumb.ppm"; 
       QString thumbname = tmpdir + "/" + qfi.baseName() + "." + suffix;
-      RawProcessor.dcraw_thumb_writer(thumbname.toAscii().constData());
+      RawProcessor.dcraw_thumb_writer(QFile::encodeName(thumbname));
     }
     std::cout << "Filename: " << filename << std::endl;
-    std::cout << "Outname: " << outname.toAscii().constData() << std::endl;
+    std::cout << "Outname: " << qPrintable(outname) << std::endl;
   }
 
   LibRaw::dcraw_clear_mem(image);

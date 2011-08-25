@@ -291,7 +291,7 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 		clearlists(false);
 		for (int i = 0; i < fileList.size(); i++) {
 			//align_image_stack can only output tiff files
-			char* fname = strdup(QFile::encodeName(QString(luminance_options->tempfilespath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif")).constData());
+                        QByteArray fname = QFile::encodeName(QString(luminance_options->tempfilespath + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif"));
 			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname, "", false);
 			//if 8bit ldr tiff
@@ -315,19 +315,22 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 			}
 			qDebug() << "void HdrCreationManager::ais_finished: remove " << fname;
 			QFile::remove(fname);
-			free(fname);
 		}
-		QFile::remove(QString(luminance_options->tempfilespath + "/hugin_debug_optim_results.txt"));
+                QFile::remove(luminance_options->tempfilespath + "/hugin_debug_optim_results.txt");
 		emit finishedAligning();
 	}
 }
 
-void HdrCreationManager::removeTempFiles() {
-	foreach (QString tempfname, filesToRemove) {
-		qDebug() << "void HdrCreationManager::removeTempFiles(): " << tempfname.toAscii().constData();
-		if (tempfname != "")
-			QFile::remove(tempfname);
-	}
+void HdrCreationManager::removeTempFiles()
+{
+    foreach (QString tempfname, filesToRemove)
+    {
+        qDebug() << "void HdrCreationManager::removeTempFiles(): " << qPrintable(tempfname);
+        if (!tempfname.isEmpty())
+        {
+            QFile::remove(tempfname);
+        }
+    }
 }
 
 void HdrCreationManager::checkEVvalues() {

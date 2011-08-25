@@ -52,7 +52,7 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
 
     QFileInfo qfi(filename);
     QString absoluteFileName = qfi.absoluteFilePath();
-    QByteArray encodedName = absoluteFileName.toLocal8Bit();
+    QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
     pfs::Frame* hdr_frame = hdr_input->getHDRPfsFrame();
 
@@ -88,10 +88,7 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     else
     {
         // Default as EXR
-        absoluteFileName = absoluteFileName + ".exr";
-        QByteArray encodedName_2 = absoluteFileName.toLocal8Bit();
-
-        writeEXRfile(hdr_frame, encodedName_2);
+        writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
     }
     emit write_hdr_success(hdr_input, filename);
 
@@ -108,7 +105,7 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
     QFileInfo qfi(filename);
     QString format = qfi.suffix();
 
-    if ( image->save(filename, format.toAscii().constData(), quality) )
+    if ( image->save(filename, format.toLocal8Bit(), quality) )
     {
         emit write_ldr_success(ldr_input, filename);
     }
@@ -147,7 +144,7 @@ void IOWorker::get_frame(QString fname)
     QFileInfo qfi(fname);
     if ( !qfi.isReadable() )
     {
-        qDebug("File %s is not readable.", fname.toLocal8Bit().constData());
+        qDebug("File %s is not readable.", qPrintable(fname));
         emit read_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
         return;
     }
@@ -155,13 +152,12 @@ void IOWorker::get_frame(QString fname)
     pfs::Frame* hdrpfsframe = NULL;
     QStringList rawextensions;
     rawextensions << "CRW" << "CR2" << "NEF" << "DNG" << "MRW" << "ORF" << "KDC" << "DCR" << "ARW" << "RAF" << "PTX" << "PEF" << "X3F" << "RAW" << "SR2" << "3FR" << "RW2" << "MEF" << "MOS" << "ERF" << "NRW";
-    QString extension = qfi.suffix().toUpper();
-    bool rawinput = (rawextensions.indexOf(extension) != -1);
+
     try
     {
-        QByteArray TempPath = (luminance_options->tempfilespath).toLocal8Bit();
-        QByteArray FilePath = qfi.absoluteFilePath().toLocal8Bit();
-        const char* encodedFileName = FilePath.constData(); // It will be surely needed... so I prefer to do it now
+        QString extension = qfi.suffix().toUpper();
+        QByteArray TempPath = QFile::encodeName(luminance_options->tempfilespath);
+        QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
         if (extension=="EXR")
         {
@@ -187,15 +183,15 @@ void IOWorker::get_frame(QString fname)
         else if (extension.startsWith("TIF"))
         {
             // from 8,16,32,logluv to pfs::Frame
-            TiffReader reader(encodedFileName, TempPath.constData(), false );
+            TiffReader reader(encodedFileName, TempPath, false );
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             hdrpfsframe = reader.readIntoPfsFrame();
         }
-        else if (rawinput)
+        else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath.constData(), luminance_options, false, progress_cb, this);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, luminance_options, false, progress_cb, this);
         }
         else
         {

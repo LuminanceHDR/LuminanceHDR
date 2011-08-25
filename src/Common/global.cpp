@@ -81,7 +81,7 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
             quality = savedFileQuality.getQuality();
         }
         //std::cout << quality << std::endl;
-        if( !(image->save(outfname,format.toAscii().constData(), quality)) )
+        if( !(image->save(outfname, format.toLocal8Bit(), quality)) )
         {
             //std::cout << "Failed to save" << std::endl;
             QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);

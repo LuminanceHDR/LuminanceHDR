@@ -62,7 +62,7 @@ void HdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-			TiffReader reader(QFile::encodeName(qfi.filePath()).constData(), (luminance_options->tempfilespath).toAscii().constData(), true);
+                        TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options->tempfilespath), true);
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			//if 8bit ldr tiff
@@ -91,7 +91,7 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-			pfs::Frame* frame = readRawIntoPfsFrame(fname.toAscii().constData(),(luminance_options->tempfilespath).toAscii().constData(),luminance_options, true, prog_callback, this);
+                        pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options->tempfilespath), luminance_options, true, prog_callback, this);
 			if (frame == NULL)
 				throw "Failed Loading Image";
 
@@ -122,9 +122,11 @@ void HdrInputLoader::emitMaximumValue(int expected)
 	emit maximumValue(expected);
 }
 
-int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected)
+int prog_callback(void *data,enum LibRaw_progress p, int iteration, int expected)
 {
+#ifdef QT_DEBUG
 	qDebug() << iteration << expected;
+#endif
 	HdrInputLoader *ptr = (HdrInputLoader *) data;
 	ptr->emitMaximumValue(expected);
 	ptr->emitNextStep(iteration);
