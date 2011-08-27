@@ -18,21 +18,23 @@ IF EXIST ..\msvc (
 	goto error_end
 )
 
-IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
-IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\wget.exe GOTO cygwin_error
 GOTO cygwin_ok
 
 :cygwin_error
 echo ERROR: Cygwin with 
 echo    cvs
+echo    git 
 echo    gzip 
-echo    svn 
 echo    sed 
+echo    svn 
 echo    tar 
 echo    unzip 
 echo    wget
@@ -270,11 +272,11 @@ IF NOT EXIST LuminanceHdrStuff (
 )
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	pushd LuminanceHdrStuff
-	%CYGWIN_DIR%\bin\svn.exe co https://qtpfsgui.svn.sourceforge.net/svnroot/qtpfsgui/trunk/qtpfsgui 
+	%CYGWIN_DIR%\bin\git.exe clone git://qtpfsgui.git.sourceforge.net/gitroot/qtpfsgui/qtpfsgui qtpfsgui
 	popd
 ) ELSE (
-	pushd LuminanceHdrStuff
-	%CYGWIN_DIR%\bin\svn.exe update qtpfsgui 
+	pushd LuminanceHdrStuff\qtpfsgui
+	%CYGWIN_DIR%\bin\git.exe fetch
 	popd
 )
 
