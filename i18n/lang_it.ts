@@ -564,62 +564,62 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="118"/>
+        <location filename="../src/Common/commandline.cpp" line="119"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Errore: opzione di allineamento non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="132"/>
+        <location filename="../src/Common/commandline.cpp" line="133"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>Errore: formato di creazione HDR non riconosciuto</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="157"/>
+        <location filename="../src/Common/commandline.cpp" line="158"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Errore: curva di risposta specificata non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="166"/>
+        <location filename="../src/Common/commandline.cpp" line="167"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Errore: modello per la creazione dell&apos;HDR sconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="173"/>
+        <location filename="../src/Common/commandline.cpp" line="174"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>Errore: formato per la creazione dell&apos;HDR sconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="212"/>
+        <location filename="../src/Common/commandline.cpp" line="213"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Errore: L&apos;operatore di tone mapping specificato non e&apos; stato riconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="221"/>
+        <location filename="../src/Common/commandline.cpp" line="222"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>Errore: Il formato dell&apos;opzione di tone mapping specificato non e&apos; stato riconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="310"/>
+        <location filename="../src/Common/commandline.cpp" line="311"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>Errore: Opzione di tone mapping non riconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="318"/>
+        <location filename="../src/Common/commandline.cpp" line="319"/>
         <source>Error: Unknown option %1.</source>
         <translation>Errore: Opzione sconosciutaL: %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="320"/>
+        <location filename="../src/Common/commandline.cpp" line="321"/>
         <source>Error: Missing argument for %1.</source>
         <translation>Errore: Argomento mancante per %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="329"/>
+        <location filename="../src/Common/commandline.cpp" line="330"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Errore: Il numero di valori EV specificati e&apos; differente dal numero di file di input.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="375"/>
+        <location filename="../src/Common/commandline.cpp" line="376"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Errore: Dati Exif mancanti nelle immagini e valori EV non specificati manualmente.</translation>
     </message>
@@ -639,12 +639,12 @@ p, li { white-space: pre-wrap; }
         <translation>Impossibile convertire %1 in un valore intero</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="142"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Errore: Funzione peso specificata sconosciuta.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="396"/>
+        <location filename="../src/Common/commandline.cpp" line="397"/>
         <source>Failed executing align_image_stack</source>
         <translation>align_image_stack ha terminato in modo incorretto</translation>
     </message>
@@ -1920,24 +1920,12 @@ i seguenti dati exif: 		&lt;ul&gt;&lt;li&gt;Velocità Otturatore (secondi)&lt;/l
         <translation type="obsolete">Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.raw *.nrw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation>Tutti i formati (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
+        <translation type="obsolete">Tutti i formati (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation>Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
-        <translation></translation>
+        <translation type="obsolete">Immagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="170"/>
@@ -2000,6 +1988,26 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     <message>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up &gt; External Tools&quot; for more information.</source>
         <translation type="obsolete">Impossibile eseguire l&apos;applicazione &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Leggere &quot;Aiuto -&gt; Sommario... -&gt; Setting up &gt;External Tools&quot; per maggiori informazioni.</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
@@ -2661,27 +2669,27 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con il protoc
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="151"/>
+        <location filename="../src/Core/IOWorker.cpp" line="148"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation>ERRORE: Il seguente file non e&apos; accessibile: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="180"/>
+        <location filename="../src/Core/IOWorker.cpp" line="176"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation>Errore: Impossibile aprire il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="203"/>
+        <location filename="../src/Core/IOWorker.cpp" line="199"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERRORE: Il file %1 ha una estensione non supportata.</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="214"/>
+        <location filename="../src/Core/IOWorker.cpp" line="210"/>
         <source>ERROR: %1</source>
         <translation>ERRORE: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="220"/>
+        <location filename="../src/Core/IOWorker.cpp" line="216"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERRORE: impossibile caricare il file: %1</translation>
     </message>
@@ -2833,22 +2841,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">ERRORE: Errore o timeout nell&apos;eseguire dcraw sul file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="116"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="115"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>ERRORE: Il file %1 ha una estensione non supportata.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="133"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="131"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>ERRORE: impossibile caricare il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="94"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="93"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation>Errore: Impossibile aprire il file: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="127"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="125"/>
         <source>ERROR: %1</source>
         <translation>Errore: %1</translation>
     </message>
@@ -3239,17 +3247,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Tonemappa l&apos;Hdr</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="944"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="938"/>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="676"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="670"/>
         <source>Error...</source>
         <translation>Errore...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="275"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="269"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Pronto. Ora apri un&apos;immagine HDR esistente o creane una nuova!</translation>
     </message>
@@ -3258,50 +3266,50 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Salvataggio file...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="339"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="425"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1308"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="333"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1304"/>
         <source>All HDR formats </source>
         <translation>Tutti i formati HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="350"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="344"/>
         <source>Load one or more HDR images...</source>
         <translation>Carica una o più immagini HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="391"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="385"/>
         <source>Save files in</source>
         <translation>Salva i file in</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="433"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1316"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="427"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1312"/>
         <source>Save the HDR image as...</source>
         <translation>Salva l&apos;immagine HDR come...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="539"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="533"/>
         <source>Failed to save</source>
         <translation>Impossibile salvare</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1233"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1229"/>
         <source>Done!</source>
         <translation>Fatto!</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1297"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1293"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation>Questa immagine HDR ha modifiche non salvate.&lt;br&gt;Vuoi salvarla?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1474"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1470"/>
         <source>Untitled %1</source>
         <translation>Senza nome %1</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Error: %1</source>
         <translation>Errore: %1</translation>
     </message>
@@ -3310,7 +3318,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Errore: Impossibile eseguire il Tonemapping</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="677"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="671"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation>Luminance HDR deve memorizzare i risultati su files temporanei ma la directory selezionata non è valida.&lt;br&gt;Scegli un percorso valido in Strumenti-&gt;Preferenze...-&gt;Tonemapping.</translation>
     </message>
@@ -3319,12 +3327,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">C&apos;è almeno un&apos;immagine HDR con cambiamenti non salvati.&lt;br&gt;Vuoi ancora uscire?</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1252"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1248"/>
         <source>Cropped Image</source>
         <translation>Immagine ritagliata</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1296"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1292"/>
         <source>Unsaved changes...</source>
         <translation>Modifiche non salvate...</translation>
     </message>
@@ -3428,7 +3436,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Luminance HDR</source>
         <translatorcomment>Luminance HDR</translatorcomment>
         <translation>Luminance HDR</translation>
@@ -3952,7 +3960,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Applica una projective transformation all&apos;attuale Hdr.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1472"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1468"/>
         <source>Untitled</source>
         <translation>Nuovo</translation>
     </message>
@@ -5170,47 +5178,47 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="94"/>
+        <location filename="../forms/PreviewPanel.ui" line="103"/>
         <source>Mantiuk &apos;06</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="119"/>
+        <location filename="../forms/PreviewPanel.ui" line="128"/>
         <source>Mantiuk &apos;08</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="144"/>
+        <location filename="../forms/PreviewPanel.ui" line="153"/>
         <source>Fattal</source>
         <translation>Fattal</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="169"/>
+        <location filename="../forms/PreviewPanel.ui" line="178"/>
         <source>Drago</source>
         <translation>Drago</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="194"/>
+        <location filename="../forms/PreviewPanel.ui" line="203"/>
         <source>Durand</source>
         <translation>Durand</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="219"/>
+        <location filename="../forms/PreviewPanel.ui" line="228"/>
         <source>Reinhard &apos;02</source>
         <translation>Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="244"/>
+        <location filename="../forms/PreviewPanel.ui" line="253"/>
         <source>Reinhard &apos;05</source>
         <translation>Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="269"/>
+        <location filename="../forms/PreviewPanel.ui" line="278"/>
         <source>Ashikhmin</source>
         <translation>Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="294"/>
+        <location filename="../forms/PreviewPanel.ui" line="303"/>
         <source>Pattanaik</source>
         <translation>Pattanaik</translation>
     </message>
@@ -5360,19 +5368,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="453"/>
         <source>All LDR formats</source>
         <translation>Tutti i formati LDR</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="469"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="463"/>
         <source>Save the LDR image as...</source>
         <translation>Salva le immagini LDR come...</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="494"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="488"/>
         <source>Save as...</source>
         <translation>Salva come...</translation>
     </message>
@@ -6146,9 +6154,8 @@ Selezione</translation>
         <translation>&amp;Processa</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2266"/>
@@ -6416,6 +6423,11 @@ p, li { white-space: pre-wrap; }
         <translation>Inizia il tonemapping (CTRL+T)</translation>
     </message>
     <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+T</translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2587"/>
         <source>undo</source>
         <translation>annulla</translation>
@@ -6458,177 +6470,132 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Pannello di tone mapping</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="256"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="271"/>
-        <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
-        <translation>Chiudi tutti</translation>
+        <translation type="obsolete">Chiudi tutti</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="277"/>
-        <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Chiudi tutti gli LDR presenti nel workspace</translation>
+        <translation type="obsolete">Chiudi tutti gli LDR presenti nel workspace</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
-        <translation>Miniature</translation>
+        <translation type="obsolete">Miniature</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
-        <translation>Immagini in miniatura</translation>
+        <translation type="obsolete">Immagini in miniatura</translation>
     </message>
     <message>
         <source>Layout all LDRs as thumbnails.</source>
         <translation type="obsolete">Disponi tutti gli LDR come miniature.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="347"/>
-        <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Scala l&apos;LDR in modo da riempire la finestra che lo contiene.</translation>
+        <translation type="obsolete">Scala l&apos;LDR in modo da riempire la finestra che lo contiene.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="353"/>
         <source>W</source>
-        <translation>W</translation>
+        <translation type="obsolete">W</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="72"/>
         <source>&amp;File</source>
-        <translation>&amp;File</translation>
+        <translation type="obsolete">&amp;File</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="46"/>
         <source>&amp;View</source>
-        <translation>&amp;Visualizza</translation>
+        <translation type="obsolete">&amp;Visualizza</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="118"/>
         <source>Show Main Toolbar</source>
-        <translation>Visualizza Toolbar Principale</translation>
+        <translation type="obsolete">Visualizza Toolbar Principale</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="157"/>
         <source>&amp;Close</source>
-        <translation>&amp;Chiudi</translation>
+        <translation type="obsolete">&amp;Chiudi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="163"/>
-        <location filename="../forms/TonemappingWindow.ui" line="166"/>
-        <location filename="../forms/TonemappingWindow.ui" line="169"/>
         <source>Close the tonemapping dialog</source>
-        <translation>Chiudi la finestra di Tonemapping</translation>
+        <translation type="obsolete">Chiudi la finestra di Tonemapping</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="187"/>
-        <location filename="../forms/TonemappingWindow.ui" line="190"/>
         <source>Tone Mapping Options</source>
-        <translation>Opzioni di Tonemapping</translation>
+        <translation type="obsolete">Opzioni di Tonemapping</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="193"/>
-        <location filename="../forms/TonemappingWindow.ui" line="196"/>
         <source>Toggle display of the tonemapping options sidebar</source>
-        <translation>Mostra/Nascondi pannello laterale</translation>
+        <translation type="obsolete">Mostra/Nascondi pannello laterale</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="199"/>
         <source>Show/Hide the tonemapping options sidebar</source>
-        <translation>Mostra/Nascondi pannello laterale</translation>
+        <translation type="obsolete">Mostra/Nascondi pannello laterale</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="223"/>
-        <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Sistema l&apos;istogramma per la LDR corrente</translation>
+        <translation type="obsolete">Sistema l&apos;istogramma per la LDR corrente</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
-        <translation>C&amp;hiudi tutti</translation>
+        <translation type="obsolete">C&amp;hiudi tutti</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
-        <translation>Come &amp;miniature</translation>
+        <translation type="obsolete">Come &amp;miniature</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="303"/>
-        <location filename="../forms/TonemappingWindow.ui" line="306"/>
         <source>Layout all LDR images as thumbnails</source>
-        <translation>Disponi tutte le LDR come anteprima</translation>
+        <translation type="obsolete">Disponi tutte le LDR come anteprima</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Disponi</translation>
+        <translation type="obsolete">&amp;Disponi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Scala alla finestra</translation>
+        <translation type="obsolete">&amp;Scala alla finestra</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="440"/>
-        <location filename="../forms/TonemappingWindow.ui" line="443"/>
         <source>Show the original high dynamic range image</source>
-        <translation>Mostra l&apos;immagine HDR originale</translation>
+        <translation type="obsolete">Mostra l&apos;immagine HDR originale</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="464"/>
-        <location filename="../forms/TonemappingWindow.ui" line="467"/>
         <source>Show the next image</source>
-        <translation>Mostra l&apos;immagine successiva</translation>
+        <translation type="obsolete">Mostra l&apos;immagine successiva</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="488"/>
-        <location filename="../forms/TonemappingWindow.ui" line="491"/>
         <source>Show the previous image</source>
-        <translation>Mostra l&apos;immagine precedente</translation>
+        <translation type="obsolete">Mostra l&apos;immagine precedente</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="598"/>
         <source>Sync View</source>
-        <translation>Sincronizza visualizzazione</translation>
+        <translation type="obsolete">Sincronizza visualizzazione</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="601"/>
-        <location filename="../forms/TonemappingWindow.ui" line="604"/>
-        <location filename="../forms/TonemappingWindow.ui" line="607"/>
         <source>Lock view of all images to sync panning</source>
-        <translation>Sincronizza le immagini</translation>
+        <translation type="obsolete">Sincronizza le immagini</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="629"/>
         <source>Show information about Qt</source>
-        <translation>Morstra informazioni riguardanti Qt</translation>
+        <translation type="obsolete">Morstra informazioni riguardanti Qt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="632"/>
-        <location filename="../forms/TonemappingWindow.ui" line="635"/>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation>Mostra informazioni riguardanti la libreria Qt usata da Luminance</translation>
+        <translation type="obsolete">Mostra informazioni riguardanti la libreria Qt usata da Luminance</translation>
     </message>
     <message>
         <source>Active TM Processes</source>
         <translation type="obsolete">Processi TM attivi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="283"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="obsolete">Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="37"/>
         <source>&amp;Help</source>
-        <translation>&amp;Aiuto</translation>
+        <translation type="obsolete">&amp;Aiuto</translation>
     </message>
     <message>
         <source>Tone Mapping Panel</source>
@@ -6647,44 +6614,32 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Sistema i Livelli...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
-        <translation>&amp;Salva come...</translation>
+        <translation type="obsolete">&amp;Salva come...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="244"/>
-        <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
-        <translation>Salva come...</translation>
+        <translation type="obsolete">Salva come...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="250"/>
-        <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
-        <translation>Salva l&apos;LDR corrente</translation>
+        <translation type="obsolete">Salva l&apos;LDR corrente</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="320"/>
-        <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Ordina tutti gli LDR nell&apos;area di lavoro</translation>
+        <translation type="obsolete">Ordina tutti gli LDR nell&apos;area di lavoro</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="362"/>
-        <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
-        <translation>Guida rapida</translation>
+        <translation type="obsolete">Guida rapida</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="368"/>
-        <location filename="../forms/TonemappingWindow.ui" line="371"/>
         <source>Get verbose information about user interface elements</source>
-        <translation>Montra informazioni dettagliate sull&apos;interfaccia utente</translation>
+        <translation type="obsolete">Montra informazioni dettagliate sull&apos;interfaccia utente</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="374"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Documentation...</source>
@@ -6695,24 +6650,20 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="172"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="229"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation type="obsolete">Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="309"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation type="obsolete">Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="326"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
         <source>Get information about the graphical elements</source>
@@ -6723,9 +6674,8 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Utilizza questo bottone per ottenere informazioni sui vari elementi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="14"/>
         <source>Tone Mapping: </source>
-        <translation>Tone Mapping: </translation>
+        <translation type="obsolete">Tone Mapping: </translation>
     </message>
     <message>
         <source>&amp;Exit</source>
@@ -6744,167 +6694,112 @@ Vuoi continuare?</translation>
         <translation type="obsolete">Toolbar</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="404"/>
-        <location filename="../forms/TonemappingWindow.ui" line="407"/>
-        <location filename="../forms/TonemappingWindow.ui" line="410"/>
         <source>Save All</source>
-        <translation>Salva Tutti</translation>
+        <translation type="obsolete">Salva Tutti</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="413"/>
-        <location filename="../forms/TonemappingWindow.ui" line="416"/>
         <source>Saves all LDRs</source>
-        <translation>Salva tutte le LDRs</translation>
+        <translation type="obsolete">Salva tutte le LDRs</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="419"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation type="obsolete">Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save files in</source>
         <translation type="obsolete">Salva i file in</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
-        <translation>Barre degli Strumenti</translation>
+        <translation type="obsolete">Barre degli Strumenti</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="83"/>
         <source>&amp;Windows</source>
-        <translation>Fi&amp;nestre</translation>
+        <translation type="obsolete">Fi&amp;nestre</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="160"/>
         <source>Close</source>
-        <translation>Chiudi</translation>
+        <translation type="obsolete">Chiudi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="214"/>
         <source>Adjust &amp;Levels</source>
-        <translation>Aggiusta &amp;Livelli</translation>
+        <translation type="obsolete">Aggiusta &amp;Livelli</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="217"/>
-        <location filename="../forms/TonemappingWindow.ui" line="220"/>
         <source>Adjust Levels</source>
-        <translation>Aggiusta Livelli</translation>
+        <translation type="obsolete">Aggiusta Livelli</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="383"/>
         <source>&amp;Contents...</source>
-        <translation>&amp;Sommario...</translation>
+        <translation type="obsolete">&amp;Sommario...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="386"/>
-        <location filename="../forms/TonemappingWindow.ui" line="389"/>
         <source>Open user manual for Luminance</source>
-        <translation>Apre il manule utente di Luminance</translation>
+        <translation type="obsolete">Apre il manule utente di Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="392"/>
-        <source>F1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="431"/>
-        <location filename="../forms/TonemappingWindow.ui" line="434"/>
-        <location filename="../forms/TonemappingWindow.ui" line="437"/>
         <source>HDR Image</source>
-        <translation>Immagine HDR</translation>
+        <translation type="obsolete">Immagine HDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="455"/>
-        <location filename="../forms/TonemappingWindow.ui" line="458"/>
-        <location filename="../forms/TonemappingWindow.ui" line="461"/>
         <source>Next Image</source>
-        <translation>Immagine successiva</translation>
+        <translation type="obsolete">Immagine successiva</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="479"/>
-        <location filename="../forms/TonemappingWindow.ui" line="482"/>
-        <location filename="../forms/TonemappingWindow.ui" line="485"/>
         <source>Previous Image</source>
-        <translation>Immagine precedente</translation>
+        <translation type="obsolete">Immagine precedente</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
-        <translation>Dimensioni &amp;normali</translation>
+        <translation type="obsolete">Dimensioni &amp;normali</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="506"/>
         <source>O</source>
-        <translation>O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="518"/>
-        <source>Zoom &amp;In</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="521"/>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="obsolete">+</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="533"/>
-        <source>Zoom &amp;Out</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="536"/>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="552"/>
         <source>Text Under Icons</source>
-        <translation>Testo sotto le icone</translation>
+        <translation type="obsolete">Testo sotto le icone</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="560"/>
         <source>Only Icons</source>
-        <translation>Solo icone</translation>
+        <translation type="obsolete">Solo icone</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="563"/>
-        <location filename="../forms/TonemappingWindow.ui" line="566"/>
         <source>Icons Only</source>
-        <translation>Solo icone</translation>
+        <translation type="obsolete">Solo icone</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="574"/>
         <source>Text Alongside Icons</source>
-        <translation>Testo di fianco icone</translation>
+        <translation type="obsolete">Testo di fianco icone</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="582"/>
         <source>Text Only</source>
-        <translation>Solo testo</translation>
+        <translation type="obsolete">Solo testo</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
-        <translation>Informazioni su Luminance</translation>
+        <translation type="obsolete">Informazioni su Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="615"/>
         <source>Show information about Luminance</source>
-        <translation>Mostra informazioni su Luminance</translation>
+        <translation type="obsolete">Mostra informazioni su Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="618"/>
-        <location filename="../forms/TonemappingWindow.ui" line="621"/>
         <source>Show information about Luminance, its authors and contributors</source>
-        <translation>Mostra informazioni su Luminance HDR, i suoi autori e contributori</translation>
+        <translation type="obsolete">Mostra informazioni su Luminance HDR, i suoi autori e contributori</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="626"/>
         <source>About Qt</source>
-        <translation>Informazioni su Qt</translation>
+        <translation type="obsolete">Informazioni su Qt</translation>
     </message>
     <message>
         <source>Original HDR</source>

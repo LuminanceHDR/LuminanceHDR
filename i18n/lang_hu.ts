@@ -450,72 +450,72 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="118"/>
+        <location filename="../src/Common/commandline.cpp" line="119"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Hiba: Ismeretlen igazítómű.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="132"/>
+        <location filename="../src/Common/commandline.cpp" line="133"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>Hiba: Hamis HDR előállítási típus</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="142"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Hiba: Ismeretlen súlyfüggvény.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="157"/>
+        <location filename="../src/Common/commandline.cpp" line="158"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Hiba: Ismeretlen válaszgörbe.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="166"/>
+        <location filename="../src/Common/commandline.cpp" line="167"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Hiba: Ismeretlen HDR előállítási típus.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="173"/>
+        <location filename="../src/Common/commandline.cpp" line="174"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>Hiba: Helytelen HDR előállítási típus.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="212"/>
+        <location filename="../src/Common/commandline.cpp" line="213"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Hiba: Ismeretlen árnyalatnövelési művelet.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="221"/>
+        <location filename="../src/Common/commandline.cpp" line="222"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>Hiba: Helytelen árnyalatnövelési beállítás.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="310"/>
+        <location filename="../src/Common/commandline.cpp" line="311"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>Hiba: Ismeretlen árnyalatnövelési beállitás.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="318"/>
+        <location filename="../src/Common/commandline.cpp" line="319"/>
         <source>Error: Unknown option %1.</source>
         <translation>Hiba: Ismeretlen beállítás (%1).</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="320"/>
+        <location filename="../src/Common/commandline.cpp" line="321"/>
         <source>Error: Missing argument for %1.</source>
         <translation>Hiba: %1 értéke hiányzik.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="329"/>
+        <location filename="../src/Common/commandline.cpp" line="330"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Hiba: A megvilágítási értékek száma különbözik a feldolgozandó képek számától.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="375"/>
+        <location filename="../src/Common/commandline.cpp" line="376"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Hiba: Az EXIF adatok hiányoznak a képekből és nincs megadva megvilágítási érték a parancssorban, ezért megszakítva.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="396"/>
+        <location filename="../src/Common/commandline.cpp" line="397"/>
         <source>Failed executing align_image_stack</source>
         <translation>Nem sikerült elvégezni hugin align_image_stack-jét</translation>
     </message>
@@ -1692,16 +1692,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Megvilágítás</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="152"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished"></translation>
@@ -1709,16 +1699,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="153"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1794,6 +1774,26 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation type="obsolete">Nem indult el ez a külső program: &quot;align_image_stack&quot;.&lt;br&gt;Kérem olvassa el a &quot;Súgó -&gt; Dokumentáció... -&gt; Hints and tips&quot; fejezetét.</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
@@ -2449,27 +2449,27 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="151"/>
+        <location filename="../src/Core/IOWorker.cpp" line="148"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished">HIBA: A következő fájl olvashatatlan: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="180"/>
+        <location filename="../src/Core/IOWorker.cpp" line="176"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="203"/>
+        <location filename="../src/Core/IOWorker.cpp" line="199"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished">HIBA: A(z) %1 fájl típusa nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="214"/>
+        <location filename="../src/Core/IOWorker.cpp" line="210"/>
         <source>ERROR: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="220"/>
+        <location filename="../src/Core/IOWorker.cpp" line="216"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished">HIBA: Nem lehet megnyitni: %1</translation>
     </message>
@@ -2621,22 +2621,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">HIBA: Lejárt az idő, miközben dcraw működött egy fájlon: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="116"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="115"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>HIBA: A(z) %1 fájl típusa nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="133"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="131"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>HIBA: Nem lehet megnyitni: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="94"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="93"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="127"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="125"/>
         <source>ERROR: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2668,7 +2668,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Luminance HDR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3033,7 +3033,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="944"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="938"/>
         <source>Aborting...</source>
         <translation>Megszakítás...</translation>
     </message>
@@ -3042,75 +3042,75 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">HDR kép mentése...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="275"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="269"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="339"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="425"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1308"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="333"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1304"/>
         <source>All HDR formats </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="350"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="344"/>
         <source>Load one or more HDR images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="391"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="385"/>
         <source>Save files in</source>
         <translation type="unfinished">Képeket menteni itt</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="433"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1316"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="427"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1312"/>
         <source>Save the HDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="539"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="533"/>
         <source>Failed to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1297"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1293"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1474"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1470"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="676"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="670"/>
         <source>Error...</source>
         <translation>Hiba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="677"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="671"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1233"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1229"/>
         <source>Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1296"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1292"/>
         <source>Unsaved changes...</source>
         <translation>Fennálló változtatások...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1252"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1248"/>
         <source>Cropped Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3683,7 +3683,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1472"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1468"/>
         <source>Untitled</source>
         <translation>Névtelen</translation>
     </message>
@@ -4676,47 +4676,47 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="94"/>
+        <location filename="../forms/PreviewPanel.ui" line="103"/>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="119"/>
+        <location filename="../forms/PreviewPanel.ui" line="128"/>
         <source>Mantiuk &apos;08</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="144"/>
+        <location filename="../forms/PreviewPanel.ui" line="153"/>
         <source>Fattal</source>
         <translation type="unfinished">Fattal</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="169"/>
+        <location filename="../forms/PreviewPanel.ui" line="178"/>
         <source>Drago</source>
         <translation type="unfinished">Drago</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="194"/>
+        <location filename="../forms/PreviewPanel.ui" line="203"/>
         <source>Durand</source>
         <translation type="unfinished">Durand</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="219"/>
+        <location filename="../forms/PreviewPanel.ui" line="228"/>
         <source>Reinhard &apos;02</source>
         <translation type="unfinished">Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="244"/>
+        <location filename="../forms/PreviewPanel.ui" line="253"/>
         <source>Reinhard &apos;05</source>
         <translation type="unfinished">Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="269"/>
+        <location filename="../forms/PreviewPanel.ui" line="278"/>
         <source>Ashikhmin</source>
         <translation type="unfinished">Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="294"/>
+        <location filename="../forms/PreviewPanel.ui" line="303"/>
         <source>Pattanaik</source>
         <translation type="unfinished">Pattanaik</translation>
     </message>
@@ -4866,19 +4866,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="453"/>
         <source>All LDR formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="469"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="463"/>
         <source>Save the LDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="494"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="488"/>
         <source>Save as...</source>
         <translation type="unfinished">Mentés másként...</translation>
     </message>
@@ -5602,9 +5602,8 @@ Original HDR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2266"/>
@@ -5868,6 +5867,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+T</translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2587"/>
         <source>undo</source>
         <translation type="unfinished"></translation>
@@ -5901,96 +5905,76 @@ Do you want to continue?</source>
 <context>
     <name>TonemappingWindow</name>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="46"/>
         <source>&amp;View</source>
-        <translation>&amp;Nézet</translation>
+        <translation type="obsolete">&amp;Nézet</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="72"/>
         <source>&amp;File</source>
-        <translation>&amp;Fájl</translation>
+        <translation type="obsolete">&amp;Fájl</translation>
     </message>
     <message>
         <source>Tone mapping Panel</source>
         <translation type="obsolete">Árnyalatnövelési panel</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="223"/>
-        <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation>A jelenlegi LDR hisztogrammját megváltoztatni</translation>
+        <translation type="obsolete">A jelenlegi LDR hisztogrammját megváltoztatni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="256"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
-        <translation>Be&amp;zár mindent</translation>
+        <translation type="obsolete">Be&amp;zár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="271"/>
-        <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
-        <translation>Bezár mindent</translation>
+        <translation type="obsolete">Bezár mindent</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="277"/>
-        <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
-        <translation>A rajzasztalon bezár minden LDR képet</translation>
+        <translation type="obsolete">A rajzasztalon bezár minden LDR képet</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="283"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="obsolete">Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
-        <translation>Mint &amp;indexképeket</translation>
+        <translation type="obsolete">Mint &amp;indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
-        <translation>Mint indexképeket</translation>
+        <translation type="obsolete">Mint indexképeket</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
-        <translation>Képeket mint indexképeket</translation>
+        <translation type="obsolete">Képeket mint indexképeket</translation>
     </message>
     <message>
         <source>Layout all LDRs as thumbnails.</source>
         <translation type="obsolete">Minden LDR képet indexképként mutatni.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Egymás alatt</translation>
+        <translation type="obsolete">&amp;Egymás alatt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Ablakhoz igazítani</translation>
+        <translation type="obsolete">&amp;Ablakhoz igazítani</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="347"/>
-        <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>A jelenlegi LDR képet az ablakához igazítani.</translation>
+        <translation type="obsolete">A jelenlegi LDR képet az ablakához igazítani.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="353"/>
         <source>W</source>
-        <translation>W</translation>
+        <translation type="obsolete">W</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="37"/>
         <source>&amp;Help</source>
-        <translation>&amp;Súgó</translation>
+        <translation type="obsolete">&amp;Súgó</translation>
     </message>
     <message>
         <source>Tone Mapping Panel</source>
@@ -6009,38 +5993,28 @@ Do you want to continue?</source>
         <translation type="obsolete">Szinteket szabályozni...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
-        <translation>Men&amp;tés másként...</translation>
+        <translation type="obsolete">Men&amp;tés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="244"/>
-        <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
-        <translation>Mentés másként...</translation>
+        <translation type="obsolete">Mentés másként...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="250"/>
-        <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
-        <translation>A kijelölt LDR képet menteni</translation>
+        <translation type="obsolete">A kijelölt LDR képet menteni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="320"/>
-        <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>A rajzasztalon minden LDR képet egymás alá helyezni</translation>
+        <translation type="obsolete">A rajzasztalon minden LDR képet egymás alá helyezni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="362"/>
-        <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
-        <translation>Ez mi?</translation>
+        <translation type="obsolete">Ez mi?</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="374"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Documentation...</source>
@@ -6051,24 +6025,20 @@ Do you want to continue?</source>
         <translation type="obsolete">Ctrl+H</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="172"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="229"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation type="obsolete">Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="309"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation type="obsolete">Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="326"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
         <source>Get information about the graphical elements</source>
@@ -6079,9 +6049,8 @@ Do you want to continue?</source>
         <translation type="obsolete">Ezzel a gombbal lehet rákérdezni, mi micsoda</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="14"/>
         <source>Tone Mapping: </source>
-        <translation>Árnyalatnövelés: </translation>
+        <translation type="obsolete">Árnyalatnövelés: </translation>
     </message>
     <message>
         <source>&amp;Exit</source>
@@ -6100,254 +6069,60 @@ Do you want to continue?</source>
         <translation type="obsolete">Eszköztár</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="404"/>
-        <location filename="../forms/TonemappingWindow.ui" line="407"/>
-        <location filename="../forms/TonemappingWindow.ui" line="410"/>
         <source>Save All</source>
-        <translation>Mentés egyszerre</translation>
+        <translation type="obsolete">Mentés egyszerre</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="413"/>
-        <location filename="../forms/TonemappingWindow.ui" line="416"/>
         <source>Saves all LDRs</source>
-        <translation>Minden LDR-t elmenteni</translation>
+        <translation type="obsolete">Minden LDR-t elmenteni</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="419"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation type="obsolete">Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>Save files in</source>
         <translation type="obsolete">Képeket menteni itt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
-        <translation type="unfinished">Eszköztárak</translation>
+        <translation type="obsolete">Eszköztárak</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="83"/>
         <source>&amp;Windows</source>
-        <translation type="unfinished">&amp;Ablakok</translation>
+        <translation type="obsolete">&amp;Ablakok</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="118"/>
-        <source>Show Main Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="157"/>
         <source>&amp;Close</source>
-        <translation type="unfinished">Ki&amp;lépés</translation>
+        <translation type="obsolete">Ki&amp;lépés</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="160"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="214"/>
-        <source>Adjust &amp;Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="217"/>
-        <location filename="../forms/TonemappingWindow.ui" line="220"/>
-        <source>Adjust Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="431"/>
-        <location filename="../forms/TonemappingWindow.ui" line="434"/>
-        <location filename="../forms/TonemappingWindow.ui" line="437"/>
-        <source>HDR Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="455"/>
-        <location filename="../forms/TonemappingWindow.ui" line="458"/>
-        <location filename="../forms/TonemappingWindow.ui" line="461"/>
-        <source>Next Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="479"/>
-        <location filename="../forms/TonemappingWindow.ui" line="482"/>
-        <location filename="../forms/TonemappingWindow.ui" line="485"/>
-        <source>Previous Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="163"/>
-        <location filename="../forms/TonemappingWindow.ui" line="166"/>
-        <location filename="../forms/TonemappingWindow.ui" line="169"/>
-        <source>Close the tonemapping dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="187"/>
-        <location filename="../forms/TonemappingWindow.ui" line="190"/>
-        <source>Tone Mapping Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="193"/>
-        <location filename="../forms/TonemappingWindow.ui" line="196"/>
-        <source>Toggle display of the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="199"/>
-        <source>Show/Hide the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="303"/>
-        <location filename="../forms/TonemappingWindow.ui" line="306"/>
-        <source>Layout all LDR images as thumbnails</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="368"/>
-        <location filename="../forms/TonemappingWindow.ui" line="371"/>
-        <source>Get verbose information about user interface elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="383"/>
-        <source>&amp;Contents...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="386"/>
-        <location filename="../forms/TonemappingWindow.ui" line="389"/>
-        <source>Open user manual for Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="392"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="440"/>
-        <location filename="../forms/TonemappingWindow.ui" line="443"/>
-        <source>Show the original high dynamic range image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="464"/>
-        <location filename="../forms/TonemappingWindow.ui" line="467"/>
-        <source>Show the next image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="488"/>
-        <location filename="../forms/TonemappingWindow.ui" line="491"/>
-        <source>Show the previous image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
-        <translation type="unfinished">&amp;Eredeti méret</translation>
+        <translation type="obsolete">&amp;Eredeti méret</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="506"/>
         <source>O</source>
-        <translation type="unfinished">O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="518"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">&amp;Nagyítás</translation>
+        <translation type="obsolete">&amp;Nagyítás</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="521"/>
         <source>+</source>
-        <translation type="unfinished">+</translation>
+        <translation type="obsolete">+</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="533"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">&amp;Kicsinyítés</translation>
+        <translation type="obsolete">&amp;Kicsinyítés</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="536"/>
         <source>-</source>
-        <translation type="unfinished">-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="552"/>
-        <source>Text Under Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="560"/>
-        <source>Only Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="563"/>
-        <location filename="../forms/TonemappingWindow.ui" line="566"/>
-        <source>Icons Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="574"/>
-        <source>Text Alongside Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="582"/>
-        <source>Text Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="598"/>
-        <source>Sync View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="601"/>
-        <location filename="../forms/TonemappingWindow.ui" line="604"/>
-        <location filename="../forms/TonemappingWindow.ui" line="607"/>
-        <source>Lock view of all images to sync panning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="629"/>
-        <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="632"/>
-        <location filename="../forms/TonemappingWindow.ui" line="635"/>
-        <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
-        <translation type="unfinished">Luminance névjegye</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="615"/>
-        <source>Show information about Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="618"/>
-        <location filename="../forms/TonemappingWindow.ui" line="621"/>
-        <source>Show information about Luminance, its authors and contributors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="626"/>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Luminance névjegye</translation>
     </message>
     <message>
         <source>%1 License document not found, you can find it online: %2here%3</source>

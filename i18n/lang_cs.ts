@@ -440,62 +440,62 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="118"/>
+        <location filename="../src/Common/commandline.cpp" line="119"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>CHYBA: Nástroj zarovnání nerozpoznán.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="132"/>
+        <location filename="../src/Common/commandline.cpp" line="133"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>CHYBA: Špatný formát tvorby HDR</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="157"/>
+        <location filename="../src/Common/commandline.cpp" line="158"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>CHYBA: Určena neznámá křivka odezvy.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="166"/>
+        <location filename="../src/Common/commandline.cpp" line="167"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>CHYBA: Určen neznámý model tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="173"/>
+        <location filename="../src/Common/commandline.cpp" line="174"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>CHYBA: Určen neznámý formát tvorby HDR.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="212"/>
+        <location filename="../src/Common/commandline.cpp" line="213"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>CHYBA: Určen neznámý operátor přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="221"/>
+        <location filename="../src/Common/commandline.cpp" line="222"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>CHYBA: Špatný formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="310"/>
+        <location filename="../src/Common/commandline.cpp" line="311"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>CHYBA: Neznámý formát volby přemapování.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="318"/>
+        <location filename="../src/Common/commandline.cpp" line="319"/>
         <source>Error: Unknown option %1.</source>
         <translation>CHYBA: Neznámá volby %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="320"/>
+        <location filename="../src/Common/commandline.cpp" line="321"/>
         <source>Error: Missing argument for %1.</source>
         <translation>CHYBA: Chybí argument pro %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="329"/>
+        <location filename="../src/Common/commandline.cpp" line="330"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>CHYBA: Počet zadaných hodnot kroků EV se neshoduje s počtem vstupních souborů.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="375"/>
+        <location filename="../src/Common/commandline.cpp" line="376"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Chyba: V obrázcích chybí exif data a ani v příkazové řádce nejsou určeny hodnoty EV.</translation>
     </message>
@@ -515,12 +515,12 @@ p, li { white-space: pre-wrap; }
         <translation>Nemohu konvertovat %1 do celých čísel</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="142"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Chyba: Určena neznámá váhová funkce.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="396"/>
+        <location filename="../src/Common/commandline.cpp" line="397"/>
         <source>Failed executing align_image_stack</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1645,16 +1645,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Expozice</translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="152"/>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished"></translation>
@@ -1662,16 +1652,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="153"/>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1747,6 +1727,26 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation type="obsolete">Nepovedlo se spustit externí aplikaci &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;K získání více informací přečtěte prosím &quot;Nápověda -&gt; Dokumentace... -&gt; &quot;Pokyny a tipy&quot;. </translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
@@ -2381,27 +2381,27 @@ associated with the protocol?</source>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="151"/>
+        <location filename="../src/Core/IOWorker.cpp" line="148"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished">CHYBA: Následující soubor nelze přečíst: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="180"/>
+        <location filename="../src/Core/IOWorker.cpp" line="176"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="203"/>
+        <location filename="../src/Core/IOWorker.cpp" line="199"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished">CHYBA: Nepodporovaná přípona u souboru %1.</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="214"/>
+        <location filename="../src/Core/IOWorker.cpp" line="210"/>
         <source>ERROR: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="220"/>
+        <location filename="../src/Core/IOWorker.cpp" line="216"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished">CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
@@ -2553,22 +2553,22 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="116"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="115"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>CHYBA: Nepodporovaná přípona u souboru %1.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="133"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="131"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="94"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="93"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="127"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="125"/>
         <source>ERROR: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2605,7 +2605,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Luminance HDR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3481,75 +3481,75 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Uložit HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="944"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="938"/>
         <source>Aborting...</source>
         <translation>Přerušuji...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="676"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="670"/>
         <source>Error...</source>
         <translation>Chyba...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="275"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="269"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="339"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="425"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1308"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="333"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1304"/>
         <source>All HDR formats </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="350"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="344"/>
         <source>Load one or more HDR images...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="391"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="385"/>
         <source>Save files in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="433"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1316"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="427"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1312"/>
         <source>Save the HDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="539"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="533"/>
         <source>Failed to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1233"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1229"/>
         <source>Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1297"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1293"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1474"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1470"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="677"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="671"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1252"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1248"/>
         <source>Cropped Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3558,7 +3558,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Luminance potřebuje ukládat rozpracované soubory, ale právě zvolený adresář není platný.&lt;br&gt;Zvolte prosím platnou cestu pomocí &lt;i&gt;Nástroje-&gt;Předvolby...-&gt;Tone Mapping&lt;/i&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1296"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1292"/>
         <source>Unsaved changes...</source>
         <translation>Neuložené změny...</translation>
     </message>
@@ -3595,7 +3595,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1472"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1468"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4500,47 +4500,47 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="94"/>
+        <location filename="../forms/PreviewPanel.ui" line="103"/>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="119"/>
+        <location filename="../forms/PreviewPanel.ui" line="128"/>
         <source>Mantiuk &apos;08</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="144"/>
+        <location filename="../forms/PreviewPanel.ui" line="153"/>
         <source>Fattal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="169"/>
+        <location filename="../forms/PreviewPanel.ui" line="178"/>
         <source>Drago</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="194"/>
+        <location filename="../forms/PreviewPanel.ui" line="203"/>
         <source>Durand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="219"/>
+        <location filename="../forms/PreviewPanel.ui" line="228"/>
         <source>Reinhard &apos;02</source>
         <translation type="unfinished">Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="244"/>
+        <location filename="../forms/PreviewPanel.ui" line="253"/>
         <source>Reinhard &apos;05</source>
         <translation type="unfinished">Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="269"/>
+        <location filename="../forms/PreviewPanel.ui" line="278"/>
         <source>Ashikhmin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="294"/>
+        <location filename="../forms/PreviewPanel.ui" line="303"/>
         <source>Pattanaik</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4686,19 +4686,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="453"/>
         <source>All LDR formats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="469"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="463"/>
         <source>Save the LDR image as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="494"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="488"/>
         <source>Save as...</source>
         <translation type="unfinished">Uložit jako...</translation>
     </message>
@@ -5412,9 +5412,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;Použít</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+P</translation>
+        <translation type="obsolete">Ctrl+P</translation>
     </message>
     <message>
         <source>Tone Mapping settings file section</source>
@@ -5639,6 +5638,11 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+M</translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2587"/>
         <source>undo</source>
         <translation type="unfinished"></translation>
@@ -5672,19 +5676,16 @@ Do you want to continue?</source>
 <context>
     <name>TonemappingWindow</name>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="37"/>
         <source>&amp;Help</source>
-        <translation>&amp;Nápověda</translation>
+        <translation type="obsolete">&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="46"/>
         <source>&amp;View</source>
-        <translation>&amp;Pohled</translation>
+        <translation type="obsolete">&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="72"/>
         <source>&amp;File</source>
-        <translation>&amp;Soubor</translation>
+        <translation type="obsolete">&amp;Soubor</translation>
     </message>
     <message>
         <source>Tone Mapping Panel</source>
@@ -5703,182 +5704,72 @@ Do you want to continue?</source>
         <translation type="obsolete">Nastavit úrovně...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="163"/>
-        <location filename="../forms/TonemappingWindow.ui" line="166"/>
-        <location filename="../forms/TonemappingWindow.ui" line="169"/>
-        <source>Close the tonemapping dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="187"/>
-        <location filename="../forms/TonemappingWindow.ui" line="190"/>
-        <source>Tone Mapping Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="193"/>
-        <location filename="../forms/TonemappingWindow.ui" line="196"/>
-        <source>Toggle display of the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="199"/>
-        <source>Show/Hide the tonemapping options sidebar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="223"/>
-        <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Doladit histogram aktuálního LDR</translation>
+        <translation type="obsolete">Doladit histogram aktuálního LDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
-        <translation>Uložit &amp;jako...</translation>
+        <translation type="obsolete">Uložit &amp;jako...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="244"/>
-        <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
-        <translation>Uložit jako...</translation>
+        <translation type="obsolete">Uložit jako...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="250"/>
-        <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
-        <translation>Uložit právě vybraný LDR</translation>
+        <translation type="obsolete">Uložit právě vybraný LDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="256"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+J</translation>
+        <translation type="obsolete">Ctrl+J</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
-        <translation>Zavřít &amp;vše</translation>
+        <translation type="obsolete">Zavřít &amp;vše</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="271"/>
-        <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
-        <translation>Zavřít vše</translation>
+        <translation type="obsolete">Zavřít vše</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="277"/>
-        <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Zavřít všechny LDR na pracovní ploše</translation>
+        <translation type="obsolete">Zavřít všechny LDR na pracovní ploše</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="283"/>
-        <source>Ctrl+C</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
-        <translation>Jako &amp;náhledy</translation>
+        <translation type="obsolete">Jako &amp;náhledy</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
-        <translation>Jako náhledy</translation>
+        <translation type="obsolete">Jako náhledy</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
-        <translation>Obrázky jako náhledy</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="440"/>
-        <location filename="../forms/TonemappingWindow.ui" line="443"/>
-        <source>Show the original high dynamic range image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="464"/>
-        <location filename="../forms/TonemappingWindow.ui" line="467"/>
-        <source>Show the next image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="488"/>
-        <location filename="../forms/TonemappingWindow.ui" line="491"/>
-        <source>Show the previous image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="598"/>
-        <source>Sync View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="601"/>
-        <location filename="../forms/TonemappingWindow.ui" line="604"/>
-        <location filename="../forms/TonemappingWindow.ui" line="607"/>
-        <source>Lock view of all images to sync panning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="629"/>
-        <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="632"/>
-        <location filename="../forms/TonemappingWindow.ui" line="635"/>
-        <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Obrázky jako náhledy</translation>
     </message>
     <message>
         <source>Layout all LDRs as thumbnails.</source>
         <translation type="obsolete">Uspořádat všechny LDR jako náhledy.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
-        <translation>&amp;Kaskáda</translation>
+        <translation type="obsolete">&amp;Kaskáda</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="320"/>
-        <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Přerovnat všechny LDR na ploše do kaskády</translation>
+        <translation type="obsolete">Přerovnat všechny LDR na ploše do kaskády</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Vyplnit okno</translation>
+        <translation type="obsolete">&amp;Vyplnit okno</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="347"/>
-        <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Vyplnit okno obsahující LDR.</translation>
+        <translation type="obsolete">Vyplnit okno obsahující LDR.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="353"/>
-        <source>W</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="362"/>
-        <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
-        <translation>Co je to?</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="368"/>
-        <location filename="../forms/TonemappingWindow.ui" line="371"/>
-        <source>Get verbose information about user interface elements</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="374"/>
-        <source>Shift+F1</source>
-        <translation></translation>
+        <translation type="obsolete">Co je to?</translation>
     </message>
     <message>
         <source>&amp;Documentation...</source>
@@ -5889,30 +5780,20 @@ Do you want to continue?</source>
         <translation type="obsolete">Panel přemapování (Tone Mapping)</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="172"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+K</translation>
+        <translation type="obsolete">Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="229"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation type="obsolete">Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="303"/>
-        <location filename="../forms/TonemappingWindow.ui" line="306"/>
-        <source>Layout all LDR images as thumbnails</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="309"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+M</translation>
+        <translation type="obsolete">Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="326"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
         <source>Get information about the graphical elements</source>
@@ -5923,9 +5804,8 @@ Do you want to continue?</source>
         <translation type="obsolete">Použijte toto tačítko k získání informací o grafických prvcích</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="14"/>
         <source>Tone Mapping: </source>
-        <translation>Přemapování:</translation>
+        <translation type="obsolete">Přemapování:</translation>
     </message>
     <message>
         <source>&amp;Exit</source>
@@ -5940,173 +5820,32 @@ Do you want to continue?</source>
         <translation type="obsolete">Zavřít okno přemapování</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="404"/>
-        <location filename="../forms/TonemappingWindow.ui" line="407"/>
-        <location filename="../forms/TonemappingWindow.ui" line="410"/>
-        <source>Save All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="413"/>
-        <location filename="../forms/TonemappingWindow.ui" line="416"/>
-        <source>Saves all LDRs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="419"/>
-        <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
-        <translation type="unfinished">Lišty nástrojů</translation>
+        <translation type="obsolete">Lišty nástrojů</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="83"/>
         <source>&amp;Windows</source>
-        <translation type="unfinished">O&amp;kna</translation>
+        <translation type="obsolete">O&amp;kna</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="118"/>
-        <source>Show Main Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="157"/>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Zavřít</translation>
+        <translation type="obsolete">&amp;Zavřít</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="160"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="214"/>
-        <source>Adjust &amp;Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="217"/>
-        <location filename="../forms/TonemappingWindow.ui" line="220"/>
-        <source>Adjust Levels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="383"/>
-        <source>&amp;Contents...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="386"/>
-        <location filename="../forms/TonemappingWindow.ui" line="389"/>
-        <source>Open user manual for Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="392"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="431"/>
-        <location filename="../forms/TonemappingWindow.ui" line="434"/>
-        <location filename="../forms/TonemappingWindow.ui" line="437"/>
-        <source>HDR Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="455"/>
-        <location filename="../forms/TonemappingWindow.ui" line="458"/>
-        <location filename="../forms/TonemappingWindow.ui" line="461"/>
-        <source>Next Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="479"/>
-        <location filename="../forms/TonemappingWindow.ui" line="482"/>
-        <location filename="../forms/TonemappingWindow.ui" line="485"/>
-        <source>Previous Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
-        <translation type="unfinished">&amp;Původní velikost</translation>
+        <translation type="obsolete">&amp;Původní velikost</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="506"/>
-        <source>O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="518"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Při&amp;blížit</translation>
+        <translation type="obsolete">Při&amp;blížit</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="521"/>
-        <source>+</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="533"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Od&amp;dálit</translation>
+        <translation type="obsolete">Od&amp;dálit</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="536"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="552"/>
-        <source>Text Under Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="560"/>
-        <source>Only Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="563"/>
-        <location filename="../forms/TonemappingWindow.ui" line="566"/>
-        <source>Icons Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="574"/>
-        <source>Text Alongside Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="582"/>
-        <source>Text Only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
-        <translation type="unfinished">O Luminance</translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="615"/>
-        <source>Show information about Luminance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="618"/>
-        <location filename="../forms/TonemappingWindow.ui" line="621"/>
-        <source>Show information about Luminance, its authors and contributors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../forms/TonemappingWindow.ui" line="626"/>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">O Luminance</translation>
     </message>
     <message>
         <source>%1 License document not found, you can find it online: %2here%3</source>

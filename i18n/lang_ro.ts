@@ -392,72 +392,72 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>CommandLineInterfaceManager</name>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="118"/>
+        <location filename="../src/Common/commandline.cpp" line="119"/>
         <source>Error: Alignment engine not recognized.</source>
         <translation>Eroare: Motor de aliniere nerecunoscut.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="132"/>
+        <location filename="../src/Common/commandline.cpp" line="133"/>
         <source>Error: Wrong HDR creation format</source>
         <translation>Eroare: Format de creere HDR greșit</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="142"/>
+        <location filename="../src/Common/commandline.cpp" line="143"/>
         <source>Error: Unknown weight function specified.</source>
         <translation>Eroare: funcția de ponderi necunoscută.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="157"/>
+        <location filename="../src/Common/commandline.cpp" line="158"/>
         <source>Error: Unknown response curve specified.</source>
         <translation>Eroare: Curba de răspuns necunoscută.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="166"/>
+        <location filename="../src/Common/commandline.cpp" line="167"/>
         <source>Error: Unknown HDR creation model specified.</source>
         <translation>Eroare: Model de creere HDR necunoscut.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="173"/>
+        <location filename="../src/Common/commandline.cpp" line="174"/>
         <source>Error: Unknown HDR creation format specified.</source>
         <translation>Eroare: Format de creere HDR necunoscut.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="212"/>
+        <location filename="../src/Common/commandline.cpp" line="213"/>
         <source>Error: Unknown tone mapping operator specified.</source>
         <translation>Eroare: Operator mapare de tonuri necunoscut.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="221"/>
+        <location filename="../src/Common/commandline.cpp" line="222"/>
         <source>Error: Wrong tone mapping option format.</source>
         <translation>Eroare: Format de opțiune mapare de tonuri greșit.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="310"/>
+        <location filename="../src/Common/commandline.cpp" line="311"/>
         <source>Error: Unknown tone mapping option specified.</source>
         <translation>Eroare: Opțiune mapare de tonuri necunoscută.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="318"/>
+        <location filename="../src/Common/commandline.cpp" line="319"/>
         <source>Error: Unknown option %1.</source>
         <translation>Eroare: Opțiune necunoscută %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="320"/>
+        <location filename="../src/Common/commandline.cpp" line="321"/>
         <source>Error: Missing argument for %1.</source>
         <translation>Eroare: Parametru lipsă pentru %1.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="329"/>
+        <location filename="../src/Common/commandline.cpp" line="330"/>
         <source>Error: The number of EV values specified is different from the number of input files.</source>
         <translation>Eroare: Numărul de valori EV specificat este diferit de numărul de fișiere sursă.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="375"/>
+        <location filename="../src/Common/commandline.cpp" line="376"/>
         <source>Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.</source>
         <translation>Eroare: Informațiile Exif lipsesc din imagini și valorile EV nu sunt specificate în linia de comandă, renunțând.</translation>
     </message>
     <message>
-        <location filename="../src/Common/commandline.cpp" line="396"/>
+        <location filename="../src/Common/commandline.cpp" line="397"/>
         <source>Failed executing align_image_stack</source>
         <translation>Eșuat în a executa align_image_stack</translation>
     </message>
@@ -1553,26 +1553,6 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Imagini RAW (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 </translation>
     </message>
     <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="159"/>
         <source>Select the input images</source>
         <translation>Selectează imaginile sursă</translation>
@@ -1646,6 +1626,26 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
         <translation type="obsolete">Eșuat în a porni aplicația externă &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Te rog citește &quot;Ajutor -&gt; Documentație... -&gt; Indicii și sfaturi&quot; pentru mai multe informații.</translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="150"/>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="151"/>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="154"/>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/HdrWizard/HdrWizard.cpp" line="155"/>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/HdrWizard/HdrWizard.cpp" line="363"/>
@@ -1952,27 +1952,27 @@ asociată cu protocolul?</translation>
 <context>
     <name>IOWorker</name>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="151"/>
+        <location filename="../src/Core/IOWorker.cpp" line="148"/>
         <source>ERROR: The following file is not readable: %1</source>
         <translation type="unfinished">EROARE: Următorul fișier nu este citibil: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="180"/>
+        <location filename="../src/Core/IOWorker.cpp" line="176"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation type="unfinished">EROARE: Nu pot deschide fișierul: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="203"/>
+        <location filename="../src/Core/IOWorker.cpp" line="199"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished">EROARE: Fișierul %1 are o extensie nesuportată.</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="214"/>
+        <location filename="../src/Core/IOWorker.cpp" line="210"/>
         <source>ERROR: %1</source>
         <translation type="unfinished">EROARE: %1</translation>
     </message>
     <message>
-        <location filename="../src/Core/IOWorker.cpp" line="220"/>
+        <location filename="../src/Core/IOWorker.cpp" line="216"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation type="unfinished">EROARE: Eșuat la încărcarea fișierului: %1</translation>
     </message>
@@ -2116,7 +2116,7 @@ p, li { white-space: pre-wrap; }
         <translation>EROARE: Următorul fișier nu este citibil: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="94"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="93"/>
         <source>ERROR: Cannot open file: %1</source>
         <translation>EROARE: Nu pot deschide fișierul: %1</translation>
     </message>
@@ -2129,17 +2129,17 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">EROARE: Eroare sau timpul a expirat în timpul execuției dcraw pe fișierul: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="116"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="115"/>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation>EROARE: Fișierul %1 are o extensie nesuportată.</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="127"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="125"/>
         <source>ERROR: %1</source>
         <translation>EROARE: %1</translation>
     </message>
     <message>
-        <location filename="../src/Threads/LoadHdrThread.cpp" line="133"/>
+        <location filename="../src/Threads/LoadHdrThread.cpp" line="131"/>
         <source>ERROR: Failed loading file: %1</source>
         <translation>EROARE: Eșuat la încărcarea fișierului: %1</translation>
     </message>
@@ -2148,7 +2148,7 @@ p, li { white-space: pre-wrap; }
     <name>MainWindow</name>
     <message>
         <location filename="../forms/MainWindow.ui" line="14"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Luminance HDR</source>
         <translation>Luminance HDR</translation>
     </message>
@@ -2920,7 +2920,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="275"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="269"/>
         <source>Ready. Now open an existing HDR image or create a new one!</source>
         <translation>Gata. Acum deschide o imagine HDR existentă sau crează una nouă!</translation>
     </message>
@@ -2929,45 +2929,45 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Salvând fișier...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="339"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="425"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1308"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="333"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="419"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1304"/>
         <source>All HDR formats </source>
         <translation>Toate formatele HDR</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="350"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="344"/>
         <source>Load one or more HDR images...</source>
         <translation>Încarcă una sau mai multe imagini HDR...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="391"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="385"/>
         <source>Save files in</source>
         <translation type="unfinished">Salvează fișierele în</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="433"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1316"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="427"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1312"/>
         <source>Save the HDR image as...</source>
         <translation>Salvează imaginea HDR ca...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="539"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="533"/>
         <source>Failed to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1297"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1293"/>
         <source>This HDR image has unsaved changes.&lt;br&gt;Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1474"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1470"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1533"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1529"/>
         <source>Error: %1</source>
         <translation type="unfinished">Eroare: %1</translation>
     </message>
@@ -2980,27 +2980,27 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Eroare: Eșuat în a mapa tonurile imaginii</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="676"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="670"/>
         <source>Error...</source>
         <translation>Eroare...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="677"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="671"/>
         <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
         <translation>Luminance HDR are nevoie să salveze rezultatele în fișiere temporare, dar dosarul curent selectat este invalid.&lt;br&gt;Alege o cale validă în Unelte -&gt; Preferințe...-&gt; Mapare de tonuri.</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="944"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="938"/>
         <source>Aborting...</source>
         <translation>Anulând...</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1233"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1229"/>
         <source>Done!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1296"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1292"/>
         <source>Unsaved changes...</source>
         <translation>Schimbări nesalvate...</translation>
     </message>
@@ -3014,12 +3014,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">%1 Document licență negăsit, îl poți găsi online: %2here%3</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1472"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1468"/>
         <source>Untitled</source>
         <translation>Fără titlu</translation>
     </message>
     <message>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="1252"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="1248"/>
         <source>Cropped Image</source>
         <translation>Imagine tăiată</translation>
     </message>
@@ -3860,47 +3860,47 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="94"/>
+        <location filename="../forms/PreviewPanel.ui" line="103"/>
         <source>Mantiuk &apos;06</source>
         <translation type="unfinished">Mantiuk &apos;06</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="119"/>
+        <location filename="../forms/PreviewPanel.ui" line="128"/>
         <source>Mantiuk &apos;08</source>
         <translation type="unfinished">Mantiuk &apos;08</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="144"/>
+        <location filename="../forms/PreviewPanel.ui" line="153"/>
         <source>Fattal</source>
         <translation type="unfinished">Fattal</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="169"/>
+        <location filename="../forms/PreviewPanel.ui" line="178"/>
         <source>Drago</source>
         <translation type="unfinished">Drago</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="194"/>
+        <location filename="../forms/PreviewPanel.ui" line="203"/>
         <source>Durand</source>
         <translation type="unfinished">Durand</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="219"/>
+        <location filename="../forms/PreviewPanel.ui" line="228"/>
         <source>Reinhard &apos;02</source>
         <translation type="unfinished">Reinhard &apos;02</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="244"/>
+        <location filename="../forms/PreviewPanel.ui" line="253"/>
         <source>Reinhard &apos;05</source>
         <translation type="unfinished">Reinhard &apos;05</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="269"/>
+        <location filename="../forms/PreviewPanel.ui" line="278"/>
         <source>Ashikhmin</source>
         <translation type="unfinished">Ashikhmin</translation>
     </message>
     <message>
-        <location filename="../forms/PreviewPanel.ui" line="294"/>
+        <location filename="../forms/PreviewPanel.ui" line="303"/>
         <source>Pattanaik</source>
         <translation type="unfinished">Pattanaik</translation>
     </message>
@@ -4027,19 +4027,19 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <location filename="../src/Common/global.cpp" line="45"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="459"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="453"/>
         <source>All LDR formats</source>
         <translation>Toate formatele LDR</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="52"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="469"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="463"/>
         <source>Save the LDR image as...</source>
         <translation>Salvează imaginea LDR ca...</translation>
     </message>
     <message>
         <location filename="../src/Common/global.cpp" line="74"/>
-        <location filename="../src/MainWindow/MainWindow.cpp" line="494"/>
+        <location filename="../src/MainWindow/MainWindow.cpp" line="488"/>
         <source>Save as...</source>
         <translation>Salvează ca...</translation>
     </message>
@@ -4791,6 +4791,11 @@ p, li { white-space: pre-wrap; }
         <translation>Precedentele setări aplicate</translation>
     </message>
     <message>
+        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+T</translation>
+    </message>
+    <message>
         <location filename="../forms/TonemappingPanel.ui" line="2123"/>
         <location filename="../forms/TonemappingPanel.ui" line="2137"/>
         <location filename="../forms/TonemappingPanel.ui" line="2151"/>
@@ -4954,9 +4959,8 @@ Selection</source>
         <translation type="obsolete">&amp;Aplică</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingPanel.ui" line="2564"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../forms/TonemappingPanel.ui" line="2587"/>
@@ -5066,393 +5070,288 @@ Vrei să continui?</translation>
 <context>
     <name>TonemappingWindow</name>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="14"/>
         <source>Tone Mapping: </source>
-        <translation>Mapare de tonuri: </translation>
+        <translation type="obsolete">Mapare de tonuri: </translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="37"/>
         <source>&amp;Help</source>
-        <translation>&amp;Ajutor</translation>
+        <translation type="obsolete">&amp;Ajutor</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="46"/>
         <source>&amp;View</source>
-        <translation>&amp;Vizualizare</translation>
+        <translation type="obsolete">&amp;Vizualizare</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="50"/>
-        <location filename="../forms/TonemappingWindow.ui" line="541"/>
         <source>Toolbars</source>
-        <translation>Bare de unelte</translation>
+        <translation type="obsolete">Bare de unelte</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="72"/>
         <source>&amp;File</source>
-        <translation>&amp;Fișier</translation>
+        <translation type="obsolete">&amp;Fișier</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="83"/>
         <source>&amp;Windows</source>
-        <translation>&amp;Ferestre</translation>
+        <translation type="obsolete">&amp;Ferestre</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="118"/>
         <source>Show Main Toolbar</source>
-        <translation>Arată bara de unelte principală</translation>
+        <translation type="obsolete">Arată bara de unelte principală</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="157"/>
         <source>&amp;Close</source>
-        <translation>În&amp;chide</translation>
+        <translation type="obsolete">În&amp;chide</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="160"/>
         <source>Close</source>
-        <translation>Închide</translation>
+        <translation type="obsolete">Închide</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="163"/>
-        <location filename="../forms/TonemappingWindow.ui" line="166"/>
-        <location filename="../forms/TonemappingWindow.ui" line="169"/>
         <source>Close the tonemapping dialog</source>
-        <translation>Închide dialogul de mapare de tonuri</translation>
+        <translation type="obsolete">Închide dialogul de mapare de tonuri</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="172"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="187"/>
-        <location filename="../forms/TonemappingWindow.ui" line="190"/>
         <source>Tone Mapping Options</source>
-        <translation>Opțiuni mapare de tonuri</translation>
+        <translation type="obsolete">Opțiuni mapare de tonuri</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="193"/>
-        <location filename="../forms/TonemappingWindow.ui" line="196"/>
         <source>Toggle display of the tonemapping options sidebar</source>
-        <translation>Comută afișarea barei laterale cu opțiuni mapare de tonuri</translation>
+        <translation type="obsolete">Comută afișarea barei laterale cu opțiuni mapare de tonuri</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="199"/>
         <source>Show/Hide the tonemapping options sidebar</source>
-        <translation>Arată/Ascunde bara laterală cu opțiuni mapare de tonuri</translation>
+        <translation type="obsolete">Arată/Ascunde bara laterală cu opțiuni mapare de tonuri</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="214"/>
         <source>Adjust &amp;Levels</source>
-        <translation>Ajutează &amp;nivele</translation>
+        <translation type="obsolete">Ajutează &amp;nivele</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="217"/>
-        <location filename="../forms/TonemappingWindow.ui" line="220"/>
         <source>Adjust Levels</source>
-        <translation>Ajustează nivele</translation>
+        <translation type="obsolete">Ajustează nivele</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="223"/>
-        <location filename="../forms/TonemappingWindow.ui" line="226"/>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Reglează histograma pentru imaginea LDR curentă</translation>
+        <translation type="obsolete">Reglează histograma pentru imaginea LDR curentă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="229"/>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation type="obsolete">Ctrl+L</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="241"/>
         <source>&amp;Save as...</source>
-        <translation>&amp;Salvează ca...</translation>
+        <translation type="obsolete">&amp;Salvează ca...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="244"/>
-        <location filename="../forms/TonemappingWindow.ui" line="247"/>
         <source>Save As...</source>
-        <translation>Salvează ca...</translation>
+        <translation type="obsolete">Salvează ca...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="250"/>
-        <location filename="../forms/TonemappingWindow.ui" line="253"/>
         <source>Save the currently selected LDR</source>
-        <translation>Salvează LDR curent selectat</translation>
+        <translation type="obsolete">Salvează LDR curent selectat</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="256"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="268"/>
         <source>C&amp;lose All</source>
-        <translation>Înc&amp;hide toate</translation>
+        <translation type="obsolete">Înc&amp;hide toate</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="271"/>
-        <location filename="../forms/TonemappingWindow.ui" line="274"/>
         <source>Close All</source>
-        <translation>Închide toate</translation>
+        <translation type="obsolete">Închide toate</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="277"/>
-        <location filename="../forms/TonemappingWindow.ui" line="280"/>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Închide toate imaginile LDR din spațiul de lucru</translation>
+        <translation type="obsolete">Închide toate imaginile LDR din spațiul de lucru</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="283"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="obsolete">Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="294"/>
         <source>As &amp;Thumbnails</source>
-        <translation>Ca pic&amp;tograme</translation>
+        <translation type="obsolete">Ca pic&amp;tograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="297"/>
         <source>As Thumbnails</source>
-        <translation>Ca pictograme</translation>
+        <translation type="obsolete">Ca pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="300"/>
         <source>Images as Thumbnails</source>
-        <translation>Imagini ca pictograme</translation>
+        <translation type="obsolete">Imagini ca pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="303"/>
-        <location filename="../forms/TonemappingWindow.ui" line="306"/>
         <source>Layout all LDR images as thumbnails</source>
-        <translation>Afișează toate imaginile LDR ca pictograme</translation>
+        <translation type="obsolete">Afișează toate imaginile LDR ca pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="309"/>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation type="obsolete">Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="317"/>
         <source>&amp;Cascade</source>
-        <translation>În &amp;cascadă</translation>
+        <translation type="obsolete">În &amp;cascadă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="320"/>
-        <location filename="../forms/TonemappingWindow.ui" line="323"/>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Adișează toate LDR-urile din spațiul de lucru în cascadă</translation>
+        <translation type="obsolete">Adișează toate LDR-urile din spațiul de lucru în cascadă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="326"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="344"/>
         <source>&amp;Fit to Window</source>
-        <translation>&amp;Potrivește în fereastră</translation>
+        <translation type="obsolete">&amp;Potrivește în fereastră</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="347"/>
-        <location filename="../forms/TonemappingWindow.ui" line="350"/>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Potrivește LDR curent în fereastra care îl conține.</translation>
+        <translation type="obsolete">Potrivește LDR curent în fereastra care îl conține.</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="353"/>
         <source>W</source>
-        <translation>W</translation>
+        <translation type="obsolete">W</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="362"/>
-        <location filename="../forms/TonemappingWindow.ui" line="365"/>
         <source>What&apos;s This?</source>
-        <translation>Ce-i asta?</translation>
+        <translation type="obsolete">Ce-i asta?</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="368"/>
-        <location filename="../forms/TonemappingWindow.ui" line="371"/>
         <source>Get verbose information about user interface elements</source>
-        <translation>Obține informații detaliate despre elementele interfeței cu utilizatorul</translation>
+        <translation type="obsolete">Obține informații detaliate despre elementele interfeței cu utilizatorul</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="374"/>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="383"/>
         <source>&amp;Contents...</source>
-        <translation>&amp;Conținut...</translation>
+        <translation type="obsolete">&amp;Conținut...</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="386"/>
-        <location filename="../forms/TonemappingWindow.ui" line="389"/>
         <source>Open user manual for Luminance</source>
-        <translation>Deschide manualul Luminance</translation>
+        <translation type="obsolete">Deschide manualul Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="392"/>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation type="obsolete">F1</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="404"/>
-        <location filename="../forms/TonemappingWindow.ui" line="407"/>
-        <location filename="../forms/TonemappingWindow.ui" line="410"/>
         <source>Save All</source>
-        <translation>Salvează toate</translation>
+        <translation type="obsolete">Salvează toate</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="413"/>
-        <location filename="../forms/TonemappingWindow.ui" line="416"/>
         <source>Saves all LDRs</source>
-        <translation>Salvează toate imaginile LDR</translation>
+        <translation type="obsolete">Salvează toate imaginile LDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="419"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation type="obsolete">Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="431"/>
-        <location filename="../forms/TonemappingWindow.ui" line="434"/>
-        <location filename="../forms/TonemappingWindow.ui" line="437"/>
         <source>HDR Image</source>
-        <translation>Imagine HDR</translation>
+        <translation type="obsolete">Imagine HDR</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="440"/>
-        <location filename="../forms/TonemappingWindow.ui" line="443"/>
         <source>Show the original high dynamic range image</source>
-        <translation>Arată imaginea cu interval dinamic mare originală</translation>
+        <translation type="obsolete">Arată imaginea cu interval dinamic mare originală</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="455"/>
-        <location filename="../forms/TonemappingWindow.ui" line="458"/>
-        <location filename="../forms/TonemappingWindow.ui" line="461"/>
         <source>Next Image</source>
-        <translation>Imaginea următoare</translation>
+        <translation type="obsolete">Imaginea următoare</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="464"/>
-        <location filename="../forms/TonemappingWindow.ui" line="467"/>
         <source>Show the next image</source>
-        <translation>Arată imaginea următoare</translation>
+        <translation type="obsolete">Arată imaginea următoare</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="479"/>
-        <location filename="../forms/TonemappingWindow.ui" line="482"/>
-        <location filename="../forms/TonemappingWindow.ui" line="485"/>
         <source>Previous Image</source>
-        <translation>Imaginea precedentă</translation>
+        <translation type="obsolete">Imaginea precedentă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="488"/>
-        <location filename="../forms/TonemappingWindow.ui" line="491"/>
         <source>Show the previous image</source>
-        <translation>Arată imaginea precedentă</translation>
+        <translation type="obsolete">Arată imaginea precedentă</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="503"/>
         <source>&amp;Normal Size</source>
-        <translation>Dimensiune &amp;normală</translation>
+        <translation type="obsolete">Dimensiune &amp;normală</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="506"/>
         <source>O</source>
-        <translation>O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="518"/>
         <source>Zoom &amp;In</source>
-        <translation>&amp;Mărește</translation>
+        <translation type="obsolete">&amp;Mărește</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="521"/>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="obsolete">+</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="533"/>
         <source>Zoom &amp;Out</source>
-        <translation>Mi&amp;cșorează</translation>
+        <translation type="obsolete">Mi&amp;cșorează</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="536"/>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="552"/>
         <source>Text Under Icons</source>
-        <translation>Text sub pictograme</translation>
+        <translation type="obsolete">Text sub pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="560"/>
         <source>Only Icons</source>
-        <translation>Doar pictograme</translation>
+        <translation type="obsolete">Doar pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="563"/>
-        <location filename="../forms/TonemappingWindow.ui" line="566"/>
         <source>Icons Only</source>
-        <translation>Doar pictograme</translation>
+        <translation type="obsolete">Doar pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="574"/>
         <source>Text Alongside Icons</source>
-        <translation>Text lângă pictograme</translation>
+        <translation type="obsolete">Text lângă pictograme</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="582"/>
         <source>Text Only</source>
-        <translation>Doar text</translation>
+        <translation type="obsolete">Doar text</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="598"/>
         <source>Sync View</source>
-        <translation>Vizualizare sincronizată</translation>
+        <translation type="obsolete">Vizualizare sincronizată</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="601"/>
-        <location filename="../forms/TonemappingWindow.ui" line="604"/>
-        <location filename="../forms/TonemappingWindow.ui" line="607"/>
         <source>Lock view of all images to sync panning</source>
-        <translation>Blochează vizualizarea tuturor imaginilor la deplasare sincronizată</translation>
+        <translation type="obsolete">Blochează vizualizarea tuturor imaginilor la deplasare sincronizată</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="612"/>
         <source>About Luminance</source>
-        <translation>Despre Luminance</translation>
+        <translation type="obsolete">Despre Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="615"/>
         <source>Show information about Luminance</source>
-        <translation>Arată informații despre Luminance</translation>
+        <translation type="obsolete">Arată informații despre Luminance</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="618"/>
-        <location filename="../forms/TonemappingWindow.ui" line="621"/>
         <source>Show information about Luminance, its authors and contributors</source>
-        <translation>Arată informații despre Luminance, autorii și colaboratorii săi</translation>
+        <translation type="obsolete">Arată informații despre Luminance, autorii și colaboratorii săi</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="626"/>
         <source>About Qt</source>
-        <translation>Despre Qt</translation>
+        <translation type="obsolete">Despre Qt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="629"/>
         <source>Show information about Qt</source>
-        <translation>Arată informații despre Qt</translation>
+        <translation type="obsolete">Arată informații despre Qt</translation>
     </message>
     <message>
-        <location filename="../forms/TonemappingWindow.ui" line="632"/>
-        <location filename="../forms/TonemappingWindow.ui" line="635"/>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation>Arată informații despre biblioteca Qt folosită de Luminance</translation>
+        <translation type="obsolete">Arată informații despre biblioteca Qt folosită de Luminance</translation>
     </message>
     <message>
         <source>Active TM Processes</source>

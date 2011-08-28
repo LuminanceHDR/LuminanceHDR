@@ -1252,11 +1252,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation>Kaikki formaatit (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
+        <translation type="obsolete">Kaikki formaatit (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
     </message>
     <message>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</translation>
+        <translation type="obsolete">*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</translation>
     </message>
     <message>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
@@ -1268,11 +1268,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation>RAW-kuvat (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
+        <translation type="obsolete">RAW-kuvat (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
     </message>
     <message>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
-        <translation>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</translation>
+        <translation type="obsolete">*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</translation>
     </message>
     <message>
         <source>Select the input images</source>
@@ -1417,6 +1417,22 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Contents... -&gt; Setting up -&gt; External Tools&quot; for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4065,7 +4081,7 @@ Valinta</translation>
     </message>
     <message>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <source>undo</source>
@@ -4136,6 +4152,10 @@ Error: %1</source>
         <source>Saved Quality for JPG or PNG</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Ctrl+T</source>
+        <translation type="unfinished">Ctrl+T</translation>
+    </message>
 </context>
 <context>
     <name>TonemappingWarningDialog</name>
@@ -4160,287 +4180,287 @@ Haluatko jatkaa?</translation>
     <name>TonemappingWindow</name>
     <message>
         <source>Tone Mapping: </source>
-        <translation>Tonemappaus: </translation>
+        <translation type="obsolete">Tonemappaus: </translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Ohje</translation>
+        <translation type="obsolete">&amp;Ohje</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Näytä</translation>
+        <translation type="obsolete">&amp;Näytä</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation>Työkaluvalikot</translation>
+        <translation type="obsolete">Työkaluvalikot</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Tiedosto</translation>
+        <translation type="obsolete">&amp;Tiedosto</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation>&amp;Ikkunat</translation>
+        <translation type="obsolete">&amp;Ikkunat</translation>
     </message>
     <message>
         <source>Show Main Toolbar</source>
-        <translation>Näytä päätyökaluvalikko</translation>
+        <translation type="obsolete">Näytä päätyökaluvalikko</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Sulje</translation>
+        <translation type="obsolete">&amp;Sulje</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sulje</translation>
+        <translation type="obsolete">Sulje</translation>
     </message>
     <message>
         <source>Close the tonemapping dialog</source>
-        <translation>Sulje tonemappausdialogi</translation>
+        <translation type="obsolete">Sulje tonemappausdialogi</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="obsolete">Ctrl+Q</translation>
     </message>
     <message>
         <source>Tone Mapping Options</source>
-        <translation>Tonemappauksen asetukset</translation>
+        <translation type="obsolete">Tonemappauksen asetukset</translation>
     </message>
     <message>
         <source>Toggle display of the tonemapping options sidebar</source>
-        <translation>Kytke tonemappauksen asetusten sivupaneelin näyttö</translation>
+        <translation type="obsolete">Kytke tonemappauksen asetusten sivupaneelin näyttö</translation>
     </message>
     <message>
         <source>Show/Hide the tonemapping options sidebar</source>
-        <translation>Näytä/Piilota tonemappauksen asetusten sivupaneeli</translation>
+        <translation type="obsolete">Näytä/Piilota tonemappauksen asetusten sivupaneeli</translation>
     </message>
     <message>
         <source>Adjust &amp;Levels</source>
-        <translation>Säädä &amp;tasoja</translation>
+        <translation type="obsolete">Säädä &amp;tasoja</translation>
     </message>
     <message>
         <source>Adjust Levels</source>
-        <translation>Säädä tasoja</translation>
+        <translation type="obsolete">Säädä tasoja</translation>
     </message>
     <message>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Säädä nykyisen LDR:n histogrammia</translation>
+        <translation type="obsolete">Säädä nykyisen LDR:n histogrammia</translation>
     </message>
     <message>
         <source>Ctrl+L</source>
-        <translation>Ctrl+L</translation>
+        <translation type="obsolete">Ctrl+L</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
-        <translation>T&amp;allenna nimellä...</translation>
+        <translation type="obsolete">T&amp;allenna nimellä...</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation>Tallenna nimellä...</translation>
+        <translation type="obsolete">Tallenna nimellä...</translation>
     </message>
     <message>
         <source>Save the currently selected LDR</source>
-        <translation>Tallenna valittu LDR</translation>
+        <translation type="obsolete">Tallenna valittu LDR</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
         <source>C&amp;lose All</source>
-        <translation>S&amp;ulje kaikki</translation>
+        <translation type="obsolete">S&amp;ulje kaikki</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation>Sulje kaikki</translation>
+        <translation type="obsolete">Sulje kaikki</translation>
     </message>
     <message>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Sulje kaikki työtilan LDR:t</translation>
+        <translation type="obsolete">Sulje kaikki työtilan LDR:t</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation type="obsolete">Ctrl+C</translation>
     </message>
     <message>
         <source>As &amp;Thumbnails</source>
-        <translation>&amp;Pienoiskuvina</translation>
+        <translation type="obsolete">&amp;Pienoiskuvina</translation>
     </message>
     <message>
         <source>As Thumbnails</source>
-        <translation>Pienoiskuvina</translation>
+        <translation type="obsolete">Pienoiskuvina</translation>
     </message>
     <message>
         <source>Images as Thumbnails</source>
-        <translation>Kuvat pienoiskuvina</translation>
+        <translation type="obsolete">Kuvat pienoiskuvina</translation>
     </message>
     <message>
         <source>Layout all LDR images as thumbnails</source>
-        <translation>Sommittele kaikki LDR-kuvat pienoiskuvina</translation>
+        <translation type="obsolete">Sommittele kaikki LDR-kuvat pienoiskuvina</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
-        <translation>Ctrl+T</translation>
+        <translation type="obsolete">Ctrl+T</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation>&amp;Limitä</translation>
+        <translation type="obsolete">&amp;Limitä</translation>
     </message>
     <message>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Limitä kaikki työtilan LDR:t</translation>
+        <translation type="obsolete">Limitä kaikki työtilan LDR:t</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="obsolete">Ctrl+D</translation>
     </message>
     <message>
         <source>&amp;Fit to Window</source>
-        <translation>Sovita i&amp;kkunaan</translation>
+        <translation type="obsolete">Sovita i&amp;kkunaan</translation>
     </message>
     <message>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Sovita valittu LDR ikkunaansa.</translation>
+        <translation type="obsolete">Sovita valittu LDR ikkunaansa.</translation>
     </message>
     <message>
         <source>W</source>
-        <translation>W</translation>
+        <translation type="obsolete">W</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
-        <translation>Mikä tämä on?</translation>
+        <translation type="obsolete">Mikä tämä on?</translation>
     </message>
     <message>
         <source>Get verbose information about user interface elements</source>
-        <translation>Hae monipuolista tietoa käyttöliittymän elementeistä</translation>
+        <translation type="obsolete">Hae monipuolista tietoa käyttöliittymän elementeistä</translation>
     </message>
     <message>
         <source>Shift+F1</source>
-        <translation>Shift+F1</translation>
+        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Contents...</source>
-        <translation>Sis&amp;ältö...</translation>
+        <translation type="obsolete">Sis&amp;ältö...</translation>
     </message>
     <message>
         <source>Open user manual for Luminance</source>
-        <translation>Avaa Luminancen käyttöohje</translation>
+        <translation type="obsolete">Avaa Luminancen käyttöohje</translation>
     </message>
     <message>
         <source>F1</source>
-        <translation>F1</translation>
+        <translation type="obsolete">F1</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation>Tallenna kaikki</translation>
+        <translation type="obsolete">Tallenna kaikki</translation>
     </message>
     <message>
         <source>Saves all LDRs</source>
-        <translation>Tallentaa kaikki LDR:t</translation>
+        <translation type="obsolete">Tallentaa kaikki LDR:t</translation>
     </message>
     <message>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation type="obsolete">Ctrl+Shift+S</translation>
     </message>
     <message>
         <source>HDR Image</source>
-        <translation>HDR-kuva</translation>
+        <translation type="obsolete">HDR-kuva</translation>
     </message>
     <message>
         <source>Show the original high dynamic range image</source>
-        <translation>Näytä alkuperäinen HDR</translation>
+        <translation type="obsolete">Näytä alkuperäinen HDR</translation>
     </message>
     <message>
         <source>Next Image</source>
-        <translation>Seuraava kuva</translation>
+        <translation type="obsolete">Seuraava kuva</translation>
     </message>
     <message>
         <source>Show the next image</source>
-        <translation>Näytä seuraava kuva</translation>
+        <translation type="obsolete">Näytä seuraava kuva</translation>
     </message>
     <message>
         <source>Previous Image</source>
-        <translation>Edellinen kuva</translation>
+        <translation type="obsolete">Edellinen kuva</translation>
     </message>
     <message>
         <source>Show the previous image</source>
-        <translation>Näytä edellinen kuva</translation>
+        <translation type="obsolete">Näytä edellinen kuva</translation>
     </message>
     <message>
         <source>&amp;Normal Size</source>
-        <translation>&amp;Normaali koko</translation>
+        <translation type="obsolete">&amp;Normaali koko</translation>
     </message>
     <message>
         <source>O</source>
-        <translation>O</translation>
+        <translation type="obsolete">O</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>Lä&amp;hennä</translation>
+        <translation type="obsolete">Lä&amp;hennä</translation>
     </message>
     <message>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="obsolete">+</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>L&amp;oitonna</translation>
+        <translation type="obsolete">L&amp;oitonna</translation>
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="obsolete">-</translation>
     </message>
     <message>
         <source>Text Under Icons</source>
-        <translation>Teksti ikonien alla</translation>
+        <translation type="obsolete">Teksti ikonien alla</translation>
     </message>
     <message>
         <source>Only Icons</source>
-        <translation>Vain ikonit</translation>
+        <translation type="obsolete">Vain ikonit</translation>
     </message>
     <message>
         <source>Icons Only</source>
-        <translation>Vain ikonit</translation>
+        <translation type="obsolete">Vain ikonit</translation>
     </message>
     <message>
         <source>Text Alongside Icons</source>
-        <translation>Teksti ja ikonit</translation>
+        <translation type="obsolete">Teksti ja ikonit</translation>
     </message>
     <message>
         <source>Text Only</source>
-        <translation>Vain teksti</translation>
+        <translation type="obsolete">Vain teksti</translation>
     </message>
     <message>
         <source>Sync View</source>
-        <translation>Synkronoitu näyttö</translation>
+        <translation type="obsolete">Synkronoitu näyttö</translation>
     </message>
     <message>
         <source>Lock view of all images to sync panning</source>
-        <translation>Lukitse kaikkien kuvien näyttö synkronoituun panorointiin</translation>
+        <translation type="obsolete">Lukitse kaikkien kuvien näyttö synkronoituun panorointiin</translation>
     </message>
     <message>
         <source>About Luminance</source>
-        <translation>Tietoja Luminancesta</translation>
+        <translation type="obsolete">Tietoja Luminancesta</translation>
     </message>
     <message>
         <source>Show information about Luminance</source>
-        <translation>Näytä tietoja Luminancesta</translation>
+        <translation type="obsolete">Näytä tietoja Luminancesta</translation>
     </message>
     <message>
         <source>Show information about Luminance, its authors and contributors</source>
-        <translation>Näytä tietoja Luminancesta, sen tekijöistä ja avustajista</translation>
+        <translation type="obsolete">Näytä tietoja Luminancesta, sen tekijöistä ja avustajista</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Tietoja Qt:sta</translation>
+        <translation type="obsolete">Tietoja Qt:sta</translation>
     </message>
     <message>
         <source>Show information about Qt</source>
-        <translation>Näytä tietoa Qt:sta</translation>
+        <translation type="obsolete">Näytä tietoa Qt:sta</translation>
     </message>
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation>Näytä tietoa Qt-kirjastosta jota Luminance käyttää</translation>
+        <translation type="obsolete">Näytä tietoa Qt-kirjastosta jota Luminance käyttää</translation>
     </message>
     <message>
         <source>Active TM Processes</source>
