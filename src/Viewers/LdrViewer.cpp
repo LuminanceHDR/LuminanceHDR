@@ -105,6 +105,8 @@ void LdrViewer::levelsRequested(bool /*a*/)
     connect(levels,SIGNAL(closing()), this, SIGNAL(levels_closed()));
     //refresh preview when a values changes
     connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
+    //accept the changes
+    connect(levels,SIGNAL(accepted()),this,SLOT(finalize_levels()));
     //restore original on "cancel"
     connect(levels,SIGNAL(rejected()),this,SLOT(restore_original()));
 
