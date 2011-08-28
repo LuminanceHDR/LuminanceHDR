@@ -461,13 +461,20 @@ SET(LUMINANCE_FILES
 
 IF(APPLE)
   # icon files to copy in the bundle
-  SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+  #SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
   # set where in the bundle to put the icns files
   SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # set where in the bundle to put the translation files
   SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
   # include the icns files in the target
-  SET( LUMINANCE_FILES ${LUMINANCE_FILES} ${OSX_ICON_FILES} )
+  SET( LUMINANCE_FILES ${LUMINANCE_FILES} ) #${OSX_ICON_FILES} )
+
+  SET( PROGNAME luminance-hdr )
+  SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
+  #SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
+  #SET( MACOSX_BUNDLE_VERSION 0.7-beta2 )
+  #SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
+  #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
 
   ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/../Resources/i18n")
   ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
