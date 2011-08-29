@@ -1,14 +1,11 @@
 If I forgot to add someone to this list please let me know.
 
-Original author and maintainer:
-Giuseppe Rota <grota@sourceforge.net>
-
 Main developer, improvements, bug fixing
-Franco Comida <fcomida@sourceforge.net>
 Davide Anastasia (code improvement, performance improvement, Mac OS support)
+Franco Comida <fcomida@sourceforge.net>
+Daniel Kaneider (windows setup, head of i18n efforts)
 
 Contributors:
-Daniel Kaneider (windows setup, head of i18n efforts)
 Mandus (Norwegian translator)
 Nicholas Phillips (MTB alignment code)
 Mustafa GÜNAY (Turkish translator)
@@ -25,3 +22,6 @@ Frank Boehme (various suggestions)
 Erik Ouchterlony
 Antoine Latter
 Markus Schmaus (found and fixed bug in Debevec and Robertson02)
+
+Original author:
+Giuseppe Rota <grota@sourceforge.net>
