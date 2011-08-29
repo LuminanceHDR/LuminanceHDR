@@ -1,10 +1,115 @@
-Read the README file as well, it's much more detailed!
-To compile from source, first execute the command:
-	$> qmake
-to generate the Makefile.
+This is the README file for Luminance HDR
+-------------------------------------------------------------------
+Copyright (C)  	2006-2010, Giuseppe Rota <grota@users.sourceforge.net>
+				2010-2011, Davide Anastasia <davideanastasia@users.sourceforge.net>
+							Franco Comida <fcomida@users.sourceforge.net>
+Webpage:       http://qtpfsgui.sourceforge.net
+Sourceforge:   http://sourceforge.net/projects/qtpfsgui
+
+Contents
+---------
+1. Basic compilation of the sources
+2. Dependencies
+3. Compiling the sources
+
+Last update: 2011.08.29
+
+The build system is based on CMake (http://www.cmake.org/).
+The build description is contained in the CMakeLists.txt file.
+
+1. Basic compilation
+------------------------------------------------------------------- 
+To compile from source, first execute from an EMPTY folder the command:
+> cmake <luminance source code directory>
+to generate the Makefile. We strongly suggest to use an EMPTY folder OUTSIDE of the source directory.
+
+It is also possible to generate specific project files for well known IDE (Visual Studio, Xcode and so on). Please, refer to CMake's manual for all the available options.
+CMake will also check whether all the dependecies are available or not, and it will show a message accordingly.
+
 Then execute the command:
-	$> make
+> make
 to compile the source code.
+
 Finally execute (as root) the command:
-	#> make install
-to install the target file.
+> make install
+to install the luminance executable in /usr/local/bin (if not differently specified during the configuration command).
+This last step also installs the icon, the desktop file, the html documentation and the "qm" translation files. This last step is usually required in order for Luminance HDR to locate the "qm" files used for internationalization.
+
+2. Internationalization
+-------------------------------------------------------------------
+Luminance HDR source are shipped with update translation files for internationalization.
+These file are stored inside the folder "i18n". They are usually updated. Should you make a change inside the source code (in particular on the UI), you need to update them. To enable the update of the translations, you must configure CMake to do so, with the following command:
+> cmake -DUPDATE_TRANSLATIONS=ON .
+if the current working directory (please, refer to 1. of this file) has already been build, otherwise:
+> cmake -DUPDATE_TRANSLATIONS=ON <luminance source code directory>
+This command will regenerate the Makefile for translation update. Then:
+> make
+will update every .ts file.
+To bring back the working folder to the original "building mode", you must use this command:
+> cmake -DUPDATE_TRANSLATIONS=OFF .
+and then
+> make
+to build correctly the whole source directory.
+
+3. Dependencies
+-------------------------------------------------------------------
+
+Luminance has 7 dependencies:
+1) Qt4 (www.trolltech.com)
+Qt4 is required because it's the framework the graphical interface is built on. In the case of the Windows version, Qt version must agree with the final building environment (Visual Studio 2008/2010 or *** deprecated *** MinGW)
+
+2) exiv2 (www.exiv2.org)
+libexiv2 is a C/C++ library used to extract EXIF tags from LDR and RAW image files, and is required in order to extract the aperture, exposure-time and ISO tags from the input images (and for other EXIF-related functionalities).
+
+3) fftw3 (www.fftw.org)
+FFTW is required by the fast implementation of Durand tonemapping algorithm. Luminance requires the "float" version of fftw3 (usually called fftw3f or fftw3-single on MacPorts).
+
+4) libtiff (http://www.remotesensing.org/libtiff)
+libtiff is required because of the tiff load/save feature.
+
+5) OpenEXR (www.openexr.com)
+OpenEXR is a high dynamic-range (HDR) image file format developed by Industrial Light & Magic for use in computer imaging applications.
+The package is also known as ``ilmbase'' in some GNU/Linux distributions.
+
+6) Gnu Gsl (http://www.gnu.org/software/gsl/)
+Gnu GSL is required because Mantiuk08 TMO uses this library.
+
+7) LibRAW (http://www.libraw.org/)
+Used to read the vast majority of RAW file on the market.
+
+Windows:
+Currently, Luminance HDR can be compiled using Microsoft Visual Studio. It both works using precompiled libraries (supplied at http://sourceforge.net/projects/qtpfsgui/files/DEPs/ for different version of Visual Studio) or build entirely every dependency and Luminance itself using a script file (build/msvc/getDependencies.cmd. More information can be found inside build/msvc/README.txt).
+[*** DEPRECATED: this method will not longer be supported in the future ***]
+It is also possible to use MinGW as building infrastracture. In this case, you can satisfy all the runtime dependencies by downloading the ``Windows DLL Package'' available at http://sourceforge.net/projects/qtpfsgui/files/Windows%20DLL%20Package/
+
+NOTE: depending on your compiler (MinGW GCC or MS Visual Studio), you must download the proper version of Qt, or build it yourself accordingly.
+
+GNU/Linux:
+On GNU/Linux you have to compile the code and you need the aforementioned packages (and the ``devel'' or ``dev'' ones, depending on the distribution's naming convention). CMake will guide you to correctly understand which dependency are missing and which are not.
+
+Mac OS X:
+On Mac OS X, all the dependecies can be obtained using MacPorts, except LibRAW, which needs to compiled straight from source.
+
+4. Note for Packagers
+-------------------------------------------------------------------
+Luminance's default installation prefix is "/usr/local". You can execute:
+> cmake -DCMAKE_INSTALL_PREFIX=/usr
+before running make in order to modify the default CMAKE_INSTALL_PREFIX.
+
+Icon luminance.png will be installed in ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/48x48/apps. You may need to run update-desktop-database in case Luminance's entry doesn't show up in the graphical menus.
+Translation files will be installed inside ${CMAKE_INSTALL_PREFIX}/share/luminance/i18n.
+Help files will be installed inside ${CMAKE_INSTALL_PREFIX}/share/luminance/help.
+
+Running:
+> qmake -DCMAKE_BUILD_TYPE={Debug,Release,RelWithDebInfo}
+creates a Makefile that builds Luminance with different debug levels. It is strongly suggest to use "RelWithDebInfo": this option will leave inside the final executable all the info necessary for a proper debug but at the same time will optimize the code as much as possible.
+
+The Windows EXE is currently build using Microsoft Visual Studio.
+In GNU/Linux you have to compile the code and you need the packages mentioned in Section 3 (and the ``devel'' or ``dev'' ones, depending on the distribution's naming convention).
+If you want to compile the sources in windows you need to have a compiled version of libexiv2 and fftw3. You also need Qt4 for the right compiler you want to use.
+Building Luminance from sources on Mac OS X can be performed build a Makefile or an Xcode project using CMake. By default, CMake builds a Makefile on Mac OS X.
+
+OpenMP is only available if compiling with GCC 4.3 or newer and Microsoft Visual Studio (CMake will correctly find the right option for OpenMP accordingly to your compiler).
+
+Optimisation note: the default compiler flags include SSE2 and [Linux only] OpenMP.
+SSE2 is only available on recent CPUs (Pentium 4, Pentium-M or newer).

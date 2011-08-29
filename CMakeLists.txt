@@ -446,7 +446,7 @@ QT4_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 QT4_WRAP_UI(LUMINANCE_HDR_UI_HEADERS ${LUMINANCE_HDR_UI})
 
 OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
-if (UPDATE_TRANSLATIONS)
+IF(UPDATE_TRANSLATIONS)
     SET(LUMINANCE_TO_TRANSLATE
     ${LIB_HDR_INCLUDE}
     ${LIB_HDR_SRC}
@@ -456,9 +456,8 @@ if (UPDATE_TRANSLATIONS)
     ${LUMINANCE_HDR_SRC}
     ${LUMINANCE_HDR_UI})
     QT4_CREATE_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TO_TRANSLATE} ${LUMINANCE_TS})
-else (UPDATE_TRANSLATIONS)
+ELSE(UPDATE_TRANSLATIONS)
     QT4_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
-endif (UPDATE_TRANSLATIONS)
 
 SET(LUMINANCE_FILES
          ${LIB_HDR_INCLUDE}
@@ -473,42 +472,58 @@ SET(LUMINANCE_FILES
 )
 
 IF(APPLE)
-  # icon files to copy in the bundle
-  #SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
-  # set where in the bundle to put the icns files
-  SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-  # set where in the bundle to put the translation files
-  SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
-  # include the icns files in the target
-  SET( LUMINANCE_FILES ${LUMINANCE_FILES} ) #${OSX_ICON_FILES} )
+    # icon files to copy in the bundle
+    #SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
+    # set where in the bundle to put the icns files
+    SET_SOURCE_FILES_PROPERTIES(${OSX_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    # set where in the bundle to put the translation files
+    SET_SOURCE_FILES_PROPERTIES(${LUMINANCE_QM} PROPERTIES MACOSX_PACKAGE_LOCATION Resources/i18n)
+    # include the icns files in the target
+    SET( LUMINANCE_FILES ${LUMINANCE_FILES} ) #${OSX_ICON_FILES} )
 
-  SET( PROGNAME luminance-hdr )
-  SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
-  #SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
-  #SET( MACOSX_BUNDLE_VERSION 0.7-beta2 )
-  #SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
-  #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
+    SET( PROGNAME luminance-hdr )
+    SET( MACOSX_BUNDLE_ICON_FILE "${CMAKE_SOURCE_DIR}/images/luminance.icns" )
+    #SET( MACOSX_BUNDLE_SHORT_VERSION_STRING 0.7-beta2 )
+    #SET( MACOSX_BUNDLE_VERSION 0.7-beta2 )
+    #SET( MACOSX_BUNDLE_LONG_VERSION_STRING Version 0.7-beta2 )
+    #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
 
-  ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/../Resources/i18n")
-  ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
+    ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/../Resources/i18n")
+    ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
   
-  SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
+    SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
+
 ELSEIF(UNIX)
-  ADD_DEFINITIONS(-DI18NDIR="${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n")
-  ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})  
-ELSEIF(WIN32)
-	# icon files to copy in the bundle
-	SET( LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc" )
 
-	ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
-	
-	# Subsystem console:
-	ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
-	
-	# Set icon!
+    #ADD_DEFINITIONS(-DPREFIX=${CMAKE_INSTALL_PREFIX})
+    ADD_DEFINITIONS(-DI18NDIR="${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n")
+    ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
+
+    # make install directivies
+    INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main exec
+    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance/i18n) # i18n
+    INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
+    INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
+    INSTALL(FILES
+    ${CMAKE_SOURCE_DIR}/AUTHORS
+    ${CMAKE_SOURCE_DIR}/README
+    ${CMAKE_SOURCE_DIR}/LICENSE
+    ${CMAKE_SOURCE_DIR}/Changelog
+    DESTINATION share/luminance) #info files
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance) # help directory
+
+ELSEIF(WIN32)
+
+    # icon files to copy in the bundle
+    SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc")
+
+    ADD_DEFINITIONS(-DI18NDIR=QCoreApplication::applicationDirPath\(\)+"/i18n")
+
+    # Subsystem console:
+    ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
   
-	# copies all necessary Qt dlls from the Qt binary dir to the output folder
-	SET(QT_RELEASE_DLLS
+    # copies all necessary Qt dlls from the Qt binary dir to the output folder
+    SET(QT_RELEASE_DLLS
         phonon4.dll
         QtCore4.dll
         QtGui4.dll
@@ -518,18 +533,20 @@ ELSEIF(WIN32)
         QtWebKit4.dll
         QtXml4.dll
         QtXmlPatterns4.dll
-	)
-	FOREACH (dll ${QT_RELEASE_DLLS})
-		file(COPY "${QT_BINARY_DIR}/${dll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release")
-		string(REPLACE "4" "d4" debugdll ${dll})
-		file(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
-	ENDFOREACH()
+    )
+    FOREACH(dll ${QT_RELEASE_DLLS})
+        FILE(COPY "${QT_BINARY_DIR}/${dll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release")
+        STRING(REPLACE "4" "d4" debugdll ${dll})
+        FILE(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
+    ENDFOREACH()
 
-	file(COPY "${QT_PLUGINS_DIR}/imageformats/qjpeg4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/imageformats")
-	file(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
-	file(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlite4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/sqldrivers")
-	file(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
+    FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpeg4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/imageformats")
+    FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
+    FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlite4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/sqldrivers")
+    FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
 
 ENDIF()
 
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+
+ENDIF(UPDATE_TRANSLATIONS)
