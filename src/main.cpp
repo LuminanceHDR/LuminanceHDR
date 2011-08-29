@@ -37,6 +37,13 @@
 int main( int argc, char ** argv )
 {
     int rc=-1;
+
+#ifdef QT_DEBUG
+    qDebug() << "i18n folder = " << I18NDIR;
+    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
+#endif
+
 #ifndef Q_WS_MAC
     //CLI application
     // Do not try to run the CLI app on Mac -
@@ -60,7 +67,7 @@ int main( int argc, char ** argv )
 
     //GUI application
 #ifdef WIN32
-		FreeConsole();
+    FreeConsole();
 #endif
     Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
@@ -68,9 +75,6 @@ int main( int argc, char ** argv )
     //QSettings _settings("Luminance", "Luminance");
     //settings = &_settings;
     settings = new QSettings("Luminance", "Luminance");
-
-    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
 
 #ifdef WIN32
     bool found_DLL = false;
