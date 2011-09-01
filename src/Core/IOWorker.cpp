@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
+#include <QDebug>
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
