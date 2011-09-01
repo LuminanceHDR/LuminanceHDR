@@ -94,7 +94,6 @@ protected:
     QToolButton *cornerButton;
     SmartScrollArea *scrollArea;
     PanIconWidget *panIconWidget;
-    QStatusBar* statusBar;
 
     QString filename;
     QImage *m_image;

@@ -56,10 +56,6 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
     connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
     connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
-
-    statusBar = new QStatusBar(this);
-    statusBar->setSizeGripEnabled(false);
-    //VBL_L->addWidget(statusBar);
 }
 
 GenericViewer::~GenericViewer()
