@@ -334,12 +334,12 @@ SET(LUMINANCE_HDR_SRC
 	src/Viewers/Histogram.cpp
 	src/Viewers/LuminanceRangeWidget.cpp
 	src/Viewers/SmartScrollArea.cpp
+        src/Viewers/SelectionTool.cpp
 	src/Common/GammaAndLevels.cpp
 	src/Common/Gang.cpp	
 	src/Common/ImageQualityDialog.cpp
 	src/Common/PanIconWidget.cpp
-	src/Common/ProgressHelper.cpp	
-	src/Common/SelectionTool.cpp
+        src/Common/ProgressHelper.cpp
 	src/Common/commandline.cpp	
 	src/Common/global.cpp
 	src/Common/options.cpp
@@ -389,12 +389,12 @@ SET(LUMINANCE_HDR_MOC
 	src/Viewers/LdrViewer.h
 	src/Viewers/LuminanceRangeWidget.h
 	src/Viewers/SmartScrollArea.h
+        src/Viewers/SelectionTool.h
 	src/Common/GammaAndLevels.h
 	src/Common/Gang.h
 	src/Common/ImageQualityDialog.h
 	src/Common/PanIconWidget.h
-	src/Common/ProgressHelper.h	
-	src/Common/SelectionTool.h	
+        src/Common/ProgressHelper.h
 	src/Common/commandline.h
 )
 

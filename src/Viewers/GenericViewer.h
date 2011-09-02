@@ -29,14 +29,21 @@
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
+
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
+
+// USELESS
 #include <QStatusBar>
 #include <QProgressBar>
 #include <QtConcurrentRun>
 #include <QFutureWatcher>
 
+
 #include "SmartScrollArea.h"
 #include "Common/PanIconWidget.h"
-#include "Common/SelectionTool.h"
+#include "Viewers/SelectionTool.h"
 #include "Libpfs/frame.h"
 
 class GenericViewer : public QWidget 

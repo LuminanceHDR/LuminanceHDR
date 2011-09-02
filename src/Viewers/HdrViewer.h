@@ -35,7 +35,7 @@
 #include <QComboBox>
 #include <QResizeEvent>
 
-#include "Common/SelectionTool.h"
+#include "Viewers/SelectionTool.h"
 #include "GenericViewer.h"
 #include "LuminanceRangeWidget.h"
 #include "Libpfs/array2d.h"

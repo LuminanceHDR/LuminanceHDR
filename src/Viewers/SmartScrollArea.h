@@ -33,7 +33,7 @@
 #include <QLabel>
 #include <QMouseEvent>
 
-#include "Common/SelectionTool.h"
+#include "Viewers/SelectionTool.h"
 
 class SmartScrollArea : public QScrollArea {
 	Q_OBJECT

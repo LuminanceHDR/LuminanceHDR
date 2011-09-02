@@ -31,7 +31,7 @@
 #include "ui_EditingTools.h"
 #include "Common/global.h"
 #include "Common/PanIconWidget.h"
-#include "Common/SelectionTool.h"
+#include "Viewers/SelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "PreviewWidget.h"
 
