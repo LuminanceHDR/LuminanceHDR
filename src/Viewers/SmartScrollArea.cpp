@@ -30,9 +30,14 @@
 
 #include "SmartScrollArea.h"
 
-SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ) : QScrollArea(parent), imageLabel(imagelabel), scaleFactor(1.0), previousScaleFactor(1.0), fittingwin(false), panning(false) {
-
-
+SmartScrollArea::SmartScrollArea( QWidget *parent, QLabel &imagelabel ):
+    QScrollArea(parent),
+    imageLabel(imagelabel),
+    scaleFactor(1.0),
+    previousScaleFactor(1.0),
+    fittingwin(false),
+    panning(false)
+{
 	setBackgroundRole(QPalette::Light);
 	imageLabel.setBackgroundRole(QPalette::Base);
 	//the label ignores the pixmap's size
@@ -217,11 +222,11 @@ void SmartScrollArea::mouseReleaseEvent(QMouseEvent *) {
 	}
 	setCursor(QCursor(Qt::ArrowCursor));
 }
-
+//Deprecated
 int  SmartScrollArea::getHorizScrollBarValue() {
 	return horizontalScrollBar()->value();
 }
-
+//Deprecated
 int  SmartScrollArea::getVertScrollBarValue() {
 	return verticalScrollBar()->value();
 }
@@ -235,11 +240,11 @@ float SmartScrollArea::getImageScaleFactor()
     float scale_factor = float(imageLabel.size().width()) / (float) (imageLabel.pixmap()->size().width());
     return scale_factor;
 }
-
+//Deprecated
 void SmartScrollArea::setHorizScrollBarValue(int value) {
 	horizontalScrollBar()->setValue(value);
 }
-
+//Deprecated
 void SmartScrollArea::setVertScrollBarValue(int value) {
 	verticalScrollBar()->setValue(value);
 }

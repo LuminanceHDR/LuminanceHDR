@@ -26,6 +26,7 @@
  */
 
 #include <QMessageBox>
+//#include <QGLWidget>
 
 #include "GenericViewer.h"
 #include "UI/UMessageBox.h"
@@ -33,9 +34,6 @@
 GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
         QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf)
 {
-    // Set Minimum Dimension of the Viewer Window
-    // setMinimumSize(450, 300);
-
     VBL_L = new QVBoxLayout(this);
     VBL_L->setSpacing(0);
     VBL_L->setMargin(0);
@@ -45,89 +43,112 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     toolBar->setFixedHeight(40);
     VBL_L->addWidget(toolBar);
 
-    scrollArea = new SmartScrollArea(this, imageLabel);
-    scrollArea->setBackgroundRole(QPalette::Shadow);
-    VBL_L->addWidget(scrollArea);
+    // RUBBISH
+    //scrollArea = new SmartScrollArea(this, imageLabel);
+    //scrollArea->setBackgroundRole(QPalette::Shadow);
+    //VBL_L->addWidget(scrollArea);
 
     cornerButton = new QToolButton(this);
     cornerButton->setToolTip(tr("Pan the image to a region"));
     cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-    scrollArea->setCornerWidget(cornerButton);
+    //scrollArea->setCornerWidget(cornerButton);
     connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-    connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
-    connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
+    //connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    //connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
+    // RUBBISH
+
+    mScene = new QGraphicsScene(this);
+    mScene->setBackgroundBrush(Qt::darkGray);
+    mView = new QGraphicsView(mScene, this);
+    //mView->setViewport(QGLWidget()); //OpenGL viewer
+    mView->setCornerWidget(cornerButton);
+
+    VBL_L->addWidget(mView);
+    mView->show();
+
+    mPixmap = new QGraphicsPixmapItem();
+    QGraphicsDropShadowEffect* x = new QGraphicsDropShadowEffect();
+    x->setBlurRadius(8);
+    x->setXOffset(1);
+    x->setYOffset(1);
+    mPixmap->setGraphicsEffect(x);
 }
 
 GenericViewer::~GenericViewer()
 {
-    if ( m_image != NULL ) delete m_image;
+    if ( mImage != NULL ) delete mImage;
     this->deleteLater();
 }
 
 void GenericViewer::setLabelPixmap(const QPixmap pix)
 {
-	imageLabel.setPixmap(pix);
-	imageLabel.adjustSize();
+    //imageLabel.setPixmap(pix);
+    //imageLabel.adjustSize();
 }
 
 void GenericViewer::fitToWindow(bool checked)
 {
-	scrollArea->fitToWindow(checked);
+        //scrollArea->fitToWindow(checked);
 	emit changed(this);
 }
 
 void GenericViewer::zoomIn()
 {
-	scrollArea->zoomIn();
+        //scrollArea->zoomIn();
+
+        mView->scale(1.1,1.1);
 	emit changed(this);
 }
 
 void GenericViewer::zoomOut()
 {
-	scrollArea->zoomOut();
+        //scrollArea->zoomOut();
+
+        mView->scale(0.8,0.8);
 	emit changed(this);
 }
 
+// Factor is a number between 0.01 and 1.0f (1% to 100%)
 void GenericViewer::zoomToFactor(float factor)
 {
-	scrollArea->zoomToFactor(factor);
+        //scrollArea->zoomToFactor(factor);
 	emit changed(this);
 }
 
 void GenericViewer::normalSize()
 {
-	scrollArea->normalSize();
+        //scrollArea->normalSize();
 	emit changed(this);
 }
 
 bool GenericViewer::isFittedToWindow()
 {
-	return scrollArea->isFittedToWindow();
+        return false; //scrollArea->isFittedToWindow();
 }
 
 float GenericViewer::getScaleFactor()
 {
-	return scrollArea->getScaleFactor();
+        return 1.0f; //scrollArea->getScaleFactor();
 }
 
 const QRect GenericViewer::getSelectionRect(void)
 {
-	return scrollArea->getSelectionRect();
+        return QRect();//scrollArea->getSelectionRect();
 }
 
 void GenericViewer::setSelectionTool(bool toggled)
 {
-	scrollArea->setSelectionTool( toggled );
+        //scrollArea->setSelectionTool( toggled );
 }
 
 void GenericViewer::removeSelection(void)
 {
-	scrollArea->removeSelection();
+        //scrollArea->removeSelection();
 }
 
 bool GenericViewer::hasSelection(void)
 {
-	return scrollArea->hasSelection();
+        return false; //scrollArea->hasSelection();
 }
 
 bool GenericViewer::needsSaving(void)
@@ -152,30 +173,30 @@ void GenericViewer::setFileName(const QString fn)
 
 void GenericViewer::slotCornerButtonPressed()
 {
-    panIconWidget=new PanIconWidget(this);
-    panIconWidget->setImage(m_image);
+    panIconWidget = new PanIconWidget(this);
+    panIconWidget->setImage(mImage);
 
-    float zf=scrollArea->getScaleFactor();
-    float leftviewpos=(float)(scrollArea->horizontalScrollBar()->value());
-    float topviewpos=(float)(scrollArea->verticalScrollBar()->value());
-    float wps_w=(float)(scrollArea->maximumViewportSize().width());
-    float wps_h=(float)(scrollArea->maximumViewportSize().height());
+    float zf = this->getImageScaleFactor(); // come minchia lo calcolo lo scaling factor?!
+    float leftviewpos = (float)(mView->horizontalScrollBar()->value());
+    float topviewpos = (float)(mView->verticalScrollBar()->value());
+    float wps_w = (float)(mView->maximumViewportSize().width());
+    float wps_h = (float)(mView->maximumViewportSize().height());
     QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
     panIconWidget->setRegionSelection(r);
     panIconWidget->setMouseFocus();
     connect(panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
     connect(panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
-    QPoint g = scrollArea->mapToGlobal(scrollArea->viewport()->pos());
-    g.setX(g.x()+ scrollArea->viewport()->size().width());
-    g.setY(g.y()+ scrollArea->viewport()->size().height());
+    QPoint g = mView->mapToGlobal(mView->viewport()->pos());
+    g.setX(g.x()+ mView->viewport()->size().width());
+    g.setY(g.y()+ mView->viewport()->size().height());
     panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, g.y() - panIconWidget->height()/2));
     panIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
-void GenericViewer::slotPanIconSelectionMoved(QRect gotopos )
+void GenericViewer::slotPanIconSelectionMoved(QRect gotopos)
 {
-    scrollArea->horizontalScrollBar()->setValue((int)(gotopos.x()*scrollArea->getScaleFactor()));
-    scrollArea->verticalScrollBar()->setValue((int)(gotopos.y()*scrollArea->getScaleFactor()));
+    mView->horizontalScrollBar()->setValue((int)(gotopos.x()*this->getImageScaleFactor()));
+    mView->verticalScrollBar()->setValue((int)(gotopos.y()*this->getImageScaleFactor()));
     emit changed(this);
 }
 
@@ -189,27 +210,30 @@ void GenericViewer::slotPanIconHidden()
 
 int  GenericViewer::getHorizScrollBarValue()
 {
-    return scrollArea->getHorizScrollBarValue();
+    return mView->horizontalScrollBar()->value();
 }
 
-int  GenericViewer::getVertScrollBarValue()
+int GenericViewer::getVertScrollBarValue()
 {
-    return scrollArea->getVertScrollBarValue();
+    return mView->verticalScrollBar()->value();
 }
 
-float  GenericViewer::getImageScaleFactor()
+float GenericViewer::getImageScaleFactor()
 {
-    return scrollArea->getImageScaleFactor();
+    return 1.0f;
+    //return scrollArea->getImageScaleFactor();
 }
 
 void GenericViewer::setHorizScrollBarValue(int value)
 {
-    scrollArea->setHorizScrollBarValue(value);
+    mView->horizontalScrollBar()->setValue(value);
+    //scrollArea->setHorizScrollBarValue(value);
 }
 
 void GenericViewer::setVertScrollBarValue(int value)
 {
-    scrollArea->setVertScrollBarValue(value);
+    mView->verticalScrollBar()->setValue(value);
+    //scrollArea->setVertScrollBarValue(value);
 }
 
 void GenericViewer::route_changed()

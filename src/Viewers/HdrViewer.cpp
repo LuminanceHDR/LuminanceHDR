@@ -31,8 +31,7 @@
 #include <assert.h>
 #include <QApplication>
 #include <QFileInfo>
-#include <QtConcurrentRun>
- #include <QFuture>
+
 
 #include "arch/math.h"
 
@@ -166,14 +165,16 @@ void HdrViewer::init_ui()
 
 void HdrViewer::updateHDR(pfs::Frame* inputframe)
 {
+#ifdef QT_DEBUG
     assert(inputframe != NULL);
-    pfs::DOMIO pfsio;
+#else
+    if (inputframe == NULL) return;
+#endif
 
     if ( pfsFrame != NULL )
     {
-        //delete previous pfs::Frame*. It must be done calling freeFrame()
-        pfsio.freeFrame(pfsFrame);
-        delete m_image;
+        delete pfsFrame;
+        delete mImage;
     }
     // Update Pointer to HDR Frame
     pfsFrame = inputframe;
@@ -191,20 +192,20 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe)
     assert( workArea[0] != NULL && workArea[1] != NULL && workArea[2] != NULL );
 
     // Update size of the frame
-    m_cols  = workArea[0]->getCols();
-    m_rows  = workArea[0]->getRows();
+    mCols  = workArea[0]->getCols();
+    mRows  = workArea[0]->getRows();
 
-    m_image = new QImage(m_cols, m_rows, QImage::Format_RGB32);
+    mImage = new QImage(mCols, mRows, QImage::Format_RGB32);
 
     m_lumRange->setHistogramImage(getPrimaryChannel());
 
     //fitToDynamicRange() already takes care -indirectly- to call updateImage()
-    m_lumRange->fitToDynamicRange();
+    m_lumRange->fitToDynamicRange(); // OLD
 
     //zoom at original size, 100%
     //make the label use the image dimensions
-    imageLabel.adjustSize();
-    imageLabel.update();
+    //imageLabel.adjustSize(); // OLD
+    //imageLabel.update(); // OLD
 }
 
 void HdrViewer::setFlagUpdateImage(bool updateImage)
@@ -225,10 +226,15 @@ void HdrViewer::updateImage()
     mapFrameToImage();
 
     //assign the mapped image to the label
-    imageLabel.setPixmap(QPixmap::fromImage(*m_image));
+    //imageLabel.setPixmap(QPixmap::fromImage(*mImage)); // OLD
+
+    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+
+    mScene->addItem(mPixmap);
 
     //scaleFactor is stored into scrollArea (1.0 by default)
-    scrollArea->scaleImage();
+    //scrollArea->scaleImage(); // OLD
+
 
     emit S_end();
     QApplication::restoreOverrideCursor();
@@ -250,12 +256,12 @@ void HdrViewer::mapFrameToImage()
     const float* G = workArea[1]->getRawData();
     const float* B = workArea[2]->getRawData();
 
-    QRgb *pixels = reinterpret_cast<QRgb*>(m_image->bits());
+    QRgb *pixels = reinterpret_cast<QRgb*>(mImage->bits());
 
     int pr, pg, pb;
 
 #pragma omp parallel for private(pr, pg, pb)
-    for ( int index = 0; index < m_rows*m_cols; ++index )
+    for ( int index = 0; index < mRows*mCols; ++index )
     {
         if ( !finite( R[index] ) || !finite( G[index] ) || !finite( B[index] ) )   // x is NaN or Inf
         {
@@ -305,7 +311,7 @@ void HdrViewer::mapFrameToImage()
         lutPixFloor[p] = getInverseMapping( p_left );
     }
 
-    QRgb *pixels = reinterpret_cast<QRgb*>(m_image->bits());
+    QRgb *pixels = reinterpret_cast<QRgb*>(mImage->bits());
 
     for ( int index = 0; index < rows*cols; ++index )
     {
@@ -405,7 +411,7 @@ pfs::Frame* HdrViewer::getHDRPfsFrame()
 void HdrViewer::saveHdrPreview()
 {
     qDebug("filename=%s",qPrintable(filename));
-    saveLDRImage(this, QFileInfo(filename).completeBaseName()+"_preview"+".jpg", m_image);
+    saveLDRImage(this, QFileInfo(filename).completeBaseName()+"_preview"+".jpg", mImage);
 }
 
 void HdrViewer::setFreePfsFrameOnExit(bool b)

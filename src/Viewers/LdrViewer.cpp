@@ -34,27 +34,29 @@ LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const Tonema
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_image = i;
+    mImage = i;
 
-    if (m_image == 0) {
-		m_cols = 0;
-		m_rows = 0;
+    if (mImage == 0) {
+                mCols = 0;
+                mRows = 0;
     }
     else {
-    	m_cols = m_image->width();
-    	m_rows = m_image->height();
+        mCols = mImage->width();
+        mRows = mImage->height();
     }
 
     temp_image = NULL;
     previewimage = NULL;
 
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_cols).arg(m_rows), toolBar );
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), toolBar);
     toolBar->addWidget(informativeLabel);
 
-    if (m_image == 0)
+    if (mImage == 0)
 	return;
 
-    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+    mScene->addItem(mPixmap);
+    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     parseOptions(opts);
     setWindowTitle(caption);
@@ -72,9 +74,9 @@ LdrViewer::~LdrViewer()
 void LdrViewer::parseOptions(const TonemappingOptions *opts)
 {
     TMOptionsOperations tmopts(opts);
-    postfix=tmopts.getPostfix();
-    caption=tmopts.getCaption();
-    exif_comment=tmopts.getExifComment();
+    postfix = tmopts.getPostfix();
+    caption = tmopts.getCaption();
+    exif_comment = tmopts.getExifComment();
 }
 
 QString LdrViewer::getFilenamePostFix()
@@ -84,7 +86,7 @@ QString LdrViewer::getFilenamePostFix()
 
 const QImage* LdrViewer::getQImage()
 {
-    return m_image;
+    return mImage;
 }
 
 QString LdrViewer::getExifComment()
@@ -96,10 +98,10 @@ void LdrViewer::levelsRequested(bool /*a*/)
 {
     // TODO : Check this rubbish!
 
-    temp_image = m_image;
-    previewimage = new QImage( m_cols, m_rows, QImage::Format_RGB32 ); //image->copy() //copy original data
+    temp_image = mImage;
+    previewimage = new QImage( mCols, mRows, QImage::Format_RGB32 ); //image->copy() //copy original data
 
-    GammaAndLevels *levels = new GammaAndLevels(this, m_image);
+    GammaAndLevels *levels = new GammaAndLevels(this, mImage);
     levels->setAttribute(Qt::WA_DeleteOnClose);
     //when closing levels, inform the Tone Mapping dialog.
     connect(levels,SIGNAL(closing()), this, SIGNAL(levels_closed()));
@@ -117,22 +119,24 @@ void LdrViewer::updatePreview(unsigned char *LUT)
 {
     //printf("LdrViewer::updatePreview\n");
     // TODO : clean up this implementation... (in case I keep it in the final release)!!!
-    for (int x=0; x < m_cols; x++)
+    for (int x=0; x < mCols; x++)
     {
-        for (int y=0; y < m_rows; y++)
+        for (int y=0; y < mRows; y++)
         {
-            QRgb rgb = m_image->pixel(x,y);
+            QRgb rgb = mImage->pixel(x,y);
             QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
             previewimage->setPixel(x,y,withgamma);
         }
     }
-    imageLabel.setPixmap(QPixmap::fromImage(*previewimage));
+    mPixmap->setPixmap(QPixmap::fromImage(*previewimage));
+    //imageLabel.setPixmap(QPixmap::fromImage(*previewimage));
 }
 
 void LdrViewer::restore_original()
 {
     //printf("LdrViewer::restoreoriginal() \n");
-    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     delete previewimage;
 
@@ -143,8 +147,9 @@ void LdrViewer::restore_original()
 void LdrViewer::finalize_levels()
 {
     //printf("LdrViewer::finalize_levels() \n");
-    m_image = previewimage;
-    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
+    mImage = previewimage;
+    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     delete temp_image;
 
@@ -154,15 +159,17 @@ void LdrViewer::finalize_levels()
 
 void LdrViewer::setImage(QImage *i)
 {
-    if (m_image != NULL)
-        delete m_image;
+    if (mImage != NULL)
+        delete mImage;
     if (informativeLabel != NULL)
-		delete informativeLabel;
-    m_image = new QImage(*i);
-    imageLabel.setPixmap( QPixmap::fromImage(*m_image) );
-    imageLabel.adjustSize();
-    m_cols = m_image->width();
-    m_rows = m_image->height();
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(m_cols).arg(m_rows), toolBar );
+        delete informativeLabel;
+
+    mImage = new QImage(*i);
+    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+//    imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
+//    imageLabel.adjustSize();
+    mCols = mImage->width();
+    mRows = mImage->height();
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), toolBar );
     toolBar->addWidget(informativeLabel);
 }

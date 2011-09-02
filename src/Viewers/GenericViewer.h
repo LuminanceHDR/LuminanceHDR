@@ -33,6 +33,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsDropShadowEffect>
 
 // USELESS
 #include <QStatusBar>
@@ -95,17 +96,21 @@ protected Q_SLOTS:
 protected:
     virtual void closeEvent ( QCloseEvent * event );
 
-    QLabel imageLabel;
+    //QLabel imageLabel;
     QVBoxLayout *VBL_L;
     QToolBar *toolBar;
     QToolButton *cornerButton;
-    SmartScrollArea *scrollArea;
+    //SmartScrollArea *scrollArea;
     PanIconWidget *panIconWidget;
 
+    QGraphicsScene* mScene;
+    QGraphicsView* mView;
+    QGraphicsPixmapItem* mPixmap;
+
     QString filename;
-    QImage *m_image;
-    int m_cols;
-    int m_rows;
+    QImage *mImage;
+    int mCols;
+    int mRows;
 
     bool NeedsSaving;
     bool noCloseFlag;
