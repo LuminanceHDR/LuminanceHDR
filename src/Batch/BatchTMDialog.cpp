@@ -105,8 +105,8 @@ void BatchTMDialog::add_dir_HDRs()
     if ( !dirname.isEmpty() )
     {
         QStringList filters;
-        filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.sr2" << "*.rw2";
-        filters << "*.EXR" << "*.HDR" << "*.PIC" << "*.TIFF" << "*.TIF" << "*.PFS" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.SR2" << "*.RW2";
+        filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.sr2" << "*.rw2" << "*.srw";
+        filters << "*.EXR" << "*.HDR" << "*.PIC" << "*.TIFF" << "*.TIF" << "*.PFS" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.SR2" << "*.RW2" << "*.SRW";
         QDir chosendir(dirname);
         chosendir.setFilter(QDir::Files);
         chosendir.setNameFilters(filters);
@@ -122,8 +122,8 @@ void BatchTMDialog::add_HDRs()
     //printf("BatchTMDialog::add_HDRs()\n");
 
     QString filetypes = tr("All HDR images ");
-    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 "
-                 "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2)";
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.srw"
+                 "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2) *.SRW";
     QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), RecentDirHDRSetting, filetypes);
     add_view_model_HDRs(onlyhdrs);
 }
