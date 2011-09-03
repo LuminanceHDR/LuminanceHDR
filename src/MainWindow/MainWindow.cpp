@@ -1589,7 +1589,7 @@ void MainWindow::updateImage(GenericViewer *viewer)
     Q_ASSERT(m_changedImage != NULL);
     if (m_isLocked)
     {
-        m_scaleFactor = m_changedImage->getImageScaleFactor();
+        m_scaleFactor = m_changedImage->getScaleFactor(); //getImageScaleFactor();
         m_HSB_Value = m_changedImage->getHorizScrollBarValue();
         m_VSB_Value = m_changedImage->getVertScrollBarValue();
         viewer->normalSize();

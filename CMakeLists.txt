@@ -335,6 +335,7 @@ SET(LUMINANCE_HDR_SRC
 	src/Viewers/LuminanceRangeWidget.cpp
 	src/Viewers/SmartScrollArea.cpp
         src/Viewers/SelectionTool.cpp
+        src/Viewers/IGraphicsView.cpp
 	src/Common/GammaAndLevels.cpp
 	src/Common/Gang.cpp	
 	src/Common/ImageQualityDialog.cpp
@@ -390,6 +391,7 @@ SET(LUMINANCE_HDR_MOC
 	src/Viewers/LuminanceRangeWidget.h
 	src/Viewers/SmartScrollArea.h
         src/Viewers/SelectionTool.h
+        src/Viewers/IGraphicsView.h
 	src/Common/GammaAndLevels.h
 	src/Common/Gang.h
 	src/Common/ImageQualityDialog.h

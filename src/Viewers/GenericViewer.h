@@ -31,21 +31,15 @@
 #include <QToolButton>
 
 #include <QGraphicsScene>
-#include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsDropShadowEffect>
 
-// USELESS
-#include <QStatusBar>
-#include <QProgressBar>
-#include <QtConcurrentRun>
-#include <QFutureWatcher>
-
-
-#include "SmartScrollArea.h"
 #include "Common/PanIconWidget.h"
+#include "Viewers/IGraphicsView.h"
 #include "Viewers/SelectionTool.h"
 #include "Libpfs/frame.h"
+
+enum ViewerMode {FIT_WINDOW, FILL_WINDOW, NORMAL_SIZE};
 
 class GenericViewer : public QWidget 
 {
@@ -55,27 +49,43 @@ public:
     virtual ~GenericViewer();
 
 public Q_SLOTS:
-    virtual void setLabelPixmap(const QPixmap pix);
-    virtual void fitToWindow(bool checked);
+    virtual void updateView();  // tells the Viewer to update the View area
+
     virtual void zoomIn();
     virtual void zoomOut();
-    virtual void normalSize();
+
+    virtual void fitToWindow(bool checked = true);  // checked is useless: kept for compatibility
     virtual bool isFittedToWindow();
+
+    virtual void fillToWindow();
+    virtual bool isFilledToWindow();
+
+    virtual void normalSize();
+    virtual bool isNormalSize();
+
+    virtual void zoomToFactor(float factor);
+    inline virtual float getScaleFactor()
+    {
+        return mView->transform().m11();
+    }
+
+    // selection properties!
     virtual bool hasSelection();
     virtual void setSelectionTool(bool);
-    virtual float getScaleFactor();
     virtual const QRect getSelectionRect(void);
     virtual void removeSelection();
+
     virtual bool needsSaving();
     virtual void setNeedsSaving(bool);
+
     virtual const QString getFileName();
     virtual void setFileName(const QString);
+
     virtual int getHorizScrollBarValue();
     virtual int getVertScrollBarValue();
-    virtual float getImageScaleFactor();
     virtual void setHorizScrollBarValue(int value);
     virtual void setVertScrollBarValue(int value);
-    virtual void zoomToFactor(float factor);
+
     virtual bool isHDR() = 0;
     virtual void levelsRequested(bool) = 0; // only used by LdrViewer
     virtual QString getFilenamePostFix() = 0; // only used by LdrViewer
@@ -94,17 +104,18 @@ protected Q_SLOTS:
     virtual void route_changed();
 
 protected:
-    virtual void closeEvent ( QCloseEvent * event );
+    virtual void closeEvent (QCloseEvent * event);
 
-    //QLabel imageLabel;
-    QVBoxLayout *VBL_L;
     QToolBar *toolBar;
     QToolButton *cornerButton;
     //SmartScrollArea *scrollArea;
     PanIconWidget *panIconWidget;
 
+    QVBoxLayout *mVBL;
+
     QGraphicsScene* mScene;
-    QGraphicsView* mView;
+    IGraphicsView* mView;
+    ViewerMode mViewerMode;
     QGraphicsPixmapItem* mPixmap;
 
     QString filename;

@@ -25,28 +25,36 @@
  *
  */
 
-#include <QMessageBox>
+#include <QScrollBar>
+//#include <QMessageBox>
 //#include <QGLWidget>
 
 #include "GenericViewer.h"
 #include "UI/UMessageBox.h"
 
+// define the number of pixels to count as border of the image, because of the shadow
+#define BORDER_SIZE 30
+
 GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
-        QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf)
+    QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf),
+    mImage(NULL),
+    mViewerMode(NORMAL_SIZE)
 {
-    VBL_L = new QVBoxLayout(this);
-    VBL_L->setSpacing(0);
-    VBL_L->setMargin(0);
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    mVBL = new QVBoxLayout(this);
+    mVBL->setSpacing(0);
+    mVBL->setMargin(0);
 
     toolBar = new QToolBar("",this);
     toolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     toolBar->setFixedHeight(40);
-    VBL_L->addWidget(toolBar);
+    mVBL->addWidget(toolBar);
 
     // RUBBISH
     //scrollArea = new SmartScrollArea(this, imageLabel);
     //scrollArea->setBackgroundRole(QPalette::Shadow);
-    //VBL_L->addWidget(scrollArea);
+    //mVBL->addWidget(scrollArea);
 
     cornerButton = new QToolButton(this);
     cornerButton->setToolTip(tr("Pan the image to a region"));
@@ -59,76 +67,160 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
 
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
-    mView = new QGraphicsView(mScene, this);
+    mView = new IGraphicsView(mScene, this);
+    connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
+    connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
+    connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
     //mView->setViewport(QGLWidget()); //OpenGL viewer
     mView->setCornerWidget(cornerButton);
 
-    VBL_L->addWidget(mView);
+    mVBL->addWidget(mView);
     mView->show();
 
     mPixmap = new QGraphicsPixmapItem();
     QGraphicsDropShadowEffect* x = new QGraphicsDropShadowEffect();
-    x->setBlurRadius(8);
-    x->setXOffset(1);
-    x->setYOffset(1);
+    x->setBlurRadius(10);
+    x->setXOffset(0);
+    x->setYOffset(0);
     mPixmap->setGraphicsEffect(x);
 }
 
 GenericViewer::~GenericViewer()
 {
     if ( mImage != NULL ) delete mImage;
-    this->deleteLater();
 }
 
-void GenericViewer::setLabelPixmap(const QPixmap pix)
+void GenericViewer::fitToWindow(bool /* checked */)
 {
-    //imageLabel.setPixmap(pix);
-    //imageLabel.adjustSize();
-}
+    // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
+    //if ( mViewerMode == FIT_WINDOW ) return;
 
-void GenericViewer::fitToWindow(bool checked)
-{
-        //scrollArea->fitToWindow(checked);
-	emit changed(this);
-}
+    mViewerMode = FIT_WINDOW;
 
-void GenericViewer::zoomIn()
-{
-        //scrollArea->zoomIn();
+    const int w = mView->width(); // - mView->verticalScrollBar()->width() - 2;
+    const int h = mView->height(); // - mView->horizontalScrollBar()->height() - 2;
 
-        mView->scale(1.1,1.1);
-	emit changed(this);
-}
+    qreal w_ratio = qreal(w)/(mCols + 2*BORDER_SIZE);
+    qreal h_ratio = qreal(h)/(mRows + 2*BORDER_SIZE);
 
-void GenericViewer::zoomOut()
-{
-        //scrollArea->zoomOut();
+    qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
-        mView->scale(0.8,0.8);
-	emit changed(this);
-}
+    if (sf != 1.0) mView->scale(sf,sf);
 
-// Factor is a number between 0.01 and 1.0f (1% to 100%)
-void GenericViewer::zoomToFactor(float factor)
-{
-        //scrollArea->zoomToFactor(factor);
-	emit changed(this);
-}
-
-void GenericViewer::normalSize()
-{
-        //scrollArea->normalSize();
-	emit changed(this);
+    emit changed(this);
 }
 
 bool GenericViewer::isFittedToWindow()
 {
-        return false; //scrollArea->isFittedToWindow();
+    return ((mViewerMode == FIT_WINDOW) ? true : false);
 }
 
-float GenericViewer::getScaleFactor()
+
+void GenericViewer::fillToWindow()
 {
-        return 1.0f; //scrollArea->getScaleFactor();
+    // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
+    //if ( mViewerMode == FILL_WINDOW ) return;
+
+    mViewerMode = FILL_WINDOW;
+
+    const int w = mView->width() - mView->verticalScrollBar()->width() - 2;
+    const int h = mView->height() - mView->horizontalScrollBar()->height() - 2;
+
+    qreal w_ratio = qreal(w)/(mCols);
+    qreal h_ratio = qreal(h)/(mRows);
+
+    qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
+
+    if (sf != 1.0) mView->scale(sf,sf);
+
+    emit changed(this);
+}
+
+bool GenericViewer::isFilledToWindow()
+{
+    return ((mViewerMode == FILL_WINDOW) ? true : false);
+}
+
+void GenericViewer::normalSize()
+{
+    // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
+    //if ( mViewerMode == NORMAL_SIZE ) return;
+
+    mViewerMode = NORMAL_SIZE;
+
+    qreal curr_scale_factor = getScaleFactor();
+    qreal scale_by = 1.0f/curr_scale_factor;
+
+    mView->scale(scale_by, scale_by);
+
+    //scrollArea->normalSize();
+    emit changed(this);
+}
+
+bool GenericViewer::isNormalSize()
+{
+    return ((mViewerMode == NORMAL_SIZE) ? true : false);
+}
+
+void GenericViewer::zoomIn()
+{
+    // update the current view
+    switch (mViewerMode)
+    {
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    case FILL_WINDOW:
+        normalSize();
+        break;
+    case FIT_WINDOW:
+        fillToWindow();
+        break;
+    }
+
+    emit changed(this);
+}
+
+void GenericViewer::zoomOut()
+{
+    // update the current view
+    switch (mViewerMode)
+    {
+    case NORMAL_SIZE:
+        fillToWindow();
+        break;
+    case FILL_WINDOW:
+        fitToWindow();
+        break;
+    case FIT_WINDOW:
+        fitToWindow();
+        break;
+    }
+
+    emit changed(this);
+}
+
+void GenericViewer::updateView()
+{
+    switch (mViewerMode)
+    {
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    case FILL_WINDOW:
+        fillToWindow();
+        break;
+    case FIT_WINDOW:
+        fitToWindow();
+        break;
+    }
+}
+
+// Factor is a number between 0.01 and 1.0f (1% to 100%)
+void GenericViewer::zoomToFactor(float /*factor*/)
+{
+    //scrollArea->zoomToFactor(factor);
+    emit changed(this);
 }
 
 const QRect GenericViewer::getSelectionRect(void)
@@ -176,7 +268,7 @@ void GenericViewer::slotCornerButtonPressed()
     panIconWidget = new PanIconWidget(this);
     panIconWidget->setImage(mImage);
 
-    float zf = this->getImageScaleFactor(); // come minchia lo calcolo lo scaling factor?!
+    float zf = this->getScaleFactor(); //getImageScaleFactor(); // come minchia lo calcolo lo scaling factor?!
     float leftviewpos = (float)(mView->horizontalScrollBar()->value());
     float topviewpos = (float)(mView->verticalScrollBar()->value());
     float wps_w = (float)(mView->maximumViewportSize().width());
@@ -195,8 +287,8 @@ void GenericViewer::slotCornerButtonPressed()
 
 void GenericViewer::slotPanIconSelectionMoved(QRect gotopos)
 {
-    mView->horizontalScrollBar()->setValue((int)(gotopos.x()*this->getImageScaleFactor()));
-    mView->verticalScrollBar()->setValue((int)(gotopos.y()*this->getImageScaleFactor()));
+    mView->horizontalScrollBar()->setValue((int)(gotopos.x()*this->getScaleFactor()));
+    mView->verticalScrollBar()->setValue((int)(gotopos.y()*this->getScaleFactor()));
     emit changed(this);
 }
 
@@ -216,12 +308,6 @@ int  GenericViewer::getHorizScrollBarValue()
 int GenericViewer::getVertScrollBarValue()
 {
     return mView->verticalScrollBar()->value();
-}
-
-float GenericViewer::getImageScaleFactor()
-{
-    return 1.0f;
-    //return scrollArea->getImageScaleFactor();
 }
 
 void GenericViewer::setHorizScrollBarValue(int value)

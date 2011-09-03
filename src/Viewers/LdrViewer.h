@@ -28,6 +28,7 @@
 #ifndef IMAGELDRVIEWER_H
 #define IMAGELDRVIEWER_H
 
+#include <QLabel>
 #include <iostream>
 
 #include "Core/TonemappingOptions.h"

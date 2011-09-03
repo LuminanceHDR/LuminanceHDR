@@ -27,12 +27,12 @@
 
 #include "HdrViewer.h"
 
-#include <cmath>
-#include <assert.h>
+#include <QLabel>
 #include <QApplication>
 #include <QFileInfo>
 
-
+#include <cmath>
+#include <assert.h>
 #include "arch/math.h"
 
 #include "Common/global.h"
@@ -240,9 +240,6 @@ void HdrViewer::updateImage()
     QApplication::restoreOverrideCursor();
 }
 
-#define NEW_MAP_FRAME 1
-
-#ifdef NEW_MAP_FRAME
 void HdrViewer::mapFrameToImage()
 {
 #ifdef TIMER_PROFILING
@@ -286,65 +283,6 @@ void HdrViewer::mapFrameToImage()
     std::cout << "HdrViewer::mapFrameToImage() [NEW]= " << __timer.get_time() << " msec" << std::endl;
 #endif
 }
-
-#else
-
-void HdrViewer::mapFrameToImage()
-{
-#ifdef TIMER_PROFILING
-    msec_timer __timer;
-    __timer.start();
-#endif
-
-    const int lutSize = 256;    // 256 levels!
-
-    const int rows = workArea[0]->getRows();
-    const int cols = workArea[0]->getCols();
-
-    float lutPixFloor[lutSize/*257*2*/];
-
-    //lutPixFloor[0] = 0.0f;
-    for ( int p = 0; p < lutSize; p++ )
-    {
-        //float p_left = ((float)p - 1.f)/255.f; // Should be -1.5f, but we don't want negative nums
-        float p_left = ((float)p)/255.f; // Should be -1.5f, but we don't want negative nums
-        lutPixFloor[p] = getInverseMapping( p_left );
-    }
-
-    QRgb *pixels = reinterpret_cast<QRgb*>(mImage->bits());
-
-    for ( int index = 0; index < rows*cols; ++index )
-    {
-        if ( !finite( (*workArea[0])(index) ) || !finite( (*workArea[1])(index) ) || !finite( (*workArea[2])(index) ) )   // x is NaN or Inf
-        {
-            pixels[index] = naninfcol;
-        }
-        else if( (*workArea[0])(index)<0 || (*workArea[1])(index)<0 || (*workArea[2])(index)<0 )    // x is negative
-        {
-            pixels[index] = negcol;
-        }
-        else
-        {
-            int pr, pg, pb;
-
-            // Color channels
-            pr = binarySearchPixels( (*workArea[0])(index), lutPixFloor, lutSize );
-            pg = binarySearchPixels( (*workArea[1])(index), lutPixFloor, lutSize );
-            pb = binarySearchPixels( (*workArea[2])(index), lutPixFloor, lutSize );
-
-            // Clipping
-            pixels[index] = qRgb(clamp( pr /*-1 */, 0, 255 ),
-                                 clamp( pg /*-1 */, 0, 255 ),
-                                 clamp( pb /*-1 */, 0, 255 ));
-        }
-
-    }
-#ifdef TIMER_PROFILING
-    __timer.stop_and_update();
-    std::cout << "HdrViewer::mapFrameToImage() [OLD]= " << __timer.get_time() << " msec" << std::endl;
-#endif
-}
-#endif
 
 LuminanceRangeWidget* HdrViewer::lumRange()
 {
