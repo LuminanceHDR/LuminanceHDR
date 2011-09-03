@@ -94,6 +94,11 @@ int main( int argc, char ** argv )
     }
 #endif
 
+#ifdef QT_DEBUG
+    qDebug() << "i18n folder = " << I18NDIR;
+    //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+    //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
+#endif
 
     QTranslator guiTranslator;
     QTranslator qtTranslator;
