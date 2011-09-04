@@ -96,11 +96,11 @@ void GenericViewer::fitToWindow(bool /* checked */)
 
     mViewerMode = FIT_WINDOW;
 
-    const int w = mView->width(); // - mView->verticalScrollBar()->width() - 2;
-    const int h = mView->height(); // - mView->horizontalScrollBar()->height() - 2;
+    const int w = mView->width() - 2*BORDER_SIZE; // - mView->verticalScrollBar()->width() - 2;
+    const int h = mView->height() - 2*BORDER_SIZE; // - mView->horizontalScrollBar()->height() - 2;
 
-    qreal w_ratio = qreal(w)/(mCols + 2*BORDER_SIZE);
-    qreal h_ratio = qreal(h)/(mRows + 2*BORDER_SIZE);
+    qreal w_ratio = qreal(w)/(mCols);
+    qreal h_ratio = qreal(h)/(mRows);
 
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
