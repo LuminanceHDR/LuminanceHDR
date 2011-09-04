@@ -111,10 +111,13 @@ protected Q_SLOTS:
     void hdr_fit_exp();
     void hdr_ldr_exp();
 
+    // Viewers
     void viewerZoomIn();
     void viewerZoomOut();
-    void viewerFitToWin(bool checked);
+    void viewerFitToWin(bool checked = true);
+    void viewerFillToWin();
     void viewerOriginalSize();
+    void updateMagnificationButtons(GenericViewer*);
 
     void openDocumentation();
     void enterWhatsThis();
@@ -262,7 +265,6 @@ protected:
     void updateActionsNoImage();
     void updateActionsLdrImage();
     void updateActionsHdrImage();
-    void updateMagnificationButtons(GenericViewer*);
     void updatePreviousNextActions();
 
     QString getCurrentHDRName();

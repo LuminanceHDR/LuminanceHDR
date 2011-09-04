@@ -26,8 +26,7 @@
  */
 
 #include <QScrollBar>
-//#include <QMessageBox>
-//#include <QGLWidget>
+//#include <QtOpenGL/QGLWidget>
 
 #include "GenericViewer.h"
 #include "UI/UMessageBox.h"
@@ -71,7 +70,7 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
     connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
     connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
-    //mView->setViewport(QGLWidget()); //OpenGL viewer
+    //mView->setViewport(new QGLWidget()); //OpenGL viewer
     mView->setCornerWidget(cornerButton);
 
     mVBL->addWidget(mView);
@@ -153,7 +152,6 @@ void GenericViewer::normalSize()
 
     mView->scale(scale_by, scale_by);
 
-    //scrollArea->normalSize();
     emit changed(this);
 }
 

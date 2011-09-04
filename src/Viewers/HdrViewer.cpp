@@ -200,12 +200,7 @@ void HdrViewer::updateHDR(pfs::Frame* inputframe)
     m_lumRange->setHistogramImage(getPrimaryChannel());
 
     //fitToDynamicRange() already takes care -indirectly- to call updateImage()
-    m_lumRange->fitToDynamicRange(); // OLD
-
-    //zoom at original size, 100%
-    //make the label use the image dimensions
-    //imageLabel.adjustSize(); // OLD
-    //imageLabel.update(); // OLD
+    m_lumRange->fitToDynamicRange();
 }
 
 void HdrViewer::setFlagUpdateImage(bool updateImage)
@@ -226,15 +221,9 @@ void HdrViewer::updateImage()
     mapFrameToImage();
 
     //assign the mapped image to the label
-    //imageLabel.setPixmap(QPixmap::fromImage(*mImage)); // OLD
-
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
 
     mScene->addItem(mPixmap);
-
-    //scaleFactor is stored into scrollArea (1.0 by default)
-    //scrollArea->scaleImage(); // OLD
-
 
     emit S_end();
     QApplication::restoreOverrideCursor();

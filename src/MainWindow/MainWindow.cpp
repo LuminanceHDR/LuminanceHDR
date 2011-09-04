@@ -238,8 +238,8 @@ void MainWindow::createMenus()
     // Zoom
     connect(zoomInAct,SIGNAL(triggered()),this,SLOT(viewerZoomIn()));
     connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(viewerZoomOut()));
-    // TODO: this one should be triggered()
-    connect(fitToWindowAct,SIGNAL(toggled(bool)),this,SLOT(viewerFitToWin(bool)));
+    connect(fitToWindowAct,SIGNAL(triggered()),this,SLOT(viewerFitToWin()));
+    connect(actionFill_to_Window,SIGNAL(triggered()),this,SLOT(viewerFillToWin()));
     connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(viewerOriginalSize()));
 
     // Tools
@@ -598,7 +598,8 @@ void MainWindow::updateActionsLdrImage()
 
 void MainWindow::updateActionsHdrImage()
 {
-	qDebug() << "MainWindow::updateActionsHdrImage()";
+    qDebug() << "MainWindow::updateActionsHdrImage()";
+
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
     //actionShowHDRs->setEnabled(false);
@@ -614,17 +615,20 @@ void MainWindow::updateActionsHdrImage()
 
     actionResizeHDR->setEnabled(true);
     action_Projective_Transformation->setEnabled(true);
-	if (tm_status.curr_tm_frame)
-		if (!tm_status.curr_tm_frame->hasSelection()) 
-		{ 
-		    cropToSelectionAction->setEnabled(false);
-			removeSelectionAction->setEnabled(false);
-		}
-		else 
-		{
-		    cropToSelectionAction->setEnabled(true);
-			removeSelectionAction->setEnabled(true);
-		}
+
+    if (tm_status.curr_tm_frame)
+    {
+        if (!tm_status.curr_tm_frame->hasSelection())
+        {
+            cropToSelectionAction->setEnabled(false);
+            removeSelectionAction->setEnabled(false);
+        }
+        else
+        {
+            cropToSelectionAction->setEnabled(true);
+            removeSelectionAction->setEnabled(true);
+        }
+    }
     rotateccw->setEnabled(true);
     rotatecw->setEnabled(true);
     actionFix_Histogram->setEnabled(false);
@@ -822,16 +826,15 @@ void MainWindow::hdr_ldr_exp()
         curr_hdr_v->lumRange()->lowDynamicRange();
 }
 
+// Zoom = Viewers (START)
 void MainWindow::viewerZoomIn()
 {
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-	fitToWindowAct->setChecked(false);
-
     g_v->zoomIn();
-    updateMagnificationButtons(g_v);
+    //updateMagnificationButtons(g_v);
 }
 
 void MainWindow::viewerZoomOut()
@@ -840,10 +843,8 @@ void MainWindow::viewerZoomOut()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-	fitToWindowAct->setChecked(false);
-
     g_v->zoomOut();
-    updateMagnificationButtons(g_v);
+    //updateMagnificationButtons(g_v);
 }
 
 void MainWindow::viewerFitToWin(bool checked)
@@ -852,8 +853,18 @@ void MainWindow::viewerFitToWin(bool checked)
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    g_v->fitToWindow(checked);
-    updateMagnificationButtons(g_v);
+    g_v->fitToWindow();
+    //updateMagnificationButtons(g_v);
+}
+
+void MainWindow::viewerFillToWin()
+{
+    if (m_tabwidget->count() <= 0) return;
+
+    GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
+
+    g_v->fillToWindow();
+    //updateMagnificationButtons(g_v);
 }
 
 void MainWindow::viewerOriginalSize()
@@ -862,11 +873,11 @@ void MainWindow::viewerOriginalSize()
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-	fitToWindowAct->setChecked(false);
-
     g_v->normalSize();
-    updateMagnificationButtons(g_v);
+    //updateMagnificationButtons(g_v);
 }
+// Zoom = Viewers (END)
+
 
 void MainWindow::openDocumentation()
 {
@@ -954,6 +965,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
         connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
+        connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
+
         newhdr->setSelectionTool(true);
 
         newhdr->updateHDR(new_hdr_frame);
@@ -1461,6 +1474,7 @@ void MainWindow::addLDRResult(QImage* image)
     LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
     connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
+    connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
     connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
     // TODO : progressive numbering of the open LDR tabs
@@ -1470,11 +1484,8 @@ void MainWindow::addLDRResult(QImage* image)
         m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
     m_tabwidget->setCurrentWidget(n);
 
-    // This portion of code MUST appear after addTab() and setCurrentWidget()
-    //if (fitToWindowAct->isChecked())
     n->fitToWindow(true);
-    //if ( n->getScaleFactor() > 1.0f )
-    //    n->zoomToFactor(1.0f);
+
     previewPanel->setEnabled(true);
 }
 
@@ -1639,24 +1650,70 @@ void MainWindow::showPreviewPanel(bool b)
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
-    // TODO : this function needs double-check!
     if ( c_v == NULL )
     {
-        normalSizeAct->setEnabled( false );
+        normalSizeAct->setEnabled(false);
+        normalSizeAct->setChecked(false);
+        fitToWindowAct->setEnabled( false );
+        fitToWindowAct->setChecked(false);
+        actionFill_to_Window->setEnabled(false);
+        actionFill_to_Window->setChecked(false);
+
         zoomInAct->setEnabled( false );
         zoomOutAct->setEnabled( false );
-        fitToWindowAct->setEnabled( false );
     }
     else
-    {
-        // based on the scaling factor of the current viewer
-        // I set correctly the status of the magnification buttons
-        float current_scale_factor = c_v->getScaleFactor();
+    {  
+        if ( c_v->isNormalSize() )
+        {
+            qDebug() << "MainWindow::updateMagnificationButtons -> Normal Size";
 
-        normalSizeAct->setEnabled( !(current_scale_factor == 1.0f) );
-        zoomInAct->setEnabled( (current_scale_factor < 1.0f) );
-        zoomOutAct->setEnabled( (current_scale_factor > 0.15f) );
-        fitToWindowAct->setEnabled( true );
+            zoomInAct->setEnabled(false);
+            zoomOutAct->setEnabled(true);
+
+            normalSizeAct->setEnabled(false);
+            normalSizeAct->setChecked(true);
+            fitToWindowAct->setEnabled(true);
+            fitToWindowAct->setChecked(false);
+            actionFill_to_Window->setEnabled(true);
+            actionFill_to_Window->setChecked(false);
+
+            return;
+        }
+
+        if ( c_v->isFilledToWindow() )
+        {
+            qDebug() << "MainWindow::updateMagnificationButtons -> Filled Size";
+
+            zoomInAct->setEnabled(true);
+            zoomOutAct->setEnabled(true);
+
+            normalSizeAct->setEnabled(true);
+            normalSizeAct->setChecked(false);
+            fitToWindowAct->setEnabled(true);
+            fitToWindowAct->setChecked(false);
+            actionFill_to_Window->setEnabled(false);
+            actionFill_to_Window->setChecked(true);
+
+            return;
+        }
+
+        if ( c_v->isFittedToWindow() )
+        {
+            qDebug() << "MainWindow::updateMagnificationButtons -> Fitted Size";
+
+            zoomInAct->setEnabled(true);
+            zoomOutAct->setEnabled(false);
+
+            normalSizeAct->setEnabled(true);
+            normalSizeAct->setChecked(false);
+            fitToWindowAct->setEnabled(false);
+            fitToWindowAct->setChecked(true);
+            actionFill_to_Window->setEnabled(true);
+            actionFill_to_Window->setChecked(false);
+
+            return;
+        }
     }
 }
 

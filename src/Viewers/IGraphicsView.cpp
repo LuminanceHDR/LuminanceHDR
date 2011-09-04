@@ -30,12 +30,19 @@
 IGraphicsView::IGraphicsView(QWidget * parent):
     QGraphicsView(parent)
 {
-    setDragMode(QGraphicsView::RubberBandDrag);
+    init();
 }
 
 IGraphicsView::IGraphicsView(QGraphicsScene * scene, QWidget * parent):
     QGraphicsView(scene, parent)
-{ }
+{
+    init();
+}
+
+void IGraphicsView::init()
+{
+    //setDragMode(QGraphicsView::RubberBandDrag);
+}
 
 IGraphicsView::~IGraphicsView()
 { }

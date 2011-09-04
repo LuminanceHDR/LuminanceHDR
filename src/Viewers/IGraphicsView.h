@@ -33,6 +33,9 @@
 
 class IGraphicsView : public QGraphicsView {
     Q_OBJECT
+private:
+    void init();
+
 public:
     IGraphicsView ( QWidget * parent = 0 );
     IGraphicsView ( QGraphicsScene * scene, QWidget * parent = 0 );

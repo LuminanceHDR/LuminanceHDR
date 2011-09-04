@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -94,6 +94,7 @@
      <addaction name="separator"/>
     </widget>
     <addaction name="fitToWindowAct"/>
+    <addaction name="actionFill_to_Window"/>
     <addaction name="normalSizeAct"/>
     <addaction name="zoomInAct"/>
     <addaction name="zoomOutAct"/>
@@ -158,11 +159,12 @@
    <addaction name="fileSaveAllAction"/>
    <addaction name="separator"/>
    <addaction name="actionLock"/>
-   <addaction name="zoomInAct"/>
-   <addaction name="zoomOutAct"/>
+   <addaction name="fitToWindowAct"/>
+   <addaction name="actionFill_to_Window"/>
    <addaction name="normalSizeAct"/>
    <addaction name="actionShowPrevious"/>
    <addaction name="actionShowNext"/>
+   <addaction name="separator"/>
    <addaction name="actionFix_Histogram"/>
   </widget>
   <action name="fileNewAction">
@@ -238,39 +240,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="TonemapAction">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
-   </property>
-   <property name="text">
-    <string>&amp;Tone Mapping...</string>
-   </property>
-   <property name="iconText">
-    <string>Tonemap HDR image</string>
-   </property>
-   <property name="toolTip">
-    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
-   </property>
-   <property name="statusTip">
-    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
-   </property>
-   <property name="whatsThis">
-    <string>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
    </property>
   </action>
   <action name="fileExitAction">
@@ -442,6 +411,9 @@
    </property>
   </action>
   <action name="normalSizeAct">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -521,7 +493,7 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="enabled">
     <bool>false</bool>
@@ -996,6 +968,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionFill_to_Window">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fill to Window</string>
    </property>
   </action>
  </widget>

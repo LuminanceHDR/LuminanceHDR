@@ -29,7 +29,7 @@
 #include "Common/GammaAndLevels.h"
 #include "LdrViewer.h"
 
-LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts) :
+LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
         GenericViewer(parent, ns, ncf), informativeLabel(NULL)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -136,7 +136,6 @@ void LdrViewer::restore_original()
 {
     //printf("LdrViewer::restoreoriginal() \n");
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     delete previewimage;
 
@@ -149,7 +148,6 @@ void LdrViewer::finalize_levels()
     //printf("LdrViewer::finalize_levels() \n");
     mImage = previewimage;
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     delete temp_image;
 
@@ -166,8 +164,7 @@ void LdrViewer::setImage(QImage *i)
 
     mImage = new QImage(*i);
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-//    imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
-//    imageLabel.adjustSize();
+
     mCols = mImage->width();
     mRows = mImage->height();
     informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), toolBar );
