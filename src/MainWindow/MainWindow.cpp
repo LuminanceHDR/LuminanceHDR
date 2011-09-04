@@ -98,8 +98,8 @@ MainWindow::~MainWindow()
     settings->setValue("MainWindowState", saveState());
     settings->setValue("MainWindowGeometry", saveGeometry());
 
-	qRegisterMetaType<QImage>("QImage");
-	qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+    qRegisterMetaType<QImage>("QImage");
+    qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
 }
 
 void MainWindow::init()
@@ -177,6 +177,7 @@ void MainWindow::createCentralWidget()
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
+    connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
 }
 
 void MainWindow::createToolBar()
@@ -973,15 +974,12 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         newhdr->setFileName(new_fname);
         newhdr->setWindowTitle(new_fname);
 
-        newhdr->normalSize();
         newhdr->fitToWindow(true);
 
         m_tabwidget->addTab(newhdr, new_fname);
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
-
-        tmPanel->setEnabled(true);
 
         m_tabwidget->setCurrentWidget(newhdr);
 
@@ -995,9 +993,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         }
         emit updatedHDR(newhdr->getHDRPfsFrame());  // signal: I have a new HDR open
 
+        tmPanel->setEnabled(true);
         actionShowPreviewPanel->setEnabled(true);
-        //if (actionShowPreviewPanel->isChecked())
-        //  previewPanel->show();
 
         showPreviewPanel(actionShowPreviewPanel->isChecked());
 
@@ -1630,7 +1627,6 @@ void MainWindow::showPreviewPanel(bool b)
             previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
 
             // connect signals
-            connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
             connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
             connect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
@@ -1641,7 +1637,6 @@ void MainWindow::showPreviewPanel(bool b)
         previewPanel->hide();
 
         // disconnect signals
-        disconnect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
         disconnect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
         disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
         disconnect(previewPanel, SIGNAL(startTonemapping(TonemappingOptions*)), tmPanel, SLOT(updateTonemappingParams(TonemappingOptions*)));
