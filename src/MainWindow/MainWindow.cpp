@@ -591,7 +591,7 @@ void MainWindow::updateActionsLdrImage()
     actionResizeHDR->setEnabled(false);
     action_Projective_Transformation->setEnabled(false);
     cropToSelectionAction->setEnabled(false);
-	removeSelectionAction->setEnabled(false);
+    removeSelectionAction->setEnabled(false);
     rotateccw->setEnabled(false);
     rotatecw->setEnabled(false);
     actionFix_Histogram->setEnabled(true);
@@ -599,7 +599,7 @@ void MainWindow::updateActionsLdrImage()
 
 void MainWindow::updateActionsHdrImage()
 {
-    qDebug() << "MainWindow::updateActionsHdrImage()";
+    //qDebug() << "MainWindow::updateActionsHdrImage()";
 
     fileSaveAsAction->setEnabled(true);
     actionSave_Hdr_Preview->setEnabled(true);
@@ -637,7 +637,7 @@ void MainWindow::updateActionsHdrImage()
 
 void MainWindow::updateActions( int w )
 {
-    qDebug() << "MainWindow::updateActions(" << w << ")";
+    //qDebug() << "MainWindow::updateActions(" << w << ")";
     updatePreviousNextActions();
     if ( w < 0 )
     {
