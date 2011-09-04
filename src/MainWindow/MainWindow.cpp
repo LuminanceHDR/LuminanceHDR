@@ -1570,7 +1570,6 @@ void MainWindow::lockImages(bool toggled)
     m_isLocked = toggled;
     if (m_tabwidget->count())
     {
-
         dispatch((GenericViewer*)m_tabwidget->currentWidget());
     }
 }
@@ -1597,19 +1596,16 @@ void MainWindow::updateImage(GenericViewer *viewer)
     Q_ASSERT(m_changedImage != NULL);
     if (m_isLocked)
     {
-        m_scaleFactor = m_changedImage->getScaleFactor(); //getImageScaleFactor();
+        if ( m_changedImage->isFittedToWindow() )
+            viewer->fitToWindow();
+        else if ( m_changedImage->isNormalSize() )
+            viewer->normalSize();
+        else if ( m_changedImage->isFilledToWindow() )
+            viewer->fillToWindow();
+
         m_HSB_Value = m_changedImage->getHorizScrollBarValue();
         m_VSB_Value = m_changedImage->getVertScrollBarValue();
-        viewer->normalSize();
-        if (fitToWindowAct->isChecked())
-        {
-            viewer->fitToWindow(true);
-        }
-        else
-        {
-            viewer->fitToWindow(false);
-        }
-        viewer->zoomToFactor(m_scaleFactor);
+
         viewer->setHorizScrollBarValue(m_HSB_Value);
         viewer->setVertScrollBarValue(m_VSB_Value);
     }
@@ -1661,8 +1657,6 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
     {  
         if ( c_v->isNormalSize() )
         {
-            qDebug() << "MainWindow::updateMagnificationButtons -> Normal Size";
-
             zoomInAct->setEnabled(false);
             zoomOutAct->setEnabled(true);
 
@@ -1678,8 +1672,6 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 
         if ( c_v->isFilledToWindow() )
         {
-            qDebug() << "MainWindow::updateMagnificationButtons -> Filled Size";
-
             zoomInAct->setEnabled(true);
             zoomOutAct->setEnabled(true);
 
@@ -1695,8 +1687,6 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 
         if ( c_v->isFittedToWindow() )
         {
-            qDebug() << "MainWindow::updateMagnificationButtons -> Fitted Size";
-
             zoomInAct->setEnabled(true);
             zoomOutAct->setEnabled(false);
 

@@ -98,6 +98,7 @@
     <addaction name="normalSizeAct"/>
     <addaction name="zoomInAct"/>
     <addaction name="zoomOutAct"/>
+    <addaction name="actionLock"/>
     <addaction name="menuHDR_Histogram"/>
     <addaction name="separator"/>
     <addaction name="menuToolbars"/>
@@ -158,7 +159,6 @@
    <addaction name="fileSaveAsAction"/>
    <addaction name="fileSaveAllAction"/>
    <addaction name="separator"/>
-   <addaction name="actionLock"/>
    <addaction name="fitToWindowAct"/>
    <addaction name="actionFill_to_Window"/>
    <addaction name="normalSizeAct"/>
@@ -867,10 +867,10 @@
      <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
    </property>
    <property name="text">
-    <string>Lock</string>
+    <string>Lock Viewers</string>
    </property>
    <property name="toolTip">
-    <string>Lock the images for sync view</string>
+    <string>Syncronize viewers mode (fit, fill or 1:1).</string>
    </property>
    <property name="whatsThis">
     <string>Lock the images for sync view</string>

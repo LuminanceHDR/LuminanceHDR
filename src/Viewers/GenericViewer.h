@@ -106,9 +106,10 @@ protected Q_SLOTS:
 protected:
     virtual void closeEvent (QCloseEvent * event);
 
-    QToolBar *mToolBar;
-    QToolButton *mCornerButton;
-    PanIconWidget *mPanIconWidget;
+    QToolBar* mToolBar;
+    QToolButton* mCornerButton;
+    PanIconWidget* mPanIconWidget;
+    SelectionTool* mSelectionTool;
 
     QVBoxLayout *mVBL;
 
