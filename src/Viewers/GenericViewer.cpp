@@ -45,24 +45,10 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mVBL->setSpacing(0);
     mVBL->setMargin(0);
 
-    toolBar = new QToolBar("",this);
-    toolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    toolBar->setFixedHeight(40);
-    mVBL->addWidget(toolBar);
-
-    // RUBBISH
-    //scrollArea = new SmartScrollArea(this, imageLabel);
-    //scrollArea->setBackgroundRole(QPalette::Shadow);
-    //mVBL->addWidget(scrollArea);
-
-    cornerButton = new QToolButton(this);
-    cornerButton->setToolTip(tr("Pan the image to a region"));
-    cornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
-    //scrollArea->setCornerWidget(cornerButton);
-    connect(cornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-    //connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
-    //connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
-    // RUBBISH
+    mToolBar = new QToolBar("",this);
+    mToolBar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    mToolBar->setFixedHeight(40);
+    mVBL->addWidget(mToolBar);
 
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
@@ -71,7 +57,16 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
     connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
     //mView->setViewport(new QGLWidget()); //OpenGL viewer
-    mView->setCornerWidget(cornerButton);
+
+    mCornerButton = new QToolButton(this);
+    mCornerButton->setToolTip(tr("Pan the image to a region"));
+    mCornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
+
+    mView->setCornerWidget(mCornerButton);
+
+    connect(mCornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
+    //connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    //connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
 
     mVBL->addWidget(mView);
     mView->show();
@@ -263,24 +258,24 @@ void GenericViewer::setFileName(const QString fn)
 
 void GenericViewer::slotCornerButtonPressed()
 {
-    panIconWidget = new PanIconWidget(this);
-    panIconWidget->setImage(mImage);
+    mPanIconWidget = new PanIconWidget(this);
+    mPanIconWidget->setImage(mImage);
 
-    float zf = this->getScaleFactor(); //getImageScaleFactor(); // come minchia lo calcolo lo scaling factor?!
+    float zf = this->getScaleFactor();
     float leftviewpos = (float)(mView->horizontalScrollBar()->value());
     float topviewpos = (float)(mView->verticalScrollBar()->value());
     float wps_w = (float)(mView->maximumViewportSize().width());
     float wps_h = (float)(mView->maximumViewportSize().height());
     QRect r((int)(leftviewpos/zf), (int)(topviewpos/zf), (int)(wps_w/zf), (int)(wps_h/zf));
-    panIconWidget->setRegionSelection(r);
-    panIconWidget->setMouseFocus();
-    connect(panIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
-    connect(panIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
+    mPanIconWidget->setRegionSelection(r);
+    mPanIconWidget->setMouseFocus();
+    connect(mPanIconWidget, SIGNAL(selectionMoved(QRect)), this, SLOT(slotPanIconSelectionMoved(QRect)));
+    connect(mPanIconWidget, SIGNAL(finished()), this, SLOT(slotPanIconHidden()));
     QPoint g = mView->mapToGlobal(mView->viewport()->pos());
     g.setX(g.x()+ mView->viewport()->size().width());
     g.setY(g.y()+ mView->viewport()->size().height());
-    panIconWidget->popup(QPoint(g.x() - panIconWidget->width()/2, g.y() - panIconWidget->height()/2));
-    panIconWidget->setCursorToLocalRegionSelectionCenter();
+    mPanIconWidget->popup(QPoint(g.x() - mPanIconWidget->width()/2, g.y() - mPanIconWidget->height()/2));
+    mPanIconWidget->setCursorToLocalRegionSelectionCenter();
 }
 
 void GenericViewer::slotPanIconSelectionMoved(QRect gotopos)
@@ -292,10 +287,10 @@ void GenericViewer::slotPanIconSelectionMoved(QRect gotopos)
 
 void GenericViewer::slotPanIconHidden()
 {
-    panIconWidget->close();
-    cornerButton->blockSignals(true);
-    cornerButton->animateClick();
-    cornerButton->blockSignals(false);
+    mPanIconWidget->close();
+    mCornerButton->blockSignals(true);
+    mCornerButton->animateClick();
+    mCornerButton->blockSignals(false);
 }
 
 int  GenericViewer::getHorizScrollBarValue()

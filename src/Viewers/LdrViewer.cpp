@@ -48,8 +48,8 @@ LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const Tonema
     temp_image = NULL;
     previewimage = NULL;
 
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), toolBar);
-    toolBar->addWidget(informativeLabel);
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), mToolBar);
+    mToolBar->addWidget(informativeLabel);
 
     if (mImage == 0)
 	return;
@@ -167,6 +167,6 @@ void LdrViewer::setImage(QImage *i)
 
     mCols = mImage->width();
     mRows = mImage->height();
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), toolBar );
-    toolBar->addWidget(informativeLabel);
+    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), mToolBar );
+    mToolBar->addWidget(informativeLabel);
 }

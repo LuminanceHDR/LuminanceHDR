@@ -137,12 +137,12 @@ void HdrViewer::init_ui()
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QLabel *mappingMethodLabel = new QLabel( tr("&Mapping:"), toolBar );
+    QLabel *mappingMethodLabel = new QLabel( tr("&Mapping:"), mToolBar );
     mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
-    mappingMethodCB = new QComboBox( toolBar );
-    toolBar->addWidget(mappingMethodLabel);
-    toolBar->addWidget(mappingMethodCB);
-    toolBar->addSeparator();
+    mappingMethodCB = new QComboBox( mToolBar );
+    mToolBar->addWidget(mappingMethodLabel);
+    mToolBar->addWidget(mappingMethodCB);
+    mToolBar->addSeparator();
     mappingMethodLabel->setBuddy( mappingMethodCB );
     QStringList methods;
     methods+=tr("Linear");
@@ -154,13 +154,13 @@ void HdrViewer::init_ui()
     mappingMethodCB->addItems(methods);
     mappingMethodCB->setCurrentIndex( 3 );
     connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
-    QLabel *histlabel = new QLabel( tr("Histogram:"), toolBar );
-    m_lumRange = new LuminanceRangeWidget( toolBar );
-    toolBar->addWidget(histlabel);
-    toolBar->addWidget(m_lumRange);
-    toolBar->addSeparator();
+    QLabel *histlabel = new QLabel( tr("Histogram:"), mToolBar );
+    m_lumRange = new LuminanceRangeWidget( mToolBar );
+    mToolBar->addWidget(histlabel);
+    mToolBar->addWidget(m_lumRange);
+    mToolBar->addSeparator();
     connect( m_lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
-    toolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+    mToolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 }
 
 void HdrViewer::updateHDR(pfs::Frame* inputframe)
