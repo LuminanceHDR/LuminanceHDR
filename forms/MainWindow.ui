@@ -858,7 +858,7 @@
     <string>Show Next Image</string>
    </property>
    <property name="shortcut">
-    <string>PgDown</string>
+    <string>Ctrl+PgDown</string>
    </property>
   </action>
   <action name="actionShowPrevious">
@@ -879,7 +879,7 @@
     <string>Show Previous Image</string>
    </property>
    <property name="shortcut">
-    <string>PgUp</string>
+    <string>Ctrl+PgUp</string>
    </property>
   </action>
   <action name="actionLock">
