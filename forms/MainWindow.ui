@@ -982,7 +982,10 @@
      <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text">
-    <string>Fill to Window</string>
+    <string>Fill Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Fill window with the current viewer</string>
    </property>
   </action>
  </widget>

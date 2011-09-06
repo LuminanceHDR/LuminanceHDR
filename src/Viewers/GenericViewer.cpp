@@ -117,8 +117,8 @@ void GenericViewer::fillToWindow()
 
     mViewerMode = FILL_WINDOW;
 
-    const int w = mView->viewport()->size().width() - mView->verticalScrollBar()->width() - 2;
-    const int h = mView->viewport()->size().height() - mView->horizontalScrollBar()->height() - 2;
+    const int w = mView->viewport()->size().width();
+    const int h = mView->viewport()->size().height();
 
     qreal w_ratio = qreal(w)/(mCols);
     qreal h_ratio = qreal(h)/(mRows);
