@@ -22,6 +22,7 @@ IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\gzip.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\sed.exe GOTO cygwin_error
+IF NOT EXIST %CYGWIN_DIR%\bin\ssh.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\svn.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\tar.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\unzip.exe GOTO cygwin_error
@@ -34,6 +35,7 @@ echo    cvs
 echo    git 
 echo    gzip 
 echo    sed 
+echo    ssh 
 echo    svn 
 echo    tar 
 echo    unzip 
@@ -277,6 +279,7 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
 	%CYGWIN_DIR%\bin\git.exe fetch
+	%CYGWIN_DIR%\bin\git.exe rebase refs/remotes/origin/master
 	popd
 )
 

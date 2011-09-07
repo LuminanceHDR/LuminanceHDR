@@ -32,7 +32,7 @@ This build process requires:
              This reconfiguration can also be applied for generating x64 Qt versions!
              
 * CMake
-* Cygwin installed with: sed, cvs, gzip, svn, tar, unzip, wget
+* Cygwin installed with: sed, cvs, git, gzip, ssh, svn, tar, unzip, wget
 
 
 2. Compilation
