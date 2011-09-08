@@ -247,7 +247,7 @@ protected:
     
     bool m_isLocked;
     GenericViewer *m_changedImage;
-    float m_scaleFactor;
+
     int m_VSB_Value;
     int m_HSB_Value;
 

@@ -1726,12 +1726,6 @@ void MainWindow::removeTab(int t)
             if ( maybeSave() )
             {
                 // if discard OR saved
-                tm_status.is_hdr_ready = false;
-                tm_status.curr_tm_frame = NULL;
-                tm_status.curr_tm_options = NULL;
-
-                tmPanel->setEnabled(false);
-
                 m_tabwidget->removeTab(t);
                 w->deleteLater();   // delete yourself whenever you want
 
