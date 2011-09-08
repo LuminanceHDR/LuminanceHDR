@@ -38,12 +38,6 @@ int main( int argc, char ** argv )
 {
     int rc=-1;
 
-#ifdef QT_DEBUG
-    qDebug() << "i18n folder = " << I18NDIR;
-    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
-#endif
-
 #ifndef Q_WS_MAC
     //CLI application
     // Do not try to run the CLI app on Mac -
@@ -71,6 +65,12 @@ int main( int argc, char ** argv )
 #endif
     Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
+
+#ifdef QT_DEBUG
+    qDebug() << "i18n folder = " << I18NDIR;
+    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
+#endif
 
     //QSettings _settings("Luminance", "Luminance");
     //settings = &_settings;
