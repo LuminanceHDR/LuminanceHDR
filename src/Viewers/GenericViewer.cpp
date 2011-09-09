@@ -28,7 +28,8 @@
 #include <QScrollBar>
 //#include <QtOpenGL/QGLWidget>
 
-#include "GenericViewer.h"
+#include "Viewers/GenericViewer.h"
+#include "Viewers/IGraphicsPixmapItem.h"
 #include "UI/UMessageBox.h"
 
 // define the number of pixels to count as border of the image, because of the shadow
@@ -71,12 +72,11 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mVBL->addWidget(mView);
     mView->show();
 
-    mPixmap = new QGraphicsPixmapItem();
-    QGraphicsDropShadowEffect* x = new QGraphicsDropShadowEffect();
-    x->setBlurRadius(10);
-    x->setXOffset(0);
-    x->setYOffset(0);
-    mPixmap->setGraphicsEffect(x);
+    mPixmap = new IGraphicsPixmapItem();
+    mDropShadow = new QGraphicsDropShadowEffect();
+    mDropShadow->setBlurRadius(10);
+    mDropShadow->setOffset(0,0);
+    mPixmap->setGraphicsEffect(mDropShadow);
 }
 
 GenericViewer::~GenericViewer()
@@ -99,7 +99,8 @@ void GenericViewer::fitToWindow(bool /* checked */)
 
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
-    if (sf != 1.0) mView->scale(sf,sf);
+    mView->scale(sf,sf);
+    mDropShadow->setEnabled(true);
 
     emit changed(this);
 }
@@ -117,6 +118,7 @@ void GenericViewer::fillToWindow()
 
     mViewerMode = FILL_WINDOW;
 
+
     const int w = mView->viewport()->size().width();
     const int h = mView->viewport()->size().height();
 
@@ -125,7 +127,8 @@ void GenericViewer::fillToWindow()
 
     qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
 
-    if (sf != 1.0) mView->scale(sf,sf);
+    mView->scale(sf,sf);
+    mDropShadow->setEnabled(false);
 
     emit changed(this);
 }
@@ -146,6 +149,7 @@ void GenericViewer::normalSize()
     qreal scale_by = 1.0f/curr_scale_factor;
 
     mView->scale(scale_by, scale_by);
+    mDropShadow->setEnabled(false);
 
     emit changed(this);
 }

@@ -37,6 +37,7 @@
 #include "Common/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
 #include "Viewers/SelectionTool.h"
+#include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
 
 enum ViewerMode {FIT_WINDOW, FILL_WINDOW, NORMAL_SIZE};
@@ -116,7 +117,8 @@ protected:
     QGraphicsScene* mScene;
     IGraphicsView* mView;
     ViewerMode mViewerMode;
-    QGraphicsPixmapItem* mPixmap;
+    IGraphicsPixmapItem* mPixmap;
+    QGraphicsDropShadowEffect* mDropShadow;
 
     QString filename;
     QImage *mImage;
