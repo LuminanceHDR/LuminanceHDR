@@ -89,6 +89,7 @@ void GenericViewer::fitToWindow(bool /* checked */)
     // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
     //if ( mViewerMode == FIT_WINDOW ) return;
 
+    mScene->setSceneRect(mPixmap->boundingRect());
     mViewerMode = FIT_WINDOW;
 
     const int w = mView->viewport()->size().width() - 2*BORDER_SIZE;
@@ -116,8 +117,8 @@ void GenericViewer::fillToWindow()
     // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
     //if ( mViewerMode == FILL_WINDOW ) return;
 
+    mScene->setSceneRect(mPixmap->boundingRect());
     mViewerMode = FILL_WINDOW;
-
 
     const int w = mView->viewport()->size().width();
     const int h = mView->viewport()->size().height();
@@ -143,6 +144,7 @@ void GenericViewer::normalSize()
     // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
     //if ( mViewerMode == NORMAL_SIZE ) return;
 
+    mScene->setSceneRect(mPixmap->boundingRect());
     mViewerMode = NORMAL_SIZE;
 
     qreal curr_scale_factor = getScaleFactor();
