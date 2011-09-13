@@ -25,29 +25,26 @@
 #ifndef IGRAPHICSPIXMAPITEM_H
 #define IGRAPHICSPIXMAPITEM_H
 
-#include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
-#include <QRubberBand>
-#include <QRect>
-#include <QRectF>
-#include <QPoint>
-#include <QPointF>
 
-class IGraphicsPixmapItem :
-        //public QObject,
-        public QGraphicsPixmapItem
+#include "Viewers/ISelectionBox.h"
+
+class IGraphicsPixmapItem : public QGraphicsPixmapItem
 {
-    //Q_OBJECT
 public:
     IGraphicsPixmapItem(QGraphicsItem * parent = 0);
+    ~IGraphicsPixmapItem();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *e);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *e);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
 
 protected:
-    QRubberBand* mRubberBand;
+
+    ISelectionBox* mSelectionBox;
     QPointF mOrigin;
 };
 #endif

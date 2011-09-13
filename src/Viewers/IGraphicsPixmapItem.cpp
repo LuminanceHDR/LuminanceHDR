@@ -23,6 +23,8 @@
  */
 
 #include <QDebug>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 #include "Viewers/IGraphicsPixmapItem.h"
 
@@ -32,7 +34,12 @@
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
     QGraphicsPixmapItem(parent)
 {
-    mRubberBand = NULL;
+    mSelectionBox = NULL;
+}
+
+IGraphicsPixmapItem::~IGraphicsPixmapItem()
+{
+    if ( mSelectionBox ) delete mSelectionBox;
 }
 
 void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -40,22 +47,22 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
 
     mOrigin = event->pos();
-    if (!mRubberBand)
+    if (!mSelectionBox)
     {
-        mRubberBand = new QRubberBand(QRubberBand::Rectangle);
+        mSelectionBox = new ISelectionBox(this);
+        //this->scene()->addItem(mSelectionBox);
     }
-    //mRubberBand->setGeometry(QRectF(mOrigin, QSizeF()));
-    mRubberBand->setGeometry(QRect(20, 20, 100, 100));
-    mRubberBand->show();
+    mSelectionBox->setSelection(QRectF(mOrigin, QSizeF()));
+    mSelectionBox->show();
 }
 
 void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
 
-    if (mRubberBand)
+    if (mSelectionBox)
     {
-        //mRubberBand->setGeometry(QRectF(mOrigin, event->pos()).normalized());
+        mSelectionBox->setSelection(QRectF(mOrigin, event->pos()));
     }
 }
 
@@ -63,18 +70,12 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
 
-    if (mRubberBand)
+    if (mSelectionBox)
     {
-        mRubberBand->hide();
-        //QPoint startPoint = mOrigin;
-        //QPoint endPoint = event->pos() ;
-        //QRect rect(startPoint, endPoint);
-        //rect.normalized();
-        //QRectF floatRect(rect);
-        //m_scene->addRect(floatRect);
+        mSelectionBox->setSelection(QRectF(mOrigin, event->pos()));
     }
-
 }
+
 
 
 
