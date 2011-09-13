@@ -281,6 +281,11 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/Common/global.h
         src/Common/options.h
         src/Common/config.h
+
+# new viewer
+        src/Viewers/ISelectionBox.h
+        src/Viewers/ISelectionAnchor.h
+# end new viewer
 )
 
 SET(LUMINANCE_HDR_SRC
@@ -399,8 +404,6 @@ SET(LUMINANCE_HDR_MOC
 # new viewer
         src/Viewers/IGraphicsView.h
         src/Viewers/IGraphicsPixmapItem.h
-        src/Viewers/ISelectionBox.h
-        src/Viewers/ISelectionAnchor.h
 # end new viewer
 	src/Common/GammaAndLevels.h
 	src/Common/Gang.h
