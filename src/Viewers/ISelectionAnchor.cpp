@@ -82,6 +82,24 @@ void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent*)
 
 void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
 {
+    switch (mPosition)
+    {
+    case TOP_LEFT:
+    case BOTTOM_RIGHT:
+        setCursor(Qt::SizeFDiagCursor);
+        break;
+    case TOP_RIGHT:
+    case BOTTOM_LEFT:
+        setCursor(Qt::SizeBDiagCursor);
+        break;
+    case LEFT: case RIGHT:
+        setCursor(Qt::SizeHorCursor);
+        break;
+    case TOP: case BOTTOM:
+        setCursor(Qt::SizeVerCursor);
+        break;
+    }
+
     mAnchorColor = Qt::red;
     this->update();
 }

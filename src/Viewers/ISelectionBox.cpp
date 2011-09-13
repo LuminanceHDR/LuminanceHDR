@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QGraphicsScene>
 #include <QRegion>
+#include <QCursor>
 
 #include "Viewers/ISelectionBox.h"
 
@@ -126,6 +127,8 @@ void ISelectionBox::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
 #ifdef QT_DEBUG
     qDebug() << "ISelectionBox::hoverEnterEvent()";
 #endif
+
+    setCursor(Qt::OpenHandCursor);
 }
 
 void ISelectionBox::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
