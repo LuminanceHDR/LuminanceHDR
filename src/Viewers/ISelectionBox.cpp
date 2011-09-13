@@ -155,10 +155,11 @@ void ISelectionBox::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
     // draw border
     QPen pen(QColor(255,255,255,255));
     pen.setWidth(1);
-    pen.setCapStyle(Qt::FlatCap);
+    pen.setStyle(Qt::DashLine);
+    pen.setCapStyle(Qt::RoundCap);
     pen.setJoinStyle(Qt::MiterJoin);
     painter->setPen(pen);
-    painter->setBrush(QBrush());
+    painter->setBrush(Qt::NoBrush);
     painter->drawRect(mSelectedArea);
 
     // draw corners
