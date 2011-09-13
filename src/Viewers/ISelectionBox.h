@@ -25,6 +25,7 @@
 #ifndef ISELECTIONTOOL_H
 #define ISELECTIONTOOL_H
 
+#include <QPointF>
 #include <QGraphicsObject>
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -62,11 +63,14 @@ protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
 
-    virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
-    virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
+    //virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
+    //virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
     virtual bool sceneEventFilter(QGraphicsItem * watched, QEvent * event);
 
     void setCornerPositions();
+
+    // checks and modifies that a certain point is not outside the parent's area
+    QPointF checkBorders(QPointF);
 
 protected:
     QGraphicsPixmapItem* mParent;
@@ -74,7 +78,6 @@ protected:
     ISelectionAnchor* mAnchors[8];
 
     QRectF mSelectedArea;
-    QPointF mOrigin;
 
     bool mIsEnable;
 };

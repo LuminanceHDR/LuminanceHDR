@@ -36,8 +36,10 @@
 #include <QPen>
 #include <QPointF>
 
+#define ANCHOR_SIZE (8)
+
 enum AnchorPosition {TOP_LEFT, TOP, TOP_RIGHT, LEFT, RIGHT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT};
-enum AnchorMouseState {MOUSE_RELEASED, MOUSE_BUTTON_DOWN, MOUSE_MOVING};
+enum AnchorMouseState {MOUSE_BUTTON_RELEASED, MOUSE_BUTTON_PRESSED, MOUSE_MOVING};
 
 class ISelectionAnchor: public QGraphicsItem
 {
@@ -52,8 +54,7 @@ public:
     // allows the owner to get the current mouse state
     inline AnchorMouseState getMouseState() { return mMouseState; }
 
-    qreal mMouseDownX;
-    qreal mMouseDownY;
+    qreal getAnchorSize() { return mSize; }
 
 private:
 
@@ -73,17 +74,15 @@ private:
     // between the hover events and mouseMove/Press/Release
     // events which triggers a vtable issue
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent * event);
-    virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
+    //virtual void mouseMoveEvent(QGraphicsSceneDragDropEvent *event);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * event);
-    virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
+    //virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * event);
 
-    QColor _outterborderColor; ///< the hover event handlers will toggle this between red and black
-    QPen _outterborderPen; ///< the pen is used to paint the red/black border
+    // the hover event handlers will toggle this between red and black
+    QColor mAnchorColor;
 
-    qreal mWidth;
-    qreal mHeight;
-
+    qreal mSize;
     AnchorPosition mPosition;
     AnchorMouseState mMouseState;
 };

@@ -44,35 +44,56 @@ IGraphicsPixmapItem::~IGraphicsPixmapItem()
 
 void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
-
-    mOrigin = event->pos();
-    if (!mSelectionBox)
+    if (event->button() == Qt::LeftButton)
     {
-        mSelectionBox = new ISelectionBox(this);
-        //this->scene()->addItem(mSelectionBox);
+#ifdef QT_DEBUG
+        qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
+#endif
+        if (!mSelectionBox)
+        {
+            mSelectionBox = new ISelectionBox(this);
+            //this->scene()->addItem(mSelectionBox);    // not necessary
+        }
+        mSelectionBox->setSelection(QRectF(event->buttonDownScenePos(Qt::LeftButton), QSizeF()));
+        mSelectionBox->show();
     }
-    mSelectionBox->setSelection(QRectF(mOrigin, QSizeF()));
-    mSelectionBox->show();
+
+    if (event->button() == Qt::RightButton)
+    {
+        if (mSelectionBox)
+        {
+            delete mSelectionBox;
+            mSelectionBox = NULL;
+            scene()->update();
+        }
+    }
 }
 
 void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
-
-    if (mSelectionBox)
-    {
-        mSelectionBox->setSelection(QRectF(mOrigin, event->pos()));
-    }
+//    if (event->button() == Qt::LeftButton)
+//    {
+#ifdef QT_DEBUG
+        qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
+#endif
+        if (mSelectionBox)
+        {
+            mSelectionBox->setSelection(QRectF(event->buttonDownScenePos(Qt::LeftButton), event->scenePos()));
+        }
+//    }
 }
 
 void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
-
-    if (mSelectionBox)
+    if (event->button() == Qt::LeftButton)
     {
-        mSelectionBox->setSelection(QRectF(mOrigin, event->pos()));
+#ifdef QT_DEBUG
+        qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
+#endif
+        if (mSelectionBox)
+        {
+            mSelectionBox->setSelection(QRectF(event->buttonDownScenePos(Qt::LeftButton), event->scenePos()));
+        }
     }
 }
 

@@ -45,6 +45,5 @@ protected:
 protected:
 
     ISelectionBox* mSelectionBox;
-    QPointF mOrigin;
 };
 #endif

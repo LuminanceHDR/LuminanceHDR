@@ -22,52 +22,51 @@
  *
  */
 
+#include <QDebug>
+#include <QGraphicsView>
+
 #include "Viewers/ISelectionAnchor.h"
 
 ISelectionAnchor::ISelectionAnchor(AnchorPosition position, QGraphicsItem *parent):
     QGraphicsItem(parent),
-    mMouseDownX(0),
-    mMouseDownY(0),
-    _outterborderColor(Qt::black),
-    _outterborderPen(),
-    mWidth(6),
-    mHeight(6),
+    mAnchorColor(Qt::black),
+    mSize(ANCHOR_SIZE),
     mPosition(position),
-    mMouseState(MOUSE_RELEASED)
+    mMouseState(MOUSE_BUTTON_RELEASED)
 {
     setParentItem(parent);
 
-    _outterborderPen.setWidth(2);
-    _outterborderPen.setColor(_outterborderColor);
-
-   this->setAcceptHoverEvents(true);
+    this->setAcceptHoverEvents(true);
 }
 
 // we have to implement the mouse events to keep the linker happy,
 // just set accepted to false since are not actually handling them
 
-void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
-{
-    event->setAccepted(false);
-}
+//void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneDragDropEvent *event)
+//{
+//    event->setAccepted(false);
+//}
 
-void ISelectionAnchor::mousePressEvent(QGraphicsSceneDragDropEvent *event)
-{
-    event->setAccepted(false);
-}
+//void ISelectionAnchor::mousePressEvent(QGraphicsSceneDragDropEvent *event)
+//{
+//    event->setAccepted(false);
+//}
 
-void ISelectionAnchor::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
+void ISelectionAnchor::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    mMouseState = MOUSE_BUTTON_RELEASED;
     event->setAccepted(true);
 }
 
-void ISelectionAnchor::mousePressEvent(QGraphicsSceneMouseEvent * event)
+void ISelectionAnchor::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+    mMouseState = MOUSE_BUTTON_PRESSED;
     event->setAccepted(false);
 }
 
-void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
+void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+    mMouseState = MOUSE_MOVING;
     event->setAccepted(false);
 }
 
@@ -75,38 +74,55 @@ void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent * event)
 // change the color on hover events to indicate to the use the object has
 // been captured by the mouse
 
-void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
+void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent*)
 {
-    _outterborderColor = Qt::black;
-    this->update(0,0,mWidth,mHeight);
+    mAnchorColor = Qt::black;
+    this->update();
 }
 
-void ISelectionAnchor::hoverEnterEvent (QGraphicsSceneHoverEvent *)
+void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
 {
-    _outterborderColor = Qt::red;
-    this->update(0,0,mWidth,mHeight);
+    mAnchorColor = Qt::red;
+    this->update();
 }
 
 QRectF ISelectionAnchor::boundingRect() const
 {
-    return QRectF(0,0,mWidth,mHeight);
+    return QRectF(0, 0, mSize, mSize);
 }
 
+#include <QtCore/qmath.h>
 
-void ISelectionAnchor::paint (QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void ISelectionAnchor::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    // fill the box with solid color, use sharp corners
-    _outterborderPen.setCapStyle(Qt::SquareCap);
-    _outterborderPen.setStyle(Qt::SolidLine);
-    painter->setPen(_outterborderPen);
+    QList<QGraphicsView*> views = this->scene()->views();
 
-    QPointF topLeft(0, 0);
-    QPointF bottomRight(mWidth, mHeight);
+    // I only consider the first one for speed, being sure that
+    if ( views.count() >= 1)
+    {
+        QGraphicsView* view = views.at(0);
+        qreal sf = 1.0/view->transform().m11();
 
-    QRectF rect(topLeft, bottomRight);
+        mSize = qFloor(ANCHOR_SIZE*sf);
+    }
+    else
+    {
+        // default values
+        mSize = ANCHOR_SIZE;
+    }
+
+    QRectF rect(QPointF(0, 0), QPointF(mSize, mSize));
+
+//    QPen pen(Qt::SolidLine);
+//    pen.setCapStyle(Qt::SquareCap);
+//    pen.setColor(mAnchorColor);
 
     QBrush brush(Qt::SolidPattern);
-    brush.setColor (_outterborderColor);
-    painter->fillRect(rect,brush);
+    brush.setColor(mAnchorColor);
 
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(brush);
+    painter->drawEllipse(rect);
+
+    //painter->fillRect(rect,brush);
 }
