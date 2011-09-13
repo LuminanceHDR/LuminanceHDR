@@ -55,8 +55,8 @@ LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const Tonema
 	return;
 
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+    mPixmap->disable(); // disable by default crop functionalities
     mScene->addItem(mPixmap);
-    //imageLabel.setPixmap( QPixmap::fromImage(*mImage) );
 
     parseOptions(opts);
     setWindowTitle(caption);
