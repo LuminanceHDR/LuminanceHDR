@@ -32,11 +32,10 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
-#include <QGraphicsDropShadowEffect>
 
 #include "Common/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
-#include "Viewers/SelectionTool.h"
+//#include "Viewers/SelectionTool.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
 
@@ -110,7 +109,7 @@ protected:
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
     PanIconWidget* mPanIconWidget;
-    SelectionTool* mSelectionTool;
+    //SelectionTool* mSelectionTool;
 
     QVBoxLayout *mVBL;
 
@@ -118,7 +117,6 @@ protected:
     IGraphicsView* mView;
     ViewerMode mViewerMode;
     IGraphicsPixmapItem* mPixmap;
-    QGraphicsDropShadowEffect* mDropShadow;
 
     QString filename;
     QImage *mImage;

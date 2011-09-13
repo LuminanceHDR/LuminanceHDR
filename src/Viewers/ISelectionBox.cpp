@@ -30,7 +30,7 @@
 
 ISelectionBox::ISelectionBox(QGraphicsPixmapItem * parent):
     QGraphicsItem(parent),
-    mParent(parent), mSelectedArea(0, 0, 0, 0), mIsEnable(true)
+    mParent(parent), mSelectedArea(0, 0, 0, 0)
 {
     // 0 ---- 1 -----2
     // |             |
@@ -104,7 +104,6 @@ void ISelectionBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << "ISelectionBox::mousePressEvent()";
 #endif
 
-    if (!mIsEnable) return;
 }
 
 void ISelectionBox::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

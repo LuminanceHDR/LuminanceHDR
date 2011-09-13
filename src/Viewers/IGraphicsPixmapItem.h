@@ -25,25 +25,45 @@
 #ifndef IGRAPHICSPIXMAPITEM_H
 #define IGRAPHICSPIXMAPITEM_H
 
+#include <QRect>
+#include <QObject>
 #include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsDropShadowEffect>
 
 #include "Viewers/ISelectionBox.h"
 
-class IGraphicsPixmapItem : public QGraphicsPixmapItem
+class IGraphicsPixmapItem : public QObject, public virtual QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
     IGraphicsPixmapItem(QGraphicsItem * parent = 0);
     ~IGraphicsPixmapItem();
 
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *e);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *e);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
+    QRect getSelectionRect();
+    void removeSelection();
+    inline bool hasSelection() { return (mSelectionBox != NULL); }
+
+    inline void enable() {  mIsSelectionEnabled = true; }
+    inline void disable() { mIsSelectionEnabled = false; }
+
+Q_SIGNALS:
+    void selectionReady(bool);
+//    void moved(QPoint diff);
+//    void scroll(int x, int y, int w, int h);
 
 protected:
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *e);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *e);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *e);
 
+    //virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    QGraphicsDropShadowEffect* mDropShadow;
     ISelectionBox* mSelectionBox;
+
+    bool mIsSelectionEnabled;
 };
 #endif

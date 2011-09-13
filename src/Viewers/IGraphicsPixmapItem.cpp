@@ -34,12 +34,43 @@
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
     QGraphicsPixmapItem(parent)
 {
+    mDropShadow = new QGraphicsDropShadowEffect();
+    mDropShadow->setBlurRadius(10);
+    mDropShadow->setOffset(0,0);
+    //this->setGraphicsEffect(mDropShadow);
+
     mSelectionBox = NULL;
 }
 
 IGraphicsPixmapItem::~IGraphicsPixmapItem()
 {
     if ( mSelectionBox ) delete mSelectionBox;
+
+    delete mDropShadow;
+}
+
+QRect IGraphicsPixmapItem::getSelectionRect()
+{
+    if (mSelectionBox)
+    {
+        return mSelectionBox->getSelection().toRect();
+    }
+    else
+    {
+        return QRect(0,0,0,0);
+    }
+}
+
+void IGraphicsPixmapItem::removeSelection()
+{
+    if (mSelectionBox)
+    {
+        delete mSelectionBox;
+        mSelectionBox = NULL;
+        scene()->update();
+
+        emit selectionReady(false);
+    }
 }
 
 void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -60,12 +91,7 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if (event->button() == Qt::RightButton)
     {
-        if (mSelectionBox)
-        {
-            delete mSelectionBox;
-            mSelectionBox = NULL;
-            scene()->update();
-        }
+        removeSelection();
     }
 }
 
@@ -93,6 +119,8 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         if (mSelectionBox)
         {
             mSelectionBox->setSelection(QRectF(event->buttonDownScenePos(Qt::LeftButton), event->scenePos()));
+
+            emit selectionReady(true);
         }
     }
 }

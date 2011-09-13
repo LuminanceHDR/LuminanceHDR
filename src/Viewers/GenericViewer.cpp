@@ -68,17 +68,14 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mView->setCornerWidget(mCornerButton);
 
     connect(mCornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-    //connect(scrollArea, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+
     //connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
 
     mVBL->addWidget(mView);
     mView->show();
 
     mPixmap = new IGraphicsPixmapItem();
-    mDropShadow = new QGraphicsDropShadowEffect();
-    mDropShadow->setBlurRadius(10);
-    mDropShadow->setOffset(0,0);
-    mPixmap->setGraphicsEffect(mDropShadow);
+    connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 }
 
 GenericViewer::~GenericViewer()
@@ -103,7 +100,6 @@ void GenericViewer::fitToWindow(bool /* checked */)
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
     mView->scale(sf,sf);
-    mDropShadow->setEnabled(true);
 
     emit changed(this);
 }
@@ -131,7 +127,6 @@ void GenericViewer::fillToWindow()
     qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
 
     mView->scale(sf,sf);
-    mDropShadow->setEnabled(false);
 
     emit changed(this);
 }
@@ -153,7 +148,6 @@ void GenericViewer::normalSize()
     qreal scale_by = 1.0f/curr_scale_factor;
 
     mView->scale(scale_by, scale_by);
-    mDropShadow->setEnabled(false);
 
     emit changed(this);
 }
@@ -226,42 +220,43 @@ void GenericViewer::zoomToFactor(float /*factor*/)
 
 const QRect GenericViewer::getSelectionRect(void)
 {
-        return QRect();//scrollArea->getSelectionRect();
+    return mPixmap->getSelectionRect();
 }
 
 void GenericViewer::setSelectionTool(bool toggled)
 {
-        //scrollArea->setSelectionTool( toggled );
+    if (toggled) mPixmap->enable();
+    else mPixmap->disable();
 }
 
 void GenericViewer::removeSelection(void)
 {
-        //scrollArea->removeSelection();
+    mPixmap->removeSelection();
 }
 
 bool GenericViewer::hasSelection(void)
 {
-        return false; //scrollArea->hasSelection();
+    return mPixmap->hasSelection();
 }
 
 bool GenericViewer::needsSaving(void)
 {
-	return NeedsSaving;
+    return NeedsSaving;
 }
 
 void GenericViewer::setNeedsSaving(bool s)
 {
-	NeedsSaving = s;
+    NeedsSaving = s;
 }
 
 const QString GenericViewer::getFileName(void)
 {
-	return filename;
+    return filename;
 }
 
 void GenericViewer::setFileName(const QString fn)
 {
-	filename = fn;
+    filename = fn;
 }
 
 void GenericViewer::slotCornerButtonPressed()

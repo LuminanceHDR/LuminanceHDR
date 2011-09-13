@@ -78,8 +78,6 @@ protected:
     ISelectionAnchor* mAnchors[8];
 
     QRectF mSelectedArea;
-
-    bool mIsEnable;
 };
 #endif
 
