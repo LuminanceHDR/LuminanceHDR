@@ -82,60 +82,75 @@ void ISelectionBox::setCornerPositions()
     QPointF disp = QPointF(disp_r, disp_r);
 
     mAnchors[0]->setPos(mSelectedArea.topLeft() - disp);
+    mAnchors[0]->update(); // force update
     mAnchors[1]->setPos(
                 QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.top()) - disp
                 ); // top
+    mAnchors[1]->update(); // force update
     mAnchors[2]->setPos(mSelectedArea.topRight() - disp);
+    mAnchors[2]->update(); // force update
     mAnchors[3]->setPos(
                 QPointF(mSelectedArea.right(), (mSelectedArea.top()+mSelectedArea.bottom())/2) - disp
                 ); // right
+    mAnchors[3]->update(); // force update
     mAnchors[4]->setPos(mSelectedArea.bottomRight() - disp);
+    mAnchors[4]->update(); // force update
     mAnchors[5]->setPos(
                 QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.bottom()) - disp
                 ); // bottom
+    mAnchors[5]->update(); // force update
     mAnchors[6]->setPos(mSelectedArea.bottomLeft() - disp);
+    mAnchors[6]->update(); // force update
     mAnchors[7]->setPos(
                 QPointF(mSelectedArea.left(), (mSelectedArea.top()+mSelectedArea.bottom())/2 ) - disp
                 ); // left
+    mAnchors[7]->update(); // force update
 }
 
 void ISelectionBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-#ifdef QT_DEBUG
-    qDebug() << "ISelectionBox::mousePressEvent()";
-#endif
-
+    setCursor(Qt::ClosedHandCursor);
 }
 
 void ISelectionBox::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-#ifdef QT_DEBUG
-    qDebug() << "ISelectionBox::mouseMoveEvent()";
-#endif
+    // simply, no? This is the power of OOP!
+    setCursor(Qt::ClosedHandCursor);
 
+    QRectF bounding_rect = mParent->boundingRect();
+
+    QPointF start = event->lastScenePos();
+    QPointF current = event->scenePos();
+
+    QPointF motion_vector = current - start;
+
+    // left/right
+    if (mSelectedArea.left() + motion_vector.x() < bounding_rect.left()) motion_vector.setX(bounding_rect.left() - mSelectedArea.left());
+    if (mSelectedArea.right() + motion_vector.x() > bounding_rect.right()) motion_vector.setX(bounding_rect.right() - mSelectedArea.right());
+
+    if (mSelectedArea.top() + motion_vector.y() < bounding_rect.top()) motion_vector.setY(bounding_rect.top() - mSelectedArea.top());
+    if (mSelectedArea.bottom() + motion_vector.y() > bounding_rect.bottom()) motion_vector.setY(bounding_rect.bottom() - mSelectedArea.bottom());
+
+    // move!
+    mSelectedArea.moveTopLeft(mSelectedArea.topLeft() + motion_vector);
+    this->update();
 }
 
 void ISelectionBox::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-#ifdef QT_DEBUG
-    qDebug() << "ISelectionBox::mouseReleaseEvent()";
-#endif
+    this->mousePressEvent(event);   // reuse the same code!
+
+    setCursor(Qt::OpenHandCursor);
 }
 
 void ISelectionBox::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
 {
-#ifdef QT_DEBUG
-    qDebug() << "ISelectionBox::hoverEnterEvent()";
-#endif
-
     setCursor(Qt::OpenHandCursor);
 }
 
 void ISelectionBox::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
 {
-#ifdef QT_DEBUG
-    qDebug() << "ISelectionBox::hoverLeaveEvent()";
-#endif
+
 }
 
 QRectF ISelectionBox::boundingRect() const
