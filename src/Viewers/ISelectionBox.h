@@ -44,7 +44,7 @@ public:
     inline void setSelection(QRectF selection)
     {
         mSelectedArea = selection;
-        this->update(mSelectedArea);
+        this->update();
     }
 
     inline QRectF getSelection() { return mSelectedArea; }
