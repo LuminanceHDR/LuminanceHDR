@@ -47,7 +47,11 @@ public:
     inline bool hasSelection() { return (mSelectionBox != NULL); }
 
     inline void enable() {  mIsSelectionEnabled = true; }
-    inline void disable() { mIsSelectionEnabled = false; }
+    inline void disable()
+    {
+        mIsSelectionEnabled = false;
+        removeSelection();
+    }
 
 Q_SIGNALS:
     void selectionReady(bool);

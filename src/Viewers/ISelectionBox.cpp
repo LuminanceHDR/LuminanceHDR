@@ -165,9 +165,9 @@ void ISelectionBox::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
     setCornerPositions();
 }
 
-QPointF ISelectionBox::checkBorders(QPointF in)
+QPointF ISelectionBox::checkBorders(QPointF in, QGraphicsItem* area)
 {
-    QRectF parents_rect = mParent->boundingRect();
+    QRectF parents_rect = area->boundingRect();
 
     if (in.x() < parents_rect.left()) in.setX(parents_rect.left());
     else if (in.x() > parents_rect.right()) in.setX(parents_rect.right());
@@ -193,7 +193,7 @@ bool ISelectionBox::sceneEventFilter(QGraphicsItem* watched, QEvent* event)
     case QEvent::GraphicsSceneMouseMove:
     case QEvent::GraphicsSceneMouseRelease:
     {
-        QPointF currCoord = checkBorders(mouse_event->scenePos());
+        QPointF currCoord = checkBorders(mouse_event->scenePos(), mParent);
 
         // TOP_LEFT, TOP, TOP_RIGHT, LEFT, RIGHT, BOTTOM_LEFT, BOTTOM, BOTTOM_RIGHT
         switch(anchor->getCorner())

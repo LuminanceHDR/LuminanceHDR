@@ -48,6 +48,9 @@ public:
     }
 
     inline QRectF getSelection() { return mSelectedArea; }
+
+    // checks and modifies that a certain point is not outside the parent's area
+    static QPointF checkBorders(QPointF, QGraphicsItem*);
 protected:
     // must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView
     virtual QRectF boundingRect() const;
@@ -68,9 +71,6 @@ protected:
     virtual bool sceneEventFilter(QGraphicsItem * watched, QEvent * event);
 
     void setCornerPositions();
-
-    // checks and modifies that a certain point is not outside the parent's area
-    QPointF checkBorders(QPointF);
 
 protected:
     QGraphicsPixmapItem* mParent;
