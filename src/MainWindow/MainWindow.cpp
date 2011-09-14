@@ -1477,8 +1477,16 @@ void MainWindow::addLDRResult(QImage* image)
     // TODO : progressive numbering of the open LDR tabs
     if (num_ldr_generated == 1)
         m_tabwidget->addTab(n, tr("Untitled"));
-    else
-        m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+    else 
+	{
+		if (!tmPanel->replaceLdr())
+        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+		else
+		{
+			m_tabwidget->removeTab(m_tabwidget->currentIndex());
+        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+		}
+	}
     m_tabwidget->setCurrentWidget(n);
 
     n->fitToWindow(true);

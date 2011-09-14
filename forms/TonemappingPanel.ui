@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
+    <width>450</width>
     <height>580</height>
    </rect>
   </property>
@@ -2421,19 +2421,9 @@ p, li { white-space: pre-wrap; }
              </spacer>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBoxOriginal">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="toolTip">
-               <string>If checked process the original HDR image, if not process the previously tonemapped image</string>
-              </property>
+             <widget class="QCheckBox" name="replaceLdrCheckBox">
               <property name="text">
-               <string>Process
-Original HDR</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
+               <string>Replace current LDR</string>
               </property>
              </widget>
             </item>
