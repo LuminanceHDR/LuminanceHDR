@@ -40,6 +40,7 @@
     <addaction name="actionShowPreviewPanel"/>
     <addaction name="separator"/>
     <addaction name="Transplant_Exif_Data_action"/>
+    <addaction name="actionBatch_HDR"/>
     <addaction name="actionBatch_Tone_Mapping"/>
     <addaction name="OptionsAction"/>
    </widget>
@@ -996,6 +997,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="actionBatch_HDR">
+   <property name="text">
+    <string>Batch HDR...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

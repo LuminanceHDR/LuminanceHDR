@@ -102,6 +102,7 @@ protected Q_SLOTS:
     void resize_requested();
     void projectiveTransf_requested();
 
+	void batch_hdr_requested();
     void batch_requested();
 
     void hdr_increase_exp();
