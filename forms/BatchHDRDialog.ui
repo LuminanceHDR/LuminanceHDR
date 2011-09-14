@@ -47,6 +47,9 @@
            </item>
            <item>
             <widget class="QSlider" name="horizontalSlider">
+             <property name="toolTip">
+              <string>Select the number of bracketed pictures used to create the HDRs</string>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -60,6 +63,9 @@
            </item>
            <item>
             <widget class="QSpinBox" name="spinBox">
+             <property name="toolTip">
+              <string>Select the number of bracketed pictures used to create the HDRs</string>
+             </property>
              <property name="minimum">
               <number>1</number>
              </property>
@@ -81,6 +87,10 @@
            </item>
            <item>
             <widget class="QComboBox" name="profileComboBox">
+             <property name="toolTip">
+              <string>Choose one of the creation predefined profiles. 
+See documentation for more informations.</string>
+             </property>
              <item>
               <property name="text">
                <string>Profile 1</string>
@@ -128,6 +138,9 @@
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
+                <property name="toolTip">
+                 <string>Auto align the bracketed pictures</string>
+                </property>
                 <property name="text">
                  <string>Auto Align</string>
                 </property>
@@ -137,6 +150,9 @@
                <widget class="QRadioButton" name="aisRadioButton">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Use align_image_stack engine</string>
                 </property>
                 <property name="text">
                  <string>align_image_stack</string>
@@ -150,6 +166,9 @@
                <widget class="QRadioButton" name="MTBRadioButton">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Use MTB engine</string>
                 </property>
                 <property name="text">
                  <string>MTB</string>
@@ -172,6 +191,9 @@
            </item>
            <item>
             <widget class="QComboBox" name="formatComboBox">
+             <property name="toolTip">
+              <string>Choose an HDR output file format</string>
+             </property>
              <item>
               <property name="text">
                <string>hdr</string>
@@ -200,6 +222,9 @@
           <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
             <widget class="QPushButton" name="inputPushButton">
+             <property name="toolTip">
+              <string>Folder where bracketed pictures are located (in alphabetical order)</string>
+             </property>
              <property name="text">
               <string>Select Input Folder</string>
              </property>
@@ -214,6 +239,9 @@
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
             <widget class="QPushButton" name="outputPushButton">
+             <property name="toolTip">
+              <string>Folder where created HDRs are saved</string>
+             </property>
              <property name="text">
               <string>Select Output Folder</string>
              </property>
