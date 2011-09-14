@@ -322,8 +322,8 @@ void GrayBar::mouseReleaseEvent( QMouseEvent * e) {
 
 GrayBar::draggingT GrayBar::findHandle(int x, int y) {
 
-	QRect black_rect(blackpos-5,1+(height()-1)/2, 10, (height()-1)-(1+(height()-1)/2));
-	QRect white_rect(whitepos-5,1+(height()-1)/2, 10, (height()-1)-(1+(height()-1)/2));
+	QRect black_rect(blackpos-25,1+(height()-1)/2, 50, (height()-1)-(1+(height()-1)/2));
+	QRect white_rect(whitepos-25,1+(height()-1)/2, 50, (height()-1)-(1+(height()-1)/2));
 
 	//mouse click belongs to both white and black rects, and there's some space on the left of the black coordinate
 	if ( black_rect.contains(x,y,false) && white_rect.contains(x,y,false) && blackpos!=0 ) {
@@ -346,7 +346,7 @@ GrayBar::draggingT GrayBar::findHandle(int x, int y) {
 
 	//check if we clicked on gray handle
 	if (!twohandles) {
-		QRect gray_rect(gammapos-5,1+(height() - 1)/2, 10, (height() - 1)-(1+(height() - 1)/2));
+		QRect gray_rect(gammapos-25,1+(height() - 1)/2, 50, (height() - 1)-(1+(height() - 1)/2));
 		if ( gray_rect.contains(x,y,false) ) {
 			return DRAGGRAY;
 		}
