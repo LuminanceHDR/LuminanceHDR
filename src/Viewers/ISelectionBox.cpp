@@ -82,29 +82,21 @@ void ISelectionBox::setCornerPositions()
     QPointF disp = QPointF(disp_r, disp_r);
 
     mAnchors[0]->setPos(mSelectedArea.topLeft() - disp);
-    mAnchors[0]->update(); // force update
     mAnchors[1]->setPos(
                 QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.top()) - disp
                 ); // top
-    mAnchors[1]->update(); // force update
     mAnchors[2]->setPos(mSelectedArea.topRight() - disp);
-    mAnchors[2]->update(); // force update
     mAnchors[3]->setPos(
                 QPointF(mSelectedArea.right(), (mSelectedArea.top()+mSelectedArea.bottom())/2) - disp
                 ); // right
-    mAnchors[3]->update(); // force update
     mAnchors[4]->setPos(mSelectedArea.bottomRight() - disp);
-    mAnchors[4]->update(); // force update
     mAnchors[5]->setPos(
                 QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.bottom()) - disp
                 ); // bottom
-    mAnchors[5]->update(); // force update
     mAnchors[6]->setPos(mSelectedArea.bottomLeft() - disp);
-    mAnchors[6]->update(); // force update
     mAnchors[7]->setPos(
                 QPointF(mSelectedArea.left(), (mSelectedArea.top()+mSelectedArea.bottom())/2 ) - disp
                 ); // left
-    mAnchors[7]->update(); // force update
 }
 
 void ISelectionBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -155,29 +147,39 @@ void ISelectionBox::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
 
 QRectF ISelectionBox::boundingRect() const
 {
-    return mSelectedArea;
+    return mSelectedArea.normalized();
 }
 
-// example of a drop shadow effect on a box, using QLinearGradient and two boxes
+void ISelectionBox::setSelection(QRectF selection)
+{
+    mSelectedArea = selection.normalized();
+    this->update();
+}
+
+QRectF ISelectionBox::getSelection()
+{
+    return mSelectedArea.normalized();
+}
 
 void ISelectionBox::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     // draw outside region
-    QRegion outsideArea = mParent->boundingRegion(mParent->sceneTransform()) - QRegion(mSelectedArea.toRect());
+    QRegion outsideArea = mParent->boundingRegion(mParent->sceneTransform()) - QRegion(getSelection().toRect());
 
     painter->setPen(Qt::NoPen);
-    painter->setBrush(QColor(127,127,127,127));
+    painter->setBrush(QColor(127,127,127,188));
     painter->drawRects(outsideArea.rects());
 
     // draw border
-    QPen pen(QColor(255,255,255,255));
+    //QPen pen(QColor(255,255,255,255));
+    QPen pen(Qt::yellow);
     pen.setWidth(1);
     pen.setStyle(Qt::DashLine);
     pen.setCapStyle(Qt::RoundCap);
     pen.setJoinStyle(Qt::MiterJoin);
-    painter->setPen(pen);
-    painter->setBrush(Qt::NoBrush);
-    painter->drawRect(mSelectedArea);
+    painter->setPen( pen );
+    painter->setBrush( Qt::NoBrush );
+    painter->drawRect( mSelectedArea.normalized() );
 
     // draw corners
     setCornerPositions();
@@ -257,19 +259,20 @@ bool ISelectionBox::sceneEventFilter(QGraphicsItem* watched, QEvent* event)
         }
             break;
         }
-    }
-    case QEvent::GraphicsSceneMousePress:
-    {
-        //save initial position
-        //mOrigin = mouse_event->pos();
-    }
+
+        if (mouse_event->type() == QEvent::GraphicsSceneMouseRelease)
+        {
+            mSelectedArea = mSelectedArea.normalized();
+        }
+        this->update();
         break;
+    }
+    case QEvent::GraphicsSceneMousePress: { } break;
 
     // so the compiler doesn't bitch
     default: { } break;
 
     }
-    this->update();
     return true;
 }
 

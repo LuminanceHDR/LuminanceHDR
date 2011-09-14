@@ -41,13 +41,8 @@ public:
     ISelectionBox(QGraphicsPixmapItem * parent = 0);
     ~ISelectionBox();
 
-    inline void setSelection(QRectF selection)
-    {
-        mSelectedArea = selection;
-        this->update();
-    }
-
-    inline QRectF getSelection() { return mSelectedArea; }
+    void setSelection(QRectF selection);
+    QRectF getSelection();
 
     // checks and modifies that a certain point is not outside the parent's area
     static QPointF checkBorders(QPointF, QGraphicsItem*);
@@ -72,12 +67,12 @@ protected:
 
     void setCornerPositions();
 
-protected:
     QGraphicsPixmapItem* mParent;
 
     ISelectionAnchor* mAnchors[8];
 
     QRectF mSelectedArea;
+
 };
 #endif
 

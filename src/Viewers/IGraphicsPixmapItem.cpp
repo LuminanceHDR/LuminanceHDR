@@ -67,7 +67,7 @@ void IGraphicsPixmapItem::removeSelection()
     {
         delete mSelectionBox;
         mSelectionBox = NULL;
-        scene()->update();
+        //scene()->update();
 
         emit selectionReady(false);
     }
@@ -80,8 +80,9 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
 #ifdef QT_DEBUG
-        qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
+        //qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
 #endif
+        setCursor(Qt::CrossCursor);
         if (!mSelectionBox)
         {
             mSelectionBox = new ISelectionBox(this);
@@ -102,18 +103,17 @@ void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!mIsSelectionEnabled) return;
 
-//    if (event->button() == Qt::LeftButton)
-//    {
 #ifdef QT_DEBUG
-        qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
+    //qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
 #endif
-        if (mSelectionBox)
-        {
-            QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
-            QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
-            mSelectionBox->setSelection(QRectF(origin, current));
-        }
-//    }
+    if (mSelectionBox)
+    {
+        setCursor(Qt::CrossCursor);
+
+        QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
+        QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
+        mSelectionBox->setSelection(QRectF(origin, current));
+    }
 }
 
 void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -123,7 +123,7 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
 #ifdef QT_DEBUG
-        qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
+        //qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
 #endif
         if (mSelectionBox)
         {
@@ -133,6 +133,7 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
             emit selectionReady(true);
         }
+        unsetCursor();
     }
 }
 

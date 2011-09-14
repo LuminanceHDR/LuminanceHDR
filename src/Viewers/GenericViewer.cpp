@@ -54,7 +54,7 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
     mView = new IGraphicsView(mScene, this);
-    //mView->setCacheMode(QGraphicsView::CacheNone);
+    mView->setCacheMode(QGraphicsView::CacheBackground);
     mView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
     connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
