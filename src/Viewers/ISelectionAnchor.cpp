@@ -55,7 +55,7 @@ ISelectionAnchor::ISelectionAnchor(AnchorPosition position, QGraphicsItem *paren
 void ISelectionAnchor::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     mMouseState = MOUSE_BUTTON_RELEASED;
-    event->setAccepted(true);
+    event->setAccepted(false);
 }
 
 void ISelectionAnchor::mousePressEvent(QGraphicsSceneMouseEvent* event)
@@ -70,35 +70,37 @@ void ISelectionAnchor::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     event->setAccepted(false);
 }
 
-
 // change the color on hover events to indicate to the use the object has
 // been captured by the mouse
 
 void ISelectionAnchor::hoverLeaveEvent(QGraphicsSceneHoverEvent*)
 {
+    unsetCursor();
     mAnchorColor = Qt::black;
     this->update();
 }
 
 void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
 {
-    switch (mPosition)
-    {
-    case TOP_LEFT:
-    case BOTTOM_RIGHT:
-        setCursor(Qt::SizeFDiagCursor);
-        break;
-    case TOP_RIGHT:
-    case BOTTOM_LEFT:
-        setCursor(Qt::SizeBDiagCursor);
-        break;
-    case LEFT: case RIGHT:
-        setCursor(Qt::SizeHorCursor);
-        break;
-    case TOP: case BOTTOM:
-        setCursor(Qt::SizeVerCursor);
-        break;
-    }
+    setCursor(Qt::CrossCursor);
+
+//    switch (mPosition)
+//    {
+//    case TOP_LEFT:
+//    case BOTTOM_RIGHT:
+//        setCursor(Qt::SizeFDiagCursor);
+//        break;
+//    case TOP_RIGHT:
+//    case BOTTOM_LEFT:
+//        setCursor(Qt::SizeBDiagCursor);
+//        break;
+//    case LEFT: case RIGHT:
+//        setCursor(Qt::SizeHorCursor);
+//        break;
+//    case TOP: case BOTTOM:
+//        setCursor(Qt::SizeVerCursor);
+//        break;
+//    }
 
     mAnchorColor = Qt::red;
     this->update();
@@ -106,7 +108,7 @@ void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
 
 QRectF ISelectionAnchor::boundingRect() const
 {
-    return QRectF(0, 0, mSize, mSize);
+    return QRectF(0, 0, mSize, mSize).normalized();
 }
 
 #include <QtCore/qmath.h>
@@ -129,18 +131,7 @@ void ISelectionAnchor::paint(QPainter* painter, const QStyleOptionGraphicsItem*,
         mSize = ANCHOR_SIZE;
     }
 
-    QRectF rect(QPointF(0, 0), QPointF(mSize, mSize));
-
-//    QPen pen(Qt::SolidLine);
-//    pen.setCapStyle(Qt::SquareCap);
-//    pen.setColor(mAnchorColor);
-
-    QBrush brush(Qt::SolidPattern);
-    brush.setColor(mAnchorColor);
-
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(brush);
-    painter->drawEllipse(rect);
-
-    //painter->fillRect(rect,brush);
+    painter->setPen( Qt::NoPen );
+    painter->setBrush( QBrush(mAnchorColor, Qt::SolidPattern) );
+    painter->drawEllipse( QRectF(0, 0, mSize, mSize).normalized() );
 }
