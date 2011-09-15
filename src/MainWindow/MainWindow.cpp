@@ -1483,7 +1483,9 @@ void MainWindow::addLDRResult(QImage* image)
         	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
 		else
 		{
-			m_tabwidget->removeTab(m_tabwidget->currentIndex());
+			GenericViewer *g_v = (GenericViewer *) m_tabwidget->currentWidget();
+			if (!g_v->isHDR())
+				m_tabwidget->removeTab(m_tabwidget->currentIndex());
         	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
 		}
 	}
