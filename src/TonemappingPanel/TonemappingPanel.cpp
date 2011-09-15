@@ -54,7 +54,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     setupUi(this);
 
 	// This is hided at moment 
-	checkBoxOriginal->hide();	
+	//checkBoxOriginal->hide();	
 
     currentTmoOperator = mantiuk06; // from Qt Designer
 
@@ -422,7 +422,7 @@ void TonemappingPanel::fillToneMappingOptions()
     toneMappingOptions.xsize = sizes[sizeComboBox->currentIndex()];
     toneMappingOptions.pregamma = pregammaGang->v();
     //toneMappingOptions.tonemapSelection = checkBoxSelection->isChecked();
-    toneMappingOptions.tonemapOriginal = checkBoxOriginal->isChecked();
+    //toneMappingOptions.tonemapOriginal = checkBoxOriginal->isChecked();
     switch (currentTmoOperator) {
     case ashikhmin:
         toneMappingOptions.tmoperator = ashikhmin;
@@ -1693,6 +1693,11 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 	bool res = query.exec();
 	if (res == false)
 		qDebug() << query.lastError();
+}
+
+bool TonemappingPanel::replaceLdr()
+{
+	return replaceLdrCheckBox->isChecked();
 }
 
 // ------------------------- // END FILE

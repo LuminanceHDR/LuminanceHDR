@@ -131,6 +131,7 @@ public:
     TonemappingPanel(QWidget *parent = 0);
     ~TonemappingPanel();
     void setSizes(int, int);
+	bool replaceLdr();
 
 public Q_SLOTS:
     void setEnabled(bool);
