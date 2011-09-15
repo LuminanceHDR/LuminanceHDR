@@ -1517,11 +1517,11 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="0" margin="0"/>
  <tabstops>
+  <tabstop>EVSlider</tabstop>
+  <tabstop>ImageEVdsb</tabstop>
   <tabstop>loadImagesButton</tabstop>
   <tabstop>removeImageButton</tabstop>
   <tabstop>clearListButton</tabstop>
-  <tabstop>EVSlider</tabstop>
-  <tabstop>ImageEVdsb</tabstop>
   <tabstop>alignCheckBox</tabstop>
   <tabstop>ais_radioButton</tabstop>
   <tabstop>mtb_radioButton</tabstop>
@@ -1547,6 +1547,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>saveRespCurveFileButton</tabstop>
   <tabstop>saveRespCurveToFileCheckbox</tabstop>
   <tabstop>CurveFileNameSaveLineEdit</tabstop>
+  <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../icons.qrc"/>
