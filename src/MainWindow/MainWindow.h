@@ -168,9 +168,9 @@ protected Q_SLOTS:
     void deleteTMOThread(TMOThread *th);
     void showErrorMessage(const char *e);
 
-    void lockImages(bool);
-    void updateImage(GenericViewer *viewer);
-    void dispatch(GenericViewer *);
+    // lock functionalities
+    void lockViewers(bool);
+    void syncViewers(GenericViewer *);
 
     void showPreviewPanel(bool b);
 
@@ -244,12 +244,6 @@ protected:
 
     pfs::Frame * getSelectedFrame(HdrViewer *hdr);
     void getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
-    
-    bool m_isLocked;
-    GenericViewer *m_changedImage;
-
-    int m_VSB_Value;
-    int m_HSB_Value;
 
     void init();
     void createUI();

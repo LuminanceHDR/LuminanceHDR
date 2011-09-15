@@ -91,7 +91,9 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving
 
 MainWindow::~MainWindow()
 {
+#ifdef QT_DEBUG
     qDebug() << "MainWindow::~MainWindow()";
+#endif
 
     clearRecentFileActions();
 
@@ -107,7 +109,6 @@ void MainWindow::init()
     helpBrowser = NULL;
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
-    m_isLocked = false;
 
     createUI();
     loadOptions();
@@ -190,7 +191,7 @@ void MainWindow::createToolBar()
     toolBarOptsGroup->addAction(actionText_Only);
     menuToolbars->addAction(toolBar->toggleViewAction());
 
-    connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockImages(bool)));
+    connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockViewers(bool)));
     connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
     connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
     connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
@@ -378,32 +379,32 @@ void MainWindow::updateRecentDirLDRSetting(QString newvalue)
 void MainWindow::fileSaveAll()
 {
     if (m_tabwidget->count() <= 0) return;
-	
-	QWidget *wgt;
-	GenericViewer *g_v;
-	LdrViewer *l_v; 
 
-	QString dir = QFileDialog::getExistingDirectory(0, tr("Save files in"), RecentDirLDRSetting);
+    QWidget *wgt;
+    GenericViewer *g_v;
+    LdrViewer *l_v;
 
-	if (!dir.isEmpty())
-	{
-		updateRecentDirLDRSetting(dir);
-		for (int i = 0; i < m_tabwidget->count(); i++)
-		{
-			wgt = m_tabwidget->widget(i);
-			g_v = (GenericViewer *)wgt;	
+    QString dir = QFileDialog::getExistingDirectory(0, tr("Save files in"), RecentDirLDRSetting);
 
-    		if ( !g_v->isHDR() )
-    		{
-        		l_v = dynamic_cast<LdrViewer*>(g_v);
+    if (!dir.isEmpty())
+    {
+        updateRecentDirLDRSetting(dir);
+        for (int i = 0; i < m_tabwidget->count(); i++)
+        {
+            wgt = m_tabwidget->widget(i);
+            g_v = (GenericViewer *)wgt;
 
-				QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-				QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
-				
-            	emit save_ldr_frame(l_v, outfname, 100);
-			}
-		}
-	}
+            if ( !g_v->isHDR() )
+            {
+                l_v = dynamic_cast<LdrViewer*>(g_v);
+
+                QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+                QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
+
+                emit save_ldr_frame(l_v, outfname, 100);
+            }
+        }
+    }
 }
 
 void MainWindow::fileSaveAs()
@@ -458,12 +459,12 @@ void MainWindow::fileSaveAs()
         filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
         filetypes += "BMP (*.bmp *.BMP)";
 
-                QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+        QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
         QString outfname = QFileDialog::getSaveFileName(this,
-                                                QObject::tr("Save the LDR image as..."),
-                                                RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg",
-                                                filetypes);
+                                                        QObject::tr("Save the LDR image as..."),
+                                                        RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg",
+                                                        filetypes);
 
         if ( !outfname.isEmpty() )
         {
@@ -966,6 +967,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
         connect(newhdr, SIGNAL(selectionReady(bool)), this, SLOT(enableCrop(bool)));
+        connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(syncViewers(GenericViewer*)));
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
         newhdr->setSelectionTool(true);
@@ -1470,7 +1472,7 @@ void MainWindow::addLDRResult(QImage* image)
 
     LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
 
-    connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(dispatch(GenericViewer *)));
+    connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
     connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
     connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
@@ -1515,7 +1517,7 @@ void MainWindow::addProcessedFrame(pfs::Frame *frame)
 //    else
 //        HDR->showNormal();
 
-//    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+//    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
 }
 
 void MainWindow::tonemappingFinished()
@@ -1565,49 +1567,28 @@ void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, 
 /*
  * Lock Handling
  */
-void MainWindow::lockImages(bool toggled)
+void MainWindow::lockViewers(bool /*toggled*/)
 {
-    m_isLocked = toggled;
-    if (m_tabwidget->count())
+    if (actionLock->isChecked() && m_tabwidget->count())
     {
-        dispatch((GenericViewer*)m_tabwidget->currentWidget());
+        syncViewers((GenericViewer*)m_tabwidget->currentWidget());
     }
 }
 
-void MainWindow::dispatch(GenericViewer *sender)
+void MainWindow::syncViewers(GenericViewer *sender)
 {
-    // TODO : is there a better way to implement this functionality?
-    m_changedImage = sender;
+    if (sender == NULL) return;
+    if (!actionLock->isChecked()) return;
+
     for (int idx = 0; idx < m_tabwidget->count(); idx++)
     {
         GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
         if (sender != viewer)
         {
-            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
-            updateImage(viewer);
-            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(dispatch(GenericViewer *)));
+            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+            viewer->syncViewer(sender);
+            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
         }
-    }
-}
-
-void MainWindow::updateImage(GenericViewer *viewer)
-{
-    Q_ASSERT(viewer != NULL);
-    Q_ASSERT(m_changedImage != NULL);
-    if (m_isLocked)
-    {
-        if ( m_changedImage->isFittedToWindow() )
-            viewer->fitToWindow();
-        else if ( m_changedImage->isNormalSize() )
-            viewer->normalSize();
-        else if ( m_changedImage->isFilledToWindow() )
-            viewer->fillToWindow();
-
-        m_HSB_Value = m_changedImage->getHorizScrollBarValue();
-        m_VSB_Value = m_changedImage->getVertScrollBarValue();
-
-        viewer->setHorizScrollBarValue(m_HSB_Value);
-        viewer->setVertScrollBarValue(m_VSB_Value);
     }
 }
 

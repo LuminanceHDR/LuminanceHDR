@@ -54,12 +54,17 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mScene = new QGraphicsScene(this);
     mScene->setBackgroundBrush(Qt::darkGray);
     mView = new IGraphicsView(mScene, this);
+    //mView->setViewport(new QGLWidget()); //OpenGL viewer
     mView->setCacheMode(QGraphicsView::CacheBackground);
     mView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+
     connect(mView, SIGNAL(zoomIn()), this, SLOT(zoomIn()));
     connect(mView, SIGNAL(zoomOut()), this, SLOT(zoomOut()));
     connect(mView, SIGNAL(viewAreaChangedSize()), this, SLOT(updateView()));
-    //mView->setViewport(new QGLWidget()); //OpenGL viewer
+    mView->horizontalScrollBar()->setTracking(true);
+    mView->verticalScrollBar()->setTracking(true);
+    connect(mView->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
+    connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
 
     mCornerButton = new QToolButton(this);
     mCornerButton->setToolTip(tr("Pan the image to a region"));
@@ -68,8 +73,6 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mView->setCornerWidget(mCornerButton);
 
     connect(mCornerButton, SIGNAL(pressed()), this, SLOT(slotCornerButtonPressed()));
-
-    //connect(scrollArea, SIGNAL(changed(void)), this, SLOT(route_changed(void)));
 
     mVBL->addWidget(mView);
     mView->show();
@@ -309,14 +312,31 @@ int GenericViewer::getVertScrollBarValue()
 void GenericViewer::setHorizScrollBarValue(int value)
 {
     mView->horizontalScrollBar()->setValue(value);
-    //scrollArea->setHorizScrollBarValue(value);
 }
 
 void GenericViewer::setVertScrollBarValue(int value)
 {
     mView->verticalScrollBar()->setValue(value);
-    //scrollArea->setVertScrollBarValue(value);
 }
+
+void GenericViewer::scrollBarChanged(int /*value*/)
+{
+    emit changed(this);
+}
+
+void GenericViewer::syncViewer(GenericViewer *src)
+{
+    if (src == NULL) return;
+    if (src == this) return;
+
+    if ( src->isFittedToWindow() ) this->fitToWindow();
+    else if ( src->isNormalSize() ) this->normalSize();
+    else if ( src->isFilledToWindow() ) this->fillToWindow();
+
+    this->setHorizScrollBarValue( src->getHorizScrollBarValue() );
+    this->setVertScrollBarValue( src->getVertScrollBarValue() );
+}
+
 
 void GenericViewer::route_changed()
 {

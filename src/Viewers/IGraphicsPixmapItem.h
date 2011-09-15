@@ -55,8 +55,6 @@ public:
 
 Q_SIGNALS:
     void selectionReady(bool);
-//    void moved(QPoint diff);
-//    void scroll(int x, int y, int w, int h);
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *e);

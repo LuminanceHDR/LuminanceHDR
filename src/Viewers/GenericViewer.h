@@ -81,6 +81,7 @@ public Q_SLOTS:
     virtual const QString getFileName();
     virtual void setFileName(const QString);
 
+    virtual void syncViewer(GenericViewer *src);
     virtual int getHorizScrollBarValue();
     virtual int getVertScrollBarValue();
     virtual void setHorizScrollBarValue(int value);
@@ -101,6 +102,7 @@ protected Q_SLOTS:
     virtual void slotPanIconSelectionMoved(QRect);
     virtual void slotPanIconHidden();
     virtual void slotCornerButtonPressed();
+    virtual void scrollBarChanged(int /*value*/);
     virtual void route_changed();
 
 protected:
@@ -109,7 +111,6 @@ protected:
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
     PanIconWidget* mPanIconWidget;
-    //SelectionTool* mSelectionTool;
 
     QVBoxLayout *mVBL;
 
