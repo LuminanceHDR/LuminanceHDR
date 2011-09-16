@@ -66,12 +66,6 @@ int main( int argc, char ** argv )
     Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
 
-#ifdef QT_DEBUG
-    qDebug() << "i18n folder = " << I18NDIR;
-    qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-    qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
-#endif
-
     //QSettings _settings("Luminance", "Luminance");
     //settings = &_settings;
     settings = new QSettings("Luminance", "Luminance");
