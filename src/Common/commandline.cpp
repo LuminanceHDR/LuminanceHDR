@@ -31,6 +31,7 @@
 	#include <getopt.h>
 #endif
 
+#include <QTimer>
 
 #include "global.h"
 #include "options.h"
@@ -62,10 +63,41 @@ if (verbose) { \
 	fprintf(stdout, "%s", qPrintable(tr( string "\n" ).arg( argument )) ); \
 }
 
+#define NONCLIOPTIONS 31
 
 static struct option cmdLineOptions[] = {
+  // Qt options
+  { "nograb", no_argument, NULL, 0 },
+  { "dograb", no_argument, NULL, 0 },
+  { "sync", no_argument, NULL, 0 },
+  { "style", required_argument, NULL, 0 },
+  { "stylesheet", required_argument, NULL, 0 },
+  { "session", required_argument, NULL, 0 },
+  { "widgetcount", no_argument, NULL, 0 },
+  { "reverse", no_argument, NULL, 0 },
+  { "graphicssystem", required_argument, NULL, 0 },
+  { "qmljsdebugger", required_argument, NULL, 0 },
+  { "display", required_argument, NULL, 0 },
+  { "geometry", required_argument, NULL, 0 },
+  { "fn", required_argument, NULL, 0 },
+  { "font", required_argument, NULL, 0 },
+  { "bg", required_argument, NULL, 0 },
+  { "background", required_argument, NULL, 0 },
+  { "fg", required_argument, NULL, 0 },
+  { "foreground", required_argument, NULL, 0 },
+  { "btn", required_argument, NULL, 0 },
+  { "button", required_argument, NULL, 0 },
+  { "name", required_argument, NULL, 0 },
+  { "title", required_argument, NULL, 0 },
+  { "visual", required_argument, NULL, 0 },
+  { "ncols", required_argument, NULL, 0 },
+  { "cmap", no_argument, NULL, 0 },
+  { "im", no_argument, NULL, 0 },
+  { "inputstyle", required_argument, NULL, 0 },
+  // Luminance HDR options
 	{ "verbose", no_argument, NULL, 'v' },
 	{ "help", no_argument, NULL, 'h' },
+  { "gui", no_argument, NULL, 'u' },
 	{ "align", required_argument, NULL, 'a' },
 	{ "ev", required_argument, NULL, 'e' },
 	{ "config", required_argument, NULL, 'c' },
@@ -79,30 +111,33 @@ static struct option cmdLineOptions[] = {
 	{ NULL, 0, NULL, 0 }
 };
 
-
 CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv) : argc(argc), argv(argv) {
 	hdrCreationManager=NULL;
 	align_mode=NO_ALIGN;
 	luminance_options=LuminanceOptions::getInstance();
-	connect(this,SIGNAL(startParsing()),this,SLOT(parseArgs()),Qt::QueuedConnection);
-	emit startParsing();
+	parseArgs();
 }
 
 void CommandLineInterfaceManager::parseArgs() {
 	operation_mode=UNKNOWN_MODE;
 
 	verbose = false;
-	config_triple hdrcreationconfig;
 	hdrcreationconfig.weights=TRIANGULAR;
 	hdrcreationconfig.response_curve=LINEAR;
 	hdrcreationconfig.model=DEBEVEC;
 	hdrcreationconfig.SaveCurveToFilename="";
-	QString loadHdrFilename;
         tmopts = TMOptionsOperations::getDefaultTMOptions();
-	QStringList inputFiles;
-
+  cliApp = false;
+  bool forceGui = false;
 	int optionIndex = 0, c;
-	while( (c=getopt_long (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:", cmdLineOptions, &optionIndex)) != -1 ) {
+  QString cliOptions;
+  for (int i = NONCLIOPTIONS; cmdLineOptions[i].name != NULL; ++i) {
+      cliOptions += cmdLineOptions[i].val;
+  }
+	while( (c=getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:", cmdLineOptions, &optionIndex)) != -1 ) {
+    if (cliOptions.indexOf(c) > -1) {
+        cliApp = true;
+    }
 		switch( c ) {
 			case 'h':
 				printHelp(argv[0]);
@@ -110,6 +145,9 @@ void CommandLineInterfaceManager::parseArgs() {
 			case 'v':
 				verbose = true;
 				break;
+      case 'u':
+        forceGui = true;
+        break;
 			case 'a':
 				if (strcmp(optarg,"AIS")==0)
 					align_mode=AIS_ALIGN;
@@ -322,10 +360,22 @@ void CommandLineInterfaceManager::parseArgs() {
 		}
 	}
 	for (int index = optind; index < argc; index++) {
+    cliApp = true;
 		inputFiles << QString(argv[index]);
 		VERBOSEPRINT("Input file %1" , argv[index]);
 	}
+	if (forceGui) {
+    cliApp = false;
+  }
+}
 
+void CommandLineInterfaceManager::execCommandLineParams()
+{
+    QTimer::singleShot(0, this, SLOT(execCommandLineParamsSlot()));
+}
+
+void CommandLineInterfaceManager::execCommandLineParamsSlot()
+{
 	if (!ev.isEmpty() && ev.count()!=inputFiles.count())
 		error(qPrintable(tr("Error: The number of EV values specified is different from the number of input files.")));
 
@@ -527,6 +577,7 @@ void CommandLineInterfaceManager::printHelp(char * progname)
   "\t" + tr("Commandline interface to %1.").arg(progname) + "\n\n" +
   "\t" + tr("-h --help              Display this help.") + "\n" +
   "\t" + tr("-v --verbose           Print more messages during execution.") + "\n" +
+  "\t" + tr("-u --gui               Start in gui mode with input files.") + "\n" +
   "\t" + tr("-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).") + "\n" +
   "\t" + tr("-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).") + "\n" +
   "\t" + tr("-c --config            HDR creation config. Possible values: ") + "\n" +

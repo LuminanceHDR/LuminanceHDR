@@ -89,6 +89,8 @@ public Q_SLOTS:
     void tonemapImage(TonemappingOptions *opts);
     void setMainWindowModified(bool b);
 
+    void setInputFiles(const QStringList& files);
+
 protected Q_SLOTS:
     void fileNewViaWizard(QStringList files = QStringList());
     void fileOpen();    //for File->Open, it then calls loadFile()
@@ -127,6 +129,7 @@ protected Q_SLOTS:
 
     void levelsRequested(bool checked);
     void levelsClosed();
+    void openInputFiles();
 
     // Tool Bar Handling
     void Text_Under_Icons();
@@ -214,6 +217,7 @@ protected:
     IOWorker* IO_Worker;
 
     HelpBrowser *helpBrowser;
+    QStringList inputFiles;
 
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);
@@ -267,6 +271,8 @@ protected:
 
     // Preview Panel
     PreviewPanel *previewPanel;
+
+    void openFiles(const QStringList& files);
 };
 
 

@@ -37,27 +37,21 @@
 int main( int argc, char ** argv )
 {
     int rc=-1;
+    settings = new QSettings("Luminance", "Luminance");
+    CommandLineInterfaceManager cli( argc, argv );
 
-#ifndef Q_WS_MAC
-    //CLI application
-    // Do not try to run the CLI app on Mac -
-    // FIXME: the problem is that some args are supplied when
-    // running as a gui-app in Mac OS X, this messes up things.
-    if (argc>1)
+    if (cli.isCommandLineApp())
     {
         QCoreApplication cliApplication( argc, argv );
-        QSettings _settings("Luminance", "Luminance");
-        settings = &_settings;
         QTranslator translator;
         translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
         cliApplication.installTranslator(&translator);
-        CommandLineInterfaceManager cli( argc, argv );
+        cli.execCommandLineParams();
         cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
         rc = cliApplication.exec();
         LuminanceOptions::deleteInstance();
         return rc;
     }
-#endif
 
     //GUI application
 #ifdef WIN32
@@ -65,10 +59,6 @@ int main( int argc, char ** argv )
 #endif
     Q_INIT_RESOURCE(icons);
     QApplication application( argc, argv );
-
-    //QSettings _settings("Luminance", "Luminance");
-    //settings = &_settings;
-    settings = new QSettings("Luminance", "Luminance");
 
 #ifdef WIN32
     bool found_DLL = false;
@@ -103,6 +93,7 @@ int main( int argc, char ** argv )
     application.installTranslator(&guiTranslator);
     MainWindow* MW = new MainWindow;
     //application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
+    MW->setInputFiles(cli.files());
     MW->show();
     rc = application.exec();
     LuminanceOptions::deleteInstance();

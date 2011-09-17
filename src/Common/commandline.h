@@ -39,6 +39,9 @@ class CommandLineInterfaceManager : public QObject {
 Q_OBJECT
 public:
 	CommandLineInterfaceManager(const int argc, char **argv);
+    bool isCommandLineApp() { return cliApp; };
+    QStringList files() { return inputFiles; };
+    void execCommandLineParams();
 private:
 	enum operation_mode {
 		CREATE_HDR_MODE,
@@ -69,6 +72,10 @@ private:
 	void printHelp(char *progname);
 	TonemappingOptions *tmopts;
 	bool verbose;
+  bool cliApp;
+  config_triple hdrcreationconfig;
+  QString loadHdrFilename;
+  QStringList inputFiles;
 private slots:
 	void finishedLoadingInputFiles(QStringList);
 	void errorWhileLoading(QString errormessage);
@@ -77,9 +84,9 @@ private slots:
 	void loadFinished(pfs::Frame*,QString);
 	void parseArgs();
 	void tonemapTerminated(QImage*);
+    void execCommandLineParamsSlot();
 
 signals:
-	void startParsing();
 	void finishedParsing();
 };
 

@@ -40,6 +40,7 @@
 #include <QSignalMapper>
 #include <QTextStream>
 #include <QDesktopServices>
+#include <QTimer>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -1062,23 +1063,27 @@ void MainWindow::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasUrls())
     {
-        QStringList files = convertUrlListToFilenameList(event->mimeData()->urls());
-        if (files.size() > 0)
-        {
-            DnDOptionDialog dndOption(this, files);
-            dndOption.exec();
-
-            switch (dndOption.result) {
-            case 1: // create new using LDRS
-                fileNewViaWizard(files);
-                break;
-            case 2: // openHDRs
-                emit open_frames(files);
-                break;
-            }
-        }
+        openFiles(convertUrlListToFilenameList(event->mimeData()->urls()));
     }
     event->acceptProposedAction();
+}
+
+void MainWindow::openFiles(const QStringList& files)
+{
+    if (files.size() > 0)
+    {
+        DnDOptionDialog dndOption(this, files);
+        dndOption.exec();
+
+        switch (dndOption.result) {
+        case 1: // create new using LDRS
+            fileNewViaWizard(files);
+            break;
+        case 2: // openHDRs
+            emit open_frames(files);
+            break;
+        }
+    }
 }
 
 void MainWindow::Text_Under_Icons()
@@ -1929,3 +1934,13 @@ void MainWindow::levelsClosed()
     actionFix_Histogram->setChecked(false);
 }
 
+void MainWindow::setInputFiles(const QStringList& files)
+{
+    inputFiles = files;
+    QTimer::singleShot(0, this, SLOT(openInputFiles()));
+}
+
+void MainWindow::openInputFiles()
+{
+    openFiles(inputFiles);
+}
