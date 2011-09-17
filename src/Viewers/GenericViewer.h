@@ -103,10 +103,10 @@ protected Q_SLOTS:
     virtual void slotPanIconHidden();
     virtual void slotCornerButtonPressed();
     virtual void scrollBarChanged(int /*value*/);
-    virtual void route_changed();
+    //virtual void route_changed();
 
 protected:
-    virtual void closeEvent (QCloseEvent * event);
+    //virtual void closeEvent (QCloseEvent * event);
 
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
@@ -132,13 +132,8 @@ Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
     void levels_closed(bool isReady);   // only used by LdrViewer
-    void closeRequested(bool);          // emitted when NoCloseFlag is true
 
-    // SIGNALS
-    void S_init();
-    void S_setMaximum(int x);
-    void S_setValue(int x);
-    void S_end();
+    // void closeRequested(bool);          // emitted when NoCloseFlag is true
 };
 
 #endif

@@ -214,8 +214,8 @@ void HdrViewer::updateImage()
 
     assert( pfsFrame != NULL );
 
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    emit S_init();
+    setCursor(Qt::WaitCursor);
+    //QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     // Start the computation.
     mapFrameToImage();
@@ -223,10 +223,10 @@ void HdrViewer::updateImage()
     //assign the mapped image to the label
     mPixmap->setPixmap(QPixmap::fromImage(*mImage));
 
-    mScene->addItem(mPixmap);
+    mScene->addItem(mPixmap); // ??
 
-    emit S_end();
-    QApplication::restoreOverrideCursor();
+    //QApplication::restoreOverrideCursor();
+    unsetCursor();
 }
 
 void HdrViewer::mapFrameToImage()

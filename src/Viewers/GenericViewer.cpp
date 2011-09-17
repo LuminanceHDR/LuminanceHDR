@@ -338,36 +338,36 @@ void GenericViewer::syncViewer(GenericViewer *src)
 }
 
 
-void GenericViewer::route_changed()
-{
-    emit changed(this);
-}
+//void GenericViewer::route_changed()
+//{
+//    emit changed(this);
+//}
 
-void GenericViewer::closeEvent( QCloseEvent * event )
-{
-    if (NeedsSaving)
-    {
-        int ret = UMessageBox::warning(tr("Unsaved changes..."),
-                                       tr("This image has unsaved changes.<br>Are you sure you want to close it?"),
-                                       this);
+//void GenericViewer::closeEvent( QCloseEvent * event )
+//{
+//    if (NeedsSaving)
+//    {
+//        int ret = UMessageBox::warning(tr("Unsaved changes..."),
+//                                       tr("This image has unsaved changes.<br>Are you sure you want to close it?"),
+//                                       this);
 
-        if ( ret == QMessageBox::Yes )
-        {
-            event->accept();
-        }
-        else
-        {
-            event->ignore();
-        }
-    }
-    else if (noCloseFlag)
-    {
-        emit closeRequested(false);
-        event->ignore();
-    }
-    else
-    {
-        event->accept();
-    }
-}
+//        if ( ret == QMessageBox::Yes )
+//        {
+//            event->accept();
+//        }
+//        else
+//        {
+//            event->ignore();
+//        }
+//    }
+//    else if (noCloseFlag)
+//    {
+//        emit closeRequested(false);
+//        event->ignore();
+//    }
+//    else
+//    {
+//        event->accept();
+//    }
+//}
 
