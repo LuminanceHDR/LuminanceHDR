@@ -72,6 +72,8 @@ int getopt_long (int, char *const *, const char *, const struct option *, int *)
 #define HAVE_DECL_GETOPT 1
 #endif
 
+#define getopt_long_only getopt_long
+
 #define no_argument             0
 #define required_argument       1
 #define optional_argument       2
