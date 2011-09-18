@@ -27,6 +27,7 @@
 
 #include <QDebug>
 #include <iostream>
+#include <cassert>
 
 #include "TMOThread.h"
 #include "Common/config.h"
@@ -105,50 +106,132 @@ void TMOThread::finalize()
 
     if (!(ph->isTerminationRequested()))
     {
+        apply_white_black_point(workingframe, 0.0f, 95.f);
+
         QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
-		quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
+        quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
 
         switch (m_tmo_thread_mode) {
         case TMO_BATCH:
-            {
-                // different emit signal
-                // I let the parent of this thread to delete working_frame
-                pfs::DOMIO pfsio;
-                pfsio.freeFrame(workingframe);
-                emit imageComputed(res, pixmap, opts);
-            }
+        {
+            // different emit signal
+            // I let the parent of this thread to delete working_frame
+            pfs::DOMIO pfsio;
+            pfsio.freeFrame(workingframe);
+            emit imageComputed(res, pixmap, opts);
+        }
             break;
         case TMO_PREVIEW:
-            {
-                // different emit signal
-                // I let the parent of this thread to delete working_frame
-                pfs::DOMIO pfsio;
-                pfsio.freeFrame(workingframe);
-                emit imageComputed(res, m_image_num);
-            }
+        {
+            // different emit signal
+            // I let the parent of this thread to delete working_frame
+            pfs::DOMIO pfsio;
+            pfsio.freeFrame(workingframe);
+            emit imageComputed(res, m_image_num);
+        }
             break;
         case TMO_INTERACTIVE:
         default:
+        {
+            qDebug() << "emit imageComputed(res, pixmap)";
+            emit imageComputed(res, pixmap);
+            if ( luminance_options->tmowindow_showprocessed )
             {
-				qDebug() << "emit imageComputed(res, pixmap)";
-                emit imageComputed(res, pixmap);
-                if ( luminance_options->tmowindow_showprocessed )
-                {
-                    emit processedFrame(workingframe);
-                }
-                else
-                {
-                    //clean up workingframe in order not to waste much memory!
-                    //delete workingframe;
-                    pfs::DOMIO pfsio;
-                    pfsio.freeFrame(workingframe);
-                }
-
+                emit processedFrame(workingframe);
             }
+            else
+            {
+                //clean up workingframe in order not to waste much memory!
+                //delete workingframe;
+                pfs::DOMIO pfsio;
+                pfsio.freeFrame(workingframe);
+            }
+
+        }
             break;
         }
     }
     emit finished();
     emit deleteMe(this);
+}
+
+void TMOThread::apply_white_black_point(pfs::Frame* in, float black_point_perc, float white_point_perc)
+{
+    pfs::Channel *R, *G, *B;
+    in->getXYZChannels( R, G, B );
+
+    assert( R != NULL );
+    assert( G != NULL );
+    assert( B != NULL );
+
+    const int NUM_PIXELS = in->getHeight()*in->getWidth();
+
+    float* data;
+    float sample_curr;
+    float sample_max = 0.f;
+    float sample_min = 1000.0f;
+
+    for (int channel = 0; channel < 3; ++channel)
+    {
+        switch (channel)
+        {
+        case 1:
+            data = G->getRawData();
+            break;
+        case 2:
+            data = B->getRawData();
+            break;
+        default:
+        case 0:
+            data = R->getRawData();
+            break;
+        }
+
+        for (int idx = 0; idx < NUM_PIXELS; idx++)
+        {
+            sample_curr = data[idx];
+            if (sample_curr >= 0.0f)
+            {
+                sample_max = (sample_curr > sample_max) ? sample_curr : sample_max;
+                sample_min = (sample_curr < sample_min) ? sample_curr : sample_min;
+            }
+        }
+
+        //std::cerr << "min = " << sample_min << " max = " << sample_max << std::endl;
+    }
+
+    float frame_range = sample_max - sample_min;
+    sample_min += (frame_range/100.f)*black_point_perc;
+    sample_max -= (frame_range/100.f)*(100.f - white_point_perc);
+
+    float stretch_factor = 1.0f/(sample_max - sample_min);
+
+    for (int channel = 0; channel < 3; ++channel)
+    {
+        switch (channel)
+        {
+        case 1:
+            data = G->getRawData();
+            break;
+        case 2:
+            data = B->getRawData();
+            break;
+        default:
+        case 0:
+            data = R->getRawData();
+            break;
+        }
+
+        for (int idx = 0; idx < NUM_PIXELS; idx++)
+        {
+            sample_curr = data[idx];
+            sample_curr -= sample_min;
+            sample_curr *= stretch_factor;
+            if (sample_curr < 0.0f) sample_curr = 0.0f;
+            if (sample_curr > 1.0f) sample_curr = 1.0f;
+            data[idx] = sample_curr;
+        }
+    }
+
 }
 
