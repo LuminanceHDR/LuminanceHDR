@@ -40,6 +40,8 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_er
 	
 	closePushButton->hide();
 
+	luminance_options = LuminanceOptions::getInstance();
+
 	RecentBatchHdrInputDir = settings->value(KEY_RECENT_PATH_BATCH_HDR_INPUT, QDir::currentPath()).toString();
 	RecentBatchHdrOutputDir = settings->value(KEY_RECENT_PATH_BATCH_HDR_OUTPUT, QDir::currentPath()).toString();
 
@@ -63,6 +65,17 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_er
 BatchHDRDialog::~BatchHDRDialog()
 {
 	qDebug() << "BatchHDRDialog::~BatchHDRDialog()";
+	QStringList  fnames = m_hdrCreationManager->getFileList();
+	int n = fnames.size();
+	
+	for (int i = 0; i < n; i++) {
+		QString fname = m_hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+		QFile::remove(thumb_name);
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+		QFile::remove(thumb_name);
+	}
 	m_hdrCreationManager->reset();
 	delete m_hdrCreationManager;
 	delete m_IO_Worker;
@@ -163,6 +176,17 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 		foreach (QString fname, filesLackingExif)
 			textEdit->append(fname);
 		m_errors = true;
+		QStringList  fnames = m_hdrCreationManager->getFileList();
+		int n = fnames.size();
+	
+		for (int i = 0; i < n; i++) {
+			QString fname = m_hdrCreationManager->getFileList().at(i);
+			QFileInfo qfi(fname);
+			QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+			QFile::remove(thumb_name);
+			thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+			QFile::remove(thumb_name);
+		}
 		m_hdrCreationManager->reset();
 		this->batch_hdr(); // try to continue
 		return;
@@ -186,6 +210,17 @@ void BatchHDRDialog::create_hdr()
 	m_hdrCreationManager->chosen_config = predef_confs[profileComboBox->currentIndex()];
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
 	m_IO_Worker->write_hdr_frame(resultHDR, outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix);
+	QStringList  fnames = m_hdrCreationManager->getFileList();
+	int n = fnames.size();
+	
+	for (int i = 0; i < n; i++) {
+		QString fname = m_hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+		QFile::remove(thumb_name);
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+		QFile::remove(thumb_name);
+	}
 	m_hdrCreationManager->reset();
 	progressBar->setValue(progressBar->value() + 1);
 	textEdit->append(tr("Written ") + outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix );
@@ -197,6 +232,17 @@ void BatchHDRDialog::error_while_loading(QString message)
 	qDebug() << message;
 	textEdit->append(tr("Error: ") + message);
 	m_errors = true;
+	QStringList  fnames = m_hdrCreationManager->getFileList();
+	int n = fnames.size();
+	
+	for (int i = 0; i < n; i++) {
+		QString fname = m_hdrCreationManager->getFileList().at(i);
+		QFileInfo qfi(fname);
+		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+		QFile::remove(thumb_name);
+		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+		QFile::remove(thumb_name);
+	}
 	m_hdrCreationManager->reset();
 	this->batch_hdr(); // try to continue
 }
