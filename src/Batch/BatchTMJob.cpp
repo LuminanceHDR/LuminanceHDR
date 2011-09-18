@@ -127,6 +127,9 @@ void BatchTMJob::run()
 					{
                     	emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
 					}
+                	// reset for the next TM
+					delete [] m_pixmap;
+					m_pixmap = NULL;
 				}
 				else
 				{
@@ -146,7 +149,9 @@ void BatchTMJob::run()
 
                 // reset for the next TM
                 	delete m_ldr_image;
+					delete [] m_pixmap;
                 	m_ldr_image = NULL;
+					m_pixmap = NULL;
             	}
 			}
             // update progress bar
