@@ -1600,9 +1600,11 @@ void MainWindow::syncViewers(GenericViewer *sender)
         GenericViewer *viewer = (GenericViewer*)m_tabwidget->widget(idx);
         if (sender != viewer)
         {
-            disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+            viewer->blockSignals(true);
+            //disconnect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
             viewer->syncViewer(sender);
-            connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+            //connect(viewer,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+            viewer->blockSignals(false);
         }
     }
 }
@@ -1714,6 +1716,7 @@ void MainWindow::removeTab(int t)
     if (t < 0) return;
 
     GenericViewer* w = (GenericViewer*)m_tabwidget->widget(t);
+    w->blockSignals(true);
     if (w->isHDR())
     {
         qDebug() << "Remove HDR from MainWindow";
@@ -1737,10 +1740,12 @@ void MainWindow::removeTab(int t)
                 tmPanel->hide();
                 previewPanel->hide();
             }
-            // else { }
             // if FALSE, it means that the user said "Cancel"
             // or the saving operation went wrong
-            // and we don't need to do anything
+            // and we don't need to remove any tab
+            else {
+                w->blockSignals(false);
+            }
         }
         else
         {
