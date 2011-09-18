@@ -57,9 +57,9 @@ public slots:
 	virtual void terminateRequested();
   
 signals:
-	void imageComputed(QImage*);
-        void imageComputed(QImage*, const TonemappingOptions* opts);
-        void imageComputed(QImage*, int imageNumber);
+	void imageComputed(QImage*, quint16*);
+	void imageComputed(QImage*, quint16*, const TonemappingOptions* opts);
+	void imageComputed(QImage*, int imageNumber);
 	void processedFrame(pfs::Frame *);
 	void setMaximumSteps(int);
 	void setValue(int);

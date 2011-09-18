@@ -36,6 +36,8 @@
 #include "Filter/pfsgamma.h"
 #include "Filter/pfssize.h"
 #include "Fileformat/pfsoutldrimage.h"
+#include "Fileformat/pfsout16bitspixmap.h"
+#include "Fileformat/pfstiff.h"
 
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions *opts) :
         QThread(0), opts(opts), out_CS(pfs::CS_RGB)
@@ -104,6 +106,7 @@ void TMOThread::finalize()
     if (!(ph->isTerminationRequested()))
     {
         QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
+		quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
 
         switch (m_tmo_thread_mode) {
         case TMO_BATCH:
@@ -112,7 +115,7 @@ void TMOThread::finalize()
                 // I let the parent of this thread to delete working_frame
                 pfs::DOMIO pfsio;
                 pfsio.freeFrame(workingframe);
-                emit imageComputed(res, opts);
+                emit imageComputed(res, pixmap, opts);
             }
             break;
         case TMO_PREVIEW:
@@ -127,8 +130,8 @@ void TMOThread::finalize()
         case TMO_INTERACTIVE:
         default:
             {
-		qDebug() << "emit imageComputed(res)";
-                emit imageComputed(res);
+				qDebug() << "emit imageComputed(res, pixmap)";
+                emit imageComputed(res, pixmap);
                 if ( luminance_options->tmowindow_showprocessed )
                 {
                     emit processedFrame(workingframe);
