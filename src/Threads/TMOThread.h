@@ -52,14 +52,16 @@ public:
   void set_mode(TMOTHREAD_MODE mode) { m_tmo_thread_mode = mode; }
   void set_batch_mode() { m_tmo_thread_mode = TMO_BATCH; }
   void set_image_number(int n) { m_image_num = n; }
+
+  static void apply_white_black_point(pfs::Frame*, float white_point = 0.0f, float black_point = 100.0f);
   
 public slots:
 	virtual void terminateRequested();
   
 signals:
-	void imageComputed(QImage*);
-        void imageComputed(QImage*, const TonemappingOptions* opts);
-        void imageComputed(QImage*, int imageNumber);
+	void imageComputed(QImage*, quint16*);
+	void imageComputed(QImage*, quint16*, const TonemappingOptions* opts);
+	void imageComputed(QImage*, int imageNumber);
 	void processedFrame(pfs::Frame *);
 	void setMaximumSteps(int);
 	void setValue(int);
@@ -67,7 +69,8 @@ signals:
 	void finished();
 	void deleteMe(TMOThread *);
 	void tmo_error(const char *);
-  
+
+
 protected:
 	virtual void run() = 0;
 	void finalize();
@@ -80,7 +83,9 @@ protected:
 	// Different output color spaces can be selected by a specific operator
 	// in order to make its output compliant to the one defined by qtpfsgui 1.9.3
 	// In the future, this value can change accordingly to the TM operator's changes
-	pfs::ColorSpace out_CS;  
+        pfs::ColorSpace out_CS;
+
+
 };
 
 #endif

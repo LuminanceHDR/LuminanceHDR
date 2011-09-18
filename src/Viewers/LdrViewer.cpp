@@ -29,12 +29,13 @@
 #include "Common/GammaAndLevels.h"
 #include "LdrViewer.h"
 
-LdrViewer::LdrViewer(QImage *i, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
+LdrViewer::LdrViewer(QImage *i, quint16 *p, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
         GenericViewer(parent, ns, ncf), informativeLabel(NULL)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
     mImage = i;
+	m_pixmap = p;
 
     if (mImage == 0) {
                 mCols = 0;
@@ -67,6 +68,7 @@ LdrViewer::~LdrViewer()
 {
     std::cout << "LdrViewer::~LdrViewer()" << std::endl;
 
+	delete [] m_pixmap;
     //delete origimage;
     //delete [] origimage.bits();
 }
@@ -87,6 +89,11 @@ QString LdrViewer::getFilenamePostFix()
 const QImage* LdrViewer::getQImage()
 {
     return mImage;
+}
+
+const quint16 *LdrViewer::getPixmap()
+{
+	return m_pixmap;
 }
 
 QString LdrViewer::getExifComment()

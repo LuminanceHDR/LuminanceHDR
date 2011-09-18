@@ -82,13 +82,15 @@ private:
   pfs::Channel *Xc, *Yc, *Zc;
   
   QImage *ldrimage;
+  const quint16 *pixmap;
   uint32 width,height;
 public:
   TiffWriter( const char* filename, pfs::Frame *f );
   TiffWriter( const char* filename, QImage *ldrimage );
+  TiffWriter( const char* filename, const quint16 *pixmap, int w, int h);
   
   int write8bitTiff(); //write 8bit Tiff from QImage
-  //   int write16bitTiff(); //write 16bit Tiff from pfs::Frame
+  int write16bitTiff(); //write 16bit Tiff from 16 bits pixmap
   int writeFloatTiff(); //write 32bit float Tiff from pfs::Frame
   int writeLogLuvTiff(); //write LogLuv Tiff from pfs::Frame
 signals: //For ProgressDialog

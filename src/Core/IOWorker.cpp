@@ -98,23 +98,88 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     return status;
 }
 
-void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
+bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
 {
-    emit IO_init();
-    const QImage* image = ldr_input->getQImage();
+    bool status = true;
 
     QFileInfo qfi(filename);
-    QString format = qfi.suffix();
+    QString absoluteFileName = qfi.absoluteFilePath();
+    QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if ( image->save(filename, format.toLocal8Bit(), quality) )
+    if (qfi.suffix().toUpper() == "EXR")
     {
-        emit write_ldr_success(ldr_input, filename);
+        writeEXRfile(hdr_frame, encodedName);
+    }
+    else if (qfi.suffix().toUpper() == "HDR")
+    {
+        writeRGBEfile(hdr_frame, encodedName);
+    }
+    else if (qfi.suffix().toUpper().startsWith("TIF"))
+    {
+        TiffWriter tiffwriter(encodedName, hdr_frame);
+        if (luminance_options->saveLogLuvTiff)
+        {
+            tiffwriter.writeLogLuvTiff();
+        }
+        else
+        {
+            tiffwriter.writeFloatTiff();
+        }
+    }
+    else if (qfi.suffix().toUpper() == "PFS")
+    {
+        FILE *fd = fopen(encodedName, "w");
+        pfs::DOMIO pfsio;
+        pfsio.writeFrame(hdr_frame, fd);
+        fclose(fd);
     }
     else
     {
-        emit write_ldr_failed();
+        // Default as EXR
+        writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
     }
 
+    return status;
+}
+
+void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
+{
+    emit IO_init();
+
+    const QImage* image = ldr_input->getQImage();
+    
+	QFileInfo qfi(filename);
+    QString format = qfi.suffix();
+    QString absoluteFileName = qfi.absoluteFilePath();
+    QByteArray encodedName = QFile::encodeName(absoluteFileName);
+
+
+	if (qfi.suffix().toUpper().startsWith("TIF"))
+	{
+		const quint16 *pixmap = ldr_input->getPixmap();
+		int width = image->width();
+		int height = image->height();
+		try
+		{
+        	TiffWriter tiffwriter(encodedName, pixmap, width, height);
+			tiffwriter.write16bitTiff();
+		}
+		catch(...)
+		{
+			emit write_ldr_failed();
+		}
+	}
+    else 
+    {
+		if ( image->save(filename, format.toLocal8Bit(), quality) )
+		{
+        	emit write_ldr_success(ldr_input, filename);
+		}
+    	else
+    	{
+        	emit write_ldr_failed();
+    	}
+	}
     emit IO_finish();
 }
 

@@ -700,6 +700,8 @@ void PreferencesDialog::from_options_to_gui() {
 		batchLdrFormatComboBox->setCurrentIndex(3);
 	else if (luminance_options->batch_ldr_format=="BMP")
 		batchLdrFormatComboBox->setCurrentIndex(4);
+	else if (luminance_options->batch_ldr_format=="TIFF")
+		batchLdrFormatComboBox->setCurrentIndex(5);
 	numThreadspinBox->setValue(luminance_options->num_threads);
 	aisParamsLineEdit->setText(luminance_options->align_image_stack_options.join(" "));
 	logLuvRadioButton->setChecked(luminance_options->saveLogLuvTiff);

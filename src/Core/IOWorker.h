@@ -61,6 +61,7 @@ private:
 public:
     IOWorker(QObject* parent = 0);
     virtual ~IOWorker();
+    bool write_hdr_frame(pfs::Frame *frame, QString filename);
 
 public slots:
     void read_frame(QString filename);

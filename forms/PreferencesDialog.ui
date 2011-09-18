@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
+    <width>599</width>
     <height>509</height>
    </rect>
   </property>
@@ -740,6 +740,11 @@
                     <string>BMP</string>
                    </property>
                   </item>
+                  <item>
+                   <property name="text">
+                    <string>TIFF</string>
+                   </property>
+                  </item>
                  </widget>
                 </item>
                </layout>
@@ -815,8 +820,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>526</width>
-              <height>241</height>
+              <width>573</width>
+              <height>237</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1030,8 +1035,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>508</width>
-              <height>332</height>
+              <width>341</width>
+              <height>344</height>
              </rect>
             </property>
             <attribute name="label">
@@ -1754,8 +1759,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>524</width>
-              <height>199</height>
+              <width>405</width>
+              <height>166</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2127,8 +2132,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>524</width>
-              <height>199</height>
+              <width>264</width>
+              <height>140</height>
              </rect>
             </property>
             <attribute name="label">

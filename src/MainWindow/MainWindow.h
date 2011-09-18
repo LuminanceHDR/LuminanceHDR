@@ -104,6 +104,7 @@ protected Q_SLOTS:
     void resize_requested();
     void projectiveTransf_requested();
 
+	void batch_hdr_requested();
     void batch_requested();
 
     void hdr_increase_exp();
@@ -166,7 +167,7 @@ protected Q_SLOTS:
 
     // TM
     void addProcessedFrame(pfs::Frame *);
-    void addLDRResult(QImage*);
+    void addLDRResult(QImage*, quint16*);
     void tonemappingFinished();
     void deleteTMOThread(TMOThread *th);
     void showErrorMessage(const char *e);
