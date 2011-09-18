@@ -167,7 +167,7 @@ protected Q_SLOTS:
 
     // TM
     void addProcessedFrame(pfs::Frame *);
-    void addLDRResult(QImage*);
+    void addLDRResult(QImage*, quint16*);
     void tonemappingFinished();
     void deleteTMOThread(TMOThread *th);
     void showErrorMessage(const char *e);

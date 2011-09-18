@@ -460,7 +460,8 @@ void MainWindow::fileSaveAs()
         filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
         filetypes += "PNG (*.png *.PNG);;" ;
         filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
-        filetypes += "BMP (*.bmp *.BMP)";
+        filetypes += "BMP (*.bmp *.BMP);;";
+        filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
@@ -1461,7 +1462,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
         progInd = new TMOProgressIndicator(this);
 
-        connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(addLDRResult(QImage*)));
+        connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(addLDRResult(QImage*, quint16*)));
         connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
         connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
         connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
@@ -1479,12 +1480,12 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     }
 }
 
-void MainWindow::addLDRResult(QImage* image)
+void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
 {
     num_ldr_generated++;
     curr_num_ldr_open++;
 
-    LdrViewer *n = new LdrViewer( image, this, false, false, tm_status.curr_tm_options);
+    LdrViewer *n = new LdrViewer( image, pixmap, this, false, false, tm_status.curr_tm_options);
 
     connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
     connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));

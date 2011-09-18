@@ -150,6 +150,7 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/rgbeio.h
 	src/Fileformat/pfsinraw.h
 	src/Fileformat/pfsoutldrimage.h
+	src/Fileformat/pfsout16bitspixmap.h
 # PFS TMO
 	src/TonemappingOperators/pfstmo.h
         src/TonemappingOperators/pfstmdefaultparams.h
@@ -213,6 +214,7 @@ SET(LIB_HDR_SRC
 	src/Fileformat/pfsoutexr.cpp
 	src/Fileformat/pfsinraw.cpp
 	src/Fileformat/pfsoutldrimage.cpp
+	src/Fileformat/pfsout16bitspixmap.cpp
 # PFS TMO
 	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.cpp
 	src/TonemappingOperators/ashikhmin02/pfstmo_ashikhmin02.cpp

@@ -145,20 +145,41 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
 void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
 {
     emit IO_init();
+
     const QImage* image = ldr_input->getQImage();
-
-    QFileInfo qfi(filename);
+    
+	QFileInfo qfi(filename);
     QString format = qfi.suffix();
+    QString absoluteFileName = qfi.absoluteFilePath();
+    QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    if ( image->save(filename, format.toLocal8Bit(), quality) )
-    {
-        emit write_ldr_success(ldr_input, filename);
-    }
-    else
-    {
-        emit write_ldr_failed();
-    }
 
+	if (qfi.suffix().toUpper().startsWith("TIF"))
+	{
+		const quint16 *pixmap = ldr_input->getPixmap();
+		int width = image->width();
+		int height = image->height();
+		try
+		{
+        	TiffWriter tiffwriter(encodedName, pixmap, width, height);
+			tiffwriter.write16bitTiff();
+		}
+		catch(...)
+		{
+			emit write_ldr_failed();
+		}
+	}
+    else 
+    {
+		if ( image->save(filename, format.toLocal8Bit(), quality) )
+		{
+        	emit write_ldr_success(ldr_input, filename);
+		}
+    	else
+    	{
+        	emit write_ldr_failed();
+    	}
+	}
     emit IO_finish();
 }
 

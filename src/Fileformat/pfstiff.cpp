@@ -313,6 +313,23 @@ TiffWriter::TiffWriter( const char* filename, pfs::Frame *f ) : tif((TIFF *)NULL
     TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
 }
 
+TiffWriter::TiffWriter( const char* filename, const quint16 *pix, int w, int h) : tif((TIFF *)NULL)
+{
+	pixmap = pix;
+    width   = w;
+    height  = h;
+
+    tif = TIFFOpen(filename, "w");
+    if( !tif )
+        throw pfs::Exception("TIFF: could not open file for writing.");
+
+    TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, width);
+    TIFFSetField (tif, TIFFTAG_IMAGELENGTH, height);
+    TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+    TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+    TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, 1);
+}
+
 TiffWriter::TiffWriter( const char* filename, QImage *f ) : tif((TIFF *)NULL)
 {
     ldrimage=f;
@@ -448,6 +465,47 @@ int TiffWriter::write8bitTiff()
             strip_buf[4*col+2] = qBlue(ldrpixels[width*s + col]);
             //qAlpha(*( (QRgb*)( ldrimage->bits() ) + width*s + col ));
             strip_buf[4*col+3] = qAlpha(ldrpixels[width*s + col]);
+        }
+        if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
+        {
+            qDebug("error writing strip");
+            return -1;
+        }
+        else
+        {
+            emit nextstep( s ); // for QProgressDialog
+        }
+    }
+    _TIFFfree(strip_buf);
+    TIFFClose(tif);
+    return 0;
+}
+
+int TiffWriter::write16bitTiff()
+{
+    if (pixmap == NULL)
+        throw pfs::Exception("TIFF: 16 bits pixmap was not set correctly");
+
+    TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
+    TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+    TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 16);
+
+    tsize_t strip_size = TIFFStripSize (tif);
+    tstrip_t strips_num = TIFFNumberOfStrips (tif);
+
+    quint16* strip_buf = (quint16*)_TIFFmalloc(strip_size); //enough space for a strip
+    if (!strip_buf)
+        throw pfs::Exception("TIFF: error allocating buffer");
+
+    emit maximumValue( strips_num ); // for QProgressDialog
+
+    for (unsigned int s = 0; s < strips_num; s++)
+    {
+        for (unsigned int col = 0; col < width; col++)
+        {
+            strip_buf[3*col] = pixmap[3*(width*s + col)];
+            strip_buf[3*col + 1] = pixmap[3*(width*s + col) + 1];
+            strip_buf[3*col + 2] = pixmap[3*(width*s + col) + 2];
         }
         if (TIFFWriteEncodedStrip (tif, s, strip_buf, strip_size) == 0)
         {

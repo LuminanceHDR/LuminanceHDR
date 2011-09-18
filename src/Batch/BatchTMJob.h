@@ -52,7 +52,7 @@ private slots:
   void load_hdr_failed(QString);
 	void load_hdr_completed(pfs::Frame*, QString);
   void tm_failed();
-  void tm_completed(QImage* newimage, const TonemappingOptions* opts);
+  void tm_completed(QImage* newimage, quint16* newpixmap, const TonemappingOptions* opts);
 
 private:
   int             m_thread_id;
@@ -66,6 +66,7 @@ private:
   pfs::Frame    * m_working_frame;
   //TMOThread     * m_tmo_thread;
   QImage        * m_ldr_image;
+  const quint16	* m_pixmap;
 };
 
 #endif // __BATCH_TM_JOB__
