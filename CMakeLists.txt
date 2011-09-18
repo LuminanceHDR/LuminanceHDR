@@ -289,6 +289,7 @@ SET(LUMINANCE_HDR_INCLUDE
 )
 
 SET(LUMINANCE_HDR_SRC
+	src/BatchHDR/BatchHDRDialog.cpp
 	src/Batch/BatchTMDialog.cpp
 	src/Batch/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
@@ -359,6 +360,7 @@ SET(LUMINANCE_HDR_SRC
 )
 
 SET(LUMINANCE_HDR_MOC
+	src/BatchHDR/BatchHDRDialog.h
 	src/Batch/BatchTMDialog.h
 	src/Batch/BatchTMJob.h
 	src/Core/IOWorker.h
@@ -414,6 +416,7 @@ SET(LUMINANCE_HDR_MOC
 )
 
 SET(LUMINANCE_HDR_UI
+	forms/BatchHDRDialog.ui
 	forms/BatchTMDialog.ui
 	forms/DnDOption.ui
 	forms/EditingTools.ui

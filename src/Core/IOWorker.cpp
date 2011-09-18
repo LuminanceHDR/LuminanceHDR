@@ -98,6 +98,50 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     return status;
 }
 
+bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
+{
+    bool status = true;
+
+    QFileInfo qfi(filename);
+    QString absoluteFileName = qfi.absoluteFilePath();
+    QByteArray encodedName = QFile::encodeName(absoluteFileName);
+
+    if (qfi.suffix().toUpper() == "EXR")
+    {
+        writeEXRfile(hdr_frame, encodedName);
+    }
+    else if (qfi.suffix().toUpper() == "HDR")
+    {
+        writeRGBEfile(hdr_frame, encodedName);
+    }
+    else if (qfi.suffix().toUpper().startsWith("TIF"))
+    {
+        TiffWriter tiffwriter(encodedName, hdr_frame);
+        if (luminance_options->saveLogLuvTiff)
+        {
+            tiffwriter.writeLogLuvTiff();
+        }
+        else
+        {
+            tiffwriter.writeFloatTiff();
+        }
+    }
+    else if (qfi.suffix().toUpper() == "PFS")
+    {
+        FILE *fd = fopen(encodedName, "w");
+        pfs::DOMIO pfsio;
+        pfsio.writeFrame(hdr_frame, fd);
+        fclose(fd);
+    }
+    else
+    {
+        // Default as EXR
+        writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
+    }
+
+    return status;
+}
+
 void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
 {
     emit IO_init();

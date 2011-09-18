@@ -49,6 +49,7 @@
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "BatchHDR/BatchHDRDialog.h"
 #include "Batch/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
@@ -247,6 +248,7 @@ void MainWindow::createMenus()
 
     // Tools
     connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
+    connect(actionBatch_HDR, SIGNAL(triggered()), this, SLOT(batch_hdr_requested()));
     connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 
     connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
@@ -1206,6 +1208,13 @@ void MainWindow::bringAllMWToFront()
             MW->raise();
         }
     }
+}
+
+void MainWindow::batch_hdr_requested()
+{
+    BatchHDRDialog *batch_hdr_dialog = new BatchHDRDialog(this);
+    batch_hdr_dialog->exec();
+    delete batch_hdr_dialog;
 }
 
 void MainWindow::batch_requested()

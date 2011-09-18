@@ -117,5 +117,7 @@
 #define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "Recent_path_input_for_hdr"
 #define KEY_RECENT_PATH_EXIF_FROM "Recent_path_exif_from"
 #define KEY_RECENT_PATH_EXIF_TO "Recent_path_exif_to"
+#define KEY_RECENT_PATH_BATCH_HDR_INPUT "Recent_path_batch_hdr_input"
+#define KEY_RECENT_PATH_BATCH_HDR_OUTPUT "Recent_path_batch_hdr_output"
 
 #endif
