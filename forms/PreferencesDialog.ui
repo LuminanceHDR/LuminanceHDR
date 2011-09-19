@@ -416,38 +416,61 @@
              </property>
              <layout class="QGridLayout" name="gridLayout">
               <item row="0" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout_22">
+               <layout class="QHBoxLayout" name="horizontalLayout_27">
                 <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
+                 <widget class="QLabel" name="label_4">
                   <property name="text">
-                   <string>Maximize result</string>
+                   <string>Previews width:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
-                  <property name="enabled">
-                   <bool>false</bool>
+                 <widget class="QSpinBox" name="previewsWidthSpinBox">
+                  <property name="suffix">
+                   <string>pix</string>
                   </property>
-                  <property name="text">
-                   <string>Always show Processed HDR</string>
+                  <property name="minimum">
+                   <number>128</number>
                   </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
-                  <property name="text">
-                   <string>Always show Preview Panel</string>
+                  <property name="maximum">
+                   <number>2048</number>
                   </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                  <property name="value">
+                   <number>400</number>
                   </property>
                  </widget>
                 </item>
                </layout>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Maximize result</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Always show Processed HDR</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
+                <property name="text">
+                 <string>Always show Preview Panel</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

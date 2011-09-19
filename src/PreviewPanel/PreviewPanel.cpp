@@ -35,6 +35,8 @@ PreviewPanel::PreviewPanel(QWidget *parent):
 {
     setupUi(this);
 
+	luminance_options=LuminanceOptions::getInstance();
+
     labelMantiuk06 = new PreviewLabel(frameMantiuk06, 0);
     labelMantiuk06->setText("Mantiuk '06");
 
@@ -294,7 +296,7 @@ void PreviewPanel::tonemapPreview(int n)
         return;
 
     opts->origxsize = original_width_frame;
-    opts->xsize = 400;
+    opts->xsize = luminance_options->previews_width;
     opts->pregamma = 1.0;
     opts->tonemapSelection = false;
     opts->tonemapOriginal = false;

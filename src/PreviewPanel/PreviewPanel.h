@@ -31,6 +31,7 @@
 #include "PreviewLabel.h"
 #include "ui_PreviewPanel.h"
 
+#include "Common/options.h"
 #include "Libpfs/frame.h"
 #include "Core/TonemappingOptions.h"
 #include "Threads/TMOThread.h"
@@ -70,6 +71,7 @@ Q_SIGNALS:
     void startTonemapping(TonemappingOptions*);
 
 private:
+	LuminanceOptions *luminance_options;
     bool is_frame_set;
     int original_width_frame;
     pfs::Frame* current_frame;

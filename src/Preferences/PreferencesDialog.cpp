@@ -246,11 +246,14 @@ void PreferencesDialog::ok_clicked() {
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWINDOW);
+		if (previewsWidthSpinBox->value() != luminance_options->previews_width) {
+			luminance_options->previews_width = previewsWidthSpinBox->value();
+			settings->setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, previewsWidthSpinBox->value());
+		}	
 		if (checkBoxTMOWindowsMax->isChecked() != luminance_options->tmowindow_max) {
 			luminance_options->tmowindow_max=checkBoxTMOWindowsMax->isChecked();
 			settings->setValue(KEY_TMOWINDOW_MAX,checkBoxTMOWindowsMax->isChecked());
 		}
-
 		if (checkBoxTMOWindowsHDR->isChecked() != luminance_options->tmowindow_showprocessed) {
 			luminance_options->tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
 			settings->setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
@@ -708,6 +711,7 @@ void PreferencesDialog::from_options_to_gui() {
 	floatTiffRadioButton->setChecked(!luminance_options->saveLogLuvTiff);
 	change_color_of(negativeColorButton,&negcolor);
 	change_color_of(ifnanColorButton,&infnancolor);
+	previewsWidthSpinBox->setValue(luminance_options->previews_width);
 	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
 	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
 	checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
@@ -846,3 +850,4 @@ void PreferencesDialog::updateLineEditString() {
 void PreferencesDialog::enterWhatsThis() {
 	QWhatsThis::enterWhatsThisMode();
 }
+

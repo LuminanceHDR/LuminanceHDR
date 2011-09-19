@@ -49,6 +49,7 @@
 
 #define GROUP_TMOWINDOW "TMOWindow_Options"
 #define GROUP_HDR_WIZARD "HDR_Wizard_Options"
+#define KEY_TMOWINDOW_PREVIEWS_WIDTH "TMOWindow_PreviewsWidth"
 #define KEY_TMOWINDOW_MAX "TMOWindow_Max"
 #define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_ShowProcessed"
 #define KEY_TMOWINDOW_SHOWPREVIEWPANEL "TMOWindow_ShowPreviewPanel"

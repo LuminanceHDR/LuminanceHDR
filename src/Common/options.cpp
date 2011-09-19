@@ -98,6 +98,10 @@ void LuminanceOptions::loadFromQSettings()
 	settings->endGroup();
 
 	settings->beginGroup(GROUP_TMOWINDOW);
+		if (!settings->contains(KEY_TMOWINDOW_PREVIEWS_WIDTH))
+			settings->setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400);
+		previews_width=settings->value(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400).toInt();
+
         if (!settings->contains(KEY_TMOWINDOW_MAX))
 			settings->setValue(KEY_TMOWINDOW_MAX,false);
 		tmowindow_max=settings->value(KEY_TMOWINDOW_MAX,false).toBool();
