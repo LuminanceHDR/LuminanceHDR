@@ -1014,6 +1014,23 @@ void TonemappingPanel::setEnabled(bool b)
 
     // Tonemap
     applyButton->setEnabled(b);
+
+	// DB
+	loadCommentsButton->setEnabled(b);
+	loadButton->setEnabled(b);
+	saveButton->setEnabled(b);
+	
+	qualityHS->setEnabled(b);
+	qualitySB->setEnabled(b);
+
+	replaceLdrCheckBox->setEnabled(b);
+
+	// Labels
+	lblOperators->setEnabled(b);
+	groupSaveLoadTMOsetting->setEnabled(b);
+	label->setEnabled(b);
+	pregammaLabel->setEnabled(b);
+	pregammaGroup->setEnabled(b);
 }
 
 void TonemappingPanel::updatedHDR(pfs::Frame* f)
