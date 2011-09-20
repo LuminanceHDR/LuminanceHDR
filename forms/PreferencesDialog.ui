@@ -440,6 +440,19 @@
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <spacer name="horizontalSpacer_15">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                </layout>
               </item>
               <item row="1" column="0">
@@ -843,8 +856,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>573</width>
-              <height>237</height>
+              <width>269</width>
+              <height>133</height>
              </rect>
             </property>
             <attribute name="label">
