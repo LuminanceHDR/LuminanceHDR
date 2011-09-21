@@ -97,7 +97,7 @@ static struct option cmdLineOptions[] = {
   // Luminance HDR options
 	{ "verbose", no_argument, NULL, 'v' },
 	{ "help", no_argument, NULL, 'h' },
-  { "gui", no_argument, NULL, 'u' },
+	{ "gui", no_argument, NULL, 'u' },
 	{ "align", required_argument, NULL, 'a' },
 	{ "ev", required_argument, NULL, 'e' },
 	{ "config", required_argument, NULL, 'c' },
@@ -134,7 +134,7 @@ void CommandLineInterfaceManager::parseArgs() {
   for (int i = NONCLIOPTIONS; cmdLineOptions[i].name != NULL; ++i) {
       cliOptions += cmdLineOptions[i].val;
   }
-	while( (c=getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:", cmdLineOptions, &optionIndex)) != -1 ) {
+	while( (c=getopt_long_only (argc, argv, ":hva:e:c:l:s:g:r:t:p:o:u", cmdLineOptions, &optionIndex)) != -1 ) {
     if (cliOptions.indexOf(c) > -1) {
         cliApp = true;
     }
@@ -145,9 +145,9 @@ void CommandLineInterfaceManager::parseArgs() {
 			case 'v':
 				verbose = true;
 				break;
-      case 'u':
-        forceGui = true;
-        break;
+			case 'u':
+				forceGui = true;
+				break;
 			case 'a':
 				if (strcmp(optarg,"AIS")==0)
 					align_mode=AIS_ALIGN;
@@ -360,13 +360,13 @@ void CommandLineInterfaceManager::parseArgs() {
 		}
 	}
 	for (int index = optind; index < argc; index++) {
-    cliApp = true;
+		cliApp = true;
 		inputFiles << QString(argv[index]);
 		VERBOSEPRINT("Input file %1" , argv[index]);
 	}
 	if (forceGui) {
-    cliApp = false;
-  }
+		cliApp = false;
+	}
 }
 
 void CommandLineInterfaceManager::execCommandLineParams()
