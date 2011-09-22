@@ -137,22 +137,22 @@ namespace pfs
         /**
          * Get number of columns or, in case of an image, width.
          */
-        inline int getCols() const { return m_cols; }
+        int getCols() const;
 
         /**
          * Get number of rows or, in case of an image, height.
          */
-        inline int getRows() const { return m_rows; }
+        int getRows() const;
 
         /**
          * Direct access to the raw data
          */
-        inline float*       getRawData()        { return m_data; }
+        float*       getRawData();
 
         /**
          * Direct access to the raw data
          */
-        inline const float* getRawData() const  { return m_data; }
+        const float* getRawData() const;
         
         /**
          * Reset the entire vector data to the value "value"
@@ -164,6 +164,37 @@ namespace pfs
          */
         void scale(const float value);
     };
+
+    inline int Array2D::getCols() const { return m_cols; }
+    inline int Array2D::getRows() const { return m_rows; }
+    inline float* Array2D::getRawData() { return m_data; }
+    inline const float* Array2D::getRawData() const { return m_data; }
+
+    inline float& Array2D::operator()( int cols, int rows )
+    {
+        //assert( cols >= 0 && cols < m_cols );
+        //assert( rows >= 0 && rows < m_rows );
+        return m_data[ rows*m_cols + cols ];
+    }
+
+    inline const float& Array2D::operator()( int cols, int rows ) const
+    {
+        //assert( cols >= 0 && cols < m_cols );
+        //assert( rows >= 0 && rows < m_rows );
+        return m_data[ rows*m_cols + cols ];
+    }
+
+    inline float& Array2D::operator()( int index )
+    {
+        //assert( index >= 0 && index < m_rows*m_cols );
+        return m_data[index];
+    }
+
+    inline const float& Array2D::operator()( int index ) const
+    {
+        //assert( index >= 0 && index <= m_rows*m_cols );
+        return m_data[index];
+    }
 
     void copyArray(const Array2D *from, Array2D *to);
     void copyArray(const Array2D *from, Array2D *to, int x_ul, int y_ul, int x_br, int y_br);

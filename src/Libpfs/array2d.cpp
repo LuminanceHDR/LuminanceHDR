@@ -90,31 +90,31 @@ namespace pfs
         if (m_is_data_owned) _mm_free(m_data); //delete[] data;
     }
 
-    float& Array2D::operator()( int cols, int rows )
-    {
-        assert( cols >= 0 && cols < m_cols );
-        assert( rows >= 0 && rows < m_rows );
-        return m_data[ rows*m_cols + cols ];
-    }
+//    float& Array2D::operator()( int cols, int rows )
+//    {
+//        assert( cols >= 0 && cols < m_cols );
+//        assert( rows >= 0 && rows < m_rows );
+//        return m_data[ rows*m_cols + cols ];
+//    }
 
-    const float& Array2D::operator()( int cols, int rows ) const
-    {
-        assert( cols >= 0 && cols < m_cols );
-        assert( rows >= 0 && rows < m_rows );
-        return m_data[ rows*m_cols + cols ];
-    }
+//    const float& Array2D::operator()( int cols, int rows ) const
+//    {
+//        assert( cols >= 0 && cols < m_cols );
+//        assert( rows >= 0 && rows < m_rows );
+//        return m_data[ rows*m_cols + cols ];
+//    }
 
-    float& Array2D::operator()( int index )
-    {
-        assert( index >= 0 && index < m_rows*m_cols );
-        return m_data[index];
-    }
+//    float& Array2D::operator()( int index )
+//    {
+//        assert( index >= 0 && index < m_rows*m_cols );
+//        return m_data[index];
+//    }
 
-    const float& Array2D::operator()( int index ) const
-    {
-        assert( index >= 0 && index <= m_rows*m_cols );
-        return m_data[index];
-    }
+//    const float& Array2D::operator()( int index ) const
+//    {
+//        assert( index >= 0 && index <= m_rows*m_cols );
+//        return m_data[index];
+//    }
 
     void Array2D::reset(const float value)
     {
