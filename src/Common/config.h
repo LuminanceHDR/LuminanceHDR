@@ -24,7 +24,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define LUMINANCEVERSION "2.1.0"
+#define LUMINANCEVERSION "2.2.0-beta1"
 #define TMOSETTINGSVERSION "0.6"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
@@ -49,6 +49,7 @@
 
 #define GROUP_TMOWINDOW "TMOWindow_Options"
 #define GROUP_HDR_WIZARD "HDR_Wizard_Options"
+#define KEY_TMOWINDOW_PREVIEWS_WIDTH "TMOWindow_PreviewsWidth"
 #define KEY_TMOWINDOW_MAX "TMOWindow_Max"
 #define KEY_TMOWINDOW_SHOWPROCESSED "TMOWindow_ShowProcessed"
 #define KEY_TMOWINDOW_SHOWPREVIEWPANEL "TMOWindow_ShowPreviewPanel"

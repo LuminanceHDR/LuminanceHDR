@@ -45,6 +45,8 @@ public:
 	unsigned int naninfcolor, negcolor;
 	//if true, we save a logluv tiff (if false a uncompressed 32 bit tiff)
 	bool saveLogLuvTiff;
+	// width of previews result
+	int previews_width;
 	// if true, tmo result windows should come up maximized
 	bool tmowindow_max;
 	//if true always show processed hdr

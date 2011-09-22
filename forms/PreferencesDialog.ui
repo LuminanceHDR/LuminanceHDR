@@ -416,38 +416,90 @@
              </property>
              <layout class="QGridLayout" name="gridLayout">
               <item row="0" column="0">
-               <layout class="QVBoxLayout" name="verticalLayout_22">
+               <layout class="QHBoxLayout" name="horizontalLayout_27">
                 <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
-                  <property name="enabled">
-                   <bool>false</bool>
-                  </property>
+                 <widget class="QLabel" name="label_4">
                   <property name="text">
-                   <string>Maximize result</string>
+                   <string>Previews width:</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
-                  <property name="enabled">
-                   <bool>false</bool>
+                 <spacer name="horizontalSpacer_16">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="text">
-                   <string>Always show Processed HDR</string>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Minimum</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="previewsWidthSpinBox">
+                  <property name="suffix">
+                   <string>pix</string>
+                  </property>
+                  <property name="minimum">
+                   <number>128</number>
+                  </property>
+                  <property name="maximum">
+                   <number>2048</number>
+                  </property>
+                  <property name="value">
+                   <number>400</number>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
-                  <property name="text">
-                   <string>Always show Preview Panel</string>
+                 <spacer name="horizontalSpacer_15">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
                   </property>
-                  <property name="checked">
-                   <bool>true</bool>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
                   </property>
-                 </widget>
+                 </spacer>
                 </item>
                </layout>
+              </item>
+              <item row="1" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Maximize result</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="text">
+                 <string>Always show Processed HDR</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
+                <property name="text">
+                 <string>Always show Preview Panel</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -820,8 +872,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>573</width>
-              <height>237</height>
+              <width>269</width>
+              <height>133</height>
              </rect>
             </property>
             <attribute name="label">
