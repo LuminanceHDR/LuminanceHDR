@@ -116,6 +116,7 @@ void BatchHDRDialog::add_files()
 			settings->setValue(KEY_RECENT_PATH_BATCH_HDR_INPUT, RecentBatchHdrInputDir);
 		}
 	}
+	check_start_button();
 }
 
 void BatchHDRDialog::add_out_dir()
@@ -127,6 +128,7 @@ void BatchHDRDialog::add_out_dir()
 		RecentBatchHdrOutputDir = outputLineEdit->text();
 		settings->setValue(KEY_RECENT_PATH_BATCH_HDR_OUTPUT, RecentBatchHdrOutputDir);
 	}
+	check_start_button();
 }
 
 void BatchHDRDialog::init_batch_hdr()
@@ -251,4 +253,10 @@ void BatchHDRDialog::writeAisData(QByteArray data)
 {
 	qDebug() << data;
 	textEdit->append(data);
+}
+
+void BatchHDRDialog::check_start_button()
+{
+	if (inputLineEdit->text() != "" && outputLineEdit->text() != "")
+		startPushButton->setEnabled(true);
 }

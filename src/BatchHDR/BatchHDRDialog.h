@@ -49,6 +49,7 @@ protected slots:
 	void create_hdr();
 	void error_while_loading(QString);
 	void writeAisData(QByteArray);
+	void check_start_button();
 
 protected:
 	LuminanceOptions *luminance_options;
