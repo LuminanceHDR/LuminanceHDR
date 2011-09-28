@@ -139,6 +139,8 @@ void BatchHDRDialog::init_batch_hdr()
 	startPushButton->setEnabled(false);
 	progressBar->setMaximum(m_bracketed.count() / spinBox->value());	
 	textEdit->append(tr("Started processing..."));
+    // mouse pointer to busy
+    QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 	this->batch_hdr();
 }
 
@@ -162,6 +164,7 @@ void BatchHDRDialog::batch_hdr()
 		cancelPushButton->hide();
 		startPushButton->hide();
 		progressBar->hide();
+        QApplication::restoreOverrideCursor();
 		if (m_errors)
 			textEdit->append(tr("Completed with errors"));
 		else
