@@ -30,38 +30,36 @@
 
 TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p) : QDialog(p)
 {
-	setupUi(this);
-	luminance_options=LuminanceOptions::getInstance();
+    setupUi(this);
 
-	plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
-	
-	
-	checkBoxAskAgain->setChecked(luminance_options->tmowarning_fattalsmall);
+    plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
 
-	connect(buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
-	yes=false;
+    checkBoxAskAgain->setChecked(luminance_options.value(KEY_TMOWARNING_FATTALSMALL, false).toBool());
+
+    connect(buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
+    yes=false;
 }
 
 void TonemappingWarningDialog::accepted()
 {
-	settings->beginGroup(GROUP_TMOWARNING);
-  if (checkBoxAskAgain->isChecked() != luminance_options->tmowarning_fattalsmall)
-  {
-    luminance_options->tmowarning_fattalsmall = checkBoxAskAgain->isChecked();
-    settings->setValue(KEY_TMOWARNING_FATTALSMALL, checkBoxAskAgain->isChecked());
-  }
-	settings->endGroup();
-	
-	accept();
-	
-	yes=true;
+    bool tmowarning_fattalsmall = luminance_options.value(KEY_TMOWARNING_FATTALSMALL, false).toBool();
+    if (checkBoxAskAgain->isChecked() != tmowarning_fattalsmall)
+    {
+        tmowarning_fattalsmall = !tmowarning_fattalsmall;
+        luminance_options.setValue(KEY_TMOWARNING_FATTALSMALL, checkBoxAskAgain->isChecked());
+    }
+
+    accept();
+
+    yes=true;
 }
 
 bool TonemappingWarningDialog::wasAccepted()
 {
-	return(yes);
+    return(yes);
 }
 
 
-TonemappingWarningDialog::~TonemappingWarningDialog() {
+TonemappingWarningDialog::~TonemappingWarningDialog()
+{
 }

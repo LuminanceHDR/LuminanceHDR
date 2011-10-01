@@ -24,9 +24,12 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#include <QSettings>
+#include <QString>
+#include <QWidget>
+#include <QImage>
+#include <QStringList>
+#include <QUrl>
 
-extern QSettings *settings;
 QString saveLDRImage(QWidget *p, const QString initialFileName, const QImage *image, bool batchMode = false);
 bool matchesLdrFilename(QString file);
 bool matchesHdrFilename(QString file);

@@ -43,7 +43,7 @@
 #include "Libpfs/pfs.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 
 int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
 
@@ -52,12 +52,12 @@ class IOWorker : public QObject
     Q_OBJECT
 
 private:
-	friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
-    LuminanceOptions* luminance_options;
+    friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+    LuminanceOptions m_luminance_options;
 
     void get_frame(QString fname);
-	void emitNextStep(int iteration);
-	void emitMaximumValue(int iteration);
+    void emitNextStep(int iteration);
+    void emitMaximumValue(int iteration);
 public:
     IOWorker(QObject* parent = 0);
     virtual ~IOWorker();

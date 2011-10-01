@@ -30,7 +30,7 @@
 #include <QProcess>
 #include <QPair>
 
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "arch/math.h"
 #include "createhdr.h"
 
@@ -138,7 +138,7 @@ private:
 	//once a new LDR or MDR pops up, the slots call this function to perform some housekeeping
 	void newResult(int index, float expotime, QString);
 
-	LuminanceOptions *luminance_options;
+        LuminanceOptions m_luminance_options;
 
 	//align_image_stack
 	QProcess *ais;

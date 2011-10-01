@@ -39,7 +39,7 @@
 #include "ui_BatchTMDialog.h"
 
 #include "Batch/BatchTMJob.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
 #include "Threads/LoadHdrThread.h"
@@ -77,20 +77,22 @@ protected:
   void closeEvent(QCloseEvent *);
 private:
   //Parses a TM_opts file (return NULL on error)
-	TonemappingOptions* parse_tm_opt_file(QString filename); 
+        TonemappingOptions* parse_tm_opt_file(QString filename);
   
   //required for the cache path
-  LuminanceOptions *luminance_options;
-  
-	//selection start/stop left/right
-  //TODO: remove this rubbish, thanks!
-	int start_left;
-  int stop_left;
-  int start_right;
-  int stop_right;
-  
-	//Application-wide settings, loaded via QSettings
-	QString RecentDirHDRSetting, RecentPathLoadSaveTmoSettings, recentPathSaveLDR;  
+  LuminanceOptions m_luminance_options;
+
+  //Application-wide settings, loaded via QSettings
+  QString m_batchTmInputDir;
+  QString m_batchTmTmoSettingsDir;
+  QString m_batchTmOutputDir;
+
+    //selection start/stop left/right
+    //TODO: remove this rubbish, thanks!
+    int start_left;
+    int stop_left;
+    int start_right;
+    int stop_right;
   
   //data structure (model) for left-side list: HDRs
 	QStringList HDRs_list;

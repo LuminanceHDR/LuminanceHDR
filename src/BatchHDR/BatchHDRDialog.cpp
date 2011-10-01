@@ -28,8 +28,6 @@
 #include <QDir>
 
 #include "BatchHDRDialog.h"
-#include "Common/config.h"
-#include "Common/global.h"
 #include "Libpfs/pfs.h"
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_errors(false)
@@ -39,11 +37,6 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_er
     setWindowModality(Qt::WindowModal);   // Mac Mode
 	
 	closePushButton->hide();
-
-	luminance_options = LuminanceOptions::getInstance();
-
-	RecentBatchHdrInputDir = settings->value(KEY_RECENT_PATH_BATCH_HDR_INPUT, QDir::currentPath()).toString();
-	RecentBatchHdrOutputDir = settings->value(KEY_RECENT_PATH_BATCH_HDR_OUTPUT, QDir::currentPath()).toString();
 
 	m_hdrCreationManager = new HdrCreationManager;
 	m_IO_Worker = new IOWorker;
@@ -60,6 +53,10 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_er
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
 	connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
 	connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+
+    m_tempDir = m_luminance_options.getTempDir();
+    m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput();
+    m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput();
 }
 
 BatchHDRDialog::~BatchHDRDialog()
@@ -71,9 +68,9 @@ BatchHDRDialog::~BatchHDRDialog()
 	for (int i = 0; i < n; i++) {
 		QString fname = m_hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 	m_hdrCreationManager->reset();
@@ -100,7 +97,7 @@ void BatchHDRDialog::num_bracketed_changed(int value)
 
 void BatchHDRDialog::add_files()
 {
-	inputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), RecentBatchHdrInputDir));
+        inputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrInputDir));
 	if (!inputLineEdit->text().isEmpty())
 	{
 		QDir chosendir(inputLineEdit->text());
@@ -109,23 +106,26 @@ void BatchHDRDialog::add_files()
 		//hack to prepend to this list the path as prefix.
 		m_bracketed.replaceInStrings(QRegExp("(.+)"), chosendir.path()+"/\\1");
 		qDebug() << m_bracketed;
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings
-		if (RecentBatchHdrInputDir != inputLineEdit->text())
-		{
-			RecentBatchHdrInputDir = inputLineEdit->text();
-			settings->setValue(KEY_RECENT_PATH_BATCH_HDR_INPUT, RecentBatchHdrInputDir);
-		}
+
+                // if the new dir, the one just chosen by the user, is different from the one stored in the settings,
+                // update the settings
+                if (m_batchHdrInputDir != inputLineEdit->text())
+                {
+                    m_batchHdrInputDir = inputLineEdit->text();
+                    m_luminance_options.setBatchHdrPathInput(m_batchHdrInputDir);
+                }
 	}
 }
 
 void BatchHDRDialog::add_out_dir()
 {
-	outputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), RecentBatchHdrOutputDir));
-	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings
-	if (RecentBatchHdrOutputDir != outputLineEdit->text())
+        outputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrOutputDir));
+        // if the new dir, the one just chosen by the user, is different from the one stored in the settings,
+        // update the settings
+        if (m_batchHdrOutputDir != outputLineEdit->text())
 	{
-		RecentBatchHdrOutputDir = outputLineEdit->text();
-		settings->setValue(KEY_RECENT_PATH_BATCH_HDR_OUTPUT, RecentBatchHdrOutputDir);
+            m_batchHdrOutputDir = outputLineEdit->text();
+            m_luminance_options.setBatchHdrPathOutput(m_batchHdrOutputDir);
 	}
 }
 
@@ -182,9 +182,9 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 		for (int i = 0; i < n; i++) {
 			QString fname = m_hdrCreationManager->getFileList().at(i);
 			QFileInfo qfi(fname);
-			QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                        QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 			QFile::remove(thumb_name);
-			thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                        thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
 			QFile::remove(thumb_name);
 		}
 		m_hdrCreationManager->reset();
@@ -216,9 +216,9 @@ void BatchHDRDialog::create_hdr()
 	for (int i = 0; i < n; i++) {
 		QString fname = m_hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 	m_hdrCreationManager->reset();
@@ -238,9 +238,9 @@ void BatchHDRDialog::error_while_loading(QString message)
 	for (int i = 0; i < n; i++) {
 		QString fname = m_hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(m_tempDir + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 	m_hdrCreationManager->reset();

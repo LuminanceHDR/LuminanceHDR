@@ -102,7 +102,7 @@ void TMOThread::startTonemapping()
 
 void TMOThread::finalize()
 {
-    LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
+    //LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
 
     if (!(ph->isTerminationRequested()))
     {
@@ -116,8 +116,9 @@ void TMOThread::finalize()
         {
             // different emit signal
             // I let the parent of this thread to delete working_frame
-            pfs::DOMIO pfsio;
-            pfsio.freeFrame(workingframe);
+            //pfs::DOMIO pfsio;
+            //pfsio.freeFrame(workingframe);
+            delete workingframe;
             emit imageComputed(res, pixmap, opts);
         }
             break;
@@ -125,8 +126,9 @@ void TMOThread::finalize()
         {
             // different emit signal
             // I let the parent of this thread to delete working_frame
-            pfs::DOMIO pfsio;
-            pfsio.freeFrame(workingframe);
+            //pfs::DOMIO pfsio;
+            //pfsio.freeFrame(workingframe);
+            delete workingframe;
             emit imageComputed(res, m_image_num);
         }
             break;
@@ -134,18 +136,21 @@ void TMOThread::finalize()
         default:
         {
             qDebug() << "emit imageComputed(res, pixmap)";
+
+            delete workingframe;
+
             emit imageComputed(res, pixmap);
-            if ( luminance_options->tmowindow_showprocessed )
-            {
-                emit processedFrame(workingframe);
-            }
-            else
-            {
-                //clean up workingframe in order not to waste much memory!
-                //delete workingframe;
-                pfs::DOMIO pfsio;
-                pfsio.freeFrame(workingframe);
-            }
+//            if ( luminance_options->tmowindow_showprocessed )
+//            {
+//                emit processedFrame(workingframe);
+//            }
+//            else
+//            {
+//                //clean up workingframe in order not to waste much memory!
+//                //delete workingframe;
+//                pfs::DOMIO pfsio;
+//                pfsio.freeFrame(workingframe);
+//            }
 
         }
             break;
@@ -156,7 +161,7 @@ void TMOThread::finalize()
 }
 
 void TMOThread::apply_white_black_point(pfs::Frame* in, float black_point_perc, float white_point_perc)
-{
+{   
     pfs::Channel *R, *G, *B;
     in->getXYZChannels( R, G, B );
 

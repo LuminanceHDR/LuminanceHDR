@@ -1114,7 +1114,7 @@ p, li { white-space: pre-wrap; }
                       <bool>false</bool>
                      </property>
                      <property name="text">
-                      <string>T(K):      </string>
+                      <string>Temperature (Kelvin):      </string>
                      </property>
                     </widget>
                    </item>
@@ -1636,7 +1636,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="text">
-                      <string>White</string>
+                      <string>Saturation</string>
                      </property>
                     </widget>
                    </item>

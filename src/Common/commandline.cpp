@@ -33,14 +33,14 @@
 
 #include <QTimer>
 
-#include "global.h"
-#include "options.h"
-#include "config.h"
+#include "Common/global.h"
+#include "Common/config.h"
+#include "Common/LuminanceOptions.h"
 #include "HdrCreation/createhdr.h"
 #include "Threads/LoadHdrThread.h"
 #include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
-#include "commandline.h"
+#include "Common/commandline.h"
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/colorspace.h"
@@ -111,10 +111,12 @@ static struct option cmdLineOptions[] = {
 	{ NULL, 0, NULL, 0 }
 };
 
-CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv) : argc(argc), argv(argv) {
-	hdrCreationManager=NULL;
-	align_mode=NO_ALIGN;
-	luminance_options=LuminanceOptions::getInstance();
+CommandLineInterfaceManager::CommandLineInterfaceManager(const int argc, char **argv)
+    :argc(argc), argv(argv)
+{
+        hdrCreationManager = NULL;
+        align_mode = NO_ALIGN;
+
 	parseArgs();
 }
 
@@ -393,8 +395,8 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 
 	if (operation_mode==CREATE_HDR_MODE) {
 		if (verbose) {
-			VERBOSEPRINT("Temporary directory: %1",luminance_options->tempfilespath);
-			VERBOSEPRINT("Using %1 threads.", luminance_options->num_threads);
+                        VERBOSEPRINT("Temporary directory: %1",luminance_options.getTempDir());
+                        VERBOSEPRINT("Using %1 threads.", luminance_options.getNumThreads());
 		}
 		hdrCreationManager = new HdrCreationManager();
 		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
@@ -472,7 +474,7 @@ void CommandLineInterfaceManager::saveHDR()
         else if (qfi.suffix().toUpper().startsWith("TIF"))
         {
             TiffWriter tiffwriter(encodedName, HDR);
-            if (luminance_options->saveLogLuvTiff)
+            if (luminance_options.isSaveLogLuvTiff())
             {
                 tiffwriter.writeLogLuvTiff();
             }

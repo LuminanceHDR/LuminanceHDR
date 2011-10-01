@@ -27,9 +27,6 @@
 #ifndef __PFS_FILE_FORMAT_H__
 #define __PFS_FILE_FORMAT_H__
 
-#include <QImage>
-#include <QSysInfo>
-
 #include "Libpfs/pfs.h"
 
 #include "rgbeio.h"

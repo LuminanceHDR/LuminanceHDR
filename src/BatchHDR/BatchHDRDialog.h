@@ -27,7 +27,7 @@
 #define BATCH_HDR_IMPL_H
 
 #include "ui_BatchHDRDialog.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Core/IOWorker.h"
 #include "HdrCreation/HdrCreationManager.h"
 
@@ -51,11 +51,12 @@ protected slots:
 	void writeAisData(QByteArray);
 
 protected:
-	LuminanceOptions *luminance_options;
+        LuminanceOptions m_luminance_options;
 
-	//Application-wide settings, loaded via QSettings
-	QString RecentBatchHdrInputDir;  
-	QString RecentBatchHdrOutputDir;  
+        //Application-wide settings, loaded via QSettings
+        QString m_batchHdrInputDir;
+        QString m_batchHdrOutputDir;
+        QString m_tempDir;
 
 	QStringList m_bracketed;
 	IOWorker *m_IO_Worker;

@@ -34,7 +34,7 @@
 #include "Viewers/SelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "PreviewWidget.h"
-
+#include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
 //defined in mtb_alignment.cpp
@@ -63,6 +63,8 @@ private:
 	PanIconWidget *panIconWidget;
 	QToolButton *cornerButton;
 	SelectionTool *selectionTool;
+
+        LuminanceOptions luminanceOptions;
 private slots:
 	void slotPanIconSelectionMoved(QRect);
 	void slotPanIconHidden();

@@ -32,6 +32,7 @@
 #include "Libpfs/domio.h"
 #include "pfsinraw.h"
 
+
 /**************************** From UFRAW sourcecode ********************************
  *
  * Convert between Temperature and RGB.
@@ -87,9 +88,8 @@ void Temperature_to_RGB(double T, double RGB[3])
 #define P2 RawProcessor.imgdata.other
 #define OUT RawProcessor.imgdata.params
 
-pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk, progress_callback cb,\
-	void *callback_data)
-{  
+pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, LuminanceOptions *options, bool writeOnDisk, progress_callback cb, void *callback_data)
+{
   LibRaw RawProcessor;
   RawProcessor.set_progress_handler(cb, callback_data);
   int ret;
@@ -101,26 +101,26 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   //OUT.gamm[1] = 12.92;   //sRGB
   OUT.gamm[0] = OUT.gamm[1] = 1; 
  
-  if( options->four_color_rgb)
+  if ( options->isRawFourColorRGB() )
     OUT.four_color_rgb = 1;
 
-  if( options->do_not_use_fuji_rotate)
+  if ( options->isRawDoNotUseFujiRotate() )
     OUT.use_fuji_rotate = 0; // do not rotate or strech pixels on fuji cameras - default = 1 (rotate)
  
-  OUT.user_qual = options->user_qual; 
-  OUT.med_passes = options->med_passes; 
+  OUT.user_qual = options->getRawUserQuality();
+  OUT.med_passes = options->getRawMedPasses();
 
-  if(options->wb_method == 1) // Camera WB
+  if (options->getRawWhiteBalanceMethod() == 1) // Camera WB
     OUT.use_camera_wb = 1;
-  else if(options->wb_method == 2) // Auto WB
+  else if (options->getRawWhiteBalanceMethod() == 2) // Auto WB
     OUT.use_auto_wb = 1;
   else { // Manual WB
-    double Temp = options->TK;
+    double Temp = options->getRawTemperatureKelvin();
     double RGB[3];
 
     Temperature_to_RGB(Temp, RGB);
 
-    RGB[1] = RGB[1] / options->green;	
+    RGB[1] = RGB[1] / options->getRawGreen();
 
    if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
       std::cout << "Error Opening RAW File" << std::endl;
@@ -160,27 +160,27 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     OUT.user_mul[3] = RGB[1];
   }
 
-  if (options->highlights < 3)
-    OUT.highlight = options->highlights;
+  if (options->getRawHighlightsMode() < 3)
+      OUT.highlight = options->getRawHighlightsMode();
   else
-    OUT.highlight = options->highlights + options->level; 
+      OUT.highlight = options->getRawHighlightsMode() + options->getRawLevel();
   
-  OUT.no_auto_bright = !options->auto_bright;
-  OUT.bright = options->brightness;
+  OUT.no_auto_bright = !options->isRawAutoBrightness();
+  OUT.bright = options->getRawBrightness();
 
-  if (options->use_black)
-    OUT.user_black = options->user_black;
+  if ( options->isRawUseBlack() )
+    OUT.user_black = options->getRawUserBlack();
 
-  if (options->use_sat)
-    OUT.user_sat = options->user_sat;
+  if ( options->isRawUseSaturation() )
+    OUT.user_sat = options->getRawUserSaturation();
 
-  if (options->use_noise)
-    OUT.threshold = options->threshold;
+  if ( options->isRawUseNoiseReduction() )
+    OUT.threshold = options->getRawNoiseReductionThreshold();
 
-  if (options->use_chroma)
+  if ( options->isRawUseChroma() )
   {
-    OUT.aber[0] = options->aber_0;
-    OUT.aber[2] = options->aber_2;
+    OUT.aber[0] = options->getRawAber0();
+    OUT.aber[2] = options->getRawAber2();
   }
 
   if ( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)

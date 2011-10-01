@@ -54,8 +54,8 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
-	RecentDirEXIFfrom=settings->value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
-	RecentDirEXIFto=settings->value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
+        RecentDirEXIFfrom = luminance_options.value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
+        RecentDirEXIFto = luminance_options.value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
 }
 
 TransplantExifDialog::~TransplantExifDialog() {
@@ -194,11 +194,11 @@ void TransplantExifDialog::append_left() {
 	QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirEXIFfrom, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
+                // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the luminance_options.
 		if (RecentDirEXIFfrom != qfi.path()) {
 			// update internal field variable
 			RecentDirEXIFfrom=qfi.path();
-			settings->setValue(KEY_RECENT_PATH_EXIF_FROM, RecentDirEXIFfrom);
+                        luminance_options.setValue(KEY_RECENT_PATH_EXIF_FROM, RecentDirEXIFfrom);
 		}
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {
@@ -222,11 +222,11 @@ void TransplantExifDialog::append_right() {
 	QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirEXIFto, filetypes );
 	if (!files.isEmpty()) {
 		QFileInfo qfi(files.at(0));
-		// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
+                // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the luminance_options.
 		if (RecentDirEXIFto != qfi.path()) {
 			// update internal field variable
 			RecentDirEXIFto=qfi.path();
-			settings->setValue(KEY_RECENT_PATH_EXIF_TO, RecentDirEXIFto);
+                        luminance_options.setValue(KEY_RECENT_PATH_EXIF_TO, RecentDirEXIFto);
 		}
 		QStringList::Iterator it = files.begin();
 		while( it != files.end() ) {

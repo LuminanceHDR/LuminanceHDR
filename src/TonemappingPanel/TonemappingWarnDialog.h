@@ -27,7 +27,7 @@
 #include <QDialog>
 
 #include "ui_TonemappingWarnDialog.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 
 class TonemappingWarningDialog : public QDialog, private Ui::TonemappingWarningDialog
@@ -38,7 +38,7 @@ public:
 	bool wasAccepted();
 	~TonemappingWarningDialog();
 private:
-	LuminanceOptions *luminance_options;
+        LuminanceOptions luminance_options;
 	bool yes;
 	
 private slots:

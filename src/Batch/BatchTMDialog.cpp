@@ -29,27 +29,30 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#ifdef QT_DEBUG
 #include <QDebug>
-#include <limits.h>
-#include <assert.h>
+#endif
+#include <limits.h> // <climits>
+#include <assert.h> // <cassert>
 
 #include "BatchTMDialog.h"
 #include "Common/config.h"
 #include "Exif/ExifOperations.h"
 
-
 BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1)
 {
-    //printf("BatchTMDialog::BatchTMDialog()\n");
+    //qRegisterMetaType<QImage>("QImage");    // What's its meaning?!
+#ifdef QT_DEBUG
+    qDebug() << "BatchTMDialog::BatchTMDialog()";
+#endif
     setupUi(this);
 
     setWindowModality(Qt::WindowModal);   // Mac Mode
 
-    luminance_options = LuminanceOptions::getInstance();
-
-    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR, QDir::currentPath()).toString();
-    RecentPathLoadSaveTmoSettings = settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
-    recentPathSaveLDR = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+    m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
+    m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
+    m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
+    m_max_num_threads = m_luminance_options.getBatchTmNumThreads();
 
     connect(add_dir_HDRs_Button,    SIGNAL(clicked()), this, SLOT(add_dir_HDRs())       );
     connect(add_HDRs_Button,        SIGNAL(clicked()), this, SLOT(add_HDRs())           );
@@ -70,10 +73,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
     Log_Widget->setModel(log_filter);
     Log_Widget->setWordWrap(true);
 
-    //qRegisterMetaType<QImage>("QImage");    // What's its meaning?!
-
-    m_max_num_threads = luminance_options->num_threads;
-
     m_thread_slot.release(m_max_num_threads);
     m_available_threads = new bool[m_max_num_threads];
     for (int r = 0; r < m_max_num_threads; r++) m_available_threads[r] = TRUE;  // reset to true
@@ -82,7 +81,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: ")+luminance_options->batch_ldr_format);
+    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -101,7 +100,7 @@ void BatchTMDialog::add_dir_HDRs()
 {
     //printf("BatchTMDialog::add_dir_HDRs()\n");
 
-    QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), RecentDirHDRSetting);
+    QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmInputDir );
     if ( !dirname.isEmpty() )
     {
         QStringList filters;
@@ -124,7 +123,7 @@ void BatchTMDialog::add_HDRs()
     QString filetypes = tr("All HDR images ");
     filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.srw "
                  "*.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.SRW)";
-    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), RecentDirHDRSetting, filetypes);
+    QStringList onlyhdrs = QFileDialog::getOpenFileNames(this, tr("Select input images"), m_batchTmInputDir, filetypes);
     add_view_model_HDRs(onlyhdrs);
 }
 
@@ -132,7 +131,7 @@ void BatchTMDialog::add_dir_TMopts()
 {
     //printf("BatchTMDialog::add_dir_TMopts()\n");
 
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), RecentPathLoadSaveTmoSettings);
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmTmoSettingsDir);
     if ( !dirname.isEmpty() )
     {
         QStringList filters;
@@ -151,7 +150,10 @@ void BatchTMDialog::add_TMopts()
 {
     //printf("BatchTMDialog::add_TMopts()\n");
 
-    QStringList onlytxts = QFileDialog::getOpenFileNames(this, tr("Load tone mapping settings text files..."), RecentPathLoadSaveTmoSettings, tr("LuminanceHDR tone mapping settings text file (*.txt)"));
+    QStringList onlytxts = QFileDialog::getOpenFileNames(this,
+                                                         tr("Load tone mapping settings text files..."),
+                                                         m_batchTmTmoSettingsDir,
+                                                         tr("LuminanceHDR tone mapping settings text file (*.txt)"));
     add_view_model_TM_OPTs(onlytxts);
 }
 
@@ -186,14 +188,14 @@ void BatchTMDialog::out_folder_clicked()
 {
     //printf("BatchTMDialog::out_folder_clicked()\n");
 
-    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), recentPathSaveLDR);
-
-    settings->setValue(KEY_RECENT_PATH_SAVE_LDR, dirname);
-    recentPathSaveLDR=dirname;
+    QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmOutputDir);
 
     QFileInfo test(dirname);
     if (test.isWritable() && test.exists() && test.isDir() && !dirname.isEmpty())
     {
+        m_batchTmOutputDir = dirname;
+        m_luminance_options.setBatchTmPathLdrOutput(m_batchTmOutputDir);
+
         out_folder_widgets->setText(dirname);
         check_enable_start();
     }
@@ -503,14 +505,15 @@ void BatchTMDialog::stop_batch_tm_ui()
 
 void BatchTMDialog::closeEvent( QCloseEvent* ce )
 {
-    //printf("BatchTMDialog::closeEvent()\n");
-
+#ifdef QT_DEBUG
+    qDebug() << "BatchTMDialog::closeEvent()";
+#endif
     if ( m_is_batch_running )
-        return;
-
-    ce->accept();
-    return;
+        ce->ignore();
+    else
+        ce->accept();
 }
+
 
 void BatchTMDialog::increment_progress_bar(int inc)
 {

@@ -31,8 +31,8 @@
 #include <libraw/libraw.h>
 #endif
 
-#include "Common/options.h"
 #include "Libpfs/frame.h"
+#include "Common/LuminanceOptions.h"
 
 typedef int (*progress_callback)(void *callback_data,enum LibRaw_progress stage, int iteration, int expected);
 

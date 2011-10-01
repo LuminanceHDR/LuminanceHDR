@@ -40,7 +40,7 @@ BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingO
     m_working_frame = NULL;
     m_ldr_image     = NULL;
 
-    m_ldr_output_format = LuminanceOptions::getInstance()->batch_ldr_format;
+    m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
 
     m_output_file_name_base  = m_output_folder + "/" + QFileInfo(m_file_name).completeBaseName();
 }

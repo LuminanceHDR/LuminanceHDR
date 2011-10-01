@@ -32,7 +32,7 @@
 #include <QImage>
 
 #include "Core/TonemappingOptions.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 #include "Common/ProgressHelper.h"
 #include "Libpfs/pfs.h"

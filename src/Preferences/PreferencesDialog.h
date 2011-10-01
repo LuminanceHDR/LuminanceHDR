@@ -28,7 +28,7 @@
 #include <QMap>
 
 #include "ui_PreferencesDialog.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 
 class PreferencesDialog : public QDialog, private Ui::PreferencesDialog
@@ -40,7 +40,7 @@ public:
 private:
 	void change_color_of(QPushButton *,QColor *);
 	void from_options_to_gui();
-	LuminanceOptions *luminance_options;
+        LuminanceOptions luminance_options;
 	QColor infnancolor, negcolor;
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;

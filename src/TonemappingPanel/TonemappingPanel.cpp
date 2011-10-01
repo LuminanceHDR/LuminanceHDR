@@ -41,12 +41,14 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-#include "Common/config.h"
+#include "Common/LuminanceOptions.h"
 #include "TonemappingPanel.h"
 #include "TMOProgressIndicator.h"
 #include "TonemappingWarnDialog.h"
 #include "SavedParametersDialog.h"
 #include "SavingParametersDialog.h"
+
+
 
 TonemappingPanel::TonemappingPanel(QWidget *parent)
     : QWidget(parent), adding_custom_size(false)
@@ -149,7 +151,7 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     //--
     connect(stackedWidget_operators, SIGNAL(currentChanged(int)), this, SLOT(updateCurrentTmoOperator(int)));
 
-    recentPathLoadSaveTmoSettings=settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString();
+    recentPathLoadSaveTmoSettings = LuminanceOptions().getDefaultPathTmoSettings();
 
     connect(loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
@@ -393,7 +395,8 @@ void TonemappingPanel::on_pregammadefault_clicked()
 // TODO : check this function
 void TonemappingPanel::on_applyButton_clicked()
 {
-    LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
+    // TODO: fix it!!!
+    /*
     if (luminance_options->tmowarning_fattalsmall)
     {
         bool doTonemapping = true;
@@ -409,6 +412,7 @@ void TonemappingPanel::on_applyButton_clicked()
         if (doTonemapping == false)
             return;
     }
+    */
 
     fillToneMappingOptions();
     setupUndo();
@@ -670,6 +674,8 @@ void TonemappingPanel::on_redoButton_clicked()
 
 void TonemappingPanel::on_loadsettingsbutton_clicked()
 {
+    LuminanceOptions lum_options;
+
     QString opened = QFileDialog::getOpenFileName(this,
                                                   tr("Load a tonemapping settings text file..."),
                                                   recentPathLoadSaveTmoSettings,
@@ -685,11 +691,11 @@ void TonemappingPanel::on_loadsettingsbutton_clicked()
             return;
         }
         // update internal field variable
-        recentPathLoadSaveTmoSettings=qfi.path();
+        recentPathLoadSaveTmoSettings = qfi.path();
         // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
-        if (recentPathLoadSaveTmoSettings != settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS,QDir::currentPath()).toString())
+        if (recentPathLoadSaveTmoSettings != lum_options.getDefaultPathTmoSettings())
         {
-            settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
+            lum_options.setDefaultPathTmoSettings( recentPathLoadSaveTmoSettings );
         }
         //update filename internal field, used by parsing function fromTxt2Gui()
         tmoSettingsFilename = opened;
@@ -700,6 +706,8 @@ void TonemappingPanel::on_loadsettingsbutton_clicked()
 
 void TonemappingPanel::on_savesettingsbutton_clicked()
 {
+    LuminanceOptions lum_options;
+
     QString fname = QFileDialog::getSaveFileName(this,
                                                  tr("Save tonemapping settings text file to..."),
                                                  recentPathLoadSaveTmoSettings,
@@ -712,11 +720,11 @@ void TonemappingPanel::on_savesettingsbutton_clicked()
             fname+=".txt";
         }
         // update internal field variable
-        recentPathLoadSaveTmoSettings=qfi.path();
+        recentPathLoadSaveTmoSettings = qfi.path();
         // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
-        if (recentPathLoadSaveTmoSettings != settings->value(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, QDir::currentPath()).toString())
+        if (recentPathLoadSaveTmoSettings != lum_options.getDefaultPathTmoSettings() )
         {
-            settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS, recentPathLoadSaveTmoSettings);
+            lum_options.setDefaultPathTmoSettings(recentPathLoadSaveTmoSettings);
         }
         //write txt file
         fromGui2Txt(fname);

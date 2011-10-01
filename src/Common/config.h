@@ -41,8 +41,6 @@
 
 #define GROUP_TONEMAPPING "Tonemapping_Options"
 #define KEY_TEMP_RESULT_PATH "TemporaryFilesPath"
-#define KEY_BATCH_LDR_FORMAT "Batch_LDR_Format"
-#define KEY_NUM_BATCH_THREADS "Num_Batch_Threads"
 
 #define GROUP_TIFF "TIFF_Options"
 #define KEY_SAVE_LOGLUV "TiffSaveLogLuv"
@@ -116,9 +114,18 @@
 #define KEY_RECENT_PATH_LOAD_SAVE_TMO_SETTINGS "Recent_path_TMO_settings"
 #define KEY_RECENT_PATH_SAVE_LDR "Recent_path_save_ldr"
 #define KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR "Recent_path_input_for_hdr"
+// Exif
 #define KEY_RECENT_PATH_EXIF_FROM "Recent_path_exif_from"
 #define KEY_RECENT_PATH_EXIF_TO "Recent_path_exif_to"
-#define KEY_RECENT_PATH_BATCH_HDR_INPUT "Recent_path_batch_hdr_input"
-#define KEY_RECENT_PATH_BATCH_HDR_OUTPUT "Recent_path_batch_hdr_output"
+// Batch HDR
+#define KEY_BATCH_HDR_PATH_INPUT "batch_hdr/path_input"
+#define KEY_BATCH_HDR_PATH_OUTPUT "batch_hdr/path_output"
+// Batch TM
+#define GROUP_BATCH_TM "batch_tm"
+#define KEY_BATCH_TM_PATH_INPUT "batch_tm/path_hdr_input"
+#define KEY_BATCH_TM_PATH_TMO_SETTINGS "batch_tm/path_tmo_settings"
+#define KEY_BATCH_TM_PATH_OUTPUT "batch_tm/path_ldr_output"
+#define KEY_BATCH_TM_LDR_FORMAT "batch_tm/Batch_LDR_Format"
+#define KEY_BATCH_TM_NUM_THREADS "batch_tm/Num_Batch_Threads"
 
 #endif

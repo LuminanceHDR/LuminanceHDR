@@ -281,7 +281,7 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
-        src/Common/options.h
+        src/Common/LuminanceOptions.h
         src/Common/config.h
 
 # new viewer
@@ -356,7 +356,7 @@ SET(LUMINANCE_HDR_SRC
         src/Common/ProgressHelper.cpp
 	src/Common/commandline.cpp	
 	src/Common/global.cpp
-	src/Common/options.cpp
+        src/Common/LuminanceOptions.cpp
 	
 	src/main.cpp
 )

@@ -27,19 +27,19 @@
 #include <QUrl>
 #include <iostream>
 
-#include "config.h"
-#include "options.h"
-#include "global.h"
-#include "ImageQualityDialog.h"
-
-QSettings *settings = 0;
+#include "Common/config.h"
+#include "Common/LuminanceOptions.h"
+#include "Common/global.h"
+#include "Common/ImageQualityDialog.h"
 
 /**
  * \return "" when fail, out file name when successful
  */
 QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage *image, bool batchMode)
 {
-    QString outfname = QDir(settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName);
+    LuminanceOptions luminance_options;
+
+    QString outfname = QDir(luminance_options.getDefaultPathLdrOut()).filePath(initialFileName);
     if (!batchMode)
     {
         QString filetypes = QObject::tr("All LDR formats") + " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
@@ -50,16 +50,15 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
 
         outfname = QFileDialog::getSaveFileName(parent,
                                                 QObject::tr("Save the LDR image as..."),
-                                                QDir(settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString()).filePath(initialFileName),
+                                                QDir(luminance_options.getDefaultPathLdrOut()).filePath(initialFileName),
                                                 filetypes);
     }
 
     if( !outfname.isEmpty() )
     {
         QFileInfo qfi(outfname);
-        //save settings
-        settings->setValue(KEY_RECENT_PATH_SAVE_LDR, qfi.path());
-        QString format=qfi.suffix();
+        luminance_options.setDefaultPathLdrOut(qfi.path()); //save settings
+        QString format = qfi.suffix();
 
         if ( qfi.suffix().isEmpty() )
         {
@@ -110,14 +109,14 @@ bool matchesValidHDRorLDRfilename(QString file)
 
 QStringList convertUrlListToFilenameList(QList<QUrl> urls)
 {
-	QStringList files;
-	for (int i = 0; i < urls.size(); ++i)
-  {
-		QString localFile = urls.at(i).toLocalFile();
-		if (matchesValidHDRorLDRfilename(localFile))
+    QStringList files;
+    for (int i = 0; i < urls.size(); ++i)
     {
-			files.append(localFile);
+        QString localFile = urls.at(i).toLocalFile();
+        if (matchesValidHDRorLDRfilename(localFile))
+        {
+            files.append(localFile);
+        }
     }
-	}
-	return files;
+    return files;
 }

@@ -69,17 +69,15 @@ MainWindow::MainWindow(QWidget *parent):
     init();
 
     // SPLASH SCREEN    ----------------------------------------------------------------------
-    if (settings->contains("ShowSplashScreen"))
+    if (luminance_options.value("ShowSplashScreen", true).toBool())
     {
-        if (settings->value("ShowSplashScreen").toInt())
-            showSplash();
-            //UMessageBox::donationSplashMB();
-    }
-    else
         showSplash();
+        //UMessageBox::donationSplashMB();
+    }
+
     // END SPLASH SCREEN    ------------------------------------------------------------------
 
-    testTempDir(luminance_options->tempfilespath);
+    testTempDir(luminance_options.getTempDir());
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
@@ -99,8 +97,8 @@ MainWindow::~MainWindow()
 
     clearRecentFileActions();
 
-    settings->setValue("MainWindowState", saveState());
-    settings->setValue("MainWindowGeometry", saveGeometry());
+    luminance_options.setValue("MainWindowState", saveState());
+    luminance_options.setValue("MainWindowGeometry", saveGeometry());
 
     qRegisterMetaType<QImage>("QImage");
     qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
@@ -138,8 +136,8 @@ void MainWindow::createUI()
         dir.mkdir(".LuminanceHDR");
 #endif
 
-    restoreState(settings->value("MainWindowState").toByteArray());
-    restoreGeometry(settings->value("MainWindowGeometry").toByteArray());
+    restoreState(luminance_options.value("MainWindowState").toByteArray());
+    restoreGeometry(luminance_options.value("MainWindowGeometry").toByteArray());
 
     setAcceptDrops(true);
     setWindowModified(false);
@@ -285,16 +283,12 @@ void MainWindow::createConnections()
 
 void MainWindow::loadOptions()
 {
-    luminance_options = LuminanceOptions::getInstance();
-
     //load from settings the path where hdrs have been previously opened/loaded
-    RecentDirHDRSetting = settings->value(KEY_RECENT_PATH_LOAD_SAVE_HDR,QDir::currentPath()).toString();
-    RecentDirLDRSetting = settings->value(KEY_RECENT_PATH_SAVE_LDR,QDir::currentPath()).toString();
+    RecentDirHDRSetting = luminance_options.getDefaultPathHdrInOut();
+    RecentDirLDRSetting = luminance_options.getDefaultPathLdrOut();
 
     //load from settings the main toolbar visualization mode
-    if (!settings->contains(KEY_TOOLBAR_MODE))
-        settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
-    switch (settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt()) {
+    switch ( luminance_options.getMainWindowToolBarMode() ) {
     case Qt::ToolButtonIconOnly:
         Icons_Only();
         actionIcons_Only->setChecked(true);
@@ -312,7 +306,7 @@ void MainWindow::loadOptions()
         actionText_Under_Icons->setChecked(true);
 	break;
     }
-    actionShowPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
+    actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
 }
 
 void MainWindow::showDonationsPage()
@@ -322,7 +316,7 @@ void MainWindow::showDonationsPage()
 
 void MainWindow::fileNewViaWizard(QStringList files)
 {    
-    if (testTempDir(luminance_options->tempfilespath))
+    if (testTempDir(luminance_options.getTempDir()))
     {
         HdrWizard *wizard = new HdrWizard (this, files);
         if (wizard->exec() == QDialog::Accepted)
@@ -369,14 +363,14 @@ void MainWindow::fileOpen()
 
 void MainWindow::updateRecentDirHDRSetting(QString newvalue)
 {
-    RecentDirHDRSetting = newvalue;                                 // update class member
-    settings->setValue(KEY_RECENT_PATH_LOAD_SAVE_HDR, newvalue);    // update settings
+    RecentDirHDRSetting = newvalue;                         // update class member
+    luminance_options.setDefaultPathHdrInOut(newvalue);     // update settings
 }
 
 void MainWindow::updateRecentDirLDRSetting(QString newvalue)
 {
     RecentDirLDRSetting = newvalue;                         // update class member
-    settings->setValue(KEY_RECENT_PATH_SAVE_LDR, newvalue); // update settings
+    luminance_options.setDefaultPathLdrOut(newvalue);       // update settings
 }
 
 void MainWindow::fileSaveAll()
@@ -966,7 +960,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     else
     {
         tmPanel->show();
-        HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
+        HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1028,13 +1022,13 @@ void MainWindow::IO_done()
 
 void MainWindow::preferences_called()
 {
-    unsigned int negcol = luminance_options->negcolor;
-    unsigned int naninfcol = luminance_options->naninfcolor;
+    unsigned int negcol = luminance_options.getViewerNegColor();
+    unsigned int naninfcol = luminance_options.getViewerNanInfColor();
     PreferencesDialog *opts = new PreferencesDialog(this);
     opts->setAttribute(Qt::WA_DeleteOnClose);
     if ( opts->exec() == QDialog::Accepted )
     {
-        if (negcol != luminance_options->negcolor || naninfcol != luminance_options->naninfcolor)
+        if (negcol != luminance_options.getViewerNegColor() || naninfcol != luminance_options.getViewerNanInfColor())
         {
             for (int idx = 0; idx < m_tabwidget->count(); idx++)
             {
@@ -1042,11 +1036,11 @@ void MainWindow::preferences_called()
                 HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(viewer);
                 if ( hdr_v != NULL )
                 {
-                    hdr_v->update_colors(luminance_options->negcolor,luminance_options->naninfcolor);
+                    hdr_v->update_colors(luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
                 }
             }
         }
-	actionShowPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
+        actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
     }
 }
 
@@ -1092,25 +1086,25 @@ void MainWindow::openFiles(const QStringList& files)
 void MainWindow::Text_Under_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon);
+    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonIconOnly);
+    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextBesideIcon);
+    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
     toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
-    settings->setValue(KEY_TOOLBAR_MODE,Qt::ToolButtonTextOnly);
+    luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextOnly);
 }
 
 void MainWindow::showSplash()
@@ -1135,7 +1129,7 @@ void MainWindow::splashShowDonationsPage()
 
 void MainWindow::splashClose()
 {
-    settings->setValue("ShowSplashScreen", 0);
+    luminance_options.setValue("ShowSplashScreen", false);
     splash->close();
 }
 
@@ -1877,7 +1871,7 @@ void MainWindow::setMainWindowModified(bool b)
  */
 void MainWindow::setCurrentFile(const QString &fileName)
 {
-    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
+    QStringList files = luminance_options.value(KEY_RECENT_FILES).toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
     while (files.size() > MAX_RECENT_FILES)
@@ -1885,14 +1879,14 @@ void MainWindow::setCurrentFile(const QString &fileName)
         files.removeLast();
     }
 
-    settings->setValue(KEY_RECENT_FILES, files);
+    luminance_options.setValue(KEY_RECENT_FILES, files);
 
     updateRecentFileActions();
 }
 
 void MainWindow::updateRecentFileActions()
 {
-    QStringList files = settings->value(KEY_RECENT_FILES).toStringList();
+    QStringList files = luminance_options.value(KEY_RECENT_FILES).toStringList();
 
     int numRecentFiles = qMin(files.size(), (int)MAX_RECENT_FILES);
     separatorRecentFiles->setVisible(numRecentFiles > 0);

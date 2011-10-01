@@ -38,7 +38,7 @@
 
 IOWorker::IOWorker(QObject* parent): QObject(parent)
 {
-    luminance_options = LuminanceOptions::getInstance();
+
 }
 
 IOWorker::~IOWorker()
@@ -70,7 +70,7 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
         TiffWriter tiffwriter(encodedName, hdr_frame);
         connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
         connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-        if (luminance_options->saveLogLuvTiff)
+        if (m_luminance_options.isSaveLogLuvTiff() )
         {
             tiffwriter.writeLogLuvTiff();
         }
@@ -117,7 +117,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         TiffWriter tiffwriter(encodedName, hdr_frame);
-        if (luminance_options->saveLogLuvTiff)
+        if ( m_luminance_options.isSaveLogLuvTiff() )
         {
             tiffwriter.writeLogLuvTiff();
         }
@@ -148,7 +148,7 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
 
     const QImage* image = ldr_input->getQImage();
     
-	QFileInfo qfi(filename);
+    QFileInfo qfi(filename);
     QString format = qfi.suffix();
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
@@ -222,7 +222,7 @@ void IOWorker::get_frame(QString fname)
     try
     {
         QString extension = qfi.suffix().toUpper();
-        QByteArray TempPath = QFile::encodeName(luminance_options->tempfilespath);
+        QByteArray TempPath = QFile::encodeName(m_luminance_options.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
         if (extension=="EXR")
@@ -257,7 +257,7 @@ void IOWorker::get_frame(QString fname)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, luminance_options, false, progress_cb, this);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &m_luminance_options, false, progress_cb, this);
         }
         else
         {

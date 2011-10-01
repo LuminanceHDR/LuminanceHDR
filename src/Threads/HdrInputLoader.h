@@ -34,7 +34,7 @@
 #include <libraw/libraw.h>
 #endif
 
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Libpfs/frame.h"
 
 int prog_callback(void *data,enum LibRaw_progress p,int iteration, int expected);
@@ -60,6 +60,6 @@ private:
 	void emitMaximumValue(int iteration);
     int image_idx;
     QString fname;
-    LuminanceOptions *luminance_options;
+    LuminanceOptions luminance_options;
 };
 #endif

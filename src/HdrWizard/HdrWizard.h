@@ -32,7 +32,7 @@
 #include <QString>
 
 #include "ui_HdrWizard.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/Gang.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
@@ -58,7 +58,7 @@ protected:
 private:
 	QString getQStringFromConfig( int type );
 	void loadInputFiles(QStringList files, int count);
-	LuminanceOptions *luminance_options;
+        LuminanceOptions luminance_options;
 
 	Gang *EVgang;
 

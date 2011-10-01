@@ -29,7 +29,7 @@
 #define TMOFACTORY
 
 #include "TMOThread.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Libpfs/frame.h"
 
 class TMOFactory {

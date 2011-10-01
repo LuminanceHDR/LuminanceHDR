@@ -34,12 +34,10 @@
 
 LoadHdrThread::LoadHdrThread(QString fname, QString RecentDirHDRSetting) : QThread(0), fname(fname), RecentDirHDRSetting(RecentDirHDRSetting)
 {
-    luminance_options = LuminanceOptions::getInstance();
 }
 
 LoadHdrThread::LoadHdrThread(QString fname) : QThread(0), fname(fname), RecentDirHDRSetting(QString())
 {
-    luminance_options = LuminanceOptions::getInstance();
 }
 
 LoadHdrThread::~LoadHdrThread()
@@ -73,7 +71,7 @@ void LoadHdrThread::run()
     bool rawinput = (rawextensions.indexOf(extension) != -1);
     try
     {
-        QByteArray TempPath = QFile::encodeName(luminance_options->tempfilespath);
+        QByteArray TempPath = QFile::encodeName(luminance_options.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
         if (extension=="EXR")
@@ -107,7 +105,7 @@ void LoadHdrThread::run()
         }
         else if (rawinput)
         {
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, luminance_options, false, prog_cb, this);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminance_options, false, prog_cb, this);
         } //raw file detected
         else
         {

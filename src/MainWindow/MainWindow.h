@@ -199,7 +199,7 @@ protected:
     QTabWidget *m_tabwidget;
 
     QSignalMapper *windowMapper;
-    LuminanceOptions *luminance_options;
+    LuminanceOptions luminance_options;
     QDialog *splash;
     QProgressBar* m_progressbar;
 

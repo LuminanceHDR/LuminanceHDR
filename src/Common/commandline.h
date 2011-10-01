@@ -38,9 +38,9 @@
 class CommandLineInterfaceManager : public QObject {
 Q_OBJECT
 public:
-	CommandLineInterfaceManager(const int argc, char **argv);
-    bool isCommandLineApp() { return cliApp; };
-    QStringList files() { return inputFiles; };
+    CommandLineInterfaceManager(const int argc, char **argv);
+    bool isCommandLineApp() { return cliApp; }
+    QStringList files() { return inputFiles; }
     void execCommandLineParams();
 private:
 	enum operation_mode {
@@ -52,7 +52,7 @@ private:
 	enum align_mode {
 		AIS_ALIGN,
 		MTB_ALIGN,
-		NO_ALIGN,
+                NO_ALIGN
 	} align_mode;
 
 	const int argc;
@@ -66,7 +66,7 @@ private:
 	HdrCreationManager *hdrCreationManager;
 	QString saveHdrFilename;
 	QString saveLdrFilename;
-	LuminanceOptions *luminance_options;
+        LuminanceOptions luminance_options;
 	pfs::Frame *HDR;
 	void saveHDR();
 	void printHelp(char *progname);

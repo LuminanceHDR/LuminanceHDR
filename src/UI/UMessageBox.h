@@ -39,9 +39,9 @@
 #include <QDebug>
 
 #include "ui_about.h"
-#include "Common/config.h"
+//#include "Common/config.h"
 #include "Common/global.h"
-#include "Common/options.h"
+#include "Common/LuminanceOptions.h"
 #include "Common/archs.h"
 
 class UMessageBox : public QMessageBox

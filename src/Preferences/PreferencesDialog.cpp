@@ -77,9 +77,8 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	fromGuiIndexToIso639[11]="tr";
 	fromGuiIndexToIso639[12]="hu";
 
-	luminance_options=LuminanceOptions::getInstance();
-	negcolor=luminance_options->negcolor;
-	infnancolor=luminance_options->naninfcolor;
+        negcolor = luminance_options.getViewerNegColor();
+        infnancolor = luminance_options.getViewerNanInfColor();
 
 	from_options_to_gui(); //update the gui in order to show the options
 
@@ -135,7 +134,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p) : QDialog(p) {
 	connect(toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
 
 /**	connect(whatsThisButton,SIGNAL(clicked()),this,SLOT(enterWhatsThis())); 
-	Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)settings->value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
+        Qt::ToolButtonStyle style = (Qt::ToolButtonStyle)luminance_options.value(KEY_TOOLBAR_MODE,Qt::ToolButtonTextUnderIcon).toInt();
 *	whatsThisButton->setToolButtonStyle(style); */
 
 	// Hide unused check boxes
@@ -202,154 +201,183 @@ QStringList PreferencesDialog::sanitizeAISparams() {
 }
 
 void PreferencesDialog::ok_clicked() {
-	if (luminance_options->gui_lang!=fromGuiIndexToIso639[languageComboBox->currentIndex()])
-		QMessageBox::information(this,tr("Please restart..."),tr("Please restart LuminanceHDR to use the new language (%1).").arg(languageComboBox->currentText()));
-	luminance_options->gui_lang=fromGuiIndexToIso639[languageComboBox->currentIndex()];
-	settings->setValue(KEY_GUI_LANG,luminance_options->gui_lang);
+        if (luminance_options.getGuiLang()!=fromGuiIndexToIso639[languageComboBox->currentIndex()]) {
+                QMessageBox::information(this,
+                                         tr("Please restart..."),
+                                         tr("Please restart LuminanceHDR to use the new language (%1).").arg(languageComboBox->currentText()));
+        }
+        luminance_options.setGuiLang( fromGuiIndexToIso639[languageComboBox->currentIndex()] );
 
-	settings->beginGroup(GROUP_EXTERNALTOOLS);
-		luminance_options->align_image_stack_options=sanitizeAISparams();
-		settings->setValue(KEY_EXTERNAL_AIS_OPTIONS,luminance_options->align_image_stack_options);
-	settings->endGroup();
+//        luminance_options.beginGroup(GROUP_EXTERNALTOOLS);
+        luminance_options.setAlignImageStackOptions( sanitizeAISparams() );
+//        luminance_options.endGroup();
 
-	settings->beginGroup(GROUP_HDRVISUALIZATION);
-		if(negcolor.rgba() != luminance_options->negcolor) {
-			luminance_options->negcolor=negcolor.rgba();
-			settings->setValue(KEY_NEGCOLOR,negcolor.rgba());
-		}
-		if(infnancolor.rgba() != luminance_options->naninfcolor) {
-			luminance_options->naninfcolor=infnancolor.rgba();
-			settings->setValue(KEY_NANINFCOLOR,infnancolor.rgba());
-		}
-	settings->endGroup();
+//        luminance_options.beginGroup(GROUP_HDRVISUALIZATION);
+//        if(negcolor.rgba() != luminance_options.negcolor) {
+//            luminance_options.negcolor=negcolor.rgba();
+//            luminance_options.setValue(KEY_NEGCOLOR,negcolor.rgba());
+//        }
+        luminance_options.setViewerNegColor(negcolor.rgba());
+//        if(infnancolor.rgba() != luminance_options.naninfcolor) {
+//            luminance_options.naninfcolor=infnancolor.rgba();
+//            luminance_options.setValue(KEY_NANINFCOLOR,infnancolor.rgba());
+//        }
+        luminance_options.setViewerNanInfColor(infnancolor.rgba());
+//        luminance_options.endGroup();
 
-	settings->beginGroup(GROUP_TONEMAPPING);
-		if (lineEditTempPath->text() != luminance_options->tempfilespath) {
-			luminance_options->tempfilespath=lineEditTempPath->text();
-			settings->setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
-		}
-		if (batchLdrFormatComboBox->currentText() != luminance_options->batch_ldr_format) {
-			luminance_options->batch_ldr_format=batchLdrFormatComboBox->currentText();
-			settings->setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
-		}
-		if (numThreadspinBox->value() != luminance_options->num_threads) {
-			luminance_options->num_threads=numThreadspinBox->value();
-			settings->setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
-		}
-	settings->endGroup();
+        //luminance_options.beginGroup(GROUP_TONEMAPPING);
+//                if (lineEditTempPath->text() != luminance_options.tempfilespath) {
+//                        luminance_options.tempfilespath=lineEditTempPath->text();
+//                        luminance_options.setValue(KEY_TEMP_RESULT_PATH,lineEditTempPath->text());
+//		}
+        luminance_options.setTempDir( lineEditTempPath->text() );
+//                if (batchLdrFormatComboBox->currentText() != luminance_options.batch_ldr_format) {
+//                        luminance_options.batch_ldr_format=batchLdrFormatComboBox->currentText();
+//                        luminance_options.setValue(KEY_BATCH_LDR_FORMAT,batchLdrFormatComboBox->currentText());
+//		}
+                luminance_options.setBatchTmLdrFormat( batchLdrFormatComboBox->currentText() );
 
-	settings->beginGroup(GROUP_TIFF);
-		if (logLuvRadioButton->isChecked() != luminance_options->saveLogLuvTiff) {
-			luminance_options->saveLogLuvTiff=logLuvRadioButton->isChecked();
-			settings->setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
-		}
-	settings->endGroup();
+//                if (numThreadspinBox->value() != luminance_options.num_threads) {
+//                        luminance_options.num_threads=numThreadspinBox->value();
+//                        luminance_options.setValue(KEY_NUM_BATCH_THREADS,numThreadspinBox->value());
+//		}
+                luminance_options.setBatchTmNumThreads( numThreadspinBox->value() );
+        //luminance_options.endGroup();
 
-	settings->beginGroup(GROUP_TMOWINDOW);
-		if (previewsWidthSpinBox->value() != luminance_options->previews_width) {
-			luminance_options->previews_width = previewsWidthSpinBox->value();
-			settings->setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, previewsWidthSpinBox->value());
-		}	
-		if (checkBoxTMOWindowsMax->isChecked() != luminance_options->tmowindow_max) {
-			luminance_options->tmowindow_max=checkBoxTMOWindowsMax->isChecked();
-			settings->setValue(KEY_TMOWINDOW_MAX,checkBoxTMOWindowsMax->isChecked());
-		}
-		if (checkBoxTMOWindowsHDR->isChecked() != luminance_options->tmowindow_showprocessed) {
-			luminance_options->tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
-			settings->setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
-		}
-		if (checkBoxTMOWindowsPreviewPanel->isChecked() != luminance_options->tmowindow_showpreviewpanel) {
-			luminance_options->tmowindow_showpreviewpanel = checkBoxTMOWindowsPreviewPanel->isChecked();
-			settings->setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL,checkBoxTMOWindowsPreviewPanel->isChecked());
-		}
-	settings->endGroup();
+//        luminance_options.beginGroup(GROUP_TIFF);
+//                if (logLuvRadioButton->isChecked() != luminance_options.saveLogLuvTiff) {
+//                        luminance_options.saveLogLuvTiff=logLuvRadioButton->isChecked();
+//                        luminance_options.setValue(KEY_SAVE_LOGLUV,logLuvRadioButton->isChecked());
+//		}
+//        luminance_options.endGroup();
+        luminance_options.setSaveLogLuvTiff( logLuvRadioButton->isChecked() );
 
-	settings->beginGroup(GROUP_HDR_WIZARD);
-		if (checkBoxWizardShowFirstPage->isChecked() != luminance_options->wizard_show_firstpage) {
-			luminance_options->wizard_show_firstpage = checkBoxWizardShowFirstPage->isChecked();
-			settings->setValue(KEY_WIZARD_SHOWFIRSTPAGE,checkBoxWizardShowFirstPage->isChecked());
-		}
-	settings->endGroup();
+//        luminance_options.beginGroup(GROUP_TMOWINDOW);
+                //if (previewsWidthSpinBox->value() != luminance_options.previews_width) {
+                        //luminance_options.previews_width = previewsWidthSpinBox->value();
+                        luminance_options.setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, previewsWidthSpinBox->value());
+                //}
+//                if (checkBoxTMOWindowsMax->isChecked() != luminance_options.tmowindow_max) {
+//                        luminance_options.tmowindow_max=checkBoxTMOWindowsMax->isChecked();
+//                        luminance_options.setValue(KEY_TMOWINDOW_MAX,checkBoxTMOWindowsMax->isChecked());
+//		}
+//                if (checkBoxTMOWindowsHDR->isChecked() != luminance_options.tmowindow_showprocessed) {
+//                        luminance_options.tmowindow_showprocessed = checkBoxTMOWindowsHDR->isChecked();
+//                        luminance_options.setValue(KEY_TMOWINDOW_SHOWPROCESSED,checkBoxTMOWindowsHDR->isChecked());
+//		}
+//                if (checkBoxTMOWindowsPreviewPanel->isChecked() != luminance_options.tmowindow_showpreviewpanel) {
+//                        luminance_options.tmowindow_showpreviewpanel = checkBoxTMOWindowsPreviewPanel->isChecked();
+//                        luminance_options.setValue(KEY_TMOWINDOW_SHOWPREVIEWPANEL,checkBoxTMOWindowsPreviewPanel->isChecked());
+//		}
+//        luminance_options.endGroup();
 
-	settings->beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
+        //luminance_options.beginGroup(GROUP_HDR_WIZARD);
+        //        if (checkBoxWizardShowFirstPage->isChecked() != luminance_options.wizard_show_firstpage) {
+        //                luminance_options.wizard_show_firstpage = checkBoxWizardShowFirstPage->isChecked();
+        //                luminance_options.setValue(KEY_WIZARD_SHOWFIRSTPAGE,checkBoxWizardShowFirstPage->isChecked());
+        //	}
+        luminance_options.setShowFirstPageWizard( checkBoxWizardShowFirstPage->isChecked() );
+        //luminance_options.endGroup();
+
+        //luminance_options.beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
 		
-		luminance_options->four_color_rgb = four_color_rgb_CB->isChecked();
-		settings->setValue(KEY_FOUR_COLOR_RGB, four_color_rgb_CB->isChecked());
+        //luminance_options.four_color_rgb = four_color_rgb_CB->isChecked();
+        //luminance_options.setValue(KEY_FOUR_COLOR_RGB, four_color_rgb_CB->isChecked());
+        luminance_options.setRawFourColorRGB( four_color_rgb_CB->isChecked() );
 
-		luminance_options->do_not_use_fuji_rotate = do_not_use_fuji_rotate_CB->isChecked();
-		settings->setValue(KEY_DO_NOT_USE_FUJI_ROTATE, do_not_use_fuji_rotate_CB->isChecked());
-		
-		luminance_options->user_qual = user_qual_comboBox->currentIndex();
-		settings->setValue(KEY_USER_QUAL, user_qual_comboBox->currentIndex());
+        //luminance_options.do_not_use_fuji_rotate = do_not_use_fuji_rotate_CB->isChecked();
+        //luminance_options.setValue(KEY_DO_NOT_USE_FUJI_ROTATE, do_not_use_fuji_rotate_CB->isChecked());
+        luminance_options.setRawDoNotUseFujiRotate( do_not_use_fuji_rotate_CB->isChecked() );
 
-		luminance_options->med_passes = med_passes_spinBox->value();
-		settings->setValue(KEY_MED_PASSES, med_passes_spinBox->value());
-		
-		luminance_options->wb_method = wb_method_comboBox->currentIndex();
-		settings->setValue(KEY_WB_METHOD, wb_method_comboBox->currentIndex());
-	
-		luminance_options->TK = TK_spinBox->value();
-		settings->setValue(KEY_TK, TK_spinBox->value());
-	
-		luminance_options->green = green_doubleSpinBox->value();
-		settings->setValue(KEY_GREEN, green_doubleSpinBox->value());
-	
-		luminance_options->highlights = highlights_comboBox->currentIndex();
-		settings->setValue(KEY_HIGHLIGHTS, highlights_comboBox->currentIndex());
+        //luminance_options.user_qual = user_qual_comboBox->currentIndex();
+        //luminance_options.setValue(KEY_USER_QUAL, user_qual_comboBox->currentIndex());
+        luminance_options.setRawUserQuality( user_qual_comboBox->currentIndex() );
 
-		luminance_options->level = level_spinBox->value();
-		settings->setValue(KEY_LEVEL, level_spinBox->value());
+        //luminance_options.med_passes = med_passes_spinBox->value();
+        //luminance_options.setValue(KEY_MED_PASSES, med_passes_spinBox->value());
+        luminance_options.setRawMedPasses( med_passes_spinBox->value() );
 
-		luminance_options->auto_bright = auto_bright_CB->isChecked();
-		settings->setValue(KEY_AUTO_BRIGHT, auto_bright_CB->isChecked());
-		
-		luminance_options->brightness = brightness_doubleSpinBox->value();
-		settings->setValue(KEY_BRIGHTNESS, brightness_doubleSpinBox->value());
+        //luminance_options.wb_method = wb_method_comboBox->currentIndex();
+        //luminance_options.setValue(KEY_WB_METHOD, wb_method_comboBox->currentIndex());
+        luminance_options.setRawWhiteBalanceMethod( wb_method_comboBox->currentIndex() );
 
-		luminance_options->use_black = use_black_CB->isChecked();
-		settings->setValue(KEY_USE_BLACK, use_black_CB->isChecked());
-		
-		luminance_options->use_sat = use_sat_CB->isChecked();
-		settings->setValue(KEY_USE_SAT, use_sat_CB->isChecked());
-		
-		luminance_options->use_noise = use_noise_CB->isChecked();
-		settings->setValue(KEY_USE_NOISE, use_noise_CB->isChecked());
-		
-		luminance_options->use_chroma = use_chroma_CB->isChecked();
-		settings->setValue(KEY_USE_CHROMA, use_chroma_CB->isChecked());
+        //luminance_options.TK = TK_spinBox->value();
+        //luminance_options.setValue(KEY_TK, TK_spinBox->value());
+        luminance_options.setRawTemperatureKelvin( TK_spinBox->value() );
 
-		luminance_options->threshold = threshold_spinBox->value();
-		settings->setValue(KEY_THRESHOLD, threshold_spinBox->value());
-		
-		luminance_options->user_black = user_black_spinBox->value();
-		settings->setValue(KEY_USER_BLACK, user_black_spinBox->value());
-		
-		luminance_options->user_sat = user_sat_spinBox->value();
-		settings->setValue(KEY_USER_SAT, user_sat_spinBox->value());
-		
-		luminance_options->aber_0 = red_doubleSpinBox->value();
-		settings->setValue(KEY_ABER_0, red_doubleSpinBox->value());
-		
-		luminance_options->aber_2 = blue_doubleSpinBox->value();
-		settings->setValue(KEY_ABER_2, blue_doubleSpinBox->value());
-		
-		//////////////////////////////////////////////////////////////
+        //luminance_options.green = green_doubleSpinBox->value();
+        //luminance_options.setValue(KEY_GREEN, green_doubleSpinBox->value());
+        luminance_options.setRawGreen( green_doubleSpinBox->value() );
 
-		settings->setValue(KEY_USER_QUAL_TOOLBUTTON, user_qual_toolButton->isEnabled());
-		settings->setValue(KEY_MED_PASSES_TOOLBUTTON, med_passes_toolButton->isEnabled());
-		settings->setValue(KEY_WB_METHOD_TOOLBUTTON, wb_method_toolButton->isEnabled());
-		settings->setValue(KEY_TK_TOOLBUTTON, TK_toolButton->isEnabled());
-		settings->setValue(KEY_HIGHLIGHTS_TOOLBUTTON, highlights_toolButton->isEnabled());
-		settings->setValue(KEY_LEVEL_TOOLBUTTON, level_toolButton->isEnabled());
-		settings->setValue(KEY_BRIGHTNESS_TOOLBUTTON, brightness_toolButton->isEnabled());
-		settings->setValue(KEY_USER_BLACK_TOOLBUTTON, user_black_toolButton->isEnabled());
-		settings->setValue(KEY_USER_SAT_TOOLBUTTON, user_sat_toolButton->isEnabled());
-		settings->setValue(KEY_THRESHOLD_TOOLBUTTON, threshold_toolButton->isEnabled());
-		settings->setValue(KEY_RED_TOOLBUTTON, red_toolButton->isEnabled());
-		settings->setValue(KEY_BLUE_TOOLBUTTON, blue_toolButton->isEnabled());
-		settings->setValue(KEY_GREEN_TOOLBUTTON, green_toolButton->isEnabled());
+        //luminance_options.highlights = highlights_comboBox->currentIndex();
+        //luminance_options.setValue(KEY_HIGHLIGHTS, highlights_comboBox->currentIndex());
+        luminance_options.setRawHighlightsMode( highlights_comboBox->currentIndex() );
+
+        //luminance_options.level = level_spinBox->value();
+        //luminance_options.setValue(KEY_LEVEL, level_spinBox->value());
+        luminance_options.setRawLevel( level_spinBox->value() );
+
+        //luminance_options.auto_bright = auto_bright_CB->isChecked();
+        //luminance_options.setValue(KEY_AUTO_BRIGHT, auto_bright_CB->isChecked());
+        luminance_options.setRawAutoBrightness( auto_bright_CB->isChecked() );
+
+        //luminance_options.brightness = brightness_doubleSpinBox->value();
+        //luminance_options.setValue(KEY_BRIGHTNESS, brightness_doubleSpinBox->value());
+        luminance_options.setRawBrightness( brightness_doubleSpinBox->value() );
+
+        //luminance_options.use_black = use_black_CB->isChecked();
+        //luminance_options.setValue(KEY_USE_BLACK, use_black_CB->isChecked());
+        luminance_options.setRawUseBlack( use_black_CB->isChecked() );
+
+        //luminance_options.use_sat = use_sat_CB->isChecked();
+        //luminance_options.setValue(KEY_USE_SAT, use_sat_CB->isChecked());
+        luminance_options.setRawUseSaturation( use_sat_CB->isChecked() );
+
+        //luminance_options.use_noise = use_noise_CB->isChecked();
+        //luminance_options.setValue(KEY_USE_NOISE, use_noise_CB->isChecked());
+        luminance_options.setRawUseNoiseReduction( use_noise_CB->isChecked() );
+
+        //luminance_options.use_chroma = use_chroma_CB->isChecked();
+        //luminance_options.setValue(KEY_USE_CHROMA, use_chroma_CB->isChecked());
+        luminance_options.setRawUseChroma( use_chroma_CB->isChecked() );
+
+        //luminance_options.threshold = threshold_spinBox->value();
+        //luminance_options.setValue(KEY_THRESHOLD, threshold_spinBox->value());
+        luminance_options.setRawNoiseReductionThreshold( threshold_spinBox->value() );
+
+        //luminance_options.user_black = user_black_spinBox->value();
+        //luminance_options.setValue(KEY_USER_BLACK, user_black_spinBox->value());
+        luminance_options.setRawUserBlack( user_black_spinBox->value() );
+
+        //luminance_options.user_sat = user_sat_spinBox->value();
+        //luminance_options.setValue(KEY_USER_SAT, user_sat_spinBox->value());
+        luminance_options.setRawUserSaturation( user_sat_spinBox->value() );
+
+        //luminance_options.aber_0 = red_doubleSpinBox->value();
+        //luminance_options.setValue(KEY_ABER_0, red_doubleSpinBox->value());
+        luminance_options.setRawAber0( red_doubleSpinBox->value() );
+
+        //luminance_options.aber_2 = blue_doubleSpinBox->value();
+        //luminance_options.setValue(KEY_ABER_2, blue_doubleSpinBox->value());
+        luminance_options.setRawAber2( blue_doubleSpinBox->value() );
+
+        //////////////////////////////////////////////////////////////
+
+        luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, user_qual_toolButton->isEnabled());
+        luminance_options.setValue(KEY_MED_PASSES_TOOLBUTTON, med_passes_toolButton->isEnabled());
+        luminance_options.setValue(KEY_WB_METHOD_TOOLBUTTON, wb_method_toolButton->isEnabled());
+        luminance_options.setValue(KEY_TK_TOOLBUTTON, TK_toolButton->isEnabled());
+        luminance_options.setValue(KEY_HIGHLIGHTS_TOOLBUTTON, highlights_toolButton->isEnabled());
+        luminance_options.setValue(KEY_LEVEL_TOOLBUTTON, level_toolButton->isEnabled());
+        luminance_options.setValue(KEY_BRIGHTNESS_TOOLBUTTON, brightness_toolButton->isEnabled());
+        luminance_options.setValue(KEY_USER_BLACK_TOOLBUTTON, user_black_toolButton->isEnabled());
+        luminance_options.setValue(KEY_USER_SAT_TOOLBUTTON, user_sat_toolButton->isEnabled());
+        luminance_options.setValue(KEY_THRESHOLD_TOOLBUTTON, threshold_toolButton->isEnabled());
+        luminance_options.setValue(KEY_RED_TOOLBUTTON, red_toolButton->isEnabled());
+        luminance_options.setValue(KEY_BLUE_TOOLBUTTON, blue_toolButton->isEnabled());
+        luminance_options.setValue(KEY_GREEN_TOOLBUTTON, green_toolButton->isEnabled());
 		
-	settings->endGroup();
+        //luminance_options.endGroup();
 	
 	accept();
 }
@@ -686,44 +714,56 @@ void PreferencesDialog::toolButtonExtTool_clicked() {
 
 /********************************************************/
 
-void PreferencesDialog::from_options_to_gui() {
-	//language: if by any chance luminance_options->gui_lang does NOT contain one of the valid 2 chars
+void PreferencesDialog::from_options_to_gui()
+{
+        //language: if by any chance luminance_options.gui_lang does NOT contain one of the valid 2 chars
 	//codes which are key for the fromIso639ToGuiIndex QMap, provide the default "en"
-	if (!fromIso639ToGuiIndex.contains(luminance_options->gui_lang))
-		luminance_options->gui_lang="en";
-	languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options->gui_lang));
-	lineEditTempPath->setText(luminance_options->tempfilespath);
-	if (luminance_options->batch_ldr_format=="JPEG")
-		batchLdrFormatComboBox->setCurrentIndex(0);
-	else if (luminance_options->batch_ldr_format=="PNG")
-		batchLdrFormatComboBox->setCurrentIndex(1);
-	else if (luminance_options->batch_ldr_format=="PPM")
-		batchLdrFormatComboBox->setCurrentIndex(2);
-	else if (luminance_options->batch_ldr_format=="PBM")
-		batchLdrFormatComboBox->setCurrentIndex(3);
-	else if (luminance_options->batch_ldr_format=="BMP")
-		batchLdrFormatComboBox->setCurrentIndex(4);
-	else if (luminance_options->batch_ldr_format=="TIFF")
-		batchLdrFormatComboBox->setCurrentIndex(5);
-	numThreadspinBox->setValue(luminance_options->num_threads);
-	aisParamsLineEdit->setText(luminance_options->align_image_stack_options.join(" "));
-	logLuvRadioButton->setChecked(luminance_options->saveLogLuvTiff);
-	floatTiffRadioButton->setChecked(!luminance_options->saveLogLuvTiff);
-	change_color_of(negativeColorButton,&negcolor);
-	change_color_of(ifnanColorButton,&infnancolor);
-	previewsWidthSpinBox->setValue(luminance_options->previews_width);
-	checkBoxTMOWindowsMax->setChecked(luminance_options->tmowindow_max);
-	checkBoxTMOWindowsHDR->setChecked(luminance_options->tmowindow_showprocessed);
-	checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options->tmowindow_showpreviewpanel);
-	checkBoxWizardShowFirstPage->setChecked(luminance_options->wizard_show_firstpage);
+        if (!fromIso639ToGuiIndex.contains(luminance_options.getGuiLang())) {
+            luminance_options.setGuiLang("en");
+        }
+        languageComboBox->setCurrentIndex(fromIso639ToGuiIndex.value(luminance_options.getGuiLang()));
 
-	four_color_rgb_CB->setChecked(luminance_options->four_color_rgb);
-	do_not_use_fuji_rotate_CB->setChecked(luminance_options->do_not_use_fuji_rotate);
-	user_qual_comboBox->setCurrentIndex(luminance_options->user_qual);
-	med_passes_horizontalSlider->setValue(luminance_options->med_passes);
-	med_passes_spinBox->setValue(luminance_options->med_passes);
-	wb_method_comboBox->setCurrentIndex(luminance_options->wb_method);
-	if (luminance_options->wb_method < 3) {
+        // Temp directory
+        lineEditTempPath->setText(luminance_options.getTempDir());
+
+        // Batch TM output format
+        {
+            QString out_format = luminance_options.getBatchTmLdrFormat();
+            if (out_format=="JPEG")
+                batchLdrFormatComboBox->setCurrentIndex(0);
+            else if (out_format=="PNG")
+                batchLdrFormatComboBox->setCurrentIndex(1);
+            else if (out_format=="PPM")
+                batchLdrFormatComboBox->setCurrentIndex(2);
+            else if (out_format=="PBM")
+                batchLdrFormatComboBox->setCurrentIndex(3);
+            else if (out_format=="BMP")
+                batchLdrFormatComboBox->setCurrentIndex(4);
+            else if (out_format=="TIFF")
+                batchLdrFormatComboBox->setCurrentIndex(5);
+        }
+        numThreadspinBox->setValue(luminance_options.getNumThreads());
+        aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(" ") );
+        logLuvRadioButton->setChecked(luminance_options.isSaveLogLuvTiff());
+        floatTiffRadioButton->setChecked(!luminance_options.isSaveLogLuvTiff());
+
+        change_color_of(negativeColorButton,&negcolor); // TO CHECK
+        change_color_of(ifnanColorButton,&infnancolor); // TO CHECK
+
+        //previewsWidthSpinBox->setValue(luminance_options.previews_width); // TO CHECK
+        //checkBoxTMOWindowsMax->setChecked(luminance_options.tmowindow_max); // TO CHECK
+        //checkBoxTMOWindowsHDR->setChecked(luminance_options.tmowindow_showprocessed); // TO CHECK
+        checkBoxTMOWindowsPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
+        checkBoxWizardShowFirstPage->setChecked(luminance_options.isShowFirstPageWizard());
+
+        // RAW Processing
+        four_color_rgb_CB->setChecked(luminance_options.isRawFourColorRGB());
+        do_not_use_fuji_rotate_CB->setChecked(luminance_options.isRawDoNotUseFujiRotate());
+        user_qual_comboBox->setCurrentIndex(luminance_options.getRawUserQuality());
+        med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
+        med_passes_spinBox->setValue(luminance_options.getRawMedPasses());
+        wb_method_comboBox->setCurrentIndex(luminance_options.getRawWhiteBalanceMethod());
+        if (luminance_options.getRawWhiteBalanceMethod() < 3) {
 		//TODO
 		TK_label->setEnabled(false);
 		TK_horizontalSlider->setEnabled(false);
@@ -740,17 +780,17 @@ void PreferencesDialog::from_options_to_gui() {
 		green_horizontalSlider->setEnabled(true);
 		green_doubleSpinBox->setEnabled(true);
 	}
-	TK_horizontalSlider->setValue(luminance_options->TK);
-	TK_spinBox->setValue(luminance_options->TK);
-	highlights_comboBox->setCurrentIndex(luminance_options->highlights);
-	level_horizontalSlider->setValue(luminance_options->level);
-	level_spinBox->setValue(luminance_options->level);
-	//false_colors_CB->setChecked(luminance_options->false_colors);
-	auto_bright_CB->setChecked(luminance_options->auto_bright);
-	brightness_horizontalSlider->setValue((int) 10.0*luminance_options->brightness);
-	brightness_doubleSpinBox->setValue(luminance_options->brightness);
-	use_black_CB->setChecked(luminance_options->use_black);
-	if (luminance_options->use_black) {
+        TK_horizontalSlider->setValue(luminance_options.getRawTemperatureKelvin());
+        TK_spinBox->setValue(luminance_options.getRawTemperatureKelvin());
+        highlights_comboBox->setCurrentIndex(luminance_options.getRawHighlightsMode());
+        level_horizontalSlider->setValue(luminance_options.getRawLevel());
+        level_spinBox->setValue(luminance_options.getRawLevel());
+        //false_colors_CB->setChecked(luminance_options.false_colors);
+        auto_bright_CB->setChecked(luminance_options.isRawAutoBrightness());
+        brightness_horizontalSlider->setValue((int) 10.0*luminance_options.getRawBrightness());
+        brightness_doubleSpinBox->setValue(luminance_options.getRawBrightness());
+        use_black_CB->setChecked(luminance_options.isRawUseBlack());
+        if ( luminance_options.isRawUseBlack() ) {
 		user_black_horizontalSlider->setEnabled(true);
 		user_black_spinBox->setEnabled(true);
 	}
@@ -758,10 +798,10 @@ void PreferencesDialog::from_options_to_gui() {
 		user_black_horizontalSlider->setEnabled(false);
 		user_black_spinBox->setEnabled(false);
 	}
-	user_black_horizontalSlider->setValue(luminance_options->user_black);
-	user_black_spinBox->setValue(luminance_options->user_black);
-	use_sat_CB->setChecked(luminance_options->use_sat);
-	if (luminance_options->use_sat) {
+        user_black_horizontalSlider->setValue(luminance_options.getRawUserBlack());
+        user_black_spinBox->setValue(luminance_options.getRawUserBlack());
+        use_sat_CB->setChecked(luminance_options.isRawUseSaturation());
+        if (luminance_options.isRawUseSaturation()) {
 		user_sat_horizontalSlider->setEnabled(true);
 		user_sat_spinBox->setEnabled(true);
 	}
@@ -769,10 +809,10 @@ void PreferencesDialog::from_options_to_gui() {
 		user_sat_horizontalSlider->setEnabled(false);
 		user_sat_spinBox->setEnabled(false);
 	}
-	user_sat_horizontalSlider->setValue(luminance_options->user_sat);
-	user_sat_spinBox->setValue(luminance_options->user_sat);
-	use_noise_CB->setChecked(luminance_options->use_noise);
-	if (luminance_options->use_noise) {
+        user_sat_horizontalSlider->setValue(luminance_options.getRawUserSaturation());
+        user_sat_spinBox->setValue(luminance_options.getRawUserSaturation());
+        use_noise_CB->setChecked(luminance_options.isRawUseNoiseReduction());
+        if ( luminance_options.isRawUseNoiseReduction() ) {
 		threshold_horizontalSlider->setEnabled(true);
 		threshold_spinBox->setEnabled(true);
 	}
@@ -780,10 +820,10 @@ void PreferencesDialog::from_options_to_gui() {
 		threshold_horizontalSlider->setEnabled(false);
 		threshold_spinBox->setEnabled(false);
 	}
-	threshold_horizontalSlider->setValue(luminance_options->threshold);
-	threshold_spinBox->setValue(luminance_options->threshold);	
-	use_chroma_CB->setChecked(luminance_options->use_chroma);
-	if (luminance_options->use_chroma) {
+        threshold_horizontalSlider->setValue( luminance_options.getRawNoiseReductionThreshold() );
+        threshold_spinBox->setValue( luminance_options.getRawNoiseReductionThreshold() );
+        use_chroma_CB->setChecked( luminance_options.isRawUseChroma() );
+        if ( luminance_options.isRawUseChroma() ) {
 		red_horizontalSlider->setEnabled(true);
 		red_doubleSpinBox->setEnabled(true);
 		blue_horizontalSlider->setEnabled(true);
@@ -809,28 +849,28 @@ void PreferencesDialog::from_options_to_gui() {
 		g_maxpos = green_horizontalSlider->maximum();
 		
 		
-	red_horizontalSlider->setValue(value2pos(luminance_options->aber_0, r_minpos, r_maxpos, r_minv, r_maxv));
-	red_doubleSpinBox->setValue(luminance_options->aber_0);
-	blue_horizontalSlider->setValue(value2pos(luminance_options->aber_2, b_minpos, b_maxpos, b_minv, b_maxv));
-	blue_doubleSpinBox->setValue(luminance_options->aber_2);
-	green_horizontalSlider->setValue(value2pos(luminance_options->green, g_minpos, g_maxpos, g_minv, g_maxv));
-	green_doubleSpinBox->setValue(luminance_options->green);
+        red_horizontalSlider->setValue(value2pos(luminance_options.getRawAber0(), r_minpos, r_maxpos, r_minv, r_maxv));
+        red_doubleSpinBox->setValue(luminance_options.getRawAber0());
+        blue_horizontalSlider->setValue(value2pos(luminance_options.getRawAber2(), b_minpos, b_maxpos, b_minv, b_maxv));
+        blue_doubleSpinBox->setValue(luminance_options.getRawAber2());
+        green_horizontalSlider->setValue(value2pos(luminance_options.getRawGreen(), g_minpos, g_maxpos, g_minv, g_maxv));
+        green_doubleSpinBox->setValue(luminance_options.getRawGreen());
 	
-	settings->beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
-	user_qual_toolButton->setEnabled( settings->value(KEY_USER_QUAL_TOOLBUTTON).toBool());
-	med_passes_toolButton->setEnabled( settings->value(KEY_MED_PASSES_TOOLBUTTON).toBool());
-	wb_method_toolButton->setEnabled( settings->value(KEY_WB_METHOD_TOOLBUTTON).toBool());
-	TK_toolButton->setEnabled( settings->value(KEY_TK_TOOLBUTTON).toBool());
-	highlights_toolButton->setEnabled( settings->value(KEY_HIGHLIGHTS_TOOLBUTTON).toBool());
-	level_toolButton->setEnabled( settings->value(KEY_LEVEL_TOOLBUTTON).toBool());
-	brightness_toolButton->setEnabled( settings->value(KEY_BRIGHTNESS_TOOLBUTTON).toBool());
-	user_black_toolButton->setEnabled( settings->value(KEY_USER_BLACK_TOOLBUTTON).toBool());
-	user_sat_toolButton->setEnabled( settings->value(KEY_USER_SAT_TOOLBUTTON).toBool());
-	threshold_toolButton->setEnabled( settings->value(KEY_THRESHOLD_TOOLBUTTON).toBool());
-	red_toolButton->setEnabled( settings->value(KEY_RED_TOOLBUTTON).toBool());
-	blue_toolButton->setEnabled( settings->value(KEY_BLUE_TOOLBUTTON).toBool());
-	green_toolButton->setEnabled( settings->value(KEY_GREEN_TOOLBUTTON).toBool());
-	settings->endGroup();
+        //luminance_options.beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
+        user_qual_toolButton->setEnabled( luminance_options.value(KEY_USER_QUAL_TOOLBUTTON).toBool());
+        med_passes_toolButton->setEnabled( luminance_options.value(KEY_MED_PASSES_TOOLBUTTON).toBool());
+        wb_method_toolButton->setEnabled( luminance_options.value(KEY_WB_METHOD_TOOLBUTTON).toBool());
+        TK_toolButton->setEnabled( luminance_options.value(KEY_TK_TOOLBUTTON).toBool());
+        highlights_toolButton->setEnabled( luminance_options.value(KEY_HIGHLIGHTS_TOOLBUTTON).toBool());
+        level_toolButton->setEnabled( luminance_options.value(KEY_LEVEL_TOOLBUTTON).toBool());
+        brightness_toolButton->setEnabled( luminance_options.value(KEY_BRIGHTNESS_TOOLBUTTON).toBool());
+        user_black_toolButton->setEnabled( luminance_options.value(KEY_USER_BLACK_TOOLBUTTON).toBool());
+        user_sat_toolButton->setEnabled( luminance_options.value(KEY_USER_SAT_TOOLBUTTON).toBool());
+        threshold_toolButton->setEnabled( luminance_options.value(KEY_THRESHOLD_TOOLBUTTON).toBool());
+        red_toolButton->setEnabled( luminance_options.value(KEY_RED_TOOLBUTTON).toBool());
+        blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
+        green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
+        //luminance_options.endGroup();
 }
 
 PreferencesDialog::~PreferencesDialog() {

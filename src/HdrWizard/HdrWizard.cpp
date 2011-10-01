@@ -64,13 +64,11 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationMan
 	if (files.size()) {
 		loadInputFiles(files, files.size());
 	}
-
-	luminance_options = LuminanceOptions::getInstance();
 	
-	if (luminance_options->wizard_show_firstpage == false) {
-		NextFinishButton->setEnabled(false);
-    	pagestack->setCurrentIndex(1);		
-	}
+        if ( !luminance_options.isShowFirstPageWizard() ) {
+            NextFinishButton->setEnabled(false);
+            pagestack->setCurrentIndex(1);
+        }
 
 	progressBar->hide();
 	textEdit->hide();
@@ -87,9 +85,9 @@ HdrWizard::~HdrWizard() {
 	for (int i = 0; i < n; i++) {
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 
@@ -154,17 +152,17 @@ void HdrWizard::loadImagesButtonClicked() {
     filetypes += tr("RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw");
     filetypes += tr("*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)");
 
-    QString RecentDirInputLDRs = settings->value(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, QDir::currentPath()).toString();
+    QString RecentDirInputLDRs = luminance_options.getDefaultPathLdrIn();
 
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select the input images"), RecentDirInputLDRs, filetypes );
 
     if (!files.isEmpty() ) {
 	QFileInfo qfi(files.at(0));
-	// if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
+        // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the luminance_options.
 	if (RecentDirInputLDRs != qfi.path()) {
 		// update internal field variable
 		RecentDirInputLDRs = qfi.path();
-		settings->setValue(KEY_RECENT_PATH_LOAD_LDRs_FOR_HDR, RecentDirInputLDRs);
+                luminance_options.setDefaultPathLdrIn(RecentDirInputLDRs);
 	}
 	//loadImagesButton->setEnabled(false);
 	confirmloadlabel->setText("<center><h3><b>"+tr("Loading...")+"</b></h3></center>");
@@ -186,9 +184,9 @@ void HdrWizard::removeImageButtonClicked()
 	{
 		QString fname = hdrCreationManager->getFileList().at(index);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 
 		hdrCreationManager->remove(index);
@@ -211,9 +209,9 @@ void HdrWizard::clearListButtonClicked()
 	for (int i = 0; i < n; i++) {
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
 		QFile::remove(thumb_name);
-		thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
 
@@ -665,14 +663,14 @@ void HdrWizard::inputHdrFileSelected(int i) {
 	else { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(i);
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 		}
 		else {
-			QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
 			if ( QFile::exists(thumb_name))  {
 				QImage thumb_image(thumb_name);
 				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
@@ -692,14 +690,14 @@ void HdrWizard::resizeEvent ( QResizeEvent * ) {
 	else if (pagestack->currentIndex() == 0 && tableWidget->currentRow() != -1 && hdrCreationManager->inputImageType() != HdrCreationManager::LDR_INPUT_TYPE) { // load preview from thumbnail previously created on disk
 		QString fname = hdrCreationManager->getFileList().at(tableWidget->currentRow());
 		QFileInfo qfi(fname);
-		QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.jpg");
+                QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.jpg");
 
 		if ( QFile::exists(thumb_name))  {
 			QImage thumb_image(thumb_name);
 			previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));
 		}
 		else {
-			QString thumb_name = QString(luminance_options->tempfilespath + "/" + qfi.completeBaseName() + ".thumb.ppm");
+                        QString thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
 			if ( QFile::exists(thumb_name))  {
 				QImage thumb_image(thumb_name);
 				previewLabel->setPixmap(QPixmap::fromImage(thumb_image.scaled(previewLabel->size(), Qt::KeepAspectRatio)));

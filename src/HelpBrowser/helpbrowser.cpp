@@ -54,11 +54,9 @@ for which a new license (GPL+exception) is in place.
 #include <QDesktopServices>
 
 #include "Common/global.h"
-#include "schelptreemodel.h"
-//#include "fmpaths.h"
-#include "LuminancePaths.h"
-
-//#include <iostream>
+#include "HelpBrowser/schelptreemodel.h"
+#include "HelpBrowser/LuminancePaths.h"
+#include "Common/LuminanceOptions.h"
 
 /*! \brief XML parsef for documantation history.
 This is small helper class which reads saved bookmarks configuration
@@ -141,11 +139,11 @@ HelpBrowser::HelpBrowser(QWidget* parent)
 }
 
 HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile)
-	: QMainWindow( parent ) ,zoomFactor(1.0)
+        : QMainWindow( parent ), zoomFactor(1.0)
 {
         firstRun=true;
 	setupUi(this);
-	restoreGeometry(settings->value("HelpBrowserGeometry").toByteArray());
+        restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
 
 	textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
@@ -176,11 +174,11 @@ HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QSt
 HelpBrowser::~HelpBrowser()
 {
 	firstRun=true;
+        LuminanceOptions().setValue("HelpBrowserGeometry", saveGeometry());
 }
 
 void HelpBrowser::closeEvent(QCloseEvent *)
 {
-	settings->setValue("HelpBrowserGeometry", saveGeometry());
 	delete menuModel;
 
 	// no need to delete child widgets, Qt does it all for us

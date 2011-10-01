@@ -28,6 +28,8 @@
 #include <QSortFilterProxyModel>
 #include <QStringListModel>
 
+#include "Common/LuminanceOptions.h"
+
 #include "ui_TransplantExifDialog.h"
 
 class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog {
@@ -48,6 +50,8 @@ private:
 	QSortFilterProxyModel *log_filter;
 	//the model that holds the data
 	QStringListModel *full_Log_Model;
+
+        LuminanceOptions luminance_options;
 private slots:
 	void transplant_requested();
 	void help_requested();

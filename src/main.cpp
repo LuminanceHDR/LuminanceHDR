@@ -36,67 +36,72 @@
 
 int main( int argc, char ** argv )
 {
-    int rc=-1;
-    settings = new QSettings("Luminance", "Luminance");
+    //QCoreApplication::setOrganizationName("Luminance");
+    //QCoreApplication::setApplicationName("Luminance");
+
+    LuminanceOptions luminance_options;
+
     CommandLineInterfaceManager cli( argc, argv );
 
     if (cli.isCommandLineApp())
     {
+        // Command Line Application
+
         QCoreApplication cliApplication( argc, argv );
         QTranslator translator;
-        translator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
+        translator.load(QString("lang_") + luminance_options.getGuiLang(), I18NDIR);
         cliApplication.installTranslator(&translator);
         cli.execCommandLineParams();
         cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
-        rc = cliApplication.exec();
-        LuminanceOptions::deleteInstance();
-        return rc;
-    }
 
-    //GUI application
+        return cliApplication.exec();
+    }
+    else
+    {
+        // GUI application
+
 #ifdef WIN32
-    FreeConsole();
+        FreeConsole();
 #endif
-    Q_INIT_RESOURCE(icons);
-    QApplication application( argc, argv );
+        Q_INIT_RESOURCE(icons);
+        QApplication application( argc, argv );
 
 #ifdef WIN32
-    bool found_DLL = false;
-    foreach (QString path, application.libraryPaths())
-    {
-        if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
+        bool found_DLL = false;
+        foreach (QString path, application.libraryPaths())
         {
-            found_DLL = true;
+            if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
+            {
+                found_DLL = true;
+            }
         }
-    }
-    if (!found_DLL)
-    {
-        QMessageBox::critical(NULL,
-                              QObject::tr("Aborting..."),
-                              QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
-        return 1;
-    }
+        if (!found_DLL)
+        {
+            QMessageBox::critical(NULL,
+                                  QObject::tr("Aborting..."),
+                                  QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
+            return 1;
+        }
 #endif
 
 #ifdef QT_DEBUG
-    qDebug() << "i18n folder = " << I18NDIR;
-    //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-    //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
+        qDebug() << "i18n folder = " << I18NDIR;
+        //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+        //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
 #endif
 
-    QTranslator guiTranslator;
-    QTranslator qtTranslator;
-    // 	qDebug( "Looking for i18n files in: " I18NDIR );
-    qtTranslator.load(QString("qt_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-    guiTranslator.load(QString("lang_") + LuminanceOptions::getInstance()->gui_lang, I18NDIR);
-    application.installTranslator(&qtTranslator);
-    application.installTranslator(&guiTranslator);
-    MainWindow* MW = new MainWindow;
-    //application.connect( &application, SIGNAL(lastWindowClosed()), &application, SLOT(quit()) );
-    MW->setInputFiles(cli.files());
-    MW->show();
-    rc = application.exec();
-    LuminanceOptions::deleteInstance();
-    return rc;
+        QTranslator guiTranslator;
+        QTranslator qtTranslator;
+        qtTranslator.load(QString("qt_") + luminance_options.getGuiLang(), I18NDIR);
+        guiTranslator.load(QString("lang_") + luminance_options.getGuiLang(), I18NDIR);
+        application.installTranslator(&qtTranslator);
+        application.installTranslator(&guiTranslator);
+
+        MainWindow* MW = new MainWindow;
+        MW->setInputFiles(cli.files());
+        MW->show();
+
+        return application.exec();
+    }
 }
 
