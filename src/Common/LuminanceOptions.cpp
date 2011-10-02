@@ -37,60 +37,6 @@
 #include <QFile>
 #include <QDir>
 
-#define LUMINANCEORGANIZATION "Luminance"
-#define LUMINANCEAPPLICATION "Luminance HDR"
-
-// Load default values if they are not defined yet
-LuminanceOptions::LuminanceOptions():
-    QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION)
-{
-
-    // Language
-
-
-
-//    // RAW conversion
-//    this->beginGroup(GROUP_RAW_CONVERSION_OPTIONS);
-//    if (!settings->contains(KEY_GAMM_0))
-//    {
-
-
-//        this->setValue(KEY_TK,6500);
-//        this->setValue(KEY_GREEN,1.0);
-//        this->setValue(KEY_USER_MUL_0,1.0);
-//        this->setValue(KEY_USER_MUL_1,1.0);
-//        this->setValue(KEY_USER_MUL_2,1.0);
-//        this->setValue(KEY_USER_MUL_3,1.0);
-//        this->setValue(KEY_AUTO_BRIGHT,true);
-//        this->setValue(KEY_BRIGHTNESS,1.0);
-//        this->setValue(KEY_THRESHOLD,100.0);
-//        this->setValue(KEY_HALF_SIZE,0);
-//        this->setValue(KEY_FOUR_COLOR_RGB,false);
-//        this->setValue(KEY_WB_METHOD,0);
-//        this->setValue(KEY_OUTPUT_COLOR,1);
-//        this->setValue(KEY_OUTPUT_PROFILE,"");
-//        this->setValue(KEY_CAMERA_PROFILE,"");
-//        this->setValue(KEY_USER_FLIP,0);
-//        this->setValue(KEY_USER_QUAL,0);
-//        this->setValue(KEY_USER_BLACK,0);
-//        this->setValue(KEY_USER_SAT,20000);
-//        this->setValue(KEY_MED_PASSES,0);
-//        this->setValue(KEY_HIGHLIGHTS,0);
-//        this->setValue(KEY_LEVEL,0);
-//        this->setValue(KEY_AUTO_BRIGHT_THR,0);
-//        this->setValue(KEY_ADJUST_MAXIMUM_THR,0);
-//        this->setValue(KEY_DO_NOT_USE_FUJI_ROTATE,false);
-//        this->setValue(KEY_USE_BLACK,false);
-//        this->setValue(KEY_USE_SAT,false);
-//        this->setValue(KEY_USE_NOISE,true);
-//        this->setValue(KEY_USE_CHROMA,false);
-//    }
-//    this->endGroup();
-}
-
-
-LuminanceOptions::~LuminanceOptions() { }
-
 /*
 void LuminanceOptions::loadFromQSettings()
 {
@@ -128,7 +74,7 @@ void LuminanceOptions::setGuiLang(QString s)
 
 bool LuminanceOptions::isRawFourColorRGB()
 {
-    return value(KEY_FOUR_COLOR_RGB).toBool();
+    return value(KEY_FOUR_COLOR_RGB, false).toBool();
 }
 
 void LuminanceOptions::setRawFourColorRGB(bool b)
@@ -138,7 +84,7 @@ void LuminanceOptions::setRawFourColorRGB(bool b)
 
 bool LuminanceOptions::isRawDoNotUseFujiRotate()
 {
-    return value(KEY_DO_NOT_USE_FUJI_ROTATE).toBool();
+    return value(KEY_DO_NOT_USE_FUJI_ROTATE, false).toBool();
 }
 
 void LuminanceOptions::setRawDoNotUseFujiRotate(bool b)
@@ -208,7 +154,7 @@ void LuminanceOptions::setRawGamm1(double v)
 
 int LuminanceOptions::getRawTemperatureKelvin()
 {
-    return value(KEY_TK).toInt();
+    return value(KEY_TK, 6500).toInt();
 }
 
 void LuminanceOptions::setRawTemperatureKelvin(int v)
@@ -218,7 +164,7 @@ void LuminanceOptions::setRawTemperatureKelvin(int v)
 
 float LuminanceOptions::getRawGreen()
 {
-    return value(KEY_GREEN).toFloat();
+    return value(KEY_GREEN, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawGreen(float v)
@@ -228,7 +174,7 @@ void LuminanceOptions::setRawGreen(float v)
 
 float LuminanceOptions::getRawUserMul0()
 {
-    return value(KEY_USER_MUL_0).toFloat();
+    return value(KEY_USER_MUL_0, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawUserMul0(float v)
@@ -238,7 +184,7 @@ void LuminanceOptions::setRawUserMul0(float v)
 
 float LuminanceOptions::getRawUserMul1()
 {
-    return value(KEY_USER_MUL_1).toFloat();
+    return value(KEY_USER_MUL_1, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawUserMul1(float v)
@@ -248,7 +194,7 @@ void LuminanceOptions::setRawUserMul1(float v)
 
 float LuminanceOptions::getRawUserMul2()
 {
-    return value(KEY_USER_MUL_2).toFloat();
+    return value(KEY_USER_MUL_2, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawUserMul2(float v)
@@ -258,7 +204,7 @@ void LuminanceOptions::setRawUserMul2(float v)
 
 float LuminanceOptions::getRawUserMul3()
 {
-    return value(KEY_USER_MUL_3).toFloat();
+    return value(KEY_USER_MUL_3, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawUserMul3(float v)
@@ -268,7 +214,7 @@ void LuminanceOptions::setRawUserMul3(float v)
 
 bool LuminanceOptions::isRawAutoBrightness()
 {
-    return value(KEY_AUTO_BRIGHT).toBool();
+    return value(KEY_AUTO_BRIGHT, false).toBool();
 }
 
 void LuminanceOptions::setRawAutoBrightness(bool b)
@@ -278,7 +224,7 @@ void LuminanceOptions::setRawAutoBrightness(bool b)
 
 float LuminanceOptions::getRawBrightness()
 {
-    return value(KEY_BRIGHTNESS).toFloat();
+    return value(KEY_BRIGHTNESS, 1.0f).toFloat();
 }
 
 void LuminanceOptions::setRawBrightness(float f)
@@ -288,7 +234,7 @@ void LuminanceOptions::setRawBrightness(float f)
 
 float LuminanceOptions::getRawNoiseReductionThreshold()
 {
-    return value(KEY_THRESHOLD).toFloat();
+    return value(KEY_THRESHOLD, 100.0f).toFloat();
 }
 
 void LuminanceOptions::setRawNoiseReductionThreshold(float v)
@@ -298,7 +244,7 @@ void LuminanceOptions::setRawNoiseReductionThreshold(float v)
 
 int LuminanceOptions::getRawHalfSize()
 {
-    return value(KEY_HALF_SIZE).toInt();
+    return value(KEY_HALF_SIZE, 0).toInt();
 }
 
 void LuminanceOptions::setRawHalfSize(int v)
@@ -308,7 +254,7 @@ void LuminanceOptions::setRawHalfSize(int v)
 
 int LuminanceOptions::getRawWhiteBalanceMethod()
 {
-    return value(KEY_WB_METHOD).toInt();
+    return value(KEY_WB_METHOD, 0).toInt();
 }
 
 void LuminanceOptions::setRawWhiteBalanceMethod(int v)
@@ -318,14 +264,14 @@ void LuminanceOptions::setRawWhiteBalanceMethod(int v)
 
 int LuminanceOptions::getRawOutputColor()
 {
-    return value(KEY_OUTPUT_COLOR).toInt();
+    return value(KEY_OUTPUT_COLOR, 1).toInt();
 }
 
 // double check those!
 QString LuminanceOptions::getRawOutputProfile()
 {
     //QFile::encodeName(this->value(KEY_OUTPUT_PROFILE).toString()).constData();
-    return QFile::encodeName(this->value(KEY_OUTPUT_PROFILE).toString());
+    return QFile::encodeName(value(KEY_OUTPUT_PROFILE, "").toString());
 }
 
 void LuminanceOptions::setRawOutputProfile(QString v)
@@ -336,7 +282,7 @@ void LuminanceOptions::setRawOutputProfile(QString v)
 QString LuminanceOptions::getRawCameraProfile()
 {
     // QFile::encodeName(this->value(KEY_CAMERA_PROFILE).toString()).constData();
-    return QFile::encodeName(this->value(KEY_CAMERA_PROFILE).toString());
+    return QFile::encodeName(value(KEY_CAMERA_PROFILE, "").toString());
 }
 
 void LuminanceOptions::setRawCameraProfile(QString v)
@@ -346,12 +292,12 @@ void LuminanceOptions::setRawCameraProfile(QString v)
 
 int LuminanceOptions::getRawUserFlip()
 {
-    return value(KEY_USER_FLIP).toInt();
+    return value(KEY_USER_FLIP, 0).toInt();
 }
 
 int LuminanceOptions::getRawUserQuality()
 {
-    return value(KEY_USER_QUAL).toInt();
+    return value(KEY_USER_QUAL, 0).toInt();
 }
 
 void LuminanceOptions::setRawUserQuality(int v)
@@ -361,7 +307,7 @@ void LuminanceOptions::setRawUserQuality(int v)
 
 int LuminanceOptions::getRawUserSaturation()
 {
-    return value(KEY_USER_SAT).toInt();
+    return value(KEY_USER_SAT, 20000).toInt();
 }
 
 void LuminanceOptions::setRawUserSaturation(int v)
@@ -371,7 +317,7 @@ void LuminanceOptions::setRawUserSaturation(int v)
 
 int LuminanceOptions::getRawMedPasses()
 {
-    return value(KEY_MED_PASSES).toInt();
+    return value(KEY_MED_PASSES, 0).toInt();
 }
 
 void LuminanceOptions::setRawMedPasses(int v)
@@ -381,7 +327,7 @@ void LuminanceOptions::setRawMedPasses(int v)
 
 int LuminanceOptions::getRawHighlightsMode()
 {
-    return value(KEY_HIGHLIGHTS).toInt();
+    return value(KEY_HIGHLIGHTS, 0).toInt();
 }
 
 void LuminanceOptions::setRawHighlightsMode(int v)
@@ -391,7 +337,7 @@ void LuminanceOptions::setRawHighlightsMode(int v)
 
 int LuminanceOptions::getRawLevel()
 {
-    return value(KEY_LEVEL).toInt();
+    return value(KEY_LEVEL, 0).toInt();
 }
 
 void LuminanceOptions::setRawLevel(int v)
@@ -401,7 +347,7 @@ void LuminanceOptions::setRawLevel(int v)
 
 float LuminanceOptions::getRawBrightnessThreshold()
 {
-    return value(KEY_AUTO_BRIGHT_THR).toFloat();
+    return value(KEY_AUTO_BRIGHT_THR, 0.0f).toFloat();
 }
 
 void LuminanceOptions::setRawBrightnessThreshold(float v)
@@ -411,7 +357,7 @@ void LuminanceOptions::setRawBrightnessThreshold(float v)
 
 float LuminanceOptions::getRawMaximumThreshold()
 {
-    return value(KEY_ADJUST_MAXIMUM_THR).toFloat();
+    return value(KEY_ADJUST_MAXIMUM_THR, 0.0f).toFloat();
 }
 
 void LuminanceOptions::setRawMaximumThreshold(float v)
@@ -421,7 +367,7 @@ void LuminanceOptions::setRawMaximumThreshold(float v)
 
 bool LuminanceOptions::isRawUseBlack()
 {
-    return value(KEY_USE_BLACK).toBool();
+    return value(KEY_USE_BLACK, false).toBool();
 }
 
 void LuminanceOptions::setRawUseBlack(bool b)
@@ -431,7 +377,7 @@ void LuminanceOptions::setRawUseBlack(bool b)
 
 int LuminanceOptions::getRawUserBlack()
 {
-    return value(KEY_USER_BLACK).toInt();
+    return value(KEY_USER_BLACK, 0).toInt();
 }
 
 void LuminanceOptions::setRawUserBlack(int v)
@@ -441,7 +387,7 @@ void LuminanceOptions::setRawUserBlack(int v)
 
 bool LuminanceOptions::isRawUseSaturation()
 {
-    return value(KEY_USE_SAT).toBool();
+    return value(KEY_USE_SAT, false).toBool();
 }
 
 void LuminanceOptions::setRawUseSaturation(bool b)
@@ -451,7 +397,7 @@ void LuminanceOptions::setRawUseSaturation(bool b)
 
 bool LuminanceOptions::isRawUseNoiseReduction()
 {
-    return value(KEY_USE_NOISE).toBool();
+    return value(KEY_USE_NOISE, true).toBool();
 }
 
 void LuminanceOptions::setRawUseNoiseReduction(bool b)
@@ -461,7 +407,7 @@ void LuminanceOptions::setRawUseNoiseReduction(bool b)
 
 bool LuminanceOptions::isRawUseChroma()
 {
-    return value(KEY_USE_CHROMA).toBool();
+    return value(KEY_USE_CHROMA, false).toBool();
 }
 
 void LuminanceOptions::setRawUseChroma(bool b)

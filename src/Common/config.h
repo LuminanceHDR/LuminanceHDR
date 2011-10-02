@@ -24,6 +24,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define LUMINANCEORGANIZATION "Luminance"
+#define LUMINANCEAPPLICATION "Luminance"
+
 #define LUMINANCEVERSION "2.2.0-beta1"
 #define TMOSETTINGSVERSION "0.6"
 

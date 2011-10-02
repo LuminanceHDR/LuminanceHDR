@@ -40,13 +40,8 @@
 class LuminanceOptions: public QSettings
 {
 public:
-    LuminanceOptions();
-    ~LuminanceOptions();
-
-    // Language
-    // 2-chars ISO 639 language code for Luminance's user interface
-    QString getGuiLang();
-    void    setGuiLang(QString);
+    LuminanceOptions():
+        QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION) { }
 
     // RAW settings
     bool    isRawFourColorRGB();
@@ -120,6 +115,11 @@ public:
     bool    isRawUseChroma();
     void    setRawUseChroma(bool);
 
+    // Language
+    // 2-chars ISO 639 language code for Luminance's user interface
+    QString getGuiLang();
+    void    setGuiLang(QString);
+
     // Batch HDR
     QString getBatchHdrPathInput();
     QString getBatchHdrPathOutput();
@@ -136,7 +136,7 @@ public:
     void    setBatchTmPathHdrInput(QString);
     void    setBatchTmPathTmoSettings(QString);
     void    setBatchTmPathLdrOutput(QString);
-    void     setBatchTmNumThreads(int);
+    void    setBatchTmNumThreads(int);
     void    setBatchTmLdrFormat(QString);
 
     int     getNumThreads() { return getBatchTmNumThreads(); }
@@ -180,11 +180,11 @@ public:
     void setViewerNegColor(unsigned int);
 
     // Preview Panel
-    bool isPreviewPanelActive();
-    void setPreviewPanelActive(bool);
+    bool    isPreviewPanelActive();
+    void    setPreviewPanelActive(bool);
 
-    int  getPreviewWidth();
-    void setPreviewWidth(int);
+    int     getPreviewWidth();
+    void    setPreviewWidth(int);
 };
 
 #endif
