@@ -2,6 +2,7 @@
  * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,10 +20,12 @@
  * ----------------------------------------------------------------------
  *
  * @author Giuseppe Rota <grota@users.sourceforge.net>
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
+ *  Refactory of the options
  */
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef LUMINANCECONFIG_H
+#define LUMINANCECONFIG_H
 
 #define LUMINANCEORGANIZATION "Luminance"
 #define LUMINANCEAPPLICATION "Luminance"
