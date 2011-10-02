@@ -495,9 +495,10 @@ void LuminanceOptions::setBatchTmLdrFormat(QString s)
     setValue(KEY_BATCH_TM_LDR_FORMAT, s);
 }
 
+// TODO: do something more!
 QString LuminanceOptions::getTempDir()
 {
-    return value(KEY_TEMP_RESULT_PATH, QDir::currentPath()).toString();
+    return value(KEY_TEMP_RESULT_PATH, QDir::temp().absolutePath()).toString();
 }
 
 void LuminanceOptions::setTempDir(QString path)
