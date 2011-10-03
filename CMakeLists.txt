@@ -281,7 +281,6 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
-        src/Common/LuminanceOptions.h
         src/Common/config.h
 
 # new viewer
@@ -409,6 +408,7 @@ SET(LUMINANCE_HDR_MOC
         src/Viewers/IGraphicsView.h
         src/Viewers/IGraphicsPixmapItem.h
 # end new viewer
+        src/Common/LuminanceOptions.h
 	src/Common/GammaAndLevels.h
 	src/Common/Gang.h
 	src/Common/ImageQualityDialog.h

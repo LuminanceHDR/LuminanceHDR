@@ -39,10 +39,12 @@
 
 class LuminanceOptions: public QSettings
 {
+    Q_OBJECT
 public:
     LuminanceOptions():
         QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION) { }
 
+public Q_SLOTS:
     // RAW settings
     bool    isRawFourColorRGB();
     void    setRawFourColorRGB(bool);
@@ -81,13 +83,13 @@ public:
     int     getRawWhiteBalanceMethod();
     void    setRawWhiteBalanceMethod(int);
     int     getRawOutputColor();
-    void    setRawOutputColor(int);
+    //void    setRawOutputColor(int);
     QString getRawOutputProfile();
     void    setRawOutputProfile(QString);
     QString getRawCameraProfile();
     void    setRawCameraProfile(QString);
     int     getRawUserFlip();
-    void    setRawUserFlip(int);
+    //void    setRawUserFlip(int);
     int     getRawUserQuality();
     void    setRawUserQuality(int);
     int     getRawMedPasses();

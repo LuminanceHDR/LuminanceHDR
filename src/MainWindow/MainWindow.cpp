@@ -254,6 +254,7 @@ void MainWindow::createMenus()
     connect(actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
     connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
     connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
+    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
     connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
     connect(actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
 
@@ -307,6 +308,7 @@ void MainWindow::loadOptions()
 	break;
     }
     actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
+
 }
 
 void MainWindow::showDonationsPage()
