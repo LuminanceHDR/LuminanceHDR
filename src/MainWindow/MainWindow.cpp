@@ -77,8 +77,6 @@ MainWindow::MainWindow(QWidget *parent):
     }
 
     // END SPLASH SCREEN    ------------------------------------------------------------------
-
-    testTempDir(luminance_options.getTempDir());
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
@@ -332,15 +330,12 @@ void MainWindow::showDonationsPage()
 
 void MainWindow::fileNewViaWizard(QStringList files)
 {    
-    if (testTempDir(luminance_options.getTempDir()))
-    {
         HdrWizard *wizard = new HdrWizard (this, files);
         if (wizard->exec() == QDialog::Accepted)
         {
             emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
         }
         delete wizard;
-    }
 }
 
 void MainWindow::fileOpen()
@@ -673,25 +668,6 @@ void MainWindow::updateActions( int w )
             // current selected frame is not an HDR
             updateActionsLdrImage();
         }
-    }
-}
-
-bool MainWindow::testTempDir(QString dirname)
-{
-    QFileInfo test(dirname);
-    if ( test.isWritable() && test.exists() && test.isDir() )
-    {
-        return true;
-    }
-    else
-    {
-        // TODO: Universal Message Box!
-        QMessageBox::critical(this,
-                              tr("Error..."),
-                              tr("Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.<br>Please choose a valid path in Tools -> Preferences... -> Tonemapping."),
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton);
-        return false;
     }
 }
 

@@ -233,8 +233,6 @@ protected:
     void initRecentFileActions();
     void clearRecentFileActions();
 
-    bool testTempDir(QString);
-
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
     TMOProgressIndicator *progInd;
