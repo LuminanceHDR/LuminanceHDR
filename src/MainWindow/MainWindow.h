@@ -274,6 +274,8 @@ protected:
     PreviewPanel *previewPanel;
 
     void openFiles(const QStringList& files);
+
+    static int sm_NumMainWindows;
 };
 
 

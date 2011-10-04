@@ -62,6 +62,7 @@
 #include "Libpfs/frame.h"
 #include "UI/UMessageBox.h"
 
+int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
         QMainWindow(parent)
@@ -91,24 +92,37 @@ MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving
 
 MainWindow::~MainWindow()
 {
+    sm_NumMainWindows--;
+
 #ifdef QT_DEBUG
-    qDebug() << "MainWindow::~MainWindow()";
+    qDebug() << "MainWindow::~MainWindow() = " << sm_NumMainWindows;
 #endif
 
+    if ( sm_NumMainWindows == 0 )
+    {
+        // Last MainWindow is dead...
+        luminance_options.setValue("MainWindowState", saveState());
+        luminance_options.setValue("MainWindowGeometry", saveGeometry());
+    }
+
     clearRecentFileActions();
-
-    luminance_options.setValue("MainWindowState", saveState());
-    luminance_options.setValue("MainWindowGeometry", saveGeometry());
-
-    qRegisterMetaType<QImage>("QImage");
-    qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
 }
 
 void MainWindow::init()
 {
+    sm_NumMainWindows++;
+
     helpBrowser = NULL;
     num_ldr_generated = 0;
     curr_num_ldr_open = 0;
+
+    if ( sm_NumMainWindows == 1)
+    {
+        // Register symbols on the first activation!
+
+        qRegisterMetaType<QImage>("QImage");
+        qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+    }
 
     createUI();
     loadOptions();
