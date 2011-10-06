@@ -31,7 +31,6 @@
 #include <QStatusBar>
 
 #include "Core/TonemappingOptions.h"
-#include "Common/LuminanceOptions.h"
 #include "Common/Gang.h"
 #include "Libpfs/frame.h"
 #include "ui_TonemappingPanel.h"

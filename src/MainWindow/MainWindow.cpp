@@ -32,6 +32,10 @@
  *
  */
 
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
+
 #include <QFileDialog>
 #include <QDir>
 #include <QFileInfo>
@@ -49,6 +53,7 @@
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "Batch/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
@@ -1375,15 +1380,29 @@ void MainWindow::setupTM()
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
 {
-    //printf("ToneMapping!\n");
-    // This function needs an heavy clean up!
+#ifdef QT_DEBUG
+    qDebug() << "Start Tone Mapping";
+#endif
 
-	previewPanel->setEnabled(false);
+    if ( opts->tmoperator == fattal && luminance_options.isShowFattalWarning() )
+    {
+        // Warning when using size dependent TMOs with smaller sizes
+        if ( opts->xsize != opts->origxsize )
+        {
+            TonemappingWarningDialog tonemapping_warning_dialog(this);
+
+            tonemapping_warning_dialog.exec();
+
+            if ( !tonemapping_warning_dialog.wasAccepted() ) return;
+        }
+    }
+
+    previewPanel->setEnabled(false);
 
     tm_status.curr_tm_options = opts;
 
-    if ( opts->tonemapOriginal )
-    {
+//    if ( opts->tonemapOriginal )
+//    {
         if ( tm_status.curr_tm_frame->hasSelection() )
         {
             opts->tonemapSelection = true;
@@ -1395,7 +1414,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         }
         else
            opts->tonemapSelection = false;
-    }
+//    }
 
 
 

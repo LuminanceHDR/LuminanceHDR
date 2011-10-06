@@ -42,13 +42,10 @@
 #include <QSqlError>
 
 #include "Common/LuminanceOptions.h"
-#include "TonemappingPanel.h"
-#include "TMOProgressIndicator.h"
-#include "TonemappingWarnDialog.h"
-#include "SavedParametersDialog.h"
-#include "SavingParametersDialog.h"
-
-
+#include "TonemappingPanel/TonemappingPanel.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
+#include "TonemappingPanel/SavedParametersDialog.h"
+#include "TonemappingPanel/SavingParametersDialog.h"
 
 TonemappingPanel::TonemappingPanel(QWidget *parent)
     : QWidget(parent), adding_custom_size(false)
@@ -392,28 +389,8 @@ void TonemappingPanel::on_pregammadefault_clicked()
     pregammaGang->setDefault();
 }
 
-// TODO : check this function
 void TonemappingPanel::on_applyButton_clicked()
 {
-    // TODO: fix it!!!
-    /*
-    if (luminance_options->tmowarning_fattalsmall)
-    {
-        bool doTonemapping = true;
-
-        // Warning when using size dependent TMOs with smaller sizes
-        if (currentTmoOperator == fattal && (sizeComboBox->currentIndex() != 0 ))
-        {
-            TonemappingWarningDialog *warn = new TonemappingWarningDialog(this);
-            warn->exec();
-            doTonemapping = warn->wasAccepted();
-            delete warn;
-        }
-        if (doTonemapping == false)
-            return;
-    }
-    */
-
     fillToneMappingOptions();
     setupUndo();
 
