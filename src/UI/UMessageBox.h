@@ -50,6 +50,8 @@ private:
     // workaround to set size
     QSpacerItem* m_horizontalSpacer;
     QGridLayout* m_layout;
+
+    void init();
 public:
   explicit UMessageBox(QWidget *parent = 0);
   
@@ -57,7 +59,7 @@ public:
                int button0, int button1, int button2,
                QWidget *parent = 0,
                Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-  
+
   virtual void showEvent(QShowEvent *event);
 
   static void about(QWidget* parent = 0)

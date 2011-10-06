@@ -30,7 +30,7 @@
 
 #include "Viewers/GenericViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
-#include "UI/UMessageBox.h"
+//#include "UI/UMessageBox.h"
 
 // define the number of pixels to count as border of the image, because of the shadow
 #define BORDER_SIZE 30

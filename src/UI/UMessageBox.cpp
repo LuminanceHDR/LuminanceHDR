@@ -30,16 +30,21 @@
 
 #define UMESSAGEBOX_WIDTH 450 // pixel
 
-UMessageBox::UMessageBox(QWidget *parent) : QMessageBox(parent)
+void UMessageBox::init()
 {
     m_horizontalSpacer = new QSpacerItem(UMESSAGEBOX_WIDTH, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_layout = (QGridLayout*)this->layout();
     m_layout->addItem(m_horizontalSpacer, m_layout->rowCount(), 0, 1, m_layout->columnCount());
 
-	this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+    this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
 #ifdef Q_WS_MAC
     this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
 #endif
+}
+
+UMessageBox::UMessageBox(QWidget *parent) : QMessageBox(parent)
+{
+    init();
 }
 
 UMessageBox::UMessageBox(const QString &title, const QString &text, Icon icon,
@@ -48,14 +53,7 @@ UMessageBox::UMessageBox(const QString &title, const QString &text, Icon icon,
              Qt::WindowFlags f) :
 QMessageBox(title, text, icon, button0, button1, button2, parent, f)
 {
-    m_horizontalSpacer = new QSpacerItem(UMESSAGEBOX_WIDTH, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    m_layout = (QGridLayout*)this->layout();
-    m_layout->addItem(m_horizontalSpacer, m_layout->rowCount(), 0, 1, m_layout->columnCount());
-
-	this->setWindowTitle("Luminance HDR "LUMINANCEVERSION);
-#ifdef Q_WS_MAC
-    this->setWindowModality(Qt::WindowModal); // In OS X, the QMessageBox is modal to the window
-#endif
+    init();
 }
 
 void UMessageBox::showEvent(QShowEvent *event)
