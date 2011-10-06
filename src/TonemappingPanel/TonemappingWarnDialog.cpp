@@ -34,7 +34,7 @@ TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p) : QDialog(p)
 
     plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
 
-    checkBoxAskAgain->setChecked(luminance_options.value(KEY_TMOWARNING_FATTALSMALL, false).toBool());
+    checkBoxAskAgain->setChecked(luminance_options.isShowFattalWarning());
 
     connect(buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
     yes=false;
@@ -42,21 +42,16 @@ TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p) : QDialog(p)
 
 void TonemappingWarningDialog::accepted()
 {
-    bool tmowarning_fattalsmall = luminance_options.value(KEY_TMOWARNING_FATTALSMALL, false).toBool();
-    if (checkBoxAskAgain->isChecked() != tmowarning_fattalsmall)
-    {
-        tmowarning_fattalsmall = !tmowarning_fattalsmall;
-        luminance_options.setValue(KEY_TMOWARNING_FATTALSMALL, checkBoxAskAgain->isChecked());
-    }
+    luminance_options.setShowFattalWarning( checkBoxAskAgain->isChecked() );
 
     accept();
 
-    yes=true;
+    yes = true;
 }
 
 bool TonemappingWarningDialog::wasAccepted()
 {
-    return(yes);
+    return (yes);
 }
 
 
