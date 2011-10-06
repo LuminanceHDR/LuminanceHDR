@@ -588,6 +588,16 @@ void LuminanceOptions::setShowFirstPageWizard(bool b)
     setValue(KEY_WIZARD_SHOWFIRSTPAGE, b);
 }
 
+bool LuminanceOptions::isShowFattalWarning()
+{
+    return value(KEY_TMOWARNING_FATTALSMALL,true).toBool();
+}
+
+void LuminanceOptions::setShowFattalWarning(bool b)
+{
+    setValue(KEY_TMOWARNING_FATTALSMALL, b);
+}
+
 int LuminanceOptions::getMainWindowToolBarMode()
 {
     return value(KEY_TOOLBAR_MODE, Qt::ToolButtonTextUnderIcon).toInt();

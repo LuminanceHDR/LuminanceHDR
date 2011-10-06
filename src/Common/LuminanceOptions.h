@@ -171,6 +171,9 @@ public Q_SLOTS:
     bool    isShowFirstPageWizard();
     void    setShowFirstPageWizard(bool b);
 
+    bool    isShowFattalWarning();
+    void    setShowFattalWarning(bool b);
+
     // MainWindow
     int     getMainWindowToolBarMode();
     void    setMainWindowToolBarMode(int);
