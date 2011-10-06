@@ -115,6 +115,7 @@ void BatchHDRDialog::add_files()
                     m_luminance_options.setBatchHdrPathInput(m_batchHdrInputDir);
                 }
 	}
+	check_start_button();
 }
 
 void BatchHDRDialog::add_out_dir()
@@ -127,6 +128,7 @@ void BatchHDRDialog::add_out_dir()
             m_batchHdrOutputDir = outputLineEdit->text();
             m_luminance_options.setBatchHdrPathOutput(m_batchHdrOutputDir);
 	}
+	check_start_button();
 }
 
 void BatchHDRDialog::init_batch_hdr()
@@ -137,6 +139,8 @@ void BatchHDRDialog::init_batch_hdr()
 	startPushButton->setEnabled(false);
 	progressBar->setMaximum(m_bracketed.count() / spinBox->value());	
 	textEdit->append(tr("Started processing..."));
+    // mouse pointer to busy
+    QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 	this->batch_hdr();
 }
 
@@ -160,6 +164,7 @@ void BatchHDRDialog::batch_hdr()
 		cancelPushButton->hide();
 		startPushButton->hide();
 		progressBar->hide();
+        QApplication::restoreOverrideCursor();
 		if (m_errors)
 			textEdit->append(tr("Completed with errors"));
 		else
@@ -251,4 +256,10 @@ void BatchHDRDialog::writeAisData(QByteArray data)
 {
 	qDebug() << data;
 	textEdit->append(data);
+}
+
+void BatchHDRDialog::check_start_button()
+{
+	if (inputLineEdit->text() != "" && outputLineEdit->text() != "")
+		startPushButton->setEnabled(true);
 }
