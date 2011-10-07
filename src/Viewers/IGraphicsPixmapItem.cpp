@@ -32,14 +32,12 @@
 //----------------------------------------------------------------------------
 //
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
-    QGraphicsPixmapItem(parent), mIsSelectionEnabled(true)
+    QGraphicsPixmapItem(parent), mIsSelectionEnabled(true), mSelectionBox(NULL)
 {
     mDropShadow = new QGraphicsDropShadowEffect();
     mDropShadow->setBlurRadius(10);
     mDropShadow->setOffset(0,0);
     //this->setGraphicsEffect(mDropShadow);
-
-    mSelectionBox = NULL;
 }
 
 IGraphicsPixmapItem::~IGraphicsPixmapItem()
@@ -79,18 +77,7 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     if (event->button() == Qt::LeftButton)
     {
-#ifdef QT_DEBUG
-        //qDebug() << "IGraphicsPixmapItem::mousePressEvent()";
-#endif
         setCursor(Qt::CrossCursor);
-        if (!mSelectionBox)
-        {
-            mSelectionBox = new ISelectionBox(this);
-            //this->scene()->addItem(mSelectionBox);    // not necessary
-        }
-        QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
-        mSelectionBox->setSelection(QRectF(origin, QSizeF()));
-        mSelectionBox->show();
     }
 
     if (event->button() == Qt::RightButton)
@@ -103,9 +90,8 @@ void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (!mIsSelectionEnabled) return;
 
-#ifdef QT_DEBUG
-    //qDebug() << "IGraphicsPixmapItem::mouseMoveEvent()";
-#endif
+    mMouseState = SELECTING;
+
     if (mSelectionBox)
     {
         setCursor(Qt::CrossCursor);
@@ -113,6 +99,14 @@ void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
         QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
         mSelectionBox->setSelection(QRectF(origin, current));
+    }
+    else
+    {
+        mSelectionBox = new ISelectionBox(this);
+
+        QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
+        mSelectionBox->setSelection(QRectF(origin, QSizeF()));
+        mSelectionBox->show();
     }
 }
 
@@ -122,17 +116,30 @@ void IGraphicsPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
     if (event->button() == Qt::LeftButton)
     {
-#ifdef QT_DEBUG
-        //qDebug() << "IGraphicsPixmapItem::mouseReleaseEvent()";
-#endif
-        if (mSelectionBox)
+        switch (mMouseState)
         {
-            QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
-            QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
-            mSelectionBox->setSelection(QRectF(origin, current));
+        case SELECTING:
+        {
+            if (mSelectionBox)
+            {
+                QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
+                QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
+                mSelectionBox->setSelection(QRectF(origin, current));
 
-            emit selectionReady(true);
+                emit selectionReady(true);
+            }
+            mMouseState = IDLE;
         }
+            break;
+
+        default:
+        case IDLE:
+        {
+            if (mSelectionBox) removeSelection();
+        }
+            break;
+        }
+
         unsetCursor();
     }
 }

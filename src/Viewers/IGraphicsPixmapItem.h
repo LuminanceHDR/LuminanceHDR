@@ -67,5 +67,7 @@ protected:
     ISelectionBox* mSelectionBox;
 
     bool mIsSelectionEnabled;
+
+    enum { IDLE, SELECTING } mMouseState;
 };
 #endif
