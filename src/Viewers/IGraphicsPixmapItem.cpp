@@ -79,11 +79,6 @@ void IGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         setCursor(Qt::CrossCursor);
     }
-
-    if (event->button() == Qt::RightButton)
-    {
-        removeSelection();
-    }
 }
 
 void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -92,10 +87,10 @@ void IGraphicsPixmapItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
     mMouseState = SELECTING;
 
+    setCursor(Qt::CrossCursor);
+
     if (mSelectionBox)
     {
-        setCursor(Qt::CrossCursor);
-
         QPointF origin = ISelectionBox::checkBorders(event->buttonDownScenePos(Qt::LeftButton), this);
         QPointF current = ISelectionBox::checkBorders(event->scenePos(), this);
         mSelectionBox->setSelection(QRectF(origin, current));
