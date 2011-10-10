@@ -39,6 +39,9 @@ int main( int argc, char ** argv )
     //QCoreApplication::setOrganizationName("Luminance");
     //QCoreApplication::setApplicationName("Luminance");
 
+    // Make sure an Q*Application exists before instantiating the QSettings
+    // Without this some systems will deadlock
+    QCoreApplication *cliApplication = new QCoreApplication( argc, argv );
     LuminanceOptions luminance_options;
 
     CommandLineInterfaceManager cli( argc, argv );
@@ -47,18 +50,22 @@ int main( int argc, char ** argv )
     {
         // Command Line Application
 
-        QCoreApplication cliApplication( argc, argv );
         QTranslator translator;
         translator.load(QString("lang_") + luminance_options.getGuiLang(), I18NDIR);
-        cliApplication.installTranslator(&translator);
+        cliApplication->installTranslator(&translator);
         cli.execCommandLineParams();
-        cliApplication.connect(&cli, SIGNAL(finishedParsing()), &cliApplication, SLOT(quit()));
+        cliApplication->connect(&cli, SIGNAL(finishedParsing()), cliApplication, SLOT(quit()));
 
-        return cliApplication.exec();
+        int ret_value = cliApplication->exec();
+        delete cliApplication;
+        return ret_value;
     }
     else
     {
         // GUI application
+
+        // Only one Q*Application may exist at a time
+        delete cliApplication;
 
 #ifdef WIN32
         FreeConsole();
