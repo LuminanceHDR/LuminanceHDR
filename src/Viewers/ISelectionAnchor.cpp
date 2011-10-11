@@ -108,7 +108,7 @@ void ISelectionAnchor::hoverEnterEvent(QGraphicsSceneHoverEvent*)
 
 QRectF ISelectionAnchor::boundingRect() const
 {
-    return QRectF(0, 0, mSize, mSize).normalized();
+    return QRectF(-mSize/qreal(2.), -mSize/qreal(2.), mSize, mSize).normalized() ;
 }
 
 #include <QtCore/qmath.h>
@@ -133,5 +133,5 @@ void ISelectionAnchor::paint(QPainter* painter, const QStyleOptionGraphicsItem*,
 
     painter->setPen( Qt::NoPen );
     painter->setBrush( QBrush(mAnchorColor, Qt::SolidPattern) );
-    painter->drawEllipse( QRectF(0, 0, mSize, mSize).normalized() );
+    painter->drawEllipse( QRectF(-mSize/qreal(2.), -mSize/qreal(2.), mSize, mSize).normalized() );
 }

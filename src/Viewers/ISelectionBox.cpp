@@ -77,26 +77,14 @@ ISelectionBox::~ISelectionBox()
 
 void ISelectionBox::setCornerPositions()
 {
-    // I assume all the anchors have the same size
-    const qreal disp_r = mAnchors[0]->getAnchorSize()/2;
-    QPointF disp = QPointF(disp_r, disp_r);
-
-    mAnchors[0]->setPos(mSelectedArea.topLeft() - disp);
-    mAnchors[1]->setPos(
-                QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.top()) - disp
-                ); // top
-    mAnchors[2]->setPos(mSelectedArea.topRight() - disp);
-    mAnchors[3]->setPos(
-                QPointF(mSelectedArea.right(), (mSelectedArea.top()+mSelectedArea.bottom())/2) - disp
-                ); // right
-    mAnchors[4]->setPos(mSelectedArea.bottomRight() - disp);
-    mAnchors[5]->setPos(
-                QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.bottom()) - disp
-                ); // bottom
-    mAnchors[6]->setPos(mSelectedArea.bottomLeft() - disp);
-    mAnchors[7]->setPos(
-                QPointF(mSelectedArea.left(), (mSelectedArea.top()+mSelectedArea.bottom())/2 ) - disp
-                ); // left
+    mAnchors[0]->setPos(mSelectedArea.topLeft());
+    mAnchors[1]->setPos(QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.top())); // top
+    mAnchors[2]->setPos(mSelectedArea.topRight());
+    mAnchors[3]->setPos(QPointF(mSelectedArea.right(), (mSelectedArea.top()+mSelectedArea.bottom())/2)); // right
+    mAnchors[4]->setPos(mSelectedArea.bottomRight());
+    mAnchors[5]->setPos(QPointF((mSelectedArea.left() + mSelectedArea.right())/2, mSelectedArea.bottom())); // bottom
+    mAnchors[6]->setPos(mSelectedArea.bottomLeft());
+    mAnchors[7]->setPos(QPointF(mSelectedArea.left(), (mSelectedArea.top()+mSelectedArea.bottom())/2 )); // left
 }
 
 void ISelectionBox::mousePressEvent(QGraphicsSceneMouseEvent *event)
