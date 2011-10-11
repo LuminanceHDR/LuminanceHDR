@@ -49,22 +49,22 @@ public:
     virtual ~GenericViewer();
 
 public Q_SLOTS:
-    virtual void updateView();  // tells the Viewer to update the View area
+    /*virtual*/ void updateView();  // tells the Viewer to update the View area
 
-    virtual void zoomIn();
-    virtual void zoomOut();
+    /*virtual*/ void zoomIn();
+    /*virtual*/ void zoomOut();
 
-    virtual void fitToWindow(bool checked = true);  // checked is useless: kept for compatibility
-    virtual bool isFittedToWindow();
+    /*virtual*/ void fitToWindow(bool checked = true);  // checked is useless: kept for compatibility
+    /*virtual*/ bool isFittedToWindow();
 
-    virtual void fillToWindow();
-    virtual bool isFilledToWindow();
+    /*virtual*/ void fillToWindow();
+    /*virtual*/ bool isFilledToWindow();
 
-    virtual void normalSize();
-    virtual bool isNormalSize();
+    /*virtual*/ void normalSize();
+    /*virtual*/ bool isNormalSize();
 
-    virtual void zoomToFactor(float factor);
-    inline virtual float getScaleFactor()
+    /*virtual*/ void zoomToFactor(float factor);
+    inline /*virtual*/ float getScaleFactor()
     {
         return mView->transform().m11();
     }
@@ -75,17 +75,17 @@ public Q_SLOTS:
     virtual const QRect getSelectionRect(void);
     virtual void removeSelection();
 
-    virtual bool needsSaving();
-    virtual void setNeedsSaving(bool);
+    /*virtual*/ bool needsSaving();
+    /*virtual*/ void setNeedsSaving(bool);
 
     virtual const QString getFileName();
     virtual void setFileName(const QString);
 
-    virtual void syncViewer(GenericViewer *src);
-    virtual int getHorizScrollBarValue();
-    virtual int getVertScrollBarValue();
-    virtual void setHorizScrollBarValue(int value);
-    virtual void setVertScrollBarValue(int value);
+    /*virtual*/  void syncViewer(GenericViewer *src);
+    /*virtual*/  int getHorizScrollBarValue();
+    /*virtual*/  int getVertScrollBarValue();
+    /*virtual*/  void setHorizScrollBarValue(int value);
+    /*virtual*/  void setVertScrollBarValue(int value);
 
     virtual bool isHDR() = 0;
     virtual void levelsRequested(bool) = 0; // only used by LdrViewer
@@ -99,10 +99,10 @@ public Q_SLOTS:
     virtual void updateHDR(pfs::Frame*) { }
 
 protected Q_SLOTS:
-    virtual void slotPanIconSelectionMoved(QRect);
-    virtual void slotPanIconHidden();
-    virtual void slotCornerButtonPressed();
-    virtual void scrollBarChanged(int /*value*/);
+    /*virtual*/  void slotPanIconSelectionMoved(QRect);
+    /*virtual*/  void slotPanIconHidden();
+    /*virtual*/  void slotCornerButtonPressed();
+    /*virtual*/  void scrollBarChanged(int /*value*/);
     //virtual void route_changed();
 
 protected:
@@ -125,8 +125,8 @@ protected:
     int mRows;
 
     bool NeedsSaving;
-    bool noCloseFlag;
-    bool isSelectionToolVisible;
+//    bool noCloseFlag;
+//    bool isSelectionToolVisible;
 
 Q_SIGNALS:
     void selectionReady(bool isReady);

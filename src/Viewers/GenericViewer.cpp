@@ -36,7 +36,8 @@
 #define BORDER_SIZE 30
 
 GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
-    QWidget(parent), NeedsSaving(ns), noCloseFlag(ncf),
+    QWidget(parent), NeedsSaving(ns),
+    // noCloseFlag(ncf),
     mImage(NULL),
     mViewerMode(NORMAL_SIZE)
 {
