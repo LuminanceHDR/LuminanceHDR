@@ -108,12 +108,12 @@ void TMOThread::finalize()
     {
         apply_white_black_point(workingframe, 0.0f, 95.f);
 
-        QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
-        quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
-
         switch (m_tmo_thread_mode) {
         case TMO_BATCH:
         {
+            QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
+            quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
+
             // different emit signal
             // I let the parent of this thread to delete working_frame
             //pfs::DOMIO pfsio;
@@ -124,6 +124,8 @@ void TMOThread::finalize()
             break;
         case TMO_PREVIEW:
         {
+            QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
+
             // different emit signal
             // I let the parent of this thread to delete working_frame
             //pfs::DOMIO pfsio;
@@ -136,6 +138,9 @@ void TMOThread::finalize()
         default:
         {
             qDebug() << "emit imageComputed(res, pixmap)";
+
+            QImage* res = fromLDRPFStoQImage(workingframe, out_CS);
+            quint16 *pixmap = fromLDRPFSto16bitsPixmap(workingframe);
 
             delete workingframe;
 
