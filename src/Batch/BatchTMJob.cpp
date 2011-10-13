@@ -190,6 +190,8 @@ void BatchTMJob::tm_failed()
 
 void BatchTMJob::tm_completed(QImage* newimage, quint16* newpixmap, const TonemappingOptions* /*opts*/)
 {
+    delete newpixmap;
+
     m_ldr_image = newimage;
-	m_pixmap = newpixmap;
+    m_pixmap = newpixmap;
 }

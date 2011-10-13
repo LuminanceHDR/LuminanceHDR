@@ -523,7 +523,7 @@ void  CommandLineInterfaceManager::startTonemap()
 			tmopts->xsize = HDR->getWidth();
     
                 TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, tmopts);
-		connect(thread, SIGNAL(imageComputed(QImage*)), this, SLOT(tonemapTerminated(QImage*)));
+		connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(tonemapTerminated(QImage*, quint16*)));
     
     thread->startTonemapping();
 	}
@@ -534,8 +534,10 @@ void  CommandLineInterfaceManager::startTonemap()
 	}
 }
 
-void CommandLineInterfaceManager::tonemapTerminated(QImage* newimage)
+void CommandLineInterfaceManager::tonemapTerminated(QImage* newimage, quint16* pixmap)
 {
+    delete pixmap;
+
 	QFileInfo qfi(saveLdrFilename);
         if (!newimage->save(saveLdrFilename, qfi.suffix().toLocal8Bit().constData(), 100))
   {

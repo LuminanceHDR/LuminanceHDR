@@ -83,7 +83,7 @@ private slots:
 	void createHDR();
 	void loadFinished(pfs::Frame*,QString);
 	void parseArgs();
-	void tonemapTerminated(QImage*);
+	void tonemapTerminated(QImage*, quint16*);
     void execCommandLineParamsSlot();
 
 signals:
