@@ -245,15 +245,8 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
 
 TonemappingOptions* TMOptionsOperations::getDefaultTMOptions() {
         TonemappingOptions *toreturn=new TonemappingOptions;
-        memset(toreturn, 0, sizeof *toreturn);
         //TODO when instantiating the tonemapperThread, check this value: if -2 => create thread with originalsize=-2 (to skip resize the step as we did with the batch tone mapping), else (the user wants to resize) create thread with true originalxsize
         toreturn->xsize=-2;
-        toreturn->pregamma=1;
-        toreturn->tmoperator=mantiuk06;
-        toreturn->operator_options.mantiuk06options.contrastfactor=0.1;
-        toreturn->operator_options.mantiuk06options.contrastequalization=false;
-        toreturn->operator_options.mantiuk06options.saturationfactor=0.8;
-        toreturn->operator_options.mantiuk06options.detailfactor=1.0;
         return toreturn;
 }
 
