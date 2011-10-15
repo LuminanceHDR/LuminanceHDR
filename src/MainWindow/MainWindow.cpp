@@ -1148,7 +1148,7 @@ void MainWindow::updateWindowMenu()
         delete Action_MW;
     }
 
-    foreach (QWidget *widget, qApp->topLevelWidgets())
+    foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
         if (MW != NULL)
@@ -1192,7 +1192,7 @@ void MainWindow::maximizeMW()
 
 void MainWindow::bringAllMWToFront()
 {
-    foreach (QWidget *widget, qApp->topLevelWidgets())
+    foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
         if (MW != NULL)
@@ -1892,7 +1892,13 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
     luminance_options.setValue(KEY_RECENT_FILES, files);
 
-    updateRecentFileActions();
+    // Update ALL MainWindow
+    foreach (QWidget *widget, QApplication::topLevelWidgets())
+    {
+        MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
+        if (mainWin)
+            mainWin->updateRecentFileActions();
+    }
 }
 
 void MainWindow::updateRecentFileActions()
