@@ -150,6 +150,19 @@ static inline float safe_log10( float x, const float min_x = MIN_PHVAL, const fl
   else return log10( x );
 }
 
+#ifdef __USE_SSE__
+
+#define LOG2_10 3.3219280948874f
+#define LOG2_10__1 (1.0f/LOG2_10)
+static inline v4sf safe_log10( v4sf x, const float min_x = MIN_PHVAL, const float max_x = MAX_PHVAL )
+{
+  x = _mm_max_ps(x, _mm_set1_ps(min_x));
+  x = _mm_min_ps(x, _mm_set1_ps(max_x));
+  return _mm_log2_ps(x) * _mm_set1_ps(LOG2_10__1);
+}
+
+#endif
+
 /**
  * Find the lowest non-zero value. Used to avoid log10(0).
  */
@@ -422,14 +435,23 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     
   pfs::Array2D* LP_low = &buf_1;
   pfs::Array2D* LP_high = &buf_2;
-
+  float* LP_high_raw = LP_high->getRawData();
+  
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
   
-  // Compute log10 of an image 
-#pragma omp parallel for default(none) shared(LP_high, L)
+  // Compute log10 of an image
+#pragma omp parallel for default(none) shared(LP_high_raw, L)
+#ifndef __USE_SSE__
   for( int i=0; i < pix_count; i++ )
-    (*LP_high)(i) = safe_log10( L[i], min_val );
-
+    LP_high_raw[i] = safe_log10( L[i], min_val );
+#else
+  for( int i=0; i < pix_count-3; i+=4 )
+    _mm_store_ps(&LP_high_raw[i], safe_log10( _mm_load_ps(&L[i]), min_val ));
+  // In case pix_count%4 > 0
+  for( int i=pix_count-3; i < pix_count; i++ )
+    LP_high_raw[i] = safe_log10( L[i], min_val );
+#endif
+  
   bool warn_out_of_range = false;
   C->total = 0;
   
