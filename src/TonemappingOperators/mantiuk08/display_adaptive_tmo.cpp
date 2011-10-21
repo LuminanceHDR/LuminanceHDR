@@ -37,6 +37,10 @@
 #include <iostream>
 #include <assert.h>
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 #include "display_adaptive_tmo.h"
 
 #include <gsl/gsl_vector.h>
@@ -263,13 +267,13 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
 static void compute_gaussian_level( const int width, const int height, const pfs::Array2D& in, pfs::Array2D& out, int level, pfs::Array2D& temp )
 {
 
-  float kernel_a = 0.4;
+  const float kernel_a = 0.4;
 
   const int kernel_len = 5;
   const int kernel_len_2 = kernel_len/2;
-  float kernel[kernel_len] = { 0.25 - kernel_a/2, 0.25 , kernel_a, 0.25, 0.25 - kernel_a/2 };
+  const float kernel[kernel_len] = { 0.25 - kernel_a/2, 0.25 , kernel_a, 0.25, 0.25 - kernel_a/2 };
 
-  int step = 1<<level;
+  const int step = 1<<level;
 
   // FIXME: without the following (with using operator () ) there
   // seems to be a performance drop - need to investigate if gcc can
@@ -281,6 +285,7 @@ static void compute_gaussian_level( const int width, const int height, const pfs
   float* out_raw = out.getRawData();
 
   // Filter rows
+#pragma omp parallel for default(none) shared(in_raw, temp_raw, kernel)
   for( int r=0; r < height; r++ ) {
     for( int c=0; c < width; c++ ) {
       float sum = 0;
@@ -297,6 +302,7 @@ static void compute_gaussian_level( const int width, const int height, const pfs
   }
     
   // Filter columns
+#pragma omp parallel for default(none) shared(temp_raw, out_raw, kernel)
   for( int c=0; c < width; c++ ) {
     for( int r=0; r < height; r++ ) {
       float sum = 0;
@@ -419,6 +425,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   const float min_val = std::max( min_positive( L, pix_count ), MIN_PHVAL );
   
   // Compute log10 of an image 
+#pragma omp parallel for default(none) shared(LP_high, L)
   for( int i=0; i < pix_count; i++ )
     (*LP_high)(i) = safe_log10( L[i], min_val );
 
@@ -439,6 +446,9 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
     const int gi_tp = C->g_count/2+1;
     const int gi_tn = C->g_count/2-1;
     const int gi_t = C->g_count/2;
+    // Can't parallelize this loop due to the increments on shared data
+    // at the end, and making those increments critical sections makes
+    // things worse.
     for( int i=0; i < pix_count; i++ ) {
       float g = (*LP_high)(i) - (*LP_low)(i); // Compute band-pass
       int x_i = round_int( ((*LP_low)(i) - C->l_min)/C->delta );
@@ -480,7 +490,6 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
         if( likely(m != gi_t) )
           C->total += (*C)(i,m,f);
     }
-      
     std::swap( LP_low, LP_high );
 
     ph->newValue( (f+1)*PROGRESS_CDF/C->f_count );  
@@ -986,6 +995,8 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   cc_lut.y_i[tc->size-1] = 1;
   
   const size_t pix_count = width*height;
+
+#pragma omp parallel for default(none) shared(R_in,G_in,B_in,L_in,R_out,G_out,B_out,tc_lut,cc_lut,df)
   for( size_t i=0; i < pix_count; i++ ) {
     float L_fix = clamp_channel(L_in[i]);
     const float L_out = tc_lut.interp( log10(L_fix) );
