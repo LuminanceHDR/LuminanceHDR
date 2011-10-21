@@ -1020,7 +1020,7 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   const size_t pix_count = width*height;
 
 #pragma omp parallel for default(none) shared(R_in,G_in,B_in,L_in,R_out,G_out,B_out,tc_lut,cc_lut,df)
-  for( size_t i=0; i < pix_count; i++ ) {
+  for(int i=0; i < pix_count; i++ ) {
     float L_fix = clamp_channel(L_in[i]);
     const float L_out = tc_lut.interp( log10(L_fix) );
     const float s = cc_lut.interp( log10(L_fix) ); // color correction
