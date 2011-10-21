@@ -95,6 +95,23 @@ float DisplayFunctionGGBA::display( float pix )
   return pow( pix, gamma ) * (L_max-L_black) + L_offset;
 }
 
+#ifdef __USE_SSE__
+
+v4sf DisplayFunctionGGBA::inv_display( v4sf L )
+{
+  const v4sf voffset = _mm_set1_ps(L_offset);
+  const v4sf vmax = _mm_set1_ps(L_max);
+  L = _mm_max_ps(L, voffset);
+  L = _mm_min_ps(L, voffset+vmax);
+  return _mm_pow_ps((L - voffset)/(vmax-_mm_set1_ps(L_black)), _mm_set1_ps(1.0f/gamma));
+}
+
+v4sf DisplayFunctionGGBA::display( v4sf pix )
+{
+  return _mm_pow_ps(pix, _mm_set1_ps(gamma)) * (_mm_set1_ps(L_max)-_mm_set1_ps(L_black)) + _mm_set1_ps(L_offset);
+}
+
+#endif
 
 // ========== LUT Display Function ==============
 
@@ -174,7 +191,7 @@ void DisplayFunctionLUT::print( FILE *fh )
 }
 
 // ========== Command line parsing ==============
-
+/*
 DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] )
 {
   DisplayFunction *df = 0;
@@ -235,4 +252,4 @@ static void removeCommandLineArg( int &argc, char* argv[],
   argc -= numArgsToRemove;
 }
 
-  
+*/

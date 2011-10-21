@@ -48,6 +48,7 @@
 #include <gsl/gsl_blas.h>
 #include <gsl/gsl_interp.h>
 #include "cqp/gsl_cqp.h"
+#include "Libpfs/vex.h"
 
 #ifdef BRANCH_PREDICTION
 #define likely(x)       __builtin_expect((x),1)
@@ -1001,9 +1002,22 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
     float L_fix = clamp_channel(L_in[i]);
     const float L_out = tc_lut.interp( log10(L_fix) );
     const float s = cc_lut.interp( log10(L_fix) ); // color correction
+#ifdef __USE_SSE__
+    v4sf vec = _mm_set_ps(R_in[i], G_in[i], B_in[i], 0) / _mm_set1_ps(L_fix);
+    vec = _mm_max_ps(vec, _mm_set1_ps(MIN_PHVAL));
+    vec = _mm_pow_ps(vec, _mm_set1_ps(s));
+    vec = vec * _mm_set1_ps(L_out);
+    vec = df->inv_display(vec);
+    float tmp[4];
+    _mm_store_ps(tmp, vec);
+    R_out[i] = tmp[3];
+    G_out[i] = tmp[2];
+    B_out[i] = tmp[1];
+#else
     R_out[i] = df->inv_display(powf(clamp_channel(R_in[i]/L_fix), s) * L_out);
     G_out[i] = df->inv_display(powf(clamp_channel(G_in[i]/L_fix), s) * L_out);
     B_out[i] = df->inv_display(powf(clamp_channel(B_in[i]/L_fix), s) * L_out);
+#endif
   }
 
   return PFSTMO_OK;  

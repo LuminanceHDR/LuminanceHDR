@@ -34,6 +34,7 @@
 
 #include <stdio.h>
 #include "arch/math.h"
+#include "Libpfs/vex.h"
 
 class DisplayFunction
 {
@@ -45,6 +46,11 @@ public:
   /** Convert pixel value (0-1) to input luminance (cd/m^2)
    */
   virtual float display( float pix ) = 0;
+
+#ifdef __USE_SSE__
+  virtual v4sf inv_display( v4sf L ) = 0;
+  virtual v4sf display( v4sf L ) = 0;
+#endif
 
   virtual void print( FILE *fh ) = 0;
   
@@ -68,6 +74,12 @@ public:
 
   float inv_display( float L );
   float display( float pix );
+
+#ifdef __USE_SSE__
+  virtual v4sf inv_display( v4sf L );
+  virtual v4sf display( v4sf L );
+#endif
+
   void print( FILE *fh );  
 
 private:
@@ -88,6 +100,6 @@ public:
   void print( FILE *fh );  
 };
 
-DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] );
+//DisplayFunction *createDisplayFunctionFromArgs( int &argc, char* argv[] );
 
 #endif
