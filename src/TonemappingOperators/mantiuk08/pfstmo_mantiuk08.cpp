@@ -132,9 +132,6 @@ void pfstmo_mantiuk08(pfs::Frame* frame, float saturation_factor, float contrast
   if( res != PFSTMO_OK )
     throw pfs::Exception( "failed to tone-map the image" );
   
-  //res = datmo_tonemap( inX->getRawData(), R.getRawData(), inZ->getRawData(), cols, rows,
-  //   inX->getRawData(), R.getRawData(), inZ->getRawData(), inY->getRawData(),
-  //df, ds, contrast_enhance_factor, saturation_factor, white_y, progress_cb );
   ph->newValue( 100 );
   
   pfs::transformColorSpace( pfs::CS_RGB, Xr, &R, Zr, pfs::CS_XYZ, Xr, Yr, Zr );

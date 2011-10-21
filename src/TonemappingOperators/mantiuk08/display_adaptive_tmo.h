@@ -60,46 +60,6 @@ public:
 
 
 /**
- * Tone-map RGB radiance map using the display adaptive tone
- * mapping. This is a convienience function that calls three stages of
- * this tone-mapping algorithm: datmo_compute_conditional_density(),
- * datmo_compute_conditional_density(), and
- * datmo_apply_tone_curve(). If you need finer control over the
- * algorithm execution or want to tone-map video, use the lower levels
- * functions instead.
- *
- * @param R_out output red-channel (in pixel values). Can be the same
- * as R_in.
- * @param G_out output green-channel (in pixel values). Can be the same
- * as G_in.
- * @param B_out output blue-channel (in pixel values). Can be the same
- * as B_in.
- * @param width image width in pixels
- * @param height image height in pixels
- * @param R_in red input radiance map.
- * @param G_in green input radiance map.
- * @param B_in blue input radiance map.
- * @param L_in input luminance map (L=0.212656*R + 0.715158*G + 0.072186*B)
- * @param df display function. See DisplayFunction class documentation for more details.
- * @param ds display size. See DisplaySize class documentation for more details.
- * @param enh_factor conrast enhancement factor. See man
- * pfstmo_mantiuk08 page for details
- * @param saturation_factor color saturation factor. See man
- * pfstmo_mantiuk08 page for details
- * @param white_y luminance factor in the input image that should be
- * mapped to the maximum luminance of a display. If the parameter is
- * set to -1, the tone-mapper will not anchor to white (recommended for HDR images).
- * @param progress_cb callback function for reporting progress or stopping computations.
- * @return PFSTMO_OK if tone-mapping was sucessful, PFSTMO_ABORTED if
- * it was stopped from a callback function and PFSTMO_ERROR if an
- * error was encountered.
- */
-int datmo_tonemap( float *R_out, float *G_out, float *B_out, int width, int height,
-  const float *R_in, const float *G_in, const float *B_in, const float *L_in,
-  DisplayFunction *df, DisplaySize *ds, const float enh_factor = 1.f, const float saturation_factor = 0.4f,
-  const float white_y = -1, ProgressHelper *ph = NULL );
-
-/**
  * Computes image statistics required for
  * datmo_compute_tone_curve(). This is the most time-consuming
  * function. If interactive tuning of the TMO parameters is needed,
@@ -202,13 +162,3 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   DisplayFunction *df, const float saturation_factor );
 
 #define DATMO_TF_TAPSIZE 26     /* Number of samples required for the temporal filter */
-
-/**
- * Filter tone curves over time to avoid flickering. This filtering is
- * designed for 25 frames per second.
- * 
- * @param in_tc array of input tone curves
- * @param count_in_tc the number of input tone curves in the array
- * @param out_tc the output tone curve. Must be pre-allocated. 
- */
-void datmo_filter_tone_curves( datmoToneCurve **in_tc, size_t count_in_tc, datmoToneCurve *out_tc );
