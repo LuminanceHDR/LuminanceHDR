@@ -276,8 +276,8 @@ void LuminanceRangeWidget::setHistogramImage( const pfs::Array2D *image )
 void LuminanceRangeWidget::fitToDynamicRange()
 {
   if( histogramImage != NULL ) {
-    float min = 99999999;
-    float max = -99999999;
+    float min = 99999999.0f;
+    float max = -99999999.0f;
 
     int size = histogramImage->getRows()*histogramImage->getCols();
     for( int i = 0; i < size; i++ ) {
@@ -286,7 +286,7 @@ void LuminanceRangeWidget::fitToDynamicRange()
       else if( v < min ) min = v;
     }
 
-    if( min <= 0.000001 ) min = 0.000001; // If data contains negative values
+    if( min <= 0.000001f ) min = 0.000001f; // If data contains negative values
 
     windowMin = log10( min );
     windowMax = log10( max );    

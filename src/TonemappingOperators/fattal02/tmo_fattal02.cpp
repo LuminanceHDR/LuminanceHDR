@@ -312,8 +312,9 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 
   const int MSIZE = 32;         // minimum size of gaussian pyramid
 	
-  unsigned int size = width*height;
-  unsigned int x,y,i,k;
+  int size = width*height;
+  unsigned int x,y;
+  int i, k;
 
   // find max & min values, normalize to range 0..100 and take logarithm
   float minLum = (*Y)(0,0);
@@ -330,7 +331,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
 
   // create gaussian pyramids
   int mins = (width<height) ? width : height;	// smaller dimension
-  unsigned int nlevels = 0;
+  int nlevels = 0;
   while( mins>=MSIZE )
   {
     nlevels++;
@@ -419,7 +420,7 @@ void tmo_fattal02(unsigned int width, unsigned int height,
     {
       (*L)(x,y) = ((*L)(x,y)-minLum) / maxLum;
       if( (*L)(x,y)<=0.0f )
-        (*L)(x,y) = 1e-4;
+        (*L)(x,y) = 1e-4f;
     }
   }
 

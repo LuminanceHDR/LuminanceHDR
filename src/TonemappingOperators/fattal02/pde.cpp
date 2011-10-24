@@ -524,7 +524,7 @@ static float snrm(unsigned long n, const float sx[])
 
 	ans = 0.0;
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
-	for (unsigned long i=0;i<n;i++)
+	for (long i=0;i<n;i++)
 		ans += sx[i]*sx[i];
 	return sqrt(ans);
 }
@@ -535,7 +535,7 @@ static float snrm(unsigned long n, const float sx[])
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
 {	
-	unsigned long j;
+	long j;
 	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
