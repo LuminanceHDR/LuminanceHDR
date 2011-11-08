@@ -47,28 +47,6 @@ T clamp( T val, T min, T max )
   return val;
 }
 
-float HdrViewer::getInverseMapping( float v )
-{
-  switch( this->mappingMethod )
-  {
-    case MAP_GAMMA1_4:
-      return powf( v, 1.4f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA1_8:
-      return powf( v, 1.8f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA2_2:
-      return powf( v, 2.2f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA2_6:
-      return powf( v, 2.6f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_LINEAR:
-      return v*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_LOGARITHMIC:
-      return powf( 10.f, v * (log10f(this->maxValue) - log10f(this->minValue)) + log10f( this->minValue )  );
-    default:
-      assert(0);
-      return 0.f;
-  }
-}
-
 inline int binarySearchPixels( float x, const float *lut, const int lutSize )
 {
   int l = 0, r = lutSize;
