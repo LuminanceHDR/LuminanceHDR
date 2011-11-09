@@ -38,6 +38,7 @@
 #include "Common/global.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"
+#include "Libpfs/vex.h"
 
 template<class T>
 T clamp( T val, T min, T max )
@@ -69,6 +70,42 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize )
 void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
 {
     const float range = maxValue - minValue;
+#ifdef __USE_SSE__
+    v4sf rgb = (_mm_set_ps(0, b, g, r) - _mm_set1_ps(minValue)) / _mm_set1_ps(range);
+
+    switch ( this->mappingMethod )
+    {
+    case MAP_GAMMA1_4:
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.4f));
+        break;
+    case MAP_GAMMA1_8:
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.8f));
+        break;
+    case MAP_GAMMA2_2:
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.2f));
+        break;
+    case MAP_GAMMA2_6:
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.6f));
+        break;
+    case MAP_LOGARITHMIC:
+        // log(x) - log(y) = log(x/y)
+	rgb = _mm_log2_ps(_mm_set_ps(0, b, g, r)/_mm_set1_ps(minValue))
+	    / _mm_log2_ps(_mm_set1_ps(maxValue/minValue));
+        break;
+    default:
+    case MAP_LINEAR:
+        // do nothing
+        // final value is already calculated
+        break;
+    }
+    rgb *= _mm_set1_ps(255.f);
+    rgb = _mm_min_ps(rgb, _mm_set1_ps(255.f));
+    rgb = _mm_max_ps(rgb, _mm_set1_ps(0.f));
+    rgb += _mm_set1_ps(0.5f);
+    float buf[4];
+    _mm_store_ps(buf, rgb);
+    pixel = qRgb( buf[0], buf[1], buf[2] );
+#else
     float rgb[3] = {
 	(r - minValue)/range,
 	(g - minValue)/range,
@@ -108,6 +145,7 @@ void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
     pixel = qRgb( clamp(rgb[0]*255.f, 0.0f, 255.f) + 0.5f,
 		  clamp(rgb[1]*255.f, 0.0f, 255.f) + 0.5f,
 		  clamp(rgb[2]*255.f, 0.0f, 255.f) + 0.5f );
+#endif
 }
 
 HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf):
