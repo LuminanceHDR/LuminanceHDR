@@ -124,16 +124,17 @@ void LdrViewer::levelsRequested(bool /*a*/)
 
 void LdrViewer::updatePreview(unsigned char *LUT)
 {
+    const QRgb* src = (const QRgb*)mImage->bits();
+    QRgb* dst = (QRgb*)previewimage->bits();
+
+#ifdef _OPENMP
+#pragma omp parallel for default(none) shared(src, dst, LUT)
+#endif
     //printf("LdrViewer::updatePreview\n");
     // TODO : clean up this implementation... (in case I keep it in the final release)!!!
-    for (int x=0; x < mCols; x++)
+    for (int i=0; i < mCols*mRows; i++)
     {
-        for (int y=0; y < mRows; y++)
-        {
-            QRgb rgb = mImage->pixel(x,y);
-            QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
-            previewimage->setPixel(x,y,withgamma);
-        }
+	dst[i] = qRgb(LUT[qRed(src[i])],LUT[qGreen(src[i])],LUT[qBlue(src[i])]);
     }
     mPixmap->setPixmap(QPixmap::fromImage(*previewimage));
     //imageLabel.setPixmap(QPixmap::fromImage(*previewimage));
