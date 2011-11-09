@@ -66,27 +66,38 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize )
 //**********************************************************************************
 //==================================================================================
 
-int HdrViewer::getMapping( float x )
+void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
 {
-    float final_value = (x - this->minValue)/(this->maxValue - this->minValue);
+    const float range = maxValue - minValue;
+    float rgb[3] = {
+	(r - minValue)/range,
+	(g - minValue)/range,
+	(b - minValue)/range
+    };
 
     switch ( this->mappingMethod )
     {
     case MAP_GAMMA1_4:
-        final_value = powf(final_value, 1.f/1.4f);
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/1.4f);
         break;
     case MAP_GAMMA1_8:
-        final_value = powf(final_value, 1.f/1.8f);
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/1.8f);
         break;
     case MAP_GAMMA2_2:
-        final_value = powf(final_value, 1.f/2.2f);
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/2.2f);
         break;
     case MAP_GAMMA2_6:
-        final_value = powf(final_value, 1.f/2.6f);
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/2.6f);
         break;
     case MAP_LOGARITHMIC:
         // log(x) - log(y) = log(x/y)
-        final_value = (log10f(x/minValue))/(log10f(maxValue/minValue));
+	rgb[0] = log10f(r/minValue)/log10f(maxValue/minValue);
+	rgb[1] = log10f(g/minValue)/log10f(maxValue/minValue);
+	rgb[2] = log10f(b/minValue)/log10f(maxValue/minValue);
         break;
     default:
     case MAP_LINEAR:
@@ -94,7 +105,9 @@ int HdrViewer::getMapping( float x )
         // final value is already calculated
         break;
     }
-    return (int)(clamp(final_value*255.f, 0.0f, 255.f) + 0.5f);   // (int)(x + 0.5) = round(x)
+    pixel = qRgb( clamp(rgb[0]*255.f, 0.0f, 255.f) + 0.5f,
+		  clamp(rgb[1]*255.f, 0.0f, 255.f) + 0.5f,
+		  clamp(rgb[2]*255.f, 0.0f, 255.f) + 0.5f );
 }
 
 HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf):
@@ -237,11 +250,7 @@ void HdrViewer::mapFrameToImage()
         }
         else
         {
-            pr = getMapping( R[index] );
-            pg = getMapping( G[index] );
-            pb = getMapping( B[index] );
-
-            pixels[index] = qRgb( pr, pg, pb );
+	    getMapping ( R[index], G[index], B[index], pixels[index] );
         }
     }
 

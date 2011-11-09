@@ -59,7 +59,7 @@ class HdrViewer : public GenericViewer
 private:
     void init_ui();
     void mapFrameToImage();
-    int getMapping(float x);
+    void getMapping( float r, float g, float b, QRgb& pixel );
 
 public:
     HdrViewer(QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
