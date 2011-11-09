@@ -69,7 +69,6 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize )
 
 void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
 {
-    const float range = maxValue - minValue;
 #ifdef __USE_SSE__
     v4sf rgb = (_mm_set_ps(0, b, g, r) - _mm_set1_ps(minValue)) / _mm_set1_ps(range);
 
@@ -90,7 +89,7 @@ void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
     case MAP_LOGARITHMIC:
         // log(x) - log(y) = log(x/y)
 	rgb = _mm_log2_ps(_mm_set_ps(0, b, g, r)/_mm_set1_ps(minValue))
-	    / _mm_log2_ps(_mm_set1_ps(maxValue/minValue));
+	    / _mm_set1_ps(logRange);
         break;
     default:
     case MAP_LINEAR:
@@ -132,9 +131,9 @@ void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
         break;
     case MAP_LOGARITHMIC:
         // log(x) - log(y) = log(x/y)
-	rgb[0] = log10f(r/minValue)/log10f(maxValue/minValue);
-	rgb[1] = log10f(g/minValue)/log10f(maxValue/minValue);
-	rgb[2] = log10f(b/minValue)/log10f(maxValue/minValue);
+	rgb[0] = log2f(r/minValue)/logRange;
+	rgb[1] = log2f(g/minValue)/logRange;
+	rgb[2] = log2f(b/minValue)/logRange;
         break;
     default:
     case MAP_LINEAR:
@@ -149,7 +148,7 @@ void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
 }
 
 HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf):
-        GenericViewer(parent, ns, ncf), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg)
+        GenericViewer(parent, ns, ncf), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), range(0.0f), logRange(0.0f), naninfcol(naninf), negcol(neg)
 {
     init_ui();
 
@@ -312,6 +311,8 @@ void HdrViewer::setRangeWindow( float min, float max )
 {
     minValue = min;
     maxValue = max;
+    range = max - min;
+    logRange = log2f(max/min);
 
     updateImage();
 }

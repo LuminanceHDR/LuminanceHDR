@@ -104,6 +104,8 @@ protected:
     LumMappingMethod mappingMethod;
     float minValue;
     float maxValue;
+    float range;
+    float logRange;
     unsigned int naninfcol,negcol;
 
     // Current HDR Frame
