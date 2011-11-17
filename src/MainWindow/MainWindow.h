@@ -40,24 +40,29 @@
 #include <QSplitter>
 #include <QTabWidget>
 #include <QThread>
+#include <QProgressBar>
 
 #include "ui_MainWindow.h"
-#include "HdrWizard/HdrWizard.h"
-#include "Preferences/PreferencesDialog.h"
-#include "Resize/ResizeDialog.h"
-#include "Projection/ProjectionsDialog.h"
-#include "HelpBrowser/helpbrowser.h"
-#include "Viewers/HdrViewer.h"
-#include "Viewers/LdrViewer.h"
-#include "UI/UMessageBox.h"
-#include "Core/IOWorker.h"
-#include "TonemappingPanel/TonemappingPanel.h"
-#include "TonemappingPanel/TMOProgressIndicator.h"
-#include "Threads/TMOThread.h"
-#include "Libpfs/frame.h"
-#include "PreviewPanel/PreviewPanel.h"
+#include "Common/LuminanceOptions.h"
 
 #define MAX_RECENT_FILES (5)
+
+// Forward declaration
+namespace pfs
+{
+    class Frame;            // #include "Libpfs/frame.h"
+}
+
+class IOWorker;             // #include "Core/IOWorker.h"
+class GenericViewer;
+class HdrViewer;            // #include "Viewers/HdrViewer.h"
+class LdrViewer;            // #include "Viewers/LdrViewer.h"
+class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
+class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
+class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
+class TMOThread;            // #include "Threads/TMOThread.h"
+class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
+class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -166,15 +171,15 @@ protected Q_SLOTS:
     void splashClose();
 
     // TM
-    void addProcessedFrame(pfs::Frame *);
+    void addProcessedFrame(pfs::Frame*);
     void addLDRResult(QImage*, quint16*);
     void tonemappingFinished();
-    void deleteTMOThread(TMOThread *th);
-    void showErrorMessage(const char *e);
+    void deleteTMOThread(TMOThread* th);
+    void showErrorMessage(const char* e);
 
     // lock functionalities
     void lockViewers(bool);
-    void syncViewers(GenericViewer *);
+    void syncViewers(GenericViewer*);
 
     void showPreviewPanel(bool b);
 
@@ -213,11 +218,9 @@ protected:
     // Open MainWindows Handling
     QList<QAction*> openMainWindows;
 
-    // I/O
-    QThread* IO_thread;
-    IOWorker* IO_Worker;
 
-    HelpBrowser *helpBrowser;
+
+    HelpBrowser* helpBrowser;
     QStringList inputFiles;
 
     virtual void dragEnterEvent(QDragEnterEvent *);
@@ -245,8 +248,8 @@ protected:
     int num_ldr_generated;
     int curr_num_ldr_open;
 
-    pfs::Frame * getSelectedFrame(HdrViewer *hdr);
-    void getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
+    pfs::Frame* getSelectedFrame(HdrViewer* hdr);
+    void getCropCoords(HdrViewer* hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
 
     void init();
     void createUI();
@@ -273,7 +276,13 @@ protected:
 
     void openFiles(const QStringList& files);
 
+private:
     static int sm_NumMainWindows;
+
+    // I/O
+    QThread *m_IOThread;
+    IOWorker *m_IOWorker;
+
 };
 
 

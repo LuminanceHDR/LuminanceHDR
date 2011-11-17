@@ -25,6 +25,7 @@
 #include <QLocale>
 #include <QTranslator>
 #include <QObject>
+#include <QDebug>
 
 #include "Common/commandline.h"
 #include "MainWindow/MainWindow.h"

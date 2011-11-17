@@ -59,13 +59,20 @@
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
-#include "Threads/LoadHdrThread.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
 #include "Common/ImageQualityDialog.h"
 #include "Libpfs/frame.h"
 #include "UI/UMessageBox.h"
+#include "PreviewPanel/PreviewPanel.h"
+#include "HelpBrowser/helpbrowser.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
+#include "TonemappingPanel/TonemappingPanel.h"
+#include "HdrWizard/HdrWizard.h"
+#include "Resize/ResizeDialog.h"
+#include "Projection/ProjectionsDialog.h"
+#include "Preferences/PreferencesDialog.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -906,38 +913,38 @@ void MainWindow::openRecentFile()
 void MainWindow::setupIO()
 {
     // Init Object/Thread
-    IO_thread = new QThread;
-    IO_Worker = new IOWorker;
+    m_IOThread = new QThread;
+    m_IOWorker = new IOWorker;
 
-    IO_Worker->moveToThread(IO_thread);
+    m_IOWorker->moveToThread(m_IOThread);
 
     // Memory Management
-    connect(this, SIGNAL(destroyed()), IO_Worker, SLOT(deleteLater()));
-    connect(IO_Worker, SIGNAL(destroyed()), IO_thread, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed()), m_IOWorker, SLOT(deleteLater()));
+    connect(m_IOWorker, SIGNAL(destroyed()), m_IOThread, SLOT(deleteLater()));
 
     // Open
-    connect(this, SIGNAL(open_frame(QString)), IO_Worker, SLOT(read_frame(QString)));
-    connect(this, SIGNAL(open_frames(QStringList)), IO_Worker, SLOT(read_frames(QStringList)));
-    connect(IO_Worker, SIGNAL(read_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
-    connect(IO_Worker, SIGNAL(read_failed(QString)), this, SLOT(load_failed(QString)));
+    connect(this, SIGNAL(open_frame(QString)), m_IOWorker, SLOT(read_frame(QString)));
+    connect(this, SIGNAL(open_frames(QStringList)), m_IOWorker, SLOT(read_frames(QStringList)));
+    connect(m_IOWorker, SIGNAL(read_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
+    connect(m_IOWorker, SIGNAL(read_failed(QString)), this, SLOT(load_failed(QString)));
 
     // Save HDR
-    connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), IO_Worker, SLOT(write_hdr_frame(HdrViewer*, QString)));
-    connect(IO_Worker, SIGNAL(write_hdr_success(HdrViewer*, QString)), this, SLOT(save_hdr_success(HdrViewer*, QString)));
-    connect(IO_Worker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
+    connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_hdr_success(HdrViewer*, QString)), this, SLOT(save_hdr_success(HdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
     // Save LDR
-    connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), IO_Worker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
-    connect(IO_Worker, SIGNAL(write_ldr_success(LdrViewer*, QString)), this, SLOT(save_ldr_success(LdrViewer*, QString)));
-    connect(IO_Worker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
+    connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
+    connect(m_IOWorker, SIGNAL(write_ldr_success(LdrViewer*, QString)), this, SLOT(save_ldr_success(LdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
 
     // progress bar handling
-    connect(IO_Worker, SIGNAL(setValue(int)), this, SLOT(ProgressBarSetValue(int)));
-    connect(IO_Worker, SIGNAL(setMaximum(int)), this, SLOT(ProgressBarSetMaximum(int)));
-    connect(IO_Worker, SIGNAL(IO_init()), this, SLOT(IO_start()));
-    connect(IO_Worker, SIGNAL(IO_finish()), this, SLOT(IO_done()));
+    connect(m_IOWorker, SIGNAL(setValue(int)), this, SLOT(ProgressBarSetValue(int)));
+    connect(m_IOWorker, SIGNAL(setMaximum(int)), this, SLOT(ProgressBarSetMaximum(int)));
+    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(IO_start()));
+    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(IO_done()));
 
     // start thread waiting for signals (I/O requests)
-    IO_thread->start();
+    m_IOThread->start();
 }
 
 void MainWindow::load_failed(QString error_message)
@@ -1344,7 +1351,7 @@ bool MainWindow::maybeSave()
                     }
 
                     // TODO : can I launch a signal and wait that it gets executed fully?
-                    return IO_Worker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
+                    return m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
                 }
                 else
                 {
