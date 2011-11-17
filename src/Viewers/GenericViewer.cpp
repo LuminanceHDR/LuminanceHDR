@@ -29,8 +29,10 @@
 //#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"
+
+#include "Common/PanIconWidget.h"
+#include "Viewers/IGraphicsView.h"
 #include "Viewers/IGraphicsPixmapItem.h"
-//#include "UI/UMessageBox.h"
 
 // define the number of pixels to count as border of the image, because of the shadow
 #define BORDER_SIZE 30
@@ -338,6 +340,10 @@ void GenericViewer::syncViewer(GenericViewer *src)
     this->setVertScrollBarValue( src->getVertScrollBarValue() );
 }
 
+float GenericViewer::getScaleFactor()
+{
+    return mView->transform().m11();
+}
 
 //void GenericViewer::route_changed()
 //{

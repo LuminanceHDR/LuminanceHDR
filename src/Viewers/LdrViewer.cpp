@@ -27,7 +27,8 @@
 
 #include "Common/config.h"
 #include "Common/GammaAndLevels.h"
-#include "LdrViewer.h"
+#include "Viewers/LdrViewer.h"
+#include "Viewers/IGraphicsPixmapItem.h"
 
 LdrViewer::LdrViewer(QImage *i, quint16 *p, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
         GenericViewer(parent, ns, ncf), informativeLabel(NULL)

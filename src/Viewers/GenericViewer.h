@@ -24,20 +24,22 @@
 #ifndef GENERICVIEWER_H
 #define GENERICVIEWER_H
 
+#include <QImage>
 #include <QWidget>
-#include <QPixmap>
 #include <QVBoxLayout>
 #include <QToolBar>
 #include <QToolButton>
-
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
-#include "Common/PanIconWidget.h"
-#include "Viewers/IGraphicsView.h"
-//#include "Viewers/SelectionTool.h"
-#include "Viewers/IGraphicsPixmapItem.h"
-#include "Libpfs/frame.h"
+// Forward declaration
+namespace pfs {
+    class Frame;            // #include "Libpfs/frame.h"
+}
+
+class PanIconWidget;        // #include "Common/PanIconWidget.h"
+class IGraphicsView;        // #include "Viewers/IGraphicsView.h"
+class IGraphicsPixmapItem;  // #include "Viewers/IGraphicsPixmapItem.h"
 
 enum ViewerMode {FIT_WINDOW, FILL_WINDOW, NORMAL_SIZE};
 
@@ -64,10 +66,7 @@ public Q_SLOTS:
     /*virtual*/ bool isNormalSize();
 
     /*virtual*/ void zoomToFactor(float factor);
-    inline /*virtual*/ float getScaleFactor()
-    {
-        return mView->transform().m11();
-    }
+    /*virtual*/ float getScaleFactor();
 
     // selection properties!
     virtual bool hasSelection();

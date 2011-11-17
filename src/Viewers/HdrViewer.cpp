@@ -38,6 +38,7 @@
 #include "Common/global.h"
 #include "Common/msec_timer.h"
 #include "Libpfs/domio.h"
+#include "Viewers/IGraphicsPixmapItem.h"
 
 template<class T>
 T clamp( T val, T min, T max )
