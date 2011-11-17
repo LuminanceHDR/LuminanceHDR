@@ -25,10 +25,13 @@
  *
  */
 
+#include <iostream>
+
 #include "Common/config.h"
 #include "Common/GammaAndLevels.h"
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Core/TonemappingOptions.h"
 
 LdrViewer::LdrViewer(QImage *i, quint16 *p, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
         GenericViewer(parent, ns, ncf), informativeLabel(NULL)
@@ -36,11 +39,11 @@ LdrViewer::LdrViewer(QImage *i, quint16 *p, QWidget *parent, bool ns, bool ncf, 
     setAttribute(Qt::WA_DeleteOnClose);
 
     mImage = i;
-	m_pixmap = p;
+    m_pixmap = p;
 
     if (mImage == 0) {
-                mCols = 0;
-                mRows = 0;
+        mCols = 0;
+        mRows = 0;
     }
     else {
         mCols = mImage->width();

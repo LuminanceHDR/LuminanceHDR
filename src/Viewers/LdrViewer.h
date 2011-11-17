@@ -29,12 +29,13 @@
 #define IMAGELDRVIEWER_H
 
 #include <QLabel>
-#include <iostream>
 
-#include "Core/TonemappingOptions.h"
 #include "GenericViewer.h"
 
-class LdrViewer : public GenericViewer
+// Forward declaration
+class TonemappingOptions;       // #include "Core/TonemappingOptions.h"
+
+class LdrViewer: public GenericViewer
 {
     Q_OBJECT
 public:
@@ -46,7 +47,7 @@ public:
     const QImage* getQImage();
     bool isHDR() { return false; }
     void setImage(QImage *i);
-	const quint16 * getPixmap();
+    const quint16 * getPixmap();
 
 signals:
     void levels_closed();
@@ -62,7 +63,7 @@ private:
     QLabel *informativeLabel;
     QImage *previewimage;
     QImage *temp_image;
-	quint16* m_pixmap;
+    quint16* m_pixmap;
 };
 
 #endif
