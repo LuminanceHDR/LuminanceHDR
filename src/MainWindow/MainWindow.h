@@ -42,14 +42,16 @@
 #include <QThread>
 #include <QProgressBar>
 
-#include "ui_MainWindow.h"
 #include "Common/LuminanceOptions.h"
 
 #define MAX_RECENT_FILES (5)
 
 // Forward declaration
-namespace pfs
-{
+namespace Ui {
+    class MainWindow;
+}
+
+namespace pfs {
     class Frame;            // #include "Libpfs/frame.h"
 }
 
@@ -64,7 +66,7 @@ class TMOThread;            // #include "Threads/TMOThread.h"
 class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
+class MainWindow: public QMainWindow
 {
     Q_OBJECT
 
@@ -283,6 +285,8 @@ private:
     QThread *m_IOThread;
     IOWorker *m_IOWorker;
 
+    // UI declaration
+    Ui::MainWindow* m_Ui;
 };
 
 

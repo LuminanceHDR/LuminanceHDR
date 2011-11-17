@@ -50,6 +50,7 @@
 #include "MainWindow/DnDOption.h"
 
 #include "ui_Splash.h"
+#include "ui_MainWindow.h"
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
@@ -147,7 +148,7 @@ void MainWindow::init()
 
 void MainWindow::createUI()
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
 
     QDir dir(QDir::homePath());
@@ -209,78 +210,78 @@ void MainWindow::createToolBar()
 {
     //main toolbars setup
     QActionGroup *toolBarOptsGroup = new QActionGroup(this);
-    toolBarOptsGroup->addAction(actionText_Under_Icons);
-    toolBarOptsGroup->addAction(actionIcons_Only);
-    toolBarOptsGroup->addAction(actionText_Alongside_Icons);
-    toolBarOptsGroup->addAction(actionText_Only);
-    menuToolbars->addAction(toolBar->toggleViewAction());
+    toolBarOptsGroup->addAction(m_Ui->actionText_Under_Icons);
+    toolBarOptsGroup->addAction(m_Ui->actionIcons_Only);
+    toolBarOptsGroup->addAction(m_Ui->actionText_Alongside_Icons);
+    toolBarOptsGroup->addAction(m_Ui->actionText_Only);
+    m_Ui->menuToolbars->addAction(m_Ui->toolBar->toggleViewAction());
 
-    connect(actionLock, SIGNAL(toggled(bool)), this, SLOT(lockViewers(bool)));
-    connect(actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
-    connect(actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
-    connect(actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
-    connect(actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
+    connect(m_Ui->actionLock, SIGNAL(toggled(bool)), this, SLOT(lockViewers(bool)));
+    connect(m_Ui->actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
+    connect(m_Ui->actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
+    connect(m_Ui->actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
+    connect(m_Ui->actionText_Only,SIGNAL(triggered()),this,SLOT(Text_Only()));
 }
 
 void MainWindow::createMenus()
 {
     // About(s)
-    connect(actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-    connect(actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
-    connect(actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
+    connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
+    connect(m_Ui->actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
+    connect(m_Ui->actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
-    connect(OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
-    connect(documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
-    connect(actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
+    connect(m_Ui->OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
+    connect(m_Ui->documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
+    connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
     // I/O
-    connect(fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
-    connect(fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
-    connect(fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
-    connect(fileSaveAllAction, SIGNAL(triggered()), this, SLOT(fileSaveAll()));
-    connect(fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
+    connect(m_Ui->fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
+    connect(m_Ui->fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
+    connect(m_Ui->fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
+    connect(m_Ui->fileSaveAllAction, SIGNAL(triggered()), this, SLOT(fileSaveAll()));
+    connect(m_Ui->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(m_Ui->actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
 
     // HDR Editing
-    connect(actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
-    connect(action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
+    connect(m_Ui->actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
+    connect(m_Ui->action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
 
     // HDR Exposure Control
-    connect(Low_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_ldr_exp()));
-    connect(Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_fit_exp()));
-    connect(Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_shrink_exp()));
-    connect(Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_extend_exp()));
-    connect(Decrease_exposure,SIGNAL(triggered()),this,SLOT(hdr_decrease_exp()));
-    connect(Increase_exposure,SIGNAL(triggered()),this,SLOT(hdr_increase_exp()));
+    connect(m_Ui->Low_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_ldr_exp()));
+    connect(m_Ui->Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_fit_exp()));
+    connect(m_Ui->Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_shrink_exp()));
+    connect(m_Ui->Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_extend_exp()));
+    connect(m_Ui->Decrease_exposure,SIGNAL(triggered()),this,SLOT(hdr_decrease_exp()));
+    connect(m_Ui->Increase_exposure,SIGNAL(triggered()),this,SLOT(hdr_increase_exp()));
 
     // Crop & Rotation
-    connect(cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
-    cropToSelectionAction->setEnabled(false);
+    connect(m_Ui->cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
+    m_Ui->cropToSelectionAction->setEnabled(false);
 
-    connect(removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
-    connect(rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
-    connect(rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
+    connect(m_Ui->removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
+    connect(m_Ui->rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
+    connect(m_Ui->rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
 
     // Zoom
-    connect(zoomInAct,SIGNAL(triggered()),this,SLOT(viewerZoomIn()));
-    connect(zoomOutAct,SIGNAL(triggered()),this,SLOT(viewerZoomOut()));
-    connect(fitToWindowAct,SIGNAL(triggered()),this,SLOT(viewerFitToWin()));
-    connect(actionFill_to_Window,SIGNAL(triggered()),this,SLOT(viewerFillToWin()));
-    connect(normalSizeAct,SIGNAL(triggered()),this,SLOT(viewerOriginalSize()));
+    connect(m_Ui->zoomInAct,SIGNAL(triggered()),this,SLOT(viewerZoomIn()));
+    connect(m_Ui->zoomOutAct,SIGNAL(triggered()),this,SLOT(viewerZoomOut()));
+    connect(m_Ui->fitToWindowAct,SIGNAL(triggered()),this,SLOT(viewerFitToWin()));
+    connect(m_Ui->actionFill_to_Window,SIGNAL(triggered()),this,SLOT(viewerFillToWin()));
+    connect(m_Ui->normalSizeAct,SIGNAL(triggered()),this,SLOT(viewerOriginalSize()));
 
     // Tools
-    connect(Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-    connect(actionBatch_HDR, SIGNAL(triggered()), this, SLOT(batch_hdr_requested()));
-    connect(actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
+    connect(m_Ui->Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
+    connect(m_Ui->actionBatch_HDR, SIGNAL(triggered()), this, SLOT(batch_hdr_requested()));
+    connect(m_Ui->actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 
-    connect(menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
-    connect(actionMinimize, SIGNAL(triggered()), this, SLOT(minimizeMW()));
-    connect(actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
-    connect(actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
-    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
-    connect(actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
-    connect(actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
-    connect(actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
+    connect(m_Ui->menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+    connect(m_Ui->actionMinimize, SIGNAL(triggered()), this, SLOT(minimizeMW()));
+    connect(m_Ui->actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
+    connect(m_Ui->actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
+    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
+    connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
+    connect(m_Ui->actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
+    connect(m_Ui->actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
 
     //recent files
     initRecentFileActions();
@@ -299,8 +300,8 @@ void MainWindow::createStatusBar()
 
 void MainWindow::createConnections()
 {
-    connect(actionShowNext, SIGNAL(triggered()), this, SLOT(activateNextViewer()));
-    connect(actionShowPrevious, SIGNAL(triggered()), this, SLOT(activatePreviousViewer()));
+    connect(m_Ui->actionShowNext, SIGNAL(triggered()), this, SLOT(activateNextViewer()));
+    connect(m_Ui->actionShowPrevious, SIGNAL(triggered()), this, SLOT(activatePreviousViewer()));
 
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
@@ -316,22 +317,22 @@ void MainWindow::loadOptions()
     switch ( luminance_options.getMainWindowToolBarMode() ) {
     case Qt::ToolButtonIconOnly:
         Icons_Only();
-        actionIcons_Only->setChecked(true);
+        m_Ui->actionIcons_Only->setChecked(true);
 	break;
     case Qt::ToolButtonTextOnly:
         Text_Only();
-        actionText_Only->setChecked(true);
+        m_Ui->actionText_Only->setChecked(true);
 	break;
     case Qt::ToolButtonTextBesideIcon:
         Text_Alongside_Icons();
-        actionText_Alongside_Icons->setChecked(true);
+        m_Ui->actionText_Alongside_Icons->setChecked(true);
 	break;
     case Qt::ToolButtonTextUnderIcon:
         Text_Under_Icons();
-        actionText_Under_Icons->setChecked(true);
+        m_Ui->actionText_Under_Icons->setChecked(true);
 	break;
     }
-    actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
+    m_Ui->actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
 
 }
 
@@ -573,88 +574,88 @@ void MainWindow::updateActionsNoImage()
 {
     updateMagnificationButtons(NULL);
 
-    fileSaveAsAction->setEnabled(false);
-    actionSave_Hdr_Preview->setEnabled(false);
+    m_Ui->fileSaveAsAction->setEnabled(false);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(false);
 
     // Histogram
-    menuHDR_Histogram->setEnabled(false);
-    Low_dynamic_range->setEnabled(false);
-    Fit_to_dynamic_range->setEnabled(false);
-    Shrink_dynamic_range->setEnabled(false);
-    Extend_dynamic_range->setEnabled(false);
-    Decrease_exposure->setEnabled(false);
-    Increase_exposure->setEnabled(false);
+    m_Ui->menuHDR_Histogram->setEnabled(false);
+    m_Ui->Low_dynamic_range->setEnabled(false);
+    m_Ui->Fit_to_dynamic_range->setEnabled(false);
+    m_Ui->Shrink_dynamic_range->setEnabled(false);
+    m_Ui->Extend_dynamic_range->setEnabled(false);
+    m_Ui->Decrease_exposure->setEnabled(false);
+    m_Ui->Increase_exposure->setEnabled(false);
 
-    actionResizeHDR->setEnabled(false);
-    action_Projective_Transformation->setEnabled(false);
-    cropToSelectionAction->setEnabled(false);
-    rotateccw->setEnabled(false);
-    rotatecw->setEnabled(false);
-    actionFix_Histogram->setEnabled(false);
+    m_Ui->actionResizeHDR->setEnabled(false);
+    m_Ui->action_Projective_Transformation->setEnabled(false);
+    m_Ui->cropToSelectionAction->setEnabled(false);
+    m_Ui->rotateccw->setEnabled(false);
+    m_Ui->rotatecw->setEnabled(false);
+    m_Ui->actionFix_Histogram->setEnabled(false);
 }
 
 void MainWindow::updateActionsLdrImage()
 {
     // Read/Save
-    fileSaveAsAction->setEnabled(true);
-    actionSave_Hdr_Preview->setEnabled(true);
+    m_Ui->fileSaveAsAction->setEnabled(true);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(true);
     if (curr_num_ldr_open >= 2)
-        fileSaveAllAction->setEnabled(true);
+        m_Ui->fileSaveAllAction->setEnabled(true);
 
     // Histogram
-    menuHDR_Histogram->setEnabled(false);
-    Low_dynamic_range->setEnabled(false);
-    Fit_to_dynamic_range->setEnabled(false);
-    Shrink_dynamic_range->setEnabled(false);
-    Extend_dynamic_range->setEnabled(false);
-    Decrease_exposure->setEnabled(false);
-    Increase_exposure->setEnabled(false);
+    m_Ui->menuHDR_Histogram->setEnabled(false);
+    m_Ui->Low_dynamic_range->setEnabled(false);
+    m_Ui->Fit_to_dynamic_range->setEnabled(false);
+    m_Ui->Shrink_dynamic_range->setEnabled(false);
+    m_Ui->Extend_dynamic_range->setEnabled(false);
+    m_Ui->Decrease_exposure->setEnabled(false);
+    m_Ui->Increase_exposure->setEnabled(false);
 
-    actionResizeHDR->setEnabled(false);
-    action_Projective_Transformation->setEnabled(false);
-    cropToSelectionAction->setEnabled(false);
-    removeSelectionAction->setEnabled(false);
-    rotateccw->setEnabled(false);
-    rotatecw->setEnabled(false);
-    actionFix_Histogram->setEnabled(true);
+    m_Ui->actionResizeHDR->setEnabled(false);
+    m_Ui->action_Projective_Transformation->setEnabled(false);
+    m_Ui->cropToSelectionAction->setEnabled(false);
+    m_Ui->removeSelectionAction->setEnabled(false);
+    m_Ui->rotateccw->setEnabled(false);
+    m_Ui->rotatecw->setEnabled(false);
+    m_Ui->actionFix_Histogram->setEnabled(true);
 }
 
 void MainWindow::updateActionsHdrImage()
 {
     //qDebug() << "MainWindow::updateActionsHdrImage()";
 
-    fileSaveAsAction->setEnabled(true);
-    actionSave_Hdr_Preview->setEnabled(true);
+    m_Ui->fileSaveAsAction->setEnabled(true);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(true);
     //actionShowHDRs->setEnabled(false);
 
     // Histogram
-    menuHDR_Histogram->setEnabled(true);
-    Low_dynamic_range->setEnabled(true);
-    Fit_to_dynamic_range->setEnabled(true);
-    Shrink_dynamic_range->setEnabled(true);
-    Extend_dynamic_range->setEnabled(true);
-    Decrease_exposure->setEnabled(true);
-    Increase_exposure->setEnabled(true);
+    m_Ui->menuHDR_Histogram->setEnabled(true);
+    m_Ui->Low_dynamic_range->setEnabled(true);
+    m_Ui->Fit_to_dynamic_range->setEnabled(true);
+    m_Ui->Shrink_dynamic_range->setEnabled(true);
+    m_Ui->Extend_dynamic_range->setEnabled(true);
+    m_Ui->Decrease_exposure->setEnabled(true);
+    m_Ui->Increase_exposure->setEnabled(true);
 
-    actionResizeHDR->setEnabled(true);
-    action_Projective_Transformation->setEnabled(true);
+    m_Ui->actionResizeHDR->setEnabled(true);
+    m_Ui->action_Projective_Transformation->setEnabled(true);
 
     if (tm_status.curr_tm_frame)
     {
         if (!tm_status.curr_tm_frame->hasSelection())
         {
-            cropToSelectionAction->setEnabled(false);
-            removeSelectionAction->setEnabled(false);
+            m_Ui->cropToSelectionAction->setEnabled(false);
+            m_Ui->removeSelectionAction->setEnabled(false);
         }
         else
         {
-            cropToSelectionAction->setEnabled(true);
-            removeSelectionAction->setEnabled(true);
+            m_Ui->cropToSelectionAction->setEnabled(true);
+            m_Ui->removeSelectionAction->setEnabled(true);
         }
     }
-    rotateccw->setEnabled(true);
-    rotatecw->setEnabled(true);
-    actionFix_Histogram->setEnabled(false);
+    m_Ui->rotateccw->setEnabled(true);
+    m_Ui->rotatecw->setEnabled(true);
+    m_Ui->actionFix_Histogram->setEnabled(false);
 }
 
 void MainWindow::updateActions( int w )
@@ -699,8 +700,8 @@ void MainWindow::dispatchrotate(bool clockwise)
 
     GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    rotateccw->setEnabled(false);
-    rotatecw->setEnabled(false);
+    m_Ui->rotateccw->setEnabled(false);
+    m_Ui->rotatecw->setEnabled(false);
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getHDRPfsFrame(), clockwise);
@@ -716,8 +717,8 @@ void MainWindow::dispatchrotate(bool clockwise)
     emit updatedHDR(curr_g_v->getHDRPfsFrame());
     QApplication::restoreOverrideCursor();
 
-    rotateccw->setEnabled(true);
-    rotatecw->setEnabled(true);
+    m_Ui->rotateccw->setEnabled(true);
+    m_Ui->rotatecw->setEnabled(true);
 }
 
 void MainWindow::resize_requested()
@@ -998,9 +999,9 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         emit updatedHDR(newhdr->getHDRPfsFrame());  // signal: I have a new HDR open
 
         tmPanel->setEnabled(true);
-        actionShowPreviewPanel->setEnabled(true);
+        m_Ui->actionShowPreviewPanel->setEnabled(true);
 
-        showPreviewPanel(actionShowPreviewPanel->isChecked());
+        showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
 
         // done by SIGNAL(updatedHDR( ))
         //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
@@ -1044,7 +1045,7 @@ void MainWindow::preferences_called()
                 }
             }
         }
-        actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
+        m_Ui->actionShowPreviewPanel->setChecked(luminance_options.isPreviewPanelActive());
     }
 }
 
@@ -1089,25 +1090,25 @@ void MainWindow::openFiles(const QStringList& files)
 
 void MainWindow::Text_Under_Icons()
 {
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextUnderIcon);
 }
 
 void MainWindow::Icons_Only()
 {
-    toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     luminance_options.setMainWindowToolBarMode(Qt::ToolButtonIconOnly);
 }
 
 void MainWindow::Text_Alongside_Icons()
 {
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextBesideIcon);
 }
 
 void MainWindow::Text_Only()
 {
-    toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    m_Ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextOnly);
     luminance_options.setMainWindowToolBarMode(Qt::ToolButtonTextOnly);
 }
 
@@ -1151,7 +1152,7 @@ void MainWindow::updateWindowMenu()
     foreach (QAction* Action_MW, openMainWindows)
     {
         openMainWindows.removeAll(Action_MW);
-        menuWindows->removeAction( Action_MW );
+        m_Ui->menuWindows->removeAction( Action_MW );
         delete Action_MW;
     }
 
@@ -1160,7 +1161,7 @@ void MainWindow::updateWindowMenu()
         MainWindow *MW = qobject_cast<MainWindow *>(widget);
         if (MW != NULL)
         {
-            QAction *action  = menuWindows->addAction( MW->getCurrentHDRName() );
+            QAction *action  = m_Ui->menuWindows->addAction( MW->getCurrentHDRName() );
 
             action->setCheckable(true);
             action->setChecked(MW == this);
@@ -1277,8 +1278,8 @@ void MainWindow::cropToSelection()
 
 void MainWindow::enableCrop(bool isReady)
 {
-    cropToSelectionAction->setEnabled(isReady);
-    removeSelectionAction->setEnabled(isReady);
+    m_Ui->cropToSelectionAction->setEnabled(isReady);
+    m_Ui->removeSelectionAction->setEnabled(isReady);
 }
 
 void MainWindow::disableCrop()
@@ -1290,8 +1291,8 @@ void MainWindow::disableCrop()
     if ( !curr_g_v->isHDR() ) return;
 
     curr_g_v->removeSelection();
-    cropToSelectionAction->setEnabled(false);
-    removeSelectionAction->setEnabled(false);
+    m_Ui->cropToSelectionAction->setEnabled(false);
+    m_Ui->removeSelectionAction->setEnabled(false);
 }
 
 void MainWindow::closeEvent( QCloseEvent *event )
@@ -1606,7 +1607,7 @@ void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, 
  */
 void MainWindow::lockViewers(bool /*toggled*/)
 {
-    if (actionLock->isChecked() && m_tabwidget->count())
+    if (m_Ui->actionLock->isChecked() && m_tabwidget->count())
     {
         syncViewers((GenericViewer*)m_tabwidget->currentWidget());
     }
@@ -1615,7 +1616,7 @@ void MainWindow::lockViewers(bool /*toggled*/)
 void MainWindow::syncViewers(GenericViewer *sender)
 {
     if (sender == NULL) return;
-    if (!actionLock->isChecked()) return;
+    if (!m_Ui->actionLock->isChecked()) return;
 
     for (int idx = 0; idx < m_tabwidget->count(); idx++)
     {
@@ -1663,59 +1664,59 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
     if ( c_v == NULL )
     {
-        normalSizeAct->setEnabled(false);
-        normalSizeAct->setChecked(false);
-        fitToWindowAct->setEnabled( false );
-        fitToWindowAct->setChecked(false);
-        actionFill_to_Window->setEnabled(false);
-        actionFill_to_Window->setChecked(false);
+        m_Ui->normalSizeAct->setEnabled(false);
+        m_Ui->normalSizeAct->setChecked(false);
+        m_Ui->fitToWindowAct->setEnabled( false );
+        m_Ui->fitToWindowAct->setChecked(false);
+        m_Ui->actionFill_to_Window->setEnabled(false);
+        m_Ui->actionFill_to_Window->setChecked(false);
 
-        zoomInAct->setEnabled( false );
-        zoomOutAct->setEnabled( false );
+        m_Ui->zoomInAct->setEnabled( false );
+        m_Ui->zoomOutAct->setEnabled( false );
     }
     else
     {  
         if ( c_v->isNormalSize() )
         {
-            zoomInAct->setEnabled(false);
-            zoomOutAct->setEnabled(true);
+            m_Ui->zoomInAct->setEnabled(false);
+            m_Ui->zoomOutAct->setEnabled(true);
 
-            normalSizeAct->setEnabled(false);
-            normalSizeAct->setChecked(true);
-            fitToWindowAct->setEnabled(true);
-            fitToWindowAct->setChecked(false);
-            actionFill_to_Window->setEnabled(true);
-            actionFill_to_Window->setChecked(false);
+            m_Ui->normalSizeAct->setEnabled(false);
+            m_Ui->normalSizeAct->setChecked(true);
+            m_Ui->fitToWindowAct->setEnabled(true);
+            m_Ui->fitToWindowAct->setChecked(false);
+            m_Ui->actionFill_to_Window->setEnabled(true);
+            m_Ui->actionFill_to_Window->setChecked(false);
 
             return;
         }
 
         if ( c_v->isFilledToWindow() )
         {
-            zoomInAct->setEnabled(true);
-            zoomOutAct->setEnabled(true);
+            m_Ui->zoomInAct->setEnabled(true);
+            m_Ui->zoomOutAct->setEnabled(true);
 
-            normalSizeAct->setEnabled(true);
-            normalSizeAct->setChecked(false);
-            fitToWindowAct->setEnabled(true);
-            fitToWindowAct->setChecked(false);
-            actionFill_to_Window->setEnabled(false);
-            actionFill_to_Window->setChecked(true);
+            m_Ui->normalSizeAct->setEnabled(true);
+            m_Ui->normalSizeAct->setChecked(false);
+            m_Ui->fitToWindowAct->setEnabled(true);
+            m_Ui->fitToWindowAct->setChecked(false);
+            m_Ui->actionFill_to_Window->setEnabled(false);
+            m_Ui->actionFill_to_Window->setChecked(true);
 
             return;
         }
 
         if ( c_v->isFittedToWindow() )
         {
-            zoomInAct->setEnabled(true);
-            zoomOutAct->setEnabled(false);
+            m_Ui->zoomInAct->setEnabled(true);
+            m_Ui->zoomOutAct->setEnabled(false);
 
-            normalSizeAct->setEnabled(true);
-            normalSizeAct->setChecked(false);
-            fitToWindowAct->setEnabled(false);
-            fitToWindowAct->setChecked(true);
-            actionFill_to_Window->setEnabled(true);
-            actionFill_to_Window->setChecked(false);
+            m_Ui->normalSizeAct->setEnabled(true);
+            m_Ui->normalSizeAct->setChecked(false);
+            m_Ui->fitToWindowAct->setEnabled(false);
+            m_Ui->fitToWindowAct->setChecked(true);
+            m_Ui->actionFill_to_Window->setEnabled(true);
+            m_Ui->actionFill_to_Window->setChecked(false);
 
             return;
         }
@@ -1757,7 +1758,7 @@ void MainWindow::removeTab(int t)
                 tm_status.curr_tm_options = NULL;
 
                 tmPanel->setEnabled(false);
-                actionShowPreviewPanel->setEnabled(false);
+                m_Ui->actionShowPreviewPanel->setEnabled(false);
 
                 tmPanel->hide();
                 previewPanel->hide();
@@ -1782,7 +1783,7 @@ void MainWindow::removeTab(int t)
             tm_status.curr_tm_options = NULL;
 
             tmPanel->setEnabled(false);
-            actionShowPreviewPanel->setEnabled(false);
+            m_Ui->actionShowPreviewPanel->setEnabled(false);
 
             tmPanel->hide();
             previewPanel->hide();
@@ -1795,7 +1796,7 @@ void MainWindow::removeTab(int t)
         w->deleteLater();   // delete yourself whenever you want
 
         if (curr_num_ldr_open == 1)
-            fileSaveAllAction->setEnabled(false);
+            m_Ui->fileSaveAllAction->setEnabled(false);
     }
     updatePreviousNextActions();
 }
@@ -1826,28 +1827,28 @@ void MainWindow::updatePreviousNextActions()
     int curr_num_viewers = m_tabwidget->count();
     if (curr_num_viewers <= 1)
     {
-        actionShowNext->setEnabled(false);
-        actionShowPrevious->setEnabled(false);
-        actionLock->setEnabled(false);
+        m_Ui->actionShowNext->setEnabled(false);
+        m_Ui->actionShowPrevious->setEnabled(false);
+        m_Ui->actionLock->setEnabled(false);
     }
     else
     {
-        actionLock->setEnabled(true);
+        m_Ui->actionLock->setEnabled(true);
         int curr_viewer = m_tabwidget->currentIndex();
         if ( curr_viewer == 0 )
         {
-            actionShowNext->setEnabled(true);
-            actionShowPrevious->setEnabled(false);
+            m_Ui->actionShowNext->setEnabled(true);
+            m_Ui->actionShowPrevious->setEnabled(false);
         }
         else if (curr_viewer == (curr_num_viewers-1))
         {
-            actionShowNext->setEnabled(false);
-            actionShowPrevious->setEnabled(true);
+            m_Ui->actionShowNext->setEnabled(false);
+            m_Ui->actionShowPrevious->setEnabled(true);
         }
         else
         {
-            actionShowNext->setEnabled(true);
-            actionShowPrevious->setEnabled(true);
+            m_Ui->actionShowNext->setEnabled(true);
+            m_Ui->actionShowPrevious->setEnabled(true);
         }
     }
 }
@@ -1930,13 +1931,13 @@ void MainWindow::updateRecentFileActions()
 
 void MainWindow::initRecentFileActions()
 {
-    separatorRecentFiles = menuFile->addSeparator();
+    separatorRecentFiles = m_Ui->menuFile->addSeparator();
 
     for (int i = 0; i < MAX_RECENT_FILES; ++i)
     {
         recentFileActs[i] = new QAction(this);
         recentFileActs[i]->setVisible(false);
-        menuFile->addAction(recentFileActs[i]);
+        m_Ui->menuFile->addAction(recentFileActs[i]);
         connect(recentFileActs[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
     }
 }
@@ -1956,15 +1957,15 @@ void MainWindow::levelsRequested(bool checked)
         GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
         if (current==NULL)
             return;
-        actionFix_Histogram->setDisabled(true);
+        m_Ui->actionFix_Histogram->setDisabled(true);
         current->levelsRequested(checked);
     }
 }
 
 void MainWindow::levelsClosed()
 {
-    actionFix_Histogram->setDisabled(false);
-    actionFix_Histogram->setChecked(false);
+    m_Ui->actionFix_Histogram->setDisabled(false);
+    m_Ui->actionFix_Histogram->setChecked(false);
 }
 
 void MainWindow::setInputFiles(const QStringList& files)
