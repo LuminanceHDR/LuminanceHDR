@@ -62,6 +62,7 @@
 #include "Filter/pfsrotate.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
+#include "Viewers/LuminanceRangeWidget.h"
 #include "Viewers/LdrViewer.h"
 #include "Common/ImageQualityDialog.h"
 #include "Libpfs/frame.h"

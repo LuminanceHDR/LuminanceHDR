@@ -33,15 +33,18 @@
 
 #include <QImage>
 #include <QComboBox>
-#include <QResizeEvent>
 
-#include "Viewers/SelectionTool.h"
 #include "GenericViewer.h"
-#include "LuminanceRangeWidget.h"
-#include "Libpfs/array2d.h"
-#include "Libpfs/pfs.h"
 
 #include <iostream>
+
+// Forward declaration
+namespace pfs {
+    class Array2D;
+    class Frame;
+}
+
+class LuminanceRangeWidget;     // #include "LuminanceRangeWidget.h"
 
 enum LumMappingMethod {
   MAP_LINEAR,

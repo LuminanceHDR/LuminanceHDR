@@ -28,7 +28,6 @@
 #include "HdrViewer.h"
 
 #include <QLabel>
-#include <QApplication>
 #include <QFileInfo>
 
 #include <cmath>
@@ -37,8 +36,12 @@
 
 #include "Common/global.h"
 #include "Common/msec_timer.h"
-#include "Libpfs/domio.h"
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Libpfs/array2d.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/frame.h"
+#include "Libpfs/domio.h"
+#include "Viewers/LuminanceRangeWidget.h"
 
 template<class T>
 T clamp( T val, T min, T max )
