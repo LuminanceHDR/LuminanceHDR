@@ -82,15 +82,6 @@ MainWindow::MainWindow(QWidget *parent):
         QMainWindow(parent)
 {
     init();
-
-    // SPLASH SCREEN    ----------------------------------------------------------------------
-    if (luminance_options.value("ShowSplashScreen", true).toBool())
-    {
-        showSplash();
-        //UMessageBox::donationSplashMB();
-    }
-
-    // END SPLASH SCREEN    ------------------------------------------------------------------
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
@@ -131,9 +122,18 @@ void MainWindow::init()
     if ( sm_NumMainWindows == 1)
     {
         // Register symbols on the first activation!
-
         qRegisterMetaType<QImage>("QImage");
         qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+
+        QDir dir(QDir::homePath());
+
+#ifdef WIN32
+        if (!dir.exists("LuminanceHDR"))
+            dir.mkdir("LuminanceHDR");
+#else
+        if (!dir.exists(".LuminanceHDR"))
+            dir.mkdir(".LuminanceHDR");
+#endif
     }
 
     createUI();
@@ -145,22 +145,23 @@ void MainWindow::init()
     setupIO();
     setupTM();
     createConnections();
+
+    if ( sm_NumMainWindows == 1 )
+    {
+        // SPLASH SCREEN    ----------------------------------------------------------------------
+        if (luminance_options.value("ShowSplashScreen", true).toBool())
+        {
+            showSplash();
+            //UMessageBox::donationSplashMB();
+        }
+        // END SPLASH SCREEN    ------------------------------------------------------------------
+    }
 }
 
 void MainWindow::createUI()
 {
     m_Ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-
-    QDir dir(QDir::homePath());
-
-#ifdef WIN32
-    if (!dir.exists("LuminanceHDR"))
-        dir.mkdir("LuminanceHDR");
-#else
-    if (!dir.exists(".LuminanceHDR"))
-        dir.mkdir(".LuminanceHDR");
-#endif
 
     restoreState(luminance_options.value("MainWindowState").toByteArray());
     restoreGeometry(luminance_options.value("MainWindowGeometry").toByteArray());
