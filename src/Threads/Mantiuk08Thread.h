@@ -28,7 +28,7 @@
 #ifndef MANTIUK08THREAD_H
 #define MANTIUK08THREAD_H
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Mantiuk08Thread : public TMOThread {
 Q_OBJECT

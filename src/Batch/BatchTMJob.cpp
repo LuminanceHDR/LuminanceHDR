@@ -26,6 +26,7 @@
 #include "BatchTMJob.h"
 #include "Fileformat/pfstiff.h"
 #include "Exif/ExifOperations.h"
+#include "Threads/TMOThread.h"
 
 #include <QFileInfo>
 #include <QByteArray>

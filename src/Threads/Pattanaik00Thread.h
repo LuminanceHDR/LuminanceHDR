@@ -28,7 +28,7 @@
 #ifndef PATTANAIK00THREAD_H
 #define PATTANAIK00THREAD_H
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Pattanaik00Thread : public TMOThread {
 Q_OBJECT

@@ -28,7 +28,7 @@
 #ifndef DRAGO03THREAD_H
 #define DRAGO03THREAD_H
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Drago03Thread : public TMOThread {
 Q_OBJECT

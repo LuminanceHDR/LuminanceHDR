@@ -124,6 +124,14 @@ public:
     void setDefaultParameters();
 };
 
+/*
+ * TODO: Davide Anastasia 2011.11.19
+ *
+ * This class depends strongly on the TonemappingOptions
+ * However, most of these functionality can be brought inside TonemappingOptions
+ * and get rid of this class
+ */
+
 class TMOptionsOperations {
 public:
         TMOptionsOperations(const TonemappingOptions* opts);

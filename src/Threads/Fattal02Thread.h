@@ -30,7 +30,7 @@
 
 #include <QMutex>
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Fattal02Thread : public TMOThread {
 Q_OBJECT

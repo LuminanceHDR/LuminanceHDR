@@ -25,9 +25,9 @@
  *
  */
 
-#include "Common/config.h"
+#include "Threads/Ashikhmin02Thread.h"
 #include "TonemappingOperators/pfstmo.h"
-#include "Ashikhmin02Thread.h"
+#include "Core/TonemappingOptions.h"
 
 Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
 TMOThread(frame, opts)

@@ -25,9 +25,9 @@
  *
  */
 
-#include "Common/config.h"
-#include "Pattanaik00Thread.h"
+#include "Threads/Pattanaik00Thread.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "Core/TonemappingOptions.h"
 
 Pattanaik00Thread::Pattanaik00Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
 TMOThread(frame, opts)

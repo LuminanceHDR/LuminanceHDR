@@ -25,9 +25,9 @@
  *
  */
 
-#include "Common/config.h"
-#include "Durand02Thread.h"
+#include "Threads/Durand02Thread.h"
 #include "TonemappingOperators/pfstmo.h"	
+#include "Core/TonemappingOptions.h"
 
 QMutex Durand02Thread::durand02_mutex;
 

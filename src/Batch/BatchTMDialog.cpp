@@ -38,6 +38,7 @@
 #include "BatchTMDialog.h"
 #include "Common/config.h"
 #include "Exif/ExifOperations.h"
+#include "Core/TonemappingOptions.h"
 
 BatchTMDialog::BatchTMDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1)
 {

@@ -49,6 +49,8 @@
 #include "Fileformat/pfstiff.h"
 #include "Fileformat/pfs_file_format.h"
 
+#include "Threads/TMOThread.h"
+
 #if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC) || defined(__APPLE__)
 #define error(Z) { fprintf(stderr,"%s", Z); exit(1); }
 

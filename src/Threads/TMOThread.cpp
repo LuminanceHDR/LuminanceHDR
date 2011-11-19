@@ -31,6 +31,7 @@
 
 #include "TMOThread.h"
 #include "Common/config.h"
+#include "Common/global.h"
 #include "Libpfs/colorspace.h"
 #include "Libpfs/domio.h"
 #include "Filter/pfscut.h"
@@ -39,6 +40,10 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfstiff.h"
+#include "Core/TonemappingOptions.h"
+#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
+#include "Common/ProgressHelper.h"
 
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions *opts) :
         QThread(0), opts(opts), out_CS(pfs::CS_RGB)

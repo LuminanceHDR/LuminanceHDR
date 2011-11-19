@@ -25,9 +25,9 @@
  *
  */
 
-#include "Common/config.h"
-#include "Mantiuk06Thread.h"
+#include "Threads/Mantiuk06Thread.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "Core/TonemappingOptions.h"
 
 QMutex Mantiuk06Thread::mantiuk06_mutex;
 

@@ -28,7 +28,7 @@
 #ifndef REINHARD02THREAD_H
 #define REINHARD02THREAD_H
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Reinhard02Thread : public TMOThread {
 Q_OBJECT

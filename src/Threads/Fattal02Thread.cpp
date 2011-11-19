@@ -25,9 +25,9 @@
  *
  */
 
-#include "Common/config.h"
-#include "Fattal02Thread.h"
+#include "Threads/Fattal02Thread.h"
 #include "TonemappingOperators/pfstmo.h"
+#include "Core/TonemappingOptions.h"
 
 QMutex Fattal02Thread::fattal02_mutex;
 

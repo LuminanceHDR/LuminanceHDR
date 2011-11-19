@@ -28,7 +28,7 @@
 #ifndef ASHIKHMIN02THREAD_H
 #define ASHIKHMIN02THREAD_H
 
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Ashikhmin02Thread : public TMOThread {
 Q_OBJECT

@@ -28,14 +28,20 @@
 #ifndef TMOFACTORY
 #define TMOFACTORY
 
-#include "TMOThread.h"
-#include "Common/LuminanceOptions.h"
-#include "Libpfs/frame.h"
+#include "Core/TonemappingOptions.h"
+
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
+
+class TMOThread;
+class TonemappingOptions;
 
 class TMOFactory {
 
 public:
-        static TMOThread * getTMOThread(const TMOperator &tmoOperator, pfs::Frame *frame, const TonemappingOptions *opt);
+        static TMOThread* getTMOThread(const TMOperator tmoOperator, pfs::Frame *frame, const TonemappingOptions* opt);
 };
 
 #endif

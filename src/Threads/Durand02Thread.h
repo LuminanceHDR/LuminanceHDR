@@ -29,7 +29,7 @@
 #define DURAND02THREAD_H
 
 #include <QMutex>
-#include "TMOThread.h"
+#include "Threads/TMOThread.h"
 
 class Durand02Thread : public TMOThread {
 Q_OBJECT

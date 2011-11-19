@@ -31,17 +31,20 @@
 #include <QThread>
 #include <QImage>
 
-#include "Core/TonemappingOptions.h"
-#include "Common/LuminanceOptions.h"
-#include "Common/global.h"
-#include "Common/ProgressHelper.h"
-#include "Libpfs/pfs.h"
-#include "Libpfs/frame.h"
 #include "Libpfs/colorspace.h"
+
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
+
+class ProgressHelper;
+class TonemappingOptions;
 
 enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH, TMO_PREVIEW };
 
-class TMOThread : public QThread {
+class TMOThread : public QThread
+{
 Q_OBJECT
 
 public:
@@ -53,6 +56,9 @@ public:
   void set_batch_mode() { m_tmo_thread_mode = TMO_BATCH; }
   void set_image_number(int n) { m_image_num = n; }
 
+  /*
+   * This function should not be here
+   */
   static void apply_white_black_point(pfs::Frame*, float white_point = 0.0f, float black_point = 100.0f);
   
 public slots:
