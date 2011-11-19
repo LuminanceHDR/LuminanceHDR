@@ -79,13 +79,13 @@
 int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
-        QMainWindow(parent)
+	QMainWindow(parent), m_Ui(new Ui::MainWindow)
 {
     init();
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
-        QMainWindow(parent)
+        QMainWindow(parent), m_Ui(new Ui::MainWindow)
 
 {
     init();
