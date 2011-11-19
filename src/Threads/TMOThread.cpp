@@ -102,11 +102,9 @@ void TMOThread::startTonemapping()
 
 void TMOThread::finalize()
 {
-    //LuminanceOptions *luminance_options = LuminanceOptions::getInstance();
-
     if (!(ph->isTerminationRequested()))
     {
-        apply_white_black_point(workingframe, 0.0f, 95.f);
+        //apply_white_black_point(workingframe, 0.0f, 95.f);
 
         switch (m_tmo_thread_mode) {
         case TMO_BATCH:
