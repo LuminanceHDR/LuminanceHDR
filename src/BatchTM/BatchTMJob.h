@@ -30,10 +30,14 @@
 
 #include <QThread>
 #include <QMutex>
+#include <QImage>
 
-#include "Libpfs/pfs.h"
-#include "Threads/LoadHdrThread.h"
-#include "Threads/TMOFactory.h"
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
+
+class TonemappingOptions;
 
 class BatchTMJob : public QThread {
   Q_OBJECT

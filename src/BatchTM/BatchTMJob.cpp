@@ -27,6 +27,9 @@
 #include "Fileformat/pfstiff.h"
 #include "Exif/ExifOperations.h"
 #include "Threads/TMOThread.h"
+#include "Libpfs/pfs.h"
+#include "Threads/LoadHdrThread.h"
+#include "Threads/TMOFactory.h"
 
 #include <QFileInfo>
 #include <QByteArray>

@@ -28,6 +28,7 @@
 #ifndef BATCH_IMPL_H
 #define BATCH_IMPL_H
 
+#include <QDialog>
 #include <QVector>
 #include <QStringListModel>
 #include <QSortFilterProxyModel>
@@ -36,18 +37,21 @@
 #include <QSemaphore> 
 #include <QtGui/QCloseEvent> 
 
-#include "ui_BatchTMDialog.h"
-
-#include "Batch/BatchTMJob.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/global.h"
-#include "Libpfs/pfs.h"
-#include "Threads/LoadHdrThread.h"
-#include "Threads/TMOFactory.h"
 
-class BatchTMDialog : public QDialog, public Ui::BatchTMDialog
+// Forward declaration
+class TonemappingOptions;
+
+namespace Ui {
+    class BatchTMDialog;
+}
+
+class BatchTMDialog: public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
+private:
+    Ui::BatchTMDialog* m_Ui;
+
 
 public:
 	BatchTMDialog(QWidget *parent = 0);
@@ -77,7 +81,7 @@ protected:
   void closeEvent(QCloseEvent *);
 private:
   //Parses a TM_opts file (return NULL on error)
-        TonemappingOptions* parse_tm_opt_file(QString filename);
+  TonemappingOptions* parse_tm_opt_file(QString filename);
   
   //required for the cache path
   LuminanceOptions m_luminance_options;

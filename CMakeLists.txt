@@ -293,8 +293,8 @@ SET(LUMINANCE_HDR_INCLUDE
 
 SET(LUMINANCE_HDR_SRC
 	src/BatchHDR/BatchHDRDialog.cpp
-	src/Batch/BatchTMDialog.cpp
-	src/Batch/BatchTMJob.cpp
+        src/BatchTM/BatchTMDialog.cpp
+        src/BatchTM/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
 #       src/Core/TMWorker.cpp
         src/Core/TonemappingOptions.cpp
@@ -364,8 +364,8 @@ SET(LUMINANCE_HDR_SRC
 
 SET(LUMINANCE_HDR_MOC
 	src/BatchHDR/BatchHDRDialog.h
-	src/Batch/BatchTMDialog.h
-	src/Batch/BatchTMJob.h
+        src/BatchTM/BatchTMDialog.h
+        src/BatchTM/BatchTMJob.h
 	src/Core/IOWorker.h
 #        src/Core/TMWorker.h
 	src/HdrCreation/HdrCreationManager.h

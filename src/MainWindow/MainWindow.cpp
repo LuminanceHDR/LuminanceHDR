@@ -56,7 +56,7 @@
 #include "Common/global.h"
 #include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
-#include "Batch/BatchTMDialog.h"
+#include "BatchTM/BatchTMDialog.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
@@ -75,6 +75,7 @@
 #include "Resize/ResizeDialog.h"
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
+#include "Threads/TMOFactory.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 
