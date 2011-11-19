@@ -38,7 +38,6 @@
 #include "Common/LuminanceOptions.h"
 #include "HdrCreation/createhdr.h"
 #include "Threads/LoadHdrThread.h"
-#include "Threads/TMOFactory.h"
 #include "Exif/ExifOperations.h"
 #include "Common/commandline.h"
 
@@ -524,7 +523,7 @@ void  CommandLineInterfaceManager::startTonemap()
 		if (tmopts->xsize == -2)	
 			tmopts->xsize = HDR->getWidth();
     
-                TMOThread *thread = TMOFactory::getTMOThread(tmopts->tmoperator, HDR, tmopts);
+                TMOThread *thread = TMOThread::getTMOThread(tmopts->tmoperator, HDR, tmopts);
 		connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(tonemapTerminated(QImage*, quint16*)));
     
     thread->startTonemapping();

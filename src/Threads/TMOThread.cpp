@@ -45,6 +45,47 @@
 #include "Libpfs/frame.h"
 #include "Common/ProgressHelper.h"
 
+#include "Threads/Ashikhmin02Thread.h"
+#include "Threads/Drago03Thread.h"
+#include "Threads/Durand02Thread.h"
+#include "Threads/Fattal02Thread.h"
+#include "Threads/Mantiuk06Thread.h"
+#include "Threads/Mantiuk08Thread.h"
+#include "Threads/Pattanaik00Thread.h"
+#include "Threads/Reinhard02Thread.h"
+#include "Threads/Reinhard05Thread.h"
+
+TMOThread* TMOThread::getTMOThread(const TMOperator tmoOperator,
+                                   pfs::Frame *workingPfsFrame,
+                                   const TonemappingOptions *opts)
+{
+    switch (tmoOperator)
+    {
+    case ashikhmin:
+        return new Ashikhmin02Thread(workingPfsFrame, opts);
+    case drago:
+        return new Drago03Thread(workingPfsFrame, opts);
+    case durand:
+        return new Durand02Thread(workingPfsFrame, opts);
+    case fattal:
+        return new Fattal02Thread(workingPfsFrame, opts);
+    case mantiuk06:
+        return new Mantiuk06Thread(workingPfsFrame, opts);
+    case mantiuk08:
+        return new Mantiuk08Thread(workingPfsFrame, opts);
+    case pattanaik:
+        return new Pattanaik00Thread(workingPfsFrame, opts);
+    case reinhard02:
+        return new Reinhard02Thread(workingPfsFrame, opts);
+    case reinhard05:
+    default:		// just to be sure
+        return new Reinhard05Thread(workingPfsFrame, opts);
+    }
+}
+
+///!
+///! Private constructor
+///!
 TMOThread::TMOThread(pfs::Frame *frame, const TonemappingOptions *opts) :
         QThread(0), opts(opts), out_CS(pfs::CS_RGB)
 {  

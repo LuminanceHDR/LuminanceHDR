@@ -44,7 +44,6 @@
 #include "Exif/ExifOperations.h"
 #include "Core/TonemappingOptions.h"
 #include "BatchTM/BatchTMJob.h"
-#include "Threads/TMOFactory.h"
 
 BatchTMDialog::BatchTMDialog(QWidget *p):
     QDialog(p), m_Ui(new Ui::BatchTMDialog),

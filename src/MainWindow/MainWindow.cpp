@@ -75,7 +75,6 @@
 #include "Resize/ResizeDialog.h"
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
-#include "Threads/TMOFactory.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -1475,7 +1474,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     {
         // TODO : can you clean up this thing?!
         // getHDRPfsFrame() is only available in HdrViewer
-        TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
+        TMOThread *thread = TMOThread::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
         progInd = new TMOProgressIndicator(this);
 
         connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(addLDRResult(QImage*, quint16*)));

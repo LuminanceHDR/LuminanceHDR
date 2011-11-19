@@ -32,6 +32,7 @@
 #include <QImage>
 
 #include "Libpfs/colorspace.h"
+#include "Core/TonemappingOptions.h"
 
 // Forward declaration
 namespace pfs {
@@ -46,9 +47,15 @@ enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH, TMO_PREVIEW };
 class TMOThread : public QThread
 {
 Q_OBJECT
+protected:
+    TMOThread(pfs::Frame *frame, const TonemappingOptions *opts);
 
 public:
-  TMOThread(pfs::Frame *frame, const TonemappingOptions *opts);
+/*
+  * Using this static function, it's possible to obtain an object of type TMOThread
+  */
+  static TMOThread* getTMOThread(const TMOperator tmoOperator, pfs::Frame *frame, const TonemappingOptions* opt);
+
   virtual ~TMOThread();
   virtual void startTonemapping();
 

@@ -24,7 +24,6 @@
 #include <QDebug>
 
 #include "PreviewPanel.h"
-#include "Threads/TMOFactory.h"
 #include "Threads/TMOThread.h"
 #include "Filter/pfssize.h"
 
@@ -177,7 +176,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = mantiuk06;
     opts->tmoperator_str = "Mantiuk '06";
 
-    TMOThread *thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    TMOThread *thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(0);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -188,7 +187,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = mantiuk08;
     opts->tmoperator_str = "Mantiuk '08";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(1);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -199,7 +198,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = fattal;
     opts->tmoperator_str = "Fattal";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(2);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -210,7 +209,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = drago;
     opts->tmoperator_str = "Drago";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(3);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -221,7 +220,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = durand;
     opts->tmoperator_str = "Durand";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(4);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -232,7 +231,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = reinhard02;
     opts->tmoperator_str = "Reinhard '02";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(5);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -243,7 +242,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = reinhard05;
     opts->tmoperator_str = "Reinhard '05";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(6);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -254,7 +253,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = ashikhmin;
     opts->tmoperator_str = "Ashikhmin";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(7);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));
@@ -265,7 +264,7 @@ void PreviewPanel::generatePreviews()
     opts->tmoperator = pattanaik;
     opts->tmoperator_str = "Pattanaik";
 
-    thread = TMOFactory::getTMOThread(opts->tmoperator, current_frame, opts);
+    thread = TMOThread::getTMOThread(opts->tmoperator, current_frame, opts);
     thread->set_image_number(8);
     thread->set_mode(TMO_PREVIEW);
     connect(thread, SIGNAL(imageComputed(QImage*, int)), this, SLOT(addSmallPreviewResult(QImage*, int)));

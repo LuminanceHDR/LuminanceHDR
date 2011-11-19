@@ -279,7 +279,6 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/HelpBrowser/schelptreemodel.h	
 	src/HelpBrowser/treeitem.h
 	src/HelpBrowser/treemodel.h
-	src/Threads/TMOFactory.h
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
@@ -329,7 +328,6 @@ SET(LUMINANCE_HDR_SRC
 	src/Threads/Reinhard02Thread.cpp
 	src/Threads/Reinhard05Thread.cpp
 	src/Threads/TMOThread.cpp
-	src/Threads/TMOFactory.cpp
 	src/TonemappingPanel/TMOProgressIndicator.cpp
 	src/TonemappingPanel/TonemappingPanel.cpp
 	src/TonemappingPanel/TonemappingWarnDialog.cpp
