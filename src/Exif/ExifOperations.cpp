@@ -196,4 +196,54 @@ namespace ExifOperations
     }
   }
   
+  int obtain_rotation(const std::string& filename)
+  {
+    try
+    {
+      Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(filename);
+      image->readMetadata();
+      Exiv2::ExifData &exifData = image->exifData();
+      if (exifData.empty())
+        return 0;
+      
+      Exiv2::ExifData::const_iterator degrees = exifData.findKey(Exiv2::ExifKey("Exif.Image.Orientation"));
+      
+      if (degrees != exifData.end())
+      {
+
+		/*
+			http://jpegclub.org/exif_orientation.html
+
+
+		Value	0th Row		0th Column
+			1	top			left side
+			2	top			right side
+			3	bottom		right side
+			4	bottom		left side
+			5	left side	top
+			6	right side	top
+			7	right side	bottom
+			8	left side	bottom
+
+		*/
+
+		float rotation = degrees->toFloat();	 
+
+		switch((int)rotation)
+		{
+		case 3:
+			return 180;
+		case 6:
+			return 90;
+		case 8:
+			return 270;
+		}
+      }
+	  return 0;
+    }
+    catch (Exiv2::AnyError& e)
+    {
+      return 0;
+    }
+  }
 }
