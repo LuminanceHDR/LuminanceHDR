@@ -1,4 +1,4 @@
-@echo off
+	@echo off
 SETLOCAL
 call setenv.cmd
 
@@ -110,7 +110,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2574 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2638 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
@@ -170,13 +170,13 @@ IF NOT EXIST tiff-4.0.0beta7 (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-0.13.8.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.13.8.zip http://www.libraw.org/data/LibRaw-0.13.8.zip
+IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.3.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.3.zip http://www.libraw.org/data/LibRaw-0.14.3.zip
 )
-IF NOT EXIST LibRaw-0.13.8 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.13.8.zip
+IF NOT EXIST LibRaw-0.14.3 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.3.zip
 
-	pushd LibRaw-0.13.8
+	pushd LibRaw-0.14.3
 	nmake /f Makefile.msvc
 	popd
 )
@@ -278,8 +278,8 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	popd
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
-	%CYGWIN_DIR%\bin\git.exe fetch
-	%CYGWIN_DIR%\bin\git.exe rebase refs/remotes/origin/master
+	rem %CYGWIN_DIR%\bin\git.exe fetch
+	rem %CYGWIN_DIR%\bin\git.exe rebase refs/remotes/origin/master
 	popd
 )
 
@@ -309,9 +309,9 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy tiff-4.0.0beta7\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.13.8\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.13.8\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
-	copy LibRaw-0.13.8\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
+	copy LibRaw-0.14.3\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
+	copy LibRaw-0.14.3\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
+	copy LibRaw-0.14.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
 	
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
