@@ -1481,6 +1481,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     {
         // TODO : can you clean up this thing?!
         // getHDRPfsFrame() is only available in HdrViewer
+        /* TOFIX
         TMOThread *thread = TMOThread::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
         progInd = new TMOProgressIndicator(this);
 
@@ -1499,6 +1500,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         thread->startTonemapping();
         statusBar()->addWidget(progInd);
         progInd->show();
+        */
     }
 }
 
@@ -1578,7 +1580,7 @@ void MainWindow::tonemappingFinished()
 
 void MainWindow::deleteTMOThread(TMOThread *th)
 {
-    delete th;
+    //delete th;
 }
 
 void MainWindow::showErrorMessage(const char *e)

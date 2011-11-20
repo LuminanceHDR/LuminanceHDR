@@ -32,15 +32,16 @@
 
 #include "Threads/TMOThread.h"
 
-class Fattal02Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorFattal02: public TonemapOperator
+{
 public:
-        Fattal02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
-protected:
-	void run();
-  
-  static QMutex fattal02_mutex;	
+    TonemapOperatorFattal02();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+
+private:
+    static QMutex m_Mutex;
 };
 
 #endif

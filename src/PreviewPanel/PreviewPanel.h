@@ -51,7 +51,7 @@ protected Q_SLOTS:
     void addSmallPreviewResult(QImage*, int n);
     void setPixmap(const QPixmap &p, int n);
     void tonemapPreview(int n);
-    void deleteTMOThread(TMOThread *th);
+    //void deleteTMOThread(TMOThread *th);
     void showError(const char *);
 
 protected:

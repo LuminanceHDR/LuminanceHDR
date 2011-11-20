@@ -46,7 +46,7 @@ TMWorker::~TMWorker()
 #endif
 }
 
-pfs::Frame* TMWorker::getTonemappedFrame(const pfs::Frame* in_frame, TonemappingOptions* tm_options)
+pfs::Frame* TMWorker::getTonemappedFrame(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options)
 {
     pfs::Frame* working_frame = preProcessFrame(in_frame, tm_options);
     try {

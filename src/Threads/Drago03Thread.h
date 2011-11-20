@@ -30,13 +30,13 @@
 
 #include "Threads/TMOThread.h"
 
-class Drago03Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorDrago03: public TonemapOperator
+{
 public:
-        Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opt);
-protected:
-	void run();
+    TonemapOperatorDrago03();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 };
 
 #endif

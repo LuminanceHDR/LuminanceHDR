@@ -28,8 +28,7 @@
 #ifndef TMOTHREAD_H
 #define TMOTHREAD_H
 
-#include <QThread>
-#include <QImage>
+
 
 #include "Libpfs/colorspace.h"
 #include "Core/TonemappingOptions.h"
@@ -40,20 +39,18 @@ namespace pfs {
 }
 
 class ProgressHelper;
-class TonemappingOptions;
 
+/*
 enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH, TMO_PREVIEW };
 
 class TMOThread : public QThread
 {
-Q_OBJECT
+    Q_OBJECT
 protected:
     TMOThread(pfs::Frame *frame, const TonemappingOptions *opts);
 
 public:
-/*
-  * Using this static function, it's possible to obtain an object of type TMOThread
-  */
+  ///! Using this static function, it's possible to obtain an object of type TMOThread
   static TMOThread* getTMOThread(const TMOperator tmoOperator, pfs::Frame *frame, const TonemappingOptions* opt);
 
   virtual ~TMOThread();
@@ -63,9 +60,7 @@ public:
   void set_batch_mode() { m_tmo_thread_mode = TMO_BATCH; }
   void set_image_number(int n) { m_image_num = n; }
 
-  /*
-   * This function should not be here
-   */
+  ///! This function should not be here
   static void apply_white_black_point(pfs::Frame*, float white_point = 0.0f, float black_point = 100.0f);
   
 public slots:
@@ -100,5 +95,31 @@ protected:
 
 
 };
+
+*/
+
+
+class TonemapOperator
+{
+public:
+    static TonemapOperator* getTonemapOperator(const TMOperator tmo);
+    virtual ~TonemapOperator();
+
+    ///!
+    ///! return the underlying type of the TonemapOperator
+    ///!
+    virtual TMOperator getType() = 0;
+
+    ///!
+    ///! Get a Frame in RGB and processes it.
+    ///! Frame is MODIFIED.
+    ///! If you want to keep the original frame, make a copy before
+    ///!
+    virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*) = 0;
+
+protected:
+    TonemapOperator();
+};
+
 
 #endif

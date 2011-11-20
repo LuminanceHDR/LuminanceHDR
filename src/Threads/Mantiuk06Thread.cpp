@@ -29,38 +29,42 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-QMutex Mantiuk06Thread::mantiuk06_mutex;
+QMutex TonemapOperatorMantiuk06::m_Mutex;
 
-Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
+TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
+    TonemapOperator()
 {
-  out_CS = pfs::CS_SRGB;
+  //out_CS = pfs::CS_SRGB;
 }
 
-void Mantiuk06Thread::run()
+void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_mantiuk06 not reentrant
-		mantiuk06_mutex.lock();
-		pfstmo_mantiuk06(workingframe,
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try
+//	{
+    // pfstmo_mantiuk06 not reentrant
+    m_Mutex.lock();
+    pfstmo_mantiuk06(workingframe,
                      opts->operator_options.mantiuk06options.contrastfactor,
                      opts->operator_options.mantiuk06options.saturationfactor,
                      opts->operator_options.mantiuk06options.detailfactor,
                      opts->operator_options.mantiuk06options.contrastequalization,
-                     ph);
-		mantiuk06_mutex.unlock();
-	}
-	catch(...)
-  	{
-    		mantiuk06_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+                     NULL);
+    m_Mutex.unlock();
+//	}
+//	catch(...)
+//  	{
+//    		mantiuk06_mutex.unlock();
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-// run()
+
+TMOperator TonemapOperatorMantiuk06::getType()
+{
+    return mantiuk06;
+}

@@ -29,41 +29,41 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorMantiuk08::TonemapOperatorMantiuk08():
+    TonemapOperator()
+{}
 
-void Mantiuk08Thread::run()
+void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try {
-		pfstmo_mantiuk08(workingframe,
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try {
+    pfstmo_mantiuk08(workingframe,
                      opts->operator_options.mantiuk08options.colorsaturation,
                      opts->operator_options.mantiuk08options.contrastenhancement,
                      opts->operator_options.mantiuk08options.luminancelevel,
                      opts->operator_options.mantiuk08options.setluminance,
-                     ph);
-	}
-	catch(pfs::Exception e)
-	{
-		if (strcmp("failed to analyse the image", e.getMessage())) 
-			return;
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+                     NULL);
+//	}
+//	catch(pfs::Exception e)
+//	{
+//		if (strcmp("failed to analyse the image", e.getMessage()))
+//			return;
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
+//	catch(...)
+//	{
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-//
-// run()
-//
 
+TMOperator TonemapOperatorMantiuk08::getType()
+{
+    return mantiuk08;
+}

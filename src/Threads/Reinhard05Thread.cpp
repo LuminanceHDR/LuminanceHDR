@@ -29,39 +29,39 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-Reinhard05Thread::Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorReinhard05::TonemapOperatorReinhard05():
+    TonemapOperator()
+{}
 
-void Reinhard05Thread::run()
+void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		pfstmo_reinhard05(workingframe,
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try
+//	{
+    pfstmo_reinhard05(workingframe,
                       opts->operator_options.reinhard05options.brightness,
                       opts->operator_options.reinhard05options.chromaticAdaptation,
                       opts->operator_options.reinhard05options.lightAdaptation,
-                      ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+                      NULL);
+//	}
+//	catch(pfs::Exception e)
+//	{
+//		emit tmo_error(e.getMessage());
+//		emit deleteMe(this);
+//		return;
+//	}
+//	catch(...)
+//	{
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-//
-// run()
-//
 
+TMOperator TonemapOperatorReinhard05::getType()
+{
+    return reinhard05;
+}

@@ -80,6 +80,7 @@ void BatchTMJob::run()
             //opts->xsize = 400; // DEBUG
             //opts->xsize = opts->origxsize;
 
+            /* TOFIX
             TMOThread * tmo_thread = TMOThread::getTMOThread(opts->tmoperator, m_working_frame, opts);
 
             // Thread deletes itself when it has done with its job
@@ -93,6 +94,7 @@ void BatchTMJob::run()
             tmo_thread->set_batch_mode();
             tmo_thread->start();
             tmo_thread->wait();
+            */
 
             if ( m_ldr_image != NULL && m_pixmap != NULL)
             {

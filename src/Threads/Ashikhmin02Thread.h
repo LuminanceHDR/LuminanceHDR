@@ -29,14 +29,15 @@
 #define ASHIKHMIN02THREAD_H
 
 #include "Threads/TMOThread.h"
+#include "Core/TonemappingOptions.h"
 
-class Ashikhmin02Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorAshikhmin02: public TonemapOperator
+{
 public:
-        Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
-protected:
-	void run();
+    TonemapOperatorAshikhmin02();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 };
 
 #endif

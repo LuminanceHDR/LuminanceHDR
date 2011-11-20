@@ -29,17 +29,19 @@
 #define DURAND02THREAD_H
 
 #include <QMutex>
+
 #include "Threads/TMOThread.h"
 
-class Durand02Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorDurand02: public TonemapOperator
+{
 public:
-        Durand02Thread(pfs::Frame *frame, const TonemappingOptions *opt);
-protected:
-	void run();
-  
-  static QMutex durand02_mutex;
+    TonemapOperatorDurand02();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+
+private:
+    static QMutex m_Mutex;
 };
 
 #endif

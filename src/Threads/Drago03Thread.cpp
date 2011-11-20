@@ -29,36 +29,38 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
+TonemapOperatorDrago03::TonemapOperatorDrago03():
+    TonemapOperator()
 {
-  out_CS = pfs::CS_SRGB;  
+    //out_CS = pfs::CS_SRGB;
 }
 
-void Drago03Thread::run()
+void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-  	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try
+//	{
+                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, NULL);
+//	}
+//	catch(pfs::Exception e)
+//	{
+//		emit tmo_error(e.getMessage());
+//		emit deleteMe(this);
+//		return;
+//	}
+//	catch(...)
+//  	{
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-//
-// run()
-//
+
+TMOperator TonemapOperatorDrago03::getType()
+{
+    return drago;
+}
 

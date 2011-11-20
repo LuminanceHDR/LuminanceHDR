@@ -32,16 +32,17 @@
 
 #include "Threads/TMOThread.h"
 
-class Mantiuk06Thread : public TMOThread {
-  Q_OBJECT
-  
+class TonemapOperatorMantiuk06: public TonemapOperator
+{
 public:
-  Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts);
-protected:
-	void run();
-  
-  // It may be removed, because the issue in the race condition of the operator has been solved
-  static QMutex mantiuk06_mutex;
+    TonemapOperatorMantiuk06();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+
+private:
+    // It may be removed, because the issue in the race condition of the operator has been solved
+    static QMutex m_Mutex;
 };
 
 #endif

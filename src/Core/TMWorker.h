@@ -45,7 +45,7 @@ public:
     ~TMWorker();
 
 public Q_SLOTS:
-    pfs::Frame* getTonemappedFrame(const pfs::Frame*, TonemappingOptions*);
+    pfs::Frame* getTonemappedFrame(/* const */pfs::Frame*, TonemappingOptions*);
     void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 
 private:

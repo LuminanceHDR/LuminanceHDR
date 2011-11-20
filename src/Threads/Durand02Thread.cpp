@@ -29,40 +29,42 @@
 #include "TonemappingOperators/pfstmo.h"	
 #include "Core/TonemappingOptions.h"
 
-QMutex Durand02Thread::durand02_mutex;
+QMutex TonemapOperatorDurand02::m_Mutex;
 
-Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
+TonemapOperatorDurand02::TonemapOperatorDurand02():
+    TonemapOperator()
 {
-  out_CS = pfs::CS_SRGB;
+  //out_CS = pfs::CS_SRGB;
 }
 
-void Durand02Thread::run()
+void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_durand02 not reentrant
-		durand02_mutex.lock();
-		pfstmo_durand02(workingframe,
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try
+//	{
+    // pfstmo_durand02 not reentrant
+    m_Mutex.lock();
+    pfstmo_durand02(workingframe,
                     opts->operator_options.durandoptions.spatial,
                     opts->operator_options.durandoptions.range,
                     opts->operator_options.durandoptions.base,
-                    ph);
-		durand02_mutex.unlock();
-	}
-	catch(...)
-  	{
-		durand02_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+                    NULL);
+    m_Mutex.unlock();
+//	}
+//	catch(...)
+//  	{
+//                m_Mutex.unlock();
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-//
-// run()
-//
+
+TMOperator TonemapOperatorDurand02::getType()
+{
+    return durand;
+}
 

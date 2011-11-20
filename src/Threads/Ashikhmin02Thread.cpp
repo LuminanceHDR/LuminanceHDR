@@ -29,39 +29,37 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
+    TonemapOperator()
+{}
 
-void Ashikhmin02Thread::run()
+void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		pfstmo_ashikhmin02(workingframe,
+    //connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+    //emit setMaximumSteps(100);
+    //	try
+    //	{
+    pfstmo_ashikhmin02(workingframe,
                        opts->operator_options.ashikhminoptions.simple,
                        opts->operator_options.ashikhminoptions.lct,
                        (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                       ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-  
-	finalize();	
+                       NULL);
+    //	}
+    //	catch(pfs::Exception e)
+    //	{
+    //		emit tmo_error(e.getMessage());
+    //		emit deleteMe(this);
+    //		return;
+    //	}
+    //	catch(...)
+    //	{
+    //		emit tmo_error("Failed to tonemap image");
+    //		emit deleteMe(this);
+    //		return;
+    //	}
 }
-//
-// run()
-//
 
+TMOperator TonemapOperatorAshikhmin02::getType()
+{
+    return ashikhmin;
+}

@@ -30,13 +30,13 @@
 
 #include "Threads/TMOThread.h"
 
-class Reinhard05Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorReinhard05: public TonemapOperator
+{
 public:
-        Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts);
-protected:
-	void run();
+    TonemapOperatorReinhard05();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 };
 
 #endif

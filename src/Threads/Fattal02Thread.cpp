@@ -29,41 +29,41 @@
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 
-QMutex Fattal02Thread::fattal02_mutex;
+QMutex TonemapOperatorFattal02::m_Mutex;
 
-Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorFattal02::TonemapOperatorFattal02():
+    TonemapOperator()
+{}
 
-void Fattal02Thread::run()
+void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_fattal02 not reentrant AKA not thread-safe!
-		fattal02_mutex.lock();
-		pfstmo_fattal02(workingframe,
+//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
+//	emit setMaximumSteps(100);
+//	try
+//	{
+    // pfstmo_fattal02 not reentrant AKA not thread-safe!
+    m_Mutex.lock();
+    pfstmo_fattal02(workingframe,
                     opts->operator_options.fattaloptions.alpha,
                     opts->operator_options.fattaloptions.beta,
                     opts->operator_options.fattaloptions.color,
                     opts->operator_options.fattaloptions.noiseredux,
                     opts->operator_options.fattaloptions.newfattal,
-                    ph);
-		fattal02_mutex.unlock();
-	}
-	catch(...)
-	{
-		fattal02_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
+                    NULL);
+    m_Mutex.unlock();
+//	}
+//	catch(...)
+//	{
+//		fattal02_mutex.unlock();
+//		emit tmo_error("Failed to tonemap image");
+//		emit deleteMe(this);
+//		return;
+//	}
 	
-	finalize();
+//	finalize();
 }
-//
-// run()
-//
 
+TMOperator TonemapOperatorFattal02::getType()
+{
+    return fattal;
+}

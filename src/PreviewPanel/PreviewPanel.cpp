@@ -173,6 +173,7 @@ void PreviewPanel::generatePreviews()
     opts->tonemapSelection = false;
     opts->tonemapOriginal = false;
 
+    /* TOFIX
     opts->tmoperator = mantiuk06;
     opts->tmoperator_str = "Mantiuk '06";
 
@@ -271,14 +272,17 @@ void PreviewPanel::generatePreviews()
     connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showError(const char *)));
     connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
     thread->start();
+    */
 
     QApplication::restoreOverrideCursor();
 }
 
+/*
 void PreviewPanel::deleteTMOThread(TMOThread *th)
 {
     delete th;
 }
+*/
 
 void PreviewPanel::addSmallPreviewResult(QImage *img, int n)
 {

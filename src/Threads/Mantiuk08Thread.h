@@ -30,13 +30,13 @@
 
 #include "Threads/TMOThread.h"
 
-class Mantiuk08Thread : public TMOThread {
-Q_OBJECT
-
+class TonemapOperatorMantiuk08: public TonemapOperator
+{
 public:
-        Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions *opts);
-protected:
-	void run();
+    TonemapOperatorMantiuk08();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 };
 
 #endif
