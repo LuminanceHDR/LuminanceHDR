@@ -38,7 +38,7 @@ public:
     TonemapOperatorMantiuk06();
 
     TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
 private:
     // It may be removed, because the issue in the race condition of the operator has been solved

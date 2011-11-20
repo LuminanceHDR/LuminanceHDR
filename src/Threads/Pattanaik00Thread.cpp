@@ -35,7 +35,7 @@ TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
   //out_CS = pfs::CS_SRGB;
 }
 
-void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
@@ -46,7 +46,7 @@ void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, Tonemapp
                        opts->operator_options.pattanaikoptions.cone,
                        opts->operator_options.pattanaikoptions.rod,
                        opts->operator_options.pattanaikoptions.autolum,
-                       NULL);
+                       &ph);
 //	}
 //	catch(pfs::Exception e)
 //	{

@@ -36,7 +36,7 @@ public:
     TonemapOperatorDrago03();
 
     TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 };
 
 #endif

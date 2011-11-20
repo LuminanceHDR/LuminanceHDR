@@ -30,15 +30,16 @@
 
 #include <QObject>
 
-#include "Libpfs/colorspace.h"
+//#include "Libpfs/colorspace.h"
 #include "Core/TonemappingOptions.h"
+#include "Common/ProgressHelper.h"
 
 // Forward declaration
 namespace pfs {
     class Frame;
 }
 
-class ProgressHelper;
+//class ProgressHelper;
 
 /*
 enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH, TMO_PREVIEW };
@@ -99,9 +100,12 @@ protected:
 */
 
 
-class TonemapOperator: public QObject
+class TonemapOperator//: public QObject
 {
-    Q_OBJECT
+//    Q_OBJECT
+//private:
+//    bool m_TerminationRequest;
+
 public:
     static TonemapOperator* getTonemapOperator(const TMOperator tmo);
     virtual ~TonemapOperator();
@@ -116,16 +120,53 @@ public:
     ///! Frame is MODIFIED.
     ///! If you want to keep the original frame, make a copy before
     ///!
-    virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*) = 0;
+    virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph) = 0;
 
+//public:
+//    ///! stub functions to emit signals
+//    void setValue(int);
+//    void setMaximum(int);
+//    void setMinimum(int);
+
+//public slots:
+    ///! set termination request to true
+//    void terminationRequest();
 protected:
     TonemapOperator();
 
-Q_SIGNALS:
-    void tonemapBegin();
-    void tonemapFinished();
+/* not sure they are usuful */
+//Q_SIGNALS:
+//    void tonemapBegin();
+//    void tonemapFinished();
 
+//    void tonemapSetMinimum(int);
+//    void tonemapSetMaximum(int);
+//    void tonemapSetValue(int);
 };
 
+//inline bool TonemapOperator::isTerminationRequested()
+//{
+//    return m_TerminationRequest;
+//}
+
+//inline void TonemapOperator::terminationRequest()
+//{
+//    m_TerminationRequest = true;
+//}
+
+//inline void TonemapOperator::setValue(int i)
+//{
+//    emit tonemapSetValue(i);
+//}
+
+//inline void TonemapOperator::setMaximum(int i)
+//{
+//    emit tonemapSetMaximum(i);
+//}
+
+//inline void TonemapOperator::setMinimum(int i)
+//{
+//    emit tonemapSetMinimum(i);
+//}
 
 #endif

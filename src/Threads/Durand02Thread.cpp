@@ -37,7 +37,7 @@ TonemapOperatorDurand02::TonemapOperatorDurand02():
   //out_CS = pfs::CS_SRGB;
 }
 
-void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
@@ -49,7 +49,7 @@ void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.durandoptions.spatial,
                     opts->operator_options.durandoptions.range,
                     opts->operator_options.durandoptions.base,
-                    NULL);
+                    &ph);
     m_Mutex.unlock();
 //	}
 //	catch(...)

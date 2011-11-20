@@ -33,7 +33,7 @@ TonemapOperatorReinhard05::TonemapOperatorReinhard05():
     TonemapOperator()
 {}
 
-void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
@@ -43,7 +43,7 @@ void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, Tonemappi
                       opts->operator_options.reinhard05options.brightness,
                       opts->operator_options.reinhard05options.chromaticAdaptation,
                       opts->operator_options.reinhard05options.lightAdaptation,
-                      NULL);
+                      &ph);
 //	}
 //	catch(pfs::Exception e)
 //	{

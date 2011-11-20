@@ -37,8 +37,9 @@ TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
   //out_CS = pfs::CS_SRGB;
 }
 
-void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
+    ph.emitSetValue(100);
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
 //	try
@@ -50,7 +51,7 @@ void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, Tonemappin
                      opts->operator_options.mantiuk06options.saturationfactor,
                      opts->operator_options.mantiuk06options.detailfactor,
                      opts->operator_options.mantiuk06options.contrastequalization,
-                     NULL);
+                     &ph);
     m_Mutex.unlock();
 //	}
 //	catch(...)

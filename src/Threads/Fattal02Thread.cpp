@@ -35,7 +35,7 @@ TonemapOperatorFattal02::TonemapOperatorFattal02():
     TonemapOperator()
 {}
 
-void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
@@ -49,7 +49,7 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.fattaloptions.color,
                     opts->operator_options.fattaloptions.noiseredux,
                     opts->operator_options.fattaloptions.newfattal,
-                    NULL);
+                    &ph);
     m_Mutex.unlock();
 //	}
 //	catch(...)

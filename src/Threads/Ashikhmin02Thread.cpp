@@ -33,7 +33,7 @@ TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
     TonemapOperator()
 {}
 
-void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     //connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
     //emit setMaximumSteps(100);
@@ -43,7 +43,7 @@ void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, Tonemapp
                        opts->operator_options.ashikhminoptions.simple,
                        opts->operator_options.ashikhminoptions.lct,
                        (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                       NULL);
+                       &ph);
     //	}
     //	catch(pfs::Exception e)
     //	{

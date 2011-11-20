@@ -35,13 +35,13 @@ TonemapOperatorDrago03::TonemapOperatorDrago03():
     //out_CS = pfs::CS_SRGB;
 }
 
-void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
 //	try
 //	{
-                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, NULL);
+                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
 //	}
 //	catch(pfs::Exception e)
 //	{

@@ -33,7 +33,7 @@ TonemapOperatorMantiuk08::TonemapOperatorMantiuk08():
     TonemapOperator()
 {}
 
-void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts)
+void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
 //	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
 //	emit setMaximumSteps(100);
@@ -43,7 +43,7 @@ void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, Tonemappin
                      opts->operator_options.mantiuk08options.contrastenhancement,
                      opts->operator_options.mantiuk08options.luminancelevel,
                      opts->operator_options.mantiuk08options.setluminance,
-                     NULL);
+                     &ph);
 //	}
 //	catch(pfs::Exception e)
 //	{

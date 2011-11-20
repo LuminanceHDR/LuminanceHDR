@@ -38,7 +38,7 @@ public:
     TonemapOperatorFattal02();
 
     TMOperator getType();
-    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
 private:
     static QMutex m_Mutex;
