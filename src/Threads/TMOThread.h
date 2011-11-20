@@ -28,7 +28,7 @@
 #ifndef TMOTHREAD_H
 #define TMOTHREAD_H
 
-
+#include <QObject>
 
 #include "Libpfs/colorspace.h"
 #include "Core/TonemappingOptions.h"
@@ -99,8 +99,9 @@ protected:
 */
 
 
-class TonemapOperator
+class TonemapOperator: public QObject
 {
+    Q_OBJECT
 public:
     static TonemapOperator* getTonemapOperator(const TMOperator tmo);
     virtual ~TonemapOperator();
@@ -119,6 +120,11 @@ public:
 
 protected:
     TonemapOperator();
+
+Q_SIGNALS:
+    void tonemapBegin();
+    void tonemapFinished();
+
 };
 
 
