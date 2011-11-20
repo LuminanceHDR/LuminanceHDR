@@ -41,6 +41,21 @@ HdrInputLoader::~HdrInputLoader() {
 	wait();
 }
 
+void conditionallyRotateImage(QFileInfo qfi, QImage** oldImage) 
+{
+	int rotation_angle = ExifOperations::obtain_rotation( QFile::encodeName(qfi.filePath()).constData() );
+
+	if (rotation_angle != 0) 
+	{
+		QMatrix rm;
+		rm.rotate(90);
+
+		QImage *notTransformedImage = *oldImage;
+		*oldImage = (new QImage((*oldImage)->transformed(rm)));
+		delete notTransformedImage;
+	}
+}
+
 void HdrInputLoader::run() {
 	try {
 		//QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -57,6 +72,9 @@ void HdrInputLoader::run() {
 			QImage *newimage=new QImage(qfi.filePath());
 			if (newimage->isNull())
 				throw "Failed Loading Image";
+
+			conditionallyRotateImage(qfi, &newimage);
+
 			emit ldrReady(newimage, image_idx, expotime, fname, false);
 			//QApplication::restoreOverrideCursor();
 			return;
@@ -71,6 +89,9 @@ void HdrInputLoader::run() {
 				QImage *newimage=reader.readIntoQImage();
 				if (newimage->isNull())
 					throw "Failed Loading Image";
+				
+				conditionallyRotateImage(qfi, &newimage);
+
 				emit ldrReady(newimage, image_idx, expotime, fname, true);
 				//QApplication::restoreOverrideCursor();
 				return;
