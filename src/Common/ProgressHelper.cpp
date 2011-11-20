@@ -23,18 +23,34 @@
 
 #include "ProgressHelper.h"
 
-ProgressHelper::ProgressHelper(QObject *p): QObject(p), m_terminate(false) {}
+ProgressHelper::ProgressHelper(QObject *p):
+    QObject(p),
+    m_terminate(false)
+{}
 
-void ProgressHelper::newValue(int progress) {
-	emit valueChanged(progress);
+void ProgressHelper::terminate(bool b)
+{
+    m_terminate = b;
 }
 
-void ProgressHelper::terminate(bool b) {
-	m_terminate = b;
+bool ProgressHelper::isTerminationRequested()
+{
+    return m_terminate;
 }
 
-bool ProgressHelper::isTerminationRequested() {
-	return m_terminate;
+void ProgressHelper::emitSetValue(int progress)
+{
+    emit setValue(progress);
+}
+
+void ProgressHelper::emitSetMaximum(int m)
+{
+    emit setMaximum(m);
+}
+
+void ProgressHelper::emitSetMinimum(int m)
+{
+    emit setMinimum(m);
 }
 
 
