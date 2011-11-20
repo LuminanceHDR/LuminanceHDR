@@ -65,6 +65,7 @@ class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h
 class TMOThread;            // #include "Threads/TMOThread.h"
 class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
+class MainWindowTM;
 
 class MainWindow: public QMainWindow
 {
@@ -94,6 +95,7 @@ public Q_SLOTS:
     void IO_start();
 
     void tonemapImage(TonemappingOptions *opts);
+
     void setMainWindowModified(bool b);
 
     void setInputFiles(const QStringList& files);
@@ -111,7 +113,7 @@ protected Q_SLOTS:
     void resize_requested();
     void projectiveTransf_requested();
 
-	void batch_hdr_requested();
+    void batch_hdr_requested();
     void batch_requested();
 
     void hdr_increase_exp();
@@ -173,7 +175,7 @@ protected Q_SLOTS:
     void splashClose();
 
     // TM
-    void addProcessedFrame(pfs::Frame*);
+    void addLdrFrame(pfs::Frame*, TonemappingOptions*);
     void addLDRResult(QImage*, quint16*);
     void tonemappingFinished();
     void deleteTMOThread(TMOThread* th);
@@ -201,6 +203,8 @@ Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
 
+    void getTonemappedFrame(pfs::Frame*, TonemappingOptions *opts);
+
 protected:
     QSplitter *m_centralwidget_splitter;
     QTabWidget *m_tabwidget;
@@ -219,8 +223,6 @@ protected:
 
     // Open MainWindows Handling
     QList<QAction*> openMainWindows;
-
-
 
     HelpBrowser* helpBrowser;
     QStringList inputFiles;
@@ -287,6 +289,9 @@ private:
 
     // UI declaration
     Ui::MainWindow* m_Ui;
+
+    // TM thread
+    MainWindowTM* m_MainWindowTM;
 };
 
 

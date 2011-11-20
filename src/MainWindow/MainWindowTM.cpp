@@ -22,19 +22,54 @@
  *  MainWindowTM implements TM functionalities of the MainWindow, decoupling dependencies
  */
 
+#include <QStatusBar>
+
 #include "MainWindow/MainWindowTM.h"
 #include "MainWindow/MainWindow.h"
 #include "Core/TMWorker.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
 
 MainWindowTM::MainWindowTM(MainWindow* mw, QObject *parent) :
     QObject(parent),
     m_MainWindows(mw),
     m_TMWorker(new TMWorker),
-    m_TMThread(new QThread)
+    m_TMThread(new QThread),
+    m_TMProgressBar(new TMOProgressIndicator)
 {
     m_TMWorker->moveToThread(m_TMThread);
 
     // Memory Management
     connect(this, SIGNAL(destroyed()), m_TMWorker, SLOT(deleteLater()));
     connect(m_TMWorker, SIGNAL(destroyed()), m_TMThread, SLOT(deleteLater()));
+    connect(this, SIGNAL(destroyed()), m_TMProgressBar, SLOT(deleteLater()));
+
+    // connect TMOProgressIndicator slots
+    connect(m_TMWorker, SIGNAL(tonemapBegin()), this, SLOT(tonemapBegin()));
+    connect(m_TMWorker, SIGNAL(tonemapEnd()), this, SLOT(tonemapEnd()));
+    connect(m_TMWorker, SIGNAL(tonemapSetValue(int)), m_TMProgressBar, SLOT(setValue(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMaximum(int)), m_TMProgressBar, SLOT(setMaximum(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMinimum(int)), m_TMProgressBar, SLOT(setMinimum(int)));
+    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()));
+
+    // connect IOWorker engine
+    connect(this, SIGNAL(getTonemappedFrame(pfs::Frame*,TonemappingOptions*)),
+            m_TMWorker, SLOT(computeTonemap(pfs::Frame*,TonemappingOptions*)));
+    connect(m_TMWorker, SIGNAL(tonemapFailed(QString)),
+            this, SIGNAL(tonemapFailed(QString)));
+    connect(m_TMWorker, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
+            this, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)));
+
+    m_TMThread->start();
+}
+
+void MainWindowTM::tonemapBegin()
+{
+    // Insert TMOProgressIndicator
+    m_MainWindows->statusBar()->addWidget(m_TMProgressBar);
+    m_TMProgressBar->show();
+}
+
+void MainWindowTM::tonemapEnd()
+{
+    m_MainWindows->statusBar()->removeWidget(m_TMProgressBar);
 }

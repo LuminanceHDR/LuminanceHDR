@@ -31,27 +31,29 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
-class TMOProgressIndicator : public QWidget {
-Q_OBJECT
+class TMOProgressIndicator : public QWidget
+{
+    Q_OBJECT
 
 public:
-	TMOProgressIndicator(QWidget *parent);
-	~TMOProgressIndicator();
-	bool isTerminated();
-	void emit_terminate() { emit terminate(); }
+    TMOProgressIndicator(QWidget *parent = 0);
+    ~TMOProgressIndicator();
+    bool isTerminated();
+
 public slots:
-	void setValue(int);
-	void setMaximum(int);
-	void setMinimum(int);
-	void terminated();
-protected:
-        QHBoxLayout     *m_hbl;
-        QProgressBar    *m_progressBar;
-        QPushButton     *m_abortButton;
-        bool            m_isTerminated;
+    void setValue(int);
+    void setMaximum(int);
+    void setMinimum(int);
+    void terminated();
+
+private:
+    QHBoxLayout*    m_hbl;
+    QProgressBar*   m_progressBar;
+    QPushButton*    m_abortButton;
+    bool            m_isTerminated;
+
 signals:
-	void terminate();
-	void deleteMe();
+    void terminate();
 };
 
 #endif

@@ -20,6 +20,8 @@
  *
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *  MainWindowTM implements TM functionalities of the MainWindow, decoupling dependencies
+ *  and acting like an adapter. Some of the slots pass thru, will some are intercepted to
+ *  improve tonemap progress.
  */
 
 #ifndef MAINWINDOWTM_H
@@ -28,8 +30,14 @@
 #include <QObject>
 
 // Forward declaration
+namespace pfs {
+    class Frame;
+}
+
 class MainWindow;
 class TMWorker;
+class TonemappingOptions;
+class TMOProgressIndicator;
 
 class MainWindowTM : public QObject
 {
@@ -38,13 +46,21 @@ public:
     explicit MainWindowTM(MainWindow* mw, QObject *parent = 0);
 
 signals:
+    void getTonemappedFrame(pfs::Frame*, TonemappingOptions*);
+    void tonemapSuccess(pfs::Frame*, TonemappingOptions*);
+    void tonemapFailed(QString);
 
 public slots:
+
+private slots:
+    void tonemapBegin();
+    void tonemapEnd();
 
 private:
     MainWindow* m_MainWindows;
     TMWorker*   m_TMWorker;
     QThread*    m_TMThread;
+    TMOProgressIndicator* m_TMProgressBar;
 };
 
 #endif // MAINWINDOWTM_H

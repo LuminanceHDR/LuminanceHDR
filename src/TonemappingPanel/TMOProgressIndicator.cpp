@@ -26,8 +26,9 @@
 
 #include <iostream>
 
-TMOProgressIndicator::TMOProgressIndicator(QWidget *parent) : 
-	QWidget(parent), m_isTerminated(false) 
+TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
+    QWidget(parent),
+    m_isTerminated(false)
 {
     m_hbl = new QHBoxLayout(this);
 
@@ -48,6 +49,9 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent) :
 
     connect(m_abortButton, SIGNAL(clicked()), this, SIGNAL(terminate()));
     connect(m_abortButton, SIGNAL(clicked()), this, SLOT(terminated()));
+
+    //Memory management
+    //connect(this, SIGNAL(destroyed()), )
 }
 
 TMOProgressIndicator::~TMOProgressIndicator()
@@ -61,7 +65,6 @@ void TMOProgressIndicator::terminated()
 {
     std::cout << "TMOProgressIndicator::terminated()" << std::endl;
     m_isTerminated = true;
-    emit deleteMe();
 }
 
 bool TMOProgressIndicator::isTerminated()

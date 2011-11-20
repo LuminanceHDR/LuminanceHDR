@@ -76,6 +76,7 @@
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
 #include "Core/IOWorker.h"
+#include "MainWindow/MainWindowTM.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -1393,6 +1394,20 @@ void MainWindow::setupTM()
     tm_status.curr_tm_options = NULL;
 
     tmPanel->setEnabled(false);
+
+    m_MainWindowTM = new MainWindowTM(this);
+
+    // memory management
+    connect(this, SIGNAL(destroyed()), m_MainWindowTM, SLOT(deleteLater()));
+
+    // behaviour
+    connect(this, SIGNAL(getTonemappedFrame(pfs::Frame*,TonemappingOptions*)),
+            m_MainWindowTM, SIGNAL(getTonemappedFrame(pfs::Frame*,TonemappingOptions*)));
+    //connect(m_MainWindowTM, SIGNAL(tonemapFailed(QString)),
+    //        this, SLOT(t))
+    connect(m_MainWindowTM, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
+            this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1433,52 +1448,14 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
            opts->tonemapSelection = false;
 //    }
 
-
-
-//    else // if ( !opts.tonemapOriginal )
-//    {
-//        if (!mdiArea->subWindowList().isEmpty())
-//        {
-//            GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-//
-//            if ( viewer->isHDR() )
-//            {
-//                HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
-//                workingPfsFrame = HDR->getHDRPfsFrame();
-//            }
-//            else
-//            {
-//                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-//                return;
-//            }
-//
-//            if ( opts->tonemapSelection )
-//            {
-//                if ( originalHDR->hasSelection() )
-//                {
-//                    getCropCoords(originalHDR,
-//                                  opts->selection_x_up_left,
-//                                  opts->selection_y_up_left,
-//                                  opts->selection_x_bottom_right,
-//                                  opts->selection_y_bottom_right);
-//                }
-//                else
-//                {
-//                    QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
-//                    return;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-//            return;
-//        }
-//    }
-
     HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
     if ( hdr_viewer )
     {
+#ifdef QT_DEBUG
+        qDebug() << "MainWindow(): emit getTonemappedFrame()";
+#endif
+        emit getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
+    }
         // TODO : can you clean up this thing?!
         // getHDRPfsFrame() is only available in HdrViewer
         /* TOFIX
@@ -1501,7 +1478,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
         statusBar()->addWidget(progInd);
         progInd->show();
         */
-    }
+    //}
 }
 
 void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
@@ -1537,7 +1514,7 @@ void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
     previewPanel->setEnabled(true);
 }
 
-void MainWindow::addProcessedFrame(pfs::Frame *frame)
+void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
 {
     // TODO : currently, I'm thinking to remove this function
     // Even the LDR viewer needs to be build using the pfs::Frame
@@ -1567,6 +1544,8 @@ void MainWindow::addProcessedFrame(pfs::Frame *frame)
 //        HDR->showNormal();
 
 //    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+
+    delete frame;
 }
 
 void MainWindow::tonemappingFinished()
