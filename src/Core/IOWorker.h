@@ -40,10 +40,15 @@
 #include <libraw/libraw.h>
 #endif
 
-#include "Libpfs/pfs.h"
-#include "Viewers/HdrViewer.h"
-#include "Viewers/LdrViewer.h"
 #include "Common/LuminanceOptions.h"
+
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
+
+class HdrViewer;
+class LdrViewer;
 
 int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
 

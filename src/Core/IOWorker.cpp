@@ -30,20 +30,26 @@
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
+#ifdef QT_DEBUG
 #include <QDebug>
+#endif
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Libpfs/domio.h"
+#include "Viewers/HdrViewer.h"
+#include "Viewers/LdrViewer.h"
 
-IOWorker::IOWorker(QObject* parent): QObject(parent)
-{
 
-}
+IOWorker::IOWorker(QObject* parent):
+    QObject(parent)
+{}
 
 IOWorker::~IOWorker()
 {
+#ifdef QT_DEBUG
     qDebug() << "IOWorker::~IOWorker()";
+#endif
 }
 
 bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
@@ -154,32 +160,32 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
 
-	if (qfi.suffix().toUpper().startsWith("TIF"))
-	{
-		const quint16 *pixmap = ldr_input->getPixmap();
-		int width = image->width();
-		int height = image->height();
-		try
-		{
-        	TiffWriter tiffwriter(encodedName, pixmap, width, height);
-			tiffwriter.write16bitTiff();
-		}
-		catch(...)
-		{
-			emit write_ldr_failed();
-		}
-	}
-    else 
+    if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-		if ( image->save(filename, format.toLocal8Bit(), quality) )
-		{
-        	emit write_ldr_success(ldr_input, filename);
-		}
-    	else
-    	{
-        	emit write_ldr_failed();
-    	}
-	}
+        const quint16 *pixmap = ldr_input->getPixmap();
+        int width = image->width();
+        int height = image->height();
+        try
+        {
+            TiffWriter tiffwriter(encodedName, pixmap, width, height);
+            tiffwriter.write16bitTiff();
+        }
+        catch(...)
+        {
+            emit write_ldr_failed();
+        }
+    }
+    else
+    {
+        if ( image->save(filename, format.toLocal8Bit(), quality) )
+        {
+            emit write_ldr_success(ldr_input, filename);
+        }
+        else
+        {
+            emit write_ldr_failed();
+        }
+    }
     emit IO_finish();
 }
 
