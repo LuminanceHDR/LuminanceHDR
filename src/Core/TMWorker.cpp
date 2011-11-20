@@ -34,40 +34,67 @@
 #include "Filter/pfscut.h"
 #include "Filter/pfsgamma.h"
 #include "Filter/pfssize.h"
+#include "Threads/TMOThread.h"
+#include "Common/ProgressHelper.h"
 
 TMWorker::TMWorker(QObject* parent):
-    QObject(parent)
-{}
+    QObject(parent),
+    m_Callback(new ProgressHelper)
+{
+#ifdef QT_DEBUG
+    qDebug() << "TMWorker::TMWorker() ctor";
+#endif
+
+    connect(this, SIGNAL(destroyed()), m_Callback, SLOT(deleteLater()));
+
+    connect(m_Callback, SIGNAL(setValue(int)), this, SIGNAL(tonemapSetValue(int)));
+    connect(m_Callback, SIGNAL(setMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)));
+    connect(m_Callback, SIGNAL(setMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)));
+}
 
 TMWorker::~TMWorker()
 {
 #ifdef QT_DEBUG
-    qDebug() << "TMWorker::~TMWorker()";
+    qDebug() << "TMWorker::~TMWorker() dtor";
 #endif
 }
 
-pfs::Frame* TMWorker::getTonemappedFrame(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options)
+pfs::Frame* TMWorker::computeTonemap(/* const */ pfs::Frame* in_frame, TonemappingOptions* tm_options)
 {
-    pfs::Frame* working_frame = preProcessFrame(in_frame, tm_options);
+#ifdef QT_DEBUG
+    qDebug() << "TMWorker::getTonemappedFrame()";
+#endif
+
+    pfs::Frame* working_frame = preprocessFrame(in_frame, tm_options);
+    if (working_frame == NULL) return NULL;
     try {
         tonemapFrame(working_frame, tm_options);
     }
     catch(...) {
-        emit tonemappingFailed("Tonemap failed!");
+        emit tonemapFailed("Tonemap failed!");
         return NULL;
     }
-    postProcessFrame(working_frame, tm_options);
+    postprocessFrame(working_frame, tm_options);
 
-    emit tonemappingSuccess(working_frame, tm_options);
+    emit tonemapSuccess(working_frame, tm_options);
     return working_frame;
 }
 
 void TMWorker::tonemapFrame(pfs::Frame* working_frame, TonemappingOptions* tm_options)
 {
-    // build object, pass new frame to it
+    emit tonemapBegin();
+    // build tonemap object
+    TonemapOperator* tmEngine = TonemapOperator::getTonemapOperator(tm_options->tmoperator);
+
+    tmEngine->tonemapFrame(working_frame, tm_options, *m_Callback);
+
+    // build object, pass new frame to it and collect the result
+
+    emit tonemapEnd();
+    delete tmEngine;
 }
 
-pfs::Frame* TMWorker::preProcessFrame(pfs::Frame* input_frame, TonemappingOptions* tm_options)
+pfs::Frame* TMWorker::preprocessFrame(pfs::Frame* input_frame, TonemappingOptions* tm_options)
 {
     pfs::Frame* working_frame = NULL;
 
@@ -97,10 +124,14 @@ pfs::Frame* TMWorker::preProcessFrame(pfs::Frame* input_frame, TonemappingOption
     {
         pfs::applyGammaOnFrame( working_frame, tm_options->pregamma );
     }
+
+    return working_frame;
 }
 
-void TMWorker::postProcessFrame(pfs::Frame*, TonemappingOptions*)
+void TMWorker::postprocessFrame(pfs::Frame*, TonemappingOptions*)
 {
-
+    // auto-level?
+    // black-point?
+    // white-point?
 }
 

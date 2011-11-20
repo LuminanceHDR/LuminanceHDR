@@ -35,6 +35,7 @@ namespace pfs {
 }
 
 class TonemappingOptions;
+class ProgressHelper;
 
 class TMWorker: public QObject
 {
@@ -45,16 +46,34 @@ public:
     ~TMWorker();
 
 public Q_SLOTS:
-    pfs::Frame* getTonemappedFrame(/* const */pfs::Frame*, TonemappingOptions*);
+    ///!
+    ///!  This function creates a copy of the input frame, tonemap the copy
+    ///!  and then returns it
+    ///!
+    pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*);
+
+    ///!
+    ///! This function tonemap the input frame
+    ///!
     void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 
 private:
-    pfs::Frame* preProcessFrame(pfs::Frame*, TonemappingOptions*);
-    void postProcessFrame(pfs::Frame*, TonemappingOptions*);
+    pfs::Frame* preprocessFrame(pfs::Frame*, TonemappingOptions*);
+    void postprocessFrame(pfs::Frame*, TonemappingOptions*);
 
 Q_SIGNALS:
-    void tonemappingSuccess(pfs::Frame*, TonemappingOptions*);
-    void tonemappingFailed(QString);
+    void tonemapSuccess(pfs::Frame*, TonemappingOptions*);
+    void tonemapFailed(QString);
+
+    void tonemapBegin();
+    void tonemapEnd();
+    void tonemapSetMaximum(int);
+    void tonemapSetMinimum(int);
+    void tonemapSetValue(int);
+    void tonemapRequestTermination();
+
+private:
+    ProgressHelper* m_Callback;
 };
 
 #endif
