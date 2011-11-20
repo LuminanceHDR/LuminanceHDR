@@ -311,6 +311,7 @@ SET(LUMINANCE_HDR_SRC
 	src/HelpBrowser/treemodel.cpp
 	src/MainWindow/DnDOption.cpp
 	src/MainWindow/MainWindow.cpp
+        src/MainWindow/MainWindowTM.cpp
 	src/Preferences/PreferencesDialog.cpp
 	src/PreviewPanel/PreviewLabel.cpp
 	src/PreviewPanel/PreviewPanel.cpp
@@ -375,6 +376,7 @@ SET(LUMINANCE_HDR_MOC
 	src/HelpBrowser/sctextbrowser.h
 	src/MainWindow/DnDOption.h
 	src/MainWindow/MainWindow.h
+        src/MainWindow/MainWindowTM.h
 	src/Preferences/PreferencesDialog.h
 	src/PreviewPanel/PreviewLabel.h
 	src/PreviewPanel/PreviewPanel.h
