@@ -42,19 +42,16 @@ class TonemappingOptions;
 class BatchTMJob : public QThread {
   Q_OBJECT
 public:
-	BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder);
-	virtual ~BatchTMJob();
+    BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder);
+    virtual ~BatchTMJob();
 signals:
-	void done(int thread_id);
+    void done(int thread_id);
   void add_log_message(QString);
   //void update_progress_bar();
   void increment_progress_bar(int);
 protected:
-	void run();
+    void run();
 private slots:
-  //void batch_core();
-  void load_hdr_failed(QString);
-	void load_hdr_completed(pfs::Frame*, QString);
   void tm_failed();
   void tm_completed(QImage* newimage, quint16* newpixmap, const TonemappingOptions* opts);
 

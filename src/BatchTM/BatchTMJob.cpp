@@ -23,12 +23,13 @@
  *
  */
 
-#include "BatchTMJob.h"
+#include "BatchTM/BatchTMJob.h"
 #include "Fileformat/pfstiff.h"
 #include "Exif/ExifOperations.h"
 #include "Threads/TMOThread.h"
 #include "Libpfs/pfs.h"
-#include "Threads/LoadHdrThread.h"
+#include "Core/IOWorker.h"
+#include "Common/LuminanceOptions.h"
 
 #include <QFileInfo>
 #include <QByteArray>
@@ -55,25 +56,13 @@ BatchTMJob::~BatchTMJob()
 
 void BatchTMJob::run()
 {
+    IOWorker io_worker;
+
     emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
 
-    // load frame
-    LoadHdrThread * load_thread = new LoadHdrThread(m_file_name);
-    connect(load_thread, SIGNAL(finished()),
-            load_thread, SLOT(deleteLater()));
-    // in case it fails!
-    // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
-    connect(load_thread, SIGNAL(load_failed(QString)),
-            this, SLOT(load_hdr_failed(QString)), Qt::DirectConnection);
-    // in case it passes
-    // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
-    connect(load_thread, SIGNAL(hdr_ready(pfs::Frame*, QString)),
-            this, SLOT(load_hdr_completed(pfs::Frame*, QString)), Qt::DirectConnection);
+    m_working_frame = io_worker.read_hdr_frame(m_file_name);
 
-    load_thread->start();
-    load_thread->wait();
-
-    if ( m_working_frame != NULL )
+    if ( !m_working_frame )
     {
         // update message box
         emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
@@ -111,52 +100,52 @@ void BatchTMJob::run()
                 TMOptionsOperations operations(opts);
 
                 QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
-				QFileInfo qfi(output_file_name);
-    			QString absoluteFileName = qfi.absoluteFilePath();
-			    QByteArray encodedName = QFile::encodeName(absoluteFileName);
-				
-				if (m_ldr_output_format == "TIFF")
-				{
+                QFileInfo qfi(output_file_name);
+                QString absoluteFileName = qfi.absoluteFilePath();
+                QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-					int width = m_ldr_image->width();
-					int height = m_ldr_image->height();
-					try
-					{
-			        	TiffWriter tiffwriter(encodedName, m_pixmap, width, height);
-						tiffwriter.write16bitTiff();
-                    	emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-					}
-					catch(...)
-					{
-                    	emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-					}
-                	// reset for the next TM
-					delete [] m_pixmap;
-					m_pixmap = NULL;
-				}
-				else
-				{
-                	qDebug() << "Batch saved quality: " << opts->quality;
-                	if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toLocal8Bit(), opts->quality))
-                	{
-                    	emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                	}
-                	else
-                	{
-                    	// ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString)[.constData()] (constData() is implicit if you omit it)
-                    	// trick to cope with local 8-bit encoding determined by the user's locale.
-                    	ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
+                if (m_ldr_output_format == "TIFF")
+                {
 
-                    	emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                	}
+                    int width = m_ldr_image->width();
+                    int height = m_ldr_image->height();
+                    try
+                    {
+                        TiffWriter tiffwriter(encodedName, m_pixmap, width, height);
+                        tiffwriter.write16bitTiff();
+                        emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                    }
+                    catch(...)
+                    {
+                        emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                    }
+                    // reset for the next TM
+                    delete [] m_pixmap;
+                    m_pixmap = NULL;
+                }
+                else
+                {
+                    qDebug() << "Batch saved quality: " << opts->quality;
+                    if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toLocal8Bit(), opts->quality))
+                    {
+                        emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                    }
+                    else
+                    {
+                        // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString)[.constData()] (constData() is implicit if you omit it)
+                        // trick to cope with local 8-bit encoding determined by the user's locale.
+                        ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
 
-                // reset for the next TM
-                	delete m_ldr_image;
-					delete [] m_pixmap;
-                	m_ldr_image = NULL;
-					m_pixmap = NULL;
-            	}
-			}
+                        emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                    }
+
+                    // reset for the next TM
+                    delete m_ldr_image;
+                    delete [] m_pixmap;
+                    m_ldr_image = NULL;
+                    m_pixmap = NULL;
+                }
+            }
             // update progress bar
             emit increment_progress_bar(1);
         }
@@ -173,17 +162,6 @@ void BatchTMJob::run()
     }
 
     emit done(m_thread_id);
-}
-
-void BatchTMJob::load_hdr_failed(QString /*error_message*/)
-{
-    // better be sure that run() finds a null pointer
-    m_working_frame = NULL;
-}
-
-void BatchTMJob::load_hdr_completed(pfs::Frame* hdr_loaded, QString /*filename*/)
-{
-    m_working_frame = hdr_loaded;
 }
 
 void BatchTMJob::tm_failed()
