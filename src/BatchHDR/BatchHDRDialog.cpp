@@ -27,27 +27,34 @@
 #include <QFileDialog>
 #include <QDir>
 
-#include "BatchHDRDialog.h"
+#include "BatchHDR/BatchHDRDialog.h"
+#include "ui_BatchHDRDialog.h"
 #include "Libpfs/pfs.h"
+#include "Core/IOWorker.h"
+#include "HdrCreation/HdrCreationManager.h"
 
-BatchHDRDialog::BatchHDRDialog(QWidget *p) : QDialog(p), m_numProcessed(0), m_errors(false)
+BatchHDRDialog::BatchHDRDialog(QWidget *p):
+    QDialog(p),
+    m_Ui(new Ui::BatchHDRDialog),
+    m_numProcessed(0),
+    m_errors(false)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
 
     setWindowModality(Qt::WindowModal);   // Mac Mode
 	
-	closePushButton->hide();
+    m_Ui->closePushButton->hide();
 
 	m_hdrCreationManager = new HdrCreationManager;
 	m_IO_Worker = new IOWorker;
 	
-	connect(horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
-	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
+        connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
+        connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 
-	connect(inputPushButton, SIGNAL(clicked()), this, SLOT(add_files()));
-	connect(outputPushButton, SIGNAL(clicked()), this, SLOT(add_out_dir()));
-	connect(startPushButton, SIGNAL(clicked()), this, SLOT(init_batch_hdr()));
-	connect(closePushButton, SIGNAL(clicked()), this, SLOT(accept()));
+        connect(m_Ui->inputPushButton, SIGNAL(clicked()), this, SLOT(add_files()));
+        connect(m_Ui->outputPushButton, SIGNAL(clicked()), this, SLOT(add_out_dir()));
+        connect(m_Ui->startPushButton, SIGNAL(clicked()), this, SLOT(init_batch_hdr()));
+        connect(m_Ui->closePushButton, SIGNAL(clicked()), this, SLOT(accept()));
 
 	connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
@@ -83,24 +90,24 @@ void BatchHDRDialog::num_bracketed_changed(int value)
 	qDebug() << "BatchHDRDialog::num_bracketed_changed " << value;
 	if (value == 1)
 	{
-		autoAlignCheckBox->setEnabled(false);
-		aisRadioButton->setEnabled(false);
-		MTBRadioButton->setEnabled(false);
+                m_Ui->autoAlignCheckBox->setEnabled(false);
+                m_Ui->aisRadioButton->setEnabled(false);
+                m_Ui->MTBRadioButton->setEnabled(false);
 	}
 	else
 	{
-		autoAlignCheckBox->setEnabled(true);
-		aisRadioButton->setEnabled(true);
-		MTBRadioButton->setEnabled(true);
+                m_Ui->autoAlignCheckBox->setEnabled(true);
+                m_Ui->aisRadioButton->setEnabled(true);
+                m_Ui->MTBRadioButton->setEnabled(true);
 	}
 }
 
 void BatchHDRDialog::add_files()
 {
-        inputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrInputDir));
-	if (!inputLineEdit->text().isEmpty())
+        m_Ui->inputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrInputDir));
+        if (!m_Ui->inputLineEdit->text().isEmpty())
 	{
-		QDir chosendir(inputLineEdit->text());
+                QDir chosendir(m_Ui->inputLineEdit->text());
 		chosendir.setFilter(QDir::Files);
 		m_bracketed = chosendir.entryList();
 		//hack to prepend to this list the path as prefix.
@@ -109,9 +116,9 @@ void BatchHDRDialog::add_files()
 
                 // if the new dir, the one just chosen by the user, is different from the one stored in the settings,
                 // update the settings
-                if (m_batchHdrInputDir != inputLineEdit->text())
+                if (m_batchHdrInputDir != m_Ui->inputLineEdit->text())
                 {
-                    m_batchHdrInputDir = inputLineEdit->text();
+                    m_batchHdrInputDir = m_Ui->inputLineEdit->text();
                     m_luminance_options.setBatchHdrPathInput(m_batchHdrInputDir);
                 }
 	}
@@ -120,12 +127,12 @@ void BatchHDRDialog::add_files()
 
 void BatchHDRDialog::add_out_dir()
 {
-        outputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrOutputDir));
+        m_Ui->outputLineEdit->setText(QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrOutputDir));
         // if the new dir, the one just chosen by the user, is different from the one stored in the settings,
         // update the settings
-        if (m_batchHdrOutputDir != outputLineEdit->text())
+        if (m_batchHdrOutputDir != m_Ui->outputLineEdit->text())
 	{
-            m_batchHdrOutputDir = outputLineEdit->text();
+            m_batchHdrOutputDir = m_Ui->outputLineEdit->text();
             m_luminance_options.setBatchHdrPathOutput(m_batchHdrOutputDir);
 	}
 	check_start_button();
@@ -133,12 +140,12 @@ void BatchHDRDialog::add_out_dir()
 
 void BatchHDRDialog::init_batch_hdr()
 {
-	if (inputLineEdit->text().isEmpty() || outputLineEdit->text().isEmpty())
+        if (m_Ui->inputLineEdit->text().isEmpty() || m_Ui->outputLineEdit->text().isEmpty())
 		return;
 
-	startPushButton->setEnabled(false);
-	progressBar->setMaximum(m_bracketed.count() / spinBox->value());	
-	textEdit->append(tr("Started processing..."));
+        m_Ui->startPushButton->setEnabled(false);
+        m_Ui->progressBar->setMaximum(m_bracketed.count() / m_Ui->spinBox->value());
+        m_Ui->textEdit->append(tr("Started processing..."));
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 	this->batch_hdr();
@@ -150,7 +157,7 @@ void BatchHDRDialog::batch_hdr()
 	{
 		m_numProcessed++;
 		QStringList toProcess;
-		for (int i = 0; i < spinBox->value(); i++)
+                for (int i = 0; i < m_Ui->spinBox->value(); ++i)
 		{
 			toProcess << m_bracketed.takeFirst();
 		}
@@ -160,15 +167,15 @@ void BatchHDRDialog::batch_hdr()
 	}	
 	else
 	{
-		closePushButton->show();
-		cancelPushButton->hide();
-		startPushButton->hide();
-		progressBar->hide();
+                m_Ui->closePushButton->show();
+                m_Ui->cancelPushButton->hide();
+                m_Ui->startPushButton->hide();
+                m_Ui->progressBar->hide();
         QApplication::restoreOverrideCursor();
 		if (m_errors)
-			textEdit->append(tr("Completed with errors"));
+                        m_Ui->textEdit->append(tr("Completed with errors"));
 		else
-			textEdit->append(tr("Completed without errors"));
+                        m_Ui->textEdit->append(tr("Completed without errors"));
 	}
 }
 
@@ -177,9 +184,9 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 	if (!filesLackingExif.isEmpty())
 	{
 		qDebug() << "BatchHDRDialog::align Error: missing EXIF data";
-		textEdit->append(tr("Error: missing EXIF data"));
+                m_Ui->textEdit->append(tr("Error: missing EXIF data"));
 		foreach (QString fname, filesLackingExif)
-			textEdit->append(fname);
+                        m_Ui->textEdit->append(fname);
 		m_errors = true;
 		QStringList  fnames = m_hdrCreationManager->getFileList();
 		int n = fnames.size();
@@ -196,10 +203,10 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 		this->batch_hdr(); // try to continue
 		return;
 	}
-	if (autoAlignCheckBox->isChecked())
+        if (m_Ui->autoAlignCheckBox->isChecked())
 	{
-		textEdit->append(tr("Aligning..."));
-		if (aisRadioButton->isChecked())
+                m_Ui->textEdit->append(tr("Aligning..."));
+                if (m_Ui->aisRadioButton->isChecked())
 			m_hdrCreationManager->align_with_ais();
 		else
 			m_hdrCreationManager->align_with_mtb();
@@ -210,11 +217,11 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 
 void BatchHDRDialog::create_hdr()
 {
-	textEdit->append(tr("Creating HDR..."));
-	QString suffix = formatComboBox->currentText();
-	m_hdrCreationManager->chosen_config = predef_confs[profileComboBox->currentIndex()];
+        m_Ui->textEdit->append(tr("Creating HDR..."));
+        QString suffix = m_Ui->formatComboBox->currentText();
+        m_hdrCreationManager->chosen_config = predef_confs[m_Ui->profileComboBox->currentIndex()];
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
-	m_IO_Worker->write_hdr_frame(resultHDR, outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix);
+        m_IO_Worker->write_hdr_frame(resultHDR, m_Ui->outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix);
 	QStringList  fnames = m_hdrCreationManager->getFileList();
 	int n = fnames.size();
 	
@@ -227,15 +234,15 @@ void BatchHDRDialog::create_hdr()
 		QFile::remove(thumb_name);
 	}
 	m_hdrCreationManager->reset();
-	progressBar->setValue(progressBar->value() + 1);
-	textEdit->append(tr("Written ") + outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix );
+        m_Ui->progressBar->setValue(m_Ui->progressBar->value() + 1);
+        m_Ui->textEdit->append(tr("Written ") + m_Ui->outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix );
 	this->batch_hdr();
 }
 
 void BatchHDRDialog::error_while_loading(QString message)
 {
 	qDebug() << message;
-	textEdit->append(tr("Error: ") + message);
+        m_Ui->textEdit->append(tr("Error: ") + message);
 	m_errors = true;
 	QStringList  fnames = m_hdrCreationManager->getFileList();
 	int n = fnames.size();
@@ -255,11 +262,11 @@ void BatchHDRDialog::error_while_loading(QString message)
 void BatchHDRDialog::writeAisData(QByteArray data)
 {
 	qDebug() << data;
-	textEdit->append(data);
+        m_Ui->textEdit->append(data);
 }
 
 void BatchHDRDialog::check_start_button()
 {
-	if (inputLineEdit->text() != "" && outputLineEdit->text() != "")
-		startPushButton->setEnabled(true);
+        if (m_Ui->inputLineEdit->text() != "" && m_Ui->outputLineEdit->text() != "")
+                m_Ui->startPushButton->setEnabled(true);
 }

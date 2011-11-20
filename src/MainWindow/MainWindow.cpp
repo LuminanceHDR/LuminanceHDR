@@ -75,6 +75,7 @@
 #include "Resize/ResizeDialog.h"
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
+#include "Core/IOWorker.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 

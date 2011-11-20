@@ -26,15 +26,24 @@
 #ifndef BATCH_HDR_IMPL_H
 #define BATCH_HDR_IMPL_H
 
-#include "ui_BatchHDRDialog.h"
-#include "Common/LuminanceOptions.h"
-#include "Core/IOWorker.h"
-#include "HdrCreation/HdrCreationManager.h"
+#include <QDialog>
 
-class BatchHDRDialog : public QDialog, public Ui::BatchHDRDialog
+
+#include "Common/LuminanceOptions.h"
+
+// Forward declaration
+class IOWorker;
+class HdrCreationManager;
+
+namespace Ui {
+    class BatchHDRDialog;
+}
+
+class BatchHDRDialog: public QDialog
 {
 Q_OBJECT
-
+private:
+    Ui::BatchHDRDialog* m_Ui;
 public:
 	BatchHDRDialog(QWidget *parent = 0);
 	~BatchHDRDialog();
