@@ -30,17 +30,15 @@
 #ifndef __IO_WORKER_H__
 #define __IO_WORKER_H__
 
-#include <QObject>
-#include <QString>
-#include <QStringList>
-
 #ifdef __APPLE__
 #include <libraw.h>
 #else
 #include <libraw/libraw.h>
 #endif
 
-#include "Common/LuminanceOptions.h"
+#include <QObject>
+#include <QString>
+#include <QStringList>
 
 // Forward declaration
 namespace pfs {
@@ -58,28 +56,29 @@ class IOWorker : public QObject
 
 private:
     friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
-    LuminanceOptions m_luminance_options;
 
     void get_frame(QString fname);
     void emitNextStep(int iteration);
     void emitMaximumValue(int iteration);
+
 public:
     IOWorker(QObject* parent = 0);
-    virtual ~IOWorker();
+    ~IOWorker();
+
+public Q_SLOTS:
+    pfs::Frame* read_hdr_frame(QString filename);
+
     bool write_hdr_frame(pfs::Frame *frame, QString filename);
-
-public slots:
-    void read_frame(QString filename);
-    void read_frames(QStringList filenames);
-
     bool write_hdr_frame(HdrViewer* frame, QString filename);
+
     void write_ldr_frame(LdrViewer* frame, QString filename, int quality);
 
 signals:
-    void read_failed(QString error_message);
-    void read_success(pfs::Frame*, QString fname);
+    void read_hdr_failed(QString error_message);
+    void read_hdr_success(pfs::Frame*, QString fname);
 
     void write_hdr_failed();
+    void write_hdr_success(pfs::Frame*, QString);
     void write_hdr_success(HdrViewer*, QString);
     void write_ldr_failed();
     void write_ldr_success(LdrViewer*, QString);

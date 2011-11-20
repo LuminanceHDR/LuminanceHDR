@@ -384,7 +384,10 @@ void MainWindow::fileOpen()
             updateRecentDirHDRSetting(qfi.path());
         }
 
-        emit open_frames(files);
+        foreach(QString filename, files)
+        {
+            emit open_hdr_frame(filename);
+        }
     }
 }
 
@@ -910,7 +913,7 @@ void MainWindow::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
-        emit open_frame(action->data().toString());
+        emit open_hdr_frame(action->data().toString());
     }
 }
 
@@ -927,10 +930,9 @@ void MainWindow::setupIO()
     connect(m_IOWorker, SIGNAL(destroyed()), m_IOThread, SLOT(deleteLater()));
 
     // Open
-    connect(this, SIGNAL(open_frame(QString)), m_IOWorker, SLOT(read_frame(QString)));
-    connect(this, SIGNAL(open_frames(QStringList)), m_IOWorker, SLOT(read_frames(QStringList)));
-    connect(m_IOWorker, SIGNAL(read_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
-    connect(m_IOWorker, SIGNAL(read_failed(QString)), this, SLOT(load_failed(QString)));
+    connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
+    connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
+    connect(m_IOWorker, SIGNAL(read_hdr_failed(QString)), this, SLOT(load_failed(QString)));
 
     // Save HDR
     connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
@@ -1084,8 +1086,12 @@ void MainWindow::openFiles(const QStringList& files)
         case 1: // create new using LDRS
             fileNewViaWizard(files);
             break;
-        case 2: // openHDRs
-            emit open_frames(files);
+        case 2: // open HDRs
+            foreach (QString filename, files)
+            {
+                 qDebug() << filename;
+                 emit open_hdr_frame(filename);
+            }
             break;
         }
     }

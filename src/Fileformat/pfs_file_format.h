@@ -27,17 +27,20 @@
 #ifndef __PFS_FILE_FORMAT_H__
 #define __PFS_FILE_FORMAT_H__
 
-#include "Libpfs/pfs.h"
+#include "Fileformat/rgbeio.h"
+#include "Fileformat/pfstiff.h"
+#include "Fileformat/pfsoutldrimage.h"
+#include "Fileformat/pfsinraw.h"
 
-#include "rgbeio.h"
-#include "pfstiff.h"
-#include "pfsoutldrimage.h"
-#include "pfsinraw.h"
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
 
-pfs::Frame* readEXRfile  (const char * filename);
-void writeEXRfile (pfs::Frame* inpfsframe,const char* outfilename);
+pfs::Frame* readEXRfile(const char * filename);
+void writeEXRfile(pfs::Frame* inpfsframe, const char* outfilename);
 
-pfs::Frame* readRGBEfile (const char * filename);
+pfs::Frame* readRGBEfile(const char * filename);
 void writeRGBEfile(pfs::Frame* inputpfshdr, const char* outfilename);
 
 #endif

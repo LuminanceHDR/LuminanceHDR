@@ -22,16 +22,17 @@
  *
  */
 
-
 #include <vector>
 #include <cmath>
-#include <QString>
-#include <QFileInfo>
 #include <iostream>
 
-#include "Libpfs/domio.h"
-#include "pfsinraw.h"
+#include <QString>
+#include <QFileInfo>
 
+#include "Libpfs/domio.h"
+#include "Fileformat/pfsinraw.h"
+#include "Libpfs/frame.h"
+#include "Common/LuminanceOptions.h"
 
 /**************************** From UFRAW sourcecode ********************************
  *

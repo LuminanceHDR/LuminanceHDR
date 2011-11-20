@@ -195,8 +195,8 @@ Q_SIGNALS:
     // I/O
     void save_hdr_frame(HdrViewer*, QString);
     void save_ldr_frame(LdrViewer*, QString, int);  // viewer, filename, quality level
-    void open_frames(QStringList);
-    void open_frame(QString);
+
+    void open_hdr_frame(QString);
 
     // update HDR
     void updatedHDR(pfs::Frame*);

@@ -39,7 +39,7 @@
 #include "Libpfs/domio.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
-
+#include "Common/LuminanceOptions.h"
 
 IOWorker::IOWorker(QObject* parent):
     QObject(parent)
@@ -52,7 +52,18 @@ IOWorker::~IOWorker()
 #endif
 }
 
-bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
+bool IOWorker::write_hdr_frame(HdrViewer* hdr_viewer, QString filename)
+{
+    pfs::Frame* hdr_frame = hdr_viewer->getHDRPfsFrame();
+
+    bool status = write_hdr_frame(hdr_frame, filename);
+
+    emit write_hdr_success(hdr_viewer, filename);
+
+    return status;
+}
+
+bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
 {
     bool status = true;
     emit IO_init();
@@ -61,8 +72,6 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
 
-    pfs::Frame* hdr_frame = hdr_input->getHDRPfsFrame();
-
     if (qfi.suffix().toUpper() == "EXR")
     {
         writeEXRfile(hdr_frame, encodedName);
@@ -73,10 +82,12 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
     }
     else if (qfi.suffix().toUpper().startsWith("TIF"))
     {
+        LuminanceOptions LuminanceOptions;
+
         TiffWriter tiffwriter(encodedName, hdr_frame);
         connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
         connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
-        if (m_luminance_options.isSaveLogLuvTiff() )
+        if (LuminanceOptions.isSaveLogLuvTiff() )
         {
             tiffwriter.writeLogLuvTiff();
         }
@@ -97,53 +108,9 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_input, QString filename)
         // Default as EXR
         writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
     }
-    emit write_hdr_success(hdr_input, filename);
+    emit write_hdr_success(hdr_frame, filename);
 
     emit IO_finish();
-
-    return status;
-}
-
-bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
-{
-    bool status = true;
-
-    QFileInfo qfi(filename);
-    QString absoluteFileName = qfi.absoluteFilePath();
-    QByteArray encodedName = QFile::encodeName(absoluteFileName);
-
-    if (qfi.suffix().toUpper() == "EXR")
-    {
-        writeEXRfile(hdr_frame, encodedName);
-    }
-    else if (qfi.suffix().toUpper() == "HDR")
-    {
-        writeRGBEfile(hdr_frame, encodedName);
-    }
-    else if (qfi.suffix().toUpper().startsWith("TIF"))
-    {
-        TiffWriter tiffwriter(encodedName, hdr_frame);
-        if ( m_luminance_options.isSaveLogLuvTiff() )
-        {
-            tiffwriter.writeLogLuvTiff();
-        }
-        else
-        {
-            tiffwriter.writeFloatTiff();
-        }
-    }
-    else if (qfi.suffix().toUpper() == "PFS")
-    {
-        FILE *fd = fopen(encodedName, "w");
-        pfs::DOMIO pfsio;
-        pfsio.writeFrame(hdr_frame, fd);
-        fclose(fd);
-    }
-    else
-    {
-        // Default as EXR
-        writeEXRfile(hdr_frame, QFile::encodeName(absoluteFileName + ".exr"));
-    }
 
     return status;
 }
@@ -158,7 +125,6 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
     QString format = qfi.suffix();
     QString absoluteFileName = qfi.absoluteFilePath();
     QByteArray encodedName = QFile::encodeName(absoluteFileName);
-
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
@@ -189,36 +155,19 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
     emit IO_finish();
 }
 
-void IOWorker::read_frame(QString filename)
+pfs::Frame* IOWorker::read_hdr_frame(QString filename)
 {
     emit IO_init();
 
-    get_frame(filename);
+    if ( filename.isEmpty() )
+        return NULL;
 
-    emit IO_finish();
-}
-
-void IOWorker::read_frames(QStringList filenames)
-{
-    emit IO_init();
-    foreach (QString filename, filenames)
-    {
-        get_frame(filename);
-    }
-    emit IO_finish();
-}
-
-void IOWorker::get_frame(QString fname)
-{
-    if ( fname.isEmpty() )
-        return;
-
-    QFileInfo qfi(fname);
+    QFileInfo qfi(filename);
     if ( !qfi.isReadable() )
     {
-        qDebug("File %s is not readable.", qPrintable(fname));
-        emit read_failed(tr("ERROR: The following file is not readable: %1").arg(fname));
-        return;
+        qDebug("File %s is not readable.", qPrintable(filename));
+        emit read_hdr_failed(tr("ERROR: The following file is not readable: %1").arg(filename));
+        return NULL;
     }
 
     pfs::Frame* hdrpfsframe = NULL;
@@ -227,8 +176,10 @@ void IOWorker::get_frame(QString fname)
 
     try
     {
+        LuminanceOptions luminanceOptions;
+
         QString extension = qfi.suffix().toUpper();
-        QByteArray TempPath = QFile::encodeName(m_luminance_options.getTempDir());
+        QByteArray TempPath = QFile::encodeName(luminanceOptions.getTempDir());
         QByteArray encodedFileName = QFile::encodeName(qfi.absoluteFilePath());
 
         if (extension=="EXR")
@@ -242,12 +193,9 @@ void IOWorker::get_frame(QString fname)
         else if (extension=="PFS")
         {
             //TODO : check this code and make it smoother
-            //const char *fname = encodedFileName;
             FILE *fd = fopen(encodedFileName, "rb");
-            if (!fd) {
-                emit read_failed(tr("ERROR: Cannot open file: %1").arg(fname));
-                return;
-            }
+            if (!fd) throw;
+
             pfs::DOMIO pfsio;
             hdrpfsframe = pfsio.readFrame(fd);
             fclose(fd);
@@ -263,13 +211,13 @@ void IOWorker::get_frame(QString fname)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &m_luminance_options, false, progress_cb, this);
+            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
         }
         else
         {
-            qDebug("TH: File %s has unsupported extension.", qPrintable(fname));
-            emit read_failed(tr("ERROR: File %1 has unsupported extension.").arg(fname));
-            return;
+            qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
+            emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
+            return NULL;
         }
 
         if (hdrpfsframe == NULL)
@@ -277,35 +225,34 @@ void IOWorker::get_frame(QString fname)
             throw "Error loading file";
         }
     }
-    catch(pfs::Exception e)
-    {
-        emit read_failed(tr("ERROR: %1").arg(e.getMessage()));
-        return;
-    }
     catch (...)
     {
         qDebug("TH: catched exception");
-        emit read_failed(tr("ERROR: Failed loading file: %1").arg(fname));
-        return;
+        emit read_hdr_failed(tr("ERROR: Failed loading file: %1").arg(filename));
+        return NULL;
     }
-    emit read_success(hdrpfsframe, fname);
+    emit read_hdr_success(hdrpfsframe, filename);
+
+    emit IO_finish();
+
+    return hdrpfsframe;
 }
 
 void IOWorker::emitNextStep(int iteration)
 {
-	emit setValue(iteration);
+    emit setValue(iteration);
 }
 
 void IOWorker::emitMaximumValue(int expected)
 {
-	emit setMaximum(expected);
+    emit setMaximum(expected);
 }
 
 int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected)
 {
-	IOWorker *ptr = (IOWorker *) data;
-	ptr->emitMaximumValue(expected);
-	ptr->emitNextStep(iteration);
-	return 0;
+    IOWorker *ptr = (IOWorker *) data;
+    ptr->emitMaximumValue(expected);
+    ptr->emitNextStep(iteration);
+    return 0;
 }
 
