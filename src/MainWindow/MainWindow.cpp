@@ -130,6 +130,8 @@ void MainWindow::init()
         qRegisterMetaType<pfs::Frame*>("pfs::Frame*");
         qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
         qRegisterMetaType<TonemappingOptions*>("TonemappingOptions*");
+        qRegisterMetaType<HdrViewer*>("HdrViewer*");
+        qRegisterMetaType<LdrViewer*>("LdrViewer*");
 
         QDir dir(QDir::homePath());
 
@@ -298,11 +300,6 @@ void MainWindow::createMenus()
 
 void MainWindow::createStatusBar()
 {
-    // progress bar
-    m_progressbar = new QProgressBar(this);
-    m_progressbar->hide();
-    statusBar()->addWidget(m_progressbar);
-
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
 }
 
@@ -391,7 +388,9 @@ void MainWindow::fileOpen()
 
         foreach(QString filename, files)
         {
-            emit open_hdr_frame(filename);
+            //emit open_hdr_frame(filename);
+            QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                      Q_ARG(QString, filename));
         }
     }
 }
@@ -433,7 +432,9 @@ void MainWindow::fileSaveAll()
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
                 QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
 
-                emit save_ldr_frame(l_v, outfname, 100);
+                //emit save_ldr_frame(l_v, outfname, 100);
+                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                          Q_ARG(LdrViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, 100));
             }
         }
     }
@@ -474,7 +475,9 @@ void MainWindow::fileSaveAs()
                 updateRecentDirHDRSetting(qfi.path());
             }
 
-            emit save_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+            //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+            QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
+                                      Q_ARG(HdrViewer*, dynamic_cast<HdrViewer*>(g_v)), Q_ARG(QString, fname));
         }
     }
     else
@@ -528,7 +531,10 @@ void MainWindow::fileSaveAs()
                 else
                     quality = savedFileQuality.getQuality();
             }
-            emit save_ldr_frame(l_v, outfname, quality);
+            // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
+            QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                      Q_ARG(LdrViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, quality));
+
         }
     }
 }
@@ -918,12 +924,18 @@ void MainWindow::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
-        emit open_hdr_frame(action->data().toString());
+        //emit open_hdr_frame(action->data().toString());
+        QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                  Q_ARG(QString, action->data().toString()));
     }
 }
 
 void MainWindow::setupIO()
 {
+    // progress bar
+    m_ProgressBar = new QProgressBar(this);
+    m_ProgressBar->hide();
+
     // Init Object/Thread
     m_IOThread = new QThread;
     m_IOWorker = new IOWorker;
@@ -935,27 +947,48 @@ void MainWindow::setupIO()
     connect(m_IOWorker, SIGNAL(destroyed()), m_IOThread, SLOT(deleteLater()));
 
     // Open
-    connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
+    //connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
     connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
     connect(m_IOWorker, SIGNAL(read_hdr_failed(QString)), this, SLOT(load_failed(QString)));
 
     // Save HDR
-    connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
+    //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_success(HdrViewer*, QString)), this, SLOT(save_hdr_success(HdrViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
     // Save LDR
-    connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
+    //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
     connect(m_IOWorker, SIGNAL(write_ldr_success(LdrViewer*, QString)), this, SLOT(save_ldr_success(LdrViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
 
     // progress bar handling
-    connect(m_IOWorker, SIGNAL(setValue(int)), this, SLOT(ProgressBarSetValue(int)));
-    connect(m_IOWorker, SIGNAL(setMaximum(int)), this, SLOT(ProgressBarSetMaximum(int)));
-    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(IO_start()));
-    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(IO_done()));
+    connect(m_IOWorker, SIGNAL(setValue(int)), m_ProgressBar, SLOT(setValue(int)));
+    connect(m_IOWorker, SIGNAL(setMaximum(int)), m_ProgressBar, SLOT(setMaximum(int)));
+    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(ioBegin()));
+    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(ioEnd()));
 
     // start thread waiting for signals (I/O requests)
     m_IOThread->start();
+}
+
+void MainWindow::ioBegin()
+{
+    statusBar()->clearMessage();
+
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
+    statusBar()->addWidget(m_ProgressBar);
+    m_ProgressBar->setMaximum(0);
+    m_ProgressBar->show();
+}
+
+void MainWindow::ioEnd()
+{
+    statusBar()->removeWidget(m_ProgressBar);
+    m_ProgressBar->reset();
+
+    QApplication::restoreOverrideCursor();
+
+    statusBar()->showMessage(tr("Done!"), 10000);
 }
 
 void MainWindow::load_failed(QString error_message)
@@ -1019,22 +1052,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
 }
 
-void MainWindow::IO_start()
-{
-    //QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-    // Init Progress Bar
-    ProgressBarInit();
-}
-
-void MainWindow::IO_done()
-{
-    // Stop Progress Bar
-    ProgressBarFinish();
-
-    //QApplication::restoreOverrideCursor();
-}
-
 void MainWindow::preferences_called()
 {
     unsigned int negcol = luminance_options.getViewerNegColor();
@@ -1094,8 +1111,10 @@ void MainWindow::openFiles(const QStringList& files)
         case 2: // open HDRs
             foreach (QString filename, files)
             {
-                 qDebug() << filename;
-                 emit open_hdr_frame(filename);
+                 //qDebug() << filename;
+                 //emit open_hdr_frame(filename);
+                 QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                           Q_ARG(QString, filename));
             }
             break;
         }
@@ -1236,37 +1255,6 @@ void MainWindow::batch_requested()
     BatchTMDialog *batchdialog = new BatchTMDialog(this);
     batchdialog->exec();
     delete batchdialog;
-}
-
-void MainWindow::ProgressBarSetMaximum(int max)
-{
-    m_progressbar->setMaximum( max - 1 );
-}
-
-void MainWindow::ProgressBarSetValue(int value)
-{
-    m_progressbar->setValue( value );
-}
-
-void MainWindow::ProgressBarInit(void)
-{
-    statusBar()->clearMessage();
-
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-    //m_progressbar->setValue( -1 );
-    m_progressbar->setMaximum( 0 );
-    m_progressbar->show();
-}
-
-void MainWindow::ProgressBarFinish(void)
-{
-    m_progressbar->hide();
-    m_progressbar->reset();
-
-    QApplication::restoreOverrideCursor();
-
-    statusBar()->showMessage(tr("Done!"), 10000);
 }
 
 void MainWindow::cropToSelection()
@@ -1424,7 +1412,7 @@ void MainWindow::setupTM()
     connect(m_TMWorker, SIGNAL(tonemapSetValue(int)), m_TMProgressBar, SLOT(setValue(int)));
     connect(m_TMWorker, SIGNAL(tonemapSetMaximum(int)), m_TMProgressBar, SLOT(setMaximum(int)));
     connect(m_TMWorker, SIGNAL(tonemapSetMinimum(int)), m_TMProgressBar, SLOT(setMinimum(int)));
-    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()));
+    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
 
     // start thread waiting for signals (I/O requests)
     m_TMThread->start();

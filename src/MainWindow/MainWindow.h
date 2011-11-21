@@ -79,9 +79,6 @@ public:
     ~MainWindow();
 
 public Q_SLOTS:
-    // For ProgressBar
-    void ProgressBarSetMaximum(int max);
-    void ProgressBarSetValue(int value);
 
     // I/O
     void save_hdr_success(HdrViewer* saved_hdr, QString fname);
@@ -92,8 +89,8 @@ public Q_SLOTS:
     void load_failed(QString);
     void load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving = false);
 
-    void IO_done();
-    void IO_start();
+    void ioBegin();
+    void ioEnd();
 
     void setMainWindowModified(bool b);
 
@@ -194,16 +191,8 @@ protected Q_SLOTS:
     void activatePreviousViewer();
 
 Q_SIGNALS:
-    // I/O
-    void save_hdr_frame(HdrViewer*, QString);
-    void save_ldr_frame(LdrViewer*, QString, int);  // viewer, filename, quality level
-
-    void open_hdr_frame(QString);
-
     // update HDR
     void updatedHDR(pfs::Frame*);
-
-    //void getTonemappedFrame(pfs::Frame*, TonemappingOptions *opts);
 
 protected:
     QSplitter *m_centralwidget_splitter;
@@ -212,7 +201,6 @@ protected:
     QSignalMapper *windowMapper;
     LuminanceOptions luminance_options;
     QDialog *splash;
-    QProgressBar* m_progressbar;
 
     QString RecentDirHDRSetting;
     QString RecentDirLDRSetting;
@@ -230,9 +218,6 @@ protected:
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);
     void closeEvent(QCloseEvent *);
-
-    void ProgressBarInit();
-    void ProgressBarFinish(void);
 
     void dispatchrotate(bool clockwise);
 
@@ -282,6 +267,7 @@ private:
     // I/O
     QThread *m_IOThread;
     IOWorker *m_IOWorker;
+    QProgressBar* m_ProgressBar;
 
     // UI declaration
     Ui::MainWindow* m_Ui;
