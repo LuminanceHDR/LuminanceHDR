@@ -288,6 +288,17 @@ SET(LUMINANCE_HDR_INCLUDE
         src/Viewers/ISelectionBox.h
         src/Viewers/ISelectionAnchor.h
 # end new viewer
+
+        src/Threads/Ashikhmin02Thread.h
+        src/Threads/Drago03Thread.h
+        src/Threads/Durand02Thread.h
+        src/Threads/Fattal02Thread.h
+        src/Threads/Mantiuk06Thread.h
+        src/Threads/Mantiuk08Thread.h
+        src/Threads/Pattanaik00Thread.h
+        src/Threads/Reinhard02Thread.h
+        src/Threads/Reinhard05Thread.h
+        src/Threads/TMOThread.h
 )
 
 SET(LUMINANCE_HDR_SRC
@@ -380,18 +391,8 @@ SET(LUMINANCE_HDR_MOC
 	src/PreviewPanel/PreviewPanel.h
 	src/Projection/ProjectionsDialog.h
 	src/Resize/ResizeDialog.h
-	src/Threads/Ashikhmin02Thread.h
-	src/Threads/Drago03Thread.h
-	src/Threads/Durand02Thread.h
-	src/Threads/Fattal02Thread.h
 	src/Threads/HdrInputLoader.h
 	src/Threads/LoadHdrThread.h
-	src/Threads/Mantiuk06Thread.h	
-	src/Threads/Mantiuk08Thread.h
-	src/Threads/Pattanaik00Thread.h
-	src/Threads/Reinhard02Thread.h
-	src/Threads/Reinhard05Thread.h
-	src/Threads/TMOThread.h
 	src/TonemappingPanel/TMOProgressIndicator.h
 	src/TonemappingPanel/TonemappingPanel.h
 	src/TonemappingPanel/TonemappingWarnDialog.h
