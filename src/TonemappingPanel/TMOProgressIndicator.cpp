@@ -26,6 +26,8 @@
 
 #include <iostream>
 
+#include <QDebug>
+
 TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
     QWidget(parent),
     m_isTerminated(false)
@@ -74,6 +76,10 @@ bool TMOProgressIndicator::isTerminated()
 
 void TMOProgressIndicator::setValue(int value)
 {
+#ifdef QT_DEBUG
+    qDebug() << "TMOProgressIndicator::setValue("<< value <<")";
+#endif
+
     m_progressBar->setValue(value);
 }
 
