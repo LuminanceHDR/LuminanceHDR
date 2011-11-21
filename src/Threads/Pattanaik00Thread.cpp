@@ -28,40 +28,34 @@
 #include "Threads/Pattanaik00Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
 TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
     TonemapOperator()
-{
-  //out_CS = pfs::CS_SRGB;
-}
+{}
 
 void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-//	emit setMaximumSteps(100);
-//	try {
-		pfstmo_pattanaik00(workingframe,
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    pfstmo_pattanaik00(workingframe,
                        opts->operator_options.pattanaikoptions.local,
                        opts->operator_options.pattanaikoptions.multiplier,
                        opts->operator_options.pattanaikoptions.cone,
                        opts->operator_options.pattanaikoptions.rod,
                        opts->operator_options.pattanaikoptions.autolum,
                        &ph);
-//	}
-//	catch(pfs::Exception e)
-//	{
-//		emit tmo_error(e.getMessage());
-//		emit deleteMe(this);
-//		return;
-//	}
-//	catch(...)
-//	{
-//		emit tmo_error("Failed to tonemap image");
-//		emit deleteMe(this);
-//		return;
-//	}
-	
-//	finalize();
+
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorPattanaik00::getType()

@@ -28,21 +28,25 @@
 #include "Threads/Durand02Thread.h"
 #include "TonemappingOperators/pfstmo.h"	
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
 QMutex TonemapOperatorDurand02::m_Mutex;
 
 TonemapOperatorDurand02::TonemapOperatorDurand02():
     TonemapOperator()
-{
-  //out_CS = pfs::CS_SRGB;
-}
+{}
 
 void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-//	emit setMaximumSteps(100);
-//	try
-//	{
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
     // pfstmo_durand02 not reentrant
     m_Mutex.lock();
     pfstmo_durand02(workingframe,
@@ -51,16 +55,9 @@ void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.durandoptions.base,
                     &ph);
     m_Mutex.unlock();
-//	}
-//	catch(...)
-//  	{
-//                m_Mutex.unlock();
-//		emit tmo_error("Failed to tonemap image");
-//		emit deleteMe(this);
-//		return;
-//	}
-	
-//	finalize();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorDurand02::getType()

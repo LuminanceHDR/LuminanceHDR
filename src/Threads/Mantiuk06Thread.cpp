@@ -28,22 +28,27 @@
 #include "Threads/Mantiuk06Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
 QMutex TonemapOperatorMantiuk06::m_Mutex;
 
 TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
     TonemapOperator()
-{
-  //out_CS = pfs::CS_SRGB;
-}
+{}
 
 void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-    ph.emitSetValue(100);
-//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-//	emit setMaximumSteps(100);
-//	try
-//	{
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
     // pfstmo_mantiuk06 not reentrant
     m_Mutex.lock();
     pfstmo_mantiuk06(workingframe,
@@ -53,16 +58,9 @@ void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, Tonemappin
                      opts->operator_options.mantiuk06options.contrastequalization,
                      &ph);
     m_Mutex.unlock();
-//	}
-//	catch(...)
-//  	{
-//    		mantiuk06_mutex.unlock();
-//		emit tmo_error("Failed to tonemap image");
-//		emit deleteMe(this);
-//		return;
-//	}
-	
-//	finalize();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorMantiuk06::getType()

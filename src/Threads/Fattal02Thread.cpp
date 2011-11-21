@@ -28,6 +28,8 @@
 #include "Threads/Fattal02Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
 QMutex TonemapOperatorFattal02::m_Mutex;
 
@@ -37,11 +39,14 @@ TonemapOperatorFattal02::TonemapOperatorFattal02():
 
 void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-//	emit setMaximumSteps(100);
-//	try
-//	{
-    // pfstmo_fattal02 not reentrant AKA not thread-safe!
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
     m_Mutex.lock();
     pfstmo_fattal02(workingframe,
                     opts->operator_options.fattaloptions.alpha,
@@ -51,16 +56,9 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.fattaloptions.newfattal,
                     &ph);
     m_Mutex.unlock();
-//	}
-//	catch(...)
-//	{
-//		fattal02_mutex.unlock();
-//		emit tmo_error("Failed to tonemap image");
-//		emit deleteMe(this);
-//		return;
-//	}
-	
-//	finalize();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorFattal02::getType()

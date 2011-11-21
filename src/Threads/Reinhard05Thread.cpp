@@ -28,6 +28,8 @@
 #include "Threads/Reinhard05Thread.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
 TonemapOperatorReinhard05::TonemapOperatorReinhard05():
     TonemapOperator()
@@ -35,30 +37,22 @@ TonemapOperatorReinhard05::TonemapOperatorReinhard05():
 
 void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-//	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-//	emit setMaximumSteps(100);
-//	try
-//	{
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
     pfstmo_reinhard05(workingframe,
                       opts->operator_options.reinhard05options.brightness,
                       opts->operator_options.reinhard05options.chromaticAdaptation,
                       opts->operator_options.reinhard05options.lightAdaptation,
                       &ph);
-//	}
-//	catch(pfs::Exception e)
-//	{
-//		emit tmo_error(e.getMessage());
-//		emit deleteMe(this);
-//		return;
-//	}
-//	catch(...)
-//	{
-//		emit tmo_error("Failed to tonemap image");
-//		emit deleteMe(this);
-//		return;
-//	}
-	
-//	finalize();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
 TMOperator TonemapOperatorReinhard05::getType()
