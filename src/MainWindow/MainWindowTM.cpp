@@ -66,6 +66,7 @@ void MainWindowTM::tonemapBegin()
 {
     // Insert TMOProgressIndicator
     m_MainWindows->statusBar()->addWidget(m_TMProgressBar);
+    m_TMProgressBar->setMaximum(0);
     m_TMProgressBar->show();
 }
 
