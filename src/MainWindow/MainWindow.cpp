@@ -45,6 +45,7 @@
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QTimer>
+#include <Qstring>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -76,7 +77,8 @@
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
 #include "Core/IOWorker.h"
-#include "MainWindow/MainWindowTM.h"
+#include "Core/TMWorker.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -125,7 +127,9 @@ void MainWindow::init()
     {
         // Register symbols on the first activation!
         qRegisterMetaType<QImage>("QImage");
+        qRegisterMetaType<pfs::Frame*>("pfs::Frame*");
         qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+        qRegisterMetaType<TonemappingOptions*>("TonemappingOptions*");
 
         QDir dir(QDir::homePath());
 
@@ -1395,19 +1399,49 @@ void MainWindow::setupTM()
 
     tmPanel->setEnabled(false);
 
-    m_MainWindowTM = new MainWindowTM(this);
+    m_TMProgressBar = new TMOProgressIndicator;
+    connect(this, SIGNAL(destroyed()), m_TMProgressBar, SLOT(deleteLater()));
 
-    // memory management
-    connect(this, SIGNAL(destroyed()), m_MainWindowTM, SLOT(deleteLater()));
+    m_TMWorker = new TMWorker;
+    m_TMThread = new QThread;
 
-    // behaviour
-    connect(this, SIGNAL(getTonemappedFrame(pfs::Frame*,TonemappingOptions*)),
-            m_MainWindowTM, SIGNAL(getTonemappedFrame(pfs::Frame*,TonemappingOptions*)));
-    //connect(m_MainWindowTM, SIGNAL(tonemapFailed(QString)),
-    //        this, SLOT(t))
-    connect(m_MainWindowTM, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
+    m_TMWorker->moveToThread(m_TMThread);
+
+    // Memory Management
+    connect(this, SIGNAL(destroyed()), m_TMWorker, SLOT(deleteLater()));
+    connect(m_TMWorker, SIGNAL(destroyed()), m_TMThread, SLOT(deleteLater()));
+
+    // get back result!
+    connect(m_TMWorker, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
             this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+    connect(m_TMWorker, SIGNAL(tonemapFailed(QString)),
+            this, SLOT(tonemapFailed(QString)));
 
+    // progress bar handling
+    connect(m_TMWorker, SIGNAL(tonemapBegin()), this, SLOT(tonemapBegin()));
+    connect(m_TMWorker, SIGNAL(tonemapEnd()), this, SLOT(tonemapEnd()));
+
+    connect(m_TMWorker, SIGNAL(tonemapSetValue(int)), m_TMProgressBar, SLOT(setValue(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMaximum(int)), m_TMProgressBar, SLOT(setMaximum(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMinimum(int)), m_TMProgressBar, SLOT(setMinimum(int)));
+    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()));
+
+    // start thread waiting for signals (I/O requests)
+    m_TMThread->start();
+
+}
+
+void MainWindow::tonemapBegin()
+{
+    statusBar()->addWidget(m_TMProgressBar);
+    m_TMProgressBar->setMaximum(0);
+    m_TMProgressBar->show();
+}
+
+void MainWindow::tonemapEnd()
+{
+    statusBar()->removeWidget(m_TMProgressBar);
+    m_TMProgressBar->reset();
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1454,7 +1488,10 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 #ifdef QT_DEBUG
         qDebug() << "MainWindow(): emit getTonemappedFrame()";
 #endif
-        emit getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
+        //CALL m_TMWorker->getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
+        QMetaObject::invokeMethod(m_TMWorker, "computeTonemap", Qt::QueuedConnection,
+                                  Q_ARG(pfs::Frame*, hdr_viewer->getHDRPfsFrame()), Q_ARG(TonemappingOptions*,opts));
+
     }
         // TODO : can you clean up this thing?!
         // getHDRPfsFrame() is only available in HdrViewer
@@ -1481,6 +1518,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     //}
 }
 
+/*
 void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
 {
     num_ldr_generated++;
@@ -1513,6 +1551,7 @@ void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
 
     previewPanel->setEnabled(true);
 }
+*/
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
 {
@@ -1548,29 +1587,12 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
     delete frame;
 }
 
-void MainWindow::tonemappingFinished()
+void MainWindow::tonemapFailed(QString error_msg)
 {
-    qDebug() << "TonemappingWindow::tonemappingFinished()";
-    statusBar()->removeWidget(progInd);
-    tmPanel->setEnabled(true);
-
-    delete progInd;
-}
-
-void MainWindow::deleteTMOThread(TMOThread *th)
-{
-    //delete th;
-}
-
-void MainWindow::showErrorMessage(const char *e)
-{
-    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
+    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(error_msg),
                           QMessageBox::Ok,QMessageBox::NoButton);
 
-    statusBar()->removeWidget(progInd);
     tmPanel->setEnabled(true);
-
-    delete progInd;
 }
 
 

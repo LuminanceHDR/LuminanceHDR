@@ -37,7 +37,7 @@ namespace pfs {
 class TonemappingOptions;
 class ProgressHelper;
 
-class TMWorker: public QObject
+class TMWorker : public QObject
 {
     Q_OBJECT
 

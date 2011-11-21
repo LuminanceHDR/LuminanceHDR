@@ -35,6 +35,7 @@
 #define MAINGUI_IMPL_H
 
 #include <QMainWindow>
+#include <QString>
 #include <QStringList>
 #include <QSignalMapper>
 #include <QSplitter>
@@ -65,7 +66,7 @@ class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h
 class TMOThread;            // #include "Threads/TMOThread.h"
 class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
-class MainWindowTM;
+class TMWorker;
 
 class MainWindow: public QMainWindow
 {
@@ -93,8 +94,6 @@ public Q_SLOTS:
 
     void IO_done();
     void IO_start();
-
-    void tonemapImage(TonemappingOptions *opts);
 
     void setMainWindowModified(bool b);
 
@@ -175,11 +174,12 @@ protected Q_SLOTS:
     void splashClose();
 
     // TM
+    void tonemapBegin();
+    void tonemapEnd();
+    void tonemapImage(TonemappingOptions *opts);
     void addLdrFrame(pfs::Frame*, TonemappingOptions*);
-    void addLDRResult(QImage*, quint16*);
-    void tonemappingFinished();
-    void deleteTMOThread(TMOThread* th);
-    void showErrorMessage(const char* e);
+    //void addLDRResult(QImage*, quint16*);
+    void tonemapFailed(QString);
 
     // lock functionalities
     void lockViewers(bool);
@@ -203,7 +203,7 @@ Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
 
-    void getTonemappedFrame(pfs::Frame*, TonemappingOptions *opts);
+    //void getTonemappedFrame(pfs::Frame*, TonemappingOptions *opts);
 
 protected:
     QSplitter *m_centralwidget_splitter;
@@ -239,10 +239,6 @@ protected:
     void updateRecentFileActions();
     void initRecentFileActions();
     void clearRecentFileActions();
-
-    // Tone Mapping Panel
-    TonemappingPanel *tmPanel;
-    TMOProgressIndicator *progInd;
 
     struct {
         bool is_hdr_ready;
@@ -291,7 +287,11 @@ private:
     Ui::MainWindow* m_Ui;
 
     // TM thread
-    MainWindowTM* m_MainWindowTM;
+    QThread* m_TMThread;
+    TMWorker* m_TMWorker;
+    TMOProgressIndicator* m_TMProgressBar;
+    // Tone Mapping Panel
+    TonemappingPanel *tmPanel;
 };
 
 
