@@ -100,12 +100,8 @@ protected:
 */
 
 
-class TonemapOperator//: public QObject
+class TonemapOperator
 {
-//    Q_OBJECT
-//private:
-//    bool m_TerminationRequest;
-
 public:
     static TonemapOperator* getTonemapOperator(const TMOperator tmo);
     virtual ~TonemapOperator();
@@ -122,51 +118,11 @@ public:
     ///!
     virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph) = 0;
 
-//public:
-//    ///! stub functions to emit signals
-//    void setValue(int);
-//    void setMaximum(int);
-//    void setMinimum(int);
-
-//public slots:
-    ///! set termination request to true
-//    void terminationRequest();
 protected:
     TonemapOperator();
 
-/* not sure they are usuful */
-//Q_SIGNALS:
-//    void tonemapBegin();
-//    void tonemapFinished();
-
-//    void tonemapSetMinimum(int);
-//    void tonemapSetMaximum(int);
-//    void tonemapSetValue(int);
 };
 
-//inline bool TonemapOperator::isTerminationRequested()
-//{
-//    return m_TerminationRequest;
-//}
 
-//inline void TonemapOperator::terminationRequest()
-//{
-//    m_TerminationRequest = true;
-//}
-
-//inline void TonemapOperator::setValue(int i)
-//{
-//    emit tonemapSetValue(i);
-//}
-
-//inline void TonemapOperator::setMaximum(int i)
-//{
-//    emit tonemapSetMaximum(i);
-//}
-
-//inline void TonemapOperator::setMinimum(int i)
-//{
-//    emit tonemapSetMinimum(i);
-//}
 
 #endif
