@@ -47,9 +47,9 @@ TMWorker::TMWorker(QObject* parent):
 
     connect(this, SIGNAL(destroyed()), m_Callback, SLOT(deleteLater()));
 
-    connect(m_Callback, SIGNAL(setValue(int)), this, SIGNAL(tonemapSetValue(int)));
-    connect(m_Callback, SIGNAL(setMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)));
-    connect(m_Callback, SIGNAL(setMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)));
+    connect(m_Callback, SIGNAL(setValue(int)), this, SIGNAL(tonemapSetValue(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(setMinimum(int)), this, SIGNAL(tonemapSetMinimum(int)), Qt::DirectConnection);
+    connect(m_Callback, SIGNAL(setMaximum(int)), this, SIGNAL(tonemapSetMaximum(int)), Qt::DirectConnection);
 }
 
 TMWorker::~TMWorker()
