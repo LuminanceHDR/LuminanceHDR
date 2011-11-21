@@ -72,4 +72,5 @@ void MainWindowTM::tonemapBegin()
 void MainWindowTM::tonemapEnd()
 {
     m_MainWindows->statusBar()->removeWidget(m_TMProgressBar);
+    m_TMProgressBar->reset();
 }

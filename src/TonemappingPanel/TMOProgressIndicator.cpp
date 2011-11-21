@@ -86,3 +86,9 @@ void TMOProgressIndicator::setMinimum(int min)
 {
     m_progressBar->setMinimum(min);
 }
+
+void TMOProgressIndicator::reset()
+{
+    m_progressBar->reset();
+    m_isTerminated = false;
+}

@@ -39,6 +39,7 @@ public:
     TMOProgressIndicator(QWidget *parent = 0);
     ~TMOProgressIndicator();
     bool isTerminated();
+    void reset();
 
 public slots:
     void setValue(int);
