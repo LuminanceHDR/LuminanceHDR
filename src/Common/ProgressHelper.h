@@ -26,17 +26,14 @@
 
 #include <QObject>
 
-class ProgressHelper : public QObject {
-Q_OBJECT
-
+class ProgressHelper : public QObject
+{
+    Q_OBJECT
 public:
 	ProgressHelper(QObject *p = 0);
 
         ///! backcompatibility
-        void newValue(int progress)
-        {
-            emitSetValue(progress);
-        }
+        void newValue(int progress);
         void emitSetValue(int progress);
         void emitSetMaximum(int max);
         void emitSetMinimum(int min);

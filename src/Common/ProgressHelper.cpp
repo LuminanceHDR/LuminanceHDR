@@ -53,4 +53,9 @@ void ProgressHelper::emitSetMinimum(int m)
     emit setMinimum(m);
 }
 
+void ProgressHelper::newValue(int progress)
+{
+    emit setValue(progress);
+}
+
 
