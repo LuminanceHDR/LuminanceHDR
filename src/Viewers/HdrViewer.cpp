@@ -42,6 +42,7 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 #include "Viewers/LuminanceRangeWidget.h"
+#include "Libpfs/vex.h"
 
 template<class T>
 T clamp( T val, T min, T max )
@@ -49,28 +50,6 @@ T clamp( T val, T min, T max )
   if ( val < min ) return min;
   if ( val > max ) return max;
   return val;
-}
-
-float HdrViewer::getInverseMapping( float v )
-{
-  switch( this->mappingMethod )
-  {
-    case MAP_GAMMA1_4:
-      return powf( v, 1.4f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA1_8:
-      return powf( v, 1.8f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA2_2:
-      return powf( v, 2.2f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_GAMMA2_6:
-      return powf( v, 2.6f )*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_LINEAR:
-      return v*(this->maxValue - this->minValue) + this->minValue;
-    case MAP_LOGARITHMIC:
-      return powf( 10.f, v * (log10f(this->maxValue) - log10f(this->minValue)) + log10f( this->minValue )  );
-    default:
-      assert(0);
-      return 0.f;
-  }
 }
 
 inline int binarySearchPixels( float x, const float *lut, const int lutSize )
@@ -92,27 +71,29 @@ inline int binarySearchPixels( float x, const float *lut, const int lutSize )
 //**********************************************************************************
 //==================================================================================
 
-int HdrViewer::getMapping( float x )
+void HdrViewer::getMapping( float r, float g, float b, QRgb& pixel )
 {
-    float final_value = (x - this->minValue)/(this->maxValue - this->minValue);
+#ifdef __USE_SSE__
+    v4sf rgb = (_mm_set_ps(0, b, g, r) - _mm_set1_ps(minValue)) / _mm_set1_ps(range);
 
     switch ( this->mappingMethod )
     {
     case MAP_GAMMA1_4:
-        final_value = powf(final_value, 1.f/1.4f);
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.4f));
         break;
     case MAP_GAMMA1_8:
-        final_value = powf(final_value, 1.f/1.8f);
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/1.8f));
         break;
     case MAP_GAMMA2_2:
-        final_value = powf(final_value, 1.f/2.2f);
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.2f));
         break;
     case MAP_GAMMA2_6:
-        final_value = powf(final_value, 1.f/2.6f);
+	rgb = _mm_pow_ps(rgb, _mm_set1_ps(1.0f/2.6f));
         break;
     case MAP_LOGARITHMIC:
         // log(x) - log(y) = log(x/y)
-        final_value = (log10f(x/minValue))/(log10f(maxValue/minValue));
+	rgb = _mm_log2_ps(_mm_set_ps(0, b, g, r)/_mm_set1_ps(minValue))
+	    / _mm_set1_ps(logRange);
         break;
     default:
     case MAP_LINEAR:
@@ -120,11 +101,58 @@ int HdrViewer::getMapping( float x )
         // final value is already calculated
         break;
     }
-    return (int)(clamp(final_value*255.f, 0.0f, 255.f) + 0.5f);   // (int)(x + 0.5) = round(x)
+    rgb *= _mm_set1_ps(255.f);
+    rgb = _mm_min_ps(rgb, _mm_set1_ps(255.f));
+    rgb = _mm_max_ps(rgb, _mm_set1_ps(0.f));
+    rgb += _mm_set1_ps(0.5f);
+    float buf[4];
+    _mm_store_ps(buf, rgb);
+    pixel = qRgb( buf[0], buf[1], buf[2] );
+#else
+    float rgb[3] = {
+	(r - minValue)/range,
+	(g - minValue)/range,
+	(b - minValue)/range
+    };
+
+    switch ( this->mappingMethod )
+    {
+    case MAP_GAMMA1_4:
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/1.4f);
+        break;
+    case MAP_GAMMA1_8:
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/1.8f);
+        break;
+    case MAP_GAMMA2_2:
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/2.2f);
+        break;
+    case MAP_GAMMA2_6:
+	for ( int i = 0; i < 3; i++ )
+	    rgb[i] = powf(rgb[i], 1.0f/2.6f);
+        break;
+    case MAP_LOGARITHMIC:
+        // log(x) - log(y) = log(x/y)
+	rgb[0] = log2f(r/minValue)/logRange;
+	rgb[1] = log2f(g/minValue)/logRange;
+	rgb[2] = log2f(b/minValue)/logRange;
+        break;
+    default:
+    case MAP_LINEAR:
+        // do nothing
+        // final value is already calculated
+        break;
+    }
+    pixel = qRgb( clamp(rgb[0]*255.f, 0.0f, 255.f) + 0.5f,
+		  clamp(rgb[1]*255.f, 0.0f, 255.f) + 0.5f,
+		  clamp(rgb[2]*255.f, 0.0f, 255.f) + 0.5f );
+#endif
 }
 
 HdrViewer::HdrViewer(QWidget *parent, bool ns, bool ncf, unsigned int neg, unsigned int naninf):
-        GenericViewer(parent, ns, ncf), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), naninfcol(naninf), negcol(neg)
+        GenericViewer(parent, ns, ncf), mappingMethod(MAP_GAMMA2_2), minValue(1.0f), maxValue(1.0f), range(0.0f), logRange(0.0f), naninfcol(naninf), negcol(neg)
 {
     init_ui();
 
@@ -263,11 +291,7 @@ void HdrViewer::mapFrameToImage()
         }
         else
         {
-            pr = getMapping( R[index] );
-            pg = getMapping( G[index] );
-            pb = getMapping( B[index] );
-
-            pixels[index] = qRgb( pr, pg, pb );
+	    getMapping ( R[index], G[index], B[index], pixels[index] );
         }
     }
 
@@ -291,6 +315,8 @@ void HdrViewer::setRangeWindow( float min, float max )
 {
     minValue = min;
     maxValue = max;
+    range = max - min;
+    logRange = log2f(max/min);
 
     updateImage();
 }

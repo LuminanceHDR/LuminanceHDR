@@ -62,8 +62,7 @@ class HdrViewer : public GenericViewer
 private:
     void init_ui();
     void mapFrameToImage();
-    int getMapping(float x);
-    float getInverseMapping( float v );
+    void getMapping( float r, float g, float b, QRgb& pixel );
 
 public:
     HdrViewer(QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
@@ -108,6 +107,8 @@ protected:
     LumMappingMethod mappingMethod;
     float minValue;
     float maxValue;
+    float range;
+    float logRange;
     unsigned int naninfcol,negcol;
 
     // Current HDR Frame
