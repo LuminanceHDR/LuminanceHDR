@@ -1008,7 +1008,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     else
     {
         tmPanel->show();
-        HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+        HdrViewer * newhdr = new HdrViewer(this, false, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1455,20 +1455,17 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
     tm_status.curr_tm_options = opts;
 
-//    if ( opts->tonemapOriginal )
-//    {
-        if ( tm_status.curr_tm_frame->hasSelection() )
-        {
-            opts->tonemapSelection = true;
-            getCropCoords((HdrViewer *)tm_status.curr_tm_frame,
-                           opts->selection_x_up_left,
-                           opts->selection_y_up_left,
-                           opts->selection_x_bottom_right,
-                           opts->selection_y_bottom_right);
-        }
-        else
-           opts->tonemapSelection = false;
-//    }
+    if ( tm_status.curr_tm_frame->hasSelection() )
+    {
+        opts->tonemapSelection = true;
+        getCropCoords((HdrViewer *)tm_status.curr_tm_frame,
+                      opts->selection_x_up_left,
+                      opts->selection_y_up_left,
+                      opts->selection_x_bottom_right,
+                      opts->selection_y_bottom_right);
+    }
+    else
+        opts->tonemapSelection = false;
 
     HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
     if ( hdr_viewer )
@@ -1481,29 +1478,6 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
                                   Q_ARG(pfs::Frame*, hdr_viewer->getHDRPfsFrame()), Q_ARG(TonemappingOptions*,opts));
 
     }
-        // TODO : can you clean up this thing?!
-        // getHDRPfsFrame() is only available in HdrViewer
-        /* TOFIX
-        TMOThread *thread = TMOThread::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
-        progInd = new TMOProgressIndicator(this);
-
-        connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(addLDRResult(QImage*, quint16*)));
-        connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
-        connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
-        connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
-        connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-        connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
-        connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
-        connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-        connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
-
-        //start thread
-        tmPanel->setEnabled(false);
-        thread->startTonemapping();
-        statusBar()->addWidget(progInd);
-        progInd->show();
-        */
-    //}
 }
 
 /*
@@ -1543,6 +1517,8 @@ void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
 {
+    load_success(frame, QString("TEST"), true);
+
     // TODO : currently, I'm thinking to remove this function
     // Even the LDR viewer needs to be build using the pfs::Frame
     // When the LDR hold the floating-point data, it can create a 16bit/channel version for high quality TIFF save
@@ -1572,7 +1548,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
 
 //    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
 
-    delete frame;
+    //delete frame;
 }
 
 void MainWindow::tonemapFailed(QString error_msg)
