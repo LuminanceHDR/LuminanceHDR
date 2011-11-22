@@ -430,7 +430,7 @@ void MainWindow::fileSaveAll()
                 l_v = dynamic_cast<LdrViewer*>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-                QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
+                QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
                 //emit save_ldr_frame(l_v, outfname, 100);
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
@@ -499,7 +499,7 @@ void MainWindow::fileSaveAs()
 
         QString outfname = QFileDialog::getSaveFileName(this,
                                                         QObject::tr("Save the LDR image as..."),
-                                                        RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg",
+                                                        RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg",
                                                         filetypes);
 
         if ( !outfname.isEmpty() )
@@ -522,7 +522,12 @@ void MainWindow::fileSaveAs()
             int quality = 100; // default value is 100%
             if ( format == "png" || format == "jpg" )
             {
-                ImageQualityDialog savedFileQuality(l_v->getQImage(), format, this);
+                // TOFIX: with this method, I create the same QImage twice: here
+                // and inside the write_ldr_frame() routine.
+                // Is there a way to do it better?
+                QImage image = l_v->getQImage();
+
+                ImageQualityDialog savedFileQuality(&image, format, this);
                 QString winTitle(QObject::tr("Save as..."));
                 winTitle += format.toUpper();
                 savedFileQuality.setWindowTitle( winTitle );
@@ -721,9 +726,9 @@ void MainWindow::dispatchrotate(bool clockwise)
     m_Ui->rotatecw->setEnabled(false);
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getHDRPfsFrame(), clockwise);
+    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getFrame(), clockwise);
     //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-    curr_g_v->updateHDR(rotated);
+    curr_g_v->setFrame(rotated);
     if ( !curr_g_v->needsSaving() )
     {
         curr_g_v->setNeedsSaving(true);
@@ -731,7 +736,7 @@ void MainWindow::dispatchrotate(bool clockwise)
 
         setWindowModified(true);
     }
-    emit updatedHDR(curr_g_v->getHDRPfsFrame());
+    emit updatedHDR(curr_g_v->getFrame());
     QApplication::restoreOverrideCursor();
 
     m_Ui->rotateccw->setEnabled(true);
@@ -744,12 +749,12 @@ void MainWindow::resize_requested()
 
     GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getHDRPfsFrame());
+    ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getFrame());
     if (resizedialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        curr_g_v->updateHDR(resizedialog->getResizedFrame());
+        curr_g_v->setFrame(resizedialog->getResizedFrame());
         if (! curr_g_v->needsSaving())
         {
             curr_g_v->setNeedsSaving(true);
@@ -757,7 +762,7 @@ void MainWindow::resize_requested()
 
             setWindowModified(true);
         }
-        emit updatedHDR(curr_g_v->getHDRPfsFrame());
+        emit updatedHDR(curr_g_v->getFrame());
         QApplication::restoreOverrideCursor();
     }
     delete resizedialog;
@@ -769,12 +774,12 @@ void MainWindow::projectiveTransf_requested()
 
     GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this, curr_g_v->getHDRPfsFrame());
+    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this, curr_g_v->getFrame());
     if (projTranfsDialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        curr_g_v->updateHDR(projTranfsDialog->getTranformedFrame());
+        curr_g_v->setFrame(projTranfsDialog->getTranformedFrame());
         if ( !curr_g_v->needsSaving() )
         {
             curr_g_v->setNeedsSaving(true);
@@ -782,7 +787,7 @@ void MainWindow::projectiveTransf_requested()
 
             setWindowModified(true);
         }
-        emit updatedHDR(curr_g_v->getHDRPfsFrame());
+        emit updatedHDR(curr_g_v->getFrame());
         QApplication::restoreOverrideCursor();
     }
     delete projTranfsDialog;
@@ -1008,7 +1013,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     else
     {
         tmPanel->show();
-        HdrViewer * newhdr = new HdrViewer(this, false, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1016,13 +1021,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(syncViewers(GenericViewer*)));
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
-        newhdr->setSelectionTool(true);
-
-        newhdr->updateHDR(new_hdr_frame);
         newhdr->setFileName(new_fname);
         newhdr->setWindowTitle(new_fname);
-
-        newhdr->fitToWindow(true);
 
         m_tabwidget->addTab(newhdr, new_fname);
 
@@ -1039,7 +1039,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-        emit updatedHDR(newhdr->getHDRPfsFrame());  // signal: I have a new HDR open
+        emit updatedHDR(newhdr->getFrame());  // signal: I have a new HDR open
 
         tmPanel->setEnabled(true);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
@@ -1270,7 +1270,7 @@ void MainWindow::cropToSelection()
     int x_ul, y_ul, x_br, y_br;
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
     disableCrop();
-    pfs::Frame *original_frame = curr_g_v->getHDRPfsFrame();
+    pfs::Frame *original_frame = curr_g_v->getFrame();
     pfs::Frame *cropped_frame = pfs::pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
     emit load_success(cropped_frame, QString(tr("Cropped Image")), true);
@@ -1475,7 +1475,7 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 #endif
         //CALL m_TMWorker->getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
         QMetaObject::invokeMethod(m_TMWorker, "computeTonemap", Qt::QueuedConnection,
-                                  Q_ARG(pfs::Frame*, hdr_viewer->getHDRPfsFrame()), Q_ARG(TonemappingOptions*,opts));
+                                  Q_ARG(pfs::Frame*, hdr_viewer->getFrame()), Q_ARG(TonemappingOptions*,opts));
 
     }
 }
@@ -1515,40 +1515,31 @@ void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
 }
 */
 
-void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions*)
+void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
-    load_success(frame, QString("TEST"), true);
+    num_ldr_generated++;
 
-    // TODO : currently, I'm thinking to remove this function
-    // Even the LDR viewer needs to be build using the pfs::Frame
-    // When the LDR hold the floating-point data, it can create a 16bit/channel version for high quality TIFF save
-    qDebug() << "MainWindow::addProcessedFrame(pfs::Frame *frame)";
-    qDebug() << "This function needs cleaning";
+    GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
+    if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
+    {
+        n->setFrame(frame);
+    } else {
+        curr_num_ldr_open++;
 
-//    HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
-//    HDR->setFreePfsFrameOnExit(true);
-//    HDR->updateHDR(frame);
-//    HDR->setFileName(QString(tr("Processed HDR")));
-//    HDR->setWindowTitle(QString(tr("Processed HDR")));
-//    HDR->setSelectionTool(true);
-//    HDR->normalSize();
-//    HDR->showMaximized();
-//    //        if (actionFit_to_Window->isChecked())
-//    //                HDR->fitToWindow(true);
-//    QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
-//    HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
-//    HdrSubWin->setWidget(HDR);
-//    mdiArea->addSubWindow(HdrSubWin);
-//    //HDR->showMaximized();
+        n = new LdrViewer(frame, tm_options, this, true);
 
-//    if (luminance_options->tmowindow_max)
-//        HDR->showMaximized();
-//    else
-//        HDR->showNormal();
+        connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
+        connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
+        connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
-//    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
+        if (num_ldr_generated == 1)
+            m_tabwidget->addTab(n, tr("Untitled"));
+        else
+            m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+    }
+    m_tabwidget->setCurrentWidget(n);
 
-    //delete frame;
+    previewPanel->setEnabled(true);
 }
 
 void MainWindow::tonemapFailed(QString error_msg)
@@ -1563,7 +1554,7 @@ void MainWindow::tonemapFailed(QString error_msg)
 pfs::Frame * MainWindow::getSelectedFrame(HdrViewer *hdr)
 {
     assert( hdr != NULL );
-    pfs::Frame *frame = hdr->getHDRPfsFrame();
+    pfs::Frame *frame = hdr->getFrame();
     QRect cropRect = hdr->getSelectionRect();
     int x_ul, y_ul, x_br, y_br;
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
@@ -1617,7 +1608,7 @@ void MainWindow::showPreviewPanel(bool b)
             previewPanel->show();
 
             // ask panel to refresh itself
-            previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
+            previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
 
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));

@@ -45,6 +45,7 @@ namespace pfs {
 }
 
 class LuminanceRangeWidget;     // #include "LuminanceRangeWidget.h"
+class HdrViewerMapping;
 
 enum LumMappingMethod {
   MAP_LINEAR,
@@ -61,27 +62,23 @@ class HdrViewer : public GenericViewer
     Q_OBJECT
 private:
     void init_ui();
-    void mapFrameToImage();
-    void getMapping( float r, float g, float b, QRgb& pixel );
 
 public:
-    HdrViewer(QWidget *parent, bool ns = false, bool ncf = false,  unsigned int negcol = 0, unsigned int naninfcol = 0);
+    HdrViewer(pfs::Frame* frame, QWidget *parent = 0, bool ns = false, unsigned int negcol = 0, unsigned int naninfcol = 0);
     virtual ~HdrViewer();
 
-    void updateHDR(pfs::Frame*);
-    pfs::Frame* getHDRPfsFrame();
-
     void saveHdrPreview();
-    void setFlagUpdateImage(bool updateImage);
+
     LuminanceRangeWidget* lumRange();
-    void update_colors(unsigned int negcol, unsigned int naninfcol);
+    void update_colors(int negcol, int naninfcol);
 
     void levelsRequested(bool);     // do nothing but used by LdrViewer (its own implementation)
-    QString getFilenamePostFix();   // do nothing but used by LdrViewer (its own implementation)
+    QString getFileNamePostFix();   // do nothing but used by LdrViewer (its own implementation)
     QString getExifComment();       // do nothing but used by LdrViewer (its own implementation)
-    const QImage* getQImage();       // do nothing but used by LdrViewer (its own implementation)
-    void setFreePfsFrameOnExit(bool b);
-    bool isHDR() { return true; }
+
+    //! \brief virtual function
+    //! \return always return TRUE
+    bool isHDR();
 
 public Q_SLOTS:
     void updateRangeWindow();
@@ -89,31 +86,24 @@ public Q_SLOTS:
     void setLumMappingMethod( int method );
 
 protected Q_SLOTS:
-    void updateImage();
+    virtual void updatePixmap();
 
 protected:
     // Methods
-    void setRangeWindow( float min, float max );
-    const pfs::Array2D *getPrimaryChannel();
+    void setRangeWindow(float min, float max);
 
     // UI
     LuminanceRangeWidget *m_lumRange;
     QComboBox *mappingMethodCB;
 
-    bool flagUpdateImage;
-    bool flagFreeOnExit;
-
-    // Current Visualization mode
-    LumMappingMethod mappingMethod;
-    float minValue;
-    float maxValue;
-    float range;
-    float logRange;
-    unsigned int naninfcol,negcol;
-
-    // Current HDR Frame
-    pfs::Array2D *workArea[3];
-    pfs::Frame *pfsFrame;
+private:
+    //! \attention use a boost::scoped_ptr!
+    HdrViewerMapping* m_mappingImpl;
 };
+
+inline bool HdrViewer::isHDR()
+{
+    return true;
+}
 
 #endif

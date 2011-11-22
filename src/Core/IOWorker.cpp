@@ -54,7 +54,7 @@ IOWorker::~IOWorker()
 
 bool IOWorker::write_hdr_frame(HdrViewer* hdr_viewer, QString filename)
 {
-    pfs::Frame* hdr_frame = hdr_viewer->getHDRPfsFrame();
+    pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
     bool status = write_hdr_frame(hdr_frame, filename);
 
@@ -118,8 +118,6 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
 void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
 {
     emit IO_init();
-
-    const QImage* image = ldr_input->getQImage();
     
     QFileInfo qfi(filename);
     QString format = qfi.suffix();
@@ -128,9 +126,11 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        const quint16 *pixmap = ldr_input->getPixmap();
-        int width = image->width();
-        int height = image->height();
+        // TOFIX
+        const quint16 *pixmap = 0; //ldr_input->getPixmap();
+        // TOFIX
+        int width = 1000; //ldr_input->width();
+        int height = 1000; //ldr_input->height();
         try
         {
             TiffWriter tiffwriter(encodedName, pixmap, width, height);
@@ -143,7 +143,8 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
     }
     else
     {
-        if ( image->save(filename, format.toLocal8Bit(), quality) )
+        QImage image = ldr_input->getQImage();
+        if ( image.save(filename, format.toLocal8Bit(), quality) )
         {
             emit write_ldr_success(ldr_input, filename);
         }

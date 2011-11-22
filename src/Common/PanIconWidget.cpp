@@ -32,7 +32,8 @@
 
 #include "PanIconWidget.h"
 
-PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(parent,flags) {
+PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(parent,flags)
+{
 	this->setAttribute(Qt::WA_DeleteOnClose);
 // 	this->setFrameStyle(QFrame::Box|QFrame::Plain);
 // 	setLineWidth(1);
@@ -43,8 +44,9 @@ PanIconWidget::PanIconWidget(QWidget *parent, Qt::WindowFlags flags) : QFrame(pa
 	setMouseTracking(true); //necessary?
 }
 
-void PanIconWidget::setImage(const QImage *fullsize) {
-        m_image = new QImage(fullsize->scaled(180,120,Qt::KeepAspectRatio));
+void PanIconWidget::setImage(const QImage *fullsize)
+{
+        m_image           = new QImage(fullsize->scaled(180,120,Qt::KeepAspectRatio));
 	m_width           = m_image->width();
 	m_height          = m_image->height();
         m_orgWidth        = fullsize->width();

@@ -48,14 +48,14 @@ namespace pfs {
 class HdrViewer;
 class LdrViewer;
 
-int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
 class IOWorker : public QObject
 {
     Q_OBJECT
 
 private:
-    friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+    friend int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
     void get_frame(QString fname);
     void emitNextStep(int iteration);

@@ -26,6 +26,7 @@
  */
 
 #include <QScrollBar>
+#include <QDebug>
 //#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"
@@ -33,18 +34,17 @@
 #include "Common/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Libpfs/frame.h"
 
 // define the number of pixels to count as border of the image, because of the shadow
 #define BORDER_SIZE 30
 
-GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
-    QWidget(parent), NeedsSaving(ns),
-    // noCloseFlag(ncf),
-    mImage(NULL),
-    mViewerMode(NORMAL_SIZE)
+GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
+    QWidget(parent),
+    mNeedsSaving(ns),
+    mViewerMode(FIT_WINDOW),
+    mFrame(frame)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
-
     mVBL = new QVBoxLayout(this);
     mVBL->setSpacing(0);
     mVBL->setMargin(0);
@@ -81,12 +81,13 @@ GenericViewer::GenericViewer(QWidget *parent, bool ns, bool ncf):
     mView->show();
 
     mPixmap = new IGraphicsPixmapItem();
+    mScene->addItem(mPixmap);
     connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 }
 
 GenericViewer::~GenericViewer()
 {
-    if ( mImage != NULL ) delete mImage;
+    delete mFrame;
 }
 
 void GenericViewer::fitToWindow(bool /* checked */)
@@ -100,21 +101,27 @@ void GenericViewer::fitToWindow(bool /* checked */)
     const int w = mView->viewport()->size().width() - 2*BORDER_SIZE;
     const int h = mView->viewport()->size().height() - 2*BORDER_SIZE;
 
-    qreal w_ratio = qreal(w)/(mCols);
-    qreal h_ratio = qreal(h)/(mRows);
+    qreal w_ratio = qreal(w)/getWidth();
+    qreal h_ratio = qreal(h)/getHeight();
 
     qreal sf = qMin(w_ratio, h_ratio)/getScaleFactor();
 
-    mView->scale(sf,sf);
+    // update only if the change is below the 0.005%
+    if ( qAbs(sf - 1.0) > 0.005 )
+    {
+#ifdef QT_DEBUG
+        qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
+#endif
+        mView->scale(sf,sf);
 
-    emit changed(this);
+        emit changed(this);
+    }
 }
 
 bool GenericViewer::isFittedToWindow()
 {
     return ((mViewerMode == FIT_WINDOW) ? true : false);
 }
-
 
 void GenericViewer::fillToWindow()
 {
@@ -127,14 +134,21 @@ void GenericViewer::fillToWindow()
     const int w = mView->viewport()->size().width();
     const int h = mView->viewport()->size().height();
 
-    qreal w_ratio = qreal(w)/(mCols);
-    qreal h_ratio = qreal(h)/(mRows);
+    qreal w_ratio = qreal(w)/getWidth();
+    qreal h_ratio = qreal(h)/getHeight();
 
     qreal sf = qMax(w_ratio, h_ratio)/getScaleFactor();
 
-    mView->scale(sf,sf);
+    // update only if the change is below the 0.005%
+    if ( qAbs(sf - 1.0) > 0.005 )
+    {
+#ifdef QT_DEBUG
+        qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
+#endif
+        mView->scale(sf,sf);
 
-    emit changed(this);
+        emit changed(this);
+    }
 }
 
 bool GenericViewer::isFilledToWindow()
@@ -145,7 +159,7 @@ bool GenericViewer::isFilledToWindow()
 void GenericViewer::normalSize()
 {
     // DO NOT de-comment: this line is not an optimization, it's a nice way to stop everything working correctly!
-    //if ( mViewerMode == NORMAL_SIZE ) return;
+    if ( mViewerMode == NORMAL_SIZE ) return;
 
     mScene->setSceneRect(mPixmap->boundingRect());
     mViewerMode = NORMAL_SIZE;
@@ -203,6 +217,10 @@ void GenericViewer::zoomOut()
 
 void GenericViewer::updateView()
 {
+#ifdef QT_DEBUG
+    qDebug() << "void GenericViewer::updateView()";
+#endif
+
     switch (mViewerMode)
     {
     case NORMAL_SIZE:
@@ -224,15 +242,15 @@ void GenericViewer::zoomToFactor(float /*factor*/)
     emit changed(this);
 }
 
-const QRect GenericViewer::getSelectionRect(void)
+QRect GenericViewer::getSelectionRect(void)
 {
     return mPixmap->getSelectionRect();
 }
 
 void GenericViewer::setSelectionTool(bool toggled)
 {
-    if (toggled) mPixmap->enable();
-    else mPixmap->disable();
+    if (toggled) mPixmap->enableSelectionTool();
+    else mPixmap->disableSelectionTool();
 }
 
 void GenericViewer::removeSelection(void)
@@ -247,28 +265,32 @@ bool GenericViewer::hasSelection(void)
 
 bool GenericViewer::needsSaving(void)
 {
-    return NeedsSaving;
+    return mNeedsSaving;
 }
 
 void GenericViewer::setNeedsSaving(bool s)
 {
-    NeedsSaving = s;
+    mNeedsSaving = s;
 }
 
-const QString GenericViewer::getFileName(void)
+QString GenericViewer::getFileName()
 {
-    return filename;
+    return mFileName;
 }
 
-void GenericViewer::setFileName(const QString fn)
+void GenericViewer::setFileName(const QString& fn)
 {
-    filename = fn;
+    mFileName = fn;
 }
 
 void GenericViewer::slotCornerButtonPressed()
 {
     mPanIconWidget = new PanIconWidget(this);
-    mPanIconWidget->setImage(mImage);
+
+    // is there a way to avoid this call?
+    // how expensive is to call this function?
+    QImage image = this->getQImage();
+    mPanIconWidget->setImage(&image);
 
     float zf = this->getScaleFactor();
     float leftviewpos = (float)(mView->horizontalScrollBar()->value());
@@ -302,26 +324,6 @@ void GenericViewer::slotPanIconHidden()
     mCornerButton->blockSignals(false);
 }
 
-int  GenericViewer::getHorizScrollBarValue()
-{
-    return mView->horizontalScrollBar()->value();
-}
-
-int GenericViewer::getVertScrollBarValue()
-{
-    return mView->verticalScrollBar()->value();
-}
-
-void GenericViewer::setHorizScrollBarValue(int value)
-{
-    mView->horizontalScrollBar()->setValue(value);
-}
-
-void GenericViewer::setVertScrollBarValue(int value)
-{
-    mView->verticalScrollBar()->setValue(value);
-}
-
 void GenericViewer::scrollBarChanged(int /*value*/)
 {
     emit changed(this);
@@ -332,12 +334,21 @@ void GenericViewer::syncViewer(GenericViewer *src)
     if (src == NULL) return;
     if (src == this) return;
 
-    if ( src->isFittedToWindow() ) this->fitToWindow();
-    else if ( src->isNormalSize() ) this->normalSize();
-    else if ( src->isFilledToWindow() ) this->fillToWindow();
+    switch ( src->mViewerMode )
+    {
+    case FIT_WINDOW:
+        fitToWindow();
+        break;
+    case FILL_WINDOW:
+        fillToWindow();
+        break;
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    }
 
-    this->setHorizScrollBarValue( src->getHorizScrollBarValue() );
-    this->setVertScrollBarValue( src->getVertScrollBarValue() );
+    mView->horizontalScrollBar()->setValue( src->mView->horizontalScrollBar()->value() );
+    mView->verticalScrollBar()->setValue( src->mView->verticalScrollBar()->value() );
 }
 
 float GenericViewer::getScaleFactor()
@@ -345,36 +356,31 @@ float GenericViewer::getScaleFactor()
     return mView->transform().m11();
 }
 
-//void GenericViewer::route_changed()
-//{
-//    emit changed(this);
-//}
+QImage GenericViewer::getQImage() const
+{
+    return mPixmap->pixmap().toImage();
+}
 
-//void GenericViewer::closeEvent( QCloseEvent * event )
-//{
-//    if (NeedsSaving)
-//    {
-//        int ret = UMessageBox::warning(tr("Unsaved changes..."),
-//                                       tr("This image has unsaved changes.<br>Are you sure you want to close it?"),
-//                                       this);
+int GenericViewer::getWidth()
+{
+    return mFrame->getWidth();
+}
 
-//        if ( ret == QMessageBox::Yes )
-//        {
-//            event->accept();
-//        }
-//        else
-//        {
-//            event->ignore();
-//        }
-//    }
-//    else if (noCloseFlag)
-//    {
-//        emit closeRequested(false);
-//        event->ignore();
-//    }
-//    else
-//    {
-//        event->accept();
-//    }
-//}
+int GenericViewer::getHeight()
+{
+    return mFrame->getHeight();
+}
 
+void GenericViewer::setFrame(pfs::Frame *new_frame)
+{
+    delete mFrame;
+    mFrame = new_frame;
+
+    // call virtual protected function
+    updatePixmap();
+}
+
+pfs::Frame* GenericViewer::getFrame() const
+{
+    return mFrame;
+}

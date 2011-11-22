@@ -27,10 +27,8 @@
 #include <QGraphicsView>
 
 #include "Viewers/IGraphicsPixmapItem.h"
+#include "Viewers/ISelectionBox.h"
 
-//
-//----------------------------------------------------------------------------
-//
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
     QGraphicsPixmapItem(parent), mIsSelectionEnabled(true), mSelectionBox(NULL)
 {

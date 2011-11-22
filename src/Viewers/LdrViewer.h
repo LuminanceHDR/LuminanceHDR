@@ -39,31 +39,41 @@ class LdrViewer: public GenericViewer
 {
     Q_OBJECT
 public:
-    LdrViewer(QImage *i, quint16* p, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts);
+    LdrViewer(pfs::Frame* frame, const TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0);
     virtual ~LdrViewer();
     void levelsRequested(bool);
-    QString getFilenamePostFix();
+    QString getFileNamePostFix();
     QString getExifComment();
-    const QImage* getQImage();
-    bool isHDR() { return false; }
-    void setImage(QImage *i);
-    const quint16 * getPixmap();
+
+    //! \brief virtual function
+    //! \return always return FALSE
+    bool isHDR();
+    //void setImage(QImage *i);
+    //const quint16 * getPixmap();
 
 signals:
     void levels_closed();
 
-private slots:
+protected Q_SLOTS:
+    virtual void updatePixmap();
+
+private Q_SLOTS:
     void updatePreview(unsigned char *);
     void restore_original();
     void finalize_levels();
 
 private:
     void parseOptions(const TonemappingOptions *opts);
-    QString caption,postfix,exif_comment;
+    QString caption; // ,postfix,exif_comment;
     QLabel *informativeLabel;
     QImage *previewimage;
     QImage *temp_image;
-    quint16* m_pixmap;
+
+    const TonemappingOptions* mTonemappingOptions;
 };
 
+inline bool LdrViewer::isHDR()
+{
+    return false;
+}
 #endif
