@@ -32,8 +32,14 @@
 
 #include <QImage>
 
-#include "Libpfs/colorspace.h"
+// forward declaration
+namespace pfs {
+    class Frame;
+}
 
-QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe, pfs::ColorSpace display_colorspace = pfs::CS_RGB );
+//! \brief Build from a pfs::Frame a QImage of the same size
+//! \param[in] in_frame is a pointer to pfs::Frame*
+//! \return Pointer to QImage containing an 8 bit/channel representation of the input frame
+QImage* fromLDRPFStoQImage(pfs::Frame* in_frame);
 
 #endif
