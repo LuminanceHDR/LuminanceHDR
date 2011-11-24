@@ -38,8 +38,6 @@ namespace pfs
 {
   pfs::Frame* applyGammaOnFrame(pfs::Frame* frame, const float gamma)
   {
-    pfs::DOMIO pfsio;
-    
     float multiplier = 1.0f;
     
     const char *lum_type = frame->getTags()->getString("LUMINANCE");
@@ -63,22 +61,22 @@ namespace pfs
       pfs::Array2D* Yr = Y->getChannelData();
       pfs::Array2D* Zr = Z->getChannelData();
       
-      pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
-                               pfs::CS_RGB, Xr, Yr, Zr);
+      //pfs::transformColorSpace(pfs::CS_XYZ, Xr, Yr, Zr,
+      //                         pfs::CS_RGB, Xr, Yr, Zr);
       // At this point (X,Y,Z) = (R,G,B)
       
-      applyGamma(Xr, 1/gamma, multiplier);
-      applyGamma(Yr, 1/gamma, multiplier);
-      applyGamma(Zr, 1/gamma, multiplier);
+      applyGamma(Xr, 1.0f/gamma, multiplier);
+      applyGamma(Yr, 1.0f/gamma, multiplier);
+      applyGamma(Zr, 1.0f/gamma, multiplier);
       
-      pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
-                               pfs::CS_XYZ, Xr, Yr, Zr);
+      //pfs::transformColorSpace(pfs::CS_RGB, Xr, Yr, Zr,
+      //                         pfs::CS_XYZ, Xr, Yr, Zr);
       // At this point (X,Y,Z) = (X,Y,Z)
     }
     else if ( (Y = frame->getChannel( "Y" )) != NULL )
     {
       // Luminance only
-      applyGamma(Y->getChannelData(), 1/gamma, multiplier);
+      applyGamma(Y->getChannelData(), 1.0f/gamma, multiplier);
     } 
     //TODO
     //else
