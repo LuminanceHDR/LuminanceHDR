@@ -27,13 +27,18 @@
 #include "Fileformat/pfstiff.h"
 #include "Exif/ExifOperations.h"
 #include "Threads/TMOThread.h"
-#include "Libpfs/pfs.h"
+#include "Libpfs/frame.h"
+#include "Filter/pfscut.h"
 #include "Core/IOWorker.h"
 #include "Common/LuminanceOptions.h"
+#include "Core/IOWorker.h"
+#include "Fileformat/pfsout16bitspixmap.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #include <QFileInfo>
 #include <QByteArray>
 #include <QDebug>
+#include <QImage>
 
 BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder):
         m_thread_id(thread_id),
@@ -41,9 +46,6 @@ BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingO
         m_tm_options(tm_options),
         m_output_folder(output_folder)
 {
-    m_working_frame = NULL;
-    m_ldr_image     = NULL;
-
     m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
 
     m_output_file_name_base  = m_output_folder + "/" + QFileInfo(m_file_name).completeBaseName();
@@ -56,13 +58,15 @@ BatchTMJob::~BatchTMJob()
 
 void BatchTMJob::run()
 {
+    ProgressHelper prog_helper;
     IOWorker io_worker;
 
     emit add_log_message(tr("[T%1] Start processing %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
 
-    m_working_frame = io_worker.read_hdr_frame(m_file_name);
+    // reference frame
+    pfs::Frame* reference_frame = io_worker.read_hdr_frame(m_file_name);
 
-    if ( !m_working_frame )
+    if ( !reference_frame )
     {
         // update message box
         emit add_log_message(tr("[T%1] Successfully load %2").arg(m_thread_id).arg(QFileInfo(m_file_name).completeBaseName()));
@@ -75,83 +79,70 @@ void BatchTMJob::run()
         {
             opts = m_tm_options->at(idx);
 
+            pfs::Frame* temporary_frame = pfs::pfscopy(reference_frame);
+
             opts->tonemapSelection = false; // just to be sure!
-            opts->origxsize = m_working_frame->getWidth();
+            opts->origxsize = temporary_frame->getWidth();
             //opts->xsize = 400; // DEBUG
             //opts->xsize = opts->origxsize;
 
-            /* TOFIX
-            TMOThread * tmo_thread = TMOThread::getTMOThread(opts->tmoperator, m_working_frame, opts);
+            TonemapOperator* tm_operator = TonemapOperator::getTonemapOperator(opts->tmoperator);
 
-            // Thread deletes itself when it has done with its job
-            connect(tmo_thread, SIGNAL(finished()),
-                    tmo_thread, SLOT(deleteLater()));
-            // there must be a direct connection, otherwise the wait() returns BEFORE the execution of the SLOT!
-            connect(tmo_thread, SIGNAL(imageComputed(QImage*, quint16*, const TonemappingOptions*)),
-                    this, SLOT(tm_completed(QImage*, quint16*, const TonemappingOptions*)), Qt::DirectConnection);
+            tm_operator->tonemapFrame(temporary_frame, opts, prog_helper);
 
-            //start thread
-            tmo_thread->set_batch_mode();
-            tmo_thread->start();
-            tmo_thread->wait();
-            */
+            // ldr and pixmap are available
+            TMOptionsOperations operations(opts);
 
-            if ( m_ldr_image != NULL && m_pixmap != NULL)
+            QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
+            QFileInfo qfi(output_file_name);
+            QString absoluteFileName = qfi.absoluteFilePath();
+            QByteArray encodedName = QFile::encodeName(absoluteFileName);
+
+            if (m_ldr_output_format == "TIFF")
             {
-                // ldr and pixmap are available
-                TMOptionsOperations operations(opts);
-
-                QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
-                QFileInfo qfi(output_file_name);
-                QString absoluteFileName = qfi.absoluteFilePath();
-                QByteArray encodedName = QFile::encodeName(absoluteFileName);
-
-                if (m_ldr_output_format == "TIFF")
+                int width = temporary_frame->getWidth();
+                int height = temporary_frame->getHeight();
+                quint16* pixmap = fromLDRPFSto16bitsPixmap(temporary_frame);
+                try
                 {
+                    TiffWriter tiffwriter(encodedName, pixmap, width, height);
+                    tiffwriter.write16bitTiff();
 
-                    int width = m_ldr_image->width();
-                    int height = m_ldr_image->height();
-                    try
-                    {
-                        TiffWriter tiffwriter(encodedName, m_pixmap, width, height);
-                        tiffwriter.write16bitTiff();
-                        emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                    }
-                    catch(...)
-                    {
-                        emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                    }
-                    // reset for the next TM
-                    delete [] m_pixmap;
-                    m_pixmap = NULL;
+                    ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
+                    emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                }
+                catch(...)
+                {
+                    emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
+                }
+                // reset for the next TM
+                delete [] pixmap;
+            }
+            else
+            {
+#ifdef QT_DEBUG
+                qDebug() << "Batch saved quality: " << opts->quality;
+#endif
+                QImage* qimage = fromLDRPFStoQImage(temporary_frame);
+                if (qimage->save(output_file_name, m_ldr_output_format.toLocal8Bit(), opts->quality))
+                {
+                    // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString)[.constData()] (constData() is implicit if you omit it)
+                    // trick to cope with local 8-bit encoding determined by the user's locale.
+                    ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
+                    emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
                 }
                 else
                 {
-                    qDebug() << "Batch saved quality: " << opts->quality;
-                    if (!m_ldr_image->save(output_file_name, m_ldr_output_format.toLocal8Bit(), opts->quality))
-                    {
-                        emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                    }
-                    else
-                    {
-                        // ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString)[.constData()] (constData() is implicit if you omit it)
-                        // trick to cope with local 8-bit encoding determined by the user's locale.
-                        ExifOperations::writeExifData(QFile::encodeName(output_file_name).constData(), operations.getExifComment().toStdString());
-
-                        emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
-                    }
-
-                    // reset for the next TM
-                    delete m_ldr_image;
-                    delete [] m_pixmap;
-                    m_ldr_image = NULL;
-                    m_pixmap = NULL;
+                    emit add_log_message( tr("[T%1] ERROR: Cannot save to file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
                 }
+                delete qimage;
             }
+
             // update progress bar
+            delete temporary_frame;
             emit increment_progress_bar(1);
         }
-        delete m_working_frame;
+        delete reference_frame;
     }
     else
     {
@@ -164,15 +155,4 @@ void BatchTMJob::run()
     }
 
     emit done(m_thread_id);
-}
-
-void BatchTMJob::tm_failed()
-{
-    m_ldr_image = NULL;
-}
-
-void BatchTMJob::tm_completed(QImage* newimage, quint16* newpixmap, const TonemappingOptions* /*opts*/)
-{
-    m_ldr_image = newimage;
-    m_pixmap = newpixmap;
 }

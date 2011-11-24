@@ -29,45 +29,31 @@
 #define __BATCH_TM_JOB__
 
 #include <QThread>
-#include <QMutex>
-#include <QImage>
 
 // Forward declaration
-namespace pfs {
-    class Frame;
-}
-
 class TonemappingOptions;
 
-class BatchTMJob : public QThread {
-  Q_OBJECT
+class BatchTMJob : public QThread
+{
+    Q_OBJECT
 public:
     BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder);
     virtual ~BatchTMJob();
 signals:
     void done(int thread_id);
-  void add_log_message(QString);
-  //void update_progress_bar();
-  void increment_progress_bar(int);
+    void add_log_message(QString);
+    //void update_progress_bar();
+    void increment_progress_bar(int);
 protected:
     void run();
-private slots:
-  void tm_failed();
-  void tm_completed(QImage* newimage, quint16* newpixmap, const TonemappingOptions* opts);
 
 private:
-  int             m_thread_id;
-  QString         m_file_name;
-  const QList<TonemappingOptions*>* m_tm_options;
-  QString         m_output_folder;
-  QString         m_output_file_name_base;
-  QString         m_ldr_output_format;
-  
-  //LoadHdrThread * m_load_thread;
-  pfs::Frame    * m_working_frame;
-  //TMOThread     * m_tmo_thread;
-  QImage        * m_ldr_image;
-  const quint16	* m_pixmap;
+    int             m_thread_id;
+    QString         m_file_name;
+    const QList<TonemappingOptions*>* m_tm_options;
+    QString         m_output_folder;
+    QString         m_output_file_name_base;
+    QString         m_ldr_output_format;
 };
 
 #endif // __BATCH_TM_JOB__
