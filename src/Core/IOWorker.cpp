@@ -40,6 +40,7 @@
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LdrViewer.h"
 #include "Common/LuminanceOptions.h"
+#include "Fileformat/pfsout16bitspixmap.h"
 
 IOWorker::IOWorker(QObject* parent):
     QObject(parent)
@@ -126,18 +127,22 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        // TOFIX
-        const quint16 *pixmap = 0; //ldr_input->getPixmap();
-        // TOFIX
-        int width = 1000; //ldr_input->width();
-        int height = 1000; //ldr_input->height();
+        quint16 *pixmap = fromLDRPFSto16bitsPixmap(ldr_input->getFrame());
+        int width = ldr_input->getWidth();
+        int height = ldr_input->getHeight();
         try
         {
             TiffWriter tiffwriter(encodedName, pixmap, width, height);
+            connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
+            connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             tiffwriter.write16bitTiff();
+
+            delete [] pixmap;
+            emit write_ldr_success(ldr_input, filename);
         }
         catch(...)
         {
+            delete [] pixmap;
             emit write_ldr_failed();
         }
     }

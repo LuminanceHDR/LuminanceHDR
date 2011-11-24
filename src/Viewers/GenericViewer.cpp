@@ -36,8 +36,12 @@
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
 
+
+namespace
+{
 // define the number of pixels to count as border of the image, because of the shadow
-#define BORDER_SIZE 30
+static const int BORDER_SIZE = 30;
+}
 
 GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     QWidget(parent),
@@ -110,7 +114,7 @@ void GenericViewer::fitToWindow(bool /* checked */)
     if ( qAbs(sf - 1.0) > 0.005 )
     {
 #ifdef QT_DEBUG
-        qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
+        //qDebug() << "void GenericViewer::fitToWindow().sf = " << sf;
 #endif
         mView->scale(sf,sf);
 
@@ -143,7 +147,7 @@ void GenericViewer::fillToWindow()
     if ( qAbs(sf - 1.0) > 0.005 )
     {
 #ifdef QT_DEBUG
-        qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
+        //qDebug() << "void GenericViewer::fillToWindow().sf = " << sf;
 #endif
         mView->scale(sf,sf);
 

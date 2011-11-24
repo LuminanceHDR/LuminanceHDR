@@ -26,56 +26,53 @@
 
 #include <assert.h>
 #include <iostream>
+#include <QSharedPointer>
 
-#include "pfsout16bitspixmap.h"
+#include "Libpfs/frame.h"
+#include "Fileformat/pfsout16bitspixmap.h"
 #include "Common/msec_timer.h"
 
-inline quint16 clamp2quint16( const float v, const float minV, const float maxV )
+namespace
 {
-    if ( v < minV ) return (quint16)minV;
-    if ( v > maxV ) return (quint16)maxV;
-    return (quint16)v;
+inline quint16 clamp_to_16bits(const float value)
+{
+    if (value < 0.0f) return 0;
+    if (value > 65535.f) return 65535;
+    return (quint16)(value*65535.f + 0.5f);
 }
 
-quint16* fromLDRPFSto16bitsPixmap( pfs::Frame* inpfsframe)
+}
+
+quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe)
 {
 #ifdef TIMER_PROFILING
     msec_timer __timer;
     __timer.start();
 #endif
 
+#ifdef QT_DEBUG
     assert( inpfsframe != NULL );
+#endif
 
     pfs::Channel *Xc, *Yc, *Zc;
     inpfsframe->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    pfs::Array2D  *X = Xc->getChannelData();
-    pfs::Array2D  *Y = Yc->getChannelData();
-    pfs::Array2D  *Z = Zc->getChannelData();
-
-    const int width   = Xc->getWidth();
-    const int height  = Xc->getHeight();
+    const int width   = inpfsframe->getWidth();
+    const int height  = inpfsframe->getHeight();
 
     quint16* temp_pixmap = new quint16[3*width*height];
 
-    const float* p_R = X->getRawData();
-    const float* p_G = Y->getRawData();
-    const float* p_B = Z->getRawData();
-
-    quint16 red, green, blue;
+    const float* p_R = Xc->getChannelData()->getRawData();
+    const float* p_G = Yc->getChannelData()->getRawData();
+    const float* p_B = Zc->getChannelData()->getRawData();
 	
-	int d = 0;
-    for (int idx = 0; idx < 3*height*width; idx += 3)
+#pragma omp parallel for
+    for (int idx = 0; idx < height*width; ++idx)
     {
-        red = clamp2quint16(p_R[d]*65535.f, 0.0f, 65535.f);
-        green = clamp2quint16(p_G[d]*65535.f, 0.0f, 65535.f);
-        blue = clamp2quint16(p_B[d]*65535.f, 0.0f, 65535.f);
-
-        temp_pixmap[idx] = red;
-        temp_pixmap[idx + 1] = green;
-        temp_pixmap[idx + 2] = blue;
-		d++;
+        temp_pixmap[3*idx] = clamp_to_16bits(p_R[idx]);;
+        temp_pixmap[3*idx + 1] = clamp_to_16bits(p_G[idx]);
+        temp_pixmap[3*idx + 2] = clamp_to_16bits(p_B[idx]);
     }
 
 #ifdef TIMER_PROFILING
