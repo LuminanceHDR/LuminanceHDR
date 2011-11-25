@@ -110,6 +110,10 @@ MainWindow::~MainWindow()
         // Last MainWindow is dead...
         luminance_options.setValue("MainWindowState", saveState());
         luminance_options.setValue("MainWindowGeometry", saveGeometry());
+
+        //wait for the working thread to finish
+        m_IOThread->wait(500);
+        m_TMThread->wait(500);
     }
 
     clearRecentFileActions();
