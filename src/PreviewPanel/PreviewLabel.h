@@ -27,7 +27,6 @@
 #include <QLabel>
 #include <QMouseEvent>
 #include <QImage>
-#include <QSharedPointer>
 
 #include "Core/TonemappingOptions.h"
 

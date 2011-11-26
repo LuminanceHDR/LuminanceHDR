@@ -62,17 +62,25 @@ public:
     void operator()(PreviewLabel* to_update)
     {
 #ifdef QT_DEBUG
-        //qDebug() << "Thread " << QThread::currentThread() << "running...";
+        //qDebug() << QThread::currentThread() << "running...";
 #endif
-
-        ProgressHelper fake_progress_helper;
-
-        // Copy Reference Frame
-        QScopedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
 
         // retrieve TM parameters
         TonemappingOptions* tm_options = to_update->getTonemappingOptions();
         resetTonemappingOptions(tm_options);
+
+        if ( m_ReferenceFrame.isNull() )
+        {
+#ifdef QT_DEBUG
+            qDebug() << "operator()() for TM" << static_cast<int>(tm_options->tmoperator) << " received a NULL pointer";
+            return;
+#endif
+        }
+
+        ProgressHelper fake_progress_helper;
+
+        // Copy Reference Frame
+        QSharedPointer<pfs::Frame> temp_frame( pfs::pfscopy(m_ReferenceFrame.data()) );
 
         // Tone Mapping
         QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(tm_options->tmoperator));
@@ -89,7 +97,7 @@ public:
                                   Q_ARG(QSharedPointer<QImage>, qimage));
 
 #ifdef QT_DEBUG
-        //qDebug() << "...thread " << QThread::currentThread() << "done!";
+        //qDebug() << QThread::currentThread() << "done!";
 #endif
     }
 
@@ -163,6 +171,8 @@ PreviewPanel::~PreviewPanel()
 
 void PreviewPanel::updatePreviews(pfs::Frame* frame)
 {
+    if ( frame == NULL ) return;
+
     original_width_frame = frame->getWidth();
     // 1. make a resized copy
     QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, PREVIEW_WIDTH));

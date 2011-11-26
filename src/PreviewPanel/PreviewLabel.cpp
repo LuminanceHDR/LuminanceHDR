@@ -23,12 +23,6 @@
 
 #include "PreviewLabel.h"
 
-
-namespace // anoymous namespace
-{
-
-}
-
 PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
     QLabel(parent),
     m_TMOptions(new TonemappingOptions)
