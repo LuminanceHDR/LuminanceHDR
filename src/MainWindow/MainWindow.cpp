@@ -757,7 +757,7 @@ void MainWindow::resize_requested()
     if (resizedialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
+        //setFrame() method takes care of deleting its previous pfs::Frame* buffer.
         curr_g_v->setFrame(resizedialog->getResizedFrame());
         if (! curr_g_v->needsSaving())
         {
