@@ -33,6 +33,7 @@
 
 #include <QImage>
 #include <QComboBox>
+#include <QScopedPointer>
 
 #include "GenericViewer.h"
 
@@ -97,8 +98,10 @@ protected:
     QComboBox *mappingMethodCB;
 
 private:
-    //! \attention use a boost::scoped_ptr!
-    HdrViewerMapping* m_mappingImpl;
+    void refreshPixmap();
+
+    //! \brief Smart pointer to PIMPL class
+    QScopedPointer<HdrViewerMapping> m_mappingImpl;
 };
 
 inline bool HdrViewer::isHDR()

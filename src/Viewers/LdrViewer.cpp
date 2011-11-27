@@ -27,6 +27,7 @@
 
 #include <iostream>
 #include <QDebug>
+#include <QScopedPointer>
 
 #include "Common/config.h"
 #include "Common/GammaAndLevels.h"
@@ -36,63 +37,7 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
 #include "Common/msec_timer.h"
-
-namespace
-{
-
-//! \brief clamp the input between minV and maxV and round it to the nearest integer
-inline int clamp_and_round_2int(const float v, const float minV, const float maxV)
-{
-    if ( v < minV ) return (int)minV;
-    if ( v > maxV ) return (int)maxV;
-    return (int)(v + 0.5f); // round
-}
-
-//! \brief computes a QImage, RGB 8 bit/channel from the input frame
-//! \param[in] in_frame pointer to pfs::Frame
-//! \return QImage
-QImage mapFrameToImage(pfs::Frame* in_frame)
-{
-#ifdef QT_DEBUG
-    msec_timer stopWatch;
-    stopWatch.start();
-#endif
-
-    pfs::Channel *Xc, *Yc, *Zc;
-    in_frame->getXYZChannels( Xc, Yc, Zc );
-    assert( Xc != NULL && Yc != NULL && Zc != NULL );
-
-    const int width   = in_frame->getWidth();
-    const int height  = in_frame->getHeight();
-
-    QImage temp_qimage(width, height, QImage::Format_ARGB32);
-
-    const float* p_R = Xc->getChannelData()->getRawData();
-    const float* p_G = Yc->getChannelData()->getRawData();
-    const float* p_B = Zc->getChannelData()->getRawData();
-
-    int red, green, blue;
-    QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage.bits());
-
-#pragma omp parallel for private(red, green, blue) shared(pixels)
-    for (int idx = 0; idx < height*width; ++idx)
-    {
-        red = clamp_and_round_2int(p_R[idx]*255.f, 0.0f, 255.f);
-        green = clamp_and_round_2int(p_G[idx]*255.f, 0.0f, 255.f);
-        blue = clamp_and_round_2int(p_B[idx]*255.f, 0.0f, 255.f);
-
-        pixels[idx] = qRgb(red, green, blue);
-    }
-
-#ifdef QT_DEBUG
-    stopWatch.stop_and_update();
-    qDebug() << "LdrViewer::mapFrameToImage() = " << stopWatch.get_time() << " msec";
-#endif
-
-    return temp_qimage;
-}
-
-} // anonymous namespace
+#include "Fileformat/pfsoutldrimage.h"
 
 LdrViewer::LdrViewer(pfs::Frame* frame, const TonemappingOptions* opts, QWidget *parent, bool ns):
     GenericViewer(frame, parent, ns),
@@ -110,7 +55,9 @@ LdrViewer::LdrViewer(pfs::Frame* frame, const TonemappingOptions* opts, QWidget 
     setWindowTitle(caption);
     setToolTip(caption);
 
-    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
+    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+
+    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
 
     updateView();
 }
@@ -234,5 +181,7 @@ void LdrViewer::updatePixmap()
     qDebug() << "void LdrViewer::updatePixmap()";
 #endif
 
-    mPixmap->setPixmap(QPixmap::fromImage(mapFrameToImage(getFrame())));
+    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+
+    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
 }

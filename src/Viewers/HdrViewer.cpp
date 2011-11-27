@@ -293,10 +293,10 @@ void HdrViewer::init_ui()
     mToolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
 }
 
-void HdrViewer::updatePixmap()
+void HdrViewer::refreshPixmap()
 {
 #ifdef QT_DEBUG
-    qDebug() << "void HdrViewer::updatePixmap()";
+    qDebug() << "void HdrViewer::refreshPixmap()";
 #endif
 
     setCursor( Qt::WaitCursor );
@@ -304,11 +304,21 @@ void HdrViewer::updatePixmap()
     mPixmap->setPixmap(QPixmap::fromImage(m_mappingImpl->mapFrameToImage(getFrame())));
 
     unsetCursor();
+}
+
+void HdrViewer::updatePixmap()
+{
+#ifdef QT_DEBUG
+    qDebug() << "void HdrViewer::updatePixmap()";
+#endif
 
     m_lumRange->blockSignals(true);
+
+    refreshPixmap();
+
     // I need to set the histogram again during the setFrame function
-    //m_lumRange->setHistogramImage(getPrimaryChannel(getFrame()));
-    //m_lumRange->fitToDynamicRange();
+    m_lumRange->setHistogramImage(getPrimaryChannel(getFrame()));
+    m_lumRange->fitToDynamicRange();
     m_lumRange->blockSignals(false);
 }
 
@@ -327,7 +337,7 @@ void HdrViewer::setRangeWindow( float min, float max )
 {
     m_mappingImpl->setMinMax(min, max);
 
-    updatePixmap();
+    refreshPixmap();
 }
 
 int HdrViewer::getLumMappingMethod()
@@ -340,21 +350,19 @@ void HdrViewer::setLumMappingMethod( int method )
     mappingMethodCB->setCurrentIndex( method );
     m_mappingImpl->setMappingMethod(method);
 
-    updatePixmap();
+    refreshPixmap();
 }
 
 void HdrViewer::update_colors(int neg, int naninf )
 {
     m_mappingImpl->updateErrorColors(naninf, neg);
 
-    updatePixmap();
+    refreshPixmap();
 }
 
 //! empty dtor
 HdrViewer::~HdrViewer()
-{
-    delete m_mappingImpl;
-}
+{}
 
 ///! TOFIX: this function has to go!
 void HdrViewer::saveHdrPreview()

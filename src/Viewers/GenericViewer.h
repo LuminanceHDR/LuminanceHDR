@@ -104,7 +104,7 @@ public Q_SLOTS:
     //! \brief
     virtual QString getExifComment() = 0;
 
-    //! returns a QImage that reflects the content of the viewerport
+    //! \brief returns a QImage that reflects the content of the viewerport
     QImage getQImage() const;
 
     //! this function returns an handle to the internal data type
@@ -123,8 +123,11 @@ protected Q_SLOTS:
     /*virtual*/  void slotCornerButtonPressed();
     /*virtual*/  void scrollBarChanged(int /*value*/);
 
-    //! \brief
+    //! \brief Update viewer's pixmap when a new frame is set by setFrame()
     virtual void updatePixmap() = 0;
+
+//    //! \brief Refresh viewer's pixmap when
+//    virtual void refreshPixmap() = 0;
 
 protected:
 
