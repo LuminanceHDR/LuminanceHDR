@@ -45,8 +45,7 @@ namespace pfs {
     class Frame;
 }
 
-class HdrViewer;
-class LdrViewer;
+class GenericViewer;
 
 int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
@@ -69,10 +68,10 @@ public Q_SLOTS:
     pfs::Frame* read_hdr_frame(QString filename);
 
     bool write_hdr_frame(pfs::Frame *frame, QString filename);
-    bool write_hdr_frame(HdrViewer* frame, QString filename);
+    bool write_hdr_frame(GenericViewer* frame, QString filename);
 
-    bool write_ldr_frame(LdrViewer* frame, QString filename, int quality);
     bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality);
+    bool write_ldr_frame(GenericViewer* frame, QString filename, int quality);
 
 signals:
     void read_hdr_failed(QString error_message);
@@ -80,11 +79,11 @@ signals:
 
     void write_hdr_failed();
     void write_hdr_success(pfs::Frame*, QString);
-    void write_hdr_success(HdrViewer*, QString);
+    void write_hdr_success(GenericViewer*, QString);
 
     void write_ldr_failed();
     void write_ldr_success(pfs::Frame*, QString);
-    void write_ldr_success(LdrViewer*, QString);
+    void write_ldr_success(GenericViewer*, QString);
 
     void setMaximum(int);
     void setValue(int);

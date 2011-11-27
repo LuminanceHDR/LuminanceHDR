@@ -55,7 +55,7 @@ IOWorker::~IOWorker()
 #endif
 }
 
-bool IOWorker::write_hdr_frame(HdrViewer* hdr_viewer, QString filename)
+bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, QString filename)
 {
     pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
@@ -119,7 +119,7 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     return status;
 }
 
-bool IOWorker::write_ldr_frame(LdrViewer* ldr_viewer, QString filename, int quality)
+bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int quality)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 

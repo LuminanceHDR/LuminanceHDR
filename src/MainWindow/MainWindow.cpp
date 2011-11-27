@@ -136,6 +136,7 @@ void MainWindow::init()
         qRegisterMetaType<TonemappingOptions*>("TonemappingOptions*");
         qRegisterMetaType<HdrViewer*>("HdrViewer*");
         qRegisterMetaType<LdrViewer*>("LdrViewer*");
+        qRegisterMetaType<GenericViewer*>("LdrViewer*");
 
         QDir dir(QDir::homePath());
 
@@ -438,7 +439,7 @@ void MainWindow::fileSaveAll()
 
                 //emit save_ldr_frame(l_v, outfname, 100);
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                          Q_ARG(LdrViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, 100));
+                                          Q_ARG(GenericViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, 100));
             }
         }
     }
@@ -481,7 +482,7 @@ void MainWindow::fileSaveAs()
 
             //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
             QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
-                                      Q_ARG(HdrViewer*, dynamic_cast<HdrViewer*>(g_v)), Q_ARG(QString, fname));
+                                      Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)), Q_ARG(QString, fname));
         }
     }
     else
@@ -542,13 +543,13 @@ void MainWindow::fileSaveAs()
             }
             // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
             QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                      Q_ARG(LdrViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, quality));
+                                      Q_ARG(GenericViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, quality));
 
         }
     }
 }
 
-void MainWindow::save_hdr_success(HdrViewer* saved_hdr, QString fname)
+void MainWindow::save_hdr_success(GenericViewer* saved_hdr, QString fname)
 {
     QFileInfo qfi(fname);
     QString absoluteFileName = qfi.absoluteFilePath();
@@ -568,7 +569,7 @@ void MainWindow::save_hdr_failed()
     // TODO pass the name of the file, so the user know which file didn't save correctly
 }
 
-void MainWindow::save_ldr_success(LdrViewer* saved_ldr, QString fname)
+void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
 {
     saved_ldr->setFileName(fname);
     saved_ldr->setWindowTitle(QFileInfo(fname).absoluteFilePath());
@@ -962,11 +963,11 @@ void MainWindow::setupIO()
 
     // Save HDR
     //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_success(HdrViewer*, QString)), this, SLOT(save_hdr_success(HdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, QString)), this, SLOT(save_hdr_success(GenericViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
     // Save LDR
     //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
-    connect(m_IOWorker, SIGNAL(write_ldr_success(LdrViewer*, QString)), this, SLOT(save_ldr_success(LdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, QString)), this, SLOT(save_ldr_success(GenericViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
 
     // progress bar handling

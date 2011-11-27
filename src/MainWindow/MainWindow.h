@@ -81,9 +81,9 @@ public:
 public Q_SLOTS:
 
     // I/O
-    void save_hdr_success(HdrViewer* saved_hdr, QString fname);
+    void save_hdr_success(GenericViewer* saved_hdr, QString fname);
     void save_hdr_failed();
-    void save_ldr_success(LdrViewer* saved_ldr, QString fname);
+    void save_ldr_success(GenericViewer* saved_ldr, QString fname);
     void save_ldr_failed();
 
     void load_failed(QString);
