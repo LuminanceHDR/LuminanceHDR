@@ -49,6 +49,9 @@
 #include "Fileformat/pfs_file_format.h"
 
 #include "Threads/TMOThread.h"
+#include "Core/IOWorker.h"
+#include "Core/TMWorker.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 #if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC) || defined(__APPLE__)
 #define error(Z) { fprintf(stderr,"%s", Z); exit(1); }
@@ -418,13 +421,15 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 	}
 }
 
-void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString fname) {
+void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString fname)
+{
 	VERBOSEPRINT("Successfully loaded file %1.",fname);
 	HDR=hdr;
 	saveHDR();
 }
 
-void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif) {
+void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif)
+{
         if (filesLackingExif.size()!=0 && ev.isEmpty()) {//else
 		error(qPrintable(tr("Error: Exif data missing in images and EV values not specifed on the commandline, bailing out.")));
 	}	
@@ -442,15 +447,18 @@ void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLac
 		createHDR();
 }
 
-void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
+void CommandLineInterfaceManager::errorWhileLoading(QString errormessage)
+{
 	error(qPrintable(errormessage));
 	exit(1);
 }
-void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError) {
+void CommandLineInterfaceManager::ais_failed(QProcess::ProcessError)
+{
 	errorWhileLoading(tr("Failed executing align_image_stack"));
 }
 
-void CommandLineInterfaceManager::createHDR() {
+void CommandLineInterfaceManager::createHDR()
+{
 	hdrCreationManager->removeTempFiles();
 	VERBOSEPRINT("Creating (in memory) the HDR. %1","");
 	HDR=hdrCreationManager->createHdr(false,1);
@@ -461,44 +469,18 @@ void CommandLineInterfaceManager::saveHDR()
 {
     if (!saveHdrFilename.isEmpty())
     {
+        IOWorker io_worker;
+
         VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
-        QFileInfo qfi(saveHdrFilename);
-        QByteArray encodedName(QFile::encodeName(qfi.filePath()));
-        if (qfi.suffix().toUpper()=="EXR")
+
+        // write_hdr_frame by default saves to EXR, if it doesn't find a supported file type
+        if ( io_worker.write_hdr_frame(HDR, saveHdrFilename) )
         {
-            writeEXRfile(HDR, encodedName);
-        }
-        else if (qfi.suffix().toUpper()=="HDR")
-        {
-            writeRGBEfile(HDR, encodedName);
-        }
-        else if (qfi.suffix().toUpper().startsWith("TIF"))
-        {
-            TiffWriter tiffwriter(encodedName, HDR);
-            if (luminance_options.isSaveLogLuvTiff())
-            {
-                tiffwriter.writeLogLuvTiff();
-            }
-            else
-            {
-                tiffwriter.writeFloatTiff();
-            }
-        }
-        else if (qfi.suffix().toUpper()=="PFS")
-        {
-            // Convert to CS_XYZ:
-            pfs::Channel *X, *Y, *Z;
-            HDR->getXYZChannels( X, Y, Z );
-            pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                                     pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
-            FILE *fd = fopen(encodedName, "wb");
-            pfs::DOMIO pfsio;
-            pfsio.writeFrame(HDR, fd);
-            fclose(fd);
+            VERBOSEPRINT("Image %1 saved successfully", saveHdrFilename.toLocal8Bit().constData());
         }
         else
         {
-            error("Error, please specify a supported HDR file format.");
+            VERBOSEPRINT("Could not save %1", saveHdrFilename.toLocal8Bit().constData());
         }
     }
     else
@@ -511,68 +493,69 @@ void CommandLineInterfaceManager::saveHDR()
 
 void  CommandLineInterfaceManager::startTonemap()
 {
-	if (!saveLdrFilename.isEmpty())
-  {
-		VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
-		//now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
-		//TODO
-		tmopts->origxsize = HDR->getWidth();
-		
-		std::cout << "XSIZE: " << tmopts->xsize << std::endl;
-    
-		if (tmopts->xsize == -2)	
-			tmopts->xsize = HDR->getWidth();
-// TOFIX
-//                TMOThread *thread = TMOThread::getTMOThread(tmopts->tmoperator, HDR, tmopts);
-//		connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(tonemapTerminated(QImage*, quint16*)));
-    
-//    thread->startTonemapping();
-	}
-  else
-  {
-		VERBOSEPRINT("Tonemapping NOT requested. %1","");
-		emit finishedParsing();
-	}
-}
+    if (!saveLdrFilename.isEmpty())
+    {
+        VERBOSEPRINT("Tonemapping requested, saving to file %1.",saveLdrFilename);
+        //now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
+        //TODO
+        tmopts->origxsize = HDR->getWidth();
 
-void CommandLineInterfaceManager::tonemapTerminated(QImage* newimage, quint16* pixmap)
-{
-    delete pixmap;
+        std::cout << "XSIZE: " << tmopts->xsize << std::endl;
 
-	QFileInfo qfi(saveLdrFilename);
-        if (!newimage->save(saveLdrFilename, qfi.suffix().toLocal8Bit().constData(), 100))
-  {
-		error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
-	}
-  else
-  {
-		TMOptionsOperations operations(tmopts);
-		//ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
-		ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
-	}
-	emit finishedParsing();
+        if (tmopts->xsize == -2) tmopts->xsize = HDR->getWidth();
+
+        // Build TMWorker
+        TMWorker tm_worker;
+
+        // Build a new TM frame
+        // The scoped pointer will free the memory automatically later on
+        QScopedPointer<pfs::Frame> tm_frame( tm_worker.computeTonemap(HDR, tmopts) );
+
+        // Build QImage from pfs::Frame
+        // TODO: ideally we would like to use IOWorker facilities to save the final output
+        QScopedPointer<QImage> q_image( fromLDRPFStoQImage(tm_frame.data()) );
+
+        QFileInfo qfi(saveLdrFilename);
+        if (!q_image->save(saveLdrFilename, qfi.suffix().toLocal8Bit().constData(), 100))
+        {
+            error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
+        }
+        else
+        {
+            TMOptionsOperations operations(tmopts);
+            //ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
+            ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
+        }
+        emit finishedParsing();
+    }
+    else
+    {
+        VERBOSEPRINT("Tonemapping NOT requested. %1","");
+        emit finishedParsing();
+    }
 }
 
 float CommandLineInterfaceManager::toFloatWithErrMsg(const QString &str)
 {
-	bool ok;
-	float ret = str.toFloat(&ok);
-	if (!ok)
-  {
-		QString errmessage=tr("Cannot convert %1 to a float").arg(str);
-		error(qPrintable(errmessage));
-	}
-	return ret;
+    bool ok;
+    float ret = str.toFloat(&ok);
+    if (!ok)
+    {
+        QString errmessage=tr("Cannot convert %1 to a float").arg(str);
+        error(qPrintable(errmessage));
+    }
+    return ret;
 }
 
-int CommandLineInterfaceManager::toIntWithErrMsg(const QString &str) {
-	bool ok;
-	int ret = str.toInt(&ok);
-	if (!ok) {
-		QString errmessage=tr("Cannot convert %1 to an integer").arg(str);
-		error(qPrintable(errmessage));
-	}
-	return ret;
+int CommandLineInterfaceManager::toIntWithErrMsg(const QString &str)
+{
+    bool ok;
+    int ret = str.toInt(&ok);
+    if (!ok) {
+        QString errmessage=tr("Cannot convert %1 to an integer").arg(str);
+        error(qPrintable(errmessage));
+    }
+    return ret;
 }
 
 void CommandLineInterfaceManager::printHelp(char * progname)

@@ -35,7 +35,8 @@
 #include "Core/TonemappingOptions.h"
 #include "HdrCreation/HdrCreationManager.h"
 
-class CommandLineInterfaceManager : public QObject {
+class CommandLineInterfaceManager : public QObject
+{
 Q_OBJECT
 public:
     CommandLineInterfaceManager(const int argc, char **argv);
@@ -83,7 +84,6 @@ private slots:
 	void createHDR();
 	void loadFinished(pfs::Frame*,QString);
 	void parseArgs();
-	void tonemapTerminated(QImage*, quint16*);
     void execCommandLineParamsSlot();
 
 signals:
