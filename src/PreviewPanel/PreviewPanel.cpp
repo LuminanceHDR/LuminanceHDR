@@ -177,8 +177,14 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame)
     // 1. make a resized copy
     QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, PREVIEW_WIDTH));
 
-    // 2. for each PreviewLabel, call PreviewLabelUpdater::operator()
-    QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
+    // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
+    foreach(PreviewLabel* current_label, m_ListPreviewLabel)
+    {
+        PreviewLabelUpdater updater(current_frame);
+        updater(current_label);
+    }
+    // 2. (concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
+    //QtConcurrent::map (m_ListPreviewLabel, PreviewLabelUpdater(current_frame) );
 }
 
 void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
