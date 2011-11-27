@@ -33,6 +33,7 @@
 #ifdef QT_DEBUG
 #include <QDebug>
 #endif
+#include <QScopedPointer>
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
@@ -41,6 +42,7 @@
 #include "Viewers/LdrViewer.h"
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
+#include "Fileformat/pfsoutldrimage.h"
 
 IOWorker::IOWorker(QObject* parent):
     QObject(parent)
@@ -59,7 +61,8 @@ bool IOWorker::write_hdr_frame(HdrViewer* hdr_viewer, QString filename)
 
     bool status = write_hdr_frame(hdr_frame, filename);
 
-    emit write_hdr_success(hdr_viewer, filename);
+    if ( status )
+        emit write_hdr_success(hdr_viewer, filename);
 
     return status;
 }
@@ -116,8 +119,22 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     return status;
 }
 
-void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
+bool IOWorker::write_ldr_frame(LdrViewer* ldr_viewer, QString filename, int quality)
 {
+    pfs::Frame* ldr_frame = ldr_viewer->getFrame();
+
+    bool status = write_ldr_frame(ldr_frame, filename, quality);
+
+    if ( status )
+        emit write_ldr_success(ldr_viewer, filename);
+
+    return status;
+}
+
+
+bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality)
+{
+    bool status = true;
     emit IO_init();
     
     QFileInfo qfi(filename);
@@ -127,38 +144,42 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        quint16 *pixmap = fromLDRPFSto16bitsPixmap(ldr_input->getFrame());
+        // QScopedArrayPointer will call delete [] when this object goes out of scope
+        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input));
         int width = ldr_input->getWidth();
         int height = ldr_input->getHeight();
         try
         {
-            TiffWriter tiffwriter(encodedName, pixmap, width, height);
+            TiffWriter tiffwriter(encodedName, pixmap.data(), width, height);
             connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
             connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             tiffwriter.write16bitTiff();
 
-            delete [] pixmap;
             emit write_ldr_success(ldr_input, filename);
         }
         catch(...)
         {
-            delete [] pixmap;
+            status = false;
             emit write_ldr_failed();
         }
     }
     else
     {
-        QImage image = ldr_input->getQImage();
-        if ( image.save(filename, format.toLocal8Bit(), quality) )
+        // QScopedPointer will call delete when this object goes out of scope
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input));
+        if ( image->save(filename, format.toLocal8Bit(), quality) )
         {
             emit write_ldr_success(ldr_input, filename);
         }
         else
         {
+            status = false;
             emit write_ldr_failed();
         }
     }
     emit IO_finish();
+
+    return status;
 }
 
 pfs::Frame* IOWorker::read_hdr_frame(QString filename)
