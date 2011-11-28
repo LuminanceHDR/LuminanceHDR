@@ -290,13 +290,18 @@ void HdrCreationManager::ais_finished(int exitcode, QProcess::ExitStatus exitsta
 		clearlists(false);
 		for (int i = 0; i < fileList.size(); i++) {
 			//align_image_stack can only output tiff files
-                        QByteArray fname = QFile::encodeName(QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif"));
+			QString filename = QString(m_luminance_options.getTempDir() + "/aligned_" + QString("%1").arg(i,4,10,QChar('0'))+".tif");
+            QByteArray fname = QFile::encodeName(filename);
 			//qDebug("HCM: Loading back file name=%s", fname);
 			TiffReader reader(fname, "", false);
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
-				ldrImagesList.append( reader.readIntoQImage() );
-				tiffLdrList.append(true);
+				QImage* resultImage = reader.readIntoQImage();
+				QImage* oldImage = resultImage;
+				HdrInputLoader::conditionallyRotateImage(QFileInfo(fileList[0]), &resultImage);
+
+				ldrImagesList.append( resultImage );
+				tiffLdrList.append(oldImage == resultImage);
 			}
 			//if 16bit (tiff) treat as hdr
 			else if (reader.is16bitTiff()) {
