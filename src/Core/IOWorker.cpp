@@ -43,6 +43,8 @@
 #include "Common/LuminanceOptions.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
+#include "Core/TonemappingOptions.h"
+#include "Exif/ExifOperations.h"
 
 IOWorker::IOWorker(QObject* parent):
     QObject(parent)
@@ -122,11 +124,11 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     return status;
 }
 
-bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int quality)
+bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int quality, TonemappingOptions* tmopts)
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
-    bool status = write_ldr_frame(ldr_frame, filename, quality);
+    bool status = write_ldr_frame(ldr_frame, filename, quality, tmopts);
 
     if ( status )
     {
@@ -138,10 +140,15 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int 
 }
 
 
-bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality)
+bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality, TonemappingOptions* tmopts)
 {
     bool status = true;
     emit IO_init();
+
+    QScopedPointer<TMOptionsOperations> operations;
+
+    if (tmopts != NULL)
+        operations.reset(new TMOptionsOperations(tmopts));
     
     QFileInfo qfi(filename);
     QString format = qfi.suffix();
@@ -161,6 +168,9 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
             connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             tiffwriter.write16bitTiff();
 
+            if (tmopts != NULL)
+                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
             emit write_ldr_success(ldr_input, filename);
         }
         catch(...)
@@ -175,6 +185,9 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
         QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input));
         if ( image->save(filename, format.toLocal8Bit(), quality) )
         {
+            if (tmopts != NULL)
+                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
             emit write_ldr_success(ldr_input, filename);
         }
         else

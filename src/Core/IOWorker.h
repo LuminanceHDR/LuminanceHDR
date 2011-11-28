@@ -46,6 +46,7 @@ namespace pfs {
 }
 
 class GenericViewer;
+class TonemappingOptions;
 
 int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
@@ -70,8 +71,8 @@ public Q_SLOTS:
     bool write_hdr_frame(pfs::Frame *frame, QString filename);
     bool write_hdr_frame(GenericViewer* frame, QString filename);
 
-    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality);
-    bool write_ldr_frame(GenericViewer* frame, QString filename, int quality);
+    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
+    bool write_ldr_frame(GenericViewer* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
 
 signals:
     void read_hdr_failed(QString error_message);
