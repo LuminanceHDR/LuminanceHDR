@@ -381,6 +381,9 @@ void GenericViewer::setFrame(pfs::Frame *new_frame)
 
     // call virtual protected function
     updatePixmap();
+
+    // reset boundaries
+    updateView();
 }
 
 pfs::Frame* GenericViewer::getFrame() const
