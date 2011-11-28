@@ -136,7 +136,7 @@ void MainWindow::init()
         qRegisterMetaType<TonemappingOptions*>("TonemappingOptions*");
         qRegisterMetaType<HdrViewer*>("HdrViewer*");
         qRegisterMetaType<LdrViewer*>("LdrViewer*");
-        qRegisterMetaType<GenericViewer*>("LdrViewer*");
+        qRegisterMetaType<GenericViewer*>("GenericViewer*");
 
         QDir dir(QDir::homePath());
 
@@ -552,15 +552,15 @@ void MainWindow::fileSaveAs()
 void MainWindow::save_hdr_success(GenericViewer* saved_hdr, QString fname)
 {
     QFileInfo qfi(fname);
-    QString absoluteFileName = qfi.absoluteFilePath();
 
-    setCurrentFile(absoluteFileName);
-    saved_hdr->setFileName(fname);
-    saved_hdr->setWindowTitle(absoluteFileName);
+    setCurrentFile(qfi.absoluteFilePath());
+    setWindowModified(false);
+
+    // IOWorker does this thing for you
+    //saved_hdr->setFileName(fname);
 
     // update name on the tab label
-    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), fname);
-    setWindowModified(false);
+    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), qfi.fileName());
 }
 
 void MainWindow::save_hdr_failed()
@@ -571,10 +571,10 @@ void MainWindow::save_hdr_failed()
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
 {
-    saved_ldr->setFileName(fname);
-    saved_ldr->setWindowTitle(QFileInfo(fname).absoluteFilePath());
+    // IOWorker does already thing thing
+    //saved_ldr->setFileName(fname);
 
-    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), fname);
+    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
 void MainWindow::save_ldr_failed()
@@ -732,12 +732,15 @@ void MainWindow::dispatchrotate(bool clockwise)
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
     pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getFrame(), clockwise);
-    //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
+
     curr_g_v->setFrame(rotated);
     if ( !curr_g_v->needsSaving() )
     {
         curr_g_v->setNeedsSaving(true);
-        curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+        int index = m_tabwidget->indexOf(curr_g_v);
+        QString text = m_tabwidget->tabText(index);
+        m_tabwidget->setTabText(index, text.prepend("(*) "));
 
         setWindowModified(true);
     }
@@ -758,12 +761,15 @@ void MainWindow::resize_requested()
     if (resizedialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        //setFrame() method takes care of deleting its previous pfs::Frame* buffer.
+
         curr_g_v->setFrame(resizedialog->getResizedFrame());
         if (! curr_g_v->needsSaving())
         {
             curr_g_v->setNeedsSaving(true);
-            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            int index = m_tabwidget->indexOf(curr_g_v);
+            QString text = m_tabwidget->tabText(index);
+            m_tabwidget->setTabText(index, text.prepend("(*) "));
 
             setWindowModified(true);
         }
@@ -783,12 +789,15 @@ void MainWindow::projectiveTransf_requested()
     if (projTranfsDialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
+
         curr_g_v->setFrame(projTranfsDialog->getTranformedFrame());
         if ( !curr_g_v->needsSaving() )
         {
             curr_g_v->setNeedsSaving(true);
-            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            int index = m_tabwidget->indexOf(curr_g_v);
+            QString text = m_tabwidget->tabText(index);
+            m_tabwidget->setTabText(index, text.prepend("(*) "));
 
             setWindowModified(true);
         }
@@ -1027,9 +1036,8 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
         newhdr->setFileName(new_fname);
-        newhdr->setWindowTitle(new_fname);
 
-        m_tabwidget->addTab(newhdr, new_fname);
+        m_tabwidget->addTab(newhdr, QFileInfo(new_fname).fileName());
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;

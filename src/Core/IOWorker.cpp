@@ -62,7 +62,10 @@ bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, QString filename)
     bool status = write_hdr_frame(hdr_frame, filename);
 
     if ( status )
+    {
+        hdr_viewer->setFileName(filename);
         emit write_hdr_success(hdr_viewer, filename);
+    }
 
     return status;
 }
@@ -126,7 +129,10 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int 
     bool status = write_ldr_frame(ldr_frame, filename, quality);
 
     if ( status )
+    {
+        ldr_viewer->setFileName(filename);
         emit write_ldr_success(ldr_viewer, filename);
+    }
 
     return status;
 }
@@ -192,7 +198,9 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
     QFileInfo qfi(filename);
     if ( !qfi.isReadable() )
     {
+#ifdef QT_DEBUG
         qDebug("File %s is not readable.", qPrintable(filename));
+#endif
         emit read_hdr_failed(tr("ERROR: The following file is not readable: %1").arg(filename));
         return NULL;
     }
@@ -242,14 +250,16 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
         }
         else
         {
+#ifdef QT_DEBUG
             qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
+#endif
             emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
             return NULL;
         }
 
         if (hdrpfsframe == NULL)
         {
-            throw "Error loading file";
+            return NULL;
         }
     }
     catch (...)
