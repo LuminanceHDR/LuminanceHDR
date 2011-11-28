@@ -41,7 +41,7 @@ HdrInputLoader::~HdrInputLoader() {
 	wait();
 }
 
-void conditionallyRotateImage(QFileInfo qfi, QImage** oldImage) 
+void HdrInputLoader::conditionallyRotateImage(QFileInfo qfi, QImage** oldImage) 
 {
 	int rotation_angle = ExifOperations::obtain_rotation( QFile::encodeName(qfi.filePath()).constData() );
 
@@ -52,7 +52,7 @@ void conditionallyRotateImage(QFileInfo qfi, QImage** oldImage)
 
 		QImage *notTransformedImage = *oldImage;
 		*oldImage = (new QImage((*oldImage)->transformed(rm)));
-		delete notTransformedImage;
+		delete[] notTransformedImage->bits();
 	}
 }
 

@@ -27,6 +27,7 @@
 #include <QThread>
 #include <QImage>
 #include <QDebug>
+#include <QFileInfo>
 
 #ifdef __APPLE__
 #include <libraw.h>
@@ -45,6 +46,8 @@ class HdrInputLoader : public QThread {
 public:
     HdrInputLoader(QString filename, int image_idx);
     ~HdrInputLoader();
+	static void conditionallyRotateImage(QFileInfo qfi, QImage** oldImage); 
+
 signals:
     void ldrReady(QImage *ldrImage, int index, float expotime, QString new_fname, bool ldrtiff);
     void mdrReady(pfs::Frame *mdrImage, int index, float expotime, QString new_fname);
