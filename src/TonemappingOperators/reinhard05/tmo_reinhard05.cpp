@@ -38,10 +38,9 @@
 
 #include <assert.h>
 
-
 void tmo_reinhard05(unsigned int width, unsigned int height,
   float* nR, float* nG, float* nB, 
-  const float* nY, float br, float ca, float la, ProgressHelper *ph )
+  const float* nY, const float br, const float ca, const float la, ProgressHelper *ph )
 {
   const pfs::Array2D* Y = new pfs::Array2D(width, height, const_cast<float*>(nY));
   pfs::Array2D* R = new pfs::Array2D(width, height, nR);
@@ -53,8 +52,8 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
   float world_lum = 0.0;
   float Cav[] = { 0.0f, 0.0f, 0.0f};
   float Lav = 0.0f;
-  int im_width = Y->getCols();
-  int im_height = Y->getRows();
+  const int im_width = Y->getCols();
+  const int im_height = Y->getRows();
   int im_size = im_width * im_height;
 
   for( int i=1 ; i<im_size ; i++ )
@@ -79,26 +78,28 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
   min_lum = log( min_lum );
 
   // image key
-  float k = (max_lum - world_lum) / (max_lum - min_lum);
+  const float k = (max_lum - world_lum) / (max_lum - min_lum);
   // image contrast based on key value
-  float m = 0.3f+0.7f*pow(k,1.4f);
+  const float m = 0.3f+0.7f*pow(k,1.4f);
   // image brightness
-  float f = exp(-br);
+  const float f = exp(-br);
 
   float max_col = 0.0f;
   float min_col = 1.0f;
 
-  int x,y;
-  for( x=0 ; x<im_width ; x++ ) {
-    ph->newValue(100*x/im_width);
-	if (ph->isTerminationRequested())
-		break;
-    for( y=0 ; y<im_height ; y++ )
+  int xTotal = 0;
+
+  #pragma omp parallel for shared(max_col,min_col,xTotal)
+  for(int x=0 ; x<im_width ; x++ ) {
+    ph->newValue(66 * (xTotal++) / im_width);
+
+    for(int y=0 ; y<im_height ; y++ )
     {
       float l = (*Y)(x,y);
-      float col;
-      if( l != 0.0f )
+
+	  if( l != 0.0f )
       {
+        float col;
         for( int c=0 ; c<3 ; c++ )
         {
           switch(c)
@@ -133,18 +134,22 @@ void tmo_reinhard05(unsigned int width, unsigned int height,
       }
     }
   }
-  //--- normalize intensities
-  for( x=0 ; x<im_width ; x++ ) {
-    ph->newValue(100*x/im_width);
-	if (ph->isTerminationRequested())
-		break;
-    for( y=0 ; y<im_height ; y++ )
-    {
-      (*R)(x,y) = ((*R)(x,y)-min_col)/(max_col-min_col);
-      (*G)(x,y) = ((*G)(x,y)-min_col)/(max_col-min_col);
-      (*B)(x,y) = ((*B)(x,y)-min_col)/(max_col-min_col);
-    }
+  if (!ph->isTerminationRequested()) 
+  {
+	  //--- normalize intensities
+	  xTotal = 0;
+	  #pragma omp parallel for shared(xTotal)
+	  for(int x=0 ; x<im_width ; x++ ) {
+		ph->newValue(66 + 33 * (xTotal++) / im_width);
+		for(int y=0 ; y<im_height ; y++ )
+		{
+		  (*R)(x,y) = ((*R)(x,y)-min_col)/(max_col-min_col);
+		  (*G)(x,y) = ((*G)(x,y)-min_col)/(max_col-min_col);
+		  (*B)(x,y) = ((*B)(x,y)-min_col)/(max_col-min_col);
+		}
+	  }
   }
+
   delete B;
   delete G;
   delete R;
