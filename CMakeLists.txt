@@ -35,6 +35,9 @@ IF(WIN32)
 		# Enable multi processor compilation
 		ADD_DEFINITIONS(/MP)
 
+		# Full optimization
+		ADD_DEFINITIONS(/Ox)
+		
 		# Enable OpenMP
 		ADD_DEFINITIONS(/openmp)
 
@@ -44,6 +47,7 @@ IF(WIN32)
 		ADD_DEFINITIONS(-DUNICODE )
 		ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
 		SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
+		ADD_DEFINITIONS(-DHAVE_FFTW3F)
 		
 		SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
 		SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
@@ -74,13 +78,15 @@ IF(WIN32)
 	ENDIF()
 ELSE()
 
-# Unix & Apple part
-FIND_PACKAGE(OpenEXR REQUIRED)
-FIND_PACKAGE(TIFF REQUIRED)
-FIND_PACKAGE(LibRAW REQUIRED)
-FIND_PACKAGE(fftwf REQUIRED)
-FIND_PACKAGE(GSL REQUIRED)
-FIND_PACKAGE(exiv2 REQUIRED)
+	# Unix & Apple part
+	FIND_PACKAGE(OpenEXR REQUIRED)
+	FIND_PACKAGE(TIFF REQUIRED)
+	FIND_PACKAGE(LibRAW REQUIRED)
+	FIND_PACKAGE(fftwf REQUIRED)
+	FIND_PACKAGE(GSL REQUIRED)
+	FIND_PACKAGE(exiv2 REQUIRED)
+
+	ADD_DEFINITIONS(-O3)
 
 ENDIF(WIN32)
 
@@ -107,33 +113,31 @@ SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
 #OpenMP Support under Linux, Windows with MSVC & MacOS X with GCC >= 4.3
 IF(MSVC)
 
-FIND_PACKAGE(OpenMP REQUIRED)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+	FIND_PACKAGE(OpenMP REQUIRED)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 
 ELSEIF(CMAKE_COMPILER_IS_GNUCC AND UNIX)
 
-execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
-                OUTPUT_VARIABLE GCC_VERSION)
-#MESSAGE(STATUS ${GCC_VERSION})
-IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
-    message(STATUS "GCC >= 4.3")
-    FIND_PACKAGE(OpenMP REQUIRED)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-endif()
+	execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion
+					OUTPUT_VARIABLE GCC_VERSION)
+	#MESSAGE(STATUS ${GCC_VERSION})
+	IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
+		message(STATUS "GCC >= 4.3")
+		FIND_PACKAGE(OpenMP REQUIRED)
+		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+	endif()
 
 ENDIF()
 # END OpenMP Support
-
-ADD_DEFINITIONS(-O3)
 
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/src/" ${INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LIB_HDR_INCLUDE
 	src/Common/msec_timer.h
-        src/Libpfs/vex.h
+	src/Libpfs/vex.h
 	src/Libpfs/array2d.h
 	src/Libpfs/channel.h
 	src/Libpfs/colorspace.h
@@ -155,7 +159,7 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/pfsout16bitspixmap.h
 # PFS TMO
 	src/TonemappingOperators/pfstmo.h
-        src/TonemappingOperators/pfstmdefaultparams.h
+	src/TonemappingOperators/pfstmdefaultparams.h
 	src/TonemappingOperators/ashikhmin02/pyramid.h
 	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h
 	src/TonemappingOperators/drago03/tmo_drago03.h
