@@ -39,7 +39,7 @@
 #include "Common/msec_timer.h"
 #include "Fileformat/pfsoutldrimage.h"
 
-LdrViewer::LdrViewer(pfs::Frame* frame, const TonemappingOptions* opts, QWidget *parent, bool ns):
+LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
     GenericViewer(frame, parent, ns),
     mTonemappingOptions(opts),
     informativeLabel(new QLabel( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()), mToolBar))

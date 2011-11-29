@@ -39,7 +39,7 @@ class LdrViewer: public GenericViewer
 {
     Q_OBJECT
 public:
-    LdrViewer(pfs::Frame* frame, const TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0);
+    LdrViewer(pfs::Frame* frame, TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0);
     virtual ~LdrViewer();
     void levelsRequested(bool);
     QString getFileNamePostFix();
@@ -48,8 +48,16 @@ public:
     //! \brief virtual function
     //! \return always return FALSE
     bool isHDR();
-    //void setImage(QImage *i);
-    //const quint16 * getPixmap();
+
+    void setTonemappingOptions(TonemappingOptions* tmopts)
+    {
+        mTonemappingOptions = tmopts;
+    }
+
+    TonemappingOptions* getTonemappingOptions()
+    {
+        return mTonemappingOptions;
+    }
 
 signals:
     void levels_closed();
@@ -69,7 +77,7 @@ private:
     QImage *previewimage;
     QImage *temp_image;
 
-    const TonemappingOptions* mTonemappingOptions;
+    TonemappingOptions* mTonemappingOptions;
 };
 
 inline bool LdrViewer::isHDR()
