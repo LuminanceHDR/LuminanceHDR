@@ -450,7 +450,6 @@ void MainWindow::fileSaveAs()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-
     if ( g_v->isHDR() )
     {
         /*
@@ -490,7 +489,13 @@ void MainWindow::fileSaveAs()
         /*
          * In this case I'm saving an LDR
          */
-        LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
+        LdrViewer* l_v = NULL;
+        try {
+            l_v = dynamic_cast<LdrViewer*>(g_v);
+        } catch (...)
+        {
+            return;
+        }
 
         QString filetypes = QObject::tr("All LDR formats");
         filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
@@ -543,7 +548,10 @@ void MainWindow::fileSaveAs()
             }
             // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
             QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
-                                      Q_ARG(GenericViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, quality));
+                                      Q_ARG(GenericViewer*, l_v),
+                                      Q_ARG(QString, outfname),
+                                      Q_ARG(int, quality),
+                                      Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
 
         }
     }
