@@ -152,9 +152,6 @@ protected Q_SLOTS:
     void openRecentFile();
     void setCurrentFile(const QString &fileName);
 
-    void updateRecentDirHDRSetting(QString);
-    void updateRecentDirLDRSetting(QString);
-
     void aboutLuminance();
     void showSplash();
 
@@ -201,9 +198,6 @@ protected:
     QSignalMapper *windowMapper;
     LuminanceOptions luminance_options;
     QDialog *splash;
-
-    QString RecentDirHDRSetting;
-    QString RecentDirLDRSetting;
 
     // Recent Files Management
     QAction* recentFileActs[MAX_RECENT_FILES];

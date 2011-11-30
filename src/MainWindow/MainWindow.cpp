@@ -80,6 +80,45 @@
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
 
+namespace
+{
+QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+{
+
+    QString filetypes = QObject::tr("All LDR formats");
+    filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
+    filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
+    filetypes += "PNG (*.png *.PNG);;" ;
+    filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
+    filetypes += "BMP (*.bmp *.BMP);;";
+    filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
+
+    return QFileDialog::getSaveFileName(parent,
+                                        QObject::tr("Save the LDR image as..."),
+                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + suggested_file_name,
+                                        filetypes);
+}
+
+QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+{
+    QString filetypes = QObject::tr("All HDR formats ");
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
+    filetypes += "OpenEXR (*.exr *.EXR);;" ;
+    filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
+    filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
+    filetypes += "PFS Stream (*.pfs *.PFS)";
+
+    return QFileDialog::getSaveFileName(parent,
+                                        QObject::tr("Save the HDR image as..."),
+                                        LuminanceOptions().getDefaultPathHdrInOut() + "/" + suggested_file_name,
+                                        filetypes);
+}
+
+}
+
+
+
+
 int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
@@ -320,8 +359,6 @@ void MainWindow::createConnections()
 void MainWindow::loadOptions()
 {
     //load from settings the path where hdrs have been previously opened/loaded
-    RecentDirHDRSetting = luminance_options.getDefaultPathHdrInOut();
-    RecentDirLDRSetting = luminance_options.getDefaultPathLdrOut();
 
     //load from settings the main toolbar visualization mode
     switch ( luminance_options.getMainWindowToolBarMode() ) {
@@ -375,7 +412,7 @@ void MainWindow::fileOpen()
 
     QStringList files = QFileDialog::getOpenFileNames(this,
                                                       tr("Load one or more HDR images..."),
-                                                      RecentDirHDRSetting,
+                                                      luminance_options.getDefaultPathHdrInOut(),
                                                       filetypes );
 
     if ( !files.isEmpty() )
@@ -383,13 +420,8 @@ void MainWindow::fileOpen()
         // Update working folder
         // All the files are in the same folder, so I pick the first as reference to update the settings
         QFileInfo qfi(files.first());
-        if ( RecentDirHDRSetting != qfi.path() )
-        {
-            // if the new dir (the one just chosen by the user)
-            // is different from the one stored in the settings
-            // update the settings
-            updateRecentDirHDRSetting(qfi.path());
-        }
+
+        luminance_options.setDefaultPathHdrInOut( qfi.path() );
 
         foreach(QString filename, files)
         {
@@ -400,42 +432,29 @@ void MainWindow::fileOpen()
     }
 }
 
-void MainWindow::updateRecentDirHDRSetting(QString newvalue)
-{
-    RecentDirHDRSetting = newvalue;                         // update class member
-    luminance_options.setDefaultPathHdrInOut(newvalue);     // update settings
-}
-
-void MainWindow::updateRecentDirLDRSetting(QString newvalue)
-{
-    RecentDirLDRSetting = newvalue;                         // update class member
-    luminance_options.setDefaultPathLdrOut(newvalue);       // update settings
-}
-
 void MainWindow::fileSaveAll()
 {
     if (m_tabwidget->count() <= 0) return;
 
-    QWidget *wgt;
-    GenericViewer *g_v;
-    LdrViewer *l_v;
-
-    QString dir = QFileDialog::getExistingDirectory(0, tr("Save files in"), RecentDirLDRSetting);
+    QString dir = QFileDialog::getExistingDirectory(this,
+                                                    tr("Save files in"),
+                                                    luminance_options.getDefaultPathLdrOut());
 
     if (!dir.isEmpty())
     {
-        updateRecentDirLDRSetting(dir);
+        luminance_options.setDefaultPathLdrOut(dir);
+
         for (int i = 0; i < m_tabwidget->count(); i++)
         {
-            wgt = m_tabwidget->widget(i);
-            g_v = (GenericViewer *)wgt;
+            QWidget *wgt = m_tabwidget->widget(i);
+            GenericViewer *g_v = (GenericViewer *)wgt;
 
             if ( !g_v->isHDR() )
             {
-                l_v = dynamic_cast<LdrViewer*>(g_v);
+                LdrViewer *l_v = dynamic_cast<LdrViewer*>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-                QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
+                QString outfname = luminance_options.getDefaultPathLdrOut() + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
                 //emit save_ldr_frame(l_v, outfname, 100);
                 QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
@@ -455,33 +474,17 @@ void MainWindow::fileSaveAs()
         /*
          * In this case I'm saving an HDR
          */
-        QString filetypes = tr("All HDR formats ");
-        filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
-        filetypes += "OpenEXR (*.exr *.EXR);;" ;
-        filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-        filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
-        filetypes += "PFS Stream (*.pfs *.PFS)";
-
-        QString fname = QFileDialog::getSaveFileName(this,
-                                                     tr("Save the HDR image as..."),
-                                                     RecentDirHDRSetting,
-                                                     filetypes);
+        QString fname = getHdrFileNameFromSaveDialog(QString(), this);
 
         if ( !fname.isEmpty() )
         {
             // Update working folder
-            QFileInfo qfi(fname);
-            if ( RecentDirHDRSetting != qfi.path() )
-            {
-                // if the new dir (the one just chosen by the user)
-                // is different from the one stored in the settings
-                // update the settings
-                updateRecentDirHDRSetting(qfi.path());
-            }
+            luminance_options.setDefaultPathHdrInOut( QFileInfo(fname).path() );
 
             //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
             QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
-                                      Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)), Q_ARG(QString, fname));
+                                      Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
+                                      Q_ARG(QString, fname));
         }
     }
     else
@@ -489,38 +492,20 @@ void MainWindow::fileSaveAs()
         /*
          * In this case I'm saving an LDR
          */
-        LdrViewer* l_v = NULL;
-        try {
-            l_v = dynamic_cast<LdrViewer*>(g_v);
-        } catch (...)
-        {
-            return;
-        }
+        LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
 
-        QString filetypes = QObject::tr("All LDR formats");
-        filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
-        filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
-        filetypes += "PNG (*.png *.PNG);;" ;
-        filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
-        filetypes += "BMP (*.bmp *.BMP);;";
-        filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
+        if ( l_v == NULL ) return;
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outfname = QFileDialog::getSaveFileName(this,
-                                                        QObject::tr("Save the LDR image as..."),
-                                                        RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg",
-                                                        filetypes);
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
 
         if ( !outfname.isEmpty() )
         {
             QFileInfo qfi(outfname);
             QString format = qfi.suffix();
 
-            if ( RecentDirLDRSetting != qfi.path() )
-            {
-                updateRecentDirLDRSetting( qfi.path() );
-            }
+            luminance_options.setDefaultPathLdrOut( qfi.path() );
 
             if ( format.isEmpty() )
             {
@@ -532,9 +517,7 @@ void MainWindow::fileSaveAs()
             int quality = 100; // default value is 100%
             if ( format == "png" || format == "jpg" )
             {
-                // TOFIX: with this method, I create the same QImage twice: here
-                // and inside the write_ldr_frame() routine.
-                // Is there a way to do it better?
+                // How costly is this function? I doesn't seem to be much
                 QImage image = l_v->getQImage();
 
                 ImageQualityDialog savedFileQuality(&image, format, this);
@@ -564,9 +547,6 @@ void MainWindow::save_hdr_success(GenericViewer* saved_hdr, QString fname)
     setCurrentFile(qfi.absoluteFilePath());
     setWindowModified(false);
 
-    // IOWorker does this thing for you
-    //saved_hdr->setFileName(fname);
-
     // update name on the tab label
     m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), qfi.fileName());
 }
@@ -579,9 +559,6 @@ void MainWindow::save_hdr_failed()
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
 {
-    // IOWorker does already thing thing
-    //saved_ldr->setFileName(fname);
-
     m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
@@ -595,14 +572,26 @@ void MainWindow::save_ldr_failed()
 
 void MainWindow::saveHdrPreview()
 {
-    // TODO : This function is just rubbish, and should be changed!
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    try {
+        HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
 
-    if (hdr_v == NULL) return;
-    else hdr_v->saveHdrPreview();
+        QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + hdr_v->getFileNamePostFix() + ".jpg", this);
+
+        if ( outfname.isEmpty() ) return;
+
+        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                  Q_ARG(GenericViewer*, hdr_v),
+                                  Q_ARG(QString, outfname),
+                                  Q_ARG(int, 100));
+    } catch (...)
+    {
+        return;
+    }
 }
 
 void MainWindow::updateActionsNoImage()
@@ -1348,31 +1337,13 @@ bool MainWindow::maybeSave()
                   /* if save == success return true;
                    * else return false;
                    */
-                qDebug() << "HDR need to be saved";
-
-                QString filetypes = tr("All HDR formats ");
-                filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
-                filetypes += "OpenEXR (*.exr *.EXR);;" ;
-                filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-                filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
-                filetypes += "PFS Stream (*.pfs *.PFS)";
-
-                QString fname = QFileDialog::getSaveFileName(this,
-                                                             tr("Save the HDR image as..."),
-                                                             RecentDirHDRSetting,
-                                                             filetypes);
+                QString fname = getHdrFileNameFromSaveDialog(QString(), this);
 
                 if ( !fname.isEmpty() )
                 {
                     // Update working folder
                     QFileInfo qfi(fname);
-                    if ( RecentDirHDRSetting != qfi.path() )
-                    {
-                        // if the new dir (the one just chosen by the user)
-                        // is different from the one stored in the settings
-                        // update the settings
-                        updateRecentDirHDRSetting(qfi.path());
-                    }
+                    luminance_options.setDefaultPathHdrInOut(qfi.path());
 
                     // TODO : can I launch a signal and wait that it gets executed fully?
                     return m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
