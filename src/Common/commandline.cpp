@@ -32,6 +32,7 @@
 #endif
 
 #include <QTimer>
+#include <QDebug>
 
 #include "Common/global.h"
 #include "Common/config.h"
@@ -469,12 +470,10 @@ void CommandLineInterfaceManager::saveHDR()
 {
     if (!saveHdrFilename.isEmpty())
     {
-        IOWorker io_worker;
-
         VERBOSEPRINT("Saving to file %1.",saveHdrFilename);
 
         // write_hdr_frame by default saves to EXR, if it doesn't find a supported file type
-        if ( io_worker.write_hdr_frame(HDR, saveHdrFilename) )
+        if ( IOWorker().write_hdr_frame(HDR, saveHdrFilename) )
         {
             VERBOSEPRINT("Image %1 saved successfully", saveHdrFilename.toLocal8Bit().constData());
         }
@@ -499,9 +498,9 @@ void  CommandLineInterfaceManager::startTonemap()
         //now check if user wants to resize (create thread with either -2 or true original size as first argument in ctor, see options.cpp).
         //TODO
         tmopts->origxsize = HDR->getWidth();
-
-        std::cout << "XSIZE: " << tmopts->xsize << std::endl;
-
+#ifdef QT_DEBUG
+        qDebug() << "XSIZE: " << tmopts->xsize << std::endl;
+#endif
         if (tmopts->xsize == -2) tmopts->xsize = HDR->getWidth();
 
         // Build TMWorker
@@ -511,20 +510,17 @@ void  CommandLineInterfaceManager::startTonemap()
         // The scoped pointer will free the memory automatically later on
         QScopedPointer<pfs::Frame> tm_frame( tm_worker.computeTonemap(HDR, tmopts) );
 
-        // Build QImage from pfs::Frame
-        // TODO: ideally we would like to use IOWorker facilities to save the final output
-        QScopedPointer<QImage> q_image( fromLDRPFStoQImage(tm_frame.data()) );
-
-        QFileInfo qfi(saveLdrFilename);
-        if (!q_image->save(saveLdrFilename, qfi.suffix().toLocal8Bit().constData(), 100))
+        // Create an ad-hoc IOWorker to save the file
+        if ( IOWorker().write_ldr_frame(tm_frame.data(), saveLdrFilename, 100, tmopts) )
         {
-            error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
+            // File save successful
+            VERBOSEPRINT("Image %1 saved successfully", saveLdrFilename.toLocal8Bit().constData());
         }
         else
         {
-            TMOptionsOperations operations(tmopts);
-            //ExifOperations methods want a std::string, we need to use the QFile::encodeName(QString).constData() trick to cope with local 8-bit encoding determined by the user's locale.
-            ExifOperations::writeExifData(QFile::encodeName(saveLdrFilename).constData(),operations.getExifComment().toStdString());
+            // File save failed
+            VERBOSEPRINT("Could not save %1", saveLdrFilename.toLocal8Bit().constData());
+            error(qPrintable(tr("ERROR: Cannot save to file: %1").arg(saveLdrFilename)));
         }
         emit finishedParsing();
     }
