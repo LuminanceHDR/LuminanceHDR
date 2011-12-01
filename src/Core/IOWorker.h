@@ -71,7 +71,7 @@ public Q_SLOTS:
     bool write_hdr_frame(pfs::Frame *frame, QString filename);
     bool write_hdr_frame(GenericViewer* frame, QString filename);
 
-    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
+    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL, float min_luminance = 0.0f, float max_luminance = 1.0f);
     bool write_ldr_frame(GenericViewer* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
 
 signals:

@@ -127,11 +127,13 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int 
 {
     pfs::Frame* ldr_frame = ldr_viewer->getFrame();
 
-    bool status = write_ldr_frame(ldr_frame, filename, quality, tmopts);
+    bool status = write_ldr_frame(ldr_frame, filename, quality, tmopts, ldr_viewer->getMinLuminanceValue(), ldr_viewer->getMaxLuminanceValue());
 
     if ( status )
     {
-        ldr_viewer->setFileName(filename);
+        if ( !ldr_viewer->isHDR() )
+            ldr_viewer->setFileName(filename);
+
         emit write_ldr_success(ldr_viewer, filename);
     }
 
@@ -139,7 +141,7 @@ bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int 
 }
 
 
-bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality, TonemappingOptions* tmopts)
+bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality, TonemappingOptions* tmopts, float min_luminance, float max_luminance)
 {
     bool status = true;
     emit IO_init();
@@ -157,7 +159,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
         // QScopedArrayPointer will call delete [] when this object goes out of scope
-        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input));
+        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input, min_luminance, max_luminance));
         int width = ldr_input->getWidth();
         int height = ldr_input->getHeight();
         try
@@ -181,7 +183,7 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
     else
     {
         // QScopedPointer will call delete when this object goes out of scope
-        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input));
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
         if ( image->save(filename, format.toLocal8Bit(), quality) )
         {
             if (tmopts != NULL)

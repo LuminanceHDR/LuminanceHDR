@@ -559,7 +559,8 @@ void MainWindow::save_hdr_failed()
 
 void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
 {
-    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
+    if ( !saved_ldr->isHDR() )
+        m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
 void MainWindow::save_ldr_failed()
