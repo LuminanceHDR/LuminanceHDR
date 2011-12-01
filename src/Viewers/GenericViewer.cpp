@@ -162,7 +162,7 @@ bool GenericViewer::isFilledToWindow()
 
 void GenericViewer::normalSize()
 {
-    if ( mViewerMode == NORMAL_SIZE ) return;
+    //if ( mViewerMode == NORMAL_SIZE ) return;
 
     mScene->setSceneRect(mPixmap->boundingRect());
     mViewerMode = NORMAL_SIZE;
