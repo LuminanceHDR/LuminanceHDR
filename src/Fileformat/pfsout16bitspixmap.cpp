@@ -34,20 +34,33 @@
 
 namespace
 {
-inline quint16 clamp_to_16bits(const float value)
+
+inline quint16 clamp_to_16bits(const float& value)
 {
-    if (value < 0.0f) return 0;
-    if (value > 65535.f) return 65535;
+    if (value <= 0.0f) return 0;
+    if (value >= 65535.f) return 65535;
+    return (quint16)(value*65535.f + 0.5f);
+}
+
+//! \note I pass value by value, so I can use it as a temporary variable inside the function
+//! I will let the compiler do the optimization that it likes
+inline quint16 clamp_and_offset_to_16bits(float value, const float& min, const float& max)
+{
+    if (value <= min) value = min;
+    else if (value >= max) value = max;
+
+    value = (value - min)/(max - min);
+
     return (quint16)(value*65535.f + 0.5f);
 }
 
 }
 
-quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe)
+quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe, float min_luminance, float max_luminance)
 {
 #ifdef TIMER_PROFILING
-    msec_timer __timer;
-    __timer.start();
+    msec_timer stop_watch;
+    stop_watch.start();
 #endif
 
 #ifdef QT_DEBUG
@@ -70,14 +83,14 @@ quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe)
 #pragma omp parallel for
     for (int idx = 0; idx < height*width; ++idx)
     {
-        temp_pixmap[3*idx] = clamp_to_16bits(p_R[idx]);;
-        temp_pixmap[3*idx + 1] = clamp_to_16bits(p_G[idx]);
-        temp_pixmap[3*idx + 2] = clamp_to_16bits(p_B[idx]);
+        temp_pixmap[3*idx] = clamp_and_offset_to_16bits(p_R[idx], min_luminance, max_luminance);
+        temp_pixmap[3*idx + 1] = clamp_and_offset_to_16bits(p_G[idx], min_luminance, max_luminance);
+        temp_pixmap[3*idx + 2] = clamp_and_offset_to_16bits(p_B[idx], min_luminance, max_luminance);
     }
 
 #ifdef TIMER_PROFILING
-    __timer.stop_and_update();
-    std::cout << "fromLDRPFSto16bitsPixmap() = " << __timer.get_time() << " msec" << std::endl;
+    stop_watch.stop_and_update();
+    std::cout << "fromLDRPFSto16bitsPixmap() = " << stop_watch.get_time() << " msec" << std::endl;
 #endif
 	
     return temp_pixmap;
