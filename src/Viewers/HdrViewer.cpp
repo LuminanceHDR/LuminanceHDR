@@ -81,10 +81,10 @@ public:
 
     void setMinMax( float min, float max )
     {
-        m_MinValue  = min;
-        m_MaxValue  = max;
-        m_Range     = max - min;
-        m_LogRange  = log2f(max/min);
+        m_MinValue      = min;
+        m_MaxValue      = max;
+        m_Range         = max - min;
+        m_LogRange      = log2f(max/min);
     }
 
     void updateErrorColors(int nan_inf_color, int neg_color)
@@ -101,6 +101,16 @@ public:
     int getMappingMethod()
     {
         return m_MappingMethod;
+    }
+
+    float getMinLuminance()
+    {
+        return m_MinValue;
+    }
+
+    float getMaxLuminance()
+    {
+        return m_MaxValue;
     }
 
     void getMapping(float r, float g, float b, QRgb& pixel)
@@ -384,4 +394,16 @@ QString HdrViewer::getFileNamePostFix()
 QString HdrViewer::getExifComment()
 {
     return QString("HDR Created with Luminance HDR");
+}
+
+//! \brief returns max value of the handled frame
+float HdrViewer::getMaxLuminanceValue()
+{
+    return m_mappingImpl->getMaxLuminance();
+}
+
+//! \brief returns min value of the handled frame
+float HdrViewer::getMinLuminanceValue()
+{
+    return m_mappingImpl->getMinLuminance();
 }

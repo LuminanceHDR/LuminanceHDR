@@ -81,6 +81,12 @@ public:
     //! \return always return TRUE
     bool isHDR();
 
+    //! \brief returns max value of the handled frame
+    float getMaxLuminanceValue();
+
+    //! \brief returns min value of the handled frame
+    float getMinLuminanceValue();
+
 public Q_SLOTS:
     void updateRangeWindow();
     int getLumMappingMethod();

@@ -95,7 +95,15 @@ public Q_SLOTS:
     //! \param[src] GenericViewer to syncronize with
     void syncViewer(GenericViewer *src);
 
+    //! \brief tells is the viewer holds an LDR or an HDR frame
     virtual bool isHDR() = 0;
+
+    //! \brief returns max value of the handled frame
+    virtual float getMaxLuminanceValue() = 0;
+
+    //! \brief returns min value of the handled frame
+    virtual float getMinLuminanceValue() = 0;
+
     virtual void levelsRequested(bool) = 0; // only used by LdrViewer
 
     //! \brief returns a filename postfix based on the viewer's content
@@ -125,9 +133,6 @@ protected Q_SLOTS:
 
     //! \brief Update viewer's pixmap when a new frame is set by setFrame()
     virtual void updatePixmap() = 0;
-
-//    //! \brief Refresh viewer's pixmap when
-//    virtual void refreshPixmap() = 0;
 
 protected:
 

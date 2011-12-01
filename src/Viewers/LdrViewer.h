@@ -49,15 +49,17 @@ public:
     //! \return always return FALSE
     bool isHDR();
 
-    void setTonemappingOptions(TonemappingOptions* tmopts)
-    {
-        mTonemappingOptions = tmopts;
-    }
+    //! \brief Set tonemap options that generated the handled frame
+    void setTonemappingOptions(TonemappingOptions* tmopts);
 
-    TonemappingOptions* getTonemappingOptions()
-    {
-        return mTonemappingOptions;
-    }
+    //! \brief Get tonemap options that generated the handled frame
+    TonemappingOptions* getTonemappingOptions();
+
+    //! \brief returns max value of the handled frame
+    float getMaxLuminanceValue();
+
+    //! \brief returns min value of the handled frame
+    float getMinLuminanceValue();
 
 signals:
     void levels_closed();

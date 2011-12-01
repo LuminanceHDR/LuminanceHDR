@@ -185,3 +185,25 @@ void LdrViewer::updatePixmap()
 
     mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
 }
+
+void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
+{
+    mTonemappingOptions = tmopts;
+}
+
+TonemappingOptions* LdrViewer::getTonemappingOptions()
+{
+    return mTonemappingOptions;
+}
+
+//! \brief returns max value of the handled frame
+float LdrViewer::getMaxLuminanceValue()
+{
+    return 1.0f;
+}
+
+//! \brief returns min value of the handled frame
+float LdrViewer::getMinLuminanceValue()
+{
+    return 0.0f;
+}
