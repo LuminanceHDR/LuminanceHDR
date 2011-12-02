@@ -26,7 +26,6 @@
 #include "BatchTM/BatchTMJob.h"
 #include "Fileformat/pfstiff.h"
 #include "Exif/ExifOperations.h"
-#include "Threads/TMOThread.h"
 #include "Libpfs/frame.h"
 #include "Filter/pfscut.h"
 #include "Core/IOWorker.h"
@@ -34,6 +33,7 @@
 #include "Core/IOWorker.h"
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
+#include "TonemappingEngine/TonemapOperator.h"
 
 #include <QFileInfo>
 #include <QByteArray>

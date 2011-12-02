@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,22 +23,22 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Fattal02Thread.h"
+#include "TonemappingEngine/TonemapOperatorAshikhmin02.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-QMutex TonemapOperatorFattal02::m_Mutex;
-
-TonemapOperatorFattal02::TonemapOperatorFattal02():
+TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
     TonemapOperator()
 {}
 
-void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
@@ -47,21 +48,17 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    m_Mutex.lock();
-    pfstmo_fattal02(workingframe,
-                    opts->operator_options.fattaloptions.alpha,
-                    opts->operator_options.fattaloptions.beta,
-                    opts->operator_options.fattaloptions.color,
-                    opts->operator_options.fattaloptions.noiseredux,
-                    opts->operator_options.fattaloptions.newfattal,
-                    &ph);
-    m_Mutex.unlock();
+    pfstmo_ashikhmin02(workingframe,
+                       opts->operator_options.ashikhminoptions.simple,
+                       opts->operator_options.ashikhminoptions.lct,
+                       (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
+                       &ph);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
-TMOperator TonemapOperatorFattal02::getType()
+TMOperator TonemapOperatorAshikhmin02::getType()
 {
-    return fattal;
+    return ashikhmin;
 }

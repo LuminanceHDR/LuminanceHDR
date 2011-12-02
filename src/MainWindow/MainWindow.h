@@ -63,7 +63,6 @@ class LdrViewer;            // #include "Viewers/LdrViewer.h"
 class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
 class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
 class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
-class TMOThread;            // #include "Threads/TMOThread.h"
 class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 class TMWorker;

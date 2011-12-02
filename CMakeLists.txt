@@ -289,16 +289,16 @@ SET(LUMINANCE_HDR_INCLUDE
         src/Viewers/ISelectionAnchor.h
 # end new viewer
 
-        src/Threads/Ashikhmin02Thread.h
-        src/Threads/Drago03Thread.h
-        src/Threads/Durand02Thread.h
-        src/Threads/Fattal02Thread.h
-        src/Threads/Mantiuk06Thread.h
-        src/Threads/Mantiuk08Thread.h
-        src/Threads/Pattanaik00Thread.h
-        src/Threads/Reinhard02Thread.h
-        src/Threads/Reinhard05Thread.h
-        src/Threads/TMOThread.h
+        src/TonemappingEngine/TonemapOperatorAshikhmin02.h
+        src/TonemappingEngine/TonemapOperatorDrago03.h
+        src/TonemappingEngine/TonemapOperatorDurand02.h
+        src/TonemappingEngine/TonemapOperatorFattal02.h
+        src/TonemappingEngine/TonemapOperatorMantiuk06.h
+        src/TonemappingEngine/TonemapOperatorMantiuk08.h
+        src/TonemappingEngine/TonemapOperatorPattanaik00.h
+        src/TonemappingEngine/TonemapOperatorReinhard02.h
+        src/TonemappingEngine/TonemapOperatorReinhard05.h
+        src/TonemappingEngine/TonemapOperator.h
 )
 
 SET(LUMINANCE_HDR_SRC
@@ -327,18 +327,10 @@ SET(LUMINANCE_HDR_SRC
 	src/PreviewPanel/PreviewPanel.cpp
 	src/Projection/ProjectionsDialog.cpp
 	src/Resize/ResizeDialog.cpp
-	src/Threads/Ashikhmin02Thread.cpp
-	src/Threads/Drago03Thread.cpp
-	src/Threads/Durand02Thread.cpp
-	src/Threads/Fattal02Thread.cpp
+
 	src/Threads/HdrInputLoader.cpp
 	src/Threads/LoadHdrThread.cpp
-	src/Threads/Mantiuk06Thread.cpp	
-	src/Threads/Mantiuk08Thread.cpp
-	src/Threads/Pattanaik00Thread.cpp
-	src/Threads/Reinhard02Thread.cpp
-	src/Threads/Reinhard05Thread.cpp
-	src/Threads/TMOThread.cpp
+
 	src/TonemappingPanel/TMOProgressIndicator.cpp
 	src/TonemappingPanel/TonemappingPanel.cpp
 	src/TonemappingPanel/TonemappingWarnDialog.cpp
@@ -367,7 +359,18 @@ SET(LUMINANCE_HDR_SRC
 	src/Common/commandline.cpp	
 	src/Common/global.cpp
         src/Common/LuminanceOptions.cpp
-	
+
+        src/TonemappingEngine/TonemapOperatorAshikhmin02.cpp
+        src/TonemappingEngine/TonemapOperatorDrago03.cpp
+        src/TonemappingEngine/TonemapOperatorDurand02.cpp
+        src/TonemappingEngine/TonemapOperatorFattal02.cpp
+        src/TonemappingEngine/TonemapOperatorMantiuk06.cpp
+        src/TonemappingEngine/TonemapOperatorMantiuk08.cpp
+        src/TonemappingEngine/TonemapOperatorPattanaik00.cpp
+        src/TonemappingEngine/TonemapOperatorReinhard02.cpp
+        src/TonemappingEngine/TonemapOperatorReinhard05.cpp
+        src/TonemappingEngine/TonemapOperator.cpp
+
 	src/main.cpp
 )
 

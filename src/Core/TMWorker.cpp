@@ -34,8 +34,8 @@
 #include "Filter/pfscut.h"
 #include "Filter/pfsgamma.h"
 #include "Filter/pfssize.h"
-#include "Threads/TMOThread.h"
 #include "Common/ProgressHelper.h"
+#include "TonemappingEngine/TonemapOperator.h"
 
 TMWorker::TMWorker(QObject* parent):
     QObject(parent),

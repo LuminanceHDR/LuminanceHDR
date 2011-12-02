@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,15 +23,16 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#ifndef TMOTHREAD_H
-#define TMOTHREAD_H
+#ifndef TONEMAP_OPERATOR_H
+#define TONEMAP_OPERATOR_H
 
 #include <QObject>
 
-//#include "Libpfs/colorspace.h"
 #include "Core/TonemappingOptions.h"
 #include "Common/ProgressHelper.h"
 
@@ -38,67 +40,6 @@
 namespace pfs {
     class Frame;
 }
-
-//class ProgressHelper;
-
-/*
-enum TMOTHREAD_MODE { TMO_INTERACTIVE, TMO_BATCH, TMO_PREVIEW };
-
-class TMOThread : public QThread
-{
-    Q_OBJECT
-protected:
-    TMOThread(pfs::Frame *frame, const TonemappingOptions *opts);
-
-public:
-  ///! Using this static function, it's possible to obtain an object of type TMOThread
-  static TMOThread* getTMOThread(const TMOperator tmoOperator, pfs::Frame *frame, const TonemappingOptions* opt);
-
-  virtual ~TMOThread();
-  virtual void startTonemapping();
-
-  void set_mode(TMOTHREAD_MODE mode) { m_tmo_thread_mode = mode; }
-  void set_batch_mode() { m_tmo_thread_mode = TMO_BATCH; }
-  void set_image_number(int n) { m_image_num = n; }
-
-  ///! This function should not be here
-  static void apply_white_black_point(pfs::Frame*, float white_point = 0.0f, float black_point = 100.0f);
-  
-public slots:
-	virtual void terminateRequested();
-  
-signals:
-	void imageComputed(QImage*, quint16*);
-	void imageComputed(QImage*, quint16*, const TonemappingOptions* opts);
-	void imageComputed(QImage*, int imageNumber);
-	void processedFrame(pfs::Frame *);
-	void setMaximumSteps(int);
-	void setValue(int);
-	void setValue();
-	void finished();
-	void deleteMe(TMOThread *);
-	void tmo_error(const char *);
-
-
-protected:
-	virtual void run() = 0;
-	void finalize();
-	pfs::Frame *workingframe;
-        const TonemappingOptions *opts;
-	TMOTHREAD_MODE m_tmo_thread_mode;
-	int m_image_num;
-	ProgressHelper *ph;
-  
-	// Different output color spaces can be selected by a specific operator
-	// in order to make its output compliant to the one defined by qtpfsgui 1.9.3
-	// In the future, this value can change accordingly to the TM operator's changes
-        pfs::ColorSpace out_CS;
-
-
-};
-
-*/
-
 
 class TonemapOperator
 {

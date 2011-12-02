@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,20 +23,22 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Reinhard02Thread.h"
+#include "TonemappingEngine/TonemapOperatorDrago03.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-TonemapOperatorReinhard02::TonemapOperatorReinhard02():
+TonemapOperatorDrago03::TonemapOperatorDrago03():
     TonemapOperator()
 {}
 
-void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
@@ -45,21 +48,14 @@ void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, Tonemappi
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_reinhard02(workingframe,
-                      opts->operator_options.reinhard02options.key,
-                      opts->operator_options.reinhard02options.phi,
-                      opts->operator_options.reinhard02options.range,
-                      opts->operator_options.reinhard02options.lower,
-                      opts->operator_options.reinhard02options.upper,
-                      opts->operator_options.reinhard02options.scales,
-                      &ph);
+    pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
-TMOperator TonemapOperatorReinhard02::getType()
+TMOperator TonemapOperatorDrago03::getType()
 {
-    return reinhard02;
+    return drago;
 }
 

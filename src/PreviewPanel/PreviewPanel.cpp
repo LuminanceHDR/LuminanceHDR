@@ -26,12 +26,12 @@
 #include <QSharedPointer>
 
 #include "PreviewPanel/PreviewPanel.h"
-#include "Threads/TMOThread.h"
 #include "Filter/pfssize.h"
 #include "Filter/pfscut.h"
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
+#include "TonemappingEngine/TonemapOperator.h"
 
 namespace // anoymous namespace
 {

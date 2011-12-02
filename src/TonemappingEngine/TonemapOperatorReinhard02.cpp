@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,20 +23,22 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Pattanaik00Thread.h"
+#include "TonemappingEngine/TonemapOperatorReinhard02.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
+TonemapOperatorReinhard02::TonemapOperatorReinhard02():
     TonemapOperator()
 {}
 
-void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
@@ -45,20 +48,21 @@ void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, Tonemapp
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_pattanaik00(workingframe,
-                       opts->operator_options.pattanaikoptions.local,
-                       opts->operator_options.pattanaikoptions.multiplier,
-                       opts->operator_options.pattanaikoptions.cone,
-                       opts->operator_options.pattanaikoptions.rod,
-                       opts->operator_options.pattanaikoptions.autolum,
-                       &ph);
-
+    pfstmo_reinhard02(workingframe,
+                      opts->operator_options.reinhard02options.key,
+                      opts->operator_options.reinhard02options.phi,
+                      opts->operator_options.reinhard02options.range,
+                      opts->operator_options.reinhard02options.lower,
+                      opts->operator_options.reinhard02options.upper,
+                      opts->operator_options.reinhard02options.scales,
+                      &ph);
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
-TMOperator TonemapOperatorPattanaik00::getType()
+TMOperator TonemapOperatorReinhard02::getType()
 {
-    return pattanaik;
+    return reinhard02;
 }
+

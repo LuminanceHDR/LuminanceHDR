@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,20 +23,26 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Ashikhmin02Thread.h"
+#include "TonemappingEngine/TonemapOperatorMantiuk06.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
+QMutex TonemapOperatorMantiuk06::m_Mutex;
+
+TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
     TonemapOperator()
 {}
 
-void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
@@ -45,17 +52,21 @@ void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, Tonemapp
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_ashikhmin02(workingframe,
-                       opts->operator_options.ashikhminoptions.simple,
-                       opts->operator_options.ashikhminoptions.lct,
-                       (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                       &ph);
+    // pfstmo_mantiuk06 not reentrant
+    m_Mutex.lock();
+    pfstmo_mantiuk06(workingframe,
+                     opts->operator_options.mantiuk06options.contrastfactor,
+                     opts->operator_options.mantiuk06options.saturationfactor,
+                     opts->operator_options.mantiuk06options.detailfactor,
+                     opts->operator_options.mantiuk06options.contrastequalization,
+                     &ph);
+    m_Mutex.unlock();
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
-                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
-TMOperator TonemapOperatorAshikhmin02::getType()
+TMOperator TonemapOperatorMantiuk06::getType()
 {
-    return ashikhmin;
+    return mantiuk06;
 }

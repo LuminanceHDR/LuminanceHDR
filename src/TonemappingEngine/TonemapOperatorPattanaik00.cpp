@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,20 +23,22 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Drago03Thread.h"
+#include "TonemappingEngine/TonemapOperatorPattanaik00.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-TonemapOperatorDrago03::TonemapOperatorDrago03():
+TonemapOperatorPattanaik00::TonemapOperatorPattanaik00():
     TonemapOperator()
 {}
 
-void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
+void TonemapOperatorPattanaik00::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
     ph.emitSetMaximum(100);
 
@@ -45,14 +48,20 @@ void TonemapOperatorDrago03::tonemapFrame(pfs::Frame* workingframe, TonemappingO
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, &ph);
+    pfstmo_pattanaik00(workingframe,
+                       opts->operator_options.pattanaikoptions.local,
+                       opts->operator_options.pattanaikoptions.multiplier,
+                       opts->operator_options.pattanaikoptions.cone,
+                       opts->operator_options.pattanaikoptions.rod,
+                       opts->operator_options.pattanaikoptions.autolum,
+                       &ph);
+
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
 
-TMOperator TonemapOperatorDrago03::getType()
+TMOperator TonemapOperatorPattanaik00::getType()
 {
-    return drago;
+    return pattanaik;
 }
-
