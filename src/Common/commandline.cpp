@@ -499,7 +499,7 @@ void  CommandLineInterfaceManager::startTonemap()
         //TODO
         tmopts->origxsize = HDR->getWidth();
 #ifdef QT_DEBUG
-        qDebug() << "XSIZE: " << tmopts->xsize << std::endl;
+        qDebug() << "XSIZE:" << tmopts->xsize;
 #endif
         if (tmopts->xsize == -2) tmopts->xsize = HDR->getWidth();
 
