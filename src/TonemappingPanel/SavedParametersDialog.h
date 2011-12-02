@@ -35,13 +35,29 @@ class SavedParameters : public QDialog, private Ui::ParametersDialog
     Q_OBJECT
 
 public:
+    //! \brief Default constructor
+    explicit SavedParameters(QWidget *parent = 0);
+
+    //! \brief Specialized ctor
     SavedParameters(TMOperator op, QWidget *parent = 0);
+
     ~SavedParameters();
-	QModelIndex getCurrentIndex() { return tableView->currentIndex(); }
-	QSqlTableModel *getModel() { return model; }
+
+    QModelIndex getCurrentIndex();
+    QSqlTableModel* getModel();
 
 protected:
-	QSqlTableModel *model;
+    QSqlTableModel* model;
 };
+
+inline QModelIndex SavedParameters::getCurrentIndex()
+{
+    return tableView->currentIndex();
+}
+
+inline QSqlTableModel* SavedParameters::getModel()
+{
+    return model;
+}
 
 #endif

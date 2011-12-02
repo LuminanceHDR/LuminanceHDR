@@ -46,7 +46,6 @@ void resetTonemappingOptions(TonemappingOptions* tm_options)
     tm_options->xsize              = PREVIEW_WIDTH;
     tm_options->pregamma           = 1.0f;
     tm_options->tonemapSelection   = false;
-    tm_options->tonemapOriginal    = false;
 }
 
 class PreviewLabelUpdater

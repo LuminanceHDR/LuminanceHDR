@@ -36,7 +36,7 @@
 
 //----------------- DO NOT CHANGE ENUMERATION ORDER -----------------------
 // all is used by SavedParametersDialog to select comments from all operators
-enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik, all};
+enum TMOperator {mantiuk06,mantiuk08,fattal,drago,durand,reinhard02,reinhard05,ashikhmin,pattanaik};
 
 class TonemappingOptions
 {
@@ -45,12 +45,10 @@ private:
 public:
     int origxsize;          // this parameter should be coming from the UI
     int xsize;              // this parameter should be coming from the frame
-	int quality;
+    int quality;
     float pregamma;
     bool tonemapSelection;  // we should let do this thing to the tonemapping thread
-    bool tonemapOriginal;   // ?
     TMOperator tmoperator;
-    const char *tmoperator_str; // ?
     struct {
         struct {
             bool  simple;
