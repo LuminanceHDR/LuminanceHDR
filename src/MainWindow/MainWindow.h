@@ -58,8 +58,6 @@ namespace pfs {
 
 class IOWorker;             // #include "Core/IOWorker.h"
 class GenericViewer;
-class HdrViewer;            // #include "Viewers/HdrViewer.h"
-class LdrViewer;            // #include "Viewers/LdrViewer.h"
 class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
 class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
 class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
@@ -225,9 +223,6 @@ protected:
     } tm_status;
     int num_ldr_generated;
     int curr_num_ldr_open;
-
-    pfs::Frame* getSelectedFrame(HdrViewer* hdr);
-    void getCropCoords(HdrViewer* hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
 
     void init();
     void createUI();

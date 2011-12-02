@@ -114,6 +114,16 @@ QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
                                         filetypes);
 }
 
+inline void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
+{
+#ifdef QT_DEBUG
+    assert( gv != NULL );
+#endif
+
+    QRect cropRect = gv->getSelectionRect().normalized();
+    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+}
+
 }
 
 
@@ -1451,7 +1461,8 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     if ( tm_status.curr_tm_frame->hasSelection() )
     {
         opts->tonemapSelection = true;
-        getCropCoords((HdrViewer *)tm_status.curr_tm_frame,
+
+        getCropCoords(tm_status.curr_tm_frame,
                       opts->selection_x_up_left,
                       opts->selection_y_up_left,
                       opts->selection_x_bottom_right,
@@ -1541,25 +1552,6 @@ void MainWindow::tonemapFailed(QString error_msg)
                           QMessageBox::Ok,QMessageBox::NoButton);
 
     tmPanel->setEnabled(true);
-}
-
-
-pfs::Frame * MainWindow::getSelectedFrame(HdrViewer *hdr)
-{
-    assert( hdr != NULL );
-    pfs::Frame *frame = hdr->getFrame();
-    QRect cropRect = hdr->getSelectionRect();
-    int x_ul, y_ul, x_br, y_br;
-    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-    return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
-}
-
-void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)
-{
-    assert( hdr != NULL );
-
-    QRect cropRect = hdr->getSelectionRect();
-    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
 /*
