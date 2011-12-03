@@ -45,7 +45,7 @@
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QTimer>
-#include <Qstring>
+#include <QString>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
