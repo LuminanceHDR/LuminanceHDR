@@ -38,7 +38,6 @@
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "HdrCreation/createhdr.h"
-#include "Threads/LoadHdrThread.h"
 #include "Exif/ExifOperations.h"
 #include "Common/commandline.h"
 
@@ -398,35 +397,39 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 		error("Wrong combination of parameters.");
 	}
 
-	if (operation_mode==CREATE_HDR_MODE) {
-		if (verbose) {
-                        VERBOSEPRINT("Temporary directory: %1",luminance_options.getTempDir());
-                        VERBOSEPRINT("Using %1 threads.", luminance_options.getNumThreads());
-		}
-		hdrCreationManager = new HdrCreationManager();
-		connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
-		connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
-		connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(createHDR()));
-		connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
-        hdrCreationManager->setConfig(hdrcreationconfig);
-		hdrCreationManager->setFileList(inputFiles);
-		hdrCreationManager->loadInputFiles();
-	}
-	else {
-		LoadHdrThread *loadthread = new LoadHdrThread(loadHdrFilename, "");
-		connect(loadthread, SIGNAL(finished()), loadthread, SLOT(deleteLater()));
-		connect(loadthread, SIGNAL(hdr_ready(pfs::Frame*,QString)), this, SLOT(loadFinished(pfs::Frame*,QString)));
-		connect(loadthread, SIGNAL(load_failed(QString)), this, SLOT(errorWhileLoading(QString)));
-		loadthread->start();
-		VERBOSEPRINT("Loading file %1",loadHdrFilename);
-	}
-}
+        if (operation_mode==CREATE_HDR_MODE)
+        {
+            if (verbose)
+            {
+                LuminanceOptions luminance_options;
 
-void CommandLineInterfaceManager::loadFinished(pfs::Frame* hdr, QString fname)
-{
-	VERBOSEPRINT("Successfully loaded file %1.",fname);
-	HDR=hdr;
-	saveHDR();
+                VERBOSEPRINT("Temporary directory: %1",luminance_options.getTempDir());
+                VERBOSEPRINT("Using %1 threads.", luminance_options.getNumThreads());
+            }
+            hdrCreationManager = new HdrCreationManager();
+            connect(hdrCreationManager,SIGNAL(finishedLoadingInputFiles(QStringList)),this, SLOT(finishedLoadingInputFiles(QStringList)));
+            connect(hdrCreationManager,SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
+            connect(hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(createHDR()));
+            connect(hdrCreationManager, SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+            hdrCreationManager->setConfig(hdrcreationconfig);
+            hdrCreationManager->setFileList(inputFiles);
+            hdrCreationManager->loadInputFiles();
+        }
+        else
+        {
+            VERBOSEPRINT("Loading file %1",loadHdrFilename);
+            HDR = IOWorker().read_hdr_frame(loadHdrFilename);
+
+            if ( HDR != NULL )
+            {
+                VERBOSEPRINT("Successfully loaded file %1.", loadHdrFilename);
+                saveHDR();
+            }
+            else
+            {
+                errorWhileLoading(QString("Load file %1 failed").arg(loadHdrFilename));
+            }
+	}
 }
 
 void CommandLineInterfaceManager::finishedLoadingInputFiles(QStringList filesLackingExif)

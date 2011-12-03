@@ -329,7 +329,6 @@ SET(LUMINANCE_HDR_SRC
 	src/Resize/ResizeDialog.cpp
 
 	src/Threads/HdrInputLoader.cpp
-	src/Threads/LoadHdrThread.cpp
 
 	src/TonemappingPanel/TMOProgressIndicator.cpp
 	src/TonemappingPanel/TonemappingPanel.cpp
@@ -395,7 +394,6 @@ SET(LUMINANCE_HDR_MOC
 	src/Projection/ProjectionsDialog.h
 	src/Resize/ResizeDialog.h
 	src/Threads/HdrInputLoader.h
-	src/Threads/LoadHdrThread.h
 	src/TonemappingPanel/TMOProgressIndicator.h
 	src/TonemappingPanel/TonemappingPanel.h
 	src/TonemappingPanel/TonemappingWarnDialog.h

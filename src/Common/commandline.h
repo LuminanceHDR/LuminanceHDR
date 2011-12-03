@@ -67,7 +67,6 @@ private:
 	HdrCreationManager *hdrCreationManager;
 	QString saveHdrFilename;
 	QString saveLdrFilename;
-        LuminanceOptions luminance_options;
 	pfs::Frame *HDR;
 	void saveHDR();
 	void printHelp(char *progname);
@@ -82,7 +81,7 @@ private slots:
 	void errorWhileLoading(QString errormessage);
 	void ais_failed(QProcess::ProcessError);
 	void createHDR();
-	void loadFinished(pfs::Frame*,QString);
+
 	void parseArgs();
     void execCommandLineParamsSlot();
 
