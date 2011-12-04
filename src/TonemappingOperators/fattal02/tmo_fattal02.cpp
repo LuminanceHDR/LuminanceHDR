@@ -337,6 +337,10 @@ void tmo_fattal02(unsigned int width, unsigned int height,
     nlevels++;
     mins /= 2;
   }
+  // std::cout << "DEBUG: nlevels = " << nlevels << ", mins = " << mins << std::endl;
+  // The following lines solves a bug with images particularly small
+  if (nlevels == 0) nlevels = 1;
+
   pfs::Array2D** pyramids = new pfs::Array2D*[nlevels];
   createGaussianPyramids(H, pyramids, nlevels);
 
