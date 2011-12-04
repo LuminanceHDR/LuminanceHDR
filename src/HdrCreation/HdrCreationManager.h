@@ -34,7 +34,7 @@
 #include "arch/math.h"
 #include "createhdr.h"
 
-const config_triple predef_confs[6]= {
+const config_triple predef_confs[6] = {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},
 {TRIANGULAR, GAMMA, DEBEVEC,"",""},
 {PLATEAU, LINEAR,DEBEVEC,"",""},
@@ -42,6 +42,7 @@ const config_triple predef_confs[6]= {
 {GAUSSIAN, LINEAR,DEBEVEC,"",""},
 {GAUSSIAN, GAMMA,DEBEVEC,"",""},
 };
+
 
 class HdrCreationManager : public QObject {
 Q_OBJECT

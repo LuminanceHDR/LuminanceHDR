@@ -46,6 +46,7 @@
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "TonemappingPanel/SavedParametersDialog.h"
 #include "TonemappingPanel/SavingParametersDialog.h"
+#include "TonemappingOperators/pfstmdefaultparams.h"
 
 TonemappingPanel::TonemappingPanel(QWidget *parent)
     : QWidget(parent), adding_custom_size(false)
@@ -58,32 +59,32 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06
-    contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, 0.1f);
+    contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
     connect(contrastfactorGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, 0.8f);
-    detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, 1.0f);
+    saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
+    detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
 
     // mantiuk08
-    colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, 1.f);
+    colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
 
     connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, 1.f);
-    luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, 1.f);
+    contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
+    luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(alphaSlider, alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, 1.f, true);
+    alphaGang = new Gang(alphaSlider, alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, FATTAL02_ALPHA, true);
 
     connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    betaGang = new Gang(betaSlider, betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, 0.9f);
-    saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, .8f);
-    noiseGang = new Gang(noiseSlider, noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, 0.f);
+    betaGang = new Gang(betaSlider, betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
+    saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, FATTAL02_COLOR);
+    noiseGang = new Gang(noiseSlider, noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
     oldFattalGang = new Gang(NULL,NULL, oldFattalCheckBox);
 
     // ashikhmin02
@@ -96,28 +97,28 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     eq2Gang = new Gang(NULL, NULL,NULL, NULL, eq2RadioButton, eq4RadioButton);
 
     // drago03
-    biasGang = new Gang(biasSlider, biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.85f);
+    biasGang = new Gang(biasSlider, biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, DRAGO03_BIAS);
 
     connect(biasGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
     // durand02
-    spatialGang = new Gang(spatialSlider, spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, 2.f);
+    spatialGang = new Gang(spatialSlider, spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
 
     connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    rangeGang = new Gang(rangeSlider, rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, 0.4f);
-    baseGang = new Gang(baseSlider, basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, 5.0f);
+    rangeGang = new Gang(rangeSlider, rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, DURAND02_RANGE);
+    baseGang = new Gang(baseSlider, basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, DURAND02_BASE);
 
     // pattanaik00
-    multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, 1.f, true);
+    multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, PATTANAIK00_MULTIPLIER, true);
 
     connect(multiplierGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(multiplierGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    coneGang = new Gang(coneSlider, conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
-    rodGang = new Gang(rodSlider, roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+    coneGang = new Gang(coneSlider, conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_CONE);
+    rodGang = new Gang(rodSlider, roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_ROD);
     autoYGang = new Gang(NULL,NULL, autoYcheckbox);
     pattalocalGang = new Gang(NULL,NULL, pattalocal);
 
@@ -127,20 +128,20 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    phiGang = new Gang(phiSlider, phidsb,NULL,NULL,NULL,NULL, 0.f, 100.f, 1.f);
-    range2Gang = new Gang(range2Slider, range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, 8.f);
-    lowerGang = new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, 1.f);
-    upperGang = new Gang(upperSlider, upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, 43.f);
+    phiGang = new Gang(phiSlider, phidsb,NULL,NULL,NULL,NULL, 0.f, 100.f, REINHARD02_PHI);
+    range2Gang = new Gang(range2Slider, range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, REINHARD02_RANGE);
+    lowerGang = new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_LOWER);
+    upperGang = new Gang(upperSlider, upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_UPPER);
     usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
 
     // reinhard05
-    brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, 0.f);
+    brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
 
     connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
     connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
 
-    chromaticGang = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.f);
-    lightGang = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 1.f);
+    chromaticGang = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
+    lightGang = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
     // pregamma
     pregammaGang = new Gang(pregammaSlider, pregammadsb,NULL,NULL,NULL,NULL, 0, 3, 1);
@@ -148,13 +149,11 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     //--
     connect(stackedWidget_operators, SIGNAL(currentChanged(int)), this, SLOT(updateCurrentTmoOperator(int)));
 
-    recentPathLoadSaveTmoSettings = LuminanceOptions().getDefaultPathTmoSettings();
-
     connect(loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
     connect(saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
     connect(loadCommentsButton, SIGNAL(clicked()), this, SLOT(loadComments()));
 	
-	createDatabase();
+    createDatabase();
 }
 
 TonemappingPanel::~TonemappingPanel()
@@ -655,7 +654,7 @@ void TonemappingPanel::on_loadsettingsbutton_clicked()
 
     QString opened = QFileDialog::getOpenFileName(this,
                                                   tr("Load a tonemapping settings text file..."),
-                                                  recentPathLoadSaveTmoSettings,
+                                                  lum_options.getDefaultPathTmoSettings(),
                                                   tr("LuminanceHDR tonemapping settings text file (*.txt)") );
     if ( !opened.isEmpty() )
     {
@@ -667,13 +666,8 @@ void TonemappingPanel::on_loadsettingsbutton_clicked()
                                   QMessageBox::Ok,QMessageBox::NoButton);
             return;
         }
-        // update internal field variable
-        recentPathLoadSaveTmoSettings = qfi.path();
-        // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
-        if (recentPathLoadSaveTmoSettings != lum_options.getDefaultPathTmoSettings())
-        {
-            lum_options.setDefaultPathTmoSettings( recentPathLoadSaveTmoSettings );
-        }
+        lum_options.setDefaultPathTmoSettings( qfi.path() );
+
         //update filename internal field, used by parsing function fromTxt2Gui()
         tmoSettingsFilename = opened;
         //call parsing function
@@ -687,7 +681,7 @@ void TonemappingPanel::on_savesettingsbutton_clicked()
 
     QString fname = QFileDialog::getSaveFileName(this,
                                                  tr("Save tonemapping settings text file to..."),
-                                                 recentPathLoadSaveTmoSettings,
+                                                 lum_options.getDefaultPathTmoSettings(),
                                                  tr("LuminanceHDR tonemapping settings text file (*.txt)"));
     if( ! fname.isEmpty() )
     {
@@ -696,13 +690,9 @@ void TonemappingPanel::on_savesettingsbutton_clicked()
         {
             fname+=".txt";
         }
-        // update internal field variable
-        recentPathLoadSaveTmoSettings = qfi.path();
-        // if the new dir, the one just chosen by the user, is different from the one stored in the settings, update the settings->
-        if (recentPathLoadSaveTmoSettings != lum_options.getDefaultPathTmoSettings() )
-        {
-            lum_options.setDefaultPathTmoSettings(recentPathLoadSaveTmoSettings);
-        }
+
+        lum_options.setDefaultPathTmoSettings( qfi.path() );
+
         //write txt file
         fromGui2Txt(fname);
     }
