@@ -41,7 +41,6 @@ class LdrViewer: public GenericViewer
 public:
     LdrViewer(pfs::Frame* frame, TonemappingOptions* opts = 0, QWidget *parent = 0, bool ns = 0);
     virtual ~LdrViewer();
-    void levelsRequested(bool);
     QString getFileNamePostFix();
     QString getExifComment();
 
@@ -61,23 +60,13 @@ public:
     //! \brief returns min value of the handled frame
     float getMinLuminanceValue();
 
-signals:
-    void levels_closed();
-
 protected Q_SLOTS:
     virtual void updatePixmap();
-
-private Q_SLOTS:
-    void updatePreview(unsigned char *);
-    void restore_original();
-    void finalize_levels();
 
 private:
     void parseOptions(const TonemappingOptions *opts);
     QString caption; // ,postfix,exif_comment;
     QLabel *informativeLabel;
-    QImage *previewimage;
-    QImage *temp_image;
 
     TonemappingOptions* mTonemappingOptions;
 };

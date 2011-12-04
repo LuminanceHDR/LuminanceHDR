@@ -29,14 +29,10 @@
 #include <QDebug>
 #include <QScopedPointer>
 
-#include "Common/config.h"
-#include "Common/GammaAndLevels.h"
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
-#include "Libpfs/channel.h"
 #include "Libpfs/frame.h"
-#include "Common/msec_timer.h"
 #include "Fileformat/pfsoutldrimage.h"
 
 LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
@@ -44,9 +40,6 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     mTonemappingOptions(opts),
     informativeLabel(new QLabel( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()), mToolBar))
 {
-    temp_image = NULL;
-    previewimage = NULL;
-
     mToolBar->addWidget(informativeLabel);
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
@@ -57,7 +50,8 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
     QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+    //mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+    setQImage(*temp_qimage);
 
     updateView();
 }
@@ -96,84 +90,6 @@ QString LdrViewer::getExifComment()
     } else
         return QString();
 }
-
-void LdrViewer::levelsRequested(bool /*a*/)
-{
-//    // TODO : Check this rubbish!
-
-//    temp_image = mImage;
-//    previewimage = new QImage( mCols, mRows, QImage::Format_RGB32 ); //image->copy() //copy original data
-
-//    GammaAndLevels *levels = new GammaAndLevels(this, mImage);
-//    levels->setAttribute(Qt::WA_DeleteOnClose);
-//    //when closing levels, inform the Tone Mapping dialog.
-//    connect(levels,SIGNAL(closing()), this, SIGNAL(levels_closed()));
-//    //refresh preview when a values changes
-//    connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
-//    //accept the changes
-//    connect(levels,SIGNAL(accepted()),this,SLOT(finalize_levels()));
-//    //restore original on "cancel"
-//    connect(levels,SIGNAL(rejected()),this,SLOT(restore_original()));
-
-//    levels->exec();
-}
-
-// TODO : clean up this implementation... (in case I keep it in the final release)!!!
-void LdrViewer::updatePreview(unsigned char *LUT)
-{
-//#ifdef QT_DEBUG
-//    qDebug() << "LdrViewer::updatePreview\n";
-//#endif
-
-//    const QRgb* src = (const QRgb*)mImage->bits();
-//    QRgb* dst = (QRgb*)previewimage->bits();
-
-//#pragma omp parallel for default(none) shared(src, dst, LUT)
-//    for (int i=0; i < getWidth()*getHeight(); ++i)
-//    {
-//	dst[i] = qRgb(LUT[qRed(src[i])],LUT[qGreen(src[i])],LUT[qBlue(src[i])]);
-//    }
-//    mPixmap->setPixmap(QPixmap::fromImage(*previewimage));
-}
-
-void LdrViewer::restore_original()
-{
-//    //printf("LdrViewer::restoreoriginal() \n");
-//    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-
-//    delete previewimage;
-
-//    temp_image = NULL;
-//    previewimage = NULL;
-}
-
-void LdrViewer::finalize_levels()
-{
-//    //printf("LdrViewer::finalize_levels() \n");
-//    mImage = previewimage;
-//    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-
-//    delete temp_image;
-
-//    temp_image = NULL;
-//    previewimage = NULL;
-}
-
-//void LdrViewer::setImage(QImage *i)
-//{
-//    if (mImage != NULL)
-//        delete mImage;
-//    if (informativeLabel != NULL)
-//        delete informativeLabel;
-
-//    mImage = new QImage(*i);
-//    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-
-//    mCols = mImage->width();
-//    mRows = mImage->height();
-//    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), mToolBar );
-//    mToolBar->addWidget(informativeLabel);
-//}
 
 void LdrViewer::updatePixmap()
 {
