@@ -104,8 +104,6 @@ public Q_SLOTS:
     //! \brief returns min value of the handled frame
     virtual float getMinLuminanceValue() = 0;
 
-    virtual void levelsRequested(bool) = 0; // only used by LdrViewer
-
     //! \brief returns a filename postfix based on the viewer's content
     virtual QString getFileNamePostFix() = 0;
 
@@ -114,6 +112,9 @@ public Q_SLOTS:
 
     //! \brief returns a QImage that reflects the content of the viewerport
     QImage getQImage() const;
+
+    //! \brief set new QImage
+    void setQImage(const QImage& qimage);
 
     //! this function returns an handle to the internal data type
     //! it would be better if the return pointer is const
