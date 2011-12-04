@@ -91,12 +91,14 @@ protected:
     void fillToneMappingOptions();
     void setupUndo();
     void fromGui2Txt(QString destination); //i.e. WRITE tmo settings to text file
-    QString recentPathLoadSaveTmoSettings, tmoSettingsFilename;
+    //QString recentPathLoadSaveTmoSettings;
+    QString tmoSettingsFilename;
     int out_ldr_cs;
 
     float heightToWidthRatio;
     bool adding_custom_size;
-	void createDatabase();
+
+    void createDatabase();
 
 protected Q_SLOTS:
     void on_pregammadefault_clicked();
