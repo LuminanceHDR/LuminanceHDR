@@ -23,7 +23,12 @@
 
 #ifndef GAMMA_AND_LEVELS_H
 #define GAMMA_AND_LEVELS_H
+
 #include <QWidget>
+#include <QImage>
+
+#include "ui_GammaAndLevels.h"
+#include "Viewers/GenericViewer.h"
 
 class GrayBar : public QWidget
 {
@@ -77,26 +82,34 @@ protected:
 // 	void resizeEvent ( QResizeEvent * );
 };
 
-
-#include "ui_GammaAndLevels.h"
 class GammaAndLevels : public QDialog, public Ui::LevelsDialog
 {
-Q_OBJECT
+    Q_OBJECT
 private:
-	unsigned char *LUT;
-	int blackin, whitein, blackout, whiteout;
-	float gamma;
-	void refreshLUT();
+    const QImage m_ReferenceQImage; // can only be read
+
+    int blackin, whitein, blackout, whiteout;
+    float gamma;
+
+    GrayBar *gb1;
+    GrayBar *gb2;
+    HistogramLDR *histogram;
+
+    void refreshLUT();
 public:
-        GammaAndLevels(QWidget *parent, const QImage* image);
+        GammaAndLevels(QWidget *parent, const QImage& image);
 	~GammaAndLevels();
-	GrayBar *gb1,*gb2;
-	HistogramLDR *histogram;
-protected:
-	void closeEvent ( QCloseEvent * event );
+
+        QImage getReferenceQImage();
+
+        float getBlackPointInput();
+        float getBlackPointOutput();
+        float getWhitePointInput();
+        float getWhitePointOutput();
+        float getGamma();
+
 signals:
-	void closing();
-	void LUTrefreshed(unsigned char *);
+        void updateQImage(QImage image);
 
 private slots:
 	void resetValues();
@@ -108,6 +121,5 @@ private slots:
 	void defaultGammaBlackWhiteIn();
 	void defaultBlackWhiteOut();
 };
-
 
 #endif

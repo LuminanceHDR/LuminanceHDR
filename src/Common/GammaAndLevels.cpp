@@ -21,33 +21,50 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QDebug>
 #include <QCloseEvent>
 #include <QLinearGradient>
 #include <QPainter>
+
 #include <cmath>
 #include <cassert>
 
-#include "GammaAndLevels.h"
+#include "Common/GammaAndLevels.h"
 
-GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage* data) : QDialog(parent)
+namespace
+{
+static inline int clamp(const float& v, const float& minV, const float& maxV)
+{
+    if ( v <= minV ) return minV;
+    if ( v >= maxV ) return maxV;
+    return (int)(v + 0.5f);
+}
+
+}
+
+GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
+    QDialog(parent, Qt::Dialog),
+    m_ReferenceQImage(data),
+    blackin(0),
+    whitein(255),
+    gamma(1.0f),
+    blackout(0),
+    whiteout(255)
 {
 	setupUi(this);
-	connect(cancelButton,SIGNAL(clicked()),this,SIGNAL(closing()));
-	connect(okButton,SIGNAL(clicked()),this,SIGNAL(closing()));
 
-	LUT=new unsigned char[256];
-	blackin=0;
-	gamma=1.0f;
-	whitein=255;
-	blackout=0;
-	whiteout=255;
+#ifdef Q_WS_MAC
+    this->setWindowModality(Qt::WindowModal); // In OS X, set window to modal
+#endif
 
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(1);
 
 	histogram=new HistogramLDR(this);
-	histogram->setData(data);
+
+        histogram->setData(&m_ReferenceQImage);
+
 	gb1=new GrayBar(inputStuffFrame);
 
 	connect(black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
@@ -82,9 +99,11 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage* data) : QDialog(pa
 	out_levels->setLayout(qvl2);
 }
 
-GammaAndLevels::~GammaAndLevels() {
-	delete gb1; delete gb2; delete histogram;
-	emit closing();
+GammaAndLevels::~GammaAndLevels()
+{
+    delete gb1;
+    delete gb2;
+    delete histogram;
 }
 
 void GammaAndLevels::defaultGammaBlackWhiteIn() {
@@ -98,10 +117,6 @@ void GammaAndLevels::defaultBlackWhiteOut() {
 	qDebug("GammaAndLevels::defaultBlackWhiteOut");
 	blackout=0;
 	whiteout=255;
-}
-
-void GammaAndLevels::closeEvent(QCloseEvent *) {
-// 	emit closing();
 }
 
 void GammaAndLevels::updateBlackIn(int v) {
@@ -152,27 +167,74 @@ void GammaAndLevels::resetValues() {
 	refreshLUT();
 }
 
-static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
+void GammaAndLevels::refreshLUT()
 {
-    if( v < minV ) return minV;
-    if( v > maxV ) return maxV;
-    return (unsigned char)v;
+#ifdef QT_DEBUG
+    qDebug() << "Update Look-Up-Table and send update QImage to viewer";
+#endif
+
+    int LUT[256];
+
+    //values in 0..1 range
+    float bin=(float)blackin/255.0f;
+    float win=(float)whitein/255.0f;
+    float expgamma=1.0f/gamma;
+
+// it is only 256 values, so it won't really get any improvement from multi threading
+//#pragma omp parallel for
+    for (int i=0; i<256; ++i)
+    {
+        float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
+        LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
+    }
+
+    // Build new QImage from the reference one
+    const QRgb* src = (const QRgb*)m_ReferenceQImage.bits();
+
+    QImage previewimage(m_ReferenceQImage.width(), m_ReferenceQImage.height(), QImage::Format_RGB32);
+    QRgb* dst = (QRgb*)previewimage.bits();
+
+#pragma omp parallel for default(none) shared(src, dst, LUT)
+    for (int i=0; i < m_ReferenceQImage.width()*m_ReferenceQImage.height(); ++i)
+    {
+        dst[i] = qRgb(LUT[qRed(src[i])],
+                      LUT[qGreen(src[i])],
+                      LUT[qBlue(src[i])]);
+    }
+
+    emit updateQImage(previewimage);
 }
 
-void GammaAndLevels::refreshLUT() {
-	qDebug("refreshLUT");
-	//values in 0..1 range
-	float bin=(float)blackin/255.0f;
-	float win=(float)whitein/255.0f;
-	float expgamma=1.0f/gamma;
-	for (int i=0; i<256; i++) {
-		float value=powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
-		LUT[i]=clamp(blackout+value*(whiteout-blackout),0,255);
-// 		qDebug("LUT[%d]=%f char=%d",i,(blackout+value*(whiteout-blackout)),LUT[i]);
-	}
-	qDebug("GammaAndLevels::emitting LUTrefreshed");
-	emit LUTrefreshed(LUT);
+QImage GammaAndLevels::getReferenceQImage()
+{
+    return m_ReferenceQImage;
 }
+
+float GammaAndLevels::getBlackPointInput()
+{
+    return (float)blackin/255.f;
+}
+
+float GammaAndLevels::getBlackPointOutput()
+{
+    return (float)blackout/255.f;
+}
+
+float GammaAndLevels::getWhitePointInput()
+{
+    return (float)whitein/255.f;
+}
+
+float GammaAndLevels::getWhitePointOutput()
+{
+    return (float)whiteout/255.f;
+}
+
+float GammaAndLevels::getGamma()
+{
+    return (1.0f/gamma);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////
 
 HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), accuracy(accuracy){
