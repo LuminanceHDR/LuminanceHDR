@@ -35,15 +35,16 @@
 
 namespace // anoymous namespace
 {
-const int PREVIEW_WIDTH = 128;
+const int PREVIEW_WIDTH = 120;
+const int PREVIEW_HEIGHT = 100;
 const int PREVIEW_WIDTH_TM = 500;
 
 //! \note It is not the most efficient way to do this thing, but I will fix it later
 //! this function get calls multiple time
-void resetTonemappingOptions(TonemappingOptions* tm_options)
+void resetTonemappingOptions(TonemappingOptions* tm_options, const pfs::Frame* frame)
 {
-    tm_options->origxsize          = PREVIEW_WIDTH;
-    tm_options->xsize              = PREVIEW_WIDTH;
+    tm_options->origxsize          = frame->getWidth();
+    tm_options->xsize              = frame->getWidth();
     tm_options->pregamma           = 1.0f;
     tm_options->tonemapSelection   = false;
 }
@@ -66,7 +67,7 @@ public:
 
         // retrieve TM parameters
         TonemappingOptions* tm_options = to_update->getTonemappingOptions();
-        resetTonemappingOptions(tm_options);
+        resetTonemappingOptions(tm_options, m_ReferenceFrame.data());
 
         if ( m_ReferenceFrame.isNull() )
         {
@@ -173,8 +174,18 @@ void PreviewPanel::updatePreviews(pfs::Frame* frame)
     if ( frame == NULL ) return;
 
     original_width_frame = frame->getWidth();
+
+    int frame_width = frame->getWidth();
+    int frame_height = frame->getHeight();
+
+    int resized_width = PREVIEW_WIDTH;
+    if (frame_height > frame_width)
+    {
+        float ratio = ((float)frame_width)/frame_height;
+        resized_width = PREVIEW_HEIGHT*ratio;
+    }
     // 1. make a resized copy
-    QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, PREVIEW_WIDTH));
+    QSharedPointer<pfs::Frame> current_frame( pfs::resizeFrame(frame, resized_width));
 
     // 2. (non concurrent) for each PreviewLabel, call PreviewLabelUpdater::operator()
     foreach(PreviewLabel* current_label, m_ListPreviewLabel)
