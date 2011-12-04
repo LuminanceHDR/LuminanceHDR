@@ -66,11 +66,11 @@ signals:
 
 class HistogramLDR : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 private:
-	//LDR means 256 bins
-	float *P;
-	int accuracy;
+    //LDR means 256 bins
+    float P[256];
+    int accuracy;
 public:
 	HistogramLDR(QWidget *parent, int accuracy=1);
 	~HistogramLDR();

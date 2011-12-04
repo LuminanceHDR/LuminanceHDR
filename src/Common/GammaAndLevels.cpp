@@ -54,7 +54,7 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
 	setupUi(this);
 
 #ifdef Q_WS_MAC
-    this->setWindowModality(Qt::WindowModal); // In OS X, set window to modal
+    //this->setWindowModality(Qt::WindowModal); // In OS X, set window to modal
 #endif
 
 	QVBoxLayout *qvl=new QVBoxLayout;
@@ -235,41 +235,33 @@ float GammaAndLevels::getGamma()
     return (1.0f/gamma);
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), accuracy(accuracy){
-	P = new float[256];
-	this->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
-	//initialize to 0
-	for( int i = 0; i < 256; i++ )
-		P[i]=0;
-	
+HistogramLDR::HistogramLDR(QWidget *parent, int accuracy):
+    QWidget(parent),
+    accuracy(accuracy)
+{
+    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    //initialize to 0
+    for (int i = 0; i < 256; ++i)
+        P[i] = 0.0f;
 }
 
 void HistogramLDR::setData(const QImage *data)
 {
-    if (data->isNull()) {
+    if (data->isNull())
+    {
         for( int i = 0; i < 256; i++ )
-            P[i] = 0;
+            P[i] = 0.0f;
         return;
     }
 
-    // 	if (data.format()==QImage::Format_Indexed8) {
-    // 		//increment bins
-    // 		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
-    // 			const unsigned char v=*((const unsigned char*)(data.bits())+i);
-    // 			P[v] += 1;
-    // 		}
-    //
-    // 	} else {
-    //increment bins
-    for (int i=0; i<data->width()*data->height(); i+=accuracy)
+    const QRgb* pixels = (const QRgb*)(data->bits());
+    const int ELEMS = data->width()*data->height();
+    for (int i = 0; i < ELEMS; i += accuracy)
     {
-        int v=qGray(*((QRgb*)(data->bits())+i));
+        int v = qGray(pixels[i]);
         assert(v>=0 && v<=255);
         P[v] += 1;
     }
-    // 	}
 
     //find max
     float max=-1;
@@ -282,27 +274,38 @@ void HistogramLDR::setData(const QImage *data)
         P[i] /= max;
 }
 
-void HistogramLDR::paintEvent( QPaintEvent * ) {
-	QPainter painter(this);
-	for (int i=0; i<256; i++) {
-		QRectF rf( i*(((float)(this->width()))/255.f), this->height()-(P[i]*(height()/*-2*/)), ((float)(this->width())/255.f), (P[i]*(height()/*-2*/)));
-		painter.fillRect(rf,QBrush(Qt::black) );
-	}
-painter.drawRect(QRect(0,0,width()-1,height()-1));
+void HistogramLDR::paintEvent( QPaintEvent * )
+{
+    QPainter painter(this);
+    for (int i=0; i<256; i++)
+    {
+        QRectF rf( i*(((float)(this->width()))/255.f),
+                   this->height()-(P[i]*(height()/*-2*/)),
+                   ((float)(this->width())/255.f),
+                   (P[i]*(height()/*-2*/)));
+
+        painter.fillRect(rf,QBrush(Qt::black) );
+    }
+    painter.drawRect(QRect(0,0,width()-1,height()-1));
 }
 
-QSize HistogramLDR::sizeHint () const {
-	return QSize( 255, 80 );
-}
-QSize HistogramLDR::minimumSizeHint () const {
-	return QSize( 255, 80 );
-}
-HistogramLDR::~HistogramLDR() {
-	delete [] P;
+QSize HistogramLDR::sizeHint () const
+{
+    return QSize( 255, 80 );
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-GrayBar::GrayBar(QWidget *parent, bool two_handles) : QWidget(parent), dont_emit(false) {
+QSize HistogramLDR::minimumSizeHint () const
+{
+    return QSize( 255, 80 );
+}
+
+HistogramLDR::~HistogramLDR()
+{}
+
+GrayBar::GrayBar(QWidget *parent, bool two_handles):
+    QWidget(parent),
+    dont_emit(false)
+{
 	twohandles=two_handles;
 	dragging=DRAGNONE;
 // 	qDebug("width=%d, height=%d",width(),height());
