@@ -146,7 +146,8 @@ SET(LIB_HDR_INCLUDE
 	src/Filter/pfsgamma.h
 	src/Filter/pfspanoramic.h
 	src/Filter/pfsrotate.h
-	src/Filter/pfssize.h	
+        src/Filter/pfssize.h
+        src/Filter/pfsgammaandlevels.h
 # PFS I/O
 	src/Fileformat/pfs_file_format.h
 	src/Fileformat/rgbeio.h
@@ -207,6 +208,7 @@ SET(LIB_HDR_SRC
 	src/Filter/pfspanoramic.cpp
 	src/Filter/pfsrotate.cpp
 	src/Filter/pfssize.cpp
+        src/Filter/pfsgammaandlevels.cpp
 # PFS I/O
 	src/Fileformat/pfstiff.cpp
 	src/Fileformat/rgbeio.cpp

@@ -131,7 +131,7 @@ protected Q_SLOTS:
     void transplant_called();
 
     void levelsRequested(bool checked);
-    void levelsClosed();
+
     void openInputFiles();
 
     // Tool Bar Handling

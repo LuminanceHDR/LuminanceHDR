@@ -61,6 +61,7 @@
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
+#include "Filter/pfsgammaandlevels.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
@@ -79,6 +80,7 @@
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
+#include "Common/GammaAndLevels.h"
 
 namespace
 {
@@ -1484,41 +1486,6 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
     }
 }
 
-/*
-void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
-{
-    num_ldr_generated++;
-    curr_num_ldr_open++;
-
-    LdrViewer *n = new LdrViewer( image, pixmap, this, false, false, tm_status.curr_tm_options);
-
-    connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
-    connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
-    connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
-
-    // TODO : progressive numbering of the open LDR tabs
-    if (num_ldr_generated == 1)
-        m_tabwidget->addTab(n, tr("Untitled"));
-    else 
-	{
-		if (!tmPanel->replaceLdr())
-        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
-		else
-		{
-			GenericViewer *g_v = (GenericViewer *) m_tabwidget->currentWidget();
-			if (!g_v->isHDR())
-				m_tabwidget->removeTab(m_tabwidget->currentIndex());
-        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
-		}
-	}
-    m_tabwidget->setCurrentWidget(n);
-
-    n->fitToWindow(true);
-
-    previewPanel->setEnabled(true);
-}
-*/
-
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
     num_ldr_generated++;
@@ -1534,7 +1501,6 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 
         connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
         connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
-        connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
 
         if (num_ldr_generated == 1)
             m_tabwidget->addTab(n, tr("Untitled"));
@@ -1907,17 +1873,37 @@ void MainWindow::levelsRequested(bool checked)
     if (checked)
     {
         GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-        if (current==NULL)
-            return;
-        m_Ui->actionFix_Histogram->setDisabled(true);
-        current->levelsRequested(checked);
-    }
-}
+        if ( current==NULL ) return;
+        if ( current->isHDR() ) return;
 
-void MainWindow::levelsClosed()
-{
-    m_Ui->actionFix_Histogram->setDisabled(false);
-    m_Ui->actionFix_Histogram->setChecked(false);
+        QScopedPointer<GammaAndLevels> g_n_l( new GammaAndLevels(this, current->getQImage()) );
+
+        m_Ui->actionFix_Histogram->setDisabled(true);
+
+        connect(g_n_l.data(), SIGNAL(updateQImage(QImage)), current, SLOT(setQImage(QImage)));
+        int exit_status = g_n_l->exec();
+
+        if ( exit_status == 1 )
+        {
+            qDebug() << "GammaAndLevels accepted!";
+
+            pfs::Frame* frame = pfs::gamma_levels(current->getFrame(),
+                                                  g_n_l->getBlackPointInput(),
+                                                  g_n_l->getWhitePointInput(),
+                                                  g_n_l->getBlackPointOutput(),
+                                                  g_n_l->getWhitePointOutput(),
+                                                  g_n_l->getGamma());
+
+            current->setFrame(frame);
+        } else {
+            qDebug() << "GammaAndLevels refused!";
+
+            current->setQImage(g_n_l->getReferenceQImage());
+        }
+
+        m_Ui->actionFix_Histogram->setDisabled(false);
+        m_Ui->actionFix_Histogram->setChecked(false);
+    }
 }
 
 void MainWindow::setInputFiles(const QStringList& files)
