@@ -50,8 +50,8 @@ public:
 
 protected slots:
 	void num_bracketed_changed(int);
-	void add_files();
-	void add_out_dir();
+	void add_input_directory();
+	void add_output_directory(QString dir = QString());
 	void init_batch_hdr();
 	void batch_hdr();
 	void align(QStringList);
