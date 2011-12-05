@@ -107,6 +107,9 @@
               <string>Choose one of the creation predefined profiles. 
 See documentation for more informations.</string>
              </property>
+             <property name="currentIndex">
+              <number>5</number>
+             </property>
              <item>
               <property name="text">
                <string>Profile 1</string>
@@ -158,7 +161,7 @@ See documentation for more informations.</string>
                  <string>Auto align the bracketed pictures</string>
                 </property>
                 <property name="text">
-                 <string>Auto Align</string>
+                 <string>Auto-align images</string>
                 </property>
                </widget>
               </item>
@@ -168,10 +171,10 @@ See documentation for more informations.</string>
                  <bool>false</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Use align_image_stack engine</string>
+                 <string>Use Hugin's align_image_stack engine</string>
                 </property>
                 <property name="text">
-                 <string>align_image_stack</string>
+                 <string>Hugin's align_image_stack</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -184,7 +187,7 @@ See documentation for more informations.</string>
                  <bool>false</bool>
                 </property>
                 <property name="toolTip">
-                 <string>Use MTB engine</string>
+                 <string>Use MTB (Median Threshold Bitmap) engine</string>
                 </property>
                 <property name="text">
                  <string>MTB</string>
@@ -260,7 +263,7 @@ See documentation for more informations.</string>
                 <string>Folder where bracketed pictures are located (in alphabetical order)</string>
                </property>
                <property name="text">
-                <string>Select Input Folder</string>
+                <string>Select &amp;Input Folder</string>
                </property>
                <property name="icon">
                 <iconset resource="../icons.qrc">
@@ -274,7 +277,7 @@ See documentation for more informations.</string>
                 <string>Folder where created HDRs are saved</string>
                </property>
                <property name="text">
-                <string>Select Output Folder</string>
+                <string>Select &amp;Output Folder</string>
                </property>
                <property name="icon">
                 <iconset resource="../icons.qrc">
@@ -366,7 +369,7 @@ See documentation for more informations.</string>
        <item>
         <widget class="QPushButton" name="cancelPushButton">
          <property name="text">
-          <string>Cancel</string>
+          <string>&amp;Cancel</string>
          </property>
         </widget>
        </item>
@@ -376,14 +379,14 @@ See documentation for more informations.</string>
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Start</string>
+          <string>&amp;Start</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="closePushButton">
          <property name="text">
-          <string>Close</string>
+          <string>&amp;Close</string>
          </property>
         </widget>
        </item>
