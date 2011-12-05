@@ -64,6 +64,7 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
 	histogram=new HistogramLDR(this);
 
         histogram->setData(&m_ReferenceQImage);
+        histogram->setFrame(false); // remove histogram frame
 
 	gb1=new GrayBar(inputStuffFrame);
 
@@ -235,68 +236,162 @@ float GammaAndLevels::getGamma()
     return (1.0f/gamma);
 }
 
-HistogramLDR::HistogramLDR(QWidget *parent, int accuracy):
+HistogramLDR::HistogramLDR(QWidget *parent):
     QWidget(parent),
-    accuracy(accuracy)
+    isDrawFrame(true),
+    isDrawColorHist(true)
 {
-    this->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    //initialize to 0
-    for (int i = 0; i < 256; ++i)
-        P[i] = 0.0f;
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
 
-void HistogramLDR::setData(const QImage *data)
+void HistogramLDR::setData(const QImage* data)
 {
-    if (data->isNull())
-    {
-        for( int i = 0; i < 256; i++ )
-            P[i] = 0.0f;
-        return;
-    }
+    for (int i = 0; i < 256; ++i) m_GreyHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_RedHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_GreenHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_BlueHist[i] = 0.0f;
 
+    if ( data->isNull() ) return;
+
+    // Build histogram
     const QRgb* pixels = (const QRgb*)(data->bits());
     const int ELEMS = data->width()*data->height();
-    for (int i = 0; i < ELEMS; i += accuracy)
+    for (int i = 0; i < ELEMS; ++i)
     {
-        int v = qGray(pixels[i]);
-        assert(v>=0 && v<=255);
-        P[v] += 1;
+        m_GreyHist[ qGray(pixels[i]) ] += 1.0f;
+
+        m_RedHist[ qRed(pixels[i]) ] += 1.0f;
+        m_GreenHist[ qGreen(pixels[i]) ] += 1.0f;
+        m_BlueHist[ qBlue(pixels[i]) ] += 1.0f;
     }
 
     //find max
-    float max=-1;
-    for( int i = 0; i < 256; i++ )
-        if (P[i]>max)
-            max=P[i];
+    float hist_max = m_GreyHist[0];
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_GreyHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_RedHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_GreenHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_BlueHist[i]);
 
-    //normalize to make maxvalue=1
-    for( int i = 0; i < 256; i++ )
-        P[i] /= max;
+    //normalize in the range [0...1]
+    for (int i = 0; i < 256; ++i) m_GreyHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_RedHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_GreenHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_BlueHist[i] /= hist_max;
+
+    //qDebug() << "hist_max = "<< hist_max << "grey_hist_max = " << grey_hist_max;
 }
 
 void HistogramLDR::paintEvent( QPaintEvent * )
 {
-    QPainter painter(this);
-    for (int i=0; i<256; i++)
-    {
-        QRectF rf( i*(((float)(this->width()))/255.f),
-                   this->height()-(P[i]*(height()/*-2*/)),
-                   ((float)(this->width())/255.f),
-                   (P[i]*(height()/*-2*/)));
+    qDebug() << "void HistogramLDR::paintEvent( QPaintEvent * )";
 
-        painter.fillRect(rf,QBrush(Qt::black) );
+    const qreal skew = (qreal)width()/255;
+
+    QPainter painter(this);
+
+    //painter.setRenderHint(QPainter::Antialiasing, true); // antialiasing
+
+    QPolygonF pol_grey;
+
+    if ( isDrawColorHist )
+    {
+        // reuse pol_grey to print also red/green/blue components
+        pol_grey.clear();
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_RedHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //( QColor(255, 0, 0, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(255, 0, 0, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
+
+        // reuse pol_grey to print also red/green/blue components
+        pol_grey.clear(); // reuse of pol_grey
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_GreenHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //( QColor(0, 255, 0, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(0, 255, 0, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
+
+        pol_grey.clear(); // reuse of pol_grey
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_BlueHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //QColor(0, 0, 255, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(0, 0, 255, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
     }
-    painter.drawRect(QRect(0,0,width()-1,height()-1));
+
+    // first point, left bottom corner
+    pol_grey.clear();
+    pol_grey << QPointF(0.0, height());
+    for (int i = 0; i < 256; ++i)
+    {
+        pol_grey << QPointF(i*skew, (1.0 - m_GreyHist[i])*height());
+    }
+    // last point, bottom right corner
+    pol_grey << QPointF(width(), height());
+
+    // Draw histogram
+    painter.setBrush( QColor(160, 160, 160, 50) ); // semi-transparent brush
+    painter.setPen( QPen(QBrush(QColor(20, 20, 20, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+    painter.drawConvexPolygon(pol_grey);
+
+    // Draw frame
+    if ( isDrawFrame )
+    {
+        painter.setPen(Qt::black);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawRect(QRect(0,0,width()-1,height()-1));
+    }
+}
+
+void HistogramLDR::mouseDoubleClickEvent( QMouseEvent * event )
+{
+    // repaint
+    if (event->button() == Qt::LeftButton)
+    {
+        isDrawColorHist = !isDrawColorHist; // revert condition
+        repaint();
+    }
+}
+
+void HistogramLDR::setFrame(bool b)
+{
+    isDrawFrame = b;
+}
+
+void HistogramLDR::setColorHistogram(bool b)
+{
+    isDrawColorHist = b;
 }
 
 QSize HistogramLDR::sizeHint () const
 {
-    return QSize( 255, 80 );
+    return QSize( 255, 120 );
 }
 
 QSize HistogramLDR::minimumSizeHint () const
 {
-    return QSize( 255, 80 );
+    return QSize( 255, 120 );
 }
 
 HistogramLDR::~HistogramLDR()

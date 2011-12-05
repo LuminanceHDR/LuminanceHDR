@@ -67,19 +67,34 @@ signals:
 class HistogramLDR : public QWidget
 {
     Q_OBJECT
+public:
+    HistogramLDR(QWidget *parent);
+    ~HistogramLDR();
+    QSize sizeHint () const;
+    QSize minimumSizeHint () const;
+    void setData(const QImage* data);
+
+    void setFrame(bool b = true);
+    void setColorHistogram(bool b = true);
+
+    bool isFrame() {  return isDrawFrame; }
+    bool isColorHistogram() { return isDrawColorHist; }
+
+protected:
+    //! \brief repaints canvas
+    void paintEvent( QPaintEvent * );
+    //! \brief disable/enable color histogram on each double click
+    void mouseDoubleClickEvent( QMouseEvent * event );
+
 private:
     //LDR means 256 bins
-    float P[256];
-    int accuracy;
-public:
-	HistogramLDR(QWidget *parent, int accuracy=1);
-	~HistogramLDR();
-	QSize sizeHint () const;
-	QSize minimumSizeHint () const;
-        void setData(const QImage* data);
-protected:
-	void paintEvent( QPaintEvent * );
-// 	void resizeEvent ( QResizeEvent * );
+    float m_GreyHist[256];
+    float m_RedHist[256];
+    float m_GreenHist[256];
+    float m_BlueHist[256];
+
+    bool isDrawFrame;
+    bool isDrawColorHist;
 };
 
 class GammaAndLevels : public QDialog, public Ui::LevelsDialog
