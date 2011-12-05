@@ -290,10 +290,18 @@ See documentation for more informations.</string>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QLineEdit" name="inputLineEdit"/>
+              <widget class="QLineEdit" name="inputLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="outputLineEdit"/>
+              <widget class="QLineEdit" name="outputLineEdit">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -337,7 +345,11 @@ See documentation for more informations.</string>
           </layout>
          </item>
          <item row="6" column="0">
-          <widget class="QTextEdit" name="textEdit"/>
+          <widget class="QTextEdit" name="textEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
          <item row="7" column="0">
           <widget class="QProgressBar" name="progressBar">
