@@ -150,7 +150,8 @@ SET(LIB_HDR_INCLUDE
 	src/Filter/pfsgamma.h
 	src/Filter/pfspanoramic.h
 	src/Filter/pfsrotate.h
-	src/Filter/pfssize.h	
+        src/Filter/pfssize.h
+        src/Filter/pfsgammaandlevels.h
 # PFS I/O
 	src/Fileformat/pfs_file_format.h
 	src/Fileformat/rgbeio.h
@@ -211,6 +212,7 @@ SET(LIB_HDR_SRC
 	src/Filter/pfspanoramic.cpp
 	src/Filter/pfsrotate.cpp
 	src/Filter/pfssize.cpp
+        src/Filter/pfsgammaandlevels.cpp
 # PFS I/O
 	src/Fileformat/pfstiff.cpp
 	src/Fileformat/rgbeio.cpp
@@ -292,6 +294,17 @@ SET(LUMINANCE_HDR_INCLUDE
         src/Viewers/ISelectionBox.h
         src/Viewers/ISelectionAnchor.h
 # end new viewer
+
+        src/TonemappingEngine/TonemapOperatorAshikhmin02.h
+        src/TonemappingEngine/TonemapOperatorDrago03.h
+        src/TonemappingEngine/TonemapOperatorDurand02.h
+        src/TonemappingEngine/TonemapOperatorFattal02.h
+        src/TonemappingEngine/TonemapOperatorMantiuk06.h
+        src/TonemappingEngine/TonemapOperatorMantiuk08.h
+        src/TonemappingEngine/TonemapOperatorPattanaik00.h
+        src/TonemappingEngine/TonemapOperatorReinhard02.h
+        src/TonemappingEngine/TonemapOperatorReinhard05.h
+        src/TonemappingEngine/TonemapOperator.h
 )
 
 SET(LUMINANCE_HDR_SRC
@@ -299,7 +312,7 @@ SET(LUMINANCE_HDR_SRC
         src/BatchTM/BatchTMDialog.cpp
         src/BatchTM/BatchTMJob.cpp
 	src/Core/IOWorker.cpp
-#       src/Core/TMWorker.cpp
+        src/Core/TMWorker.cpp
         src/Core/TonemappingOptions.cpp
 	src/Exif/ExifOperations.cpp
 	src/HdrCreation/HdrCreationManager.cpp
@@ -320,18 +333,9 @@ SET(LUMINANCE_HDR_SRC
 	src/PreviewPanel/PreviewPanel.cpp
 	src/Projection/ProjectionsDialog.cpp
 	src/Resize/ResizeDialog.cpp
-	src/Threads/Ashikhmin02Thread.cpp
-	src/Threads/Drago03Thread.cpp
-	src/Threads/Durand02Thread.cpp
-	src/Threads/Fattal02Thread.cpp
+
 	src/Threads/HdrInputLoader.cpp
-	src/Threads/LoadHdrThread.cpp
-	src/Threads/Mantiuk06Thread.cpp	
-	src/Threads/Mantiuk08Thread.cpp
-	src/Threads/Pattanaik00Thread.cpp
-	src/Threads/Reinhard02Thread.cpp
-	src/Threads/Reinhard05Thread.cpp
-	src/Threads/TMOThread.cpp
+
 	src/TonemappingPanel/TMOProgressIndicator.cpp
 	src/TonemappingPanel/TonemappingPanel.cpp
 	src/TonemappingPanel/TonemappingWarnDialog.cpp
@@ -360,7 +364,18 @@ SET(LUMINANCE_HDR_SRC
 	src/Common/commandline.cpp	
 	src/Common/global.cpp
         src/Common/LuminanceOptions.cpp
-	
+
+        src/TonemappingEngine/TonemapOperatorAshikhmin02.cpp
+        src/TonemappingEngine/TonemapOperatorDrago03.cpp
+        src/TonemappingEngine/TonemapOperatorDurand02.cpp
+        src/TonemappingEngine/TonemapOperatorFattal02.cpp
+        src/TonemappingEngine/TonemapOperatorMantiuk06.cpp
+        src/TonemappingEngine/TonemapOperatorMantiuk08.cpp
+        src/TonemappingEngine/TonemapOperatorPattanaik00.cpp
+        src/TonemappingEngine/TonemapOperatorReinhard02.cpp
+        src/TonemappingEngine/TonemapOperatorReinhard05.cpp
+        src/TonemappingEngine/TonemapOperator.cpp
+
 	src/main.cpp
 )
 
@@ -369,7 +384,7 @@ SET(LUMINANCE_HDR_MOC
         src/BatchTM/BatchTMDialog.h
         src/BatchTM/BatchTMJob.h
 	src/Core/IOWorker.h
-#        src/Core/TMWorker.h
+        src/Core/TMWorker.h
 	src/HdrCreation/HdrCreationManager.h
 	src/HdrWizard/EditingTools.h
 	src/HdrWizard/HdrWizard.h
@@ -384,18 +399,7 @@ SET(LUMINANCE_HDR_MOC
 	src/PreviewPanel/PreviewPanel.h
 	src/Projection/ProjectionsDialog.h
 	src/Resize/ResizeDialog.h
-	src/Threads/Ashikhmin02Thread.h
-	src/Threads/Drago03Thread.h
-	src/Threads/Durand02Thread.h
-	src/Threads/Fattal02Thread.h
 	src/Threads/HdrInputLoader.h
-	src/Threads/LoadHdrThread.h
-	src/Threads/Mantiuk06Thread.h	
-	src/Threads/Mantiuk08Thread.h
-	src/Threads/Pattanaik00Thread.h
-	src/Threads/Reinhard02Thread.h
-	src/Threads/Reinhard05Thread.h
-	src/Threads/TMOThread.h
 	src/TonemappingPanel/TMOProgressIndicator.h
 	src/TonemappingPanel/TonemappingPanel.h
 	src/TonemappingPanel/TonemappingWarnDialog.h

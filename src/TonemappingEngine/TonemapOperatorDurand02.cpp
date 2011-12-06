@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,47 +23,48 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Durand02Thread.h"
+#include "TonemappingEngine/TonemapOperatorDurand02.h"
 #include "TonemappingOperators/pfstmo.h"	
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-QMutex Durand02Thread::durand02_mutex;
+QMutex TonemapOperatorDurand02::m_Mutex;
 
-Durand02Thread::Durand02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
+TonemapOperatorDurand02::TonemapOperatorDurand02():
+    TonemapOperator()
+{}
+
+void TonemapOperatorDurand02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-  out_CS = pfs::CS_SRGB;
-}
+    ph.emitSetMaximum(100);
 
-void Durand02Thread::run()
-{
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_durand02 not reentrant
-		durand02_mutex.lock();
-		pfstmo_durand02(workingframe,
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    // pfstmo_durand02 not reentrant
+    m_Mutex.lock();
+    pfstmo_durand02(workingframe,
                     opts->operator_options.durandoptions.spatial,
                     opts->operator_options.durandoptions.range,
                     opts->operator_options.durandoptions.base,
-                    ph);
-		durand02_mutex.unlock();
-	}
-	catch(...)
-  	{
-		durand02_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
+                    &ph);
+    m_Mutex.unlock();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
-//
-// run()
-//
+
+TMOperator TonemapOperatorDurand02::getType()
+{
+    return durand;
+}
 

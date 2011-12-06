@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,21 +23,47 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#ifndef DRAGO03THREAD_H
-#define DRAGO03THREAD_H
+#ifndef TONEMAP_OPERATOR_H
+#define TONEMAP_OPERATOR_H
 
-#include "Threads/TMOThread.h"
+#include <QObject>
 
-class Drago03Thread : public TMOThread {
-Q_OBJECT
+#include "Core/TonemappingOptions.h"
+#include "Common/ProgressHelper.h"
 
+// Forward declaration
+namespace pfs {
+    class Frame;
+}
+
+class TonemapOperator
+{
 public:
-        Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opt);
+    static TonemapOperator* getTonemapOperator(const TMOperator tmo);
+    virtual ~TonemapOperator();
+
+    ///!
+    ///! return the underlying type of the TonemapOperator
+    ///!
+    virtual TMOperator getType() = 0;
+
+    ///!
+    ///! Get a Frame in RGB and processes it.
+    ///! Frame is MODIFIED.
+    ///! If you want to keep the original frame, make a copy before
+    ///!
+    virtual void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph) = 0;
+
 protected:
-	void run();
+    TonemapOperator();
+
 };
+
+
 
 #endif

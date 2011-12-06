@@ -26,19 +26,28 @@
 
 #include <QObject>
 
-class ProgressHelper : public QObject {
-Q_OBJECT
-
+class ProgressHelper : public QObject
+{
+    Q_OBJECT
 public:
 	ProgressHelper(QObject *p = 0);
-	void newValue(int progress);
-	bool isTerminationRequested();
+
+        ///! backcompatibility
+        void newValue(int progress);
+        void emitSetValue(int progress);
+        void emitSetMaximum(int max);
+        void emitSetMinimum(int min);
+
+        bool isTerminationRequested();
+
 public slots:
-	void terminate(bool);
+        void terminate(bool b = true);
 private:
 	bool m_terminate;
 signals:
-	void valueChanged(int progress);
+        void setValue(int progress);
+        void setMaximum(int max);
+        void setMinimum(int min);
 };
 
 #endif

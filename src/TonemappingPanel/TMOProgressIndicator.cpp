@@ -26,8 +26,11 @@
 
 #include <iostream>
 
-TMOProgressIndicator::TMOProgressIndicator(QWidget *parent) : 
-	QWidget(parent), m_isTerminated(false) 
+#include <QDebug>
+
+TMOProgressIndicator::TMOProgressIndicator(QWidget *parent):
+    QWidget(parent),
+    m_isTerminated(false)
 {
     m_hbl = new QHBoxLayout(this);
 
@@ -48,6 +51,9 @@ TMOProgressIndicator::TMOProgressIndicator(QWidget *parent) :
 
     connect(m_abortButton, SIGNAL(clicked()), this, SIGNAL(terminate()));
     connect(m_abortButton, SIGNAL(clicked()), this, SLOT(terminated()));
+
+    //Memory management
+    //connect(this, SIGNAL(destroyed()), )
 }
 
 TMOProgressIndicator::~TMOProgressIndicator()
@@ -61,7 +67,6 @@ void TMOProgressIndicator::terminated()
 {
     std::cout << "TMOProgressIndicator::terminated()" << std::endl;
     m_isTerminated = true;
-    emit deleteMe();
 }
 
 bool TMOProgressIndicator::isTerminated()
@@ -71,6 +76,10 @@ bool TMOProgressIndicator::isTerminated()
 
 void TMOProgressIndicator::setValue(int value)
 {
+#ifdef QT_DEBUG
+    qDebug() << "TMOProgressIndicator::setValue("<< value <<")";
+#endif
+
     m_progressBar->setValue(value);
 }
 
@@ -82,4 +91,10 @@ void TMOProgressIndicator::setMaximum(int max)
 void TMOProgressIndicator::setMinimum(int min)
 {
     m_progressBar->setMinimum(min);
+}
+
+void TMOProgressIndicator::reset()
+{
+    m_progressBar->reset();
+    m_isTerminated = false;
 }

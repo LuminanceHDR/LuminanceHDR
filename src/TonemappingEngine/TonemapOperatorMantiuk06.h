@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,48 +23,29 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Fattal02Thread.h"
-#include "TonemappingOperators/pfstmo.h"
-#include "Core/TonemappingOptions.h"
+#ifndef TONEMAP_OPERATOR_MANTIUK06_H
+#define TONEMAP_OPERATOR_MANTIUK06_H
 
-QMutex Fattal02Thread::fattal02_mutex;
+#include <QMutex>
 
-Fattal02Thread::Fattal02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
+#include "TonemappingEngine/TonemapOperator.h"
+
+class TonemapOperatorMantiuk06: public TonemapOperator
 {
-}
+public:
+    TonemapOperatorMantiuk06();
 
-void Fattal02Thread::run()
-{
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_fattal02 not reentrant AKA not thread-safe!
-		fattal02_mutex.lock();
-		pfstmo_fattal02(workingframe,
-                    opts->operator_options.fattaloptions.alpha,
-                    opts->operator_options.fattaloptions.beta,
-                    opts->operator_options.fattaloptions.color,
-                    opts->operator_options.fattaloptions.noiseredux,
-                    opts->operator_options.fattaloptions.newfattal,
-                    ph);
-		fattal02_mutex.unlock();
-	}
-	catch(...)
-	{
-		fattal02_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
-}
-//
-// run()
-//
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
+private:
+    // It may be removed, because the issue in the race condition of the operator has been solved
+    static QMutex m_Mutex;
+};
+
+#endif

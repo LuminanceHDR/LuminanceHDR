@@ -45,6 +45,7 @@
 #include <QTextStream>
 #include <QDesktopServices>
 #include <QTimer>
+#include <QString>
 
 #include "MainWindow/MainWindow.h"
 #include "MainWindow/DnDOption.h"
@@ -60,6 +61,7 @@
 #include "Fileformat/pfs_file_format.h"
 #include "Filter/pfscut.h"
 #include "Filter/pfsrotate.h"
+#include "Filter/pfsgammaandlevels.h"
 #include "TransplantExif/TransplantExifDialog.h"
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
@@ -76,6 +78,58 @@
 #include "Projection/ProjectionsDialog.h"
 #include "Preferences/PreferencesDialog.h"
 #include "Core/IOWorker.h"
+#include "Core/TMWorker.h"
+#include "TonemappingPanel/TMOProgressIndicator.h"
+#include "Common/GammaAndLevels.h"
+
+namespace
+{
+QString getLdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+{
+
+    QString filetypes = QObject::tr("All LDR formats");
+    filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
+    filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
+    filetypes += "PNG (*.png *.PNG);;" ;
+    filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
+    filetypes += "BMP (*.bmp *.BMP);;";
+    filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
+
+    return QFileDialog::getSaveFileName(parent,
+                                        QObject::tr("Save the LDR image as..."),
+                                        LuminanceOptions().getDefaultPathLdrOut() + "/" + suggested_file_name,
+                                        filetypes);
+}
+
+QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget* parent = 0)
+{
+    QString filetypes = QObject::tr("All HDR formats ");
+    filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
+    filetypes += "OpenEXR (*.exr *.EXR);;" ;
+    filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
+    filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
+    filetypes += "PFS Stream (*.pfs *.PFS)";
+
+    return QFileDialog::getSaveFileName(parent,
+                                        QObject::tr("Save the HDR image as..."),
+                                        LuminanceOptions().getDefaultPathHdrInOut() + "/" + suggested_file_name,
+                                        filetypes);
+}
+
+inline void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
+{
+#ifdef QT_DEBUG
+    assert( gv != NULL );
+#endif
+
+    QRect cropRect = gv->getSelectionRect().normalized();
+    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
+}
+
+}
+
+
+
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -107,6 +161,10 @@ MainWindow::~MainWindow()
         // Last MainWindow is dead...
         luminance_options.setValue("MainWindowState", saveState());
         luminance_options.setValue("MainWindowGeometry", saveGeometry());
+
+        //wait for the working thread to finish
+        m_IOThread->wait(500);
+        m_TMThread->wait(500);
     }
 
     clearRecentFileActions();
@@ -124,7 +182,12 @@ void MainWindow::init()
     {
         // Register symbols on the first activation!
         qRegisterMetaType<QImage>("QImage");
+        qRegisterMetaType<pfs::Frame*>("pfs::Frame*");
         qRegisterMetaType<TonemappingOptions>("TonemappingOptions");
+        qRegisterMetaType<TonemappingOptions*>("TonemappingOptions*");
+        qRegisterMetaType<HdrViewer*>("HdrViewer*");
+        qRegisterMetaType<LdrViewer*>("LdrViewer*");
+        qRegisterMetaType<GenericViewer*>("GenericViewer*");
 
         QDir dir(QDir::homePath());
 
@@ -293,11 +356,6 @@ void MainWindow::createMenus()
 
 void MainWindow::createStatusBar()
 {
-    // progress bar
-    m_progressbar = new QProgressBar(this);
-    m_progressbar->hide();
-    statusBar()->addWidget(m_progressbar);
-
     statusBar()->showMessage(tr("Ready. Now open an existing HDR image or create a new one!"), 10000);
 }
 
@@ -313,8 +371,6 @@ void MainWindow::createConnections()
 void MainWindow::loadOptions()
 {
     //load from settings the path where hdrs have been previously opened/loaded
-    RecentDirHDRSetting = luminance_options.getDefaultPathHdrInOut();
-    RecentDirLDRSetting = luminance_options.getDefaultPathLdrOut();
 
     //load from settings the main toolbar visualization mode
     switch ( luminance_options.getMainWindowToolBarMode() ) {
@@ -368,7 +424,7 @@ void MainWindow::fileOpen()
 
     QStringList files = QFileDialog::getOpenFileNames(this,
                                                       tr("Load one or more HDR images..."),
-                                                      RecentDirHDRSetting,
+                                                      luminance_options.getDefaultPathHdrInOut(),
                                                       filetypes );
 
     if ( !files.isEmpty() )
@@ -376,59 +432,45 @@ void MainWindow::fileOpen()
         // Update working folder
         // All the files are in the same folder, so I pick the first as reference to update the settings
         QFileInfo qfi(files.first());
-        if ( RecentDirHDRSetting != qfi.path() )
-        {
-            // if the new dir (the one just chosen by the user)
-            // is different from the one stored in the settings
-            // update the settings
-            updateRecentDirHDRSetting(qfi.path());
-        }
+
+        luminance_options.setDefaultPathHdrInOut( qfi.path() );
 
         foreach(QString filename, files)
         {
-            emit open_hdr_frame(filename);
+            //emit open_hdr_frame(filename);
+            QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                      Q_ARG(QString, filename));
         }
     }
-}
-
-void MainWindow::updateRecentDirHDRSetting(QString newvalue)
-{
-    RecentDirHDRSetting = newvalue;                         // update class member
-    luminance_options.setDefaultPathHdrInOut(newvalue);     // update settings
-}
-
-void MainWindow::updateRecentDirLDRSetting(QString newvalue)
-{
-    RecentDirLDRSetting = newvalue;                         // update class member
-    luminance_options.setDefaultPathLdrOut(newvalue);       // update settings
 }
 
 void MainWindow::fileSaveAll()
 {
     if (m_tabwidget->count() <= 0) return;
 
-    QWidget *wgt;
-    GenericViewer *g_v;
-    LdrViewer *l_v;
-
-    QString dir = QFileDialog::getExistingDirectory(0, tr("Save files in"), RecentDirLDRSetting);
+    QString dir = QFileDialog::getExistingDirectory(this,
+                                                    tr("Save files in"),
+                                                    luminance_options.getDefaultPathLdrOut());
 
     if (!dir.isEmpty())
     {
-        updateRecentDirLDRSetting(dir);
+        luminance_options.setDefaultPathLdrOut(dir);
+
         for (int i = 0; i < m_tabwidget->count(); i++)
         {
-            wgt = m_tabwidget->widget(i);
-            g_v = (GenericViewer *)wgt;
+            QWidget *wgt = m_tabwidget->widget(i);
+            GenericViewer *g_v = (GenericViewer *)wgt;
 
             if ( !g_v->isHDR() )
             {
-                l_v = dynamic_cast<LdrViewer*>(g_v);
+                LdrViewer *l_v = dynamic_cast<LdrViewer*>(g_v);
 
                 QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
-                QString outfname = RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg";
+                QString outfname = luminance_options.getDefaultPathLdrOut() + "/" + ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg";
 
-                emit save_ldr_frame(l_v, outfname, 100);
+                //emit save_ldr_frame(l_v, outfname, 100);
+                QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                          Q_ARG(GenericViewer*, l_v), Q_ARG(QString, outfname), Q_ARG(int, 100));
             }
         }
     }
@@ -439,37 +481,22 @@ void MainWindow::fileSaveAs()
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-
     if ( g_v->isHDR() )
     {
         /*
          * In this case I'm saving an HDR
          */
-        QString filetypes = tr("All HDR formats ");
-        filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
-        filetypes += "OpenEXR (*.exr *.EXR);;" ;
-        filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-        filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
-        filetypes += "PFS Stream (*.pfs *.PFS)";
-
-        QString fname = QFileDialog::getSaveFileName(this,
-                                                     tr("Save the HDR image as..."),
-                                                     RecentDirHDRSetting,
-                                                     filetypes);
+        QString fname = getHdrFileNameFromSaveDialog(QString(), this);
 
         if ( !fname.isEmpty() )
         {
             // Update working folder
-            QFileInfo qfi(fname);
-            if ( RecentDirHDRSetting != qfi.path() )
-            {
-                // if the new dir (the one just chosen by the user)
-                // is different from the one stored in the settings
-                // update the settings
-                updateRecentDirHDRSetting(qfi.path());
-            }
+            luminance_options.setDefaultPathHdrInOut( QFileInfo(fname).path() );
 
-            emit save_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+            //CALL m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(g_v), fname);
+            QMetaObject::invokeMethod(m_IOWorker, "write_hdr_frame", Qt::QueuedConnection,
+                                      Q_ARG(GenericViewer*, dynamic_cast<HdrViewer*>(g_v)),
+                                      Q_ARG(QString, fname));
         }
     }
     else
@@ -479,30 +506,18 @@ void MainWindow::fileSaveAs()
          */
         LdrViewer* l_v = dynamic_cast<LdrViewer*>(g_v);
 
-        QString filetypes = QObject::tr("All LDR formats");
-        filetypes += " (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp *.JPG *.JPEG *.PNG *.PPM *.PBM *.BMP);;";
-        filetypes += "JPEG (*.jpg *.jpeg *.JPG *.JPEG);;" ;
-        filetypes += "PNG (*.png *.PNG);;" ;
-        filetypes += "PPM PBM (*.ppm *.pbm *.PPM *.PBM);;";
-        filetypes += "BMP (*.bmp *.BMP);;";
-        filetypes += "16 bits TIFF (*.tif *.tiff *.TIF *.TIFF)";
+        if ( l_v == NULL ) return;
 
         QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
 
-        QString outfname = QFileDialog::getSaveFileName(this,
-                                                        QObject::tr("Save the LDR image as..."),
-                                                        RecentDirLDRSetting + "/" + ldr_name + "_" + l_v->getFilenamePostFix() + ".jpg",
-                                                        filetypes);
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + l_v->getFileNamePostFix() + ".jpg", this);
 
         if ( !outfname.isEmpty() )
         {
             QFileInfo qfi(outfname);
             QString format = qfi.suffix();
 
-            if ( RecentDirLDRSetting != qfi.path() )
-            {
-                updateRecentDirLDRSetting( qfi.path() );
-            }
+            luminance_options.setDefaultPathLdrOut( qfi.path() );
 
             if ( format.isEmpty() )
             {
@@ -514,7 +529,10 @@ void MainWindow::fileSaveAs()
             int quality = 100; // default value is 100%
             if ( format == "png" || format == "jpg" )
             {
-                ImageQualityDialog savedFileQuality(l_v->getQImage(), format, this);
+                // How costly is this function? I doesn't seem to be much
+                QImage image = l_v->getQImage();
+
+                ImageQualityDialog savedFileQuality(&image, format, this);
                 QString winTitle(QObject::tr("Save as..."));
                 winTitle += format.toUpper();
                 savedFileQuality.setWindowTitle( winTitle );
@@ -523,23 +541,26 @@ void MainWindow::fileSaveAs()
                 else
                     quality = savedFileQuality.getQuality();
             }
-            emit save_ldr_frame(l_v, outfname, quality);
+            // CALL m_IOWorker->write_ldr_frame(l_v, outfname, quality);
+            QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                      Q_ARG(GenericViewer*, l_v),
+                                      Q_ARG(QString, outfname),
+                                      Q_ARG(int, quality),
+                                      Q_ARG(TonemappingOptions*, l_v->getTonemappingOptions()));
+
         }
     }
 }
 
-void MainWindow::save_hdr_success(HdrViewer* saved_hdr, QString fname)
+void MainWindow::save_hdr_success(GenericViewer* saved_hdr, QString fname)
 {
     QFileInfo qfi(fname);
-    QString absoluteFileName = qfi.absoluteFilePath();
 
-    setCurrentFile(absoluteFileName);
-    saved_hdr->setFileName(fname);
-    saved_hdr->setWindowTitle(absoluteFileName);
+    setCurrentFile(qfi.absoluteFilePath());
+    setWindowModified(false);
 
     // update name on the tab label
-    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), fname);
-    setWindowModified(false);
+    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_hdr), qfi.fileName());
 }
 
 void MainWindow::save_hdr_failed()
@@ -548,12 +569,10 @@ void MainWindow::save_hdr_failed()
     // TODO pass the name of the file, so the user know which file didn't save correctly
 }
 
-void MainWindow::save_ldr_success(LdrViewer* saved_ldr, QString fname)
+void MainWindow::save_ldr_success(GenericViewer* saved_ldr, QString fname)
 {
-    saved_ldr->setFileName(fname);
-    saved_ldr->setWindowTitle(QFileInfo(fname).absoluteFilePath());
-
-    m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), fname);
+    if ( !saved_ldr->isHDR() )
+        m_tabwidget->setTabText(m_tabwidget->indexOf(saved_ldr), QFileInfo(fname).fileName());
 }
 
 void MainWindow::save_ldr_failed()
@@ -566,14 +585,26 @@ void MainWindow::save_ldr_failed()
 
 void MainWindow::saveHdrPreview()
 {
-    // TODO : This function is just rubbish, and should be changed!
     if (m_tabwidget->count() <= 0) return;
 
     GenericViewer* g_v = (GenericViewer*)m_tabwidget->currentWidget();
-    HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
+    try {
+        HdrViewer* hdr_v = dynamic_cast<HdrViewer*>(g_v);
 
-    if (hdr_v == NULL) return;
-    else hdr_v->saveHdrPreview();
+        QString ldr_name = QFileInfo(getCurrentHDRName()).baseName();
+
+        QString outfname = getLdrFileNameFromSaveDialog(ldr_name + "_" + hdr_v->getFileNamePostFix() + ".jpg", this);
+
+        if ( outfname.isEmpty() ) return;
+
+        QMetaObject::invokeMethod(m_IOWorker, "write_ldr_frame", Qt::QueuedConnection,
+                                  Q_ARG(GenericViewer*, hdr_v),
+                                  Q_ARG(QString, outfname),
+                                  Q_ARG(int, 100));
+    } catch (...)
+    {
+        return;
+    }
 }
 
 void MainWindow::updateActionsNoImage()
@@ -710,17 +741,20 @@ void MainWindow::dispatchrotate(bool clockwise)
     m_Ui->rotatecw->setEnabled(false);
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getHDRPfsFrame(), clockwise);
-    //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-    curr_g_v->updateHDR(rotated);
+    pfs::Frame *rotated = pfs::rotateFrame(curr_g_v->getFrame(), clockwise);
+
+    curr_g_v->setFrame(rotated);
     if ( !curr_g_v->needsSaving() )
     {
         curr_g_v->setNeedsSaving(true);
-        curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+        int index = m_tabwidget->indexOf(curr_g_v);
+        QString text = m_tabwidget->tabText(index);
+        m_tabwidget->setTabText(index, text.prepend("(*) "));
 
         setWindowModified(true);
     }
-    emit updatedHDR(curr_g_v->getHDRPfsFrame());
+    emit updatedHDR(curr_g_v->getFrame());
     QApplication::restoreOverrideCursor();
 
     m_Ui->rotateccw->setEnabled(true);
@@ -733,20 +767,23 @@ void MainWindow::resize_requested()
 
     GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getHDRPfsFrame());
+    ResizeDialog *resizedialog = new ResizeDialog(this, curr_g_v->getFrame());
     if (resizedialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        curr_g_v->updateHDR(resizedialog->getResizedFrame());
+
+        curr_g_v->setFrame(resizedialog->getResizedFrame());
         if (! curr_g_v->needsSaving())
         {
             curr_g_v->setNeedsSaving(true);
-            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            int index = m_tabwidget->indexOf(curr_g_v);
+            QString text = m_tabwidget->tabText(index);
+            m_tabwidget->setTabText(index, text.prepend("(*) "));
 
             setWindowModified(true);
         }
-        emit updatedHDR(curr_g_v->getHDRPfsFrame());
+        emit updatedHDR(curr_g_v->getFrame());
         QApplication::restoreOverrideCursor();
     }
     delete resizedialog;
@@ -758,20 +795,23 @@ void MainWindow::projectiveTransf_requested()
 
     GenericViewer* curr_g_v = (GenericViewer*)m_tabwidget->currentWidget();
 
-    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this, curr_g_v->getHDRPfsFrame());
+    ProjectionsDialog *projTranfsDialog = new ProjectionsDialog(this, curr_g_v->getFrame());
     if (projTranfsDialog->exec() == QDialog::Accepted)
     {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        //updateHDR() method takes care of deleting its previous pfs::Frame* buffer.
-        curr_g_v->updateHDR(projTranfsDialog->getTranformedFrame());
+
+        curr_g_v->setFrame(projTranfsDialog->getTranformedFrame());
         if ( !curr_g_v->needsSaving() )
         {
             curr_g_v->setNeedsSaving(true);
-            curr_g_v->setWindowTitle(curr_g_v->windowTitle().prepend("(*) "));
+
+            int index = m_tabwidget->indexOf(curr_g_v);
+            QString text = m_tabwidget->tabText(index);
+            m_tabwidget->setTabText(index, text.prepend("(*) "));
 
             setWindowModified(true);
         }
-        emit updatedHDR(curr_g_v->getHDRPfsFrame());
+        emit updatedHDR(curr_g_v->getFrame());
         QApplication::restoreOverrideCursor();
     }
     delete projTranfsDialog;
@@ -913,12 +953,18 @@ void MainWindow::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
-        emit open_hdr_frame(action->data().toString());
+        //emit open_hdr_frame(action->data().toString());
+        QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                  Q_ARG(QString, action->data().toString()));
     }
 }
 
 void MainWindow::setupIO()
 {
+    // progress bar
+    m_ProgressBar = new QProgressBar(this);
+    m_ProgressBar->hide();
+
     // Init Object/Thread
     m_IOThread = new QThread;
     m_IOWorker = new IOWorker;
@@ -930,27 +976,48 @@ void MainWindow::setupIO()
     connect(m_IOWorker, SIGNAL(destroyed()), m_IOThread, SLOT(deleteLater()));
 
     // Open
-    connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
+    //connect(this, SIGNAL(open_hdr_frame(QString)), m_IOWorker, SLOT(read_hdr_frame(QString)));
     connect(m_IOWorker, SIGNAL(read_hdr_success(pfs::Frame*, QString)), this, SLOT(load_success(pfs::Frame*, QString)));
     connect(m_IOWorker, SIGNAL(read_hdr_failed(QString)), this, SLOT(load_failed(QString)));
 
     // Save HDR
-    connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
-    connect(m_IOWorker, SIGNAL(write_hdr_success(HdrViewer*, QString)), this, SLOT(save_hdr_success(HdrViewer*, QString)));
+    //connect(this, SIGNAL(save_hdr_frame(HdrViewer*, QString)), m_IOWorker, SLOT(write_hdr_frame(HdrViewer*, QString)));
+    connect(m_IOWorker, SIGNAL(write_hdr_success(GenericViewer*, QString)), this, SLOT(save_hdr_success(GenericViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_hdr_failed()), this, SLOT(save_hdr_failed()));
     // Save LDR
-    connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
-    connect(m_IOWorker, SIGNAL(write_ldr_success(LdrViewer*, QString)), this, SLOT(save_ldr_success(LdrViewer*, QString)));
+    //connect(this, SIGNAL(save_ldr_frame(LdrViewer*, QString, int)), m_IOWorker, SLOT(write_ldr_frame(LdrViewer*, QString, int)));
+    connect(m_IOWorker, SIGNAL(write_ldr_success(GenericViewer*, QString)), this, SLOT(save_ldr_success(GenericViewer*, QString)));
     connect(m_IOWorker, SIGNAL(write_ldr_failed()), this, SLOT(save_ldr_failed()));
 
     // progress bar handling
-    connect(m_IOWorker, SIGNAL(setValue(int)), this, SLOT(ProgressBarSetValue(int)));
-    connect(m_IOWorker, SIGNAL(setMaximum(int)), this, SLOT(ProgressBarSetMaximum(int)));
-    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(IO_start()));
-    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(IO_done()));
+    connect(m_IOWorker, SIGNAL(setValue(int)), m_ProgressBar, SLOT(setValue(int)));
+    connect(m_IOWorker, SIGNAL(setMaximum(int)), m_ProgressBar, SLOT(setMaximum(int)));
+    connect(m_IOWorker, SIGNAL(IO_init()), this, SLOT(ioBegin()));
+    connect(m_IOWorker, SIGNAL(IO_finish()), this, SLOT(ioEnd()));
 
     // start thread waiting for signals (I/O requests)
     m_IOThread->start();
+}
+
+void MainWindow::ioBegin()
+{
+    statusBar()->clearMessage();
+
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
+    statusBar()->addWidget(m_ProgressBar);
+    m_ProgressBar->setMaximum(0);
+    m_ProgressBar->show();
+}
+
+void MainWindow::ioEnd()
+{
+    statusBar()->removeWidget(m_ProgressBar);
+    m_ProgressBar->reset();
+
+    QApplication::restoreOverrideCursor();
+
+    statusBar()->showMessage(tr("Done!"), 10000);
 }
 
 void MainWindow::load_failed(QString error_message)
@@ -970,7 +1037,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     else
     {
         tmPanel->show();
-        HdrViewer * newhdr = new HdrViewer(NULL, false, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -978,15 +1045,9 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(syncViewers(GenericViewer*)));
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
-        newhdr->setSelectionTool(true);
-
-        newhdr->updateHDR(new_hdr_frame);
         newhdr->setFileName(new_fname);
-        newhdr->setWindowTitle(new_fname);
 
-        newhdr->fitToWindow(true);
-
-        m_tabwidget->addTab(newhdr, new_fname);
+        m_tabwidget->addTab(newhdr, QFileInfo(new_fname).fileName());
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
@@ -1001,7 +1062,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-        emit updatedHDR(newhdr->getHDRPfsFrame());  // signal: I have a new HDR open
+        emit updatedHDR(newhdr->getFrame());  // signal: I have a new HDR open
 
         tmPanel->setEnabled(true);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
@@ -1012,22 +1073,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
         //                  newhdr->getHDRPfsFrame()->getHeight());
     }
-}
-
-void MainWindow::IO_start()
-{
-    //QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-    // Init Progress Bar
-    ProgressBarInit();
-}
-
-void MainWindow::IO_done()
-{
-    // Stop Progress Bar
-    ProgressBarFinish();
-
-    //QApplication::restoreOverrideCursor();
 }
 
 void MainWindow::preferences_called()
@@ -1089,8 +1134,10 @@ void MainWindow::openFiles(const QStringList& files)
         case 2: // open HDRs
             foreach (QString filename, files)
             {
-                 qDebug() << filename;
-                 emit open_hdr_frame(filename);
+                 //qDebug() << filename;
+                 //emit open_hdr_frame(filename);
+                 QMetaObject::invokeMethod(m_IOWorker, "read_hdr_frame", Qt::QueuedConnection,
+                                           Q_ARG(QString, filename));
             }
             break;
         }
@@ -1233,37 +1280,6 @@ void MainWindow::batch_requested()
     delete batchdialog;
 }
 
-void MainWindow::ProgressBarSetMaximum(int max)
-{
-    m_progressbar->setMaximum( max - 1 );
-}
-
-void MainWindow::ProgressBarSetValue(int value)
-{
-    m_progressbar->setValue( value );
-}
-
-void MainWindow::ProgressBarInit(void)
-{
-    statusBar()->clearMessage();
-
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-
-    //m_progressbar->setValue( -1 );
-    m_progressbar->setMaximum( 0 );
-    m_progressbar->show();
-}
-
-void MainWindow::ProgressBarFinish(void)
-{
-    m_progressbar->hide();
-    m_progressbar->reset();
-
-    QApplication::restoreOverrideCursor();
-
-    statusBar()->showMessage(tr("Done!"), 10000);
-}
-
 void MainWindow::cropToSelection()
 {
     if (m_tabwidget->count() <= 0) return;
@@ -1277,7 +1293,7 @@ void MainWindow::cropToSelection()
     int x_ul, y_ul, x_br, y_br;
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
     disableCrop();
-    pfs::Frame *original_frame = curr_g_v->getHDRPfsFrame();
+    pfs::Frame *original_frame = curr_g_v->getFrame();
     pfs::Frame *cropped_frame = pfs::pfscut(original_frame, x_ul, y_ul, x_br, y_br);
 
     emit load_success(cropped_frame, QString(tr("Cropped Image")), true);
@@ -1334,31 +1350,13 @@ bool MainWindow::maybeSave()
                   /* if save == success return true;
                    * else return false;
                    */
-                qDebug() << "HDR need to be saved";
-
-                QString filetypes = tr("All HDR formats ");
-                filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.EXR *.HDR *.PIC *.TIFF *.TIF *.PFS);;" ;
-                filetypes += "OpenEXR (*.exr *.EXR);;" ;
-                filetypes += "Radiance RGBE (*.hdr *.pic *.HDR *.PIC);;";
-                filetypes += "HDR TIFF (*.tiff *.tif *.TIFF *.TIF);;";
-                filetypes += "PFS Stream (*.pfs *.PFS)";
-
-                QString fname = QFileDialog::getSaveFileName(this,
-                                                             tr("Save the HDR image as..."),
-                                                             RecentDirHDRSetting,
-                                                             filetypes);
+                QString fname = getHdrFileNameFromSaveDialog(QString(), this);
 
                 if ( !fname.isEmpty() )
                 {
                     // Update working folder
                     QFileInfo qfi(fname);
-                    if ( RecentDirHDRSetting != qfi.path() )
-                    {
-                        // if the new dir (the one just chosen by the user)
-                        // is different from the one stored in the settings
-                        // update the settings
-                        updateRecentDirHDRSetting(qfi.path());
-                    }
+                    luminance_options.setDefaultPathHdrInOut(qfi.path());
 
                     // TODO : can I launch a signal and wait that it gets executed fully?
                     return m_IOWorker->write_hdr_frame(dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame), fname);
@@ -1393,6 +1391,50 @@ void MainWindow::setupTM()
     tm_status.curr_tm_options = NULL;
 
     tmPanel->setEnabled(false);
+
+    m_TMProgressBar = new TMOProgressIndicator;
+    connect(this, SIGNAL(destroyed()), m_TMProgressBar, SLOT(deleteLater()));
+
+    m_TMWorker = new TMWorker;
+    m_TMThread = new QThread;
+
+    m_TMWorker->moveToThread(m_TMThread);
+
+    // Memory Management
+    connect(this, SIGNAL(destroyed()), m_TMWorker, SLOT(deleteLater()));
+    connect(m_TMWorker, SIGNAL(destroyed()), m_TMThread, SLOT(deleteLater()));
+
+    // get back result!
+    connect(m_TMWorker, SIGNAL(tonemapSuccess(pfs::Frame*,TonemappingOptions*)),
+            this, SLOT(addLdrFrame(pfs::Frame*, TonemappingOptions*)));
+    connect(m_TMWorker, SIGNAL(tonemapFailed(QString)),
+            this, SLOT(tonemapFailed(QString)));
+
+    // progress bar handling
+    connect(m_TMWorker, SIGNAL(tonemapBegin()), this, SLOT(tonemapBegin()));
+    connect(m_TMWorker, SIGNAL(tonemapEnd()), this, SLOT(tonemapEnd()));
+
+    connect(m_TMWorker, SIGNAL(tonemapSetValue(int)), m_TMProgressBar, SLOT(setValue(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMaximum(int)), m_TMProgressBar, SLOT(setMaximum(int)));
+    connect(m_TMWorker, SIGNAL(tonemapSetMinimum(int)), m_TMProgressBar, SLOT(setMinimum(int)));
+    connect(m_TMProgressBar, SIGNAL(terminate()), m_TMWorker, SIGNAL(tonemapRequestTermination()), Qt::DirectConnection);
+
+    // start thread waiting for signals (I/O requests)
+    m_TMThread->start();
+
+}
+
+void MainWindow::tonemapBegin()
+{
+    statusBar()->addWidget(m_TMProgressBar);
+    m_TMProgressBar->setMaximum(0);
+    m_TMProgressBar->show();
+}
+
+void MainWindow::tonemapEnd()
+{
+    statusBar()->removeWidget(m_TMProgressBar);
+    m_TMProgressBar->reset();
 }
 
 void MainWindow::tonemapImage(TonemappingOptions *opts)
@@ -1418,197 +1460,64 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
     tm_status.curr_tm_options = opts;
 
-//    if ( opts->tonemapOriginal )
-//    {
-        if ( tm_status.curr_tm_frame->hasSelection() )
-        {
-            opts->tonemapSelection = true;
-            getCropCoords((HdrViewer *)tm_status.curr_tm_frame,
-                           opts->selection_x_up_left,
-                           opts->selection_y_up_left,
-                           opts->selection_x_bottom_right,
-                           opts->selection_y_bottom_right);
-        }
-        else
-           opts->tonemapSelection = false;
-//    }
+    if ( tm_status.curr_tm_frame->hasSelection() )
+    {
+        opts->tonemapSelection = true;
 
-
-
-//    else // if ( !opts.tonemapOriginal )
-//    {
-//        if (!mdiArea->subWindowList().isEmpty())
-//        {
-//            GenericViewer *viewer = (GenericViewer *) mdiArea->activeSubWindow()->widget();
-//
-//            if ( viewer->isHDR() )
-//            {
-//                HdrViewer *HDR = (HdrViewer *) mdiArea->activeSubWindow()->widget();
-//                workingPfsFrame = HDR->getHDRPfsFrame();
-//            }
-//            else
-//            {
-//                QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-//                return;
-//            }
-//
-//            if ( opts->tonemapSelection )
-//            {
-//                if ( originalHDR->hasSelection() )
-//                {
-//                    getCropCoords(originalHDR,
-//                                  opts->selection_x_up_left,
-//                                  opts->selection_y_up_left,
-//                                  opts->selection_x_bottom_right,
-//                                  opts->selection_y_bottom_right);
-//                }
-//                else
-//                {
-//                    QMessageBox::critical(this,tr("Luminance HDR"),tr("Please make a selection of the HDR image to tonemap."), QMessageBox::Ok);
-//                    return;
-//                }
-//            }
-//        }
-//        else
-//        {
-//            QMessageBox::critical(this,tr("Luminance HDR"),tr("Please select an HDR image to tonemap."), QMessageBox::Ok);
-//            return;
-//        }
-//    }
+        getCropCoords(tm_status.curr_tm_frame,
+                      opts->selection_x_up_left,
+                      opts->selection_y_up_left,
+                      opts->selection_x_bottom_right,
+                      opts->selection_y_bottom_right);
+    }
+    else
+        opts->tonemapSelection = false;
 
     HdrViewer* hdr_viewer = dynamic_cast<HdrViewer*>(tm_status.curr_tm_frame);
     if ( hdr_viewer )
     {
-        // TODO : can you clean up this thing?!
-        // getHDRPfsFrame() is only available in HdrViewer
-        TMOThread *thread = TMOThread::getTMOThread(opts->tmoperator, hdr_viewer->getHDRPfsFrame(), tm_status.curr_tm_options);
-        progInd = new TMOProgressIndicator(this);
+#ifdef QT_DEBUG
+        qDebug() << "MainWindow(): emit getTonemappedFrame()";
+#endif
+        //CALL m_TMWorker->getTonemappedFrame(hdr_viewer->getHDRPfsFrame(), opts);
+        QMetaObject::invokeMethod(m_TMWorker, "computeTonemap", Qt::QueuedConnection,
+                                  Q_ARG(pfs::Frame*, hdr_viewer->getFrame()), Q_ARG(TonemappingOptions*,opts));
 
-        connect(thread, SIGNAL(imageComputed(QImage*, quint16*)), this, SLOT(addLDRResult(QImage*, quint16*)));
-        connect(thread, SIGNAL(processedFrame(pfs::Frame *)), this, SLOT(addProcessedFrame(pfs::Frame *)));
-        connect(thread, SIGNAL(setMaximumSteps(int)), progInd, SLOT(setMaximum(int)));
-        connect(thread, SIGNAL(setValue(int)), progInd, SLOT(setValue(int)));
-        connect(thread, SIGNAL(tmo_error(const char *)), this, SLOT(showErrorMessage(const char *)));
-        connect(thread, SIGNAL(finished()), progInd, SLOT(terminated()));
-        connect(thread, SIGNAL(finished()), this, SLOT(tonemappingFinished()));
-        connect(thread, SIGNAL(deleteMe(TMOThread *)), this, SLOT(deleteTMOThread(TMOThread *)));
-        connect(progInd, SIGNAL(terminate()), thread, SLOT(terminateRequested()));
-
-        //start thread
-        tmPanel->setEnabled(false);
-        thread->startTonemapping();
-        statusBar()->addWidget(progInd);
-        progInd->show();
     }
 }
 
-void MainWindow::addLDRResult(QImage* image, quint16 *pixmap)
+void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
     num_ldr_generated++;
-    curr_num_ldr_open++;
 
-    LdrViewer *n = new LdrViewer( image, pixmap, this, false, false, tm_status.curr_tm_options);
+    GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
+    if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
+    {
+        n->setFrame(frame);
+    } else {
+        curr_num_ldr_open++;
 
-    connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
-    connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
-    connect(n, SIGNAL(levels_closed()), this, SLOT(levelsClosed()));
+        n = new LdrViewer(frame, tm_options, this, true);
 
-    // TODO : progressive numbering of the open LDR tabs
-    if (num_ldr_generated == 1)
-        m_tabwidget->addTab(n, tr("Untitled"));
-    else 
-	{
-		if (!tmPanel->replaceLdr())
-        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
-		else
-		{
-			GenericViewer *g_v = (GenericViewer *) m_tabwidget->currentWidget();
-			if (!g_v->isHDR())
-				m_tabwidget->removeTab(m_tabwidget->currentIndex());
-        	m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
-		}
-	}
+        connect(n, SIGNAL(changed(GenericViewer *)), this, SLOT(syncViewers(GenericViewer *)));
+        connect(n, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
+
+        if (num_ldr_generated == 1)
+            m_tabwidget->addTab(n, tr("Untitled"));
+        else
+            m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+    }
     m_tabwidget->setCurrentWidget(n);
-
-    n->fitToWindow(true);
 
     previewPanel->setEnabled(true);
 }
 
-void MainWindow::addProcessedFrame(pfs::Frame *frame)
+void MainWindow::tonemapFailed(QString error_msg)
 {
-    // TODO : currently, I'm thinking to remove this function
-    // Even the LDR viewer needs to be build using the pfs::Frame
-    // When the LDR hold the floating-point data, it can create a 16bit/channel version for high quality TIFF save
-    qDebug() << "MainWindow::addProcessedFrame(pfs::Frame *frame)";
-    qDebug() << "This function needs cleaning";
-
-//    HdrViewer *HDR = new HdrViewer(this, false, false, luminance_options->negcolor, luminance_options->naninfcolor);
-//    HDR->setFreePfsFrameOnExit(true);
-//    HDR->updateHDR(frame);
-//    HDR->setFileName(QString(tr("Processed HDR")));
-//    HDR->setWindowTitle(QString(tr("Processed HDR")));
-//    HDR->setSelectionTool(true);
-//    HDR->normalSize();
-//    HDR->showMaximized();
-//    //        if (actionFit_to_Window->isChecked())
-//    //                HDR->fitToWindow(true);
-//    QMdiSubWindow *HdrSubWin = new QMdiSubWindow(this);
-//    HdrSubWin->setAttribute(Qt::WA_DeleteOnClose);
-//    HdrSubWin->setWidget(HDR);
-//    mdiArea->addSubWindow(HdrSubWin);
-//    //HDR->showMaximized();
-
-//    if (luminance_options->tmowindow_max)
-//        HDR->showMaximized();
-//    else
-//        HDR->showNormal();
-
-//    //connect(HDR,SIGNAL(changed(GenericViewer *)),this,SLOT(syncViewers(GenericViewer *)));
-}
-
-void MainWindow::tonemappingFinished()
-{
-    qDebug() << "TonemappingWindow::tonemappingFinished()";
-    statusBar()->removeWidget(progInd);
-    tmPanel->setEnabled(true);
-
-    delete progInd;
-}
-
-void MainWindow::deleteTMOThread(TMOThread *th)
-{
-    delete th;
-}
-
-void MainWindow::showErrorMessage(const char *e)
-{
-    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(e),
+    QMessageBox::critical(this,tr("Luminance HDR"),tr("Error: %1").arg(error_msg),
                           QMessageBox::Ok,QMessageBox::NoButton);
 
-    statusBar()->removeWidget(progInd);
     tmPanel->setEnabled(true);
-
-    delete progInd;
-}
-
-
-pfs::Frame * MainWindow::getSelectedFrame(HdrViewer *hdr)
-{
-    assert( hdr != NULL );
-    pfs::Frame *frame = hdr->getHDRPfsFrame();
-    QRect cropRect = hdr->getSelectionRect();
-    int x_ul, y_ul, x_br, y_br;
-    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
-    return pfs::pfscut(frame, x_ul, y_ul, x_br, y_br);
-}
-
-void MainWindow::getCropCoords(HdrViewer *hdr, int& x_ul, int& y_ul, int& x_br, int& y_br)
-{
-    assert( hdr != NULL );
-
-    QRect cropRect = hdr->getSelectionRect();
-    cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
 /*
@@ -1650,7 +1559,7 @@ void MainWindow::showPreviewPanel(bool b)
             previewPanel->show();
 
             // ask panel to refresh itself
-            previewPanel->updatePreviews(tm_status.curr_tm_frame->getHDRPfsFrame());
+            previewPanel->updatePreviews(tm_status.curr_tm_frame->getFrame());
 
             // connect signals
             connect(this, SIGNAL(updatedHDR(pfs::Frame*)), previewPanel, SLOT(updatePreviews(pfs::Frame*)));
@@ -1964,17 +1873,37 @@ void MainWindow::levelsRequested(bool checked)
     if (checked)
     {
         GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
-        if (current==NULL)
-            return;
-        m_Ui->actionFix_Histogram->setDisabled(true);
-        current->levelsRequested(checked);
-    }
-}
+        if ( current==NULL ) return;
+        if ( current->isHDR() ) return;
 
-void MainWindow::levelsClosed()
-{
-    m_Ui->actionFix_Histogram->setDisabled(false);
-    m_Ui->actionFix_Histogram->setChecked(false);
+        QScopedPointer<GammaAndLevels> g_n_l( new GammaAndLevels(this, current->getQImage()) );
+
+        m_Ui->actionFix_Histogram->setDisabled(true);
+
+        connect(g_n_l.data(), SIGNAL(updateQImage(QImage)), current, SLOT(setQImage(QImage)));
+        int exit_status = g_n_l->exec();
+
+        if ( exit_status == 1 )
+        {
+            qDebug() << "GammaAndLevels accepted!";
+
+            pfs::Frame* frame = pfs::gamma_levels(current->getFrame(),
+                                                  g_n_l->getBlackPointInput(),
+                                                  g_n_l->getWhitePointInput(),
+                                                  g_n_l->getBlackPointOutput(),
+                                                  g_n_l->getWhitePointOutput(),
+                                                  g_n_l->getGamma());
+
+            current->setFrame(frame);
+        } else {
+            qDebug() << "GammaAndLevels refused!";
+
+            current->setQImage(g_n_l->getReferenceQImage());
+        }
+
+        m_Ui->actionFix_Histogram->setDisabled(false);
+        m_Ui->actionFix_Histogram->setChecked(false);
+    }
 }
 
 void MainWindow::setInputFiles(const QStringList& files)

@@ -36,56 +36,62 @@
 #include <assert.h>
 
 #include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
 #include "Common/msec_timer.h"
 
-inline int clamp2int( const float v, const float minV, const float maxV )
+namespace
 {
-    if ( v < minV ) return (int)minV;
-    if ( v > maxV ) return (int)maxV;
-    return (int)v;
+
+inline int clamp_to_8bits(const float& value)
+{
+    if (value <= 0.f) return 0;
+    if (value >= 1.f) return 255;
+    return (int)(value*255.f + 0.5f);
 }
 
-QImage* fromLDRPFStoQImage( pfs::Frame* inpfsframe , pfs::ColorSpace display_colorspace )
+//! \note I pass value by value, so I can use it as a temporary variable inside the function
+//! I will let the compiler do the optimization that it likes
+inline int clamp_and_offset_to_8bits(float value, const float& min, const float& max)
+{
+    if (value <= min) value = min;
+    else if (value >= max) value = max;
+
+    value = (value - min)/(max - min);
+
+    return (quint16)(value*255.f + 0.5f);
+}
+
+}
+
+QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_luminance)
 {
 #ifdef TIMER_PROFILING
     msec_timer __timer;
     __timer.start();
 #endif
 
-    assert( inpfsframe != NULL );
+    assert( in_frame != NULL );
 
     pfs::Channel *Xc, *Yc, *Zc;
-    inpfsframe->getXYZChannels( Xc, Yc, Zc );
+    in_frame->getXYZChannels( Xc, Yc, Zc );
     assert( Xc != NULL && Yc != NULL && Zc != NULL );
 
-    pfs::Array2D  *X = Xc->getChannelData();
-    pfs::Array2D  *Y = Yc->getChannelData();
-    pfs::Array2D  *Z = Zc->getChannelData();
+    const int width   = in_frame->getWidth();
+    const int height  = in_frame->getHeight();
 
-    // Back to CS_RGB for the Viewer
-    pfs::transformColorSpace(pfs::CS_XYZ, X, Y, Z, display_colorspace, X, Y, Z);
+    QImage* temp_qimage = new QImage(width, height, QImage::Format_ARGB32);
 
-    const int width   = Xc->getWidth();
-    const int height  = Xc->getHeight();
+    const float* p_R = Xc->getChannelData()->getRawData();
+    const float* p_G = Yc->getChannelData()->getRawData();
+    const float* p_B = Zc->getChannelData()->getRawData();
 
-    QImage * temp_qimage = new QImage (width, height, QImage::Format_ARGB32);
-
-    const float* p_R = X->getRawData();
-    const float* p_G = Y->getRawData();
-    const float* p_B = Z->getRawData();
-
-    int red, green, blue;
     QRgb *pixels = reinterpret_cast<QRgb*>(temp_qimage->bits());
 
-#pragma omp parallel for private(red, green, blue) shared(pixels)
+#pragma omp parallel for shared(pixels)
     for (int idx = 0; idx < height*width; ++idx)
     {
-        red = clamp2int(p_R[idx]*255.f, 0.0f, 255.f);
-        green = clamp2int(p_G[idx]*255.f, 0.0f, 255.f);
-        blue = clamp2int(p_B[idx]*255.f, 0.0f, 255.f);
-
-        pixels[idx] = qRgb(red, green, blue);
+        pixels[idx] = qRgb(clamp_and_offset_to_8bits(p_R[idx], min_luminance, max_luminance),
+                           clamp_and_offset_to_8bits(p_G[idx], min_luminance, max_luminance),
+                           clamp_and_offset_to_8bits(p_B[idx], min_luminance, max_luminance));
     }
 
 

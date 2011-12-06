@@ -26,11 +26,12 @@
 #ifndef FROMLDRPFSTO16BITSPIXMAP
 #define FROMLDRPFSTO16BITSPIXMAP
 
-#include <QtGlobal> 
+#include <QtGlobal>
 
-#include "Libpfs/frame.h"
-#include "Libpfs/colorspace.h"
+namespace pfs {
+    class Frame;
+}
 
-quint16* fromLDRPFSto16bitsPixmap( pfs::Frame* inpfsframe);
+quint16* fromLDRPFSto16bitsPixmap(pfs::Frame* inpfsframe, float min_luminance = 0.0f, float max_luminance = 1.0f);
 
 #endif

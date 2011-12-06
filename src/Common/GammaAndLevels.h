@@ -23,7 +23,17 @@
 
 #ifndef GAMMA_AND_LEVELS_H
 #define GAMMA_AND_LEVELS_H
+
 #include <QWidget>
+#include <QImage>
+#include <QDialog>
+
+#include "Viewers/GenericViewer.h"
+
+namespace Ui
+{
+    class LevelsDialog;
+}
 
 class GrayBar : public QWidget
 {
@@ -61,42 +71,67 @@ signals:
 
 class HistogramLDR : public QWidget
 {
-Q_OBJECT
-private:
-	//LDR means 256 bins
-	float *P;
-	int accuracy;
+    Q_OBJECT
 public:
-	HistogramLDR(QWidget *parent, int accuracy=1);
-	~HistogramLDR();
-	QSize sizeHint () const;
-	QSize minimumSizeHint () const;
-        void setData(const QImage* data);
+    HistogramLDR(QWidget *parent);
+    ~HistogramLDR();
+    QSize sizeHint () const;
+    QSize minimumSizeHint () const;
+    void setData(const QImage* data);
+
+    void setFrame(bool b = true);
+    void setColorHistogram(bool b = true);
+
+    bool isFrame() {  return isDrawFrame; }
+    bool isColorHistogram() { return isDrawColorHist; }
+
 protected:
-	void paintEvent( QPaintEvent * );
-// 	void resizeEvent ( QResizeEvent * );
+    //! \brief repaints canvas
+    void paintEvent( QPaintEvent * );
+    //! \brief disable/enable color histogram on each double click
+    void mouseDoubleClickEvent( QMouseEvent * event );
+
+private:
+    //LDR means 256 bins
+    float m_GreyHist[256];
+    float m_RedHist[256];
+    float m_GreenHist[256];
+    float m_BlueHist[256];
+
+    bool isDrawFrame;
+    bool isDrawColorHist;
 };
 
-
-#include "ui_GammaAndLevels.h"
-class GammaAndLevels : public QDialog, public Ui::LevelsDialog
+class GammaAndLevels : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 private:
-	unsigned char *LUT;
-	int blackin, whitein, blackout, whiteout;
-	float gamma;
-	void refreshLUT();
+    Ui::LevelsDialog* m_Ui;
+
+    const QImage m_ReferenceQImage; // can only be read
+
+    int blackin, whitein, blackout, whiteout;
+    float gamma;
+
+    GrayBar *gb1;
+    GrayBar *gb2;
+    HistogramLDR *histogram;
+
+    void refreshLUT();
 public:
-        GammaAndLevels(QWidget *parent, const QImage* image);
+        GammaAndLevels(QWidget *parent, const QImage& image);
 	~GammaAndLevels();
-	GrayBar *gb1,*gb2;
-	HistogramLDR *histogram;
-protected:
-	void closeEvent ( QCloseEvent * event );
+
+        QImage getReferenceQImage();
+
+        float getBlackPointInput();
+        float getBlackPointOutput();
+        float getWhitePointInput();
+        float getWhitePointOutput();
+        float getGamma();
+
 signals:
-	void closing();
-	void LUTrefreshed(unsigned char *);
+        void updateQImage(QImage image);
 
 private slots:
 	void resetValues();
@@ -108,6 +143,5 @@ private slots:
 	void defaultGammaBlackWhiteIn();
 	void defaultBlackWhiteOut();
 };
-
 
 #endif

@@ -26,22 +26,36 @@
 
 #include <QLabel>
 #include <QMouseEvent>
+#include <QImage>
+
+#include "Core/TonemappingOptions.h"
 
 class PreviewLabel : public QLabel
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-        PreviewLabel(QWidget *parent = 0, int n = 0);
-	~PreviewLabel();
+    PreviewLabel(QWidget *parent = 0, TMOperator tm_operator = mantiuk06);
+    ~PreviewLabel();
+
+    TonemappingOptions* getTonemappingOptions();
+
+public Q_SLOTS:
+    void assignNewQImage(QSharedPointer<QImage> new_qimage);
 
 protected:
-	void mousePressEvent(QMouseEvent *event);
-
-private:
-	int label_num;
+    void mousePressEvent(QMouseEvent *event);
 
 signals:
-	void clicked(int n);
+    void clicked(TonemappingOptions*);
+
+private:
+    TonemappingOptions* m_TMOptions;
 };
+
+inline TonemappingOptions* PreviewLabel::getTonemappingOptions()
+{
+    return m_TMOptions;
+}
+
 #endif

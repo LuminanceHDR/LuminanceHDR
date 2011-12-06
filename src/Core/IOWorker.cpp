@@ -33,13 +33,17 @@
 #ifdef QT_DEBUG
 #include <QDebug>
 #endif
+#include <QScopedPointer>
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
 #include "Libpfs/domio.h"
-#include "Viewers/HdrViewer.h"
-#include "Viewers/LdrViewer.h"
+#include "Viewers/GenericViewer.h"
 #include "Common/LuminanceOptions.h"
+#include "Fileformat/pfsout16bitspixmap.h"
+#include "Fileformat/pfsoutldrimage.h"
+#include "Core/TonemappingOptions.h"
+#include "Exif/ExifOperations.h"
 
 IOWorker::IOWorker(QObject* parent):
     QObject(parent)
@@ -52,13 +56,17 @@ IOWorker::~IOWorker()
 #endif
 }
 
-bool IOWorker::write_hdr_frame(HdrViewer* hdr_viewer, QString filename)
+bool IOWorker::write_hdr_frame(GenericViewer* hdr_viewer, QString filename)
 {
-    pfs::Frame* hdr_frame = hdr_viewer->getHDRPfsFrame();
+    pfs::Frame* hdr_frame = hdr_viewer->getFrame();
 
     bool status = write_hdr_frame(hdr_frame, filename);
 
-    emit write_hdr_success(hdr_viewer, filename);
+    if ( status )
+    {
+        hdr_viewer->setFileName(filename);
+        emit write_hdr_success(hdr_viewer, filename);
+    }
 
     return status;
 }
@@ -115,11 +123,33 @@ bool IOWorker::write_hdr_frame(pfs::Frame *hdr_frame, QString filename)
     return status;
 }
 
-void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quality)
+bool IOWorker::write_ldr_frame(GenericViewer* ldr_viewer, QString filename, int quality, TonemappingOptions* tmopts)
 {
+    pfs::Frame* ldr_frame = ldr_viewer->getFrame();
+
+    bool status = write_ldr_frame(ldr_frame, filename, quality, tmopts, ldr_viewer->getMinLuminanceValue(), ldr_viewer->getMaxLuminanceValue());
+
+    if ( status )
+    {
+        if ( !ldr_viewer->isHDR() )
+            ldr_viewer->setFileName(filename);
+
+        emit write_ldr_success(ldr_viewer, filename);
+    }
+
+    return status;
+}
+
+
+bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int quality, TonemappingOptions* tmopts, float min_luminance, float max_luminance)
+{
+    bool status = true;
     emit IO_init();
 
-    const QImage* image = ldr_input->getQImage();
+    QScopedPointer<TMOptionsOperations> operations;
+
+    if (tmopts != NULL)
+        operations.reset(new TMOptionsOperations(tmopts));
     
     QFileInfo qfi(filename);
     QString format = qfi.suffix();
@@ -128,31 +158,48 @@ void IOWorker::write_ldr_frame(LdrViewer* ldr_input, QString filename, int quali
 
     if (qfi.suffix().toUpper().startsWith("TIF"))
     {
-        const quint16 *pixmap = ldr_input->getPixmap();
-        int width = image->width();
-        int height = image->height();
+        // QScopedArrayPointer will call delete [] when this object goes out of scope
+        QScopedArrayPointer<quint16> pixmap(fromLDRPFSto16bitsPixmap(ldr_input, min_luminance, max_luminance));
+        int width = ldr_input->getWidth();
+        int height = ldr_input->getHeight();
         try
         {
-            TiffWriter tiffwriter(encodedName, pixmap, width, height);
+            TiffWriter tiffwriter(encodedName, pixmap.data(), width, height);
+            connect(&tiffwriter, SIGNAL(maximumValue(int)), this, SIGNAL(setMaximum(int)));
+            connect(&tiffwriter, SIGNAL(nextstep(int)), this, SIGNAL(setValue(int)));
             tiffwriter.write16bitTiff();
+
+            if (tmopts != NULL)
+                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
+            emit write_ldr_success(ldr_input, filename);
         }
         catch(...)
         {
+            status = false;
             emit write_ldr_failed();
         }
     }
     else
     {
+        // QScopedPointer will call delete when this object goes out of scope
+        QScopedPointer<QImage> image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
         if ( image->save(filename, format.toLocal8Bit(), quality) )
         {
+            if (tmopts != NULL)
+                ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());
+
             emit write_ldr_success(ldr_input, filename);
         }
         else
         {
+            status = false;
             emit write_ldr_failed();
         }
     }
     emit IO_finish();
+
+    return status;
 }
 
 pfs::Frame* IOWorker::read_hdr_frame(QString filename)
@@ -165,7 +212,9 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
     QFileInfo qfi(filename);
     if ( !qfi.isReadable() )
     {
+#ifdef QT_DEBUG
         qDebug("File %s is not readable.", qPrintable(filename));
+#endif
         emit read_hdr_failed(tr("ERROR: The following file is not readable: %1").arg(filename));
         return NULL;
     }
@@ -215,14 +264,16 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
         }
         else
         {
+#ifdef QT_DEBUG
             qDebug("TH: File %s has unsupported extension.", qPrintable(filename));
+#endif
             emit read_hdr_failed(tr("ERROR: File %1 has unsupported extension.").arg(filename));
             return NULL;
         }
 
         if (hdrpfsframe == NULL)
         {
-            throw "Error loading file";
+            return NULL;
         }
     }
     catch (...)

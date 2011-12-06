@@ -45,17 +45,17 @@ namespace pfs {
     class Frame;
 }
 
-class HdrViewer;
-class LdrViewer;
+class GenericViewer;
+class TonemappingOptions;
 
-int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
 class IOWorker : public QObject
 {
     Q_OBJECT
 
 private:
-    friend int progress_cb(void *data,enum LibRaw_progress p,int iteration, int expected);
+    friend int progress_cb(void *data, enum LibRaw_progress p, int iteration, int expected);
 
     void get_frame(QString fname);
     void emitNextStep(int iteration);
@@ -69,9 +69,10 @@ public Q_SLOTS:
     pfs::Frame* read_hdr_frame(QString filename);
 
     bool write_hdr_frame(pfs::Frame *frame, QString filename);
-    bool write_hdr_frame(HdrViewer* frame, QString filename);
+    bool write_hdr_frame(GenericViewer* frame, QString filename);
 
-    void write_ldr_frame(LdrViewer* frame, QString filename, int quality);
+    bool write_ldr_frame(pfs::Frame* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL, float min_luminance = 0.0f, float max_luminance = 1.0f);
+    bool write_ldr_frame(GenericViewer* frame, QString filename, int quality, TonemappingOptions* tmopts = NULL);
 
 signals:
     void read_hdr_failed(QString error_message);
@@ -79,9 +80,11 @@ signals:
 
     void write_hdr_failed();
     void write_hdr_success(pfs::Frame*, QString);
-    void write_hdr_success(HdrViewer*, QString);
+    void write_hdr_success(GenericViewer*, QString);
+
     void write_ldr_failed();
-    void write_ldr_success(LdrViewer*, QString);
+    void write_ldr_success(pfs::Frame*, QString);
+    void write_ldr_success(GenericViewer*, QString);
 
     void setMaximum(int);
     void setValue(int);

@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,46 +23,42 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Ashikhmin02Thread.h"
+#include "TonemappingEngine/TonemapOperatorAshikhmin02.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-Ashikhmin02Thread::Ashikhmin02Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorAshikhmin02::TonemapOperatorAshikhmin02():
+    TonemapOperator()
+{}
 
-void Ashikhmin02Thread::run()
+void TonemapOperatorAshikhmin02::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		pfstmo_ashikhmin02(workingframe,
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    pfstmo_ashikhmin02(workingframe,
                        opts->operator_options.ashikhminoptions.simple,
                        opts->operator_options.ashikhminoptions.lct,
                        (opts->operator_options.ashikhminoptions.eq2 ? 2 : 4),
-                       ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-  
-	finalize();	
-}
-//
-// run()
-//
+                       &ph);
 
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+}
+
+TMOperator TonemapOperatorAshikhmin02::getType()
+{
+    return ashikhmin;
+}

@@ -102,9 +102,7 @@ void TonemappingOptions::setDefaultParameters()
     xsize = INT_MAX;
     pregamma = 1.0f;
     tonemapSelection = false;
-    tonemapOriginal = true;
     tmoperator = mantiuk06;
-    tmoperator_str = "Mantiuk '06";
 
     selection_x_up_left = 0;
     selection_y_up_left = 0;

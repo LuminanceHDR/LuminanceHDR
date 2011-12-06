@@ -21,38 +21,54 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
+#include <QDebug>
 #include <QCloseEvent>
 #include <QLinearGradient>
 #include <QPainter>
+
 #include <cmath>
 #include <cassert>
 
-#include "GammaAndLevels.h"
+#include "Common/GammaAndLevels.h"
+#include "ui_GammaAndLevels.h"
 
-GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage* data) : QDialog(parent)
+namespace
 {
-	setupUi(this);
-	connect(cancelButton,SIGNAL(clicked()),this,SIGNAL(closing()));
-	connect(okButton,SIGNAL(clicked()),this,SIGNAL(closing()));
+static inline int clamp(const float& v, const float& minV, const float& maxV)
+{
+    if ( v <= minV ) return minV;
+    if ( v >= maxV ) return maxV;
+    return (int)(v + 0.5f);
+}
 
-	LUT=new unsigned char[256];
-	blackin=0;
-	gamma=1.0f;
-	whitein=255;
-	blackout=0;
-	whiteout=255;
+}
+
+GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
+    QDialog(parent, Qt::Dialog),
+    m_ReferenceQImage(data),
+    blackin(0),
+    whitein(255),
+    gamma(1.0f),
+    blackout(0),
+    whiteout(255),
+    m_Ui(new Ui::LevelsDialog)
+{
+    m_Ui->setupUi(this);
 
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
 	qvl->setSpacing(1);
 
 	histogram=new HistogramLDR(this);
-	histogram->setData(data);
-	gb1=new GrayBar(inputStuffFrame);
 
-	connect(black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
-	connect(gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
-	connect(white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
+        histogram->setData(&m_ReferenceQImage);
+        histogram->setFrame(false); // remove histogram frame
+
+        gb1=new GrayBar(m_Ui->inputStuffFrame);
+
+        connect(m_Ui->black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
+        connect(m_Ui->gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
+        connect(m_Ui->white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
 
 	connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
 	connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
@@ -61,30 +77,32 @@ GammaAndLevels::GammaAndLevels(QWidget *parent, const QImage* data) : QDialog(pa
 
 	qvl->addWidget(histogram);
 	qvl->addWidget(gb1);
-	inputStuffFrame->setLayout(qvl);
+        m_Ui->inputStuffFrame->setLayout(qvl);
 
 	QVBoxLayout *qvl2=new QVBoxLayout;
 	qvl2->setMargin(0);
 	qvl2->setSpacing(1);
-	gb2=new GrayBar(out_levels,true);
-	connect(black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
-	connect(white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
+        gb2=new GrayBar(m_Ui->out_levels,true);
+        connect(m_Ui->black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
+        connect(m_Ui->white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
 
 	connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
 	connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
 	connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
 
-	connect(ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
-	connect(ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
-	connect(ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
 
 	qvl2->addWidget(gb2);
-	out_levels->setLayout(qvl2);
+        m_Ui->out_levels->setLayout(qvl2);
 }
 
-GammaAndLevels::~GammaAndLevels() {
-	delete gb1; delete gb2; delete histogram;
-	emit closing();
+GammaAndLevels::~GammaAndLevels()
+{
+    delete gb1;
+    delete gb2;
+    delete histogram;
 }
 
 void GammaAndLevels::defaultGammaBlackWhiteIn() {
@@ -100,38 +118,34 @@ void GammaAndLevels::defaultBlackWhiteOut() {
 	whiteout=255;
 }
 
-void GammaAndLevels::closeEvent(QCloseEvent *) {
-// 	emit closing();
-}
-
 void GammaAndLevels::updateBlackIn(int v) {
 	qDebug("GammaAndLevels::updateBlackIn");
-	black_in_spinbox->setValue(v);
+        m_Ui->black_in_spinbox->setValue(v);
 	blackin=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateGamma(double v) {
 	qDebug("GammaAndLevels::updateGamma");
 	gb1->dont_emit=true;
-	gamma_spinbox->setValue(v);
+        m_Ui->gamma_spinbox->setValue(v);
 	gamma=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteIn(int v) {
 	qDebug("GammaAndLevels::updateWhiteIn");
-	white_in_spinbox->setValue(v);
+        m_Ui->white_in_spinbox->setValue(v);
 	whitein=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateBlackOut(int v) {
 	qDebug("GammaAndLevels::updateBlackOut");
-	black_out_spinbox->setValue(v);
+        m_Ui->black_out_spinbox->setValue(v);
 	blackout=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteOut(int v) {
 	qDebug("GammaAndLevels::updateWhiteOut");
-	white_out_spinbox->setValue(v);
+        m_Ui->white_out_spinbox->setValue(v);
 	whiteout=v;
 	refreshLUT();
 }
@@ -144,103 +158,251 @@ void GammaAndLevels::resetValues() {
 	blackout=0;
 	whiteout=255;
 	gb1->dont_emit=true;
-	black_in_spinbox->setValue(0);
-	gamma_spinbox->setValue(1);
-	white_in_spinbox->setValue(255);
-	black_out_spinbox->setValue(0);
-	white_out_spinbox->setValue(255);
+        m_Ui->black_in_spinbox->setValue(0);
+        m_Ui->gamma_spinbox->setValue(1);
+        m_Ui->white_in_spinbox->setValue(255);
+        m_Ui->black_out_spinbox->setValue(0);
+        m_Ui->white_out_spinbox->setValue(255);
 	refreshLUT();
 }
 
-static inline unsigned char clamp( const float v, const unsigned char minV, const unsigned char maxV )
+void GammaAndLevels::refreshLUT()
 {
-    if( v < minV ) return minV;
-    if( v > maxV ) return maxV;
-    return (unsigned char)v;
-}
+#ifdef QT_DEBUG
+    qDebug() << "Update Look-Up-Table and send update QImage to viewer";
+#endif
 
-void GammaAndLevels::refreshLUT() {
-	qDebug("refreshLUT");
-	//values in 0..1 range
-	float bin=(float)blackin/255.0f;
-	float win=(float)whitein/255.0f;
-	float expgamma=1.0f/gamma;
-	for (int i=0; i<256; i++) {
-		float value=powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
-		LUT[i]=clamp(blackout+value*(whiteout-blackout),0,255);
-// 		qDebug("LUT[%d]=%f char=%d",i,(blackout+value*(whiteout-blackout)),LUT[i]);
-	}
-	qDebug("GammaAndLevels::emitting LUTrefreshed");
-	emit LUTrefreshed(LUT);
-}
-//////////////////////////////////////////////////////////////////////////////////////
+    int LUT[256];
 
-HistogramLDR::HistogramLDR(QWidget *parent, int accuracy) : QWidget(parent), accuracy(accuracy){
-	P = new float[256];
-	this->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
-	//initialize to 0
-	for( int i = 0; i < 256; i++ )
-		P[i]=0;
-	
-}
+    //values in 0..1 range
+    float bin=(float)blackin/255.0f;
+    float win=(float)whitein/255.0f;
+    float expgamma=1.0f/gamma;
 
-void HistogramLDR::setData(const QImage *data)
-{
-    if (data->isNull()) {
-        for( int i = 0; i < 256; i++ )
-            P[i] = 0;
-        return;
-    }
-
-    // 	if (data.format()==QImage::Format_Indexed8) {
-    // 		//increment bins
-    // 		for (int i=0; i<data.width()*data.height(); i+=accuracy) {
-    // 			const unsigned char v=*((const unsigned char*)(data.bits())+i);
-    // 			P[v] += 1;
-    // 		}
-    //
-    // 	} else {
-    //increment bins
-    for (int i=0; i<data->width()*data->height(); i+=accuracy)
+// it is only 256 values, so it won't really get any improvement from multi threading
+//#pragma omp parallel for
+    for (int i=0; i<256; ++i)
     {
-        int v=qGray(*((QRgb*)(data->bits())+i));
-        assert(v>=0 && v<=255);
-        P[v] += 1;
+        float value = powf( ( ((float)(i)/255.0f) - bin ) / (win-bin), expgamma);
+        LUT[i] = clamp(blackout+value*(whiteout-blackout),0,255);
     }
-    // 	}
+
+    // Build new QImage from the reference one
+    const QRgb* src = (const QRgb*)m_ReferenceQImage.bits();
+
+    QImage previewimage(m_ReferenceQImage.width(), m_ReferenceQImage.height(), QImage::Format_RGB32);
+    QRgb* dst = (QRgb*)previewimage.bits();
+
+#pragma omp parallel for default(none) shared(src, dst, LUT)
+    for (int i=0; i < m_ReferenceQImage.width()*m_ReferenceQImage.height(); ++i)
+    {
+        dst[i] = qRgb(LUT[qRed(src[i])],
+                      LUT[qGreen(src[i])],
+                      LUT[qBlue(src[i])]);
+    }
+
+    emit updateQImage(previewimage);
+}
+
+QImage GammaAndLevels::getReferenceQImage()
+{
+    return m_ReferenceQImage;
+}
+
+float GammaAndLevels::getBlackPointInput()
+{
+    return (float)blackin/255.f;
+}
+
+float GammaAndLevels::getBlackPointOutput()
+{
+    return (float)blackout/255.f;
+}
+
+float GammaAndLevels::getWhitePointInput()
+{
+    return (float)whitein/255.f;
+}
+
+float GammaAndLevels::getWhitePointOutput()
+{
+    return (float)whiteout/255.f;
+}
+
+float GammaAndLevels::getGamma()
+{
+    return (1.0f/gamma);
+}
+
+HistogramLDR::HistogramLDR(QWidget *parent):
+    QWidget(parent),
+    isDrawFrame(true),
+    isDrawColorHist(true)
+{
+    setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+}
+
+void HistogramLDR::setData(const QImage* data)
+{
+    for (int i = 0; i < 256; ++i) m_GreyHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_RedHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_GreenHist[i] = 0.0f;
+    for (int i = 0; i < 256; ++i) m_BlueHist[i] = 0.0f;
+
+    if ( data->isNull() ) return;
+
+    // Build histogram
+    const QRgb* pixels = (const QRgb*)(data->bits());
+    const int ELEMS = data->width()*data->height();
+    for (int i = 0; i < ELEMS; ++i)
+    {
+        m_GreyHist[ qGray(pixels[i]) ] += 1.0f;
+
+        m_RedHist[ qRed(pixels[i]) ] += 1.0f;
+        m_GreenHist[ qGreen(pixels[i]) ] += 1.0f;
+        m_BlueHist[ qBlue(pixels[i]) ] += 1.0f;
+    }
 
     //find max
-    float max=-1;
-    for( int i = 0; i < 256; i++ )
-        if (P[i]>max)
-            max=P[i];
+    float hist_max = m_GreyHist[0];
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_GreyHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_RedHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_GreenHist[i]);
+    for (int i = 0; i < 256; ++i) hist_max = qMax(hist_max, m_BlueHist[i]);
 
-    //normalize to make maxvalue=1
-    for( int i = 0; i < 256; i++ )
-        P[i] /= max;
-}
+    //normalize in the range [0...1]
+    for (int i = 0; i < 256; ++i) m_GreyHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_RedHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_GreenHist[i] /= hist_max;
+    for (int i = 0; i < 256; ++i) m_BlueHist[i] /= hist_max;
 
-void HistogramLDR::paintEvent( QPaintEvent * ) {
-	QPainter painter(this);
-	for (int i=0; i<256; i++) {
-		QRectF rf( i*(((float)(this->width()))/255.f), this->height()-(P[i]*(height()/*-2*/)), ((float)(this->width())/255.f), (P[i]*(height()/*-2*/)));
-		painter.fillRect(rf,QBrush(Qt::black) );
-	}
-painter.drawRect(QRect(0,0,width()-1,height()-1));
+    //qDebug() << "hist_max = "<< hist_max << "grey_hist_max = " << grey_hist_max;
 }
 
-QSize HistogramLDR::sizeHint () const {
-	return QSize( 255, 80 );
-}
-QSize HistogramLDR::minimumSizeHint () const {
-	return QSize( 255, 80 );
-}
-HistogramLDR::~HistogramLDR() {
-	delete [] P;
+void HistogramLDR::paintEvent( QPaintEvent * )
+{
+    qDebug() << "void HistogramLDR::paintEvent( QPaintEvent * )";
+
+    const qreal skew = (qreal)width()/256;
+
+    QPainter painter(this);
+
+    //painter.setRenderHint(QPainter::Antialiasing, true); // antialiasing
+
+    QPolygonF pol_grey;
+
+    if ( isDrawColorHist )
+    {
+        // reuse pol_grey to print also red/green/blue components
+        pol_grey.clear();
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_RedHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_RedHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //( QColor(255, 0, 0, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(255, 0, 0, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
+
+        // reuse pol_grey to print also red/green/blue components
+        pol_grey.clear(); // reuse of pol_grey
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_GreenHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_GreenHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //( QColor(0, 255, 0, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(0, 255, 0, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
+
+        pol_grey.clear(); // reuse of pol_grey
+        pol_grey << QPointF(0.0, height());
+        for (int i = 0; i < 256; ++i)
+        {
+            pol_grey << QPointF(i*skew, (1.0 - m_BlueHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_BlueHist[i])*height());
+        }
+        // last point, bottom right corner
+        pol_grey << QPointF(width(), height());
+
+        // Draw histogram
+        painter.setBrush( Qt::NoBrush ); //QColor(0, 0, 255, 160) ); // semi-transparent brush
+        painter.setPen( QPen(QBrush(QColor(0, 0, 255, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+        painter.drawConvexPolygon(pol_grey);
+    }
+
+    // first point, left bottom corner
+    pol_grey.clear();
+    pol_grey << QPointF(0.0, height());
+    for (int i = 0; i < 256; ++i)
+    {
+        pol_grey << QPointF(i*skew, (1.0 - m_GreyHist[i])*height());
+        pol_grey << QPointF((i+1)*skew, (1.0 - m_GreyHist[i])*height());
+    }
+    // last point, bottom right corner
+    pol_grey << QPointF(width(), height());
+
+    // Draw histogram
+    painter.setBrush( QColor(160, 160, 160, 50) ); // semi-transparent brush
+    painter.setPen( QPen(QBrush(QColor(20, 20, 20, 255)), 1.0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin) );
+    painter.drawConvexPolygon(pol_grey);
+
+    // Draw frame
+    if ( isDrawFrame )
+    {
+        painter.setPen(Qt::black);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawRect(QRect(0,0,width()-1,height()-1));
+    }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-GrayBar::GrayBar(QWidget *parent, bool two_handles) : QWidget(parent), dont_emit(false) {
+void HistogramLDR::mouseDoubleClickEvent( QMouseEvent * event )
+{
+    // repaint
+    if (event->button() == Qt::LeftButton)
+    {
+        isDrawColorHist = !isDrawColorHist; // revert condition
+        repaint();
+    }
+}
+
+void HistogramLDR::setFrame(bool b)
+{
+    isDrawFrame = b;
+}
+
+void HistogramLDR::setColorHistogram(bool b)
+{
+    isDrawColorHist = b;
+}
+
+QSize HistogramLDR::sizeHint () const
+{
+    return QSize( 255, 120 );
+}
+
+QSize HistogramLDR::minimumSizeHint () const
+{
+    return QSize( 255, 120 );
+}
+
+HistogramLDR::~HistogramLDR()
+{}
+
+GrayBar::GrayBar(QWidget *parent, bool two_handles):
+    QWidget(parent),
+    dont_emit(false)
+{
 	twohandles=two_handles;
 	dragging=DRAGNONE;
 // 	qDebug("width=%d, height=%d",width(),height());

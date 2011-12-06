@@ -35,6 +35,7 @@
 #define MAINGUI_IMPL_H
 
 #include <QMainWindow>
+#include <QString>
 #include <QStringList>
 #include <QSignalMapper>
 #include <QSplitter>
@@ -57,14 +58,12 @@ namespace pfs {
 
 class IOWorker;             // #include "Core/IOWorker.h"
 class GenericViewer;
-class HdrViewer;            // #include "Viewers/HdrViewer.h"
-class LdrViewer;            // #include "Viewers/LdrViewer.h"
 class PreviewPanel;         // #include "PreviewPanel/PreviewPanel.h"
 class HelpBrowser;          // #include "HelpBrowser/helpbrowser.h"
 class TMOProgressIndicator; // #include "TonemappingPanel/TMOProgressIndicator.h"
-class TMOThread;            // #include "Threads/TMOThread.h"
 class TonemappingPanel;     // #include "TonemappingPanel/TonemappingPanel.h"
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
+class TMWorker;
 
 class MainWindow: public QMainWindow
 {
@@ -77,23 +76,19 @@ public:
     ~MainWindow();
 
 public Q_SLOTS:
-    // For ProgressBar
-    void ProgressBarSetMaximum(int max);
-    void ProgressBarSetValue(int value);
 
     // I/O
-    void save_hdr_success(HdrViewer* saved_hdr, QString fname);
+    void save_hdr_success(GenericViewer* saved_hdr, QString fname);
     void save_hdr_failed();
-    void save_ldr_success(LdrViewer* saved_ldr, QString fname);
+    void save_ldr_success(GenericViewer* saved_ldr, QString fname);
     void save_ldr_failed();
 
     void load_failed(QString);
     void load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool needSaving = false);
 
-    void IO_done();
-    void IO_start();
+    void ioBegin();
+    void ioEnd();
 
-    void tonemapImage(TonemappingOptions *opts);
     void setMainWindowModified(bool b);
 
     void setInputFiles(const QStringList& files);
@@ -111,7 +106,7 @@ protected Q_SLOTS:
     void resize_requested();
     void projectiveTransf_requested();
 
-	void batch_hdr_requested();
+    void batch_hdr_requested();
     void batch_requested();
 
     void hdr_increase_exp();
@@ -136,7 +131,7 @@ protected Q_SLOTS:
     void transplant_called();
 
     void levelsRequested(bool checked);
-    void levelsClosed();
+
     void openInputFiles();
 
     // Tool Bar Handling
@@ -154,9 +149,6 @@ protected Q_SLOTS:
     void openRecentFile();
     void setCurrentFile(const QString &fileName);
 
-    void updateRecentDirHDRSetting(QString);
-    void updateRecentDirLDRSetting(QString);
-
     void aboutLuminance();
     void showSplash();
 
@@ -173,11 +165,12 @@ protected Q_SLOTS:
     void splashClose();
 
     // TM
-    void addProcessedFrame(pfs::Frame*);
-    void addLDRResult(QImage*, quint16*);
-    void tonemappingFinished();
-    void deleteTMOThread(TMOThread* th);
-    void showErrorMessage(const char* e);
+    void tonemapBegin();
+    void tonemapEnd();
+    void tonemapImage(TonemappingOptions *opts);
+    void addLdrFrame(pfs::Frame*, TonemappingOptions*);
+    //void addLDRResult(QImage*, quint16*);
+    void tonemapFailed(QString);
 
     // lock functionalities
     void lockViewers(bool);
@@ -192,12 +185,6 @@ protected Q_SLOTS:
     void activatePreviousViewer();
 
 Q_SIGNALS:
-    // I/O
-    void save_hdr_frame(HdrViewer*, QString);
-    void save_ldr_frame(LdrViewer*, QString, int);  // viewer, filename, quality level
-
-    void open_hdr_frame(QString);
-
     // update HDR
     void updatedHDR(pfs::Frame*);
 
@@ -208,10 +195,6 @@ protected:
     QSignalMapper *windowMapper;
     LuminanceOptions luminance_options;
     QDialog *splash;
-    QProgressBar* m_progressbar;
-
-    QString RecentDirHDRSetting;
-    QString RecentDirLDRSetting;
 
     // Recent Files Management
     QAction* recentFileActs[MAX_RECENT_FILES];
@@ -220,8 +203,6 @@ protected:
     // Open MainWindows Handling
     QList<QAction*> openMainWindows;
 
-
-
     HelpBrowser* helpBrowser;
     QStringList inputFiles;
 
@@ -229,18 +210,11 @@ protected:
     virtual void dropEvent(QDropEvent *);
     void closeEvent(QCloseEvent *);
 
-    void ProgressBarInit();
-    void ProgressBarFinish(void);
-
     void dispatchrotate(bool clockwise);
 
     void updateRecentFileActions();
     void initRecentFileActions();
     void clearRecentFileActions();
-
-    // Tone Mapping Panel
-    TonemappingPanel *tmPanel;
-    TMOProgressIndicator *progInd;
 
     struct {
         bool is_hdr_ready;
@@ -249,9 +223,6 @@ protected:
     } tm_status;
     int num_ldr_generated;
     int curr_num_ldr_open;
-
-    pfs::Frame* getSelectedFrame(HdrViewer* hdr);
-    void getCropCoords(HdrViewer* hdr, int& x_ul, int& y_ul, int& x_br, int& y_br);
 
     void init();
     void createUI();
@@ -284,9 +255,17 @@ private:
     // I/O
     QThread *m_IOThread;
     IOWorker *m_IOWorker;
+    QProgressBar* m_ProgressBar;
 
     // UI declaration
     Ui::MainWindow* m_Ui;
+
+    // TM thread
+    QThread* m_TMThread;
+    TMWorker* m_TMWorker;
+    TMOProgressIndicator* m_TMProgressBar;
+    // Tone Mapping Panel
+    TonemappingPanel *tmPanel;
 };
 
 
