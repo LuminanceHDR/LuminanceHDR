@@ -237,7 +237,7 @@ float GammaAndLevels::getGamma()
 HistogramLDR::HistogramLDR(QWidget *parent):
     QWidget(parent),
     isDrawFrame(true),
-    isDrawColorHist(true)
+    isDrawColorHist(false)
 {
     setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 }
