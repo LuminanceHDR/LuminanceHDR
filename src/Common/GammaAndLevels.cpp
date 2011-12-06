@@ -30,6 +30,7 @@
 #include <cassert>
 
 #include "Common/GammaAndLevels.h"
+#include "ui_GammaAndLevels.h"
 
 namespace
 {
@@ -49,13 +50,10 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
     whitein(255),
     gamma(1.0f),
     blackout(0),
-    whiteout(255)
+    whiteout(255),
+    m_Ui(new Ui::LevelsDialog)
 {
-	setupUi(this);
-
-#ifdef Q_WS_MAC
-    //this->setWindowModality(Qt::WindowModal); // In OS X, set window to modal
-#endif
+    m_Ui->setupUi(this);
 
 	QVBoxLayout *qvl=new QVBoxLayout;
 	qvl->setMargin(0);
@@ -66,11 +64,11 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
         histogram->setData(&m_ReferenceQImage);
         histogram->setFrame(false); // remove histogram frame
 
-	gb1=new GrayBar(inputStuffFrame);
+        gb1=new GrayBar(m_Ui->inputStuffFrame);
 
-	connect(black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
-	connect(gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
-	connect(white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
+        connect(m_Ui->black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
+        connect(m_Ui->gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
+        connect(m_Ui->white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
 
 	connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
 	connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
@@ -79,25 +77,25 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
 
 	qvl->addWidget(histogram);
 	qvl->addWidget(gb1);
-	inputStuffFrame->setLayout(qvl);
+        m_Ui->inputStuffFrame->setLayout(qvl);
 
 	QVBoxLayout *qvl2=new QVBoxLayout;
 	qvl2->setMargin(0);
 	qvl2->setSpacing(1);
-	gb2=new GrayBar(out_levels,true);
-	connect(black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
-	connect(white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
+        gb2=new GrayBar(m_Ui->out_levels,true);
+        connect(m_Ui->black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
+        connect(m_Ui->white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
 
 	connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
 	connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
 	connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
 
-	connect(ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
-	connect(ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
-	connect(ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
+        connect(m_Ui->ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
 
 	qvl2->addWidget(gb2);
-	out_levels->setLayout(qvl2);
+        m_Ui->out_levels->setLayout(qvl2);
 }
 
 GammaAndLevels::~GammaAndLevels()
@@ -122,32 +120,32 @@ void GammaAndLevels::defaultBlackWhiteOut() {
 
 void GammaAndLevels::updateBlackIn(int v) {
 	qDebug("GammaAndLevels::updateBlackIn");
-	black_in_spinbox->setValue(v);
+        m_Ui->black_in_spinbox->setValue(v);
 	blackin=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateGamma(double v) {
 	qDebug("GammaAndLevels::updateGamma");
 	gb1->dont_emit=true;
-	gamma_spinbox->setValue(v);
+        m_Ui->gamma_spinbox->setValue(v);
 	gamma=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteIn(int v) {
 	qDebug("GammaAndLevels::updateWhiteIn");
-	white_in_spinbox->setValue(v);
+        m_Ui->white_in_spinbox->setValue(v);
 	whitein=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateBlackOut(int v) {
 	qDebug("GammaAndLevels::updateBlackOut");
-	black_out_spinbox->setValue(v);
+        m_Ui->black_out_spinbox->setValue(v);
 	blackout=v;
 	refreshLUT();
 }
 void GammaAndLevels::updateWhiteOut(int v) {
 	qDebug("GammaAndLevels::updateWhiteOut");
-	white_out_spinbox->setValue(v);
+        m_Ui->white_out_spinbox->setValue(v);
 	whiteout=v;
 	refreshLUT();
 }
@@ -160,11 +158,11 @@ void GammaAndLevels::resetValues() {
 	blackout=0;
 	whiteout=255;
 	gb1->dont_emit=true;
-	black_in_spinbox->setValue(0);
-	gamma_spinbox->setValue(1);
-	white_in_spinbox->setValue(255);
-	black_out_spinbox->setValue(0);
-	white_out_spinbox->setValue(255);
+        m_Ui->black_in_spinbox->setValue(0);
+        m_Ui->gamma_spinbox->setValue(1);
+        m_Ui->white_in_spinbox->setValue(255);
+        m_Ui->black_out_spinbox->setValue(0);
+        m_Ui->white_out_spinbox->setValue(255);
 	refreshLUT();
 }
 

@@ -26,9 +26,14 @@
 
 #include <QWidget>
 #include <QImage>
+#include <QDialog>
 
-#include "ui_GammaAndLevels.h"
 #include "Viewers/GenericViewer.h"
+
+namespace Ui
+{
+    class LevelsDialog;
+}
 
 class GrayBar : public QWidget
 {
@@ -97,10 +102,12 @@ private:
     bool isDrawColorHist;
 };
 
-class GammaAndLevels : public QDialog, public Ui::LevelsDialog
+class GammaAndLevels : public QDialog
 {
     Q_OBJECT
 private:
+    Ui::LevelsDialog* m_Ui;
+
     const QImage m_ReferenceQImage; // can only be read
 
     int blackin, whitein, blackout, whiteout;
