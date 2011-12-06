@@ -285,7 +285,7 @@ void HistogramLDR::paintEvent( QPaintEvent * )
 {
     qDebug() << "void HistogramLDR::paintEvent( QPaintEvent * )";
 
-    const qreal skew = (qreal)width()/255;
+    const qreal skew = (qreal)width()/256;
 
     QPainter painter(this);
 
@@ -301,6 +301,7 @@ void HistogramLDR::paintEvent( QPaintEvent * )
         for (int i = 0; i < 256; ++i)
         {
             pol_grey << QPointF(i*skew, (1.0 - m_RedHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_RedHist[i])*height());
         }
         // last point, bottom right corner
         pol_grey << QPointF(width(), height());
@@ -316,6 +317,7 @@ void HistogramLDR::paintEvent( QPaintEvent * )
         for (int i = 0; i < 256; ++i)
         {
             pol_grey << QPointF(i*skew, (1.0 - m_GreenHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_GreenHist[i])*height());
         }
         // last point, bottom right corner
         pol_grey << QPointF(width(), height());
@@ -330,6 +332,7 @@ void HistogramLDR::paintEvent( QPaintEvent * )
         for (int i = 0; i < 256; ++i)
         {
             pol_grey << QPointF(i*skew, (1.0 - m_BlueHist[i])*height());
+            pol_grey << QPointF((i+1)*skew, (1.0 - m_BlueHist[i])*height());
         }
         // last point, bottom right corner
         pol_grey << QPointF(width(), height());
@@ -346,6 +349,7 @@ void HistogramLDR::paintEvent( QPaintEvent * )
     for (int i = 0; i < 256; ++i)
     {
         pol_grey << QPointF(i*skew, (1.0 - m_GreyHist[i])*height());
+        pol_grey << QPointF((i+1)*skew, (1.0 - m_GreyHist[i])*height());
     }
     // last point, bottom right corner
     pol_grey << QPointF(width(), height());
