@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,26 +23,28 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#ifndef MANTIUK06THREAD_H
-#define MANTIUK06THREAD_H
+#ifndef TONEMAP_OPERATOR_FATTAL02_H
+#define TONEMAP_OPERATOR_FATTAL02_H
 
 #include <QMutex>
 
-#include "Threads/TMOThread.h"
+#include "TonemappingEngine/TonemapOperator.h"
 
-class Mantiuk06Thread : public TMOThread {
-  Q_OBJECT
-  
+class TonemapOperatorFattal02: public TonemapOperator
+{
 public:
-  Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts);
-protected:
-	void run();
-  
-  // It may be removed, because the issue in the race condition of the operator has been solved
-  static QMutex mantiuk06_mutex;
+    TonemapOperatorFattal02();
+
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+
+private:
+    static QMutex m_Mutex;
 };
 
 #endif

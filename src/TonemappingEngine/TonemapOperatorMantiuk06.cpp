@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,45 +23,50 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Mantiuk06Thread.h"
+#include "TonemappingEngine/TonemapOperatorMantiuk06.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-QMutex Mantiuk06Thread::mantiuk06_mutex;
+QMutex TonemapOperatorMantiuk06::m_Mutex;
 
-Mantiuk06Thread::Mantiuk06Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
+TonemapOperatorMantiuk06::TonemapOperatorMantiuk06():
+    TonemapOperator()
+{}
+
+void TonemapOperatorMantiuk06::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-  out_CS = pfs::CS_SRGB;
-}
+    ph.emitSetMaximum(100);
 
-void Mantiuk06Thread::run()
-{
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		// pfstmo_mantiuk06 not reentrant
-		mantiuk06_mutex.lock();
-		pfstmo_mantiuk06(workingframe,
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    // pfstmo_mantiuk06 not reentrant
+    m_Mutex.lock();
+    pfstmo_mantiuk06(workingframe,
                      opts->operator_options.mantiuk06options.contrastfactor,
                      opts->operator_options.mantiuk06options.saturationfactor,
                      opts->operator_options.mantiuk06options.detailfactor,
                      opts->operator_options.mantiuk06options.contrastequalization,
-                     ph);
-		mantiuk06_mutex.unlock();
-	}
-	catch(...)
-  	{
-    		mantiuk06_mutex.unlock();
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
+                     &ph);
+    m_Mutex.unlock();
+
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 }
-// run()
+
+TMOperator TonemapOperatorMantiuk06::getType()
+{
+    return mantiuk06;
+}

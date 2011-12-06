@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,43 +23,23 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Drago03Thread.h"
-#include "TonemappingOperators/pfstmo.h"
-#include "Core/TonemappingOptions.h"
+#ifndef TONEMAP_OPERATOR_REINHARD05_H
+#define TONEMAP_OPERATOR_REINHARD05_H
 
-Drago03Thread::Drago03Thread(pfs::Frame *frame, const TonemappingOptions *opts):
-TMOThread(frame, opts)
+#include "TonemappingEngine/TonemapOperator.h"
+
+class TonemapOperatorReinhard05: public TonemapOperator
 {
-  out_CS = pfs::CS_SRGB;  
-}
+public:
+    TonemapOperatorReinhard05();
 
-void Drago03Thread::run()
-{
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-                pfstmo_drago03(workingframe, opts->operator_options.dragooptions.bias, ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-  	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
-}
-//
-// run()
-//
+    TMOperator getType();
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+};
 
+#endif

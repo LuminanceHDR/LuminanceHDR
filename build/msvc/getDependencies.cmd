@@ -269,6 +269,49 @@ IF NOT EXIST fftw-3.3-dll (
 	popd
 )
 
+REM IF NOT DEFINED L_BOOST_DIR (
+REM 	set L_BOOST_DIR=.
+REM )
+REM 
+REM IF NOT EXIST %TEMP_DIR%\boost_1_47_0.tar.gz (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/boost_1_47_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.47.0/boost_1_47_0.tar.gz/download
+REM 	%CYGWIN_DIR%\bin\gzip.exe -d %TEMP_DIR%/boost_1_47_0.tar.gz
+REM 
+REM )
+REM 
+REM IF NOT EXIST %L_BOOST_DIR%\boost_1_47_0 (
+REM 	echo.Extracting boost. Be patient!
+REM 
+REM 	pushd %L_BOOST_DIR%
+REM 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/boost_1_47_0.tar
+REM 	popd
+REM 
+REM 	pushd %L_BOOST_DIR%\boost_1_47_0
+REM 	bootstrap.bat
+REM 	popd
+REM 	
+REM 	pushd %L_BOOST_DIR%\boost_1_47_0
+REM 	IF %Platform% EQU Win32 (
+REM 		IF %Configuration% EQU Release (
+REM 			b2.exe toolset=msvc variant=release
+REM 		) ELSE (
+REM 			b2.exe toolset=msvc variant=debug
+REM 		)
+REM 	) ELSE (
+REM 		IF %Configuration% EQU Release (
+REM 			b2.exe toolset=msvc variant=release address-model=64
+REM 		) ELSE (
+REM 			b2.exe toolset=msvc variant=debug address-model=64
+REM 		)
+REM 	)
+REM 	popd
+REM )
+REM 
+REM REM Set Boost-directory as ENV variable (needed for CMake)
+REM pushd %L_BOOST_DIR%\boost_1_47_0
+REM SET BOOST_ROOT=%CD%
+REM popd
+
 IF NOT EXIST LuminanceHdrStuff (
 	mkdir LuminanceHdrStuff
 )

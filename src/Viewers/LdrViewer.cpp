@@ -26,158 +26,100 @@
  */
 
 #include <iostream>
+#include <QDebug>
+#include <QScopedPointer>
 
-#include "Common/config.h"
-#include "Common/GammaAndLevels.h"
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/frame.h"
+#include "Fileformat/pfsoutldrimage.h"
 
-LdrViewer::LdrViewer(QImage *i, quint16 *p, QWidget *parent, bool ns, bool ncf, const TonemappingOptions *opts):
-        GenericViewer(parent, ns, ncf), informativeLabel(NULL)
+LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
+    GenericViewer(frame, parent, ns),
+    mTonemappingOptions(opts),
+    informativeLabel(new QLabel( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()), mToolBar))
 {
-    setAttribute(Qt::WA_DeleteOnClose);
-
-    mImage = i;
-    m_pixmap = p;
-
-    if (mImage == 0) {
-        mCols = 0;
-        mRows = 0;
-    }
-    else {
-        mCols = mImage->width();
-        mRows = mImage->height();
-    }
-
-    temp_image = NULL;
-    previewimage = NULL;
-
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), mToolBar);
     mToolBar->addWidget(informativeLabel);
 
-    if (mImage == 0)
-	return;
-
-    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-    mPixmap->disable(); // disable by default crop functionalities
-    mScene->addItem(mPixmap);
+    mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
     parseOptions(opts);
     setWindowTitle(caption);
     setToolTip(caption);
+
+    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+
+    //mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+    setQImage(*temp_qimage);
+
+    updateView();
 }
 
 LdrViewer::~LdrViewer()
 {
+#ifdef QT_DEBUG
     std::cout << "LdrViewer::~LdrViewer()" << std::endl;
-
-	delete [] m_pixmap;
-    //delete origimage;
-    //delete [] origimage.bits();
+#endif
 }
 
 void LdrViewer::parseOptions(const TonemappingOptions *opts)
 {
     TMOptionsOperations tmopts(opts);
-    postfix = tmopts.getPostfix();
+    //postfix = tmopts.getPostfix();
     caption = tmopts.getCaption();
-    exif_comment = tmopts.getExifComment();
+    //exif_comment = tmopts.getExifComment();
 }
 
-QString LdrViewer::getFilenamePostFix()
+QString LdrViewer::getFileNamePostFix()
 {
-    return postfix;
-}
-
-const QImage* LdrViewer::getQImage()
-{
-    return mImage;
-}
-
-const quint16 *LdrViewer::getPixmap()
-{
-	return m_pixmap;
+    if ( mTonemappingOptions )
+    {
+        TMOptionsOperations tm_ops(mTonemappingOptions);
+        return tm_ops.getPostfix();
+    } else
+        return QString();
 }
 
 QString LdrViewer::getExifComment()
 {
-    return exif_comment;
-}
-
-void LdrViewer::levelsRequested(bool /*a*/)
-{
-    // TODO : Check this rubbish!
-
-    temp_image = mImage;
-    previewimage = new QImage( mCols, mRows, QImage::Format_RGB32 ); //image->copy() //copy original data
-
-    GammaAndLevels *levels = new GammaAndLevels(this, mImage);
-    levels->setAttribute(Qt::WA_DeleteOnClose);
-    //when closing levels, inform the Tone Mapping dialog.
-    connect(levels,SIGNAL(closing()), this, SIGNAL(levels_closed()));
-    //refresh preview when a values changes
-    connect(levels,SIGNAL(LUTrefreshed(unsigned char *)),this,SLOT(updatePreview(unsigned char *)));
-    //accept the changes
-    connect(levels,SIGNAL(accepted()),this,SLOT(finalize_levels()));
-    //restore original on "cancel"
-    connect(levels,SIGNAL(rejected()),this,SLOT(restore_original()));
-
-    levels->exec();
-}
-
-void LdrViewer::updatePreview(unsigned char *LUT)
-{
-    //printf("LdrViewer::updatePreview\n");
-    // TODO : clean up this implementation... (in case I keep it in the final release)!!!
-    for (int x=0; x < mCols; x++)
+    if ( mTonemappingOptions )
     {
-        for (int y=0; y < mRows; y++)
-        {
-            QRgb rgb = mImage->pixel(x,y);
-            QRgb withgamma = qRgb(LUT[qRed(rgb)],LUT[qGreen(rgb)],LUT[qBlue(rgb)]);
-            previewimage->setPixel(x,y,withgamma);
-        }
-    }
-    mPixmap->setPixmap(QPixmap::fromImage(*previewimage));
-    //imageLabel.setPixmap(QPixmap::fromImage(*previewimage));
+        TMOptionsOperations tm_ops(mTonemappingOptions);
+        return tm_ops.getExifComment();
+    } else
+        return QString();
 }
 
-void LdrViewer::restore_original()
+void LdrViewer::updatePixmap()
 {
-    //printf("LdrViewer::restoreoriginal() \n");
-    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+#ifdef QT_DEBUG
+    qDebug() << "void LdrViewer::updatePixmap()";
+#endif
 
-    delete previewimage;
+    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    temp_image = NULL;
-    previewimage = NULL;
+    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
 }
 
-void LdrViewer::finalize_levels()
+void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
 {
-    //printf("LdrViewer::finalize_levels() \n");
-    mImage = previewimage;
-    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
-
-    delete temp_image;
-
-    temp_image = NULL;
-    previewimage = NULL;
+    mTonemappingOptions = tmopts;
 }
 
-void LdrViewer::setImage(QImage *i)
+TonemappingOptions* LdrViewer::getTonemappingOptions()
 {
-    if (mImage != NULL)
-        delete mImage;
-    if (informativeLabel != NULL)
-        delete informativeLabel;
+    return mTonemappingOptions;
+}
 
-    mImage = new QImage(*i);
-    mPixmap->setPixmap(QPixmap::fromImage(*mImage));
+//! \brief returns max value of the handled frame
+float LdrViewer::getMaxLuminanceValue()
+{
+    return 1.0f;
+}
 
-    mCols = mImage->width();
-    mRows = mImage->height();
-    informativeLabel = new QLabel( tr("LDR image [%1 x %2]").arg(mCols).arg(mRows), mToolBar );
-    mToolBar->addWidget(informativeLabel);
+//! \brief returns min value of the handled frame
+float LdrViewer::getMinLuminanceValue()
+{
+    return 0.0f;
 }

@@ -24,15 +24,21 @@ This build process requires:
              compile Luminance with VC2010 you should also have Qt compiled
              with VC2010. If you don't find any precompiled Qt with a 
              specific MSVC or platform version, you can just download the 
-             latest version of a precompiled Qt with any VC compiler, 
+             latest version of a precompiled Qt with any VC compiler (or just the Qt source version), 
              open the VC command prompt in the Qt main directory and then run:
-             > configure.exe -sse2 -mp -fast
-             > nmake sub-src
+             > configure.exe -mp -fast
+             > nmake
+             > nmake confclean
+             > del /S /Q *.obj lib*.dll
              This recompiles the whole Qt and takes from 30 minutes to several hours...
              This reconfiguration can also be applied for generating x64 Qt versions!
+  ATTENTION: If you move the Qt folder AFTER the compilation you have to do the 
+             > configure.exe -mp -fast
+             (without doing the actual compilation with nmake)
+			 
              
 * CMake
-* Cygwin installed with: sed, cvs, git, gzip, ssh, svn, tar, unzip, wget
+* Cygwin installed with: cvs, git, gzip, sed, ssh, svn, tar, unzip, wget
 
 
 2. Compilation

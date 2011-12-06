@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2008,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,48 +23,43 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Mantiuk08Thread.h"
+#include "TonemappingEngine/TonemapOperatorMantiuk08.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-Mantiuk08Thread::Mantiuk08Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorMantiuk08::TonemapOperatorMantiuk08():
+    TonemapOperator()
+{}
 
-void Mantiuk08Thread::run()
+void TonemapOperatorMantiuk08::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try {
-		pfstmo_mantiuk08(workingframe,
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    pfstmo_mantiuk08(workingframe,
                      opts->operator_options.mantiuk08options.colorsaturation,
                      opts->operator_options.mantiuk08options.contrastenhancement,
                      opts->operator_options.mantiuk08options.luminancelevel,
                      opts->operator_options.mantiuk08options.setluminance,
-                     ph);
-	}
-	catch(pfs::Exception e)
-	{
-		if (strcmp("failed to analyse the image", e.getMessage())) 
-			return;
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
-}
-//
-// run()
-//
+                     &ph);
 
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+}
+
+TMOperator TonemapOperatorMantiuk08::getType()
+{
+    return mantiuk08;
+}

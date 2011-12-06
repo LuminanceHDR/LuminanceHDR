@@ -2,6 +2,7 @@
  * This file is a part of LuminanceHDR package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
+ * Copyright (C) 2011 Davide Anastasia
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,46 +23,42 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  * Improvements, bugfixing 
  * @author Franco Comida <fcomida@users.sourceforge.net>
+ * Refactory of TMThread.h class to TonemapOperator in order to remove dependency from QObject and QThread
+ * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
  *
  */
 
-#include "Threads/Reinhard05Thread.h"
+#include "TonemappingEngine/TonemapOperatorReinhard05.h"
 #include "TonemappingOperators/pfstmo.h"
 #include "Core/TonemappingOptions.h"
+#include "Libpfs/channel.h"
+#include "Libpfs/colorspace.h"
 
-Reinhard05Thread::Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts) :
-TMOThread(frame, opts)
-{
-}
+TonemapOperatorReinhard05::TonemapOperatorReinhard05():
+    TonemapOperator()
+{}
 
-void Reinhard05Thread::run()
+void TonemapOperatorReinhard05::tonemapFrame(pfs::Frame* workingframe, TonemappingOptions* opts, ProgressHelper& ph)
 {
-	connect(ph, SIGNAL(valueChanged(int)), this, SIGNAL(setValue(int)));
-	emit setMaximumSteps(100);
-	try
-	{
-		pfstmo_reinhard05(workingframe,
+    ph.emitSetMaximum(100);
+
+    // Convert to CS_XYZ: tm operator now use this colorspace
+    pfs::Channel *X, *Y, *Z;
+    workingframe->getXYZChannels( X, Y, Z );
+    pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+
+    pfstmo_reinhard05(workingframe,
                       opts->operator_options.reinhard05options.brightness,
                       opts->operator_options.reinhard05options.chromaticAdaptation,
                       opts->operator_options.reinhard05options.lightAdaptation,
-                      ph);
-	}
-	catch(pfs::Exception e)
-	{
-		emit tmo_error(e.getMessage());
-		emit deleteMe(this);
-		return;
-	}
-	catch(...)
-	{
-		emit tmo_error("Failed to tonemap image");
-		emit deleteMe(this);
-		return;
-	}
-	
-	finalize();
-}
-//
-// run()
-//
+                      &ph);
 
+    pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
+                             pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
+}
+
+TMOperator TonemapOperatorReinhard05::getType()
+{
+    return reinhard05;
+}

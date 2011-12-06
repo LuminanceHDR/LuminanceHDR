@@ -1,5 +1,5 @@
 /**
- * This file is a part of LuminanceHDR package.
+ * This file is a part of Luminance HDR package.
  * ----------------------------------------------------------------------
  * Copyright (C) 2011 Davide Anastasia
  *
@@ -20,40 +20,60 @@
  *
  * Original Work
  * @author Davide Anastasia <davideanastasia@users.sourceforge.net>
- * This class splits the "Batch Tonemapping core" from the UI, to achieve a simpler
- * code, faster, easier to maintain and more clear to read
  *
  */
 
-#ifndef __BATCH_TM_JOB__
-#define __BATCH_TM_JOB__
+#ifndef __TM_WORKER_H__
+#define __TM_WORKER_H__
 
-#include <QThread>
+#include <QObject>
+#include <QString>
 
 // Forward declaration
-class TonemappingOptions;
+namespace pfs {
+    class Frame;
+}
 
-class BatchTMJob : public QThread
+class TonemappingOptions;
+class ProgressHelper;
+
+class TMWorker : public QObject
 {
     Q_OBJECT
+
 public:
-    BatchTMJob(int thread_id, QString filename, const QList<TonemappingOptions*>* tm_options, QString output_folder);
-    virtual ~BatchTMJob();
-signals:
-    void done(int thread_id);
-    void add_log_message(QString);
-    //void update_progress_bar();
-    void increment_progress_bar(int);
-protected:
-    void run();
+    TMWorker(QObject* parent = 0);
+    ~TMWorker();
+
+public Q_SLOTS:
+    ///!
+    ///!  This function creates a copy of the input frame, tonemap the copy
+    ///!  and then returns it
+    ///!
+    pfs::Frame* computeTonemap(/* const */pfs::Frame*, TonemappingOptions*);
+
+    ///!
+    ///! This function tonemap the input frame
+    ///!
+    void tonemapFrame(pfs::Frame*, TonemappingOptions*);
 
 private:
-    int             m_thread_id;
-    QString         m_file_name;
-    const QList<TonemappingOptions*>* m_tm_options;
-    QString         m_output_folder;
-    QString         m_output_file_name_base;
-    QString         m_ldr_output_format;
+    pfs::Frame* preprocessFrame(pfs::Frame*, TonemappingOptions*);
+    void postprocessFrame(pfs::Frame*, TonemappingOptions*);
+
+Q_SIGNALS:
+    void tonemapSuccess(pfs::Frame*, TonemappingOptions*);
+    void tonemapFailed(QString);
+
+    void tonemapBegin();
+    void tonemapEnd();
+    void tonemapSetMaximum(int);
+    void tonemapSetMinimum(int);
+    void tonemapSetValue(int);
+    void tonemapRequestTermination();
+
+private:
+    ProgressHelper* m_Callback;
 };
 
-#endif // __BATCH_TM_JOB__
+#endif

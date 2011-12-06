@@ -23,19 +23,29 @@
 
 #include "PreviewLabel.h"
 
-PreviewLabel::PreviewLabel(QWidget *parent, int n) : QLabel(parent)
+PreviewLabel::PreviewLabel(QWidget *parent, TMOperator tm_operator):
+    QLabel(parent),
+    m_TMOptions(new TonemappingOptions)
 {
-	label_num = n;
+    m_TMOptions->tmoperator = tm_operator;
 }
 
 PreviewLabel::~PreviewLabel()
 {
+    delete m_TMOptions;
 }
 
 void PreviewLabel::mousePressEvent(QMouseEvent *event)
 {
-	if (event->buttons() == Qt::LeftButton) {	
-		emit clicked(label_num);
-	}
+    if (event->buttons() == Qt::LeftButton)
+    {
+        emit clicked(m_TMOptions);
+    }
+}
+
+void PreviewLabel::assignNewQImage(QSharedPointer<QImage> new_qimage)
+{
+    setPixmap( QPixmap::fromImage(*new_qimage) );
+    adjustSize();
 }
 

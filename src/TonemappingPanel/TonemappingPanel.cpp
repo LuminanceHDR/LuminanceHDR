@@ -406,26 +406,22 @@ void TonemappingPanel::fillToneMappingOptions()
     switch (currentTmoOperator) {
     case ashikhmin:
         toneMappingOptions.tmoperator = ashikhmin;
-        toneMappingOptions.tmoperator_str = "Ashikhmin";
         toneMappingOptions.operator_options.ashikhminoptions.simple=simpleGang->isCheckBox1Checked();
         toneMappingOptions.operator_options.ashikhminoptions.eq2=eq2Gang->isRadioButton1Checked();
         toneMappingOptions.operator_options.ashikhminoptions.lct=contrastGang->v();
         break;
     case drago:
         toneMappingOptions.tmoperator = drago;
-        toneMappingOptions.tmoperator_str = "Drago";
         toneMappingOptions.operator_options.dragooptions.bias=biasGang->v();
         break;
     case durand:
         toneMappingOptions.tmoperator = durand;
-        toneMappingOptions.tmoperator_str = "Durand";
         toneMappingOptions.operator_options.durandoptions.spatial=spatialGang->v();
         toneMappingOptions.operator_options.durandoptions.range=rangeGang->v();
         toneMappingOptions.operator_options.durandoptions.base=baseGang->v();
         break;
     case fattal:
         toneMappingOptions.tmoperator = fattal;
-        toneMappingOptions.tmoperator_str = "Fattal";
         toneMappingOptions.operator_options.fattaloptions.alpha=alphaGang->v();
         toneMappingOptions.operator_options.fattaloptions.beta=betaGang->v();
         toneMappingOptions.operator_options.fattaloptions.color=saturation2Gang->v();
@@ -434,7 +430,6 @@ void TonemappingPanel::fillToneMappingOptions()
         break;
     case mantiuk06:
         toneMappingOptions.tmoperator = mantiuk06;
-        toneMappingOptions.tmoperator_str = "Mantiuk '06";
         toneMappingOptions.operator_options.mantiuk06options.contrastfactor=contrastfactorGang->v();
         toneMappingOptions.operator_options.mantiuk06options.saturationfactor=saturationfactorGang->v();
         toneMappingOptions.operator_options.mantiuk06options.detailfactor=detailfactorGang->v();
@@ -442,7 +437,6 @@ void TonemappingPanel::fillToneMappingOptions()
         break;
     case mantiuk08:
         toneMappingOptions.tmoperator = mantiuk08;
-        toneMappingOptions.tmoperator_str = "Mantiuk '08";
         toneMappingOptions.operator_options.mantiuk08options.colorsaturation=colorSaturationGang->v();
         toneMappingOptions.operator_options.mantiuk08options.contrastenhancement=contrastEnhancementGang->v();
         toneMappingOptions.operator_options.mantiuk08options.luminancelevel=luminanceLevelGang->v();
@@ -450,7 +444,6 @@ void TonemappingPanel::fillToneMappingOptions()
         break;
     case pattanaik:
         toneMappingOptions.tmoperator = pattanaik;
-        toneMappingOptions.tmoperator_str = "Pattanaik";
         toneMappingOptions.operator_options.pattanaikoptions.autolum=autoYGang->isCheckBox1Checked();
         toneMappingOptions.operator_options.pattanaikoptions.local=pattalocalGang->isCheckBox1Checked();
         toneMappingOptions.operator_options.pattanaikoptions.cone=coneGang->v();
@@ -459,7 +452,6 @@ void TonemappingPanel::fillToneMappingOptions()
         break;
     case reinhard02:
         toneMappingOptions.tmoperator = reinhard02;
-        toneMappingOptions.tmoperator_str = "Reinhard '02";
         toneMappingOptions.operator_options.reinhard02options.scales=usescalesGang->isCheckBox1Checked();
         toneMappingOptions.operator_options.reinhard02options.key=keyGang->v();
         toneMappingOptions.operator_options.reinhard02options.phi=phiGang->v();
@@ -469,7 +461,6 @@ void TonemappingPanel::fillToneMappingOptions()
         break;
     case reinhard05:
         toneMappingOptions.tmoperator = reinhard05;
-        toneMappingOptions.tmoperator_str = "Reinhard '05";
         toneMappingOptions.operator_options.reinhard05options.brightness=brightnessGang->v();
         toneMappingOptions.operator_options.reinhard05options.chromaticAdaptation=chromaticGang->v();
         toneMappingOptions.operator_options.reinhard05options.lightAdaptation=lightGang->v();
@@ -1346,7 +1337,7 @@ void TonemappingPanel::loadParameters()
 
 void TonemappingPanel::loadComments()
 {
-	SavedParameters dialog(all);
+    SavedParameters dialog(this);
 	if (dialog.exec())
 	{
 		QSqlTableModel *model = dialog.getModel();

@@ -47,8 +47,19 @@ class GenericViewer : public QWidget
 {
     Q_OBJECT
 public:
-    GenericViewer(QWidget *parent = 0, bool ns = false, bool ncf = false);
+    //! \brief GenericViewer constructor
+    //! \param[in] frame reference frame
+    //! \param[in] ns need saving
+    GenericViewer(pfs::Frame* frame, QWidget *parent = 0, bool ns = false);
+
+    //! \brief GenericViewer virtual destructor
     virtual ~GenericViewer();
+
+    //! returns the width of the current frame
+    int getWidth();
+
+    //! returns the height of the current frame
+    int getHeight();
 
 public Q_SLOTS:
     /*virtual*/ void updateView();  // tells the Viewer to update the View area
@@ -65,47 +76,66 @@ public Q_SLOTS:
     /*virtual*/ void normalSize();
     /*virtual*/ bool isNormalSize();
 
-    /*virtual*/ void zoomToFactor(float factor);
-    /*virtual*/ float getScaleFactor();
-
     // selection properties!
-    virtual bool hasSelection();
-    virtual void setSelectionTool(bool);
-    virtual const QRect getSelectionRect(void);
-    virtual void removeSelection();
+    bool hasSelection();
+    void setSelectionTool(bool);
+    QRect getSelectionRect();
+    void removeSelection();
 
-    /*virtual*/ bool needsSaving();
-    /*virtual*/ void setNeedsSaving(bool);
+    bool needsSaving();
+    void setNeedsSaving(bool);
 
-    virtual const QString getFileName();
-    virtual void setFileName(const QString);
+    //! \brief get filename if set, or an empty string
+    QString getFileName();
 
-    /*virtual*/  void syncViewer(GenericViewer *src);
-    /*virtual*/  int getHorizScrollBarValue();
-    /*virtual*/  int getVertScrollBarValue();
-    /*virtual*/  void setHorizScrollBarValue(int value);
-    /*virtual*/  void setVertScrollBarValue(int value);
+    //! \brief set filename (overwrite previous status)
+    void setFileName(const QString&);
 
+    //! \brief This function syncronizes scrollbars position and zoom mode
+    //! \param[src] GenericViewer to syncronize with
+    void syncViewer(GenericViewer *src);
+
+    //! \brief tells is the viewer holds an LDR or an HDR frame
     virtual bool isHDR() = 0;
-    virtual void levelsRequested(bool) = 0; // only used by LdrViewer
-    virtual QString getFilenamePostFix() = 0; // only used by LdrViewer
-    virtual QString getExifComment() = 0; // only used by LdrViewer
-    virtual const QImage* getQImage() = 0; // only used by LdrViewer
 
-    //TODO: this function will become virtual when I redevelop (Ldr/Hdr)Viewer
-    virtual pfs::Frame* getHDRPfsFrame() { return NULL; }
-    //TODO: check this function!
-    virtual void updateHDR(pfs::Frame*) { }
+    //! \brief returns max value of the handled frame
+    virtual float getMaxLuminanceValue() = 0;
+
+    //! \brief returns min value of the handled frame
+    virtual float getMinLuminanceValue() = 0;
+
+    //! \brief returns a filename postfix based on the viewer's content
+    virtual QString getFileNamePostFix() = 0;
+
+    //! \brief
+    virtual QString getExifComment() = 0;
+
+    //! \brief returns a QImage that reflects the content of the viewerport
+    QImage getQImage() const;
+
+    //! \brief set new QImage
+    void setQImage(const QImage& qimage);
+
+    //! this function returns an handle to the internal data type
+    //! it would be better if the return pointer is const
+    //! It requires to many changes at this stage and it does not worth the effort
+    //! it will be done during the integration of LibHDR
+    pfs::Frame* getFrame() const;
+
+    //! set a new reference frame to be shown in the viewport
+    //! previous frame gets DELETED!
+    void setFrame(pfs::Frame* new_frame);
 
 protected Q_SLOTS:
     /*virtual*/  void slotPanIconSelectionMoved(QRect);
     /*virtual*/  void slotPanIconHidden();
     /*virtual*/  void slotCornerButtonPressed();
     /*virtual*/  void scrollBarChanged(int /*value*/);
-    //virtual void route_changed();
+
+    //! \brief Update viewer's pixmap when a new frame is set by setFrame()
+    virtual void updatePixmap() = 0;
 
 protected:
-    //virtual void closeEvent (QCloseEvent * event);
 
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
@@ -118,21 +148,25 @@ protected:
     ViewerMode mViewerMode;
     IGraphicsPixmapItem* mPixmap;
 
-    QString filename;
-    QImage *mImage;
-    int mCols;
-    int mRows;
+    QString mFileName;
 
-    bool NeedsSaving;
-//    bool noCloseFlag;
-//    bool isSelectionToolVisible;
+private:
+    //! \brief Zoom to the input factor
+    //! \param[in] factor zoom factor to match
+    //! \attention currently this function has an empty body
+    void zoomToFactor(float factor);
+
+    //! \brief Calculate the current zoom factor
+    //! \return current zoom factor
+    float getScaleFactor();
+
+    bool mNeedsSaving;
+    pfs::Frame* mFrame;
 
 Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
     void levels_closed(bool isReady);   // only used by LdrViewer
-
-    // void closeRequested(bool);          // emitted when NoCloseFlag is true
 };
 
 #endif

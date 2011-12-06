@@ -33,7 +33,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsDropShadowEffect>
 
-#include "Viewers/ISelectionBox.h"
+class ISelectionBox;    // forward declaration
 
 class IGraphicsPixmapItem : public QObject, public virtual QGraphicsPixmapItem
 {
@@ -44,14 +44,10 @@ public:
 
     QRect getSelectionRect();
     void removeSelection();
-    inline bool hasSelection() { return (mSelectionBox != NULL); }
+    bool hasSelection();
 
-    inline void enable() {  mIsSelectionEnabled = true; }
-    inline void disable()
-    {
-        mIsSelectionEnabled = false;
-        removeSelection();
-    }
+    void enableSelectionTool();
+    void disableSelectionTool();
 
 Q_SIGNALS:
     void selectionReady(bool);
@@ -70,4 +66,20 @@ protected:
 
     enum { IDLE, SELECTING } mMouseState;
 };
+
+inline bool IGraphicsPixmapItem::hasSelection()
+{
+    return (mSelectionBox != NULL);
+}
+
+inline void IGraphicsPixmapItem::enableSelectionTool()
+{
+    mIsSelectionEnabled = true;
+}
+
+inline void IGraphicsPixmapItem::disableSelectionTool()
+{
+    mIsSelectionEnabled = false;
+    removeSelection();
+}
 #endif

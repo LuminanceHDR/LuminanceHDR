@@ -1,8 +1,9 @@
-/*
- * This file is a part of LuminanceHDR package.
- * ---------------------------------------------------------------------- 
- * Copyright (C) 2006,2007 Giuseppe Rota
- * 
+/**
+ * @brief apply gamma and level filtering to a frame
+ *
+ * ----------------------------------------------------------------------
+ * Copyright (C) 2011 Davide Anastasia
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,27 +17,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
+ * ----------------------------------------------------------------------
  *
- * Original Work
- * @author Giuseppe Rota <grota@users.sourceforge.net>
- * Improvements, bugfixing 
- * @author Franco Comida <fcomida@users.sourceforge.net>
+ * @author Davide Anastasia
+ * builds a copy of the input frame and applies gamma and in/out black/white points
  *
  */
 
-#ifndef REINHARD05THREAD_H
-#define REINHARD05THREAD_H
+namespace pfs
+{
 
-#include "Threads/TMOThread.h"
+class Frame;
 
-class Reinhard05Thread : public TMOThread {
-Q_OBJECT
+pfs::Frame* gamma_levels(pfs::Frame* in, float black_in, float white_in,
+                         float black_out, float white_out, float gamma);
 
-public:
-        Reinhard05Thread(pfs::Frame *frame, const TonemappingOptions *opts);
-protected:
-	void run();
-};
-
-#endif
+}
