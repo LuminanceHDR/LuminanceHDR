@@ -1,15 +1,18 @@
 Changes 2.2.0
 * NEW: BatchHDR tool
 * NEW: LDRs can be saved as 16 bit Tiffs
-* NEW: Samsungs RAW file support
-* NEW: Speed improvement due to OpenMP on Mac 
-* More speed improvements: tone-mapping(Mantiuk 06/08, Fattal, Reinhard), Mainwindow, image viewers, adjust levels
-* Default profile in HDR creation is now no. 6
-* Better crop/selection tool
+* NEW: Samsung(s) RAW file support
+* NEW: Speed improvement due to OpenMP 
+* More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard), Mainwindow,
+* NEW: image viewers with improved crop/selection tool
+* Improvement and optimized level and gamma control
+* Default profile in HDR creation is now Profile 6
 * Supporting better portrait HDRs
 * Windows: correcting file name, temp dir problems
-* Library updates: Qt,LibRaw,exiv2
-* Dev: changing build system from qmake to cmake
+* Library updates: Qt, LibRaw, exiv2
+* Developement: changing build system from qmake to cmake
+
+TODO: redesign UI of: Preview Panel, Tonemapping Panel and HdrWizard (possibly using QWizard)
 
 Changes 2.1.0
 * Merge MainWindow and TonemappingWindow
@@ -27,288 +30,562 @@ Changes 2.0.2
 * Sorted leaks in freeing memory from pfs::Channel
 
 Changes 2.0.2(-pre1)
+
 * Smaller memory footprint during the TM process
 * [Windows only] improved responsiveness of the UI during the Mantiuk TMO
 * [Windows only] update of the library in the package with the latest release (not yet completed)
-* libRaw is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
+* LibRAW is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
 * [Mac only] Luminance HDR 2.0.2 works on Mac OS X 10.5.X (64 bits version for Snow Leopard also planned, but not yet released)
 * [Mac only] Better UI in Mac OS X (looks cleaner and closer to the Mac style)
 * Huge memory leak during the HDR creation process has been sorted out. The overall procedure is now much faster and uses less memory (much less memory)
 * Huge clean of compilation errors and wrong memory allocation/release (Thanks to Elizabeth Oldham)
 * [Linux only] Multithread support is active again and improved
 * [FreeBSD] Cleaner compilation (Thanks to Joao Rocha Braga Filho, Maintainer of Luminance HDR for FreeBSD)
+
 TODO: Redesign of the UI
 
 Changes 2.0.1
 * Proper colorspace conversion in Mantiuk06
+
 * OpenMP support disabled
 
+
+
 Changes 2.0.0
+
 * Project renamed from 'Qtpfsgui' to 'LuminanceHDR'
+
 * Cropping of HDR images
+
 * Tonemapping selections
+
 * Threads manager
+
 * Added mantiuk08
+
 * New help browser and new help content
+
 TODO: Check Flickr (and other external links) (actually mapped to 'luminance')
+
 TODO: Repaint Icons in TMO dialog
+
  
+
 Changes 1.9.3
+
 * Performance improvements on MultiCore Machines
+
 * Integrated pfstmo 1.3.x changes, including better Mantiuk performance
+
 * Integration of Exiv 0.18 (tiff write capabilities in the "Copy EXIF Data" panel)
+
 * Added Hungarian language (thanks to Peter Gaal)
+
 * Added Indonesian language (thanks to Teddy Widhi Laksono)
+
 * Drag and Drop support for HDR creation/opening
+
 * UI improvements: new icons, cleanup of tonemapping panel
+
 * added detail factor option to the mantiuk06 tmo, thanks to Dejan Beric
+
 * Now using native file saving dialogs on Windows and Mac
+
 * 'Save all' feature in tonemapping dialog.
+
 * Many bugfixes, including the old filename problem
+
 * Integrated pfstmo 1.3.x changes:
+
   mantiuk06: Ed Brambley's bug-fix and convergence patch
+
   mantiuk06: Ed Brambley's OpenMP patch
+
   all: Fixes and optimization - see pfstmo ChangeLog for more information
+
 * Renamed reinhard04 to reinhard05 (src directory and references)
+
 * Improved linux packaging system: docs and html target directories can be specified separately. 
 
+
+
 Changes 1.9.2:
+
 * Fixed other bugs with non-ascii characters in paths/filenames.
+
 * Integrated pfstmo 1.2 changes:
+
 	fixed some serious bugs in the solver and subsampling procedure the artifacts found in some odd-sized images should be gone (this was actually the mantiuk change in qtpfsgui 1.9.0, thanks to Rafal).
+
 	faster up-/down-sampling functions make the algorithm 25% faster. Thanks to Ed Brambley.
+
 	performance improvements from Ed Brambley: lower memory consumption, faster solver, better convergence, additional scale parameter for the contrast equalization method.
+
 	(change in mantiuk parameters => new tmo file version + small changes in Fattal by Ed Brambley)
+
 * Added support for align_image_stack commandline parameters and user language selection.
+
 * Global: added 2 new fields in the singleton qtpfsgui class: QStringList for align_image_stack options and a 2-chars ISO 639 language code for Qtpfsgui's user interface.
+
 * Improved comments with references for the algorithm that reads exif data to obtain average global luminance (and EV).
 
+
+
 Changes 1.9.1:
+
 * Global: Now there's only one QSettings object and a saveLdr function (also cleaned QtpfsguiOptions interface: singleton)
+
 * Users can now save the preview of a HDR.
+
 * Added panoramic functionality (GUI dialog and pfs-backend)
+
 * Added sr2 to the list of legal raw extensions
+
 * Fixed bug in exif code leading to crash when having utf8 characters in the path and/or filename. This bug used to occur in all exif related code: getting EV values in the new hdr wizard, writing exif comments in jpeg images (batch, cli, and interactive tm), and copying exif values between files.
+
 * Fixed bug that left a temporary tiff file from raw conversion when pressing ESC in the new hdr wizard.
+
 * bug 1888249 (sf tracker): fixed typos in manual
+
 * fixed bugs in the cli interface
 
+
+
 Changes 1.9.0:
+
 * added manual anti-ghosting feature (for LDRs only).
+
 * fixed mantiuk glitch.
+
 * the online and offline documentation has been updated.
+
 * removed integrated dcraw implementation (now calling external executable).
+
 * fixed durand02 bug (range=0).
+
 * added commandline interface.
+
 * clicking on the tone mapper progress bar will terminate the tone mapping process.
+
 * reinhard04 renamed to reinhard05.
+
 * added hdrInputLoader, a class that loads a ldr/mdr file (input for hdr) in a threaded way
+
 * removed "_impl" from batch gui and exif copy classes filenames.
+
 * renamed aligndialog to editing_tools.
+
 * moved common low-level hdr creation files (and mtb implementation) in the HdrCreation dir.
+
 * moved config.h, gang.{h,cpp} panIconWidget.{h,cpp} smart_scroll_area.{h,cpp} to dir "Common".
+
 * renamed alignmentdialog_impl.{h,cpp} to editingTools
+
 * moved previewWidget.{h,cpp} to HdrWizard.
+
 * renamed options_impl.{h,cpp} -> preferencesDialog.{h,cpp}.
+
 * integrated pfstools 1.6.3 changes.
+
 * fix for gcc 4.3
+
 * added Indonesian translation
 
+
+
 02-08-2007 v1.8.12
+
 * 2 New Auto Alignment Engines: hugin's align_image_stack and Greg Ward's Median Threshold Bitmap, see http://qtpfsgui.wiki.sourceforge.net/align_image_stack
+
 * New manual alignment dialog (for small position refinements after the automatic alignment step, for example).
+
 * Now checking that images have all the same size while creating the hdr.
+
 * Removed last page in the hdr creation wizard.
+
 * Showing hdr list in windows menu item.
+
 * Added an "About Qtpfsgui" info dialog in the main window.
+
 * (linux) Installing doc (README AUTHORS COPYING ...) files as well in the make install step.
+
 * Now is possible to load jpeg and tiff in the same set.
+
 * Added czech translation
+
 * Changed order of tone mapping tabs.
+
 * Fixed tone mapping settings file parsing bug (fattal).
+
 * Fixed "shortcuts assert" crash.
+
 * Improved batch dialog behavior (disable widget during tone mapping).
+
 * Fixed some small graphical glitches (removed dot from tooltips).
+
 * Added "what's this" descriptions & actions.
+
 * fixed potential buffer overflow security bug.
+
 * Modified icon apply.
 
+
+
 31-07-2007 v1.8.11
+
 * added custom size result
+
 * added new operator: mantiuk06
+
 * fattal: added checkbox to enable "old" (pre 1.8.4) behaviour
+
 * fattal: added noise reduction patch (pfstmo 1.1)
+
 * reinhard04: renamed to reinhard05 (following pfstmo's rename)
+
 * reinhard04: synched with pfstmo 1.1 (chromatic & light adaptation)
+
 * exif copy tool: added log, cleaned the code (more robust).
+
 * saving hdr before tone mapping is not required anymore
+
 * gamma and levels: fixed bug: changing the numerical value is the same as dragging the triangles.
+
 * qtpfsgui version added to exif data.
+
 * added pfstmo's gcc switches.
+
 * small bugs & typos.
 
+
+
 14-07-2007 v1.8.10
+
 * OpenEXR file format available in win32 as well
+
 * Initial implementation of batch functionality
+
 * Added arch-dependend source files for FreeBSD
+
 * Fixed segfault for qt 4.2.1
+
 * Loading HDRs is a threaded operation now
+
 * Added build option to enable/disable debug statements (see README).
+
 * Usability patch when user has to specify the EV manually
+
 * Added turkish translation
+
 * Restructured source tree
+
 * Added run-time check for correct dll placement.
+
 * Included pfstools patch for XYZ<->sRGB color space transformation
+
 * Using qt4 endiannes detection
 
+
+
 09-06-2007 v1.8.9
+
 * fixed serious bug related to the creation of an hdr image.
+
 * fixed incompatibilities between Qt 4.1.x and Qt 4.2.x that prevented a successful compilation.
+
 * The following languages are being shipped in the release: English, Italian, German, Spanish, French and Polish.
+
 * fixed fullsize bug in tonemapping panel
+
 * fixed some textual inconsistencies.
+
 * Added displaying options for the main toolbar.
+
 * fixed in the README the instructions related to internationalization.
+
 * Fixed another segfault (non-const constructor for QImage) at the end of the hdr creation wizard.
 
+
+
 15-05-2007 v1.8.8
+
 * Fixed bug causing crash in windows.
+
 * Qtpfsgui now can be translated in your language (supports internationalization, see http://qtpfsgui.sourceforge.net/i18n.html).
+
 * Added "All supported files ..." file-filter where appropriate.
+
 * Fixed "button does nothing" bug.
+
 * Added shortcuts for menu items, fixed some visual text messages.
+
 * Improved build system, better support for distro packagers (see README file).
+
 * The hdr creation wizard now shows for how many remaining files we have to specify, in manual mode, the EV value.
 
+
+
 06-05-2007 v1.8.7
+
 * fixed test for the correctness of the cache path (important for windows version).
+
 * closed pending file descriptors.
+
 * qtpfsgui warns the user when she attempts to close modified/unsaved HDRs in the workspace and also when she closes the main window.
+
 * fixed underscore and ~ for LDRs description.
+
 * when attempting to load a non-existent recent files history entry qtpfsgui now removes graphically that entry.
 
+
+
 05-05-2007 v1.8.6
+
 * fixed "QPaintEngine::setSystemClip" bug.
+
 * solved a compile-time error with some version of Qt4.
+
 * updated FAQ (in the html documentation).
 
+
+
 28-04-2007 v1.8.5 Giuseppe Rota <grota@users.sourceforge.net>
+
 * added progressbars in tonemapping status bar
+
 * added some status_tips in tone mapping dialog
+
 * added all available formats in load hdr dialog
+
 * fixed filename path bug
+
 * press and hold middle mouse button to scroll hdr and ldr images.
 
+
+
 26-04-2007 v1.8.4 Giuseppe Rota <grota@users.sourceforge.net>
+
 * The Tone mapping window has been restyled, so that now
+
 we can have multiple results at the same time.
+
 * Threaded execution keeps user interface responsive, and on a
+
 multi-processor machine (SMP) each thread gets allocated on a different CPU.
+
 * Qtpfsgui now caches intermediate results (using temporary files)
+
 for faster execution.
+
 * Faster (post)gamma correction on LDR images.
+
 * It is now possible to use Utf8 file names.
+
 * Corrected bug in fattal tone mapping operator.
 
+
+
 v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
+
 	Added the possibility to load image files without exif data: the user will specify manually the difference in exposure values (EV or stops).
+
 	Added online documentation: manual,FAQ,hints.
+
 	The tonemapping dialog remembers the last used filename.
+
 	Fixed PowerPC compile-time alignment bug.
+
 	Fixed aperture=0 bug.
 
+
+
 18-03-2007 v1.8.2 Giuseppe Rota <grota@users.sourceforge.net>
+
 * Qtpfsgui now supports tiff file formats in:
+
 "File->Load HDR..." (8,16,32 bit and logluv tiff formats)
+
 "File->Save HDR..." (32 bit and logluv tiff formats)
+
 "File->New HDR..." (8 and 16 bit tiff formats)
+
 * memory allocation via mmap (linux,mac) and virtualalloc (win32)
+
 * added a missing newline in exif comments.
+
 * fixed alignment bugs on PowerPC architectures ("blue image").
 
+
+
 04-03-2007 v1.8.1 Giuseppe Rota <grota@users.sourceforge.net>
+
 * new dialogs: resize and transplant
+
 * new actions in mainwindow: transplant and resize
+
 * now using doublespinboxes rather than QLineEdits in tonemapping dialog
+
 * now using "apply" button
+
 * initial dependency detection system when compiling in linux
+
 * critical changes in gang.{h,cpp}, to use QDoubleSpinboxes
+
 * hdrwizard: error message beautified
+
 * hdrwizard & mainwindow: gathered all raw formats in 1 filter
+
 * swapped increase/decrease exposure
+
 * writing tonemapping parameters in output ldr
+
 * updated icip06 exponent: 24->12 (it still seems to not work) :(
 
+
+
 13-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
+
 * added initial raw image format input support in "Open Hdr..." 
+
 	and in the "New Hdr..." wizard.
+
 	the raw import functionality is obtained via dcraw's code.
+
 * added settings panel.
+
 * added KDE/GNOME desktop integration
 
+
+
 05-02-2007 Giuseppe Rota <grota@users.sourceforge.net>
+
 * Fixed exif calculations when APEX values are used. This fixes another red-image hdr bug.
+
 * Fixed a Segmentation Fault (const/noconst uchar*) bug that happens when compiling in Linux (Suse 10.2) against recent versions of Qt4.
+
 * Fixed some small memory leaks.
 
+
+
 29-01-2006 Giuseppe Rota <grota@users.sourceforge.net>
+
 * The only LDR image format supported is now JPEG, the one that has EXIF tags.
+
 * better EXIF tag check: if exif data not found user is warned and operation is aborted
+
 * code that displays negative hdr pixels in black has been commented out.
+
 * libpfs: added renameRGBChannelsToXYZ() renameXYZChannelsToRGB() convertRGBChannelsToXYZ() convertXYZChannelsToRGB()
+
 * restored PFS stream compatibility (PFS stream has XYZ color chans, not RGB!).
+
 * fixed color bug for reinhard04 tmo.
 
+
+
 18-01-2006 Giuseppe Rota <grota@users.sourceforge.net>
+
 * drastic changes in code layout/design aimed to reduce memory usage.
+
 * ``Fit to window'' option now keeps image ratio.
+
 * Faster computation of Durand va fftw3. Users need to download the new Win
+
 Dep Pckg.
+
 		
 
+
+
 25-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 Christmas changes:
+
 *  Initial anti-ghosting (BETA) feature.
+
 *  restored the "what you see is what you save" behaviour in TMO dialog. (fix saveLDR bug)
+
 *  removed buttons in the TMO section: modifying the settings implies istantaneous computation.
+
 *  fixed shortcuts action functionality.
+
 *  fixed save ldr dialog (if no extension specified it uses the one belonging to the current ``filter'')
+
 *  zoom in/out/original and fit to window enabled
+
 *  the application now remembers the last used directory for
+
 	open/save hdr
+
 	load/save settings
+
 	load input exposures
 
+
+
 22-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 v1.4
+
 *  tonemapping dialog: added save... load... line_edit pushbutton widgets.
+
 *  loading input ldr exposures      starts from last used directory.
+
 *  loading input TMO settings file  starts from last used directory.
+
 *  fixed stupid inefficiency while showing hdr.
+
 *  fixed memory leaks while closing hdr window.
+
 *  implemented loadsettings, savesettings, fromGui2Txt, fromTxt2Gui
 
+
+
 20-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 *  Changed behaviour in the TMO dialog: 
+
 	Combobox moved to the top of the preview image.
+
 	Clicking save you'll get the full (100%) input hdr tonemapped with current settings.
+
 *  Cleared some pfs buffers when the TMO dialog gets closed.
+
 *  Added a "Done!" label that shows up when the input ldr exposures have finished loading.
 
+
+
 20-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 *  changed some #includes
+
 *  added comment showing original pfshdrcreate hack: it was NOT in svn, now it's there only for future reference, in case it's needed.
+
 *  restructuring of svn repository in branches/qt4: moved hdrcreate* files into their own directory
 
+
+
 18-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 v1.3
+
 *  fixed bug: some cameras (NIKON D50) don't write ISO values in the JPEGS. That led to a wrong (completely red) hdr result. Now if qtpfsgui doesn't find a ISO value, it uses internally a default value of ISO=100 for all input exposures.
 
+
+
 15-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
+
 *  created branch of qtpfsgui, using Qt4. (in svn the code is in branches/qtpfsgui-qt4)
+
 *  the code integrates libpfs/pfstmo/pfshdrcreate, now it's stand-alone.
+
 *  the code requires libexiv2-devel
+
 *  Compilable both in linux and in windows with mingw.
+
 *  supported hdr formats in windows are only: HDR(rgbe) and PFS.
+
    Linux also supports OpenEXR. Still problems compiling OpenEXR in windows with MinGW, seems like no one has ever done it... :(
+
    Also, OpenEXR is compilable with Cygwin, but Qt (qmake and everything) doesn't work with cygwin.
+
