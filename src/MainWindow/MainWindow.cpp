@@ -54,6 +54,7 @@
 #include "ui_MainWindow.h"
 #include "Common/archs.h"
 #include "Common/config.h"
+#include "Common/GitSHA1.h"
 #include "Common/global.h"
 #include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
@@ -232,7 +233,7 @@ void MainWindow::createUI()
 
     setAcceptDrops(true);
     setWindowModified(false);
-    setWindowTitle("Luminance HDR "LUMINANCEVERSION);
+    setWindowTitle(QString("Luminance HDR "LUMINANCEVERSION) + "  " + g_GIT_SHA1);
 }
 
 void MainWindow::createCentralWidget()
