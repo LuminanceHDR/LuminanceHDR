@@ -206,7 +206,7 @@ SET(LIB_HDR_INCLUDE
 
 IF(MSVC)
 	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
-		src/Common/getopt_win32.h
+		src/arch/msvc/getopt_win32.h
 	)
 ENDIF()
 
@@ -278,7 +278,7 @@ SET(LIB_HDR_SRC
 )
 IF(MSVC)
 	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
-		src/Common/getopt_win32.c
+		src/arch/msvc/getopt_win32.c
 	)
 ENDIF()
 

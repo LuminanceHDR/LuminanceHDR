@@ -25,11 +25,7 @@
  *
  */
 
-#if defined(_MSC_VER)
-	#include "getopt_win32.h"
-#else
-	#include <getopt.h>
-#endif
+#include "arch/getopt.h"
 
 #include <QTimer>
 #include <QDebug>
@@ -53,13 +49,7 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "TonemappingEngine/TonemapOperator.h"
 
-#if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC) || defined(__APPLE__)
-#define error(Z) { fprintf(stderr,"%s", Z); exit(1); }
-
-#else
-#include <error.h>
-#define error(Z) error(1,0,"%s", Z);
-#endif
+#include "arch/error.h"
 
 ///string is a QString with a %1 in it
 #define VERBOSEPRINT( string, argument ) \
