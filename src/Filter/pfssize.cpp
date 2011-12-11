@@ -60,19 +60,7 @@ void resize( const pfs::Array2D *src, pfs::Array2D *dest );
 void resampleMitchell( const pfs::Array2D *in, pfs::Array2D *out );
 void resampleArray( const pfs::Array2D *in, pfs::Array2D *out, ResampleFilter *filter );
 
-#if defined(_MSC_VER)
-    #include "minmax.h"
-#else
-    inline float max( float a, float b )
-    {
-      return a > b ? a : b;
-    }
-
-    inline float min( float a, float b )
-    {
-      return a < b ? a : b;
-    }
-#endif
+#include "arch/minmax.h"
 // --------- Filters --------
 
 class MitchellFilter : public ResampleFilter
