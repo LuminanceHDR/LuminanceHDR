@@ -38,6 +38,7 @@
 #include <QTextStream>
 #include <QDebug>
 
+#include "Common/GitSHA1.h"
 #include "ui_about.h"
 //#include "Common/config.h"
 #include "Common/global.h"
@@ -71,7 +72,7 @@ public:
       ui.authorsBox->setOpenExternalLinks(true);
       ui.thanksToBox->setOpenExternalLinks(true);
       ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-      ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)));
+      ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).left(6)).append("]"));
 
       bool license_file_not_found=true;
       QString docDir = QCoreApplication::applicationDirPath();
