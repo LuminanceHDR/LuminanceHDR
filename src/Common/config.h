@@ -30,7 +30,7 @@
 #define LUMINANCEORGANIZATION "Luminance"
 #define LUMINANCEAPPLICATION "Luminance"
 
-#define LUMINANCEVERSION "2.2.0-beta1"
+#define LUMINANCEVERSION "2.2.0-beta2"
 #define TMOSETTINGSVERSION "0.6"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"

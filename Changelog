@@ -1,3 +1,19 @@
+Changes 2.2.0(-beta2)
+* NEW: BatchHDR tool
+* NEW: LDRs can be saved as 16 bit Tiffs
+* NEW: Samsung(s) RAW file support
+* NEW: Speed improvement due to OpenMP 
+* More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard), Mainwindow,
+* NEW: image viewers with improved crop/selection tool
+* Improvement and optimized level and gamma control
+* Default profile in HDR creation is now Profile 6
+* Supporting better portrait HDRs
+* Windows: correcting file name, temp dir problems
+* Library updates: Qt, LibRaw, exiv2
+* Developement: changing build system from qmake to cmake
+
+TODO: redesign UI of: Preview Panel, Tonemapping Panel and HdrWizard (possibly using QWizard)
+
 Changes 2.1.0
 * Merge MainWindow and TonemappingWindow
 * MainWindow works using the SDI concept, instead then MDI (multiple MainWindow can be open at the same time and work in parallel)
@@ -17,13 +33,14 @@ Changes 2.0.2(-pre1)
 * Smaller memory footprint during the TM process
 * [Windows only] improved responsiveness of the UI during the Mantiuk TMO
 * [Windows only] update of the library in the package with the latest release (not yet completed)
-* libRaw is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
+* LibRAW is now in charge to convert RAW files, removing the dependency from dcraw as an external tool (Thanks to Franco Comida)
 * [Mac only] Luminance HDR 2.0.2 works on Mac OS X 10.5.X (64 bits version for Snow Leopard also planned, but not yet released)
 * [Mac only] Better UI in Mac OS X (looks cleaner and closer to the Mac style)
 * Huge memory leak during the HDR creation process has been sorted out. The overall procedure is now much faster and uses less memory (much less memory)
 * Huge clean of compilation errors and wrong memory allocation/release (Thanks to Elizabeth Oldham)
 * [Linux only] Multithread support is active again and improved
 * [FreeBSD] Cleaner compilation (Thanks to Joao Rocha Braga Filho, Maintainer of Luminance HDR for FreeBSD)
+
 TODO: Redesign of the UI
 
 Changes 2.0.1
@@ -37,9 +54,10 @@ Changes 2.0.0
 * Threads manager
 * Added mantiuk08
 * New help browser and new help content
+
 TODO: Check Flickr (and other external links) (actually mapped to 'luminance')
 TODO: Repaint Icons in TMO dialog
- 
+
 Changes 1.9.3
 * Performance improvements on MultiCore Machines
 * Integrated pfstmo 1.3.x changes, including better Mantiuk performance
@@ -138,7 +156,7 @@ Changes 1.9.0:
 * OpenEXR file format available in win32 as well
 * Initial implementation of batch functionality
 * Added arch-dependend source files for FreeBSD
-* Fixed segfault for qt 4.2.1
+* Fixed segfault for Qt 4.2.1
 * Loading HDRs is a threaded operation now
 * Added build option to enable/disable debug statements (see README).
 * Usability patch when user has to specify the EV manually
@@ -146,7 +164,7 @@ Changes 1.9.0:
 * Restructured source tree
 * Added run-time check for correct dll placement.
 * Included pfstools patch for XYZ<->sRGB color space transformation
-* Using qt4 endiannes detection
+* Using Qt4 endiannes detection
 
 09-06-2007 v1.8.9
 * fixed serious bug related to the creation of an hdr image.
@@ -187,12 +205,9 @@ Changes 1.9.0:
 * press and hold middle mouse button to scroll hdr and ldr images.
 
 26-04-2007 v1.8.4 Giuseppe Rota <grota@users.sourceforge.net>
-* The Tone mapping window has been restyled, so that now
-we can have multiple results at the same time.
-* Threaded execution keeps user interface responsive, and on a
-multi-processor machine (SMP) each thread gets allocated on a different CPU.
-* Qtpfsgui now caches intermediate results (using temporary files)
-for faster execution.
+* The Tone mapping window has been restyled, so that now we can have multiple results at the same time.
+* Threaded execution keeps user interface responsive, and on a multi-processor machine (SMP) each thread gets allocated on a different CPU.
+* Qtpfsgui now caches intermediate results (using temporary files) for faster execution.
 * Faster (post)gamma correction on LDR images.
 * It is now possible to use Utf8 file names.
 * Corrected bug in fattal tone mapping operator.
@@ -248,10 +263,8 @@ v1.8.3 Giuseppe Rota <grota@users.sourceforge.net>
 
 18-01-2006 Giuseppe Rota <grota@users.sourceforge.net>
 * drastic changes in code layout/design aimed to reduce memory usage.
-* ``Fit to window'' option now keeps image ratio.
-* Faster computation of Durand va fftw3. Users need to download the new Win
-Dep Pckg.
-		
+* "Fit to window" option now keeps image ratio.
+* Faster computation of Durand va fftw3. Users need to download the new Win Dep Pckg
 
 25-12-2006  Giuseppe Rota <grota@users.sourceforge.net>
 Christmas changes:
