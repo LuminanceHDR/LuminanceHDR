@@ -54,7 +54,6 @@
 #include "ui_MainWindow.h"
 #include "Common/archs.h"
 #include "Common/config.h"
-#include "Common/GitSHA1.h"
 #include "Common/global.h"
 #include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
@@ -117,7 +116,7 @@ QString getHdrFileNameFromSaveDialog(const QString& suggested_file_name, QWidget
                                         filetypes);
 }
 
-inline void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
+void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, int& y_br)
 {
 #ifdef QT_DEBUG
     assert( gv != NULL );
@@ -127,10 +126,20 @@ inline void getCropCoords(GenericViewer* gv, int& x_ul, int& y_ul, int& x_br, in
     cropRect.getCoords(&x_ul, &y_ul, &x_br, &y_br);
 }
 
+GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget)
+{
+    if (curr_tab_widget.count() <= 0)
+    {
+        return GenericViewer::FIT_WINDOW;
+    }
+    else
+    {
+        GenericViewer* g_v = (GenericViewer*)curr_tab_widget.currentWidget();
+        return g_v->getViewerMode();
+    }
 }
 
-
-
+}
 
 int MainWindow::sm_NumMainWindows = 0;
 
@@ -233,7 +242,7 @@ void MainWindow::createUI()
 
     setAcceptDrops(true);
     setWindowModified(false);
-    setWindowTitle(QString("Luminance HDR "LUMINANCEVERSION) + "  " + g_GIT_SHA1);
+    setWindowTitle(QString("Luminance HDR "LUMINANCEVERSION)); // + "  " + g_GIT_SHA1);
 }
 
 void MainWindow::createCentralWidget()
@@ -1037,7 +1046,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
     else
     {
-        tmPanel->show();
         HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1047,6 +1055,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
         newhdr->setFileName(new_fname);
+        newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
         m_tabwidget->addTab(newhdr, QFileInfo(new_fname).fileName());
 
@@ -1063,16 +1072,14 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         {
             setCurrentFile(new_fname);
         }
-        emit updatedHDR(newhdr->getFrame());  // signal: I have a new HDR open
 
+        tmPanel->show();
         tmPanel->setEnabled(true);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
         showPreviewPanel(m_Ui->actionShowPreviewPanel->isChecked());
 
-        // done by SIGNAL(updatedHDR( ))
-        //tmPanel->setSizes(newhdr->getHDRPfsFrame()->getWidth(),
-        //                  newhdr->getHDRPfsFrame()->getHeight());
+        emit updatedHDR(newhdr->getFrame());  // signal: I have a new HDR open
     }
 }
 
@@ -1495,7 +1502,9 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
         n->setFrame(frame);
-    } else {
+    }
+    else
+    {
         curr_num_ldr_open++;
 
         n = new LdrViewer(frame, tm_options, this, true);
@@ -1507,6 +1516,8 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
             m_tabwidget->addTab(n, tr("Untitled"));
         else
             m_tabwidget->addTab(n, tr("Untitled %1").arg(num_ldr_generated));
+
+        n->setViewerMode( getCurrentViewerMode( *m_tabwidget ) );
     }
     m_tabwidget->setCurrentWidget(n);
 

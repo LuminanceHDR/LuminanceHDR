@@ -64,7 +64,6 @@ protected Q_SLOTS:
     virtual void updatePixmap();
 
 private:
-    void parseOptions(const TonemappingOptions *opts);
     QString caption; // ,postfix,exif_comment;
     QLabel *informativeLabel;
 

@@ -35,6 +35,18 @@
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 
+namespace
+{
+void parseOptions(const TonemappingOptions *opts, QString& caption)
+{
+    TMOptionsOperations tmopts(opts);
+    //postfix = tmopts.getPostfix();
+    caption = tmopts.getCaption();
+    //exif_comment = tmopts.getExifComment();
+}
+}
+
+
 LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
     GenericViewer(frame, parent, ns),
     mTonemappingOptions(opts),
@@ -44,7 +56,7 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
-    parseOptions(opts);
+    parseOptions(opts, caption);
     setWindowTitle(caption);
     setToolTip(caption);
 
@@ -61,14 +73,6 @@ LdrViewer::~LdrViewer()
 #ifdef QT_DEBUG
     std::cout << "LdrViewer::~LdrViewer()" << std::endl;
 #endif
-}
-
-void LdrViewer::parseOptions(const TonemappingOptions *opts)
-{
-    TMOptionsOperations tmopts(opts);
-    //postfix = tmopts.getPostfix();
-    caption = tmopts.getCaption();
-    //exif_comment = tmopts.getExifComment();
 }
 
 QString LdrViewer::getFileNamePostFix()

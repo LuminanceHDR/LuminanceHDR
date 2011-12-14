@@ -68,14 +68,11 @@ public:
     HdrViewer(pfs::Frame* frame, QWidget *parent = 0, bool ns = false, unsigned int negcol = 0, unsigned int naninfcol = 0);
     virtual ~HdrViewer();
 
-    void saveHdrPreview();
-
     LuminanceRangeWidget* lumRange();
     void update_colors(int negcol, int naninfcol);
 
-    void levelsRequested(bool);     // do nothing but used by LdrViewer (its own implementation)
-    QString getFileNamePostFix();   // do nothing but used by LdrViewer (its own implementation)
-    QString getExifComment();       // do nothing but used by LdrViewer (its own implementation)
+    QString getFileNamePostFix();
+    QString getExifComment();
 
     //! \brief virtual function
     //! \return always return TRUE

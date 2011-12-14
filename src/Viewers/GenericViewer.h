@@ -41,11 +41,17 @@ class PanIconWidget;        // #include "Common/PanIconWidget.h"
 class IGraphicsView;        // #include "Viewers/IGraphicsView.h"
 class IGraphicsPixmapItem;  // #include "Viewers/IGraphicsPixmapItem.h"
 
-enum ViewerMode {FIT_WINDOW, FILL_WINDOW, NORMAL_SIZE};
-
 class GenericViewer : public QWidget 
 {
     Q_OBJECT
+public:
+    //! \brief Enum containing the list of possible view mode
+    enum ViewerMode {
+        FIT_WINDOW = 0,
+        FILL_WINDOW = 1,
+        NORMAL_SIZE = 2
+    };
+
 public:
     //! \brief GenericViewer constructor
     //! \param[in] frame reference frame
@@ -75,6 +81,12 @@ public Q_SLOTS:
 
     /*virtual*/ void normalSize();
     /*virtual*/ bool isNormalSize();
+
+    //! \brief get viewer mode (Fit, Fill or Normal Size)
+    ViewerMode getViewerMode();
+
+    //! \brief set viewer mode (Fit, Fill or Normal Size)
+    void setViewerMode(ViewerMode viewer_mode);
 
     // selection properties!
     bool hasSelection();
@@ -166,7 +178,6 @@ private:
 Q_SIGNALS:
     void selectionReady(bool isReady);
     void changed(GenericViewer *v);     // emitted when zoomed in/out, scrolled ....
-    void levels_closed(bool isReady);   // only used by LdrViewer
 };
 
 #endif

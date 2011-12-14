@@ -180,6 +180,27 @@ bool GenericViewer::isNormalSize()
     return ((mViewerMode == NORMAL_SIZE) ? true : false);
 }
 
+GenericViewer::ViewerMode GenericViewer::getViewerMode()
+{
+    return mViewerMode;
+}
+
+void GenericViewer::setViewerMode(GenericViewer::ViewerMode viewer_mode)
+{
+    switch (viewer_mode)
+    {
+    case NORMAL_SIZE:
+        normalSize();
+        break;
+    case FIT_WINDOW:
+        fitToWindow();
+        break;
+    case FILL_WINDOW:
+        fillToWindow();
+        break;
+    }
+}
+
 void GenericViewer::zoomIn()
 {
     // update the current view
@@ -337,18 +358,7 @@ void GenericViewer::syncViewer(GenericViewer *src)
     if (src == NULL) return;
     if (src == this) return;
 
-    switch ( src->mViewerMode )
-    {
-    case FIT_WINDOW:
-        fitToWindow();
-        break;
-    case FILL_WINDOW:
-        fillToWindow();
-        break;
-    case NORMAL_SIZE:
-        normalSize();
-        break;
-    }
+    setViewerMode( src->getViewerMode() );
 
     mView->horizontalScrollBar()->setValue( src->mView->horizontalScrollBar()->value() );
     mView->verticalScrollBar()->setValue( src->mView->verticalScrollBar()->value() );

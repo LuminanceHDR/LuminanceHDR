@@ -374,18 +374,6 @@ void HdrViewer::update_colors(int neg, int naninf )
 HdrViewer::~HdrViewer()
 {}
 
-///! TOFIX: this function has to go!
-void HdrViewer::saveHdrPreview()
-{
-    qDebug("filename=%s",qPrintable(mFileName));
-    qDebug("This function is deprecated!");
-    //saveLDRImage(this, QFileInfo(mFileName).completeBaseName()+"_preview"+".jpg", mImage);
-}
-
-//! \brief Empty implementation of a virtual method
-void HdrViewer::levelsRequested(bool)
-{}
-
 QString HdrViewer::getFileNamePostFix()
 {
     return QString("_hdr_preview");
