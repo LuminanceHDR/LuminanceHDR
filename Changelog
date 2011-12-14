@@ -1,16 +1,3 @@
-Changes 2.2.0
-* NEW: BatchHDR tool
-* NEW: LDRs can be saved as 16 bit Tiffs
-* NEW: Samsungs RAW file support
-* NEW: Speed improvement due to OpenMP on Mac 
-* More speed improvements: tone-mapping(Mantiuk 06/08, Fattal, Reinhard), Mainwindow, image viewers, adjust levels
-* Default profile in HDR creation is now no. 6
-* Better crop/selection tool
-* Supporting better portrait HDRs
-* Windows: correcting file name, temp dir problems
-* Library updates: Qt,LibRaw,exiv2
-* Dev: changing build system from qmake to cmake
-
 Changes 2.1.0
 * Merge MainWindow and TonemappingWindow
 * MainWindow works using the SDI concept, instead then MDI (multiple MainWindow can be open at the same time and work in parallel)
