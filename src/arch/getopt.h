@@ -22,20 +22,12 @@
  *  
  */
  
- #ifndef _ARCH_MINMAX_H
-#define _ARCH_MINMAX_H
+#pragma once
 
-
-	#if defined(_MSC_VER)
-		#include <minmax.h>
-	#else
-		#ifndef max
-			#define max(a,b)            (((a) > (b)) ? (a) : (b))
-			#endif
-
-			#ifndef min
-			#define min(a,b)            (((a) < (b)) ? (a) : (b))
-			#endif
-	#endif
-
+#if defined(_MSC_VER)
+	#include "msvc/getopt_win32.h"
+#else
+	#include <getopt.h>
 #endif
+
+

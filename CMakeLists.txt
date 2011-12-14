@@ -21,6 +21,22 @@ INCLUDE(${QT_USE_FILE})
 
 set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTXML_LIBRARIES} ${QT_QTSQL_LIBRARIES})
 
+FIND_PACKAGE(Git QUIET)
+IF(NOT GIT_FOUND)
+    FIND_FILE(GIT_EXECUTABLE git.exe 
+        $ENV{CYGWIN_DIR}\\bin
+        $ENV{CYGWIN_DIR}
+    )
+    IF (EXISTS ${GIT_EXECUTABLE})
+        SET(GIT_FOUND 1)
+    ENDIF()
+ENDIF()
+
+IF(GIT_FOUND)
+    include(GetGitRevisionDescription)
+    get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+ENDIF()
+
 IF(WIN32)
 # Windows Section
 	SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
@@ -190,7 +206,7 @@ SET(LIB_HDR_INCLUDE
 
 IF(MSVC)
 	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
-		src/Common/getopt_win32.h
+		src/arch/msvc/getopt_win32.h
 	)
 ENDIF()
 
@@ -262,7 +278,7 @@ SET(LIB_HDR_SRC
 )
 IF(MSVC)
 	SET(LIB_HDR_INCLUDE ${LIB_HDR_INCLUDE}
-		src/Common/getopt_win32.c
+		src/arch/msvc/getopt_win32.c
 	)
 ENDIF()
 
@@ -288,7 +304,8 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/UI/UMessageBox.h
 	src/Viewers/Histogram.h
 	src/Common/global.h
-        src/Common/config.h
+	src/Common/GitSHA1.h
+    src/Common/config.h
 
 # new viewer
         src/Viewers/ISelectionBox.h
@@ -377,7 +394,10 @@ SET(LUMINANCE_HDR_SRC
         src/TonemappingEngine/TonemapOperator.cpp
 
 	src/main.cpp
+	${CMAKE_CURRENT_BINARY_DIR}/src/Common/GitSHA1.cpp     # for actual git version
 )
+
+CONFIGURE_FILE("${CMAKE_CURRENT_SOURCE_DIR}/src/Common/GitSHA1.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/Common/GitSHA1.cpp" @ONLY)
 
 SET(LUMINANCE_HDR_MOC
 	src/BatchHDR/BatchHDRDialog.h

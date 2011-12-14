@@ -22,20 +22,12 @@
  *  
  */
  
- #ifndef _ARCH_MINMAX_H
-#define _ARCH_MINMAX_H
+#pragma once
 
-
-	#if defined(_MSC_VER)
-		#include <minmax.h>
-	#else
-		#ifndef max
-			#define max(a,b)            (((a) > (b)) ? (a) : (b))
-			#endif
-
-			#ifndef min
-			#define min(a,b)            (((a) < (b)) ? (a) : (b))
-			#endif
-	#endif
-
+#if defined(__FreeBSD__) || defined(WIN32) || defined(Q_WS_MAC) || defined(__APPLE__)
+	#define error(Z) { fprintf(stderr,"%s", Z); exit(1); }
+#else
+	#include <error.h>
+	#define error(Z) error(1,0,"%s", Z);
 #endif
+
