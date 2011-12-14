@@ -38,13 +38,6 @@
 #include <QTextStream>
 #include <QDebug>
 
-#include "Common/GitSHA1.h"
-#include "ui_about.h"
-//#include "Common/config.h"
-#include "Common/global.h"
-#include "Common/LuminanceOptions.h"
-#include "Common/archs.h"
-
 class UMessageBox : public QMessageBox
 {
 private:
@@ -63,103 +56,16 @@ public:
 
   virtual void showEvent(QShowEvent *event);
 
-  static void about(QWidget* parent = 0)
-  {
-      QDialog *about = new QDialog(parent);
-      about->setAttribute(Qt::WA_DeleteOnClose);
-      Ui::AboutLuminance ui;
-      ui.setupUi(about);
-      ui.authorsBox->setOpenExternalLinks(true);
-      ui.thanksToBox->setOpenExternalLinks(true);
-      ui.GPLbox->setTextInteractionFlags(Qt::TextSelectableByMouse);
-      ui.label_version->setText(ui.label_version->text().append(QString(LUMINANCEVERSION)).append(" [Build ").append(QString(g_GIT_SHA1).left(6)).append("]"));
+  static void about(QWidget* parent = 0);
 
-      bool license_file_not_found=true;
-      QString docDir = QCoreApplication::applicationDirPath();
-      docDir.append("/../Resources");
-      QStringList paths = QStringList( BASEDIR "/share/doc/luminance-hdr") << BASEDIR "/share/luminance-hdr" << docDir << "/Applications/luminance.app/Contents/Resources" << "./" << QCoreApplication::applicationDirPath();
-      foreach (QString path,paths)
-      {
-          QString fname(path+QString("/LICENSE"));
-#ifdef WIN32
-          fname+=".txt";
-#endif
-          if (QFile::exists(fname))
-          {
-              QFile file(fname);
-              //try opening it
-              if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-                  break;
-              QTextStream ts(&file);
-              ui.GPLbox->setAcceptRichText(false);
-              ui.GPLbox->setPlainText(ts.readAll());
-              license_file_not_found=false;
-              break;
-          }
-      }
-      if (license_file_not_found)
-      {
-          ui.GPLbox->setOpenExternalLinks(true);
-          ui.GPLbox->setTextInteractionFlags(Qt::TextBrowserInteraction);
-          ui.GPLbox->setHtml(tr("%1 License document not found, you can find it online: %2here%3","%2 and %3 are html tags").arg("<html>").arg("<a href=\"http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt\">").arg("</a></html>"));
-      }
-      about->show();
-  }
+  static int warning(QString title, QString description, QWidget* parent = 0);
 
-  static int warning(QString title, QString description, QWidget* parent = 0)
-  {
-      UMessageBox WarningMsgBox(parent);
-      WarningMsgBox.setText(title);
-      WarningMsgBox.setInformativeText(description);
-      WarningMsgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-      WarningMsgBox.setDefaultButton(QMessageBox::No);
-      WarningMsgBox.setIcon(QMessageBox::Warning);
-
-      return WarningMsgBox.exec();
-  }
-
-  static int saveDialog(QString title, QString description, QWidget* parent = 0)
-  {
-      UMessageBox WarningMsgBox(parent);
-      WarningMsgBox.setText(title);
-      WarningMsgBox.setInformativeText(description);
-      WarningMsgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-      WarningMsgBox.setDefaultButton(QMessageBox::Cancel);
-      WarningMsgBox.setIcon(QMessageBox::Warning);
-
-      return WarningMsgBox.exec();
-  }
+  static int saveDialog(QString title, QString description, QWidget* parent = 0);
 
   /*
    * Function not yet used, it will... :)
    */
-  static void donationSplashMB(QWidget* parent = 0)
-  {
-      UMessageBox donationMB(parent);
-      donationMB.setText(tr("Donation"));
-      donationMB.setInformativeText(tr("Would you like to donate?"));
-      donationMB.setIcon(QMessageBox::Question);
-
-      QPushButton *yes = donationMB.addButton(tr("Yes, I'd love to!"), QMessageBox::ActionRole);
-      QPushButton *dontBother = donationMB.addButton(tr("Stop Bothering Me"), QMessageBox::ActionRole);
-      QPushButton *later = donationMB.addButton(tr("Remind me later"),  QMessageBox::ActionRole);
-
-      donationMB.exec();
-
-      if (donationMB.clickedButton() == yes)
-      {
-          qDebug() << "Open Donation Web page";
-      }
-      else if (donationMB.clickedButton() == dontBother)
-      {
-          qDebug() << "Stop bother me";
-
-      } else if (donationMB.clickedButton() == later)
-      {
-          qDebug() << "Remind me later";
-      }
-
-  }
+  static void donationSplashMB(QWidget* parent);
 };
 
 #endif
