@@ -1,7 +1,7 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of Luminance HDR package.
+ * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -30,29 +30,21 @@
 #ifndef _robertson02_h_
 #define _robertson02_h_
 #include <QList>
-#include <QVector>
 #include <QImage>
 #include "responses.h"
 
 /**
- * @brief Create HDR image by applying response curve to given images using Robertson02 model, checking for under/over exposed pixel values.
+ * @brief Create HDR image by applying response curve to given images taken with different exposures
  *
- * @param sumf function used for calculating the dividend when averaging over all images
- * @param divf function used for calculating the divisor when averaging over all images
- * @param outf function used for transforming the resulting quotient to the output range
- * @param Rout [out] HDR image channel 1
- * @param Gout [out] HDR image channel 2
- * @param Bout [out] HDR image channel 3
- * @param arrayofexptime array of floats containing equivalent exposure time (computed from time,f-value and ISO)
- * @param Ir response curve for channel 1
- * @param Ig response curve for channel 2
- * @param Ib response curve for channel 3
- * @param w  array of weights
- * @param M  number of levels of the input images
- * @param ldrinput if true listldr is used for the input images otherwise listhdrR, listhdrG, listhdrB are used
+ * @param xj [out] HDR image
+ * @param imgs reference to vector containing source exposures
+ * @param I camera response function (array size of M)
+ * @param w weighting function for camera output values (array size of M)
+ * @param M number of camera output levels
+ * @return number of saturated pixels in the HDR image (0: all OK)
  */
-//void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
-void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
+int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
+  const float* I, const float* w, const int M, const int chan, const bool ldrinput, ... );
 
 /**
  * @brief Calculate camera response using Robertson02 algorithm
@@ -64,7 +56,7 @@ void robertson02_applyResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array
  * @param M max camera output (no of discrete steps)
  * @return number of saturated pixels in the HDR image (0: all OK)
  */
-//void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
-void robertson02_getResponse( pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, float* Ir,float* Ig,float* Ib, const float* w, const int M, const bool ldrinput, ... );
+int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
+  float* I, const float* w, const int M, const int chan, const bool ldrinput, ... );
 
 #endif /* #ifndef _robertson02_h_ */

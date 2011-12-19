@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance HDR package.
+ * This file is a part of Qtpfsgui package.
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -22,27 +22,43 @@
  */
 
 #include <QList>
-#include <QVector>
 #include <QImage>
 #include "responses.h"
 
 /**
+ * @brief Create HDR image by applying response curve to given images using Debevec model, simple model, using array of weights P, not checking for under/over exposed pixel values.
+ *
+ * @param list reference to input Qt list containing source exposures, channels RGB
+ * @param arrayofexptime array of floats containing equivalent exposure time (computed from time,f-value and ISO)
+ * @param xj [out] HDR image channel 1
+ * @param yj [out] HDR image channel 2
+ * @param zj [out] HDR image channel 3
+ * @param I1 response curve for channel 1, to be found with robertson02
+ * @param I2 response curve for channel 2, to be found with robertson02
+ * @param I3 response curve for channel 3, to be found with robertson02
+ * @param P  width*height*#exposures array of weights
+ */
+int debevec_applyResponse( const float *arrayofexptime,
+			pfs::Array2D* xj, const float* I1,
+			pfs::Array2D* yj, const float* I2,
+			pfs::Array2D* zj, const float* I3,
+			const Array2DList &P, const bool ldrinput, ... );
+
+/**
  * @brief Create HDR image by applying response curve to given images using Debevec model, checking for under/over exposed pixel values.
  *
- * @param sumf function used for calculating the dividend when averaging over all images
- * @param divf function used for calculating the divisor when averaging over all images
- * @param outf function used for transforming the resulting quotient to the output range
- * @param Rout [out] HDR image channel 1
- * @param Gout [out] HDR image channel 2
- * @param Bout [out] HDR image channel 3
+ * @param list reference to input Qt list containing source exposures, channels RGB
  * @param arrayofexptime array of floats containing equivalent exposure time (computed from time,f-value and ISO)
- * @param Ir response curve for channel 1
- * @param Ig response curve for channel 2
- * @param Ib response curve for channel 3
+ * @param xj [out] HDR image channel 1
+ * @param yj [out] HDR image channel 2
+ * @param zj [out] HDR image channel 3
+ * @param Ir response curve for channel 1, to be found with robertson02
+ * @param Ig response curve for channel 2, to be found with robertson02
+ * @param Ib response curve for channel 3, to be found with robertson02
  * @param w  array of weights
- * @param M  number of levels of the input images
- * @param ldrinput if true listldr is used for the input images otherwise listhdrR, listhdrG, listhdrB are used
+ * @param M  lenght of w
  */
-//void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const float * arrayofexptime, 
-void debevec_applyResponse(pfs::Array2D* Rout,pfs::Array2D* Gout,pfs::Array2D* Bout, const QVector<float> arrayofexptime, 
-    const float* Ir, const float* Ig, const float* Ib, const float* w, const int M, const bool ldrinput, ... );
+int debevec_applyResponse( const float * arrayofexptime,
+			   pfs::Array2D* xj, pfs::Array2D* yj, pfs::Array2D* zj,
+			   const float* Ir, const float* Ig, const float* Ib,
+			   const float *w, int M, const bool ldrinput, ... );

@@ -32,7 +32,7 @@
 
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
-#include "createhdr.h"
+#include "HdrCreation/createhdr.h"
 
 const config_triple predef_confs[6] = {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},

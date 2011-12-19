@@ -196,8 +196,8 @@ SET(LIB_HDR_INCLUDE
 	src/TonemappingOperators/reinhard05/tmo_reinhard05.h
 # CREATE HDR
 	src/HdrCreation/createhdr.h
-	src/HdrCreation/debevec.h
-	src/HdrCreation/generic_applyResponse.h
+        src/HdrCreation/debevec.h
+#	src/HdrCreation/generic_applyResponse.h
 #	src/HdrCreation/icip06.h
 	src/HdrCreation/responses.h
 	src/HdrCreation/robertson02.h
@@ -270,7 +270,7 @@ SET(LIB_HDR_SRC
 # CREATE HDR
 	src/HdrCreation/createhdr.cpp
 	src/HdrCreation/debevec.cpp
-	src/HdrCreation/generic_applyResponse.cpp
+#	src/HdrCreation/generic_applyResponse.cpp
 #	src/HdrCreation/icip06.cpp
 	src/HdrCreation/responses.cpp
 	src/HdrCreation/robertson02.cpp	
