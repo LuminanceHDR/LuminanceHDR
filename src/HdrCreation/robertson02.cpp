@@ -29,21 +29,53 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include <math.h>
 
 #include "HdrCreation/responses.h"
 #include "HdrCreation/robertson02.h"
 
-#define PROG_NAME "robertson02"
+namespace {
 
 // maximum iterations after algorithm accepts local minima
-#define MAXIT 500
+const int MAXIT = 35; //500;
 
 // maximum accepted error
-#define MAX_DELTA 1e-5f
+const float MAX_DELTA = 1e-3f; //1e-5f;
 
-float normalizeI( float* I, int M );
+float normalizeI(float* I, int M)
+{
+    int Mmin, Mmax;
+    // find min max
+    for (Mmin=0 ; Mmin<M && I[Mmin]==0 ; ++Mmin);
+    for (Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; --Mmax);
+
+    //int Mmin = *std::min_element(I, I+M);
+    //int Mmax = *std::max_element(I, I+M);
+
+    int Mmid = Mmin+(Mmax-Mmin)/2;
+    float mid = I[Mmid];
+
+    //   std::cerr << "robertson02: middle response, mid=" << mid
+    //             << " [" << Mmid << "]"
+    //             << " " << Mmin << ".." << Mmax << std::endl;
+
+    if( mid==0.0f )
+    {
+        // find first non-zero middle response
+        while( Mmid<Mmax && I[Mmid]==0.0f )
+            Mmid++;
+        mid = I[Mmid];
+    }
+
+    if( mid!=0.0f )
+        for( int m=0 ; m<M ; m++ )
+            I[m] /= mid;
+    return mid;
+}
+
+}
 
 int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
                                const float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... ) {
@@ -98,8 +130,9 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
     
     // --- anti ghosting: for each image i, find images with
     // the immediately higher and lower exposure times
-    int* i_lower = new int[N];
-    int* i_upper = new int[N];
+    std::vector<int> i_lower(N); // int* i_lower = new int[N];
+    std::vector<int> i_upper(N); // int* i_upper = new int[N];
+
     for( int i=0 ; i<N ; i++ )
     {
         i_lower[i]=-1;
@@ -212,9 +245,6 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
             (*xj)(j) = 0.0f;
     }
 
-    delete[] i_lower;
-    delete[] i_upper;
-
     return saturated_pixels;
 }
 
@@ -226,16 +256,22 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
     QList<QImage*> *listldr=NULL;
     Array2DList *listhdr=NULL;
-    int N=-1; int width=-1; int height=-1;
+
+    int N=-1;
+    int width=-1;
+    int height=-1;
     
-    if (ldrinput) {
+    if (ldrinput)
+    {
         listldr=va_arg(arg_pointer,QList<QImage*>*);
         // number of exposures
         N = listldr->count();
         // frame size
         width = (listldr->at(0))->width();
         height = (listldr->at(0))->height();
-    } else {
+    }
+    else
+    {
         listhdr=va_arg(arg_pointer,Array2DList*);
         // number of exposures
         N = listhdr->size();
@@ -259,11 +295,7 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     // indexes
     int i,j,m;
     
-    float* Ip = new float[M]; // previous response
-    if( Ip==NULL ) {
-        std::cerr << "robertson02: could not allocate memory for camera response" << std::endl;
-        exit(1);
-    }
+    std::vector<float> Ip(M);       //float* Ip = new float[M]; // previous response
     
     // 0. Initialization
     normalizeI( I, M );
@@ -276,18 +308,15 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
         robertson02_applyResponse( xj, arrayofexptime, I, w, M, channelRGB, false, listhdr );
     
     // Optimization process
-    bool converged=false;
-    long* cardEm = new long[M];
-    float* sum = new float[M];
-    if( sum==NULL || cardEm==NULL )
-    {
-        std::cerr << "robertson02: could not allocate memory for optimization process" << std::endl;
-        exit(1);
-    }
+    bool converged = false;
+
+    std::vector<long> cardEm(M);    // long* cardEm = new long[M];
+    std::vector<float> sum(M);      // float* sum = new float[M];
     
     int cur_it = 0;
     float pdelta= 0.0f;
-    while( !converged )
+
+    while ( !converged )
     {
         // 1. Minimize with respect to I
         for( m=0 ; m<M ; m++ ) {
@@ -339,7 +368,8 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
         // 4. Check stopping condition
         float delta = 0.0f;
         int hits=0;
-        for( m=0 ; m<M ; m++ )
+        for ( m=0 ; m<M ; m++ )
+        {
             if( I[m]!=0.0f )
             {
                 float diff = I[m]-Ip[m];;
@@ -347,14 +377,15 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
                 Ip[m] = I[m];
                 hits++;
             }
+        }
         delta /= hits;
         
-        std::cerr << " #" << cur_it
-                  << " delta=" << delta
-                  << " (coverage: " << 100*hits/M << "%)\n";
+        std::cerr << " #" << cur_it << " delta=" << delta << " (coverage: " << 100*hits/M << "%)\n";
         
-        if( delta < MAX_DELTA )
+        if ( delta < MAX_DELTA )
+        {
             converged=true;
+        }
         else if( isnan(delta) || (cur_it>MAXIT && pdelta<delta) )
         {
             std::cerr << "algorithm failed to converge, too noisy data in range\n";
@@ -365,46 +396,10 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
         cur_it++;
     }
     
-    if( converged )
-        std::cerr << " #" << cur_it
-                  << " delta=" << pdelta << " <- converged\n";
-    
-    delete[] Ip;
-    delete[] cardEm;
-    delete[] sum;
+    if ( converged )
+    {
+        std::cerr << " #" << cur_it << " delta=" << pdelta << " <- converged\n";
+    }
     
     return saturated_pixels;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////
-// private part
-
-float normalizeI( float* I, int M )
-{
-    int Mmin, Mmax;
-    // find min max
-    for( Mmin=0 ; Mmin<M && I[Mmin]==0 ; Mmin++ );
-    for( Mmax=M-1 ; Mmax>0 && I[Mmax]==0 ; Mmax-- );
-    
-    int Mmid = Mmin+(Mmax-Mmin)/2;
-    float mid = I[Mmid];
-    
-    //   std::cerr << "robertson02: middle response, mid=" << mid
-    //             << " [" << Mmid << "]"
-    //             << " " << Mmin << ".." << Mmax << std::endl;
-    
-    if( mid==0.0f )
-    {
-        // find first non-zero middle response
-        while( Mmid<Mmax && I[Mmid]==0.0f )
-            Mmid++;
-        mid = I[Mmid];
-    }
-    
-    if( mid!=0.0f )
-        for( int m=0 ; m<M ; m++ )
-            I[m] /= mid;
-    return mid;
-}
-
