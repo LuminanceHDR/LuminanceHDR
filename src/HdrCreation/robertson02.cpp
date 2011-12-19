@@ -1,11 +1,11 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of Qtpfsgui package.
- * ---------------------------------------------------------------------- 
+ * This file is a part of Luminance HDR package
+ * ----------------------------------------------------------------------
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -19,8 +19,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * ---------------------------------------------------------------------- 
- * 
+ * ----------------------------------------------------------------------
+ *
  * @author Grzegorz Krawczyk, <gkrawczyk@users.sourceforge.net>
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  *
@@ -32,8 +32,8 @@
 
 #include <math.h>
 
-#include "responses.h"
-#include "robertson02.h"
+#include "HdrCreation/responses.h"
+#include "HdrCreation/robertson02.h"
 
 #define PROG_NAME "robertson02"
 
@@ -46,7 +46,7 @@
 float normalizeI( float* I, int M );
 
 int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                              const float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... ) {
+                               const float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... ) {
     
     QList<QImage*> *listldr=NULL;
     Array2DList *listhdr=NULL;
@@ -210,17 +210,17 @@ int robertson02_applyResponse( pfs::Array2D* xj, const float * arrayofexptime,
             (*xj)(j) = sum/div;
         else
             (*xj)(j) = 0.0f;
-	}
-	
-	delete[] i_lower;
-	delete[] i_upper;
-	
-	return saturated_pixels;
+    }
+
+    delete[] i_lower;
+    delete[] i_upper;
+
+    return saturated_pixels;
 }
 
 ////////////////////////////////     GET RESPONSE    /////////////////////////////////////
 int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
-                            float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... )
+                             float* I, const float* w, const int M, const int channelRGB, const bool ldrinput, ... )
 {
     va_list arg_pointer;
     va_start(arg_pointer,ldrinput); /* Initialize the argument list. */
@@ -350,8 +350,8 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
         delta /= hits;
         
         std::cerr << " #" << cur_it
-        << " delta=" << delta
-        << " (coverage: " << 100*hits/M << "%)\n";
+                  << " delta=" << delta
+                  << " (coverage: " << 100*hits/M << "%)\n";
         
         if( delta < MAX_DELTA )
             converged=true;
@@ -367,7 +367,7 @@ int robertson02_getResponse( pfs::Array2D* xj, const float * arrayofexptime,
     
     if( converged )
         std::cerr << " #" << cur_it
-        << " delta=" << pdelta << " <- converged\n";
+                  << " delta=" << pdelta << " <- converged\n";
     
     delete[] Ip;
     delete[] cardEm;

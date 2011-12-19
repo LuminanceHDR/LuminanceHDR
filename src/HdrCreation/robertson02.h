@@ -1,7 +1,7 @@
 /**
  * @brief Robertson02 algorithm for automatic self-calibration.
  *
- * This file is a part of Qtpfsgui package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2004 Grzegorz Krawczyk
  * Copyright (C) 2006-2007 Giuseppe Rota
@@ -29,6 +29,7 @@
 
 #ifndef _robertson02_h_
 #define _robertson02_h_
+
 #include <QList>
 #include <QImage>
 #include "responses.h"
