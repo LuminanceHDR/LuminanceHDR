@@ -27,11 +27,12 @@
  * $Id: robertson02.cpp,v 1.7 2006/11/16 15:06:17 gkrawczyk Exp $
  */
 
+#include "arch/math.h"
+#include "arch/minmax.h"
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
-#include <math.h>
 
 #include "HdrCreation/responses.h"
 #include "HdrCreation/robertson02.h"
