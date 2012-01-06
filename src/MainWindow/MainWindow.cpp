@@ -1501,7 +1501,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
     if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
-        n->setFrame(frame);
+        n->setFrame(frame, tm_options);
     }
     else
     {
