@@ -443,7 +443,7 @@
                 <item>
                  <widget class="QSpinBox" name="previewsWidthSpinBox">
                   <property name="suffix">
-                   <string>px</string>
+                   <string>pix</string>
                   </property>
                   <property name="minimum">
                    <number>128</number>
