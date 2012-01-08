@@ -32,12 +32,12 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "PreviewPanel/PreviewLabel.h"
 #include "TonemappingEngine/TonemapOperator.h"
+#include "Common/LuminanceOptions.h"
 
 namespace // anoymous namespace
 {
 const int PREVIEW_WIDTH = 120;
 const int PREVIEW_HEIGHT = 100;
-const int PREVIEW_WIDTH_TM = 500;
 
 //! \note It is not the most efficient way to do this thing, but I will fix it later
 //! this function get calls multiple time
@@ -203,7 +203,7 @@ void PreviewPanel::tonemapPreview(TonemappingOptions* opts)
     qDebug() << "void PreviewPanel::tonemapPreview()";
 #endif
 
-    opts->xsize = PREVIEW_WIDTH_TM;
+    opts->xsize = LuminanceOptions().getPreviewWidth();
     opts->origxsize = original_width_frame;
 
     emit startTonemapping(opts);
