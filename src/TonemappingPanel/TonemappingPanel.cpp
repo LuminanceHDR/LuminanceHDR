@@ -42,6 +42,7 @@
 #include <QSqlError>
 
 #include "Common/LuminanceOptions.h"
+#include "Common/config.h"
 #include "TonemappingPanel/TonemappingPanel.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
 #include "TonemappingPanel/SavedParametersDialog.h"

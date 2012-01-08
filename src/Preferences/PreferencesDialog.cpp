@@ -39,6 +39,21 @@
 // UI
 #include "ui_PreferencesDialog.h"
 
+#define KEY_USER_QUAL_TOOLBUTTON "preference_dialog/user_qual_toolButton"
+#define KEY_MED_PASSES_TOOLBUTTON "preference_dialog/med_passes_toolButton"
+#define KEY_WB_METHOD_TOOLBUTTON "preference_dialog/wb_method_toolButton"
+#define KEY_TK_TOOLBUTTON "preference_dialog/TK_toolButton"
+#define KEY_MULTIPLIERS_TOOLBUTTON "preference_dialog/multipliers_toolButton"
+#define KEY_HIGHLIGHTS_TOOLBUTTON "preference_dialog/highlights_toolButton"
+#define KEY_LEVEL_TOOLBUTTON "preference_dialog/level_toolButton"
+#define KEY_BRIGHTNESS_TOOLBUTTON "preference_dialog/brightness_toolButton"
+#define KEY_USER_BLACK_TOOLBUTTON "preference_dialog/user_black_toolButton"
+#define KEY_USER_SAT_TOOLBUTTON "preference_dialog/user_sat_toolButton"
+#define KEY_THRESHOLD_TOOLBUTTON "preference_dialog/threshold_toolButton"
+#define KEY_RED_TOOLBUTTON "preference_dialog/red_toolButton"
+#define KEY_BLUE_TOOLBUTTON "preference_dialog/blue_toolButton"
+#define KEY_GREEN_TOOLBUTTON "preference_dialog/green_toolButton"
+
 namespace
 {
 inline double pos2value(int pos, int minpos, int maxpos, double minv, double maxv)
