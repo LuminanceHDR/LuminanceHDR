@@ -80,7 +80,7 @@ public:
     //! \brief Get tonemap options that generated the handled frame
     //! \note GenericViewer holds only an empty implementation of this function. It is
     //! up to the derived class to override this behaviour
-    virtual TonemappingOptions* getTonemappingOptions() {}
+    virtual TonemappingOptions* getTonemappingOptions() { return NULL; }
 
 public Q_SLOTS:
     /*virtual*/ void updateView();  // tells the Viewer to update the View area
