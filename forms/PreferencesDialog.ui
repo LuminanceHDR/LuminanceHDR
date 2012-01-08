@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>599</width>
-    <height>509</height>
+    <height>617</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,256 +25,189 @@
    </property>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_21">
+     <property name="margin">
+      <number>12</number>
+     </property>
      <item>
-      <widget class="QFrame" name="framePreferences">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="autoFillBackground">
-        <bool>true</bool>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_9">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_25">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_16">
-            <item>
-             <widget class="QToolButton" name="toolButtonInterface">
-              <property name="text">
-               <string>Interface</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>48</width>
-                <height>48</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_17">
-            <item>
-             <widget class="QToolButton" name="toolButtonHDR">
-              <property name="text">
-               <string>HDR Options</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/HDR_icon.png</normaloff>:/new/prefix1/images/HDR_icon.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>48</width>
-                <height>48</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_18">
-            <item>
-             <widget class="QToolButton" name="toolButtonTM">
-              <property name="text">
-               <string>Tone Mapping</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>48</width>
-                <height>48</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_9">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_19">
-            <item>
-             <widget class="QToolButton" name="toolButtonRAW">
-              <property name="text">
-               <string>RAW Conversion</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/rawconverter.png</normaloff>:/new/prefix1/images/rawconverter.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>48</width>
-                <height>48</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_10">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_20">
-            <item>
-             <widget class="QToolButton" name="toolButtonExtTool">
-              <property name="text">
-               <string>External Tools</string>
-              </property>
-              <property name="icon">
-               <iconset resource="../icons.qrc">
-                <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>48</width>
-                <height>48</height>
-               </size>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="autoExclusive">
-               <bool>true</bool>
-              </property>
-              <property name="toolButtonStyle">
-               <enum>Qt::ToolButtonTextUnderIcon</enum>
-              </property>
-              <property name="autoRaise">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QGridLayout" name="gridLayout_16">
+       <item row="0" column="5">
+        <widget class="QToolButton" name="toolButtonExtTool">
+         <property name="text">
+          <string>External Tools</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QToolButton" name="toolButtonHDR">
+         <property name="text">
+          <string>HDR Options</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/new/prefix1/images/HDR_icon.png</normaloff>:/new/prefix1/images/HDR_icon.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QToolButton" name="toolButtonInterface">
+         <property name="text">
+          <string>Interface</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QToolButton" name="toolButtonTM">
+         <property name="text">
+          <string>Tone Mapping</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <spacer name="horizontalSpacer_17">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="4">
+        <widget class="QToolButton" name="toolButtonRAW">
+         <property name="text">
+          <string>RAW Conversion</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../icons.qrc">
+           <normaloff>:/new/prefix1/images/rawconverter.png</normaloff>:/new/prefix1/images/rawconverter.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextUnderIcon</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <spacer name="horizontalSpacer_18">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QStackedWidget" name="stackedPagesWidget">
@@ -284,680 +217,432 @@
          <height>16777215</height>
         </size>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
-       <widget class="QWidget" name="languagePage">
+       <widget class="QWidget" name="stackedPagesWidgetPage1_2">
         <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_23">
-           <item>
-            <widget class="QGroupBox" name="languageGroupBox">
-             <property name="font">
-              <font>
-               <kerning>true</kerning>
-              </font>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="2" column="0">
+          <layout class="QFormLayout" name="formLayout_7">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Language</string>
              </property>
-             <property name="title">
-              <string>Language:</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_24">
-                <item>
-                 <widget class="QComboBox" name="languageComboBox">
-                  <item>
-                   <property name="text">
-                    <string>Czech</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>English</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Finnish</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>French</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>German</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Indonesian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Italian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Polish</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Romanian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Russian</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Spanish</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Turkish</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Hungarian</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
             </widget>
            </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="languageComboBox">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <item>
+              <property name="text">
+               <string>Czech</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>English</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Finnish</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>French</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>German</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Indonesian</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Italian</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Polish</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Romanian</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Russian</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Spanish</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Turkish</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Hungarian</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Default Previews Width</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="previewsWidthSpinBox">
+             <property name="suffix">
+              <string>px</string>
+             </property>
+             <property name="minimum">
+              <number>128</number>
+             </property>
+             <property name="maximum">
+              <number>2048</number>
+             </property>
+             <property name="value">
+              <number>400</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
+             <property name="text">
+              <string>Always show Preview Panel</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
+             <property name="text">
+              <string>Always show Wizard first page</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="stackedPagesWidgetPage2_2">
+        <layout class="QGridLayout" name="gridLayout_13">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QFormLayout" name="formLayout_8">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>HDR TIFF Default File Format</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QRadioButton" name="logLuvRadioButton">
+               <property name="toolTip">
+                <string>Good quality and smaller file size</string>
+               </property>
+               <property name="text">
+                <string>LogLuv TIFF (float, 16bit per color channel)</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="floatTiffRadioButton">
+               <property name="toolTip">
+                <string>Better quality, larger file size, better compatibility with other applications</string>
+               </property>
+               <property name="text">
+                <string>Float TIFF (float, 32bit per color channel)</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="negativeColorsLabel">
+             <property name="text">
+              <string>Show negative numbers as:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="negativeColorButton">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="ifnanColorLabel">
+             <property name="text">
+              <string>Show nan and +/-Inf values as:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="ifnanColorButton">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="stackedPagesWidgetPage3_2">
+        <layout class="QGridLayout" name="gridLayout_14">
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QFormLayout" name="formLayout_9">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Temporary Working Folder</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <layout class="QHBoxLayout" name="_10">
+             <item>
+              <widget class="QLineEdit" name="lineEditTempPath">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>250</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="chooseCachePathButton">
+               <property name="text">
+                <string>C&amp;hoose</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="batchLdrFormatLabel">
+             <property name="toolTip">
+              <string>Which LDR image format to save to</string>
+             </property>
+             <property name="text">
+              <string>Batch Tonemapping Default Output Format</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="batchLdrFormatComboBox">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
-               <width>16777215</width>
+               <width>250</width>
                <height>16777215</height>
               </size>
              </property>
-             <property name="title">
-              <string>Tone Mapping</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_27">
-                <item>
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>Previews width:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_16">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Minimum</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="previewsWidthSpinBox">
-                  <property name="suffix">
-                   <string>pix</string>
-                  </property>
-                  <property name="minimum">
-                   <number>128</number>
-                  </property>
-                  <property name="maximum">
-                   <number>2048</number>
-                  </property>
-                  <property name="value">
-                   <number>400</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_15">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="checkBoxTMOWindowsMax">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Maximize result</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QCheckBox" name="checkBoxTMOWindowsHDR">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>Always show Processed HDR</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QCheckBox" name="checkBoxTMOWindowsPreviewPanel">
-                <property name="text">
-                 <string>Always show Preview Panel</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>HDR Wizard</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_11">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="checkBoxWizardShowFirstPage">
-                <property name="text">
-                 <string>Always show Wizard first page</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="spacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="hdrOptionsPage">
-        <layout class="QGridLayout" name="gridLayout_13">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_24">
-           <item>
-            <widget class="QGroupBox" name="hdrTiffGroupBox">
              <property name="toolTip">
-              <string>Choose what type of HDR TIFF to save to</string>
+              <string>Which LDR image format to save to</string>
              </property>
-             <property name="title">
-              <string>HDR TIFF File Format</string>
-             </property>
-             <layout class="QVBoxLayout" name="_4">
-              <property name="spacing">
-               <number>8</number>
+             <item>
+              <property name="text">
+               <string>JPEG</string>
               </property>
-              <property name="margin">
-               <number>5</number>
+             </item>
+             <item>
+              <property name="text">
+               <string>PNG</string>
               </property>
-              <item>
-               <widget class="QRadioButton" name="logLuvRadioButton">
-                <property name="toolTip">
-                 <string>Good quality and smaller file size</string>
-                </property>
-                <property name="text">
-                 <string>LogLuv TIFF (float, 16bit per color channel)</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="floatTiffRadioButton">
-                <property name="toolTip">
-                 <string>Better quality, larger file size, better compatibility with other applications</string>
-                </property>
-                <property name="text">
-                 <string>Float TIFF (float, 32bit per color channel)</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+             </item>
+             <item>
+              <property name="text">
+               <string>PPM</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>PBM</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>BMP</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>TIFF</string>
+              </property>
+             </item>
             </widget>
            </item>
-           <item>
-            <widget class="QGroupBox" name="colorsGroupBox">
-             <property name="title">
-              <string>Colors</string>
+           <item row="2" column="0">
+            <widget class="QLabel" name="numThreadsLabel">
+             <property name="toolTip">
+              <string>Amount of threads to use on multicore/SMP machines</string>
              </property>
-             <layout class="QVBoxLayout" name="_5">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <property name="margin">
-               <number>5</number>
-              </property>
-              <item>
-               <layout class="QHBoxLayout" name="_6">
-                <item>
-                 <widget class="QLabel" name="negativeColorsLabel">
-                  <property name="text">
-                   <string>Show negative numbers as:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="negativeColorButton">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="_7">
-                <item>
-                 <widget class="QLabel" name="ifnanColorLabel">
-                  <property name="text">
-                   <string>Show nan and +/-Inf values as:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer>
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="ifnanColorButton">
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
+             <property name="text">
+              <string>Batch Tonemapping Number of Threads</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
-           <item>
-            <spacer>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="numThreadspinBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
+             <property name="toolTip">
+              <string>Amount of threads to use on multicore/SMP machines</string>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>30</height>
-              </size>
+             <property name="minimum">
+              <number>1</number>
              </property>
-            </spacer>
+             <property name="maximum">
+              <number>10</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="tonemappingPage">
-        <layout class="QGridLayout" name="gridLayout_14">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_25">
-           <item>
-            <widget class="QGroupBox" name="tempDirGroupBox">
-             <property name="title">
-              <string>Cache</string>
-             </property>
-             <layout class="QVBoxLayout" name="_9">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <property name="margin">
-               <number>5</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="tempDirDescriptionLabel">
-                <property name="text">
-                 <string>Where to store temporary data:</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="_10">
-                <item>
-                 <widget class="QLineEdit" name="lineEditTempPath">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="readOnly">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="chooseCachePathButton">
-                  <property name="text">
-                   <string>C&amp;hoose</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="batchGroupBox">
-             <property name="title">
-              <string>Batch Tone Mapping</string>
-             </property>
-             <layout class="QVBoxLayout" name="_11">
-              <property name="spacing">
-               <number>8</number>
-              </property>
-              <property name="margin">
-               <number>5</number>
-              </property>
-              <item>
-               <layout class="QHBoxLayout" name="_12">
-                <item>
-                 <widget class="QLabel" name="batchLdrFormatLabel">
-                  <property name="toolTip">
-                   <string>Which LDR image format to save to</string>
-                  </property>
-                  <property name="text">
-                   <string>LDR image &amp;format:</string>
-                  </property>
-                  <property name="buddy">
-                   <cstring>batchLdrFormatComboBox</cstring>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="batchLdrFormatComboBox">
-                  <property name="toolTip">
-                   <string>Which LDR image format to save to</string>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>JPEG</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PNG</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PPM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>PBM</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>BMP</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>TIFF</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="_13">
-                <item>
-                 <widget class="QLabel" name="numThreadsLabel">
-                  <property name="toolTip">
-                   <string>Amount of threads to use on multicore/SMP machines</string>
-                  </property>
-                  <property name="text">
-                   <string>Number of &amp;threads:</string>
-                  </property>
-                  <property name="wordWrap">
-                   <bool>true</bool>
-                  </property>
-                  <property name="buddy">
-                   <cstring>numThreadspinBox</cstring>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="numThreadspinBox">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="toolTip">
-                   <string>Amount of threads to use on multicore/SMP machines</string>
-                  </property>
-                  <property name="minimum">
-                   <number>1</number>
-                  </property>
-                  <property name="maximum">
-                   <number>10</number>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="rawConversionPage">
+       <widget class="QWidget" name="stackedPagesWidgetPage4_2">
         <layout class="QGridLayout" name="gridLayout_6">
+         <property name="margin">
+          <number>0</number>
+         </property>
          <item row="1" column="0">
-          <widget class="QToolBox" name="toolBox">
+          <widget class="QTabWidget" name="tabWidget">
            <property name="currentIndex">
             <number>0</number>
            </property>
-           <widget class="QWidget" name="page_2">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>269</width>
-              <height>133</height>
-             </rect>
-            </property>
-            <attribute name="label">
-             <string>Demosaicing</string>
+           <widget class="QWidget" name="tabWidgetPage1">
+            <attribute name="title">
+             <string>General</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <layout class="QVBoxLayout" name="verticalLayout_3">
-                 <item>
-                  <widget class="QCheckBox" name="four_color_rgb_CB">
-                   <property name="toolTip">
-                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interpolate RGB as four colors&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default is to assume that all green pixels are the same. If even-row green pixels are more sensitive to ultraviolet light than odd-row this difference causes a mesh                             pattern in the output; using this option solves this problem with minimal loss of detail.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string>Interpolate RGB using 4 colours</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="do_not_use_fuji_rotate_CB">
-                   <property name="toolTip">
-                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not stretch or rotate pixels&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="text">
-                    <string>Do not stretch or rotate pixels</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+              <layout class="QFormLayout" name="formLayout">
+               <item row="3" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Quality:</string>
+                 </property>
+                </widget>
                </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_18">
+               <item row="3" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout">
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_2">
-                   <item>
-                    <widget class="QLabel" name="label">
-                     <property name="text">
-                      <string>Quality:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_2">
-                     <property name="text">
-                      <string>Median:</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
+                  <widget class="QComboBox" name="user_qual_comboBox">
+                   <property name="minimumSize">
                     <size>
-                     <width>40</width>
-                     <height>20</height>
+                     <width>250</width>
+                     <height>0</height>
                     </size>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout">
-                     <item>
-                      <widget class="QComboBox" name="user_qual_comboBox">
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -967,831 +652,172 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;VNG&lt;/span&gt;: use Variable Number of Gradients interpolation. This method computes gradients near the pixel of interest and uses the lower gradients (representing smoother and more similar parts of the image) to make an estimate.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;PPG&lt;/span&gt;: use Patterned Pixel Grouping interpolation. Pixel Grouping uses assumptions about natural scenery in making estimates. It has fewer color artifacts on natural images than the Variable Number of Gradients method.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;AHD&lt;/span&gt;: use Adaptive Homogeneity-Directed interpolation. This method selects the direction of interpolation so as to maximize a homogeneity metric, thus typically minimizing color artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Bilinear</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>VNG</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>PPG</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>AHD</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="user_qual_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Bilinear</string>
+                    </property>
                    </item>
                    <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_2">
-                     <item>
-                      <widget class="QSlider" name="med_passes_horizontalSlider">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="maximum">
-                        <number>10</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>1</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="med_passes_spinBox">
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                    <property name="text">
+                     <string>VNG</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>PPG</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>AHD</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="user_qual_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Median:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QSlider" name="med_passes_horizontalSlider">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>1</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="med_passes_spinBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Median Filter&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the passes used by median filter applied after interpolation to Red-Green and Blue-Green channels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="maximum">
-                        <number>10</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="med_passes_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>220</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="page_3">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>341</width>
-              <height>344</height>
-             </rect>
-            </property>
-            <attribute name="label">
-             <string>White Balance</string>
-            </attribute>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_13">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_19">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_8">
-                   <item>
-                    <widget class="QLabel" name="label_3">
-                     <property name="text">
-                      <string>Method:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="TK_label">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Temperature (Kelvin):      </string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="green_label">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Green:</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_4">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                     <item>
-                      <widget class="QComboBox" name="wb_method_comboBox">
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White Balance Method&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Configure the raw white balance :&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Default D65&lt;/span&gt;: Use a standard daylight D65 white balance (dcraw defaults)&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera&lt;/span&gt;: Use the white balance specified by the camera. If not available, reverts to default neutral white balance&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Automatic&lt;/span&gt;: Calculates an automatic white balance averaging the entire image&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manual&lt;/span&gt;: Set a custom temperature and green level values&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="currentIndex">
-                        <number>1</number>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Predefined D65</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Camera</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Auto</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Manual</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="wb_method_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_5">
-                     <item>
-                      <widget class="QSlider" name="TK_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="minimum">
-                        <number>2000</number>
-                       </property>
-                       <property name="maximum">
-                        <number>12000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>100</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>1000</number>
-                       </property>
-                       <property name="value">
-                        <number>6500</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="TK_spinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the color temperature in Kelvin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="minimum">
-                        <number>2000</number>
-                       </property>
-                       <property name="maximum">
-                        <number>12000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>6500</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="TK_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_6">
-                     <item>
-                      <widget class="QSlider" name="green_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="minimum">
-                        <number>20</number>
-                       </property>
-                       <property name="maximum">
-                        <number>2500</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>10</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>1000</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QDoubleSpinBox" name="green_doubleSpinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>Set here the green component to set magenta color cast removal level</string>
-                       </property>
-                       <property name="minimum">
-                        <double>0.200000000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>2.500000000000000</double>
-                       </property>
-                       <property name="singleStep">
-                        <double>0.100000000000000</double>
-                       </property>
-                       <property name="value">
-                        <double>1.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="green_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_20">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_10">
-                   <item>
-                    <widget class="QLabel" name="label_6">
-                     <property name="text">
-                      <string>Highlights:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_7">
-                     <property name="text">
-                      <string>Level:</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_9">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_7">
-                     <item>
-                      <widget class="QComboBox" name="highlights_comboBox">
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Highlights&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the highlight clipping method:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Solid white&lt;/span&gt;: clip all highlights to solid white&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Unclip&lt;/span&gt;: leave highlights unclipped in various shades of pink&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blend&lt;/span&gt;: Blend clipped and unclipped values together for a gradual fade to white&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rebuild&lt;/span&gt;: reconstruct highlights using a level value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Solid White</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Do not transform</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Blend</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Reconstruct</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="highlights_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_4">
-                     <item>
-                      <widget class="QSlider" name="level_horizontalSlider">
-                       <property name="maximum">
-                        <number>6</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>2</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                       <property name="tickInterval">
-                        <number>1</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="level_spinBox">
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Level&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the reconstruct highlight level. Low values favor whites and high values favor colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="maximum">
-                        <number>6</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="level_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="false_colors_CB">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>Correct false colors in highlights</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="auto_bright_CB">
-                 <property name="text">
-                  <string>Auto Brightness</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_21">
-                 <item>
-                  <widget class="QLabel" name="label_8">
-                   <property name="text">
-                    <string>Brightness:</string>
+                   <property name="maximum">
+                    <number>10</number>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <spacer name="horizontalSpacer_8">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                  <widget class="QToolButton" name="med_passes_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
+                   <property name="text">
+                    <string>...</string>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
-                   <item>
-                    <widget class="QSlider" name="brightness_horizontalSlider">
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>10</number>
-                     </property>
-                     <property name="value">
-                      <number>10</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="tickPosition">
-                      <enum>QSlider::TicksBelow</enum>
-                     </property>
-                     <property name="tickInterval">
-                      <number>10</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="brightness_doubleSpinBox">
-                     <property name="toolTip">
-                      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Brighness&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the brightness level of output image. The default value is 1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="maximum">
-                      <double>10.000000000000000</double>
-                     </property>
-                     <property name="singleStep">
-                      <double>0.100000000000000</double>
-                     </property>
-                     <property name="value">
-                      <double>1.000000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QToolButton" name="brightness_toolButton">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>...</string>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="../icons.qrc">
-                       <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  </widget>
                  </item>
                 </layout>
                </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_22">
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_11">
-                   <item>
-                    <widget class="QCheckBox" name="use_black_CB">
-                     <property name="toolTip">
-                      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="do_not_use_fuji_rotate_CB">
+                 <property name="toolTip">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific black point value to decode RAW pictures. If you set this option to off, the Black Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Black</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="use_sat_CB">
-                     <property name="toolTip">
-                      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not stretch or rotate pixels&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;For Fuji Super CCD cameras, show the image tilted 45 degrees. For cameras with non-square pixels, do not stretch the image to its correct aspect ratio. In any case,                                              this option guarantees that each output pixel corresponds to one RAW pixel.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Do not stretch or rotate pixels</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="four_color_rgb_CB">
+                 <property name="toolTip">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Saturation</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_12">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_9">
-                     <item>
-                      <widget class="QSlider" name="user_black_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="maximum">
-                        <number>1000</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>100</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                       <property name="tickInterval">
-                        <number>0</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="user_black_spinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="maximum">
-                        <number>1000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="user_black_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_8">
-                     <item>
-                      <widget class="QSlider" name="user_sat_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="maximum">
-                        <number>20000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>100</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>1000</number>
-                       </property>
-                       <property name="value">
-                        <number>20000</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QSpinBox" name="user_sat_spinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point value&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific white point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="maximum">
-                        <number>20000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>20000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="user_sat_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interpolate RGB as four colors&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The default is to assume that all green pixels are the same. If even-row green pixels are more sensitive to ultraviolet light than odd-row this difference causes a mesh                             pattern in the output; using this option solves this problem with minimal loss of detail.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To resume, this option blurs the image a little, but it eliminates false 2x2 mesh patterns with VNG quality method or mazes with AHD quality method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Interpolate RGB using 4 colours</string>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tabWidgetPage2">
+            <attribute name="title">
+             <string>White Balance</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="3" column="0">
               <spacer name="verticalSpacer_4">
                <property name="orientation">
                 <enum>Qt::Vertical</enum>
@@ -1804,24 +830,780 @@ p, li { white-space: pre-wrap; }
                </property>
               </spacer>
              </item>
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_3">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Method</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QComboBox" name="wb_method_comboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White Balance Method&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Configure the raw white balance :&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Default D65&lt;/span&gt;: Use a standard daylight D65 white balance (dcraw defaults)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Camera&lt;/span&gt;: Use the white balance specified by the camera. If not available, reverts to default neutral white balance&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Automatic&lt;/span&gt;: Calculates an automatic white balance averaging the entire image&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Manual&lt;/span&gt;: Set a custom temperature and green level values&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Predefined D65</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Camera</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Auto</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Manual</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="wb_method_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="TK_label">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Temperature (Kelvin)</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QSlider" name="TK_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>2000</number>
+                   </property>
+                   <property name="maximum">
+                    <number>12000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>1000</number>
+                   </property>
+                   <property name="value">
+                    <number>6500</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="TK_spinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Temperature&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the color temperature in Kelvin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="minimum">
+                    <number>2000</number>
+                   </property>
+                   <property name="maximum">
+                    <number>12000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>6500</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="TK_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="green_label">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Green</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                 <item>
+                  <widget class="QSlider" name="green_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>20</number>
+                   </property>
+                   <property name="maximum">
+                    <number>2500</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>1000</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="green_doubleSpinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Set here the green component to set magenta color cast removal level</string>
+                   </property>
+                   <property name="minimum">
+                    <double>0.200000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>2.500000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="green_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>Highlights</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <item>
+                  <widget class="QComboBox" name="highlights_comboBox">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Highlights&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the highlight clipping method:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Solid white&lt;/span&gt;: clip all highlights to solid white&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Unclip&lt;/span&gt;: leave highlights unclipped in various shades of pink&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blend&lt;/span&gt;: Blend clipped and unclipped values together for a gradual fade to white&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rebuild&lt;/span&gt;: reconstruct highlights using a level value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Solid White</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Do not transform</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Blend</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Reconstruct</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="highlights_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Level</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QSlider" name="level_horizontalSlider">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>6</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>2</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>1</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="level_spinBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Level&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the reconstruct highlight level. Low values favor whites and high values favor colors.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="maximum">
+                    <number>6</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="level_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="1">
+                <widget class="QCheckBox" name="false_colors_CB">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Correct false colors in highlights</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QCheckBox" name="auto_bright_CB">
+                 <property name="text">
+                  <string>Auto Brightness</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Brightness</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QSlider" name="brightness_horizontalSlider">
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>10</number>
+                   </property>
+                   <property name="value">
+                    <number>10</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>10</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="brightness_doubleSpinBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Brighness&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the brightness level of output image. The default value is 1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="maximum">
+                    <double>10.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="brightness_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="8" column="0">
+                <widget class="QCheckBox" name="use_black_CB">
+                 <property name="toolTip">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific black point value to decode RAW pictures. If you set this option to off, the Black Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Black</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QSlider" name="user_black_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>100</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>0</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="user_black_spinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Black point value&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific black point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="maximum">
+                    <number>1000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="user_black_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="9" column="0">
+                <widget class="QCheckBox" name="use_sat_CB">
+                 <property name="toolTip">
+                  <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use a specific white point value to decode RAW pictures. If you set this option to off, the White Point value will be automatically computed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Saturation</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QSlider" name="user_sat_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximum">
+                    <number>20000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>1000</number>
+                   </property>
+                   <property name="value">
+                    <number>20000</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="user_sat_spinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;White point value&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify specific white point value of the output image.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="maximum">
+                    <number>20000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>20000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="user_sat_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="page_4">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>405</width>
-              <height>166</height>
-             </rect>
-            </property>
-            <attribute name="label">
-             <string>Corrections</string>
+           <widget class="QWidget" name="tabWidgetPage3">
+            <attribute name="title">
+             <string>NR and CA Correction</string>
             </attribute>
             <layout class="QGridLayout" name="gridLayout_4">
+             <item row="1" column="0">
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>187</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_15">
-               <item>
+              <layout class="QFormLayout" name="formLayout_4">
+               <item row="0" column="1">
                 <widget class="QCheckBox" name="use_noise_CB">
                  <property name="toolTip">
                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1839,38 +1621,24 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_11">
-                 <item>
-                  <widget class="QLabel" name="threshold_label">
-                   <property name="enabled">
-                    <bool>true</bool>
-                   </property>
-                   <property name="text">
-                    <string>Threshold:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_11">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::MinimumExpanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>145</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
                  <item>
                   <widget class="QSlider" name="threshold_horizontalSlider">
                    <property name="enabled">
                     <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="minimum">
                     <number>10</number>
@@ -1902,6 +1670,18 @@ p, li { white-space: pre-wrap; }
                   <widget class="QSpinBox" name="threshold_spinBox">
                    <property name="enabled">
                     <bool>true</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="toolTip">
                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1941,7 +1721,17 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="threshold_label">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="text">
+                  <string>Threshold:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
                 <widget class="QCheckBox" name="use_chroma_CB">
                  <property name="toolTip">
                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1956,260 +1746,271 @@ p, li { white-space: pre-wrap; }
                  </property>
                 </widget>
                </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_23">
+               <item row="4" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_12">
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_5">
-                   <item>
-                    <widget class="QLabel" name="red_label">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Red:  </string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="blue_label">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>Blue:</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="horizontalSpacer_12">
+                  <widget class="QSlider" name="red_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>2000000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>1000000</number>
+                   </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>200</width>
-                     <height>20</height>
-                    </size>
+                   <property name="tickInterval">
+                    <number>100000</number>
                    </property>
-                  </spacer>
+                  </widget>
                  </item>
                  <item>
-                  <layout class="QVBoxLayout" name="verticalLayout_14">
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_12">
-                     <item>
-                      <widget class="QSlider" name="red_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>2000000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>10</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>1000000</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                       <property name="tickInterval">
-                        <number>100000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QDoubleSpinBox" name="red_doubleSpinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                  <widget class="QDoubleSpinBox" name="red_doubleSpinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Red multiplier&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the red layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="decimals">
-                        <number>5</number>
-                       </property>
-                       <property name="minimum">
-                        <double>0.000010000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>2.000000000000000</double>
-                       </property>
-                       <property name="singleStep">
-                        <double>0.100000000000000</double>
-                       </property>
-                       <property name="value">
-                        <double>1.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="red_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_13">
-                     <item>
-                      <widget class="QSlider" name="blue_horizontalSlider">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="minimum">
-                        <number>1</number>
-                       </property>
-                       <property name="maximum">
-                        <number>2000000</number>
-                       </property>
-                       <property name="singleStep">
-                        <number>10</number>
-                       </property>
-                       <property name="pageStep">
-                        <number>100</number>
-                       </property>
-                       <property name="value">
-                        <number>1000000</number>
-                       </property>
-                       <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                       </property>
-                       <property name="tickPosition">
-                        <enum>QSlider::TicksBelow</enum>
-                       </property>
-                       <property name="tickInterval">
-                        <number>100000</number>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QDoubleSpinBox" name="blue_doubleSpinBox">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+                   </property>
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="minimum">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>2.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QToolButton" name="red_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <item>
+                  <widget class="QSlider" name="blue_horizontalSlider">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>1</number>
+                   </property>
+                   <property name="maximum">
+                    <number>2000000</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
+                    <number>100</number>
+                   </property>
+                   <property name="value">
+                    <number>1000000</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="tickPosition">
+                    <enum>QSlider::TicksBelow</enum>
+                   </property>
+                   <property name="tickInterval">
+                    <number>100000</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="blue_doubleSpinBox">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>70</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blue multiplier&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Set here the magnification factor of the blue layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="decimals">
-                        <number>5</number>
-                       </property>
-                       <property name="minimum">
-                        <double>0.000010000000000</double>
-                       </property>
-                       <property name="maximum">
-                        <double>2.000000000000000</double>
-                       </property>
-                       <property name="singleStep">
-                        <double>0.100000000000000</double>
-                       </property>
-                       <property name="value">
-                        <double>1.000000000000000</double>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QToolButton" name="blue_toolButton">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                       <property name="icon">
-                        <iconset resource="../icons.qrc">
-                         <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>187</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-           <widget class="QWidget" name="page_5">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>264</width>
-              <height>140</height>
-             </rect>
-            </property>
-            <attribute name="label">
-             <string>Color Management</string>
-            </attribute>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_6">
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_17">
-                 <item>
-                  <widget class="QLabel" name="label_12">
-                   <property name="enabled">
-                    <bool>false</bool>
                    </property>
-                   <property name="text">
-                    <string>Camera profile:</string>
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="minimum">
+                    <double>0.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>2.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.100000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>1.000000000000000</double>
                    </property>
                   </widget>
                  </item>
                  <item>
+                  <widget class="QToolButton" name="blue_toolButton">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons.qrc">
+                     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="red_label">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Red Component</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="blue_label">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Blue Component</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="tabWidgetPage4">
+            <attribute name="title">
+             <string>Camera Profile</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <layout class="QFormLayout" name="formLayout_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_12">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Camera profile</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_17">
+                 <item>
                   <widget class="QComboBox" name="camera_comboBox">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="toolTip">
                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2255,12 +2056,24 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item>
+               <item row="1" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_16">
                  <item>
                   <widget class="QLineEdit" name="camera_lineEdit">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2280,22 +2093,24 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item>
+               <item row="2" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_15">
-                 <item>
-                  <widget class="QLabel" name="label_13">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>Color Space:</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item>
                   <widget class="QComboBox" name="colorspace_comboBox">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                    <property name="toolTip">
                     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2362,12 +2177,34 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Color Space</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
                 <layout class="QHBoxLayout" name="horizontalLayout_14">
                  <item>
                   <widget class="QLineEdit" name="colorspace_lineEdit">
                    <property name="enabled">
                     <bool>false</bool>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>250</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>250</width>
+                     <height>16777215</height>
+                    </size>
                    </property>
                   </widget>
                  </item>
@@ -2387,19 +2224,6 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </item>
-               <item>
-                <spacer name="verticalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
               </layout>
              </item>
             </layout>
@@ -2408,72 +2232,48 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="externalToolsPage">
+       <widget class="QWidget" name="stackedPagesWidgetPage5_2">
         <layout class="QGridLayout" name="gridLayout_15">
+         <property name="margin">
+          <number>0</number>
+         </property>
          <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_26">
-           <item>
-            <widget class="QGroupBox" name="aisGroupBox">
-             <property name="title">
-              <string>align_image_stack commandline arguments:</string>
+          <layout class="QFormLayout" name="formLayout_6">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>align_image_stack command line arguments</string>
              </property>
-             <layout class="QGridLayout" name="gridLayout_10">
-              <item row="0" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_26">
-                <item>
-                 <spacer name="horizontalSpacer_13">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="aisParamsLineEdit">
-                  <property name="toolTip">
-                   <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="aisParamsLineEdit">
+             <property name="minimumSize">
+              <size>
+               <width>250</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>250</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:'Sans Serif';&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_14">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
+             </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>121</width>
-               <height>51</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </item>
@@ -2482,7 +2282,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="_2">
+      <layout class="QHBoxLayout" name="buttonArea_2">
        <item>
         <spacer name="spacer_3">
          <property name="orientation">
@@ -2520,33 +2320,15 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
-  <tabstop>languageComboBox</tabstop>
-  <tabstop>checkBoxTMOWindowsMax</tabstop>
-  <tabstop>checkBoxTMOWindowsHDR</tabstop>
-  <tabstop>checkBoxTMOWindowsPreviewPanel</tabstop>
   <tabstop>cancelButton</tabstop>
   <tabstop>okButton</tabstop>
-  <tabstop>logLuvRadioButton</tabstop>
-  <tabstop>floatTiffRadioButton</tabstop>
-  <tabstop>negativeColorButton</tabstop>
-  <tabstop>ifnanColorButton</tabstop>
   <tabstop>lineEditTempPath</tabstop>
   <tabstop>chooseCachePathButton</tabstop>
-  <tabstop>batchLdrFormatComboBox</tabstop>
-  <tabstop>numThreadspinBox</tabstop>
-  <tabstop>four_color_rgb_CB</tabstop>
-  <tabstop>do_not_use_fuji_rotate_CB</tabstop>
   <tabstop>user_qual_comboBox</tabstop>
   <tabstop>user_qual_toolButton</tabstop>
   <tabstop>med_passes_horizontalSlider</tabstop>
   <tabstop>med_passes_spinBox</tabstop>
   <tabstop>med_passes_toolButton</tabstop>
-  <tabstop>aisParamsLineEdit</tabstop>
-  <tabstop>toolButtonInterface</tabstop>
-  <tabstop>toolButtonHDR</tabstop>
-  <tabstop>toolButtonTM</tabstop>
-  <tabstop>toolButtonRAW</tabstop>
-  <tabstop>toolButtonExtTool</tabstop>
   <tabstop>TK_toolButton</tabstop>
   <tabstop>green_horizontalSlider</tabstop>
   <tabstop>green_doubleSpinBox</tabstop>
@@ -2556,24 +2338,18 @@ p, li { white-space: pre-wrap; }
   <tabstop>level_horizontalSlider</tabstop>
   <tabstop>level_spinBox</tabstop>
   <tabstop>level_toolButton</tabstop>
-  <tabstop>false_colors_CB</tabstop>
-  <tabstop>auto_bright_CB</tabstop>
   <tabstop>brightness_horizontalSlider</tabstop>
   <tabstop>brightness_doubleSpinBox</tabstop>
   <tabstop>brightness_toolButton</tabstop>
-  <tabstop>use_black_CB</tabstop>
-  <tabstop>use_sat_CB</tabstop>
   <tabstop>user_black_horizontalSlider</tabstop>
   <tabstop>user_black_spinBox</tabstop>
   <tabstop>user_black_toolButton</tabstop>
   <tabstop>user_sat_horizontalSlider</tabstop>
   <tabstop>user_sat_spinBox</tabstop>
   <tabstop>user_sat_toolButton</tabstop>
-  <tabstop>use_noise_CB</tabstop>
   <tabstop>threshold_horizontalSlider</tabstop>
   <tabstop>threshold_spinBox</tabstop>
   <tabstop>threshold_toolButton</tabstop>
-  <tabstop>use_chroma_CB</tabstop>
   <tabstop>red_horizontalSlider</tabstop>
   <tabstop>red_doubleSpinBox</tabstop>
   <tabstop>red_toolButton</tabstop>

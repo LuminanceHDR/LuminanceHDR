@@ -27,24 +27,28 @@
 #include <QDialog>
 #include <QMap>
 
-#include "ui_PreferencesDialog.h"
-#include "Common/LuminanceOptions.h"
-#include "Common/global.h"
+namespace Ui
+{
+    class PreferencesDialog;
+}
 
-class PreferencesDialog : public QDialog, private Ui::PreferencesDialog
+class PreferencesDialog : public QDialog
 {
 Q_OBJECT
+private:
+    QScopedPointer<Ui::PreferencesDialog> m_Ui;
+
 public:
 	PreferencesDialog(QWidget *parent);
 	~PreferencesDialog();
+
 private:
-	void change_color_of(QPushButton *,QColor *);
-	void from_options_to_gui();
-        LuminanceOptions luminance_options;
-	QColor infnancolor, negcolor;
+    void from_options_to_gui();
+
+    QColor infnancolor, negcolor;
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
-	QStringList sanitizeAISparams();
+
 private slots:
 	void negative_clicked();
 	void infnan_clicked();
