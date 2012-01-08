@@ -47,11 +47,14 @@
 #include "TonemappingPanel/SavedParametersDialog.h"
 #include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
+#include "ui_TonemappingPanel.h"
 
-TonemappingPanel::TonemappingPanel(QWidget *parent)
-    : QWidget(parent), adding_custom_size(false)
+TonemappingPanel::TonemappingPanel(QWidget *parent):
+    QWidget(parent),
+    m_Ui(new Ui::TonemappingPanel),
+    adding_custom_size(false)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
 
 	// This is hided at moment 
 	//checkBoxOriginal->hide();	
@@ -59,99 +62,99 @@ TonemappingPanel::TonemappingPanel(QWidget *parent)
     currentTmoOperator = mantiuk06; // from Qt Designer
 
     // mantiuk06
-    contrastfactorGang = new Gang(contrastFactorSlider,contrastFactordsb,contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, MANTIUK06_CONTRAST_FACTOR);
+    contrastfactorGang = new Gang(m_Ui->contrastFactorSlider,m_Ui->contrastFactordsb,m_Ui->contrastEqualizCheckBox,NULL,NULL, NULL, 0.001f, 1.0f, MANTIUK06_CONTRAST_FACTOR);
 
-    connect(contrastfactorGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(contrastfactorGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(contrastfactorGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(contrastfactorGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    saturationfactorGang = new Gang(saturationFactorSlider, saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
-    detailfactorGang = new Gang(detailFactorSlider, detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
+    saturationfactorGang = new Gang(m_Ui->saturationFactorSlider, m_Ui->saturationFactordsb, NULL, NULL, NULL, NULL, 0.0f, 2.0f, MANTIUK06_SATURATION_FACTOR);
+    detailfactorGang = new Gang(m_Ui->detailFactorSlider, m_Ui->detailFactordsb,NULL,NULL,NULL,NULL, 1.0f, 99.0f, MANTIUK06_DETAIL_FACTOR);
 
     // mantiuk08
-    colorSaturationGang = new Gang(colorSaturationSlider,colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
+    colorSaturationGang = new Gang(m_Ui->colorSaturationSlider,m_Ui->colorSaturationDSB, NULL, NULL, NULL, NULL, 0.f, 2.f, MANTIUK08_COLOR_SATURATION);
 
-    connect(colorSaturationGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(colorSaturationGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(colorSaturationGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(colorSaturationGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    contrastEnhancementGang = new Gang(contrastEnhancementSlider, contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
-    luminanceLevelGang = new Gang(luminanceLevelSlider, luminanceLevelDSB, luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
+    contrastEnhancementGang = new Gang(m_Ui->contrastEnhancementSlider, m_Ui->contrastEnhancementDSB, NULL, NULL, NULL, NULL, .01f, 10.f, MANTIUK08_CONTRAST_ENHANCEMENT);
+    luminanceLevelGang = new Gang(m_Ui->luminanceLevelSlider, m_Ui->luminanceLevelDSB, m_Ui->luminanceLevelCheckBox, NULL, NULL, NULL, 1.f, 100.0f, MANTIUK08_LUMINANCE_LEVEL);
 
     // fattal02
-    alphaGang = new Gang(alphaSlider, alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, FATTAL02_ALPHA, true);
+    alphaGang = new Gang(m_Ui->alphaSlider, m_Ui->alphadsb, NULL,NULL,NULL,NULL, 1e-4, 2.f, FATTAL02_ALPHA, true);
 
-    connect(alphaGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(alphaGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(alphaGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(alphaGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    betaGang = new Gang(betaSlider, betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
-    saturation2Gang = new Gang(saturation2Slider, saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, FATTAL02_COLOR);
-    noiseGang = new Gang(noiseSlider, noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
-    oldFattalGang = new Gang(NULL,NULL, oldFattalCheckBox);
+    betaGang = new Gang(m_Ui->betaSlider, m_Ui->betadsb, NULL,NULL,NULL,NULL, 0.1f, 2.f, FATTAL02_BETA);
+    saturation2Gang = new Gang(m_Ui->saturation2Slider, m_Ui->saturation2dsb, NULL,NULL,NULL,NULL, 0.f, 1.f, FATTAL02_COLOR);
+    noiseGang = new Gang(m_Ui->noiseSlider, m_Ui->noisedsb, NULL,NULL,NULL,NULL, 0, 1.f, FATTAL02_NOISE_REDUX);
+    oldFattalGang = new Gang(NULL,NULL, m_Ui->oldFattalCheckBox);
 
     // ashikhmin02
-    contrastGang = new Gang(contrastSlider, contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
+    contrastGang = new Gang(m_Ui->contrastSlider, m_Ui->contrastdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.5f);
 
-    connect(contrastGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(contrastGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(contrastGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(contrastGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    simpleGang = new Gang(NULL, NULL, simpleCheckBox);
-    eq2Gang = new Gang(NULL, NULL,NULL, NULL, eq2RadioButton, eq4RadioButton);
+    simpleGang = new Gang(NULL, NULL, m_Ui->simpleCheckBox);
+    eq2Gang = new Gang(NULL, NULL,NULL, NULL, m_Ui->eq2RadioButton, m_Ui->eq4RadioButton);
 
     // drago03
-    biasGang = new Gang(biasSlider, biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, DRAGO03_BIAS);
+    biasGang = new Gang(m_Ui->biasSlider, m_Ui->biasdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, DRAGO03_BIAS);
 
-    connect(biasGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(biasGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(biasGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(biasGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
     // durand02
-    spatialGang = new Gang(spatialSlider, spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
+    spatialGang = new Gang(m_Ui->spatialSlider, m_Ui->spatialdsb, NULL, NULL, NULL, NULL, 0.f, 100.f, DURAND02_SPATIAL);
 
-    connect(spatialGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(spatialGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(spatialGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(spatialGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    rangeGang = new Gang(rangeSlider, rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, DURAND02_RANGE);
-    baseGang = new Gang(baseSlider, basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, DURAND02_BASE);
+    rangeGang = new Gang(m_Ui->rangeSlider, m_Ui->rangedsb,NULL,NULL,NULL,NULL, 0.01f, 10.f, DURAND02_RANGE);
+    baseGang = new Gang(m_Ui->baseSlider, m_Ui->basedsb,NULL,NULL,NULL,NULL, 0.f, 10.f, DURAND02_BASE);
 
     // pattanaik00
-    multiplierGang = new Gang(multiplierSlider, multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, PATTANAIK00_MULTIPLIER, true);
+    multiplierGang = new Gang(m_Ui->multiplierSlider, m_Ui->multiplierdsb,NULL,NULL,NULL,NULL, 1e-3,1000.f, PATTANAIK00_MULTIPLIER, true);
 
-    connect(multiplierGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(multiplierGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(multiplierGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(multiplierGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    coneGang = new Gang(coneSlider, conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_CONE);
-    rodGang = new Gang(rodSlider, roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_ROD);
-    autoYGang = new Gang(NULL,NULL, autoYcheckbox);
-    pattalocalGang = new Gang(NULL,NULL, pattalocal);
+    coneGang = new Gang(m_Ui->coneSlider, m_Ui->conedsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_CONE);
+    rodGang = new Gang(m_Ui->rodSlider, m_Ui->roddsb,NULL,NULL,NULL,NULL, 0.f, 1.f, PATTANAIK00_ROD);
+    autoYGang = new Gang(NULL,NULL, m_Ui->autoYcheckbox);
+    pattalocalGang = new Gang(NULL,NULL, m_Ui->pattalocal);
 
     // reinhard02
-    keyGang = new Gang(keySlider, keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
+    keyGang = new Gang(m_Ui->keySlider, m_Ui->keydsb,NULL,NULL,NULL,NULL, 0.f, 1.f, 0.18f);
 
-    connect(keyGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(keyGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(keyGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(keyGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    phiGang = new Gang(phiSlider, phidsb,NULL,NULL,NULL,NULL, 0.f, 100.f, REINHARD02_PHI);
-    range2Gang = new Gang(range2Slider, range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, REINHARD02_RANGE);
-    lowerGang = new Gang(lowerSlider, lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_LOWER);
-    upperGang = new Gang(upperSlider, upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_UPPER);
-    usescalesGang = new Gang(NULL,NULL, usescalescheckbox);
+    phiGang = new Gang(m_Ui->phiSlider, m_Ui->phidsb, NULL,NULL,NULL,NULL, 0.f, 100.f, REINHARD02_PHI);
+    range2Gang = new Gang(m_Ui->range2Slider, m_Ui->range2dsb,NULL,NULL,NULL,NULL, 1.f, 32.f, REINHARD02_RANGE);
+    lowerGang = new Gang(m_Ui->lowerSlider, m_Ui->lowerdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_LOWER);
+    upperGang = new Gang(m_Ui->upperSlider, m_Ui->upperdsb,NULL,NULL,NULL,NULL, 1.f, 100.f, REINHARD02_UPPER);
+    usescalesGang = new Gang(NULL,NULL, m_Ui->usescalescheckbox);
 
     // reinhard05
-    brightnessGang = new Gang(brightnessSlider, brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
+    brightnessGang = new Gang(m_Ui->brightnessSlider, m_Ui->brightnessdsb,NULL,NULL,NULL,NULL, -20.f, 20.f, REINHARD05_BRIGHTNESS);
 
-    connect(brightnessGang, SIGNAL(enableUndo(bool)), undoButton, SLOT(setEnabled(bool)));
-    connect(brightnessGang, SIGNAL(enableRedo(bool)), redoButton, SLOT(setEnabled(bool)));
+    connect(brightnessGang, SIGNAL(enableUndo(bool)), m_Ui->undoButton, SLOT(setEnabled(bool)));
+    connect(brightnessGang, SIGNAL(enableRedo(bool)), m_Ui->redoButton, SLOT(setEnabled(bool)));
 
-    chromaticGang = new Gang(chromaticAdaptSlider, chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
-    lightGang = new Gang(lightAdaptSlider, lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
+    chromaticGang = new Gang(m_Ui->chromaticAdaptSlider, m_Ui->chromaticAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_CHROMATIC_ADAPTATION);
+    lightGang = new Gang(m_Ui->lightAdaptSlider, m_Ui->lightAdaptdsb,NULL,NULL,NULL,NULL, 0.f, 1.f, REINHARD05_LIGHT_ADAPTATION);
 
     // pregamma
-    pregammaGang = new Gang(pregammaSlider, pregammadsb,NULL,NULL,NULL,NULL, 0, 3, 1);
+    pregammaGang = new Gang(m_Ui->pregammaSlider, m_Ui->pregammadsb,NULL,NULL,NULL,NULL, 0, 3, 1);
 
     //--
-    connect(stackedWidget_operators, SIGNAL(currentChanged(int)), this, SLOT(updateCurrentTmoOperator(int)));
+    connect(m_Ui->stackedWidget_operators, SIGNAL(currentChanged(int)), this, SLOT(updateCurrentTmoOperator(int)));
 
-    connect(loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
-    connect(saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
-    connect(loadCommentsButton, SIGNAL(clicked()), this, SLOT(loadComments()));
+    connect(m_Ui->loadButton, SIGNAL(clicked()), this, SLOT(loadParameters()));
+    connect(m_Ui->saveButton, SIGNAL(clicked()), this, SLOT(saveParameters()));
+    connect(m_Ui->loadCommentsButton, SIGNAL(clicked()), this, SLOT(loadComments()));
 	
     createDatabase();
 }
@@ -279,7 +282,7 @@ void TonemappingPanel::setSizes(int width, int height)
     sizes.push_front(width);
     heightToWidthRatio = ( (float)height )/( (float) width);
     fillCustomSizeComboBox();
-    sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
+    m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
 }
 
 void TonemappingPanel::on_defaultButton_clicked()
@@ -288,8 +291,8 @@ void TonemappingPanel::on_defaultButton_clicked()
     {
     case ashikhmin:
         contrastGang->setDefault();
-        simpleCheckBox->setChecked(false);
-        eq2RadioButton->setChecked(true);
+        m_Ui->simpleCheckBox->setChecked(false);
+        m_Ui->eq2RadioButton->setChecked(true);
         break;
     case drago:
         biasGang->setDefault();
@@ -304,26 +307,26 @@ void TonemappingPanel::on_defaultButton_clicked()
         betaGang->setDefault();
         saturation2Gang->setDefault();
         noiseGang->setDefault();
-        oldFattalCheckBox->setChecked(false);
+        m_Ui->oldFattalCheckBox->setChecked(false);
         break;
     case mantiuk06:
         contrastfactorGang->setDefault();
         saturationfactorGang->setDefault();
         detailfactorGang->setDefault();
-        contrastEqualizCheckBox->setChecked(false);
+        m_Ui->contrastEqualizCheckBox->setChecked(false);
         break;
     case mantiuk08:
         colorSaturationGang->setDefault();
         contrastEnhancementGang->setDefault();
         luminanceLevelGang->setDefault();
-        luminanceLevelCheckBox->setChecked(false);
+        m_Ui->luminanceLevelCheckBox->setChecked(false);
         break;
     case pattanaik:
         multiplierGang->setDefault();
         coneGang->setDefault();
         rodGang->setDefault();
-        pattalocal->setChecked(false);
-        autoYcheckbox->setChecked(true);
+        m_Ui->pattalocal->setChecked(false);
+        m_Ui->autoYcheckbox->setChecked(true);
         break;
     case reinhard02:
         keyGang->setDefault();
@@ -331,7 +334,7 @@ void TonemappingPanel::on_defaultButton_clicked()
         range2Gang->setDefault();
         lowerGang->setDefault();
         upperGang->setDefault();
-        usescalescheckbox->setChecked(false);
+        m_Ui->usescalescheckbox->setChecked(false);
         break;
     case reinhard05:
         brightnessGang->setDefault();
@@ -399,7 +402,7 @@ void TonemappingPanel::on_applyButton_clicked()
 void TonemappingPanel::fillToneMappingOptions()
 {
     toneMappingOptions.origxsize = sizes[0];
-    toneMappingOptions.xsize = sizes[sizeComboBox->currentIndex()];
+    toneMappingOptions.xsize = sizes[m_Ui->sizeComboBox->currentIndex()];
     toneMappingOptions.pregamma = pregammaGang->v();
     //toneMappingOptions.tonemapSelection = checkBoxSelection->isChecked();
     //toneMappingOptions.tonemapOriginal = checkBoxOriginal->isChecked();
@@ -703,74 +706,74 @@ void TonemappingPanel::fromGui2Txt(QString destination)
     out << "# Editing this file by hand is risky, worst case scenario is Luminance crashing." << endl;
     out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
     out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
-	out << "XSIZE=" << sizes[sizeComboBox->currentIndex()] << endl;
-	out << "QUALITY=" << qualitySB->value() << endl;
+    out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << endl;
+    out << "QUALITY=" << m_Ui->qualitySB->value() << endl;
 
-    QWidget *current_page = stackedWidget_operators->currentWidget();
-    if (current_page == page_mantiuk06)
+    QWidget *current_page = m_Ui->stackedWidget_operators->currentWidget();
+    if (current_page == m_Ui->page_mantiuk06)
     {
         out << "TMO=" << "Mantiuk06" << endl;
         out << "CONTRASTFACTOR=" << contrastfactorGang->v() << endl;
         out << "SATURATIONFACTOR=" << saturationfactorGang->v() << endl;
         out << "DETAILFACTOR=" << detailfactorGang->v() << endl;
-        out << "CONTRASTEQUALIZATION=" << (contrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
+        out << "CONTRASTEQUALIZATION=" << (m_Ui->contrastEqualizCheckBox->isChecked() ? "YES" : "NO") << endl;
     }
-    else if (current_page == page_mantiuk08)
+    else if (current_page == m_Ui->page_mantiuk08)
     {
         out << "TMO=" << "Mantiuk08" << endl;
         out << "COLORSATURATION=" << colorSaturationGang->v() << endl;
         out << "CONTRASTENHANCEMENT=" << contrastEnhancementGang->v() << endl;
         out << "LUMINANCELEVEL=" << luminanceLevelGang->v() << endl;
-        out << "SETLUMINANCE=" << (luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
+        out << "SETLUMINANCE=" << (m_Ui->luminanceLevelCheckBox->isChecked() ? "YES" : "NO") << endl;
     }
-    else if (current_page == page_fattal)
+    else if (current_page == m_Ui->page_fattal)
     {
         out << "TMO=" << "Fattal02" << endl;
         out << "ALPHA=" << alphaGang->v() << endl;
         out << "BETA=" << betaGang->v() << endl;
         out << "COLOR=" << saturation2Gang->v() << endl;
         out << "NOISE=" << noiseGang->v() << endl;
-        out << "OLDFATTAL=" << (oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
+        out << "OLDFATTAL=" << (m_Ui->oldFattalCheckBox->isChecked() ? "YES" : "NO") << endl;
     }
-    else if (current_page == page_ashikhmin)
+    else if (current_page == m_Ui->page_ashikhmin)
     {
         out << "TMO=" << "Ashikhmin02" << endl;
-        out << "SIMPLE=" << (simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
-        out << "EQUATION=" << (eq2RadioButton->isChecked() ? "2" : "4") << endl;
+        out << "SIMPLE=" << (m_Ui->simpleCheckBox->isChecked() ? "YES" : "NO") << endl;
+        out << "EQUATION=" << (m_Ui->eq2RadioButton->isChecked() ? "2" : "4") << endl;
         out << "CONTRAST=" << contrastGang->v() << endl;
     }
-    else if (current_page == page_durand)
+    else if (current_page == m_Ui->page_durand)
     {
         out << "TMO=" << "Durand02" << endl;
         out << "SPATIAL=" << spatialGang->v() << endl;
         out << "RANGE=" << rangeGang->v() << endl;
         out << "BASE=" << baseGang->v() << endl;
     }
-    else if (current_page == page_drago)
+    else if (current_page == m_Ui->page_drago)
     {
         out << "TMO=" << "Drago03" << endl;
         out << "BIAS=" << biasGang->v() << endl;
     }
-    else if (current_page == page_pattanaik)
+    else if (current_page == m_Ui->page_pattanaik)
     {
         out << "TMO=" << "Pattanaik00" << endl;
         out << "MULTIPLIER=" << multiplierGang->v() << endl;
-        out << "LOCAL=" << (pattalocal->isChecked() ? "YES" : "NO") << endl;
-        out << "AUTOLUMINANCE=" << (autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
+        out << "LOCAL=" << (m_Ui->pattalocal->isChecked() ? "YES" : "NO") << endl;
+        out << "AUTOLUMINANCE=" << (m_Ui->autoYcheckbox->isChecked() ? "YES" : "NO") << endl;
         out << "CONE=" << coneGang->v() << endl;
         out << "ROD=" << rodGang->v() << endl;
     }
-    else if (current_page == page_reinhard02)
+    else if (current_page == m_Ui->page_reinhard02)
     {
         out << "TMO=" << "Reinhard02" << endl;
         out << "KEY=" << keyGang->v() << endl;
         out << "PHI=" << phiGang->v() << endl;
-        out << "SCALES=" << (usescalescheckbox->isChecked() ? "YES" : "NO") << endl;
+        out << "SCALES=" << (m_Ui->usescalescheckbox->isChecked() ? "YES" : "NO") << endl;
         out << "RANGE=" << range2Gang->v() << endl;
         out << "LOWER=" << lowerGang->v() << endl;
         out << "UPPER=" << upperGang->v() << endl;
     }
-    else if (current_page == page_reinhard05)
+    else if (current_page == m_Ui->page_reinhard05)
     {
         out << "TMO=" << "Reinhard05" << endl;
         out << "BRIGHTNESS=" << brightnessGang->v() << endl;
@@ -814,115 +817,115 @@ void TonemappingPanel::fromTxt2Gui()
 		else if (field == "XSIZE")
 		{
 			int idx;
-			for (idx = 0; idx < sizeComboBox->count(); idx++)
+            for (idx = 0; idx < m_Ui->sizeComboBox->count(); idx++)
 			{
 					if (sizes[idx] == value.toInt())
 						break;
 			}
-			if (idx == sizeComboBox->count()) // Custom XSIZE
+            if (idx == m_Ui->sizeComboBox->count()) // Custom XSIZE
 			{
 				sizes.push_back(value.toInt());
 				fillCustomSizeComboBox();
-				sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
+                m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
 			}	
 			else
-				sizeComboBox->setCurrentIndex(idx);
+                m_Ui->sizeComboBox->setCurrentIndex(idx);
 		}
 		else if (field == "QUALITY")
 		{
-			qualityHS->setValue(value.toInt());
-			qualitySB->setValue(value.toInt());
+            m_Ui->qualityHS->setValue(value.toInt());
+            m_Ui->qualitySB->setValue(value.toInt());
 		}
         else if (field == "TMO")
         {
             if (value == "Ashikhmin02") {
-                stackedWidget_operators->setCurrentWidget(page_ashikhmin);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_ashikhmin);
             } else if (value == "Mantiuk06") {
-                stackedWidget_operators->setCurrentWidget(page_mantiuk06);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk06);
             } else if (value == "Mantiuk08") {
-                stackedWidget_operators->setCurrentWidget(page_mantiuk08);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_mantiuk08);
             } else if (value == "Drago03") {
-                stackedWidget_operators->setCurrentWidget(page_drago);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_drago);
             } else if (value == "Durand02") {
-                stackedWidget_operators->setCurrentWidget(page_durand);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_durand);
             } else if (value == "Fattal02") {
-                stackedWidget_operators->setCurrentWidget(page_fattal);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_fattal);
             } else if (value == "Pattanaik00") {
-                stackedWidget_operators->setCurrentWidget(page_pattanaik);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_pattanaik);
             } else if (value == "Reinhard02") {
-                stackedWidget_operators->setCurrentWidget(page_reinhard02);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard02);
             } else if (value == "Reinhard05") {
-                stackedWidget_operators->setCurrentWidget(page_reinhard05);
+                m_Ui->stackedWidget_operators->setCurrentWidget(m_Ui->page_reinhard05);
             }
         } else if (field == "CONTRASTFACTOR") {
-            contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
+            m_Ui->contrastFactorSlider->setValue(contrastfactorGang->v2p(value.toFloat()));
         } else if (field == "SATURATIONFACTOR") {
-            saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
+            m_Ui->saturationFactorSlider->setValue(saturationfactorGang->v2p(value.toFloat()));
         } else if (field == "DETAILFACTOR") {
-            detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
+            m_Ui->detailFactorSlider->setValue(detailfactorGang->v2p(value.toFloat()));
         } else if (field == "CONTRASTEQUALIZATION") {
-            contrastEqualizCheckBox->setChecked((value == "YES"));
+            m_Ui->contrastEqualizCheckBox->setChecked((value == "YES"));
         } else if (field == "COLORSATURATION") {
-            contrastFactorSlider->setValue(colorSaturationGang->v2p(value.toFloat()));
+            m_Ui->contrastFactorSlider->setValue(colorSaturationGang->v2p(value.toFloat()));
         } else if (field == "CONTRASTENHANCEMENT") {
-            saturationFactorSlider->setValue(contrastEnhancementGang->v2p(value.toFloat()));
+            m_Ui->saturationFactorSlider->setValue(contrastEnhancementGang->v2p(value.toFloat()));
         } else if (field == "LUMINANCELEVEL") {
-            detailFactorSlider->setValue(luminanceLevelGang->v2p(value.toFloat()));
+            m_Ui->detailFactorSlider->setValue(luminanceLevelGang->v2p(value.toFloat()));
         } else if (field == "SIMPLE") {
-            simpleCheckBox->setChecked((value == "YES"));
+            m_Ui->simpleCheckBox->setChecked((value == "YES"));
         } else if (field == "EQUATION") {
-            eq2RadioButton->setChecked((value=="2"));
-            eq4RadioButton->setChecked((value=="4"));
+            m_Ui->eq2RadioButton->setChecked((value=="2"));
+            m_Ui->eq4RadioButton->setChecked((value=="4"));
         } else if (field == "CONTRAST") {
-            contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
+            m_Ui->contrastSlider->setValue(contrastGang->v2p(value.toFloat()));
         } else if (field == "BIAS") {
-            biasSlider->setValue(biasGang->v2p(value.toFloat()));
+            m_Ui->biasSlider->setValue(biasGang->v2p(value.toFloat()));
         } else if (field == "SPATIAL") {
-            spatialSlider->setValue(spatialGang->v2p(value.toFloat()));
+            m_Ui->spatialSlider->setValue(spatialGang->v2p(value.toFloat()));
         } else if (field == "RANGE") {
-            rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
+            m_Ui->rangeSlider->setValue(rangeGang->v2p(value.toFloat()));
         } else if (field == "BASE") {
-            baseSlider->setValue(baseGang->v2p(value.toFloat()));
+            m_Ui->baseSlider->setValue(baseGang->v2p(value.toFloat()));
         } else if (field == "ALPHA") {
-            alphaSlider->setValue(alphaGang->v2p(value.toFloat()));
+            m_Ui->alphaSlider->setValue(alphaGang->v2p(value.toFloat()));
         } else if (field == "BETA") {
-            betaSlider->setValue(betaGang->v2p(value.toFloat()));
+            m_Ui->betaSlider->setValue(betaGang->v2p(value.toFloat()));
         } else if (field == "COLOR") {
-            saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
+            m_Ui->saturation2Slider->setValue(saturation2Gang->v2p(value.toFloat()));
         } else if (field == "NOISE") {
-            noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
+            m_Ui->noiseSlider->setValue(noiseGang->v2p(value.toFloat()));
         } else if (field == "OLDFATTAL") {
-            oldFattalCheckBox->setChecked(value == "YES");
+            m_Ui->oldFattalCheckBox->setChecked(value == "YES");
         } else if (field == "MULTIPLIER") {
-            multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
+            m_Ui->multiplierSlider->setValue(multiplierGang->v2p(value.toFloat()));
         } else if (field == "LOCAL") {
-            (value == "YES") ? pattalocal->setChecked(value == "YES") : pattalocal->setChecked(value=="NO");
+            (value == "YES") ? m_Ui->pattalocal->setChecked(value == "YES") : m_Ui->pattalocal->setChecked(value=="NO");
         } else if (field == "AUTOLUMINANCE") {
-            (value == "YES") ? autoYcheckbox->setChecked(value == "YES") : autoYcheckbox->setChecked(value=="NO");
+            (value == "YES") ? m_Ui->autoYcheckbox->setChecked(value == "YES") : m_Ui->autoYcheckbox->setChecked(value=="NO");
         } else if (field == "CONE") {
-            coneSlider->setValue(coneGang->v2p(value.toFloat()));
+            m_Ui->coneSlider->setValue(coneGang->v2p(value.toFloat()));
         } else if (field == "ROD") {
-            rodSlider->setValue(rodGang->v2p(value.toFloat()));
+            m_Ui->rodSlider->setValue(rodGang->v2p(value.toFloat()));
         } else if (field == "KEY") {
-            keySlider->setValue(keyGang->v2p(value.toFloat()));
+            m_Ui->keySlider->setValue(keyGang->v2p(value.toFloat()));
         } else if (field == "PHI") {
-            phiSlider->setValue(phiGang->v2p(value.toFloat()));
+            m_Ui->phiSlider->setValue(phiGang->v2p(value.toFloat()));
         } else if (field == "SCALES") {
-            (value == "YES") ? usescalescheckbox->setChecked(value == "YES") : usescalescheckbox->setChecked(value=="NO");
+            (value == "YES") ? m_Ui->usescalescheckbox->setChecked(value == "YES") : m_Ui->usescalescheckbox->setChecked(value=="NO");
         } else if (field == "RANGE") {
-            range2Slider->setValue(range2Gang->v2p(value.toFloat()));
+            m_Ui->range2Slider->setValue(range2Gang->v2p(value.toFloat()));
         } else if (field == "LOWER") {
-            lowerSlider->setValue(lowerGang->v2p(value.toFloat()));
+            m_Ui->lowerSlider->setValue(lowerGang->v2p(value.toFloat()));
         } else if (field == "UPPER") {
-            upperSlider->setValue(upperGang->v2p(value.toFloat()));
+            m_Ui->upperSlider->setValue(upperGang->v2p(value.toFloat()));
         } else if (field == "BRIGHTNESS") {
-            brightnessSlider->setValue(brightnessGang->v2p(value.toFloat()));
+            m_Ui->brightnessSlider->setValue(brightnessGang->v2p(value.toFloat()));
         } else if (field == "CHROMATICADAPTATION") {
-            chromaticAdaptSlider->setValue(chromaticGang->v2p(value.toFloat()));
+            m_Ui->chromaticAdaptSlider->setValue(chromaticGang->v2p(value.toFloat()));
         } else if (field == "LIGHTADAPTATION") {
-            lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
+            m_Ui->lightAdaptSlider->setValue(lightGang->v2p(value.toFloat()));
         } else if (field == "PREGAMMA") {
-            pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
+            m_Ui->pregammaSlider->setValue(pregammaGang->v2p(value.toFloat()));
         }
     }
 }
@@ -937,66 +940,66 @@ void TonemappingPanel::on_addCustomSizeButton_clicked()
     {
         sizes.push_back(i);
         fillCustomSizeComboBox();
-        sizeComboBox->setCurrentIndex(sizeComboBox->count() - 1);
+        m_Ui->sizeComboBox->setCurrentIndex(m_Ui->sizeComboBox->count() - 1);
     }
 }
 
 void TonemappingPanel::fillCustomSizeComboBox()
 {
-    sizeComboBox->clear();
+    m_Ui->sizeComboBox->clear();
     for (int i = 0; i < sizes.size(); i++)
     {
-        sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
+        m_Ui->sizeComboBox->addItem( QString("%1x%2").arg(sizes[i]).arg( (int)(heightToWidthRatio*sizes[i]) ));
     }
 }
 
 void TonemappingPanel::setEnabled(bool b)
 {
     // Operator select
-    cmbOperators->setEnabled(b);
-    stackedWidget_operators->setEnabled(b);
+    m_Ui->cmbOperators->setEnabled(b);
+    m_Ui->stackedWidget_operators->setEnabled(b);
 
     // Load/Store/Reset
-    loadsettingsbutton->setEnabled(b);
-    savesettingsbutton->setEnabled(b);
-    defaultButton->setEnabled(b);
+    m_Ui->loadsettingsbutton->setEnabled(b);
+    m_Ui->savesettingsbutton->setEnabled(b);
+    m_Ui->defaultButton->setEnabled(b);
     if (b) 
     {
     	updateUndoState();
     }
     else
     {
-        undoButton->setEnabled(false);
-        redoButton->setEnabled(false);
+        m_Ui->undoButton->setEnabled(false);
+        m_Ui->redoButton->setEnabled(false);
     }
     // Size
-    sizeComboBox->setEnabled(b);
-    addCustomSizeButton->setEnabled(b);
+    m_Ui->sizeComboBox->setEnabled(b);
+    m_Ui->addCustomSizeButton->setEnabled(b);
 
     // Gamma
-    pregammadefault->setEnabled(b);
-    pregammaSlider->setEnabled(b);
-    pregammadsb->setEnabled(b);
+    m_Ui->pregammadefault->setEnabled(b);
+    m_Ui->pregammaSlider->setEnabled(b);
+    m_Ui->pregammadsb->setEnabled(b);
 
     // Tonemap
-    applyButton->setEnabled(b);
+    m_Ui->applyButton->setEnabled(b);
 
 	// DB
-	loadCommentsButton->setEnabled(b);
-	loadButton->setEnabled(b);
-	saveButton->setEnabled(b);
+    m_Ui->loadCommentsButton->setEnabled(b);
+    m_Ui->loadButton->setEnabled(b);
+    m_Ui->saveButton->setEnabled(b);
 	
-	qualityHS->setEnabled(b);
-	qualitySB->setEnabled(b);
+    m_Ui->qualityHS->setEnabled(b);
+    m_Ui->qualitySB->setEnabled(b);
 
-	replaceLdrCheckBox->setEnabled(b);
+    m_Ui->replaceLdrCheckBox->setEnabled(b);
 
 	// Labels
-	lblOperators->setEnabled(b);
-	groupSaveLoadTMOsetting->setEnabled(b);
-	label->setEnabled(b);
-	pregammaLabel->setEnabled(b);
-	pregammaGroup->setEnabled(b);
+    m_Ui->lblOperators->setEnabled(b);
+    m_Ui->groupSaveLoadTMOsetting->setEnabled(b);
+    m_Ui->label->setEnabled(b);
+    m_Ui->pregammaLabel->setEnabled(b);
+    m_Ui->pregammaGroup->setEnabled(b);
 }
 
 void TonemappingPanel::updatedHDR(pfs::Frame* f)
@@ -1013,7 +1016,7 @@ void TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts)
     qDebug() << "TonemappingPanel::updateTonemappingParams(TonemappingOptions *opts)";
 //    currentTmoOperator = opts->tmoperator;
 //    updateUndoState();
-    cmbOperators->setCurrentIndex(opts->tmoperator);
+    m_Ui->cmbOperators->setCurrentIndex(opts->tmoperator);
 }
 
 void TonemappingPanel::saveParameters()
@@ -1194,37 +1197,37 @@ void TonemappingPanel::loadParameters()
 				eq2 = model->record(selectedRow).value("eq2").toBool();
 				lct = model->record(selectedRow).value("lct").toFloat();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				simpleCheckBox->setChecked(simple);
+                m_Ui->simpleCheckBox->setChecked(simple);
 				if (eq2)
-					eq2RadioButton->setChecked(true);
+                    m_Ui->eq2RadioButton->setChecked(true);
 				else
-					eq4RadioButton->setChecked(true);
-				contrastSlider->setValue(lct);
-				contrastdsb->setValue(lct);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                    m_Ui->eq4RadioButton->setChecked(true);
+                m_Ui->contrastSlider->setValue(lct);
+                m_Ui->contrastdsb->setValue(lct);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case drago:
 				bias = model->record(selectedRow).value("bias").toFloat();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				biasSlider->setValue(bias);
-				biasdsb->setValue(bias);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->biasSlider->setValue(bias);
+                m_Ui->biasdsb->setValue(bias);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case durand:
 				spatial = model->record(selectedRow).value("spatial").toFloat();
 				range = model->record(selectedRow).value("range").toFloat();
 				base = model->record(selectedRow).value("base").toFloat();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				spatialSlider->setValue(spatial);
-				spatialdsb->setValue(spatial);
-				rangeSlider->setValue(range);
-				rangedsb->setValue(range);
-				baseSlider->setValue(base);
-				basedsb->setValue(base);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->spatialSlider->setValue(spatial);
+                m_Ui->spatialdsb->setValue(spatial);
+                m_Ui->rangeSlider->setValue(range);
+                m_Ui->rangedsb->setValue(range);
+                m_Ui->baseSlider->setValue(base);
+                m_Ui->basedsb->setValue(base);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case fattal:
 				alpha = model->record(selectedRow).value("alpha").toFloat();
@@ -1233,17 +1236,17 @@ void TonemappingPanel::loadParameters()
 				noiseReduction = model->record(selectedRow).value("noiseReduction").toFloat();
 				oldFattal = model->record(selectedRow).value("oldFattal").toBool();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				alphaSlider->setValue(alpha);
-				alphadsb->setValue(alpha);
-				betaSlider->setValue(beta);
-				betadsb->setValue(beta);
-				saturation2Slider->setValue(colorSat);
-				saturation2dsb->setValue(colorSat);
-				noiseSlider->setValue(noiseReduction);
-				noisedsb->setValue(noiseReduction);
-				oldFattalCheckBox->setChecked(oldFattal);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->alphaSlider->setValue(alpha);
+                m_Ui->alphadsb->setValue(alpha);
+                m_Ui->betaSlider->setValue(beta);
+                m_Ui->betadsb->setValue(beta);
+                m_Ui->saturation2Slider->setValue(colorSat);
+                m_Ui->saturation2dsb->setValue(colorSat);
+                m_Ui->noiseSlider->setValue(noiseReduction);
+                m_Ui->noisedsb->setValue(noiseReduction);
+                m_Ui->oldFattalCheckBox->setChecked(oldFattal);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
     		case mantiuk06:
 				contrastEqualization = model->record(selectedRow).value("contrastEqualization").toBool();		
@@ -1251,15 +1254,15 @@ void TonemappingPanel::loadParameters()
 				saturationFactor =  model->record(selectedRow).value("saturationFactor").toFloat();	
 				detailFactor =  model->record(selectedRow).value("detailFactor").toFloat();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				contrastEqualizCheckBox->setChecked(contrastEqualization);					
-				contrastFactorSlider->setValue(contrastFactor);
-				contrastFactordsb->setValue(contrastFactor);
-				saturationFactorSlider->setValue(saturationFactor);
-				saturationFactordsb->setValue(saturationFactor);
-				detailFactorSlider->setValue(detailFactor);
-				detailFactordsb->setValue(detailFactor);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->contrastEqualizCheckBox->setChecked(contrastEqualization);
+                m_Ui->contrastFactorSlider->setValue(contrastFactor);
+                m_Ui->contrastFactordsb->setValue(contrastFactor);
+                m_Ui->saturationFactorSlider->setValue(saturationFactor);
+                m_Ui->saturationFactordsb->setValue(saturationFactor);
+                m_Ui->detailFactorSlider->setValue(detailFactor);
+                m_Ui->detailFactordsb->setValue(detailFactor);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
     		case mantiuk08:
 				colorSaturation = model->record(selectedRow).value("colorSaturation").toFloat();
@@ -1267,15 +1270,15 @@ void TonemappingPanel::loadParameters()
 				luminanceLevel = model->record(selectedRow).value("luminanceLevel").toFloat();
 				manualLuminanceLevel = model->record(selectedRow).value("manualLuminanceLevel").toBool();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				colorSaturationSlider->setValue(colorSaturation);
-				colorSaturationDSB->setValue(colorSaturation);
-				contrastEnhancementSlider->setValue(contrastEnhancement);
-				contrastEnhancementDSB->setValue(contrastEnhancement);
-				luminanceLevelSlider->setValue(luminanceLevel);
-				luminanceLevelDSB->setValue(luminanceLevel);
-				luminanceLevelCheckBox->setChecked(manualLuminanceLevel);	
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->colorSaturationSlider->setValue(colorSaturation);
+                m_Ui->colorSaturationDSB->setValue(colorSaturation);
+                m_Ui->contrastEnhancementSlider->setValue(contrastEnhancement);
+                m_Ui->contrastEnhancementDSB->setValue(contrastEnhancement);
+                m_Ui->luminanceLevelSlider->setValue(luminanceLevel);
+                m_Ui->luminanceLevelDSB->setValue(luminanceLevel);
+                m_Ui->luminanceLevelCheckBox->setChecked(manualLuminanceLevel);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case pattanaik:
 				multiplier = model->record(selectedRow).value("multiplier").toFloat();
@@ -1284,16 +1287,16 @@ void TonemappingPanel::loadParameters()
 				autolum = model->record(selectedRow).value("autolum").toBool();
 				local = model->record(selectedRow).value("local").toBool();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				multiplierSlider->setValue(multiplier);
-				multiplierdsb->setValue(multiplier);
-				coneSlider->setValue(cone);
-				conedsb->setValue(cone);
-				rodSlider->setValue(rod);
-				roddsb->setValue(rod);
-				pattalocal->setChecked(local);
-				autoYcheckbox->setChecked(autolum);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->multiplierSlider->setValue(multiplier);
+                m_Ui->multiplierdsb->setValue(multiplier);
+                m_Ui->coneSlider->setValue(cone);
+                m_Ui->conedsb->setValue(cone);
+                m_Ui->rodSlider->setValue(rod);
+                m_Ui->roddsb->setValue(rod);
+                m_Ui->pattalocal->setChecked(local);
+                m_Ui->autoYcheckbox->setChecked(autolum);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case reinhard02:
 				scales = model->record(selectedRow).value("scales").toBool();
@@ -1303,33 +1306,33 @@ void TonemappingPanel::loadParameters()
 				lower = model->record(selectedRow).value("lower").toInt();
 				upper = model->record(selectedRow).value("upper").toInt();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				usescalescheckbox->setChecked(scales);
-				keySlider->setValue(key);
-				keydsb->setValue(key);
-				phiSlider->setValue(phi);
-				phidsb->setValue(phi);
-				range2Slider->setValue(irange);
-				range2dsb->setValue(irange);
-				lowerSlider->setValue(lower);
-				lowerdsb->setValue(lower);
-				upperSlider->setValue(upper);
-				upperdsb->setValue(upper);
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->usescalescheckbox->setChecked(scales);
+                m_Ui->keySlider->setValue(key);
+                m_Ui->keydsb->setValue(key);
+                m_Ui->phiSlider->setValue(phi);
+                m_Ui->phidsb->setValue(phi);
+                m_Ui->range2Slider->setValue(irange);
+                m_Ui->range2dsb->setValue(irange);
+                m_Ui->lowerSlider->setValue(lower);
+                m_Ui->lowerdsb->setValue(lower);
+                m_Ui->upperSlider->setValue(upper);
+                m_Ui->upperdsb->setValue(upper);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 			case reinhard05:
 				brightness = model->record(selectedRow).value("brightness").toFloat();
 				chromaticAdaptation = model->record(selectedRow).value("chromaticAdaptation").toFloat();
 				lightAdaptation = model->record(selectedRow).value("lightAdaptation").toFloat();
 				pregamma = model->record(selectedRow).value("pregamma").toFloat();
-				brightnessSlider->setValue(brightness);
-				brightnessdsb->setValue(brightness);
-				chromaticAdaptSlider->setValue(chromaticAdaptation);
-				chromaticAdaptdsb->setValue(chromaticAdaptation);
-				lightAdaptSlider->setValue(lightAdaptation);
-				lightAdaptdsb->setValue(lightAdaptation);	
-				pregammaSlider->setValue(pregamma);
-				pregammadsb->setValue(pregamma);
+                m_Ui->brightnessSlider->setValue(brightness);
+                m_Ui->brightnessdsb->setValue(brightness);
+                m_Ui->chromaticAdaptSlider->setValue(chromaticAdaptation);
+                m_Ui->chromaticAdaptdsb->setValue(chromaticAdaptation);
+                m_Ui->lightAdaptSlider->setValue(lightAdaptation);
+                m_Ui->lightAdaptdsb->setValue(lightAdaptation);
+                m_Ui->pregammaSlider->setValue(pregamma);
+                m_Ui->pregammadsb->setValue(pregamma);
 			break;
 		}
 	}
@@ -1352,155 +1355,155 @@ void TonemappingPanel::loadComments()
 		QSqlQuery query("SELECT * from " + tmOperator + " WHERE comment = '" + comment + "'");
 		if (tmOperator == "ashikhmin")
 		{
-			stackedWidget_operators->setCurrentIndex(ashikhmin);
+            m_Ui->stackedWidget_operators->setCurrentIndex(ashikhmin);
 			updateCurrentTmoOperator(ashikhmin);
 			while (query.next())
 			{
-				simpleCheckBox->setChecked(query.value(0).toBool());
+                m_Ui->simpleCheckBox->setChecked(query.value(0).toBool());
 				if (query.value(1).toBool())
-					eq2RadioButton->setChecked(true);
+                    m_Ui->eq2RadioButton->setChecked(true);
 				else
-					eq4RadioButton->setChecked(true);
-				contrastSlider->setValue(query.value(2).toFloat());
-				contrastdsb->setValue(query.value(2).toFloat());
-				pregammaSlider->setValue(query.value(3).toFloat());
-				pregammadsb->setValue(query.value(3).toFloat());
+                    m_Ui->eq4RadioButton->setChecked(true);
+                m_Ui->contrastSlider->setValue(query.value(2).toFloat());
+                m_Ui->contrastdsb->setValue(query.value(2).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
 			}
 		}
 		else if (tmOperator == "drago")
 		{
-			stackedWidget_operators->setCurrentIndex(drago);
+            m_Ui->stackedWidget_operators->setCurrentIndex(drago);
 			updateCurrentTmoOperator(drago);
 			while (query.next())
 			{
-				biasSlider->setValue(query.value(0).toFloat());
-				biasdsb->setValue(query.value(0).toFloat());
-				pregammaSlider->setValue(query.value(1).toFloat());
-				pregammadsb->setValue(query.value(1).toFloat());
+                m_Ui->biasSlider->setValue(query.value(0).toFloat());
+                m_Ui->biasdsb->setValue(query.value(0).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(1).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(1).toFloat());
 			}
 		}
 		else if (tmOperator == "durand")
 		{
-			stackedWidget_operators->setCurrentIndex(durand);
+            m_Ui->stackedWidget_operators->setCurrentIndex(durand);
 			updateCurrentTmoOperator(durand);
 			while (query.next())
 			{
-				spatialSlider->setValue(query.value(0).toFloat());
-				spatialdsb->setValue(query.value(0).toFloat());
-				rangeSlider->setValue(query.value(1).toFloat());
-				rangedsb->setValue(query.value(1).toFloat());
-				baseSlider->setValue(query.value(2).toFloat());
-				basedsb->setValue(query.value(2).toFloat());
-				pregammaSlider->setValue(query.value(3).toFloat());
-				pregammadsb->setValue(query.value(3).toFloat());
+                m_Ui->spatialSlider->setValue(query.value(0).toFloat());
+                m_Ui->spatialdsb->setValue(query.value(0).toFloat());
+                m_Ui->rangeSlider->setValue(query.value(1).toFloat());
+                m_Ui->rangedsb->setValue(query.value(1).toFloat());
+                m_Ui->baseSlider->setValue(query.value(2).toFloat());
+                m_Ui->basedsb->setValue(query.value(2).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
 			}
 		}
 		else if (tmOperator == "fattal")
 		{
-			stackedWidget_operators->setCurrentIndex(fattal);
+            m_Ui->stackedWidget_operators->setCurrentIndex(fattal);
 			updateCurrentTmoOperator(fattal);
 			while (query.next())
 			{
-				alphaSlider->setValue(query.value(0).toFloat());
-				alphadsb->setValue(query.value(0).toFloat());
-				betaSlider->setValue(query.value(1).toFloat());
-				betadsb->setValue(query.value(1).toFloat());
-				saturation2Slider->setValue(query.value(2).toFloat());
-				saturation2dsb->setValue(query.value(2).toFloat());
-				noiseSlider->setValue(query.value(3).toFloat());
-				noisedsb->setValue(query.value(3).toFloat());
-				oldFattalCheckBox->setChecked(query.value(4).toBool());
-				pregammaSlider->setValue(query.value(5).toFloat());
-				pregammadsb->setValue(query.value(5).toFloat());
+                m_Ui->alphaSlider->setValue(query.value(0).toFloat());
+                m_Ui->alphadsb->setValue(query.value(0).toFloat());
+                m_Ui->betaSlider->setValue(query.value(1).toFloat());
+                m_Ui->betadsb->setValue(query.value(1).toFloat());
+                m_Ui->saturation2Slider->setValue(query.value(2).toFloat());
+                m_Ui->saturation2dsb->setValue(query.value(2).toFloat());
+                m_Ui->noiseSlider->setValue(query.value(3).toFloat());
+                m_Ui->noisedsb->setValue(query.value(3).toFloat());
+                m_Ui->oldFattalCheckBox->setChecked(query.value(4).toBool());
+                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}
 		}
 		else if (tmOperator == "mantiuk06")
 		{
-			stackedWidget_operators->setCurrentIndex(mantiuk06);
+            m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk06);
 			updateCurrentTmoOperator(mantiuk06);
 			while (query.next())
 			{
-				contrastEqualizCheckBox->setChecked(query.value(0).toBool());					
-				contrastFactorSlider->setValue(query.value(1).toFloat());
-				contrastFactordsb->setValue(query.value(1).toFloat());
-				saturationFactorSlider->setValue(query.value(2).toFloat());
-				saturationFactordsb->setValue(query.value(2).toFloat());
-				detailFactorSlider->setValue(query.value(3).toFloat());
-				detailFactordsb->setValue(query.value(3).toFloat());
-				pregammaSlider->setValue(query.value(4).toFloat());
-				pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->contrastEqualizCheckBox->setChecked(query.value(0).toBool());
+                m_Ui->contrastFactorSlider->setValue(query.value(1).toFloat());
+                m_Ui->contrastFactordsb->setValue(query.value(1).toFloat());
+                m_Ui->saturationFactorSlider->setValue(query.value(2).toFloat());
+                m_Ui->saturationFactordsb->setValue(query.value(2).toFloat());
+                m_Ui->detailFactorSlider->setValue(query.value(3).toFloat());
+                m_Ui->detailFactordsb->setValue(query.value(3).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
 			}
 		}
 		else if (tmOperator == "mantiuk08")
 		{
-			stackedWidget_operators->setCurrentIndex(mantiuk08);
+            m_Ui->stackedWidget_operators->setCurrentIndex(mantiuk08);
 			updateCurrentTmoOperator(mantiuk08);
 			while (query.next())
 			{
-				colorSaturationSlider->setValue(query.value(0).toFloat());
-				colorSaturationDSB->setValue(query.value(0).toFloat());
-				contrastEnhancementSlider->setValue(query.value(1).toFloat());
-				contrastEnhancementDSB->setValue(query.value(1).toFloat());
-				luminanceLevelSlider->setValue(query.value(2).toFloat());
-				luminanceLevelDSB->setValue(query.value(2).toFloat());
-				luminanceLevelCheckBox->setChecked(query.value(3).toBool());	
-				pregammaSlider->setValue(query.value(4).toFloat());
-				pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->colorSaturationSlider->setValue(query.value(0).toFloat());
+                m_Ui->colorSaturationDSB->setValue(query.value(0).toFloat());
+                m_Ui->contrastEnhancementSlider->setValue(query.value(1).toFloat());
+                m_Ui->contrastEnhancementDSB->setValue(query.value(1).toFloat());
+                m_Ui->luminanceLevelSlider->setValue(query.value(2).toFloat());
+                m_Ui->luminanceLevelDSB->setValue(query.value(2).toFloat());
+                m_Ui->luminanceLevelCheckBox->setChecked(query.value(3).toBool());
+                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
 			}
 		}
 		else if (tmOperator == "pattanaik")
 		{
-			stackedWidget_operators->setCurrentIndex(pattanaik);
+            m_Ui->stackedWidget_operators->setCurrentIndex(pattanaik);
 			updateCurrentTmoOperator(pattanaik);
 			while (query.next())
 			{
-				multiplierSlider->setValue(query.value(0).toFloat());
-				multiplierdsb->setValue(query.value(0).toFloat());
-				coneSlider->setValue(query.value(1).toFloat());
-				conedsb->setValue(query.value(1).toFloat());
-				rodSlider->setValue(query.value(2).toFloat());
-				roddsb->setValue(query.value(2).toFloat());
-				pattalocal->setChecked(query.value(3).toBool());
-				autoYcheckbox->setChecked(query.value(3).toFloat());
-				pregammaSlider->setValue(query.value(4).toFloat());
-				pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->multiplierSlider->setValue(query.value(0).toFloat());
+                m_Ui->multiplierdsb->setValue(query.value(0).toFloat());
+                m_Ui->coneSlider->setValue(query.value(1).toFloat());
+                m_Ui->conedsb->setValue(query.value(1).toFloat());
+                m_Ui->rodSlider->setValue(query.value(2).toFloat());
+                m_Ui->roddsb->setValue(query.value(2).toFloat());
+                m_Ui->pattalocal->setChecked(query.value(3).toBool());
+                m_Ui->autoYcheckbox->setChecked(query.value(3).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
 			}
 		}
 		else if (tmOperator == "reinhard02")
 		{
-			stackedWidget_operators->setCurrentIndex(reinhard02);
+            m_Ui->stackedWidget_operators->setCurrentIndex(reinhard02);
 			updateCurrentTmoOperator(reinhard02);
 			while (query.next())
 			{
-				usescalescheckbox->setChecked(query.value(0).toBool());
-				keySlider->setValue(query.value(1).toFloat());
-				keydsb->setValue(query.value(1).toFloat());
-				phiSlider->setValue(query.value(2).toFloat());
-				phidsb->setValue(query.value(2).toFloat());
-				range2Slider->setValue(query.value(3).toInt());
-				range2dsb->setValue(query.value(3).toInt());
-				lowerSlider->setValue(query.value(4).toInt());
-				lowerdsb->setValue(query.value(4).toInt());
-				upperSlider->setValue(query.value(5).toInt());
-				upperdsb->setValue(query.value(5).toInt());
-				pregammaSlider->setValue(query.value(6).toFloat());
-				pregammadsb->setValue(query.value(6).toFloat());
+                m_Ui->usescalescheckbox->setChecked(query.value(0).toBool());
+                m_Ui->keySlider->setValue(query.value(1).toFloat());
+                m_Ui->keydsb->setValue(query.value(1).toFloat());
+                m_Ui->phiSlider->setValue(query.value(2).toFloat());
+                m_Ui->phidsb->setValue(query.value(2).toFloat());
+                m_Ui->range2Slider->setValue(query.value(3).toInt());
+                m_Ui->range2dsb->setValue(query.value(3).toInt());
+                m_Ui->lowerSlider->setValue(query.value(4).toInt());
+                m_Ui->lowerdsb->setValue(query.value(4).toInt());
+                m_Ui->upperSlider->setValue(query.value(5).toInt());
+                m_Ui->upperdsb->setValue(query.value(5).toInt());
+                m_Ui->pregammaSlider->setValue(query.value(6).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(6).toFloat());
 			}
 		}
 		else if (tmOperator == "reinhard05")
 		{
-			stackedWidget_operators->setCurrentIndex(reinhard05);
+            m_Ui->stackedWidget_operators->setCurrentIndex(reinhard05);
 			updateCurrentTmoOperator(reinhard05);
 			while (query.next())
 			{
-				brightnessSlider->setValue(query.value(0).toFloat());
-				brightnessdsb->setValue(query.value(0).toFloat());
-				chromaticAdaptSlider->setValue(query.value(1).toFloat());
-				chromaticAdaptdsb->setValue(query.value(1).toFloat());
-				lightAdaptSlider->setValue(query.value(2).toFloat());
-				lightAdaptdsb->setValue(query.value(2).toFloat());	
-				pregammaSlider->setValue(query.value(3).toFloat());
-				pregammadsb->setValue(query.value(3).toFloat());
+                m_Ui->brightnessSlider->setValue(query.value(0).toFloat());
+                m_Ui->brightnessdsb->setValue(query.value(0).toFloat());
+                m_Ui->chromaticAdaptSlider->setValue(query.value(1).toFloat());
+                m_Ui->chromaticAdaptdsb->setValue(query.value(1).toFloat());
+                m_Ui->lightAdaptSlider->setValue(query.value(2).toFloat());
+                m_Ui->lightAdaptdsb->setValue(query.value(2).toFloat());
+                m_Ui->pregammaSlider->setValue(query.value(3).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(3).toFloat());
 			}
 		}
 		delete temp_model;
@@ -1513,7 +1516,7 @@ void TonemappingPanel::execMantiuk06Query(bool contrastEqualization, float contr
 	qDebug() << "TonemappingPanel::execMantiuk06Query";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO mantiuk06 (contrastEqualization, contrastFactor, saturationFactor, detailFactor, pregamma, comment) "
 				"VALUES (:contrastEqualization, :contrastFactor, :saturationFactor, :detailFactor, :pregamma, :comment)");
 	query.bindValue(":contrastEqualization", contrastEqualization);
@@ -1533,7 +1536,7 @@ void TonemappingPanel::execMantiuk08Query(float colorSaturation, float contrastE
 	qDebug() << "TonemappingPanel::execMantiuk08Query";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO mantiuk08 (colorSaturation, contrastEnhancement, luminanceLevel, manualLuminanceLevel, pregamma, comment) "
 				"VALUES (:colorSaturation, :contrastEnhancement, :luminanceLevel, :manualLuminanceLevel, :pregamma, :comment)");
 	query.bindValue(":colorSaturation", colorSaturation);
@@ -1552,7 +1555,7 @@ void TonemappingPanel::execAshikhminQuery(bool simple, bool eq2, float lct, QStr
 	qDebug() << "TonemappingPanel::execAshikhminQuery";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO ashikhmin (simple, eq2, lct, pregamma, comment) "
 				"VALUES (:simple, :eq2, :lct, :pregamma, :comment)");
 	query.bindValue(":simple", simple);
@@ -1570,7 +1573,7 @@ void TonemappingPanel::execDragoQuery(float bias, QString comment)
 	qDebug() << "TonemappingPanel::execDragoQuery";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO drago (bias, pregamma, comment) "
 				"VALUES (:bias, :pregamma, :comment)");
 	query.bindValue(":bias", bias);
@@ -1586,7 +1589,7 @@ void TonemappingPanel::execDurandQuery(float spatial, float range, float base, Q
 	qDebug() << "TonemappingPanel::execDurandQuery";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO durand (spatial, range, base, pregamma, comment) "
 				"VALUES (:spatial, :range, :base, :pregamma, :comment)");
 	query.bindValue(":spatial", spatial);
@@ -1604,7 +1607,7 @@ void TonemappingPanel::execFattalQuery(float alpha, float beta, float colorSatur
 	qDebug() << "TonemappingPanel::execFattalQuery";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO fattal (alpha, beta, colorSaturation, noiseReduction, oldFattal, pregamma, comment) "
 				"VALUES (:alpha, :beta, :colorSaturation, :noiseReduction, :oldFattal, :pregamma, :comment)");
 	query.bindValue(":alpha", alpha);
@@ -1624,7 +1627,7 @@ void TonemappingPanel::execPattanaikQuery(bool autolum, bool local, float cone, 
 	qDebug() << "TonemappingPanel::execPattanaikQuery";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO pattanaik (autolum, local, cone, rod, multiplier, pregamma, comment) "
 				"VALUES (:autolum, :local, :cone, :rod, :multiplier, :pregamma, :comment)");
 	query.bindValue(":autolum", autolum);
@@ -1644,7 +1647,7 @@ void TonemappingPanel::execReinhard02Query(bool scales, float key, float phi, in
 	qDebug() << "TonemappingPanel::execReinhard02Query";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO reinhard02 (scales, key, phi, range, lower, upper, pregamma, comment) "
 				"VALUES (:scales, :key, :phi, :range, :lower, :upper, :pregamma, :comment)");
 	query.bindValue(":scales", scales);
@@ -1665,7 +1668,7 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 	qDebug() << "TonemappingPanel::execReinhard05Query";
 	QSqlDatabase db = QSqlDatabase::database();
 	QSqlQuery query(db);
-	float pregamma = pregammadsb->value();
+    float pregamma = m_Ui->pregammadsb->value();
 	query.prepare("INSERT INTO reinhard05 (brightness, chromaticAdaptation, lightAdaptation, pregamma, comment) "
 				"VALUES (:brightness, :chromaticAdaptation, :lightAdaptation, :pregamma, :comment)");
 	query.bindValue(":brightness", brightness);
@@ -1680,7 +1683,7 @@ void TonemappingPanel::execReinhard05Query(float brightness, float chromaticAdap
 
 bool TonemappingPanel::replaceLdr()
 {
-	return replaceLdrCheckBox->isChecked();
+    return m_Ui->replaceLdrCheckBox->isChecked();
 }
 
 // ------------------------- // END FILE
