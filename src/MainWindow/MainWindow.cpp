@@ -407,17 +407,16 @@ void MainWindow::loadOptions()
 
 void MainWindow::showDonationsPage()
 {
-  QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
+    QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
 }
 
 void MainWindow::fileNewViaWizard(QStringList files)
-{    
-        HdrWizard *wizard = new HdrWizard (this, files);
-        if (wizard->exec() == QDialog::Accepted)
-        {
-            emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
-        }
-        delete wizard;
+{
+    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
+    if (wizard->exec() == QDialog::Accepted)
+    {
+        emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
+    }
 }
 
 void MainWindow::fileOpen()
