@@ -2926,7 +2926,7 @@ Tone Mapping</string>
              <string>Load an existing text file containing pregamma and TMO settings.</string>
             </property>
             <property name="text">
-             <string>&amp;Load to File</string>
+             <string>&amp;Load from File</string>
             </property>
             <property name="icon">
              <iconset resource="../icons.qrc">
