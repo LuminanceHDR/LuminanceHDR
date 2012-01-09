@@ -654,12 +654,6 @@ Equalization</string>
                   <height>28</height>
                  </size>
                 </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <kerning>true</kerning>
-                 </font>
-                </property>
                 <property name="text">
                  <string>Enable
 Luminace Level</string>
