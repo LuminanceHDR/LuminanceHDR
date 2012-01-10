@@ -293,6 +293,11 @@ void MainWindow::createCentralWidget()
 
     m_tabwidget->setBackgroundRole(QPalette::Dark);
     m_tabwidget->setAutoFillBackground( true );
+
+    // replace with ->tabBar() one day, or subclass
+    QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QLatin1String("qt_tabwidget_tabbar"));
+    tabBar->setAutoFillBackground( true );
+    tabBar->setBackgroundRole(QPalette::Window);
 }
 
 void MainWindow::createToolBar()
