@@ -89,7 +89,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
+    add_log_message(tr("Saving using file format: %1, (quality - if applicable): %2").arg(m_luminance_options.getBatchTmLdrFormat()).arg(m_luminance_options.getBatchTmDefaultOutputQuality()));
 }
 
 BatchTMDialog::~BatchTMDialog()
