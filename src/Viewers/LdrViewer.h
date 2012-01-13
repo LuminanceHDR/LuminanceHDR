@@ -49,10 +49,12 @@ public:
     bool isHDR();
 
     //! \brief Set tonemap options that generated the handled frame
-    void setTonemappingOptions(TonemappingOptions* tmopts);
+    //! \note Override default empty behavioru of GenericViewer
+    virtual void setTonemappingOptions(TonemappingOptions* tmopts);
 
     //! \brief Get tonemap options that generated the handled frame
-    TonemappingOptions* getTonemappingOptions();
+    //! \note Override default empty behavioru of GenericViewer
+    virtual TonemappingOptions* getTonemappingOptions();
 
     //! \brief returns max value of the handled frame
     float getMaxLuminanceValue();

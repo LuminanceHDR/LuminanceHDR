@@ -28,8 +28,6 @@
  *
  */
 
-#include "Common/LuminanceOptions.h"
-
 //#include <QTextStream>
 //#include <QApplication>
 #include <QString>
@@ -37,29 +35,12 @@
 #include <QFile>
 #include <QDir>
 
-/*
-void LuminanceOptions::loadFromQSettings()
-{
+#include "Common/LuminanceOptions.h"
+#include "Common/config.h"
 
-
-
-
-
-
-    settings->beginGroup(GROUP_TMOWINDOW);
-    if (!settings->contains(KEY_TMOWINDOW_PREVIEWS_WIDTH))
-        settings->setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400);
-    previews_width=settings->value(KEY_TMOWINDOW_PREVIEWS_WIDTH, 400).toInt();
-
-    settings->beginGroup(GROUP_TMOWARNING);
-    if (!settings->contains(KEY_TMOWARNING_FATTALSMALL))
-        settings->setValue(KEY_TMOWARNING_FATTALSMALL,true);
-    tmowarning_fattalsmall=settings->value(KEY_TMOWARNING_FATTALSMALL,true).toBool();
-    settings->endGroup();
-
-}
-
-*/
+LuminanceOptions::LuminanceOptions():
+    QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION)
+{ }
 
 // write system default language the first time around (discard "_country")
 QString LuminanceOptions::getGuiLang()

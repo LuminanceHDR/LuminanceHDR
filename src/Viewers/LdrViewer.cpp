@@ -39,10 +39,17 @@ namespace
 {
 void parseOptions(const TonemappingOptions *opts, QString& caption)
 {
-    TMOptionsOperations tmopts(opts);
-    //postfix = tmopts.getPostfix();
-    caption = tmopts.getCaption();
-    //exif_comment = tmopts.getExifComment();
+    if (opts == NULL)
+    {
+        caption.clear();
+    }
+    else
+    {
+        TMOptionsOperations tmopts(opts);
+        //postfix = tmopts.getPostfix();
+        caption = tmopts.getCaption();
+        //exif_comment = tmopts.getExifComment();
+    }
 }
 }
 
@@ -56,9 +63,7 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
-    parseOptions(opts, caption);
-    setWindowTitle(caption);
-    setToolTip(caption);
+    setTonemappingOptions(opts);
 
     QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
@@ -104,11 +109,16 @@ void LdrViewer::updatePixmap()
     QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
     mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+    informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
 }
 
 void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
 {
     mTonemappingOptions = tmopts;
+
+    parseOptions(tmopts, caption);
+    setWindowTitle(caption);
+    setToolTip(caption);
 }
 
 TonemappingOptions* LdrViewer::getTonemappingOptions()

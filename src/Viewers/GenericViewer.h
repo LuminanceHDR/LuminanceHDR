@@ -40,6 +40,7 @@ namespace pfs {
 class PanIconWidget;        // #include "Common/PanIconWidget.h"
 class IGraphicsView;        // #include "Viewers/IGraphicsView.h"
 class IGraphicsPixmapItem;  // #include "Viewers/IGraphicsPixmapItem.h"
+class TonemappingOptions;
 
 class GenericViewer : public QWidget 
 {
@@ -67,6 +68,20 @@ public:
     //! returns the height of the current frame
     int getHeight();
 
+    /*virtual*/ bool isFittedToWindow();
+    /*virtual*/ bool isFilledToWindow();
+    /*virtual*/ bool isNormalSize();
+
+    //! \brief Set tonemap options that generated the handled frame
+    //! \note GenericViewer holds only an empty implementation of this function. It is
+    //! up to the derived class to override this behaviour
+    virtual void setTonemappingOptions(TonemappingOptions* tmopts) {}
+
+    //! \brief Get tonemap options that generated the handled frame
+    //! \note GenericViewer holds only an empty implementation of this function. It is
+    //! up to the derived class to override this behaviour
+    virtual TonemappingOptions* getTonemappingOptions() { return NULL; }
+
 public Q_SLOTS:
     /*virtual*/ void updateView();  // tells the Viewer to update the View area
 
@@ -74,13 +89,8 @@ public Q_SLOTS:
     /*virtual*/ void zoomOut();
 
     /*virtual*/ void fitToWindow(bool checked = true);  // checked is useless: kept for compatibility
-    /*virtual*/ bool isFittedToWindow();
-
     /*virtual*/ void fillToWindow();
-    /*virtual*/ bool isFilledToWindow();
-
     /*virtual*/ void normalSize();
-    /*virtual*/ bool isNormalSize();
 
     //! \brief get viewer mode (Fit, Fill or Normal Size)
     ViewerMode getViewerMode();
@@ -136,7 +146,7 @@ public Q_SLOTS:
 
     //! set a new reference frame to be shown in the viewport
     //! previous frame gets DELETED!
-    void setFrame(pfs::Frame* new_frame);
+    void setFrame(pfs::Frame* new_frame, TonemappingOptions* tmopts = NULL);
 
 protected Q_SLOTS:
     /*virtual*/  void slotPanIconSelectionMoved(QRect);

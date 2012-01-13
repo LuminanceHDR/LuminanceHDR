@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance HDR package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -32,9 +32,9 @@
 
 #include "Common/LuminanceOptions.h"
 #include "arch/math.h"
-#include "createhdr.h"
+#include "HdrCreation/createhdr.h"
 
-const config_triple predef_confs[6] = {
+const config_triple predef_confs[6]= {
 {TRIANGULAR, LINEAR,DEBEVEC,"",""},
 {TRIANGULAR, GAMMA, DEBEVEC,"",""},
 {PLATEAU, LINEAR,DEBEVEC,"",""},
@@ -42,7 +42,6 @@ const config_triple predef_confs[6] = {
 {GAUSSIAN, LINEAR,DEBEVEC,"",""},
 {GAUSSIAN, GAMMA,DEBEVEC,"",""},
 };
-
 
 class HdrCreationManager : public QObject {
 Q_OBJECT

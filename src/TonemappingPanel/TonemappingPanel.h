@@ -33,9 +33,13 @@
 #include "Core/TonemappingOptions.h"
 #include "Common/Gang.h"
 #include "Libpfs/frame.h"
-#include "ui_TonemappingPanel.h"
 
-class TonemappingPanel : public QWidget, private Ui::TonemappingPanel
+namespace Ui
+{
+    class TonemappingPanel;
+}
+
+class TonemappingPanel: public QWidget
 {
     Q_OBJECT
 
@@ -99,6 +103,8 @@ protected:
     bool adding_custom_size;
 
     void createDatabase();
+
+    QScopedPointer<Ui::TonemappingPanel> m_Ui;
 
 protected Q_SLOTS:
     void on_pregammadefault_clicked();

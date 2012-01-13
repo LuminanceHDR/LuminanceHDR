@@ -170,13 +170,13 @@ IF NOT EXIST tiff-4.0.0beta7 (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.3.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.3.zip http://www.libraw.org/data/LibRaw-0.14.3.zip
+IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.5.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.5.zip http://www.libraw.org/data/LibRaw-0.14.5.zip
 )
-IF NOT EXIST LibRaw-0.14.3 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.3.zip
+IF NOT EXIST LibRaw-0.14.5 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.5.zip
 
-	pushd LibRaw-0.14.3
+	pushd LibRaw-0.14.5
 	nmake /f Makefile.msvc
 	popd
 )
@@ -352,9 +352,9 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy tiff-4.0.0beta7\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.14.3\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
-	copy LibRaw-0.14.3\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
-	copy LibRaw-0.14.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
+	copy LibRaw-0.14.5\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
+	copy LibRaw-0.14.5\lib\*.lib LuminanceHdrStuff\DEPs\lib\libraw
+	copy LibRaw-0.14.5\bin\*.dll LuminanceHdrStuff\DEPs\bin\libraw
 	
 	copy OpenExrStuff\Deploy\include\*.h LuminanceHdrStuff\DEPs\include\OpenEXR
 	copy OpenExrStuff\Deploy\lib\%Platform%\%Configuration%\*.lib LuminanceHdrStuff\DEPs\lib\OpenEXR
@@ -373,10 +373,10 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 
 IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
 	mkdir LuminanceHdrStuff\qtpfsgui.build
-	pushd LuminanceHdrStuff\qtpfsgui.build
-	%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui
-	popd
 )
+pushd LuminanceHdrStuff\qtpfsgui.build
+%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui
+popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 	pushd LuminanceHdrStuff\qtpfsgui.build	

@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance HDR package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -380,9 +380,9 @@ void HdrCreationManager::setEV(float new_ev, int image_idx) {
 pfs::Frame* HdrCreationManager::createHdr(bool ag, int iterations) {
 	//CREATE THE HDR
 	if (inputType == LDR_INPUT_TYPE)
-		return createHDR( expotimes, &chosen_config, ag, iterations, true, &ldrImagesList );
+        return createHDR(expotimes.data(), &chosen_config, ag, iterations, true, &ldrImagesList );
 	else
-		return createHDR( expotimes, &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
+        return createHDR(expotimes.data(), &chosen_config, ag, iterations, false, &listmdrR, &listmdrG, &listmdrB );
 }
 
 HdrCreationManager::~HdrCreationManager() {

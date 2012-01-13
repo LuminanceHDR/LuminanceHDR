@@ -1,2 +1,3 @@
 *.project
 CMakeLists.txt.user
+/.settings

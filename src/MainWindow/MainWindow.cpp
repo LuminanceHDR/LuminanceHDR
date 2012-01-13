@@ -144,13 +144,15 @@ GenericViewer::ViewerMode getCurrentViewerMode(const QTabWidget& curr_tab_widget
 int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
-	QMainWindow(parent), m_Ui(new Ui::MainWindow)
+    QMainWindow(parent),
+    m_Ui(new Ui::MainWindow)
 {
     init();
 }
 
-MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent) :
-        QMainWindow(parent), m_Ui(new Ui::MainWindow)
+MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
+    QMainWindow(parent),
+    m_Ui(new Ui::MainWindow)
 
 {
     init();
@@ -171,6 +173,8 @@ MainWindow::~MainWindow()
         // Last MainWindow is dead...
         luminance_options.setValue("MainWindowState", saveState());
         luminance_options.setValue("MainWindowGeometry", saveGeometry());
+        luminance_options.setValue("MainWindowSplitterState", m_centralwidget_splitter->saveState());
+        luminance_options.setValue("MainWindowSplitterGeometry", m_centralwidget_splitter->saveGeometry());
 
         //wait for the working thread to finish
         m_IOThread->wait(500);
@@ -272,7 +276,6 @@ void MainWindow::createCentralWidget()
     m_centralwidget_splitter->addWidget(previewPanel);
     m_centralwidget_splitter->setStretchFactor(2, 0);
 
-    tmPanel->hide();
     previewPanel->hide();
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
@@ -280,6 +283,9 @@ void MainWindow::createCentralWidget()
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
+
+    m_centralwidget_splitter->restoreState(luminance_options.value("MainWindowSplitterState").toByteArray());
+    m_centralwidget_splitter->restoreGeometry(luminance_options.value("MainWindowSplitterGeometry").toByteArray());
 }
 
 void MainWindow::createToolBar()
@@ -407,17 +413,16 @@ void MainWindow::loadOptions()
 
 void MainWindow::showDonationsPage()
 {
-  QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
+    QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
 }
 
 void MainWindow::fileNewViaWizard(QStringList files)
-{    
-        HdrWizard *wizard = new HdrWizard (this, files);
-        if (wizard->exec() == QDialog::Accepted)
-        {
-            emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
-        }
-        delete wizard;
+{
+    QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
+    if (wizard->exec() == QDialog::Accepted)
+    {
+        emit load_success(wizard->getPfsFrameHDR(), wizard->getCaptionTEXT(), true);
+    }
 }
 
 void MainWindow::fileOpen()
@@ -1073,7 +1078,6 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
             setCurrentFile(new_fname);
         }
 
-        tmPanel->show();
         tmPanel->setEnabled(true);
         m_Ui->actionShowPreviewPanel->setEnabled(true);
 
@@ -1501,7 +1505,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
     if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
-        n->setFrame(frame);
+        n->setFrame(frame, tm_options);
     }
     else
     {
@@ -1690,7 +1694,6 @@ void MainWindow::removeTab(int t)
                 tmPanel->setEnabled(false);
                 m_Ui->actionShowPreviewPanel->setEnabled(false);
 
-                tmPanel->hide();
                 previewPanel->hide();
             }
             // if FALSE, it means that the user said "Cancel"
@@ -1715,7 +1718,6 @@ void MainWindow::removeTab(int t)
             tmPanel->setEnabled(false);
             m_Ui->actionShowPreviewPanel->setEnabled(false);
 
-            tmPanel->hide();
             previewPanel->hide();
         }
     }

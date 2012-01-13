@@ -27,6 +27,7 @@
 
 	#define _USE_MATH_DEFINES
 	#include <math.h> // re-include here
+	#include <float.h> // for _finite
 
 	#define exp2f(x)        (powf(2.0f, x))
 	#define log2(x)        (log(x)  / 0.693147180559945309417)

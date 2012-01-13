@@ -1,5 +1,5 @@
 /**
- * This file is a part of Luminance HDR package.
+ * This file is a part of Luminance HDR package
  * ---------------------------------------------------------------------- 
  * Copyright (C) 2006,2007 Giuseppe Rota
  * 
@@ -26,32 +26,47 @@
 
 #include <QString>
 #include <QList>
-#include <QVector>
 #include <QImage>
-#include <cmath>
+
 #include <stdarg.h>
 
-#include "responses.h"
-#include "robertson02.h"
-#include "icip06.h"
-#include "debevec.h"
+#include "HdrCreation/responses.h"
+#include "HdrCreation/robertson02.h"
+#include "HdrCreation/debevec.h"
 
-#include "Libpfs/frame.h"
+namespace pfs {
+    class Frame;
+}
 
 enum TWeight
-{ TRIANGULAR, GAUSSIAN, PLATEAU };
-enum TResponse
-{ FROM_FILE, LINEAR, GAMMA, LOG10, FROM_ROBERTSON } ;
-enum TModel
-{ ROBERTSON, DEBEVEC };
+{
+    TRIANGULAR,
+    GAUSSIAN,
+    PLATEAU
+};
 
-//TODO locate where variables of this type get destroied and free() LoadCurveFromFilename
-struct config_triple {
-	TWeight weights;
-	TResponse response_curve;
-	TModel model;
-	const char* LoadCurveFromFilename;
-	const char* SaveCurveToFilename;
+enum TResponse
+{
+    FROM_FILE,
+    LINEAR,
+    GAMMA,
+    LOG10,
+    FROM_ROBERTSON
+};
+
+enum TModel
+{
+    ROBERTSON,
+    DEBEVEC
+};
+
+struct config_triple
+{
+    TWeight weights;
+    TResponse response_curve;
+    TModel model;
+    QString LoadCurveFromFilename;
+    QString SaveCurveToFilename;
 };
 
 /**
@@ -59,6 +74,6 @@ struct config_triple {
  * @brief it can either create an hdr from a qt list of LDRs (QtImage) or from a list of HDR data (raw formats, hdr tiffs).
  *
 **/
-//pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
-pfs::Frame* createHDR(const QVector<float> arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
+pfs::Frame* createHDR(const float* const arrayofexptime, const config_triple* const chosen_config, bool antighosting, int iterations, bool ldrinput, ...);
+
 #endif

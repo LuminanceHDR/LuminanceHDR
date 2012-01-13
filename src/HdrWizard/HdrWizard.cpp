@@ -103,8 +103,6 @@ void HdrWizard::setupConnections() {
 	connect(cancelButton,SIGNAL(clicked()),this,SLOT(reject()));
 	connect(pagestack,SIGNAL(currentChanged(int)),this,SLOT(currentPageChangedInto(int)));
 
-        predefConfigsComboBox->setCurrentIndex(5); // 2011.12.04... this patch is just rubbish!
-
 	connect(predefConfigsComboBox,SIGNAL(activated(int)),this,
 	SLOT(predefConfigsComboBoxActivated(int)));
 	connect(antighostRespCurveCombobox,SIGNAL(activated(int)),this,

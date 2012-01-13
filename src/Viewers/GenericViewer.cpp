@@ -389,13 +389,17 @@ int GenericViewer::getHeight()
     return mFrame->getHeight();
 }
 
-void GenericViewer::setFrame(pfs::Frame *new_frame)
+void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 {
     delete mFrame;
     mFrame = new_frame;
 
     // call virtual protected function
     updatePixmap();
+
+    // update tonemappingoptions (if available)
+    // in the current implementation, only LdrViewer redefines this function
+    setTonemappingOptions(tmopts);
 
     // reset boundaries
     updateView();

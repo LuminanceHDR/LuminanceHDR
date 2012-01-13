@@ -35,14 +35,11 @@
 #include <QString>
 #include <QStringList>
 
-#include "Common/config.h"
-
 class LuminanceOptions: public QSettings
 {
     Q_OBJECT
 public:
-    LuminanceOptions():
-        QSettings(LUMINANCEORGANIZATION, LUMINANCEAPPLICATION) { }
+    explicit LuminanceOptions();
 
 public Q_SLOTS:
     // RAW settings
