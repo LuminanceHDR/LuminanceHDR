@@ -705,7 +705,7 @@ void TonemappingPanel::fromGui2Txt(QString destination)
     out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
     out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
     out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << endl;
-    out << "QUALITY=" << m_Ui->qualitySB->value() << endl;
+    out << "QUALITY=" << LuminanceOptions().getBatchTmDefaultOutputQuality() << endl;
 
     QWidget *current_page = m_Ui->stackedWidget_operators->currentWidget();
     if (current_page == m_Ui->page_mantiuk06)
@@ -829,11 +829,11 @@ void TonemappingPanel::fromTxt2Gui()
 			else
                 m_Ui->sizeComboBox->setCurrentIndex(idx);
 		}
-		else if (field == "QUALITY")
-		{
-            m_Ui->qualityHS->setValue(value.toInt());
-            m_Ui->qualitySB->setValue(value.toInt());
-		}
+        //else if ( field == "QUALITY" å)
+        //{
+        //    m_Ui->qualityHS->setValue(value.toInt());
+        //    m_Ui->qualitySB->setValue(value.toInt());
+        //}
         else if (field == "TMO")
         {
             if (value == "Ashikhmin02") {
@@ -987,8 +987,8 @@ void TonemappingPanel::setEnabled(bool b)
     m_Ui->loadButton->setEnabled(b);
     m_Ui->saveButton->setEnabled(b);
 	
-    m_Ui->qualityHS->setEnabled(b);
-    m_Ui->qualitySB->setEnabled(b);
+    //m_Ui->qualityHS->setEnabled(b);
+    //m_Ui->qualitySB->setEnabled(b);
 
     m_Ui->replaceLdrCheckBox->setEnabled(b);
 
