@@ -466,6 +466,17 @@ void LuminanceOptions::setBatchTmNumThreads(int v)
     setValue(KEY_BATCH_TM_NUM_THREADS, v);
 }
 
+int LuminanceOptions::getBatchTmDefaultOutputQuality()
+{
+    return value(KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY, 100).toInt();
+}
+
+void LuminanceOptions::setBatchTmDefaultOutputQuality(int v)
+{
+    setValue(KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY, v);
+}
+
+
 QString LuminanceOptions::getBatchTmLdrFormat()
 {
     return value(KEY_BATCH_TM_LDR_FORMAT, "JPEG").toString();
