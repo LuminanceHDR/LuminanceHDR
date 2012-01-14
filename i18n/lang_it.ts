@@ -240,7 +240,7 @@ p, li { white-space: pre-wrap; }
     <name>BatchHDRDialog</name>
     <message>
         <source>Batch HDR Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Finestra Batch HDR</translation>
     </message>
     <message>
         <source>Number of bracketed images:</source>
@@ -402,39 +402,39 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Auto-align images</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-allineamento immagini</translation>
     </message>
     <message>
         <source>Use Hugin&apos;s align_image_stack engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa align_image_stack da Hugin</translation>
     </message>
     <message>
         <source>Hugin&apos;s align_image_stack</source>
-        <translation type="unfinished">align_image_stack da Hugin</translation>
+        <translation>align_image_stack da Hugin</translation>
     </message>
     <message>
         <source>Use MTB (Median Threshold Bitmap) engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa MTB (Median Threshold Bitmap)</translation>
     </message>
     <message>
         <source>Select &amp;Input Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona la cartella &amp;sorgente</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona la cartella &amp;destinazione</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished">A&amp;nnulla</translation>
+        <translation>A&amp;nnulla</translation>
     </message>
     <message>
         <source>&amp;Start</source>
-        <translation type="unfinished">&amp;Avvia</translation>
+        <translation>&amp;Avvia</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Chiudi</translation>
+        <translation>&amp;Chiudi</translation>
     </message>
 </context>
 <context>
@@ -681,7 +681,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvataggio in formato %1, (qualità - se applicabile): %2</translation>
     </message>
 </context>
 <context>
@@ -905,7 +905,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>-u --gui               Start in gui mode with input files.</source>
-        <translation>-u --gui Avvia in modalità grafica con files di input</translation>
+        <translation>-u --gui Avvia in modalità grafica con file di input.</translation>
     </message>
     <message>
         <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk06|mantiuk08</source>
@@ -1312,7 +1312,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The image %1 is an 16 bit format while the previous ones are not.</source>
-        <translation>L&apos;immagine %1 è in formato 16 bit mentre le precedenti non lo sono</translation>
+        <translation>L&apos;immagine %1 è in formato 16 bit mentre le precedenti non lo sono.</translation>
     </message>
 </context>
 <context>
@@ -1394,7 +1394,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mapping:</translation>
     </message>
 </context>
 <context>
@@ -1957,15 +1957,15 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     </message>
     <message>
         <source>EV:</source>
-        <translation type="unfinished"></translation>
+        <translation>EV:</translation>
     </message>
     <message>
         <source>MTB</source>
-        <translation type="unfinished"></translation>
+        <translation>MTB</translation>
     </message>
     <message>
         <source>Anti-ghosting (beta!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anti-ghosting (beta!)</translation>
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
@@ -1973,11 +1973,11 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     </message>
     <message>
         <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW);;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
@@ -1989,7 +1989,7 @@ i seguenti dati EXIF: 		&lt;ul&gt;&lt;li&gt;Velocità otturatore (secondi)&lt;/l
     </message>
     <message>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3564,23 +3564,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrandisci</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuisci</translation>
     </message>
     <message>
         <source>Click and drag inside image area to create a selection, then use this button to crop to a new HDR image</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca e trascina nell&apos;aria dell&apos;immagine per creare una seleziona, dopo usa questo tasto per tagliare l&apos;immagine in un nuovo HDR</translation>
     </message>
     <message>
         <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Lock Viewers</source>
@@ -3588,15 +3588,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Syncronize viewers mode (fit, fill or 1:1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Modalità di sincronizza delle anteprima (adatta, riempi o 1:1).</translation>
     </message>
     <message>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Fill Window</source>
@@ -3608,7 +3608,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch HDR...</source>
-        <translation type="unfinished"></translation>
+        <translation>Batch HDR...</translation>
     </message>
 </context>
 <context>
@@ -3661,7 +3661,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished">Lingua</translation>
+        <translation>Lingua</translation>
     </message>
     <message>
         <source>External Tools</source>
@@ -4664,91 +4664,91 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Default Previews Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largezza predefinita anteprima</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>HDR TIFF Default File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato predefinito per il salvataggio TIFF HDR</translation>
     </message>
     <message>
         <source>Temporary Working Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartella di lavoro temporanea</translation>
     </message>
     <message>
         <source>Batch Tonemapping Default Output Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Cartella predefinita di salvataggio per il Batch Tonemapping</translation>
     </message>
     <message>
         <source>Batch Tonemapping Number of Threads</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero di thread per il Batch Tonemapping</translation>
     </message>
     <message>
         <source>Batch Tonemapping Default Output Quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Qualità predefinita del salvataggio per il Batch Tonemapping</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Generale</translation>
     </message>
     <message>
         <source>Method</source>
-        <translation type="unfinished"></translation>
+        <translation>Metodo</translation>
     </message>
     <message>
         <source>Temperature (Kelvin)</source>
-        <translation type="unfinished"></translation>
+        <translation>Temperatura (Kelvin)</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Verde</translation>
     </message>
     <message>
         <source>Highlights</source>
-        <translation type="unfinished"></translation>
+        <translation>Alte luci</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Livello</translation>
     </message>
     <message>
         <source>Brightness</source>
-        <translation type="unfinished">Luminosità</translation>
+        <translation>Luminosità</translation>
     </message>
     <message>
         <source>Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Saturazione</translation>
     </message>
     <message>
         <source>NR and CA Correction</source>
-        <translation type="unfinished"></translation>
+        <translation>NR e correzione CA</translation>
     </message>
     <message>
         <source>Red Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Componente Rossa</translation>
     </message>
     <message>
         <source>Blue Component</source>
-        <translation type="unfinished"></translation>
+        <translation>Componente Blue</translation>
     </message>
     <message>
         <source>Camera Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo Camera</translation>
     </message>
     <message>
         <source>Camera profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo Camera</translation>
     </message>
     <message>
         <source>Color Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Spazio colore</translation>
     </message>
     <message>
         <source>align_image_stack command line arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Argomenti linea di comando align_image_stack</translation>
     </message>
 </context>
 <context>
@@ -4783,7 +4783,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
@@ -4920,19 +4920,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>All HDR formats </source>
-        <translation type="unfinished">Tutti i formati HDR</translation>
+        <translation>Tutti i formati HDR</translation>
     </message>
     <message>
         <source>Save the HDR image as...</source>
-        <translation type="unfinished">Salva l&apos;immagine HDR come...</translation>
+        <translation>Salva l&apos;immagine HDR come...</translation>
     </message>
     <message>
         <source>Option -v -a...</source>
-        <translation type="unfinished">Opzione -v -a...</translation>
+        <translation>Opzione -v -a...</translation>
     </message>
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
-        <translation type="unfinished">Luminance HDR richiede che align_image_stack sia eseguito con le opzioni &quot;-v -a aligned_&quot;. Le opzioni della line di comando sono state corrette.</translation>
+        <translation>Luminance HDR richiede che align_image_stack sia eseguito con le opzioni &quot;-v -a aligned_&quot;. Le opzioni della linea di comando sono state corrette.</translation>
     </message>
 </context>
 <context>
@@ -5742,19 +5742,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantiuk &apos;06</translation>
     </message>
     <message>
         <source>Mantiuk &apos;08</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantiuk &apos;08</translation>
     </message>
     <message>
         <source>Lcd</source>
-        <translation type="unfinished"></translation>
+        <translation>LCD</translation>
     </message>
     <message>
         <source>CRT</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT</translation>
     </message>
     <message>
         <source>...</source>
@@ -5766,56 +5766,57 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Update current LDR</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiornato LDR corrente</translation>
     </message>
     <message>
         <source>Tonemap</source>
-        <translation type="unfinished"></translation>
+        <translation>Tonemap</translation>
     </message>
     <message>
         <source>Operator</source>
-        <translation type="unfinished"></translation>
+        <translation>Operatore</translation>
     </message>
     <message>
         <source>Enable
 Luminace Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Abilita
+Livello Luminanza</translation>
     </message>
     <message>
         <source>Version Pre 1.8.4</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione Pre 1.8.4</translation>
     </message>
     <message>
         <source>Auto Cone/Rod</source>
-        <translation type="unfinished"></translation>
+        <translation>Coni/Bastoncelli Automatici</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished">Precedente</translation>
+        <translation>Precedente</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished">Successivo</translation>
+        <translation>Successivo</translation>
     </message>
     <message>
         <source>&amp;Save to File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salva su File</translation>
     </message>
     <message>
         <source>&amp;Load from File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Carica da File</translation>
     </message>
     <message>
         <source>&amp;Result Size</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dimensione Risultato</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
-        <translation type="unfinished">Pre-gamma</translation>
+        <translation>Pre-gamma</translation>
     </message>
     <message>
         <source>Set Custom Output Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Definisci Dimensione di Uscita Personalizzata</translation>
     </message>
 </context>
 <context>
