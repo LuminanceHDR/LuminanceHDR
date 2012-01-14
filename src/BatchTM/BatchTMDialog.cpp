@@ -55,8 +55,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
-    setWindowModality(Qt::WindowModal);   // Mac Mode
-
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
     m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
