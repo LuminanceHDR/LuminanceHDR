@@ -286,6 +286,18 @@ void MainWindow::createCentralWidget()
 
     m_centralwidget_splitter->restoreState(luminance_options.value("MainWindowSplitterState").toByteArray());
     m_centralwidget_splitter->restoreGeometry(luminance_options.value("MainWindowSplitterGeometry").toByteArray());
+
+	QPalette pal = m_tabwidget->palette();
+	pal.setColor(QPalette::Dark, Qt::darkGray);
+	m_tabwidget->setPalette(pal);
+
+    m_tabwidget->setBackgroundRole(QPalette::Dark);
+    m_tabwidget->setAutoFillBackground( true );
+
+    // replace with ->tabBar() one day, or subclass
+    QTabBar* tabBar = m_tabwidget->findChild<QTabBar *>(QLatin1String("qt_tabwidget_tabbar"));
+    tabBar->setAutoFillBackground( true );
+    tabBar->setBackgroundRole(QPalette::Window);
 }
 
 void MainWindow::createToolBar()

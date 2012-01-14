@@ -49,7 +49,7 @@ private:
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
 
-private slots:
+private Q_SLOTS:
 	void negative_clicked();
 	void infnan_clicked();
 	void ok_clicked();
@@ -98,5 +98,7 @@ private slots:
 	void toolButtonTM_clicked();
 	void toolButtonRAW_clicked();
 	void toolButtonExtTool_clicked();
+
+    void batchTmFormatSelector(int);
 };
 #endif

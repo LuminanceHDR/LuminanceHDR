@@ -110,5 +110,6 @@
 #define KEY_BATCH_TM_PATH_OUTPUT "batch_tm/path_ldr_output"
 #define KEY_BATCH_TM_LDR_FORMAT "batch_tm/Batch_LDR_Format"
 #define KEY_BATCH_TM_NUM_THREADS "batch_tm/Num_Batch_Threads"
+#define KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY "batch_tm/default_output_quality"
 
 #endif

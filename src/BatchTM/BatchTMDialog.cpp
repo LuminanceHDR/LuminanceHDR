@@ -55,8 +55,6 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
 #endif
     m_Ui->setupUi(this);
 
-    setWindowModality(Qt::WindowModal);   // Mac Mode
-
     m_batchTmInputDir = m_luminance_options.getBatchTmPathHdrInput();
     m_batchTmTmoSettingsDir = m_luminance_options.getBatchTmPathTmoSettings();
     m_batchTmOutputDir = m_luminance_options.getBatchTmPathLdrOutput();
@@ -89,7 +87,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
+    add_log_message(tr("Saving using file format: %1, (quality - if applicable): %2").arg(m_luminance_options.getBatchTmLdrFormat()).arg(m_luminance_options.getBatchTmDefaultOutputQuality()));
 }
 
 BatchTMDialog::~BatchTMDialog()

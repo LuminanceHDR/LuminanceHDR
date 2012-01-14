@@ -54,6 +54,7 @@ private:
     QString         m_output_folder;
     QString         m_output_file_name_base;
     QString         m_ldr_output_format;
+    int             m_ldr_output_quality;
 };
 
 #endif // __BATCH_TM_JOB__

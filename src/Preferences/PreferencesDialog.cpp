@@ -122,6 +122,35 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
     return temp_ais_options;
 }
 
+int mappingBatchTmQStringToInt(const QString& string)
+{
+    if (string == "JPEG")
+    {
+        return 0;
+    }
+    else if (string=="PNG")
+    {
+        return 1;
+    }
+    else if (string=="PPM")
+    {
+        return 2;
+    }
+    else if (string=="PBM")
+    {
+        return 3;
+    }
+    else if (string=="BMP")
+    {
+        return 4;
+    }
+    else if (string=="TIFF")
+    {
+        return 5;
+    }
+}
+
+
 }
 
 PreferencesDialog::PreferencesDialog(QWidget *p):
@@ -161,13 +190,15 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     negcolor = LuminanceOptions().getViewerNegColor();
     infnancolor = LuminanceOptions().getViewerNanInfColor();
 
-	from_options_to_gui(); //update the gui in order to show the options
+    from_options_to_gui(); //update the gui in order to show the options
 
     connect(m_Ui->negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
     connect(m_Ui->ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
     connect(m_Ui->okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
     connect(m_Ui->cancelButton,SIGNAL(clicked()),this,SLOT(cancel_clicked()));
     connect(m_Ui->chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
+
+    connect(m_Ui->batchLdrFormatComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(batchTmFormatSelector(int)));
 
     connect(m_Ui->user_qual_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(user_qual_comboBox_currentIndexChanged(int)));
     connect(m_Ui->med_passes_spinBox,SIGNAL(valueChanged(int)),this,SLOT(med_passes_spinBox_valueChanged(int)));
@@ -237,16 +268,19 @@ void PreferencesDialog::ok_clicked()
 
     // UI
     luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
-    luminance_options.setViewerNegColor(negcolor.rgba());
 
-    luminance_options.setViewerNanInfColor(infnancolor.rgba());
+    luminance_options.setViewerNegColor( negcolor.rgba() );
+    luminance_options.setViewerNanInfColor( infnancolor.rgba() );
 
     luminance_options.setTempDir( m_Ui->lineEditTempPath->text() );
-    luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
-    luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
 
     luminance_options.setPreviewWidth( m_Ui->previewsWidthSpinBox->value() );
     luminance_options.setShowFirstPageWizard( m_Ui->checkBoxWizardShowFirstPage->isChecked() );
+
+    // --- Batch TM
+    luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
+    luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
+    luminance_options.setBatchTmDefaultOutputQuality( m_Ui->batchTmOutputQualitySlider->value() );
 
     // --- Other Parameters
     luminance_options.setAlignImageStackOptions( sanitizeAISparams( m_Ui->aisParamsLineEdit->text() ) );
@@ -295,6 +329,39 @@ void PreferencesDialog::ok_clicked()
 void PreferencesDialog::cancel_clicked()
 {
 	reject();
+}
+
+void PreferencesDialog::batchTmFormatSelector(int index)
+{
+    switch (index)
+    {
+    case 0: // JPEG
+        m_Ui->batchTmOutputQualitySlider->setEnabled(true);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(true);
+        break;
+    case 1: // PNG
+        m_Ui->batchTmOutputQualitySlider->setEnabled(true);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(true);
+        break;
+    case 2: // PPM
+        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
+        break;
+    case 3: // PBM
+        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
+        break;
+    case 4: // BMP
+        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
+        break;
+    case 5:
+        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
+        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
+        break;
+    default:
+        break;
+    }
 }
 
 void PreferencesDialog::user_qual_comboBox_currentIndexChanged(int i)
@@ -676,22 +743,15 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->lineEditTempPath->setText(luminance_options.getTempDir());
 
     // Batch TM output format
-    {
-        QString out_format = luminance_options.getBatchTmLdrFormat();
-        if (out_format=="JPEG")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(0);
-        else if (out_format=="PNG")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(1);
-        else if (out_format=="PPM")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(2);
-        else if (out_format=="PBM")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(3);
-        else if (out_format=="BMP")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(4);
-        else if (out_format=="TIFF")
-            m_Ui->batchLdrFormatComboBox->setCurrentIndex(5);
-    }
-    m_Ui->numThreadspinBox->setValue(luminance_options.getNumThreads());
+    int current_batch_tm_output_type = mappingBatchTmQStringToInt( luminance_options.getBatchTmLdrFormat() );
+    m_Ui->batchLdrFormatComboBox->setCurrentIndex( current_batch_tm_output_type );
+    batchTmFormatSelector( current_batch_tm_output_type );
+
+    m_Ui->batchTmOutputQualitySlider->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
+    m_Ui->batchTmOutputQualitySpinBox->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
+
+    m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
+
     m_Ui->aisParamsLineEdit->setText( luminance_options.getAlignImageStackOptions().join(" ") );
     m_Ui->logLuvRadioButton->setChecked(luminance_options.isSaveLogLuvTiff());
     m_Ui->floatTiffRadioButton->setChecked(!luminance_options.isSaveLogLuvTiff());
@@ -711,7 +771,8 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
     m_Ui->med_passes_spinBox->setValue(luminance_options.getRawMedPasses());
     m_Ui->wb_method_comboBox->setCurrentIndex(luminance_options.getRawWhiteBalanceMethod());
-    if (luminance_options.getRawWhiteBalanceMethod() < 3) {
+    if (luminance_options.getRawWhiteBalanceMethod() < 3)
+    {
         //TODO
         m_Ui->TK_label->setEnabled(false);
         m_Ui->TK_horizontalSlider->setEnabled(false);
@@ -733,7 +794,7 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->highlights_comboBox->setCurrentIndex(luminance_options.getRawHighlightsMode());
     m_Ui->level_horizontalSlider->setValue(luminance_options.getRawLevel());
     m_Ui->level_spinBox->setValue(luminance_options.getRawLevel());
-    //false_colors_CB->setChecked(luminance_options.false_colors);
+    //m_Ui->false_colors_CB->setChecked(luminance_options.false_colors);
     m_Ui->auto_bright_CB->setChecked(luminance_options.isRawAutoBrightness());
     m_Ui->brightness_horizontalSlider->setValue((int) 10.0*luminance_options.getRawBrightness());
     m_Ui->brightness_doubleSpinBox->setValue(luminance_options.getRawBrightness());
