@@ -513,7 +513,7 @@ void MainWindow::fileSaveAs()
         /*
          * In this case I'm saving an HDR
          */
-        QString fname = getHdrFileNameFromSaveDialog(QString(), this);
+        QString fname = getHdrFileNameFromSaveDialog(g_v->getFileName(), this);
 
         if ( !fname.isEmpty() )
         {
@@ -1063,6 +1063,10 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
     else
     {
+#ifdef QT_DEBUG
+        qDebug() << "Filename: " << new_fname;
+#endif
+
         HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
@@ -1071,24 +1075,31 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(syncViewers(GenericViewer*)));
         connect(newhdr, SIGNAL(changed(GenericViewer*)), this, SLOT(updateMagnificationButtons(GenericViewer*)));
 
-        newhdr->setFileName(new_fname);
         newhdr->setViewerMode( getCurrentViewerMode(*m_tabwidget) );
 
-        m_tabwidget->addTab(newhdr, QFileInfo(new_fname).fileName());
+        QFileInfo qfileinfo(new_fname);
+        if ( !qfileinfo.exists() )
+        {
+            // it doesn't exist on the file system,
+            // so I have just got back a file from some creational operation (new hdr, crop...)
+            newhdr->setFileName(QString("untitled"));
+            m_tabwidget->addTab(newhdr, new_fname.prepend("(*) "));
+
+            setMainWindowModified(true);
+        }
+        else
+        {
+            // the new file exists on the file system, so I can use this value to set captions and so on
+            newhdr->setFileName(new_fname);
+            m_tabwidget->addTab(newhdr, qfileinfo.fileName());
+
+            setCurrentFile(new_fname);
+        }
 
         tm_status.is_hdr_ready = true;
         tm_status.curr_tm_frame = newhdr;
 
         m_tabwidget->setCurrentWidget(newhdr);
-
-        if ( needSaving )
-        {
-            setMainWindowModified(true);
-        }
-        else
-        {
-            setCurrentFile(new_fname);
-        }
 
         tmPanel->setEnabled(true);
         m_Ui->actionShowPreviewPanel->setEnabled(true);

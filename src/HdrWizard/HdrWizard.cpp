@@ -601,8 +601,9 @@ void HdrWizard::loadRespCurveFilename( const QString & filename_from_gui) {
 	}
 }
 
-QString HdrWizard::getCaptionTEXT() {
-	return tr("(*) Weights: ")+getQStringFromConfig(1) + tr(" - Response curve: ") + getQStringFromConfig(2) + tr(" - Model: ") + getQStringFromConfig(3);
+QString HdrWizard::getCaptionTEXT()
+{
+    return tr("Weights: ")+getQStringFromConfig(1) + tr(" - Response curve: ") + getQStringFromConfig(2) + tr(" - Model: ") + getQStringFromConfig(3);
 }
 
 QString HdrWizard::getQStringFromConfig( int type ) {
