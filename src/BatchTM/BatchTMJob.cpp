@@ -34,6 +34,7 @@
 #include "Fileformat/pfsout16bitspixmap.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "TonemappingEngine/TonemapOperator.h"
+#include "Filter/pfssize.h"
 
 #include <QFileInfo>
 #include <QByteArray>
@@ -78,12 +79,16 @@ void BatchTMJob::run()
         {
             TonemappingOptions* opts = m_tm_options->at(idx);
 
-            QScopedPointer<pfs::Frame> temporary_frame( pfs::pfscopy(reference_frame.data()) );
-
             opts->tonemapSelection = false; // just to be sure!
-            opts->origxsize = temporary_frame->getWidth();
+            opts->origxsize = reference_frame->getWidth();
             //opts->xsize = 400; // DEBUG
             //opts->xsize = opts->origxsize;
+
+            QScopedPointer<pfs::Frame> temporary_frame;
+            if ( reference_frame->getWidth() == opts->xsize )
+                temporary_frame.reset( pfs::pfscopy(reference_frame.data()) );
+            else
+                temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
 
             QScopedPointer<TonemapOperator> tm_operator( TonemapOperator::getTonemapOperator(opts->tmoperator) );
 

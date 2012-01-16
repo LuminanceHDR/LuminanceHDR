@@ -56,6 +56,7 @@ private:
 public:
 	BatchTMDialog(QWidget *parent = 0);
 	~BatchTMDialog();
+
 // protected:
 private slots:
 	void add_dir_HDRs();
@@ -77,8 +78,10 @@ private slots:
   void start_batch_thread(); 
   void stop_batch_tm_ui();
   void increment_progress_bar(int);
+
 protected:
   void closeEvent(QCloseEvent *);
+
 private:
   //Parses a TM_opts file (return NULL on error)
   TonemappingOptions* parse_tm_opt_file(QString filename);

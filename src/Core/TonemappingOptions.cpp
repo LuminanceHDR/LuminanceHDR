@@ -119,7 +119,7 @@ TonemappingOptions* TMOptionsOperations::parseFile(QString fname) {
         }
 
         TonemappingOptions *toreturn = new TonemappingOptions;
-        memset(toreturn, 0, sizeof *toreturn);
+        //memset(toreturn, 0, sizeof *toreturn);
 
         QTextStream in(&file);
         QString field,value;
