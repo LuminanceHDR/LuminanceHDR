@@ -5250,7 +5250,7 @@ Errore: %1</translation>
     </message>
     <message>
         <source>LuminanceHDR tonemapping settings text file (*.txt)</source>
-        <translation>File di impostazione di tonemappings (*.txt)</translation>
+        <translation>File di impostazione per tonemapping (*.txt)</translation>
     </message>
     <message>
         <source>Aborting...</source>
@@ -5258,7 +5258,7 @@ Errore: %1</translation>
     </message>
     <message>
         <source>File is not readable (check existence, permissions,...)</source>
-        <translation>Il File non e&apos; accessibile (controllarne l&apos;esistenza, i permessi,...)</translation>
+        <translation>Il File non è accessibile (controllarne l&apos;esistenza, i permessi,...)</translation>
     </message>
     <message>
         <source>Save tonemapping settings text file to...</source>
@@ -5286,7 +5286,7 @@ Errore: %1</translation>
     </message>
     <message>
         <source>Custom LDR size</source>
-        <translation>Personalizza la dimensione dell&apos;LDR</translation>
+        <translation>Dimensione LDR personalizzata</translation>
     </message>
     <message>
         <source>Tonemapping Operators and options</source>
@@ -5322,7 +5322,7 @@ Errore: %1</translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation>Soglia Contrasto Locale</translation>
+        <translation>Soglia contrasto locale</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -5336,11 +5336,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation>Spatial Kernel Sigma</translation>
+        <translation>Spatial kernel sigma</translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation>Range Kernel Sigma</translation>
+        <translation>Range kernel sigma</translation>
     </message>
     <message>
         <source>Base Contrast</source>
@@ -5376,7 +5376,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Tone Mapping</source>
-        <translation>Tone Mapping Locale</translation>
+        <translation>Tone mapping locale</translation>
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
@@ -5402,11 +5402,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tone mapping operators and their options</source>
-        <translation>Gli operatori di tonemaping con le loro opzioni</translation>
+        <translation>Operatori di tonemapping e le loro opzioni</translation>
     </message>
     <message>
         <source>Use Scales</source>
-        <translation>Usa Scale</translation>
+        <translation>Usa scale</translation>
     </message>
     <message>
         <source>Key Value</source>
@@ -5464,11 +5464,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Next applied settings</source>
-        <translation>Impostazioni Successive</translation>
+        <translation>Impostazioni successive</translation>
     </message>
     <message>
         <source>Tone Mapping Settings</source>
-        <translation>Impostazioni Tone Mapping</translation>
+        <translation>Impostazioni tone mapping</translation>
     </message>
     <message>
         <source>Saved Quality for JPG or PNG</source>
@@ -5480,7 +5480,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Size of the resulting LDR image</source>
-        <translation>Dimensione dell&apos;immagine LDR risultante</translation>
+        <translation>Dimensione dell&apos;immagine LDR finale</translation>
     </message>
     <message>
         <source>If checked process the original HDR image, if not process the previously tonemapped image</source>
@@ -5504,7 +5504,7 @@ Selezione</translation>
     </message>
     <message>
         <source>Gamma applied before tonemapping</source>
-        <translation>Gamma applicata prima del tonemapping</translation>
+        <translation>Gamma applicata prima del tone mapping</translation>
     </message>
     <message>
         <source>Pre-gamma:</source>
@@ -5548,19 +5548,19 @@ Selezione</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
-        <translation>Qua e&apos; possibile scegliere la dimensione dell&apos;immagine risultante.</translation>
+        <translation>Qui è possibile scegliere la dimensione dell&apos;immagine finale.</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
-        <translation>Con questo bottone e&apos; possibile inserire un valore &lt;i&gt;larghezza&lt;/i&gt; per la dimensione dell&apos;immagine LDR risultante.&lt;br&gt;dopo aver premuto Enter (o Return) un valore di altezza verra&apos; calcolato automaticamente e la nuova dimensione aggiunta alla lista.</translation>
+        <translation>Con questo bottone è possibile inserire un valore di &lt;i&gt;larghezza&lt;/i&gt; per la dimensione dell&apos;immagine LDR finale.&lt;br&gt;Dopo aver premuto Enter (o Return) un valore di altezza verrà calcolato automaticamente e la nuova dimensione aggiunta alla lista.</translation>
     </message>
     <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
-        <translation>Qua puoi applicare un valore di correzione gamma all&apos;HDR.&lt;br&gt;La correzione gamma verra&apos; applicata prima del tone mapping.</translation>
+        <translation>Qui puoi applicare un valore di correzione gamma all&apos;HDR.&lt;br&gt;La correzione gamma verrà applicata prima del tone mapping.</translation>
     </message>
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
-        <translation>Ripristina il valore di default del gamma (1)</translation>
+        <translation>Ripristina il valore predefinito del pregamma (1)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -5574,7 +5574,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Contrast Equalization</source>
-        <translation>Equalizzazione contrasto</translation>
+        <translation>Equalizzazione del contrasto</translation>
     </message>
     <message>
         <source>Contrast Factor</source>
@@ -5586,7 +5586,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Restore operator&apos;s default values</source>
-        <translation>Ripristina i valori di default dell&apos;operatore</translation>
+        <translation>Ripristina i valori predefiniti dell&apos;operatore</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
@@ -5622,7 +5622,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
-        <translation>Qua e&apos; possibile caricare e salvare un file di impostazioni di tone mapping.&lt;br&gt;E&apos; anche possibile applicare i contenuti del file di impostazioni di tone mapping correntemente caricato.</translation>
+        <translation>Qui è possibile caricare e salvare un file di impostazioni di tone mapping.&lt;br&gt;E&apos; anche possibile applicare i contenuti del file di impostazioni di tone mapping correntemente caricato.</translation>
     </message>
     <message>
         <source>Save current parameters to a text file</source>
@@ -5638,7 +5638,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
-        <translation>Carica un file di testo contenente i parametri pregamma e di tone mapping.</translation>
+        <translation>Carica un file di testo contenente i parametri di pregamma e tone mapping.</translation>
     </message>
     <message>
         <source>&amp;Load...</source>
@@ -5702,11 +5702,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Lcd Office</source>
-        <translation>LCD Ufficio</translation>
+        <translation>LCD ufficio</translation>
     </message>
     <message>
         <source>Lcd Bright</source>
-        <translation>Lcd luminoso</translation>
+        <translation>LCD luminoso</translation>
     </message>
     <message>
         <source>Contrast Enhancement</source>
@@ -5766,7 +5766,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Update current LDR</source>
-        <translation>Aggiornato LDR corrente</translation>
+        <translation>Aggiorna LDR corrente</translation>
     </message>
     <message>
         <source>Tonemap</source>
@@ -5780,7 +5780,7 @@ p, li { white-space: pre-wrap; }
         <source>Enable
 Luminace Level</source>
         <translation>Abilita
-Livello Luminanza</translation>
+livello luminanza</translation>
     </message>
     <message>
         <source>Version Pre 1.8.4</source>
@@ -5788,7 +5788,8 @@ Livello Luminanza</translation>
     </message>
     <message>
         <source>Auto Cone/Rod</source>
-        <translation>Coni/Bastoncelli Automatici</translation>
+        <translation>Coni/bastoncelli
+automatici</translation>
     </message>
     <message>
         <source>Previous</source>
@@ -5800,15 +5801,15 @@ Livello Luminanza</translation>
     </message>
     <message>
         <source>&amp;Save to File</source>
-        <translation>&amp;Salva su File</translation>
+        <translation>&amp;Salva su file</translation>
     </message>
     <message>
         <source>&amp;Load from File</source>
-        <translation>&amp;Carica da File</translation>
+        <translation>&amp;Carica da file</translation>
     </message>
     <message>
         <source>&amp;Result Size</source>
-        <translation>&amp;Dimensione Risultato</translation>
+        <translation>&amp;Dimensione risultato</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
@@ -5816,7 +5817,7 @@ Livello Luminanza</translation>
     </message>
     <message>
         <source>Set Custom Output Size</source>
-        <translation>Definisci Dimensione di Uscita Personalizzata</translation>
+        <translation>Definisci dimensione finale personalizzata</translation>
     </message>
 </context>
 <context>
