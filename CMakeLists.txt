@@ -1,6 +1,8 @@
 PROJECT(luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
+OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # find and setup Qt4 for this project
@@ -501,7 +503,6 @@ QT4_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 
 QT4_WRAP_UI(LUMINANCE_HDR_UI_HEADERS ${LUMINANCE_HDR_UI})
 
-OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
 IF(UPDATE_TRANSLATIONS)
     SET(LUMINANCE_TO_TRANSLATE
     ${LIB_HDR_INCLUDE}
@@ -597,11 +598,17 @@ ELSEIF(WIN32)
         STRING(REPLACE "4" "d4" debugdll ${dll})
         FILE(COPY "${QT_BINARY_DIR}/${debugdll}" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug")
     ENDFOREACH()
-
+    
     FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpeg4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/imageformats")
     FILE(COPY "${QT_PLUGINS_DIR}/imageformats/qjpegd4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/imageformats")
     FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlite4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Release/sqldrivers")
     FILE(COPY "${QT_PLUGINS_DIR}/sqldrivers/qsqlited4.dll" DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/Debug/sqldrivers")
+
+    FILE(GLOB QtI18nAll "${QT_TRANSLATIONS_DIR}/qt_*.qm")
+    FILE(GLOB QtI18nHelp "${QT_TRANSLATIONS_DIR}/qt_help_*.qm")
+    LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
+    FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
+
 
 ENDIF()
 

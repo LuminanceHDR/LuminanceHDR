@@ -385,39 +385,42 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (
 	popd
 )
 
-IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
-	
-	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt (
-		copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
-	)
-	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe (
-		copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
-	)
-	
-	IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
-		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
-			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
-			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
-			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\
-			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\imageformats\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
-			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\sqldrivers\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
+IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
+	IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration% (
+		
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt (
+			copy LuminanceHdrStuff\qtpfsgui\LICENSE LuminanceHdrStuff\qtpfsgui.build\%Configuration%\LICENSE.txt
 		)
-	)
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe (
+			copy %TEMP_DIR%\align_image_stack_%RawPlatform%.exe LuminanceHdrStuff\qtpfsgui.build\%Configuration%\align_image_stack.exe
+		)
+		
+		IF EXIST LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\ (
+			IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
+				mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
+				mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
+				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\
+				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\imageformats\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\imageformats\
+				copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\%Configuration%\sqldrivers\* LuminanceHdrStuff\qtpfsgui.build\%Configuration%\sqldrivers\
+			)
+		)
 
-	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
-		pushd LuminanceHdrStuff\DEPs\bin
-		for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
-			copy %%v ..\..\qtpfsgui.build\%Configuration%
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
+			pushd LuminanceHdrStuff\DEPs\bin
+			for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+				copy %%v ..\..\qtpfsgui.build\%Configuration%
+			)
+			popd
 		)
-		popd
-	)
-	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
-		mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
-		copy LuminanceHdrStuff\qtpfsgui.build\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
-	)
-	IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
-		mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
-		xcopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /D /E /C /R /H /I /K /Y
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n\ (
+			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
+			copy LuminanceHdrStuff\qtpfsgui.build\QtDlls\i18n\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
+			copy LuminanceHdrStuff\qtpfsgui.build\*.qm LuminanceHdrStuff\qtpfsgui.build\%Configuration%\i18n
+		)
+		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help\ (
+			mkdir LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help
+			xcopy LuminanceHdrStuff\qtpfsgui\help LuminanceHdrStuff\qtpfsgui.build\%Configuration%\help /D /E /C /R /H /I /K /Y
+		)
 	)
 )
 
