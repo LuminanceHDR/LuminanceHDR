@@ -5,6 +5,10 @@ OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (W
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
+IF( NOT CMAKE_BUILD_TYPE )
+    SET( CMAKE_BUILD_TYPE "RelWithDebInfo" )
+ENDIF()
+
 # find and setup Qt4 for this project
 FIND_PACKAGE(Qt4 REQUIRED COMPONENTS QtCore QtGui QtXml QtWebkit QtSql REQUIRED)
 
