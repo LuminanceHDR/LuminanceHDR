@@ -307,11 +307,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>All messages</source>
-        <translation>alle Meldungen</translation>
+        <translation>Alle Meldungen</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation>nur Fehler</translation>
+        <translation>Nur Fehler</translation>
     </message>
     <message>
         <source>Clear filter text</source>
@@ -347,19 +347,19 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
-        <translation>zu konvertierende HDR-Bilder</translation>
+        <translation>Zu konvertierende HDR-Bilder</translation>
     </message>
     <message>
         <source>Add all the HDRs in a directory to the list</source>
-        <translation>alle in einem Ordner befindlichen HDR-Dateien der Liste hinzufügen</translation>
+        <translation>Alle in einem Ordner befindlichen HDR-Dateien der Liste hinzufügen</translation>
     </message>
     <message>
         <source>Add single HDR files to the list</source>
-        <translation>einzelne HDR-Dateien der Liste hinzufügen</translation>
+        <translation>Einzelne HDR-Dateien der Liste hinzufügen</translation>
     </message>
     <message>
         <source>Remove single HDR files to the list</source>
-        <translation>einzelne HDR-Dateien aus der Liste entfernen</translation>
+        <translation>Einzelne HDR-Dateien aus der Liste entfernen</translation>
     </message>
     <message>
         <source>Tone Mapping Settings Files</source>
@@ -367,15 +367,15 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
-        <translation>alle in einem Ordner befindlichen Dateien mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
+        <translation>Alle in einem Ordner befindlichen Dateien mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
     </message>
     <message>
         <source>Add single Tone Mapping Setting files to the list</source>
-        <translation>einzelne Datei mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
+        <translation>Einzelne Datei mit Dynamikkompressionsvorgaben der Liste hinzufügen</translation>
     </message>
     <message>
         <source>Remove single Tone Mapping Setting files to the list</source>
-        <translation>einzelne Datei mit Dynamikkompressionsvorgaben aus der Liste entfernen</translation>
+        <translation>Einzelne Datei mit Dynamikkompressionsvorgaben aus der Liste entfernen</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -399,7 +399,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Success messages</source>
-        <translation>nur Erfolgsmeldungen</translation>
+        <translation>Nur Erfolgsmeldungen</translation>
     </message>
     <message>
         <source>&amp;Filter log messages:</source>
@@ -469,11 +469,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <name>CommandLineInterfaceManager</name>
     <message>
         <source>Error: Alignment engine not recognized.</source>
-        <translation>Fehler: Ausrichtungsmodus wurde nicht erkannt.</translation>
+        <translation>Fehler: Ausrichtungsmethode wurde nicht erkannt.</translation>
     </message>
     <message>
         <source>Error: Wrong HDR creation format</source>
-        <translation>Fehler: Falsches Format zur HDR-Erzeugung</translation>
+        <translation>Fehler: Falsches Format zur HDR-Erzeugung.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
@@ -553,11 +553,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>-u --gui               Start in gui mode with input files.</source>
-        <translation>-u --gui               GUI mit Quelldateien starten.</translation>
+        <translation>-u --gui               Startet GUI mit Quelldateien.</translation>
     </message>
     <message>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
-        <translation>-a --align AIS|MTB     Der für die HDR-Erzeugung zu verwendende Ausrichtungsmodus (Standard: keine Ausrichtung).</translation>
+        <translation>-a --align AIS|MTB     Die für die HDR-Erzeugung zu verwendende Ausrichtungsmethode (Standard: keine Ausrichtung).</translation>
     </message>
     <message>
         <source>-e --ev EV1,EV2,...    Specify numerical EV values (as many as INPUTFILES).</source>
@@ -569,11 +569,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>-l --load HDR_FILE     Load an HDR instead of creating a new one. </source>
-        <translation>-l --load HDR_FILE     Eine HDR-Datei laden anstatt eine neue zu erzeugen. </translation>
+        <translation>-l --load HDR_FILE     Lädt eine HDR-Datei anstatt eine neue zu erzeugen. </translation>
     </message>
     <message>
         <source>-s --save HDR_FILE     Save to a HDR file format. (default: don&apos;t save) </source>
-        <translation>-s --save HDR_FILE     Speichern als HDR-Datei. (Standard: nicht speichern) </translation>
+        <translation>-s --save HDR_FILE     Speichert eine HDR-Datei. (Standard: nicht speichern) </translation>
     </message>
     <message>
         <source>-g --gamma VALUE       Gamma value to use during tone mapping. (default: 1) </source>
@@ -585,7 +585,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>-t --tmo               Tone mapping operator. Legal values are: </source>
-        <translation>-t --tmo               Der Operator für die Dynamikkompression. Mögliche Werte sind: </translation>
+        <translation>-t --tmo               Operator für die Dynamikkompression. Mögliche Werte sind: </translation>
     </message>
     <message>
         <source>-p --tmoptions         Tone mapping operator options. Legal values are: </source>
@@ -720,11 +720,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation>an Fenster anpassen</translation>
+        <translation>An Fenster anpassen</translation>
     </message>
     <message>
         <source>&amp;Fit to Window</source>
-        <translation>an &amp;Fenster anpassen</translation>
+        <translation>An &amp;Fenster anpassen</translation>
     </message>
     <message>
         <source>Original size</source>
@@ -736,19 +736,19 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation>vergrößern</translation>
+        <translation>Vergrößern</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>ver&amp;größern</translation>
+        <translation>Ver&amp;größern</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation>verkleinern</translation>
+        <translation>Verkleinern</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>ver&amp;kleinern</translation>
+        <translation>Ver&amp;kleinern</translation>
     </message>
     <message>
         <source>Preview &amp;Mode:</source>
@@ -778,7 +778,7 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
     </message>
     <message>
         <source>Select the previous image in both lists</source>
-        <translation>vorheriges Bild in beiden Listen wählen</translation>
+        <translation>Vorheriges Bild in beiden Listen wählen</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the previous image in both lists.</source>
@@ -786,7 +786,7 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
     </message>
     <message>
         <source>Select the next image in both lists</source>
-        <translation>nächstes Bild in beiden Listen wählen</translation>
+        <translation>Nächstes Bild in beiden Listen wählen</translation>
     </message>
     <message>
         <source>Use this button to move the selection to the next image in both lists.</source>
@@ -870,11 +870,11 @@ Das Histogramm des Bildes wird im oberen Feld angezeigt.</translation>
     </message>
     <message>
         <source>&amp;Horizontal:</source>
-        <translation>&amp;horizontal:</translation>
+        <translation>&amp;Horizontal:</translation>
     </message>
     <message>
         <source>&amp;Vertical:</source>
-        <translation>&amp;vertikal:</translation>
+        <translation>&amp;Vertikal:</translation>
     </message>
     <message>
         <source>Insert an horizontal shift value for the currently selected movable image</source>
@@ -1161,7 +1161,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remove Selected Image</source>
-        <translation>ausgewähltes Bild entfernen</translation>
+        <translation>Ausgewähltes Bild entfernen</translation>
     </message>
     <message>
         <source>Clear List</source>
@@ -1389,7 +1389,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation>Eingabebilder auswählen</translation>
+        <translation>Quellbilder wählen</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -1421,7 +1421,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
-        <translation>RAW.Bilder (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
+        <translation>RAW-Bilder (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</translation>
     </message>
     <message>
         <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW *.SRW)</source>
@@ -1441,7 +1441,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Unknown</source>
-        <translation>unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <source>Error...</source>
@@ -1461,7 +1461,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Now click on next button</source>
-        <translation>jetzt auf &quot;Weiter&quot; klicken</translation>
+        <translation>Jetzt auf &quot;Weiter&quot; klicken</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
@@ -1675,7 +1675,7 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     </message>
     <message>
         <source>&amp;Search</source>
-        <translation>&amp;suchen</translation>
+        <translation>&amp;Suchen</translation>
     </message>
     <message>
         <source>1</source>
@@ -1717,7 +1717,7 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     <name>ImageQualityDialog</name>
     <message>
         <source>Unknown</source>
-        <translation>unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
@@ -1740,7 +1740,7 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <source>Ca&amp;lculate</source>
@@ -1999,7 +1999,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>WORK IN PROGRESS</source>
-        <translation>IN BEARBEITUNG</translation>
+        <translation>WIRD VERARBEITET</translation>
     </message>
     <message>
         <source>&amp;About Qt</source>
@@ -2055,7 +2055,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Crop to Selection</source>
-        <translation>auf Auswahl zuschneiden</translation>
+        <translation>Auf Auswahl zuschneiden</translation>
     </message>
     <message>
         <source>Remove &amp;Selection</source>
@@ -2219,7 +2219,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cropped Image</source>
-        <translation>zugeschnittenes Bild</translation>
+        <translation>Zugeschnittenes Bild</translation>
     </message>
     <message>
         <source>Error: %1</source>
@@ -2323,7 +2323,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Fit to dynamic range</source>
-        <translation>dem Dynamikumfang anpassen</translation>
+        <translation>Dem Dynamikumfang anpassen</translation>
     </message>
     <message>
         <source>&amp;Contents...</source>
@@ -2569,7 +2569,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation>wä&amp;hlen</translation>
+        <translation>Wä&amp;hlen</translation>
     </message>
     <message>
         <source>Which LDR image format to save to</source>
@@ -2781,11 +2781,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto</source>
-        <translation>automatisch</translation>
+        <translation>Automatisch</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>manuell</translation>
+        <translation>Manuell</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2822,26 +2822,26 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Glanzlichter&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Glanzlicht-Begrenzungsverfahren wählen:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;klares weiß&lt;/span&gt;: Alle Glanzlichter auf klares Weiß begrenzen&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;nicht transformieren&lt;/span&gt;: Glanzlichter in verschiedenen unbegrenzten Pink-Schattierungen belassen&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;vermischen&lt;/span&gt;: Begrenzte und unbegrenzte Werte miteinander vermischen für einen Verlauf zu Weiß&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;rekonstruieren&lt;/span&gt;: Glanzlichter mit einem Stärkewert rekonstruieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Klares weiß&lt;/span&gt;: Alle Glanzlichter auf klares Weiß begrenzen&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nicht transformieren&lt;/span&gt;: Glanzlichter in verschiedenen unbegrenzten Pink-Schattierungen belassen&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Vermischen&lt;/span&gt;: Begrenzte und unbegrenzte Werte miteinander vermischen für einen Verlauf zu Weiß&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Rekonstruieren&lt;/span&gt;: Glanzlichter mit einem Stärkewert rekonstruieren&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Solid White</source>
-        <translation>klares Weiß</translation>
+        <translation>Klares Weiß</translation>
     </message>
     <message>
         <source>Do not transform</source>
-        <translation>nicht transformieren</translation>
+        <translation>Nicht transformieren</translation>
     </message>
     <message>
         <source>Blend</source>
-        <translation>vermischen</translation>
+        <translation>Vermischen</translation>
     </message>
     <message>
         <source>Reconstruct</source>
-        <translation>rekonstruieren</translation>
+        <translation>Rekonstruieren</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3057,21 +3057,21 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Kameraprofil&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Auswahl des Eingabefarbraums zur Dekodierung der RAW-Daten.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;keines&lt;/span&gt;: zur RAW-Dekodierung wird kein Eingabefarbprofil verwendet.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;eingebettet&lt;/span&gt;: falls in der RAW-Datei ein eingebettetes Farbprofil existiert, wird es verwendet.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;eigenes&lt;/span&gt;: ein eigenes Eingabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Keines&lt;/span&gt;: zur RAW-Dekodierung wird kein Eingabefarbprofil verwendet.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Eingebettetes&lt;/span&gt;: falls in der RAW-Datei ein eingebettetes Farbprofil existiert, wird es verwendet.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Eigenes&lt;/span&gt;: ein eigenes Eingabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>keines</translation>
+        <translation>Keines</translation>
     </message>
     <message>
         <source>Built in</source>
-        <translation>eingebettet</translation>
+        <translation>Eingebettetes</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation>eigenes</translation>
+        <translation>Eigenes</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3095,9 +3095,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;RAW (linear)&lt;/span&gt;: zur RAW-Dekodierung wird kein Ausgabefarbprofil verwendet.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: ein von Hewlett-Packard und Microsoft gemeinsam entwickelter RGB-Farbraum, der für Web und Portraitfotografie am besten geeignet ist.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: ein von Adobe entwickelter erweiterter RGB-Farbraum für fotografische Anwendungen wie Werbung und Kunst.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;breiter Gamut&lt;/span&gt;: eine Erweiterung des Adobe-RGB-Farbraums.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Breiter Gamut&lt;/span&gt;: eine Erweiterung des Adobe-RGB-Farbraums.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ProPhoto&lt;/span&gt;: ein von Kodak entwickelter RGB-Farbraum mit besonders großem Gamut, der für fotografische Ausgaben gedacht ist.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;eigenes&lt;/span&gt;: ein eigenes Ausgabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Eigenes&lt;/span&gt;: ein eigenes Ausgabefarbprofil wird verwendet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>RAW</source>
@@ -3113,7 +3113,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Wide Gamut</source>
-        <translation>breiter Gamut</translation>
+        <translation>Breiter Gamut</translation>
     </message>
     <message>
         <source>Pro Photo</source>
@@ -3189,7 +3189,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Form</source>
         <translatorcomment>[Christian Raue] I have no idea if or where this will be shown and what it means. Will leave it as is.</translatorcomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
@@ -3420,7 +3420,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Equation 2</source>
-        <translatorcomment>[Christian Raue] Don&apos;t know its meaning nor a good translation. Will leave it as is.</translatorcomment>
         <translation></translation>
     </message>
     <message>
@@ -3441,12 +3440,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translatorcomment>[Christian Raue] Don&apos;t know its meaning nor a good translation. Will leave it as is.</translatorcomment>
         <translation></translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translatorcomment>[Christian Raue] Don&apos;t know its meaning nor a good translation. Will leave it as is.</translatorcomment>
         <translation></translation>
     </message>
     <message>
@@ -3455,11 +3452,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Alpha</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Beta</source>
-        <translation>Beta</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Color Saturation</source>
@@ -3499,7 +3496,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Manual Luminance Level</source>
-        <translation>manuelle Helligkeit</translation>
+        <translation>Manuelle Helligkeit</translation>
     </message>
     <message>
         <source>Cone and Rod based on Luminance</source>
@@ -3507,7 +3504,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Tonemapping</source>
-        <translation>lokale Dynamikkompression</translation>
+        <translation>Lokale Dynamikkompression</translation>
     </message>
     <message>
         <source>Cone Level</source>
@@ -3570,7 +3567,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Enter a short comment for the saved parameters</source>
-        <translation>Gib einen kurzen Kommentar für die zu speichernden Parameter ein</translation>
+        <translation>Gib einen kurzen Kommentar für die zu speichernden Parameter ein:</translation>
     </message>
 </context>
 <context>
@@ -3664,7 +3661,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Alpha</source>
-        <translation>Alpha</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Color Saturation</source>
@@ -3704,7 +3701,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Bias</source>
-        <translation>Bias</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Multiplier</source>
@@ -3760,15 +3757,15 @@ Error: %1</source>
     </message>
     <message>
         <source>Restore</source>
-        <translation>zurücksetzen</translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <source>&amp;Save to File</source>
-        <translation>in Datei &amp;speichern</translation>
+        <translation>In Datei &amp;speichern</translation>
     </message>
     <message>
         <source>&amp;Load from File</source>
-        <translation>aus Datei &amp;laden</translation>
+        <translation>Aus Datei &amp;laden</translation>
     </message>
     <message>
         <source>Load parameters by comment</source>
@@ -3776,19 +3773,19 @@ Error: %1</source>
     </message>
     <message>
         <source>Load saved parameters</source>
-        <translation>gespeicherte Parameter laden</translation>
+        <translation>Gespeicherte Parameter laden</translation>
     </message>
     <message>
         <source>Save current parameters</source>
-        <translation>derzeitige Parameter speichern</translation>
+        <translation>Derzeitige Parameter speichern</translation>
     </message>
     <message>
         <source>Previous applied settings</source>
-        <translation>zuvor angewandte Werte</translation>
+        <translation>Zuvor angewandte Werte</translation>
     </message>
     <message>
         <source>Next applied settings</source>
-        <translation>nächste angewandte Werte</translation>
+        <translation>Nächste angewandte Werte</translation>
     </message>
     <message>
         <source>Tone Mapping Settings</source>
@@ -3800,7 +3797,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Gamma applied before tonemapping</source>
-        <translation>vor Dynamikkompression angewandte Gammakorrektur</translation>
+        <translation>Vor Dynamikkompression angewandte Gammakorrektur</translation>
     </message>
     <message>
         <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image</source>
@@ -3808,7 +3805,7 @@ Error: %1</source>
     </message>
     <message>
         <source>&amp;Tonemap</source>
-        <translation>&amp;anwenden</translation>
+        <translation>&amp;Anwenden</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
@@ -3816,7 +3813,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Beta</source>
-        <translation>Beta</translation>
+        <translation></translation>
     </message>
     <message>
         <source>&amp;Result Size</source>
@@ -3832,7 +3829,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Set Custom Output Size</source>
-        <translation>benutzerdefinierte Ausgabegröße festlegen</translation>
+        <translation>Benutzerdefinierte Ausgabegröße festlegen</translation>
     </message>
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
@@ -3860,7 +3857,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Restore operator&apos;s default values</source>
-        <translation>setzt die Parameter des Operators auf Standardwerte zurück</translation>
+        <translation>Setzt die Parameter des Operators auf Standardwerte zurück</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
@@ -3880,11 +3877,11 @@ Error: %1</source>
     </message>
     <message>
         <source>Previous</source>
-        <translation>vorherige</translation>
+        <translation>Vorherige</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation>nächste</translation>
+        <translation>Nächste</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
@@ -3948,7 +3945,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Update current LDR</source>
-        <translation>aktuelles LDR-Bild aktualisieren</translation>
+        <translation>Aktuelles LDR-Bild aktualisieren</translation>
     </message>
     <message>
         <source>Tonemap</source>
@@ -4005,11 +4002,11 @@ Luminace Level</source>
     </message>
     <message>
         <source>undo</source>
-        <translation>rückgängig</translation>
+        <translation>Rückgängig</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>wiederherstellen</translation>
+        <translation>Wiederherstellen</translation>
     </message>
 </context>
 <context>
@@ -4431,11 +4428,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>All messages</source>
-        <translation>alle Meldungen</translation>
+        <translation>Alle Meldungen</translation>
     </message>
     <message>
         <source>Errors only</source>
-        <translation>nur Fehler</translation>
+        <translation>Nur Fehler</translation>
     </message>
     <message>
         <source>&amp;Filter log messages:</source>
@@ -4483,11 +4480,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Stop Bothering Me</source>
-        <translation>nicht erneut fragen</translation>
+        <translation>Nicht erneut fragen</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>später erinnern</translation>
+        <translation>Später erinnern</translation>
     </message>
 </context>
 </TS>
