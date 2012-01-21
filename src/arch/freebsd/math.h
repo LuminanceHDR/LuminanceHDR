@@ -30,8 +30,10 @@
 #define exp2f(x)       ( (float)( exp2(x) ) )
 #endif
 
+#if __FreeBSD__ < 9
 #define log2(x)        (log(x)  / M_LN2)
 #define log2f(x)       (logf(x) / M_LN2)
+#endif
 
 #endif
 
