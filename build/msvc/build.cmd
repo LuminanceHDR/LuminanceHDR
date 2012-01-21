@@ -375,7 +375,12 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
 	mkdir LuminanceHdrStuff\qtpfsgui.build
 )
 pushd LuminanceHdrStuff\qtpfsgui.build
-%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui
+IF %OPTION_LUMINANCE_UPDATE_TRANSLATIONS% EQU 1 (
+	set CMAKE_OPTIONS=-DUPDATE_TRANSLATIONS=1	
+) ELSE (
+	set CMAKE_OPTIONS=-UUPDATE_TRANSLATIONS
+)
+%CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
 popd
 
 IF EXIST LuminanceHdrStuff\qtpfsgui.build\luminance-hdr.sln (

@@ -1,8 +1,15 @@
 @echo off
-
-REM Change if necessary:
-SET CYGWIN_DIR=C:\cygwin
+SET CYGWIN_DIR=c:\cygwin
+SET TEMP_DIR=.downloaddir
 SET CMAKE_DIR=C:\Data\Programs\cmake-2.8.4-win32-x86
 
-REM There should no need to change this:
-SET TEMP_DIR=.downloaddir
+REM Options:  -------------------------------------------
+
+REM enable another configuration (defaulting to Release)
+REM SET Configuration=Debug
+
+REM updates/overwrites the original .ts files doing a Qt lupdate
+SET OPTION_LUMINANCE_UPDATE_TRANSLATIONS=0
+
+REM Optional variables
+REM SET L_BOOST_DIR=C:\Data\Develop\libhdrStuff

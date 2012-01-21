@@ -19,7 +19,7 @@ This build process requires:
 * MS Visual Studio 2008 or higher
 * Qt for MSVC installed
   - official 32 bit Qt from: http://qt.nokia.com/downloads/downloads#qt-lib
-  - working 64 bit and 32 bit Qt from: http://code.google.com/p/qt-msvc-installer/
+  - Qt self compiled
   ATTENTION: Do not mix the compilation with different versions of MSVC. If you 
              compile Luminance with VC2010 you should also have Qt compiled
              with VC2010. If you don't find any precompiled Qt with a 
@@ -32,7 +32,7 @@ This build process requires:
              > del /S /Q *.obj lib*.dll
              This recompiles the whole Qt and takes from 30 minutes to several hours...
              This reconfiguration can also be applied for generating x64 Qt versions!
-  ATTENTION: If you move the Qt folder AFTER the compilation you have to do the 
+  ATTENTION: If you move the Qt folder AFTER the compilation you have to redo the 
              > configure.exe -mp -fast
              (without doing the actual compilation with nmake)
 			 
@@ -50,7 +50,7 @@ there are some problems the batch script should tell you!
 Open the setenv.cmd file and adjust the variables paths for your needs.
 
 Start the compilation with 
->	getDependencies.cmd
+>	build.cmd
 
 Wait, wait, wait....
 
