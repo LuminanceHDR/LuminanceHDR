@@ -63,11 +63,13 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
     mPixmap->disableSelectionTool(); // disable by default crop functionalities
 
-    setTonemappingOptions(opts);
+    // I shouldn't call a virtual function straight from the constructor,
+    // but specifing correctly which version of this virtual function I want to call,
+    // I am safe
+    LdrViewer::setTonemappingOptions(opts);
 
     QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    //mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
     setQImage(*temp_qimage);
 
     updateView();
