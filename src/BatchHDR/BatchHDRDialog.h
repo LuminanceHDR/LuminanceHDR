@@ -28,7 +28,6 @@
 
 #include <QDialog>
 
-
 #include "Common/LuminanceOptions.h"
 
 // Forward declaration
@@ -43,7 +42,7 @@ class BatchHDRDialog: public QDialog
 {
 Q_OBJECT
 private:
-    Ui::BatchHDRDialog* m_Ui;
+    QScopedPointer<Ui::BatchHDRDialog> m_Ui;
 public:
 	BatchHDRDialog(QWidget *parent = 0);
 	~BatchHDRDialog();

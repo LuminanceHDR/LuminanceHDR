@@ -32,7 +32,14 @@
 #include "Exif/ExifOperations.h"
 #include "TransplantExifDialog.h"
 
-TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), done(false) {
+TransplantExifDialog::TransplantExifDialog(QWidget *p):
+    QDialog(p),
+    start_left(-1),
+    stop_left(-1),
+    start_right(-1),
+    stop_right(-1),
+    done(false)
+{
 	setupUi(this);
 	Log_Widget->setWordWrap(true);
 	connect(moveup_left_button,	SIGNAL(clicked()),this,SLOT(moveup_left()));
@@ -48,19 +55,23 @@ TransplantExifDialog::TransplantExifDialog(QWidget *p) : QDialog(p), start_left(
 
 	connect(filterComboBox, SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 	connect(filterLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
-	full_Log_Model=new QStringListModel();
-	log_filter=new QSortFilterProxyModel(this);
+    full_Log_Model = new QStringListModel();
+    log_filter = new QSortFilterProxyModel(this);
 	log_filter->setDynamicSortFilter(true);
 	log_filter->setSourceModel(full_Log_Model);
 	Log_Widget->setModel(log_filter);
 
-        RecentDirEXIFfrom = luminance_options.value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
-        RecentDirEXIFto = luminance_options.value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
+    // TODO: clean up this implementation: this guys should not be here
+    RecentDirEXIFfrom = luminance_options.value(KEY_RECENT_PATH_EXIF_FROM,QDir::currentPath()).toString();
+    RecentDirEXIFto = luminance_options.value(KEY_RECENT_PATH_EXIF_TO,QDir::currentPath()).toString();
 }
 
 TransplantExifDialog::~TransplantExifDialog() {
 	leftlist->clear();
 	rightlist->clear();
+
+    delete full_Log_Model;
+    delete log_filter;
 }
 
 //TODO

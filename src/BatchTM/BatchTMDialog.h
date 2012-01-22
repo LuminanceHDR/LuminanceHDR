@@ -50,8 +50,7 @@ class BatchTMDialog: public QDialog
 {
     Q_OBJECT
 private:
-    Ui::BatchTMDialog* m_Ui;
-
+    QScopedPointer<Ui::BatchTMDialog> m_Ui;
 
 public:
 	BatchTMDialog(QWidget *parent = 0);
