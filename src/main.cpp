@@ -37,6 +37,7 @@
 
 int main( int argc, char ** argv )
 {
+#ifndef Q_WS_MAC
     //QCoreApplication::setOrganizationName("Luminance");
     //QCoreApplication::setApplicationName("Luminance");
 
@@ -71,6 +72,12 @@ int main( int argc, char ** argv )
 #ifdef WIN32
         FreeConsole();
 #endif
+#endif // Q_WS_MAC
+
+#ifdef Q_WS_MAC
+        LuminanceOptions luminance_options;
+#endif // Q_WS_MAC
+
         Q_INIT_RESOURCE(icons);
         QApplication application( argc, argv );
 
@@ -106,10 +113,15 @@ int main( int argc, char ** argv )
         application.installTranslator(&guiTranslator);
 
         MainWindow* MW = new MainWindow;
+#ifndef Q_WS_MAC
         MW->setInputFiles(cli.files());
+#endif // Q_WS_MAC
         MW->show();
 
         return application.exec();
+
+#ifndef Q_WS_MAC
     }
+#endif // Q_WS_MAC
 }
 
