@@ -41,8 +41,6 @@ QDialog(p),
 {
 	m_Ui->setupUi(this);
 
-	setWindowModality(Qt::WindowModal);   // Mac Mode
-
 	m_Ui->closePushButton->hide();
 
 	m_hdrCreationManager = new HdrCreationManager;
