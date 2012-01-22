@@ -1523,8 +1523,6 @@ void MainWindow::tonemapImage(TonemappingOptions *opts)
 
 void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
 {
-    num_ldr_generated++;
-
     GenericViewer *n = static_cast<GenericViewer*>(m_tabwidget->currentWidget());
     if (tmPanel->replaceLdr() && n != NULL && !n->isHDR())
     {
@@ -1533,6 +1531,7 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     else
     {
         curr_num_ldr_open++;
+        num_ldr_generated++;
 
         n = new LdrViewer(frame, tm_options, this, true);
 
