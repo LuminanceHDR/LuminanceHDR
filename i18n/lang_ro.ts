@@ -6749,7 +6749,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Weights: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ponderi: </translation>
     </message>
     <message>
         <source> - Response curve: </source>

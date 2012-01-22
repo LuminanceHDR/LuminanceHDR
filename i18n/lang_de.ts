@@ -19,6 +19,44 @@ p, li { white-space: pre-wrap; }
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
+    <message>
+        <source>A&amp;uthors</source>
+        <translation>&amp;Autoren</translation>
+    </message>
+    <message>
+        <source>&amp;Thanks To</source>
+        <translation>&amp;Dank an</translation>
+    </message>
+    <message>
+        <source>&amp;License Agreement</source>
+        <translation>&amp;Lizenzvereinbarung</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -26,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, 2011, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -48,46 +86,8 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;    &lt;/span&gt;&lt;a href=&quot;mailto:danielkaneider@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;danielkaneider@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>A&amp;uthors</source>
-        <translation>&amp;Autoren</translation>
-    </message>
-    <message>
-        <source>&amp;Thanks To</source>
-        <translation>&amp;Dank an</translation>
-    </message>
-    <message>
-        <source>&amp;License Agreement</source>
-        <translation>&amp;Lizenzvereinbarung</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation></translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1489,7 +1489,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>(*) Weights: </source>
-        <translation>(*) Gewichte: </translation>
+        <translation type="obsolete">(*) Gewichte: </translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1514,6 +1514,10 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
         <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle Belichtungswerte wurden festgelegt.&lt;br&gt;Jetzt auf &quot;Weiter&quot; klicken.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+    </message>
+    <message>
+        <source>Weights: </source>
+        <translation>Gewichte: </translation>
     </message>
 </context>
 <context>
@@ -1644,15 +1648,15 @@ die für dieses Protokoll festgelegt ist, geöffnet werden?</translation>
     <name>HelpDialog</name>
     <message>
         <source>Luminance Help</source>
-        <translation>Hilfe zu Luminance HDR</translation>
+        <translation type="obsolete">Hilfe zu Luminance HDR</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>S&amp;chließen</translation>
+        <translation type="obsolete">S&amp;chließen</translation>
     </message>
     <message>
         <source>CTRL+Q</source>
-        <translation>Strg+Q</translation>
+        <translation type="obsolete">Strg+Q</translation>
     </message>
 </context>
 <context>
@@ -4032,328 +4036,300 @@ Willst du ihn dennoch anwenden?</translation>
     <name>TonemappingWindow</name>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Ansicht</translation>
+        <translation type="obsolete">&amp;Ansicht</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation type="obsolete">&amp;Datei</translation>
     </message>
     <message>
         <source>Tune the histogram for the current LDR</source>
-        <translation>Histogramm für das aktuelle LDR-Bild anpassen</translation>
+        <translation type="obsolete">Histogramm für das aktuelle LDR-Bild anpassen</translation>
     </message>
     <message>
         <source>Ctrl+S</source>
-        <translation>Strg+S</translation>
+        <translation type="obsolete">Strg+S</translation>
     </message>
     <message>
         <source>C&amp;lose All</source>
-        <translation>Alle sch&amp;ließen</translation>
+        <translation type="obsolete">Alle sch&amp;ließen</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation>Alle schließen</translation>
+        <translation type="obsolete">Alle schließen</translation>
     </message>
     <message>
         <source>Close all the LDRs in the workspace</source>
-        <translation>Alle LDR-Bilder im Arbeitsbereich schließen</translation>
+        <translation type="obsolete">Alle LDR-Bilder im Arbeitsbereich schließen</translation>
     </message>
     <message>
         <source>Ctrl+C</source>
-        <translation>Strg+C</translation>
+        <translation type="obsolete">Strg+C</translation>
     </message>
     <message>
         <source>As &amp;Thumbnails</source>
-        <translation>Als &amp;Thumbnails</translation>
+        <translation type="obsolete">Als &amp;Thumbnails</translation>
     </message>
     <message>
         <source>As Thumbnails</source>
-        <translation>Als Thumbnails</translation>
+        <translation type="obsolete">Als Thumbnails</translation>
     </message>
     <message>
         <source>Images as Thumbnails</source>
-        <translation>Bilder als Thumbnails</translation>
+        <translation type="obsolete">Bilder als Thumbnails</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation>Gesta&amp;pelt</translation>
+        <translation type="obsolete">Gesta&amp;pelt</translation>
     </message>
     <message>
         <source>&amp;Fit to Window</source>
-        <translation>An &amp;Fenster anpassen</translation>
+        <translation type="obsolete">An &amp;Fenster anpassen</translation>
     </message>
     <message>
         <source>Fit the current LDR to its containing window.</source>
-        <translation>Passt das aktuelle LDR-Bild an sein Fenster an.</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation></translation>
+        <translation type="obsolete">Passt das aktuelle LDR-Bild an sein Fenster an.</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Hilfe</translation>
+        <translation type="obsolete">&amp;Hilfe</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
-        <translation>&amp;Speichern als ...</translation>
+        <translation type="obsolete">&amp;Speichern als ...</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation>Speichern als ...</translation>
+        <translation type="obsolete">Speichern als ...</translation>
     </message>
     <message>
         <source>Save the currently selected LDR</source>
-        <translation>Speichert das derzeit ausgewählte LDR-Bild</translation>
+        <translation type="obsolete">Speichert das derzeit ausgewählte LDR-Bild</translation>
     </message>
     <message>
         <source>Cascade all LDRs in the workspace</source>
-        <translation>Stapelt alle LDR-Bilder im Arbeitsbereich</translation>
+        <translation type="obsolete">Stapelt alle LDR-Bilder im Arbeitsbereich</translation>
     </message>
     <message>
         <source>What&apos;s This?</source>
-        <translation>Was ist das?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation></translation>
+        <translation type="obsolete">Was ist das?</translation>
     </message>
     <message>
         <source>Ctrl+Q</source>
-        <translation>Strg+Q</translation>
+        <translation type="obsolete">Strg+Q</translation>
     </message>
     <message>
         <source>Ctrl+L</source>
-        <translation>Strg+L</translation>
+        <translation type="obsolete">Strg+L</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
-        <translation>Strg+T</translation>
+        <translation type="obsolete">Strg+T</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
-        <translation>Strg+D</translation>
+        <translation type="obsolete">Strg+D</translation>
     </message>
     <message>
         <source>Tone Mapping: </source>
-        <translation>Dynamikkompression: </translation>
+        <translation type="obsolete">Dynamikkompression: </translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation>Alle speichern</translation>
+        <translation type="obsolete">Alle speichern</translation>
     </message>
     <message>
         <source>Saves all LDRs</source>
-        <translation>Speichert alle LDR-Bilder</translation>
+        <translation type="obsolete">Speichert alle LDR-Bilder</translation>
     </message>
     <message>
         <source>Ctrl+Shift+S</source>
-        <translation>Strg+Shift+S</translation>
+        <translation type="obsolete">Strg+Shift+S</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation>Symbolleisten</translation>
+        <translation type="obsolete">Symbolleisten</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
-        <translation>F&amp;enster</translation>
+        <translation type="obsolete">F&amp;enster</translation>
     </message>
     <message>
         <source>Show Main Toolbar</source>
-        <translation>Hauptsymbolleiste zeigen</translation>
+        <translation type="obsolete">Hauptsymbolleiste zeigen</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>S&amp;chließen</translation>
+        <translation type="obsolete">S&amp;chließen</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Schließen</translation>
+        <translation type="obsolete">Schließen</translation>
     </message>
     <message>
         <source>Adjust &amp;Levels</source>
-        <translation>&amp;Werte anpassen</translation>
+        <translation type="obsolete">&amp;Werte anpassen</translation>
     </message>
     <message>
         <source>Adjust Levels</source>
-        <translation>Werte anpassen</translation>
+        <translation type="obsolete">Werte anpassen</translation>
     </message>
     <message>
         <source>HDR Image</source>
-        <translation>HDR-Bild</translation>
+        <translation type="obsolete">HDR-Bild</translation>
     </message>
     <message>
         <source>Next Image</source>
-        <translation>Nächstes Bild</translation>
+        <translation type="obsolete">Nächstes Bild</translation>
     </message>
     <message>
         <source>Previous Image</source>
-        <translation>Vorheriges Bild</translation>
+        <translation type="obsolete">Vorheriges Bild</translation>
     </message>
     <message>
         <source>Close the tonemapping dialog</source>
-        <translation>Dialog für Dynamikkompression schließen</translation>
+        <translation type="obsolete">Dialog für Dynamikkompression schließen</translation>
     </message>
     <message>
         <source>Tone Mapping Options</source>
-        <translation>Dynamikkompressionsoptionen</translation>
+        <translation type="obsolete">Dynamikkompressionsoptionen</translation>
     </message>
     <message>
         <source>Toggle display of the tonemapping options sidebar</source>
-        <translation>Anzeige der Seitenleiste mit Dynamikkompressionsoptionen umschalten</translation>
+        <translation type="obsolete">Anzeige der Seitenleiste mit Dynamikkompressionsoptionen umschalten</translation>
     </message>
     <message>
         <source>Show/Hide the tonemapping options sidebar</source>
-        <translation>Seitenleiste mit Dynamikkompressionsoptionen anzeigen/ausblenden</translation>
+        <translation type="obsolete">Seitenleiste mit Dynamikkompressionsoptionen anzeigen/ausblenden</translation>
     </message>
     <message>
         <source>Layout all LDR images as thumbnails</source>
-        <translation>Alle LDR-Bilder als Thumbnails anordnen</translation>
+        <translation type="obsolete">Alle LDR-Bilder als Thumbnails anordnen</translation>
     </message>
     <message>
         <source>Get verbose information about user interface elements</source>
-        <translation>Weitere Informationen über Elemente der Programmoberfläche erhalten</translation>
+        <translation type="obsolete">Weitere Informationen über Elemente der Programmoberfläche erhalten</translation>
     </message>
     <message>
         <source>&amp;Contents...</source>
-        <translation>&amp;Inhalt ...</translation>
+        <translation type="obsolete">&amp;Inhalt ...</translation>
     </message>
     <message>
         <source>Open user manual for Luminance</source>
-        <translation>Nutzerhandbuch für Luminance HDR öffnen</translation>
-    </message>
-    <message>
-        <source>F1</source>
-        <translation></translation>
+        <translation type="obsolete">Nutzerhandbuch für Luminance HDR öffnen</translation>
     </message>
     <message>
         <source>Show the original high dynamic range image</source>
-        <translation>Original-HDR-Bild anzeigen</translation>
+        <translation type="obsolete">Original-HDR-Bild anzeigen</translation>
     </message>
     <message>
         <source>Show the next image</source>
-        <translation>Nächstes Bild anzeigen</translation>
+        <translation type="obsolete">Nächstes Bild anzeigen</translation>
     </message>
     <message>
         <source>Show the previous image</source>
-        <translation>Vorheriges Bild anzeigen</translation>
+        <translation type="obsolete">Vorheriges Bild anzeigen</translation>
     </message>
     <message>
         <source>&amp;Normal Size</source>
-        <translation>&amp;Normale Größe</translation>
-    </message>
-    <message>
-        <source>O</source>
-        <translation></translation>
+        <translation type="obsolete">&amp;Normale Größe</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>Ver&amp;größern</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation></translation>
+        <translation type="obsolete">Ver&amp;größern</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>Ver&amp;kleinern</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation></translation>
+        <translation type="obsolete">Ver&amp;kleinern</translation>
     </message>
     <message>
         <source>Text Under Icons</source>
-        <translation>Text unter Symbolen</translation>
+        <translation type="obsolete">Text unter Symbolen</translation>
     </message>
     <message>
         <source>Only Icons</source>
-        <translation>Nur Symbole</translation>
+        <translation type="obsolete">Nur Symbole</translation>
     </message>
     <message>
         <source>Icons Only</source>
-        <translation>Nur Symbole</translation>
+        <translation type="obsolete">Nur Symbole</translation>
     </message>
     <message>
         <source>Text Alongside Icons</source>
-        <translation>Text neben Symbolen</translation>
+        <translation type="obsolete">Text neben Symbolen</translation>
     </message>
     <message>
         <source>Text Only</source>
-        <translation>Nur Text</translation>
+        <translation type="obsolete">Nur Text</translation>
     </message>
     <message>
         <source>Sync View</source>
-        <translation>Ansicht angleichen</translation>
+        <translation type="obsolete">Ansicht angleichen</translation>
     </message>
     <message>
         <source>Lock view of all images to sync panning</source>
-        <translation>Ansicht aller Bilder an Ausrichtung angleichen</translation>
+        <translation type="obsolete">Ansicht aller Bilder an Ausrichtung angleichen</translation>
     </message>
     <message>
         <source>Show information about Qt</source>
-        <translation>Informationen über Qt anzeigen</translation>
+        <translation type="obsolete">Informationen über Qt anzeigen</translation>
     </message>
     <message>
         <source>Show information about Qt library that is used by Luminance</source>
-        <translation>Zeigt Informationen über die von Luminance HDR verwendete Qt-Bibliothek</translation>
+        <translation type="obsolete">Zeigt Informationen über die von Luminance HDR verwendete Qt-Bibliothek</translation>
     </message>
     <message>
         <source>About Luminance</source>
-        <translation>Über Luminance HDR</translation>
+        <translation type="obsolete">Über Luminance HDR</translation>
     </message>
     <message>
         <source>Show information about Luminance</source>
-        <translation>Informationen über Luminance HDR anzeigen</translation>
+        <translation type="obsolete">Informationen über Luminance HDR anzeigen</translation>
     </message>
     <message>
         <source>Show information about Luminance, its authors and contributors</source>
-        <translation>Informationen über Luminance HDR, dessen Autoren und Mitwirkende anzeigen</translation>
+        <translation type="obsolete">Informationen über Luminance HDR, dessen Autoren und Mitwirkende anzeigen</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation>Über Qt</translation>
+        <translation type="obsolete">Über Qt</translation>
     </message>
     <message>
         <source>Original HDR</source>
-        <translation>Original-HDR-Bild</translation>
+        <translation type="obsolete">Original-HDR-Bild</translation>
     </message>
     <message>
         <source>Processed HDR</source>
-        <translation>Verarbeitetes HDR-Bild</translation>
-    </message>
-    <message>
-        <source>Luminance HDR</source>
-        <translation></translation>
+        <translation type="obsolete">Verarbeitetes HDR-Bild</translation>
     </message>
     <message>
         <source>Please select an LDR image to save.</source>
-        <translation>Bitte zu speicherndes LDR-Bild wählen.</translation>
+        <translation type="obsolete">Bitte zu speicherndes LDR-Bild wählen.</translation>
     </message>
     <message>
         <source>Save files in</source>
-        <translation>Dateien speichern in</translation>
+        <translation type="obsolete">Dateien speichern in</translation>
     </message>
     <message>
         <source>%1 License document not found, you can find it online: %2here%3</source>
         <comment>%2 and %3 are html tags</comment>
-        <translation>%1 Der Lizenztext wurde nicht gefunden. Du kannst ihn online lesen: %2hier%3</translation>
+        <translation type="obsolete">%1 Der Lizenztext wurde nicht gefunden. Du kannst ihn online lesen: %2hier%3</translation>
     </message>
     <message>
         <source>Please make a selection of the HDR image to tonemap.</source>
-        <translation>Bitte den Bereich innerhalb des zu verarbeitenden HDR-Bildes wählen.</translation>
+        <translation type="obsolete">Bitte den Bereich innerhalb des zu verarbeitenden HDR-Bildes wählen.</translation>
     </message>
     <message>
         <source>Please select an HDR image to tonemap.</source>
-        <translation>Bitte zu verarbeitendes HDR-Bild wählen.</translation>
+        <translation type="obsolete">Bitte zu verarbeitendes HDR-Bild wählen.</translation>
     </message>
     <message>
         <source>Error: %1</source>
-        <translation>Fehler: %1</translation>
+        <translation type="obsolete">Fehler: %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation>Unbenannt</translation>
+        <translation type="obsolete">Unbenannt</translation>
     </message>
 </context>
 <context>
