@@ -1,3 +1,5 @@
+This document is OUTDATED
+
 * displaying progress bar when loading HDR images (we need to ``moc`` each facility...)
 * long term: TEST/IMPROVE the antighosting algorithm (waiting Hugin's GSoC)
 * see http://qtpfsgui.wiki.sourceforge.net/TODO for a complete list.

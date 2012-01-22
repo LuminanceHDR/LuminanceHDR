@@ -1,18 +1,25 @@
-Changes 2.2.0(-beta2)
+Changes 2.2.0
 * NEW: BatchHDR tool
 * NEW: LDRs can be saved as 16 bit Tiffs
 * NEW: Samsung(s) RAW file support
 * NEW: Speed improvement due to OpenMP 
-* More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard), Mainwindow,
+* More speed improvements: tone-mapping (Mantiuk 06/08, Fattal, Reinhard)
 * NEW: image viewers with improved crop/selection tool
-* Improvement and optimized level and gamma control
-* Default profile in HDR creation is now Profile 6
+* Improvement and optimized level and gamma control (new histogram)
+* Improved UI: Tonemapping Panel, Preference Dialog and Mainwindow
+* Revert HDR merge algorithms to Qtpfsgui 1.8.12
 * Supporting better portrait HDRs
-* Windows: correcting file name, temp dir problems
-* Library updates: Qt, LibRaw, exiv2
-* Developement: changing build system from qmake to cmake
+* Windows: fix for file name and temp directory problems
+* Better support for filesystem character encoding
+* Library updates: Qt, LibRaw 0.14.5, exiv2
+* Updated translations (Italian, German, Romanian)
+* Development: changing build system from qmake to cmake
+* Development: update Windows building scripts
+* Development: migration from SVN to Git
+* Development: support for FreeBSD9
 
-TODO: redesign UI of: Preview Panel, Tonemapping Panel and HdrWizard (possibly using QWizard)
+TODO: redesign UI of Preview Panel and HdrWizard (possibly using QWizard)
+TODO: improve preset store/load (maybe use XML files?)
 
 Changes 2.1.0
 * Merge MainWindow and TonemappingWindow
@@ -29,7 +36,7 @@ Changes 2.0.2
 * New BatchTM Processing engine
 * Sorted leaks in freeing memory from pfs::Channel
 
-Changes 2.0.2(-pre1)
+Changes 2.0.2-pre1
 * Smaller memory footprint during the TM process
 * [Windows only] improved responsiveness of the UI during the Mantiuk TMO
 * [Windows only] update of the library in the package with the latest release (not yet completed)
