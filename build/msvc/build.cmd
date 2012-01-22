@@ -110,7 +110,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2638 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2656 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
