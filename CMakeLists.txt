@@ -255,7 +255,7 @@ SET(LUMINANCE_HDR_INCLUDE
 	src/Viewers/Histogram.h
 	src/Common/global.h
 	src/Common/GitSHA1.h
-    src/Common/config.h
+        src/Common/config.h
 
 # new viewer
         src/Viewers/ISelectionBox.h
@@ -312,10 +312,10 @@ SET(LUMINANCE_HDR_SRC
         src/Viewers/ISelectionBox.cpp
         src/Viewers/ISelectionAnchor.cpp
 # end new viewer
-	src/Common/GammaAndLevels.cpp
-	src/Common/Gang.cpp	
-	src/Common/ImageQualityDialog.cpp
-	src/Common/PanIconWidget.cpp
+        src/UI/GammaAndLevels.cpp
+        src/UI/Gang.cpp
+        src/UI/ImageQualityDialog.cpp
+        src/UI/PanIconWidget.cpp
         src/Common/ProgressHelper.cpp
 	src/Common/commandline.cpp	
 	src/Common/global.cpp
@@ -366,10 +366,10 @@ SET(LUMINANCE_HDR_MOC
         src/Viewers/IGraphicsPixmapItem.h
 # end new viewer
         src/Common/LuminanceOptions.h
-	src/Common/GammaAndLevels.h
-	src/Common/Gang.h
-	src/Common/ImageQualityDialog.h
-	src/Common/PanIconWidget.h
+        src/UI/GammaAndLevels.h
+        src/UI/Gang.h
+        src/UI/ImageQualityDialog.h
+        src/UI/PanIconWidget.h
         src/Common/ProgressHelper.h
 	src/Common/commandline.h
 )

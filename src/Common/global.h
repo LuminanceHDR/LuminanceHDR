@@ -30,7 +30,7 @@
 #include <QStringList>
 #include <QUrl>
 
-QString saveLDRImage(QWidget *p, const QString initialFileName, const QImage *image, bool batchMode = false);
+//QString saveLDRImage(QWidget *p, const QString initialFileName, const QImage *image, bool batchMode = false);
 bool matchesLdrFilename(QString file);
 bool matchesHdrFilename(QString file);
 bool matchesValidHDRorLDRfilename(QString file);

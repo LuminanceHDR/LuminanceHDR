@@ -29,7 +29,7 @@
 #include <cmath>
 #include <cassert>
 
-#include "Common/GammaAndLevels.h"
+#include "UI/GammaAndLevels.h"
 #include "ui_GammaAndLevels.h"
 
 namespace

@@ -30,13 +30,14 @@
 
 #include "ui_EditingTools.h"
 #include "Common/global.h"
-#include "Common/PanIconWidget.h"
 #include "Viewers/SelectionTool.h"
 #include "HdrCreation/HdrCreationManager.h"
 #include "PreviewWidget.h"
 #include "Common/LuminanceOptions.h"
 
 class HistogramLDR;
+class PanIconWidget;
+
 //defined in mtb_alignment.cpp
 QImage* shiftQImage(const QImage *in, int dx, int dy);
 

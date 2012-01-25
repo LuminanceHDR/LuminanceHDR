@@ -30,11 +30,13 @@
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
-#include "Common/ImageQualityDialog.h"
+
+//#include "UI/ImageQualityDialog.h"
 
 /**
  * \return "" when fail, out file name when successful
  */
+/*
 QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImage *image, bool batchMode)
 {
     LuminanceOptions luminance_options;
@@ -89,6 +91,7 @@ QString saveLDRImage(QWidget *parent, const QString initialFileName, const QImag
     } // if(!outfname.isEmpty())
     return outfname;
 }
+*/
 
 bool matchesLdrFilename(QString file)
 {

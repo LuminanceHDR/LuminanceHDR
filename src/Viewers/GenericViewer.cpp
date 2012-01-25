@@ -31,7 +31,7 @@
 
 #include "Viewers/GenericViewer.h"
 
-#include "Common/PanIconWidget.h"
+#include "UI/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"

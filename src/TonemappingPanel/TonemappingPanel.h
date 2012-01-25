@@ -31,8 +31,9 @@
 #include <QStatusBar>
 
 #include "Core/TonemappingOptions.h"
-#include "Common/Gang.h"
 #include "Libpfs/frame.h"
+
+class Gang;
 
 namespace Ui
 {

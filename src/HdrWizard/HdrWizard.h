@@ -33,11 +33,12 @@
 
 #include "ui_HdrWizard.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/Gang.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
 #include "arch/freebsd/math.h"
 #include "HdrCreation/HdrCreationManager.h"
+
+class Gang;
 
 class HdrWizard : public QDialog, private Ui::HdrWizard
 {
@@ -60,7 +61,7 @@ private:
 	void loadInputFiles(QStringList files, int count);
         LuminanceOptions luminance_options;
 
-	Gang *EVgang;
+    Gang* EVgang;
 
 	HdrCreationManager *hdrCreationManager;
 

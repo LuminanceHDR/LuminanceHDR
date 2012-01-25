@@ -37,8 +37,9 @@
 #include "arch/math.h"
 
 #include "Common/config.h"
-#include "EditingTools.h"
-#include "HdrWizard.h"
+#include "HdrWizard/EditingTools.h"
+#include "HdrWizard/HdrWizard.h"
+#include "UI/Gang.h"
 
 HdrWizard::HdrWizard(QWidget *p, QStringList files) : QDialog(p), hdrCreationManager(NULL), loadcurvefilename(""), savecurvefilename("") {
 	setupUi(this);
