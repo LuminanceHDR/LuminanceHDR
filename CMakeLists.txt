@@ -167,14 +167,6 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(LIB_HDR_INCLUDE
 	src/Common/msec_timer.h
-	src/Libpfs/vex.h
-	src/Libpfs/array2d.h
-	src/Libpfs/channel.h
-	src/Libpfs/colorspace.h
-	src/Libpfs/domio.h
-	src/Libpfs/frame.h
-	src/Libpfs/pfs.h
-	src/Libpfs/tag.h
 # PFS FILTER	
 	src/Filter/pfscut.h
 	src/Filter/pfsgamma.h
@@ -188,26 +180,6 @@ SET(LIB_HDR_INCLUDE
 	src/Fileformat/pfsinraw.h
 	src/Fileformat/pfsoutldrimage.h
 	src/Fileformat/pfsout16bitspixmap.h
-# PFS TMO
-	src/TonemappingOperators/pfstmo.h
-	src/TonemappingOperators/pfstmdefaultparams.h
-	src/TonemappingOperators/ashikhmin02/pyramid.h
-	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.h
-	src/TonemappingOperators/drago03/tmo_drago03.h
-	src/TonemappingOperators/durand02/bilateral.h
-	src/TonemappingOperators/durand02/fastbilateral.h
-	src/TonemappingOperators/durand02/tmo_durand02.h
-	src/TonemappingOperators/fattal02/pde.h
-	src/TonemappingOperators/fattal02/tmo_fattal02.h
-	src/TonemappingOperators/mantiuk06/contrast_domain.h
-	src/TonemappingOperators/mantiuk08/display_adaptive_tmo.h
-	src/TonemappingOperators/mantiuk08/display_function.h
-	src/TonemappingOperators/mantiuk08/display_size.h
-	src/TonemappingOperators/mantiuk08/cqp/gsl_cqp.h
-	src/TonemappingOperators/mantiuk08/cqp/initial_point.h
-	src/TonemappingOperators/pattanaik00/tmo_pattanaik00.h	
-	src/TonemappingOperators/reinhard02/tmo_reinhard02.h
-	src/TonemappingOperators/reinhard05/tmo_reinhard05.h
 # CREATE HDR
 	src/HdrCreation/createhdr.h
         src/HdrCreation/debevec.h
@@ -226,14 +198,6 @@ ENDIF()
 
 SET(LIB_HDR_SRC
 	src/Common/msec_timer.cpp
-        src/Libpfs/vex.cpp
-	src/Libpfs/array2d.cpp
-	src/Libpfs/channel.cpp
-	src/Libpfs/colorspace.cpp
-	src/Libpfs/domio.cpp
-	src/Libpfs/frame.cpp
-#	src/Libpfs/pfs.cpp
-	src/Libpfs/tag.cpp
 # PFS FILTER	
 #	src/Filter/pfsclamp.cpp
 	src/Filter/pfscut.cpp
@@ -253,34 +217,6 @@ SET(LIB_HDR_SRC
 	src/Fileformat/pfsinraw.cpp
 	src/Fileformat/pfsoutldrimage.cpp
 	src/Fileformat/pfsout16bitspixmap.cpp
-# PFS TMO
-	src/TonemappingOperators/ashikhmin02/tmo_ashikhmin02.cpp
-	src/TonemappingOperators/ashikhmin02/pfstmo_ashikhmin02.cpp
-	src/TonemappingOperators/drago03/tmo_drago03.cpp
-	src/TonemappingOperators/drago03/pfstmo_drago03.cpp
-	src/TonemappingOperators/durand02/bilateral.cpp
-	src/TonemappingOperators/durand02/fastbilateral.cpp
-	src/TonemappingOperators/durand02/pfstmo_durand02.cpp
-	src/TonemappingOperators/durand02/tmo_durand02.cpp
-	src/TonemappingOperators/fattal02/pde.cpp
-	src/TonemappingOperators/fattal02/tmo_fattal02.cpp
-	src/TonemappingOperators/fattal02/pfstmo_fattal02.cpp
-	src/TonemappingOperators/mantiuk06/contrast_domain.cpp
-	src/TonemappingOperators/mantiuk06/pfstmo_mantiuk06.cpp
-	src/TonemappingOperators/mantiuk08/display_adaptive_tmo.cpp
-	src/TonemappingOperators/mantiuk08/display_function.cpp
-	src/TonemappingOperators/mantiuk08/display_size.cpp
-	src/TonemappingOperators/mantiuk08/cqp/initial_point.c
-	src/TonemappingOperators/mantiuk08/cqp/cqpminimizer.c
-	src/TonemappingOperators/mantiuk08/cqp/mg_pdip.c
-	src/TonemappingOperators/mantiuk08/pfstmo_mantiuk08.cpp	
-	src/TonemappingOperators/pattanaik00/tmo_pattanaik00.cpp
-	src/TonemappingOperators/pattanaik00/pfstmo_pattanaik00.cpp
-	src/TonemappingOperators/reinhard02/tmo_reinhard02.cpp
-	src/TonemappingOperators/reinhard02/pfstmo_reinhard02.cpp
-	src/TonemappingOperators/reinhard02/approx.cpp
-	src/TonemappingOperators/reinhard05/tmo_reinhard05.cpp
-	src/TonemappingOperators/reinhard05/pfstmo_reinhard05.cpp
 # CREATE HDR
 	src/HdrCreation/createhdr.cpp
 	src/HdrCreation/debevec.cpp
@@ -325,17 +261,6 @@ SET(LUMINANCE_HDR_INCLUDE
         src/Viewers/ISelectionBox.h
         src/Viewers/ISelectionAnchor.h
 # end new viewer
-
-        src/TonemappingEngine/TonemapOperatorAshikhmin02.h
-        src/TonemappingEngine/TonemapOperatorDrago03.h
-        src/TonemappingEngine/TonemapOperatorDurand02.h
-        src/TonemappingEngine/TonemapOperatorFattal02.h
-        src/TonemappingEngine/TonemapOperatorMantiuk06.h
-        src/TonemappingEngine/TonemapOperatorMantiuk08.h
-        src/TonemappingEngine/TonemapOperatorPattanaik00.h
-        src/TonemappingEngine/TonemapOperatorReinhard02.h
-        src/TonemappingEngine/TonemapOperatorReinhard05.h
-        src/TonemappingEngine/TonemapOperator.h
 )
 
 SET(LUMINANCE_HDR_SRC
@@ -396,18 +321,8 @@ SET(LUMINANCE_HDR_SRC
 	src/Common/global.cpp
         src/Common/LuminanceOptions.cpp
 
-        src/TonemappingEngine/TonemapOperatorAshikhmin02.cpp
-        src/TonemappingEngine/TonemapOperatorDrago03.cpp
-        src/TonemappingEngine/TonemapOperatorDurand02.cpp
-        src/TonemappingEngine/TonemapOperatorFattal02.cpp
-        src/TonemappingEngine/TonemapOperatorMantiuk06.cpp
-        src/TonemappingEngine/TonemapOperatorMantiuk08.cpp
-        src/TonemappingEngine/TonemapOperatorPattanaik00.cpp
-        src/TonemappingEngine/TonemapOperatorReinhard02.cpp
-        src/TonemappingEngine/TonemapOperatorReinhard05.cpp
-        src/TonemappingEngine/TonemapOperator.cpp
-
 	src/main.cpp
+
 	${CMAKE_CURRENT_BINARY_DIR}/src/Common/GitSHA1.cpp     # for actual git version
 )
 
@@ -507,6 +422,9 @@ QT4_ADD_RESOURCES(LUMINANCE_HDR_RCCS_SRCS ${LUMINANCE_HDR_RCCS})
 
 QT4_WRAP_UI(LUMINANCE_HDR_UI_HEADERS ${LUMINANCE_HDR_UI})
 
+ADD_SUBDIRECTORY(src)
+
+
 IF(UPDATE_TRANSLATIONS)
     SET(LUMINANCE_TO_TRANSLATE
     ${LIB_HDR_INCLUDE}
@@ -534,6 +452,7 @@ SET(LUMINANCE_FILES
          ${LUMINANCE_QM}
 )
 
+
 IF(APPLE)
     # icon files to copy in the bundle
     #SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
@@ -556,7 +475,7 @@ IF(APPLE)
   
     SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
 
-ELSEIF(UNIX)
+ELSEIF(APPLE)
 
     #ADD_DEFINITIONS(-DPREFIX=${CMAKE_INSTALL_PREFIX})
     ADD_DEFINITIONS(-DI18NDIR="${CMAKE_INSTALL_PREFIX}/share/luminance-hdr/i18n")
@@ -613,7 +532,10 @@ ELSEIF(WIN32)
     LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 
-
 ENDIF()
 
+# Link sub components
+TARGET_LINK_LIBRARIES(luminance-hdr pfs tmengine pfstmo)
+# Link shared library
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+

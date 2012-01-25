@@ -1,0 +1,3 @@
+ADD_SUBDIRECTORY(Libpfs)
+ADD_SUBDIRECTORY(TonemappingEngine)
+ADD_SUBDIRECTORY(TonemappingOperators)
