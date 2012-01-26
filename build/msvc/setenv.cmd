@@ -10,6 +10,7 @@ REM SET Configuration=Debug
 
 REM updates/overwrites the original .ts files doing a Qt lupdate
 SET OPTION_LUMINANCE_UPDATE_TRANSLATIONS=0
+SET OPTION_LUPDATE_NOOBSOLETE=0
 
 REM Optional variables
 REM SET L_BOOST_DIR=C:\Data\Develop\libhdrStuff
