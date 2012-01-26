@@ -27,30 +27,6 @@
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
     </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;Please &lt;/span&gt;&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;, if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;All the community on &lt;/span&gt;&lt;a href=&quot;http://www.flickr.com/groups/qtpfsgui&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;Flickr&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Hugin&apos;s &lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; font-style:italic;&quot;&gt;align_image_stack&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt; and more&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Pablo D&apos;Angelo&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Opensuse 10.2 and 10.3 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Peter Linnell&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Fedora packager and bug reports&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Douglas E. Warner&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;openSUSE 10.2 packager&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rauch Christian&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Gentoo Linux Ebuild&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Rene Zbinden&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Various suggestions&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Arne Hagenah&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -208,10 +184,6 @@ See documentation for more informations.</source>
     <message>
         <source>Messages</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Sulje</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -426,10 +398,6 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">Käytetään %1 säiettä</translation>
     </message>
     <message>
-        <source>Saving using file format: </source>
-        <translation type="obsolete">Tallennetaan käyttäen tiedostomuotoa:</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Valitse hakemisto</translation>
     </message>
@@ -458,24 +426,8 @@ Kuvaerän tonemappaus</translation>
         <translation type="unfinished">&amp;Valmis</translation>
     </message>
     <message>
-        <source>Starting to convert an HDR image: </source>
-        <translation type="obsolete">Aloitetaan muuntamaan HDR-kuvaa:</translation>
-    </message>
-    <message>
         <source>All tasks completed.</source>
         <translation type="unfinished">Kaikki tehtävät suoritettu.</translation>
-    </message>
-    <message>
-        <source>Finished tone mapping the current HDR.</source>
-        <translation type="obsolete">HDR-kuvan tonemappaus valmis.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot save to file: </source>
-        <translation type="obsolete">VIRHE: Ei voida tallentaa tiedostoon: </translation>
-    </message>
-    <message>
-        <source>Successfully saved LDR file: </source>
-        <translation type="obsolete">Onnistuneesti tallennettu LDR-tiedosto: </translation>
     </message>
     <message>
         <source>Close</source>
@@ -1052,14 +1004,6 @@ p, li { white-space: pre-wrap; }
         <source>Pan the image to a region</source>
         <translation type="unfinished">Panoroi kuva alueelle</translation>
     </message>
-    <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Tallentamattomat muutokset...</translation>
-    </message>
-    <message>
-        <source>This image has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="obsolete">Tässä kuvassa on tallentamattomia muutoksia.&lt;br&gt;Oletko varma, että haluat sulkea sen?</translation>
-    </message>
 </context>
 <context>
     <name>HdrCreationManager</name>
@@ -1125,10 +1069,6 @@ p, li { white-space: pre-wrap; }
         <source>Histogram:</source>
         <translation type="unfinished">Histogrammi:</translation>
     </message>
-    <message>
-        <source>Loading file...</source>
-        <translation type="obsolete">Ladataan tiedostoa...</translation>
-    </message>
 </context>
 <context>
     <name>HdrWizard</name>
@@ -1181,14 +1121,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Currently Loaded &amp;Files</source>
         <translation type="unfinished">Tällä hetkellä ladatut &amp;tiedostot</translation>
-    </message>
-    <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Lataa kuvat</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Lataa kuvat...</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -1431,28 +1363,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Valotus</translation>
     </message>
     <message>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="obsolete">Kaikki formaatit (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
-    </message>
-    <message>
-        <source>*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</source>
-        <translation type="obsolete">*.JPEG *.JPG *.TIFF *.TIF *.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW);;</translation>
-    </message>
-    <message>
         <source>JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</source>
         <translation type="unfinished">JPEG (*.jpeg *.jpg *.JPEG *.JPG);;</translation>
     </message>
     <message>
         <source>TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</source>
         <translation type="unfinished">TIFF Images (*.tiff *.tif *.TIFF *.TIF);;</translation>
-    </message>
-    <message>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</source>
-        <translation type="obsolete">RAW-kuvat (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw</translation>
-    </message>
-    <message>
-        <source>*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</source>
-        <translation type="obsolete">*.CRW *.CR2 *.NEF *.DNG *.MRW *.ORF *.KDC *.DCR *.ARW *.RAF *.PTX *.PEF *.X3F *.RAW *.SR2 *.RW2 *.3FR *.MEF *.MOS *.ERF *.NRW)</translation>
     </message>
     <message>
         <source>Select the input images</source>
@@ -1467,26 +1383,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Kuvat ladattu.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance HDR ei löytänyt olennaisia &lt;i&gt;EXIF&lt;/i&gt; -tageja
-seuraaville kuville:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;Voit silti jatkaa HDR:n luomista. Niin tehdäkseisi sinun täytyy syöttää &lt;b&gt;manuaalisesti&lt;/b&gt;  EV-arvot (exposure values, valotusarvot) tai aukkojen eron arvot.		&lt;hr&gt;Jos haluat Luminance HDR:n tekevän tämän &lt;b&gt;automaattisesti&lt;/b&gt;, sinun täytyy ladata vähintään
-seuraava exif-data: 		&lt;ul&gt;&lt;li&gt;Suljinaika (sekunteja)&lt;/li&gt;		&lt;li&gt;Aukko (f-numero)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;VIHJE:&lt;/b&gt; Exif-datan häviäminen tapahtuu usein kuvia esikäsitellessä.&lt;br&gt;		Voit tehdä&lt;b&gt;kuvasta kuvaan kopioinnin&lt;/b&gt; kahden kuvasarjan välillä &lt;i&gt;&lt;b&gt;&quot;Työkalut-&gt;Koipio exif-tiedot...&quot;&lt;/b&gt;&lt;/i&gt; -valikosta.</translation>
-    </message>
-    <message>
         <source>EXIF data not found</source>
         <translation type="unfinished">EXIF-tietoja ei löytynyt</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Jatkaaksesi sinun täytyy asetaa valotusarvot manuaalisesti&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; arvoa puuttuu.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Latausvirhe</translation>
     </message>
     <message>
         <source>Start loading a set of images with different exposure</source>
@@ -1499,10 +1401,6 @@ seuraava exif-data: 		&lt;ul&gt;&lt;li&gt;Suljinaika (sekunteja)&lt;/li&gt;		&lt
     <message>
         <source>Error...</source>
         <translation type="unfinished">Virhe...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Ulkoisen sovelluksen käynnistäminen epäonnistui &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Ole hyvä ja lue &quot;Ohje -&gt; Dokumentaatio... -&gt; Vihjeitä ja vinkkejä saadaksesi lisää tietoa.</translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
@@ -1539,10 +1437,6 @@ seuraava exif-data: 		&lt;ul&gt;&lt;li&gt;Suljinaika (sekunteja)&lt;/li&gt;		&lt
     <message>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Tallenna kameran vastekäyrätiedosto</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Painoarvot:</translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1745,17 +1639,6 @@ joka on liitetty protokollaan?</translation>
     </message>
 </context>
 <context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Luminance Help</source>
-        <translation type="obsolete">Luminance ohje</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Sulje</translation>
-    </message>
-</context>
-<context>
     <name>HelpSideBar</name>
     <message>
         <source>Contents</source>
@@ -1805,16 +1688,8 @@ joka on liitetty protokollaan?</translation>
         <translation type="unfinished">VIRHE: Tiedosto ei ole luettavissa: %1</translation>
     </message>
     <message>
-        <source>ERROR: Cannot open file: %1</source>
-        <translation type="obsolete">VIRHE: Ei voida avata tiedostoa: %1</translation>
-    </message>
-    <message>
         <source>ERROR: File %1 has unsupported extension.</source>
         <translation type="unfinished">VIRHE: Tiedoston %1 pääte ei ole tuettu.</translation>
-    </message>
-    <message>
-        <source>ERROR: %1</source>
-        <translation type="obsolete">VIRHE: %1</translation>
     </message>
     <message>
         <source>ERROR: Failed loading file: %1</source>
@@ -1932,29 +1807,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LoadHdrThread</name>
-    <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">VIRHE: Tiedosto ei ole luettavissa: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot open file: %1</source>
-        <translation type="obsolete">VIRHE: Ei voida avata tiedostoa: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">VIRHE: Tiedoston %1 pääte ei ole tuettu.</translation>
-    </message>
-    <message>
-        <source>ERROR: %1</source>
-        <translation type="obsolete">VIRHE: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">VIRHE: Tiedoston lataaminen epäonnistui: %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Luminance HDR</source>
@@ -1993,10 +1845,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Muokkaa</translation>
     </message>
     <message>
-        <source>Show Main Toolbar</source>
-        <translation type="obsolete">Näytä päätyökaluvalikko</translation>
-    </message>
-    <message>
         <source>&amp;New HDR image...</source>
         <translation type="unfinished">&amp;Uusi HDR-kuva...</translation>
     </message>
@@ -2033,36 +1881,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
-        <source>&amp;Save HDR image as...</source>
-        <translation type="obsolete">Talle&amp;nna HDR-kuva nimellä...</translation>
-    </message>
-    <message>
-        <source>Save HDR image as...</source>
-        <translation type="obsolete">Tallenna HDR-kuva nimellä...</translation>
-    </message>
-    <message>
-        <source>Save HDR image (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Tallenna HDr-kuva (OpenEXR, Radiance RGBE, PFS stream, tai 32bit tai LogLuv TIFF)</translation>
-    </message>
-    <message>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Tone Mapping...</source>
-        <translation type="obsolete">T&amp;onemappaus...</translation>
-    </message>
-    <message>
-        <source>Tonemap HDR image</source>
-        <translation type="obsolete">Tonemappaa HDR-kuva</translation>
-    </message>
-    <message>
-        <source>Convert the HDR image to a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="obsolete">Muunna HDR-kuva yleiseen LDR-formaattiin (esim. JPEG tai PNG)</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -2433,10 +2253,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Valmis. Avaa nyt olemassa oleva HDR-kuva tai luo uusi!</translation>
     </message>
     <message>
-        <source>Saving file...</source>
-        <translation type="obsolete">Tallennetaan tiedostoa...</translation>
-    </message>
-    <message>
         <source>All HDR formats </source>
         <translation type="unfinished">Kaikki HDR-formaatit</translation>
     </message>
@@ -2445,41 +2261,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Lataa yksi tai useampi HDR-kuva...</translation>
     </message>
     <message>
-        <source>Save the HDR image as...</source>
-        <translation type="obsolete">Tallenna HDR-kuva nimellä...</translation>
-    </message>
-    <message>
-        <source>Error: %1 </source>
-        <translation type="obsolete">Virhe: %1 </translation>
-    </message>
-    <message>
-        <source>Error: Failed to Tonemap Image</source>
-        <translation type="obsolete">Virhe: Kuvan tonemappaus epäonnistui</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Virhe...</translation>
-    </message>
-    <message>
-        <source>Luminance HDR needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tonemapping.</source>
-        <translation type="obsolete">Luminance HDR:n täytyy tallentaa tulokset välimuistiin käyttäen väliaikaisia tiedostoja, mutta tällä hetkellä valittu hakemisto ei kelpaa. &lt;br&gt;Ole hyvä ja valitse validi polku asetuksista Työkalut -&gt; Asetukset... -&gt; Tonemappaus.</translation>
-    </message>
-    <message>
         <source>Aborting...</source>
         <translation type="unfinished">Keskeytetään...</translation>
     </message>
     <message>
         <source>Unsaved changes...</source>
         <translation type="unfinished">Tallentamattomia muutoksia...</translation>
-    </message>
-    <message>
-        <source>There is at least one HDR image with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Vähintään yhdessä HDR-kuvassa on tallentamattomia muutoksia.&lt;br&gt;Haluatko silti lopettaa?</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Lisenssidokumenttia ei löydy, löydät sen online: %2täältä%3</translation>
     </message>
     <message>
         <source>Untitled</source>
@@ -2664,36 +2451,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Käyttöliittymä</translation>
     </message>
     <message>
-        <source>HDR</source>
-        <translation type="obsolete">HDR</translation>
-    </message>
-    <message>
         <source>Tone Mapping</source>
         <translation type="unfinished">Tonemappaus</translation>
     </message>
     <message>
-        <source>Raw Conversion</source>
-        <translation type="obsolete">Raw-muunnos</translation>
-    </message>
-    <message>
         <source>External Tools</source>
         <translation type="unfinished">Lisätyökalut</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Käyttöliittymä&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translation type="obsolete">Kieli:</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -2740,28 +2503,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Unkari</translation>
     </message>
     <message>
-        <source>Tonemapping Windows</source>
-        <translation type="obsolete">Tonemappausikkunat</translation>
-    </message>
-    <message>
-        <source>Maximize result</source>
-        <translation type="obsolete">Maksimoi lopullinen kuva</translation>
-    </message>
-    <message>
-        <source>Always show Processed HDR</source>
-        <translation type="obsolete">Näytä aina prosessoitu HDR</translation>
-    </message>
-    <message>
         <source>HDR Options</source>
         <translation type="unfinished">HDR-asetukset</translation>
-    </message>
-    <message>
-        <source>Choose what type of HDR TIFF to save to</source>
-        <translation type="obsolete">Valitse, minkä tyyppiseen TIFFiin HDR tallennetaan</translation>
-    </message>
-    <message>
-        <source>HDR TIFF File Format</source>
-        <translation type="obsolete">HDR TIFF-tiedostoformaatti</translation>
     </message>
     <message>
         <source>Good quality and smaller file size</source>
@@ -2780,10 +2523,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Float TIFF (float, 32 bittiä per värikanava)</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="obsolete">Värit</translation>
-    </message>
-    <message>
         <source>Show negative numbers as:</source>
         <translation type="unfinished">Väri, jolla negatiiviset numerot näytetään:</translation>
     </message>
@@ -2792,32 +2531,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"> Nan- ja +/-Inf-arvojen väri:</translation>
     </message>
     <message>
-        <source>Tone Mapping Options</source>
-        <translation type="obsolete">Tonemappauksen asetukset</translation>
-    </message>
-    <message>
-        <source>Cache</source>
-        <translation type="obsolete">Välimuisti</translation>
-    </message>
-    <message>
-        <source>Where to store temporary data:</source>
-        <translation type="obsolete">Minne väliaikaiset tiedostot varastoidaan:</translation>
-    </message>
-    <message>
         <source>C&amp;hoose</source>
         <translation type="unfinished">&amp;Valitse</translation>
     </message>
     <message>
-        <source>Batch Tone Mapping</source>
-        <translation type="obsolete">Kuvasarjan tonemappaus</translation>
-    </message>
-    <message>
         <source>Which LDR image format to save to</source>
         <translation type="unfinished">Mihin LDR-formaattiin tallennetaan</translation>
-    </message>
-    <message>
-        <source>LDR image &amp;format:</source>
-        <translation type="obsolete">LDR-kuvan &amp;formaatti:</translation>
     </message>
     <message>
         <source>JPEG</source>
@@ -2842,34 +2561,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Amount of threads to use on multicore/SMP machines</source>
         <translation type="unfinished">Käytettävien säikeiden määrä moniydin/SMP-koneissa</translation>
-    </message>
-    <message>
-        <source>Number of &amp;threads:</source>
-        <translation type="obsolete">Säikeiden &amp;määrä:</translation>
-    </message>
-    <message>
-        <source>Demosaicing</source>
-        <translation type="obsolete">Demosaicing</translation>
-    </message>
-    <message>
-        <source>Multipliers:</source>
-        <translation type="obsolete">Kertoimet:</translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="obsolete">R</translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="obsolete">G</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="obsolete">B</translation>
-    </message>
-    <message>
-        <source>Red:    </source>
-        <translation type="obsolete">Punainen:</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2978,18 +2669,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Valkotasapaino</translation>
     </message>
     <message>
-        <source>Method:</source>
-        <translation type="obsolete">Menetelmä:</translation>
-    </message>
-    <message>
-        <source>T(K):      </source>
-        <translation type="obsolete">T(K):</translation>
-    </message>
-    <message>
-        <source>Green:</source>
-        <translation type="obsolete">Vihreä:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3044,14 +2723,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Set here the green component to set magenta color cast removal level</source>
         <translation type="unfinished">Aseta tähän vihreä komponetti asettaaksesi magentan värivirheen poistotason</translation>
-    </message>
-    <message>
-        <source>Highlights:</source>
-        <translation type="obsolete">Huippukohdat:</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation type="obsolete">Taso:</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3114,10 +2785,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Automaattinen kirkkaus</translation>
     </message>
     <message>
-        <source>Brightness:</source>
-        <translation type="obsolete">Kirkkaus:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3164,10 +2831,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Käytä tiettyä valkoisen pisteen arvoa muuntaaksesi RAW-kuvia. Jos valitset off, valkoisen pisteen arvo lasketaan automaattisesti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>White</source>
-        <translation type="obsolete">Valkoinen</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3194,10 +2857,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Valkoisen pisteen arvo&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Määritä valkoisen pisteen arvo lopulliselle kuvalle.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Corrections</source>
-        <translation type="obsolete">Korjaukset</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3254,14 +2913,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ota käyttöön kromaattisen aberraation korjaus</translation>
     </message>
     <message>
-        <source>Red:  </source>
-        <translation type="obsolete">Punainen:</translation>
-    </message>
-    <message>
-        <source>Blue:</source>
-        <translation type="obsolete">Sininen:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3288,14 +2939,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sinisen kerroin&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aseta sinisen tason suurennuskerroin.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Color Management</source>
-        <translation type="obsolete">Värinhallinta</translation>
-    </message>
-    <message>
-        <source>Camera profile:</source>
-        <translation type="obsolete">Kameran profiili:</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3328,10 +2971,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Custom</source>
         <translation type="unfinished">Kustomoitu</translation>
-    </message>
-    <message>
-        <source>Color Space:</source>
-        <translation type="obsolete">Väriavaruus:</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3380,10 +3019,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Pro Photo</translation>
     </message>
     <message>
-        <source>align_image_stack commandline arguments:</source>
-        <translation type="obsolete">align_image_stack komentorivin argumentit:</translation>
-    </message>
-    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -3402,14 +3037,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Option -a...</source>
-        <translation type="obsolete">Asetus -a...</translation>
-    </message>
-    <message>
-        <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Command line options have been corrected.</source>
-        <translation type="obsolete">LuminanceHDR vaatii että align_image_stack suoritetaan &quot;-a aligned_&quot; asetuksella. Komentoriviasetukset on korjattu.</translation>
     </message>
     <message>
         <source>Please restart...</source>
@@ -3964,29 +3591,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ThreadManager</name>
-    <message>
-        <source>Active TM Processes</source>
-        <translation type="obsolete">Aktiiviset TM-prosessit</translation>
-    </message>
-    <message>
-        <source>&amp;Abort All</source>
-        <translation type="obsolete">&amp;Keskeytä kaikki</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Sulje</translation>
-    </message>
-</context>
-<context>
     <name>TonemappingPanel</name>
     <message>
         <source>Tone mapping operators and their options</source>
         <translation type="unfinished">Tonemappausoperaattorit ja niiden asetukset</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Operaattori:&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
@@ -4023,16 +3631,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Pattanaik</source>
         <translation type="unfinished">Pattanaik</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
@@ -4083,10 +3681,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Luminanssin taso</translation>
     </message>
     <message>
-        <source>Set Manual Luminace Level</source>
-        <translation type="obsolete">Aseta luminanssin taso manuaalisesti</translation>
-    </message>
-    <message>
         <source>Alpha</source>
         <translation type="unfinished">Alpha</translation>
     </message>
@@ -4097,10 +3691,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Noise Reduction</source>
         <translation type="unfinished">Kohinanpoisto</translation>
-    </message>
-    <message>
-        <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
-        <translation type="obsolete">&quot;Vanha&quot; Fattal (pre 1.8.4)</translation>
     </message>
     <message>
         <source>Bias</source>
@@ -4183,10 +3773,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Local Tone Mapping</translation>
     </message>
     <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Cone and Rod based on Luminance</translation>
-    </message>
-    <message>
         <source>Cone Level</source>
         <translation type="unfinished">Cone Level</translation>
     </message>
@@ -4215,10 +3801,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Seuraavat hyväksytyt asetukset</translation>
     </message>
     <message>
-        <source>Tone Mapping settings file section</source>
-        <translation type="obsolete">Tonemappauksen asetustiedostojen alue</translation>
-    </message>
-    <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
         <translation type="unfinished">Voit ladata ja tallentaa tässä tonemappauksen asetustiedoston.&lt;br&gt;Voit myös hyväksyä tällä hetkellä ladatun asetustiedoston sisällön.</translation>
     </message>
@@ -4235,10 +3817,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tallenna nykyiset parametrit (pregamma ja TMO) tekstitiedostoon.</translation>
     </message>
     <message>
-        <source>&amp;Save...</source>
-        <translation type="obsolete">&amp;Tallenna...</translation>
-    </message>
-    <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation type="unfinished">Lataa pregamma- ja TMO-asetukset sisältävä tekstitiedosto</translation>
     </message>
@@ -4247,24 +3825,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Lataa pregamma- ja TMO-asetukset sisältävä tekstitiedosto.</translation>
     </message>
     <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Lataa...</translation>
-    </message>
-    <message>
-        <source>Gamma applied before tone mapping</source>
-        <translation type="obsolete">Gamma lisätään ennen tonemappausta</translation>
-    </message>
-    <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
         <translation type="unfinished">Voit lisätä tässä HDr-kuvaan gammakorjauksen.&lt;br&gt;Gammakorjaus tehdään ennen tonemappausta.</translation>
     </message>
     <message>
         <source>Process</source>
         <translation type="unfinished">Käsittele</translation>
-    </message>
-    <message>
-        <source>&amp;Result Size:</source>
-        <translation type="obsolete">&amp;Valmiin kuvan koko:</translation>
     </message>
     <message>
         <source>Size of the resulting LDR image</source>
@@ -4283,40 +3849,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tätä nappia klikkaamalla voit asettaa &lt;i&gt;leveyden&lt;/i&gt;lopulliselle LDR-kuvalle.&lt;br&gt;Kun olet painanut Enteriä (eli Palaa (Return)-nappia) korkeuden arvo lasketaan automaattisesti ja uusi koko listätään listaan.</translation>
     </message>
     <message>
-        <source>Start tonemapping (CTRL+A)</source>
-        <translation type="obsolete">Aloita tonemappaus (CTRL+A)</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">&amp;Hyväksy</translation>
-    </message>
-    <message>
-        <source>If checked process the original HDR image, if not process the previously tonemapped image</source>
-        <translation type="obsolete">Jos valittu, prosessoi alkuperäisen HDR-kuvan, jos ei, prosessoi edellisen tonemapatun kuvan</translation>
-    </message>
-    <message>
-        <source>Process
-Original HDR</source>
-        <translation type="obsolete">Käsittele
-Alkuperäinen HDR</translation>
-    </message>
-    <message>
-        <source>Process only selection of the original HDR image</source>
-        <translation type="obsolete">Käsittele ainoastaan valittu alue alkuperäisestä HDR-kuvasta</translation>
-    </message>
-    <message>
-        <source>Process
-Selection</source>
-        <translation type="obsolete">Käsittele
-Valinta</translation>
-    </message>
-    <message>
         <source>Gamma applied before tonemapping</source>
         <translation type="unfinished">Gamma lisätään ennen tonemappausta</translation>
-    </message>
-    <message>
-        <source>Pre-gamma:</source>
-        <translation type="obsolete">Pre-gamma:</translation>
     </message>
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
@@ -4333,10 +3867,6 @@ Valinta</translation>
     <message>
         <source>&amp;Tonemap</source>
         <translation type="unfinished">&amp;Tonemappaa</translation>
-    </message>
-    <message>
-        <source>Ctrl+A</source>
-        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <source>undo</source>
@@ -4478,338 +4008,6 @@ Do you want to continue?</source>
         <translation type="unfinished">Tämä tonemappausoperaattori on riipuvainen annetun kuvan koosta. Lopputulos on todennäköisesti erilainen, kun operaattoria käytetään täysikokoiseen kuvaan.
 
 Haluatko jatkaa?</translation>
-    </message>
-</context>
-<context>
-    <name>TonemappingWindow</name>
-    <message>
-        <source>Tone Mapping: </source>
-        <translation type="obsolete">Tonemappaus: </translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Ohje</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Näytä</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="obsolete">Työkaluvalikot</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Tiedosto</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="obsolete">&amp;Ikkunat</translation>
-    </message>
-    <message>
-        <source>Show Main Toolbar</source>
-        <translation type="obsolete">Näytä päätyökaluvalikko</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Sulje</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Sulje</translation>
-    </message>
-    <message>
-        <source>Close the tonemapping dialog</source>
-        <translation type="obsolete">Sulje tonemappausdialogi</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="obsolete">Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Options</source>
-        <translation type="obsolete">Tonemappauksen asetukset</translation>
-    </message>
-    <message>
-        <source>Toggle display of the tonemapping options sidebar</source>
-        <translation type="obsolete">Kytke tonemappauksen asetusten sivupaneelin näyttö</translation>
-    </message>
-    <message>
-        <source>Show/Hide the tonemapping options sidebar</source>
-        <translation type="obsolete">Näytä/Piilota tonemappauksen asetusten sivupaneeli</translation>
-    </message>
-    <message>
-        <source>Adjust &amp;Levels</source>
-        <translation type="obsolete">Säädä &amp;tasoja</translation>
-    </message>
-    <message>
-        <source>Adjust Levels</source>
-        <translation type="obsolete">Säädä tasoja</translation>
-    </message>
-    <message>
-        <source>Tune the histogram for the current LDR</source>
-        <translation type="obsolete">Säädä nykyisen LDR:n histogrammia</translation>
-    </message>
-    <message>
-        <source>Ctrl+L</source>
-        <translation type="obsolete">Ctrl+L</translation>
-    </message>
-    <message>
-        <source>&amp;Save as...</source>
-        <translation type="obsolete">T&amp;allenna nimellä...</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation type="obsolete">Tallenna nimellä...</translation>
-    </message>
-    <message>
-        <source>Save the currently selected LDR</source>
-        <translation type="obsolete">Tallenna valittu LDR</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="obsolete">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>C&amp;lose All</source>
-        <translation type="obsolete">S&amp;ulje kaikki</translation>
-    </message>
-    <message>
-        <source>Close All</source>
-        <translation type="obsolete">Sulje kaikki</translation>
-    </message>
-    <message>
-        <source>Close all the LDRs in the workspace</source>
-        <translation type="obsolete">Sulje kaikki työtilan LDR:t</translation>
-    </message>
-    <message>
-        <source>Ctrl+C</source>
-        <translation type="obsolete">Ctrl+C</translation>
-    </message>
-    <message>
-        <source>As &amp;Thumbnails</source>
-        <translation type="obsolete">&amp;Pienoiskuvina</translation>
-    </message>
-    <message>
-        <source>As Thumbnails</source>
-        <translation type="obsolete">Pienoiskuvina</translation>
-    </message>
-    <message>
-        <source>Images as Thumbnails</source>
-        <translation type="obsolete">Kuvat pienoiskuvina</translation>
-    </message>
-    <message>
-        <source>Layout all LDR images as thumbnails</source>
-        <translation type="obsolete">Sommittele kaikki LDR-kuvat pienoiskuvina</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="obsolete">&amp;Limitä</translation>
-    </message>
-    <message>
-        <source>Cascade all LDRs in the workspace</source>
-        <translation type="obsolete">Limitä kaikki työtilan LDR:t</translation>
-    </message>
-    <message>
-        <source>Ctrl+D</source>
-        <translation type="obsolete">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">Sovita i&amp;kkunaan</translation>
-    </message>
-    <message>
-        <source>Fit the current LDR to its containing window.</source>
-        <translation type="obsolete">Sovita valittu LDR ikkunaansa.</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation type="obsolete">W</translation>
-    </message>
-    <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">Mikä tämä on?</translation>
-    </message>
-    <message>
-        <source>Get verbose information about user interface elements</source>
-        <translation type="obsolete">Hae monipuolista tietoa käyttöliittymän elementeistä</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
-    </message>
-    <message>
-        <source>&amp;Contents...</source>
-        <translation type="obsolete">Sis&amp;ältö...</translation>
-    </message>
-    <message>
-        <source>Open user manual for Luminance</source>
-        <translation type="obsolete">Avaa Luminancen käyttöohje</translation>
-    </message>
-    <message>
-        <source>F1</source>
-        <translation type="obsolete">F1</translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="obsolete">Tallenna kaikki</translation>
-    </message>
-    <message>
-        <source>Saves all LDRs</source>
-        <translation type="obsolete">Tallentaa kaikki LDR:t</translation>
-    </message>
-    <message>
-        <source>Ctrl+Shift+S</source>
-        <translation type="obsolete">Ctrl+Shift+S</translation>
-    </message>
-    <message>
-        <source>HDR Image</source>
-        <translation type="obsolete">HDR-kuva</translation>
-    </message>
-    <message>
-        <source>Show the original high dynamic range image</source>
-        <translation type="obsolete">Näytä alkuperäinen HDR</translation>
-    </message>
-    <message>
-        <source>Next Image</source>
-        <translation type="obsolete">Seuraava kuva</translation>
-    </message>
-    <message>
-        <source>Show the next image</source>
-        <translation type="obsolete">Näytä seuraava kuva</translation>
-    </message>
-    <message>
-        <source>Previous Image</source>
-        <translation type="obsolete">Edellinen kuva</translation>
-    </message>
-    <message>
-        <source>Show the previous image</source>
-        <translation type="obsolete">Näytä edellinen kuva</translation>
-    </message>
-    <message>
-        <source>&amp;Normal Size</source>
-        <translation type="obsolete">&amp;Normaali koko</translation>
-    </message>
-    <message>
-        <source>O</source>
-        <translation type="obsolete">O</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Lä&amp;hennä</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="obsolete">+</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">L&amp;oitonna</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="obsolete">-</translation>
-    </message>
-    <message>
-        <source>Text Under Icons</source>
-        <translation type="obsolete">Teksti ikonien alla</translation>
-    </message>
-    <message>
-        <source>Only Icons</source>
-        <translation type="obsolete">Vain ikonit</translation>
-    </message>
-    <message>
-        <source>Icons Only</source>
-        <translation type="obsolete">Vain ikonit</translation>
-    </message>
-    <message>
-        <source>Text Alongside Icons</source>
-        <translation type="obsolete">Teksti ja ikonit</translation>
-    </message>
-    <message>
-        <source>Text Only</source>
-        <translation type="obsolete">Vain teksti</translation>
-    </message>
-    <message>
-        <source>Sync View</source>
-        <translation type="obsolete">Synkronoitu näyttö</translation>
-    </message>
-    <message>
-        <source>Lock view of all images to sync panning</source>
-        <translation type="obsolete">Lukitse kaikkien kuvien näyttö synkronoituun panorointiin</translation>
-    </message>
-    <message>
-        <source>About Luminance</source>
-        <translation type="obsolete">Tietoja Luminancesta</translation>
-    </message>
-    <message>
-        <source>Show information about Luminance</source>
-        <translation type="obsolete">Näytä tietoja Luminancesta</translation>
-    </message>
-    <message>
-        <source>Show information about Luminance, its authors and contributors</source>
-        <translation type="obsolete">Näytä tietoja Luminancesta, sen tekijöistä ja avustajista</translation>
-    </message>
-    <message>
-        <source>About Qt</source>
-        <translation type="obsolete">Tietoja Qt:sta</translation>
-    </message>
-    <message>
-        <source>Show information about Qt</source>
-        <translation type="obsolete">Näytä tietoa Qt:sta</translation>
-    </message>
-    <message>
-        <source>Show information about Qt library that is used by Luminance</source>
-        <translation type="obsolete">Näytä tietoa Qt-kirjastosta jota Luminance käyttää</translation>
-    </message>
-    <message>
-        <source>Active TM Processes</source>
-        <translation type="obsolete">Aktiiviset TM-prosessit</translation>
-    </message>
-    <message>
-        <source>Original HDR</source>
-        <translation type="obsolete">Alkuperäinen HDR</translation>
-    </message>
-    <message>
-        <source>Processed HDR</source>
-        <translation type="obsolete">Prosessoitu HDR</translation>
-    </message>
-    <message>
-        <source>Luminance HDR</source>
-        <translation type="obsolete">Luminance HDR</translation>
-    </message>
-    <message>
-        <source>Please select an LDR image to save.</source>
-        <translation type="obsolete">Ole hyvä ja valitse tallennettava LDr-kuva.</translation>
-    </message>
-    <message>
-        <source>Save files in</source>
-        <translation type="obsolete">Tallenna tiedostot</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Lisenssidokumenttia ei löydy, löydät sen online: %2täältä%3</translation>
-    </message>
-    <message>
-        <source>Please make a selection of the HDR image to tonemap.</source>
-        <translation type="obsolete">Ole hyvä ja valitse alue HDR-kuvasta tonemapattavaksi.</translation>
-    </message>
-    <message>
-        <source>Please select an HDR image to tonemap.</source>
-        <translation type="obsolete">Valitse tonemapattava HDR-kuva.</translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translation type="obsolete">Virhe: %1</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="obsolete">Tuntematon</translation>
     </message>
 </context>
 <context>
