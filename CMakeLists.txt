@@ -615,7 +615,11 @@ ELSEIF(WIN32)
 
     FILE(GLOB QtI18nAll "${QT_TRANSLATIONS_DIR}/qt_*.qm")
     FILE(GLOB QtI18nHelp "${QT_TRANSLATIONS_DIR}/qt_help_*.qm")
-    LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
+    LIST(LENGTH QtI18nHelp QtI18nHelp_length)
+    IF(${QtI18nHelp_length} GREATER 0)
+        LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
+    ENDIF()
+    
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 
 
