@@ -65,6 +65,9 @@ public:
 protected Q_SLOTS:
     virtual void updatePixmap();
 
+protected:
+	virtual void retranslateUi();
+
 private:
     QString caption; // ,postfix,exif_comment;
     QLabel *informativeLabel;

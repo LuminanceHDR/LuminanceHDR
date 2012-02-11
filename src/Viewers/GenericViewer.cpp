@@ -77,7 +77,6 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     connect(mView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(scrollBarChanged(int)));
 
     mCornerButton = new QToolButton(this);
-    mCornerButton->setToolTip(tr("Pan the image to a region"));
     mCornerButton->setIcon(QIcon(":/new/prefix1/images/move.png"));
 
     mView->setCornerWidget(mCornerButton);
@@ -95,6 +94,18 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
 GenericViewer::~GenericViewer()
 {
     delete mFrame;
+}
+
+void GenericViewer::retranslateUi()
+{
+    mCornerButton->setToolTip(tr("Pan the image to a region"));
+}
+
+void GenericViewer::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		 retranslateUi();
+	QWidget::changeEvent(event);
 }
 
 void GenericViewer::fitToWindow(bool /* checked */)

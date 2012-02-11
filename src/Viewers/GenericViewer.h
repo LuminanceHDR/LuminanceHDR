@@ -159,6 +159,9 @@ protected Q_SLOTS:
 
 protected:
 
+	virtual void retranslateUi();
+	virtual void changeEvent(QEvent* event);
+
     QToolBar* mToolBar;
     QToolButton* mCornerButton;
     PanIconWidget* mPanIconWidget;

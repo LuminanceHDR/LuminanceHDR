@@ -29,3 +29,10 @@ HelpSideBar::HelpSideBar(const QString &title, QWidget *parent, Qt::WindowFlags 
 }
 
 HelpSideBar::~HelpSideBar() {};
+
+void HelpSideBar::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		Ui::HelpSideBar::retranslateUi(this);
+	QWidget::changeEvent(event);
+}

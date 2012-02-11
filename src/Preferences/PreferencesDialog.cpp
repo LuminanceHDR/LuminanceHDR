@@ -32,6 +32,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "Common/global.h"
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "Preferences/PreferencesDialog.h"
@@ -243,6 +244,13 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     connect(m_Ui->toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
 }
 
+void PreferencesDialog::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		 m_Ui->retranslateUi(this);
+	QWidget::changeEvent(event);
+}
+
 void PreferencesDialog::negative_clicked()
 {
     negcolor = QColorDialog::getColor(negcolor, this);
@@ -261,14 +269,11 @@ void PreferencesDialog::ok_clicked()
 
     if (luminance_options.getGuiLang() != fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()])
     {
-        QMessageBox::information(this,
-                                 tr("Please restart..."),
-                                 tr("Please restart LuminanceHDR to use the new language (%1).").arg(m_Ui->languageComboBox->currentText()));
+        luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
+        installTranslators(true);
     }
 
     // UI
-    luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
-
     luminance_options.setViewerNegColor( negcolor.rgba() );
     luminance_options.setViewerNanInfColor( infnancolor.rgba() );
 

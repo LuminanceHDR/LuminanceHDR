@@ -64,8 +64,6 @@ public:
 	~HelpBrowser();
 	
 	
-	virtual void changeEvent(QEvent *e);
-
 	/*! \brief History menu. It's public because of history reader - separate class */
 	QMenu* histMenu;
 	/*! \brief Mapping the documents for history. */
@@ -77,6 +75,7 @@ public:
 	static bool firstRun;
 
 protected:
+	virtual void changeEvent(QEvent* e);
 	void closeEvent(QCloseEvent * event);
 
 	void setupLocalUI();
