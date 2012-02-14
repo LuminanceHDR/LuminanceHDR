@@ -104,21 +104,20 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
 // 		qDebug("now adding");
         temp_ais_options.insert(idx_a+1,"aligned_");
     }
-    //check if we have '-v'
-    temp_ais_options = input_parameter_string.split(" ",QString::SkipEmptyParts);
-    idx_a = temp_ais_options.indexOf("-v");
-    if (idx_a == -1) {
-// 		qDebug("missing, adding");
-        temp_ais_options+="-v";
-    }
     else
-    {
         align_opt_was_ok=true;
+
+    //check if we have '-v'
+    if (temp_ais_options.indexOf("-v") < 0) {
+// 		qDebug("missing, adding");
+        temp_ais_options.insert(0, "-v");
+        align_opt_was_ok = false;
     }
+
     if (!align_opt_was_ok) {
         QMessageBox::information(0,
-                                 QObject::tr("Option -v -a..."),
-                                 QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
+			QObject::tr("Option -v -a..."),
+			QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
     }
     return temp_ais_options;
 }
