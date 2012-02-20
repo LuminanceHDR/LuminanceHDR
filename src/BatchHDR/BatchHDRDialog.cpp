@@ -37,7 +37,9 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 QDialog(p),
 	m_Ui(new Ui::BatchHDRDialog),
 	m_numProcessed(0),
-	m_errors(false)
+	m_errors(false),
+	m_abort(false),
+	m_processing(false)
 {
 	m_Ui->setupUi(this);
 
@@ -53,6 +55,7 @@ QDialog(p),
 	connect(m_Ui->outputPushButton, SIGNAL(clicked()), this, SLOT(add_output_directory()));
 	connect(m_Ui->startPushButton, SIGNAL(clicked()), this, SLOT(init_batch_hdr()));
 	connect(m_Ui->closePushButton, SIGNAL(clicked()), this, SLOT(accept()));
+	connect(m_Ui->cancelPushButton, SIGNAL(clicked()), this, SLOT(abort()));
 
 	connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
@@ -165,6 +168,13 @@ void BatchHDRDialog::init_batch_hdr()
 
 void BatchHDRDialog::batch_hdr()
 {
+	m_processing = true;
+	if (m_abort) {
+		qDebug() << "Aborted";
+		QApplication::restoreOverrideCursor();
+		m_hdrCreationManager->reset();
+		this->reject();
+	}
 	if (!m_bracketed.isEmpty())
 	{
 		m_numProcessed++;
@@ -281,4 +291,15 @@ void BatchHDRDialog::check_start_button()
 {
 	if (m_Ui->inputLineEdit->text() != "" && m_Ui->outputLineEdit->text() != "")
 		m_Ui->startPushButton->setEnabled(true);
+}
+
+void BatchHDRDialog::abort()
+{
+	if (m_processing) {
+		m_abort = true;
+		m_Ui->cancelPushButton->setText(tr("Aborting..."));
+		m_Ui->cancelPushButton->setEnabled(false);
+	}
+	else
+		this->reject();
 }

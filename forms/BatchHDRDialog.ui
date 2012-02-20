@@ -444,21 +444,5 @@ See documentation for more informations.</string>
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>cancelPushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>BatchHDRDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>423</x>
-     <y>549</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>390</x>
-     <y>427</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>
