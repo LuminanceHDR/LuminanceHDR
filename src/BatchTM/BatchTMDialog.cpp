@@ -47,7 +47,7 @@
 
 BatchTMDialog::BatchTMDialog(QWidget *p):
     QDialog(p), m_Ui(new Ui::BatchTMDialog),
-    start_left(-1), stop_left(-1), start_right(-1), stop_right(-1)
+    start_left(-1), stop_left(-1), start_right(-1), stop_right(-1), m_abort(false)
 {
     //qRegisterMetaType<QImage>("QImage");    // What's its meaning?!
 #ifdef QT_DEBUG
@@ -68,6 +68,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     connect(m_Ui->remove_HDRs_Button,     SIGNAL(clicked()), this, SLOT(remove_HDRs())        );
     connect(m_Ui->remove_TMOpts_Button,   SIGNAL(clicked()), this, SLOT(remove_TMOpts())      );
     connect(m_Ui->BatchGoButton,          SIGNAL(clicked()), this, SLOT(batch_core()));  //start_called()
+    connect(m_Ui->cancelbutton,           SIGNAL(clicked()), this, SLOT(abort()));  
 
     connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
@@ -382,6 +383,12 @@ void BatchTMDialog::start_batch_thread()
     // lock the class resources in order to work free of race-condition
     m_class_data_mutex.lock();
 
+	if (m_abort) {
+		m_class_data_mutex.unlock();
+        emit stop_batch_tm_ui();
+		return;
+    }
+		
     if ( m_next_hdr_file == HDRs_list.size() )
     {
         m_class_data_mutex.unlock();
@@ -473,7 +480,7 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->overallProgressBar->setValue(0);
 
     // disable all buttons!
-    m_Ui->cancelbutton->setDisabled(true);
+    //m_Ui->cancelbutton->setDisabled(true);
     m_Ui->BatchGoButton->setDisabled(true);
     m_Ui->out_folder_Button->setDisabled(true);
     m_Ui->add_dir_HDRs_Button->setDisabled(true);
@@ -524,4 +531,15 @@ void BatchTMDialog::closeEvent( QCloseEvent* ce )
 void BatchTMDialog::increment_progress_bar(int inc)
 {
     m_Ui->overallProgressBar->setValue(m_Ui->overallProgressBar->value()+inc);
+}
+
+void BatchTMDialog::abort()
+{
+	if (m_is_batch_running) {
+		m_abort = true;
+		m_Ui->cancelbutton->setText(tr("Aborting..."));
+		m_Ui->cancelbutton->setEnabled(false);
+	}
+	else
+		this->reject();
 }
