@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Cerrar</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ See documentation for more informations.</source>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -471,8 +479,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Error: Motor de alineado no reconocido.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Error: Fallo en la creación del formato HDR</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished">Error: Fallo en la creación del formato HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
@@ -1438,7 +1446,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleccionar las imágenes iniciales</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -2905,14 +2913,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3386,7 +3386,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3743,14 +3743,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TM Database Problem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3764,7 +3756,7 @@ Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

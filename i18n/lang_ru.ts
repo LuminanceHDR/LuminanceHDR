@@ -265,6 +265,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Закрыть</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Прерывание...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -448,6 +452,10 @@ See documentation for more informations.</source>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Прерывание...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -479,8 +487,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Ошибка: не опознан движок выравнивания.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Ошибка: неправильно указан формат создаваемого HDR-снимка</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished">Ошибка: неправильно указан формат создаваемого HDR-снимка.</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
@@ -2563,11 +2571,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="unfinished">Необходим перезапуск программы</translation>
+        <translation type="obsolete">Необходим перезапуск программы</translation>
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Интерфейс станет доступным на выбранном языке (%1)
+        <translation type="obsolete">Интерфейс станет доступным на выбранном языке (%1)
 только при следующем запуске программы.</translation>
     </message>
     <message>
@@ -3407,7 +3415,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3721,11 +3729,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="obsolete">Отменить</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">Вернуть</translation>
+        <translation type="obsolete">Вернуть</translation>
     </message>
     <message>
         <source>Load a tonemapping settings text file...</source>
@@ -3756,7 +3764,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Файл нечитаем (проверьте права доступа, путь...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished">Ошибка: формат файла параметров отображения тонов. Старый формат файлов в этой версии Luminance HDR не поддерживается. Создайте новый файл с параметрами.</translation>
     </message>
     <message>

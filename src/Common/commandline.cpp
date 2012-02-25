@@ -164,7 +164,7 @@ void CommandLineInterfaceManager::parseArgs() {
 				    QStringList keyandvalue = hdrCreationOptsList[i].split("=");
 
 				    if (keyandvalue.size()!=2)
-				      error(qPrintable(tr("Error: Wrong HDR creation format")));
+				      error(qPrintable(tr("Error: Wrong HDR creation format.")));
 
 				    if (keyandvalue.at(0)== "weight") {
 				      if (keyandvalue.at(1)== "triangular")

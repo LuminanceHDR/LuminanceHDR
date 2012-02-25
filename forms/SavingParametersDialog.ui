@@ -40,7 +40,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Enter a short comment for the saved parameters</string>
+        <string>Enter a short comment for the saved parameters:</string>
        </property>
       </widget>
      </item>

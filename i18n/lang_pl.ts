@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Zamknij</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Przerywam...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ See documentation for more informations.</source>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Przerywam...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -471,7 +479,7 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
+        <source>Error: Wrong HDR creation format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1292,7 +1300,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniowe</translation>
     </message>
     <message>
         <source>HDR creation model:</source>
@@ -1451,7 +1459,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logarytmiczne</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -2887,14 +2895,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3368,7 +3368,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3725,14 +3725,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TM Database Problem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3746,7 +3738,7 @@ Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

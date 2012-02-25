@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Fermer</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abandon...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ See documentation for more informations.</source>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abandon...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -471,8 +479,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Erreur : Opérateur d&apos;alignement non reconnu.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Erreur : Mauvais format de création HDR</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished">Erreur : Mauvais format de création HDR.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
@@ -3013,11 +3021,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Le nouveau langage (%1) sera disponible au prochain lancement de Luminance HDR.</translation>
+        <translation type="obsolete">Le nouveau langage (%1) sera disponible au prochain lancement de Luminance HDR.</translation>
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="unfinished">Relancez SVP...</translation>
+        <translation type="obsolete">Relancez SVP...</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3557,7 +3565,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3631,7 +3639,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="unfinished">Erreur, le format de fichier de paramètres de tonemapping a changé. Cet ancien fichier ne peut pas être utilisé avec cette version de LuminanceHDR. Créez-en un nouveau.</translation>
+        <translation type="obsolete">Erreur, le format de fichier de paramètres de tonemapping a changé. Cet ancien fichier ne peut pas être utilisé avec cette version de LuminanceHDR. Créez-en un nouveau.</translation>
     </message>
     <message>
         <source>Enter the width of the new size:</source>
@@ -3887,11 +3895,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">défaire</translation>
+        <translation type="obsolete">défaire</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">refaire</translation>
+        <translation type="obsolete">refaire</translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>
@@ -3997,6 +4005,10 @@ Luminace Level</source>
     </message>
     <message>
         <source>Set Custom Output Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

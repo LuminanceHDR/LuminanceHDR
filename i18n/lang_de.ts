@@ -258,6 +258,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <source>Error: </source>
         <translation>Fehler: </translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abbrechen ...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -441,6 +445,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <source>All tasks completed.</source>
         <translation>Alle Aufgaben abgeschlossen.</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abbrechen ...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -472,7 +480,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation>Fehler: Ausrichtungsmethode wurde nicht erkannt.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
+        <source>Error: Wrong HDR creation format.</source>
         <translation>Fehler: Falsches Format zur HDR-Erzeugung.</translation>
     </message>
     <message>
@@ -3158,11 +3166,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation>Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
+        <translation type="obsolete">Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
     </message>
     <message>
         <source>Please restart...</source>
-        <translation>Bitte neu starten ...</translation>
+        <translation type="obsolete">Bitte neu starten ...</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3551,7 +3559,7 @@ p, li { white-space: pre-wrap; }
         <translation>Parameter speichern</translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation>Gib einen kurzen Kommentar für die zu speichernden Parameter ein:</translation>
     </message>
 </context>
@@ -3633,7 +3641,7 @@ Error: %1</source>
         <translation>Datei ist nicht lesbar (prüf deren Zugriffsrechte, Pfad, ...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation>Fehler: Das Dateiformat für Dynamikkompressionsvorgaben hat sich geändert. Diese (alte) Datei kann mit dieser Version von Luminance HDR nicht verwendet werden. Erstell eine neue.</translation>
     </message>
     <message>
@@ -3987,11 +3995,11 @@ Luminace Level</source>
     </message>
     <message>
         <source>undo</source>
-        <translation>Rückgängig</translation>
+        <translation type="obsolete">Rückgängig</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>Wiederherstellen</translation>
+        <translation type="obsolete">Wiederherstellen</translation>
     </message>
 </context>
 <context>

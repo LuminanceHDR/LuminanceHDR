@@ -3345,24 +3345,6 @@ Luminace Level</string>
     </spacer>
    </item>
   </layout>
-  <action name="actionUndo">
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
-   </property>
-   <property name="text">
-    <string>undo</string>
-   </property>
-  </action>
-  <action name="actionRedo">
-   <property name="icon">
-    <iconset resource="../icons.qrc">
-     <normaloff>:/new/prefix1/images/edit-redo.png</normaloff>:/new/prefix1/images/edit-redo.png</iconset>
-   </property>
-   <property name="text">
-    <string>redo</string>
-   </property>
-  </action>
  </widget>
  <resources>
   <include location="../icons.qrc"/>

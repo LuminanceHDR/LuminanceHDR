@@ -266,6 +266,10 @@ Vedi la documentazione per maggiori informazioni.</translation>
         <source>&amp;Close</source>
         <translation>&amp;Chiudi</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Operazione interrotta...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -449,6 +453,10 @@ Vedi la documentazione per maggiori informazioni.</translation>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation>Salvataggio in formato %1, (qualità - se applicabile): %2</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Operazione interrotta...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -480,8 +488,8 @@ Vedi la documentazione per maggiori informazioni.</translation>
         <translation>Errore: opzione di allineamento non riconosciuta.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation>Errore: formato di creazione HDR non riconosciuto</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation>Errore: formato di creazione HDR non riconosciuto.</translation>
     </message>
     <message>
         <source>Error: Unknown response curve specified.</source>
@@ -3076,11 +3084,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation>Riavviare Luminance per usare la lingua: (%1).</translation>
+        <translation type="obsolete">Riavviare Luminance per usare la lingua: (%1).</translation>
     </message>
     <message>
         <source>Please restart...</source>
-        <translation>Riavviare...</translation>
+        <translation type="obsolete">Riavviare...</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3560,8 +3568,8 @@ p, li { white-space: pre-wrap; }
         <translation>Salvataggio Parametri</translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
-        <translation>Immetti un breve commento per i parametri salvati</translation>
+        <source>Enter a short comment for the saved parameters:</source>
+        <translation>Immetti un breve commento per i parametri salvati:</translation>
     </message>
 </context>
 <context>
@@ -3643,8 +3651,8 @@ Errore: %1</translation>
         <translation>Errore di accesso in lettura al file (controllarne i permessi, il percorso,...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation>Errore, il formato delle opzioni di tonemapping è cambiato. Questo (vecchio) file non può essere usato dalla versione corrente di Luminance HDR. Creane uno nuovo.</translation>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <translation>Errore: Il formato delle opzioni di tonemapping è cambiato. Questo (vecchio) file non può essere usato dalla versione corrente di Luminance HDR. Creane uno nuovo.</translation>
     </message>
     <message>
         <source>Enter the width of the new size:</source>
@@ -3924,11 +3932,11 @@ Errore: %1</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>annulla</translation>
+        <translation type="obsolete">annulla</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>ripeti</translation>
+        <translation type="obsolete">ripeti</translation>
     </message>
     <message>
         <source>Mantiuk &apos;06</source>

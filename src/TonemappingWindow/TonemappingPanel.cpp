@@ -755,7 +755,7 @@ void TonemappingPanel::fromTxt2Gui()
         {
             if (value != TMOSETTINGSVERSION)
             {
-                QMessageBox::critical(this,tr("Aborting..."),tr("Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one."),
+                QMessageBox::critical(this,tr("Aborting..."),tr("Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one."),
                                       QMessageBox::Ok,QMessageBox::NoButton);
                 return;
             }

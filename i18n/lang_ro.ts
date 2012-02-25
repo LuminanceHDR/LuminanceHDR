@@ -258,6 +258,10 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <source>Error: </source>
         <translation type="unfinished">Eroare: </translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Anulând...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -441,6 +445,10 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <source>All tasks completed.</source>
         <translation type="unfinished">Toate sarcinile finalizate.</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Anulând...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -472,8 +480,8 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <translation type="unfinished">Eroare: Motor de aliniere nerecunoscut.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Eroare: Format de creere HDR greșit</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished">Eroare: Format de creere HDR greșit.</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
@@ -3010,11 +3018,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="unfinished">Restartează...</translation>
+        <translation type="obsolete">Restartează...</translation>
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Restartează Luminance HDR pentru a folosi nouă limbă (%1).</translation>
+        <translation type="obsolete">Restartează Luminance HDR pentru a folosi nouă limbă (%1).</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3402,8 +3410,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Se Salvează Parametrii</translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
-        <translation type="unfinished">Introdu un scurt comentariu pentru parametrii salvaţi</translation>
+        <source>Enter a short comment for the saved parameters:</source>
+        <translation type="unfinished">Introdu un scurt comentariu pentru parametrii salvaţi:</translation>
     </message>
 </context>
 <context>
@@ -3790,11 +3798,11 @@ Nivelul Luminance</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">anulează</translation>
+        <translation type="obsolete">anulează</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">refă</translation>
+        <translation type="obsolete">refă</translation>
     </message>
     <message>
         <source>TM Database Problem</source>
@@ -3836,7 +3844,7 @@ Eroare: %1</translation>
     </message>
     <message>
         <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
-        <translation type="unfinished">Eroare, formatul fișierul de setări pentru mapare de tonuri s-a schimbat. Acest fișier (vechi) nu poate fi folosit cu această versiune de LuminanceHDR. Crează unul nou.</translation>
+        <translation type="obsolete">Eroare, formatul fișierul de setări pentru mapare de tonuri s-a schimbat. Acest fișier (vechi) nu poate fi folosit cu această versiune de LuminanceHDR. Crează unul nou.</translation>
     </message>
     <message>
         <source>Custom LDR size</source>
@@ -3845,6 +3853,10 @@ Eroare: %1</translation>
     <message>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished">Introduce lățimea noii dimensiuni:</translation>
+    </message>
+    <message>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

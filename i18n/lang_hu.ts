@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">Ki&amp;lépés</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Megszakítás...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ See documentation for more informations.</source>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Megszakítás...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMJob</name>
@@ -471,8 +479,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Hiba: Ismeretlen igazítómű.</translation>
     </message>
     <message>
-        <source>Error: Wrong HDR creation format</source>
-        <translation type="unfinished">Hiba: Hamis HDR előállítási típus</translation>
+        <source>Error: Wrong HDR creation format.</source>
+        <translation type="unfinished">Hiba: Hamis HDR előállítási típus.</translation>
     </message>
     <message>
         <source>Error: Unknown weight function specified.</source>
@@ -1358,7 +1366,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gammabeállítás</translation>
     </message>
     <message>
         <source>Amount of iterations:</source>
@@ -1410,7 +1418,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Előre &gt;</translation>
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
@@ -1438,7 +1446,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feldolgozandó képek kiválasztása</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -2496,7 +2504,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="unfinished">Kérem újraindítani...</translation>
+        <translation type="obsolete">Kérem újraindítani...</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -2910,10 +2918,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3386,7 +3390,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a short comment for the saved parameters</source>
+        <source>Enter a short comment for the saved parameters:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3747,14 +3751,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>undo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>TM Database Problem</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3768,7 +3764,7 @@ Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
+        <source>Error: The tone mapping settings file format has changed. This (old) file cannot be used with this version of LuminanceHDR. Create a new one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
