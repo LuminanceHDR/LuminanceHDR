@@ -569,7 +569,7 @@ ELSEIF(UNIX)
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main exec
-    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance/i18n) # i18n
+    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
     INSTALL(FILES
@@ -577,8 +577,8 @@ ELSEIF(UNIX)
     ${CMAKE_SOURCE_DIR}/README
     ${CMAKE_SOURCE_DIR}/LICENSE
     ${CMAKE_SOURCE_DIR}/Changelog
-    DESTINATION share/luminance) #info files
-    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance) # help directory
+    DESTINATION share/luminance-hdr) #info files
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
 
 ELSEIF(WIN32)
 
