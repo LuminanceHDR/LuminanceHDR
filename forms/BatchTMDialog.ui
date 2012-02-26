@@ -503,22 +503,5 @@
  <resources>
   <include location="../icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>cancelbutton</sender>
-   <signal>clicked()</signal>
-   <receiver>BatchTMDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>597</x>
-     <y>492</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>327</x>
-     <y>495</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

@@ -35,5 +35,7 @@ bool matchesLdrFilename(QString file);
 bool matchesHdrFilename(QString file);
 bool matchesValidHDRorLDRfilename(QString file);
 QStringList convertUrlListToFilenameList(QList<QUrl> urls);
+void installTranslators(bool installQtTranslations);
+void installTranslators(QString lang, bool installQtTranslations);
 
 #endif

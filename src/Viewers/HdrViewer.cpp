@@ -27,7 +27,6 @@
 
 #include "HdrViewer.h"
 
-#include <QLabel>
 #include <QFileInfo>
 #include <QDebug>
 
@@ -276,31 +275,47 @@ HdrViewer::HdrViewer(pfs::Frame* frame, QWidget *parent, bool ns, unsigned int n
 
 void HdrViewer::init_ui()
 {
-    QLabel *mappingMethodLabel = new QLabel( tr("&Mapping:"), mToolBar );
+    mappingMethodLabel = new QLabel( mToolBar );
     mappingMethodLabel->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
     mappingMethodCB = new QComboBox( mToolBar );
     mToolBar->addWidget(mappingMethodLabel);
     mToolBar->addWidget(mappingMethodCB);
     mToolBar->addSeparator();
     mappingMethodLabel->setBuddy( mappingMethodCB );
-    QStringList methods;
-    methods << tr("Linear")
-            << tr("Gamma 1.4")
-            << tr("Gamma 1.8")
-            << tr("Gamma 2.2")
-            << tr("Gamma 2.6")
-            << tr("Logarithmic");
 
-    mappingMethodCB->addItems(methods);
-    mappingMethodCB->setCurrentIndex( 3 );
-    connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
-    QLabel *histlabel = new QLabel( tr("Histogram:"), mToolBar );
+    histlabel = new QLabel( mToolBar );
     m_lumRange = new LuminanceRangeWidget( mToolBar );
     mToolBar->addWidget(histlabel);
     mToolBar->addWidget(m_lumRange);
     mToolBar->addSeparator();
     connect( m_lumRange, SIGNAL( updateRangeWindow() ), this, SLOT( updateRangeWindow() ) );
     mToolBar->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
+
+    retranslateUi();
+}
+
+void HdrViewer::retranslateUi()
+{
+	mappingMethodLabel->setText(tr("&Mapping:"));
+	histlabel->setText(tr("Histogram:"));
+
+	int oldMappingMethodIndex = mappingMethodCB->currentIndex();
+
+	disconnect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+	QStringList methods;
+	methods << tr("Linear")
+			<< tr("Gamma 1.4")
+			<< tr("Gamma 1.8")
+			<< tr("Gamma 2.2")
+			<< tr("Gamma 2.6")
+			<< tr("Logarithmic");
+
+    mappingMethodCB->clear();
+    mappingMethodCB->addItems(methods);
+	mappingMethodCB->setCurrentIndex( oldMappingMethodIndex >= 0 ? oldMappingMethodIndex : 3 );
+	connect( mappingMethodCB, SIGNAL( activated( int ) ), this, SLOT( setLumMappingMethod(int) ) );
+
+	GenericViewer::retranslateUi();
 }
 
 void HdrViewer::refreshPixmap()

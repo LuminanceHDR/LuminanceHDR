@@ -12,14 +12,6 @@
         <translation type="unfinished">&amp;O</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;center&gt;Luminance - Hdr Imaging Workflow Application&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;center&gt;Luminance - Apikace ke zpracování HDR&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>A&amp;uthors</source>
         <translation type="unfinished">A&amp;utoři</translation>
     </message>
@@ -32,22 +24,8 @@
         <translation type="unfinished">&amp;Licenční ujednání</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Prosím&lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;dejte mi vědět,&lt;/span&gt;&lt;/a&gt; jesti jsem v seznamu někoho vynechal.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Luminance </source>
-        <translation type="obsolete">Luminance</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -287,10 +265,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Hromadné přemapování (Batch Tone Mapping)</translation>
     </message>
     <message>
-        <source>Input Hdr list</source>
-        <translation type="obsolete">Seznam vstupních HDR</translation>
-    </message>
-    <message>
         <source>Add all the HDRs in a directory to the list</source>
         <translation type="unfinished">Přidat do seznamu všechny HDR v adresáři</translation>
     </message>
@@ -317,10 +291,6 @@ See documentation for more informations.</source>
     <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation type="unfinished">Seznam HDR, které budou přemapovány</translation>
-    </message>
-    <message>
-        <source>Input Tone Mapping Setting list</source>
-        <translation type="obsolete">Seznam vstupních nastavení přemapování</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
@@ -363,10 +333,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Vybrat &amp;výstupní adresář...</translation>
     </message>
     <message>
-        <source>Log:</source>
-        <translation type="obsolete">Log:</translation>
-    </message>
-    <message>
         <source>Batch operations report</source>
         <translation type="unfinished">Zpráva hromadného zpracování</translation>
     </message>
@@ -391,10 +357,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Zprávy o úspěchu</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filtr log zpráv:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Smazat text filtru</translation>
     </message>
@@ -411,36 +373,12 @@ See documentation for more informations.</source>
         <translation type="unfinished">Začít hromadné přemapování</translation>
     </message>
     <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Začít!</translation>
-    </message>
-    <message>
         <source>Using %1 thread(s)</source>
         <translation type="unfinished">Používám %1 vlákno(a)</translation>
     </message>
     <message>
-        <source>Saving using fileformat: </source>
-        <translation type="obsolete">Ukládám ve formátu:</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Vybrat adresář</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Všechny HDR formáty</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Vybrat vstupní obrázky</translation>
-    </message>
-    <message>
-        <source>Load the tonemapping settings text files...</source>
-        <translation type="obsolete">Nahrát soubory nastavení přemapování...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Luminance soubory nastavení přemapování (*.txt)</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -451,24 +389,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">&amp;Hotovo</translation>
     </message>
     <message>
-        <source>Starting to tone map HDR file: </source>
-        <translation type="obsolete">Začít přemapovávat HDR soubor:</translation>
-    </message>
-    <message>
         <source>All tasks completed.</source>
         <translation type="unfinished">Všechny úkoly hotovy.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot save to file: </source>
-        <translation type="obsolete">CHYBA: Nemohu uložit do souboru:</translation>
-    </message>
-    <message>
-        <source>Successfully saved LDR file: </source>
-        <translation type="obsolete">LDR soubor úspěšně uložen:</translation>
-    </message>
-    <message>
-        <source>Finished tone mapping the current HDR.</source>
-        <translation type="obsolete">Přemapování aktuálního HDR dokončeno.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
@@ -1104,14 +1026,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">CHYBA: Soubor &lt;br&gt;%1&lt;br&gt; není 8 nebo 16 bitový TIFF.</translation>
     </message>
     <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
-    </message>
-    <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation type="unfinished">CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
@@ -1122,10 +1036,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>HdrViewer</name>
-    <message>
-        <source>Viewing Settings Toolbar</source>
-        <translation type="obsolete">Zobrazení voleb nástrojové lišty</translation>
-    </message>
     <message>
         <source>Linear</source>
         <translation type="unfinished">Lineárně</translation>
@@ -1155,14 +1065,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Histogram:</translation>
     </message>
     <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Změny neuloženy...</translation>
-    </message>
-    <message>
-        <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="obsolete">Tento HDR není uložen.&lt;br&gt;Opravdu ho chcete zavřít?</translation>
-    </message>
-    <message>
         <source>&amp;Mapping:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1170,56 +1072,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrWizard</name>
     <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Pomocník tvorby HDR</translation>
-    </message>
-    <message>
         <source>[1/2] Load Input Images</source>
         <translation type="unfinished">[1/2] Nahrát vstupní obrázky</translation>
     </message>
     <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Nahrát vstupní obrázky</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Nahrát obrázky...</translation>
-    </message>
-    <message>
         <source>Alignment</source>
         <translation type="unfinished">Zarovnání</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Automatické &amp;vyrovnání obrázků</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin align_image_stack</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Median Threshold Bitmap</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Vyberte nastavení pro tvorbu Hdr</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vyberte jeden z předdefinovaných profilů ze seznamu:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;První profil obvykle vede k nejlepším výsledkům, měňte pouze pokud vytvořený HDR není &quot;dost dobrý&quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">seznam přednastavených profilů</translation>
     </message>
     <message>
         <source>Profile 1</source>
@@ -1262,14 +1120,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Uložit jako...</translation>
     </message>
     <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Model tvorby HDR:</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Odstranění duchů(beta!)</translation>
-    </message>
-    <message>
         <source>Gamma</source>
         <translation type="unfinished">Gamma</translation>
     </message>
@@ -1282,31 +1132,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Kalibrace</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Počet iterací (zachovej malé!):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Použít vlastní nastavení.
-(použijte jen pokud přednastavené
-profily nevedou k dobrému výsledku)</translation>
-    </message>
-    <message>
         <source>[2/2] Choose Custom Configuration</source>
         <translation type="unfinished">[2/1] Vlastní nastavení</translation>
     </message>
     <message>
         <source>Weights:</source>
         <translation type="unfinished">Váha:</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Vyberte konfidenční funkci
- přes všechny možné hodnoty pixelů&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Gaussian</source>
@@ -1333,22 +1164,6 @@ pixel values&lt;/p&gt;</source>
         <translation type="unfinished">Použít kalibraci k nalezení křivky odezvy (algoritmus robertson02)</translation>
     </message>
     <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Uložit křivku odezvy do souboru</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Uložit jako...</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Rovnice tvorby HDR:</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Vyberte model:</translation>
-    </message>
-    <message>
         <source>&amp;Next &gt;</source>
         <translation type="unfinished">&amp;Vpřed &gt;</translation>
     </message>
@@ -1369,15 +1184,6 @@ pixel values&lt;/p&gt;</source>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Obrázky načteny.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;VAROVÁNÍ:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance nenalezl náležité  &lt;i&gt;EXIF&lt;/i&gt; data
-u následujících obrázků:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Abyste mohl přistoupit k tovorbě HDR, musíte doplnit hodnoty expozice EV nebo expoziční kroky &lt;b&gt;ručně&lt;/b&gt;.	&lt;hr&gt;Pokud chcete, aby to LuminanceI dělal &lt;b&gt;automaticky&lt;/b&gt;, musí zpracovávané soubory obsahovat alespoň tyto &lt;i&gt;EXIF&lt;/i&gt; data:	&lt;ul&gt;&lt;li&gt;Rychlost závěrky v sekundách&lt;/li&gt;	&lt;li&gt;Clonové číslo&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;TIP:&lt;/b&gt; Ztrátu  &lt;i&gt;EXIF&lt;/i&gt; dat je obvykle způsobena předúpravou obrázku.&lt;br&gt;	Můžete provést &lt;b&gt;kopii exif dat jeden-na-jednoho&lt;/b&gt; mezi dvěma sadami obrázků pomocí položky menu &lt;i&gt;&lt;b&gt;&quot;Nástroje-&gt;Kopírovat EXIF data...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
-    </message>
-    <message>
         <source>EXIF data not found</source>
         <translation type="unfinished">EXIF data nenalezena</translation>
     </message>
@@ -1386,16 +1192,8 @@ u následujících obrázků:
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Chyba při nahrávání</translation>
-    </message>
-    <message>
         <source>Error...</source>
         <translation type="unfinished">Chyba...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Nepovedlo se spustit externí aplikaci &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;K získání více informací přečtěte prosím &quot;Nápověda -&gt; Dokumentace... -&gt; &quot;Pokyny a tipy&quot;. </translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
@@ -1428,10 +1226,6 @@ u následujících obrázků:
     <message>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Ulož soubor křivky odezvy kamery</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*)Váha:</translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1687,325 +1481,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
 </context>
 <context>
-    <name>HdrWizardForm</name>
-    <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Pomocník tvorby HDR</translation>
-    </message>
-    <message>
-        <source>Click the button below to load the input images</source>
-        <translation type="obsolete">Klikněte na tlačítko pro nahrání obrázků</translation>
-    </message>
-    <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Nahrát vstupní obrázky</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Automatické &amp;vyrovnání obrázků</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin align_image_stack</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vyberte jeden z předdefinovaných profilů ze seznamu:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;První profil obvykle vede k nejlepším výsledkům, měňte pouze pokud vytvořený HDR není &quot;dost dobrý&quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">seznam přednastavených profilů</translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="obsolete">Profil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="obsolete">Profil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="obsolete">Profil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="obsolete">Profil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="obsolete">Profil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="obsolete">Profil 6</translation>
-    </message>
-    <message>
-        <source>Weighting function:</source>
-        <translation type="obsolete">Váhová funkce:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="obsolete">Trojúhelníková</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="obsolete">Křivka odezvy:</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation type="obsolete">Gamma</translation>
-    </message>
-    <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Model tvorby HDR:</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Odstranění duchů(beta!)</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Lineární</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="obsolete">Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrace</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Počet iterací (zachovej malé!):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Použít vlastní nastavení.
-(použijte jen pokud přednastavené
-profily nevedou k dobrému výsledku)</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="obsolete">Váha:</translation>
-    </message>
-    <message>
-        <source>Gaussian</source>
-        <translation type="obsolete">Gausovská</translation>
-    </message>
-    <message>
-        <source>Plateau</source>
-        <translation type="obsolete">Rovina</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Vyberte konfidenční funkci
- přes všechny možné hodnoty pixelů&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="obsolete">Předdefinované křivky odezvy:</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="obsolete">Nahrát...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="obsolete">Použít kalibraci k nalezení křivky odezvy (algoritmus robertson02)</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Rovnice tvorby HDR:</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Vyberte model:</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="obsolete">&amp;Vpřed &gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Storno</translation>
-    </message>
-    <message>
-        <source>JPEG (*.jpeg *.jpg);;</source>
-        <translation type="obsolete">JPEG (*.jpeg *.jpg);;</translation>
-    </message>
-    <message>
-        <source>TIFF Images (*.tiff *.tif);;</source>
-        <translation type="obsolete">Obrázky TIFF (*.tiff *.tif);;</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Vyber vstupní obrázky</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Obrázky načteny.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>EXIF data not found</source>
-        <translation type="obsolete">EXIF data nenalezena</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Pro pokračování musíte manuálně vyplnit hodnoty expozice.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; hodnoty jsou stále požadovány.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Finish</source>
-        <translation type="obsolete">&amp;Proveď</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Nahrát soubor křivky odezvy fotoaparátu</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Křivka odezvy fotoaparátu (*.m);;Všechny soubory (*)</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*)Váha:</translation>
-    </message>
-    <message>
-        <source> - Response curve: </source>
-        <translation type="obsolete"> - Křivka odezvy: </translation>
-    </message>
-    <message>
-        <source> - Model: </source>
-        <translation type="obsolete">- Model:</translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="obsolete">Logaritmický</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="obsolete">Podle kalibrace</translation>
-    </message>
-    <message>
-        <source>From File</source>
-        <translation type="obsolete">Ze souboru</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Chyba...</translation>
-    </message>
-    <message>
-        <source>[1/2] Load Input Images</source>
-        <translation type="obsolete">[1/2] Nahrát vstupní obrázky</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Nahrát obrázky...</translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="obsolete">Zarovnání</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Median Threshold Bitmap</translation>
-    </message>
-    <message>
-        <source>&amp;Files Currently Loaded:</source>
-        <translation type="obsolete">Právě načtené &amp;Soubory:</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Vyberte nastavení pro tvorbu Hdr</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="obsolete">[2/1] Vlastní nastavení</translation>
-    </message>
-    <message>
-        <source>&amp;Exposure for selected image</source>
-        <translation type="obsolete">&amp;Expozice vybraného obrázku</translation>
-    </message>
-    <message>
-        <source>EV </source>
-        <translation type="obsolete">EV</translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="obsolete">Načíst křivku odezvy ze souboru</translation>
-    </message>
-    <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Uložit křivku odezvy do souboru</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Uložit jako...</translation>
-    </message>
-    <message>
-        <source>Image Filename</source>
-        <translation type="obsolete">Jméno souboru</translation>
-    </message>
-    <message>
-        <source>Exposure</source>
-        <translation type="obsolete">Expozice</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;VAROVÁNÍ:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance nenalezl náležité  &lt;i&gt;EXIF&lt;/i&gt; data
-u následujících obrázků:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Abyste mohl přistoupit k tovorbě HDR, musíte doplnit hodnoty expozice EV nebo expoziční kroky &lt;b&gt;ručně&lt;/b&gt;.	&lt;hr&gt;Pokud chcete, aby to LuminanceI dělal &lt;b&gt;automaticky&lt;/b&gt;, musí zpracovávané soubory obsahovat alespoň tyto &lt;i&gt;EXIF&lt;/i&gt; data:	&lt;ul&gt;&lt;li&gt;Rychlost závěrky v sekundách&lt;/li&gt;	&lt;li&gt;Clonové číslo&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;TIP:&lt;/b&gt; Ztrátu  &lt;i&gt;EXIF&lt;/i&gt; dat je obvykle způsobena předúpravou obrázku.&lt;br&gt;	Můžete provést &lt;b&gt;kopii exif dat jeden-na-jednoho&lt;/b&gt; mezi dvěma sadami obrázků pomocí položky menu &lt;i&gt;&lt;b&gt;&quot;Nástroje-&gt;Kopírovat EXIF data...&quot;&lt;/b&gt;&lt;/i&gt;.</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Chyba při nahrávání</translation>
-    </message>
-    <message>
-        <source>Unknown </source>
-        <translation type="obsolete">Neznámý</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Nepovedlo se spustit externí aplikaci &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;K získání více informací přečtěte prosím &quot;Nápověda -&gt; Dokumentace... -&gt; &quot;Pokyny a tipy&quot;. </translation>
-    </message>
-    <message>
-        <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="obsolete">Externí aplikace &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; havarovala...</translation>
-    </message>
-    <message>
-        <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="obsolete">Při spouštění aplikace&quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; se vyskytla neznámá chyba...</translation>
-    </message>
-    <message>
-        <source>Aligning...</source>
-        <translation type="obsolete">Zarovnávám...</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Ulož soubor křivky odezvy kamery</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Byly nastaveny včechny EV hodnoty.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-</context>
-<context>
     <name>HelpBrowser</name>
     <message>
         <source>Luminance Help</source>
@@ -2125,17 +1600,6 @@ u následujících obrázků:
 Do you want to open the link with the default application 
 associated with the protocol?</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Luminance Help</source>
-        <translation type="obsolete">Nápověda Luminance</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Zavřít</translation>
     </message>
 </context>
 <context>
@@ -2307,45 +1771,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LoadHdrThread</name>
-    <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">CHYBA: Následující soubor nelze přečíst: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">CHYBA: Nepodporovaná přípona u souboru %1.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">CHYBA: CHYBA: Nepodařio se načíst soubor: %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Soubor</translation>
     </message>
     <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">O&amp;brázek</translation>
-    </message>
-    <message>
         <source>&amp;View</source>
         <translation type="unfinished">&amp;Pohled</translation>
-    </message>
-    <message>
-        <source>Hdr &amp;Histogram</source>
-        <translation type="obsolete">Hdr &amp;histogram</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
@@ -2364,76 +1797,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Nápově&amp;da</translation>
     </message>
     <message>
-        <source>Common operations</source>
-        <translation type="obsolete">Běžné operace</translation>
-    </message>
-    <message>
-        <source>&amp;New Hdr...</source>
-        <translation type="obsolete">&amp;Nový HDR...</translation>
-    </message>
-    <message>
-        <source>New Hdr...</source>
-        <translation type="obsolete">Nový HDR...</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
-        <translation type="obsolete">Vytvořit nový HDR ze série souborů JPEG, RAW nebo TIFF (8 nebo 16 bitů)</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation type="obsolete">Vytvořit nový HDR ze série souborů JPEG, RAW nebo TIFF (8 nebo 16 bitů).</translation>
-    </message>
-    <message>
-        <source>&amp;Open Hdr...</source>
-        <translation type="obsolete">&amp;Otevřít HDR...</translation>
-    </message>
-    <message>
-        <source>Open Hdr....</source>
-        <translation type="obsolete">Otevřít HDR...</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation type="obsolete">Otevřít existující HDR soubor (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation type="obsolete">Otevřít existující HDR soubor (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</translation>
-    </message>
-    <message>
-        <source>&amp;Save Hdr as...</source>
-        <translation type="obsolete">&amp;Uložit HDR jako...</translation>
-    </message>
-    <message>
-        <source>Save Hdr as...</source>
-        <translation type="obsolete">Uložit HDR jako...</translation>
-    </message>
-    <message>
-        <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Uložit HDR (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</translation>
-    </message>
-    <message>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+U</translation>
-    </message>
-    <message>
-        <source>&amp;Tonemap the Hdr...</source>
-        <translation type="obsolete">Pře&amp;mapovat HDR...</translation>
-    </message>
-    <message>
-        <source>Tonemap the Hdr</source>
-        <translation type="obsolete">Přemapovat HDR</translation>
-    </message>
-    <message>
-        <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="obsolete">Přemapovat HDR do běžného LDR formátu (např. JPEG nebo PNG)</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+M</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Konec</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2442,30 +1807,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ctrl+Q</source>
         <translation type="unfinished">Ctrl+K</translation>
-    </message>
-    <message>
-        <source>Rotate C&amp;ounterClockWise</source>
-        <translation type="obsolete">Otočit do&amp;leva</translation>
-    </message>
-    <message>
-        <source>Rotate CounterClockWise</source>
-        <translation type="obsolete">Otočit doleva</translation>
-    </message>
-    <message>
-        <source>Rotate Counterclockwise the Hdr</source>
-        <translation type="obsolete">Otočit HDR doleva</translation>
-    </message>
-    <message>
-        <source>Rotate C&amp;lockWise</source>
-        <translation type="obsolete">Otočit do&amp;prava</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise</source>
-        <translation type="obsolete">Otočit doprava</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise the Hdr</source>
-        <translation type="obsolete">Otočit HDR doprava</translation>
     </message>
     <message>
         <source>&amp;Save as...</source>
@@ -2512,48 +1853,20 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+L</translation>
     </message>
     <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentace...</translation>
-    </message>
-    <message>
         <source>About...</source>
         <translation type="unfinished">O...</translation>
-    </message>
-    <message>
-        <source>Show Luminance Help</source>
-        <translation type="obsolete">Ukazat nápovědu Luminance</translation>
     </message>
     <message>
         <source>&amp;Normal Size</source>
         <translation type="unfinished">&amp;Původní velikost</translation>
     </message>
     <message>
-        <source>View Hdr at Normal Size</source>
-        <translation type="obsolete">Zorazit HDR v původní velikosti</translation>
-    </message>
-    <message>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">Při&amp;blížit</translation>
     </message>
     <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Přiblížit</translation>
-    </message>
-    <message>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">Od&amp;dálit</translation>
-    </message>
-    <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Oddálit</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Vyplnit okno</translation>
-    </message>
-    <message>
-        <source>Shrink the Hdr to fit its containing window</source>
-        <translation type="obsolete">Změnit velikost HDR aby vyplnil okno</translation>
     </message>
     <message>
         <source>&amp;Preferences...</source>
@@ -2562,26 +1875,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Luminance Options</source>
         <translation type="unfinished">Volby Luminance</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance</source>
-        <translation type="obsolete">Nastavit různé volby pro Luminance</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance.</source>
-        <translation type="obsolete">Nastavit různé volby pro Luminance.</translation>
-    </message>
-    <message>
-        <source>&amp;Resize the Hdr...</source>
-        <translation type="obsolete">&amp;Změnit velikost HDR...</translation>
-    </message>
-    <message>
-        <source>Resize the Hdr</source>
-        <translation type="obsolete">Změnit velikost HDR</translation>
-    </message>
-    <message>
-        <source>Resize (shrink or expand) the Hdr</source>
-        <translation type="obsolete">Změnit velikost HDR (zvětšit nebo zmenšit)</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
@@ -2594,10 +1887,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Copy Exif Data</source>
         <translation type="unfinished">Kopírovat Exif Data</translation>
-    </message>
-    <message>
-        <source>Copy Exif Data between two set of files</source>
-        <translation type="obsolete">Kopírovat Exif Data mezi dvěma sériemi souborů</translation>
     </message>
     <message>
         <source>&amp;Align Images...</source>
@@ -2628,10 +1917,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Lišty nástrojů</translation>
     </message>
     <message>
-        <source>Text &amp;Under Icons</source>
-        <translation type="obsolete">Text &amp;pod ikonami</translation>
-    </message>
-    <message>
         <source>&amp;Icons Only</source>
         <translation type="unfinished">Jen &amp;ikony</translation>
     </message>
@@ -2648,32 +1933,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Hromadné přemapování (&amp;Batch Tone Mapping)...</translation>
     </message>
     <message>
-        <source>Ready.... Now open an Hdr or create one!</source>
-        <translation type="obsolete">Připraven.... Teď otevřete nebo vytvořte HDR!</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Všechny HDR formáty</translation>
-    </message>
-    <message>
-        <source>Load an Hdr file...</source>
-        <translation type="obsolete">Otevřít HDR soubor...</translation>
-    </message>
-    <message>
-        <source>Save the HDR...</source>
-        <translation type="obsolete">Uložit HDR...</translation>
-    </message>
-    <message>
         <source>Aborting...</source>
         <translation type="unfinished">Přerušuji...</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Chyba...</translation>
-    </message>
-    <message>
-        <source>Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
-        <translation type="obsolete">Luminance potřebuje ukládat rozpracované soubory, ale právě zvolený adresář není platný.&lt;br&gt;Zvolte prosím platnou cestu pomocí &lt;i&gt;Nástroje-&gt;Předvolby...-&gt;Tone Mapping&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>Unsaved changes...</source>
@@ -2684,25 +1945,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Co je toto?</translation>
     </message>
     <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Získej informace o grafických prvcích</translation>
-    </message>
-    <message>
         <source>Shift+F1</source>
         <translation type="unfinished">Shift+F1</translation>
-    </message>
-    <message>
-        <source>About &amp;Luminance</source>
-        <translation type="obsolete">O &amp;Luminance</translation>
-    </message>
-    <message>
-        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Minimálně jeden HDR nemá uloženy změny. &lt;bd&gt;Chcete přesto ukončit?</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
     </message>
     <message>
         <source>Luminance HDR</source>
@@ -3161,45 +2405,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>PreferenceDialog</name>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Vybrat adresář</translation>
-    </message>
-</context>
-<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Tone Mapping</source>
         <translation type="unfinished">Tone Mapping</translation>
-    </message>
-    <message>
-        <source>Hdr Tiff</source>
-        <translation type="obsolete">HDR TIFF</translation>
-    </message>
-    <message>
-        <source>Hdr Visualization</source>
-        <translation type="obsolete">Zobrazení HDR</translation>
-    </message>
-    <message>
-        <source>Cache</source>
-        <translation type="obsolete">Vyrovnávací paměť</translation>
-    </message>
-    <message>
-        <source>Choose the directory where Luminance will store the temporary data to.</source>
-        <translation type="obsolete">Vyber adresář, kde bude Luminance ukládat přechodná data.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Nahrát...</translation>
-    </message>
-    <message>
-        <source>Batch</source>
-        <translation type="obsolete">Dávkové zpracování</translation>
-    </message>
-    <message>
-        <source>Save using this LDR image &amp;format:</source>
-        <translation type="obsolete">Ukládat v tomto LDR &amp;formátu:</translation>
     </message>
     <message>
         <source>JPEG</source>
@@ -3220,98 +2429,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>BMP</source>
         <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>Number of &amp;threads:
-(useful on multi-core/SMP machines)</source>
-        <translation type="obsolete">Počet &amp;vláken:
-(pro procesory s více než jedním jádrem)</translation>
-    </message>
-    <message>
-        <source>Batch Tone Mapping</source>
-        <translation type="obsolete">Hromadné přemapování (Batch Tone Mapping)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Volby importu RAW&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pro více informací kliněte na tačítko&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="obsolete">Pro získání více informací o parametrech RAW konverze klikněte zde</translation>
-    </message>
-    <message>
-        <source>&amp;About Raw Parameters</source>
-        <translation type="obsolete">&amp;O RAW parametrech</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Volby TIFF&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Vybrat formát TIFF-HDR pro ukládání HDR obrázků.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv TIFF&lt;/span&gt; je vhodný formát pro většinu příležitostí, zabírá přijatelnou velikost.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float TIFF&lt;/span&gt; použijte pokud jiná aplikace neumí otevřít LogLuv TIFF formát.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="obsolete">LogLuv TIFF (float, 16bit)</translation>
-    </message>
-    <message>
-        <source>Float Tiff (float, 32bit)</source>
-        <translation type="obsolete">Float TIFF (float, 32bit)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Volby zobrazení HDR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Colors</source>
-        <translation type="obsolete">Barvy</translation>
-    </message>
-    <message>
-        <source>Show Negative Numbers as:</source>
-        <translation type="obsolete">Zobrazit negativní hodnoty jako:</translation>
-    </message>
-    <message>
-        <source>&amp;What&apos;s this?</source>
-        <translation type="obsolete">&amp;Co je toto?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -4032,10 +3149,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Nemohu najít Qt JPEG plugin...&lt;br&gt;Rozbalte archív s volbou &quot;zachovat strukturu adresářů&quot;.</translation>
     </message>
     <message>
-        <source>Save the LDR to...</source>
-        <translation type="obsolete">Uložit LDR jako...</translation>
-    </message>
-    <message>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Uložení selhalo &lt;b&gt;</translation>
     </message>
@@ -4312,21 +3425,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ThreadManager</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Zavřít</translation>
-    </message>
-</context>
-<context>
     <name>TonemappingPanel</name>
     <message>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished">Nahrát soubor nastavení přemapování...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Luminance soubor nastavení přemapování (*.txt)</translation>
     </message>
     <message>
         <source>Aborting...</source>
@@ -4349,24 +3451,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Soubor není čitelný (zkontrolujte práva, cestu...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one.</source>
-        <translation type="obsolete">Chyba, formát souboru nastavení přemapvání se změnil. Tento (starý) soubor nelze použít v této verzi Luminance. Vytvořte nový.</translation>
-    </message>
-    <message>
         <source>Custom LDR size</source>
         <translation type="unfinished">Volitelná velikost LDR</translation>
-    </message>
-    <message>
-        <source>Tonemapping Operators and options</source>
-        <translation type="obsolete">Volby a operace přemapování (Tone Mapping)</translation>
-    </message>
-    <message>
-        <source>&amp;Result size:</source>
-        <translation type="obsolete">&amp;Výsledné rozlišení:</translation>
-    </message>
-    <message>
-        <source>The size of the resulting LDR image.</source>
-        <translation type="obsolete">Velikost výsledného LDR obrázku.</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
@@ -4375,10 +3461,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Clicking this button you will be able to insert a &lt;i&gt;width&lt;/i&gt; value for the size of the resulting LDR image.&lt;br&gt;After pressing Enter (or Return) a height value will be automatically computed and the new size added to the list.</source>
         <translation type="unfinished">Kliknutím na toto tlačítko můžete vložit novou hodnotu &lt;i&gt;šířky&lt;/i&gt; výsledného LDR obrázku. Enter dopočítá hodnotu výšky a uloží nový rozměr do seznamu.</translation>
-    </message>
-    <message>
-        <source>Gamma applied before tone mapping</source>
-        <translation type="obsolete">Gamma použitá před přemapováním (Tone Mapping)</translation>
     </message>
     <message>
         <source>Here you can apply a gamma correction to the HDR.&lt;br&gt;The gamma correction will applied before tone mapping.</source>
@@ -4405,20 +3487,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Obnovit původní hodnoty operátoru</translation>
     </message>
     <message>
-        <source>Default Values for operator</source>
-        <translation type="obsolete">Původní hodnoty operátoru</translation>
-    </message>
-    <message>
         <source>Color Saturation</source>
         <translation type="unfinished">Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
         <translation type="unfinished">Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
-    </message>
-    <message>
-        <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
-        <translation type="obsolete">&quot;Starý&quot; Fattal (před 1.8.4)</translation>
     </message>
     <message>
         <source>Bias</source>
@@ -4489,36 +3563,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Lokální přemapování (Local Tone Mapping)</translation>
     </message>
     <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
-    </message>
-    <message>
         <source>Cone Level</source>
         <translation type="unfinished">Úroveň Cone&lt;br&gt;(Cone Level)</translation>
     </message>
     <message>
         <source>Rod Level</source>
         <translation type="unfinished">Úroveň Rod&lt;br&gt;(Rod Level)</translation>
-    </message>
-    <message>
-        <source>Start tone mapping (CTRL+A).</source>
-        <translation type="obsolete">Začít přemapování (CTRL+P).</translation>
-    </message>
-    <message>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
-        <translation type="obsolete">Použít parametry výše k přemapování na LDR obrázek (pregamma a operátory přemapování).</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">&amp;Použít</translation>
-    </message>
-    <message>
-        <source>Ctrl+A</source>
-        <translation type="obsolete">Ctrl+P</translation>
-    </message>
-    <message>
-        <source>Tone Mapping settings file section</source>
-        <translation type="obsolete">Oddíl souboru nastavení přemapování</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
@@ -4533,20 +3583,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Uložit parametry (pregamma a TMO) do souboru.</translation>
     </message>
     <message>
-        <source>&amp;Save...</source>
-        <translation type="obsolete">&amp;Uložit...</translation>
-    </message>
-    <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation type="unfinished">Nahrát soubor s parametry pregamma a TMO</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation type="unfinished">Nahrát soubor s parametry pregamma a TMO.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Nahrát...</translation>
     </message>
     <message>
         <source>Reinhard &apos;02</source>
@@ -4801,190 +3843,6 @@ Do you want to continue?</source>
     </message>
 </context>
 <context>
-    <name>TonemappingWindow</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Nápověda</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Pohled</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Soubor</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Panel</source>
-        <translation type="obsolete">Panel Přemapování (Tone Mapping)</translation>
-    </message>
-    <message>
-        <source>Show/Hide the Tone mapping Panel</source>
-        <translation type="obsolete">Ukaž/schovej panel přemapování (Tone Mapping)</translation>
-    </message>
-    <message>
-        <source>Adjust &amp;Levels...</source>
-        <translation type="obsolete">Nastavit ú&amp;rovně...</translation>
-    </message>
-    <message>
-        <source>Adjust Levels...</source>
-        <translation type="obsolete">Nastavit úrovně...</translation>
-    </message>
-    <message>
-        <source>Tune the histogram for the current LDR</source>
-        <translation type="obsolete">Doladit histogram aktuálního LDR</translation>
-    </message>
-    <message>
-        <source>&amp;Save as...</source>
-        <translation type="obsolete">Uložit &amp;jako...</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation type="obsolete">Uložit jako...</translation>
-    </message>
-    <message>
-        <source>Save the currently selected LDR</source>
-        <translation type="obsolete">Uložit právě vybraný LDR</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="obsolete">Ctrl+J</translation>
-    </message>
-    <message>
-        <source>C&amp;lose All</source>
-        <translation type="obsolete">Zavřít &amp;vše</translation>
-    </message>
-    <message>
-        <source>Close All</source>
-        <translation type="obsolete">Zavřít vše</translation>
-    </message>
-    <message>
-        <source>Close all the LDRs in the workspace</source>
-        <translation type="obsolete">Zavřít všechny LDR na pracovní ploše</translation>
-    </message>
-    <message>
-        <source>As &amp;Thumbnails</source>
-        <translation type="obsolete">Jako &amp;náhledy</translation>
-    </message>
-    <message>
-        <source>As Thumbnails</source>
-        <translation type="obsolete">Jako náhledy</translation>
-    </message>
-    <message>
-        <source>Images as Thumbnails</source>
-        <translation type="obsolete">Obrázky jako náhledy</translation>
-    </message>
-    <message>
-        <source>Layout all LDRs as thumbnails.</source>
-        <translation type="obsolete">Uspořádat všechny LDR jako náhledy.</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="obsolete">&amp;Kaskáda</translation>
-    </message>
-    <message>
-        <source>Cascade all LDRs in the workspace</source>
-        <translation type="obsolete">Přerovnat všechny LDR na ploše do kaskády</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Vyplnit okno</translation>
-    </message>
-    <message>
-        <source>Fit the current LDR to its containing window.</source>
-        <translation type="obsolete">Vyplnit okno obsahující LDR.</translation>
-    </message>
-    <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">Co je to?</translation>
-    </message>
-    <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentace...</translation>
-    </message>
-    <message>
-        <source>Tone mapping Panel</source>
-        <translation type="obsolete">Panel přemapování (Tone Mapping)</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="obsolete">Ctrl+K</translation>
-    </message>
-    <message>
-        <source>Ctrl+L</source>
-        <translation type="obsolete">Ctrl+L</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+M</translation>
-    </message>
-    <message>
-        <source>Ctrl+D</source>
-        <translation type="obsolete">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Získej informace o grafických prvcích</translation>
-    </message>
-    <message>
-        <source>Use this button to get information about the graphical elements</source>
-        <translation type="obsolete">Použijte toto tačítko k získání informací o grafických prvcích</translation>
-    </message>
-    <message>
-        <source>Tone Mapping: </source>
-        <translation type="obsolete">Přemapování:</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Konec</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="obsolete">Konec</translation>
-    </message>
-    <message>
-        <source>Close Tone Mapping Window</source>
-        <translation type="obsolete">Zavřít okno přemapování</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="obsolete">Lišty nástrojů</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="obsolete">O&amp;kna</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Zavřít</translation>
-    </message>
-    <message>
-        <source>&amp;Normal Size</source>
-        <translation type="obsolete">&amp;Původní velikost</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Při&amp;blížit</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Od&amp;dálit</translation>
-    </message>
-    <message>
-        <source>About Luminance</source>
-        <translation type="obsolete">O Luminance</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1Dokument licence nenaezen, můžete jej najít: %2zde%3</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
-    </message>
-</context>
-<context>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
@@ -5005,14 +3863,6 @@ Do you want to continue?</source>
     <message>
         <source>Append files to the list</source>
         <translation type="unfinished">Přidat soubory do seznamu</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;From...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Z...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;To...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Do...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Log:</source>
@@ -5039,28 +3889,12 @@ Do you want to continue?</source>
         <translation type="unfinished">Jen chyby</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filtr log zpráv:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Smazat text filtru</translation>
     </message>
     <message>
-        <source>Keep existing exif tags in destination file</source>
-        <translation type="obsolete">Zachovej původní EXIF tagy v cílovém souboru</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Nápověda</translation>
-    </message>
-    <message>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;Storno</translation>
-    </message>
-    <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Start!</translation>
     </message>
     <message>
         <source>Select the input images</source>
@@ -5069,10 +3903,6 @@ Do you want to continue?</source>
     <message>
         <source>&amp;Done</source>
         <translation type="unfinished">&amp;Hotovo</translation>
-    </message>
-    <message>
-        <source>&amp;Done.</source>
-        <translation type="obsolete">&amp;Zpracuj.</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5133,25 +3963,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Remind me later</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>hdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">CHYBA: Soubor &lt;br&gt;%1&lt;br&gt; není 8 nebo 16 bitový TIFF.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Nemohu spustit dcraw u souboru: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">CHYBA: Vyskytla se chyba nebo vypršel čas při provádění dcraw u souboru: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">CHYBA: Nepodařio se načíst soubor: %1</translation>
     </message>
 </context>
 </TS>

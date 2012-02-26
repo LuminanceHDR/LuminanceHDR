@@ -8,20 +8,8 @@
         <translation type="unfinished">Luminance névjegye</translation>
     </message>
     <message>
-        <source>Luminance </source>
-        <translation type="obsolete">Luminance </translation>
-    </message>
-    <message>
         <source>&amp;About</source>
         <translation type="unfinished">&amp;Névjegy</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;center&gt;Luminance - Hdr Imaging Workflow Application&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;center&gt;Luminance&lt;br&gt;Nagy megvilágítástartományú (HDR) képek előállítása&lt;br&gt;
-(c) 2006-2007, Giuseppe Rota&lt;br&gt;
-&lt;a href=&quot;http://luminance.sourceforge.net&quot;&gt;http://luminance.sourceforge.net&lt;/a&gt;&lt;/center&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
@@ -34,26 +22,6 @@
     <message>
         <source>&amp;License Agreement</source>
         <translation type="unfinished">&amp;Engedély</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg, &lt;/span&gt;&lt;/a&gt; ha valakit kifelejtettem volna.&lt;br /&gt;&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Főfejlesztő.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} programkód.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algoritmusa.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Orosz fordítás; felhasználhatósági javítások, .desktop fájl.&lt;br /&gt;&lt;br /&gt;Mandus&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X csomagolás, norvég fordítás.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Török fordítás.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   Francia fordítás és Ubuntu csomagolás.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanyol fordítás.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   Német fordítás.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Cseh fordítás.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Lengyel fordítás.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD karbantartás.&lt;br /&gt;&lt;br /&gt;Gaál Péter&lt;br /&gt;   Magyar fordítás.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;&lt;br /&gt;All the community on &lt;a href=&quot;http://www.flickr.com/groups/luminance&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelo&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt; and more.&lt;br /&gt;&lt;br /&gt;Peter Linnell&lt;br /&gt;   Opensuse 10.2 and 10.3 packager.&lt;br /&gt;&lt;br /&gt;Douglas E. Warner&lt;br /&gt;   FC6 packager and bug reports.&lt;br /&gt;&lt;br /&gt;Rauch Christian&lt;br /&gt;   openSUSE 10.2 packager.&lt;br /&gt;&lt;br /&gt;Rene Zbinden&lt;br /&gt;   For the Gentoo Linux Ebuild.&lt;br /&gt;&lt;br /&gt;Arne Hagenah&lt;br /&gt;   Various suggestions.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzki&lt;br /&gt;   Tiff ldr bugfixes and suggestion.&lt;br /&gt;&lt;br /&gt;Dave Coffin&lt;br /&gt;   For dcraw.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlony&lt;br /&gt;Antoine Latter&lt;br /&gt;Frank Boehme&lt;br /&gt;Sloan Poe&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kérlek, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;írd meg&lt;/span&gt;&lt;/a&gt;, ha kifelejtettem volna valakit.&lt;br /&gt;&lt;br /&gt;Az egész &lt;a href=&quot;http://www.flickr.com/groups/luminance&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flickr&lt;/span&gt;&lt;/a&gt; közösségnek.&lt;br /&gt;&lt;br /&gt;Pablo D&apos;Angelónak&lt;br /&gt;   Hugin&apos;s &lt;span style=&quot; font-style:italic;&quot;&gt;align_stack_image&lt;/span&gt;-ért és másért.&lt;br /&gt;&lt;br /&gt;Douglas E. Warnernek&lt;br /&gt;   az FC6 csomagolásáért és a hibajelentésekért.&lt;br /&gt;&lt;br /&gt;Rauch Christiannak&lt;br /&gt;   az openSUSE 10.2 csomagolásáért.&lt;br /&gt;&lt;br /&gt;Rene Zbindennek&lt;br /&gt;   a Gentoo Linux ebuildjéért.&lt;br /&gt;&lt;br /&gt;Arne Hagenáhnak&lt;br /&gt;   különböző javaslataiért.&lt;br /&gt;&lt;br /&gt;Ignacy Gawedzkinek&lt;br /&gt;   Tiff ldr javításaiért és javaslataiért.&lt;br /&gt;&lt;br /&gt;Dave Coffinnak&lt;br /&gt;   a dcraw-ért.&lt;br /&gt;&lt;br /&gt;Erik Ouchterlonynak&lt;br /&gt;Antoine Latternek&lt;br /&gt;Frank Boehmének&lt;br /&gt;Sloan Poenak&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -218,10 +186,6 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Mégsem</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Válasszon egy mappát</translation>
     </message>
@@ -301,10 +265,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Köteges árnyalatnövelés</translation>
     </message>
     <message>
-        <source>Input Hdr list</source>
-        <translation type="obsolete">Bemeneti HDR lista</translation>
-    </message>
-    <message>
         <source>Add &amp;Directory</source>
         <translation type="unfinished">&amp;Mappa hozzáadása</translation>
     </message>
@@ -319,10 +279,6 @@ See documentation for more informations.</source>
     <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation type="unfinished">Feldolgozandó HDR képek listája</translation>
-    </message>
-    <message>
-        <source>Input Tone Mapping Setting list</source>
-        <translation type="obsolete">Árnyalatnövelési jellemzők megadása</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
@@ -345,10 +301,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">&amp;Eredmények mappája...</translation>
     </message>
     <message>
-        <source>Log:</source>
-        <translation type="obsolete">Napló:</translation>
-    </message>
-    <message>
         <source>&amp;Show only:</source>
         <translation type="unfinished">&amp;Csak ez látsszon:</translation>
     </message>
@@ -361,10 +313,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">csak hibaüzenetek</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">Ü&amp;zeneteket szűrni:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Meghatározót törölni</translation>
     </message>
@@ -373,28 +321,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Mé&amp;gsem</translation>
     </message>
     <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Rajta!</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Válasszon egy mappát</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Mindennemű HDR fájltípus </translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Válassza ki a feldolgozandó képeket</translation>
-    </message>
-    <message>
-        <source>Load the tonemapping settings text files...</source>
-        <translation type="obsolete">Árnyalatnövelési jellemzők betöltése...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Árnyalatnövelési jellemzők (*.txt)</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -461,28 +389,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">%1 huzamot használ</translation>
     </message>
     <message>
-        <source>Saving using fileformat: </source>
-        <translation type="obsolete">Mentéshez használt fájltípus: </translation>
-    </message>
-    <message>
-        <source>Starting to tone map HDR file: </source>
-        <translation type="obsolete">HDR fájl feldolgozása elkezdve: </translation>
-    </message>
-    <message>
         <source>All tasks completed.</source>
         <translation type="unfinished">Minden feladat elvágezve.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot save to file: </source>
-        <translation type="obsolete">HIBA: Nem lehetett elmenteni: </translation>
-    </message>
-    <message>
-        <source>Successfully saved LDR file: </source>
-        <translation type="obsolete">LDR fájl eredményesen mentve: </translation>
-    </message>
-    <message>
-        <source>Finished tone mapping the current HDR.</source>
-        <translation type="obsolete">Árnyalatnövelés ezen a fájlon befejezve.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
@@ -700,20 +608,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">(Az alapbeállítás weight=triangular:response_curve=linear:model=debevec)(sp)</translation>
     </message>
     <message>
-        <source>ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk</source>
-        <translation type="obsolete">ashikhmin|drago|durand|fattal|pattanaik|reinhard02|reinhard05|mantiuk</translation>
-    </message>
-    <message>
-        <source>(Default is mantiuk)</source>
-        <translation type="obsolete">(Az alapbeállítás mantiuk)</translation>
-    </message>
-    <message>
         <source>alpha=VALUE:beta=VALUE:color=VALUE:noise=VALUE:new=true|false (for fattal)</source>
         <translation type="unfinished">alpha=ÉRTÉK:beta=ÉRTÉK:color=ÉRTÉK:noise=ÉRTÉK:new=true|false (fattalhoz)</translation>
-    </message>
-    <message>
-        <source>contrast=VALUE:saturation=VALUE:equalization=true|false (for mantiuk)</source>
-        <translation type="obsolete">contrast=ÉRTÉK:saturation=ÉRTÉK:equalization=true|false (mantiukhoz)</translation>
     </message>
     <message>
         <source>localcontrast=VALUE:eq=2|4:simple=true|false (for ashikhmin)</source>
@@ -767,40 +663,12 @@ See documentation for more informations.</source>
 <context>
     <name>DnDOption</name>
     <message>
-        <source>Drag and drop</source>
-        <translation type="obsolete">Húzd és ejtsd</translation>
-    </message>
-    <message>
         <source>&lt;b&gt;What would you like to do with the file(s)?&lt;/b&gt;</source>
         <translation type="unfinished">&lt;b&gt;Mit szeretne csinálni ezzel a fájllal vagy ezekkel a fájlokkal?&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Mégsem</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="obsolete">Megnyitás</translation>
-    </message>
-    <message>
-        <source>Open an existing HDR.</source>
-        <translation type="obsolete">Létező HDR képet megnyitni.</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">Új</translation>
-    </message>
-    <message>
-        <source>Create a new HDR, by using one or more images.</source>
-        <translation type="obsolete">Nagy megvilágítástartományú képet alkotni egy vagy több sima képből.</translation>
-    </message>
-    <message>
         <source>&amp;Cancel</source>
         <translation type="unfinished">Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <source>Cancel the drag and drop process and return to the main window.</source>
-        <translation type="obsolete">Megszakítani a húzd és ejtsd műveletét.</translation>
     </message>
     <message>
         <source>Drag and Drop</source>
@@ -1132,10 +1000,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>GenericViewer</name>
     <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Fennálló változtatások...</translation>
-    </message>
-    <message>
         <source>Pan the image to a region</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1162,10 +1026,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">A kép &lt;br&gt;(%1)&lt;br&gt; nem egy 8 vagy 16 bites Tiff fájl.</translation>
     </message>
     <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">HIBA: dcraw visszautasítja ezt a fájlt: %1</translation>
-    </message>
-    <message>
         <source>ERROR: Failed Loading file: %1</source>
         <translation type="unfinished">HIBA: Nem lehet megnyitni: %1</translation>
     </message>
@@ -1176,10 +1036,6 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>HdrViewer</name>
-    <message>
-        <source>Viewing Settings Toolbar</source>
-        <translation type="obsolete">Nézetbeállítási eszköztár</translation>
-    </message>
     <message>
         <source>Linear</source>
         <translation type="unfinished">Egyenes arányú</translation>
@@ -1209,14 +1065,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Hisztogramm:</translation>
     </message>
     <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Fennálló változtatások...</translation>
-    </message>
-    <message>
-        <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="obsolete">Ebben a HDR képben vannak még fennálló változtatások.&lt;br&gt;Biztos, hogy be akarja zárni az ablakot?</translation>
-    </message>
-    <message>
         <source>&amp;Mapping:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1224,56 +1072,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrWizard</name>
     <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Nagy megvilágítási tartományt szerkesztő mágus</translation>
-    </message>
-    <message>
         <source>[1/2] Load Input Images</source>
         <translation type="unfinished">[1/2] Feldolgozandó képek betöltése</translation>
     </message>
     <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Feldolgozandó képek betöltése</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">Képek &amp;megnyitása...</translation>
-    </message>
-    <message>
         <source>Alignment</source>
         <translation type="unfinished">Igazítás</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Képek automatikus &amp;igazítása</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin align_image_stack-je</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Átlag bitmap küszöb</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] HDR jellemzők beállítása</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Válasszon ki egyet a jobb oldalt megadott profilok közül:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A legelső általában a legjobb; csak akkor válasszon másikat, ha az eredmény nem kielégítő.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">alapértelmezett profilok</translation>
     </message>
     <message>
         <source>Profile 1</source>
@@ -1320,16 +1124,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Egyenes arányú</translation>
     </message>
     <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">HDR előállítási típusa:</translation>
-    </message>
-    <message>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Szellemképcsökkentő (kísérleti!)</translation>
     </message>
     <message>
         <source>Log</source>
@@ -1340,32 +1136,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Kalibrálás</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Menetek száma (ha lehet, legyen kevés):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Egyéni beállítások.
-(Csak akkor használja, ha a fenti alapértelmezett
-profilok nem vezetnek jó eredményre)</translation>
-    </message>
-    <message>
         <source>[2/2] Choose Custom Configuration</source>
         <translation type="unfinished">[2/2] Egyéni konfiguráció kiválasztása</translation>
     </message>
     <message>
         <source>Weights:</source>
         <translation type="unfinished">Súlyok:</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Bizalomfüggvény kiválasztása
-a lehető összes képpont
-figyelembevételével&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Gaussian</source>
@@ -1392,22 +1168,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="unfinished">Válaszgörbe meghatározása kalibrálással (robertson02 algoritmus)</translation>
     </message>
     <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Válaszfüggvény fájl mentése</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Mentés másként...</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">HDR előállítási függvény:</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Válassza ki a típust:</translation>
-    </message>
-    <message>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -1428,15 +1188,6 @@ figyelembevételével&lt;/p&gt;</translation>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Betöltött képek.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Luminance nem talált megfelelő &lt;i&gt;EXIF&lt;/i&gt; címkét
-a következő képekben: &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Ennek ellenére lehet folytatni a HDR kép előállítását. Csak annyit kell tenni, hogy &lt;b&gt;kézzel&lt;/b&gt; be kell táplálni minden képhez a megvilágítási értéket vagy a fényrekesz különbségét.	&lt;hr&gt;Ha a Qtfsguival akarja ezt &lt;b&gt;automatikusan csinálni&lt;/b&gt;, akkor a betöltendő képeknek legalább
-a következő EXIF adatokat kell tartalmazniuk: 	&lt;ul&gt;&lt;li&gt;sebesség&lt;/li&gt;	&lt;li&gt;rekesz&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;UTALÁS:&lt;/b&gt; Az EXIF adatok általában a megelőző feldolgozás folyamán vesznek el.&lt;br&gt;	EXIF címkéket &lt;b&gt;egy az egyben&lt;/b&gt; át lehet másolni két képgyűjtemény között az &lt;i&gt;&lt;b&gt;&quot;Eszközök-&gt;EXIF adatok másolása...&quot;&lt;/b&gt;&lt;/i&gt; menüpont alatt.</translation>
-    </message>
-    <message>
         <source>EXIF data not found</source>
         <translation type="unfinished">Nincsenek EXIF adatok</translation>
     </message>
@@ -1445,16 +1196,8 @@ a következő EXIF adatokat kell tartalmazniuk: 	&lt;ul&gt;&lt;li&gt;sebesség&l
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;A továbbiakhoz kézzel meg kell adni a megvilágítási értékeket.&lt;br&gt;Ebből kell még &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; darab.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Hiba megnyitás közben</translation>
-    </message>
-    <message>
         <source>Error...</source>
         <translation type="unfinished">Hiba...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Nem indult el ez a külső program: &quot;align_image_stack&quot;.&lt;br&gt;Kérem olvassa el a &quot;Súgó -&gt; Dokumentáció... -&gt; Hints and tips&quot; fejezetét.</translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
@@ -1487,10 +1230,6 @@ a következő EXIF adatokat kell tartalmazniuk: 	&lt;ul&gt;&lt;li&gt;sebesség&l
     <message>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Fényképezőgép válaszgörbéjének a mentése</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Súlyok: </translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1742,342 +1481,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
 </context>
 <context>
-    <name>HdrWizardForm</name>
-    <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Nagy megvilágítási tartományt szerkesztő mágus</translation>
-    </message>
-    <message>
-        <source>Click the button below to load the input images</source>
-        <translation type="obsolete">Kattintson a gombra a feldolgozandó képek betöltéséhez</translation>
-    </message>
-    <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Feldolgozandó képek betöltése</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">alapértelmezett profilok</translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="obsolete">Profil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="obsolete">Profil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="obsolete">Profil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="obsolete">Profil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="obsolete">Profil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="obsolete">Profil 6</translation>
-    </message>
-    <message>
-        <source>Weighting function:</source>
-        <translation type="obsolete">Súlyozó függvény:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="obsolete">Háromszögelő</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="obsolete">Válaszgörbe:</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation type="obsolete">Gamma</translation>
-    </message>
-    <message>
-        <source>Debevec</source>
-        <translation type="obsolete">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Szellemképcsökkentő (kísérleti!)</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Egyenes arányú</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="obsolete">Logaritmikus</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Kalibrálás</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Menetek száma (ha lehet, legyen kevés):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Egyéni beállítások.
-(Csak akkor használja, ha a fenti alapértelmezett
-profilok nem vezetnek jó eredményre)</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="obsolete">Súlyok:</translation>
-    </message>
-    <message>
-        <source>Gaussian</source>
-        <translation type="obsolete">Gauß</translation>
-    </message>
-    <message>
-        <source>Plateau</source>
-        <translation type="obsolete">Fennsík</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Bizalomfüggvény kiválasztása
-a lehető összes képpont
-figyelembevételével&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="obsolete">Adoot válaszgörbék:</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="obsolete">Betöltés...</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="obsolete">Válaszgörbe meghatározása kalibrálással (robertson02 algoritmus)</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Válassza ki a típust:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="obsolete">Robertson</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="obsolete">&amp;Előre</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <source>JPEG (*.jpeg *.jpg);;</source>
-        <translation type="obsolete">JPEG (*.jpeg *.jpg);;</translation>
-    </message>
-    <message>
-        <source>TIFF Images (*.tiff *.tif);;</source>
-        <translation type="obsolete">TIFF képek (*.tiff *.tif);;</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Feldolgozandó képek kiválasztása</translation>
-    </message>
-    <message>
-        <source>EXIF data not found</source>
-        <translation type="obsolete">Nincsenek EXIF adatok</translation>
-    </message>
-    <message>
-        <source>&amp;Finish</source>
-        <translation type="obsolete">&amp;Befejezés</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Fényképezőgép válaszgörbéjének a betöltése</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Fényképezőgép válaszgörbéje (*.m);;Minden fájl (*)</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Súlyok: </translation>
-    </message>
-    <message>
-        <source> - Response curve: </source>
-        <translation type="obsolete"> - Válaszgörbe: </translation>
-    </message>
-    <message>
-        <source> - Model: </source>
-        <translation type="obsolete"> - Típus: </translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="obsolete">Logaritmikus</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="obsolete">A kalibrálásból eredő</translation>
-    </message>
-    <message>
-        <source>From File</source>
-        <translation type="obsolete">Fájlból</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Válasszon ki egyet a jobb oldalt megadott profilok közül:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A legelső általában a legjobb; csak akkor válasszon másikat, ha az eredmény nem kielégítő.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">HDR előállítási típusa:</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">HDR előállítási függvény:</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Képek automatikus &amp;igazítása</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">hugin align_image_stack-je</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Betöltött képek.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;A továbbiakhoz kézzel meg kell adni a megvilágítási értékeket.&lt;br&gt;Ebből kell még &lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; darab.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Hiba...</translation>
-    </message>
-    <message>
-        <source>[1/2] Load Input Images</source>
-        <translation type="obsolete">[1/2] Feldolgozandó képek betöltése</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">Képek &amp;megnyitása...</translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="obsolete">Igazítás</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Átlag bitmap küszöb</translation>
-    </message>
-    <message>
-        <source>&amp;Files Currently Loaded:</source>
-        <translation type="obsolete">&amp;Jelenleg nyitott fájlok:</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] HDR jellemzők beállítása</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="obsolete">[2/2] Egyéni konfiguráció kiválasztása</translation>
-    </message>
-    <message>
-        <source>&amp;Exposure for selected image</source>
-        <translation type="obsolete">A kijelölt kép meg&amp;világítása</translation>
-    </message>
-    <message>
-        <source>EV </source>
-        <translation type="obsolete">EV </translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="obsolete">Válaszfüggvény fájl betöltése</translation>
-    </message>
-    <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Válaszfüggvény fájl mentése</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Mentés másként...</translation>
-    </message>
-    <message>
-        <source>Image Filename</source>
-        <translation type="obsolete">Képfájl neve</translation>
-    </message>
-    <message>
-        <source>Exposure</source>
-        <translation type="obsolete">Megvilágítás</translation>
-    </message>
-    <message>
-        <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2);;</source>
-        <translation type="obsolete">Minden fájltípus (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw);;</translation>
-    </message>
-    <message>
-        <source>RAW Images (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="obsolete">Nyers képek (*.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw*.sr2)</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;Luminance nem talált megfelelő &lt;i&gt;EXIF&lt;/i&gt; címkét
-a következő képekben: &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Ennek ellenére lehet folytatni a HDR kép előállítását. Csak annyit kell tenni, hogy &lt;b&gt;kézzel&lt;/b&gt; be kell táplálni minden képhez a megvilágítási értéket vagy a fényrekesz különbségét.	&lt;hr&gt;Ha a Qtfsguival akarja ezt &lt;b&gt;automatikusan csinálni&lt;/b&gt;, akkor a betöltendő képeknek legalább
-a következő EXIF adatokat kell tartalmazniuk: 	&lt;ul&gt;&lt;li&gt;sebesség&lt;/li&gt;	&lt;li&gt;rekesz&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;UTALÁS:&lt;/b&gt; Az EXIF adatok általában a megelőző feldolgozás folyamán vesznek el.&lt;br&gt;	EXIF címkéket &lt;b&gt;egy az egyben&lt;/b&gt; át lehet másolni két képgyűjtemény között az &lt;i&gt;&lt;b&gt;&quot;Eszközök-&gt;EXIF adatok másolása...&quot;&lt;/b&gt;&lt;/i&gt; menüpont alatt.</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Hiba megnyitás közben</translation>
-    </message>
-    <message>
-        <source>Unknown </source>
-        <translation type="obsolete">Ismeretlen </translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Nem indult el ez a külső program: &quot;align_image_stack&quot;.&lt;br&gt;Kérem olvassa el a &quot;Súgó -&gt; Dokumentáció... -&gt; Hints and tips&quot; fejezetét.</translation>
-    </message>
-    <message>
-        <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="obsolete">Az &quot;align_image_stack&quot; külső folyamat bedöglött...</translation>
-    </message>
-    <message>
-        <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="obsolete">Ismeretlen hiba történt a &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; folyamatban...</translation>
-    </message>
-    <message>
-        <source>Aligning...</source>
-        <translation type="obsolete">Igazítás...</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Fényképezőgép válaszgörbéjének a mentése</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Minden megvilágítási érték rögzítve&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-</context>
-<context>
     <name>HelpBrowser</name>
     <message>
         <source>Luminance Help</source>
@@ -2197,21 +1600,6 @@ a következő EXIF adatokat kell tartalmazniuk: 	&lt;ul&gt;&lt;li&gt;sebesség&l
 Do you want to open the link with the default application 
 associated with the protocol?</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Luminance Help</source>
-        <translation type="obsolete">Luminance súgó</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">Ki&amp;lépés</translation>
-    </message>
-    <message>
-        <source>CTRL+Q</source>
-        <translation type="obsolete">CTRL+Q</translation>
     </message>
 </context>
 <context>
@@ -2383,41 +1771,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LoadHdrThread</name>
-    <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">HIBA: A következő fájl olvashatatlan: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">HIBA: dcraw visszautasítja ezt a fájlt: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">HIBA: Lejárt az idő, miközben dcraw működött egy fájlon: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">HIBA: A(z) %1 fájl típusa nem támogatott.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">HIBA: Nem lehet megnyitni: %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
-    <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
-    </message>
     <message>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Fájl</translation>
-    </message>
-    <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">&amp;Kép</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -2436,60 +1793,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Súgó</translation>
     </message>
     <message>
-        <source>Common operations</source>
-        <translation type="obsolete">Szokványos műveletek</translation>
-    </message>
-    <message>
-        <source>&amp;New Hdr...</source>
-        <translation type="obsolete">Ú&amp;j HDR kép...</translation>
-    </message>
-    <message>
-        <source>New Hdr...</source>
-        <translation type="obsolete">Új HDR kép...</translation>
-    </message>
-    <message>
         <source>Ctrl+N</source>
         <translation type="unfinished">Ctrl+N</translation>
-    </message>
-    <message>
-        <source>&amp;Open Hdr...</source>
-        <translation type="obsolete">HDR kép &amp;megnyitása...</translation>
-    </message>
-    <message>
-        <source>Open Hdr....</source>
-        <translation type="obsolete">HDR kép megnyitása...</translation>
     </message>
     <message>
         <source>Ctrl+O</source>
         <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
-        <source>&amp;Save Hdr as...</source>
-        <translation type="obsolete">HDR kép men&amp;tése másként...</translation>
-    </message>
-    <message>
-        <source>Save Hdr as...</source>
-        <translation type="obsolete">HDR kép mentése másként...</translation>
-    </message>
-    <message>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Tonemap the Hdr...</source>
-        <translation type="obsolete">Árnyala&amp;tnövelés...</translation>
-    </message>
-    <message>
-        <source>Tonemap the Hdr</source>
-        <translation type="obsolete">Árnyalatnövelés</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">Ki&amp;lépés</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2500,24 +1813,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
-        <source>Rotate C&amp;ounterClockWise</source>
-        <translation type="obsolete">Óramutató e&amp;llen elfordítani</translation>
-    </message>
-    <message>
-        <source>Rotate CounterClockWise</source>
-        <translation type="obsolete">Óramutató ellen elfordítani</translation>
-    </message>
-    <message>
         <source>&lt;</source>
         <translation type="unfinished">&lt;</translation>
-    </message>
-    <message>
-        <source>Rotate C&amp;lockWise</source>
-        <translation type="obsolete">Óramutató &amp;irányában elfordítani</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise</source>
-        <translation type="obsolete">Óramutató irányában elfordítani</translation>
     </message>
     <message>
         <source>&gt;</source>
@@ -2572,16 +1869,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">9</translation>
     </message>
     <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentáció...</translation>
-    </message>
-    <message>
         <source>About...</source>
         <translation type="unfinished">Névjegy...</translation>
-    </message>
-    <message>
-        <source>Show Luminance Help</source>
-        <translation type="obsolete">Luminance súgó</translation>
     </message>
     <message>
         <source>Ctrl+H</source>
@@ -2600,10 +1889,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Nagyítás</translation>
     </message>
     <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Nagyítás</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation type="unfinished">+</translation>
     </message>
@@ -2612,16 +1897,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;Kicsinyítés</translation>
     </message>
     <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Kicsinyítés</translation>
-    </message>
-    <message>
         <source>-</source>
         <translation type="unfinished">-</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Ablakhoz igazítás</translation>
     </message>
     <message>
         <source>W</source>
@@ -2630,10 +1907,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Luminance Options</source>
         <translation type="unfinished">Luminance beállítások</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance.</source>
-        <translation type="obsolete">Luminance beállítását elvégezni.</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
@@ -2684,76 +1957,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Megszakítás...</translation>
     </message>
     <message>
-        <source>Save the HDR...</source>
-        <translation type="obsolete">HDR kép mentése...</translation>
-    </message>
-    <message>
         <source>Save files in</source>
         <translation type="unfinished">Képeket menteni itt</translation>
     </message>
     <message>
-        <source>Error...</source>
-        <translation type="obsolete">Hiba...</translation>
-    </message>
-    <message>
         <source>Unsaved changes...</source>
         <translation type="unfinished">Fennálló változtatások...</translation>
-    </message>
-    <message>
-        <source>Hdr &amp;Histogram</source>
-        <translation type="obsolete">HDR &amp;Hisztogramm</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation type="obsolete">Nagy megvilágítástartományú képet alkotni nyers képekből, vagy JPEG, 8 vagy 16 bites TIFF fájlokból.</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation type="obsolete">Létező HDR képet megnyitni (OpenEXR, Radiance RGBE, PFS áradat, nyers kép vagy TIFF).</translation>
-    </message>
-    <message>
-        <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="obsolete">HDR képet árnyalatnöveléssel LDR képpé, vagyis JPEG-re vagy PNG-re változtatni</translation>
-    </message>
-    <message>
-        <source>Rotate Counterclockwise the Hdr</source>
-        <translation type="obsolete">A HDR képet az óramutató ellen elfordítani</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise the Hdr</source>
-        <translation type="obsolete">A HDR képet az óramutató irányában elfordítani</translation>
-    </message>
-    <message>
-        <source>View Hdr at Normal Size</source>
-        <translation type="obsolete">A HDR képet eredeti méretében mutatni</translation>
-    </message>
-    <message>
-        <source>Shrink the Hdr to fit its containing window</source>
-        <translation type="obsolete">A HDR képet az ablakához igazítani</translation>
-    </message>
-    <message>
-        <source>Resize the Hdr</source>
-        <translation type="obsolete">HDR képet átméretezni</translation>
-    </message>
-    <message>
-        <source>Resize (shrink or expand) the Hdr</source>
-        <translation type="obsolete">HDR képet átméretezni (kicsinyíteni vagy nagyítani)</translation>
-    </message>
-    <message>
-        <source>Ready.... Now open an Hdr or create one!</source>
-        <translation type="obsolete">Kész... Most lehet készíteni vagy meg lehet nyitni egy HDR képet!</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Mindennemű HDR fájltípus </translation>
-    </message>
-    <message>
-        <source>Load an Hdr file...</source>
-        <translation type="obsolete">HDR kép megnyitása...</translation>
-    </message>
-    <message>
-        <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Menti a HDR képet (OpenEXR, Radiance RGBE, PFS áradat, vagy 32 bit-es vagy LogLuv TIFF)</translation>
     </message>
     <message>
         <source>Toolbars</source>
@@ -2762,14 +1971,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Preferences...</source>
         <translation type="unfinished">&amp;Beállítások...</translation>
-    </message>
-    <message>
-        <source>&amp;Resize the Hdr...</source>
-        <translation type="obsolete">HDR képet á&amp;tméretezni...</translation>
-    </message>
-    <message>
-        <source>Text &amp;Under Icons</source>
-        <translation type="obsolete">Szöveg az ikonok &amp;alatt</translation>
     </message>
     <message>
         <source>&amp;Icons Only</source>
@@ -2816,69 +2017,20 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Mentés egyszerre</translation>
     </message>
     <message>
-        <source>Copy Exif Data between two set of files</source>
-        <translation type="obsolete">EXIF adatok átmásolása két képgyűjtemény között</translation>
-    </message>
-    <message>
         <source>Ctrl+B</source>
         <translation type="unfinished">Ctrl+B</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
-        <translation type="obsolete">Nagy megvilágítástartományú képet alkotni nyers képekből, vagy JPEG, 8 vagy 16 bites TIFF fájlokból</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation type="obsolete">Létező HDR képet megnyitni (OpenEXR, Radiance RGBE, PFS áradat, nyers kép vagy TIFF)</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance</source>
-        <translation type="obsolete">Luminance beállítását elvégezni</translation>
-    </message>
-    <message>
-        <source>Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
-        <translation type="obsolete">Luminance egy gyorsítótárban őrzi az ideiglenes fájljait, de a kijelölt mappa nem érvényes.&lt;br&gt;Válasszon egy másik útvonalat az Eszközök -&gt; Beállítások... -&gt; árnyalatnövelés menüpont segítségével.</translation>
     </message>
     <message>
         <source>&amp;What&apos;s This?</source>
         <translation type="unfinished">Ez &amp;mi?</translation>
     </message>
     <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Rákérdezni, mi micsoda</translation>
-    </message>
-    <message>
         <source>Shift+F1</source>
         <translation type="unfinished">Shift+F1</translation>
     </message>
     <message>
-        <source>About &amp;Luminance</source>
-        <translation type="obsolete">&amp;Luminance névjegye</translation>
-    </message>
-    <message>
-        <source>Save Hdr &amp;Preview...</source>
-        <translation type="obsolete">HDR &amp;előnézet mentése...</translation>
-    </message>
-    <message>
-        <source>Save the current Hdr Preview to a Ldr file.</source>
-        <translation type="obsolete">HDR előnézetet LDR képként menteni.</translation>
-    </message>
-    <message>
         <source>&amp;Projective Transformation...</source>
         <translation type="unfinished">Át&amp;vetítés...</translation>
-    </message>
-    <message>
-        <source>Apply a projective transformation to the current Hdr.</source>
-        <translation type="obsolete">A jelenlegi HDR képet átvetíteni.</translation>
-    </message>
-    <message>
-        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Az egyik HDR képben vannak még fennálló változtatások.&lt;br&gt;Kilépni ennek ellenére?</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
     </message>
     <message>
         <source>Untitled</source>
@@ -3253,42 +2405,7 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>PreferenceDialog</name>
-    <message>
-        <source>Option -a...</source>
-        <translation type="obsolete">Az -a kapcsoló...</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation type="obsolete">Kérem újraindítani...</translation>
-    </message>
-    <message>
-        <source>Please restart Luminance to use the new language (%1).</source>
-        <translation type="obsolete">Újra kéne indítani Luminance-t az új nyelv (%1) használata végett.</translation>
-    </message>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Válasszon egy mappát</translation>
-    </message>
-    <message>
-        <source>Option -T...</source>
-        <translation type="obsolete">A -T kapcsoló...</translation>
-    </message>
-    <message>
-        <source>Luminance requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
-        <translation type="obsolete">A Luminance megköveteli a &quot;-T&quot; kapcsoló használatát a dcraw-val. A parancssor ennek megfelelően módosítva lett.</translation>
-    </message>
-    <message>
-        <source>Luminance requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
-        <translation type="obsolete">A Luminance megköveteli az &quot;-a aligned_&quot; kapcsoló használatát az align_image_stackkel. A parancssor ennek megfelelően módosítva lett.</translation>
-    </message>
-</context>
-<context>
     <name>PreferencesDialog</name>
-    <message>
-        <source>Luminance Preferences</source>
-        <translation type="obsolete">Luminance beállítások</translation>
-    </message>
     <message>
         <source>Tone Mapping</source>
         <translation type="unfinished">LDR</translation>
@@ -3300,44 +2417,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>External Tools</source>
         <translation type="unfinished">Programok</translation>
-    </message>
-    <message>
-        <source>Hdr Tiff</source>
-        <translation type="obsolete">HDR Tiff</translation>
-    </message>
-    <message>
-        <source>Hdr Visualization</source>
-        <translation type="obsolete">HDR nézet</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tone Mapping Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Árnyalatnövelési beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Cache</source>
-        <translation type="obsolete">Gyorsítótár</translation>
-    </message>
-    <message>
-        <source>Choose the directory where Luminance will store the temporary data to.</source>
-        <translation type="obsolete">Válasszon egy mappát az időleges fájlok részére.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Megnyitás...</translation>
-    </message>
-    <message>
-        <source>Batch</source>
-        <translation type="obsolete">Köteges feldolgozás</translation>
-    </message>
-    <message>
-        <source>Save using this LDR image &amp;format:</source>
-        <translation type="obsolete">Normális megvilágítástartományú (LDR)&lt;br&gt;képek mentéséhez használt &amp;fájltípus:</translation>
     </message>
     <message>
         <source>JPEG</source>
@@ -3358,20 +2437,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>BMP</source>
         <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>Number of &amp;threads:
-(useful on multi-core/SMP machines)</source>
-        <translation type="obsolete">&amp;Huzamok száma:
-(hasznos többmagos (SMP) processzorok esetében)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;User Interface&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Kezelés&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translation type="obsolete">Nyelv:</translation>
     </message>
     <message>
         <source>Czech</source>
@@ -3414,116 +2479,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">török</translation>
     </message>
     <message>
-        <source>Batch Tone Mapping</source>
-        <translation type="obsolete">Köteges árnyalatnövelés</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Nyers fájlok import beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>dcraw commandline parameters:</source>
-        <translation type="obsolete">A dcraw parancssora:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;További kérdések tisztázásához az alábbi súgó gombra kattintani&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="obsolete">Itt található a nyers képek feldolgozásához szükséges parancskapcsolók leírása</translation>
-    </message>
-    <message>
-        <source>&amp;About Raw Parameters</source>
-        <translation type="obsolete">&amp;Nyerskép kapcsolók</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Alignment Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Igazítási beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>align_image_stack commandline parameters:</source>
-        <translation type="obsolete">Az align_image_stack parancssora:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff beállítások&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Válasszon ki egy nagy megvilágítástartományú Tiff fájltípust a HDR képek mentésére.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; a legtöbb esetben megfelel, mert a keletkező HDR fájl nagysága nem túl nagy.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; fájltípust csak akkor használja, ha a Tiff képet egy olyan program részére szánja, amelyik nem tudja betölteni a LogLuv fájltípust.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="obsolete">LogLuv Tiff (16 bites float)</translation>
-    </message>
-    <message>
-        <source>Float Tiff (float, 32bit)</source>
-        <translation type="obsolete">Float Tiff (32 bites float)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;HDR nézet beállításai&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Colors</source>
-        <translation type="obsolete">Színek</translation>
-    </message>
-    <message>
-        <source>Show Negative Numbers as:</source>
-        <translation type="obsolete">Negatív számok jelölése:</translation>
-    </message>
-    <message>
         <source>Show nan and +/-Inf values as:</source>
         <translation type="unfinished">Meghatározatlan (NaN) és &lt;br&gt;végtelen (+Inf) értékek jelölése:</translation>
-    </message>
-    <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Rákérdezni, mi micsoda</translation>
-    </message>
-    <message>
-        <source>&amp;What&apos;s this?</source>
-        <translation type="obsolete">Ez &amp;mi?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3538,28 +2495,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">magyar</translation>
     </message>
     <message>
-        <source>Option -T...</source>
-        <translation type="obsolete">A -T kapcsoló...</translation>
-    </message>
-    <message>
-        <source>Luminance requires dcraw to be executed with the &quot;-T&quot; option. Commandline options have been corrected.</source>
-        <translation type="obsolete">A Luminance megköveteli a &quot;-T&quot; kapcsoló használatát a dcraw-val. A parancssor ennek megfelelően módosítva lett.</translation>
-    </message>
-    <message>
-        <source>Option -a...</source>
-        <translation type="obsolete">Az -a kapcsoló...</translation>
-    </message>
-    <message>
-        <source>Luminance requires align_image_stack to be executed with the &quot;-a aligned_&quot; option. Commandline options have been corrected.</source>
-        <translation type="obsolete">A Luminance megköveteli az &quot;-a aligned_&quot; kapcsoló használatát az align_image_stackkel. A parancssor ennek megfelelően módosítva lett.</translation>
-    </message>
-    <message>
         <source>Please restart...</source>
         <translation type="unfinished">Kérem újraindítani...</translation>
-    </message>
-    <message>
-        <source>Please restart Luminance to use the new language (%1).</source>
-        <translation type="obsolete">Újra kéne indítani Luminance-t az új nyelv (%1) használata végett.</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -4212,16 +3149,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Nem található a Qt JPEG modulja...&lt;br&gt;Csomagolja ki a DLL archívumát a mappák nevének használatával.</translation>
     </message>
     <message>
-        <source>Save the LDR to...</source>
-        <translation type="obsolete">LDR kép mentése...</translation>
-    </message>
-    <message>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Mentés nem sikerült &lt;br&gt;</translation>
-    </message>
-    <message>
-        <source>All LDR formats (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</source>
-        <translation type="obsolete">Minden normális megvilágítástartományú (LDR) képtípus (*.jpg *.jpeg *.png *.ppm *.pbm *.bmp);;</translation>
     </message>
     <message>
         <source>Save as...</source>
@@ -4496,21 +3425,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ThreadManager</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">Ki&amp;lépés</translation>
-    </message>
-</context>
-<context>
     <name>TonemappingPanel</name>
     <message>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished">Árnyalatnövelési jellemzők betöltése...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Árnyalatnövelési jellemzők (*.txt)</translation>
     </message>
     <message>
         <source>Aborting...</source>
@@ -4533,10 +3451,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">A fájl olvashatatlan (ellenőrizze a jogait, az útvonalat, stb.)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one.</source>
-        <translation type="obsolete">Hiba: az árnyalatnövelési jellemzők szabványa megváltozott. Ezt a régi fájlt nem lehet használni a Luminance ezen verziójával. Teremtsen egy új fájlt.</translation>
-    </message>
-    <message>
         <source>Enter the width of the new size:</source>
         <translation type="unfinished">Adja meg az új méret szélességét:</translation>
     </message>
@@ -4545,43 +3459,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Egyéni LDR méret</translation>
     </message>
     <message>
-        <source>Tonemapping Operators and options</source>
-        <translation type="obsolete">Árnyalatnövelési műveletek és beállítások</translation>
-    </message>
-    <message>
-        <source>Gamma applied before tone mapping</source>
-        <translation type="obsolete">Gammakorrektúra árnyalatnövelés előtt</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gradient Domain High Dynamic Range Compression&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;HDR tömörítés a gradiensek segítségével&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Alpha</source>
         <translation type="unfinished">Alfa</translation>
     </message>
     <message>
         <source>Color Saturation</source>
         <translation type="unfinished">Színtelítettség</translation>
-    </message>
-    <message>
-        <source>Default Values for operator</source>
-        <translation type="obsolete">Alapértelmezett értékek</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Tone Mapping Algorithm for High Contrast Images&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Árnyalatnövelési algoritmus nagy kontrasztú képekhez&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Simple</source>
@@ -4604,16 +3487,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Heli kontraszt küszöb</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gyors bilaterális szűrő HDR képek megjelenítéséhez&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Spatial Kernel Sigma</source>
         <translation type="unfinished">Térbeli szigma mag</translation>
     </message>
@@ -4626,28 +3499,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Alapkontraszt</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Alkalmazkodó logaritmikus leképezés nagy kontrasztú jelenetek megjelenítéséhez&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Bias</source>
         <translation type="unfinished">Eltolás (bias)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time-Dependent Visual Adaptation for Realistic Image Display&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Időfüggő nézetmódosítás valósághű képek megjelenítéséhez&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Multiplier</source>
@@ -4658,26 +3511,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Helyi árnyalatnövelés</translation>
     </message>
     <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Fényességen alapuló kúp és rúd</translation>
-    </message>
-    <message>
         <source>Cone Level</source>
         <translation type="unfinished">Kúp szintje</translation>
     </message>
     <message>
         <source>Rod Level</source>
         <translation type="unfinished">Rúd szintje</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Photographic Tone Reproduction for Digital Images&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Árnyalatok fényképészeti utánzása digitális képeken&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use Scales</source>
@@ -4704,22 +3543,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Felső fokozat</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dynamic Range Reduction Inspired by Photoreceptor Physiology&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A fényreceptorok fiziológiája által ihletet dinamikus tartománycsökkentés&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Brightness</source>
         <translation type="unfinished">Fényesség</translation>
-    </message>
-    <message>
-        <source>Ctrl+A</source>
-        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
@@ -4728,14 +3553,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Beta</source>
         <translation type="unfinished">Béta</translation>
-    </message>
-    <message>
-        <source>&amp;Result size:</source>
-        <translation type="obsolete">&amp;Eredmény méretei:</translation>
-    </message>
-    <message>
-        <source>The size of the resulting LDR image.</source>
-        <translation type="obsolete">A normális megvilágítástartományú (LDR) kép mérete.</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
@@ -4752,16 +3569,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation type="unfinished">Visszaállítani a gammakorektúra előtti alapértelmezést (1)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nagy megvilágítástartományú (HDR) képek kontraszt befolyásolásának az érzékelési keretei&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
@@ -4784,32 +3591,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Zajcsökkentés</translation>
     </message>
     <message>
-        <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
-        <translation type="obsolete">&quot;Régi&quot; Fattal (1.8.4 előtti)</translation>
-    </message>
-    <message>
         <source>Chromatic Adaptation</source>
         <translation type="unfinished">Színmódosítás</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
         <translation type="unfinished">Fénymódosítás</translation>
-    </message>
-    <message>
-        <source>Start tone mapping (CTRL+A).</source>
-        <translation type="obsolete">Árnyalatnövelést elindítani (CTRL+A).</translation>
-    </message>
-    <message>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
-        <translation type="obsolete">Használja a fenti jellemzőket (gamma előtti és átnyalatnövelési műveleteket) az LDR kép előállításához.</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">&amp;Alkalmaz</translation>
-    </message>
-    <message>
-        <source>Tone Mapping settings file section</source>
-        <translation type="obsolete">Árnyalatnövelési jellemzők fejezete</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
@@ -4824,28 +3611,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Jelenlegi beállításokat (gamma előtti és átnyalatnövelési műveletek) szövegfájlba menteni.</translation>
     </message>
     <message>
-        <source>&amp;Save...</source>
-        <translation type="obsolete">&amp;Mentés...</translation>
-    </message>
-    <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation type="unfinished">Gamma előtti és átnyalatnövelési műveletek beállítását tartalmazó fájlt megnyitni.</translation>
     </message>
     <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Megnyitás...</translation>
-    </message>
-    <message>
         <source>Detail Factor</source>
         <translation type="unfinished">Részlettényező</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Operator:&lt;/b&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Művelet:&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Mantiuk</source>
-        <translation type="obsolete">Mantiuk</translation>
     </message>
     <message>
         <source>Fattal</source>
@@ -4876,16 +3647,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Pattanaik</translation>
     </message>
     <message>
-        <source>Tonemapping settings</source>
-        <translation type="obsolete">Az árnyalatnövelés beállításai</translation>
-    </message>
-    <message>
         <source>Process</source>
         <translation type="unfinished">Feldolgozás</translation>
-    </message>
-    <message>
-        <source>Pre Gamma:</source>
-        <translation type="obsolete">Gammakorrektúra előtt:</translation>
     </message>
     <message>
         <source>Ctrl+T</source>
@@ -5080,242 +3843,6 @@ Do you want to continue?</source>
     </message>
 </context>
 <context>
-    <name>TonemappingWindow</name>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Nézet</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Fájl</translation>
-    </message>
-    <message>
-        <source>Tone mapping Panel</source>
-        <translation type="obsolete">Árnyalatnövelési panel</translation>
-    </message>
-    <message>
-        <source>Tune the histogram for the current LDR</source>
-        <translation type="obsolete">A jelenlegi LDR hisztogrammját megváltoztatni</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="obsolete">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>C&amp;lose All</source>
-        <translation type="obsolete">Be&amp;zár mindent</translation>
-    </message>
-    <message>
-        <source>Close All</source>
-        <translation type="obsolete">Bezár mindent</translation>
-    </message>
-    <message>
-        <source>Close all the LDRs in the workspace</source>
-        <translation type="obsolete">A rajzasztalon bezár minden LDR képet</translation>
-    </message>
-    <message>
-        <source>Ctrl+C</source>
-        <translation type="obsolete">Ctrl+C</translation>
-    </message>
-    <message>
-        <source>As &amp;Thumbnails</source>
-        <translation type="obsolete">Mint &amp;indexképeket</translation>
-    </message>
-    <message>
-        <source>As Thumbnails</source>
-        <translation type="obsolete">Mint indexképeket</translation>
-    </message>
-    <message>
-        <source>Images as Thumbnails</source>
-        <translation type="obsolete">Képeket mint indexképeket</translation>
-    </message>
-    <message>
-        <source>Layout all LDRs as thumbnails.</source>
-        <translation type="obsolete">Minden LDR képet indexképként mutatni.</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="obsolete">&amp;Egymás alatt</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Ablakhoz igazítani</translation>
-    </message>
-    <message>
-        <source>Fit the current LDR to its containing window.</source>
-        <translation type="obsolete">A jelenlegi LDR képet az ablakához igazítani.</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation type="obsolete">W</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">&amp;Súgó</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Panel</source>
-        <translation type="obsolete">Árnyalatnövelési panel</translation>
-    </message>
-    <message>
-        <source>Show/Hide the Tone mapping Panel</source>
-        <translation type="obsolete">Árnyalatnövelési panelt mutatni vagy elrejteni</translation>
-    </message>
-    <message>
-        <source>Adjust &amp;Levels...</source>
-        <translation type="obsolete">Szinteket &amp;szabályozni...</translation>
-    </message>
-    <message>
-        <source>Adjust Levels...</source>
-        <translation type="obsolete">Szinteket szabályozni...</translation>
-    </message>
-    <message>
-        <source>&amp;Save as...</source>
-        <translation type="obsolete">Men&amp;tés másként...</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation type="obsolete">Mentés másként...</translation>
-    </message>
-    <message>
-        <source>Save the currently selected LDR</source>
-        <translation type="obsolete">A kijelölt LDR képet menteni</translation>
-    </message>
-    <message>
-        <source>Cascade all LDRs in the workspace</source>
-        <translation type="obsolete">A rajzasztalon minden LDR képet egymás alá helyezni</translation>
-    </message>
-    <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">Ez mi?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
-    </message>
-    <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Dokumentáció...</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="obsolete">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="obsolete">Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>Ctrl+L</source>
-        <translation type="obsolete">Ctrl+L</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>Ctrl+D</source>
-        <translation type="obsolete">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Rákérdezni, mi micsoda</translation>
-    </message>
-    <message>
-        <source>Use this button to get information about the graphical elements</source>
-        <translation type="obsolete">Ezzel a gombbal lehet rákérdezni, mi micsoda</translation>
-    </message>
-    <message>
-        <source>Tone Mapping: </source>
-        <translation type="obsolete">Árnyalatnövelés: </translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">Ki&amp;lépés</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="obsolete">Kilépés</translation>
-    </message>
-    <message>
-        <source>Close Tone Mapping Window</source>
-        <translation type="obsolete">Árnyalatnövelési ablak bezárása</translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="obsolete">Eszköztár</translation>
-    </message>
-    <message>
-        <source>Save All</source>
-        <translation type="obsolete">Mentés egyszerre</translation>
-    </message>
-    <message>
-        <source>Saves all LDRs</source>
-        <translation type="obsolete">Minden LDR-t elmenteni</translation>
-    </message>
-    <message>
-        <source>Ctrl+Shift+S</source>
-        <translation type="obsolete">Ctrl+Shift+S</translation>
-    </message>
-    <message>
-        <source>Save files in</source>
-        <translation type="obsolete">Képeket menteni itt</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="obsolete">Eszköztárak</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="obsolete">&amp;Ablakok</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">Ki&amp;lépés</translation>
-    </message>
-    <message>
-        <source>&amp;Normal Size</source>
-        <translation type="obsolete">&amp;Eredeti méret</translation>
-    </message>
-    <message>
-        <source>O</source>
-        <translation type="obsolete">O</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">&amp;Nagyítás</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="obsolete">+</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">&amp;Kicsinyítés</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="obsolete">-</translation>
-    </message>
-    <message>
-        <source>About Luminance</source>
-        <translation type="obsolete">Luminance névjegye</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Az engedély dokumentuma nincs meg. Itt található a weben: %2here%3</translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="obsolete">Névtelen</translation>
-    </message>
-    <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
-    </message>
-</context>
-<context>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
@@ -5336,22 +3863,6 @@ Do you want to continue?</source>
     <message>
         <source>Append files to the list</source>
         <translation type="unfinished">Hozzáadni</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;From...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Forrás...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;To...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Cél...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Keep existing exif tags in destination file</source>
-        <translation type="obsolete">Meglévő EXIF címkéket megtartani</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Súgó</translation>
     </message>
     <message>
         <source>Select the input images</source>
@@ -5386,28 +3897,12 @@ Do you want to continue?</source>
         <translation type="unfinished">csak hibaüzenetek</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">Ü&amp;zeneteket szűrni:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Meghatározót törölni</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translation type="unfinished">Mé&amp;gsem</translation>
-    </message>
-    <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Rajta!</translation>
-    </message>
-    <message>
-        <source>&amp;Done.</source>
-        <translation type="obsolete">&amp;Kész.</translation>
-    </message>
-    <message>
-        <source>All Supported formats (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw *.sr2)</source>
-        <translation type="obsolete">Minden támogatott fájltípus (*.jpeg *.jpg *.tif *.tiff *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.ptx *.pef *.x3f *.raw*.sr2)</translation>
     </message>
     <message>
         <source>All Supported formats</source>
@@ -5468,25 +3963,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Remind me later</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>hdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">A kép &lt;br&gt;(%1)&lt;br&gt; nem egy 8 vagy 16 bites Tiff fájl.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">HIBA: dcraw visszautasítja ezt a fájlt: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">HIBA: Lejárt az idő vagy más hiba történt, miközben dcraw működött egy fájlon: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">HIBA: Nem lehet megnyitni: %1</translation>
     </message>
 </context>
 </TS>

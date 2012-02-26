@@ -41,13 +41,15 @@ private:
 public:
 	PreferencesDialog(QWidget *parent);
 	~PreferencesDialog();
-
 private:
     void from_options_to_gui();
 
     QColor infnancolor, negcolor;
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
+
+protected:
+	virtual void changeEvent(QEvent* event);
 
 private Q_SLOTS:
 	void negative_clicked();

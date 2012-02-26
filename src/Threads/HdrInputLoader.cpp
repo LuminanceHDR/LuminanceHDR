@@ -48,7 +48,7 @@ void HdrInputLoader::conditionallyRotateImage(QFileInfo qfi, QImage** oldImage)
 	if (rotation_angle != 0) 
 	{
 		QMatrix rm;
-		rm.rotate(90);
+		rm.rotate(rotation_angle);
 
 		QImage *notTransformedImage = *oldImage;
 		*oldImage = (new QImage((*oldImage)->transformed(rm)));

@@ -24,16 +24,6 @@
         <translation type="unfinished">&amp;Licencia de conformidad</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;let me know&lt;/span&gt;&lt;/a&gt; if I forgot to add someone to this list.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Main developer.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Russian translator, fixed usability issues, .desktop file.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Mac OS X packager, Norwegian translator.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Turkish translator.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   French translator and Ubuntu packager.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Spanish translator.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   German translator.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Czech translator.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Polish translator.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   FreeBSD patches and maintainers.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Por favor, &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;hazme saber&lt;/span&gt;&lt;/a&gt; si olvidé algo en esta lista.&lt;br /&gt;Giuseppe Rota&lt;br /&gt;   &lt;a href=&quot;mailto:grota@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;grota@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   Desarrollador principal.&lt;br /&gt;&lt;br /&gt;Grzegorz Krawczyk&lt;br /&gt;   &lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;Rafal Mantiuk&lt;br /&gt;   &lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   pfs{tools|calibration|tmo} codebase.&lt;br /&gt;&lt;br /&gt;Nicholas Phillips&lt;br /&gt;   &lt;a href=&quot;mailto:ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;   G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm.&lt;br /&gt;&lt;br /&gt;Alexandre Prokoudine&lt;br /&gt;   &lt;a href=&quot;mailto:alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;  Traducción al Ruso y arreglo de problemas de usabilidad, archivos .desktop.&lt;br /&gt;&lt;br /&gt;Åsmund Ødegård&lt;br /&gt;   &lt;a href=&quot;mailto:mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;br /&gt;  Empaquetador para Mac OS X , traducción al Noruego.&lt;br /&gt;&lt;br /&gt;Mustafa GÜNAY&lt;br /&gt;   Traducción al Turco.&lt;br /&gt;&lt;br /&gt;Cyril Lavier&lt;br /&gt;   Traducción al Francés y empaquetador para Ubuntu.&lt;br /&gt;&lt;br /&gt;Alberto Garcia&lt;br /&gt;   Traducción al Español.&lt;br /&gt;&lt;br /&gt;Ralph Kaeppeli&lt;br /&gt;   Traducción al Alemán.&lt;br /&gt;&lt;br /&gt;Jan Gemela&lt;br /&gt;   Traducción al Checo.&lt;br /&gt;&lt;br /&gt;Maciej Dziardziel&lt;br /&gt;   Traducción al Polaco.&lt;br /&gt;&lt;br /&gt;Bertrand Petit and Steffen Beyer&lt;br /&gt;   Empaquetadores para FreeBSD patches y mantenimiento.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="unfinished">&amp;OK</translation>
     </message>
@@ -275,10 +265,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Toneado en serie</translation>
     </message>
     <message>
-        <source>Input Hdr list</source>
-        <translation type="obsolete">Lista inicial de HDR</translation>
-    </message>
-    <message>
         <source>Add &amp;Directory</source>
         <translation type="unfinished">Añadir &amp;Directorio</translation>
     </message>
@@ -293,10 +279,6 @@ See documentation for more informations.</source>
     <message>
         <source>List of HDRs that will be tone mapped</source>
         <translation type="unfinished">Lista de HDR que serán toneados</translation>
-    </message>
-    <message>
-        <source>Input Tone Mapping Setting list</source>
-        <translation type="obsolete">Introduccir lista de configuración para toneado</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
@@ -319,10 +301,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Seleccione carpeta de &amp;destino...</translation>
     </message>
     <message>
-        <source>Log:</source>
-        <translation type="obsolete">Registro (log) :</translation>
-    </message>
-    <message>
         <source>&amp;Show only:</source>
         <translation type="unfinished">&amp;Mostrar solo:</translation>
     </message>
@@ -335,10 +313,6 @@ See documentation for more informations.</source>
         <translation type="unfinished">Solo errores</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filtro de mensajes log:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Limpiar filtrado de texto</translation>
     </message>
@@ -347,28 +321,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">&amp;Cancelar</translation>
     </message>
     <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Comenzar!</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Seleccione un directorio</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Todos los formatos Hdr </translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Seleccione las imágenes de inicio</translation>
-    </message>
-    <message>
-        <source>Load the tonemapping settings text files...</source>
-        <translation type="obsolete">Cargar archivos de configuración de toneado...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Archivo de importación de mapa de tonos de Luminance (*.txt)</translation>
     </message>
     <message>
         <source>Processing...</source>
@@ -435,28 +389,8 @@ See documentation for more informations.</source>
         <translation type="unfinished">Usando %1 hilo (thread)</translation>
     </message>
     <message>
-        <source>Saving using fileformat: </source>
-        <translation type="obsolete">Guardando formato de archivo en uso: </translation>
-    </message>
-    <message>
-        <source>Starting to tone map HDR file: </source>
-        <translation type="obsolete">Iniciando el toneado al archivo HDR: </translation>
-    </message>
-    <message>
         <source>All tasks completed.</source>
         <translation type="unfinished">Todas las tareas finalizadas.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot save to file: </source>
-        <translation type="obsolete">ERROR: No se pudo guardar el archivo: </translation>
-    </message>
-    <message>
-        <source>Successfully saved LDR file: </source>
-        <translation type="obsolete">Guardado el archivo LDR: </translation>
-    </message>
-    <message>
-        <source>Finished tone mapping the current HDR.</source>
-        <translation type="obsolete">Finalizado el toneado del HDR actual.</translation>
     </message>
     <message>
         <source>HDR Images to Convert</source>
@@ -1103,10 +1037,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrViewer</name>
     <message>
-        <source>Viewing Settings Toolbar</source>
-        <translation type="obsolete">Viendo barra de configuración</translation>
-    </message>
-    <message>
         <source>Linear</source>
         <translation type="unfinished">Lineal</translation>
     </message>
@@ -1135,14 +1065,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Histograma:</translation>
     </message>
     <message>
-        <source>Unsaved changes...</source>
-        <translation type="obsolete">Cambios no guardados...</translation>
-    </message>
-    <message>
-        <source>This Hdr has unsaved changes.&lt;br&gt;Are you sure you want to close it?</source>
-        <translation type="obsolete">Este HDR tiene modificaciones aún no guardadas.&lt;br&gt;¿Seguro que desea cerrarlo?</translation>
-    </message>
-    <message>
         <source>&amp;Mapping:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1150,52 +1072,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>HdrWizard</name>
     <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Asistente para la creación de HDR</translation>
-    </message>
-    <message>
         <source>[1/2] Load Input Images</source>
         <translation type="unfinished">[1/2] Cargar imágenes</translation>
     </message>
     <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Cargar imágenes </translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Cargar imágenes...</translation>
-    </message>
-    <message>
         <source>Alignment</source>
         <translation type="unfinished">Alinear</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Auto &amp;Alinear imágenes</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">Pila_alineación de Hugin</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Umbral media</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Seleccione la configuración para la creación del HDR</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Por favor, escoja uno de los perfiles predefinidos listados a la derecha:&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normalmente el primero es que ofrece mejores resultados, cambielo solo si el Hdr resultante no fué lo bastante bueno.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">lista de perfiles predefinidos</translation>
     </message>
     <message>
         <source>Profile 1</source>
@@ -1242,16 +1124,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Lineal</translation>
     </message>
     <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Modelo de creación del Hdr:</translation>
-    </message>
-    <message>
         <source>Debevec</source>
         <translation type="unfinished">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Anti-ghosting(beta!)</translation>
     </message>
     <message>
         <source>Gamma</source>
@@ -1266,33 +1140,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Calibración</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Numero de interacciones (mantengalo bajo):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Configuración personalizada.
-(utilice solo esta opción si
-los perfiles por defecto anteriores
-no producen buenos resultados)</translation>
-    </message>
-    <message>
         <source>[2/2] Choose Custom Configuration</source>
         <translation type="unfinished">[2/2] Seleccionar configuración personalizada</translation>
     </message>
     <message>
         <source>Weights:</source>
         <translation type="unfinished">Peso:</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Escoja la función de confianza
-sobre todos los posibles
-valores de pixels&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Gaussian</source>
@@ -1319,22 +1172,6 @@ valores de pixels&lt;/p&gt;</translation>
         <translation type="unfinished">Usar calibración para encontrar curva de respuesta (algoritmo robertson02)</translation>
     </message>
     <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Guardar función de respuesta a archivo</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Guardar como...</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Ecuación de creación del Hdr:</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Escoja modelo:</translation>
-    </message>
-    <message>
         <source>Robertson</source>
         <translation type="unfinished">Robertson</translation>
     </message>
@@ -1359,16 +1196,6 @@ valores de pixels&lt;/p&gt;</translation>
         <translation type="unfinished">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imágenes cargadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATENCIÓN:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance no puede encontrar datos de información &lt;i&gt;EXIF&lt;/i&gt; tags
-para las siguientes imágenes:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Usted puede proceder a crear el HDR. Para ello introduzca &lt;b&gt;manualmente&lt;/b&gt; los valores de exposición (EV) o valores de diafragma.		&lt;hr&gt;Si desea que Qtfsgui haga esto &lt;b&gt;automáticamente&lt;/b&gt;, usted debe cargar imágenes que al menos dispongan de
-los siguientes datos EXIF: 	&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&lt;/li&gt;	&lt;li&gt;Diafragma (número f-stop)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;PISTA:&lt;/b&gt; La pérdida de datos EXIF puede ocurrir normalmente al procesar las imágenes con programas no preparados.&lt;br&gt;	Usted puede asignar una&lt;b&gt;copia de datos EXIF&lt;/b&gt; entre dos grupos de imágenes utilizando la herramienta &lt;i&gt;&lt;b&gt;&quot;Herramientas-&gt;Copiar datos EXIF...&quot;&lt;/b&gt;&lt;/i&gt; del menú.</translation>
-    </message>
-    <message>
         <source>EXIF data not found</source>
         <translation type="unfinished">Datos EXIF no encontrados</translation>
     </message>
@@ -1377,16 +1204,8 @@ los siguientes datos EXIF: 	&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&
         <translation type="unfinished">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar usted necesita introuducir manualmente los valores de exposición.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores son necesarios.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
     </message>
     <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Error durante la carga</translation>
-    </message>
-    <message>
         <source>Error...</source>
         <translation type="unfinished">Error...</translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Fallo al iniciar aplicación externa &quot;&lt;em&gt;pila_alineación_imagenes&lt;/em&gt;&quot;.&lt;br&gt;Por favor lea &quot;Ayuda&quot;-&gt; Documentación... -&gt; Pistas y trucos&quot; para más información.</translation>
     </message>
     <message>
         <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
@@ -1419,10 +1238,6 @@ los siguientes datos EXIF: 	&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&
     <message>
         <source>Save a camera response curve file</source>
         <translation type="unfinished">Guardar archivo de curva de respuesta de cámara</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Peso: </translation>
     </message>
     <message>
         <source> - Response curve: </source>
@@ -1666,332 +1481,6 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
 </context>
 <context>
-    <name>HdrWizardForm</name>
-    <message>
-        <source>Hdr creation Wizard</source>
-        <translation type="obsolete">Asistente para la creación de HDR</translation>
-    </message>
-    <message>
-        <source>Click the button below to load the input images</source>
-        <translation type="obsolete">Pulse el botón inferior para cargar las imágenes</translation>
-    </message>
-    <message>
-        <source>Load Input Images</source>
-        <translation type="obsolete">Cargar imágenes </translation>
-    </message>
-    <message>
-        <source>Profile 1</source>
-        <translation type="obsolete">Perfil 1</translation>
-    </message>
-    <message>
-        <source>Profile 2</source>
-        <translation type="obsolete">Perfil 2</translation>
-    </message>
-    <message>
-        <source>Profile 3</source>
-        <translation type="obsolete">Perfil 3</translation>
-    </message>
-    <message>
-        <source>Profile 4</source>
-        <translation type="obsolete">Perfil 4</translation>
-    </message>
-    <message>
-        <source>Profile 5</source>
-        <translation type="obsolete">Perfil 5</translation>
-    </message>
-    <message>
-        <source>Profile 6</source>
-        <translation type="obsolete">Perfil 6</translation>
-    </message>
-    <message>
-        <source>Weighting function:</source>
-        <translation type="obsolete">Función de peso:</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="obsolete">Triangular</translation>
-    </message>
-    <message>
-        <source>Response Curve:</source>
-        <translation type="obsolete">Curva de respuesta:</translation>
-    </message>
-    <message>
-        <source>Gamma</source>
-        <translation type="obsolete">Gamma</translation>
-    </message>
-    <message>
-        <source>Debevec</source>
-        <translation type="obsolete">Debevec</translation>
-    </message>
-    <message>
-        <source>Anti-ghosting(beta!)</source>
-        <translation type="obsolete">Anti-ghosting(beta!)</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Lineal</translation>
-    </message>
-    <message>
-        <source>Log</source>
-        <translation type="obsolete">Log</translation>
-    </message>
-    <message>
-        <source>Calibration</source>
-        <translation type="obsolete">Calibración</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of iterations (keep it small):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Numero de interacciones (mantengalo bajo):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Use custom configuration.
-(use this only if the default profiles
-above do not yield good results)</source>
-        <translation type="obsolete">Configuración personalizada.
-(utilice solo esta opción si
-los perfiles por defecto anteriores
-no producen buenos resultados)</translation>
-    </message>
-    <message>
-        <source>Weights:</source>
-        <translation type="obsolete">Peso:</translation>
-    </message>
-    <message>
-        <source>Gaussian</source>
-        <translation type="obsolete">Gaussian</translation>
-    </message>
-    <message>
-        <source>Plateau</source>
-        <translation type="obsolete">Plateau</translation>
-    </message>
-    <message>
-        <source>&lt;p align=&quot;left&quot;&gt;Choose confidence function
-over all the possible
-pixel values&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p align=&quot;left&quot;&gt;Escoja la función de confianza
-sobre todos los posibles
-valores de pixels&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Predefined response curves:</source>
-        <translation type="obsolete">Curva de respuesta predefinida:</translation>
-    </message>
-    <message>
-        <source>Load...</source>
-        <translation type="obsolete">Cargar...</translation>
-    </message>
-    <message>
-        <source>Choose Model:</source>
-        <translation type="obsolete">Escoja modelo:</translation>
-    </message>
-    <message>
-        <source>Robertson</source>
-        <translation type="obsolete">Robertson</translation>
-    </message>
-    <message>
-        <source>&amp;Next &gt;</source>
-        <translation type="obsolete">&amp;Siguiente &gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Cancelar</translation>
-    </message>
-    <message>
-        <source>list of default profiles</source>
-        <translation type="obsolete">lista de perfiles predefinidos</translation>
-    </message>
-    <message>
-        <source>Use calibration to find response curve (robertson02 algorithm)</source>
-        <translation type="obsolete">Usar calibración para encontrar curva de respuesta (algoritmo robertson02)</translation>
-    </message>
-    <message>
-        <source>JPEG (*.jpeg *.jpg);;</source>
-        <translation type="obsolete">JPEG (*.jpeg *.jpg);;</translation>
-    </message>
-    <message>
-        <source>TIFF Images (*.tiff *.tif);;</source>
-        <translation type="obsolete">Imagen TIFF (*.tiff *.tif);;</translation>
-    </message>
-    <message>
-        <source>EXIF data not found</source>
-        <translation type="obsolete">Datos EXIF no encontrados</translation>
-    </message>
-    <message>
-        <source>Camera response curve (*.m);;All Files (*)</source>
-        <translation type="obsolete">Curva de respuesta de la cámara (*.m);;Todos los archivos (*)</translation>
-    </message>
-    <message>
-        <source>(*) Weights: </source>
-        <translation type="obsolete">(*) Peso: </translation>
-    </message>
-    <message>
-        <source> - Response curve: </source>
-        <translation type="obsolete"> - Curva de respuesta: </translation>
-    </message>
-    <message>
-        <source> - Model: </source>
-        <translation type="obsolete"> - Modelo: </translation>
-    </message>
-    <message>
-        <source>Logarithmic</source>
-        <translation type="obsolete">Logaritmica</translation>
-    </message>
-    <message>
-        <source>From Calibration</source>
-        <translation type="obsolete">Desde calibración</translation>
-    </message>
-    <message>
-        <source>From File</source>
-        <translation type="obsolete">Desde archivo</translation>
-    </message>
-    <message>
-        <source>Load a camera response curve file</source>
-        <translation type="obsolete">Cargar archivo de respuesta de la cámara</translation>
-    </message>
-    <message>
-        <source>Select the input images</source>
-        <translation type="obsolete">Seleccione imágenes</translation>
-    </message>
-    <message>
-        <source>&amp;Finish</source>
-        <translation type="obsolete">&amp;Finalizar</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please choose one of the predefined profiles listed on the right:&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;The first one in the list usually leads to best results, change it only if the resulting Hdr is not good enough.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;p, li { white-space: pre-wrap; }&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Por favor, escoja uno de los perfiles predefinidos listados a la derecha:&lt;/p&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normalmente el primero es que ofrece mejores resultados, cambielo solo si el Hdr resultante no fué lo bastante bueno.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Hdr creation model:</source>
-        <translation type="obsolete">Modelo de creación del Hdr:</translation>
-    </message>
-    <message>
-        <source>Hdr creation equation:</source>
-        <translation type="obsolete">Ecuación de creación del Hdr:</translation>
-    </message>
-    <message>
-        <source>Auto &amp;Align Images</source>
-        <translation type="obsolete">Auto &amp;Alinear imágenes</translation>
-    </message>
-    <message>
-        <source>hugin&apos;s align_image_stack</source>
-        <translation type="obsolete">Pila_alineación de Hugin</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Images Loaded.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Imágenes cargadas.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;h3&gt;&lt;b&gt;To proceed you need to manually set the exposure values.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; values still required.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;h3&gt;&lt;b&gt;Para continuar usted necesita introuducir manualmente los valores de exposición.&lt;br&gt;&lt;font color=&quot;#FF0000&quot;&gt;%1&lt;/font&gt; valores son necesarios.&lt;/b&gt;&lt;/h3&gt;&lt;/center&gt;</translation>
-    </message>
-    <message>
-        <source>Error...</source>
-        <translation type="obsolete">Error...</translation>
-    </message>
-    <message>
-        <source>[1/2] Load Input Images</source>
-        <translation type="obsolete">[1/2] Cargar imágenes</translation>
-    </message>
-    <message>
-        <source>&amp;Load Images...</source>
-        <translation type="obsolete">&amp;Cargar imágenes...</translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation type="obsolete">Alinear</translation>
-    </message>
-    <message>
-        <source>Median Threshold Bitmap</source>
-        <translation type="obsolete">Umbral media</translation>
-    </message>
-    <message>
-        <source>&amp;Files Currently Loaded:</source>
-        <translation type="obsolete">&amp;Archivos actualmente cargados:</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Settings for Hdr Creation</source>
-        <translation type="obsolete">[2/2] Seleccione la configuración para la creación del HDR</translation>
-    </message>
-    <message>
-        <source>[2/2] Choose Custom Configuration</source>
-        <translation type="obsolete">[2/2] Seleccionar configuración personalizada</translation>
-    </message>
-    <message>
-        <source>&amp;Exposure for selected image</source>
-        <translation type="obsolete">&amp;Exposición para la imagen seleccinada</translation>
-    </message>
-    <message>
-        <source>EV </source>
-        <translation type="obsolete">EV </translation>
-    </message>
-    <message>
-        <source>Load response function from file</source>
-        <translation type="obsolete">Cargar función de respuesta desde archivo</translation>
-    </message>
-    <message>
-        <source>Save response function to file</source>
-        <translation type="obsolete">Guardar función de respuesta a archivo</translation>
-    </message>
-    <message>
-        <source>Save as...</source>
-        <translation type="obsolete">Guardar como...</translation>
-    </message>
-    <message>
-        <source>Image Filename</source>
-        <translation type="obsolete">Nombre del archivo de imagen</translation>
-    </message>
-    <message>
-        <source>Exposure</source>
-        <translation type="obsolete">Exposición</translation>
-    </message>
-    <message>
-        <source>&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;WARNING:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;		Luminance was not able to find the relevant &lt;i&gt;EXIF&lt;/i&gt; tags
-for the following images:
- &lt;ul&gt;		%1&lt;/ul&gt;		&lt;hr&gt;You can still proceed creating an Hdr. To do so you have to insert &lt;b&gt;manually&lt;/b&gt; the EV (exposure values) or stop difference values.		&lt;hr&gt;If you want Qtfsgui to do this &lt;b&gt;automatically&lt;/b&gt;, you have to load images that have at least
-the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt;		&lt;li&gt;Aperture (f-number)&lt;/li&gt;&lt;/ul&gt;		&lt;hr&gt;&lt;b&gt;HINT:&lt;/b&gt; Losing EXIF data usually happens when you preprocess your pictures.&lt;br&gt;		You can perform a &lt;b&gt;one-to-one copy of the exif data&lt;/b&gt; between two sets of images via the &lt;i&gt;&lt;b&gt;&quot;Tools-&gt;Copy Exif Data...&quot;&lt;/b&gt;&lt;/i&gt; menu item.</source>
-        <translation type="obsolete">&lt;font color=&quot;#FF0000&quot;&gt;&lt;h3&gt;&lt;b&gt;ATENCIÓN:&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;	Luminance no puede encontrar datos de información &lt;i&gt;EXIF&lt;/i&gt; tags
-para las siguientes imágenes:
- &lt;ul&gt;	%1&lt;/ul&gt;	&lt;hr&gt;Usted puede proceder a crear el HDR. Para ello introduzca &lt;b&gt;manualmente&lt;/b&gt; los valores de exposición (EV) o valores de diafragma.		&lt;hr&gt;Si desea que Qtfsgui haga esto &lt;b&gt;automáticamente&lt;/b&gt;, usted debe cargar imágenes que al menos dispongan de
-los siguientes datos EXIF: 	&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&lt;/li&gt;	&lt;li&gt;Diafragma (número f-stop)&lt;/li&gt;&lt;/ul&gt;	&lt;hr&gt;&lt;b&gt;PISTA:&lt;/b&gt; La pérdida de datos EXIF puede ocurrir normalmente al procesar las imágenes con programas no preparados.&lt;br&gt;	Usted puede asignar una&lt;b&gt;copia de datos EXIF&lt;/b&gt; entre dos grupos de imágenes utilizando la herramienta &lt;i&gt;&lt;b&gt;&quot;Herramientas-&gt;Copiar datos EXIF...&quot;&lt;/b&gt;&lt;/i&gt; del menú.</translation>
-    </message>
-    <message>
-        <source>Loading Error</source>
-        <translation type="obsolete">Error durante la carga</translation>
-    </message>
-    <message>
-        <source>Unknown </source>
-        <translation type="obsolete">Desconocido </translation>
-    </message>
-    <message>
-        <source>Failed to start external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot;.&lt;br&gt;Please read &quot;Help -&gt; Documentation... -&gt; Hints and tips&quot; for more information.</source>
-        <translation type="obsolete">Fallo al iniciar aplicación externa &quot;&lt;em&gt;pila_alineación_imagenes&lt;/em&gt;&quot;.&lt;br&gt;Por favor lea &quot;Ayuda&quot;-&gt; Documentación... -&gt; Pistas y trucos&quot; para más información.</translation>
-    </message>
-    <message>
-        <source>The external application &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; crashed...</source>
-        <translation type="obsolete">La aplicación externa &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot; falló...</translation>
-    </message>
-    <message>
-        <source>An unknown error occurred while executing the &quot;&lt;em&gt;align_image_stack&lt;/em&gt;&quot; application...</source>
-        <translation type="obsolete">Ha ocurrido un error desconocido cuando se ejecutaba la aplicación &quot;&lt;em&gt;pila_alineación_imagen&lt;/em&gt;&quot;...</translation>
-    </message>
-    <message>
-        <source>Aligning...</source>
-        <translation type="obsolete">Alineando...</translation>
-    </message>
-    <message>
-        <source>Save a camera response curve file</source>
-        <translation type="obsolete">Guardar archivo de curva de respuesta de cámara</translation>
-    </message>
-    <message>
-        <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation type="obsolete">&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Todos los valores de EV han sido establecidos.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
-    </message>
-</context>
-<context>
     <name>HelpBrowser</name>
     <message>
         <source>Luminance Help</source>
@@ -2111,21 +1600,6 @@ los siguientes datos EXIF: 	&lt;ul&gt;&lt;li&gt;Velocidad de disparo (segundos)&
 Do you want to open the link with the default application 
 associated with the protocol?</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HelpDialog</name>
-    <message>
-        <source>Luminance Help</source>
-        <translation type="obsolete">Documentación Luminance</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Cerrar</translation>
-    </message>
-    <message>
-        <source>CTRL+Q</source>
-        <translation type="obsolete">CTRL+Q</translation>
     </message>
 </context>
 <context>
@@ -2297,41 +1771,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LoadHdrThread</name>
-    <message>
-        <source>ERROR: The following file is not readable: %1</source>
-        <translation type="obsolete">ERROR: El siguiente archivo no es legible: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: No se puede iniciar dcraw para el archivo: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Fallo ó tiempo de espera agotado mientras se ejecutaba dcraw al archivo: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: File %1 has unsupported extension.</source>
-        <translation type="obsolete">ERROR: El archivo %1 tiene una extensión no soportada.</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed loading file: %1</source>
-        <translation type="obsolete">ERROR: Fallo cargando el archivo: %1</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
-    <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
-    </message>
     <message>
         <source>&amp;File</source>
         <translation type="unfinished">&amp;Archivo</translation>
-    </message>
-    <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">&amp;Imagen</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -2350,52 +1793,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">A&amp;yuda</translation>
     </message>
     <message>
-        <source>Common operations</source>
-        <translation type="obsolete">Operaciones comunes</translation>
-    </message>
-    <message>
-        <source>&amp;New Hdr...</source>
-        <translation type="obsolete">&amp;Nuevo HDR...</translation>
-    </message>
-    <message>
-        <source>New Hdr...</source>
-        <translation type="obsolete">Nuevo HDR...</translation>
-    </message>
-    <message>
-        <source>&amp;Open Hdr...</source>
-        <translation type="obsolete">&amp;Abrir HDR...</translation>
-    </message>
-    <message>
-        <source>Open Hdr....</source>
-        <translation type="obsolete">Abrir HDR...</translation>
-    </message>
-    <message>
         <source>Ctrl+O</source>
         <translation type="unfinished">Ctrl+O</translation>
     </message>
     <message>
-        <source>&amp;Save Hdr as...</source>
-        <translation type="obsolete">&amp;Guardar HDR como...</translation>
-    </message>
-    <message>
-        <source>Save Hdr as...</source>
-        <translation type="obsolete">Guarda HDR como...</translation>
-    </message>
-    <message>
         <source>Ctrl+S</source>
         <translation type="unfinished">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>&amp;Tonemap the Hdr...</source>
-        <translation type="obsolete">&amp;Tonear el HDR...</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Salir</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2406,24 +1809,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
-        <source>Rotate C&amp;ounterClockWise</source>
-        <translation type="obsolete">Rotar en sentido &amp;anti-horario</translation>
-    </message>
-    <message>
-        <source>Rotate CounterClockWise</source>
-        <translation type="obsolete">Rotar en sentido anti-horario</translation>
-    </message>
-    <message>
         <source>&lt;</source>
         <translation type="unfinished">&lt;</translation>
-    </message>
-    <message>
-        <source>Rotate C&amp;lockWise</source>
-        <translation type="obsolete">Rotar en sentido &amp;horario</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise</source>
-        <translation type="obsolete">Gira el HDR en el sentido de las aguas del reloj</translation>
     </message>
     <message>
         <source>&gt;</source>
@@ -2478,16 +1865,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">9</translation>
     </message>
     <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Documentación...</translation>
-    </message>
-    <message>
         <source>About...</source>
         <translation type="unfinished">Acerca de...</translation>
-    </message>
-    <message>
-        <source>Show Luminance Help</source>
-        <translation type="obsolete">Mostrar ayuda de Luminance</translation>
     </message>
     <message>
         <source>Ctrl+H</source>
@@ -2506,10 +1885,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">A&amp;umentar zoom</translation>
     </message>
     <message>
-        <source>Zoom In</source>
-        <translation type="obsolete">Amplia la imagen</translation>
-    </message>
-    <message>
         <source>+</source>
         <translation type="unfinished">+</translation>
     </message>
@@ -2518,16 +1893,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">R&amp;educir zoom</translation>
     </message>
     <message>
-        <source>Zoom Out</source>
-        <translation type="obsolete">Reducir ampliación</translation>
-    </message>
-    <message>
         <source>-</source>
         <translation type="unfinished">-</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Ajustar a la ventana</translation>
     </message>
     <message>
         <source>W</source>
@@ -2536,10 +1903,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Luminance Options</source>
         <translation type="unfinished">Opciones Luminance</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance.</source>
-        <translation type="obsolete">Permite configurar varias opciones de Luminance.</translation>
     </message>
     <message>
         <source>Ctrl+P</source>
@@ -2590,80 +1953,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctrl+N</translation>
     </message>
     <message>
-        <source>Tonemap the Hdr</source>
-        <translation type="obsolete">Tonear el HDR</translation>
-    </message>
-    <message>
         <source>Aborting...</source>
         <translation type="unfinished">Cancelando tarea...</translation>
     </message>
     <message>
-        <source>Error...</source>
-        <translation type="obsolete">Error...</translation>
-    </message>
-    <message>
         <source>Unsaved changes...</source>
         <translation type="unfinished">Modificaciones no guardadas...</translation>
-    </message>
-    <message>
-        <source>Save the HDR...</source>
-        <translation type="obsolete">Guardar HDR como...</translation>
-    </message>
-    <message>
-        <source>Hdr &amp;Histogram</source>
-        <translation type="obsolete">H&amp;istograma Hdr</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files.</source>
-        <translation type="obsolete">Crea un Hdr a partir de un grupo de imágenes JPEGs, RAW ó TIFF de 8/16 bits.</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF).</source>
-        <translation type="obsolete">Carga una imagen Hdr (formatos OpenEXR, Radiance RGBE, PFS stream, RAW o TIFF).</translation>
-    </message>
-    <message>
-        <source>Tonemap the Hdr into a common LDR (i.e. JPEG or PNG) format</source>
-        <translation type="obsolete">Mapea los tonos de un Hdr a un formato LDR común (ejem:JPEG o PNG)</translation>
-    </message>
-    <message>
-        <source>Rotate Counterclockwise the Hdr</source>
-        <translation type="obsolete">Gira el Hdr en el sentido contrario de las agujas del reloj</translation>
-    </message>
-    <message>
-        <source>Rotate ClockWise the Hdr</source>
-        <translation type="obsolete">Gira el Hdr en el sentido de las aguas del reloj</translation>
-    </message>
-    <message>
-        <source>View Hdr at Normal Size</source>
-        <translation type="obsolete">Ver Hdr a tamaño normal (100%)</translation>
-    </message>
-    <message>
-        <source>Shrink the Hdr to fit its containing window</source>
-        <translation type="obsolete">Ajuste para mostrar la imagen completa en la ventana que la contiene</translation>
-    </message>
-    <message>
-        <source>Resize the Hdr</source>
-        <translation type="obsolete">Reescala el Hdr</translation>
-    </message>
-    <message>
-        <source>Resize (shrink or expand) the Hdr</source>
-        <translation type="obsolete">Reescalar (aumentar o reducir) la imagen Hdr</translation>
-    </message>
-    <message>
-        <source>Ready.... Now open an Hdr or create one!</source>
-        <translation type="obsolete">Hecho... Ahora puede abrir un Hdr o crearlo!</translation>
-    </message>
-    <message>
-        <source>All Hdr formats </source>
-        <translation type="obsolete">Todos los formatos Hdr </translation>
-    </message>
-    <message>
-        <source>Load an Hdr file...</source>
-        <translation type="obsolete">Cargar un archivo Hdr...</translation>
-    </message>
-    <message>
-        <source>Saves the Hdr (OpenEXR, Radiance RGBE, PFS stream, or 32bit or LogLuv TIFF)</source>
-        <translation type="obsolete">Guarda la imagen Hdr ( formatos OpenEXR, Radiance RGBE, PFS stream, o 32bit o LogLuv TIFF)</translation>
     </message>
     <message>
         <source>Toolbars</source>
@@ -2672,14 +1967,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;Preferences...</source>
         <translation type="unfinished">&amp;Preferencias...</translation>
-    </message>
-    <message>
-        <source>&amp;Resize the Hdr...</source>
-        <translation type="obsolete">&amp;Reescala el Hdr...</translation>
-    </message>
-    <message>
-        <source>Text &amp;Under Icons</source>
-        <translation type="obsolete">Texto &amp;Bajo los Iconos</translation>
     </message>
     <message>
         <source>&amp;Icons Only</source>
@@ -2722,53 +2009,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Ctlr+L</translation>
     </message>
     <message>
-        <source>Copy Exif Data between two set of files</source>
-        <translation type="obsolete">Copiar datos EXIF entre dos grupos de archivos</translation>
-    </message>
-    <message>
         <source>Ctrl+B</source>
         <translation type="unfinished">Ctrl+B</translation>
-    </message>
-    <message>
-        <source>Create an Hdr from a set of JPEGs or RAWs, or 8 or 16 bit TIFF files</source>
-        <translation type="obsolete">Crea un HDR a partir de un conjunto de JPEGs ó RAWs ó archivos TIFF de 8-16 bit</translation>
-    </message>
-    <message>
-        <source>Load an existing Hdr image file (OpenEXR, Radiance RGBE, PFS stream, RAW or TIFF)</source>
-        <translation type="obsolete">Cargar un archivo HDR existente (OpenEXR, Radiance RGBE, PFS Stream, RAW o TIFF)</translation>
-    </message>
-    <message>
-        <source>Set the various options of Luminance</source>
-        <translation type="obsolete">Establece varias opciones de Luminance</translation>
-    </message>
-    <message>
-        <source>Luminance needs to cache its results using temporary files, but the currently selected directory is not valid.&lt;br&gt;Please choose a valid path in Tools -&gt; Preferences... -&gt; Tone Mapping.</source>
-        <translation type="obsolete">Luminance necesita almacenar estos resultados en archivos temporales, pero el directorio actualmente seleccionado para esto no es válido.&lt;br&gt;Por favor, escoja una ruta válida en Herramientas-&gt;Preferencias....-&gt; Toneado.</translation>
     </message>
     <message>
         <source>&amp;What&apos;s This?</source>
         <translation type="unfinished">&amp;Que es esto?</translation>
     </message>
     <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Coger información acerca de los elementos gráficos</translation>
-    </message>
-    <message>
         <source>Shift+F1</source>
         <translation type="unfinished">Shift+F1</translation>
-    </message>
-    <message>
-        <source>About &amp;Luminance</source>
-        <translation type="obsolete">A&amp;cerca de Luminance</translation>
-    </message>
-    <message>
-        <source>There is at least one Hdr with unsaved changes.&lt;br&gt;Do you still want to quit?</source>
-        <translation type="obsolete">Hay al menos un archivo HDR con cambios no guaradados.&lt;br&gt;¿Seguro que desea salir?</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
     </message>
     <message>
         <source>Luminance HDR</source>
@@ -3155,45 +2405,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>PreferenceDialog</name>
-    <message>
-        <source>Choose a directory</source>
-        <translation type="obsolete">Seleccione un directorio</translation>
-    </message>
-</context>
-<context>
     <name>PreferencesDialog</name>
     <message>
         <source>Tone Mapping</source>
         <translation type="unfinished">Tone Mapping</translation>
-    </message>
-    <message>
-        <source>Hdr Tiff</source>
-        <translation type="obsolete">Hdr Tiff</translation>
-    </message>
-    <message>
-        <source>Hdr Visualization</source>
-        <translation type="obsolete">Ver Hdr</translation>
-    </message>
-    <message>
-        <source>Cache</source>
-        <translation type="obsolete">Caché</translation>
-    </message>
-    <message>
-        <source>Choose the directory where Luminance will store the temporary data to.</source>
-        <translation type="obsolete">Escoge el directorio donde Luminance almacenará los datos temporales.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Cargar...</translation>
-    </message>
-    <message>
-        <source>Batch</source>
-        <translation type="obsolete">Serie</translation>
-    </message>
-    <message>
-        <source>Save using this LDR image &amp;format:</source>
-        <translation type="obsolete">Guardar usando este &amp;formato LDR:</translation>
     </message>
     <message>
         <source>JPEG</source>
@@ -3214,98 +2429,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>BMP</source>
         <translation type="unfinished">BMP</translation>
-    </message>
-    <message>
-        <source>Number of &amp;threads:
-(useful on multi-core/SMP machines)</source>
-        <translation type="obsolete">Número de hilos (&amp;threads):
-(normalmente para máquinas con varios nucleos o procesadores)</translation>
-    </message>
-    <message>
-        <source>Batch Tone Mapping</source>
-        <translation type="obsolete">Toneado en serie</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Raw Import Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones de importación de RAW&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Click the help button below for more information&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pulse el botón de ayuda para más información&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Click here to get more information about the Raw convertion parameters</source>
-        <translation type="obsolete">Pulse aquí para obtener más información acerca de los parámetros de conversión RAW</translation>
-    </message>
-    <message>
-        <source>&amp;About Raw Parameters</source>
-        <translation type="obsolete">&amp;Acerca de Parametros RAW </translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Tiff Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones Tiff&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Choose the Tiff-Hdr format that Luminance will use to save an Hdr image.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; is the appropriate format for most cases because it stores the hdr data in a reasonable amount of space (i.e. file size).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Use the &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; format only if you want to load your tiff in another application that cannot open the LogLuv format.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Escoja el formato Tiff-Hdr que Luminance utilizará para guardar la imagenn Hdr.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;LogLuv Tiff&lt;/span&gt; es el formato más apropiado para la mayor parte de los casos porque almacena los datos hdr en un cantidad de espacio razonable (en terminos de espacio en disco).&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Utiliza el formato &lt;span style=&quot; font-weight:600;&quot;&gt;Float Tiff&lt;/span&gt; solo si deseas abrir el archivo en otra aplicación que no soporte el formato LogLuv.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>LogLuv Tiff (float, 16bit)</source>
-        <translation type="obsolete">LogLuv TIFF (float, 16bit)</translation>
-    </message>
-    <message>
-        <source>Float Tiff (float, 32bit)</source>
-        <translation type="obsolete">Float TIFF (float, 32bit)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Hdr Visualization Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Opciones de visualización de Hdr&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Colors</source>
-        <translation type="obsolete">Colores</translation>
-    </message>
-    <message>
-        <source>Show Negative Numbers as:</source>
-        <translation type="obsolete">Mostrar numeros negativos como:</translation>
-    </message>
-    <message>
-        <source>&amp;What&apos;s this?</source>
-        <translation type="obsolete">¿&amp;Que es esto?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -4026,10 +3149,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">No puedo encontrar complemento de Qt&apos;s para JPEGs... &lt;br&gt;Por favor descomprima el paquete de DLL con la opción &quot;usar nombres de directorios&quot; activado.</translation>
     </message>
     <message>
-        <source>Save the LDR to...</source>
-        <translation type="obsolete">Guarda LDR como...</translation>
-    </message>
-    <message>
         <source>Failed to save &lt;b&gt;</source>
         <translation type="unfinished">Error guardando&lt;b&gt;</translation>
     </message>
@@ -4306,21 +3425,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>ThreadManager</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Cerrar</translation>
-    </message>
-</context>
-<context>
     <name>TonemappingPanel</name>
     <message>
         <source>Load a tonemapping settings text file...</source>
         <translation type="unfinished">Cargar configuración de mapa de Tonos desde archivo...</translation>
-    </message>
-    <message>
-        <source>Luminance tonemapping settings text file (*.txt)</source>
-        <translation type="obsolete">Archivo de importación de mapa de tonos de Luminance (*.txt)</translation>
     </message>
     <message>
         <source>Aborting...</source>
@@ -4343,26 +3451,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">El archivo no es legible (compruebe sus permisos, ruta...)</translation>
     </message>
     <message>
-        <source>Error, the tone mapping settings file format has changed. This (old) file cannot be used with this version of Luminance. Create a new one.</source>
-        <translation type="obsolete">Error, el archivo de toneado ha cambiado. Este archivo (antiguo) no puede ser usado con esta versión de Luminance. Cree uno nuevo.</translation>
-    </message>
-    <message>
         <source>Custom LDR size</source>
         <translation type="unfinished">Personalizar tamaño LDR</translation>
-    </message>
-    <message>
-        <source>Tonemapping Operators and options</source>
-        <translation type="obsolete">Operadores y opciones de toneado</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Gradient Domain High Dynamic Range Compression&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Compresion HDR con dominio de gradientes&lt;/span&gt;&lt;br /&gt;R. Fattal, D. Lischinski, and M. Werman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Alpha</source>
@@ -4371,20 +3461,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Color Saturation</source>
         <translation type="unfinished">Saturación de color</translation>
-    </message>
-    <message>
-        <source>Default Values for operator</source>
-        <translation type="obsolete">Valores por defecto del operador</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Tone Mapping Algorithm for High Contrast Images&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Un algoritmo de toneado para imágenes de alto contraste&lt;/span&gt;&lt;br /&gt;Michael Ashikhmin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Simple</source>
@@ -4407,16 +3483,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Umbral de contraste local</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Fast Bilateral Filtering for the Display of HDR Images&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Filtrado bilateral rápido para mostrar imágenes HDR&lt;/span&gt;&lt;br /&gt;F. Durand and J. Dorsey.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Spatial Kernel Sigma</source>
         <translation type="unfinished">Spatial Kernel Sigma</translation>
     </message>
@@ -4429,28 +3495,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Contraste</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptive logarithmic mapping for displaying high contrast scenes&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Toneado logarítmico adaptativo para mostrar escenas de alto contraste&lt;/span&gt;&lt;br /&gt;F. Drago, K. Myszkowski, T. Annen, and N. Chiba.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Bias</source>
         <translation type="unfinished">Bias</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Time-Dependent Visual Adaptation for Realistic Image Display&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adaptación visual dependiente para imágenes realistas&lt;/span&gt;&lt;br /&gt;S.N. Pattanaik, J. Tumblin, H. Yee, and D.P. Greenberg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Multiplier</source>
@@ -4461,26 +3507,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Toneado local</translation>
     </message>
     <message>
-        <source>Cone and Rod based on Luminance</source>
-        <translation type="obsolete">Cono y barra basado en luminancia</translation>
-    </message>
-    <message>
         <source>Cone Level</source>
         <translation type="unfinished">Nivel de cono</translation>
     </message>
     <message>
         <source>Rod Level</source>
         <translation type="unfinished">Nivel de cono</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Photographic Tone Reproduction for Digital Images&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reproducción de tonos fotográficos para imágenes digitales&lt;/span&gt;&lt;br /&gt;E. Reinhard, M. Stark, P. Shirley, and J. Ferwerda&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Use Scales</source>
@@ -4507,42 +3539,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Escala alta</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dynamic Range Reduction Inspired by Photoreceptor Physiology&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Reducción de rango dinámico inspirado por la fisiología del fotoreceptor&lt;/span&gt;&lt;br /&gt;E. Reinhard and K. Devlin&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Brightness</source>
         <translation type="unfinished">Brillo</translation>
-    </message>
-    <message>
-        <source>Ctrl+A</source>
-        <translation type="obsolete">Ctrl+A</translation>
     </message>
     <message>
         <source>Load an existing text file containing pregamma and TMO settings</source>
         <translation type="unfinished">Cargar un archivo de texto conteniendo configuración de pregamma y TMO</translation>
     </message>
     <message>
-        <source>Gamma applied before tone mapping</source>
-        <translation type="obsolete">Aplicar Gamma ántes de tonear</translation>
-    </message>
-    <message>
         <source>Beta</source>
         <translation type="unfinished">Beta</translation>
-    </message>
-    <message>
-        <source>&amp;Result size:</source>
-        <translation type="obsolete">Tamaño &amp;resultante:</translation>
-    </message>
-    <message>
-        <source>The size of the resulting LDR image.</source>
-        <translation type="obsolete">El tamaño de salida de la imagen LDR.</translation>
     </message>
     <message>
         <source>Here you can choose the size of the resulting LDR image.</source>
@@ -4559,16 +3565,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Restore pregamma&apos;s default value (1)</source>
         <translation type="unfinished">Restaurar valores gamma por defecto (1)</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;A Perceptual Framework for Contrast Processing of High Dynamic Range Images&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Un Framework porcentual para procesamiento de constrastes de imágenes HDR&lt;/span&gt;&lt;br /&gt;Rafal Mantiuk, Karol Myszkowski, Hans-Peter Seidel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
@@ -4591,32 +3587,12 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Reducción de ruido</translation>
     </message>
     <message>
-        <source>&quot;Old&quot; Fattal (pre 1.8.4)</source>
-        <translation type="obsolete">&quot;Antiguo&quot; Fattal (pre 1.8.4)</translation>
-    </message>
-    <message>
         <source>Chromatic Adaptation</source>
         <translation type="unfinished">Adaptación cromática</translation>
     </message>
     <message>
         <source>Light Adaptation</source>
         <translation type="unfinished">Adaptación lumínicia</translation>
-    </message>
-    <message>
-        <source>Start tone mapping (CTRL+A).</source>
-        <translation type="obsolete">Iniciar toneado (CTRL+A).</translation>
-    </message>
-    <message>
-        <source>Use current parameters above (pregamma and tone mapping operator) to compute an LDR image.</source>
-        <translation type="obsolete">Usar parámetros actuales superiores (pregamma y operadores de toneado) para calcular la imagen LDR.</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">&amp;Aplicar</translation>
-    </message>
-    <message>
-        <source>Tone Mapping settings file section</source>
-        <translation type="obsolete">Area de gestión de archivos de configuración</translation>
     </message>
     <message>
         <source>Here you can load and save a tone mapping settings file.&lt;br&gt;You can also apply the contents of the currently loaded settings file.</source>
@@ -4631,16 +3607,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Guardar parámetros actuales (pregamma y TMO) a un archivo de texto.</translation>
     </message>
     <message>
-        <source>&amp;Save...</source>
-        <translation type="obsolete">&amp;Guardar...</translation>
-    </message>
-    <message>
         <source>Load an existing text file containing pregamma and TMO settings.</source>
         <translation type="unfinished">Carga un archivo existente conteniendo configuración de pregamma y TMO.</translation>
-    </message>
-    <message>
-        <source>&amp;Load...</source>
-        <translation type="obsolete">&amp;Cargar...</translation>
     </message>
     <message>
         <source>Reinhard &apos;02</source>
@@ -4875,210 +3843,6 @@ Do you want to continue?</source>
     </message>
 </context>
 <context>
-    <name>TonemappingWindow</name>
-    <message>
-        <source>Tone mapping Panel</source>
-        <translation type="obsolete">Panel de toneado</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="obsolete">Ctrl+S</translation>
-    </message>
-    <message>
-        <source>Close All</source>
-        <translation type="obsolete">Cerrar todo</translation>
-    </message>
-    <message>
-        <source>Close all the LDRs in the workspace</source>
-        <translation type="obsolete">Cerrar todos los LDR en este espacio de trabajo</translation>
-    </message>
-    <message>
-        <source>As Thumbnails</source>
-        <translation type="obsolete">como Miniatura</translation>
-    </message>
-    <message>
-        <source>Images as Thumbnails</source>
-        <translation type="obsolete">Imágenes como miniaturas</translation>
-    </message>
-    <message>
-        <source>Layout all LDRs as thumbnails.</source>
-        <translation type="obsolete">Disponer todos los LDR como miniaturas.</translation>
-    </message>
-    <message>
-        <source>Fit the current LDR to its containing window.</source>
-        <translation type="obsolete">Ajustar actual LDR a su ventana.</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation type="obsolete">W</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">&amp;Archivo</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">&amp;Ver</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Cerrar</translation>
-    </message>
-    <message>
-        <source>Tune the histogram for the current LDR</source>
-        <translation type="obsolete">Tonear el histograma del actual LDR</translation>
-    </message>
-    <message>
-        <source>C&amp;lose All</source>
-        <translation type="obsolete">Cerrar &amp;todo</translation>
-    </message>
-    <message>
-        <source>As &amp;Thumbnails</source>
-        <translation type="obsolete">Como &amp;Miniatura</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="obsolete">&amp;Cascada</translation>
-    </message>
-    <message>
-        <source>&amp;Fit to Window</source>
-        <translation type="obsolete">&amp;Ajustar a ventana</translation>
-    </message>
-    <message>
-        <source>Ctrl+C</source>
-        <translation type="obsolete">Ctrl+C</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">A&amp;yuda</translation>
-    </message>
-    <message>
-        <source>Tone Mapping Panel</source>
-        <translation type="obsolete">Panel de Toneado</translation>
-    </message>
-    <message>
-        <source>Show/Hide the Tone mapping Panel</source>
-        <translation type="obsolete">Mostrar/Ocultar Panel de Toneado</translation>
-    </message>
-    <message>
-        <source>Adjust &amp;Levels...</source>
-        <translation type="obsolete">Ajustar &amp;Niveles...</translation>
-    </message>
-    <message>
-        <source>Adjust Levels...</source>
-        <translation type="obsolete">Ajustar niveles...</translation>
-    </message>
-    <message>
-        <source>&amp;Save as...</source>
-        <translation type="obsolete">&amp;Guardar como ...</translation>
-    </message>
-    <message>
-        <source>Save As...</source>
-        <translation type="obsolete">Guardar como...</translation>
-    </message>
-    <message>
-        <source>Save the currently selected LDR</source>
-        <translation type="obsolete">Guardar el LDR actualmente seleccionado</translation>
-    </message>
-    <message>
-        <source>Cascade all LDRs in the workspace</source>
-        <translation type="obsolete">LDR en el espacio de trabajo en cascada</translation>
-    </message>
-    <message>
-        <source>What&apos;s This?</source>
-        <translation type="obsolete">¿Que es esto?</translation>
-    </message>
-    <message>
-        <source>Shift+F1</source>
-        <translation type="obsolete">Shift+F1</translation>
-    </message>
-    <message>
-        <source>&amp;Documentation...</source>
-        <translation type="obsolete">&amp;Documentación...</translation>
-    </message>
-    <message>
-        <source>Ctrl+H</source>
-        <translation type="obsolete">Ctrl+H</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation type="obsolete">Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>Ctrl+L</source>
-        <translation type="obsolete">Ctlr+L</translation>
-    </message>
-    <message>
-        <source>Ctrl+T</source>
-        <translation type="obsolete">Ctrl+T</translation>
-    </message>
-    <message>
-        <source>Ctrl+D</source>
-        <translation type="obsolete">Ctlr+D</translation>
-    </message>
-    <message>
-        <source>Get information about the graphical elements</source>
-        <translation type="obsolete">Coger información acerca del elemento gráfico</translation>
-    </message>
-    <message>
-        <source>Use this button to get information about the graphical elements</source>
-        <translation type="obsolete">Usa este botón para coger información acerca del elemento gráfico</translation>
-    </message>
-    <message>
-        <source>Tone Mapping: </source>
-        <translation type="obsolete">Toneado: </translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation type="obsolete">&amp;Salir</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="obsolete">Abandona el programa</translation>
-    </message>
-    <message>
-        <source>Close Tone Mapping Window</source>
-        <translation type="obsolete">Cerrar ventana de toneado</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="obsolete">Barra de Herramientas</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="obsolete">V&amp;entanas</translation>
-    </message>
-    <message>
-        <source>&amp;Normal Size</source>
-        <translation type="obsolete">&amp;Restaurar zoom</translation>
-    </message>
-    <message>
-        <source>O</source>
-        <translation type="obsolete">O</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="obsolete">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="obsolete">-</translation>
-    </message>
-    <message>
-        <source>About Luminance</source>
-        <translation type="obsolete">Acerca de Luminance</translation>
-    </message>
-    <message>
-        <source>%1 License document not found, you can find it online: %2here%3</source>
-        <comment>%2 and %3 are html tags</comment>
-        <translation type="obsolete">%1 Licencia del documento no encontrada, puede encontrarla on-line: %2aqui%3</translation>
-    </message>
-    <message>
-        <source>Luminance</source>
-        <translation type="obsolete">Luminance</translation>
-    </message>
-</context>
-<context>
     <name>TransplantExifDialog</name>
     <message>
         <source>Copy Exif data</source>
@@ -5099,22 +3863,6 @@ Do you want to continue?</source>
     <message>
         <source>Append files to the list</source>
         <translation type="unfinished">Añadir archivos a la lista</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;From...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;De...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;To...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;/head&gt;&lt;body style=&quot; white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-weight:400; font-style:normal; text-decoration:none;&quot;&gt;&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;A...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Keep existing exif tags in destination file</source>
-        <translation type="obsolete">Mantener etiquetas EXIF existentes en los archivos de destino</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Ayuda</translation>
     </message>
     <message>
         <source>Select the input images</source>
@@ -5149,24 +3897,12 @@ Do you want to continue?</source>
         <translation type="unfinished">Solo errores</translation>
     </message>
     <message>
-        <source>&amp;Filter Log messages:</source>
-        <translation type="obsolete">&amp;Filtrar mensajes de Log:</translation>
-    </message>
-    <message>
         <source>Clear filter text</source>
         <translation type="unfinished">Quitar filtro de texto</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
         <translation type="unfinished">&amp;Cancelar</translation>
-    </message>
-    <message>
-        <source>&amp;Start!</source>
-        <translation type="obsolete">&amp;Iniciar!</translation>
-    </message>
-    <message>
-        <source>&amp;Done.</source>
-        <translation type="obsolete">&amp;Hecho.</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -5227,25 +3963,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Remind me later</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>hdrInputLoader</name>
-    <message>
-        <source>ERROR: The file&lt;br&gt;%1&lt;br&gt; is not a 8 bit or 16 bit tiff.</source>
-        <translation type="obsolete">ERROR: El archivo &lt;br&gt;%1&lt;br&gt;no es un tiff de 8 ó 16 bits.</translation>
-    </message>
-    <message>
-        <source>ERROR: Cannot start dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: No puedo iniciar dcraw para el archivo: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Error or timeout occured while executing dcraw on file: %1</source>
-        <translation type="obsolete">ERROR: Error o tiempo de espera agotado mientras se ejecutaba dcraw al archivo: %1</translation>
-    </message>
-    <message>
-        <source>ERROR: Failed Loading file: %1</source>
-        <translation type="obsolete">ERROR: Fallo al cargar: %1</translation>
     </message>
 </context>
 </TS>

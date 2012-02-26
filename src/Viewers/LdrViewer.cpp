@@ -57,7 +57,7 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
 LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
     GenericViewer(frame, parent, ns),
     mTonemappingOptions(opts),
-    informativeLabel(new QLabel( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()), mToolBar))
+    informativeLabel(new QLabel( mToolBar))
 {
     mToolBar->addWidget(informativeLabel);
 
@@ -73,6 +73,8 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     setQImage(*temp_qimage);
 
     updateView();
+
+    retranslateUi();
 }
 
 LdrViewer::~LdrViewer()
@@ -80,6 +82,13 @@ LdrViewer::~LdrViewer()
 #ifdef QT_DEBUG
     std::cout << "LdrViewer::~LdrViewer()" << std::endl;
 #endif
+}
+
+void LdrViewer::retranslateUi()
+{
+    informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
+
+	GenericViewer::retranslateUi();
 }
 
 QString LdrViewer::getFileNamePostFix()

@@ -35,5 +35,8 @@ Q_OBJECT
 public:
 	HelpSideBar(const QString &title, QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~HelpSideBar();
+protected:
+	virtual void changeEvent(QEvent* event);
+
 };
 #endif

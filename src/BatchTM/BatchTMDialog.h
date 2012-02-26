@@ -66,8 +66,9 @@ private slots:
 	void check_enable_start();
 	void remove_HDRs();
 	void remove_TMOpts();
-  void filterChanged(const QString&);
+	void filterChanged(const QString&);
 	void filterComboBoxActivated(int);
+	void abort();
 
   //fuction that adds a log message to the model
 	void add_log_message(const QString &);
@@ -122,6 +123,7 @@ private:
   QMutex          m_class_data_mutex;
   bool            m_is_batch_running;
   bool        *   m_available_threads;
+  bool        	  m_abort;
   int             m_next_hdr_file;
   
   int   get_available_thread_id();

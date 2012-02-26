@@ -32,6 +32,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "Common/global.h"
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "Preferences/PreferencesDialog.h"
@@ -103,21 +104,20 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
 // 		qDebug("now adding");
         temp_ais_options.insert(idx_a+1,"aligned_");
     }
-    //check if we have '-v'
-    temp_ais_options = input_parameter_string.split(" ",QString::SkipEmptyParts);
-    idx_a = temp_ais_options.indexOf("-v");
-    if (idx_a == -1) {
-// 		qDebug("missing, adding");
-        temp_ais_options+="-v";
-    }
     else
-    {
         align_opt_was_ok=true;
+
+    //check if we have '-v'
+    if (temp_ais_options.indexOf("-v") < 0) {
+// 		qDebug("missing, adding");
+        temp_ais_options.insert(0, "-v");
+        align_opt_was_ok = false;
     }
+
     if (!align_opt_was_ok) {
         QMessageBox::information(0,
-                                 QObject::tr("Option -v -a..."),
-                                 QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
+			QObject::tr("Option -v -a..."),
+			QObject::tr("LuminanceHDR requires align_image_stack to be executed with the \"-v -a aligned_\" options. Command line options have been corrected."));
     }
     return temp_ais_options;
 }
@@ -243,6 +243,13 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     connect(m_Ui->toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
 }
 
+void PreferencesDialog::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		 m_Ui->retranslateUi(this);
+	QWidget::changeEvent(event);
+}
+
 void PreferencesDialog::negative_clicked()
 {
     negcolor = QColorDialog::getColor(negcolor, this);
@@ -261,14 +268,11 @@ void PreferencesDialog::ok_clicked()
 
     if (luminance_options.getGuiLang() != fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()])
     {
-        QMessageBox::information(this,
-                                 tr("Please restart..."),
-                                 tr("Please restart LuminanceHDR to use the new language (%1).").arg(m_Ui->languageComboBox->currentText()));
+        luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
+        installTranslators(true);
     }
 
     // UI
-    luminance_options.setGuiLang( fromGuiIndexToIso639[m_Ui->languageComboBox->currentIndex()] );
-
     luminance_options.setViewerNegColor( negcolor.rgba() );
     luminance_options.setViewerNanInfColor( infnancolor.rgba() );
 

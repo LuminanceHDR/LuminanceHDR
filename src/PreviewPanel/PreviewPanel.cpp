@@ -169,6 +169,13 @@ PreviewPanel::~PreviewPanel()
 #endif
 }
 
+void PreviewPanel::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		Ui::PreviewPanel::retranslateUi(this);
+	QWidget::changeEvent(event);
+}
+
 void PreviewPanel::updatePreviews(pfs::Frame* frame)
 {
     if ( frame == NULL ) return;

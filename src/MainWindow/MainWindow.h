@@ -208,6 +208,8 @@ protected:
 
     virtual void dragEnterEvent(QDragEnterEvent *);
     virtual void dropEvent(QDropEvent *);
+	virtual void changeEvent(QEvent* event);
+
     void closeEvent(QCloseEvent *);
 
     void dispatchrotate(bool clockwise);

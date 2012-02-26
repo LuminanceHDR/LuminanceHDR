@@ -199,6 +199,13 @@ TonemappingPanel::~TonemappingPanel()
 	db.close();
 }
 
+void TonemappingPanel::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		 m_Ui->retranslateUi(this);
+	QWidget::changeEvent(event);
+}
+
 void TonemappingPanel::createDatabase()
 {
     QDir dir(QDir::homePath());

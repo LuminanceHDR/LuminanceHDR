@@ -33,6 +33,7 @@
 
 #include <QImage>
 #include <QComboBox>
+#include <QLabel>
 #include <QScopedPointer>
 
 #include "GenericViewer.h"
@@ -94,11 +95,14 @@ protected Q_SLOTS:
 
 protected:
     // Methods
+	virtual void retranslateUi();
     void setRangeWindow(float min, float max);
 
     // UI
     LuminanceRangeWidget *m_lumRange;
     QComboBox *mappingMethodCB;
+    QLabel *mappingMethodLabel;
+    QLabel *histlabel;
 
 private:
     void refreshPixmap();

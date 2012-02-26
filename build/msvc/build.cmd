@@ -125,12 +125,12 @@ IF DEFINED exiv2-compile (
 )
 
 
-IF NOT EXIST %TEMP_DIR%\jpegsr8c.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/jpegsr8c.zip http://www.ijg.org/files/jpegsr8c.zip
+IF NOT EXIST %TEMP_DIR%\jpegsr8d.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/jpegsr8d.zip http://www.ijg.org/files/jpegsr8d.zip
 )
 IF NOT EXIST libjpeg (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/jpegsr8c.zip
-	ren jpeg-8c libjpeg
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/jpegsr8d.zip
+	ren jpeg-8d libjpeg
 
 	pushd libjpeg
 	copy jconfig.vc jconfig.h
@@ -147,26 +147,24 @@ IF NOT EXIST libjpeg (
 	popd
 )
 
-IF NOT EXIST %TEMP_DIR%\tiff-4.0.0beta7.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.0beta7.zip http://download.osgeo.org/libtiff/tiff-4.0.0beta7.zip
+IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.1.zip http://download.osgeo.org/libtiff/tiff-4.0.1.zip
 )
 
-IF NOT EXIST tiff-4.0.0beta7 (
-	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.0beta7.zip
-	
-	echo.  >> tiff-4.0.0beta7\nmake.opt
-	echo.JPEG_SUPPORT	= 1  >> tiff-4.0.0beta7\nmake.opt
-	echo.JPEGDIR= ../libjpeg  >> tiff-4.0.0beta7\nmake.opt
-	echo.JPEG_INCLUDE	= -I$^(JPEGDIR^)  >> tiff-4.0.0beta7\nmake.opt
-	echo.JPEG_LIB = $^(JPEGDIR^)/libjpeg.lib  >> tiff-4.0.0beta7\nmake.opt
-	echo.  >> tiff-4.0.0beta7\nmake.opt
-	echo.ZIP_SUPPORT	= 1  >> tiff-4.0.0beta7\nmake.opt
-	echo.ZLIBDIR 	= ..\zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%  >> tiff-4.0.0beta7\nmake.opt
-	echo.ZLIB_INCLUDE	= -I$^(ZLIBDIR^)  >> tiff-4.0.0beta7\nmake.opt
-	echo.ZLIB_LIB 	= $^(ZLIBDIR^)/zlibwapi.lib  >> tiff-4.0.0beta7\nmake.opt
+IF NOT EXIST tiff-4.0.1 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/tiff-4.0.1.zip
 
-	pushd tiff-4.0.0beta7
-	nmake /f Makefile.vc
+	echo.JPEG_SUPPORT=^0> tiff-4.0.1\qtpfsgui_commands.in
+	echo.JPEGDIR=..\..\libjpeg>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.JPEG_INCLUDE=-I$^(JPEGDIR^)>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.JPEG_LIB=$^(JPEGDIR^)\libjpeg.lib>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZIP_SUPPORT=^0>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZLIBDIR=..\..\zlib-1.2.5\contrib\vstudio\%VS_SHORT%\%RawPlatform%\ZlibDll%Configuration%>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZLIB_INCLUDE=-I..\..\zlib-1.2.5>> tiff-4.0.1\qtpfsgui_commands.in
+	echo.ZLIB_LIB=$^(ZLIBDIR^)\zlibwapi.lib>> tiff-4.0.1\qtpfsgui_commands.in
+
+	pushd tiff-4.0.1
+	nmake /s /c /f Makefile.vc @qtpfsgui_commands.in
 	popd
 )
 
@@ -321,8 +319,7 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	popd
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
-	rem %CYGWIN_DIR%\bin\git.exe fetch
-	rem %CYGWIN_DIR%\bin\git.exe rebase refs/remotes/origin/master
+	%CYGWIN_DIR%\bin\git.exe pull
 	popd
 )
 
@@ -347,9 +344,9 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	copy exiv2-trunk\msvc64\exiv2lib\%Platform%\%Configuration%DLL\*.lib LuminanceHdrStuff\DEPs\lib\exiv2
 	copy exiv2-trunk\msvc64\exiv2lib\%Platform%\%Configuration%DLL\*.dll LuminanceHdrStuff\DEPs\bin\exiv2
 	
-	copy tiff-4.0.0beta7\libtiff\*.h LuminanceHdrStuff\DEPs\include\libtiff
-	copy tiff-4.0.0beta7\libtiff\*.lib LuminanceHdrStuff\DEPs\lib\libtiff
-	copy tiff-4.0.0beta7\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
+	copy tiff-4.0.1\libtiff\*.h LuminanceHdrStuff\DEPs\include\libtiff
+	copy tiff-4.0.1\libtiff\*.lib LuminanceHdrStuff\DEPs\lib\libtiff
+	copy tiff-4.0.1\libtiff\*.dll LuminanceHdrStuff\DEPs\bin\libtiff
 	
 	mkdir LuminanceHdrStuff\DEPs\include\libraw\libraw
 	copy LibRaw-0.14.5\libraw\*.h LuminanceHdrStuff\DEPs\include\libraw\libraw
@@ -375,10 +372,17 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build (
 	mkdir LuminanceHdrStuff\qtpfsgui.build
 )
 pushd LuminanceHdrStuff\qtpfsgui.build
+
+
 IF %OPTION_LUMINANCE_UPDATE_TRANSLATIONS% EQU 1 (
 	set CMAKE_OPTIONS=-DUPDATE_TRANSLATIONS=1	
 ) ELSE (
 	set CMAKE_OPTIONS=-UUPDATE_TRANSLATIONS
+)
+IF %OPTION_LUPDATE_NOOBSOLETE% EQU 1 (
+	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -DLUPDATE_NOOBSOLETE=1	
+) ELSE (
+	set CMAKE_OPTIONS=%CMAKE_OPTIONS% -ULUPDATE_NOOBSOLETE
 )
 %CMAKE_DIR%\bin\cmake.exe -G "%VS_CMAKE%" ..\qtpfsgui %CMAKE_OPTIONS%
 popd

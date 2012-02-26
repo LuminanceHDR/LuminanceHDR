@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QDebug>
 
+#include "Common/global.h"
 #include "Common/commandline.h"
 #include "MainWindow/MainWindow.h"
 
@@ -44,17 +45,13 @@ int main( int argc, char ** argv )
     // Make sure an Q*Application exists before instantiating the QSettings
     // Without this some systems will deadlock
     QCoreApplication *cliApplication = new QCoreApplication( argc, argv );
-    LuminanceOptions luminance_options;
+    installTranslators(false);
 
     CommandLineInterfaceManager cli( argc, argv );
 
     if (cli.isCommandLineApp())
     {
         // Command Line Application
-
-        QTranslator translator;
-        translator.load(QString("lang_") + luminance_options.getGuiLang(), I18NDIR);
-        cliApplication->installTranslator(&translator);
         cli.execCommandLineParams();
         cliApplication->connect(&cli, SIGNAL(finishedParsing()), cliApplication, SLOT(quit()));
 
@@ -72,10 +69,6 @@ int main( int argc, char ** argv )
 #ifdef WIN32
         FreeConsole();
 #endif
-#endif // Q_WS_MAC
-
-#ifdef Q_WS_MAC
-        LuminanceOptions luminance_options;
 #endif // Q_WS_MAC
 
         Q_INIT_RESOURCE(icons);
@@ -104,14 +97,7 @@ int main( int argc, char ** argv )
         //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
         //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
 #endif
-
-        QTranslator guiTranslator;
-        QTranslator qtTranslator;
-        qtTranslator.load(QString("qt_") + luminance_options.getGuiLang(), I18NDIR);
-        guiTranslator.load(QString("lang_") + luminance_options.getGuiLang(), I18NDIR);
-        application.installTranslator(&qtTranslator);
-        application.installTranslator(&guiTranslator);
-
+        installTranslators(true);
         MainWindow* MW = new MainWindow;
 #ifndef Q_WS_MAC
         MW->setInputFiles(cli.files());

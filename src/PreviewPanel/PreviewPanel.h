@@ -44,6 +44,9 @@ public:
     PreviewPanel(QWidget *parent = 0);
     ~PreviewPanel();
 
+protected:
+	virtual void changeEvent(QEvent* event);
+
 public Q_SLOTS:
     void updatePreviews(pfs::Frame* frame);
 

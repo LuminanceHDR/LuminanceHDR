@@ -1355,6 +1355,13 @@ void MainWindow::disableCrop()
     m_Ui->removeSelectionAction->setEnabled(false);
 }
 
+void MainWindow::changeEvent(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		 m_Ui->retranslateUi(this);
+	QWidget::changeEvent(event);
+}
+
 void MainWindow::closeEvent( QCloseEvent *event )
 {
     if ( maybeSave() )

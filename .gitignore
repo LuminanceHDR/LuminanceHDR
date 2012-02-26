@@ -1,3 +1,4 @@
 *.project
 CMakeLists.txt.user
 /.settings
+**.rule

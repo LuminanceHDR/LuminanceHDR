@@ -2,6 +2,7 @@ PROJECT(luminance-hdr)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
 
 OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
+OPTION(LUPDATE_NOOBSOLETE "While doing an lupdate, remove obsolete entries.")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
@@ -434,7 +435,11 @@ IF(UPDATE_TRANSLATIONS)
     ${LUMINANCE_HDR_MOC}
     ${LUMINANCE_HDR_SRC}
     ${LUMINANCE_HDR_UI})
-    QT4_CREATE_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TO_TRANSLATE} ${LUMINANCE_TS})
+    IF(LUPDATE_NOOBSOLETE)
+        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
+    ELSE()
+        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TO_TRANSLATE} ${LUMINANCE_TS})
+    ENDIF()
 ELSE(UPDATE_TRANSLATIONS)
     QT4_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
 ENDIF(UPDATE_TRANSLATIONS)
@@ -483,7 +488,7 @@ ELSEIF(APPLE)
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main exec
-    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance/i18n) # i18n
+    INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
     INSTALL(FILES
@@ -491,8 +496,8 @@ ELSEIF(APPLE)
     ${CMAKE_SOURCE_DIR}/README
     ${CMAKE_SOURCE_DIR}/LICENSE
     ${CMAKE_SOURCE_DIR}/Changelog
-    DESTINATION share/luminance) #info files
-    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance) # help directory
+    DESTINATION share/luminance-hdr) #info files
+    INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
 
 ELSEIF(WIN32)
 
@@ -529,7 +534,11 @@ ELSEIF(WIN32)
 
     FILE(GLOB QtI18nAll "${QT_TRANSLATIONS_DIR}/qt_*.qm")
     FILE(GLOB QtI18nHelp "${QT_TRANSLATIONS_DIR}/qt_help_*.qm")
-    LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
+    LIST(LENGTH QtI18nHelp QtI18nHelp_length)
+    IF(${QtI18nHelp_length} GREATER 0)
+        LIST(REMOVE_ITEM QtI18nAll ${QtI18nHelp})
+    ENDIF()
+    
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
 
 ENDIF()
