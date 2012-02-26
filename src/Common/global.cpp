@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <QUrl>
 #include <QTranslator>
+#include <QCoreApplication>
 #include <iostream>
 
 #include "Common/config.h"
