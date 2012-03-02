@@ -26,7 +26,10 @@
 #include <QDialog>
 #include <QStringList>
 
-#include "ui_DnDOption.h"
+// forward declaration
+namespace Ui {
+    class DnDOption;
+}
 
 class DnDOptionDialog : public QDialog
 {
@@ -42,7 +45,7 @@ protected slots:
 public:
 	int result; // 1=newHDR, 2=openHDR
 private:
-	Ui::DnDOption ui;
+    QScopedPointer<Ui::DnDOption> ui;
 
 };
 #endif
