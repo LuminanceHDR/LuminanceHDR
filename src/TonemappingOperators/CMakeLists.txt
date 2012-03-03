@@ -1,54 +1,22 @@
-SET(TM_LIBPFS_H
-# PFS TMO
-        pfstmo.h
-        pfstmdefaultparams.h
-        ashikhmin02/pyramid.h
-        ashikhmin02/tmo_ashikhmin02.h
-        drago03/tmo_drago03.h
-        durand02/bilateral.h
-        durand02/fastbilateral.h
-        durand02/tmo_durand02.h
-        fattal02/pde.h
-        fattal02/tmo_fattal02.h
-        mantiuk06/contrast_domain.h
-        mantiuk08/display_adaptive_tmo.h
-        mantiuk08/display_function.h
-        mantiuk08/display_size.h
-        mantiuk08/cqp/gsl_cqp.h
-        mantiuk08/cqp/initial_point.h
-        pattanaik00/tmo_pattanaik00.h
-        reinhard02/tmo_reinhard02.h
-        reinhard05/tmo_reinhard05.h
-)
+#empty variables that will be filled in the subdirectories
+SET(TM_LIBPFS_H )
+SET(TM_LIBPFS_CPP )
 
-SET(TM_LIBPFS_CPP
-        ashikhmin02/tmo_ashikhmin02.cpp
-        ashikhmin02/pfstmo_ashikhmin02.cpp
-        drago03/tmo_drago03.cpp
-        drago03/pfstmo_drago03.cpp
-        durand02/bilateral.cpp
-        durand02/fastbilateral.cpp
-        durand02/pfstmo_durand02.cpp
-        durand02/tmo_durand02.cpp
-        fattal02/pde.cpp
-        fattal02/tmo_fattal02.cpp
-        fattal02/pfstmo_fattal02.cpp
-        mantiuk06/contrast_domain.cpp
-        mantiuk06/pfstmo_mantiuk06.cpp
-        mantiuk08/display_adaptive_tmo.cpp
-        mantiuk08/display_function.cpp
-        mantiuk08/display_size.cpp
-        mantiuk08/cqp/initial_point.c
-        mantiuk08/cqp/cqpminimizer.c
-        mantiuk08/cqp/mg_pdip.c
-        mantiuk08/pfstmo_mantiuk08.cpp
-        pattanaik00/tmo_pattanaik00.cpp
-        pattanaik00/pfstmo_pattanaik00.cpp
-        reinhard02/tmo_reinhard02.cpp
-        reinhard02/pfstmo_reinhard02.cpp
-        reinhard02/approx.cpp
-        reinhard05/tmo_reinhard05.cpp
-        reinhard05/pfstmo_reinhard05.cpp
-)
+ADD_SUBDIRECTORY(drago03)
+ADD_SUBDIRECTORY(ashikhmin02)
+ADD_SUBDIRECTORY(durand02)
+ADD_SUBDIRECTORY(fattal02)
+ADD_SUBDIRECTORY(mantiuk06)
+ADD_SUBDIRECTORY(mantiuk08)
+ADD_SUBDIRECTORY(pattanaik00)
+ADD_SUBDIRECTORY(reinhard02)
+ADD_SUBDIRECTORY(reinhard05)
 
-ADD_LIBRARY(pfstmo ${TM_LIBPFS_H} ${TM_LIBPFS_CPP})
+# List all .h files in this directory
+FILE(GLOB FILES_H *.h)
+# List all .cpp files in this directory
+FILE(GLOB FILES_CPP *.cpp)
+
+ADD_LIBRARY(pfstmo ${TM_LIBPFS_H} ${TM_LIBPFS_CPP} ${FILES_H} ${FILES_CPP})
+
+SET(LUMINANCE_MODULES_GUI ${LUMINANCE_MODULES_GUI} pfstmo PARENT_SCOPE)

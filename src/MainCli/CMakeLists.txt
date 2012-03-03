@@ -1,0 +1,11 @@
+# List all .h files in this directory
+FILE(GLOB FILES_H *.h)
+# List all .cpp files in this directory
+FILE(GLOB FILES_CPP *.cpp)
+
+QT4_WRAP_CPP(FILES_MOC ${FILES_H})
+
+ADD_LIBRARY(main_cli ${FILES_H} ${FILES_CPP} ${FILES_MOC})
+
+SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${FILES_CPP} ${FILES_H} PARENT_SCOPE)
+SET(LUMINANCE_MODULES ${LUMINANCE_MODULES} main_cli PARENT_SCOPE)

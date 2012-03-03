@@ -30,10 +30,10 @@
 #include <iostream>
 
 #include "Common/config.h"
+
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
-
-//#include "UI/ImageQualityDialog.h"
+#include "global.hxx"
 
 QTranslator* lastGuiTranslator;
 QTranslator* lastQtTranslator;
@@ -129,22 +129,27 @@ QStringList convertUrlListToFilenameList(QList<QUrl> urls)
     return files;
 }
 
-void installTranslators(QString lang, bool installQtTranslations) {
-	if (lastGuiTranslator) {
+void installTranslators(QString lang, bool installQtTranslations)
+{
+    if (lastGuiTranslator)
+    {
 		QCoreApplication::removeTranslator(lastGuiTranslator);
 		lastGuiTranslator = 0;
 	}
-	if (installQtTranslations && lastQtTranslator) {
+    if (installQtTranslations && lastQtTranslator)
+    {
 		QCoreApplication::removeTranslator(lastQtTranslator);
 		lastQtTranslator = 0;
 	}
-	if (lang != "en") {
-		QTranslator* guiTranslator = new QTranslator();
-		guiTranslator->load(QString("lang_") + lang, I18NDIR);
+    if (lang != "en")
+    {
+        QTranslator* guiTranslator = new QTranslator();
+        guiTranslator->load(QString("lang_") + lang, I18NDIR);
 	    QCoreApplication::installTranslator(guiTranslator);
 	    lastGuiTranslator = guiTranslator;
 
-	    if (installQtTranslations) {
+        if (installQtTranslations)
+        {
 			QTranslator* qtTranslator = new QTranslator();
 			qtTranslator->load(QString("qt_") + lang, I18NDIR);
 			QCoreApplication::installTranslator(qtTranslator);
