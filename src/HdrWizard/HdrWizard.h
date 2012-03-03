@@ -31,16 +31,18 @@
 #include <QDialog>
 #include <QString>
 
-#include "ui_HdrWizard.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
-#include "arch/freebsd/math.h"
 #include "HdrCreation/HdrCreationManager.h"
 
 class Gang;
 
-class HdrWizard : public QDialog, private Ui::HdrWizard
+namespace Ui {
+    class HdrWizard;
+}
+
+class HdrWizard : public QDialog
 {
 Q_OBJECT
 
@@ -73,6 +75,8 @@ private:
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
+
+    QScopedPointer<Ui::HdrWizard> m_Ui;
 
 private slots:
 
