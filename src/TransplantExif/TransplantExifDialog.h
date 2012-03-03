@@ -30,9 +30,12 @@
 
 #include "Common/LuminanceOptions.h"
 
-#include "ui_TransplantExifDialog.h"
+namespace Ui {
+    class TransplantExifDialog;
+}
 
-class TransplantExifDialog : public QDialog, private Ui::TransplantExifDialog {
+
+class TransplantExifDialog : public QDialog {
 Q_OBJECT
 public:
 	TransplantExifDialog(QWidget *);
@@ -51,7 +54,9 @@ private:
 	//the model that holds the data
 	QStringListModel *full_Log_Model;
 
-        LuminanceOptions luminance_options;
+    LuminanceOptions luminance_options;
+
+    QScopedPointer<Ui::TransplantExifDialog> m_Ui;
 private slots:
 	void transplant_requested();
 	void help_requested();
