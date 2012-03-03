@@ -45,8 +45,8 @@ static const int BORDER_SIZE = 30;
 
 GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     QWidget(parent),
-    mNeedsSaving(ns),
     mViewerMode(FIT_WINDOW),
+    mNeedsSaving(ns),
     mFrame(frame)
 {
     mVBL = new QVBoxLayout(this);

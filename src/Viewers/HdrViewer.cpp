@@ -71,9 +71,9 @@ class HdrViewerMapping
 {
 public:
     HdrViewerMapping(int nan_inf_color = 0, int neg_color = 0, float min_value = 1.0f, float max_value = 1.0f):
+        m_MappingMethod(MAP_GAMMA2_2),
         m_NanInfColor(nan_inf_color),
-        m_NegColor(neg_color),
-        m_MappingMethod(MAP_GAMMA2_2)
+        m_NegColor(neg_color)
     {
         setMinMax(min_value, max_value);
     }

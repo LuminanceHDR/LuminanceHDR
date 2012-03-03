@@ -56,8 +56,8 @@ void parseOptions(const TonemappingOptions *opts, QString& caption)
 
 LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *parent, bool ns):
     GenericViewer(frame, parent, ns),
-    mTonemappingOptions(opts),
-    informativeLabel(new QLabel( mToolBar))
+    informativeLabel(new QLabel( mToolBar)),
+    mTonemappingOptions(opts)
 {
     mToolBar->addWidget(informativeLabel);
 
