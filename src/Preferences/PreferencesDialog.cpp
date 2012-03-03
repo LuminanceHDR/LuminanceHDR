@@ -148,6 +148,8 @@ int mappingBatchTmQStringToInt(const QString& string)
     {
         return 5;
     }
+
+    return 0;   // I assume JPEG... at least it doesn't crash! :|
 }
 
 
