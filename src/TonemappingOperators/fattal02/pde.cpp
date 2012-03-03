@@ -520,12 +520,13 @@ static void atimes(const float x[], float res[])
 
 static float snrm(unsigned long n, const float sx[])
 {
-	float ans;
+    float ans = 0.0f;
 
-	ans = 0.0;
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
-	for (long i=0;i<n;i++)
+    for (unsigned long i=0; i<n; i++)
+    {
 		ans += sx[i]*sx[i];
+    }
 	return sqrt(ans);
 }
 
@@ -535,7 +536,6 @@ static float snrm(unsigned long n, const float sx[])
  */
 static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
 {	
-	long j;
 	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
 
@@ -548,12 +548,16 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 
 	*iter=0;
 	atimes(x,r);
-	for (j=0;j<n;j++)
+    for (unsigned long j=0;j<n;j++)
+    {
 		r[j]=b[j]-r[j];
-	for (j=0;j<n;j++)
+    }
+    for (unsigned long j=0;j<n;j++)
+    {
 		rr[j]=r[j];
+    }
 	atimes(r,rr);       // minimum residual
-        znrm=1.0;
+    znrm=1.0;
 	bnrm=snrm(n,b);
 	asolve(r,z);
 
@@ -563,12 +567,19 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		asolve(rr,zz);
 		bknum=0.0;
 #pragma omp parallel for private(j) shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
-		for (j=0;j<n;j++) bknum += z[j]*rr[j];
+        for (unsigned long j=0;j<n;j++)
+        {
+            bknum += z[j]*rr[j];
+        }
 		if (*iter == 1) {
-			for (j=0;j<n;j++)
+            for (unsigned long j=0;j<n;j++)
+            {
 				p[j]=z[j];
-			for (j=0;j<n;j++)
+            }
+            for (unsigned long j=0;j<n;j++)
+            {
 				pp[j]=zz[j];
+            }
 		}
 		else {
 			bk=bknum/bkden;
@@ -579,7 +590,10 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		atimes(p,z);
 		akden=0.0;
 #pragma omp parallel for private(j) shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
-		for (j=0;j<n;j++) akden += z[j]*pp[j];
+        for (unsigned long j=0;j<n;j++)
+        {
+            akden += z[j]*pp[j];
+        }
 		ak=bknum/akden;
 		atimes(pp,zz);
 		VEX_vadds(x, ak, p, x, n);

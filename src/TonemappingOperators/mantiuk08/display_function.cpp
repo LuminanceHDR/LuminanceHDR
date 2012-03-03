@@ -39,10 +39,6 @@
 #include "arch/string.h"
 #include "display_function.h"
 
-
-static void removeCommandLineArg( int &argc, char* argv[],
-  int firstArgToRemove, int numArgsToRemove );
-
 // ========== GGBA Display Function ==============
 
 DisplayFunctionGGBA::DisplayFunctionGGBA( float gamma, float L_max, float L_black, float E_amb, float screen_refl ) 
