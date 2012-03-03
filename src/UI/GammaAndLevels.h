@@ -106,8 +106,6 @@ class GammaAndLevels : public QDialog
 {
     Q_OBJECT
 private:
-    Ui::LevelsDialog* m_Ui;
-
     const QImage m_ReferenceQImage; // can only be read
 
     int blackin, whitein, blackout, whiteout;
@@ -116,6 +114,8 @@ private:
     GrayBar *gb1;
     GrayBar *gb2;
     HistogramLDR *histogram;
+
+    QScopedPointer<Ui::LevelsDialog> m_Ui;
 
     void refreshLUT();
 public:
