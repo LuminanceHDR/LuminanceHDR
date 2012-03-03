@@ -26,22 +26,26 @@
 
 #include <QDialog>
 
-#include "ui_ImageQualityDialog.h"
+namespace Ui {
+    class ImgQualityDialog;
+}
 
-class ImageQualityDialog : public QDialog, private Ui::ImgQualityDialog
+class ImageQualityDialog : public QDialog //, private Ui::ImgQualityDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
-        ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent = 0);
-	~ImageQualityDialog();
-	int getQuality(void);
+    ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent = 0);
+    ~ImageQualityDialog();
+    int getQuality(void);
 protected slots:
-	void on_getSizeButton_clicked();
-	void reset(int);
+    void on_getSizeButton_clicked();
+    void reset(int);
 
 protected:
-        const QImage *image;
-	QString format;
+    const QImage *image;
+    QString format;
+
+    QScopedPointer<Ui::ImgQualityDialog> m_Ui;
 };
 #endif

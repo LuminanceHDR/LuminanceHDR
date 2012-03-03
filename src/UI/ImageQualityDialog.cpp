@@ -27,35 +27,43 @@
 #include <QBuffer>
 
 #include "ImageQualityDialog.h"
+#include "ui_ImageQualityDialog.h"
 
 ImageQualityDialog::~ImageQualityDialog() {}
 
-ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent) : QDialog(parent), image(img)  {
-        setupUi(this);
-	format = fmt;
-	connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
-	connect(horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
+ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent):
+    QDialog(parent),
+    image(img),
+    m_Ui(new Ui::ImgQualityDialog)
+{
+    m_Ui->setupUi(this);
+    format = fmt;
+    connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
+    connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(reset(int)));
 }
 
-int ImageQualityDialog::getQuality(void) {
-	return spinBox->value();
+int ImageQualityDialog::getQuality(void)
+{
+    return m_Ui->spinBox->value();
 }
 
-void ImageQualityDialog::on_getSizeButton_clicked() {
-	setCursor(QCursor(Qt::WaitCursor));
-	int quality = spinBox->value();
-        QByteArray ba;
-        QBuffer buffer(&ba);
-        buffer.open(QIODevice::WriteOnly);
-        image->save(&buffer, (const char *) format.toLatin1(), quality);
-	
-	QLocale def;
-	QString s = def.toString( ba.size() );	
-	//label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
-	label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
-	setCursor(QCursor(Qt::ArrowCursor));
+void ImageQualityDialog::on_getSizeButton_clicked()
+{
+    setCursor(QCursor(Qt::WaitCursor));
+    int quality = m_Ui->spinBox->value();
+    QByteArray ba;
+    QBuffer buffer(&ba);
+    buffer.open(QIODevice::WriteOnly);
+    image->save(&buffer, (const char *) format.toLatin1(), quality);
+
+    QLocale def;
+    QString s = def.toString( ba.size() );
+    //label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
+    m_Ui->label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
+    setCursor(QCursor(Qt::ArrowCursor));
 }
 
-void ImageQualityDialog::reset(int) {
-	label_filesize->setText(tr("Unknown"));
+void ImageQualityDialog::reset(int)
+{
+    m_Ui->label_filesize->setText(tr("Unknown"));
 }
