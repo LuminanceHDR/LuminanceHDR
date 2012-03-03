@@ -42,19 +42,24 @@ for which a new license (GPL+exception) is in place.
 #include <QVariant>
 #include <QWidget>
 #include <QXmlInputSource>
+#include <QEvent>
+#include <QTreeWidgetItem>
 
-class QEvent;
 class ScHelpTreeModel;
 
-#include "ui_HelpBrowser.h"
 #include "HelpSideBar.h"
+
 //! \brief A structure holding title/file url reference.
 struct histd2 {
 	QString url;
 	QString title;
 };
 
-class HelpBrowser : public QMainWindow, Ui::HelpBrowser
+namespace Ui {
+    class HelpBrowser;
+}
+
+class HelpBrowser : public QMainWindow
 {
     Q_OBJECT
 
@@ -207,6 +212,9 @@ protected slots:
 	void linkHovered (const QString &, const QString &, const QString & );
 signals:
 	void closed();
+
+protected:
+    QScopedPointer<Ui::HelpBrowser> m_Ui;
 
 };
 

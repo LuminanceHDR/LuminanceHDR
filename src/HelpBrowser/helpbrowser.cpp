@@ -27,6 +27,8 @@ for which a new license (GPL+exception) is in place.
 ***************************************************************************/
 
 #include "helpbrowser.h"
+#include "ui_HelpBrowser.h"
+#include "ui_HelpSideBar.h"
 
 #include <QAction>
 #include <QDir>
@@ -132,32 +134,37 @@ class BookmarkParser2 : public QXmlDefaultHandler
 
 bool HelpBrowser::firstRun=true;
 
-HelpBrowser::HelpBrowser(QWidget* parent)
-	: QMainWindow( parent )
+HelpBrowser::HelpBrowser(QWidget* parent):
+    QMainWindow( parent ),
+    m_Ui(new Ui::HelpBrowser)
 {
-	setupUi(this);
+    m_Ui->setupUi(this);
 }
 
-HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile)
-        : QMainWindow( parent ), zoomFactor(1.0)
+HelpBrowser::HelpBrowser( QWidget* parent, const QString& /*caption*/, const QString& guiLanguage, const QString& jumpToSection, const QString& jumpToFile):
+    QMainWindow( parent ),
+    zoomFactor(1.0),
+    m_Ui(new Ui::HelpBrowser)
 {
-        firstRun=true;
-	setupUi(this);
-        restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
+    firstRun=true;
+    m_Ui->setupUi(this);
+
+    restoreGeometry(LuminanceOptions().value("HelpBrowserGeometry").toByteArray());
 	setupLocalUI();
 
-	textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
-	connect(textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
-	connect(textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
-	connect(textBrowser, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
-	connect(textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
+    m_Ui->textBrowser->page()->setLinkDelegationPolicy(QWebPage::DelegateExternalLinks);
+    connect(m_Ui->textBrowser, SIGNAL(linkClicked(const QUrl &)), this, SLOT(handleExternalLink(const QUrl &)));
+    connect(m_Ui->textBrowser, SIGNAL(loadStarted()), this, SLOT(loadStarted()));
+    connect(m_Ui->textBrowser, SIGNAL(loadFinished(bool)), this, SLOT(loadFinished(bool)));
+    connect(m_Ui->textBrowser->page(), SIGNAL(linkHovered(const QString &, const QString &, const QString & )), this, SLOT(linkHovered(const QString &, const QString &, const QString & )));
 
 	language = guiLanguage.isEmpty() ? QString("en") : guiLanguage.left(2);
 	finalBaseDir = LuminancePaths::HelpDir();
-	textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
+    m_Ui->textBrowser->setHome( QUrl::fromLocalFile( finalBaseDir + "index.html" ));
 	menuModel=NULL;
-        loadMenu();
-	if (menuModel!=NULL)
+    loadMenu();
+
+    if (menuModel!=NULL)
 	{
 		readBookmarks();
 		readHistory();
@@ -190,7 +197,7 @@ void HelpBrowser::closeEvent(QCloseEvent *)
 		stream.setCodec("UTF-8");
 		stream << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		stream << "<bookmarks>\n";
-		QTreeWidgetItemIterator it(helpSideBar->bookmarksView);
+        QTreeWidgetItemIterator it(helpSideBar->m_Ui->bookmarksView);
 		while (*it) 
 		{
 			if (bookmarkIndex.contains((*it)->text(0)))
@@ -252,17 +259,17 @@ void HelpBrowser::setupLocalUI()
 	bookDelAll=bookMenu->addAction( "", this, SLOT(deleteAllBookmarkButton_clicked()));
 
 	//Add Toolbar items
-	goHome=toolBar->addAction(QIcon(":/help/go-home.png"), "", textBrowser, SLOT(home()));
-	goBack=toolBar->addAction(QIcon(":/help/go-previous.png"), "", textBrowser, SLOT(back()));
-	goFwd=toolBar->addAction(QIcon(":/help/go-next.png"), "", textBrowser, SLOT(forward()));
-	zoomIn=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-in.png"), "", this, SLOT(zoomIn_clicked()));
-	zoomOriginal=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-original.png"), "", this, SLOT(zoomOriginal_clicked()));
-	zoomOut=toolBar->addAction(QIcon(":/new/prefix1/images/zoom-out.png"), "", this, SLOT(zoomOut_clicked()));
+    goHome=m_Ui->toolBar->addAction(QIcon(":/help/go-home.png"), "", m_Ui->textBrowser, SLOT(home()));
+    goBack=m_Ui->toolBar->addAction(QIcon(":/help/go-previous.png"), "", m_Ui->textBrowser, SLOT(back()));
+    goFwd=m_Ui->toolBar->addAction(QIcon(":/help/go-next.png"), "", m_Ui->textBrowser, SLOT(forward()));
+    zoomIn=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-in.png"), "", this, SLOT(zoomIn_clicked()));
+    zoomOriginal=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-original.png"), "", this, SLOT(zoomOriginal_clicked()));
+    zoomOut=m_Ui->toolBar->addAction(QIcon(":/new/prefix1/images/zoom-out.png"), "", this, SLOT(zoomOut_clicked()));
 	goBack->setMenu(histMenu);
 	
-	helpSideBar->listView->header()->hide();
-	helpSideBar->searchingView->header()->hide();
-	helpSideBar->bookmarksView->header()->hide();
+    helpSideBar->m_Ui->listView->header()->hide();
+    helpSideBar->m_Ui->searchingView->header()->hide();
+    helpSideBar->m_Ui->bookmarksView->header()->hide();
 
 	//splitter->setStretchFactor(splitter->indexOf(tabWidget), 0);
 	//splitter->setStretchFactor(splitter->indexOf(textBrowser), 1);
@@ -275,16 +282,16 @@ void HelpBrowser::setupLocalUI()
 	//basic ui
 	connect(histMenu, SIGNAL(triggered(QAction*)), this, SLOT(histChosen(QAction*)));
 	// searching
-	connect(helpSideBar->searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
-	connect(helpSideBar->searchingButton, SIGNAL(clicked()), this, SLOT(searchingButton_clicked()));
-	connect(helpSideBar->searchingView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemSearchSelected(QTreeWidgetItem *, int)));
+    connect(helpSideBar->m_Ui->searchingEdit, SIGNAL(returnPressed()), this, SLOT(searchingButton_clicked()));
+    connect(helpSideBar->m_Ui->searchingButton, SIGNAL(clicked()), this, SLOT(searchingButton_clicked()));
+    connect(helpSideBar->m_Ui->searchingView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemSearchSelected(QTreeWidgetItem *, int)));
 	// bookmarks
-	connect(helpSideBar->bookmarkButton, SIGNAL(clicked()), this, SLOT(bookmarkButton_clicked()));
-	connect(helpSideBar->deleteBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteBookmarkButton_clicked()));
-	connect(helpSideBar->deleteAllBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteAllBookmarkButton_clicked()));
-	connect(helpSideBar->bookmarksView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemBookmarkSelected(QTreeWidgetItem *, int)));
+    connect(helpSideBar->m_Ui->bookmarkButton, SIGNAL(clicked()), this, SLOT(bookmarkButton_clicked()));
+    connect(helpSideBar->m_Ui->deleteBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteBookmarkButton_clicked()));
+    connect(helpSideBar->m_Ui->deleteAllBookmarkButton, SIGNAL(clicked()), this, SLOT(deleteAllBookmarkButton_clicked()));
+    connect(helpSideBar->m_Ui->bookmarksView, SIGNAL(itemClicked( QTreeWidgetItem *, int)), this, SLOT(itemBookmarkSelected(QTreeWidgetItem *, int)));
 	// links hoover
-	connect(textBrowser, SIGNAL(overLink(const QString &)), this, SLOT(showLinkContents(const QString &)));
+    connect(m_Ui->textBrowser, SIGNAL(overLink(const QString &)), this, SLOT(showLinkContents(const QString &)));
 	
 	languageChange();
 }
@@ -323,7 +330,8 @@ void HelpBrowser::languageChange()
 	bookAdd->setText(tr("&Add Bookmark"));
 	bookDel->setText(tr("&Delete"));
 	bookDelAll->setText(tr("D&elete All"));
-	Ui::HelpBrowser::retranslateUi(this);
+
+    m_Ui->retranslateUi(this);
 // 	if (!firstRun)
 // 	{
 // 		QString fname(QDir::cleanPath(textBrowser->source().toString()));
@@ -347,7 +355,7 @@ void HelpBrowser::print()
 	printer.setFullPage(true);
 	QPrintDialog dialog(&printer, this);
 	if (dialog.exec())
- 		textBrowser->print(&printer);
+        m_Ui->textBrowser->print(&printer);
 }
 
 void HelpBrowser::searchingButton_clicked()
@@ -372,7 +380,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 		{
 			QTextStream stream(&f);
 			QString str = stream.readAll();
-			int cnt = str.count(helpSideBar->searchingEdit->text(), Qt::CaseInsensitive);
+            int cnt = str.count(helpSideBar->m_Ui->searchingEdit->text(), Qt::CaseInsensitive);
 			if (cnt > 0)
 			{
 				QString fullname = fname;
@@ -382,7 +390,7 @@ void HelpBrowser::searchingInDirectory(const QString& aDir)
 				{
 					i.next();
 					if (i.value()==toFind)
-						helpSideBar->searchingView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->searchingView, QStringList() << i.key()));
+                        helpSideBar->m_Ui->searchingView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->m_Ui->searchingView, QStringList() << i.key()));
 				}
 			}
 			f.close();
@@ -413,7 +421,7 @@ void HelpBrowser::findNext()
 		return;
 	}
 	// find it. finally
-	textBrowser->findText(findText, 0);
+    m_Ui->textBrowser->findText(findText, 0);
 }
 
 void HelpBrowser::findPrevious()
@@ -424,13 +432,13 @@ void HelpBrowser::findPrevious()
 		return;
 	}
 	// find it. finally
-	textBrowser->findText(findText);
+    m_Ui->textBrowser->findText(findText);
 }
 
 void HelpBrowser::bookmarkButton_clicked()
 {
-	QString title = textBrowser->title();
-	QString fname(QDir::cleanPath(textBrowser->url().toLocalFile()));
+    QString title = m_Ui->textBrowser->title();
+    QString fname(QDir::cleanPath(m_Ui->textBrowser->url().toLocalFile()));
  	title = QInputDialog::getText(this, tr("New Bookmark"), tr("New Bookmark's Title:"), QLineEdit::Normal, title, 0);
 	// user cancel
  	if (title.isNull())
@@ -445,14 +453,14 @@ void HelpBrowser::bookmarkButton_clicked()
 		if (i.value()==toFind)
 		{
 			bookmarkIndex.insert(title, qMakePair(i.key(), i.value()));
-			helpSideBar->bookmarksView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->bookmarksView, QStringList() << title));
+            helpSideBar->m_Ui->bookmarksView->addTopLevelItem(new QTreeWidgetItem(helpSideBar->m_Ui->bookmarksView, QStringList() << title));
 		}
 	}
 }
 
 void HelpBrowser::deleteBookmarkButton_clicked()
 {
-	QTreeWidgetItem *twi=helpSideBar->bookmarksView->currentItem();
+    QTreeWidgetItem *twi = helpSideBar->m_Ui->bookmarksView->currentItem();
 	if (twi!=NULL)
 	{
 		if (bookmarkIndex.contains(twi->text(0)))
@@ -464,13 +472,13 @@ void HelpBrowser::deleteBookmarkButton_clicked()
 void HelpBrowser::deleteAllBookmarkButton_clicked()
 {
 	bookmarkIndex.clear();
- 	helpSideBar->bookmarksView->clear();
+    helpSideBar->m_Ui->bookmarksView->clear();
 }
 
 void HelpBrowser::histChosen(QAction* i)
 {
 	if (mHistory.contains(i))
-		textBrowser->load( QUrl::fromLocalFile(mHistory[i].url) );
+        m_Ui->textBrowser->load( QUrl::fromLocalFile(mHistory[i].url) );
 }
 
 void HelpBrowser::jumpToHelpSection(const QString& jumpToSection, const QString& jumpToFile)
@@ -486,7 +494,7 @@ void HelpBrowser::jumpToHelpSection(const QString& jumpToSection, const QString&
 			QModelIndex index=menuModel->index(0,1);
 			if (index.isValid())
 			{
-				helpSideBar->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
+                helpSideBar->m_Ui->listView->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect);
 				toLoad += menuModel->data(index, Qt::DisplayRole).toString();
                 //qDebug("jumpToHelpSection %c / %c", finalBaseDir,  menuModel->data(index, Qt::DisplayRole).toString());
 			}
@@ -531,9 +539,9 @@ void HelpBrowser::loadHelp(const QString& filename)
 		Avail=false;
 	if (Avail)
 	{
-		textBrowser->load( QUrl::fromLocalFile(toLoad) );
+        m_Ui->textBrowser->load( QUrl::fromLocalFile(toLoad) );
 		
-		his.title = textBrowser->title();
+        his.title = m_Ui->textBrowser->title();
 		if (his.title.isEmpty())
 			his.title = toLoad;
 		his.url = toLoad;
@@ -560,13 +568,13 @@ void HelpBrowser::loadMenu()
 			delete menuModel;
 		menuModel=new ScHelpTreeModel(toLoad, "Topic", "Location", &quickHelpIndex);
 	
-		helpSideBar->listView->setModel(menuModel);
-		helpSideBar->listView->setSelectionMode(QAbstractItemView::SingleSelection);
+        helpSideBar->m_Ui->listView->setModel(menuModel);
+        helpSideBar->m_Ui->listView->setSelectionMode(QAbstractItemView::SingleSelection);
 		QItemSelectionModel *selectionModel = new QItemSelectionModel(menuModel);
-		helpSideBar->listView->setSelectionModel(selectionModel);
-		connect(helpSideBar->listView->selectionModel(), SIGNAL(selectionChanged( const QItemSelection &, const QItemSelection &)), this, SLOT(itemSelected( const QItemSelection &, const QItemSelection &)));
+        helpSideBar->m_Ui->listView->setSelectionModel(selectionModel);
+        connect(helpSideBar->m_Ui->listView->selectionModel(), SIGNAL(selectionChanged( const QItemSelection &, const QItemSelection &)), this, SLOT(itemSelected( const QItemSelection &, const QItemSelection &)));
 	
-		helpSideBar->listView->setColumnHidden(1,true);
+        helpSideBar->m_Ui->listView->setColumnHidden(1,true);
 	}
 	else
 	{
@@ -578,7 +586,7 @@ void HelpBrowser::loadMenu()
 void HelpBrowser::readBookmarks()
 {
 	BookmarkParser2 handler;
-	handler.view = helpSideBar->bookmarksView;
+    handler.view = helpSideBar->m_Ui->bookmarksView;
 	handler.quickHelpIndex=&quickHelpIndex;
 	handler.bookmarkIndex=&bookmarkIndex;
 	QFile xmlFile(bookmarkFile());
@@ -601,7 +609,7 @@ void HelpBrowser::readHistory()
 
 void HelpBrowser::setText(const QString& str)
 {
-	textBrowser->setHtml(str);
+    m_Ui->textBrowser->setHtml(str);
 }
 
 void HelpBrowser::itemSelected(const QItemSelection & selected, const QItemSelection & deselected)
@@ -636,7 +644,7 @@ void HelpBrowser::itemSearchSelected(QTreeWidgetItem *twi, int i)
 		if (!filename.isEmpty())
 		{
 			loadHelp(finalBaseDir + "/" + filename);
-			findText = helpSideBar->searchingEdit->text();
+            findText = helpSideBar->m_Ui->searchingEdit->text();
 			findNext();
 		}
 	}
@@ -710,7 +718,7 @@ void HelpBrowser::displayNoHelp()
 {
 	QString noHelpMsg=tr("<h2><p>Sorry, no manual is installed!</p><p>Please contact your package provider or LuminanceHDR team if you built the application yourself</p></h2>", "HTML message for no documentation available to show");
 
-	textBrowser->setHtml(noHelpMsg);
+    m_Ui->textBrowser->setHtml(noHelpMsg);
 	
 	filePrint->setEnabled(false);
 	editFind->setEnabled(false);
@@ -724,48 +732,48 @@ void HelpBrowser::displayNoHelp()
 	goFwd->setEnabled(false);
 	
 	histMenu->disconnect();
-	helpSideBar->searchingEdit->disconnect();
-	helpSideBar->searchingButton->disconnect();
-	helpSideBar->searchingView->disconnect();
-	helpSideBar->bookmarkButton->disconnect();
-	helpSideBar->deleteBookmarkButton->disconnect();
-	helpSideBar->deleteAllBookmarkButton->disconnect();
-	helpSideBar->bookmarksView->disconnect();
-	textBrowser->disconnect();
+    helpSideBar->m_Ui->searchingEdit->disconnect();
+    helpSideBar->m_Ui->searchingButton->disconnect();
+    helpSideBar->m_Ui->searchingView->disconnect();
+    helpSideBar->m_Ui->bookmarkButton->disconnect();
+    helpSideBar->m_Ui->deleteBookmarkButton->disconnect();
+    helpSideBar->m_Ui->deleteAllBookmarkButton->disconnect();
+    helpSideBar->m_Ui->bookmarksView->disconnect();
+    m_Ui->textBrowser->disconnect();
 }
 
 void HelpBrowser::viewContents_clicked() {
-	helpSideBar->show();
-	helpSideBar->tabWidget->setCurrentIndex(0);
+    helpSideBar->show();
+    helpSideBar->m_Ui->tabWidget->setCurrentIndex(0);
 }
 
 void HelpBrowser::viewSearch_clicked() {
-	helpSideBar->show();
-	helpSideBar->tabWidget->setCurrentIndex(1);
+    helpSideBar->show();
+    helpSideBar->m_Ui->tabWidget->setCurrentIndex(1);
 }
 
 void HelpBrowser::viewBookmarks_clicked() {
-	helpSideBar->show();
-	helpSideBar->tabWidget->setCurrentIndex(2);
+    helpSideBar->show();
+    helpSideBar->m_Ui->tabWidget->setCurrentIndex(2);
 }
 
 void HelpBrowser::zoomIn_clicked() {
 	zoomFactor *= 1.2;
 	if (zoomFactor > 46)
 		zoomFactor = 46.005;
-	textBrowser->setTextSizeMultiplier(zoomFactor);
+    m_Ui->textBrowser->setTextSizeMultiplier(zoomFactor);
 }
 
 void HelpBrowser::zoomOriginal_clicked() {
 	zoomFactor = 1.0;
-	textBrowser->setTextSizeMultiplier(1.0);
+    m_Ui->textBrowser->setTextSizeMultiplier(1.0);
 }
 
 void HelpBrowser::zoomOut_clicked() {
 	zoomFactor /= 1.2;
 	if (zoomFactor < .02)
 		zoomFactor = .0217;
-	textBrowser->setTextSizeMultiplier(zoomFactor);
+    m_Ui->textBrowser->setTextSizeMultiplier(zoomFactor);
 }
 
 void HelpBrowser::handleExternalLink(const QUrl &url) {
@@ -773,7 +781,7 @@ void HelpBrowser::handleExternalLink(const QUrl &url) {
 #ifdef WIN32
 		QDesktopServices::openUrl(url);
 #else
-		textBrowser->load(url);
+        m_Ui->textBrowser->load(url);
 #endif
 	}
 	else {
