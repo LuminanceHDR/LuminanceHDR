@@ -26,11 +26,14 @@
 
 #include <QDialog>
 
-#include "ui_TonemappingWarnDialog.h"
 #include "Common/LuminanceOptions.h"
 #include "Common/global.h"
 
-class TonemappingWarningDialog : public QDialog, private Ui::TonemappingWarningDialog
+namespace Ui {
+    class TonemappingWarningDialog;
+}
+
+class TonemappingWarningDialog : public QDialog
 {
 Q_OBJECT
 public:
@@ -38,9 +41,10 @@ public:
 	bool wasAccepted();
 	~TonemappingWarningDialog();
 private:
-        LuminanceOptions luminance_options;
+    LuminanceOptions luminance_options;
 	bool yes;
 	
+    QScopedPointer<Ui::TonemappingWarningDialog> m_Ui;
 private slots:
 	void accepted();
 };
