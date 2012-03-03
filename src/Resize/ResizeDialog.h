@@ -26,14 +26,19 @@
 
 #include <QDialog>
 
-#include "ui_ResizeDialog.h"
-#include "Libpfs/frame.h"
+namespace pfs {
+    class Frame;
+}
 
-class ResizeDialog : public QDialog, private Ui::ResizeDialog
+namespace Ui {
+    class ResizeDialog;
+}
+
+class ResizeDialog : public QDialog
 {
 Q_OBJECT
 public:
-	ResizeDialog(QWidget *parent,pfs::Frame *orig);
+    ResizeDialog(QWidget *parent, pfs::Frame *orig);
 	~ResizeDialog();
 	pfs::Frame* getResizedFrame();
 public slots:
@@ -51,6 +56,8 @@ private:
 	int rh_from_rw();
 	int rw_from_rh();
 	bool from_other_spinbox;
+
+    QScopedPointer<Ui::ResizeDialog> m_Ui;
 };
 
 #endif

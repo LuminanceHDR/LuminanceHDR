@@ -21,37 +21,46 @@
  * @author Giuseppe Rota <grota@users.sourceforge.net>
  */
 
-#include "Filter/pfssize.h"
 #include "ResizeDialog.h"
+#include "ui_ResizeDialog.h"
 
-ResizeDialog::ResizeDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent), original(orig) {
-	setupUi(this);
-	orig_width=original->getWidth();
-	orig_height=original->getHeight();
-	resized_width=orig_width;
-	resized_height=orig_height;
+#include "Filter/pfssize.h"
+#include "Libpfs/frame.h"
 
-	widthSpinBox->setSuffix("");
-	widthSpinBox->setDecimals(0);
-	widthSpinBox->setMaximum(2*orig_width);
-	widthSpinBox->setMinimum(1);
-	heightSpinBox->setSuffix("");
-	heightSpinBox->setDecimals(0);
-	heightSpinBox->setMaximum(2*orig_height);
-	heightSpinBox->setMinimum(1);
+ResizeDialog::ResizeDialog(QWidget *parent, pfs::Frame *orig):
+    QDialog(parent),
+    original(orig),
+    m_Ui(new Ui::ResizeDialog)
+{
+    m_Ui->setupUi(this);
+    orig_width = original->getWidth();
+    orig_height = original->getHeight();
+    resized_width = orig_width;
+    resized_height = orig_height;
+
+    m_Ui->widthSpinBox->setSuffix("");
+    m_Ui->widthSpinBox->setDecimals(0);
+    m_Ui->widthSpinBox->setMaximum(2*orig_width);
+    m_Ui->widthSpinBox->setMinimum(1);
+
+    m_Ui->heightSpinBox->setSuffix("");
+    m_Ui->heightSpinBox->setDecimals(0);
+    m_Ui->heightSpinBox->setMaximum(2*orig_height);
+    m_Ui->heightSpinBox->setMinimum(1);
 	//we are now in pixel mode, put directly original pixel values.
-	widthSpinBox->setValue(orig_width);
-	heightSpinBox->setValue(orig_height);
-	from_other_spinbox=false;
+    m_Ui->widthSpinBox->setValue(orig_width);
+    m_Ui->heightSpinBox->setValue(orig_height);
+
+    from_other_spinbox = false;
 	updatelabel();
 
-	connect(scaleButton,SIGNAL(clicked()),this,SLOT(scaledPressed()));
-	connect(widthSpinBox,SIGNAL(editingFinished()),this,SLOT(update_heightSpinBox()));
-	connect(widthSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_heightSpinBox()));
-	connect(heightSpinBox,SIGNAL(editingFinished()),this,SLOT(update_widthSpinBox()));
-	connect(heightSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_widthSpinBox()));
-	connect(px_or_percentage,SIGNAL(activated(int)),this,SLOT(switch_px_percentage(int)));
-	connect(restoredefault,SIGNAL(clicked()),this,SLOT(defaultpressed()));
+    connect(m_Ui->scaleButton,SIGNAL(clicked()),this,SLOT(scaledPressed()));
+    connect(m_Ui->widthSpinBox,SIGNAL(editingFinished()),this,SLOT(update_heightSpinBox()));
+    connect(m_Ui->widthSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_heightSpinBox()));
+    connect(m_Ui->heightSpinBox,SIGNAL(editingFinished()),this,SLOT(update_widthSpinBox()));
+    connect(m_Ui->heightSpinBox,SIGNAL(valueChanged(double)),this,SLOT(update_widthSpinBox()));
+    connect(m_Ui->px_or_percentage,SIGNAL(activated(int)),this,SLOT(switch_px_percentage(int)));
+    connect(m_Ui->restoredefault,SIGNAL(clicked()),this,SLOT(defaultpressed()));
 }
 
 ResizeDialog::~ResizeDialog() {
@@ -75,35 +84,35 @@ void ResizeDialog::switch_px_percentage(int px_per) {
 
 	switch (px_per) {
 	case 0:
-		widthSpinBox->setMaximum(2*orig_width);
-		heightSpinBox->setMaximum(2*orig_height);
-		from_other_spinbox=true;
-		widthSpinBox->setValue((int)(widthSpinBox->value()*(float)orig_width/100.0)); //from perc to px
-		from_other_spinbox=true;
-		heightSpinBox->setValue((int)(heightSpinBox->value()*(float)orig_height/100.0)); //from perc to px
-		widthSpinBox->setSuffix("");
-		widthSpinBox->setDecimals(0);
-		widthSpinBox->setMinimum(1);
-		heightSpinBox->setSuffix("");
-		heightSpinBox->setDecimals(0);
-		heightSpinBox->setMinimum(1);
+        m_Ui->widthSpinBox->setMaximum(2*orig_width);
+        m_Ui->heightSpinBox->setMaximum(2*orig_height);
+        from_other_spinbox = true;
+        m_Ui->widthSpinBox->setValue((int)(m_Ui->widthSpinBox->value()*(float)orig_width/100.0)); //from perc to px
+        from_other_spinbox = true;
+        m_Ui->heightSpinBox->setValue((int)(m_Ui->heightSpinBox->value()*(float)orig_height/100.0)); //from perc to px
+        m_Ui->widthSpinBox->setSuffix("");
+        m_Ui->widthSpinBox->setDecimals(0);
+        m_Ui->widthSpinBox->setMinimum(1);
+        m_Ui->heightSpinBox->setSuffix("");
+        m_Ui->heightSpinBox->setDecimals(0);
+        m_Ui->heightSpinBox->setMinimum(1);
 		break;
 	case 1:
-		widthSpinBox->setDecimals(2);
-		heightSpinBox->setDecimals(2);
-		from_other_spinbox=true;
-		widthSpinBox->setValue(100*widthSpinBox->value()/(float)orig_width); //from px to perc
-		from_other_spinbox=true;
-		heightSpinBox->setValue(100*heightSpinBox->value()/(float)orig_height); //from px to perc
-		widthSpinBox->setSuffix("%");
-		widthSpinBox->setMaximum(200);
-		widthSpinBox->setMinimum(1);
-		heightSpinBox->setSuffix("%");
-		heightSpinBox->setMaximum(200);
-		heightSpinBox->setMinimum(1);
+        m_Ui->widthSpinBox->setDecimals(2);
+        m_Ui->heightSpinBox->setDecimals(2);
+        from_other_spinbox = true;
+        m_Ui->widthSpinBox->setValue(100*m_Ui->widthSpinBox->value()/(float)orig_width); //from px to perc
+        from_other_spinbox = true;
+        m_Ui->heightSpinBox->setValue(100*m_Ui->heightSpinBox->value()/(float)orig_height); //from px to perc
+        m_Ui->widthSpinBox->setSuffix("%");
+        m_Ui->widthSpinBox->setMaximum(200);
+        m_Ui->widthSpinBox->setMinimum(1);
+        m_Ui->heightSpinBox->setSuffix("%");
+        m_Ui->heightSpinBox->setMaximum(200);
+        m_Ui->heightSpinBox->setMinimum(1);
 		break;
 	}
-	from_other_spinbox=false;
+    from_other_spinbox = false;
 	updatelabel();
 }
 //get a proper resized_width from a resized_height
@@ -119,19 +128,19 @@ void ResizeDialog::update_heightSpinBox() {
 		from_other_spinbox=false;
 		return;
 	}
-	switch (px_or_percentage->currentIndex()) {
+    switch (m_Ui->px_or_percentage->currentIndex()) {
 	case 0:
-		resized_width=(int)widthSpinBox->value();
+        resized_width=(int)m_Ui->widthSpinBox->value();
 		resized_height=rh_from_rw();
 		from_other_spinbox=true;
 		//update directly resized_height
-		heightSpinBox->setValue(resized_height);
+        m_Ui->heightSpinBox->setValue(resized_height);
 	break;
 	case 1:
-		resized_width=(int)(orig_width*widthSpinBox->value()/100.0);
+        resized_width=(int)(orig_width*m_Ui->widthSpinBox->value()/100.0);
 		resized_height=rh_from_rw();
 		from_other_spinbox=true;
-		heightSpinBox->setValue((double)resized_height/(double)orig_height*100.0);
+        m_Ui->heightSpinBox->setValue((double)resized_height/(double)orig_height*100.0);
 	break;
 	}
 	updatelabel();
@@ -141,43 +150,43 @@ void ResizeDialog::update_widthSpinBox() {
 		from_other_spinbox=false;
 		return;
 	}
-	switch (px_or_percentage->currentIndex()) {
+    switch (m_Ui->px_or_percentage->currentIndex()) {
 	case 0:
-		resized_height=(int)heightSpinBox->value();
+        resized_height=(int)m_Ui->heightSpinBox->value();
 		resized_width=rw_from_rh();
 		from_other_spinbox=true;
 		//update directly resized_width
-		widthSpinBox->setValue(resized_width);
+        m_Ui->widthSpinBox->setValue(resized_width);
 		break;
 	case 1:
-		resized_height=(int)(orig_height*heightSpinBox->value()/100.0);
+        resized_height=(int)(orig_height*m_Ui->heightSpinBox->value()/100.0);
 		resized_width=rw_from_rh();
 		from_other_spinbox=true;
-		widthSpinBox->setValue((double)resized_width/(double)orig_width*100.0);
+        m_Ui->widthSpinBox->setValue((double)resized_width/(double)orig_width*100.0);
 		break;
 	}
 	updatelabel();
 }
 void ResizeDialog::updatelabel() {
-	sizepreview->setText(QString("%1x%2").arg(resized_width).arg(resized_height));
+    m_Ui->sizepreview->setText(QString("%1x%2").arg(resized_width).arg(resized_height));
 }
 
 void ResizeDialog::defaultpressed() {
 	resized_height=orig_height;
 	resized_width=orig_width;
-	switch (px_or_percentage->currentIndex()) {
+    switch (m_Ui->px_or_percentage->currentIndex()) {
 	case 0:
 		from_other_spinbox=true;
-		widthSpinBox->setValue(resized_width);
+        m_Ui->widthSpinBox->setValue(resized_width);
 		from_other_spinbox=true;
-		heightSpinBox->setValue(resized_height);
+        m_Ui->heightSpinBox->setValue(resized_height);
 		from_other_spinbox=false;
 		break;
 	case 1:
 		from_other_spinbox=true;
-		widthSpinBox->setValue(100);
+        m_Ui->widthSpinBox->setValue(100);
 		from_other_spinbox=true;
-		heightSpinBox->setValue(100);
+        m_Ui->heightSpinBox->setValue(100);
 		from_other_spinbox=false;
 		break;
 	}
