@@ -22,10 +22,18 @@
  */
 
 #include "ProjectionsDialog.h"
+#include "ui_ProjectionsDialog.h"
+#include "Filter/pfspanoramic.h"
+#include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 
-ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig) : QDialog(parent),original(orig),transformed(NULL) {
-	setupUi(this);
+ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig):
+    QDialog(parent),
+    original(orig),
+    transformed(NULL),
+    m_Ui(new Ui::ProjectionsDialog)
+{
+    m_Ui->setupUi(this);
 
 	projectionList.append(&(PolarProjection::singleton));
 	projectionList.append(&(AngularProjection::singleton));
@@ -35,15 +43,15 @@ ProjectionsDialog::ProjectionsDialog(QWidget *parent,pfs::Frame *orig) : QDialog
 	transforminfo->srcProjection=projectionList.at(0);
 	transforminfo->dstProjection=projectionList.at(0);
 
-	connect(okButton,SIGNAL(clicked()),this,SLOT(okClicked()));
-	connect(sourceProjection,SIGNAL(activated(int)),this,SLOT(srcProjActivated(int)));
-	connect(destProjection,SIGNAL(activated(int)),this,SLOT(dstProjActivated(int)));
-	connect(bilinearCheckBox,SIGNAL(toggled(bool)),this,SLOT(bilinearToggled(bool)));
-	connect(oversampleSpinBox,SIGNAL(valueChanged(int)),this,SLOT(oversampleChanged(int)));
-	connect(XrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(XRotChanged(int)));
-	connect(YrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(YRotChanged(int)));
-	connect(ZrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(ZRotChanged(int)));
-	connect(anglesSpinBox,SIGNAL(valueChanged(int)),this,SLOT(anglesAngularDestinationProj(int)));
+    connect(m_Ui->okButton,SIGNAL(clicked()),this,SLOT(okClicked()));
+    connect(m_Ui->sourceProjection,SIGNAL(activated(int)),this,SLOT(srcProjActivated(int)));
+    connect(m_Ui->destProjection,SIGNAL(activated(int)),this,SLOT(dstProjActivated(int)));
+    connect(m_Ui->bilinearCheckBox,SIGNAL(toggled(bool)),this,SLOT(bilinearToggled(bool)));
+    connect(m_Ui->oversampleSpinBox,SIGNAL(valueChanged(int)),this,SLOT(oversampleChanged(int)));
+    connect(m_Ui->XrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(XRotChanged(int)));
+    connect(m_Ui->YrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(YRotChanged(int)));
+    connect(m_Ui->ZrotSpinBox,SIGNAL(valueChanged(int)),this,SLOT(ZRotChanged(int)));
+    connect(m_Ui->anglesSpinBox,SIGNAL(valueChanged(int)),this,SLOT(anglesAngularDestinationProj(int)));
 }
 
 ProjectionsDialog::~ProjectionsDialog() {
@@ -68,10 +76,10 @@ void ProjectionsDialog::bilinearToggled(bool v) {
 void ProjectionsDialog::dstProjActivated(int gui_index) {
 	transforminfo->dstProjection=projectionList.at(gui_index);
 	bool transformIsAngular=transforminfo->dstProjection==&(AngularProjection::singleton);
-	labelAngles->setEnabled(transformIsAngular);
-	anglesSpinBox->setEnabled(transformIsAngular);
+    m_Ui->labelAngles->setEnabled(transformIsAngular);
+    m_Ui->anglesSpinBox->setEnabled(transformIsAngular);
 	if (transformIsAngular)
-		((AngularProjection*)(transforminfo->dstProjection))->setAngle(anglesSpinBox->value());
+        ((AngularProjection*)(transforminfo->dstProjection))->setAngle(m_Ui->anglesSpinBox->value());
 }
 void ProjectionsDialog::srcProjActivated(int gui_index) {
 	transforminfo->srcProjection=projectionList.at(gui_index);
