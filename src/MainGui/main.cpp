@@ -22,8 +22,6 @@
  */
 
 #include <QApplication>
-#include <QLocale>
-#include <QTranslator>
 #include <QObject>
 #include <QDebug>
 
@@ -38,76 +36,39 @@
 
 int main( int argc, char ** argv )
 {
-#ifndef Q_WS_MAC
-    //QCoreApplication::setOrganizationName("Luminance");
-    //QCoreApplication::setApplicationName("Luminance");
+    Q_INIT_RESOURCE(icons);
+    QApplication application( argc, argv );
 
-    // Make sure an Q*Application exists before instantiating the QSettings
-    // Without this some systems will deadlock
-    QCoreApplication *cliApplication = new QCoreApplication( argc, argv );
-    installTranslators(false);
-
-    CommandLineInterfaceManager cli( argc, argv );
-
-    if (cli.isCommandLineApp())
+#ifdef WIN32
+    bool found_DLL = false;
+    foreach (QString path, application.libraryPaths())
     {
-        // Command Line Application
-        cli.execCommandLineParams();
-        cliApplication->connect(&cli, SIGNAL(finishedParsing()), cliApplication, SLOT(quit()));
-
-        int ret_value = cliApplication->exec();
-        delete cliApplication;
-        return ret_value;
+        if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
+        {
+            found_DLL = true;
+        }
     }
-    else
+    if (!found_DLL)
     {
-        // GUI application
-
-        // Only one Q*Application may exist at a time
-        delete cliApplication;
-
-#ifdef WIN32
-        FreeConsole();
-#endif
-#endif // Q_WS_MAC
-
-        Q_INIT_RESOURCE(icons);
-        QApplication application( argc, argv );
-
-#ifdef WIN32
-        bool found_DLL = false;
-        foreach (QString path, application.libraryPaths())
-        {
-            if ( QFile::exists(path+"/imageformats/qjpeg4.dll") )
-            {
-                found_DLL = true;
-            }
-        }
-        if (!found_DLL)
-        {
-            QMessageBox::critical(NULL,
-                                  QObject::tr("Aborting..."),
-                                  QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
-            return 1;
-        }
+        QMessageBox::critical(NULL,
+                              QObject::tr("Aborting..."),
+                              QObject::tr("Cannot find Qt's JPEG Plugin...<br>Please unzip the DLL package with the option \"use folder names\" activated."));
+        return 1;
+    }
 #endif
 
 #ifdef QT_DEBUG
-        qDebug() << "i18n folder = " << I18NDIR;
-        //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-        //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
+    //qDebug() << "i18n folder = " << I18NDIR;
+    //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
+    //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
 #endif
-        installTranslators(true);
-        MainWindow* MW = new MainWindow;
+    installTranslators(true);
+    MainWindow* MW = new MainWindow;
 #ifndef Q_WS_MAC
-        MW->setInputFiles(cli.files());
+    MW->setInputFiles(cli.files());
 #endif // Q_WS_MAC
-        MW->show();
+    MW->show();
 
-        return application.exec();
-
-#ifndef Q_WS_MAC
-    }
-#endif // Q_WS_MAC
+    return application.exec();
 }
 
