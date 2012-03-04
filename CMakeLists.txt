@@ -56,72 +56,73 @@ ENDIF()
 
 IF(WIN32)
 # Windows Section
-	SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
-	SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
-	SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
-	SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
-	SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
-	SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
-	SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
+    SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
+    SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
+    SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
+    SET(FFTWF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/fftw3")
+    SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
+    SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
+    SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
 		
-	IF(MSVC)
-		# Enable multi processor compilation
-		ADD_DEFINITIONS(/MP)
+    IF(MSVC)
+        # Enable multi processor compilation
+        ADD_DEFINITIONS(/MP)
 
-		# Full optimization
-		ADD_DEFINITIONS(/Ox)
+        # Full optimization
+        # Davide: Don't add it by default, let CMake choose the right compilation settings based on CMake profile (Debug, Release, ...)
+        #ADD_DEFINITIONS(/Ox)
 		
-		# Enable OpenMP
-		ADD_DEFINITIONS(/openmp)
+        # Enable OpenMP
+        # Davide: Line 150: inclusion of OpenMP, can you check if that works? If it does, you don't need this line
+        #ADD_DEFINITIONS(/openmp)
 
-		# Enable SSE2
-		ADD_DEFINITIONS(/arch:SSE2)
+        # Enable SSE2
+        # Davide: is it necessary?
+        ADD_DEFINITIONS(/arch:SSE2)
 		
-		ADD_DEFINITIONS(-DUNICODE )
-		ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
-		SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
-		ADD_DEFINITIONS(-DHAVE_FFTW3F)
+        ADD_DEFINITIONS(-DUNICODE )
+        ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
+        SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
+        ADD_DEFINITIONS(-DHAVE_FFTW3F)
 		
-		SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
-		SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
-		SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
+        SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
+        SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
+        SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
 		
-		SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
+        SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
 		
-		SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+        SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
 		
-		SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
-		SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
+        SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
+        SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
 		
-		SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
-	ELSE()
-		SET(OPENEXR_LIBRARIES "-lIlmImf.dll -lHalf.dll -lIex.dll -L${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR")
+        SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
+    ELSE()
+        SET(OPENEXR_LIBRARIES "-lIlmImf.dll -lHalf.dll -lIex.dll -L${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR")
 
-		SET(TIFF_LIBRARIES "-L../DEPs/lib/libtiff -ltiff")
+        SET(TIFF_LIBRARIES "-L../DEPs/lib/libtiff -ltiff")
 
-		SET(LIBRAW_LIBRARIES "-L../DEPs/lib/libraw -lraw_r -lws2_32 -lm")
-		ADD_DEFINITIONS(-DLIBRAW_NODLL -D_REENTRANT)
+        SET(LIBRAW_LIBRARIES "-L../DEPs/lib/libraw -lraw_r -lws2_32 -lm")
+        ADD_DEFINITIONS(-DLIBRAW_NODLL -D_REENTRANT)
 
-		SET(FFTWF_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3 -lfftw3f-3 -lm")
+        SET(FFTWF_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3 -lfftw3f-3 -lm")
 
-		SET(GSL_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgsl")
-		SET(GSLCBLAS_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgslcblas")
+        SET(GSL_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgsl")
+        SET(GSLCBLAS_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgslcblas")
 
-		SET(EXIV2_LIBRARIES "-lexiv2 -L${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2")
-	ENDIF()
+        SET(EXIV2_LIBRARIES "-lexiv2 -L${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2")
+    ENDIF()
 ELSE()
 
-	# Unix & Apple part
-	FIND_PACKAGE(OpenEXR REQUIRED)
-	FIND_PACKAGE(TIFF REQUIRED)
-	FIND_PACKAGE(LibRAW REQUIRED)
-	FIND_PACKAGE(fftwf REQUIRED)
-	FIND_PACKAGE(GSL REQUIRED)
-	FIND_PACKAGE(exiv2 REQUIRED)
+    # Unix & Apple part
+    FIND_PACKAGE(OpenEXR REQUIRED)
+    FIND_PACKAGE(TIFF REQUIRED)
+    FIND_PACKAGE(LibRAW REQUIRED)
+    FIND_PACKAGE(fftwf REQUIRED)
+    FIND_PACKAGE(GSL REQUIRED)
+    FIND_PACKAGE(exiv2 REQUIRED)
 
-        #ADD_DEFINITIONS(-O3)
-
-ENDIF(WIN32)
+ENDIF()
 
 
 SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${OPENEXR_INCLUDE_DIR} "${OPENEXR_INCLUDE_DIR}/OpenEXR")
@@ -145,23 +146,18 @@ SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
 
 #OpenMP Support under Linux, Windows with MSVC & MacOS X with GCC >= 4.3
 IF(MSVC)
-
-	FIND_PACKAGE(OpenMP REQUIRED)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-
+    FIND_PACKAGE(OpenMP REQUIRED)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 ELSEIF(CMAKE_COMPILER_IS_GNUCC AND UNIX)
-
-        EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion
-					OUTPUT_VARIABLE GCC_VERSION)
-	#MESSAGE(STATUS ${GCC_VERSION})
-	IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
-                MESSAGE(STATUS "GCC >= 4.3")
-		FIND_PACKAGE(OpenMP REQUIRED)
-		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-		SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-	endif()
-
+    EXECUTE_PROCESS(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+    #MESSAGE(STATUS ${GCC_VERSION})
+    IF(GCC_VERSION VERSION_GREATER 4.3 OR GCC_VERSION VERSION_EQUAL 4.3)
+        MESSAGE(STATUS "GCC >= 4.3")
+        FIND_PACKAGE(OpenMP REQUIRED)
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+        SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    ENDIF()
 ENDIF()
 # END OpenMP Support
 
@@ -177,12 +173,12 @@ SET(LUMINANCE_HDR_SRC ${LUMINANCE_HDR_CPP} src/arch/msvc/getopt_win32.c)
 ENDIF()
 
 SET(LUMINANCE_HDR_H ${LUMINANCE_HDR_H}
-        src/arch/math.h
-        src/arch/malloc.h
-        src/arch/minmax.h
-        src/arch/string.h
-        src/arch/freebsd/math.h
-        src/arch/msvc/math.h
+    src/arch/math.h
+    src/arch/malloc.h
+    src/arch/minmax.h
+    src/arch/string.h
+    src/arch/freebsd/math.h
+    src/arch/msvc/math.h
 )
 
 SET(LUMINANCE_HDR_RCCS icons.qrc)
@@ -192,23 +188,26 @@ ADD_SUBDIRECTORY(src)
 
 # translations
 FILE(GLOB LUMINANCE_TS i18n/*.ts)
-SET(FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${LUMINANCE_TS}s)
 
 IF(UPDATE_TRANSLATIONS)
     IF(LUPDATE_NOOBSOLETE)
-        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} OPTIONS -noobsolete)
+        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS} OPTIONS -noobsolete)
     ELSE()
-        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE})
+        QT4_CREATE_TRANSLATION(LUMINANCE_QM ${FILES_TO_TRANSLATE} ${LUMINANCE_TS})
     ENDIF()
 ELSE(UPDATE_TRANSLATIONS)
     QT4_ADD_TRANSLATION(LUMINANCE_QM ${LUMINANCE_TS})
+ENDIF(UPDATE_TRANSLATIONS)
 
-    SET(LUMINANCE_FILES
-        ${LUMINANCE_HDR_H}
-        ${LUMINANCE_HDR_CPP}
-        ${LUMINANCE_HDR_RCCS_SRCS}
-        ${LUMINANCE_QM})
+ADD_CUSTOM_TARGET(translations_target DEPENDS ${LUMINANCE_QM})
 
+SET(LUMINANCE_FILES
+    ${LUMINANCE_HDR_H}
+    ${LUMINANCE_HDR_CPP}
+    ${LUMINANCE_HDR_RCCS_SRCS}
+    ${LUMINANCE_QM})
+
+# Apple Mac OS X
 IF(APPLE)
     # icon files to copy in the bundle
     SET( OSX_ICON_FILES "${CMAKE_SOURCE_DIR}/images/luminance.icns")
@@ -229,7 +228,7 @@ IF(APPLE)
     ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
   
     SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
-
+# Unix
 ELSEIF(UNIX)
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
@@ -246,9 +245,8 @@ ELSEIF(UNIX)
     ${CMAKE_SOURCE_DIR}/Changelog
     DESTINATION share/luminance-hdr) #info files
     INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/help DESTINATION share/luminance-hdr) # help directory
-
+# Microsoft Windows
 ELSEIF(WIN32)
-
     # icon files to copy in the bundle
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc")
 
@@ -286,13 +284,9 @@ ELSEIF(WIN32)
     ENDIF()
     
     FILE(COPY ${QtI18nAll} DESTINATION "${CMAKE_BINARY_DIR}/QtDlls/i18n/")
-
 ENDIF()
 
 # Link sub modules
 TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
 # Link shared library
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
-
-ENDIF(UPDATE_TRANSLATIONS)
-
