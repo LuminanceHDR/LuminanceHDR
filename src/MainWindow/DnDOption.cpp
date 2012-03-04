@@ -23,10 +23,14 @@
 #include <QRegExp>
 
 #include "Common/global.h"
-#include "DnDOption.h"
+#include "MainWindow/DnDOption.h"
+#include "ui_DnDOption.h"
 
-DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
-	ui.setupUi(this);
+DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files):
+    QDialog(p),
+    ui(new Ui::DnDOption)
+{
+    ui->setupUi(this);
 	result = -1;
 	bool areAllHDRs = true;
 	bool areAllLDRs = true;
@@ -34,8 +38,8 @@ DnDOptionDialog::DnDOptionDialog(QWidget *p, QStringList files) : QDialog(p) {
 		areAllHDRs = areAllHDRs && matchesHdrFilename(file);
 		areAllLDRs = areAllLDRs && matchesLdrFilename(file);
 	}
-	ui.btnCreateNewHDR->setEnabled(areAllLDRs);
-	ui.btnOpenHDR->setEnabled(areAllHDRs);
+    ui->btnCreateNewHDR->setEnabled(areAllLDRs);
+    ui->btnOpenHDR->setEnabled(areAllHDRs);
 	if (!(areAllHDRs || areAllLDRs))
 		QDialog::accept();
 	else

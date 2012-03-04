@@ -26,9 +26,11 @@
 
 #include <QDockWidget>
 
-#include "ui_HelpSideBar.h"
+namespace Ui {
+    class HelpSideBar;
+}
 
-class HelpSideBar : public QDockWidget, public Ui::HelpSideBar
+class HelpSideBar : public QDockWidget
 {
 Q_OBJECT
 
@@ -37,6 +39,9 @@ public:
 	~HelpSideBar();
 protected:
 	virtual void changeEvent(QEvent* event);
+
+public:
+    QScopedPointer<Ui::HelpSideBar> m_Ui;
 
 };
 #endif

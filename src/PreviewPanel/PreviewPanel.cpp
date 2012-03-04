@@ -25,7 +25,9 @@
 #include <QtConcurrentMap>
 #include <QSharedPointer>
 
-#include "PreviewPanel/PreviewPanel.h"
+#include "PreviewPanel.h"
+#include "ui_PreviewPanel.h"
+
 #include "Filter/pfssize.h"
 #include "Filter/pfscut.h"
 #include "Core/TMWorker.h"
@@ -108,55 +110,56 @@ private:
 }
 
 PreviewPanel::PreviewPanel(QWidget *parent):
-        QWidget(parent)
+    QWidget(parent),
+    m_Ui(new Ui::PreviewPanel)
 {
     //! \note I need to register the new object to pass this class as parameter inside invokeMethod()
     //! see run() inside PreviewLabelUpdater
     qRegisterMetaType< QSharedPointer<QImage> >("QSharedPointer<QImage>");
 
-    setupUi(this);
+    m_Ui->setupUi(this);
 
-    PreviewLabel * labelMantiuk06 = new PreviewLabel(frameMantiuk06, mantiuk06);
+    PreviewLabel * labelMantiuk06 = new PreviewLabel(this, mantiuk06);
     labelMantiuk06->setText("Mantiuk '06");
     m_ListPreviewLabel.push_back(labelMantiuk06);
     connect(labelMantiuk06, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelMantiuk08 = new PreviewLabel(frameMantiuk08, mantiuk08);
+    PreviewLabel * labelMantiuk08 = new PreviewLabel(this, mantiuk08);
     labelMantiuk08->setText("Mantiuk '08");
     m_ListPreviewLabel.push_back(labelMantiuk08);
     connect(labelMantiuk08, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelFattal = new PreviewLabel(frameFattal, fattal);
+    PreviewLabel * labelFattal = new PreviewLabel(this, fattal);
     labelFattal->setText("Fattal");
     m_ListPreviewLabel.push_back(labelFattal);
     connect(labelFattal, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDrago = new PreviewLabel(frameDrago, drago);
+    PreviewLabel * labelDrago = new PreviewLabel(this, drago);
     labelDrago->setText("Drago");
     m_ListPreviewLabel.push_back(labelDrago);
     connect(labelDrago, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelDurand = new PreviewLabel(frameDurand, durand);
+    PreviewLabel * labelDurand = new PreviewLabel(this, durand);
     labelDurand->setText("Durand");
     m_ListPreviewLabel.push_back(labelDurand);
     connect(labelDurand, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard02= new PreviewLabel(frameReinhard02, reinhard02);
+    PreviewLabel * labelReinhard02= new PreviewLabel(this, reinhard02);
     labelReinhard02->setText("Reinhard '02");
     m_ListPreviewLabel.push_back(labelReinhard02);
     connect(labelReinhard02, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelReinhard05 = new PreviewLabel(frameReinhard05, reinhard05);
+    PreviewLabel * labelReinhard05 = new PreviewLabel(this, reinhard05);
     labelReinhard05->setText("Reinhard '05");
     m_ListPreviewLabel.push_back(labelReinhard05);
     connect(labelReinhard05, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelAshikhmin = new PreviewLabel(frameAshikhmin, ashikhmin);
+    PreviewLabel * labelAshikhmin = new PreviewLabel(this, ashikhmin);
     labelAshikhmin->setText("Ashikhmin");
     m_ListPreviewLabel.push_back(labelAshikhmin);
     connect(labelAshikhmin, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
 
-    PreviewLabel * labelPattanaik = new PreviewLabel(framePattanaik, pattanaik);
+    PreviewLabel * labelPattanaik = new PreviewLabel(this, pattanaik);
     labelPattanaik->setText("Pattanaik");
     m_ListPreviewLabel.push_back(labelPattanaik);
     connect(labelPattanaik, SIGNAL(clicked(TonemappingOptions*)), this, SLOT(tonemapPreview(TonemappingOptions*)));
@@ -171,8 +174,10 @@ PreviewPanel::~PreviewPanel()
 
 void PreviewPanel::changeEvent(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
-		Ui::PreviewPanel::retranslateUi(this);
+    if (event->type() == QEvent::LanguageChange) {
+        m_Ui->retranslateUi(this);
+    }
+
 	QWidget::changeEvent(event);
 }
 

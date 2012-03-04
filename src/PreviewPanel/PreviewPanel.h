@@ -26,17 +26,18 @@
 
 #include <QWidget>
 
-#include "ui_PreviewPanel.h"
-
 // forward declaration
 namespace pfs {
     class Frame;            // #include "Libpfs/frame.h"
+}
+namespace Ui {
+    class PreviewPanel;
 }
 
 class TonemappingOptions;   // #include "Core/TonemappingOptions.h"
 class PreviewLabel;         // #include "PreviewPanel/PreviewLabel.h"
 
-class PreviewPanel : public QWidget, private Ui::PreviewPanel
+class PreviewPanel : public QWidget
 {
     Q_OBJECT
 
@@ -59,5 +60,7 @@ Q_SIGNALS:
 private:
     int original_width_frame;
     QList<PreviewLabel*> m_ListPreviewLabel;
+
+    QScopedPointer<Ui::PreviewPanel> m_Ui;
 };
 #endif

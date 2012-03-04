@@ -32,6 +32,7 @@
  */
 
 #include <iostream>
+#include <sstream>>
 #include <cmath>
 
 #include "tmo_reinhard05.h"
@@ -45,10 +46,14 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     //float chromaticadaptation = 0.5f;
     //float lightadaptation = 0.75f;
 
-    std::cout << "pfstmo_reinhard05 (";
-    std::cout << "brightness: " << brightness << ", ";
-    std::cout << "chromatic adaptation: " << chromaticadaptation << ", ";
-    std::cout << "light adaptation: " << lightadaptation << ") " << std::endl;
+    std::stringstream ss;
+
+    ss << "pfstmo_reinhard05 (";
+    ss << "brightness: " << brightness << ", ";
+    ss << "chromatic adaptation: " << chromaticadaptation << ", ";
+    ss << "light adaptation: " << lightadaptation << ") " << std::endl;
+
+    std::cout << ss.str();
 
     pfs::Channel *X, *Y, *Z;
     frame->getXYZChannels( X, Y, Z );
@@ -66,20 +71,16 @@ void pfstmo_reinhard05(pfs::Frame *frame, float brightness, float chromaticadapt
     int w = Y->getWidth();
     int h = Y->getHeight();
 
-    pfs::Array2D* R = new pfs::Array2D(w,h);
-    pfs::Array2D* G = new pfs::Array2D(w,h);
-    pfs::Array2D* B = new pfs::Array2D(w,h);
+    pfs::Array2D R(w,h);
+    pfs::Array2D G(w,h);
+    pfs::Array2D B(w,h);
 
-    pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, R, G, B );
+    pfs::transformColorSpace( pfs::CS_XYZ, Xr, Yr, Zr, pfs::CS_RGB, &R, &G, &B );
 
-    tmo_reinhard05(w, h, R->getRawData(), G->getRawData(), B->getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
+    tmo_reinhard05(w, h, R.getRawData(), G.getRawData(), B.getRawData(), Y->getRawData(), brightness, chromaticadaptation, lightadaptation, ph );
 
-    pfs::transformColorSpace( pfs::CS_RGB, R, G, B, pfs::CS_XYZ, Xr, Yr, Zr );
+    pfs::transformColorSpace( pfs::CS_RGB, &R, &G, &B, pfs::CS_XYZ, Xr, Yr, Zr );
 
     if (!ph->isTerminationRequested())
         ph->newValue( 100 );
-
-    delete R;
-    delete G;
-    delete B;
 }

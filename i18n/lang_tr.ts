@@ -3131,10 +3131,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Qt JPEG Eklentisi bulunamadı..&lt;br&gt;Lütfen DLL paketini &quot;klasör isimleri kullanarak&quot; seçeneği aktif hale getirin ve çıkartın.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Kaydedilemedi &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All LDR formats</source>
         <translation type="unfinished"></translation>
     </message>

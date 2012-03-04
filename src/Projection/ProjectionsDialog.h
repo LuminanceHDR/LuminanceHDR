@@ -26,23 +26,29 @@
 
 #include <QDialog>
 
-#include "ui_ProjectionsDialog.h"
-///the projective transformation interface
-#include "Filter/pfspanoramic.h"
-#include "Libpfs/frame.h"
+namespace Ui {
+    class ProjectionsDialog;
+}
 
+namespace pfs {
+    class Frame;
+}
 
-class ProjectionsDialog : public QDialog, private Ui::ProjectionsDialog
+class Projection;
+class TransformInfo;
+
+class ProjectionsDialog : public QDialog
 {
 Q_OBJECT
 public:
-	 ProjectionsDialog(QWidget *parent,pfs::Frame *orig);
+     ProjectionsDialog(QWidget *parent, pfs::Frame *orig);
 	~ProjectionsDialog();
-	pfs::Frame* getTranformedFrame() {return transformed;}
+    pfs::Frame* getTranformedFrame();
 	TransformInfo *transforminfo;
 private:
 	pfs::Frame *original, *transformed;
 	QList <Projection*> projectionList;
+    QScopedPointer<Ui::ProjectionsDialog> m_Ui;
 private slots:
 	void okClicked();
 	void XRotChanged(int);
@@ -54,5 +60,10 @@ private slots:
 	void srcProjActivated(int);
 	void anglesAngularDestinationProj(int);
 };
+
+inline pfs::Frame* ProjectionsDialog::getTranformedFrame()
+{
+    return transformed;
+}
 
 #endif

@@ -3149,10 +3149,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">No puedo encontrar complemento de Qt&apos;s para JPEGs... &lt;br&gt;Por favor descomprima el paquete de DLL con la opción &quot;usar nombres de directorios&quot; activado.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Error guardando&lt;b&gt;</translation>
-    </message>
-    <message>
         <source>Save as...</source>
         <translation type="unfinished">Guardar como...</translation>
     </message>

@@ -3144,10 +3144,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tidak menemukan Plugin Qt&apos;s JPEG...&lt;br&gt;Dimohon unzip paket DLL menggunakan opsi &quot;use folder names&quot; telah diaktifkan.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Gagal menyimpan &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>Save as...</source>
         <translation type="unfinished">Simpan sebagai...</translation>
     </message>

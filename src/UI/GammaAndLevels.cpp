@@ -29,7 +29,7 @@
 #include <cmath>
 #include <cassert>
 
-#include "Common/GammaAndLevels.h"
+#include "UI/GammaAndLevels.h"
 #include "ui_GammaAndLevels.h"
 
 namespace
@@ -48,54 +48,54 @@ GammaAndLevels::GammaAndLevels(QWidget *parent,  const QImage& data) :
     m_ReferenceQImage(data),
     blackin(0),
     whitein(255),
-    gamma(1.0f),
     blackout(0),
     whiteout(255),
+    gamma(1.0f),
     m_Ui(new Ui::LevelsDialog)
 {
     m_Ui->setupUi(this);
 
-	QVBoxLayout *qvl=new QVBoxLayout;
-	qvl->setMargin(0);
-	qvl->setSpacing(1);
+    QVBoxLayout *qvl = new QVBoxLayout;
+    qvl->setMargin(0);
+    qvl->setSpacing(1);
 
-	histogram=new HistogramLDR(this);
+    histogram = new HistogramLDR(this);
 
-        histogram->setData(&m_ReferenceQImage);
-        histogram->setFrame(false); // remove histogram frame
+    histogram->setData(&m_ReferenceQImage);
+    histogram->setFrame(false); // remove histogram frame
 
-        gb1=new GrayBar(m_Ui->inputStuffFrame);
+    gb1=new GrayBar(m_Ui->inputStuffFrame);
 
-        connect(m_Ui->black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
-        connect(m_Ui->gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
-        connect(m_Ui->white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
+    connect(m_Ui->black_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeBlack(int)));
+    connect(m_Ui->gamma_spinbox,SIGNAL(valueChanged(double)),gb1,SLOT(changeGamma(double)));
+    connect(m_Ui->white_in_spinbox,SIGNAL(valueChanged(int)),gb1,SLOT(changeWhite(int)));
 
-	connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
-	connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
-	connect(gb1,SIGNAL(white_changed(int)),this,SLOT(updateWhiteIn(int)));
-	connect(gb1,SIGNAL(default_gamma_black_white()),this,SLOT(defaultGammaBlackWhiteIn()));
+    connect(gb1,SIGNAL(black_changed(int)),this,SLOT(updateBlackIn(int)));
+    connect(gb1,SIGNAL(gamma_changed(double)),this,SLOT(updateGamma(double)));
+    connect(gb1,SIGNAL(white_changed(int)),this,SLOT(updateWhiteIn(int)));
+    connect(gb1,SIGNAL(default_gamma_black_white()),this,SLOT(defaultGammaBlackWhiteIn()));
 
-	qvl->addWidget(histogram);
-	qvl->addWidget(gb1);
-        m_Ui->inputStuffFrame->setLayout(qvl);
+    qvl->addWidget(histogram);
+    qvl->addWidget(gb1);
+    m_Ui->inputStuffFrame->setLayout(qvl);
 
-	QVBoxLayout *qvl2=new QVBoxLayout;
-	qvl2->setMargin(0);
-	qvl2->setSpacing(1);
-        gb2=new GrayBar(m_Ui->out_levels,true);
-        connect(m_Ui->black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
-        connect(m_Ui->white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
+    QVBoxLayout *qvl2=new QVBoxLayout;
+    qvl2->setMargin(0);
+    qvl2->setSpacing(1);
+    gb2=new GrayBar(m_Ui->out_levels,true);
+    connect(m_Ui->black_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeBlack(int)));
+    connect(m_Ui->white_out_spinbox,SIGNAL(valueChanged(int)),gb2,SLOT(changeWhite(int)));
 
-	connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
-	connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
-	connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
+    connect(gb2,SIGNAL(black_changed(int)),this,SLOT(updateBlackOut(int)));
+    connect(gb2,SIGNAL(white_changed(int)),this,SLOT(updateWhiteOut(int)));
+    connect(gb2,SIGNAL(default_black_white()),this,SLOT(defaultBlackWhiteOut()));
 
-        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
-        connect(m_Ui->ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
-        connect(m_Ui->ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
+    connect(m_Ui->ResetButton,SIGNAL(clicked()),gb1,SLOT(resetvalues()));
+    connect(m_Ui->ResetButton,SIGNAL(clicked()),gb2,SLOT(resetvalues()));
+    connect(m_Ui->ResetButton,SIGNAL(clicked()),this,SLOT(resetValues()));
 
-	qvl2->addWidget(gb2);
-        m_Ui->out_levels->setLayout(qvl2);
+    qvl2->addWidget(gb2);
+    m_Ui->out_levels->setLayout(qvl2);
 }
 
 GammaAndLevels::~GammaAndLevels()
@@ -105,14 +105,16 @@ GammaAndLevels::~GammaAndLevels()
     delete histogram;
 }
 
-void GammaAndLevels::defaultGammaBlackWhiteIn() {
+void GammaAndLevels::defaultGammaBlackWhiteIn()
+{
 	qDebug("GammaAndLevels::defaultGammaBlackWhiteIn");
 	blackin=0;
 	gamma=1.0f;
 	whitein=255;
 }
 
-void GammaAndLevels::defaultBlackWhiteOut() {
+void GammaAndLevels::defaultBlackWhiteOut()
+{
 	qDebug("GammaAndLevels::defaultBlackWhiteOut");
 	blackout=0;
 	whiteout=255;
@@ -150,20 +152,24 @@ void GammaAndLevels::updateWhiteOut(int v) {
 	refreshLUT();
 }
 
-void GammaAndLevels::resetValues() {
-	qDebug("GammaAndLevels::resetValues");
-	blackin=0;
-	gamma=1.0f;
-	whitein=255;
-	blackout=0;
-	whiteout=255;
-	gb1->dont_emit=true;
-        m_Ui->black_in_spinbox->setValue(0);
-        m_Ui->gamma_spinbox->setValue(1);
-        m_Ui->white_in_spinbox->setValue(255);
-        m_Ui->black_out_spinbox->setValue(0);
-        m_Ui->white_out_spinbox->setValue(255);
-	refreshLUT();
+void GammaAndLevels::resetValues()
+{
+#ifdef QT_DEBUG
+    qDebug("GammaAndLevels::resetValues");
+#endif
+
+    blackin=0;
+    gamma=1.0f;
+    whitein=255;
+    blackout=0;
+    whiteout=255;
+    gb1->dont_emit=true;
+    m_Ui->black_in_spinbox->setValue(0);
+    m_Ui->gamma_spinbox->setValue(1);
+    m_Ui->white_in_spinbox->setValue(255);
+    m_Ui->black_out_spinbox->setValue(0);
+    m_Ui->white_out_spinbox->setValue(255);
+    refreshLUT();
 }
 
 void GammaAndLevels::refreshLUT()

@@ -3149,10 +3149,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Nemohu najít Qt JPEG plugin...&lt;br&gt;Rozbalte archív s volbou &quot;zachovat strukturu adresářů&quot;.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Uložení selhalo &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>Save as...</source>
         <translation type="unfinished">Uložit jako...</translation>
     </message>

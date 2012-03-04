@@ -30,9 +30,11 @@
 #include "Viewers/ISelectionBox.h"
 
 IGraphicsPixmapItem::IGraphicsPixmapItem(QGraphicsItem *parent):
-    QGraphicsPixmapItem(parent), mIsSelectionEnabled(true), mSelectionBox(NULL)
+    QGraphicsPixmapItem(parent),
+    mDropShadow(new QGraphicsDropShadowEffect()),
+    mSelectionBox(NULL),
+    mIsSelectionEnabled(true)
 {
-    mDropShadow = new QGraphicsDropShadowEffect();
     mDropShadow->setBlurRadius(10);
     mDropShadow->setOffset(0,0);
     //this->setGraphicsEffect(mDropShadow);

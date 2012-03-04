@@ -491,13 +491,16 @@ void HdrCreationManager::reset() {
 void HdrCreationManager::remove(int index) {
 	switch (inputType) {
 		case LDR_INPUT_TYPE:
+    {
 			if (tiffLdrList[index]) {
 				delete [] ldrImagesList[index]->bits();
 			}				
 			ldrImagesList.removeAt(index);			
 			tiffLdrList.removeAt(index);
+    }
 		break;
 		case MDR_INPUT_TYPE:
+    {
 			Array2DList::iterator itR = listmdrR.begin() + index;
 			delete *itR;
 			listmdrR.erase(itR);
@@ -513,7 +516,12 @@ void HdrCreationManager::remove(int index) {
 			QString fname = filesToRemove.at(index);
 			qDebug() << "void HdrCreationManager::remove(int index): filename " << fname;
 			QFile::remove(fname);
+    }
 		break;
+        // ...in this case, do nothing!
+    case UNKNOWN_INPUT_TYPE:
+    default:{}
+        break;
 	}
 	fileList.removeAt(index);
 	filesToRemove.remove(index);

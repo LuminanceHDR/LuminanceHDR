@@ -3323,10 +3323,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Tallenna nimellä...</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Tallennus epäonnistui &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>Aborting...</source>
         <translation type="unfinished">Keskeytetään...</translation>
     </message>

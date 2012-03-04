@@ -3322,10 +3322,6 @@ p, li { white-space: pre-wrap; }
         <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation>Speichern fehlgeschlagen &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All LDR formats</source>
         <translation>Alle LDR-Formate</translation>
     </message>

@@ -27,22 +27,25 @@
 
 #include "Common/config.h"
 #include "TonemappingWarnDialog.h"
+#include "ui_TonemappingWarnDialog.h"
 
-TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p) : QDialog(p)
+TonemappingWarningDialog::TonemappingWarningDialog(QWidget *p):
+    QDialog(p),
+    yes(false),
+    m_Ui(new Ui::TonemappingWarningDialog)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
 
-    plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
+    m_Ui->plainText->setPlainText(tr("This tonemapping operator depends on the size of the input image. Applying this operator on the full size image will most probably result in a different image.\n\nDo you want to continue?"));
 
-    checkBoxAskAgain->setChecked(luminance_options.isShowFattalWarning());
+    m_Ui->checkBoxAskAgain->setChecked(luminance_options.isShowFattalWarning());
 
-    connect(buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
-    yes=false;
+    connect(m_Ui->buttonBox,SIGNAL(accepted()),this,SLOT(accepted()));
 }
 
 void TonemappingWarningDialog::accepted()
 {
-    luminance_options.setShowFattalWarning( checkBoxAskAgain->isChecked() );
+    luminance_options.setShowFattalWarning( m_Ui->checkBoxAskAgain->isChecked() );
 
     accept();
 

@@ -3153,10 +3153,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Nem található a Qt JPEG modulja...&lt;br&gt;Csomagolja ki a DLL archívumát a mappák nevének használatával.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Mentés nem sikerült &lt;br&gt;</translation>
-    </message>
-    <message>
         <source>Save as...</source>
         <translation type="unfinished">Mentés másként...</translation>
     </message>

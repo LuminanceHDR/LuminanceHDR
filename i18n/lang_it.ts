@@ -3084,11 +3084,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="obsolete">Riavviare Luminance per usare la lingua: (%1).</translation>
+        <translation>Riavviare Luminance per usare la lingua: (%1).</translation>
     </message>
     <message>
         <source>Please restart...</source>
-        <translation type="obsolete">Riavviare...</translation>
+        <translation>Riavviare...</translation>
     </message>
     <message>
         <source>Choose a directory</source>
@@ -3329,10 +3329,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Non e&apos; stato possibile trovare il plugin JPEG di Qt...&lt;br&gt; Scompatta il pacchetto delle DLL con l&apos;opzione &quot;utilizza i nomi di cartelle&quot; attivata.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation>Errore nel salvare &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

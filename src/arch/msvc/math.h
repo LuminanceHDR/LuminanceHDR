@@ -25,26 +25,26 @@
 #ifndef _MSVC_MATH_H
 #define _MSVC_MATH_H
 
-	#define _USE_MATH_DEFINES
-	#include <math.h> // re-include here
-	#include <float.h> // for _finite
+#define _USE_MATH_DEFINES
+#include <math.h> // re-include here
+#include <float.h> // for _finite
 
-	#define exp2f(x)        (powf(2.0f, x))
-	#define log2(x)        (log(x)  / 0.693147180559945309417)
-	#define log2f(x)       (logf(x) / 0.693147180559945309417)
+#define exp2f(x)        (powf(2.0f, x))
+#define log2(x)        (log(x)  / 0.693147180559945309417)
+#define log2f(x)       (logf(x) / 0.693147180559945309417)
 
-	#define lround(d)       ((long)(d>0 ? d+0.5 : ceil(d-0.5)))
-	#define round(d)       ((d>0) ? int(d+0.5) : int(d-0.5))
-	#define finite(x)       (_finite(x))
+#define lround(d)       ((long)(d>0 ? d+0.5 : ceil(d-0.5)))
+#define round(d)       ((d>0) ? int(d+0.5) : int(d-0.5))
+#define finite(x)       (_finite(x))
 
-	#define isnan(x) (x != x)
-	#define isnanf(x) (x != x)
+#define isnan(x) (x != x)
+#define isnanf(x) (x != x)
 
-	#define fmax max
-	#define fmaxf max
-	#define fmin min
-	#define fminf min
-	#pragma warning (disable:4996)
-	#define snprintf sprintf_s
+#define fmax max
+#define fmaxf max
+#define fmin min
+#define fminf min
+#pragma warning (disable:4996)
+#define snprintf sprintf_s
 
 #endif

@@ -66,7 +66,7 @@
 #include "Viewers/HdrViewer.h"
 #include "Viewers/LuminanceRangeWidget.h"
 #include "Viewers/LdrViewer.h"
-#include "Common/ImageQualityDialog.h"
+#include "UI/ImageQualityDialog.h"
 #include "Libpfs/frame.h"
 #include "UI/UMessageBox.h"
 #include "PreviewPanel/PreviewPanel.h"
@@ -80,7 +80,7 @@
 #include "Core/IOWorker.h"
 #include "Core/TMWorker.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
-#include "Common/GammaAndLevels.h"
+#include "UI/GammaAndLevels.h"
 
 namespace
 {

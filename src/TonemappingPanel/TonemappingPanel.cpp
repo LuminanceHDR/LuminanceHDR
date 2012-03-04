@@ -48,12 +48,13 @@
 #include "TonemappingPanel/SavedParametersDialog.h"
 #include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
+#include "UI/Gang.h"
 #include "ui_TonemappingPanel.h"
 
 TonemappingPanel::TonemappingPanel(QWidget *parent):
     QWidget(parent),
-    m_Ui(new Ui::TonemappingPanel),
-    adding_custom_size(false)
+	adding_custom_size(false),
+    m_Ui(new Ui::TonemappingPanel)
 {
     m_Ui->setupUi(this);
 

@@ -31,7 +31,7 @@
 
 #include "Viewers/GenericViewer.h"
 
-#include "Common/PanIconWidget.h"
+#include "UI/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
@@ -45,8 +45,8 @@ static const int BORDER_SIZE = 30;
 
 GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     QWidget(parent),
-    mNeedsSaving(ns),
     mViewerMode(FIT_WINDOW),
+    mNeedsSaving(ns),
     mFrame(frame)
 {
     mVBL = new QVBoxLayout(this);

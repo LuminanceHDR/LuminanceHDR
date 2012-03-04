@@ -1,7 +1,7 @@
-/*
+/**
  * This file is a part of LuminanceHDR package.
  * ----------------------------------------------------------------------
- * Copyright (C) 2009 Franco Comida
+ * Copyright (C) 2012 Davide Anastasia
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,40 +18,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * ----------------------------------------------------------------------
  *
- * @author Franco Comida <fcomida@users.sourceforge.net>
- *
  */
 
-#ifndef TMOPROGRESSINDICATOR
-#define TMOPROGRESSINDICATOR
-
-#include <QWidget>
-#include <QLabel>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QHBoxLayout>
-
-class TMOProgressIndicator : public QWidget {
-Q_OBJECT
-
-public:
-	TMOProgressIndicator(QWidget *parent);
-	~TMOProgressIndicator();
-	bool isTerminated();
-	void emit_terminate() { emit terminate(); }
-public slots:
-	void setValue(int);
-	void setMaximum(int);
-	void setMinimum(int);
-	void terminated();
-protected:
-        QHBoxLayout     *m_hbl;
-        QProgressBar    *m_progressBar;
-        QPushButton     *m_abortButton;
-        bool            m_isTerminated;
-signals:
-	void terminate();
-	void deleteMe();
-};
-
-#endif
+#define I18NDIR (@I18NDIR@)

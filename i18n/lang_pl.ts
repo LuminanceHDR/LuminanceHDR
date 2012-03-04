@@ -3127,10 +3127,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Przerywam...</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Nieudany zapis &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All LDR formats</source>
         <translation type="unfinished"></translation>
     </message>

@@ -32,9 +32,11 @@
 #include <QFileDialog>
 
 #include "Common/config.h"
-#include "Common/GammaAndLevels.h"
+#include "UI/GammaAndLevels.h"
+#include "UI/PanIconWidget.h"
 #include "Fileformat/pfstiff.h"
-#include "EditingTools.h"
+#include "HdrWizard/EditingTools.h"
+
 
 EditingTools::EditingTools(HdrCreationManager *hcm, QWidget *parent) : QDialog(parent), additional_shift_value(0)
 {

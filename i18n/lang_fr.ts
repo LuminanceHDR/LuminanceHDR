@@ -3328,10 +3328,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Le Plugin JPEG de Qt est introuvable...&lt;br&gt;Veuillez décompresser le pack des DLL avec l&apos;option &quot;use folder names&quot; activée.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Enregistrement échoué &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All LDR formats</source>
         <translation type="unfinished">Tous les formats LDR</translation>
     </message>

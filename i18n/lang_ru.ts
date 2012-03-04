@@ -3177,10 +3177,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Не удается найти расширение поддержки JPEG в Qt...&lt;br&gt;Распакуйте архив с  файлами DLL, сохраняя имена каталогов.</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Не удалось сохранить &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All LDR formats</source>
         <translation type="unfinished">Файлы всех LDR-форматов</translation>
     </message>

@@ -3177,10 +3177,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Salvează ca...</translation>
     </message>
     <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Eșuat la salvare &lt;b&gt;</translation>
-    </message>
-    <message>
         <source>All HDR formats </source>
         <translation type="unfinished">Toate formatele HDR</translation>
     </message>

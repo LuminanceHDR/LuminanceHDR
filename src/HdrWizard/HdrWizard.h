@@ -31,15 +31,18 @@
 #include <QDialog>
 #include <QString>
 
-#include "ui_HdrWizard.h"
 #include "Common/LuminanceOptions.h"
-#include "Common/Gang.h"
 #include "Common/global.h"
 #include "Libpfs/pfs.h"
-#include "arch/freebsd/math.h"
 #include "HdrCreation/HdrCreationManager.h"
 
-class HdrWizard : public QDialog, private Ui::HdrWizard
+class Gang;
+
+namespace Ui {
+    class HdrWizard;
+}
+
+class HdrWizard : public QDialog
 {
 Q_OBJECT
 
@@ -60,7 +63,7 @@ private:
 	void loadInputFiles(QStringList files, int count);
         LuminanceOptions luminance_options;
 
-	Gang *EVgang;
+    Gang* EVgang;
 
 	HdrCreationManager *hdrCreationManager;
 
@@ -72,6 +75,8 @@ private:
 	TResponse responses_in_gui[4];
 	TModel models_in_gui[2];
 	TWeight weights_in_gui[3];
+
+    QScopedPointer<Ui::HdrWizard> m_Ui;
 
 private slots:
 
