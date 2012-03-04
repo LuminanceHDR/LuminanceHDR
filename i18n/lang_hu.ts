@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">Ki&amp;lépés</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Megszakítás...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -439,6 +443,10 @@ See documentation for more informations.</source>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Megszakítás...</translation>
     </message>
 </context>
 <context>
@@ -1358,7 +1366,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Gamma</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gammabeállítás</translation>
     </message>
     <message>
         <source>Amount of iterations:</source>
@@ -1410,7 +1418,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Előre &gt;</translation>
     </message>
     <message>
         <source>All formats (*.jpeg *.jpg *.tiff *.tif *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.sr2 *.rw2 *.3fr *.mef *.mos *.erf *.nrw *.srw</source>
@@ -1438,7 +1446,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feldolgozandó képek kiválasztása</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -2495,10 +2503,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">magyar</translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished">Kérem újraindítani...</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Válasszon egy mappát</translation>
     </message>
@@ -2913,10 +2917,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Default Previews Width</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3147,10 +3147,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Nem található a Qt JPEG modulja...&lt;br&gt;Csomagolja ki a DLL archívumát a mappák nevének használatával.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Mentés nem sikerült &lt;br&gt;</translation>
     </message>
     <message>
         <source>Save as...</source>

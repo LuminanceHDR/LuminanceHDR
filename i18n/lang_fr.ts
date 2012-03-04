@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Fermer</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abandon...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -439,6 +443,10 @@ See documentation for more informations.</source>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abandon...</translation>
     </message>
 </context>
 <context>
@@ -3012,14 +3020,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Hongrois</translation>
     </message>
     <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Le nouveau langage (%1) sera disponible au prochain lancement de Luminance HDR.</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation type="unfinished">Relancez SVP...</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Choisir un dossier</translation>
     </message>
@@ -3318,10 +3318,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Le Plugin JPEG de Qt est introuvable...&lt;br&gt;Veuillez décompresser le pack des DLL avec l&apos;option &quot;use folder names&quot; activée.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Enregistrement échoué &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

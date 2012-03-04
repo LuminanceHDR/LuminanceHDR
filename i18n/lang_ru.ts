@@ -265,6 +265,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Закрыть</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Прерывание...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -447,6 +451,10 @@ See documentation for more informations.</source>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Прерывание...</translation>
     </message>
 </context>
 <context>
@@ -2562,15 +2570,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Венгерский</translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished">Необходим перезапуск программы</translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Интерфейс станет доступным на выбранном языке (%1)
-только при следующем запуске программы.</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Выберите каталог</translation>
     </message>
@@ -3167,10 +3166,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Не удается найти расширение поддержки JPEG в Qt...&lt;br&gt;Распакуйте архив с  файлами DLL, сохраняя имена каталогов.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Не удалось сохранить &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

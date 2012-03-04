@@ -258,6 +258,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <source>Error: </source>
         <translation>Fehler: </translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abbrechen ...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>All tasks completed.</source>
         <translation>Alle Aufgaben abgeschlossen.</translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abbrechen ...</translation>
     </message>
 </context>
 <context>
@@ -3157,14 +3165,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ungarisch</translation>
     </message>
     <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation>Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation>Bitte neu starten ...</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation>Ordner wählen</translation>
     </message>
@@ -3312,10 +3312,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Kann das Qt-JPEG-Plug-in nicht finden ...&lt;br&gt;Das DLL-Paket sollte mit der Option &quot;Pfadangaben verwenden&quot; entpackt werden.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation>Speichern fehlgeschlagen &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Zavřít</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Přerušuji...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -439,6 +443,10 @@ See documentation for more informations.</source>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Přerušuji...</translation>
     </message>
 </context>
 <context>
@@ -1342,7 +1350,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lineárně</translation>
     </message>
     <message>
         <source>HDR creation model:</source>
@@ -1434,7 +1442,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select the input images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vyber vstupní obrázky</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -1469,7 +1477,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>Logarithmic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logaritmicky</translation>
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
@@ -2905,14 +2913,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3147,10 +3147,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Nemohu najít Qt JPEG plugin...&lt;br&gt;Rozbalte archív s volbou &quot;zachovat strukturu adresářů&quot;.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Uložení selhalo &lt;b&gt;</translation>
     </message>
     <message>
         <source>Save as...</source>

@@ -266,6 +266,10 @@ Vedi la documentazione per maggiori informazioni.</translation>
         <source>&amp;Close</source>
         <translation>&amp;Chiudi</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Operazione interrotta...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -448,6 +452,10 @@ Vedi la documentazione per maggiori informazioni.</translation>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation>Salvataggio in formato %1, (qualità - se applicabile): %2</translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Operazione interrotta...</translation>
     </message>
 </context>
 <context>
@@ -3075,14 +3083,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ungherese</translation>
     </message>
     <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation>Riavviare Luminance per usare la lingua: (%1).</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation>Riavviare...</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation>Seleziona una directory</translation>
     </message>
@@ -3321,10 +3321,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation>Non e&apos; stato possibile trovare il plugin JPEG di Qt...&lt;br&gt; Scompatta il pacchetto delle DLL con l&apos;opzione &quot;utilizza i nomi di cartelle&quot; attivata.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation>Errore nel salvare &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

@@ -257,6 +257,10 @@ See documentation for more informations.</source>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Kapat</translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Durduruluyor...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -439,6 +443,10 @@ See documentation for more informations.</source>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Durduruluyor...</translation>
     </message>
 </context>
 <context>
@@ -2887,14 +2895,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3129,10 +3129,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Qt JPEG Eklentisi bulunamadı..&lt;br&gt;Lütfen DLL paketini &quot;klasör isimleri kullanarak&quot; seçeneği aktif hale getirin ve çıkartın.</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Kaydedilemedi &lt;b&gt;</translation>
     </message>
     <message>
         <source>All LDR formats</source>

@@ -258,6 +258,10 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <source>Error: </source>
         <translation type="unfinished">Eroare: </translation>
     </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Anulând...</translation>
+    </message>
 </context>
 <context>
     <name>BatchTMDialog</name>
@@ -440,6 +444,10 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     <message>
         <source>All tasks completed.</source>
         <translation type="unfinished">Toate sarcinile finalizate.</translation>
+    </message>
+    <message>
+        <source>Aborting...</source>
+        <translation type="unfinished">Anulând...</translation>
     </message>
 </context>
 <context>
@@ -3009,14 +3017,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">&amp;OK</translation>
     </message>
     <message>
-        <source>Please restart...</source>
-        <translation type="unfinished">Restartează...</translation>
-    </message>
-    <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="unfinished">Restartează Luminance HDR pentru a folosi nouă limbă (%1).</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation type="unfinished">Alege un dosar</translation>
     </message>
@@ -3167,10 +3167,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Save as...</source>
         <translation type="unfinished">Salvează ca...</translation>
-    </message>
-    <message>
-        <source>Failed to save &lt;b&gt;</source>
-        <translation type="unfinished">Eșuat la salvare &lt;b&gt;</translation>
     </message>
     <message>
         <source>All HDR formats </source>
