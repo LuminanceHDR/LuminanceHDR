@@ -281,7 +281,7 @@ static void dumpPFS( const char *fileName, const int width, const int height, fl
 static void compute_gaussian_level( const int width, const int height, const pfs::Array2D& in, pfs::Array2D& out, int level, pfs::Array2D& temp )
 {
 
-  const float kernel_a = 0.4;
+  const float kernel_a = 0.4f;
 
   const int kernel_len = 5;
   const int kernel_len_2 = kernel_len/2;
@@ -429,7 +429,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
   
   std::auto_ptr<conditional_density> C(new conditional_density());
 
-  const float thr = 0.0043; // Approx. discrimination threshold in log10 
+  const float thr = 0.0043f; // Approx. discrimination threshold in log10
   const int pix_count = width*height;
 
     
@@ -502,7 +502,7 @@ std::auto_ptr<datmoConditionalDensity> datmo_compute_conditional_density( int wi
           gradient_exist = true;
           break;
         }
-      if( ~gradient_exist ) {
+      if( !gradient_exist ) {
         // generate some gradient data to avoid bad conditioned problem
         (*C)(i,gi_tp,f)++;
         (*C)(i,gi_tn,f)++;
@@ -1011,16 +1011,16 @@ int datmo_apply_tone_curve_cc( float *R_out, float *G_out, float *B_out, int wid
   UniformArrayLUT cc_lut( tc->size, tc->x_i );  
   for( size_t i=0; i < tc->size-1; i++ ) {
     const float contrast = (tc->y_i[i+1]-tc->y_i[i])/(tc->x_i[i+1]-tc->x_i[i]);
-    const float k1 = 1.48;
-    const float k2 = 0.82;
+    const float k1 = 1.48f;
+    const float k2 = 0.82f;
     cc_lut.y_i[i] = ( (1 + k1)*pow(contrast,k2) )/( 1 + k1*pow(contrast,k2) ) * saturation_factor;
   }
   cc_lut.y_i[tc->size-1] = 1;
   
-  const size_t pix_count = width*height;
+  const long pix_count = width*height;
 
 #pragma omp parallel for default(none) shared(R_in,G_in,B_in,L_in,R_out,G_out,B_out,tc_lut,cc_lut,df)
-  for (size_t i=0; i < pix_count; i++)
+  for (long i=0; i < pix_count; i++)
   {
     float L_fix = clamp_channel(L_in[i]);
     const float L_out = tc_lut.interp( log10(L_fix) );
