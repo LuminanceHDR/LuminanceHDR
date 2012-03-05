@@ -523,7 +523,7 @@ static float snrm(unsigned long n, const float sx[])
     float ans = 0.0f;
 
 #pragma omp parallel for shared(sx) reduction(+:ans) if (n>OMP_THRESHOLD) schedule(static)
-    for (unsigned long i=0; i<n; i++)
+    for (long i=0; i<n; i++)
     {
 		ans += sx[i]*sx[i];
     }
@@ -566,17 +566,17 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		zm1nrm=znrm;
 		asolve(rr,zz);
 		bknum=0.0;
-#pragma omp parallel for private(j) shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
-        for (unsigned long j=0;j<n;j++)
+#pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
+        for (long j=0;j<n;j++)
         {
             bknum += z[j]*rr[j];
         }
 		if (*iter == 1) {
-            for (unsigned long j=0;j<n;j++)
+            for (long j=0;j<n;j++)
             {
 				p[j]=z[j];
             }
-            for (unsigned long j=0;j<n;j++)
+            for (long j=0;j<n;j++)
             {
 				pp[j]=zz[j];
             }
@@ -589,8 +589,8 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 		bkden=bknum;
 		atimes(p,z);
 		akden=0.0;
-#pragma omp parallel for private(j) shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
-        for (unsigned long j=0;j<n;j++)
+#pragma omp parallel for shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
+        for (long j=0;j<n;j++)
         {
             akden += z[j]*pp[j];
         }

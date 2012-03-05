@@ -28,7 +28,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <getopt.h>
+#include "../arch/getopt.h"
 #include <math.h>
 #include <sstream>
 
