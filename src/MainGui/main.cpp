@@ -65,7 +65,8 @@ int main( int argc, char ** argv )
     installTranslators(true);
     MainWindow* MW = new MainWindow;
 #ifndef Q_WS_MAC
-    MW->setInputFiles(cli.files());
+    //CommandLineInterfaceManager cli( argc, argv );
+    //MW->setInputFiles(cli.files());
 #endif // Q_WS_MAC
     MW->show();
 
