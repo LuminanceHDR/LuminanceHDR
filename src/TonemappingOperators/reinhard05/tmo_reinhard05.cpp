@@ -38,6 +38,7 @@
 #include <numeric>
 #include <iostream>
 #include <cmath>
+#include <limits>
 
 using namespace std;
 
@@ -49,8 +50,8 @@ private:
     static float DISPL_F;
 public:
     LuminanceEqualization():
-        min_lum_( std::numeric_limits<float>::max() ),
-        max_lum_( -std::numeric_limits<float>::max() ),
+        min_lum_( numeric_limits<float>::max() ),
+        max_lum_( -numeric_limits<float>::max() ),
         avg_lum_( 0.0f ),
         adapted_lum_( 0.0f )
     {}
