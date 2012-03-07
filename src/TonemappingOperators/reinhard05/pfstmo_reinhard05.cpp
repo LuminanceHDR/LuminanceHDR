@@ -32,7 +32,7 @@
  */
 
 #include <iostream>
-#include <sstream>>
+#include <sstream>
 #include <cmath>
 
 #include "tmo_reinhard05.h"
