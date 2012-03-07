@@ -287,6 +287,10 @@ ELSEIF(WIN32)
 ENDIF()
 
 # Link sub modules
-TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
+IF(UNIX)
+	TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+ELSE()
+	TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
+ENDIF()
 # Link shared library
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
