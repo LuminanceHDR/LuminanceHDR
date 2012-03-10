@@ -24,15 +24,36 @@
 #include <QApplication>
 #include <QObject>
 #include <QDebug>
+#include <QFile>
+#include <QString>
+#include <QStringList>
 
 #include "Common/global.h"
-#include "Common/commandline.h"
 #include "MainWindow/MainWindow.h"
 
 #ifdef WIN32
 #include <QMessageBox>
 #include <windows.h>
 #endif
+
+namespace
+{
+QStringList getCliFiles(const QStringList& arguments)
+{
+    QStringList return_value;   // empty QStringList;
+
+    // check if any of the parameters is a proper file on the file system
+    // I skip the first value of the list because it is the name of the executable
+    for (int i = 1; i < arguments.size(); ++i)
+    {
+        QFile file( arguments.at(i).toLocal8Bit() );
+
+        if ( file.exists() ) return_value.push_back( arguments.at(i).toLocal8Bit() );
+    }
+
+    return return_value;
+}
+}
 
 int main( int argc, char ** argv )
 {
@@ -57,17 +78,11 @@ int main( int argc, char ** argv )
     }
 #endif
 
-#ifdef QT_DEBUG
-    //qDebug() << "i18n folder = " << I18NDIR;
-    //qDebug() << "QDir::currentPath() = " << QDir::currentPath();
-    //qDebug() << "QCoreApplication::applicationDirPath() = " << QCoreApplication::applicationDirPath();
-#endif
     installTranslators(true);
     MainWindow* MW = new MainWindow;
-#ifndef Q_WS_MAC
-    //CommandLineInterfaceManager cli( argc, argv );
-    //MW->setInputFiles(cli.files());
-#endif // Q_WS_MAC
+
+    MW->setInputFiles( getCliFiles( application.arguments() ) );
+
     MW->show();
 
     return application.exec();
