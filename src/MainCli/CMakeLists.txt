@@ -1,7 +1,9 @@
-# List all .h files in this directory
-FILE(GLOB FILES_H *.h)
-# List all .cpp files in this directory
-FILE(GLOB FILES_CPP *.cpp)
+
+SET(FILES_H
+${CMAKE_CURRENT_SOURCE_DIR}/commandline.h)
+SET(FILES_CPP
+${CMAKE_CURRENT_SOURCE_DIR}/commandline.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 QT4_WRAP_CPP(FILES_MOC ${FILES_H})
 

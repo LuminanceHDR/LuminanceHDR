@@ -30,12 +30,15 @@
 #include <QTimer>
 #include <QDebug>
 
+#include "commandline.h"
+
+#include "arch/error.h"
+
 #include "Common/global.h"
 #include "Common/config.h"
 #include "Common/LuminanceOptions.h"
 #include "HdrCreation/createhdr.h"
 #include "Exif/ExifOperations.h"
-#include "Common/commandline.h"
 
 #include "Libpfs/array2d.h"
 #include "Libpfs/colorspace.h"
@@ -48,8 +51,6 @@
 #include "Core/TMWorker.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "TonemappingEngine/TonemapOperator.h"
-
-#include "arch/error.h"
 
 ///string is a QString with a %1 in it
 #define VERBOSEPRINT( string, argument ) \

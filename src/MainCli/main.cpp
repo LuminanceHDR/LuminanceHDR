@@ -22,8 +22,9 @@
  */
 
 #include <QCoreApplication>
+
+#include "MainCli/commandline.h"
 #include "Common/global.h"
-#include "Common/commandline.h"
 
 int main( int argc, char ** argv )
 {
