@@ -438,7 +438,6 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
 
         hdrCreationManager.reset( new HdrCreationManager() );
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
-        connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)), this, SLOT(errorWhileLoading(QString)));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning()), this, SLOT(createHDR()));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
         hdrCreationManager->setConfig(hdrcreationconfig);
