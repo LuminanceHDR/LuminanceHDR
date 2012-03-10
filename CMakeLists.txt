@@ -226,12 +226,14 @@ IF(APPLE)
     #SET( CMAKE_OSX_ARCHITECTURES x86_64;i386 )  # Universal build
 
     ADD_EXECUTABLE(luminance-hdr MACOSX_BUNDLE ${LUMINANCE_FILES})
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
     SET_TARGET_PROPERTIES(luminance-hdr PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/build/macosx/Info.plist")
 # Unix
 ELSEIF(UNIX)
 
     ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
     # make install directivies
     INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main exec
@@ -251,7 +253,8 @@ ELSEIF(WIN32)
     SET(LUMINANCE_FILES ${LUMINANCE_FILES} "${CMAKE_SOURCE_DIR}/images/luminance_ico.rc")
 
     # Subsystem console:
-    ADD_EXECUTABLE(luminance-hdr ${LUMINANCE_FILES})
+    ADD_EXECUTABLE(luminance-hdr WIN32 ${LUMINANCE_FILES})
+    ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
   
     # copies all necessary Qt dlls from the Qt binary dir to the output folder
     SET(QT_RELEASE_DLLS
@@ -287,10 +290,13 @@ ELSEIF(WIN32)
 ENDIF()
 
 # Link sub modules
-IF(UNIX)
-	TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+IF(MSVC OR APPLE)
+    TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LUMINANCE_MODULES_CLI})
 ELSE()
-	TARGET_LINK_LIBRARIES(luminance-hdr ${LUMINANCE_MODULES_GUI})
+    TARGET_LINK_LIBRARIES(luminance-hdr -Xlinker --start-group ${LUMINANCE_MODULES_GUI} -Xlinker --end-group)
+    TARGET_LINK_LIBRARIES(luminance-hdr-cli -Xlinker --start-group ${LUMINANCE_MODULES_CLI} -Xlinker --end-group)
 ENDIF()
 # Link shared library
 TARGET_LINK_LIBRARIES(luminance-hdr ${LIBS})
+TARGET_LINK_LIBRARIES(luminance-hdr-cli ${LIBS})

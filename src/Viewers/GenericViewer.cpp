@@ -30,8 +30,7 @@
 //#include <QtOpenGL/QGLWidget>
 
 #include "Viewers/GenericViewer.h"
-
-#include "UI/PanIconWidget.h"
+#include "Viewers/PanIconWidget.h"
 #include "Viewers/IGraphicsView.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"

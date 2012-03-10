@@ -3,6 +3,8 @@ ADD_SUBDIRECTORY(MainWindow)
 
 # Gui specific and main entry point
 ADD_SUBDIRECTORY(MainGui)
+# CLI specific and main entry point
+ADD_SUBDIRECTORY(MainCli)
 
 ADD_SUBDIRECTORY(PreviewPanel)
 ADD_SUBDIRECTORY(Common)

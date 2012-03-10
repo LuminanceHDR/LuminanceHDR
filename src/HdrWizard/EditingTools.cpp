@@ -33,7 +33,7 @@
 
 #include "Common/config.h"
 #include "UI/GammaAndLevels.h"
-#include "UI/PanIconWidget.h"
+#include "Viewers/PanIconWidget.h"
 #include "Fileformat/pfstiff.h"
 #include "HdrWizard/EditingTools.h"
 
