@@ -41,11 +41,21 @@
 #include "Core/TMWorker.h"
 #include "TonemappingEngine/TonemapOperator.h"
 
+#if defined(_MSC_VER)
+	#include <fcntl.h>
+	#include <io.h>
+#endif
+
 namespace
 {
 void printErrorAndExit(const QString& error_str)
 {
-    std::cerr << qPrintable(error_str) << std::endl;
+	#if defined(_MSC_VER)
+		_setmode(_fileno(stderr), _O_U16TEXT);
+		std::wcerr << qPrintable(error_str) << std::endl;
+	#else
+		std::cerr << qPrintable(error_str) << std::endl;
+	#endif
     exit(-1);
 }
 
@@ -53,7 +63,12 @@ void printIfVerbose(const QString& str, bool verbose)
 {
     if ( verbose )
     {
-        std::cout << qPrintable(str) << std::endl;
+		#if defined(_MSC_VER)
+			_setmode(_fileno(stdout), _O_U16TEXT);
+			std::wcout << qPrintable(str) << std::endl;
+		#else
+    		std::cout << qPrintable(str) << std::endl;
+		#endif
     }
 }
 
@@ -606,6 +621,5 @@ void CommandLineInterfaceManager::printHelp(char * progname)
             "\t" + tr("-o --output LDR_FILE   File name you want to save your tone mapped LDR to.") + "\n" +
             "\t" + tr("                       (No tonemapping is performed unless -o is specified).") + "\n\n" +
             tr("You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.\n");
-
-    std::cerr << qPrintable(help) << std::endl;
+    printErrorAndExit(help);
 }
