@@ -1,6 +1,5 @@
-	@echo off
+@echo off
 SETLOCAL
-call setenv.cmd
 
 devenv /? > NUL
 IF ERRORLEVEL 1 (
@@ -17,6 +16,33 @@ IF EXIST ..\msvc (
 	echo.
 	goto error_end
 )
+
+ml64.exe > NUL
+IF ERRORLEVEL 1 (
+	set Platform=Win32
+	set RawPlatform=x86
+) ELSE (
+	set Platform=x64
+	set RawPlatform=x64
+)
+IF DEFINED VS100COMNTOOLS (
+	REM Visual Studio 2010
+	set VS_SHORT=vc10
+	set VS_CMAKE=Visual Studio 10
+	set VS_PROG_FILES=Microsoft Visual Studio 10.0
+	
+) ELSE (
+	REM Visual Studio 2008
+	set VS_SHORT=vc9
+	set VS_CMAKE=Visual Studio 9 2008
+	set VS_PROG_FILES=Microsoft Visual Studio 9.0
+)
+IF %Platform% EQU x64 (
+	set VS_CMAKE=%VS_CMAKE% Win64
+)
+
+call setenv.cmd
+
 
 IF NOT EXIST %CYGWIN_DIR%\bin\cvs.exe GOTO cygwin_error
 IF NOT EXIST %CYGWIN_DIR%\bin\git.exe GOTO cygwin_error
@@ -48,27 +74,6 @@ GOTO error_end
 
 IF NOT DEFINED Configuration (
 	set Configuration=Release
-)
-
-ml64.exe > NUL
-IF ERRORLEVEL 1 (
-	set Platform=Win32
-	set RawPlatform=x86
-) ELSE (
-	set Platform=x64
-	set RawPlatform=x64
-)
-IF DEFINED VS100COMNTOOLS (
-	REM Visual Studio 2010
-	set VS_SHORT=vc10
-	set VS_CMAKE=Visual Studio 10
-) ELSE (
-	REM Visual Studio 2008
-	set VS_SHORT=vc9
-	set VS_CMAKE=Visual Studio 9 2008
-)
-IF %Platform% EQU x64 (
-	set VS_CMAKE=%VS_CMAKE% Win64
 )
 
 cls
@@ -110,7 +115,7 @@ IF NOT EXIST expat-2.0.1 (
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
-	%CYGWIN_DIR%\bin\svn.exe co -r 2656 svn://dev.exiv2.org/svn/trunk exiv2-trunk
+	%CYGWIN_DIR%\bin\svn.exe co -r 2672 svn://dev.exiv2.org/svn/trunk exiv2-trunk
 ) ELSE (
 	rem svn update exiv2-trunk
 	rem set exiv2-compile=true
@@ -167,6 +172,7 @@ IF NOT EXIST tiff-4.0.1 (
 	nmake /s /c /f Makefile.vc @qtpfsgui_commands.in
 	popd
 )
+
 
 IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.5.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.5.zip http://www.libraw.org/data/LibRaw-0.14.5.zip
