@@ -34,7 +34,9 @@
  * this define enables the timing profile
  * You should comment this define if you want to disable this feature
  */
-#define TIMER_PROFILING 
+#ifndef QT_NO_DEBUG
+#define TIMER_PROFILING
+#endif
 
 #include <stdio.h>
 //#include <iostream>
