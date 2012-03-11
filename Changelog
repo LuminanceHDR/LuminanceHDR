@@ -1,3 +1,14 @@
+Changes 2.2.1
+* NEW: splitted executable luminance-hdr-cli for commandline mode
+* Aborting Batch HDR creation and batch tonemapping is now possible
+* Speed improvements in Reinhard05
+* Language change without restarting application
+* Corrected detection of exif rotation
+* Windows: TIFF support now works correctly (at all)
+* Windows: fixed some align_image_stack and temp dir problems
+* Development: new module system 
+* Development: fixed help install and i18n path under Linux 
+
 Changes 2.2.0
 * NEW: BatchHDR tool
 * NEW: LDRs can be saved as 16 bit Tiffs
