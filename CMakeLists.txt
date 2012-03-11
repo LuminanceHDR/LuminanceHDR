@@ -240,7 +240,8 @@ ELSEIF(UNIX)
     ADD_EXECUTABLE(luminance-hdr-cli ${LUMINANCE_FILES})
 
     # make install directivies
-    INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main exec
+    INSTALL(TARGETS luminance-hdr RUNTIME DESTINATION bin) # main GUI exec
+    INSTALL(TARGETS luminance-hdr-cli RUNTIME DESTINATION bin) # main CLI exec
     INSTALL(FILES ${LUMINANCE_QM} DESTINATION share/luminance-hdr/i18n) # i18n
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/images/luminance-hdr.png DESTINATION share/icons/hicolor/48x48/apps) # icon
     INSTALL(FILES ${CMAKE_SOURCE_DIR}/luminance-hdr.desktop DESTINATION share/applications) #desktop entry
