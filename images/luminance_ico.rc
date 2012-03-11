@@ -1,7 +1,7 @@
-#define LUMINANCE_VER 2,2,0
-#define LUMINANCE_VER_STR "2.2.0\0"
+#define LUMINANCE_VER 2,2,1
+#define LUMINANCE_VER_STR "2.2.1\0"
 
-#define PRODUCTNAME_STR "Luminance\0"
+#define PRODUCTNAME_STR "Luminance HDR\0"
 IDI_ICON1               ICON    DISCARDABLE     "luminance.ico"
 //See for more information MSDN: http://msdn.microsoft.com/en-us/library/aa381049(VS.85).aspx
 1 VERSIONINFO
@@ -18,12 +18,12 @@ BEGIN
             VALUE "ProductName",      PRODUCTNAME_STR
             VALUE "FileVersion",      LUMINANCE_VER_STR
             VALUE "FileDescription",  "Open Source HDR Imaging Workflow tool\0"
-            VALUE "CompanyName",      "http://luminance.sourceforge.net\0"
+            VALUE "CompanyName",      "http://qtpfsgui.sourceforge.net\0"
             VALUE "InternalName",     PRODUCTNAME_STR
             VALUE "ProductVersion",   LUMINANCE_VER_STR
             VALUE "LegalCopyright",   "GPL v2.0\0"
             VALUE "Comments",         "For the full text version of the GPL please read http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt"
-            VALUE "OriginalFilename", "luminance.exe\0"
+            VALUE "OriginalFilename", "luminance-hdr.exe\0"
             //VALUE "LegalTrademarks",  VER_LEGALTRADEMARKS1_STR
         END
     END
