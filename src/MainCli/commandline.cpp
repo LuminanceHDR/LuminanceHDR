@@ -455,6 +455,7 @@ void CommandLineInterfaceManager::execCommandLineParamsSlot()
         connect(hdrCreationManager.data(), SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(finishedLoadingInputFiles(QStringList)));
         connect(hdrCreationManager.data(), SIGNAL(finishedAligning()), this, SLOT(createHDR()));
         connect(hdrCreationManager.data(), SIGNAL(ais_failed(QProcess::ProcessError)), this, SLOT(ais_failed(QProcess::ProcessError)));
+		connect(hdrCreationManager.data(), SIGNAL(errorWhileLoading(QString)),this, SLOT(errorWhileLoading(QString)));
         hdrCreationManager->setConfig(hdrcreationconfig);
         hdrCreationManager->setFileList(inputFiles);
         hdrCreationManager->loadInputFiles();
@@ -586,7 +587,9 @@ void  CommandLineInterfaceManager::startTonemap()
     }
 }
 
-
+void CommandLineInterfaceManager::errorWhileLoading(QString errormessage) {
+	printErrorAndExit( tr("Failed loading images"));
+}
 
 void CommandLineInterfaceManager::printHelp(char * progname)
 {

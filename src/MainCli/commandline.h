@@ -82,6 +82,7 @@ private:
 private slots:
     void finishedLoadingInputFiles(QStringList);
     void ais_failed(QProcess::ProcessError);
+	void errorWhileLoading(QString);
     void createHDR();
     void parseArgs();
     void execCommandLineParamsSlot();
