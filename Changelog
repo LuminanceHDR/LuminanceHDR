@@ -1,5 +1,6 @@
 Changes 2.2.1
 * NEW: splitted executable luminance-hdr-cli for commandline mode
+* NEW: Windows Installer optionally registers file associations
 * Aborting Batch HDR creation and batch tonemapping is now possible
 * Speed improvements in Reinhard05
 * Language change without restarting application
