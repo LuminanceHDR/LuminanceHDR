@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="image/x-pfs">
+      <comment>PFS Image</comment>
+          <glob pattern="*.pfs"/>
+          <glob pattern="*.PFS"/>
+  </mime-type>
+</mime-info>
