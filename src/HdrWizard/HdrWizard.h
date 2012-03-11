@@ -60,8 +60,8 @@ protected:
 
 private:
 	QString getQStringFromConfig( int type );
-	void loadInputFiles(QStringList files, int count);
-        LuminanceOptions luminance_options;
+
+    LuminanceOptions luminance_options;
 
     Gang* EVgang;
 
@@ -79,6 +79,8 @@ private:
     QScopedPointer<Ui::HdrWizard> m_Ui;
 
 private slots:
+
+    void loadInputFiles(QStringList files, int count);
 
 	void fileLoaded(int index, QString fname, float expotime);
 	void finishedLoadingInputFiles(QStringList NoExifFiles);

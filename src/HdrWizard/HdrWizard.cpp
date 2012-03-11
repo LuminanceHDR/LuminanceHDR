@@ -84,25 +84,36 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files):
     m_Ui->progressBar->hide();
     m_Ui->textEdit->hide();
 
+    if (files.size())
+    {
+        m_Ui->pagestack->setCurrentIndex(1);
+
+        QMetaObject::invokeMethod(this, "loadInputFiles", Qt::QueuedConnection,
+                                  Q_ARG(QStringList, files), Q_ARG(int, files.size()));
+    }
 }
 
-HdrWizard::~HdrWizard() {
+HdrWizard::~HdrWizard()
+{
+#ifdef QT_DEBUG
 	qDebug() << "HdrWizard::~HdrWizard()";
+#endif
 	
-	QStringList  fnames = hdrCreationManager->getFileList();
-	int n = fnames.size();
-	
-	for (int i = 0; i < n; i++) {
-		QString fname = hdrCreationManager->getFileList().at(i);
-		QFileInfo qfi(fname);
-                QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
-		QFile::remove(thumb_name);
-                thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
-		QFile::remove(thumb_name);
-	}
+    QStringList  fnames = hdrCreationManager->getFileList();
+    int n = fnames.size();
 
-	delete EVgang;
-	delete hdrCreationManager;
+    for (int i = 0; i < n; i++)
+    {
+        QString fname = hdrCreationManager->getFileList().at(i);
+        QFileInfo qfi(fname);
+        QString thumb_name = QString(luminance_options.getTempDir() + "/"+  qfi.completeBaseName() + ".thumb.jpg");
+        QFile::remove(thumb_name);
+        thumb_name = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".thumb.ppm");
+        QFile::remove(thumb_name);
+    }
+
+    delete EVgang;
+    delete hdrCreationManager;
 }
 
 void HdrWizard::setupConnections()

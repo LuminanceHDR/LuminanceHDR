@@ -61,7 +61,6 @@ namespace pfs
             m_channels.erase( itToDelete );
             delete ch;
         }
-        std::cout << "Frame::~Frame()" << std::endl;
     }
 
     void Frame::getXYZChannels( Channel* &X, Channel* &Y, Channel* &Z )

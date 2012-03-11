@@ -30,6 +30,7 @@
 namespace pfs {
     class Frame;            // #include "Libpfs/frame.h"
 }
+
 namespace Ui {
     class PreviewPanel;
 }
