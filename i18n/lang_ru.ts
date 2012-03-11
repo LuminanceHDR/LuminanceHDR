@@ -540,11 +540,11 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished">Невозможно преобразовать %1 в формат с плавающей точкой</translation>
+        <translation type="obsolete">Невозможно преобразовать %1 в формат с плавающей точкой</translation>
     </message>
     <message>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished">Невозможно преобразовать %1 в формат с переменной</translation>
+        <translation type="obsolete">Невозможно преобразовать %1 в формат с переменной</translation>
     </message>
     <message>
         <source>Failed executing align_image_stack</source>
@@ -665,15 +665,43 @@ See documentation for more informations.</source>
         <translation type="unfinished">(по умолчанию используется mantiuk06)</translation>
     </message>
     <message>
-        <source>-u --gui               Start in gui mode with input files.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contrast=VALUE:saturation=VALUE:detail=VALUE:equalization=true|false (for mantiuk06)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>colorsaturation=VALUE:contrastenhancement=VALUE:luminancelevel=VALUE:setluminance=true|false (for mantiuk08)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load file %1 failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3202,6 +3230,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation type="unfinished">Невозможно преобразовать %1 в формат с плавающей точкой</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation type="unfinished">Невозможно преобразовать %1 в формат с переменной</translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

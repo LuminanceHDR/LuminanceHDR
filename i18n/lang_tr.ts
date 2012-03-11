@@ -535,14 +535,6 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -556,10 +548,6 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>-v --verbose           Print more messages during execution.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-u --gui               Start in gui mode with input files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -665,6 +653,38 @@ See documentation for more informations.</source>
     <message>
         <source>You must either load an existing HDR file (via the -l option) or specify INPUTFILES to create a new HDR.
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load file %1 failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3156,6 +3176,42 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

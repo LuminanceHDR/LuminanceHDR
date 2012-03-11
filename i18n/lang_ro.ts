@@ -537,11 +537,11 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Cannot convert %1 to a float</source>
-        <translation type="unfinished">Nu pot coverti %1 la virgulă mobilă</translation>
+        <translation type="obsolete">Nu pot coverti %1 la virgulă mobilă</translation>
     </message>
     <message>
         <source>Cannot convert %1 to an integer</source>
-        <translation type="unfinished">Nu pot converti %1 la întreg</translation>
+        <translation type="obsolete">Nu pot converti %1 la întreg</translation>
     </message>
     <message>
         <source>Usage: %1 [OPTIONS]... [INPUTFILES]...</source>
@@ -561,7 +561,7 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>-u --gui               Start in gui mode with input files.</source>
-        <translation type="unfinished">-u --gui              Începe în modul gui cu fişierele importate.</translation>
+        <translation type="obsolete">-u --gui              Începe în modul gui cu fişierele importate.</translation>
     </message>
     <message>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
@@ -668,6 +668,38 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
 </source>
         <translation type="unfinished">Trebuie fie să încarci un fișier HDR existent (cu opțiunea -l) sau să specifici FIȘIERESURSĂ pentru a crea un HDR nou.
 </translation>
+    </message>
+    <message>
+        <source>Load file %1 failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3199,6 +3231,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Cannot find Qt&apos;s JPEG Plugin...&lt;br&gt;Please unzip the DLL package with the option &quot;use folder names&quot; activated.</source>
         <translation type="unfinished">Nu pot găsi modulul JPEG al Qt...&lt;br&gt;Te rog dezarhivează pachetul DLL cu opțiunea &quot;folosește numele dosarelor&quot; activată.</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation type="unfinished">Nu pot coverti %1 la virgulă mobilă</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation type="unfinished">Nu pot converti %1 la întreg</translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

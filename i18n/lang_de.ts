@@ -47,7 +47,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;Tiff LDR bugfixes and suggestion&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Ignacy Gawedzki&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;DCRaw&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Dave Coffin&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;And also&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;  Erik Ouchterlony&lt;br /&gt;  Antoine Latter&lt;br /&gt;  Frank Boehme&lt;br /&gt;  Sloan Poe&lt;br /&gt;  Elizabeth Oldham &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -55,7 +55,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;justify&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -64,7 +64,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#00007f;&quot;&gt;Luminance HDR&lt;/span&gt; — HDR imaging workflow application&lt;br /&gt;(c) 2006-2009, Giuseppe Rota&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;(c) 2010, 2011, Franco Comida, Davide Anastasia&lt;br /&gt;&lt;a href=&quot;http://qtpfsgui.sourceforge.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://qtpfsgui.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -87,7 +87,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; font-weight:600;&quot;&gt;pfs{tools|calibration|tmo} codebase&lt;/span&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   Grzegorz Krawczyk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:krawczyk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;krawczyk@mpi-sb.mpg.de&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;   Rafal Mantiuk&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mailto:mantiuk@mpi-sb.mpg.de&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mantiuk@mpi-sb.mpg.de &lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;G.Ward&apos;s Mean Threshold Bitmap (MTB) algorithm &lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Nicholas Phillips&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;ngphillips@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;ngphillips@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;  &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Russian translator, usability fixes, user manual, .desktop file&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alexandre Prokoudine&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;alexandre.prokoudine@gmail.com&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;alexandre.prokoudine@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Norwegian translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Åsmund Ødegård&lt;br /&gt;   &lt;/span&gt;&lt;a href=&quot;mandus@users.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:9pt; text-decoration: underline; color:#0000ff;&quot;&gt;mandus@users.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Turkish translato&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;r&lt;br /&gt;   Mustafa GÜNAY&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;French translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Cyril Lavier&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Spanish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Alberto Garcia&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;German translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Christian Raue&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Czech translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Jan Gemela&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Polish translator&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Maciej Dziardziel&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;Romanian translator&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;   Andrei Răcăşan&lt;br /&gt;   &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:9pt; font-weight:600; color:#000000;&quot;&gt;FreeBSD patches and maintainers&lt;/span&gt;&lt;span style=&quot; font-size:9pt; color:#000000;&quot;&gt;&lt;br /&gt;Joao Rocha Braga Filho, Bertrand Petit and Steffen Beyer&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Abbrechen ...</translation>
+        <translation>Abbrechen ...</translation>
     </message>
 </context>
 <context>
@@ -447,7 +447,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Aborting...</source>
-        <translation type="unfinished">Abbrechen ...</translation>
+        <translation>Abbrechen ...</translation>
     </message>
 </context>
 <context>
@@ -528,14 +528,6 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation>FEHLER: Kann Datei nicht speichern: %1</translation>
     </message>
     <message>
-        <source>Cannot convert %1 to a float</source>
-        <translation>Kann %1 nicht in eine Gleitkommazahl konvertieren</translation>
-    </message>
-    <message>
-        <source>Cannot convert %1 to an integer</source>
-        <translation>Kann %1 nicht in eine Ganzzahl konvertieren</translation>
-    </message>
-    <message>
         <source>Error: Unknown weight function specified.</source>
         <translation>Fehler: Unbekannte Gewichtung angegeben.</translation>
     </message>
@@ -558,10 +550,6 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>-v --verbose           Print more messages during execution.</source>
         <translation>-v --verbose           Zeigt während der Ausführung mehr Meldungen an.</translation>
-    </message>
-    <message>
-        <source>-u --gui               Start in gui mode with input files.</source>
-        <translation>-u --gui               Startet GUI mit Quelldateien.</translation>
     </message>
     <message>
         <source>-a --align AIS|MTB     Align Engine to use during HDR creation (default: no alignment).</source>
@@ -668,6 +656,38 @@ In der Dokumentation findest du weitere Informationen.</translation>
     <message>
         <source>(Default is mantiuk06)</source>
         <translation>(Standard ist mantiuk06)</translation>
+    </message>
+    <message>
+        <source>Load file %1 failed</source>
+        <translation>Laden der Datei %1 fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>EV values have been assigned.</source>
+        <translation>EV-Werte wurden zugewiesen.</translation>
+    </message>
+    <message>
+        <source>Creating (in memory) the HDR.</source>
+        <translation>Erzeuge HDR (im Speicher).</translation>
+    </message>
+    <message>
+        <source>Saving to file %1.</source>
+        <translation>Speichere in Datei %1.</translation>
+    </message>
+    <message>
+        <source>Image %1 saved successfully</source>
+        <translation>Bild %1 erfolgreich gespeichert</translation>
+    </message>
+    <message>
+        <source>Could not save %1</source>
+        <translation>Konnte %1 nicht speichern</translation>
+    </message>
+    <message>
+        <source>NOT Saving HDR image to file. %1</source>
+        <translation>Speichere HDR-Bild NICHT in Datei. %1</translation>
+    </message>
+    <message>
+        <source>Tonemapping requested, saving to file %1.</source>
+        <translation>Dynamikkompression angefordert, speichere in Datei %1.</translation>
     </message>
 </context>
 <context>
@@ -1517,7 +1537,7 @@ the following exif data: 		&lt;ul&gt;&lt;li&gt;Shutter Speed (seconds)&lt;/li&gt
     </message>
     <message>
         <source>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;All the EV values have been set.&lt;br&gt;Now click on Next button.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</source>
-        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle Belichtungswerte wurden festgelegt.&lt;br&gt;Jetzt auf &quot;Weiter&quot; klicken.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
+        <translation>&lt;center&gt;&lt;font color=&quot;#008400&quot;&gt;&lt;h3&gt;&lt;b&gt;Alle Belichtungswerte (EV) wurden festgelegt.&lt;br&gt;Jetzt auf &quot;Weiter&quot; klicken.&lt;/b&gt;&lt;/h3&gt;&lt;/font&gt;&lt;/center&gt;</translation>
     </message>
     <message>
         <source>Weights: </source>
@@ -3165,14 +3185,6 @@ p, li { white-space: pre-wrap; }
         <translation>Ungarisch</translation>
     </message>
     <message>
-        <source>Please restart LuminanceHDR to use the new language (%1).</source>
-        <translation type="obsolete">Luminance HDR muss neu gestartet werden, um die neue Sprache (%1) zu nutzen.</translation>
-    </message>
-    <message>
-        <source>Please restart...</source>
-        <translation type="obsolete">Bitte neu starten ...</translation>
-    </message>
-    <message>
         <source>Choose a directory</source>
         <translation>Ordner wählen</translation>
     </message>
@@ -3259,7 +3271,7 @@ p, li { white-space: pre-wrap; }
         <source>Angles:</source>
         <translation>Winkel:</translation>
     </message>
-    <message utf8="both">
+    <message utf8="true">
         <source>°</source>
         <translation></translation>
     </message>
@@ -3348,6 +3360,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>LuminanceHDR requires align_image_stack to be executed with the &quot;-v -a aligned_&quot; options. Command line options have been corrected.</source>
         <translation>Luminance HDR erfordert, dass align_image_stack mit den Optionen &quot;-v -a aligned_&quot; ausgeführt wird. Die Kommandozeilenoptionen wurden angepasst.</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to a float</source>
+        <translation>Kann %1 nicht in eine Gleitkommazahl konvertieren</translation>
+    </message>
+    <message>
+        <source>Cannot convert %1 to an integer</source>
+        <translation>Kann %1 nicht in eine Ganzzahl konvertieren</translation>
+    </message>
+    <message>
+        <source>Input file %1</source>
+        <translation>Quelldatei %1</translation>
+    </message>
+    <message>
+        <source>Running in HDR-creation mode.</source>
+        <translation>Läuft im HDR-erzeugen-Modus.</translation>
+    </message>
+    <message>
+        <source>Running in Load-HDR mode.</source>
+        <translation>Läuft im HDR-laden-Modus.</translation>
+    </message>
+    <message>
+        <source>Temporary directory: %1</source>
+        <translation>Temporärer Ordner: %1</translation>
+    </message>
+    <message>
+        <source>Using %1 threads.</source>
+        <translation>Benutze %1 Thread(s).</translation>
+    </message>
+    <message>
+        <source>Loading file %1</source>
+        <translation>Lade Datei %1</translation>
+    </message>
+    <message>
+        <source>Successfully loaded file %1.</source>
+        <translation>Datei %1 erfolgreich geladen.</translation>
     </message>
 </context>
 <context>
@@ -3988,14 +4036,6 @@ Luminace Level</source>
     <message>
         <source>Start tonemapping (CTRL+T)</source>
         <translation>Dynamikkompression starten (Strg+T)</translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="obsolete">Rückgängig</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">Wiederherstellen</translation>
     </message>
 </context>
 <context>
