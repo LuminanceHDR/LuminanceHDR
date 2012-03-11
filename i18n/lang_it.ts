@@ -3148,7 +3148,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Default Output Format</source>
-        <translation>Cartella predefinita di salvataggio per il Batch Tonemapping</translation>
+        <translation>Formato di uscita di default per il Batch Tonemapping</translation>
     </message>
     <message>
         <source>Batch Tonemapping Number of Threads</source>
