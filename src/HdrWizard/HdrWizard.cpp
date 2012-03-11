@@ -69,7 +69,10 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files):
 	
     EVgang = new Gang(m_Ui->EVSlider, m_Ui->ImageEVdsb, NULL, NULL, NULL,NULL, -10,10,0);
 
+	setupConnections();
+
 	if (files.size()) {
+		m_Ui->pagestack->setCurrentIndex(1);
 		loadInputFiles(files, files.size());
 	}
 	
@@ -81,7 +84,6 @@ HdrWizard::HdrWizard(QWidget *p, QStringList files):
     m_Ui->progressBar->hide();
     m_Ui->textEdit->hide();
 
-	setupConnections();
 }
 
 HdrWizard::~HdrWizard() {
