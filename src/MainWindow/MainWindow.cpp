@@ -1159,14 +1159,11 @@ void MainWindow::openFiles(const QStringList& files)
 {
     if (files.size() > 0)
     {
-        DnDOptionDialog dndOption(this, files);
-        dndOption.exec();
-
-        switch (dndOption.result) {
-        case 1: // create new using LDRS
+        switch (DnDOptionDialog::showDndDialog(this, files)) {
+        case DnDOptionDialog::ACTION_NEW_HDR:
             fileNewViaWizard(files);
             break;
-        case 2: // open HDRs
+        case DnDOptionDialog::ACTION_OPEN_HDR:
             foreach (QString filename, files)
             {
                  //qDebug() << filename;

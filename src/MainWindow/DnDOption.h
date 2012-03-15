@@ -34,18 +34,24 @@ namespace Ui {
 class DnDOptionDialog : public QDialog
 {
 Q_OBJECT
+
 public:
-	DnDOptionDialog(QWidget *parent, QStringList files);
+	static const int ACTION_INVALID =	0;
+	static const int ACTION_NEW_HDR =	1;
+	static const int ACTION_OPEN_HDR =	2;
+
+	static int showDndDialog(QWidget *parent, QStringList files); // 1=newHDR, 2=openHDR
+
+	DnDOptionDialog(QWidget *parent, QStringList files, bool allHdrs, bool allLdrs);
 	~DnDOptionDialog();
 
 protected slots:
 	void on_btnCancel_clicked();
 	void on_btnCreateNewHDR_clicked();
 	void on_btnOpenHDR_clicked();
-public:
-	int result; // 1=newHDR, 2=openHDR
 private:
     QScopedPointer<Ui::DnDOption> ui;
+	int result; // 1=newHDR, 2=openHDR
 
 };
 #endif
