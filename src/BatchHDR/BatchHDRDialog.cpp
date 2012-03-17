@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QDir>
+#include <QMessageBox>
 
 #include "BatchHDR/BatchHDRDialog.h"
 #include "ui_BatchHDRDialog.h"
@@ -157,6 +158,12 @@ void BatchHDRDialog::init_batch_hdr()
 {
 	if (m_Ui->inputLineEdit->text().isEmpty() || m_Ui->outputLineEdit->text().isEmpty())
 		return;
+
+	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
+		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
+		QMessageBox::warning(0,"", tr("Total number of pictures must be a multiple of number of bracketed images"), QMessageBox::Ok, QMessageBox::NoButton);
+		return;
+	}
 
 	m_Ui->startPushButton->setEnabled(false);
 	m_Ui->progressBar->setMaximum(m_bracketed.count() / m_Ui->spinBox->value());
