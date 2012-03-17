@@ -251,6 +251,10 @@ protected:
 
     void openFiles(const QStringList& files);
 
+	#ifdef Q_WS_WIN
+		bool winEvent(MSG * message, long * result);
+	#endif
+
 private:
     static int sm_NumMainWindows;
 

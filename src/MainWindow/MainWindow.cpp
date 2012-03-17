@@ -55,6 +55,7 @@
 #include "Common/archs.h"
 #include "Common/config.h"
 #include "Common/global.h"
+#include "OsIntegration/osintegration.h"
 #include "TonemappingPanel/TonemappingWarnDialog.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "BatchTM/BatchTMDialog.h"
@@ -186,6 +187,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    OsIntegration::getInstance().init(this);
+
     sm_NumMainWindows++;
 
     helpBrowser = NULL;
@@ -1956,3 +1959,10 @@ void MainWindow::openInputFiles()
 {
     openFiles(inputFiles);
 }
+
+#ifdef Q_WS_WIN
+bool MainWindow::winEvent(MSG * message, long * result)
+{
+    return OsIntegration::getInstance().winEvent(message, result);
+}
+#endif
