@@ -163,7 +163,7 @@ void BatchHDRDialog::init_batch_hdr()
 
 	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
 		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-		QMessageBox::warning(0,"", tr("Total number of pictures must be a multiple of number of bracketed images"), QMessageBox::Ok, QMessageBox::NoButton);
+		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images"), QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
 
@@ -177,7 +177,18 @@ void BatchHDRDialog::init_batch_hdr()
 
 void BatchHDRDialog::batch_hdr()
 {
+	m_Ui->horizontalSlider->setEnabled(false);
+	m_Ui->spinBox->setEnabled(false);
+	m_Ui->profileComboBox->setEnabled(false);
+	m_Ui->formatComboBox->setEnabled(false);
+	m_Ui->inputPushButton->setEnabled(false);
+	m_Ui->inputLineEdit->setEnabled(false);
+	m_Ui->outputPushButton->setEnabled(false);
+	m_Ui->outputLineEdit->setEnabled(false);
+	m_Ui->groupBox->setEnabled(false);
+
 	m_processing = true;
+
 	if (m_abort) {
 		qDebug() << "Aborted";
 		QApplication::restoreOverrideCursor();
