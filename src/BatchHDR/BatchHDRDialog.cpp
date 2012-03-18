@@ -31,6 +31,7 @@
 #include "BatchHDR/BatchHDRDialog.h"
 #include "ui_BatchHDRDialog.h"
 #include "Libpfs/pfs.h"
+#include "Libpfs/domio.h"
 #include "Core/IOWorker.h"
 #include "HdrCreation/HdrCreationManager.h"
 
@@ -116,6 +117,7 @@ void BatchHDRDialog::add_input_directory()
 		{
 			QDir chosendir(m_Ui->inputLineEdit->text());
 			chosendir.setFilter(QDir::Files);
+			chosendir.setSorting(QDir::Name);
 			m_bracketed = chosendir.entryList();
 			//hack to prepend to this list the path as prefix.
 			m_bracketed.replaceInStrings(QRegExp("(.+)"), chosendir.path()+"/\\1");
@@ -250,7 +252,12 @@ void BatchHDRDialog::create_hdr()
 	QString suffix = m_Ui->formatComboBox->currentText();
 	m_hdrCreationManager->chosen_config = predef_confs[m_Ui->profileComboBox->currentIndex()];
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
-	m_IO_Worker->write_hdr_frame(resultHDR, m_Ui->outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix);
+	QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed,6,10,QChar('0')) + "." + suffix;
+	m_IO_Worker->write_hdr_frame(resultHDR, outName);
+	
+	pfs::DOMIO pfsio;
+	pfsio.freeFrame(resultHDR);
+	
 	QStringList  fnames = m_hdrCreationManager->getFileList();
 	int n = fnames.size();
 
@@ -264,7 +271,7 @@ void BatchHDRDialog::create_hdr()
 	}
 	m_hdrCreationManager->reset();
 	m_Ui->progressBar->setValue(m_Ui->progressBar->value() + 1);
-	m_Ui->textEdit->append(tr("Written ") + m_Ui->outputLineEdit->text() + "/hdr_" + QString::number(m_numProcessed) + "." + suffix );
+	m_Ui->textEdit->append(tr("Written ") + outName );
 	this->batch_hdr();
 }
 
