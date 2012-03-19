@@ -39,7 +39,9 @@ BatchHDRDialog::BatchHDRDialog(QWidget *p):
 QDialog(p),
 	m_Ui(new Ui::BatchHDRDialog),
 	m_numProcessed(0),
+	m_processed(0),
 	m_errors(false),
+	m_loading_error(false),
 	m_abort(false),
 	m_processing(false)
 {
@@ -63,6 +65,7 @@ QDialog(p),
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
 	connect(m_hdrCreationManager, SIGNAL(errorWhileLoading(QString)), this, SLOT(error_while_loading(QString)));
 	connect(m_hdrCreationManager, SIGNAL(aisDataReady(QByteArray)), this, SLOT(writeAisData(QByteArray)));
+	connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
 
 	m_tempDir = m_luminance_options.getTempDir();
 	m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput();
@@ -144,6 +147,18 @@ void BatchHDRDialog::add_output_directory(QString dir)
 	QString outputDir = !dir.isEmpty() ? dir : QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrOutputDir);
 	if (!outputDir.isEmpty())
 	{
+		bool foundHDR = false;
+		QDir chosendir(outputDir);
+		chosendir.setFilter(QDir::Files);
+		QStringList files = chosendir.entryList();
+		if (!files.empty()) {
+			foreach(QString file, files) {
+				if (file.startsWith("hdr_"))
+					foundHDR = true;
+			}		
+			if (foundHDR)
+					QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten,"), QMessageBox::Ok, QMessageBox::NoButton);
+		}
 		m_Ui->outputLineEdit->setText(outputDir);
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings,
 		// update the settings
@@ -163,20 +178,10 @@ void BatchHDRDialog::init_batch_hdr()
 
 	if (m_bracketed.count() % m_Ui->spinBox->value() != 0) {
 		qDebug() << "Total number of pictures must be a multiple of number of bracketed images";
-		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images"), QMessageBox::Ok, QMessageBox::NoButton);
+		QMessageBox::warning(0,tr("Warning"), tr("Total number of pictures must be a multiple of number of bracketed images."), QMessageBox::Ok, QMessageBox::NoButton);
 		return;
 	}
 
-	m_Ui->startPushButton->setEnabled(false);
-	m_Ui->progressBar->setMaximum(m_bracketed.count() / m_Ui->spinBox->value());
-	m_Ui->textEdit->append(tr("Started processing..."));
-	// mouse pointer to busy
-	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-	this->batch_hdr();
-}
-
-void BatchHDRDialog::batch_hdr()
-{
 	m_Ui->horizontalSlider->setEnabled(false);
 	m_Ui->spinBox->setEnabled(false);
 	m_Ui->profileComboBox->setEnabled(false);
@@ -186,7 +191,16 @@ void BatchHDRDialog::batch_hdr()
 	m_Ui->outputPushButton->setEnabled(false);
 	m_Ui->outputLineEdit->setEnabled(false);
 	m_Ui->groupBox->setEnabled(false);
+	m_Ui->startPushButton->setEnabled(false);
+	m_Ui->progressBar->setMaximum(m_bracketed.count() / m_Ui->spinBox->value());
+	m_Ui->textEdit->append(tr("Started processing..."));
+	// mouse pointer to busy
+	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+	batch_hdr();
+}
 
+void BatchHDRDialog::batch_hdr()
+{
 	m_processing = true;
 
 	if (m_abort) {
@@ -197,13 +211,14 @@ void BatchHDRDialog::batch_hdr()
 	}
 	if (!m_bracketed.isEmpty())
 	{
+		m_Ui->textEdit->append(tr("Creating HDR..."));
 		m_numProcessed++;
 		QStringList toProcess;
 		for (int i = 0; i < m_Ui->spinBox->value(); ++i)
 		{
 			toProcess << m_bracketed.takeFirst();
 		}
-		qDebug() << toProcess;
+		qDebug() << "BatchHDRDialog::batch_hdr() Files to process: " << toProcess;
 		m_hdrCreationManager->setFileList(toProcess);
 		m_hdrCreationManager->loadInputFiles();
 	}	
@@ -242,7 +257,7 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 			QFile::remove(thumb_name);
 		}
 		m_hdrCreationManager->reset();
-		this->batch_hdr(); // try to continue
+		batch_hdr();
 		return;
 	}
 	if (m_Ui->autoAlignCheckBox->isChecked())
@@ -254,12 +269,12 @@ void BatchHDRDialog::align(QStringList filesLackingExif)
 			m_hdrCreationManager->align_with_mtb();
 	}
 	else
-		this->create_hdr();
+		create_hdr();
 }
 
 void BatchHDRDialog::create_hdr()
 {
-	m_Ui->textEdit->append(tr("Creating HDR..."));
+	qDebug() << "BatchHDRDialog::create_hdr()";
 	QString suffix = m_Ui->formatComboBox->currentText();
 	m_hdrCreationManager->chosen_config = predef_confs[m_Ui->profileComboBox->currentIndex()];
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
@@ -283,7 +298,7 @@ void BatchHDRDialog::create_hdr()
 	m_hdrCreationManager->reset();
 	m_Ui->progressBar->setValue(m_Ui->progressBar->value() + 1);
 	m_Ui->textEdit->append(tr("Written ") + outName );
-	this->batch_hdr();
+	batch_hdr();
 }
 
 void BatchHDRDialog::error_while_loading(QString message)
@@ -291,6 +306,8 @@ void BatchHDRDialog::error_while_loading(QString message)
 	qDebug() << message;
 	m_Ui->textEdit->append(tr("Error: ") + message);
 	m_errors = true;
+	m_loading_error = true;
+	m_processed++;
 	QStringList  fnames = m_hdrCreationManager->getFileList();
 	int n = fnames.size();
 
@@ -302,8 +319,7 @@ void BatchHDRDialog::error_while_loading(QString message)
 		thumb_name = QString(m_tempDir + "/" + qfi.completeBaseName() + ".thumb.ppm");
 		QFile::remove(thumb_name);
 	}
-	m_hdrCreationManager->reset();
-	this->batch_hdr(); // try to continue
+	try_to_continue();
 }
 
 void BatchHDRDialog::writeAisData(QByteArray data)
@@ -327,4 +343,23 @@ void BatchHDRDialog::abort()
 	}
 	else
 		this->reject();
+}
+
+void BatchHDRDialog::processed()
+{
+	m_processed++;
+	qDebug() << "BatchHDRDialog::processed() : " << m_processed;
+	try_to_continue();
+}
+
+void BatchHDRDialog::try_to_continue()
+{
+	if (m_processed == m_Ui->spinBox->value()) {
+		m_processed = 0;
+		if (m_loading_error) {
+			m_loading_error = false;
+			m_hdrCreationManager->reset();
+			batch_hdr(); // try to continue
+		}
+	}
 }
