@@ -17,7 +17,6 @@ Comment[tr]=HDR resim dosyaları oluşturun ve ton haritalamalarını düzenleyi
 Exec=luminance-hdr --gui %F
 Icon=luminance-hdr
 MimeType=image/x-dcraw;image/tiff;image/jpeg;image/png;image/x-exr;image/x-hdr;image/x-pfs;
-Path=
 StartupNotify=true
 StartupWMClass=luminance-hdr
 Terminal=false

@@ -59,20 +59,24 @@ protected slots:
 	void writeAisData(QByteArray);
 	void check_start_button();
 	void abort();
+	void processed();
+	void try_to_continue();
 
 protected:
-        LuminanceOptions m_luminance_options;
+	LuminanceOptions m_luminance_options;
 
-        //Application-wide settings, loaded via QSettings
-        QString m_batchHdrInputDir;
-        QString m_batchHdrOutputDir;
-        QString m_tempDir;
+	//Application-wide settings, loaded via QSettings
+	QString m_batchHdrInputDir;
+	QString m_batchHdrOutputDir;
+	QString m_tempDir;
 
 	QStringList m_bracketed;
 	IOWorker *m_IO_Worker;
 	HdrCreationManager *m_hdrCreationManager;
 	int m_numProcessed;
+	int m_processed;
 	bool m_errors;
+	bool m_loading_error;
 	bool m_abort;
 	bool m_processing;
 };

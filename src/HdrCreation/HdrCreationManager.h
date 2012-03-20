@@ -108,6 +108,8 @@ signals:
 	void maximumValue(int);
 	void nextstep(int);
 
+	void processed();
+
 private:
 	//List of input files (absolute pathnames)
 	QStringList fileList;

@@ -98,7 +98,7 @@ void HdrCreationManager::loadInputFiles() {
 		return;
 	} //if all files already started processing
 	else { //if we still have to start processing some file
-                while (runningThreads < m_luminance_options.getNumThreads() && firstNotStarted < startedProcessing.size()) {
+		while (runningThreads < m_luminance_options.getNumThreads() && firstNotStarted < startedProcessing.size()) {
 			//qDebug("HCM: Creating loadinput thread on %s",qPrintable(fileList[firstNotStarted]));
 			startedProcessing[firstNotStarted] = true;
 			HdrInputLoader *thread = new HdrInputLoader(fileList[firstNotStarted],firstNotStarted);
@@ -127,6 +127,7 @@ void HdrCreationManager::loadFailed(QString message, int /*index*/) {
 void HdrCreationManager::mdrReady(pfs::Frame *newFrame, int index, float expotime, QString newfname) {
 	if (loadingError) {
 		//qDebug("HCM: loadingError, bailing out.");
+		emit processed();
 		return;
 	}
 	//newFrame is in CS_RGB but channel names remained X Y Z
@@ -163,19 +164,20 @@ void HdrCreationManager::ldrReady(QImage *newImage, int index, float expotime, Q
 	//qDebug("HCM: ldrReady");
 	if (loadingError) {
 		//qDebug("HCM: loadingError, bailing out.");
+		emit processed();
 		return;
 	}
 	if (inputType==MDR_INPUT_TYPE) {
 		//qDebug("HCM: wrong format, bailing out.");
 		loadingError = true;
-                emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
+		emit errorWhileLoading(tr("The image %1 is an 16 bit format while the previous ones are not.").arg(newfname));
 		return;
 	}
 	inputType=LDR_INPUT_TYPE;
 	if (!ldrsHaveSameSize(newImage->width(),newImage->height())) {
 		//qDebug("HCM: wrong size, bailing out.");
 		loadingError = true;
-                emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
+		emit errorWhileLoading(tr("The image %1 has an invalid size.").arg(newfname));
 		return;
 	}
 
@@ -211,6 +213,7 @@ void HdrCreationManager::newResult(int index, float expotime, QString newfname) 
 	}
 
 	emit fileLoaded(index,fileList[index],expotimes[index]);
+	emit processed();
 }
 
 bool HdrCreationManager::ldrsHaveSameSize(int currentWidth, int currentHeight) {
@@ -263,7 +266,7 @@ void HdrCreationManager::align_with_ais() {
 	connect(ais, SIGNAL(error(QProcess::ProcessError)), this, SIGNAL(ais_failed(QProcess::ProcessError)));
 	connect(ais, SIGNAL(readyRead()), this, SLOT(readData()));
 	
-        QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
+	QStringList ais_parameters = m_luminance_options.getAlignImageStackOptions();
 	if (filesToRemove[0] == "") {
 		ais_parameters << fileList;
 	}
@@ -335,6 +338,7 @@ void HdrCreationManager::removeTempFiles()
             QFile::remove(tempfname);
         }
     }
+	filesToRemove.clear();
 }
 
 void HdrCreationManager::checkEVvalues() {
