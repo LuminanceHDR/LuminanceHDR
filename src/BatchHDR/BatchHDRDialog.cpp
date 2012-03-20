@@ -157,7 +157,7 @@ void BatchHDRDialog::add_output_directory(QString dir)
 					foundHDR = true;
 			}		
 			if (foundHDR)
-					QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten,"), QMessageBox::Ok, QMessageBox::NoButton);
+					QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten."), QMessageBox::Ok, QMessageBox::NoButton);
 		}
 		m_Ui->outputLineEdit->setText(outputDir);
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings,
