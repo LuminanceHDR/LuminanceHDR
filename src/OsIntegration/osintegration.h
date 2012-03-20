@@ -21,37 +21,37 @@
  * @author Daniel Kaneider <danielkaneider@users.sourceforge.net>
  */
 
-#pragma once
+#ifndef OSINTEGRATION_H
+#define OSINTEGRATION_H
 
 #include <QWidget>
+
 #ifdef Q_WS_WIN
 	#include "ecwin7.h"
 #endif
 
-// TODO: use libhdr singleton template
-
-
 class OsIntegration
 {
 
- public:
-    static OsIntegration& getInstance();
+public:
+	static OsIntegration& getInstance();
 
- 	void init(QWidget* mainWindow);
- 	void setProgress(int value, int max = 100);
-	#ifdef Q_WS_WIN
-		bool winEvent(MSG * message, long * result);
-	#endif
+	void init(QWidget* mainWindow);
+	void setProgress(int value, int max = 100);
+#ifdef Q_WS_WIN
+	bool winEvent(MSG * message, long * result);
+#endif
 
 private:
-    OsIntegration();
-    OsIntegration(const OsIntegration&) {}
-    OsIntegration& operator=(const OsIntegration&) {}
-    ~OsIntegration() {}
+	OsIntegration();
+	OsIntegration(const OsIntegration&);
+	OsIntegration& operator=(const OsIntegration&);
+	~OsIntegration();
 
-    static OsIntegration* instance;
-	#ifdef Q_WS_WIN
-    	EcWin7* winProgressbar;
-	#endif
+	static OsIntegration* instance;
+#ifdef Q_WS_WIN
+	EcWin7* winProgressbar;
+#endif
 
 };
+#endif // OSINTEGRATION_H
