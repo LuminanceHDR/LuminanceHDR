@@ -28,6 +28,7 @@
 #include <QDir>
 #include <QMessageBox>
 
+#include "arch/math.h"
 #include "BatchHDR/BatchHDRDialog.h"
 #include "ui_BatchHDRDialog.h"
 #include "Libpfs/pfs.h"
@@ -192,7 +193,8 @@ void BatchHDRDialog::init_batch_hdr()
 	m_Ui->outputLineEdit->setEnabled(false);
 	m_Ui->groupBox->setEnabled(false);
 	m_Ui->startPushButton->setEnabled(false);
-	m_Ui->progressBar->setMaximum(m_bracketed.count() / m_Ui->spinBox->value());
+	m_total = m_bracketed.count() / m_Ui->spinBox->value();
+	m_Ui->progressBar->setMaximum(m_total);
 	m_Ui->textEdit->append(tr("Started processing..."));
 	// mouse pointer to busy
 	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -278,7 +280,9 @@ void BatchHDRDialog::create_hdr()
 	QString suffix = m_Ui->formatComboBox->currentText();
 	m_hdrCreationManager->chosen_config = predef_confs[m_Ui->profileComboBox->currentIndex()];
 	pfs::Frame* resultHDR = m_hdrCreationManager->createHdr(false, 1);
-	QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed,6,10,QChar('0')) + "." + suffix;
+
+	int paddingLength = ceil(log10(m_total + 1.0f));
+	QString outName = m_Ui->outputLineEdit->text() + "/hdr_" + QString("%1").arg(m_numProcessed, paddingLength, 10, QChar('0')) + "." + suffix;
 	m_IO_Worker->write_hdr_frame(resultHDR, outName);
 	
 	pfs::DOMIO pfsio;
@@ -296,7 +300,8 @@ void BatchHDRDialog::create_hdr()
 		QFile::remove(thumb_name);
 	}
 	m_hdrCreationManager->reset();
-	m_Ui->progressBar->setValue(m_Ui->progressBar->value() + 1);
+	int progressValue = m_Ui->progressBar->value() + 1;
+	m_Ui->progressBar->setValue(progressValue);
 	m_Ui->textEdit->append(tr("Written ") + outName );
 	batch_hdr();
 }
