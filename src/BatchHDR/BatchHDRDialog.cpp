@@ -119,9 +119,14 @@ void BatchHDRDialog::add_input_directory()
 		m_Ui->inputLineEdit->setText(inputDir);
 		if (!m_Ui->inputLineEdit->text().isEmpty())
 		{
+    		QStringList filters;
+			filters << "*.jpg" << "*.jpeg" << "*.tiff" << "*.tif" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.rw2" << "*.sr2" << "*.3fr" << "*.mef" << "*.mos" << "*.erf" << "*.nrw" << "*.srw";
+
+    		filters << "*.JPG" << "*.JPEG" << "*.TIFF" << "*.TIF" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.RW2" << "*.SR2" << "*.3FR" << "*.MEF" << "*.MOS" << "*.ERF" << "*.NRW" << "*.SRW";
 			QDir chosendir(m_Ui->inputLineEdit->text());
 			chosendir.setFilter(QDir::Files);
 			chosendir.setSorting(QDir::Name);
+			chosendir.setNameFilters(filters);
 			m_bracketed = chosendir.entryList();
 			//hack to prepend to this list the path as prefix.
 			m_bracketed.replaceInStrings(QRegExp("(.+)"), chosendir.path()+"/\\1");
