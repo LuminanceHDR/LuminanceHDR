@@ -189,6 +189,13 @@ public Q_SLOTS:
 
     int     getPreviewWidth();
     void    setPreviewWidth(int);
+
+	// Color Management
+	int		getCameraProfile();
+	void	setCameraProfile(int);
+
+	QString getCameraProfileFileName();
+	void	setCameraProfileFileName(QString);
 };
 
 #endif

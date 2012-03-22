@@ -80,6 +80,7 @@ private Q_SLOTS:
 	void blue_doubleSpinBox_valueChanged(double);
 	void green_horizontalSlider_valueChanged(int);
 	void green_doubleSpinBox_valueChanged(double);
+	void camera_comboBox_currentIndexChanged(int);
 
  	void user_qual_toolButton_clicked();
 	void med_passes_toolButton_clicked();
@@ -94,6 +95,7 @@ private Q_SLOTS:
 	void red_toolButton_clicked();
 	void blue_toolButton_clicked();
 	void green_toolButton_clicked();
+	void camera_toolButton_clicked();
 
 	void toolButtonInterface_clicked();
 	void toolButtonHDR_clicked();

@@ -238,6 +238,9 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     connect(m_Ui->blue_toolButton,SIGNAL(clicked()),this,SLOT(blue_toolButton_clicked()));
     connect(m_Ui->green_toolButton,SIGNAL(clicked()),this,SLOT(green_toolButton_clicked()));
 
+    connect(m_Ui->camera_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(camera_comboBox_currentIndexChanged(int)));
+    connect(m_Ui->camera_toolButton,SIGNAL(clicked()),this,SLOT(camera_toolButton_clicked()));
+	
     connect(m_Ui->toolButtonInterface,SIGNAL(clicked()),this,SLOT(toolButtonInterface_clicked()));
     connect(m_Ui->toolButtonHDR,SIGNAL(clicked()),this,SLOT(toolButtonHDR_clicked()));
     connect(m_Ui->toolButtonTM,SIGNAL(clicked()),this,SLOT(toolButtonTM_clicked()));
@@ -313,6 +316,11 @@ void PreferencesDialog::ok_clicked()
     luminance_options.setRawUserSaturation( m_Ui->user_sat_spinBox->value() );
     luminance_options.setRawAber0( m_Ui->red_doubleSpinBox->value() );
     luminance_options.setRawAber2( m_Ui->blue_doubleSpinBox->value() );
+
+	// --- Color Management
+	luminance_options.setCameraProfile( m_Ui->camera_comboBox->currentIndex() );
+	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
+		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
 
     // ---- temporary... this rubbish must go away!
     luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, m_Ui->user_qual_toolButton->isEnabled());
@@ -411,9 +419,20 @@ void PreferencesDialog::wb_method_comboBox_currentIndexChanged(int i)
         m_Ui->wb_method_toolButton->setEnabled(true);
 }
 
+void PreferencesDialog::camera_comboBox_currentIndexChanged(int i)
+{
+	if ( i == 2 ) {
+		m_Ui->camera_lineEdit->setEnabled(true);
+		m_Ui->camera_toolButton->setEnabled(true);
+	}
+	else {
+		m_Ui->camera_lineEdit->setEnabled(false);
+		m_Ui->camera_toolButton->setEnabled(false);
+	}
+}
 void PreferencesDialog::TK_spinBox_valueChanged(int value)
 {
-    if (value == 6500)
+    if (value == false)
         m_Ui->TK_toolButton->setEnabled(false);
     else
         m_Ui->TK_toolButton->setEnabled(true);
@@ -883,6 +902,14 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->red_toolButton->setEnabled( luminance_options.value(KEY_RED_TOOLBUTTON).toBool());
     m_Ui->blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
     m_Ui->green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
+	
+	int index = luminance_options.getCameraProfile();
+	m_Ui->camera_comboBox->setCurrentIndex( index );
+	if (index == 2) { // custom profile
+		m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
+		m_Ui->camera_lineEdit->setEnabled(true);
+		m_Ui->camera_toolButton->setEnabled(true);
+	}
 }
 
 PreferencesDialog::~PreferencesDialog() {}
@@ -904,3 +931,12 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
+void PreferencesDialog::camera_toolButton_clicked()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICCFile"),
+                                                 "/home",
+                                                 tr("Color profile (*.icc)"));
+	if (!fileName.isEmpty()) {
+		m_Ui->camera_lineEdit->setText(fileName);
+	}
+}

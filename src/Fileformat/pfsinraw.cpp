@@ -24,10 +24,10 @@
 
 #include <vector>
 #include <cmath>
-#include <iostream>
 
 #include <QString>
 #include <QFileInfo>
+#include <QDebug>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/pfsinraw.h"
@@ -123,7 +123,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     RGB[1] = RGB[1] / options->getRawGreen();
 
    if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
-      std::cout << "Error Opening RAW File" << std::endl;
+      qDebug() << "Error Opening RAW File";
       RawProcessor.recycle();
       return NULL;
     }
@@ -183,40 +183,49 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     OUT.aber[2] = options->getRawAber2();
   }
 
+  if ( options->getCameraProfile() == 1 )
+  	OUT.camera_profile = (char*)"embed";
+  else if ( options->getCameraProfile() == 2 ) {
+	qDebug() << qPrintable(options->getCameraProfileFileName());
+	OUT.camera_profile = (char*)qPrintable(options->getCameraProfileFileName());
+  }
+
+  OUT.output_color = 0;
+
   if ( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
   {
-    std::cout << "Error Opening RAW File" << std::endl;
+    qDebug() << "Error Opening RAW File";
     RawProcessor.recycle();
     return NULL;
   }
 
   if ( (ret = RawProcessor.unpack()) != LIBRAW_SUCCESS)
   {
-    std::cout << "Error Unpacking RAW File" << std::endl;
+    qDebug() << "Error Unpacking RAW File";
     RawProcessor.recycle();
     return NULL;
   }
 
   if ( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS)
   {
-    std::cout << "Error Processing RAW File" << std::endl;
+    qDebug() << "Error Processing RAW File";
     RawProcessor.recycle();
     return NULL;
   }
 
-  std::cout << "Width: " << S.width << " Height: " << S.height << std::endl;
-  std::cout << "iWidth: " << S.iwidth << " iHeight: " << S.iheight << std::endl;
-  std::cout << "Make: " << P1.make << std::endl;
-  std::cout << "Model: " << P1.model << std::endl;
-  std::cout << "ISO: " << P2.iso_speed << std::endl;
-  std::cout << "Shutter: " << P2.shutter << std::endl;
-  std::cout << "Aperture: " << P2.aperture << std::endl;
-  std::cout << "Focal Length: " << P2.focal_len << std::endl;
+  qDebug() << "Width: " << S.width << " Height: " << S.height;
+  qDebug() << "iWidth: " << S.iwidth << " iHeight: " << S.iheight;
+  qDebug() << "Make: " << P1.make;
+  qDebug() << "Model: " << P1.model;
+  qDebug() << "ISO: " << P2.iso_speed;
+  qDebug() << "Shutter: " << P2.shutter;
+  qDebug() << "Aperture: " << P2.aperture;
+  qDebug() << "Focal Length: " << P2.focal_len;
 
   libraw_processed_image_t *image = RawProcessor.dcraw_make_mem_image(&ret);
 
   if( image == NULL) {
-    std::cout << "Memory Error RAW File" << std::endl;
+    qDebug() << "Memory Error RAW File";
     RawProcessor.recycle();
     return NULL;
   }
@@ -252,8 +261,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
       }
   }
 
-  std::cout << "Data size: " << image->data_size << " " << W*H*3*2 << std::endl;
-  std::cout << "W: " << image->width << " H: " << image->height << std::endl;
+  qDebug() << "Data size: " << image->data_size << " " << W*H*3*2;
+  qDebug() << "W: " << image->width << " H: " << image->height;
 
 
   if (writeOnDisk)   // for align_image_stack and thumbnails
@@ -271,10 +280,10 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
       QString thumbname = tmpdir + "/" + qfi.baseName() + "." + suffix;
       RawProcessor.dcraw_thumb_writer(QFile::encodeName(thumbname));
     }
-    std::cout << "Filename: " << filename << std::endl;
-    std::cout << "Outname: " << qPrintable(outname) << std::endl;
+    qDebug() << "Filename: " << filename;
+    qDebug() << "Outname: " << qPrintable(outname);
   }
-
+  
   LibRaw::dcraw_clear_mem(image);
   RawProcessor.recycle();
 

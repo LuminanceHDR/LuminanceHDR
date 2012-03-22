@@ -92,6 +92,9 @@
 #define KEY_USE_NOISE "Raw_Conversion_Options/use_noise"
 #define KEY_USE_CHROMA "Raw_Conversion_Options/use_chroma"
 
+#define KEY_COLOR_CAMERA_PROFILE "Color_Management_Options/camera_profile"
+#define KEY_COLOR_CAMERA_PROFILE_FILENAME "Color_Management_Options/camera_profile_filename"
+
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"
 #define KEY_RECENT_FILES "Recent_files_list"

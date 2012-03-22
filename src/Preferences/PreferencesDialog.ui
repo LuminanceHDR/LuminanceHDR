@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
+    <width>627</width>
     <height>617</height>
    </rect>
   </property>
@@ -36,7 +36,7 @@
           <string>External Tools</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons.qrc">
+          <iconset resource="../../icons.qrc">
            <normaloff>:/new/prefix1/images/gear.png</normaloff>:/new/prefix1/images/gear.png</iconset>
          </property>
          <property name="iconSize">
@@ -65,7 +65,7 @@
           <string>HDR Options</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons.qrc">
+          <iconset resource="../../icons.qrc">
            <normaloff>:/new/prefix1/images/HDR_icon.png</normaloff>:/new/prefix1/images/HDR_icon.png</iconset>
          </property>
          <property name="iconSize">
@@ -94,7 +94,7 @@
           <string>Interface</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons.qrc">
+          <iconset resource="../../icons.qrc">
            <normaloff>:/new/prefix1/images/preferences-desktop-theme.png</normaloff>:/new/prefix1/images/preferences-desktop-theme.png</iconset>
          </property>
          <property name="iconSize">
@@ -126,7 +126,7 @@
           <string>Tone Mapping</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons.qrc">
+          <iconset resource="../../icons.qrc">
            <normaloff>:/new/prefix1/images/tonemap.png</normaloff>:/new/prefix1/images/tonemap.png</iconset>
          </property>
          <property name="iconSize">
@@ -168,7 +168,7 @@
           <string>RAW Conversion</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons.qrc">
+          <iconset resource="../../icons.qrc">
            <normaloff>:/new/prefix1/images/rawconverter.png</normaloff>:/new/prefix1/images/rawconverter.png</iconset>
          </property>
          <property name="iconSize">
@@ -754,7 +754,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -843,7 +843,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -974,7 +974,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1093,7 +1093,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1192,7 +1192,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1265,7 +1265,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1348,7 +1348,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1460,7 +1460,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1557,7 +1557,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1654,7 +1654,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1796,7 +1796,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -1924,7 +1924,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -2027,7 +2027,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -2068,7 +2068,7 @@ p, li { white-space: pre-wrap; }
                <item row="0" column="0">
                 <widget class="QLabel" name="label_12">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>Camera profile</string>
@@ -2080,7 +2080,7 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <widget class="QComboBox" name="camera_comboBox">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -2123,7 +2123,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_16">
+                  <widget class="QToolButton" name="camera_toolButton_reset">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -2131,7 +2131,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -2168,8 +2168,8 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
-                     <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+                    <iconset resource="../../icons.qrc">
+                     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -2180,7 +2180,7 @@ p, li { white-space: pre-wrap; }
                  <item>
                   <widget class="QComboBox" name="colorspace_comboBox">
                    <property name="enabled">
-                    <bool>false</bool>
+                    <bool>true</bool>
                    </property>
                    <property name="minimumSize">
                     <size>
@@ -2244,7 +2244,7 @@ p, li { white-space: pre-wrap; }
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="toolButton_17">
+                  <widget class="QToolButton" name="colorspace_toolButton_reset">
                    <property name="enabled">
                     <bool>false</bool>
                    </property>
@@ -2252,7 +2252,7 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
+                    <iconset resource="../../icons.qrc">
                      <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
                    </property>
                   </widget>
@@ -2262,7 +2262,7 @@ p, li { white-space: pre-wrap; }
                <item row="2" column="0">
                 <widget class="QLabel" name="label_13">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>Color Space</string>
@@ -2299,8 +2299,8 @@ p, li { white-space: pre-wrap; }
                     <string>...</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons.qrc">
-                     <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+                    <iconset resource="../../icons.qrc">
+                     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -2439,11 +2439,11 @@ p, li { white-space: pre-wrap; }
   <tabstop>blue_doubleSpinBox</tabstop>
   <tabstop>blue_toolButton</tabstop>
   <tabstop>camera_comboBox</tabstop>
-  <tabstop>toolButton_16</tabstop>
+  <tabstop>camera_toolButton_reset</tabstop>
   <tabstop>camera_lineEdit</tabstop>
   <tabstop>camera_toolButton</tabstop>
   <tabstop>colorspace_comboBox</tabstop>
-  <tabstop>toolButton_17</tabstop>
+  <tabstop>colorspace_toolButton_reset</tabstop>
   <tabstop>colorspace_lineEdit</tabstop>
   <tabstop>colorspace_toolButton</tabstop>
   <tabstop>TK_horizontalSlider</tabstop>
@@ -2452,7 +2452,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>TK_spinBox</tabstop>
  </tabstops>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>
