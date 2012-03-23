@@ -96,6 +96,7 @@ private Q_SLOTS:
 	void blue_toolButton_clicked();
 	void green_toolButton_clicked();
 	void camera_toolButton_clicked();
+	void camera_toolButton_reset_clicked();
 
 	void toolButtonInterface_clicked();
 	void toolButtonHDR_clicked();

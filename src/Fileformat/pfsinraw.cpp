@@ -183,14 +183,19 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
     OUT.aber[2] = options->getRawAber2();
   }
 
+  QString fname;
+  QByteArray ba;
+  
   if ( options->getCameraProfile() == 1 )
   	OUT.camera_profile = (char*)"embed";
   else if ( options->getCameraProfile() == 2 ) {
-	qDebug() << qPrintable(options->getCameraProfileFileName());
-	OUT.camera_profile = (char*)qPrintable(options->getCameraProfileFileName());
+	fname = options->getCameraProfileFileName();
+	ba = fname.toUtf8();
+	OUT.camera_profile = ba.data();
+	qDebug() << "Camera profile: " << fname;
   }
 
-  OUT.output_color = 0;
+  OUT.output_color = 1; // sRGB
 
   if ( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
   {
