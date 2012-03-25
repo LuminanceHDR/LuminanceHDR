@@ -194,7 +194,7 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
 		qDebug() << "Transform to Monitor Profile";
 		QByteArray ba = fname.toUtf8();
 
-		out_qimage = new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_ARGB32);		
+		out_qimage = new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_RGB32);		
 
 		cmsHPROFILE hsRGB, hOut;
 		cmsHTRANSFORM xform;
@@ -202,17 +202,17 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
 		cmsSetErrorHandler(errorH);
 		
 		hsRGB = cmsCreate_sRGBProfile();
-		hOut = cmsCreate_sRGBProfile();
-		//hOut = cmsOpenProfileFromFile(ba.data(), "r");
+		hOut = cmsOpenProfileFromFile(ba.data(), "r");
  
-		xform = cmsCreateTransform(hsRGB, TYPE_RGBA_8_PLANAR, hOut, TYPE_RGBA_8_PLANAR, INTENT_PERCEPTUAL, 0);
+		xform = cmsCreateTransform(hsRGB, TYPE_RGB_8, hOut, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 
-		//cmsCloseProfile(hOut);
+		cmsCloseProfile(hOut);
 		
-		//for (int i = 0; i < input_qimage->height(); i++) {
-		//	cmsDoTransform(xform, input_qimage->scanLine( i ), out_qimage->scanLine( i ), input_qimage->bytesPerLine()/4);
-		//}
-		cmsDoTransform(xform, input_qimage->bits(), out_qimage->bits(), input_qimage->width() * input_qimage->height());
+		for (int i = 0; i < input_qimage->height(); i++) {
+			cmsDoTransform(xform, input_qimage->scanLine( i ), out_qimage->scanLine( i ), input_qimage->bytesPerLine()/3);
+		}
+
+		cmsDeleteTransform(xform);
 	}
 
 	return out_qimage;

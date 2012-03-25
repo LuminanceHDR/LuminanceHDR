@@ -78,7 +78,7 @@ QImage* fromLDRPFStoQImage(pfs::Frame* in_frame, float min_luminance, float max_
     const int width   = in_frame->getWidth();
     const int height  = in_frame->getHeight();
 
-    QImage* temp_qimage = new QImage(width, height, QImage::Format_ARGB32);
+    QImage* temp_qimage = new QImage(width, height, QImage::Format_RGB32);
 
     const float* p_R = Xc->getChannelData()->getRawData();
     const float* p_G = Yc->getChannelData()->getRawData();
