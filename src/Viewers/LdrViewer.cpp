@@ -31,14 +31,14 @@
 #include <QString>
 #include <QByteArray>
 
-#include <lcms2.h>
-
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Common/LuminanceOptions.h"
+
+int errorH(int ErrorCode, const char *Text);
 
 namespace
 {
@@ -75,47 +75,23 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
 	LuminanceOptions luminance_opts; 
 
-    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+    //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));	
 
-	QString fname = luminance_opts.getMonitorProfileFileName();
-	//QString fname = "/usr/share/color/icc/bluish.icc";
-	qDebug() << "Monitor profile: " << fname;
-	
-	QImage *out_qimage = NULL;
+	QImage *xformed_qimage = doCMSTransform(temp_qimage);
 
-	if (!fname.isEmpty()) {
-		qDebug() << "Transform to Monitor Profile";
-		QByteArray ba = fname.toUtf8();
-
-		out_qimage = new QImage(temp_qimage->width(), temp_qimage->height(), QImage::Format_ARGB32);		
-
-		cmsHPROFILE hsRGB, hOut;
-		cmsHTRANSFORM xform;
-
-		hsRGB = cmsCreate_sRGBProfile();
-		hOut = cmsOpenProfileFromFile(ba.data(), "r");
- 
-		xform = cmsCreateTransform(hsRGB, TYPE_ARGB_8, hOut, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
-
-		cmsCloseProfile(hOut);
-		
-		for (int i = 0; i < temp_qimage->height(); i++) {
-			cmsDoTransform(xform, (QRgb*) temp_qimage->scanLine( i ), (QRgb*) out_qimage->scanLine( i ), temp_qimage->bytesPerLine()/4);
-		}
-	}
-
-	if (out_qimage == NULL)
+	if (xformed_qimage == NULL)
 		setQImage(*temp_qimage);
 	else {
-		qDebug() << "Setting transformed image";
-    	setQImage(*out_qimage);
+		setQImage(*xformed_qimage);
+		delete xformed_qimage;
 	}
-
-	delete out_qimage;
 
     updateView();
 
     retranslateUi();
+	
+	delete temp_qimage;
 }
 
 LdrViewer::~LdrViewer()
@@ -158,10 +134,20 @@ void LdrViewer::updatePixmap()
     qDebug() << "void LdrViewer::updatePixmap()";
 #endif
 
-    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+    //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+	QImage *xformed_qimage = doCMSTransform(temp_qimage);
+
+	if (xformed_qimage == NULL) 
+    	mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+	else {
+    	mPixmap->setPixmap(QPixmap::fromImage(*xformed_qimage));
+		delete xformed_qimage;
+	}
+
     informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
+	delete temp_qimage;
 }
 
 void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
@@ -189,3 +175,52 @@ float LdrViewer::getMinLuminanceValue()
 {
     return 0.0f;
 }
+
+int LdrViewer::cmsErrorHandler(int ErrorCode, const char *Text)
+{
+	qDebug() << Text;
+	return 0;
+}
+
+QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
+{
+	LuminanceOptions luminance_opts;
+	QString fname = luminance_opts.getMonitorProfileFileName();
+	qDebug() << "Monitor profile: " << fname;
+	
+	QImage *out_qimage = NULL;
+
+	if (!fname.isEmpty()) {
+		qDebug() << "Transform to Monitor Profile";
+		QByteArray ba = fname.toUtf8();
+
+		out_qimage = new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_ARGB32);		
+
+		cmsHPROFILE hsRGB, hOut;
+		cmsHTRANSFORM xform;
+
+		cmsSetErrorHandler(errorH);
+		
+		hsRGB = cmsCreate_sRGBProfile();
+		hOut = cmsCreate_sRGBProfile();
+		//hOut = cmsOpenProfileFromFile(ba.data(), "r");
+ 
+		xform = cmsCreateTransform(hsRGB, TYPE_RGBA_8_PLANAR, hOut, TYPE_RGBA_8_PLANAR, INTENT_PERCEPTUAL, 0);
+
+		//cmsCloseProfile(hOut);
+		
+		//for (int i = 0; i < input_qimage->height(); i++) {
+		//	cmsDoTransform(xform, input_qimage->scanLine( i ), out_qimage->scanLine( i ), input_qimage->bytesPerLine()/4);
+		//}
+		cmsDoTransform(xform, input_qimage->bits(), out_qimage->bits(), input_qimage->width() * input_qimage->height());
+	}
+
+	return out_qimage;
+}
+
+int errorH(int ErrorCode, const char *Text)
+{
+	cout << Text;
+	return 0;
+}
+

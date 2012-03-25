@@ -422,3 +422,4 @@ pfs::Frame* GenericViewer::getFrame() const
 {
     return mFrame;
 }
+

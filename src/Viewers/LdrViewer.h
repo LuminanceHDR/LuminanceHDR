@@ -29,6 +29,7 @@
 #define IMAGELDRVIEWER_H
 
 #include <QLabel>
+#include <lcms.h>
 
 #include "GenericViewer.h"
 
@@ -67,6 +68,8 @@ protected Q_SLOTS:
 
 protected:
 	virtual void retranslateUi();
+	int cmsErrorHandler(int ErrorCode, const char *Text);
+	QImage *doCMSTransform(QImage *);
 
 private:
     QString caption; // ,postfix,exif_comment;
