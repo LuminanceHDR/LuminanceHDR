@@ -28,12 +28,17 @@
 #include <iostream>
 #include <QDebug>
 #include <QScopedPointer>
+#include <QString>
+#include <QByteArray>
+
+#include <lcms2.h>
 
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
+#include "Common/LuminanceOptions.h"
 
 namespace
 {
@@ -68,9 +73,45 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     // I am safe
     LdrViewer::setTonemappingOptions(opts);
 
+	LuminanceOptions luminance_opts; 
+
     QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    setQImage(*temp_qimage);
+	QString fname = luminance_opts.getMonitorProfileFileName();
+	//QString fname = "/usr/share/color/icc/bluish.icc";
+	qDebug() << "Monitor profile: " << fname;
+	
+	QImage *out_qimage = NULL;
+
+	if (!fname.isEmpty()) {
+		qDebug() << "Transform to Monitor Profile";
+		QByteArray ba = fname.toUtf8();
+
+		out_qimage = new QImage(temp_qimage->width(), temp_qimage->height(), QImage::Format_ARGB32);		
+
+		cmsHPROFILE hsRGB, hOut;
+		cmsHTRANSFORM xform;
+
+		hsRGB = cmsCreate_sRGBProfile();
+		hOut = cmsOpenProfileFromFile(ba.data(), "r");
+ 
+		xform = cmsCreateTransform(hsRGB, TYPE_ARGB_8, hOut, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
+
+		cmsCloseProfile(hOut);
+		
+		for (int i = 0; i < temp_qimage->height(); i++) {
+			cmsDoTransform(xform, (QRgb*) temp_qimage->scanLine( i ), (QRgb*) out_qimage->scanLine( i ), temp_qimage->bytesPerLine()/4);
+		}
+	}
+
+	if (out_qimage == NULL)
+		setQImage(*temp_qimage);
+	else {
+		qDebug() << "Setting transformed image";
+    	setQImage(*out_qimage);
+	}
+
+	delete out_qimage;
 
     updateView();
 

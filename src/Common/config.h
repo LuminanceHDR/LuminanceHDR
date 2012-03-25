@@ -94,6 +94,8 @@
 
 #define KEY_COLOR_CAMERA_PROFILE "Color_Management_Options/camera_profile"
 #define KEY_COLOR_CAMERA_PROFILE_FILENAME "Color_Management_Options/camera_profile_filename"
+#define KEY_COLOR_MONITOR_PROFILE_FILENAME "Color_Management_Options/monitor_profile_filename"
+#define KEY_COLOR_PRINTER_PROFILE_FILENAME "Color_Management_Options/printer_profile_filename"
 
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"

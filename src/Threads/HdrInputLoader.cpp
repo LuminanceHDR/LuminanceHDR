@@ -81,7 +81,7 @@ void HdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-                        TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
+			TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			//if 8bit ldr tiff
@@ -113,11 +113,11 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-                    pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
+			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
 			if (frame == NULL)
 				throw "Failed Loading Image";
 
-                        QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
+			QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
 			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}

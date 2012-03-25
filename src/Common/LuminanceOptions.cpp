@@ -660,3 +660,23 @@ void LuminanceOptions::setCameraProfileFileName(QString fname)
 {
 	setValue(KEY_COLOR_CAMERA_PROFILE_FILENAME, fname);
 }
+
+QString LuminanceOptions::getMonitorProfileFileName()
+{
+	return value(KEY_COLOR_MONITOR_PROFILE_FILENAME).toString();
+}
+
+void LuminanceOptions::setMonitorProfileFileName(QString fname)
+{
+	setValue(KEY_COLOR_MONITOR_PROFILE_FILENAME, fname);
+}
+
+QString LuminanceOptions::getPrinterProfileFileName()
+{
+	return value(KEY_COLOR_PRINTER_PROFILE_FILENAME).toString();
+}
+
+void LuminanceOptions::setPrinterProfileFileName(QString fname)
+{
+	setValue(KEY_COLOR_PRINTER_PROFILE_FILENAME, fname);
+}

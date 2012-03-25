@@ -97,11 +97,13 @@ private Q_SLOTS:
 	void green_toolButton_clicked();
 	void camera_toolButton_clicked();
 	void camera_toolButton_reset_clicked();
+	void monitor_toolButton_clicked();
 
 	void toolButtonInterface_clicked();
 	void toolButtonHDR_clicked();
 	void toolButtonTM_clicked();
 	void toolButtonRAW_clicked();
+	void toolButtonCMS_clicked();
 	void toolButtonExtTool_clicked();
 
     void batchTmFormatSelector(int);

@@ -58,6 +58,10 @@
     <file>images/list-add.png</file>
     <file>images/list-remove.png</file>
     <file>images/edit-clear-list.png</file>
+    <file>images/cms.png</file>
+    <file>images/camera-photo.png</file>
+    <file>images/video-television.png</file>
+    <file>images/printer.png</file>
   </qresource>
   <qresource prefix="/help">
     <file alias="document-print.png">icons/help/document-print.png</file>

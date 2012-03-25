@@ -241,11 +241,13 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     connect(m_Ui->camera_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(camera_comboBox_currentIndexChanged(int)));
     connect(m_Ui->camera_toolButton,SIGNAL(clicked()),this,SLOT(camera_toolButton_clicked()));
     connect(m_Ui->camera_toolButton_reset,SIGNAL(clicked()),this,SLOT(camera_toolButton_reset_clicked()));
+    connect(m_Ui->monitor_toolButton,SIGNAL(clicked()),this,SLOT(monitor_toolButton_clicked()));
 	
     connect(m_Ui->toolButtonInterface,SIGNAL(clicked()),this,SLOT(toolButtonInterface_clicked()));
     connect(m_Ui->toolButtonHDR,SIGNAL(clicked()),this,SLOT(toolButtonHDR_clicked()));
     connect(m_Ui->toolButtonTM,SIGNAL(clicked()),this,SLOT(toolButtonTM_clicked()));
     connect(m_Ui->toolButtonRAW,SIGNAL(clicked()),this,SLOT(toolButtonRAW_clicked()));
+    connect(m_Ui->toolButtonCMS,SIGNAL(clicked()),this,SLOT(toolButtonCMS_clicked()));
     connect(m_Ui->toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
 }
 
@@ -322,6 +324,7 @@ void PreferencesDialog::ok_clicked()
 	luminance_options.setCameraProfile( m_Ui->camera_comboBox->currentIndex() );
 	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
 		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
+	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
 
     // ---- temporary... this rubbish must go away!
     luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, m_Ui->user_qual_toolButton->isEnabled());
@@ -737,9 +740,14 @@ void PreferencesDialog::toolButtonRAW_clicked()
     m_Ui->stackedPagesWidget->setCurrentIndex(3);
 }
 
-void PreferencesDialog::toolButtonExtTool_clicked()
+void PreferencesDialog::toolButtonCMS_clicked()
 {
     m_Ui->stackedPagesWidget->setCurrentIndex(4);
+}
+
+void PreferencesDialog::toolButtonExtTool_clicked()
+{
+    m_Ui->stackedPagesWidget->setCurrentIndex(5);
 }
 
 void PreferencesDialog::from_options_to_gui()
@@ -902,6 +910,7 @@ void PreferencesDialog::from_options_to_gui()
 	}
 	if (index != 0)
 		m_Ui->camera_toolButton_reset->setEnabled(true);
+	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
 }
 
 PreferencesDialog::~PreferencesDialog() {}
@@ -962,3 +971,20 @@ void PreferencesDialog::camera_toolButton_reset_clicked()
 	m_Ui->camera_toolButton->setEnabled(false);
 	m_Ui->camera_toolButton_reset->setEnabled(false);	
 }
+
+void PreferencesDialog::monitor_toolButton_clicked()
+{
+#ifdef WIN32
+	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+#else
+	QString ICCpath = "/usr/share/color/icc";
+#endif
+
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile File"),
+                                                 ICCpath,
+                                                 tr("Color profile (*.icc)"));
+	if (!fileName.isEmpty()) {
+		m_Ui->monitor_lineEdit->setText(fileName);
+	}
+}
+

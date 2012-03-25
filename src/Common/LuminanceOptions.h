@@ -196,6 +196,12 @@ public Q_SLOTS:
 
 	QString getCameraProfileFileName();
 	void	setCameraProfileFileName(QString);
+
+	QString getMonitorProfileFileName();
+	void	setMonitorProfileFileName(QString);
+
+	QString getPrinterProfileFileName();
+	void	setPrinterProfileFileName(QString);
 };
 
 #endif
