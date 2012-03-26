@@ -183,7 +183,6 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 {
 	int h = 0;
@@ -214,7 +213,7 @@ QImage *readJpegIntoQImage(QString fname)
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
 	cinfo.err = jpeg_std_error(&jerr);
-	
+
 	FILE * infile;
 
 	ba = fname.toUtf8();

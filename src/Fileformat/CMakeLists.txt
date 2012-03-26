@@ -10,6 +10,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsout16bitspixmap.h
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutldrimage.h
 ${CMAKE_CURRENT_SOURCE_DIR}/rgbeio.h
 ${CMAKE_CURRENT_SOURCE_DIR}/qimageinjpeg.h
+${CMAKE_CURRENT_SOURCE_DIR}/qimageoutjpeg.h
 )
 
 SET(FILES_C
@@ -26,6 +27,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/pfsinraw.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsinexr.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/pfsoutexr.cpp
 ${CMAKE_CURRENT_SOURCE_DIR}/qimageinjpeg.cpp
+${CMAKE_CURRENT_SOURCE_DIR}/qimageoutjpeg.cpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
