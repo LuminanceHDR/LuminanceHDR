@@ -69,8 +69,8 @@ void HdrInputLoader::run() {
 		//now go and fill the list of image data (real payload)
 		// check for extension: if JPEG:
 		if (extension.startsWith("JP")) {
-			QImage *newimage=new QImage(qfi.filePath());
-			if (newimage->isNull())
+			QImage *newimage = readJpegIntoQImage(qfi.filePath());
+			if (newimage == NULL)
 				throw "Failed Loading Image";
 
 			conditionallyRotateImage(qfi, &newimage);
@@ -86,7 +86,7 @@ void HdrInputLoader::run() {
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
-				QImage *newimage=reader.readIntoQImage();
+				QImage *newimage = reader.readIntoQImage();
 				if (newimage->isNull())
 					throw "Failed Loading Image";
 				
