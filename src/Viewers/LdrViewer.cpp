@@ -30,6 +30,7 @@
 #include <QScopedPointer>
 #include <QString>
 #include <QByteArray>
+#include <QMessageBox>
 
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
@@ -38,7 +39,6 @@
 #include "Fileformat/pfsoutldrimage.h"
 #include "Common/LuminanceOptions.h"
 
-int errorH(int ErrorCode, const char *Text);
 
 namespace
 {
@@ -176,12 +176,6 @@ float LdrViewer::getMinLuminanceValue()
     return 0.0f;
 }
 
-int LdrViewer::cmsErrorHandler(int ErrorCode, const char *Text)
-{
-	qDebug() << Text;
-	return 0;
-}
-
 QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
 {
 	LuminanceOptions luminance_opts;
@@ -199,28 +193,31 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
 		cmsHPROFILE hsRGB, hOut;
 		cmsHTRANSFORM xform;
 
-		cmsSetErrorHandler(errorH);
+		cmsErrorAction(LCMS_ERROR_SHOW);
 		
 		hsRGB = cmsCreate_sRGBProfile();
 		hOut = cmsOpenProfileFromFile(ba.data(), "r");
- 
-		xform = cmsCreateTransform(hsRGB, TYPE_RGB_8, hOut, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+		
+		if (hOut == NULL) {
+			QMessageBox::warning(0,tr("Warning"), tr("I cannot open monitor profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+			return NULL; 
+		}
+
+		xform = cmsCreateTransform(hsRGB, TYPE_RGBA_8, hOut, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+
+		if (xform == NULL) {
+			QMessageBox::warning(0,tr("Warning"), tr("I cannot perform the color transform. Please select a different monitor profile."), QMessageBox::Ok, QMessageBox::NoButton);
+			cmsCloseProfile(hOut);
+			return NULL;		
+		}
 
 		cmsCloseProfile(hOut);
-		
-		for (int i = 0; i < input_qimage->height(); i++) {
-			cmsDoTransform(xform, input_qimage->scanLine( i ), out_qimage->scanLine( i ), input_qimage->bytesPerLine()/3);
-		}
+
+		cmsDoTransform(xform, input_qimage->bits(), out_qimage->bits(), input_qimage->width() * input_qimage->height());
 
 		cmsDeleteTransform(xform);
 	}
 
 	return out_qimage;
-}
-
-int errorH(int ErrorCode, const char *Text)
-{
-	cout << Text;
-	return 0;
 }
 

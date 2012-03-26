@@ -68,7 +68,6 @@ protected Q_SLOTS:
 
 protected:
 	virtual void retranslateUi();
-	int cmsErrorHandler(int ErrorCode, const char *Text);
 	QImage *doCMSTransform(QImage *);
 
 private:
