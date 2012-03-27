@@ -32,6 +32,7 @@
 #include <QDebug>
 #include <iostream>
 #include <assert.h>
+#include <lcms.h>
 
 #include "pfstiff.h"
 
@@ -439,6 +440,20 @@ int TiffWriter::write8bitTiff()
     if (ldrimage == NULL)
         throw pfs::Exception("TIFF: QImage was not set correctly");
 
+	cmsHPROFILE hsRGB;
+	LPBYTE EmbedBuffer;
+	size_t profile_size = 0;	
+
+	hsRGB = cmsCreate_sRGBProfile();
+	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size); // get the size
+
+	EmbedBuffer = (LPBYTE) _cmsMalloc(profile_size);
+
+	_cmsSaveProfileToMem(hsRGB, EmbedBuffer, &profile_size);
+
+	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
+	free(EmbedBuffer);
+
     TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
     TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
     TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
@@ -485,6 +500,20 @@ int TiffWriter::write16bitTiff()
 {
     if (pixmap == NULL)
         throw pfs::Exception("TIFF: 16 bits pixmap was not set correctly");
+
+	cmsHPROFILE hsRGB;
+	LPBYTE EmbedBuffer;
+	size_t profile_size = 0;	
+
+	hsRGB = cmsCreate_sRGBProfile();
+	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size); // get the size
+
+	EmbedBuffer = (LPBYTE) _cmsMalloc(profile_size);
+
+	_cmsSaveProfileToMem(hsRGB, EmbedBuffer, &profile_size);
+
+	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, EmbedBuffer);
+	free(EmbedBuffer);
 
     TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_DEFLATE); // TODO what about others?
     TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
