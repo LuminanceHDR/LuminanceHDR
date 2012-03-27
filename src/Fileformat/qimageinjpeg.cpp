@@ -243,7 +243,7 @@ QImage *readJpegIntoQImage(QString fname)
 			hIn = cmsOpenProfileFromFile(ba.data(), "r");
 
 			if (hIn == NULL) {
-				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open monitor profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
 				return NULL;
 			}
 

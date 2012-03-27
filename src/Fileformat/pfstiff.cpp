@@ -22,13 +22,15 @@
  * ----------------------------------------------------------------------
  *
  * @author Grzegorz Krawczyk, <krawczyk@mpi-sb.mpg.de>
- * slightly modified by Giuseppe Rota <grota@sourceforge.net> for luminance
+ * slightly modified by Giuseppe Rota <grota@sourceforge.net> for Luminance HDR
+ * added color management support by Franco Comida <fcomida@sourceforge.net>
  */
 
 #include <cmath>
 #include <QObject>
 #include <QSysInfo>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QDebug>
 #include <iostream>
 #include <assert.h>
@@ -39,6 +41,88 @@
 #include "Libpfs/frame.h"
 #include "Libpfs/domio.h"
 
+#include "Common/LuminanceOptions.h"
+
+///////////////////////////////////////////////////////////////////////////////////
+//
+// This code is taken from tifficc.c from libcms distribution and sligthly modified
+//
+//
+
+cmsHPROFILE GetTIFFProfile(TIFF* in)
+{    
+    cmsCIExyYTRIPLE Primaries;
+	float* chr;
+    cmsCIExyY WhitePoint;
+    float* wp;
+    int i;       
+    LPGAMMATABLE Gamma[3]; 
+    LPWORD gmr, gmg, gmb;
+    cmsHPROFILE hProfile;
+    //DWORD EmbedLen;
+    uint32 EmbedLen;
+    LPBYTE EmbedBuffer;
+
+       if (TIFFGetField(in, TIFFTAG_ICCPROFILE, &EmbedLen, &EmbedBuffer)) {
+			qDebug() << "EmbedLen: " << EmbedLen;
+              hProfile = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
+   
+              //if (hProfile != NULL && SaveEmbedded != NULL)
+              //    SaveMemoryBlock(EmbedBuffer, EmbedLen, SaveEmbedded);
+
+              if (hProfile) return hProfile;
+       }
+
+        // Try to see if "colorimetric" tiff
+
+       if (TIFFGetField(in, TIFFTAG_PRIMARYCHROMATICITIES, &chr)) {
+                      
+           Primaries.Red.x   =  chr[0];
+           Primaries.Red.y   =  chr[1];
+           Primaries.Green.x =  chr[2];
+           Primaries.Green.y =  chr[3];
+           Primaries.Blue.x  =  chr[4];
+           Primaries.Blue.y  =  chr[5];
+           
+           Primaries.Red.Y = Primaries.Green.Y = Primaries.Blue.Y = 1.0;
+                      
+           if (TIFFGetField(in, TIFFTAG_WHITEPOINT, &wp)) {
+               
+               WhitePoint.x = wp[0];
+               WhitePoint.y = wp[1];
+               WhitePoint.Y = 1.0;
+                                             
+               // Transferfunction is a bit harder....
+               
+               for (i=0; i < 3; i++)
+                   Gamma[i] = cmsAllocGamma(256);
+                                            
+               TIFFGetFieldDefaulted(in, TIFFTAG_TRANSFERFUNCTION,
+                   &gmr, 
+                   &gmg,
+                   &gmb);
+               
+               CopyMemory(Gamma[0]->GammaTable, gmr, 256*sizeof(WORD));
+               CopyMemory(Gamma[1]->GammaTable, gmg, 256*sizeof(WORD));
+               CopyMemory(Gamma[2]->GammaTable, gmb, 256*sizeof(WORD));
+               
+               hProfile = cmsCreateRGBProfile(&WhitePoint, &Primaries, Gamma);
+               
+               for (i=0; i < 3; i++)
+                   cmsFreeGamma(Gamma[i]);
+
+               return hProfile;
+           }
+       }
+
+       return NULL;
+}
+//
+// End of code form tifficc.c
+//
+///////////////////////////////////////////////////////////////////////////////
+
+               
 TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wod)
 {
     // read header containing width and height from file
@@ -137,6 +221,72 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
 
 pfs::Frame* TiffReader::readIntoPfsFrame()
 {
+	bool doTransform = false;
+	LuminanceOptions luminance_opts;
+	int camera_profile_opt = luminance_opts.getCameraProfile();
+
+	cmsHPROFILE hIn, hsRGB;
+	cmsHTRANSFORM xform = NULL;
+
+	if (camera_profile_opt == 1) { // embedded	
+
+		hIn = GetTIFFProfile(tif);
+	
+		if (hIn) {
+			qDebug() << "Found ICC profile";
+			
+			doTransform = true;
+			hsRGB = cmsCreate_sRGBProfile();
+        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	return NULL;
+        	}
+			cmsErrorAction(LCMS_ERROR_SHOW);
+            cmsCloseProfile(hIn);
+		}
+		else {
+			qDebug() << "No embedded profile found";
+		}
+	}
+	else if (camera_profile_opt == 2) { // from file
+		
+		QString profile_fname = luminance_opts.getCameraProfileFileName();
+		qDebug() << "Camera profile: " << profile_fname;
+		QByteArray ba;
+
+		if (!profile_fname.isEmpty()) {
+		
+			ba = profile_fname.toUtf8();
+
+			cmsErrorAction(LCMS_ERROR_SHOW);
+
+			hsRGB = cmsCreate_sRGBProfile();
+			hIn = cmsOpenProfileFromFile(ba.data(), "r");
+
+			if (hIn == NULL) {
+				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+				return NULL;
+			}
+
+			doTransform = true;
+        	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	return NULL;
+
+        	}
+
+        	cmsCloseProfile(hIn);
+		}
+	}
+ 
     //--- scanline buffer with pointers to different data types
     union {
         float* fp;
@@ -145,6 +295,7 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
         void* vp;
     } buf;
 
+	uint16* outbuf = NULL;
     uchar *data = NULL; // ?
 
     //pfs::DOMIO pfsio;
@@ -173,12 +324,19 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 
     //--- image scanline size
     uint32 scanlinesize = TIFFScanlineSize(tif);
-    buf.vp = _TIFFmalloc(scanlinesize);
-
+	buf.vp = _TIFFmalloc(scanlinesize);
+	
+	if (doTransform) {
+		outbuf = (uint16 *) _TIFFmalloc(scanlinesize); 
+	}
+	
+	qDebug() << scanlinesize;
     //--- read scan lines
     const int image_width = width; //X->getCols();
-    for(uint32 row = 0; row < imagelength; row++)
+    //for(uint32 row = 0; row < imagelength; row++)
+    for(uint32 row = 0; row < height; row++)
     {
+		//qDebug() << row;
         switch(TypeOfData)
         {
         case FLOAT:
@@ -191,18 +349,21 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
                 Z[row*image_width + i] = buf.fp[i*nSamples+2];
             }
             break;
-      case WORD:
+      	case WORD:
             TIFFReadScanline(tif, buf.wp, row);
+			if (doTransform) {
+				cmsDoTransform(xform, buf.wp, outbuf, image_width);
+			}
             for( int i=0; i < image_width; i++ )
             {
-                X[row*image_width + i] = buf.wp[i*nSamples];
-                Y[row*image_width + i] = buf.wp[i*nSamples+1];
-                Z[row*image_width + i] = buf.wp[i*nSamples+2];
+                X[row*image_width + i] = !doTransform ? buf.wp[i*nSamples]   : outbuf[i*nSamples];
+                Y[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+1] : outbuf[i*nSamples+1];
+                Z[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+2] : outbuf[i*nSamples+2];;
                 if (writeOnDisk)
                 {
-                    *(data + 0 + (row*width+i)*4) = buf.wp[i*nSamples+2]/256.0 ;
-                    *(data + 1 + (row*width+i)*4) = buf.wp[i*nSamples+1]/256.0 ;
-                    *(data + 2 + (row*width+i)*4) = buf.wp[i*nSamples]/256.0 ;
+                    *(data     + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+2]/256.0 : outbuf[i*nSamples+2]/256.0;
+                    *(data + 1 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+1]/256.0 : outbuf[i*nSamples+1]/256.0;
+                    *(data + 2 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples]/256.0   : outbuf[i*nSamples]/256.0;
                     *(data + 3 + (row*width+i)*4) = 0xff;
                 }
             }
@@ -219,10 +380,14 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
         }
         emit nextstep( row ); //for QProgressDialog
     }
+	if (doTransform) {
+		cmsDeleteTransform(xform);
+		_TIFFfree(outbuf);
+	}
 
-    if (writeOnDisk)
-    {
-        QImage remapped(const_cast<uchar *>(data),image_width,imagelength,QImage::Format_ARGB32);
+    if (writeOnDisk) 
+    {	
+	    QImage remapped(const_cast<uchar *>(data),image_width,imagelength,QImage::Format_RGB32);
 
         QFileInfo fi(fileName);
         QString fname = fi.baseName() + ".thumb.jpg";
@@ -244,6 +409,72 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 //given for granted that users of this function call it only after checking that TypeOfData==BYTE
 QImage* TiffReader::readIntoQImage()
 {
+	bool doTransform = false;
+	LuminanceOptions luminance_opts;
+	int camera_profile_opt = luminance_opts.getCameraProfile();
+
+	cmsHPROFILE hIn, hsRGB;
+	cmsHTRANSFORM xform = NULL;
+
+	if (camera_profile_opt == 1) { // embedded	
+
+		hIn = GetTIFFProfile(tif);
+	
+		if (hIn) {
+			qDebug() << "Found ICC profile";
+			
+			doTransform = true;
+			hsRGB = cmsCreate_sRGBProfile();
+        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	return NULL;
+        	}
+			cmsErrorAction(LCMS_ERROR_SHOW);
+            cmsCloseProfile(hIn);
+		}
+		else {
+			qDebug() << "No embedded profile found";
+		}
+	}
+	else if (camera_profile_opt == 2) { // from file
+		
+		QString profile_fname = luminance_opts.getCameraProfileFileName();
+		qDebug() << "Camera profile: " << profile_fname;
+		QByteArray ba;
+
+		if (!profile_fname.isEmpty()) {
+		
+			ba = profile_fname.toUtf8();
+
+			cmsErrorAction(LCMS_ERROR_SHOW);
+
+			hsRGB = cmsCreate_sRGBProfile();
+			hIn = cmsOpenProfileFromFile(ba.data(), "r");
+
+			if (hIn == NULL) {
+				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+				return NULL;
+			}
+
+			doTransform = true;
+        	xform = cmsCreateTransform(hIn, TYPE_ARGB_8, hsRGB, TYPE_ARGB_8, INTENT_PERCEPTUAL, 0);
+			qDebug() << "Created transform";
+
+        	if (xform == NULL) {
+            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
+            	cmsCloseProfile(hIn);
+            	return NULL;
+
+        	}
+
+        	cmsCloseProfile(hIn);
+		}
+	}
+ 
     uchar *data=new uchar[width*height*4]; //this will contain the image data: data must be 32-bit aligned, in Format: 0xffRRGGBB
     // 	qDebug("pfstiff, w=%d h=%d",width,height);
     assert(TypeOfData==BYTE);
@@ -287,8 +518,14 @@ QImage* TiffReader::readIntoQImage()
     //--- free buffers and close files
     _TIFFfree(bp);
     TIFFClose(tif);
-
-    QImage *toreturn = new QImage(const_cast<uchar *>(data),width,height,QImage::Format_ARGB32);
+	QImage *toreturn;
+	if (doTransform) {
+    	uchar *dataout = new uchar[width*height*4];
+		cmsDoTransform(xform, data, dataout, width*height);
+    	toreturn = new QImage(const_cast<uchar *>(dataout),width,height,QImage::Format_RGB32);
+	}
+	else
+    	toreturn = new QImage(const_cast<uchar *>(data),width,height,QImage::Format_RGB32);
     return toreturn;
 }
 
