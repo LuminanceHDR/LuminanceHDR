@@ -29,7 +29,12 @@
 #define IMAGELDRVIEWER_H
 
 #include <QLabel>
-#include <lcms.h>
+
+#ifdef USE_LCMS2
+#	include <lcms2.h>
+#else
+#	include <lcms.h>
+#endif
 
 #include "GenericViewer.h"
 

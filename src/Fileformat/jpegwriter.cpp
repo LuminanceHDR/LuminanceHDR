@@ -24,7 +24,12 @@
 
 #include <QDebug>
 
-#include <lcms.h>
+#ifdef USE_LCMS2
+#	include <lcms2.h>
+#else
+#	include <lcms.h>
+#endif
+
 #include <stdio.h>
 #include <jpeglib.h>
 #include <setjmp.h>

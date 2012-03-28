@@ -34,7 +34,12 @@
 #include <QDebug>
 #include <iostream>
 #include <assert.h>
-#include <lcms.h>
+#ifdef USE_LCMS2
+#	include <lcms2.h>
+#else
+#	include <lcms.h>
+#endif
+
 
 #include "pfstiff.h"
 
@@ -245,7 +250,10 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
             	cmsCloseProfile(hIn);
             	return NULL;
         	}
-			cmsErrorAction(LCMS_ERROR_SHOW);
+
+			#ifndef USE_LCMS2
+        		cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
             cmsCloseProfile(hIn);
 		}
 		else {
@@ -262,7 +270,9 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 		
 			ba = profile_fname.toUtf8();
 
-			cmsErrorAction(LCMS_ERROR_SHOW);
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
 
 			hsRGB = cmsCreate_sRGBProfile();
 			hIn = cmsOpenProfileFromFile(ba.data(), "r");
@@ -433,7 +443,10 @@ QImage* TiffReader::readIntoQImage()
             	cmsCloseProfile(hIn);
             	throw pfs::Exception("TIFF: I cannot perform the color transform");
         	}
-			cmsErrorAction(LCMS_ERROR_SHOW);
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
+
             cmsCloseProfile(hIn);
 		}
 		else {
@@ -450,7 +463,9 @@ QImage* TiffReader::readIntoQImage()
 		
 			ba = profile_fname.toUtf8();
 
-			cmsErrorAction(LCMS_ERROR_SHOW);
+			#ifndef USE_LCMS2
+				cmsErrorAction(LCMS_ERROR_SHOW);
+			#endif
 
 			hsRGB = cmsCreate_sRGBProfile();
 			hIn = cmsOpenProfileFromFile(ba.data(), "r");
