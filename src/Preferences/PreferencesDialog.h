@@ -98,6 +98,7 @@ private Q_SLOTS:
 	void camera_toolButton_clicked();
 	void camera_toolButton_reset_clicked();
 	void monitor_toolButton_clicked();
+	void printer_toolButton_clicked();
 
 	void toolButtonInterface_clicked();
 	void toolButtonHDR_clicked();

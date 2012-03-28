@@ -68,12 +68,15 @@ public:
     //! \brief returns min value of the handled frame
     float getMinLuminanceValue();
 
+	void doSoftProofing(bool);
+	void undoSoftProofing();
+
 protected Q_SLOTS:
     virtual void updatePixmap();
 
 protected:
 	virtual void retranslateUi();
-	QImage *doCMSTransform(QImage *);
+	QImage *doCMSTransform(QImage *, bool, bool);
 
 private:
     QString caption; // ,postfix,exif_comment;

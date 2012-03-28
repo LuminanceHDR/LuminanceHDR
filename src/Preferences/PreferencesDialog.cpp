@@ -242,6 +242,7 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
     connect(m_Ui->camera_toolButton,SIGNAL(clicked()),this,SLOT(camera_toolButton_clicked()));
     connect(m_Ui->camera_toolButton_reset,SIGNAL(clicked()),this,SLOT(camera_toolButton_reset_clicked()));
     connect(m_Ui->monitor_toolButton,SIGNAL(clicked()),this,SLOT(monitor_toolButton_clicked()));
+    connect(m_Ui->printer_toolButton,SIGNAL(clicked()),this,SLOT(printer_toolButton_clicked()));
 	
     connect(m_Ui->toolButtonInterface,SIGNAL(clicked()),this,SLOT(toolButtonInterface_clicked()));
     connect(m_Ui->toolButtonHDR,SIGNAL(clicked()),this,SLOT(toolButtonHDR_clicked()));
@@ -325,6 +326,7 @@ void PreferencesDialog::ok_clicked()
 	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
 		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
 	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
+	luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
 
     // ---- temporary... this rubbish must go away!
     luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, m_Ui->user_qual_toolButton->isEnabled());
@@ -911,6 +913,7 @@ void PreferencesDialog::from_options_to_gui()
 	if (index != 0)
 		m_Ui->camera_toolButton_reset->setEnabled(true);
 	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
+	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 }
 
 PreferencesDialog::~PreferencesDialog() {}
@@ -985,6 +988,22 @@ void PreferencesDialog::monitor_toolButton_clicked()
                                                  tr("Color profile (*.icc)"));
 	if (!fileName.isEmpty()) {
 		m_Ui->monitor_lineEdit->setText(fileName);
+	}
+}
+
+void PreferencesDialog::printer_toolButton_clicked()
+{
+#ifdef WIN32
+	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+#else
+	QString ICCpath = "/usr/share/color/icc";
+#endif
+
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile File"),
+                                                 ICCpath,
+                                                 tr("Color profile (*.icc)"));
+	if (!fileName.isEmpty()) {
+		m_Ui->printer_lineEdit->setText(fileName);
 	}
 }
 
