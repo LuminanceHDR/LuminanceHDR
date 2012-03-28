@@ -75,6 +75,8 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
 	LuminanceOptions luminance_opts; 
 
+	storedPixmap = new IGraphicsPixmapItem();
+
     //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));	
 
@@ -99,6 +101,7 @@ LdrViewer::~LdrViewer()
 #ifdef QT_DEBUG
     std::cout << "LdrViewer::~LdrViewer()" << std::endl;
 #endif
+    delete storedPixmap;
 }
 
 void LdrViewer::retranslateUi()

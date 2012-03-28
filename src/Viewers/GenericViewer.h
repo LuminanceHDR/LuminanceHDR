@@ -172,7 +172,6 @@ protected:
     IGraphicsView* mView;
     ViewerMode mViewerMode;
     IGraphicsPixmapItem* mPixmap;
-    IGraphicsPixmapItem* storedPixmap;
 
     QString mFileName;
 
