@@ -184,6 +184,9 @@ protected Q_SLOTS:
     void activateNextViewer();
     void activatePreviousViewer();
 
+	void doSoftProofing(bool);
+	void doGamutCheck(bool);
+
 Q_SIGNALS:
     // update HDR
     void updatedHDR(pfs::Frame*);
@@ -250,7 +253,7 @@ protected:
     PreviewPanel *previewPanel;
 
     void openFiles(const QStringList& files);
-
+	
 private:
     static int sm_NumMainWindows;
 
@@ -268,6 +271,9 @@ private:
     TMOProgressIndicator* m_TMProgressBar;
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
+
+	// Gamut check
+	bool isGamutCheck;
 };
 
 

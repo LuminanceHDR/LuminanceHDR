@@ -145,15 +145,16 @@ int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow)
+    m_Ui(new Ui::MainWindow),
+	isGamutCheck(false)
 {
     init();
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow)
-
+    m_Ui(new Ui::MainWindow),
+	isGamutCheck(false)
 {
     init();
 
@@ -376,6 +377,9 @@ void MainWindow::createMenus()
     connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
     connect(m_Ui->actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
     connect(m_Ui->actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
+
+    connect(m_Ui->actionSoft_Proofing,SIGNAL(toggled(bool)),this,SLOT(doSoftProofing(bool)));
+    connect(m_Ui->actionGamut_Check,SIGNAL(toggled(bool)),this,SLOT(doGamutCheck(bool)));
 
     //recent files
     initRecentFileActions();
@@ -1958,3 +1962,34 @@ void MainWindow::openInputFiles()
 {
     openFiles(inputFiles);
 }
+
+void MainWindow::doSoftProofing(bool doProof)
+{
+	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
+	if ( current==NULL ) return;
+	if ( current->isHDR() ) return;
+	LdrViewer *viewer = (LdrViewer *) current;
+	if (doProof) {
+		qDebug() << "MainWindow:: do soft proofing"; 
+		viewer->doSoftProofing(isGamutCheck);
+	}
+	else {
+		qDebug() << "MainWindow:: undo soft proofing";
+		viewer->undoSoftProofing();
+	}
+}
+
+void MainWindow::doGamutCheck(bool b)
+{
+	if (b) {
+		isGamutCheck = true;
+		doSoftProofing(true);
+	}
+	else {
+		isGamutCheck = false;
+		doSoftProofing(false);
+	}
+}
+
+
+

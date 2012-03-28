@@ -86,6 +86,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mView->show();
 
     mPixmap = new IGraphicsPixmapItem();
+	storedPixmap = new IGraphicsPixmapItem();
     mScene->addItem(mPixmap);
     connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
 }
@@ -93,6 +94,8 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
 GenericViewer::~GenericViewer()
 {
     delete mFrame;
+	delete mPixmap;
+	delete storedPixmap;
 }
 
 void GenericViewer::retranslateUi()

@@ -30,7 +30,7 @@
      <x>0</x>
      <y>0</y>
      <width>1238</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSettings">
@@ -167,10 +167,13 @@
    <addaction name="actionShowNext"/>
    <addaction name="separator"/>
    <addaction name="actionFix_Histogram"/>
+   <addaction name="separator"/>
+   <addaction name="actionSoft_Proofing"/>
+   <addaction name="actionGamut_Check"/>
   </widget>
   <action name="fileNewAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
    </property>
    <property name="text">
@@ -194,7 +197,7 @@
   </action>
   <action name="fileOpenAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
    </property>
    <property name="text">
@@ -221,7 +224,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
    </property>
    <property name="text">
@@ -245,7 +248,7 @@
   </action>
   <action name="fileExitAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/exit.png</normaloff>:/new/prefix1/images/exit.png</iconset>
    </property>
    <property name="text">
@@ -269,7 +272,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/rotate_left.png</normaloff>:/new/prefix1/images/rotate_left.png</iconset>
    </property>
    <property name="text">
@@ -296,7 +299,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/rotate_right.png</normaloff>:/new/prefix1/images/rotate_right.png</iconset>
    </property>
    <property name="text">
@@ -389,7 +392,7 @@
   </action>
   <action name="documentationAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/help.png</normaloff>:/new/prefix1/images/help.png</iconset>
    </property>
    <property name="text">
@@ -419,7 +422,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
    </property>
    <property name="text">
@@ -446,7 +449,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
    </property>
    <property name="text">
@@ -470,7 +473,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
    </property>
    <property name="text">
@@ -500,7 +503,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text">
@@ -524,7 +527,7 @@
   </action>
   <action name="OptionsAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/options.png</normaloff>:/new/prefix1/images/options.png</iconset>
    </property>
    <property name="text">
@@ -551,7 +554,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/scale.png</normaloff>:/new/prefix1/images/scale.png</iconset>
    </property>
    <property name="text">
@@ -575,7 +578,7 @@
   </action>
   <action name="Transplant_Exif_Data_action">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/copyexif.png</normaloff>:/new/prefix1/images/copyexif.png</iconset>
    </property>
    <property name="text">
@@ -700,7 +703,7 @@
   </action>
   <action name="actionWhat_s_This">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
    </property>
    <property name="text">
@@ -769,7 +772,7 @@
   </action>
   <action name="cropToSelectionAction">
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
    </property>
    <property name="text">
@@ -818,7 +821,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/forward.png</normaloff>:/new/prefix1/images/forward.png</iconset>
    </property>
    <property name="text">
@@ -839,7 +842,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/back.png</normaloff>:/new/prefix1/images/back.png</iconset>
    </property>
    <property name="text">
@@ -863,7 +866,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/lock-off.png</normaloff>
      <normalon>:/new/prefix1/images/lock-on.png</normalon>:/new/prefix1/images/lock-off.png</iconset>
    </property>
@@ -923,7 +926,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/histogram.png</normaloff>:/new/prefix1/images/histogram.png</iconset>
    </property>
    <property name="text">
@@ -950,7 +953,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/filesaveall.png</normaloff>:/new/prefix1/images/filesaveall.png</iconset>
    </property>
    <property name="text">
@@ -979,7 +982,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../icons.qrc">
+    <iconset resource="../../icons.qrc">
      <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
    </property>
    <property name="text">
@@ -997,9 +1000,39 @@
     <string>Ctrl+H</string>
    </property>
   </action>
+  <action name="actionSoft_Proofing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/document-print-preview.png</normaloff>:/new/prefix1/images/document-print-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Soft Proofing</string>
+   </property>
+  </action>
+  <action name="actionGamut_Check">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/new/prefix1/images/gamut_48x48.png</normaloff>:/new/prefix1/images/gamut_48x48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Gamut Check</string>
+   </property>
+  </action>
  </widget>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections/>
 </ui>
