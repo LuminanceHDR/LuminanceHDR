@@ -23,7 +23,6 @@
  */
 
 #include <QByteArray>
-#include <QMessageBox>
 #include <QDebug>
 
 #include <lcms.h>
@@ -279,16 +278,19 @@ QImage *JpegReader::readJpegIntoQImage()
 			hIn = cmsOpenProfileFromFile(ba.data(), "r");
 
 			if (hIn == NULL) {
-				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
 				return NULL;
 			}
+			
+			if (cmsGetColorSpace(hIn) != icSigRgbData) {
+				return NULL;
+			}
+				
 
 			doTransform = true;
         	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 			qDebug() << "Created transform";
 
         	if (xform == NULL) {
-            	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
             	cmsCloseProfile(hIn);
             	return NULL;
         	}
@@ -312,7 +314,11 @@ QImage *JpegReader::readJpegIntoQImage()
 		hIn = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
 
 		if (hIn == NULL) {
-			QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open embedded profile. Please select one from file."), QMessageBox::Ok, QMessageBox::NoButton);
+			free(EmbedBuffer);
+			return NULL;
+		}
+		if (cmsGetColorSpace(hIn) != icSigRgbData) {
+			free(EmbedBuffer);
 			return NULL;
 		}
 
