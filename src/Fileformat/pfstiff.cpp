@@ -431,7 +431,7 @@ QImage* TiffReader::readIntoQImage()
         	if (xform == NULL) {
             	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform."), QMessageBox::Ok, QMessageBox::NoButton);
             	cmsCloseProfile(hIn);
-            	return NULL;
+            	throw pfs::Exception("TIFF: I cannot perform the color transform");
         	}
 			cmsErrorAction(LCMS_ERROR_SHOW);
             cmsCloseProfile(hIn);
@@ -457,7 +457,8 @@ QImage* TiffReader::readIntoQImage()
 
 			if (hIn == NULL) {
 				QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot open camera profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
-				return NULL;
+            	throw pfs::Exception("TIFF: I cannot open camera profile");
+				
 			}
 
 			doTransform = true;
@@ -467,7 +468,7 @@ QImage* TiffReader::readIntoQImage()
         	if (xform == NULL) {
             	QMessageBox::warning(0,QObject::tr("Warning"), QObject::tr("I cannot perform the color transform. Please select a different camera profile."), QMessageBox::Ok, QMessageBox::NoButton);
             	cmsCloseProfile(hIn);
-            	return NULL;
+            	throw pfs::Exception("TIFF: I cannot perform the color transform");
 
         	}
 

@@ -22,12 +22,25 @@
  *
  */
 
-#ifndef QIMAGEINJPEG
-#define QIMAGEINJPEG
+#ifndef JPEGWRITER_H
+#define JPEGWRITER_H
 
+#include <QObject>
 #include <QImage>
 #include <QString>
 
-QImage *readJpegIntoQImage(QString);
+class JpegWriter : public QObject
+{
+  Q_OBJECT
+
+	QImage *out_qimage;
+	QString fname;
+	int quality;
+
+public:
+	JpegWriter(QImage *, QString, int);
+	~JpegWriter() {}
+	bool writeQImageToJpeg();
+};
 
 #endif

@@ -22,16 +22,18 @@
  *
  */
 
-#include <QObject> // for tr()
 #include <QByteArray>
 #include <QMessageBox>
 #include <QDebug>
 
 #include <lcms.h>
 #include <stdio.h>
-#include <jpeglib.h>
+#include <setjmp.h>
 
-#include "qimageinjpeg.h"
+jmp_buf place;
+
+
+#include "jpegreader.h"
 #include "Common/LuminanceOptions.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -183,6 +185,31 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+static struct my_error_mgr { 
+
+	struct  jpeg_error_mgr pub;  // "public" fields 
+	LPVOID  Cargo;               // "private" fields 
+
+} ErrorHandler; 
+
+void my_error_handler (j_common_ptr cinfo)
+{
+	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
+	jpeg_destroy_decompress(ptr);
+	longjmp(place, 0);
+}
+  
+void my_output_message (j_common_ptr cinfo)
+{
+	char buffer[JMSG_LENGTH_MAX];
+
+	(*cinfo->err->format_message) (cinfo, buffer);
+	qDebug() << buffer;
+	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
+	jpeg_destroy_decompress(ptr);
+	longjmp(place, 0);
+}
+
 void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 {
 	int h = 0;
@@ -195,8 +222,17 @@ void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 	}
 }
 
-QImage *readJpegIntoQImage(QString fname) 
+JpegReader::JpegReader(QString filename) :
+	fname(filename)
 {
+}
+
+QImage *JpegReader::readJpegIntoQImage() 
+{
+	if (setjmp(place) != 0){
+		qDebug() << "Returned using longjmp";
+		return NULL;
+	}
 	QByteArray ba;
 	bool doTransform = false;
 
@@ -210,9 +246,9 @@ QImage *readJpegIntoQImage(QString fname)
 	JSAMPROW ScanLineTemp;
 	unsigned char *ScanLineOut;
 
-	struct jpeg_decompress_struct cinfo;
-	struct jpeg_error_mgr jerr;
-	cinfo.err = jpeg_std_error(&jerr);
+	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
+	ErrorHandler.pub.error_exit      = my_error_handler;	
+	ErrorHandler.pub.output_message  = my_output_message;
 
 	FILE * infile;
 
@@ -267,6 +303,7 @@ QImage *readJpegIntoQImage(QString fname)
 	qDebug() << "Assigned input source";
 	setup_read_icc_profile(&cinfo);
 	jpeg_read_header(&cinfo, true);
+
 	qDebug() << "Readed JPEG headers";
 
 	if (camera_profile_opt == 1 && read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true) {

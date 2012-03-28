@@ -182,7 +182,8 @@ bool IOWorker::write_ldr_frame(pfs::Frame* ldr_input, QString filename, int qual
     }
 	else if (qfi.suffix().toUpper().startsWith("JP")) {
         QImage *image(fromLDRPFStoQImage(ldr_input, min_luminance, max_luminance));
-		if (writeQImageToJpeg(image, filename, quality)) 
+		JpegWriter writer(image, filename, quality);
+		if (writer.writeQImageToJpeg()) 
 		{
 			if (tmopts != NULL)
 				ExifOperations::writeExifData(encodedName.constData(), operations->getExifComment().toStdString());

@@ -27,8 +27,11 @@
 #include <lcms.h>
 #include <stdio.h>
 #include <jpeglib.h>
+#include <setjmp.h>
 
-#include "qimageoutjpeg.h"
+jmp_buf writerplace;
+
+#include "jpegwriter.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -119,6 +122,30 @@ write_icc_profile (j_compress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+static struct my_error_mgr { 
+
+	struct  jpeg_error_mgr pub;  // "public" fields 
+	LPVOID  Cargo;               // "private" fields 
+
+} ErrorHandler; 
+
+void my_writer_error_handler (j_common_ptr cinfo)
+{
+	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
+	jpeg_destroy_decompress(ptr);
+	longjmp(writerplace, 0);
+}
+  
+void my_writer_output_message (j_common_ptr cinfo)
+{
+	char buffer[JMSG_LENGTH_MAX];
+
+	(*cinfo->err->format_message) (cinfo, buffer);
+	qDebug() << buffer;
+	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
+	jpeg_destroy_decompress(ptr);
+	longjmp(writerplace, 0);
+}
 
 void removeAlphaValues(unsigned char *in, JSAMPROW out, int size)
 {
@@ -131,7 +158,17 @@ void removeAlphaValues(unsigned char *in, JSAMPROW out, int size)
 	}
 }
 
-bool writeQImageToJpeg(QImage *out_qimage, QString fname, int quality) {
+JpegWriter::JpegWriter(QImage *out_qimage, QString fname, int quality) :
+	out_qimage(out_qimage),
+	fname(fname),
+	quality(quality)
+{}
+
+bool JpegWriter::writeQImageToJpeg() {
+	if (setjmp(writerplace) != 0){
+		qDebug() << "Returned using longjmp";
+		return false;
+	}
 	QByteArray ba;
 
 	cmsHPROFILE hsRGB;
@@ -152,9 +189,10 @@ bool writeQImageToJpeg(QImage *out_qimage, QString fname, int quality) {
 
 	JSAMPROW ScanLineOut;
 	struct jpeg_compress_struct cinfo;
-	struct jpeg_error_mgr jerr;
+	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
+	ErrorHandler.pub.error_exit      = my_writer_error_handler;	
+	ErrorHandler.pub.output_message  = my_writer_output_message;
 
-	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_compress(&cinfo);
 
 	FILE * outfile;

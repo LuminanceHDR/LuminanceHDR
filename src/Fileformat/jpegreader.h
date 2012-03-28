@@ -22,12 +22,26 @@
  *
  */
 
-#ifndef QIMAGEOUTJPEG
-#define QIMAGEOUTJPEG
+#ifndef JPEGREADER_H
+#define JPEGREADER_H
 
+#include <QObject>
 #include <QImage>
 #include <QString>
 
-bool writeQImageToJpeg(QImage *, QString, int);
+#include <jpeglib.h>
+
+class JpegReader : public QObject
+{
+  Q_OBJECT
+	
+	QString fname;
+	struct jpeg_decompress_struct cinfo;
+
+public:
+	JpegReader(QString);
+	~JpegReader() {}
+	QImage *readJpegIntoQImage();
+};
 
 #endif

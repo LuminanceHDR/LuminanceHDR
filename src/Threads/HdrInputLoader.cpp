@@ -69,7 +69,8 @@ void HdrInputLoader::run() {
 		//now go and fill the list of image data (real payload)
 		// check for extension: if JPEG:
 		if (extension.startsWith("JP")) {
-			QImage *newimage = readJpegIntoQImage(qfi.filePath());
+			JpegReader reader(qfi.filePath());
+			QImage *newimage = reader.readJpegIntoQImage();
 			if (newimage == NULL)
 				throw "Failed Loading Image";
 
