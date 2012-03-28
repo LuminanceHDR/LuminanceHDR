@@ -951,7 +951,7 @@ void PreferencesDialog::camera_comboBox_currentIndexChanged(int i)
 void PreferencesDialog::camera_toolButton_clicked()
 {
 #ifdef WIN32
-	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color";
 #else
 	QString ICCpath = "/usr/share/color/icc";
 #endif
@@ -975,7 +975,7 @@ void PreferencesDialog::camera_toolButton_reset_clicked()
 void PreferencesDialog::monitor_toolButton_clicked()
 {
 #ifdef WIN32
-	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color";
 #else
 	QString ICCpath = "/usr/share/color/icc";
 #endif

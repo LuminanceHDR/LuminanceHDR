@@ -92,7 +92,7 @@ IF NOT EXIST %TEMP_DIR%\align_image_stack_%RawPlatform%.exe (
 )
 
 IF NOT EXIST %TEMP_DIR%\zlib125.zip (
-	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib125.zip http://zlib.net/zlib125.zip
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/zlib125.zip http://prdownloads.sourceforge.net/libpng/zlib125.zip?download
 )
 IF NOT EXIST zlib-1.2.5 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/zlib125.zip
@@ -112,6 +112,7 @@ IF NOT EXIST %TEMP_DIR%\expat-2.0.1.tar (
 IF NOT EXIST expat-2.0.1 (
 	%CYGWIN_DIR%\bin\tar.exe -xf %TEMP_DIR%/expat-2.0.1.tar
 )
+
 
 IF NOT EXIST exiv2-trunk (
 	set exiv2-compile=true
@@ -152,6 +153,21 @@ IF NOT EXIST libjpeg (
 	popd
 )
 
+REM IF NOT EXIST %TEMP_DIR%\lcms2-2.3.zip (
+REM 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/lcms2-2.3.zip http://sourceforge.net/projects/lcms/files/lcms/2.3/lcms2-2.3.zip/download
+REM )
+
+
+IF NOT EXIST lcms2-2.3 (
+	%CYGWIN_DIR%\bin\git.exe clone git://github.com/danielkaneider/Little-CMS.git lcms2-2.3
+	REM %CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/lcms2-2.3.zip
+	
+	pushd lcms2-2.3
+	devenv Projects\VC2010\lcms2.sln /Upgrade
+	devenv Projects\VC2010\lcms2.sln /build "%Configuration%|%Platform%"  /Project lcms2_DLL
+	popd
+)
+
 IF NOT EXIST %TEMP_DIR%\tiff-4.0.1.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/tiff-4.0.1.zip http://download.osgeo.org/libtiff/tiff-4.0.1.zip
 )
@@ -177,11 +193,25 @@ IF NOT EXIST tiff-4.0.1 (
 IF NOT EXIST %TEMP_DIR%\LibRaw-0.14.5.zip (
 	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-0.14.5.zip http://www.libraw.org/data/LibRaw-0.14.5.zip
 )
+IF NOT EXIST %TEMP_DIR%\LibRaw-demosaic-pack-GPL2-0.14.5.zip (
+	%CYGWIN_DIR%\bin\wget.exe -O %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.5.zip http://www.libraw.org/data/LibRaw-demosaic-pack-GPL2-0.14.5.zip
+)
+IF NOT EXIST LibRaw-demosaic-pack-GPL2-0.14.5 (
+	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-demosaic-pack-GPL2-0.14.5.zip
+)
 IF NOT EXIST LibRaw-0.14.5 (
 	%CYGWIN_DIR%\bin\unzip.exe -q %TEMP_DIR%/LibRaw-0.14.5.zip
-
+	
 	pushd LibRaw-0.14.5
-	nmake /f Makefile.msvc
+	
+	echo.COPT="/arch:SSE2 /openmp">> qtpfsgui_commands.in
+	echo.CFLAGS_DP2=/I..\LibRaw-demosaic-pack-GPL2-0.14.5> qtpfsgui_commands.in
+	echo.CFLAGSG2=/DLIBRAW_DEMOSAIC_PACK_GPL2>> qtpfsgui_commands.in
+	echo.LCMS_DEF="/DUSE_LCMS2 /DCMS_DLL /I..\lcms2-2.3\include">> qtpfsgui_commands.in
+	echo.LCMS_LIB="..\lcms2-2.3\bin\lcms2_dll.lib">> qtpfsgui_commands.in
+
+	nmake /f Makefile.msvc @qtpfsgui_commands.in clean
+	nmake /f Makefile.msvc @qtpfsgui_commands.in bin\libraw.dll
 	popd
 )
 
@@ -325,7 +355,9 @@ IF NOT EXIST LuminanceHdrStuff\qtpfsgui (
 	popd
 ) ELSE (
 	pushd LuminanceHdrStuff\qtpfsgui
-	%CYGWIN_DIR%\bin\git.exe pull
+	IF %UPDATE_REPO_LUMINANCE% EQU 1 (
+		%CYGWIN_DIR%\bin\git.exe pull
+	)
 	popd
 )
 
@@ -339,11 +371,19 @@ IF NOT EXIST LuminanceHdrStuff\DEPs (
 	mkdir bin
 	popd
 	
-	for %%v in ("exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
+	for %%v in ("libjpeg", "lcms2", "exiv2", "libtiff", "libraw", "OpenEXR", "fftw3", "gsl") do (
 		mkdir LuminanceHdrStuff\DEPs\include\%%v
 		mkdir LuminanceHdrStuff\DEPs\lib\%%v
 		mkdir LuminanceHdrStuff\DEPs\bin\%%v
 	)
+	
+	
+	copy libjpeg\*.h LuminanceHdrStuff\DEPs\include\libjpeg
+	
+	copy lcms2-2.3\include\*.h LuminanceHdrStuff\DEPs\include\lcms2
+	copy lcms2-2.3\bin\*.lib LuminanceHdrStuff\DEPs\lib\lcms2
+	copy lcms2-2.3\bin\*.dll LuminanceHdrStuff\DEPs\bin\lcms2
+	
 	copy exiv2-trunk\msvc64\include\* LuminanceHdrStuff\DEPs\include\exiv2
 	copy exiv2-trunk\msvc64\include\exiv2\* LuminanceHdrStuff\DEPs\include\exiv2
 
@@ -422,7 +462,7 @@ IF EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\luminance-hdr.exe (
 
 		IF NOT EXIST LuminanceHdrStuff\qtpfsgui.build\%Configuration%\zlib1.dll (
 			pushd LuminanceHdrStuff\DEPs\bin
-			for %%v in ("exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
+			for %%v in ("lcms2\lcms2_DLL.dll", "exiv2\exiv2.dll", "exiv2\libexpat.dll", "exiv2\zlib1.dll", "OpenEXR\Half.dll", "OpenEXR\Iex.dll", "OpenEXR\IlmImf.dll", "OpenEXR\IlmThread.dll", "OpenEXR\zlibwapi.dll", "libraw\libraw.dll", "fftw3\libfftw3f-3.dll") do (
 				copy %%v ..\..\qtpfsgui.build\%Configuration%
 			)
 			popd

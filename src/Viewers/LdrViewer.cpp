@@ -193,8 +193,10 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage)
 		cmsHPROFILE hsRGB, hOut;
 		cmsHTRANSFORM xform;
 
-		cmsErrorAction(LCMS_ERROR_SHOW);
-		
+		#ifndef USE_LCMS2
+			cmsErrorAction(LCMS_ERROR_SHOW);
+		#endif
+
 		hsRGB = cmsCreate_sRGBProfile();
 		hOut = cmsOpenProfileFromFile(ba.data(), "r");
 		
