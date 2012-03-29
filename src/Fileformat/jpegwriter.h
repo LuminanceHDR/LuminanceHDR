@@ -33,14 +33,19 @@ class JpegWriter : public QObject
 {
   Q_OBJECT
 
-	QImage *out_qimage;
+	const QImage *out_qimage;
 	QString fname;
+	char *outbuf;
+	int outlen;
 	int quality;
 
 public:
-	JpegWriter(QImage *, QString, int);
+	JpegWriter(const QImage *, QString, int);
+	JpegWriter(const QImage *, int);
 	~JpegWriter() {}
 	bool writeQImageToJpeg();
+	char *getBuffer();
+	int getBufferLenght();
 };
 
 #endif

@@ -152,7 +152,7 @@ void my_writer_output_message (j_common_ptr cinfo)
 	longjmp(writerplace, 0);
 }
 
-void removeAlphaValues(unsigned char *in, JSAMPROW out, int size)
+void removeAlphaValues(const unsigned char *in, JSAMPROW out, int size)
 {
 	int h = 0;
 	for (int i = 0; i < size; i += 3) {
@@ -163,9 +163,15 @@ void removeAlphaValues(unsigned char *in, JSAMPROW out, int size)
 	}
 }
 
-JpegWriter::JpegWriter(QImage *out_qimage, QString fname, int quality) :
+JpegWriter::JpegWriter(const QImage *out_qimage, QString fname, int quality) :
 	out_qimage(out_qimage),
 	fname(fname),
+	quality(quality)
+{}
+
+JpegWriter::JpegWriter(const QImage *out_qimage, int quality) :
+	out_qimage(out_qimage),
+	fname(""),	
 	quality(quality)
 {}
 
@@ -174,7 +180,6 @@ bool JpegWriter::writeQImageToJpeg() {
 		qDebug() << "Returned using longjmp";
 		return false;
 	}
-	QByteArray ba;
 
 	cmsHPROFILE hsRGB;
 	JOCTET *EmbedBuffer;
@@ -189,9 +194,6 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	qDebug() << "sRGB profile size: " << profile_size;
 
-	ba = fname.toUtf8();
-	qDebug() << "writeQImageToJpeg: filename: " << ba.data();
-
 	JSAMPROW ScanLineOut;
 	struct jpeg_compress_struct cinfo;
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
@@ -199,15 +201,6 @@ bool JpegWriter::writeQImageToJpeg() {
 	ErrorHandler.pub.output_message  = my_writer_output_message;
 
 	jpeg_create_compress(&cinfo);
-
-	FILE * outfile;
-        
-	if ((outfile = fopen(ba.data(), "wb")) == NULL) {
-		qDebug() << "can't open " << fname;
-        return false;
-	}
-	
-	jpeg_stdio_dest(&cinfo, outfile);
 
 	cinfo.image_width = out_qimage->width();      /* image width and height, in pixels */
 	cinfo.image_height = out_qimage->height();
@@ -226,6 +219,26 @@ bool JpegWriter::writeQImageToJpeg() {
 			cinfo.comp_info[i].v_samp_factor = 1;
 		}
 	}
+
+	QByteArray ba;
+	FILE * outfile;
+        
+	if (!fname.isEmpty()) { //we are writing to file
+		ba = fname.toUtf8();
+		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
+
+		if ((outfile = fopen(ba.data(), "wb")) == NULL) {
+			qDebug() << "can't open " << fname;
+    	    return false;
+		}
+	} 
+	else { //we are writing to memory buffer
+		outlen = cinfo.image_width * cinfo.image_height * cinfo.num_components * sizeof(char);
+		outbuf = (char *) malloc(outlen);
+		memset(outbuf, 0, outlen);
+		outfile = fmemopen( outbuf, outlen, "wb");
+	}
+	jpeg_stdio_dest(&cinfo, outfile);
 
 	jpeg_start_compress(&cinfo, true);
 
@@ -247,4 +260,14 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_destroy_compress(&cinfo);
 
 	return true;
+}
+
+int JpegWriter::getBufferLenght() 
+{
+	return outlen;
+}
+
+char *JpegWriter::getBuffer()
+{
+	return outbuf;
 }

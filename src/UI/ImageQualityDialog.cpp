@@ -29,6 +29,8 @@
 #include "ImageQualityDialog.h"
 #include "ui_ImageQualityDialog.h"
 
+#include "Fileformat/jpegwriter.h"
+
 ImageQualityDialog::~ImageQualityDialog() {}
 
 ImageQualityDialog::ImageQualityDialog(const QImage *img, QString fmt, QWidget *parent):
@@ -51,16 +53,26 @@ void ImageQualityDialog::on_getSizeButton_clicked()
 {
     setCursor(QCursor(Qt::WaitCursor));
     int quality = m_Ui->spinBox->value();
-    QByteArray ba;
-    QBuffer buffer(&ba);
-    buffer.open(QIODevice::WriteOnly);
-    image->save(&buffer, (const char *) format.toLatin1(), quality);
-
+	char *outbuf;
+	int outlen;
+	int size;
+    //QByteArray ba;
+    //QBuffer buffer(&ba);
+    //buffer.open(QIODevice::WriteOnly);
+    //image->save(&buffer, (const char *) format.toLatin1(), quality);
+	JpegWriter writer(image, quality);
+	writer.writeQImageToJpeg();
+	outbuf = writer.getBuffer();
+	outlen = writer.getBufferLenght();
+	for (size = outlen; size > 0; size--)
+		if (*(outbuf + size) != 0)
+			break;
     QLocale def;
-    QString s = def.toString( ba.size() );
+    QString s = def.toString( size );
     //label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
     m_Ui->label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
     setCursor(QCursor(Qt::ArrowCursor));
+	delete outbuf;
 }
 
 void ImageQualityDialog::reset(int)
