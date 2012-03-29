@@ -271,10 +271,6 @@ private:
     TMOProgressIndicator* m_TMProgressBar;
     // Tone Mapping Panel
     TonemappingPanel *tmPanel;
-
-	// Gamut check
-	bool isGamutCheck;
 };
-
 
 #endif

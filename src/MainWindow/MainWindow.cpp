@@ -145,16 +145,14 @@ int MainWindow::sm_NumMainWindows = 0;
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow),
-	isGamutCheck(false)
+    m_Ui(new Ui::MainWindow)
 {
     init();
 }
 
 MainWindow::MainWindow(pfs::Frame* curr_frame, QString new_file, bool needSaving, QWidget *parent):
     QMainWindow(parent),
-    m_Ui(new Ui::MainWindow),
-	isGamutCheck(false)
+    m_Ui(new Ui::MainWindow)
 {
     init();
 
@@ -660,6 +658,8 @@ void MainWindow::updateActionsNoImage()
     m_Ui->rotateccw->setEnabled(false);
     m_Ui->rotatecw->setEnabled(false);
     m_Ui->actionFix_Histogram->setEnabled(false);
+    m_Ui->actionSoft_Proofing->setEnabled(false);
+    m_Ui->actionGamut_Check->setEnabled(false);
 }
 
 void MainWindow::updateActionsLdrImage()
@@ -686,6 +686,8 @@ void MainWindow::updateActionsLdrImage()
     m_Ui->rotateccw->setEnabled(false);
     m_Ui->rotatecw->setEnabled(false);
     m_Ui->actionFix_Histogram->setEnabled(true);
+    m_Ui->actionSoft_Proofing->setEnabled(true);
+    m_Ui->actionGamut_Check->setEnabled(true);
 }
 
 void MainWindow::updateActionsHdrImage()
@@ -724,6 +726,8 @@ void MainWindow::updateActionsHdrImage()
     m_Ui->rotateccw->setEnabled(true);
     m_Ui->rotatecw->setEnabled(true);
     m_Ui->actionFix_Histogram->setEnabled(false);
+    m_Ui->actionSoft_Proofing->setEnabled(false);
+    m_Ui->actionGamut_Check->setEnabled(false);
 }
 
 void MainWindow::updateActions( int w )
@@ -1971,7 +1975,9 @@ void MainWindow::doSoftProofing(bool doProof)
 	LdrViewer *viewer = (LdrViewer *) current;
 	if (doProof) {
 		qDebug() << "MainWindow:: do soft proofing"; 
-		viewer->doSoftProofing(isGamutCheck);
+		if (m_Ui->actionGamut_Check->isChecked())
+			m_Ui->actionGamut_Check->setChecked(false);
+		viewer->doSoftProofing(false);
 	}
 	else {
 		qDebug() << "MainWindow:: undo soft proofing";
@@ -1979,17 +1985,21 @@ void MainWindow::doSoftProofing(bool doProof)
 	}
 }
 
-void MainWindow::doGamutCheck(bool b)
+void MainWindow::doGamutCheck(bool doGamut)
 {
-	if (b) {
-		isGamutCheck = true;
-		doSoftProofing(true);
+	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
+	if ( current==NULL ) return;
+	if ( current->isHDR() ) return;
+	LdrViewer *viewer = (LdrViewer *) current;
+	if (doGamut) {
+		qDebug() << "MainWindow:: do gamut check"; 
+		if (m_Ui->actionSoft_Proofing->isChecked())
+			m_Ui->actionSoft_Proofing->setChecked(false);
+		viewer->doSoftProofing(true);
 	}
 	else {
-		isGamutCheck = false;
-		doSoftProofing(false);
+		qDebug() << "MainWindow:: undo gamut check"; 
+		viewer->undoSoftProofing();
 	}
 }
-
-
 
