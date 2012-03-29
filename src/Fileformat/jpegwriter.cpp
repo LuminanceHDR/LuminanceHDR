@@ -266,7 +266,7 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_destroy_compress(&cinfo);
 
 #ifdef WIN32
-	fseek (outfike, 0, SEEK_END);
+	fseek (outfile, 0, SEEK_END);
     m_filesize = ftell(outfile);
 #else
 	int size;
