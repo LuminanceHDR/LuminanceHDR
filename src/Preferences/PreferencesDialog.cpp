@@ -994,7 +994,7 @@ void PreferencesDialog::monitor_toolButton_clicked()
 void PreferencesDialog::printer_toolButton_clicked()
 {
 #ifdef WIN32
-	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+	QString ICCpath = "C:\\WINDOWS\\system32\\spool\\drivers\\color";
 #else
 	QString ICCpath = "/usr/share/color/icc";
 #endif
