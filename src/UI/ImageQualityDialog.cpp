@@ -25,6 +25,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QBuffer>
+#include <QDebug>
 
 #include "ImageQualityDialog.h"
 #include "ui_ImageQualityDialog.h"
@@ -51,28 +52,34 @@ int ImageQualityDialog::getQuality(void)
 
 void ImageQualityDialog::on_getSizeButton_clicked()
 {
+	qDebug() << format;
     setCursor(QCursor(Qt::WaitCursor));
     int quality = m_Ui->spinBox->value();
 	char *outbuf;
 	int outlen;
 	int size;
-    //QByteArray ba;
-    //QBuffer buffer(&ba);
-    //buffer.open(QIODevice::WriteOnly);
-    //image->save(&buffer, (const char *) format.toLatin1(), quality);
-	JpegWriter writer(image, quality);
-	writer.writeQImageToJpeg();
-	outbuf = writer.getBuffer();
-	outlen = writer.getBufferLenght();
-	for (size = outlen; size > 0; size--)
-		if (*(outbuf + size) != 0)
-			break;
+	if (format.startsWith("jp")) {
+		JpegWriter writer(image, quality);
+		writer.writeQImageToJpeg();
+		outbuf = writer.getBuffer();
+		outlen = writer.getBufferLenght();
+		for (size = outlen - 1; size > 0; size--)
+			if (*(outbuf + size) != 0)
+				break;
+		delete outbuf;
+	}
+	else {
+    	QByteArray ba;
+    	QBuffer buffer(&ba);
+	    buffer.open(QIODevice::WriteOnly);
+    	image->save(&buffer, (const char *) format.toLatin1(), quality);
+		size = ba.size();
+	}
     QLocale def;
     QString s = def.toString( size );
     //label_filesize->setText(QString::number( ba.size() )); //the JPG on disk differs by 374 more bytes
     m_Ui->label_filesize->setText( s ); //the JPG on disk differs by 374 more bytes
     setCursor(QCursor(Qt::ArrowCursor));
-	delete outbuf;
 }
 
 void ImageQualityDialog::reset(int)
