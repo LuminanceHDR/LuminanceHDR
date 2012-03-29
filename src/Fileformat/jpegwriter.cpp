@@ -265,17 +265,19 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_finish_compress(&cinfo);
 	jpeg_destroy_compress(&cinfo);
 
+	if (m_fname.isEmpty()) {
 #ifdef WIN32
-	fseek (outfile, 0, SEEK_END);
-    m_filesize = ftell(outfile);
+		fseek (outfile, 0, SEEK_END);
+    	m_filesize = ftell(outfile);
 #else
-	int size;
-	for (size = outlen - 1; size > 0; size--)
-		if (*(outbuf + size) != 0)
-			break;
-	m_filesize = size;
-	delete outbuf;
+		int size;
+		for (size = outlen - 1; size > 0; size--)
+			if (*(outbuf + size) != 0)
+				break;
+		m_filesize = size;
+		delete outbuf;
 #endif
+	}
 
 	fclose(outfile);
 
