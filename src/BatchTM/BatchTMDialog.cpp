@@ -73,6 +73,9 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
 
+    connect(m_Ui->spinBox_Quality,        SIGNAL(valueChanged(int)), this, SLOT(updateQuality(int)));
+    connect(m_Ui->spinBox_Width,          SIGNAL(valueChanged(int)), this, SLOT(updateWidth(int)));
+
     full_Log_Model  = new QStringListModel();
     log_filter      = new QSortFilterProxyModel(this);
     log_filter->setDynamicSortFilter(true);
@@ -88,7 +91,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     m_is_batch_running  = false;
 
     add_log_message(tr("Using %1 thread(s)").arg(m_max_num_threads));
-    add_log_message(tr("Saving using file format: %1, (quality - if applicable): %2").arg(m_luminance_options.getBatchTmLdrFormat()).arg(m_luminance_options.getBatchTmDefaultOutputQuality()));
+    add_log_message(tr("Saving using file format: %1").arg(m_luminance_options.getBatchTmLdrFormat()));
 }
 
 BatchTMDialog::~BatchTMDialog()
@@ -211,7 +214,6 @@ void BatchTMDialog::out_folder_clicked()
 void BatchTMDialog::add_view_model_HDRs(QStringList list)
 {
     //printf("BatchTMDialog::add_view_model_HDRs()\n");
-
     for (int idx = 0; idx < list.size(); ++idx)
     {
         //fill graphical list
@@ -230,6 +232,9 @@ void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
         QString curr_tmo_options_file = list.at(idx);
 
         TonemappingOptions *i_th_tm_opt = parse_tm_opt_file(curr_tmo_options_file);
+		i_th_tm_opt->quality = m_Ui->spinBox_Quality->value();
+		i_th_tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+		
         if (i_th_tm_opt != NULL)
         {
             //add to data structure
@@ -490,6 +495,11 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->add_TMopts_Button->setDisabled(true);
     m_Ui->remove_TMOpts_Button->setDisabled(true);
 
+    m_Ui->spinBox_Quality->setDisabled(true);
+    m_Ui->spinBox_Width->setDisabled(true);
+    m_Ui->horizontalSlider_Quality->setDisabled(true);
+    m_Ui->horizontalSlider_Width->setDisabled(true);
+
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
@@ -542,4 +552,20 @@ void BatchTMDialog::abort()
 	}
 	else
 		this->reject();
+}
+
+void BatchTMDialog::updateQuality(int newQuality)
+{
+	TonemappingOptions *opt;
+	foreach (opt, m_tm_options_list) {
+		opt->quality = newQuality;
+	}
+}
+
+void BatchTMDialog::updateWidth(int newWidth_in_percent)
+{
+	TonemappingOptions *opt;
+	foreach (opt, m_tm_options_list) {
+		opt->xsize_percent = newWidth_in_percent;
+	}
 }

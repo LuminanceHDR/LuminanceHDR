@@ -79,6 +79,9 @@ private slots:
   void stop_batch_tm_ui();
   void increment_progress_bar(int);
 
+  void updateQuality(int);
+  void updateWidth(int);
+
 protected:
   void closeEvent(QCloseEvent *);
 

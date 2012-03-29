@@ -49,7 +49,6 @@ BatchTMJob::BatchTMJob(int thread_id, QString filename, const QList<TonemappingO
         m_output_folder(output_folder)
 {
     m_ldr_output_format = LuminanceOptions().getBatchTmLdrFormat();
-    m_ldr_output_quality = LuminanceOptions().getBatchTmDefaultOutputQuality();
 
     m_output_file_name_base  = m_output_folder + "/" + QFileInfo(m_file_name).completeBaseName();
 }
@@ -84,8 +83,10 @@ void BatchTMJob::run()
             //opts->xsize = 400; // DEBUG
             //opts->xsize = opts->origxsize;
 
+			opts->xsize = (int) opts->origxsize * opts->xsize_percent / 100;
+
             QScopedPointer<pfs::Frame> temporary_frame;
-            if ( reference_frame->getWidth() == opts->xsize )
+            if ( opts->origxsize == opts->xsize )
                 temporary_frame.reset( pfs::pfscopy(reference_frame.data()) );
             else
                 temporary_frame.reset( pfs::resizeFrame(reference_frame.data(), opts->xsize) );
@@ -97,7 +98,7 @@ void BatchTMJob::run()
             TMOptionsOperations operations(opts);
             QString output_file_name = m_output_file_name_base+"_"+operations.getPostfix()+"."+m_ldr_output_format;
 
-            if ( io_worker.write_ldr_frame(temporary_frame.data(), output_file_name, m_ldr_output_quality, opts) )
+            if ( io_worker.write_ldr_frame(temporary_frame.data(), output_file_name, opts->quality, opts) )
             {
                 emit add_log_message( tr("[T%1] Successfully saved LDR file: %2").arg(m_thread_id).arg(QFileInfo(output_file_name).completeBaseName()) );
             } else {
