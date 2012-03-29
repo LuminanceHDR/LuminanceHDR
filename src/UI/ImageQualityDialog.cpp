@@ -55,18 +55,11 @@ void ImageQualityDialog::on_getSizeButton_clicked()
 	qDebug() << format;
     setCursor(QCursor(Qt::WaitCursor));
     int quality = m_Ui->spinBox->value();
-	char *outbuf;
-	int outlen;
 	int size;
 	if (format.startsWith("jp")) {
 		JpegWriter writer(image, quality);
 		writer.writeQImageToJpeg();
-		outbuf = writer.getBuffer();
-		outlen = writer.getBufferLenght();
-		for (size = outlen - 1; size > 0; size--)
-			if (*(outbuf + size) != 0)
-				break;
-		delete outbuf;
+		size = writer.getFileSize();
 	}
 	else {
     	QByteArray ba;

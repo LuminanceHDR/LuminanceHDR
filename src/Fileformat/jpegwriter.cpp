@@ -164,15 +164,15 @@ void removeAlphaValues(const unsigned char *in, JSAMPROW out, int size)
 }
 
 JpegWriter::JpegWriter(const QImage *out_qimage, QString fname, int quality) :
-	out_qimage(out_qimage),
-	fname(fname),
-	quality(quality)
+	m_out_qimage(out_qimage),
+	m_fname(fname),
+	m_quality(quality)
 {}
 
 JpegWriter::JpegWriter(const QImage *out_qimage, int quality) :
-	out_qimage(out_qimage),
-	fname(""),	
-	quality(quality)
+	m_out_qimage(out_qimage),
+	m_fname(""),	
+	m_quality(quality)
 {}
 
 bool JpegWriter::writeQImageToJpeg() {
@@ -202,8 +202,8 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	jpeg_create_compress(&cinfo);
 
-	cinfo.image_width = out_qimage->width();      /* image width and height, in pixels */
-	cinfo.image_height = out_qimage->height();
+	cinfo.image_width = m_out_qimage->width();      /* image width and height, in pixels */
+	cinfo.image_height = m_out_qimage->height();
 	cinfo.input_components = cinfo.num_components = 3;     /* # of color components per pixel */
 	cinfo.in_color_space = JCS_RGB; /* colorspace of input image */
 	cinfo.jpeg_color_space = JCS_RGB;
@@ -212,8 +212,8 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_set_colorspace(&cinfo, JCS_RGB);
 
 	//avoid subsampling on high quality factor
-	jpeg_set_quality(&cinfo, quality, 1);
-	if (quality >= 70) {
+	jpeg_set_quality(&cinfo, m_quality, 1);
+	if (m_quality >= 70) {
 		for(int i = 0; i < cinfo.num_components; i++) {
 			cinfo.comp_info[i].h_samp_factor = 1;
 			cinfo.comp_info[i].v_samp_factor = 1;
@@ -222,21 +222,27 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	QByteArray ba;
 	FILE * outfile;
+	char *outbuf;
+	int outlen;
         
-	if (!fname.isEmpty()) { //we are writing to file
-		ba = fname.toUtf8();
+	if (!m_fname.isEmpty()) { //we are writing to file
+		ba = m_fname.toUtf8();
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
 		if ((outfile = fopen(ba.data(), "wb")) == NULL) {
-			qDebug() << "can't open " << fname;
+			qDebug() << "can't open " << m_fname;
     	    return false;
 		}
 	} 
 	else { //we are writing to memory buffer
+#ifdef WIN32
+		outfile = tmpfile ();
+#else
 		outlen = cinfo.image_width * cinfo.image_height * cinfo.num_components * sizeof(char);
 		outbuf = (char *) malloc(outlen);
 		memset(outbuf, 0, outlen);
 		outfile = fmemopen( outbuf, outlen, "wb");
+#endif
 	}
 	jpeg_stdio_dest(&cinfo, outfile);
 
@@ -250,7 +256,7 @@ bool JpegWriter::writeQImageToJpeg() {
        
 	for (int i = 0; cinfo.next_scanline < cinfo.image_height; i++) {
 		
-		removeAlphaValues(out_qimage->scanLine( i ), ScanLineOut, cinfo.image_width * cinfo.num_components);
+		removeAlphaValues(m_out_qimage->scanLine( i ), ScanLineOut, cinfo.image_width * cinfo.num_components);
 		jpeg_write_scanlines(&cinfo, &ScanLineOut, 1);
 	}
 
@@ -259,15 +265,24 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_finish_compress(&cinfo);
 	jpeg_destroy_compress(&cinfo);
 
+#ifdef WIN32
+	fseek (outfike, 0, SEEK_END);
+    m_filesize = ftell(outfile);
+#else
+	int size;
+	for (size = outlen - 1; size > 0; size--)
+		if (*(outbuf + size) != 0)
+			break;
+	m_filesize = size;
+	delete outbuf;
+#endif
+
+	fclose(outfile);
+
 	return true;
 }
 
-int JpegWriter::getBufferLenght() 
+int JpegWriter::getFileSize()
 {
-	return outlen;
-}
-
-char *JpegWriter::getBuffer()
-{
-	return outbuf;
+	return m_filesize;
 }
