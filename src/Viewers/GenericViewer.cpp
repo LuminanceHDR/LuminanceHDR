@@ -88,6 +88,7 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mPixmap = new IGraphicsPixmapItem();
     mScene->addItem(mPixmap);
     connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    connect(mPixmap, SIGNAL(startDragging()), this, SLOT(startDragging()));
 }
 
 GenericViewer::~GenericViewer()
@@ -425,3 +426,14 @@ pfs::Frame* GenericViewer::getFrame() const
     return mFrame;
 }
 
+void GenericViewer::startDragging()
+{
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData;
+
+	mimeData->setImageData(mPixmap->pixmap().toImage());
+	drag->setMimeData(mimeData);
+	//drag->setPixmap(iconPixmap);
+
+	Qt::DropAction dropAction = drag->exec();
+}

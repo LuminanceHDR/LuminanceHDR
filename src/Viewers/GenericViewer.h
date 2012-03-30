@@ -157,6 +157,8 @@ protected Q_SLOTS:
     //! \brief Update viewer's pixmap when a new frame is set by setFrame()
     virtual void updatePixmap() = 0;
 
+	void startDragging();
+
 protected:
 
 	virtual void retranslateUi();
