@@ -83,7 +83,6 @@ private:
     QLabel *informativeLabel;
 
     TonemappingOptions* mTonemappingOptions;
-    IGraphicsPixmapItem* storedPixmap;
 };
 
 inline bool LdrViewer::isHDR()

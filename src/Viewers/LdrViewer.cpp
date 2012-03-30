@@ -25,7 +25,6 @@
  *
  */
 
-#include <iostream>
 #include <QDebug>
 #include <QScopedPointer>
 #include <QString>
@@ -75,8 +74,6 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 
 	LuminanceOptions luminance_opts; 
 
-	storedPixmap = new IGraphicsPixmapItem();
-
     //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
 	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));	
 
@@ -99,9 +96,8 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
 LdrViewer::~LdrViewer()
 {
 #ifdef QT_DEBUG
-    std::cout << "LdrViewer::~LdrViewer()" << std::endl;
+    qDebug() << "LdrViewer::~LdrViewer()";
 #endif
-    delete storedPixmap;
 }
 
 void LdrViewer::retranslateUi()
@@ -198,9 +194,7 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage, bool doProof, bool doGam
 		cmsHPROFILE hsRGB, hOut, hProof;
 		cmsHTRANSFORM xform;
 
-		#ifndef USE_LCMS2
-			cmsErrorAction(LCMS_ERROR_SHOW);
-		#endif
+		cmsErrorAction(LCMS_ERROR_SHOW);
 
 		hsRGB = cmsCreate_sRGBProfile();
 		hOut = cmsOpenProfileFromFile(ba.data(), "r");
@@ -251,15 +245,14 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage, bool doProof, bool doGam
 
 void LdrViewer::doSoftProofing(bool doGamutCheck)
 {
- 	QImage *image = doCMSTransform(&mPixmap->pixmap().toImage(), true, doGamutCheck);	
+ 	QImage *image = doCMSTransform(fromLDRPFStoQImage(getFrame()), true, doGamutCheck);	
 	if (image == NULL)
 		return;
-	storedPixmap->setPixmap(mPixmap->pixmap());
 	mPixmap->setPixmap(QPixmap::fromImage(*image));	
 	delete image;
 }
 
 void LdrViewer::undoSoftProofing()
 {
-	mPixmap->setPixmap(storedPixmap->pixmap());
+	mPixmap->setPixmap(QPixmap::fromImage(* fromLDRPFStoQImage(getFrame())));
 }
