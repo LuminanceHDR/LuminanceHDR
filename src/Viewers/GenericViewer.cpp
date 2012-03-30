@@ -413,7 +413,8 @@ void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 
     // update tonemappingoptions (if available)
     // in the current implementation, only LdrViewer redefines this function
-    setTonemappingOptions(tmopts);
+    if (tmopts != NULL)
+	    setTonemappingOptions(tmopts);
 
     // reset boundaries
     updateView();
