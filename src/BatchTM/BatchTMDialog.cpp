@@ -113,6 +113,8 @@ void BatchTMDialog::add_dir_HDRs()
     QString dirname=QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmInputDir );
     if ( !dirname.isEmpty() )
     {
+		m_batchTmInputDir = dirname;
+        m_luminance_options.setBatchTmPathHdrInput(dirname); // update settings
         QStringList filters;
         filters << "*.exr" << "*.hdr" << "*.pic" << "*.tiff" << "*.tif" << "*.pfs" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.sr2" << "*.rw2" << "*.srw";
         filters << "*.EXR" << "*.HDR" << "*.PIC" << "*.TIFF" << "*.TIF" << "*.PFS" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.SR2" << "*.RW2" << "*.SRW";
@@ -144,6 +146,8 @@ void BatchTMDialog::add_dir_TMopts()
     QString dirname = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchTmTmoSettingsDir);
     if ( !dirname.isEmpty() )
     {
+		m_batchTmTmoSettingsDir = dirname;
+        m_luminance_options.setBatchTmPathTmoSettings(dirname); // update settings
         QStringList filters;
         filters << "*.txt";
         QDir chosendir(dirname);
@@ -232,11 +236,12 @@ void BatchTMDialog::add_view_model_TM_OPTs(QStringList list)
         QString curr_tmo_options_file = list.at(idx);
 
         TonemappingOptions *i_th_tm_opt = parse_tm_opt_file(curr_tmo_options_file);
-		i_th_tm_opt->quality = m_Ui->spinBox_Quality->value();
-		i_th_tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
-		
+
         if (i_th_tm_opt != NULL)
         {
+			i_th_tm_opt->quality = m_Ui->spinBox_Quality->value();
+			i_th_tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+		
             //add to data structure
             m_tm_options_list.append(i_th_tm_opt);
 
