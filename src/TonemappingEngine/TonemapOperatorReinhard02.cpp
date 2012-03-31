@@ -34,6 +34,8 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
+QMutex TonemapOperatorReinhard02::m_Mutex;
+
 TonemapOperatorReinhard02::TonemapOperatorReinhard02():
     TonemapOperator()
 {}
@@ -48,6 +50,7 @@ void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, Tonemappi
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
+    m_Mutex.lock();
     pfstmo_reinhard02(workingframe,
                       opts->operator_options.reinhard02options.key,
                       opts->operator_options.reinhard02options.phi,
@@ -56,6 +59,7 @@ void TonemapOperatorReinhard02::tonemapFrame(pfs::Frame* workingframe, Tonemappi
                       opts->operator_options.reinhard02options.upper,
                       opts->operator_options.reinhard02options.scales,
                       &ph);
+    m_Mutex.unlock();
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_SRGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());

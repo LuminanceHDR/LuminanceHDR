@@ -31,6 +31,8 @@
 #ifndef TONEMAP_OPERATOR_REINHARD02_H
 #define TONEMAP_OPERATOR_REINHARD02_H
 
+#include <QMutex>
+
 #include "TonemappingEngine/TonemapOperator.h"
 
 class TonemapOperatorReinhard02: public TonemapOperator
@@ -40,6 +42,9 @@ public:
 
     TMOperator getType();
     void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
+
+private:
+    static QMutex m_Mutex;
 };
 
 #endif
