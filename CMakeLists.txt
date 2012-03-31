@@ -104,9 +104,10 @@ IF(WIN32)
 		
         SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
         #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
-        SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
+        SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
+        #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
         ADD_DEFINITIONS(-DCMS_DLL)
-        ADD_DEFINITIONS(-DUSE_LCMS2)
+        #ADD_DEFINITIONS(-DUSE_LCMS2)
         
         # Todo check
         SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
