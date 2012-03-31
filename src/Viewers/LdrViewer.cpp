@@ -201,6 +201,7 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage, bool doProof, bool doGam
 		
 		if (hOut == NULL) {
 			QMessageBox::warning(0,tr("Warning"), tr("I cannot open monitor profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+			delete out_qimage;
 			return NULL; 
 		}
 
@@ -228,6 +229,7 @@ QImage *LdrViewer::doCMSTransform(QImage *input_qimage, bool doProof, bool doGam
 		if (xform == NULL) {
 			QMessageBox::warning(0,tr("Warning"), tr("I cannot perform the color transform. Please select a different monitor profile."), QMessageBox::Ok, QMessageBox::NoButton);
 			cmsCloseProfile(hOut);
+			delete out_qimage;
 			return NULL;		
 		}
 
