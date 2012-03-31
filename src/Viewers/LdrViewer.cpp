@@ -260,4 +260,5 @@ void LdrViewer::undoSoftProofing()
 	if (image == NULL)
 		return;
 	mPixmap->setPixmap(QPixmap::fromImage(*image));
+	delete image;
 }
