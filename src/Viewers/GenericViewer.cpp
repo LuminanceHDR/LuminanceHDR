@@ -35,7 +35,6 @@
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
 
-
 namespace
 {
 // define the number of pixels to count as border of the image, because of the shadow
@@ -430,10 +429,9 @@ void GenericViewer::startDragging()
 {
 	QDrag *drag = new QDrag(this);
 	QMimeData *mimeData = new QMimeData;
-
 	mimeData->setImageData(mPixmap->pixmap().toImage());
 	drag->setMimeData(mimeData);
-	//drag->setPixmap(iconPixmap);
+	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
 
 	Qt::DropAction dropAction = drag->exec();
 }
