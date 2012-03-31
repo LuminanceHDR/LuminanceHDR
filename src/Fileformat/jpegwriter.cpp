@@ -34,6 +34,10 @@
 #include <jpeglib.h>
 #include <setjmp.h>
 
+#ifdef WIN32
+	#include <QTemporaryFile>
+	#include <io.h>
+#endif
 jmp_buf writerplace;
 
 #include "jpegwriter.h"
@@ -224,7 +228,9 @@ bool JpegWriter::writeQImageToJpeg() {
 	FILE * outfile;
 	char *outbuf;
 	int outlen;
-        
+#ifdef WIN32
+	char* tFileName;
+#endif
 	if (!m_fname.isEmpty()) { //we are writing to file
 		ba = m_fname.toUtf8();
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
@@ -236,7 +242,11 @@ bool JpegWriter::writeQImageToJpeg() {
 	} 
 	else { //we are writing to memory buffer
 #ifdef WIN32
-		outfile = tmpfile ();
+		QTemporaryFile qtTempFile;
+		qtTempFile.open();
+		tFileName = qtTempFile.fileName().toLatin1().data();
+		qtTempFile.close();
+		outfile = fopen(tFileName, "r+");
 #else
 		outlen = cinfo.image_width * cinfo.image_height * cinfo.num_components * sizeof(char);
 		outbuf = (char *) malloc(outlen);
@@ -267,8 +277,11 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	if (m_fname.isEmpty()) {
 #ifdef WIN32
+		fflush(outfile);
 		fseek (outfile, 0, SEEK_END);
     	m_filesize = ftell(outfile);
+		fclose(outfile);
+		remove(tFileName);
 #else
 		int size;
 		for (size = outlen - 1; size > 0; size--)
