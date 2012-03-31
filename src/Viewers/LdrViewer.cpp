@@ -256,5 +256,8 @@ void LdrViewer::doSoftProofing(bool doGamutCheck)
 
 void LdrViewer::undoSoftProofing()
 {
-	mPixmap->setPixmap(QPixmap::fromImage(* fromLDRPFStoQImage(getFrame())));
+ 	QImage *image = doCMSTransform(fromLDRPFStoQImage(getFrame()), false, false);	
+	if (image == NULL)
+		return;
+	mPixmap->setPixmap(QPixmap::fromImage(*image));
 }
