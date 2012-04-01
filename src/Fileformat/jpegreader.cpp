@@ -198,20 +198,16 @@ static struct my_error_mgr {
 
 void my_error_handler (j_common_ptr cinfo)
 {
-	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
-	jpeg_destroy_decompress(ptr);
-	longjmp(place, 0);
+	char buffer[JMSG_LENGTH_MAX];
+	(*cinfo->err->format_message) (cinfo, buffer);
+	throw buffer;
 }
   
 void my_output_message (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
-
 	(*cinfo->err->format_message) (cinfo, buffer);
-	qDebug() << buffer;
-	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
-	jpeg_destroy_decompress(ptr);
-	longjmp(place, 0);
+	throw buffer;
 }
 
 void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
@@ -233,11 +229,6 @@ JpegReader::JpegReader(QString filename) :
 
 QImage *JpegReader::readJpegIntoQImage() 
 {
-	if (setjmp(place) != 0){
-		qDebug() << "Returned using longjmp";
-		return NULL;
-	}
-	QByteArray ba;
 	bool doTransform = false;
 
 	cmsHPROFILE hsRGB, hIn;
@@ -256,6 +247,7 @@ QImage *JpegReader::readJpegIntoQImage()
 
 	FILE * infile;
 
+	QByteArray ba;
 	ba = fname.toUtf8();
 	qDebug() << "readJpegIntoQImage: filename: " << ba.data();
 
@@ -303,14 +295,23 @@ QImage *JpegReader::readJpegIntoQImage()
         	cmsCloseProfile(hIn);
 		}
 	}
-
+	
 	jpeg_create_decompress(&cinfo);
 	qDebug() << "Created decompressor";
 	jpeg_stdio_src(&cinfo, infile);
 	qDebug() << "Assigned input source";
 	setup_read_icc_profile(&cinfo);
-	jpeg_read_header(&cinfo, true);
-
+	
+	try {
+		jpeg_read_header(&cinfo, true);
+	}
+	catch (char *error)
+	{
+		qDebug() << error;
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		return NULL;
+	}
 	qDebug() << "Readed JPEG headers";
 
 	if (camera_profile_opt == 1 && read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true) {
@@ -336,8 +337,16 @@ QImage *JpegReader::readJpegIntoQImage()
 		free(EmbedBuffer);
 	}
 	
-	jpeg_start_decompress(&cinfo);
-	qDebug() << "Start decompress";
+	try {
+		jpeg_start_decompress(&cinfo);
+		qDebug() << "Start decompress";
+	}
+	catch (char *error) {
+		qDebug() << error;
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		return NULL;
+	}		
 
 	qDebug() << cinfo.output_width;
 	qDebug() << cinfo.output_height;
@@ -349,8 +358,20 @@ QImage *JpegReader::readJpegIntoQImage()
 	ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
 	
 	for (int i = 0; cinfo.output_scanline < cinfo.output_height; i++) {
-
-		jpeg_read_scanlines(&cinfo, &ScanLineIn, 1);
+		
+		try {
+			jpeg_read_scanlines(&cinfo, &ScanLineIn, 1);
+		}
+		catch (char *error) {
+			qDebug() << error;
+			jpeg_destroy_decompress(&cinfo);
+			fclose(infile);
+			_cmsFree(ScanLineIn);
+			_cmsFree(ScanLineTemp);
+			_cmsFree(ScanLineOut);
+			jpeg_destroy_decompress(&cinfo);
+			return NULL;
+		}
 		
 		if (doTransform) {
 			cmsDoTransform(xform, ScanLineIn, ScanLineTemp, cinfo.output_width);
