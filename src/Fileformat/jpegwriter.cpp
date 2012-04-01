@@ -32,13 +32,11 @@
 
 #include <stdio.h>
 #include <jpeglib.h>
-#include <setjmp.h>
 
 #ifdef WIN32
 	#include <QTemporaryFile>
 	#include <io.h>
 #endif
-jmp_buf writerplace;
 
 #include "jpegwriter.h"
 
@@ -140,20 +138,16 @@ static struct my_error_mgr {
 
 void my_writer_error_handler (j_common_ptr cinfo)
 {
-	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
-	jpeg_destroy_decompress(ptr);
-	longjmp(writerplace, 0);
+	char buffer[JMSG_LENGTH_MAX];
+	(*cinfo->err->format_message) (cinfo, buffer);
+	throw buffer;
 }
   
 void my_writer_output_message (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
-
 	(*cinfo->err->format_message) (cinfo, buffer);
-	qDebug() << buffer;
-	struct jpeg_decompress_struct *ptr = (struct jpeg_decompress_struct *) cinfo;	
-	jpeg_destroy_decompress(ptr);
-	longjmp(writerplace, 0);
+	throw buffer;
 }
 
 void removeAlphaValues(const unsigned char *in, JSAMPROW out, int size)
@@ -180,10 +174,6 @@ JpegWriter::JpegWriter(const QImage *out_qimage, int quality) :
 {}
 
 bool JpegWriter::writeQImageToJpeg() {
-	if (setjmp(writerplace) != 0){
-		qDebug() << "Returned using longjmp";
-		return false;
-	}
 
 	cmsHPROFILE hsRGB;
 	JOCTET *EmbedBuffer;
@@ -256,7 +246,18 @@ bool JpegWriter::writeQImageToJpeg() {
 	}
 	jpeg_stdio_dest(&cinfo, outfile);
 
-	jpeg_start_compress(&cinfo, true);
+	try {
+		jpeg_start_compress(&cinfo, true);
+	}
+	catch (char *error) {
+		qDebug() << error;
+#ifndef WIN32
+		free(outbuf);
+#endif
+		fclose(outfile);
+		jpeg_destroy_compress(&cinfo);
+		return false;
+	}
 
 	write_icc_profile (&cinfo, EmbedBuffer, profile_size);
 
@@ -267,7 +268,18 @@ bool JpegWriter::writeQImageToJpeg() {
 	for (int i = 0; cinfo.next_scanline < cinfo.image_height; i++) {
 		
 		removeAlphaValues(m_out_qimage->scanLine( i ), ScanLineOut, cinfo.image_width * cinfo.num_components);
-		jpeg_write_scanlines(&cinfo, &ScanLineOut, 1);
+		try {
+			jpeg_write_scanlines(&cinfo, &ScanLineOut, 1);
+		}
+		catch (char *error) {
+			qDebug() << error;
+#ifndef WIN32
+			free(outbuf);
+#endif
+			fclose(outfile);
+			jpeg_destroy_compress(&cinfo);
+			return false;
+		}	
 	}
 
 	_cmsFree(ScanLineOut);

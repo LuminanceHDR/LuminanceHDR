@@ -32,10 +32,6 @@
 #endif
 
 #include <stdio.h>
-#include <setjmp.h>
-
-jmp_buf place;
-
 
 #include "jpegreader.h"
 #include "Common/LuminanceOptions.h"
