@@ -59,7 +59,6 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   std::cout << ", upper scale: " << high;
   std::cout << ", use scales: " << use_scales << ")" << std::endl;
   
-  
   pfs::Channel *X, *Y, *Z;
   frame->getXYZChannels( X, Y, Z );
   frame->getTags()->setString("LUMINANCE", "RELATIVE");
@@ -76,8 +75,10 @@ void pfstmo_reinhard02 (pfs::Frame* frame, float key, float phi, int num, int lo
   int w = Y->getWidth();
   int h = Y->getHeight();
   pfs::Array2D* L = new pfs::Array2D(w,h);
+
+  Reinhard02 tmoperator( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
   
-  tmo_reinhard02( w, h, Y->getRawData(), L->getRawData(), use_scales, key, phi, num, low, high, temporal_coherent, ph );
+  tmoperator.tmo_reinhard02();
   
   // TODO: this section can be rewritten using SSE Function
   for( int x=0 ; x<w ; x++ )
