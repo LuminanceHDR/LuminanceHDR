@@ -125,21 +125,25 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
   delete T;
 }
 
-void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels )
+void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels, ProgressHelper *ph )
 {
   int width = H->getCols();
   int height = H->getRows();
   const int size = width*height;
 
   pyramids[0] = new pfs::Array2D(width,height);
-  for( int i=0 ; i<size ; i++ )
+  for( int i=0 ; i<size ; i++ ) {
+	ph->newValue(100*i/size);
     (*pyramids[0])(i) = (*H)(i);
+  }
 
   pfs::Array2D* L = new pfs::Array2D(width,height);
   gaussianBlur( pyramids[0], L );
 	
   for( int k=1 ; k<nlevels ; k++ )
   {
+	ph->newValue(100*k/nlevels);
+	
     width /= 2;
     height /= 2;		
     pyramids[k] = new pfs::Array2D(width,height);
@@ -371,7 +375,7 @@ void Fattal02::tmo_fattal02()
   if (m_nlevels == 0) m_nlevels = 1;
 
   m_pyramids = new pfs::Array2D*[m_nlevels];
-  createGaussianPyramids(m_H, m_pyramids, m_nlevels);
+  createGaussianPyramids(m_H, m_pyramids, m_nlevels, m_ph);
 
   // calculate gradients and its average values on pyramid levels
   m_gradients = new pfs::Array2D*[m_nlevels];
