@@ -125,29 +125,29 @@ void gaussianBlur(pfs::Array2D* I, pfs::Array2D* L)
   delete T;
 }
 
-void Fattal02::createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels )
+void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels )
 {
   int width = H->getCols();
   int height = H->getRows();
   const int size = width*height;
 
-  //m_pyramids[0] = new pfs::Array2D(width,height);
+  pyramids[0] = new pfs::Array2D(width,height);
   for( int i=0 ; i<size ; i++ )
-    (*m_pyramids[0])(i) = (*H)(i);
+    (*pyramids[0])(i) = (*H)(i);
 
   pfs::Array2D* L = new pfs::Array2D(width,height);
-  gaussianBlur( m_pyramids[0], L );
+  gaussianBlur( pyramids[0], L );
 	
   for( int k=1 ; k<nlevels ; k++ )
   {
     width /= 2;
     height /= 2;		
-    //m_pyramids[k] = new pfs::Array2D(width,height);
-    downSample(L, m_pyramids[k]);
+    pyramids[k] = new pfs::Array2D(width,height);
+    downSample(L, pyramids[k]);
     
     delete L;
     L = new pfs::Array2D(width,height);
-    gaussianBlur( m_pyramids[k], L );
+    gaussianBlur( pyramids[k], L );
   }
 
   delete L;
@@ -155,33 +155,35 @@ void Fattal02::createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids,
 
 //--------------------------------------------------------------------
 
-float Fattal02::calculateGradients(int k)
+float calculateGradients(pfs::Array2D* H, pfs::Array2D* G, int k)
 {
+  const int width = H->getCols();
+  const int height = H->getRows();
   const float divider = pow( 2.0f, k+1 );
   float avgGrad = 0.0f;
 
-//#pragma omp parallel for shared(G,H) reduction(+:avgGrad)
-  for( int y=0 ; y<m_height ; y++ )
+#pragma omp parallel for shared(G,H) reduction(+:avgGrad)
+  for( int y=0 ; y<height ; y++ )
   {
-    for( int x=0 ; x<m_width ; x++ )
+    for( int x=0 ; x<width ; x++ )
     {
       float gx, gy;
       int w, n, e, s;
       w = (x == 0 ? 0 : x-1);
       n = (y == 0 ? 0 : y-1);
-      s = (y+1 == m_height ? y : y+1);
-      e = (x+1 == m_width ? x : x+1);
+      s = (y+1 == height ? y : y+1);
+      e = (x+1 == width ? x : x+1);
 
-      gx = ((*m_pyramids[k])(w,y)-(*m_pyramids[k])(e,y)) / divider;
+      gx = ((*H)(w,y)-(*H)(e,y)) / divider;
         
-      gy = ((*m_pyramids[k])(x,s)-(*m_pyramids[k])(x,n)) / divider;
+      gy = ((*H)(x,s)-(*H)(x,n)) / divider;
       
-      (*m_gradients[k])(x,y) = sqrt(gx*gx+gy*gy);
-      avgGrad += (*m_gradients[k])(x,y);
+      (*G)(x,y) = sqrt(gx*gx+gy*gy);
+      avgGrad += (*G)(x,y);
     }
   }
 
-  return avgGrad / (m_width*m_height);
+  return avgGrad / (width*height);
 }
 
 //--------------------------------------------------------------------
@@ -377,7 +379,7 @@ void Fattal02::tmo_fattal02()
   for( int k=0 ; k<m_nlevels ; k++ )
   {
     m_gradients[k] = new pfs::Array2D(m_pyramids[k]->getCols(), m_pyramids[k]->getRows());
-    m_avgGrad[k] = calculateGradients(k);
+    m_avgGrad[k] = calculateGradients(m_pyramids[k], m_gradients[k], k);
   }
 
   // calculate fi matrix

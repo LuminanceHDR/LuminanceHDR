@@ -73,8 +73,5 @@ private:
 	pfs::Array2D *m_FI;
 	pfs::Array2D *m_Gx, *m_Gy, *m_DivG, *m_U;
 
-	void createGaussianPyramids( pfs::Array2D* H, pfs::Array2D** pyramids, int nlevels );
-	float calculateGradients(int);
-
 };
 #endif
