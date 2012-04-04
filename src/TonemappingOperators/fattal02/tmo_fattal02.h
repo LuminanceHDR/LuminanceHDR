@@ -48,30 +48,8 @@
  * @param noise gradient level of noise (extra parameter)
  */
 
-#include "TonemappingOperators/pfstmo.h"
+#include "Common/ProgressHelper.h"
 
-class Fattal02
-{
-public:
-	Fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
-	~Fattal02();
-	void tmo_fattal02();
-private:
-	unsigned int m_width, m_height;
-	const pfs::Array2D *m_Y;
-	pfs::Array2D *m_L;
-	float m_alpha, m_beta, m_noise;
-	bool m_newfattal;
-	ProgressHelper *m_ph;
-	int m_size;
-	float m_minLum, m_maxLum;
-	pfs::Array2D *m_H;
-	int m_mins, m_nlevels;
-	pfs::Array2D** m_pyramids;
-	pfs::Array2D** m_gradients;
-	float *m_avgGrad;
-	pfs::Array2D *m_FI;
-	pfs::Array2D *m_Gx, *m_Gy, *m_DivG, *m_U;
+void tmo_fattal02(unsigned int width, unsigned int height, const float* Y, float* L, float alfa, float beta, float noise, bool newfattal, ProgressHelper *ph);
 
-};
 #endif
