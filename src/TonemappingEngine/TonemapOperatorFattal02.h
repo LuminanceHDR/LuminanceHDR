@@ -31,8 +31,6 @@
 #ifndef TONEMAP_OPERATOR_FATTAL02_H
 #define TONEMAP_OPERATOR_FATTAL02_H
 
-#include <QMutex>
-
 #include "TonemappingEngine/TonemapOperator.h"
 
 class TonemapOperatorFattal02: public TonemapOperator
@@ -43,8 +41,6 @@ public:
     TMOperator getType();
     void tonemapFrame(pfs::Frame*, TonemappingOptions*, ProgressHelper& ph);
 
-private:
-    static QMutex m_Mutex;
 };
 
 #endif

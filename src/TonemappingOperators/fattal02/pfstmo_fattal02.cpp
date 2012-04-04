@@ -78,7 +78,8 @@ void pfstmo_fattal02(pfs::Frame* frame, float opt_alpha, float opt_beta, float o
   int h = Y->getHeight();
   
   pfs::Array2D* L = new pfs::Array2D(w,h);
-  tmo_fattal02(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
+  Fattal02 tmoperator(w, h, Y->getRawData(), L->getRawData(), opt_alpha, opt_beta, opt_noise, newfattal, ph);
+  tmoperator.tmo_fattal02();
 
   if ( !ph->isTerminationRequested() )
   {
