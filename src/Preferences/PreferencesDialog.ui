@@ -1877,7 +1877,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="minimum">
-                    <number>1</number>
+                    <number>0</number>
                    </property>
                    <property name="maximum">
                     <number>2000000</number>
@@ -1980,7 +1980,7 @@ p, li { white-space: pre-wrap; }
                     </size>
                    </property>
                    <property name="minimum">
-                    <number>1</number>
+                    <number>0</number>
                    </property>
                    <property name="maximum">
                     <number>2000000</number>
@@ -2542,6 +2542,198 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>357</x>
      <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>med_passes_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>med_passes_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>med_passes_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>med_passes_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>525</x>
+     <y>217</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>276</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TK_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TK_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>557</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>TK_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TK_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>557</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>165</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>level_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>level_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>557</x>
+     <y>259</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>level_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>level_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>557</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>259</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_black_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>user_black_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>255</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_black_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>user_black_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>558</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_sat_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>user_sat_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>392</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>694</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>user_sat_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>user_sat_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>694</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>threshold_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>threshold_spinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>545</x>
+     <y>158</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>threshold_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>threshold_horizontalSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>545</x>
+     <y>158</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>158</y>
     </hint>
    </hints>
   </connection>
