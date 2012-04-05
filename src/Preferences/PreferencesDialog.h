@@ -104,8 +104,8 @@ private Q_SLOTS:
 	void on_monitor_toolButton_clicked();
 	void on_printer_toolButton_clicked();
 
-	void toolButton_clicked(int);
-
     void on_batchLdrFormatComboBox_currentIndexChanged(int);
+
+	void toolButton_clicked(int);
 };
 #endif
