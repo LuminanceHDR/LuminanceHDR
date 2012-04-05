@@ -309,7 +309,6 @@ void MainWindow::createToolBar()
     toolBarOptsGroup->addAction(m_Ui->actionText_Only);
     m_Ui->menuToolbars->addAction(m_Ui->toolBar->toggleViewAction());
 
-    connect(m_Ui->actionLock, SIGNAL(toggled(bool)), this, SLOT(lockViewers(bool)));
     connect(m_Ui->actionText_Under_Icons,SIGNAL(triggered()),this,SLOT(Text_Under_Icons()));
     connect(m_Ui->actionIcons_Only,SIGNAL(triggered()),this,SLOT(Icons_Only()));
     connect(m_Ui->actionText_Alongside_Icons,SIGNAL(triggered()),this,SLOT(Text_Alongside_Icons()));
@@ -320,64 +319,23 @@ void MainWindow::createMenus()
 {
     // About(s)
     connect(m_Ui->actionAbout_Qt,SIGNAL(triggered()),qApp,SLOT(aboutQt()));
-    connect(m_Ui->actionAbout_Luminance,SIGNAL(triggered()),this,SLOT(aboutLuminance()));
-    connect(m_Ui->actionDonate, SIGNAL(activated()), this, SLOT(showDonationsPage()));
 
-    connect(m_Ui->OptionsAction,SIGNAL(triggered()),this,SLOT(preferences_called()));
-    connect(m_Ui->documentationAction,SIGNAL(triggered()),this,SLOT(openDocumentation()));
     connect(m_Ui->actionWhat_s_This,SIGNAL(triggered()),this,SLOT(enterWhatsThis()));
 
     // I/O
-    connect(m_Ui->fileNewAction, SIGNAL(triggered()), this, SLOT(fileNewViaWizard()));
-    connect(m_Ui->fileOpenAction, SIGNAL(triggered()), this, SLOT(fileOpen()));
-    connect(m_Ui->fileSaveAsAction, SIGNAL(triggered()), this, SLOT(fileSaveAs()));
-    connect(m_Ui->fileSaveAllAction, SIGNAL(triggered()), this, SLOT(fileSaveAll()));
     connect(m_Ui->fileExitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(m_Ui->actionSave_Hdr_Preview, SIGNAL(triggered()), this, SLOT(saveHdrPreview()));
-
-    // HDR Editing
-    connect(m_Ui->actionResizeHDR, SIGNAL(triggered()), this, SLOT(resize_requested()));
-    connect(m_Ui->action_Projective_Transformation, SIGNAL(triggered()), this, SLOT(projectiveTransf_requested()));
-
-    // HDR Exposure Control
-    connect(m_Ui->Low_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_ldr_exp()));
-    connect(m_Ui->Fit_to_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_fit_exp()));
-    connect(m_Ui->Shrink_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_shrink_exp()));
-    connect(m_Ui->Extend_dynamic_range,SIGNAL(triggered()),this,SLOT(hdr_extend_exp()));
-    connect(m_Ui->Decrease_exposure,SIGNAL(triggered()),this,SLOT(hdr_decrease_exp()));
-    connect(m_Ui->Increase_exposure,SIGNAL(triggered()),this,SLOT(hdr_increase_exp()));
 
     // Crop & Rotation
     connect(m_Ui->cropToSelectionAction, SIGNAL(triggered()), this, SLOT(cropToSelection()));
     m_Ui->cropToSelectionAction->setEnabled(false);
 
     connect(m_Ui->removeSelectionAction, SIGNAL(triggered()), this, SLOT(disableCrop()));
-    connect(m_Ui->rotateccw, SIGNAL(triggered()), this, SLOT(rotateccw_requested()));
-    connect(m_Ui->rotatecw, SIGNAL(triggered()), this, SLOT(rotatecw_requested()));
-
-    // Zoom
-    connect(m_Ui->zoomInAct,SIGNAL(triggered()),this,SLOT(viewerZoomIn()));
-    connect(m_Ui->zoomOutAct,SIGNAL(triggered()),this,SLOT(viewerZoomOut()));
-    connect(m_Ui->fitToWindowAct,SIGNAL(triggered()),this,SLOT(viewerFitToWin()));
-    connect(m_Ui->actionFill_to_Window,SIGNAL(triggered()),this,SLOT(viewerFillToWin()));
-    connect(m_Ui->normalSizeAct,SIGNAL(triggered()),this,SLOT(viewerOriginalSize()));
-
-    // Tools
-    connect(m_Ui->Transplant_Exif_Data_action,SIGNAL(triggered()),this,SLOT(transplant_called()));
-    connect(m_Ui->actionBatch_HDR, SIGNAL(triggered()), this, SLOT(batch_hdr_requested()));
-    connect(m_Ui->actionBatch_Tone_Mapping, SIGNAL(triggered()), this, SLOT(batch_requested()));
 
     connect(m_Ui->menuWindows, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
-    connect(m_Ui->actionMinimize, SIGNAL(triggered()), this, SLOT(minimizeMW()));
-    connect(m_Ui->actionMaximize, SIGNAL(triggered()), this, SLOT(maximizeMW()));
-    connect(m_Ui->actionBring_All_to_Front, SIGNAL(triggered()), this, SLOT(bringAllMWToFront()));
+    connect(m_Ui->actionMinimize, SIGNAL(triggered()), this, SLOT(showMinimized()));
+    connect(m_Ui->actionMaximize, SIGNAL(triggered()), this, SLOT(showMaximized()));
     connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), this, SLOT(showPreviewPanel(bool)));
     connect(m_Ui->actionShowPreviewPanel, SIGNAL(toggled(bool)), &luminance_options, SLOT(setPreviewPanelActive(bool)));
-    connect(m_Ui->actionFix_Histogram,SIGNAL(toggled(bool)),this,SLOT(levelsRequested(bool)));
-    connect(m_Ui->actionRemove_Tab,SIGNAL(triggered()),this,SLOT(removeCurrentTab()));
-
-    connect(m_Ui->actionSoft_Proofing,SIGNAL(toggled(bool)),this,SLOT(doSoftProofing(bool)));
-    connect(m_Ui->actionGamut_Check,SIGNAL(toggled(bool)),this,SLOT(doGamutCheck(bool)));
 
     //recent files
     initRecentFileActions();
@@ -391,9 +349,6 @@ void MainWindow::createStatusBar()
 
 void MainWindow::createConnections()
 {
-    connect(m_Ui->actionShowNext, SIGNAL(triggered()), this, SLOT(activateNextViewer()));
-    connect(m_Ui->actionShowPrevious, SIGNAL(triggered()), this, SLOT(activatePreviousViewer()));
-
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QWidget*)), this, SLOT(setActiveMainWindow(QWidget*)));
 }
@@ -425,12 +380,12 @@ void MainWindow::loadOptions()
 
 }
 
-void MainWindow::showDonationsPage()
+void MainWindow::on_actionDonate_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
 }
 
-void MainWindow::fileNewViaWizard(QStringList files)
+void MainWindow::on_fileNewAction_triggered(QStringList files)
 {
     QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
     if (wizard->exec() == QDialog::Accepted)
@@ -439,7 +394,7 @@ void MainWindow::fileNewViaWizard(QStringList files)
     }
 }
 
-void MainWindow::fileOpen()
+void MainWindow::on_fileOpenAction_triggered()
 {
     QString filetypes = tr("All HDR formats ");
     filetypes += "(*.exr *.hdr *.pic *.tiff *.tif *.pfs *.crw *.cr2 *.nef *.dng *.mrw *.orf *.kdc *.dcr *.arw *.raf *.ptx *.pef *.x3f *.raw *.rw2 *.sr2 *.3fr *.mef *.mos *.erf *.nrw *.srw";
@@ -473,7 +428,7 @@ void MainWindow::fileOpen()
     }
 }
 
-void MainWindow::fileSaveAll()
+void MainWindow::on_fileSaveAllAction_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -505,7 +460,7 @@ void MainWindow::fileSaveAll()
     }
 }
 
-void MainWindow::fileSaveAs()
+void MainWindow::on_fileSaveAsAction_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -612,7 +567,7 @@ void MainWindow::save_ldr_failed()
     //QMessageBox::warning(0,"",QObject::tr("Failed to save <b>") + outfname + "</b>", QMessageBox::Ok, QMessageBox::NoButton);
 }
 
-void MainWindow::saveHdrPreview()
+void MainWindow::on_actionSave_Hdr_Preview_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -756,12 +711,12 @@ void MainWindow::updateActions( int w )
     }
 }
 
-void MainWindow::rotateccw_requested()
+void MainWindow::on_rotateccw_triggered()
 {
     dispatchrotate(false);
 }
 
-void MainWindow::rotatecw_requested()
+void MainWindow::on_rotatecw_triggered()
 {
     dispatchrotate(true);
 }
@@ -796,7 +751,7 @@ void MainWindow::dispatchrotate(bool clockwise)
     m_Ui->rotatecw->setEnabled(true);
 }
 
-void MainWindow::resize_requested()
+void MainWindow::on_actionResizeHDR_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -824,7 +779,7 @@ void MainWindow::resize_requested()
     delete resizedialog;
 }
 
-void MainWindow::projectiveTransf_requested()
+void MainWindow::on_action_Projective_Transformation_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -852,7 +807,7 @@ void MainWindow::projectiveTransf_requested()
     delete projTranfsDialog;
 }
 
-void MainWindow::hdr_decrease_exp()
+void MainWindow::on_Decrease_exposure_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -862,7 +817,7 @@ void MainWindow::hdr_decrease_exp()
         curr_hdr_v->lumRange()->decreaseExposure();
 }
 
-void MainWindow::hdr_extend_exp()
+void MainWindow::on_Extend_dynamic_range_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -872,7 +827,7 @@ void MainWindow::hdr_extend_exp()
         curr_hdr_v->lumRange()->extendRange();
 }
 
-void MainWindow::hdr_fit_exp()
+void MainWindow::on_Fit_to_dynamic_range_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -882,7 +837,7 @@ void MainWindow::hdr_fit_exp()
         curr_hdr_v->lumRange()->fitToDynamicRange();
 }
 
-void MainWindow::hdr_increase_exp()
+void MainWindow::on_Increase_exposure_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -892,7 +847,7 @@ void MainWindow::hdr_increase_exp()
         curr_hdr_v->lumRange()->increaseExposure();
 }
 
-void MainWindow::hdr_shrink_exp()
+void MainWindow::on_Shrink_dynamic_range_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -902,7 +857,7 @@ void MainWindow::hdr_shrink_exp()
         curr_hdr_v->lumRange()->shrinkRange();
 }
 
-void MainWindow::hdr_ldr_exp()
+void MainWindow::on_Low_dynamic_range_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -913,7 +868,7 @@ void MainWindow::hdr_ldr_exp()
 }
 
 // Zoom = Viewers (START)
-void MainWindow::viewerZoomIn()
+void MainWindow::on_zoomInAct_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -923,7 +878,7 @@ void MainWindow::viewerZoomIn()
     //updateMagnificationButtons(g_v);
 }
 
-void MainWindow::viewerZoomOut()
+void MainWindow::on_zoomOutAct_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -933,7 +888,7 @@ void MainWindow::viewerZoomOut()
     //updateMagnificationButtons(g_v);
 }
 
-void MainWindow::viewerFitToWin(bool checked)
+void MainWindow::on_fitToWindowAct_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -943,7 +898,7 @@ void MainWindow::viewerFitToWin(bool checked)
     //updateMagnificationButtons(g_v);
 }
 
-void MainWindow::viewerFillToWin()
+void MainWindow::on_actionFill_to_Window_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -953,7 +908,7 @@ void MainWindow::viewerFillToWin()
     //updateMagnificationButtons(g_v);
 }
 
-void MainWindow::viewerOriginalSize()
+void MainWindow::on_normalSizeAct_triggered()
 {
     if (m_tabwidget->count() <= 0) return;
 
@@ -965,7 +920,7 @@ void MainWindow::viewerOriginalSize()
 // Zoom = Viewers (END)
 
 
-void MainWindow::openDocumentation()
+void MainWindow::on_documentationAction_triggered()
 {
     helpBrowser = new HelpBrowser(this,"Luminance HDR Help");
     helpBrowser->setAttribute(Qt::WA_DeleteOnClose);
@@ -1120,7 +1075,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
     }
 }
 
-void MainWindow::preferences_called()
+void MainWindow::on_OptionsAction_triggered()
 {
     unsigned int negcol = luminance_options.getViewerNegColor();
     unsigned int naninfcol = luminance_options.getViewerNanInfColor();
@@ -1144,7 +1099,7 @@ void MainWindow::preferences_called()
     }
 }
 
-void MainWindow::transplant_called()
+void MainWindow::on_Transplant_Exif_Data_action_triggered()
 {
     TransplantExifDialog *transplant=new TransplantExifDialog(this);
     transplant->setAttribute(Qt::WA_DeleteOnClose);
@@ -1171,7 +1126,7 @@ void MainWindow::openFiles(const QStringList& files)
     {
         switch (DnDOptionDialog::showDndDialog(this, files)) {
         case DnDOptionDialog::ACTION_NEW_HDR:
-            fileNewViaWizard(files);
+        	on_fileNewAction_triggered(files);
             break;
         case DnDOptionDialog::ACTION_OPEN_HDR:
             foreach (QString filename, files)
@@ -1226,7 +1181,7 @@ void MainWindow::showSplash()
 
 void MainWindow::splashShowDonationsPage()
 {
-    showDonationsPage();
+	on_actionDonate_triggered();
     splash->close();
 }
 
@@ -1236,9 +1191,9 @@ void MainWindow::splashClose()
     splash->close();
 }
 
-void MainWindow::aboutLuminance()
+void MainWindow::on_actionAbout_Luminance_triggered()
 {
-    UMessageBox::about();
+	UMessageBox::about();
 }
 
 /*
@@ -1286,17 +1241,7 @@ void MainWindow::setActiveMainWindow(QWidget* w)
     return;
 }
 
-void MainWindow::minimizeMW()
-{
-    this->showMinimized();
-}
-
-void MainWindow::maximizeMW()
-{
-    this->showMaximized();
-}
-
-void MainWindow::bringAllMWToFront()
+void MainWindow::on_actionBring_All_to_Front_triggered()
 {
     foreach (QWidget *widget, QApplication::topLevelWidgets())
     {
@@ -1308,14 +1253,14 @@ void MainWindow::bringAllMWToFront()
     }
 }
 
-void MainWindow::batch_hdr_requested()
+void MainWindow::on_actionBatch_HDR_triggered()
 {
     BatchHDRDialog *batch_hdr_dialog = new BatchHDRDialog(this);
     batch_hdr_dialog->exec();
     delete batch_hdr_dialog;
 }
 
-void MainWindow::batch_requested()
+void MainWindow::on_actionBatch_Tone_Mapping_triggered()
 {
     BatchTMDialog *batchdialog = new BatchTMDialog(this);
     batchdialog->exec();
@@ -1575,7 +1520,7 @@ void MainWindow::tonemapFailed(QString error_msg)
 /*
  * Lock Handling
  */
-void MainWindow::lockViewers(bool /*toggled*/)
+void MainWindow::on_actionLock_toggled(bool /*toggled*/)
 {
     if (m_Ui->actionLock->isChecked() && m_tabwidget->count())
     {
@@ -1697,7 +1642,7 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
  * Next/Previous Buttons
  */
 
-void MainWindow::removeCurrentTab() 
+void MainWindow::on_actionRemove_Tab_triggered()
 {
 	removeTab(m_tabwidget->currentIndex());
 }
@@ -1769,7 +1714,7 @@ void MainWindow::removeTab(int t)
     updatePreviousNextActions();
 }
 
-void MainWindow::activateNextViewer()
+void MainWindow::on_actionShowNext_triggered()
 {
     int curr_num_viewers = m_tabwidget->count();
     int curr_viewer = m_tabwidget->currentIndex();
@@ -1780,7 +1725,7 @@ void MainWindow::activateNextViewer()
     }
 }
 
-void MainWindow::activatePreviousViewer()
+void MainWindow::on_actionShowPrevious_triggered()
 {
     int curr_viewer = m_tabwidget->currentIndex();
 
@@ -1918,7 +1863,7 @@ void MainWindow::clearRecentFileActions()
     }
 }
 
-void MainWindow::levelsRequested(bool checked)
+void MainWindow::on_actionFix_Histogram_toggled(bool checked)
 {
     if (checked)
     {
@@ -1967,7 +1912,7 @@ void MainWindow::openInputFiles()
     openFiles(inputFiles);
 }
 
-void MainWindow::doSoftProofing(bool doProof)
+void MainWindow::on_actionSoft_Proofing_toggled(bool doProof)
 {
 	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
 	if ( current==NULL ) return;
@@ -1985,7 +1930,7 @@ void MainWindow::doSoftProofing(bool doProof)
 	}
 }
 
-void MainWindow::doGamutCheck(bool doGamut)
+void MainWindow::on_actionGamut_Check_toggled(bool doGamut)
 {
 	GenericViewer* current = (GenericViewer*) m_tabwidget->currentWidget();
 	if ( current==NULL ) return;

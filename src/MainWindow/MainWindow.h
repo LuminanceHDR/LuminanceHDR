@@ -94,43 +94,43 @@ public Q_SLOTS:
     void setInputFiles(const QStringList& files);
 
 protected Q_SLOTS:
-    void fileNewViaWizard(QStringList files = QStringList());
-    void fileOpen();    //for File->Open, it then calls loadFile()
-    void fileSaveAs();
-    void fileSaveAll();
-    void saveHdrPreview();
+    void on_fileNewAction_triggered(QStringList files = QStringList());
+    void on_fileOpenAction_triggered();    //for File->Open, it then calls loadFile()
+    void on_fileSaveAsAction_triggered();
+    void on_fileSaveAllAction_triggered();
+    void on_actionSave_Hdr_Preview_triggered();
 
-    void rotateccw_requested();
-    void rotatecw_requested();
+    void on_rotateccw_triggered();
+    void on_rotatecw_triggered();
 
-    void resize_requested();
-    void projectiveTransf_requested();
+    void on_actionResizeHDR_triggered();
+    void on_action_Projective_Transformation_triggered();
 
-    void batch_hdr_requested();
-    void batch_requested();
+    void on_actionBatch_HDR_triggered();
+    void on_actionBatch_Tone_Mapping_triggered();
 
-    void hdr_increase_exp();
-    void hdr_decrease_exp();
-    void hdr_extend_exp();
-    void hdr_shrink_exp();
-    void hdr_fit_exp();
-    void hdr_ldr_exp();
+    void on_Increase_exposure_triggered();
+    void on_Decrease_exposure_triggered();
+    void on_Extend_dynamic_range_triggered();
+    void on_Shrink_dynamic_range_triggered();
+    void on_Fit_to_dynamic_range_triggered();
+    void on_Low_dynamic_range_triggered();
 
     // Viewers
-    void viewerZoomIn();
-    void viewerZoomOut();
-    void viewerFitToWin(bool checked = true);
-    void viewerFillToWin();
-    void viewerOriginalSize();
+    void on_zoomInAct_triggered();
+    void on_zoomOutAct_triggered();
+    void on_fitToWindowAct_triggered();
+    void on_actionFill_to_Window_triggered();
+    void on_normalSizeAct_triggered();
     void updateMagnificationButtons(GenericViewer*);
 
-    void openDocumentation();
+    void on_documentationAction_triggered();
     void enterWhatsThis();
 
-    void preferences_called();
-    void transplant_called();
+    void on_OptionsAction_triggered();
+    void on_Transplant_Exif_Data_action_triggered();
 
-    void levelsRequested(bool checked);
+    void on_actionFix_Histogram_toggled(bool checked);
 
     void openInputFiles();
 
@@ -142,14 +142,12 @@ protected Q_SLOTS:
 
     // Window Menu Display and Functionalities
     void updateWindowMenu();
-    void minimizeMW();
-    void maximizeMW();
-    void bringAllMWToFront();
+    void on_actionBring_All_to_Front_triggered();
 
     void openRecentFile();
     void setCurrentFile(const QString &fileName);
 
-    void aboutLuminance();
+    void on_actionAbout_Luminance_triggered();
     void showSplash();
 
     void updateActions(int w);
@@ -160,7 +158,7 @@ protected Q_SLOTS:
     void disableCrop();
 
     void helpBrowserClosed();
-    void showDonationsPage();
+    void on_actionDonate_triggered();
     void splashShowDonationsPage();
     void splashClose();
 
@@ -173,19 +171,19 @@ protected Q_SLOTS:
     void tonemapFailed(QString);
 
     // lock functionalities
-    void lockViewers(bool);
+    void on_actionLock_toggled(bool);
     void syncViewers(GenericViewer*);
 
     void showPreviewPanel(bool b);
 
     // QTabWidget
     void removeTab(int);
-    void removeCurrentTab();
-    void activateNextViewer();
-    void activatePreviousViewer();
+    void on_actionRemove_Tab_triggered();
+    void on_actionShowNext_triggered();
+    void on_actionShowPrevious_triggered();
 
-	void doSoftProofing(bool);
-	void doGamutCheck(bool);
+	void on_actionSoft_Proofing_toggled(bool);
+	void on_actionGamut_Check_toggled(bool);
 
 Q_SIGNALS:
     // update HDR
