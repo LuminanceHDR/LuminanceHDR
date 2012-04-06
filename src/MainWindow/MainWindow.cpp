@@ -385,7 +385,12 @@ void MainWindow::on_actionDonate_triggered()
     QDesktopServices::openUrl(QUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=77BSTWEH7447C")); //davideanastasia
 }
 
-void MainWindow::on_fileNewAction_triggered(QStringList files)
+void MainWindow::on_fileNewAction_triggered()
+{
+	createNewHdr(QStringList()); // redirect on createNewHdr-method to avoid moc warning
+}
+
+void MainWindow::createNewHdr(QStringList files)
 {
     QScopedPointer<HdrWizard> wizard( new HdrWizard (this, files) );
     if (wizard->exec() == QDialog::Accepted)
@@ -1044,7 +1049,7 @@ void MainWindow::openFiles(const QStringList& files)
     {
         switch (DnDOptionDialog::showDndDialog(this, files)) {
         case DnDOptionDialog::ACTION_NEW_HDR:
-        	on_fileNewAction_triggered(files);
+        	createNewHdr(files);
             break;
         case DnDOptionDialog::ACTION_OPEN_HDR:
             foreach (QString filename, files)
@@ -1530,25 +1535,15 @@ void MainWindow::removeTab(int t)
     w->blockSignals(true);
     if (w->isHDR())
     {
+    	bool doClose = false;
+
         qDebug() << "Remove HDR from MainWindow";
         if ( w->needsSaving() )
         {
             if ( maybeSave() )
             {
                 // if discard OR saved
-                m_tabwidget->removeTab(t);
-                w->deleteLater();   // delete yourself whenever you want
-
-                setWindowModified(false);
-
-                tm_status.is_hdr_ready = false;
-                tm_status.curr_tm_frame = NULL;
-                tm_status.curr_tm_options = NULL;
-
-                tmPanel->setEnabled(false);
-                m_Ui->actionShowPreviewPanel->setEnabled(false);
-
-                previewPanel->hide();
+            	doClose = true;
             }
             // if FALSE, it means that the user said "Cancel"
             // or the saving operation went wrong
@@ -1558,21 +1553,22 @@ void MainWindow::removeTab(int t)
             }
         }
         else
-        {
-            // if discard OR saved
-            m_tabwidget->removeTab(t);
-            w->deleteLater();   // delete yourself whenever you want
+        	doClose = true;
 
-            setWindowModified(false);
+        if (doClose) {
+			m_tabwidget->removeTab(t);
+			w->deleteLater();   // delete yourself whenever you want
 
-            tm_status.is_hdr_ready = false;
-            tm_status.curr_tm_frame = NULL;
-            tm_status.curr_tm_options = NULL;
+			showPreviewPanel(false);
+			setWindowModified(false);
 
-            tmPanel->setEnabled(false);
-            m_Ui->actionShowPreviewPanel->setEnabled(false);
+			tm_status.is_hdr_ready = false;
+			tm_status.curr_tm_frame = NULL;
+			tm_status.curr_tm_options = NULL;
 
-            previewPanel->hide();
+			tmPanel->setEnabled(false);
+
+			previewPanel->hide();
         }
     }
     else

@@ -94,7 +94,9 @@ public Q_SLOTS:
     void setInputFiles(const QStringList& files);
 
 protected Q_SLOTS:
-    void on_fileNewAction_triggered(QStringList files = QStringList());
+    void on_fileNewAction_triggered();
+    void createNewHdr(QStringList files);
+
     void on_fileOpenAction_triggered();    //for File->Open, it then calls loadFile()
     void on_fileSaveAsAction_triggered();
     void on_fileSaveAllAction_triggered();
