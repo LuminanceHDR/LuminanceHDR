@@ -338,3 +338,7 @@ QSqlTableModel* SavedParametersDialog::getModel()
     return model;
 }
 
+QModelIndexList SavedParametersDialog::getModelIndexList()
+{
+    return m_Ui->tableView->selectionModel()->selectedRows();
+}

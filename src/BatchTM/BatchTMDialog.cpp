@@ -41,6 +41,7 @@
 #include "ui_BatchTMDialog.h"
 
 #include "Common/config.h"
+#include "Common/SavedParametersDialog.h"
 #include "Exif/ExifOperations.h"
 #include "Core/TonemappingOptions.h"
 #include "BatchTM/BatchTMJob.h"
@@ -69,6 +70,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     connect(m_Ui->remove_TMOpts_Button,   SIGNAL(clicked()), this, SLOT(remove_TMOpts())      );
     connect(m_Ui->BatchGoButton,          SIGNAL(clicked()), this, SLOT(batch_core()));  //start_called()
     connect(m_Ui->cancelbutton,           SIGNAL(clicked()), this, SLOT(abort()));  
+    connect(m_Ui->from_Database_Button,   SIGNAL(clicked()), this, SLOT(from_database()));
 
     connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
@@ -542,4 +544,11 @@ void BatchTMDialog::abort()
 	}
 	else
 		this->reject();
+}
+
+void BatchTMDialog::from_database()
+{
+	SavedParametersDialog dialog(this);
+	if (dialog.exec()) {
+	}
 }

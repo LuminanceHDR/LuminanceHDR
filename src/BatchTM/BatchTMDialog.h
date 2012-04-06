@@ -78,6 +78,7 @@ private slots:
   void start_batch_thread(); 
   void stop_batch_tm_ui();
   void increment_progress_bar(int);
+  void from_database();
 
 protected:
   void closeEvent(QCloseEvent *);

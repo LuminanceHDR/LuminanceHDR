@@ -49,6 +49,7 @@ public:
     ~SavedParametersDialog();
 
     QModelIndex getCurrentIndex();
+    QModelIndexList getModelIndexList();
     QSqlTableModel* getModel();
 
 protected:
