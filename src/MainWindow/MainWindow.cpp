@@ -603,6 +603,8 @@ void MainWindow::updateActions( int w )
 	GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
 	bool isHdr = g_v ? g_v->isHDR() : false;
 	bool isLdr = g_v ? !g_v->isHDR() : false;
+	LuminanceOptions luminance_opts;
+	bool hasPrinterProfile = !luminance_opts.getPrinterProfileFileName().isEmpty();
 
     updatePreviousNextActions();
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
@@ -626,8 +628,8 @@ void MainWindow::updateActions( int w )
     m_Ui->rotatecw->setEnabled(isHdr);
 
     m_Ui->actionFix_Histogram->setEnabled(isLdr);
-    m_Ui->actionSoft_Proofing->setEnabled(isLdr);
-    m_Ui->actionGamut_Check->setEnabled(isLdr);
+    m_Ui->actionSoft_Proofing->setEnabled(isLdr && hasPrinterProfile);
+    m_Ui->actionGamut_Check->setEnabled(isLdr && hasPrinterProfile);
 
     bool hasCropping = isHdr && tm_status.curr_tm_frame && tm_status.curr_tm_frame->hasSelection();
     m_Ui->cropToSelectionAction->setEnabled(hasCropping);
