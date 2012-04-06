@@ -25,39 +25,35 @@
 #ifndef SAVEDPARAMETERSDIALOG_H
 #define SAVEDPARAMETERSDIALOG_H
 
+#include <QDialog>
 #include <QSqlTableModel>
 
 #include "Core/TonemappingOptions.h"
-#include "ui_SavedParametersDialog.h"
 
-class SavedParameters : public QDialog, private Ui::ParametersDialog
+namespace Ui
+{
+    class SavedParametersDialog;
+}
+
+class SavedParametersDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     //! \brief Default constructor
-    explicit SavedParameters(QWidget *parent = 0);
+    explicit SavedParametersDialog(QWidget *parent = 0);
 
     //! \brief Specialized ctor
-    SavedParameters(TMOperator op, QWidget *parent = 0);
+    SavedParametersDialog(TMOperator op, QWidget *parent = 0);
 
-    ~SavedParameters();
+    ~SavedParametersDialog();
 
     QModelIndex getCurrentIndex();
     QSqlTableModel* getModel();
 
 protected:
     QSqlTableModel* model;
+    QScopedPointer<Ui::SavedParametersDialog> m_Ui;
+    
 };
-
-inline QModelIndex SavedParameters::getCurrentIndex()
-{
-    return tableView->currentIndex();
-}
-
-inline QSqlTableModel* SavedParameters::getModel()
-{
-    return model;
-}
-
 #endif
