@@ -591,124 +591,42 @@ void MainWindow::on_actionSave_Hdr_Preview_triggered()
     }
 }
 
-void MainWindow::updateActionsNoImage()
-{
-    updateMagnificationButtons(NULL);
-
-    m_Ui->fileSaveAsAction->setEnabled(false);
-    m_Ui->actionSave_Hdr_Preview->setEnabled(false);
-
-    // Histogram
-    m_Ui->menuHDR_Histogram->setEnabled(false);
-    m_Ui->Low_dynamic_range->setEnabled(false);
-    m_Ui->Fit_to_dynamic_range->setEnabled(false);
-    m_Ui->Shrink_dynamic_range->setEnabled(false);
-    m_Ui->Extend_dynamic_range->setEnabled(false);
-    m_Ui->Decrease_exposure->setEnabled(false);
-    m_Ui->Increase_exposure->setEnabled(false);
-
-    m_Ui->actionResizeHDR->setEnabled(false);
-    m_Ui->action_Projective_Transformation->setEnabled(false);
-    m_Ui->cropToSelectionAction->setEnabled(false);
-    m_Ui->rotateccw->setEnabled(false);
-    m_Ui->rotatecw->setEnabled(false);
-    m_Ui->actionFix_Histogram->setEnabled(false);
-    m_Ui->actionSoft_Proofing->setEnabled(false);
-    m_Ui->actionGamut_Check->setEnabled(false);
-}
-
-void MainWindow::updateActionsLdrImage()
-{
-    // Read/Save
-    m_Ui->fileSaveAsAction->setEnabled(true);
-    m_Ui->actionSave_Hdr_Preview->setEnabled(true);
-    if (curr_num_ldr_open >= 2)
-        m_Ui->fileSaveAllAction->setEnabled(true);
-
-    // Histogram
-    m_Ui->menuHDR_Histogram->setEnabled(false);
-    m_Ui->Low_dynamic_range->setEnabled(false);
-    m_Ui->Fit_to_dynamic_range->setEnabled(false);
-    m_Ui->Shrink_dynamic_range->setEnabled(false);
-    m_Ui->Extend_dynamic_range->setEnabled(false);
-    m_Ui->Decrease_exposure->setEnabled(false);
-    m_Ui->Increase_exposure->setEnabled(false);
-
-    m_Ui->actionResizeHDR->setEnabled(false);
-    m_Ui->action_Projective_Transformation->setEnabled(false);
-    m_Ui->cropToSelectionAction->setEnabled(false);
-    m_Ui->removeSelectionAction->setEnabled(false);
-    m_Ui->rotateccw->setEnabled(false);
-    m_Ui->rotatecw->setEnabled(false);
-    m_Ui->actionFix_Histogram->setEnabled(true);
-    m_Ui->actionSoft_Proofing->setEnabled(true);
-    m_Ui->actionGamut_Check->setEnabled(true);
-}
-
-void MainWindow::updateActionsHdrImage()
-{
-    //qDebug() << "MainWindow::updateActionsHdrImage()";
-
-    m_Ui->fileSaveAsAction->setEnabled(true);
-    m_Ui->actionSave_Hdr_Preview->setEnabled(true);
-    //actionShowHDRs->setEnabled(false);
-
-    // Histogram
-    m_Ui->menuHDR_Histogram->setEnabled(true);
-    m_Ui->Low_dynamic_range->setEnabled(true);
-    m_Ui->Fit_to_dynamic_range->setEnabled(true);
-    m_Ui->Shrink_dynamic_range->setEnabled(true);
-    m_Ui->Extend_dynamic_range->setEnabled(true);
-    m_Ui->Decrease_exposure->setEnabled(true);
-    m_Ui->Increase_exposure->setEnabled(true);
-
-    m_Ui->actionResizeHDR->setEnabled(true);
-    m_Ui->action_Projective_Transformation->setEnabled(true);
-
-    if (tm_status.curr_tm_frame)
-    {
-        if (!tm_status.curr_tm_frame->hasSelection())
-        {
-            m_Ui->cropToSelectionAction->setEnabled(false);
-            m_Ui->removeSelectionAction->setEnabled(false);
-        }
-        else
-        {
-            m_Ui->cropToSelectionAction->setEnabled(true);
-            m_Ui->removeSelectionAction->setEnabled(true);
-        }
-    }
-    m_Ui->rotateccw->setEnabled(true);
-    m_Ui->rotatecw->setEnabled(true);
-    m_Ui->actionFix_Histogram->setEnabled(false);
-    m_Ui->actionSoft_Proofing->setEnabled(false);
-    m_Ui->actionGamut_Check->setEnabled(false);
-}
-
 void MainWindow::updateActions( int w )
 {
-    //qDebug() << "MainWindow::updateActions(" << w << ")";
+    qDebug() << "MainWindow::updateActions(" << w << ")";
+	bool hasImage = w >= 0;
+	GenericViewer* g_v = hasImage ? (GenericViewer*)m_tabwidget->widget(w) : 0;
+	bool isHdr = g_v ? g_v->isHDR() : false;
+	bool isLdr = g_v ? !g_v->isHDR() : false;
+
     updatePreviousNextActions();
-    if ( w < 0 )
-    {
-        // something wrong happened?
-        updateActionsNoImage();
-    }
-    else
-    {
-        GenericViewer* g_v = (GenericViewer*)m_tabwidget->widget(w);
-        updateMagnificationButtons(g_v);
-        if ( g_v->isHDR() )
-        {
-            // current selected frame is an HDR
-            updateActionsHdrImage();
-        }
-        else
-        {
-            // current selected frame is not an HDR
-            updateActionsLdrImage();
-        }
-    }
+    updateMagnificationButtons(g_v); // g_v ? g_v : 0
+
+    m_Ui->fileSaveAsAction->setEnabled(hasImage);
+    m_Ui->actionSave_Hdr_Preview->setEnabled(hasImage);
+    m_Ui->fileSaveAllAction->setEnabled(hasImage && curr_num_ldr_open >= 2);
+
+    // Histogram
+    m_Ui->menuHDR_Histogram->setEnabled(isHdr);
+    m_Ui->Low_dynamic_range->setEnabled(isHdr);
+    m_Ui->Fit_to_dynamic_range->setEnabled(isHdr);
+    m_Ui->Shrink_dynamic_range->setEnabled(isHdr);
+    m_Ui->Extend_dynamic_range->setEnabled(isHdr);
+    m_Ui->Decrease_exposure->setEnabled(isHdr);
+    m_Ui->Increase_exposure->setEnabled(isHdr);
+
+    m_Ui->actionResizeHDR->setEnabled(isHdr);
+    m_Ui->action_Projective_Transformation->setEnabled(isHdr);
+    m_Ui->rotateccw->setEnabled(isHdr);
+    m_Ui->rotatecw->setEnabled(isHdr);
+
+    m_Ui->actionFix_Histogram->setEnabled(isLdr);
+    m_Ui->actionSoft_Proofing->setEnabled(isLdr);
+    m_Ui->actionGamut_Check->setEnabled(isLdr);
+
+    bool hasCropping = isHdr && tm_status.curr_tm_frame && tm_status.curr_tm_frame->hasSelection();
+    m_Ui->cropToSelectionAction->setEnabled(hasCropping);
+    m_Ui->removeSelectionAction->setEnabled(hasCropping);
 }
 
 void MainWindow::on_rotateccw_triggered()
@@ -1032,7 +950,7 @@ void MainWindow::load_success(pfs::Frame* new_hdr_frame, QString new_fname, bool
         qDebug() << "Filename: " << new_fname;
 #endif
 
-        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, false, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
+        HdrViewer* newhdr = new HdrViewer(new_hdr_frame, this, needSaving, luminance_options.getViewerNegColor(), luminance_options.getViewerNanInfColor());
 
         newhdr->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -1577,65 +1495,20 @@ void MainWindow::showPreviewPanel(bool b)
 
 void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
 {
-    if ( c_v == NULL )
-    {
-        m_Ui->normalSizeAct->setEnabled(false);
-        m_Ui->normalSizeAct->setChecked(false);
-        m_Ui->fitToWindowAct->setEnabled( false );
-        m_Ui->fitToWindowAct->setChecked(false);
-        m_Ui->actionFill_to_Window->setEnabled(false);
-        m_Ui->actionFill_to_Window->setChecked(false);
+	bool hasImage = c_v != NULL;
+	bool isNormalSize = c_v && c_v->isNormalSize();
+	bool isFilledToWindow = c_v && c_v->isFilledToWindow();
+	bool isFittedToWindow = c_v && c_v->isFittedToWindow();
 
-        m_Ui->zoomInAct->setEnabled( false );
-        m_Ui->zoomOutAct->setEnabled( false );
-    }
-    else
-    {  
-        if ( c_v->isNormalSize() )
-        {
-            m_Ui->zoomInAct->setEnabled(false);
-            m_Ui->zoomOutAct->setEnabled(true);
+    m_Ui->zoomInAct->setEnabled(hasImage && (isFilledToWindow || isFittedToWindow));
+    m_Ui->zoomOutAct->setEnabled(hasImage && !isFittedToWindow);
 
-            m_Ui->normalSizeAct->setEnabled(false);
-            m_Ui->normalSizeAct->setChecked(true);
-            m_Ui->fitToWindowAct->setEnabled(true);
-            m_Ui->fitToWindowAct->setChecked(false);
-            m_Ui->actionFill_to_Window->setEnabled(true);
-            m_Ui->actionFill_to_Window->setChecked(false);
-
-            return;
-        }
-
-        if ( c_v->isFilledToWindow() )
-        {
-            m_Ui->zoomInAct->setEnabled(true);
-            m_Ui->zoomOutAct->setEnabled(true);
-
-            m_Ui->normalSizeAct->setEnabled(true);
-            m_Ui->normalSizeAct->setChecked(false);
-            m_Ui->fitToWindowAct->setEnabled(true);
-            m_Ui->fitToWindowAct->setChecked(false);
-            m_Ui->actionFill_to_Window->setEnabled(false);
-            m_Ui->actionFill_to_Window->setChecked(true);
-
-            return;
-        }
-
-        if ( c_v->isFittedToWindow() )
-        {
-            m_Ui->zoomInAct->setEnabled(true);
-            m_Ui->zoomOutAct->setEnabled(false);
-
-            m_Ui->normalSizeAct->setEnabled(true);
-            m_Ui->normalSizeAct->setChecked(false);
-            m_Ui->fitToWindowAct->setEnabled(false);
-            m_Ui->fitToWindowAct->setChecked(true);
-            m_Ui->actionFill_to_Window->setEnabled(true);
-            m_Ui->actionFill_to_Window->setChecked(false);
-
-            return;
-        }
-    }
+    m_Ui->normalSizeAct->setChecked(hasImage && isNormalSize);
+    m_Ui->normalSizeAct->setEnabled(hasImage && !isNormalSize);
+    m_Ui->fitToWindowAct->setChecked(hasImage && isFittedToWindow);
+    m_Ui->fitToWindowAct->setEnabled(hasImage && !isFittedToWindow);
+    m_Ui->actionFill_to_Window->setChecked(hasImage && isFilledToWindow);
+    m_Ui->actionFill_to_Window->setEnabled(hasImage && !isFilledToWindow);
 }
 
 /*
@@ -1711,7 +1584,6 @@ void MainWindow::removeTab(int t)
         if (curr_num_ldr_open == 1)
             m_Ui->fileSaveAllAction->setEnabled(false);
     }
-    updatePreviousNextActions();
 }
 
 void MainWindow::on_actionShowNext_triggered()
@@ -1738,32 +1610,11 @@ void MainWindow::on_actionShowPrevious_triggered()
 void MainWindow::updatePreviousNextActions()
 {
     int curr_num_viewers = m_tabwidget->count();
-    if (curr_num_viewers <= 1)
-    {
-        m_Ui->actionShowNext->setEnabled(false);
-        m_Ui->actionShowPrevious->setEnabled(false);
-        m_Ui->actionLock->setEnabled(false);
-    }
-    else
-    {
-        m_Ui->actionLock->setEnabled(true);
-        int curr_viewer = m_tabwidget->currentIndex();
-        if ( curr_viewer == 0 )
-        {
-            m_Ui->actionShowNext->setEnabled(true);
-            m_Ui->actionShowPrevious->setEnabled(false);
-        }
-        else if (curr_viewer == (curr_num_viewers-1))
-        {
-            m_Ui->actionShowNext->setEnabled(false);
-            m_Ui->actionShowPrevious->setEnabled(true);
-        }
-        else
-        {
-            m_Ui->actionShowNext->setEnabled(true);
-            m_Ui->actionShowPrevious->setEnabled(true);
-        }
-    }
+    int curr_viewer = m_tabwidget->currentIndex();
+
+    m_Ui->actionShowNext->setEnabled(curr_num_viewers > 1 && curr_viewer < (curr_num_viewers-1));
+    m_Ui->actionShowPrevious->setEnabled(curr_viewer > 0);
+    m_Ui->actionLock->setEnabled(curr_num_viewers > 1);
 }
 
 QString MainWindow::getCurrentHDRName()

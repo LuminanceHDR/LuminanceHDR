@@ -238,9 +238,6 @@ protected:
     void setupTM();
     void createConnections();
 
-    void updateActionsNoImage();
-    void updateActionsLdrImage();
-    void updateActionsHdrImage();
     void updatePreviousNextActions();
 
     QString getCurrentHDRName();
