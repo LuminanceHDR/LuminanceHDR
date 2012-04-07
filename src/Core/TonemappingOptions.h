@@ -44,6 +44,7 @@ private:
 
 public:
     int origxsize;          // this parameter should be coming from the UI
+	int xsize_percent;		// this parameter should be coming from the UI
     int xsize;              // this parameter should be coming from the frame
     int quality;
     float pregamma;

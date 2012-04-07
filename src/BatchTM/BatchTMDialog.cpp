@@ -548,6 +548,22 @@ void BatchTMDialog::abort()
 		this->reject();
 }
 
+void BatchTMDialog::updateQuality(int newQuality)
+{
+	TonemappingOptions *opt;
+	foreach (opt, m_tm_options_list) {
+		opt->quality = newQuality;
+	}
+}
+
+void BatchTMDialog::updateWidth(int newWidth_in_percent)
+{
+	TonemappingOptions *opt;
+	foreach (opt, m_tm_options_list) {
+		opt->xsize_percent = newWidth_in_percent;
+	}
+}
+
 void BatchTMDialog::from_database()
 {
 	SavedParametersDialog dialog(this);
@@ -567,6 +583,8 @@ void BatchTMDialog::from_database()
 			TonemappingOptions *tm_opt = new TonemappingOptions;
 			if (tmOperator == "ashikhmin") {
 				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
 				tm_opt->tmoperator = ashikhmin;
 				tm_opt->tonemapSelection = false;
 				while (query.next()) {
