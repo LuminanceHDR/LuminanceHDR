@@ -36,6 +36,8 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QSqlRecord>
+#include <QSqlQuery>
 
 #include "BatchTM/BatchTMDialog.h"
 #include "ui_BatchTMDialog.h"
@@ -550,5 +552,32 @@ void BatchTMDialog::from_database()
 {
 	SavedParametersDialog dialog(this);
 	if (dialog.exec()) {
+		QSqlTableModel *model = dialog.getModel();
+		QModelIndexList mil = dialog.getModelIndexList();
+		foreach(QModelIndex mi, mil) {
+			QString comment, tmOperator;
+			comment = model->record(mi.row()).value("comment").toString();
+			tmOperator = model->record(mi.row()).value("operator").toString();
+
+			QSqlTableModel *temp_model = new QSqlTableModel;
+			temp_model->setTable(tmOperator);
+			temp_model->select();
+			QSqlQuery query("SELECT * from " + tmOperator + " WHERE comment = '" + comment + "'");
+			
+			TonemappingOptions *tm_opt = new TonemappingOptions;
+			if (tmOperator == "ashikhmin") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->tmoperator = ashikhmin;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.ashikhminoptions.simple = query.value(0).toBool();
+					tm_opt->operator_options.ashikhminoptions.eq2 = query.value(1).toBool();
+					tm_opt->operator_options.ashikhminoptions.lct = query.value(2).toFloat();
+					tm_opt->pregamma = query.value(3).toFloat();
+    			}
+		       	m_tm_options_list.append(tm_opt);
+			}
+			delete temp_model;
+		}
 	}
 }
