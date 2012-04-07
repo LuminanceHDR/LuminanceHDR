@@ -75,6 +75,7 @@ protected:
 	HdrCreationManager *m_hdrCreationManager;
 	int m_numProcessed;
 	int m_processed;
+	int m_total;
 	bool m_errors;
 	bool m_loading_error;
 	bool m_abort;
