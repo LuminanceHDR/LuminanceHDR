@@ -242,7 +242,7 @@
              </size>
             </property>
             <property name="text">
-             <string>From Database</string>
+             <string>From Data&amp;base</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
@@ -410,6 +410,10 @@
            <widget class="QPushButton" name="out_folder_Button">
             <property name="text">
              <string>Select &amp;Output Folder...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
            </widget>
           </item>
