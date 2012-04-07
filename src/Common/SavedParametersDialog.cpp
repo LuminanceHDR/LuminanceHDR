@@ -23,17 +23,22 @@
  */
 
 #include <QDebug>
+#include <QAbstractItemView>
+#include <QHeaderView>
+#include <QModelIndex>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
 
 #include "SavedParametersDialog.h"
+#include "ui_SavedParametersDialog.h"
 
-SavedParameters::SavedParameters(QWidget *parent):
+SavedParametersDialog::SavedParametersDialog(QWidget *parent):
     QDialog(parent),
-    model(new QSqlTableModel())
+    model(new QSqlTableModel()),
+    m_Ui(new Ui::SavedParametersDialog)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
     //QSqlDatabase db = QSqlDatabase::database();
 
     // Create a temp table
@@ -199,18 +204,19 @@ SavedParameters::SavedParameters(QWidget *parent):
     model->setHeaderData(0, Qt::Horizontal, tr("Comment"));
     model->setHeaderData(1, Qt::Horizontal, tr("TM Operator"));
 
-    tableView->setModel(model);
-    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-    tableView->show();
+    m_Ui->tableView->setModel(model);
+    m_Ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_Ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    m_Ui->tableView->show();
 }
 
 
-SavedParameters::SavedParameters(TMOperator op, QWidget *parent):
+SavedParametersDialog::SavedParametersDialog(TMOperator op, QWidget *parent):
     QDialog(parent),
-    model(new QSqlTableModel())
+    model(new QSqlTableModel()),
+    m_Ui(new Ui::SavedParametersDialog)
 {
-    setupUi(this);
+    m_Ui->setupUi(this);
     //QSqlDatabase db = QSqlDatabase::database();
 
     switch (op)
@@ -304,20 +310,35 @@ SavedParameters::SavedParameters(TMOperator op, QWidget *parent):
         model->setHeaderData(4, Qt::Horizontal, tr("Comment"));
         break;
     }
-    tableView->setModel(model);
-    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-    tableView->show();
+    m_Ui->tableView->setModel(model);
+    m_Ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_Ui->tableView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+    m_Ui->tableView->show();
 }
 
-SavedParameters::~SavedParameters()
+SavedParametersDialog::~SavedParametersDialog()
 {
 #ifdef QT_DEBUG
-    qDebug() << "SavedParameters::~SavedParameters()";
+    qDebug() << "SavedParametersDialog::~SavedParametersDialog()";
 #endif
     QSqlQuery query("DROP TABLE IF EXISTS comments");
 #ifdef QT_DEBUG
     qDebug() << query.lastError();
 #endif
     delete model;
+}
+
+QModelIndex SavedParametersDialog::getCurrentIndex()
+{
+    return m_Ui->tableView->currentIndex();
+}
+
+QSqlTableModel* SavedParametersDialog::getModel()
+{
+    return model;
+}
+
+QModelIndexList SavedParametersDialog::getModelIndexList()
+{
+    return m_Ui->tableView->selectionModel()->selectedRows();
 }

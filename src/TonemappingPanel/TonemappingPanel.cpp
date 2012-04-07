@@ -45,7 +45,7 @@
 #include "Common/config.h"
 #include "TonemappingPanel/TonemappingPanel.h"
 #include "TonemappingPanel/TMOProgressIndicator.h"
-#include "TonemappingPanel/SavedParametersDialog.h"
+#include "Common/SavedParametersDialog.h"
 #include "TonemappingPanel/SavingParametersDialog.h"
 #include "TonemappingOperators/pfstmdefaultparams.h"
 #include "UI/Gang.h"
@@ -1144,7 +1144,7 @@ void TonemappingPanel::saveParameters()
 
 void TonemappingPanel::loadParameters()
 {
-	SavedParameters dialog(currentTmoOperator);
+	SavedParametersDialog dialog(currentTmoOperator);
 	if (dialog.exec())
 	{
 		QSqlTableModel *model = dialog.getModel();
@@ -1346,7 +1346,7 @@ void TonemappingPanel::loadParameters()
 
 void TonemappingPanel::loadComments()
 {
-    SavedParameters dialog(this);
+    SavedParametersDialog dialog(this);
 	if (dialog.exec())
 	{
 		QSqlTableModel *model = dialog.getModel();
@@ -1470,9 +1470,9 @@ void TonemappingPanel::loadComments()
                 m_Ui->rodSlider->setValue(query.value(2).toFloat());
                 m_Ui->roddsb->setValue(query.value(2).toFloat());
                 m_Ui->pattalocal->setChecked(query.value(3).toBool());
-                m_Ui->autoYcheckbox->setChecked(query.value(3).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->autoYcheckbox->setChecked(query.value(4).toBool());
+                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}
 		}
 		else if (tmOperator == "reinhard02")

@@ -36,11 +36,14 @@
 
 #include <QFileDialog>
 #include <QTextStream>
+#include <QSqlRecord>
+#include <QSqlQuery>
 
 #include "BatchTM/BatchTMDialog.h"
 #include "ui_BatchTMDialog.h"
 
 #include "Common/config.h"
+#include "Common/SavedParametersDialog.h"
 #include "Exif/ExifOperations.h"
 #include "Core/TonemappingOptions.h"
 #include "BatchTM/BatchTMJob.h"
@@ -69,6 +72,7 @@ BatchTMDialog::BatchTMDialog(QWidget *p):
     connect(m_Ui->remove_TMOpts_Button,   SIGNAL(clicked()), this, SLOT(remove_TMOpts())      );
     connect(m_Ui->BatchGoButton,          SIGNAL(clicked()), this, SLOT(batch_core()));  //start_called()
     connect(m_Ui->cancelbutton,           SIGNAL(clicked()), this, SLOT(abort()));  
+    connect(m_Ui->from_Database_Button,   SIGNAL(clicked()), this, SLOT(from_database()));
 
     connect(m_Ui->filterLineEdit,         SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged(const QString&)));
     connect(m_Ui->filterComboBox,         SIGNAL(activated(int)), this, SLOT(filterComboBoxActivated(int)));
@@ -499,11 +503,11 @@ void BatchTMDialog::init_batch_tm_ui()
     m_Ui->add_dir_TMopts_Button->setDisabled(true);
     m_Ui->add_TMopts_Button->setDisabled(true);
     m_Ui->remove_TMOpts_Button->setDisabled(true);
-
-    m_Ui->spinBox_Quality->setDisabled(true);
+    m_Ui->from_Database_Button->setDisabled(true);
+    m_Ui->horizontalSlider_Width->setDisabled(true);
     m_Ui->spinBox_Width->setDisabled(true);
     m_Ui->horizontalSlider_Quality->setDisabled(true);
-    m_Ui->horizontalSlider_Width->setDisabled(true);
+    m_Ui->spinBox_Quality->setDisabled(true);
 
     // mouse pointer to busy
     QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
@@ -572,5 +576,152 @@ void BatchTMDialog::updateWidth(int newWidth_in_percent)
 	TonemappingOptions *opt;
 	foreach (opt, m_tm_options_list) {
 		opt->xsize_percent = newWidth_in_percent;
+	}
+}
+
+void BatchTMDialog::from_database()
+{
+	SavedParametersDialog dialog(this);
+	if (dialog.exec()) {
+		QSqlTableModel *model = dialog.getModel();
+		QModelIndexList mil = dialog.getModelIndexList();
+		foreach(QModelIndex mi, mil) {
+			QString comment, tmOperator;
+			comment = model->record(mi.row()).value("comment").toString();
+			tmOperator = model->record(mi.row()).value("operator").toString();
+
+			QSqlTableModel *temp_model = new QSqlTableModel;
+			temp_model->setTable(tmOperator);
+			temp_model->select();
+			QSqlQuery query("SELECT * from " + tmOperator + " WHERE comment = '" + comment + "'");
+			
+			TonemappingOptions *tm_opt = new TonemappingOptions;
+			if (tmOperator == "ashikhmin") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = ashikhmin;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.ashikhminoptions.simple = query.value(0).toBool();
+					tm_opt->operator_options.ashikhminoptions.eq2 = query.value(1).toBool();
+					tm_opt->operator_options.ashikhminoptions.lct = query.value(2).toFloat();
+					tm_opt->pregamma = query.value(3).toFloat();
+    			}
+			}
+			else if (tmOperator == "drago") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = drago;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.dragooptions.bias = query.value(0).toFloat();
+					tm_opt->pregamma = query.value(1).toFloat();
+				}
+			}					
+			else if (tmOperator == "durand") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = durand;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.durandoptions.spatial = query.value(0).toFloat();
+					tm_opt->operator_options.durandoptions.range = query.value(1).toFloat();
+					tm_opt->operator_options.durandoptions.base = query.value(2).toFloat();
+					tm_opt->pregamma = query.value(3).toFloat();
+				}
+			}
+			else if (tmOperator == "fattal") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = fattal;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.fattaloptions.alpha = query.value(0).toFloat();
+					tm_opt->operator_options.fattaloptions.beta = query.value(1).toFloat();
+					tm_opt->operator_options.fattaloptions.color = query.value(2).toFloat();
+					tm_opt->operator_options.fattaloptions.noiseredux = query.value(3).toFloat();
+					tm_opt->operator_options.fattaloptions.newfattal = query.value(4).toBool();
+					tm_opt->pregamma = query.value(5).toFloat();
+				}
+			}
+			else if (tmOperator == "mantiuk06") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = mantiuk06;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.mantiuk06options.contrastfactor = query.value(1).toFloat();
+					tm_opt->operator_options.mantiuk06options.saturationfactor = query.value(2).toFloat();
+					tm_opt->operator_options.mantiuk06options.detailfactor = query.value(3).toFloat();
+					tm_opt->operator_options.mantiuk06options.contrastequalization = query.value(0).toBool();
+					tm_opt->pregamma = query.value(4).toFloat();
+				}
+			}
+			else if (tmOperator == "mantiuk08") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = mantiuk08;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.mantiuk08options.colorsaturation = query.value(0).toFloat();
+					tm_opt->operator_options.mantiuk08options.contrastenhancement = query.value(1).toFloat();
+					tm_opt->operator_options.mantiuk08options.luminancelevel = query.value(2).toFloat();
+					tm_opt->operator_options.mantiuk08options.setluminance = query.value(3).toBool();
+					tm_opt->pregamma = query.value(4).toFloat();
+				}
+			}
+			else if (tmOperator == "pattanaik") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = pattanaik;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.pattanaikoptions.autolum = query.value(4).toBool();
+					tm_opt->operator_options.pattanaikoptions.local = query.value(3).toBool();
+					tm_opt->operator_options.pattanaikoptions.cone = query.value(1).toFloat();
+					tm_opt->operator_options.pattanaikoptions.rod = query.value(2).toFloat();
+					tm_opt->operator_options.pattanaikoptions.multiplier = query.value(0).toFloat();
+					tm_opt->pregamma = query.value(5).toFloat();
+				}
+			}
+			else if (tmOperator == "reinhard02") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = reinhard02;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.reinhard02options.scales = query.value(0).toBool();
+					tm_opt->operator_options.reinhard02options.key = query.value(1).toFloat();
+					tm_opt->operator_options.reinhard02options.phi = query.value(2).toFloat();
+					tm_opt->operator_options.reinhard02options.range = query.value(3).toInt();
+					tm_opt->operator_options.reinhard02options.lower = query.value(4).toInt();
+					tm_opt->operator_options.reinhard02options.upper = query.value(5).toInt();
+					tm_opt->pregamma = query.value(6).toFloat();
+				}
+			}
+			else if (tmOperator == "reinhard05") {
+				m_Ui->listWidget_TMopts->addItem(tmOperator + ": " + comment);
+				tm_opt->quality = m_Ui->spinBox_Quality->value();
+				tm_opt->xsize_percent = m_Ui->spinBox_Width->value();
+				tm_opt->tmoperator = reinhard05;
+				tm_opt->tonemapSelection = false;
+				while (query.next()) {
+					tm_opt->operator_options.reinhard05options.brightness = query.value(0).toFloat();
+					tm_opt->operator_options.reinhard05options.chromaticAdaptation = query.value(1).toFloat();
+					tm_opt->operator_options.reinhard05options.lightAdaptation = query.value(2).toFloat();
+					tm_opt->pregamma = query.value(3).toFloat();
+				}
+			}
+	       	m_tm_options_list.append(tm_opt);
+			delete temp_model;
+		}
 	}
 }
