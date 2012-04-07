@@ -41,6 +41,7 @@
 		<submenuitem text="HDR" file="prefs_hdr.html" />
 		<submenuitem text="Tone Mapping" file="prefs_tonemapping.html" />
 		<submenuitem text="Raw Conversion" file="prefs_rawconversion.html" />
+		<submenuitem text="Color Management" file="prefs_rawconversion.html" />
 		<submenuitem text="External Tools" file="prefs_tools.html" />
 	</area>
 
