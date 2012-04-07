@@ -61,7 +61,7 @@ using namespace std;
 #define OMP_THRESHOLD 1000000
 
 static void linbcg(unsigned long n, const float b[], float x[], float tol,
-  int itmax, int *iter, float *err);
+  int itmax, int *iter, float *err, int rows, int cols);
 
 inline float max( float a, float b )
 {
@@ -237,22 +237,22 @@ static void exact_sollution( pfs::Array2D */*F*/, pfs::Array2D *U )
 //   }
 }
 
-static int rows, cols;
+//static int rows, cols;
 
 // smooth u using f at level
 static void smooth( pfs::Array2D *U, const pfs::Array2D *F )
 {
 //   DEBUG_STR << "smooth" << endl;
   
-  rows = U->getRows();
-  cols = U->getCols();
+  int rows = U->getRows();
+  int cols = U->getCols();
   
   const int n = rows*cols;
 
   int iter;
   float err;
         
-  linbcg( n, F->getRawData(), U->getRawData(), 0.001, BCG_STEPS, &iter, &err);
+  linbcg( n, F->getRawData(), U->getRawData(), 0.001, BCG_STEPS, &iter, &err, rows, cols);
 
 //   fprintf( stderr, "." );
 
@@ -479,7 +479,7 @@ void solve_pde_multigrid( pfs::Array2D *F, pfs::Array2D *U )
 
 //#define EPS 1.0e-14
 
-static void asolve(const float b[], float x[])
+static void asolve(const float b[], float x[], int rows, int cols)
 {
   for( int j = 0; j < rows*cols; j++)
     x[j] = -4 * b[j];
@@ -487,7 +487,7 @@ static void asolve(const float b[], float x[])
 
 #define idx(R,C) ((R)*cols+(C))
 
-static void atimes(const float x[], float res[])
+static void atimes(const float x[], float res[], int rows, int cols)
 {
 #pragma omp parallel for shared(x, res) if (rows*cols>OMP_THRESHOLD) schedule(static)
   for( int r = 1; r < rows-1; r++ )
@@ -534,7 +534,7 @@ static float snrm(unsigned long n, const float sx[])
  * Biconjugate Gradient Method
  * from Numerical Recipes in C
  */
-static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err)
+static void linbcg(unsigned long n, const float b[], float x[], float tol, int itmax, int *iter, float *err, int rows, int cols)
 {	
 	float ak,akden,bk,bkden=1.0,bknum,bnrm=1.0,zm1nrm,znrm;
 	float *p,*pp,*r,*rr,*z,*zz;
@@ -547,7 +547,7 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 	zz=new float[n+1];
 
 	*iter=0;
-	atimes(x,r);
+	atimes(x,r, rows, cols);
     for (unsigned long j=0;j<n;j++)
     {
 		r[j]=b[j]-r[j];
@@ -556,15 +556,15 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
     {
 		rr[j]=r[j];
     }
-	atimes(r,rr);       // minimum residual
+	atimes(r,rr, rows, cols);       // minimum residual
     znrm=1.0;
 	bnrm=snrm(n,b);
-	asolve(r,z);
+	asolve(r,z, rows, cols);
 
 	while (*iter <= itmax) {
 		++(*iter);
 		zm1nrm=znrm;
-		asolve(rr,zz);
+		asolve(rr,zz, rows, cols);
 		bknum=0.0;
 #pragma omp parallel for shared(z, rr) reduction(+:bknum) if (n>OMP_THRESHOLD) schedule(static)
         for (long j=0;j<n;j++)
@@ -587,7 +587,7 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
 			VEX_vadds(zz, bk, pp, pp, n);
 		}                
 		bkden=bknum;
-		atimes(p,z);
+		atimes(p,z,rows,cols);
 		akden=0.0;
 #pragma omp parallel for shared(z, pp) reduction(+:akden) if (n>OMP_THRESHOLD) schedule(static)
         for (long j=0;j<n;j++)
@@ -595,11 +595,11 @@ static void linbcg(unsigned long n, const float b[], float x[], float tol, int i
             akden += z[j]*pp[j];
         }
 		ak=bknum/akden;
-		atimes(pp,zz);
+		atimes(pp,zz,rows,cols);
 		VEX_vadds(x, ak, p, x, n);
 		VEX_vsubs(r, ak, z, r, n);
 		VEX_vsubs(rr, ak, zz, rr, n);
-		asolve(r,z);
+		asolve(r,z, rows, cols);
 		znrm=1.0;
 		*err=snrm(n,r)/bnrm;
 //		fprintf( stderr, "iter=%4d err=%12.6f\n",*iter,*err);
