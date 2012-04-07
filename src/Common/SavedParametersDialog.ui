@@ -83,5 +83,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tableView</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>SavedParametersDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>417</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>417</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
