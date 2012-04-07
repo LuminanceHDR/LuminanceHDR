@@ -319,7 +319,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>R&amp;emove Files</source>
-        <translation>&amp;Rimuovi dei File</translation>
+        <translation type="obsolete">&amp;Rimuovi dei File</translation>
     </message>
     <message>
         <source>Output</source>
@@ -387,7 +387,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Tone Mapping Settings Files</source>
-        <translation>Files parametri di Tonemapping</translation>
+        <translation type="obsolete">Files parametri di Tonemapping</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
@@ -467,11 +467,39 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Saving using file format: %1, (quality - if applicable): %2</source>
-        <translation>Salvataggio in formato %1, (qualità - se applicabile): %2</translation>
+        <translation type="obsolete">Salvataggio in formato %1, (qualità - se applicabile): %2</translation>
     </message>
     <message>
         <source>Aborting...</source>
         <translation>Operazione interrotta...</translation>
+    </message>
+    <message>
+        <source>Tone Mapping Settings</source>
+        <translation>Impostazioni tone mapping</translation>
+    </message>
+    <message>
+        <source>From Database</source>
+        <translation>Da Database</translation>
+    </message>
+    <message>
+        <source>R&amp;emove</source>
+        <translation>R&amp;imuovi</translation>
+    </message>
+    <message>
+        <source>Ouput Image Width</source>
+        <translation type="unfinished">Larghezza immagine</translation>
+    </message>
+    <message>
+        <source> %</source>
+        <translation type="unfinished">%</translation>
+    </message>
+    <message>
+        <source>Output Image Quality</source>
+        <translation type="unfinished">Qualità immagine</translation>
+    </message>
+    <message>
+        <source>Saving using file format: %1</source>
+        <translation>Salvataggio usando formato file: %1</translation>
     </message>
 </context>
 <context>
@@ -1815,6 +1843,26 @@ Vuoi aprire il link con l&apos; applicazione predefinita associata con il protoc
         <source>LDR image [%1 x %2]</source>
         <translation>Immagine LDR [%1x%2]</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attenzione</translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation>Non posso aprire il profilo del monitor. Selezionarne uno differente.</translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation>Non posso aprire il profilo della stampante. Selezionarne uno differente.</translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation>Selezionare un profilo della stampante.</translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation>Non posso eseguire la trasformazione di colore. Selezionare un profilo del monitor differente.</translation>
+    </message>
 </context>
 <context>
     <name>LevelsDialog</name>
@@ -2358,27 +2406,27 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Next</source>
-        <translation>Successivo</translation>
+        <translation type="obsolete">Successivo</translation>
     </message>
     <message>
         <source>Next Image</source>
-        <translation>Immagine successiva</translation>
+        <translation type="obsolete">Immagine successiva</translation>
     </message>
     <message>
         <source>Show Next Image</source>
-        <translation>Visualizza l&apos;immagine successiva</translation>
+        <translation type="obsolete">Visualizza l&apos;immagine successiva</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Precedente</translation>
+        <translation type="obsolete">Precedente</translation>
     </message>
     <message>
         <source>Previous Image</source>
-        <translation>Immagine precedente</translation>
+        <translation type="obsolete">Immagine precedente</translation>
     </message>
     <message>
         <source>Show Previous Image</source>
-        <translation>Visualizza l&apos;immagine precedente</translation>
+        <translation type="obsolete">Visualizza l&apos;immagine precedente</translation>
     </message>
     <message>
         <source>Lock the images for sync view</source>
@@ -2469,14 +2517,6 @@ p, li { white-space: pre-wrap; }
         <translation>Clicca e trascina nell&apos;aria dell&apos;immagine per creare una seleziona, dopo usa questo tasto per tagliare l&apos;immagine in un nuovo HDR</translation>
     </message>
     <message>
-        <source>Ctrl+PgDown</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgUp</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Lock Viewers</source>
         <translation>Sincronizza i visualizzatori</translation>
     </message>
@@ -2504,12 +2544,20 @@ p, li { white-space: pre-wrap; }
         <source>Batch HDR...</source>
         <translation>Batch HDR...</translation>
     </message>
+    <message>
+        <source>Soft Proofing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamut Check</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ParametersDialog</name>
     <message>
         <source>Saved Parameters</source>
-        <translation>Parametri salvati</translation>
+        <translation type="obsolete">Parametri salvati</translation>
     </message>
 </context>
 <context>
@@ -3073,7 +3121,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3088,23 +3136,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>RAW</source>
-        <translation>RAW</translation>
+        <translation type="obsolete">RAW</translation>
     </message>
     <message>
         <source>sRGB</source>
-        <translation>sRGB</translation>
+        <translation type="obsolete">sRGB</translation>
     </message>
     <message>
         <source>Adobe RGB</source>
-        <translation>Adobe RGB</translation>
+        <translation type="obsolete">Adobe RGB</translation>
     </message>
     <message>
         <source>Wide Gamut</source>
-        <translation>Ampio Gamut</translation>
+        <translation type="obsolete">Ampio Gamut</translation>
     </message>
     <message>
         <source>Pro Photo</source>
-        <translation>Pro Photo</translation>
+        <translation type="obsolete">Pro Photo</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3224,19 +3272,47 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Camera Profile</source>
-        <translation>Profilo Camera</translation>
+        <translation type="obsolete">Profilo Camera</translation>
     </message>
     <message>
         <source>Camera profile</source>
-        <translation>Profilo Camera</translation>
+        <translation>Profilo della fotocamera</translation>
     </message>
     <message>
         <source>Color Space</source>
-        <translation>Spazio colore</translation>
+        <translation type="obsolete">Spazio colore</translation>
     </message>
     <message>
         <source>align_image_stack command line arguments</source>
         <translation>Argomenti linea di comando align_image_stack</translation>
+    </message>
+    <message>
+        <source>Color Management</source>
+        <translation>Gestione del colore</translation>
+    </message>
+    <message>
+        <source>Monitor</source>
+        <translation>Monitor</translation>
+    </message>
+    <message>
+        <source>Monitor Profile</source>
+        <translation>Profilo del monitor</translation>
+    </message>
+    <message>
+        <source>Printer</source>
+        <translation>Stampante</translation>
+    </message>
+    <message>
+        <source>Printer profile</source>
+        <translation>Profilo della stampante</translation>
+    </message>
+    <message>
+        <source>Open ICC Profile</source>
+        <translation>Apri profilo ICC</translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc)</source>
+        <translation>Profilo di colore (*.icc)</translation>
     </message>
 </context>
 <context>
@@ -3424,11 +3500,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Running in HDR-creation mode.</source>
-        <translation>Eseguendo in modalità creazione HDR</translation>
+        <translation>Eseguendo in modalità creazione HDR.</translation>
     </message>
     <message>
         <source>Running in Load-HDR mode.</source>
-        <translation>Eseguendo in modalità carica HDR</translation>
+        <translation>Eseguendo in modalità carica HDR.</translation>
     </message>
     <message>
         <source>Temporary directory: %1</source>
@@ -3445,6 +3521,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Successfully loaded file %1.</source>
         <translation>File %1 caricato con successo.</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attenzione</translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform.</source>
+        <translation>Non posso eseguire la trasformazioe di colore.</translation>
+    </message>
+    <message>
+        <source>I cannot open camera profile. Please select a different one.</source>
+        <translation>Non posso aprire il profilo della fotocamera. Selezionarne uno differente.</translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different camera profile.</source>
+        <translation>Non posso eseguire la trasformazione di colore. Selezionare un profilo della fotocamera differente.</translation>
     </message>
 </context>
 <context>
@@ -3502,6 +3594,165 @@ p, li { white-space: pre-wrap; }
     <name>SavedParameters</name>
     <message>
         <source>Simple</source>
+        <translation type="obsolete">Semplice</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="obsolete">Equazione 2</translation>
+    </message>
+    <message>
+        <source>Local Contrast Threshold</source>
+        <translation type="obsolete">Soglia Contrasto Locale</translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="obsolete">Pre-gamma</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="obsolete">Commento</translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="obsolete">Bias</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation type="obsolete">Spatial Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation type="obsolete">Range Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation type="obsolete">Contrasto base</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="obsolete">Alpha</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="obsolete">Beta</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="obsolete">Saturazione colore</translation>
+    </message>
+    <message>
+        <source>Noise Reduction</source>
+        <translation type="obsolete">Riduzione rumore</translation>
+    </message>
+    <message>
+        <source>Old Fattal</source>
+        <translation type="obsolete">Vecchio Fattal</translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="obsolete">Equalizzazione contrasto</translation>
+    </message>
+    <message>
+        <source>Contrast Factor</source>
+        <translation type="obsolete">Fattore di contrasto</translation>
+    </message>
+    <message>
+        <source>Saturation Factor</source>
+        <translation type="obsolete">Fattore di saturazione</translation>
+    </message>
+    <message>
+        <source>Detail Factor</source>
+        <translation type="obsolete">Fattore dettaglio</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="obsolete">Miglioramento contrasto</translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="obsolete">Livello luminanza</translation>
+    </message>
+    <message>
+        <source>Manual Luminance Level</source>
+        <translation type="obsolete">Livello Luminanza Manuale</translation>
+    </message>
+    <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="obsolete">Coni e bastoncelli basati sulla luminanza</translation>
+    </message>
+    <message>
+        <source>Local Tonemapping</source>
+        <translation type="obsolete">Tonemapping Locale</translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="obsolete">Livello coni</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="obsolete">Livello bastoncelli</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="obsolete">Moltiplicatore</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="obsolete">Usa Scale</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="obsolete">Parametro Key</translation>
+    </message>
+    <message>
+        <source>Phi Value</source>
+        <translation type="obsolete">Parametro Phi</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="obsolete">Intervallo</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="obsolete">Scala inferiore</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="obsolete">Scala superiore</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="obsolete">Luminosità</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="obsolete">Adattamento cromatico</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="obsolete">Adattamento luce</translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="obsolete">Operatore TM</translation>
+    </message>
+</context>
+<context>
+    <name>SavedParametersDialog</name>
+    <message>
+        <source>Saved Parameters</source>
+        <translation>Parametri salvati</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Commento</translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation>Operatore TM</translation>
+    </message>
+    <message>
+        <source>Simple</source>
         <translation>Semplice</translation>
     </message>
     <message>
@@ -3510,27 +3761,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Local Contrast Threshold</source>
-        <translation>Soglia Contrasto Locale</translation>
+        <translation>Soglia contrasto locale</translation>
     </message>
     <message>
         <source>Pre-gamma</source>
         <translation>Pre-gamma</translation>
     </message>
     <message>
-        <source>Comment</source>
-        <translation>Commento</translation>
-    </message>
-    <message>
         <source>Bias</source>
-        <translation>Bias</translation>
+        <translation type="unfinished">Bias</translation>
     </message>
     <message>
         <source>Spatial Kernel Sigma</source>
-        <translation>Spatial Kernel Sigma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Range Kernel Sigma</source>
-        <translation>Range Kernel Sigma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Base Contrast</source>
@@ -3606,7 +3853,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Use Scales</source>
-        <translation>Usa Scale</translation>
+        <translation>Usa scale</translation>
     </message>
     <message>
         <source>Key Value</source>
@@ -3639,10 +3886,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Light Adaptation</source>
         <translation>Adattamento luce</translation>
-    </message>
-    <message>
-        <source>TM Operator</source>
-        <translation>Operatore TM</translation>
     </message>
 </context>
 <context>

@@ -330,7 +330,7 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>R&amp;emove Files</source>
-        <translation type="unfinished">O&amp;dstranit soubory</translation>
+        <translation type="obsolete">O&amp;dstranit soubory</translation>
     </message>
     <message>
         <source>List of Tone Mapping Setting files that will be used to tone map each HDR</source>
@@ -413,10 +413,6 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tone Mapping Settings Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Conversion Log</source>
         <translation type="unfinished"></translation>
     </message>
@@ -453,12 +449,36 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Saving using file format: %1, (quality - if applicable): %2</source>
+        <source>Aborting...</source>
+        <translation type="unfinished">Přerušuji...</translation>
+    </message>
+    <message>
+        <source>Tone Mapping Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Přerušuji...</translation>
+        <source>From Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>R&amp;emove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ouput Image Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Image Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1760,6 +1780,26 @@ associated with the protocol?</source>
         <source>LDR image [%1 x %2]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelsDialog</name>
@@ -2297,38 +2337,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Next Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Next Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Previous Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Lock Viewers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2448,11 +2456,12 @@ p, li { white-space: pre-wrap; }
         <source>Error: %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ParametersDialog</name>
     <message>
-        <source>Saved Parameters</source>
+        <source>Soft Proofing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamut Check</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2917,41 +2926,6 @@ p, li { white-space: pre-wrap; }
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Workspace&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Select here the output color space used to decode RAW data.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Raw (linear)&lt;/span&gt;: in this mode, no output color space is used during RAW decoding.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;sRGB&lt;/span&gt;: this is a RGB color space, created cooperatively by Hewlett-Packard and Microsoft. It is the best choice for images destined for the Web and portrait photography.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Adobe RGB&lt;/span&gt;: this color space is an extended RGB color space, developed by Adobe. It is used for photography applications such as advertising and fine art.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RAW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sRGB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Adobe RGB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wide Gamut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pro Photo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;DejaVu Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Read &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-style:italic;&quot;&gt;Help &amp;gt; Contents &amp;gt; Setting up Luminance &amp;gt; External tools&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt; to find out more about align_image_stack command line arguments&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -3033,19 +3007,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Camera Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Camera profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Color Space</source>
+        <source>align_image_stack command line arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>align_image_stack command line arguments</source>
+        <source>Color Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ICC Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3256,6 +3250,22 @@ p, li { white-space: pre-wrap; }
         <source>Successfully loaded file %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open camera profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different camera profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ResizeDialog</name>
@@ -3312,11 +3322,126 @@ p, li { white-space: pre-wrap; }
     <name>SavedParameters</name>
     <message>
         <source>Simple</source>
+        <translation type="obsolete">Jednoduchý</translation>
+    </message>
+    <message>
+        <source>Local Contrast Threshold</source>
+        <translation type="obsolete">Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="obsolete">Síla&lt;br&gt;(Bias)</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation type="obsolete">Prostorové zrno&lt;br&gt;(Spatial Kernel Sigma)</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation type="obsolete">Rádius&lt;br&gt;(Range Kernel Sigma)</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation type="obsolete">Základní kontrast&lt;br&gt;(Base Contrast)</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="obsolete">Saturace barev&lt;br&gt;(Color Saturation)</translation>
+    </message>
+    <message>
+        <source>Noise Reduction</source>
+        <translation type="obsolete">Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="obsolete">Varovnání kontrastu (Contrast Equalization)</translation>
+    </message>
+    <message>
+        <source>Contrast Factor</source>
+        <translation type="obsolete">Koeficient kontrastu&lt;br&gt;(Contrast Factor)</translation>
+    </message>
+    <message>
+        <source>Saturation Factor</source>
+        <translation type="obsolete">Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
+    </message>
+    <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="obsolete">Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="obsolete">Úroveň Cone&lt;br&gt;(Cone Level)</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="obsolete">Úroveň Rod&lt;br&gt;(Rod Level)</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="obsolete">Násobitel&lt;br&gt;(Multiplier)</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="obsolete">Použít stupnice (Use Scales)</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="obsolete">Klíčová hodnota&lt;br&gt;(Key Value)</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="obsolete">Rozsah&lt;br&gt;(Range)</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="obsolete">Nižší stupnice&lt;br&gt;(Lower Scale)</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="obsolete">Vyšší stupnice&lt;br&gt;(Upper Scale)</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="obsolete">Jas&lt;br&gt;(Brightness)</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="obsolete">Adaptace barev&lt;br&gt;(Chromatic Adaptation)</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="obsolete">Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
+    </message>
+</context>
+<context>
+    <name>SavedParametersDialog</name>
+    <message>
+        <source>Saved Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple</source>
         <translation type="unfinished">Jednoduchý</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
         <translation type="unfinished">Práh lokálního kontrastu&lt;br&gt;(Local Contrast Threshold)</translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bias</source>
@@ -3335,12 +3460,24 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Základní kontrast&lt;br&gt;(Base Contrast)</translation>
     </message>
     <message>
+        <source>Alpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Color Saturation</source>
         <translation type="unfinished">Saturace barev&lt;br&gt;(Color Saturation)</translation>
     </message>
     <message>
         <source>Noise Reduction</source>
         <translation type="unfinished">Redukce šumu&lt;br&gt;(Noise Reduction)</translation>
+    </message>
+    <message>
+        <source>Old Fattal</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Contrast Equalization</source>
@@ -3355,8 +3492,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Koeficient saturace&lt;br&gt;(Saturation Factor)</translation>
     </message>
     <message>
+        <source>Detail Factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Cone and Rod based on Luminance</source>
         <translation type="unfinished">Cone a Rod podle jasu (Cone and Rod based on Luminance)</translation>
+    </message>
+    <message>
+        <source>Local Tonemapping</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cone Level</source>
@@ -3377,6 +3534,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Key Value</source>
         <translation type="unfinished">Klíčová hodnota&lt;br&gt;(Key Value)</translation>
+    </message>
+    <message>
+        <source>Phi Value</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Range</source>
@@ -3401,58 +3562,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Light Adaptation</source>
         <translation type="unfinished">Adaptace světel&lt;br&gt;(Light Adaptation)</translation>
-    </message>
-    <message>
-        <source>Equation 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Beta</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Old Fattal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detail Factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contrast Enhancement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Luminance Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual Luminance Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local Tonemapping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phi Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TM Operator</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
