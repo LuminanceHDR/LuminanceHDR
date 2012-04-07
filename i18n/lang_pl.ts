@@ -453,10 +453,6 @@ See documentation for more informations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>From Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>R&amp;emove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,6 +470,10 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Data&amp;base</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

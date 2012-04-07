@@ -295,15 +295,15 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Add &amp;Directory</source>
-        <translation>Aggiungi una &amp;Directory</translation>
+        <translation>Aggiungi &amp;Cartella</translation>
     </message>
     <message>
         <source>&amp;Add Files</source>
-        <translation>&amp;Aggiungi dei File</translation>
+        <translation>&amp;Aggiungi File</translation>
     </message>
     <message>
         <source>&amp;Remove Files</source>
-        <translation>&amp;Rimuovi dei File</translation>
+        <translation>&amp;Rimuovi File</translation>
     </message>
     <message>
         <source>List of HDRs that will be tone mapped</source>
@@ -311,11 +311,11 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Add D&amp;irectory</source>
-        <translation>Aggiungi una &amp;Directory</translation>
+        <translation>Aggiungi Ca&amp;rtella</translation>
     </message>
     <message>
         <source>Add Fi&amp;les</source>
-        <translation>&amp;Aggiungi dei File</translation>
+        <translation>Aggiungi Fi&amp;le</translation>
     </message>
     <message>
         <source>R&amp;emove Files</source>
@@ -479,7 +479,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>From Database</source>
-        <translation>Da Database</translation>
+        <translation type="obsolete">Da Database</translation>
     </message>
     <message>
         <source>R&amp;emove</source>
@@ -487,19 +487,23 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Ouput Image Width</source>
-        <translation type="unfinished">Larghezza immagine</translation>
+        <translation>Larghezza immagine</translation>
     </message>
     <message>
         <source> %</source>
-        <translation type="unfinished">%</translation>
+        <translation> %</translation>
     </message>
     <message>
         <source>Output Image Quality</source>
-        <translation type="unfinished">Qualità immagine</translation>
+        <translation>Qualità immagine</translation>
     </message>
     <message>
         <source>Saving using file format: %1</source>
         <translation>Salvataggio usando formato file: %1</translation>
+    </message>
+    <message>
+        <source>From Data&amp;base</source>
+        <translation>Da Data&amp;base</translation>
     </message>
 </context>
 <context>
