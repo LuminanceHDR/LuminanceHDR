@@ -47,6 +47,7 @@
 #include "Exif/ExifOperations.h"
 #include "Core/TonemappingOptions.h"
 #include "BatchTM/BatchTMJob.h"
+#include "OsIntegration/osintegration.h"
 
 BatchTMDialog::BatchTMDialog(QWidget *p):
     QDialog(p), m_Ui(new Ui::BatchTMDialog),
@@ -522,6 +523,7 @@ void BatchTMDialog::stop_batch_tm_ui()
 {
     if ( m_thread_slot.tryAcquire(m_max_num_threads) )
     {
+
         m_Ui->cancelbutton->setDisabled(false);
         m_Ui->cancelbutton->setText(tr("Close"));
 
@@ -544,12 +546,14 @@ void BatchTMDialog::closeEvent( QCloseEvent* ce )
         ce->ignore();
     else
         ce->accept();
+    OsIntegration::getInstance().setProgress(-1);
 }
-
 
 void BatchTMDialog::increment_progress_bar(int inc)
 {
-    m_Ui->overallProgressBar->setValue(m_Ui->overallProgressBar->value()+inc);
+	int progressValue = m_Ui->overallProgressBar->value()+inc;
+    m_Ui->overallProgressBar->setValue(progressValue);
+    OsIntegration::getInstance().setProgress(progressValue, m_Ui->overallProgressBar->maximum() - m_Ui->overallProgressBar->minimum());
 }
 
 void BatchTMDialog::abort()
