@@ -181,8 +181,6 @@ protected Q_SLOTS:
     // QTabWidget
     void removeTab(int);
     void on_actionRemove_Tab_triggered();
-    void on_actionShowNext_triggered();
-    void on_actionShowPrevious_triggered();
 
 	void on_actionSoft_Proofing_toggled(bool);
 	void on_actionGamut_Check_toggled(bool);

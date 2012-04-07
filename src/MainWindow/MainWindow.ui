@@ -163,8 +163,6 @@
    <addaction name="fitToWindowAct"/>
    <addaction name="actionFill_to_Window"/>
    <addaction name="normalSizeAct"/>
-   <addaction name="actionShowPrevious"/>
-   <addaction name="actionShowNext"/>
    <addaction name="separator"/>
    <addaction name="actionFix_Histogram"/>
    <addaction name="separator"/>
@@ -814,48 +812,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+D</string>
-   </property>
-  </action>
-  <action name="actionShowNext">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/forward.png</normaloff>:/new/prefix1/images/forward.png</iconset>
-   </property>
-   <property name="text">
-    <string>Next</string>
-   </property>
-   <property name="toolTip">
-    <string>Next Image</string>
-   </property>
-   <property name="whatsThis">
-    <string>Show Next Image</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+PgDown</string>
-   </property>
-  </action>
-  <action name="actionShowPrevious">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../../icons.qrc">
-     <normaloff>:/new/prefix1/images/back.png</normaloff>:/new/prefix1/images/back.png</iconset>
-   </property>
-   <property name="text">
-    <string>Previous</string>
-   </property>
-   <property name="toolTip">
-    <string>Previous Image</string>
-   </property>
-   <property name="whatsThis">
-    <string>Show Previous Image</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+PgUp</string>
    </property>
   </action>
   <action name="actionLock">

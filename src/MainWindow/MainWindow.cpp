@@ -606,7 +606,6 @@ void MainWindow::updateActions( int w )
 	LuminanceOptions luminance_opts;
 	bool hasPrinterProfile = !luminance_opts.getPrinterProfileFileName().isEmpty();
 
-    updatePreviousNextActions();
     updateMagnificationButtons(g_v); // g_v ? g_v : 0
 
     m_Ui->fileSaveAsAction->setEnabled(hasImage);
@@ -1518,10 +1517,6 @@ void MainWindow::updateMagnificationButtons(GenericViewer* c_v)
     m_Ui->actionFill_to_Window->setEnabled(hasImage && !isFilledToWindow);
 }
 
-/*
- * Next/Previous Buttons
- */
-
 void MainWindow::on_actionRemove_Tab_triggered()
 {
 	removeTab(m_tabwidget->currentIndex());
@@ -1582,37 +1577,6 @@ void MainWindow::removeTab(int t)
         if (curr_num_ldr_open == 1)
             m_Ui->fileSaveAllAction->setEnabled(false);
     }
-}
-
-void MainWindow::on_actionShowNext_triggered()
-{
-    int curr_num_viewers = m_tabwidget->count();
-    int curr_viewer = m_tabwidget->currentIndex();
-
-    if ( curr_viewer < curr_num_viewers-1 )
-    {
-        m_tabwidget->setCurrentIndex(curr_viewer+1);
-    }
-}
-
-void MainWindow::on_actionShowPrevious_triggered()
-{
-    int curr_viewer = m_tabwidget->currentIndex();
-
-    if ( curr_viewer > 0 )
-    {
-        m_tabwidget->setCurrentIndex(curr_viewer-1);
-    }
-}
-
-void MainWindow::updatePreviousNextActions()
-{
-    int curr_num_viewers = m_tabwidget->count();
-    int curr_viewer = m_tabwidget->currentIndex();
-
-    m_Ui->actionShowNext->setEnabled(curr_num_viewers > 1 && curr_viewer < (curr_num_viewers-1));
-    m_Ui->actionShowPrevious->setEnabled(curr_viewer > 0);
-    m_Ui->actionLock->setEnabled(curr_num_viewers > 1);
 }
 
 QString MainWindow::getCurrentHDRName()
