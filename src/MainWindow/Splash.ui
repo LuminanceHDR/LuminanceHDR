@@ -80,7 +80,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>noButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections/>
 </ui>

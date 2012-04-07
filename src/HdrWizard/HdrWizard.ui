@@ -43,7 +43,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../icons.qrc">:/splash/images/camera.png</pixmap>
+                <pixmap resource="../../icons.qrc">:/splash/images/camera.png</pixmap>
                </property>
               </widget>
              </item>
@@ -68,7 +68,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../icons.qrc">:/splash/images/stack.png</pixmap>
+                  <pixmap resource="../../icons.qrc">:/splash/images/stack.png</pixmap>
                  </property>
                 </widget>
                </item>
@@ -299,7 +299,7 @@ p, li { white-space: pre-wrap; }
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../icons.qrc">
+                   <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/list-add.png</normaloff>:/new/prefix1/images/list-add.png</iconset>
                   </property>
                  </widget>
@@ -322,7 +322,7 @@ p, li { white-space: pre-wrap; }
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../icons.qrc">
+                   <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/list-remove.png</normaloff>:/new/prefix1/images/list-remove.png</iconset>
                   </property>
                  </widget>
@@ -345,7 +345,7 @@ p, li { white-space: pre-wrap; }
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../icons.qrc">
+                   <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/edit-clear-list.png</normaloff>:/new/prefix1/images/edit-clear-list.png</iconset>
                   </property>
                  </widget>
@@ -1550,7 +1550,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>textEdit</tabstop>
  </tabstops>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>

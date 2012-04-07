@@ -266,7 +266,7 @@ See documentation for more informations.</string>
                 <string>Select &amp;Input Folder</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons.qrc">
+                <iconset resource="../../icons.qrc">
                  <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                </property>
               </widget>
@@ -280,7 +280,7 @@ See documentation for more informations.</string>
                 <string>Select &amp;Output Folder</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons.qrc">
+                <iconset resource="../../icons.qrc">
                  <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                </property>
               </widget>
@@ -409,7 +409,7 @@ See documentation for more informations.</string>
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>
