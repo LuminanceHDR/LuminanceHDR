@@ -34,8 +34,6 @@
 #include "Libpfs/channel.h"
 #include "Libpfs/colorspace.h"
 
-QMutex TonemapOperatorFattal02::m_Mutex;
-
 TonemapOperatorFattal02::TonemapOperatorFattal02():
     TonemapOperator()
 {}
@@ -50,7 +48,6 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
     pfs::transformColorSpace(pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
 
-    m_Mutex.lock();
     pfstmo_fattal02(workingframe,
                     opts->operator_options.fattaloptions.alpha,
                     opts->operator_options.fattaloptions.beta,
@@ -58,7 +55,6 @@ void TonemapOperatorFattal02::tonemapFrame(pfs::Frame* workingframe, Tonemapping
                     opts->operator_options.fattaloptions.noiseredux,
                     opts->operator_options.fattaloptions.newfattal,
                     &ph);
-    m_Mutex.unlock();
 
     pfs::transformColorSpace(pfs::CS_XYZ, X->getChannelData(), Y->getChannelData(), Z->getChannelData(),
                              pfs::CS_RGB, X->getChannelData(), Y->getChannelData(), Z->getChannelData());
