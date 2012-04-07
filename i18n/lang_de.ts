@@ -2740,7 +2740,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Default Output Quality</source>
-        <translation>Standardausgabequalität für Stapel-Dynamikkompression</translation>
+        <translation type="obsolete">Standardausgabequalität für Stapel-Dynamikkompression</translation>
     </message>
     <message>
         <source>General</source>

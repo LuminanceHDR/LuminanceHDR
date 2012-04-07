@@ -3228,7 +3228,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Default Output Quality</source>
-        <translation>Qualità predefinita del salvataggio per il Batch Tonemapping</translation>
+        <translation type="obsolete">Qualità predefinita del salvataggio per il Batch Tonemapping</translation>
     </message>
     <message>
         <source>General</source>

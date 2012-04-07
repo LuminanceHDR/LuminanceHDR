@@ -2696,7 +2696,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Default Output Quality</source>
-        <translation type="unfinished">Serie De Mapare De Tonuri Default Calitate Export</translation>
+        <translation type="obsolete">Serie De Mapare De Tonuri Default Calitate Export</translation>
     </message>
     <message>
         <source>General</source>
