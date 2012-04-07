@@ -1470,9 +1470,9 @@ void TonemappingPanel::loadComments()
                 m_Ui->rodSlider->setValue(query.value(2).toFloat());
                 m_Ui->roddsb->setValue(query.value(2).toFloat());
                 m_Ui->pattalocal->setChecked(query.value(3).toBool());
-                m_Ui->autoYcheckbox->setChecked(query.value(3).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->autoYcheckbox->setChecked(query.value(4).toBool());
+                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}
 		}
 		else if (tmOperator == "reinhard02")
