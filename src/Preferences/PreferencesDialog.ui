@@ -629,76 +629,6 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="text">
-              <string>Batch Tonemapping Default Output Quality</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <layout class="QHBoxLayout" name="horizontalLayout_18">
-             <item>
-              <widget class="QSlider" name="batchTmOutputQualitySlider">
-               <property name="minimumSize">
-                <size>
-                 <width>250</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>250</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>100</number>
-               </property>
-               <property name="value">
-                <number>100</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::TicksBelow</enum>
-               </property>
-               <property name="tickInterval">
-                <number>50</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="batchTmOutputQualitySpinBox">
-               <property name="minimumSize">
-                <size>
-                 <width>70</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>70</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="maximum">
-                <number>100</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="0">
             <widget class="QLabel" name="numThreadsLabel">
              <property name="toolTip">
               <string>Amount of threads to use on multicore/SMP machines</string>
@@ -714,7 +644,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
+           <item row="2" column="1">
             <widget class="QSpinBox" name="numThreadspinBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -2562,38 +2492,6 @@ p, li { white-space: pre-wrap; }
   <include location="../../icons.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>batchTmOutputQualitySlider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>batchTmOutputQualitySpinBox</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>357</x>
-     <y>201</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>529</x>
-     <y>202</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>batchTmOutputQualitySpinBox</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>batchTmOutputQualitySlider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>529</x>
-     <y>202</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>201</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>med_passes_horizontalSlider</sender>
    <signal>valueChanged(int)</signal>

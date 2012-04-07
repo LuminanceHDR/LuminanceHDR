@@ -244,7 +244,6 @@ void PreferencesDialog::on_okButton_clicked()
     // --- Batch TM
     luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
-    luminance_options.setBatchTmDefaultOutputQuality( m_Ui->batchTmOutputQualitySlider->value() );
 
     // --- Other Parameters
     luminance_options.setAlignImageStackOptions( sanitizeAISparams( m_Ui->aisParamsLineEdit->text() ) );
@@ -300,18 +299,6 @@ void PreferencesDialog::on_okButton_clicked()
 void PreferencesDialog::on_cancelButton_clicked()
 {
 	reject();
-}
-
-void PreferencesDialog::on_batchLdrFormatComboBox_currentIndexChanged(int index)
-{
-	bool hasQuality = index == 0 || index == 1; // JPEG || PNG
-	m_Ui->batchTmOutputQualitySlider->setEnabled(hasQuality);
-	m_Ui->batchTmOutputQualitySpinBox->setEnabled(hasQuality);
-}
-
-void PreferencesDialog::on_user_qual_comboBox_currentIndexChanged(int i)
-{
-    m_Ui->user_qual_toolButton->setEnabled(i != 0);
 }
 
 void PreferencesDialog::on_med_passes_spinBox_valueChanged(int value)
@@ -468,12 +455,6 @@ void PreferencesDialog::on_green_doubleSpinBox_valueChanged( double value)
 	m_Ui->green_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
-void PreferencesDialog::on_user_qual_toolButton_clicked()
-{
-    m_Ui->user_qual_comboBox->setCurrentIndex(0);
-    m_Ui->user_qual_toolButton->setEnabled(false);
-}
-
 void PreferencesDialog::on_med_passes_toolButton_clicked()
 {
     m_Ui->med_passes_horizontalSlider->setValue(0);
@@ -595,10 +576,6 @@ void PreferencesDialog::from_options_to_gui()
     // Batch TM output format
     int current_batch_tm_output_type = mappingBatchTmQStringToInt( luminance_options.getBatchTmLdrFormat() );
     m_Ui->batchLdrFormatComboBox->setCurrentIndex( current_batch_tm_output_type );
-    on_batchLdrFormatComboBox_currentIndexChanged( current_batch_tm_output_type );
-
-    m_Ui->batchTmOutputQualitySlider->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
-    m_Ui->batchTmOutputQualitySpinBox->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
 
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 

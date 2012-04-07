@@ -131,14 +131,12 @@ public Q_SLOTS:
     QString getBatchTmPathLdrOutput();
     int     getBatchTmNumThreads();
     QString getBatchTmLdrFormat();
-    int     getBatchTmDefaultOutputQuality();
 
     void    setBatchTmPathHdrInput(QString);
     void    setBatchTmPathTmoSettings(QString);
     void    setBatchTmPathLdrOutput(QString);
     void    setBatchTmNumThreads(int);
     void    setBatchTmLdrFormat(QString);
-    void    setBatchTmDefaultOutputQuality(int);
 
     int     getNumThreads() { return getBatchTmNumThreads(); }
     void    setNumThreads(int i) { setBatchTmNumThreads(i); }
