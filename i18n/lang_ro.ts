@@ -466,10 +466,6 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <translation type="unfinished">Setări mapare de tonuri</translation>
     </message>
     <message>
-        <source>From Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>R&amp;emove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,6 +483,10 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Data&amp;base</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

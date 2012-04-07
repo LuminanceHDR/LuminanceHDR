@@ -466,10 +466,6 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation type="unfinished">Dynamikkompressionsvorgaben</translation>
     </message>
     <message>
-        <source>From Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>R&amp;emove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,6 +483,10 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Data&amp;base</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
