@@ -35,6 +35,7 @@
 #include "Libpfs/domio.h"
 #include "Core/IOWorker.h"
 #include "HdrCreation/HdrCreationManager.h"
+#include "OsIntegration/osintegration.h"
 
 BatchHDRDialog::BatchHDRDialog(QWidget *p):
 QDialog(p),
@@ -235,6 +236,7 @@ void BatchHDRDialog::batch_hdr()
 		m_Ui->cancelPushButton->hide();
 		m_Ui->startPushButton->hide();
 		m_Ui->progressBar->hide();
+		OsIntegration::getInstance().setProgress(-1);
 		QApplication::restoreOverrideCursor();
 		if (m_errors)
 			m_Ui->textEdit->append(tr("Completed with errors"));
@@ -307,6 +309,7 @@ void BatchHDRDialog::create_hdr()
 	m_hdrCreationManager->reset();
 	int progressValue = m_Ui->progressBar->value() + 1;
 	m_Ui->progressBar->setValue(progressValue);
+	OsIntegration::getInstance().setProgress(progressValue, m_Ui->progressBar->maximum() - m_Ui->progressBar->minimum());
 	m_Ui->textEdit->append(tr("Written ") + outName );
 	batch_hdr();
 }
