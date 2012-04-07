@@ -1,0 +1,5 @@
+FIND_PROGRAM(GIT_EXECUTABLE git /usr/bin /usr/local/bin)
+
+IF (EXISTS ${GIT_EXECUTABLE})
+   SET(GIT_FOUND 1)
+ENDIF()
