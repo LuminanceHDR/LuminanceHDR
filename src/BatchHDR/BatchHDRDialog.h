@@ -49,16 +49,17 @@ public:
 
 protected slots:
 	void num_bracketed_changed(int);
-	void add_input_directory();
+	void on_selectInputFolder_clicked();
+	void on_selectOutputFolder_clicked();
 	void add_output_directory(QString dir = QString());
-	void init_batch_hdr();
+	void on_startButton_clicked();
 	void batch_hdr();
 	void align(QStringList);
 	void create_hdr();
 	void error_while_loading(QString);
 	void writeAisData(QByteArray);
 	void check_start_button();
-	void abort();
+	void on_cancelButton_clicked();
 	void processed();
 	void try_to_continue();
 
