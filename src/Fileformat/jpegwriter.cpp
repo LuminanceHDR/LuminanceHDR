@@ -254,7 +254,7 @@ bool JpegWriter::writeQImageToJpeg()
         // reset all element of the vector to zero!
         std::fill(outbuf.begin(), outbuf.end(), 0);
 
-        outfile = QSharedPointer<FILE>(fmemopen( outbuf.data(), outlen, "w+"), fclose);
+        outfile = QSharedPointer<FILE>(fmemopen(outbuf.data(), outbuf.size(), "w+"), fclose);
 #endif
 	}
 
