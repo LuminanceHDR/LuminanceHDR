@@ -250,7 +250,8 @@ bool JpegWriter::writeQImageToJpeg()
 
         if ( outfile.data() == NULL ) return false;
 #else
-        outbuf.swap( std::vector<char>(cinfo.image_width * cinfo.image_height * cinfo.num_components) );
+		std::vector<char> t(cinfo.image_width * cinfo.image_height * cinfo.num_components);
+		outbuf.swap( t );
         // reset all element of the vector to zero!
         std::fill(outbuf.begin(), outbuf.end(), 0);
 
@@ -299,10 +300,10 @@ bool JpegWriter::writeQImageToJpeg()
         fseek(outfile.data(), 0, SEEK_END);
         m_filesize = ftell(outfile.data());
 #else
-        int size = outlen - 1;
+        int size = outbuf.size() - 1;
         for (; size > 0; --size)
         {
-            if (*(outbuf + size) != 0)
+            if (outbuf[size] != 0)
                 break;
         }
         m_filesize = size;
