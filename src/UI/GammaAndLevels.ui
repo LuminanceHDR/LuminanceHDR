@@ -16,7 +16,7 @@
    <string>Levels and Gamma</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
+   <iconset resource="../../icons.qrc" >:/new/prefix1/images/histogram.png</iconset>
   </property>
   <property name="modal" >
    <bool>true</bool>
@@ -370,7 +370,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc" />
+  <include location="../../icons.qrc" />
  </resources>
  <connections>
   <connection>

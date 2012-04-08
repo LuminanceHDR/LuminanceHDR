@@ -34,6 +34,7 @@
 #include <QSettings>
 #include <QString>
 #include <QStringList>
+#include <QDir>
 
 class LuminanceOptions: public QSettings
 {
@@ -120,8 +121,8 @@ public Q_SLOTS:
     void    setGuiLang(QString);
 
     // Batch HDR
-    QString getBatchHdrPathInput();
-    QString getBatchHdrPathOutput();
+    QString getBatchHdrPathInput(QString defaultPath = QDir::currentPath());
+    QString getBatchHdrPathOutput(QString defaultPath = QDir::currentPath());
     void    setBatchHdrPathInput(QString);
     void    setBatchHdrPathOutput(QString);
 

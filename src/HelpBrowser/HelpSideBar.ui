@@ -89,7 +89,7 @@
              <string>&amp;Add</string>
             </property>
             <property name="icon" >
-             <iconset resource="../icons.qrc" >
+             <iconset resource="../../icons.qrc" >
               <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
            </widget>
@@ -100,7 +100,7 @@
              <string>&amp;Remove</string>
             </property>
             <property name="icon" >
-             <iconset resource="../icons.qrc" >
+             <iconset resource="../../icons.qrc" >
               <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
             </property>
            </widget>
@@ -122,7 +122,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../icons.qrc" />
+  <include location="../../icons.qrc" />
  </resources>
  <connections>
   <connection>

@@ -23,7 +23,7 @@
    <string>Editing Tools</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <property name="modal">
@@ -95,7 +95,7 @@
              <string>&amp;Fit to Window</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/viewmagfit.png</normaloff>:/new/prefix1/images/viewmagfit.png</iconset>
             </property>
             <property name="iconSize">
@@ -118,7 +118,7 @@
              <string>Origina&amp;l Size</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/viewmag1.png</normaloff>:/new/prefix1/images/viewmag1.png</iconset>
             </property>
             <property name="iconSize">
@@ -138,7 +138,7 @@
              <string>Zoom &amp;In</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/viewmag_inc.png</normaloff>:/new/prefix1/images/viewmag_inc.png</iconset>
             </property>
             <property name="iconSize">
@@ -158,7 +158,7 @@
              <string>Zoom &amp;Out</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/viewmag_dec.png</normaloff>:/new/prefix1/images/viewmag_dec.png</iconset>
             </property>
             <property name="iconSize">
@@ -381,7 +381,7 @@ This image's histogram is diplayed in the widget above.</string>
              <string>Use this button to move the selection to the previous image in both lists.</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
             </property>
            </widget>
@@ -401,7 +401,7 @@ This image's histogram is diplayed in the widget above.</string>
              <string>Use this button to move the selection to the next image in both lists.</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
             </property>
            </widget>
@@ -526,7 +526,7 @@ p, li { white-space: pre-wrap; }
              <string>&amp;Crop All Images</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/crop.png</normaloff>:/new/prefix1/images/crop.png</iconset>
             </property>
             <property name="iconSize">
@@ -559,7 +559,7 @@ p, li { white-space: pre-wrap; }
              <string>&amp;Anti Ghosting</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/ghost_32x32.png</normaloff>:/new/prefix1/images/ghost_32x32.png</iconset>
             </property>
             <property name="iconSize">
@@ -592,7 +592,7 @@ p, li { white-space: pre-wrap; }
              <string>&amp;Save Images</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
             </property>
             <property name="iconSize">
@@ -1021,7 +1021,7 @@ p, li { white-space: pre-wrap; }
         <string>&amp;What's this?</string>
        </property>
        <property name="icon">
-        <iconset resource="../icons.qrc">
+        <iconset resource="../../icons.qrc">
          <normaloff>:/new/prefix1/images/whatsthis.png</normaloff>:/new/prefix1/images/whatsthis.png</iconset>
        </property>
        <property name="iconSize">
@@ -1127,7 +1127,7 @@ p, li { white-space: pre-wrap; }
   <tabstop>cancelbutton</tabstop>
  </tabstops>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>

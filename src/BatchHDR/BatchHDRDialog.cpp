@@ -49,19 +49,13 @@ QDialog(p),
 {
 	m_Ui->setupUi(this);
 
-	m_Ui->closePushButton->hide();
+	m_Ui->closeButton->hide();
 
 	m_hdrCreationManager = new HdrCreationManager;
 	m_IO_Worker = new IOWorker;
 
 	connect(m_Ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
 	connect(m_Ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(num_bracketed_changed(int)));
-
-	connect(m_Ui->inputPushButton, SIGNAL(clicked()), this, SLOT(add_input_directory()));
-	connect(m_Ui->outputPushButton, SIGNAL(clicked()), this, SLOT(add_output_directory()));
-	connect(m_Ui->startPushButton, SIGNAL(clicked()), this, SLOT(init_batch_hdr()));
-	connect(m_Ui->closePushButton, SIGNAL(clicked()), this, SLOT(accept()));
-	connect(m_Ui->cancelPushButton, SIGNAL(clicked()), this, SLOT(abort()));
 
 	connect(m_hdrCreationManager, SIGNAL(finishedLoadingInputFiles(QStringList)), this, SLOT(align(QStringList)));
 	connect(m_hdrCreationManager, SIGNAL(finishedAligning()), this, SLOT(create_hdr()));
@@ -70,8 +64,12 @@ QDialog(p),
 	connect(m_hdrCreationManager, SIGNAL(processed()), this, SLOT(processed()));
 
 	m_tempDir = m_luminance_options.getTempDir();
-	m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput();
-	m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput();
+	m_batchHdrInputDir = m_luminance_options.getBatchHdrPathInput("");
+	m_batchHdrOutputDir = m_luminance_options.getBatchHdrPathOutput("");
+
+	m_Ui->inputLineEdit->setText(m_batchHdrInputDir);
+	m_Ui->outputLineEdit->setText(m_batchHdrOutputDir);
+	check_start_button();
 }
 
 BatchHDRDialog::~BatchHDRDialog()
@@ -98,41 +96,19 @@ BatchHDRDialog::~BatchHDRDialog()
 void BatchHDRDialog::num_bracketed_changed(int value)
 {
 	qDebug() << "BatchHDRDialog::num_bracketed_changed " << value;
-	if (value == 1)
-	{
-		m_Ui->autoAlignCheckBox->setEnabled(false);
-		m_Ui->aisRadioButton->setEnabled(false);
-		m_Ui->MTBRadioButton->setEnabled(false);
-	}
-	else
-	{
-		m_Ui->autoAlignCheckBox->setEnabled(true);
-		m_Ui->aisRadioButton->setEnabled(true);
-		m_Ui->MTBRadioButton->setEnabled(true);
-	}
+	m_Ui->autoAlignCheckBox->setEnabled(value > 1);
+	m_Ui->aisRadioButton->setEnabled(value > 1);
+	m_Ui->MTBRadioButton->setEnabled(value > 1);
 }
 
-void BatchHDRDialog::add_input_directory()
+void BatchHDRDialog::on_selectInputFolder_clicked()
 {
-	QString inputDir = QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrInputDir);
+	QString inputDir = QFileDialog::getExistingDirectory(this, tr("Choose a source directory"), m_batchHdrInputDir);
 	if (!inputDir.isEmpty())
 	{
 		m_Ui->inputLineEdit->setText(inputDir);
 		if (!m_Ui->inputLineEdit->text().isEmpty())
 		{
-    		QStringList filters;
-			filters << "*.jpg" << "*.jpeg" << "*.tiff" << "*.tif" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.rw2" << "*.sr2" << "*.3fr" << "*.mef" << "*.mos" << "*.erf" << "*.nrw" << "*.srw";
-
-    		filters << "*.JPG" << "*.JPEG" << "*.TIFF" << "*.TIF" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.RW2" << "*.SR2" << "*.3FR" << "*.MEF" << "*.MOS" << "*.ERF" << "*.NRW" << "*.SRW";
-			QDir chosendir(m_Ui->inputLineEdit->text());
-			chosendir.setFilter(QDir::Files);
-			chosendir.setSorting(QDir::Name);
-			chosendir.setNameFilters(filters);
-			m_bracketed = chosendir.entryList();
-			//hack to prepend to this list the path as prefix.
-			m_bracketed.replaceInStrings(QRegExp("(.+)"), chosendir.path()+"/\\1");
-			qDebug() << m_bracketed;
-
 			// if the new dir, the one just chosen by the user, is different from the one stored in the settings,
 			// update the settings
 			if (m_batchHdrInputDir != m_Ui->inputLineEdit->text())
@@ -149,23 +125,16 @@ void BatchHDRDialog::add_input_directory()
 	}
 }
 
+void BatchHDRDialog::on_selectOutputFolder_clicked()
+{
+	add_output_directory();
+}
+
 void BatchHDRDialog::add_output_directory(QString dir)
 {
-	QString outputDir = !dir.isEmpty() ? dir : QFileDialog::getExistingDirectory(this, tr("Choose a directory"), m_batchHdrOutputDir);
+	QString outputDir = !dir.isEmpty() ? dir : QFileDialog::getExistingDirectory(this, tr("Choose a output directory"), m_batchHdrOutputDir);
 	if (!outputDir.isEmpty())
 	{
-		bool foundHDR = false;
-		QDir chosendir(outputDir);
-		chosendir.setFilter(QDir::Files);
-		QStringList files = chosendir.entryList();
-		if (!files.empty()) {
-			foreach(QString file, files) {
-				if (file.startsWith("hdr_"))
-					foundHDR = true;
-			}		
-			if (foundHDR)
-					QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten."), QMessageBox::Ok, QMessageBox::NoButton);
-		}
 		m_Ui->outputLineEdit->setText(outputDir);
 		// if the new dir, the one just chosen by the user, is different from the one stored in the settings,
 		// update the settings
@@ -178,7 +147,7 @@ void BatchHDRDialog::add_output_directory(QString dir)
 	}
 }
 
-void BatchHDRDialog::init_batch_hdr()
+void BatchHDRDialog::on_startButton_clicked()
 {
 	if (m_Ui->inputLineEdit->text().isEmpty() || m_Ui->outputLineEdit->text().isEmpty())
 		return;
@@ -189,22 +158,54 @@ void BatchHDRDialog::init_batch_hdr()
 		return;
 	}
 
-	m_Ui->horizontalSlider->setEnabled(false);
-	m_Ui->spinBox->setEnabled(false);
-	m_Ui->profileComboBox->setEnabled(false);
-	m_Ui->formatComboBox->setEnabled(false);
-	m_Ui->inputPushButton->setEnabled(false);
-	m_Ui->inputLineEdit->setEnabled(false);
-	m_Ui->outputPushButton->setEnabled(false);
-	m_Ui->outputLineEdit->setEnabled(false);
-	m_Ui->groupBox->setEnabled(false);
-	m_Ui->startPushButton->setEnabled(false);
-	m_total = m_bracketed.count() / m_Ui->spinBox->value();
-	m_Ui->progressBar->setMaximum(m_total);
-	m_Ui->textEdit->append(tr("Started processing..."));
-	// mouse pointer to busy
-	QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
-	batch_hdr();
+	// check for empty output-folder
+	bool foundHDR = false;
+	QDir chosendir(m_batchHdrOutputDir);
+	chosendir.setFilter(QDir::Files);
+	QStringList files = chosendir.entryList();
+
+	bool doStart = true;
+	if (!files.empty()) {
+		foreach(QString file, files) {
+			if (file.startsWith("hdr_"))
+				foundHDR = true;
+		}
+		if (foundHDR)
+			doStart = QMessageBox::Yes == QMessageBox::warning(0,tr("Warning"), tr("The chosen output directory contains HDR files. Those files might be overwritten. \n\nContinue?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	}
+
+	// process input images
+	QStringList filters;
+	filters << "*.jpg" << "*.jpeg" << "*.tiff" << "*.tif" << "*.crw" << "*.cr2" << "*.nef" << "*.dng" << "*.mrw" << "*.orf" << "*.kdc" << "*.dcr" << "*.arw" << "*.raf" << "*.ptx" << "*.pef" << "*.x3f" << "*.raw" << "*.rw2" << "*.sr2" << "*.3fr" << "*.mef" << "*.mos" << "*.erf" << "*.nrw" << "*.srw";
+	filters << "*.JPG" << "*.JPEG" << "*.TIFF" << "*.TIF" << "*.CRW" << "*.CR2" << "*.NEF" << "*.DNG" << "*.MRW" << "*.ORF" << "*.KDC" << "*.DCR" << "*.ARW" << "*.RAF" << "*.PTX" << "*.PEF" << "*.X3F" << "*.RAW" << "*.RW2" << "*.SR2" << "*.3FR" << "*.MEF" << "*.MOS" << "*.ERF" << "*.NRW" << "*.SRW";
+
+	QDir chosenInputDir(m_batchHdrInputDir);
+	chosenInputDir.setFilter(QDir::Files);
+	chosenInputDir.setSorting(QDir::Name);
+	chosenInputDir.setNameFilters(filters);
+	m_bracketed = chosenInputDir.entryList();
+	//hack to prepend to this list the path as prefix.
+	m_bracketed.replaceInStrings(QRegExp("(.+)"), chosenInputDir.path()+"/\\1");
+	qDebug() << m_bracketed;
+
+	if (doStart) {
+		m_Ui->horizontalSlider->setEnabled(false);
+		m_Ui->spinBox->setEnabled(false);
+		m_Ui->profileComboBox->setEnabled(false);
+		m_Ui->formatComboBox->setEnabled(false);
+		m_Ui->selectInputFolder->setEnabled(false);
+		m_Ui->inputLineEdit->setEnabled(false);
+		m_Ui->selectOutputFolder->setEnabled(false);
+		m_Ui->outputLineEdit->setEnabled(false);
+		m_Ui->groupBox->setEnabled(false);
+		m_Ui->startButton->setEnabled(false);
+		m_total = m_bracketed.count() / m_Ui->spinBox->value();
+		m_Ui->progressBar->setMaximum(m_total);
+		m_Ui->textEdit->append(tr("Started processing..."));
+		// mouse pointer to busy
+		QApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
+		batch_hdr();
+	}
 }
 
 void BatchHDRDialog::batch_hdr()
@@ -232,9 +233,9 @@ void BatchHDRDialog::batch_hdr()
 	}	
 	else
 	{
-		m_Ui->closePushButton->show();
-		m_Ui->cancelPushButton->hide();
-		m_Ui->startPushButton->hide();
+		m_Ui->closeButton->show();
+		m_Ui->cancelButton->hide();
+		m_Ui->startButton->hide();
 		m_Ui->progressBar->hide();
 		OsIntegration::getInstance().setProgress(-1);
 		QApplication::restoreOverrideCursor();
@@ -344,15 +345,15 @@ void BatchHDRDialog::writeAisData(QByteArray data)
 void BatchHDRDialog::check_start_button()
 {
 	if (m_Ui->inputLineEdit->text() != "" && m_Ui->outputLineEdit->text() != "")
-		m_Ui->startPushButton->setEnabled(true);
+		m_Ui->startButton->setEnabled(true);
 }
 
-void BatchHDRDialog::abort()
+void BatchHDRDialog::on_cancelButton_clicked()
 {
 	if (m_processing) {
 		m_abort = true;
-		m_Ui->cancelPushButton->setText(tr("Aborting..."));
-		m_Ui->cancelPushButton->setEnabled(false);
+		m_Ui->cancelButton->setText(tr("Aborting..."));
+		m_Ui->cancelButton->setEnabled(false);
 	}
 	else
 		this->reject();

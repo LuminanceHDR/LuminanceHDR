@@ -17,7 +17,7 @@
    <string>Drag and Drop</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset resource="../../icons.qrc">
     <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
   </property>
   <property name="modal">
@@ -51,7 +51,7 @@
       <string>&amp;Open</string>
      </property>
      <property name="icon">
-      <iconset resource="../icons.qrc">
+      <iconset resource="../../icons.qrc">
        <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
      </property>
      <property name="iconSize">
@@ -71,7 +71,7 @@
       <string>&amp;New</string>
      </property>
      <property name="icon">
-      <iconset resource="../icons.qrc">
+      <iconset resource="../../icons.qrc">
        <normaloff>:/new/prefix1/images/newfile.png</normaloff>:/new/prefix1/images/newfile.png</iconset>
      </property>
      <property name="iconSize">
@@ -91,7 +91,7 @@
       <string>&amp;Cancel</string>
      </property>
      <property name="icon">
-      <iconset resource="../icons.qrc">
+      <iconset resource="../../icons.qrc">
        <normaloff>:/new/prefix1/images/cancel.png</normaloff>:/new/prefix1/images/cancel.png</iconset>
      </property>
      <property name="iconSize">
@@ -108,7 +108,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections/>
 </ui>

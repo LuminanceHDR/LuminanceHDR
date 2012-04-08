@@ -33,7 +33,6 @@
 #include <QString>
 #include <QLocale>
 #include <QFile>
-#include <QDir>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
@@ -396,9 +395,9 @@ void LuminanceOptions::setRawUseChroma(bool b)
     setValue(KEY_USE_CHROMA, b);
 }
 
-QString LuminanceOptions::getBatchHdrPathInput()
+QString LuminanceOptions::getBatchHdrPathInput(QString defaultPath)
 {
-    return value(KEY_BATCH_HDR_PATH_INPUT, QDir::currentPath()).toString();
+    return value(KEY_BATCH_HDR_PATH_INPUT, defaultPath).toString();
 }
 
 void LuminanceOptions::setBatchHdrPathInput(QString qstr)
@@ -406,9 +405,9 @@ void LuminanceOptions::setBatchHdrPathInput(QString qstr)
     setValue(KEY_BATCH_HDR_PATH_INPUT, qstr);
 }
 
-QString LuminanceOptions::getBatchHdrPathOutput()
+QString LuminanceOptions::getBatchHdrPathOutput(QString defaultPath)
 {
-    return value(KEY_BATCH_HDR_PATH_OUTPUT, QDir::currentPath()).toString();
+    return value(KEY_BATCH_HDR_PATH_OUTPUT, defaultPath).toString();
 }
 
 void LuminanceOptions::setBatchHdrPathOutput(QString qstr)
