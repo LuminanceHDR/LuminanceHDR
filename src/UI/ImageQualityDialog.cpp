@@ -52,16 +52,18 @@ int ImageQualityDialog::getQuality(void)
 
 void ImageQualityDialog::on_getSizeButton_clicked()
 {
-	qDebug() << format;
+    qDebug() << format;
     setCursor(QCursor(Qt::WaitCursor));
     int quality = m_Ui->spinBox->value();
-	int size;
-	if (format.startsWith("jp")) {
-		JpegWriter writer(image, quality);
-		writer.writeQImageToJpeg();
-		size = writer.getFileSize();
+    int size = 0;
+    if (format.startsWith("jp"))
+    {
+        JpegWriter writer(image, quality);
+        writer.writeQImageToJpeg();
+        size = writer.getFileSize();
 	}
-	else {
+    else
+    {
     	QByteArray ba;
     	QBuffer buffer(&ba);
 	    buffer.open(QIODevice::WriteOnly);

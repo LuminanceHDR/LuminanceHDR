@@ -23,11 +23,15 @@
  */
 
 #include <QDebug>
+#include <QSharedPointer>
+#include <stdexcept>
+#include <vector>
+#include <algorithm>
 
 #ifdef USE_LCMS2
-#	include <lcms2.h>
+#include <lcms2.h>
 #else
-#	include <lcms.h>
+#include <lcms.h>
 #endif
 
 #include <stdio.h>
@@ -140,14 +144,14 @@ void my_writer_error_handler (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
 	(*cinfo->err->format_message) (cinfo, buffer);
-	throw buffer;
+    throw std::runtime_error( std::string(buffer) );
 }
   
 void my_writer_output_message (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
 	(*cinfo->err->format_message) (cinfo, buffer);
-	throw buffer;
+    throw std::runtime_error( std::string(buffer) );
 }
 
 void removeAlphaValues(const unsigned char *in, JSAMPROW out, int size)
@@ -161,34 +165,31 @@ void removeAlphaValues(const unsigned char *in, JSAMPROW out, int size)
 	}
 }
 
-JpegWriter::JpegWriter(const QImage *out_qimage, QString fname, int quality) :
+JpegWriter::JpegWriter(const QImage *out_qimage, QString fname, int quality):
 	m_out_qimage(out_qimage),
 	m_fname(fname),
 	m_quality(quality)
 {}
 
-JpegWriter::JpegWriter(const QImage *out_qimage, int quality) :
+JpegWriter::JpegWriter(const QImage *out_qimage, int quality):
 	m_out_qimage(out_qimage),
-	m_fname(""),	
+//	m_fname(""),	empty anyway!
 	m_quality(quality)
 {}
 
-bool JpegWriter::writeQImageToJpeg() {
-
-	cmsHPROFILE hsRGB;
-	JOCTET *EmbedBuffer;
+bool JpegWriter::writeQImageToJpeg()
+{
 	size_t profile_size = 0;	
 
-	hsRGB = cmsCreate_sRGBProfile();
-	_cmsSaveProfileToMem(hsRGB, NULL, &profile_size); // get the size
+    cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
+    _cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
 
-	EmbedBuffer = (JOCTET *) _cmsMalloc(profile_size);
+    std::vector<JOCTET> EmbedBuffer(profile_size);
 
-	_cmsSaveProfileToMem(hsRGB, EmbedBuffer, &profile_size);
+    _cmsSaveProfileToMem(hsRGB, EmbedBuffer.data(), &profile_size);    //
 
 	qDebug() << "sRGB profile size: " << profile_size;
 
-	JSAMPROW ScanLineOut;
 	struct jpeg_compress_struct cinfo;
 	cinfo.err = jpeg_std_error(&ErrorHandler.pub);
 	ErrorHandler.pub.error_exit      = my_writer_error_handler;	
@@ -196,10 +197,10 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	jpeg_create_compress(&cinfo);
 
-	cinfo.image_width = m_out_qimage->width();      /* image width and height, in pixels */
+    cinfo.image_width = m_out_qimage->width();              // image width and height, in pixels
 	cinfo.image_height = m_out_qimage->height();
-	cinfo.input_components = cinfo.num_components = 3;     /* # of color components per pixel */
-	cinfo.in_color_space = JCS_RGB; /* colorspace of input image */
+    cinfo.input_components = cinfo.num_components = 3;      // # of color components per pixel
+    cinfo.in_color_space = JCS_RGB;                         // colorspace of input image
 	cinfo.jpeg_color_space = JCS_RGB;
 
 	jpeg_set_defaults(&cinfo);
@@ -216,106 +217,97 @@ bool JpegWriter::writeQImageToJpeg() {
 		}
 	}
 
-	FILE * outfile;
+    // I protecte the output file into a QSharedPointer with custom Deleter,
+    // so I don't have to close it whenever it goes out of scope!
+    QSharedPointer<FILE> outfile;
 
 #if defined(WIN32) || defined(__APPLE__)
-	char* tFileName;
+    QTemporaryFile output_temp_file;
 #else
-    char *outbuf;
-    int outlen;
+    std::vector<char> outbuf;
 #endif
-    if (!m_fname.isEmpty())
-    //we are writing to file
+    if ( !m_fname.isEmpty() )         // we are writing to file
     {
         QByteArray ba( m_fname.toUtf8() );
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
-		if ((outfile = fopen(ba.data(), "wb")) == NULL) {
+        outfile = QSharedPointer<FILE>(fopen(ba.data(), "wb"), fclose);
+
+        if (outfile.data() == NULL)
+        {
 			qDebug() << "can't open " << m_fname;
     	    return false;
 		}
 	} 
-    else
-    //we are writing to memory buffer
+    else                            // we are writing to memory buffer
     {
 #if defined(WIN32) || defined(__APPLE__)
-		QTemporaryFile qtTempFile;
-		qtTempFile.open();
-		tFileName = qtTempFile.fileName().toLatin1().data();
-		qtTempFile.close();
-		outfile = fopen(tFileName, "r+");
+        if ( !output_temp_file.open() ) return false; // could not open the temporary file!
+
+        QByteArray output_temp_filename = QFile::encodeName( output_temp_file.fileName() );
+        output_temp_file.close();
+        outfile = QSharedPointer<FILE>(fopen(output_temp_filename.constData(), "w+"), fclose);
+
+        if ( outfile.data() == NULL ) return false;
 #else
-		outlen = cinfo.image_width * cinfo.image_height * cinfo.num_components * sizeof(char);
-		outbuf = (char *) malloc(outlen);
-		memset(outbuf, 0, outlen);
-		outfile = fmemopen( outbuf, outlen, "wb");
+        outbuf.swap( std::vector<char>(cinfo.image_width * cinfo.image_height * cinfo.num_components) );
+        // reset all element of the vector to zero!
+        std::fill(outbuf.begin(), outbuf.end(), 0);
+
+        outfile = QSharedPointer<FILE>(fmemopen( outbuf.data(), outlen, "wb"), "w+"), fclose);
 #endif
 	}
-	jpeg_stdio_dest(&cinfo, outfile);
 
-	try {
-		jpeg_start_compress(&cinfo, true);
-	}
-	catch (char *error) {
-		qDebug() << error;
-#if defined(WIN32) || defined(__APPLE__)
-#else
-		free(outbuf);
-#endif
-		fclose(outfile);
-		jpeg_destroy_compress(&cinfo);
-		return false;
-	}
+    try
+    {
+        jpeg_stdio_dest(&cinfo, outfile.data());
+        jpeg_start_compress(&cinfo, true);
 
-	write_icc_profile (&cinfo, EmbedBuffer, profile_size);
+        write_icc_profile(&cinfo, EmbedBuffer.data(), profile_size);
 
-	_cmsFree(EmbedBuffer);
+        // unecessary zelous!
+        EmbedBuffer.clear();
 
-	ScanLineOut = (JSAMPROW) _cmsMalloc(cinfo.image_width * cinfo.num_components); 
-       
-	for (int i = 0; cinfo.next_scanline < cinfo.image_height; i++) {
-		
-		removeAlphaValues(m_out_qimage->scanLine( i ), ScanLineOut, cinfo.image_width * cinfo.num_components);
-		try {
-			jpeg_write_scanlines(&cinfo, &ScanLineOut, 1);
-		}
-		catch (char *error) {
-			qDebug() << error;
+        // If an exception is raised, this buffer gets automatically destructed!
+        std::vector<JSAMPLE> ScanLineOut(cinfo.image_width * cinfo.num_components);
+        JSAMPROW ScanLineOutArray[1] = { ScanLineOut.data() };
 
-#if defined(WIN32) || defined(__APPLE__)
-#else
-			free(outbuf);
-#endif
-			fclose(outfile);
-			jpeg_destroy_compress(&cinfo);
-			return false;
-		}	
-	}
+        for (int i = 0; cinfo.next_scanline < cinfo.image_height; i++)
+        {
+            removeAlphaValues(m_out_qimage->scanLine( i ),
+                              ScanLineOut.data(),
+                              cinfo.image_width * cinfo.num_components);
+            jpeg_write_scanlines(&cinfo, ScanLineOutArray, 1);
+        }
+    }
+    catch (const std::runtime_error& err)
+    {
+        qDebug() << err.what();
 
-	_cmsFree(ScanLineOut);
+        // fclose(outfile); // QSharedPointer does it!
+        jpeg_destroy_compress(&cinfo);
+        return false;
+    }
 
 	jpeg_finish_compress(&cinfo);
 	jpeg_destroy_compress(&cinfo);
 
-	if (m_fname.isEmpty()) {
+    if ( m_fname.isEmpty() )
+    {
 #if defined(WIN32) || defined(__APPLE__)
-		fflush(outfile);
-		fseek (outfile, 0, SEEK_END);
-    	m_filesize = ftell(outfile);
-		fclose(outfile);
-		remove(tFileName);
+        fflush(outfile.data());
+        fseek(outfile.data(), 0, SEEK_END);
+        m_filesize = ftell(outfile.data());
 #else
-		int size;
-		for (size = outlen - 1; size > 0; size--)
-			if (*(outbuf + size) != 0)
-				break;
-		m_filesize = size;
-		delete outbuf;
+        int size = outlen - 1;
+        for (; size > 0; --size)
+        {
+            if (*(outbuf + size) != 0)
+                break;
+        }
+        m_filesize = size;
 #endif
-	}
-
-	fclose(outfile);
-
+    }
 	return true;
 }
 

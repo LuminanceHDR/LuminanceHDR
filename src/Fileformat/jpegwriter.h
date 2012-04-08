@@ -31,19 +31,25 @@
 
 class JpegWriter : public QObject
 {
-  Q_OBJECT
-
-	const QImage *m_out_qimage;
-	QString m_fname;
-	int m_filesize;
-	int m_quality;
+    Q_OBJECT
 
 public:
 	JpegWriter(const QImage *, QString, int);
 	JpegWriter(const QImage *, int);
 	~JpegWriter() {}
+
+    //! \brief write \c QImage into Jpeg file
 	bool writeQImageToJpeg();
+
+    //! \brief return size in bytes of the file written
 	int getFileSize();
+
+private:
+    const QImage *m_out_qimage;
+    QString m_fname;
+    int m_filesize;
+    int m_quality;
+
 };
 
 #endif
