@@ -24,7 +24,10 @@
 
 	<area text="Editing HDR Images" file="editing_hdr.html">
 	</area>
-
+	
+	<area text="Color Management" file="color_management.html">
+	</area>
+	
 	<area text="Tone Mapping" file="tonemapping.html">
 		<submenuitem text="Interactive" file="tonemapping_interactive.html" />
 		<submenuitem text="Batch Mode" file="tonemapping_batch.html" />
