@@ -33,9 +33,9 @@
 #include <stdio.h>
 #include <jpeglib.h>
 
-#ifdef WIN32
-	#include <QTemporaryFile>
-	#include <io.h>
+#if defined(WIN32) || defined(__APPLE__)
+#include <QTemporaryFile>
+// #include <io.h>
 #endif
 
 #include "jpegwriter.h"
@@ -207,22 +207,27 @@ bool JpegWriter::writeQImageToJpeg() {
 
 	//avoid subsampling on high quality factor
 	jpeg_set_quality(&cinfo, m_quality, 1);
-	if (m_quality >= 70) {
-		for(int i = 0; i < cinfo.num_components; i++) {
+    if (m_quality >= 70)
+    {
+        for(int i = 0; i < cinfo.num_components; i++)
+        {
 			cinfo.comp_info[i].h_samp_factor = 1;
 			cinfo.comp_info[i].v_samp_factor = 1;
 		}
 	}
 
-	QByteArray ba;
 	FILE * outfile;
-	char *outbuf;
-	int outlen;
-#ifdef WIN32
+
+#if defined(WIN32) || defined(__APPLE__)
 	char* tFileName;
+#else
+    char *outbuf;
+    int outlen;
 #endif
-	if (!m_fname.isEmpty()) { //we are writing to file
-		ba = m_fname.toUtf8();
+    if (!m_fname.isEmpty())
+    //we are writing to file
+    {
+        QByteArray ba( m_fname.toUtf8() );
 		qDebug() << "writeQImageToJpeg: filename: " << ba.data();
 
 		if ((outfile = fopen(ba.data(), "wb")) == NULL) {
@@ -230,8 +235,10 @@ bool JpegWriter::writeQImageToJpeg() {
     	    return false;
 		}
 	} 
-	else { //we are writing to memory buffer
-#ifdef WIN32
+    else
+    //we are writing to memory buffer
+    {
+#if defined(WIN32) || defined(__APPLE__)
 		QTemporaryFile qtTempFile;
 		qtTempFile.open();
 		tFileName = qtTempFile.fileName().toLatin1().data();
@@ -251,7 +258,8 @@ bool JpegWriter::writeQImageToJpeg() {
 	}
 	catch (char *error) {
 		qDebug() << error;
-#ifndef WIN32
+#if defined(WIN32) || defined(__APPLE__)
+#else
 		free(outbuf);
 #endif
 		fclose(outfile);
@@ -273,7 +281,9 @@ bool JpegWriter::writeQImageToJpeg() {
 		}
 		catch (char *error) {
 			qDebug() << error;
-#ifndef WIN32
+
+#if defined(WIN32) || defined(__APPLE__)
+#else
 			free(outbuf);
 #endif
 			fclose(outfile);
@@ -288,7 +298,7 @@ bool JpegWriter::writeQImageToJpeg() {
 	jpeg_destroy_compress(&cinfo);
 
 	if (m_fname.isEmpty()) {
-#ifdef WIN32
+#if defined(WIN32) || defined(__APPLE__)
 		fflush(outfile);
 		fseek (outfile, 0, SEEK_END);
     	m_filesize = ftell(outfile);
