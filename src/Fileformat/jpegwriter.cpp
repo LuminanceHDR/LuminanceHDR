@@ -184,9 +184,9 @@ bool JpegWriter::writeQImageToJpeg()
     cmsHPROFILE hsRGB = cmsCreate_sRGBProfile();
     _cmsSaveProfileToMem(hsRGB, NULL, &profile_size);           // get the size
 
-    std::vector<JOCTET> EmbedBuffer(profile_size);
+    std::vector<JOCTET> profile_buffer(profile_size);
 
-    _cmsSaveProfileToMem(hsRGB, EmbedBuffer.data(), &profile_size);    //
+    _cmsSaveProfileToMem(hsRGB, profile_buffer.data(), &profile_size);    //
 
 	qDebug() << "sRGB profile size: " << profile_size;
 
@@ -250,7 +250,8 @@ bool JpegWriter::writeQImageToJpeg()
 
         if ( outfile.data() == NULL ) return false;
 #else
-        outbuf.swap( std::vector<char>(cinfo.image_width * cinfo.image_height * cinfo.num_components) );
+        std::vector<char> t(cinfo.image_width * cinfo.image_height * cinfo.num_components);
+        outbuf.swap( t );
         // reset all element of the vector to zero!
         std::fill(outbuf.begin(), outbuf.end(), 0);
 
@@ -263,10 +264,10 @@ bool JpegWriter::writeQImageToJpeg()
         jpeg_stdio_dest(&cinfo, outfile.data());
         jpeg_start_compress(&cinfo, true);
 
-        write_icc_profile(&cinfo, EmbedBuffer.data(), profile_size);
+        write_icc_profile(&cinfo, profile_buffer.data(), profile_size);
 
         // unecessary zelous!
-        EmbedBuffer.clear();
+        profile_buffer.clear();
 
         // If an exception is raised, this buffer gets automatically destructed!
         std::vector<JSAMPLE> ScanLineOut(cinfo.image_width * cinfo.num_components);
@@ -283,9 +284,8 @@ bool JpegWriter::writeQImageToJpeg()
     catch (const std::runtime_error& err)
     {
         qDebug() << err.what();
-
-        // fclose(outfile); // QSharedPointer does it!
         jpeg_destroy_compress(&cinfo);
+
         return false;
     }
 
@@ -299,13 +299,12 @@ bool JpegWriter::writeQImageToJpeg()
         fseek(outfile.data(), 0, SEEK_END);
         m_filesize = ftell(outfile.data());
 #else
-        int size = outlen - 1;
-        for (; size > 0; --size)
+        int idx = outbuf.size() - 1;
+        for (; idx > 0; --idx)
         {
-            if (*(outbuf + size) != 0)
-                break;
+            if ( outbuf[idx] != 0 ) break;
         }
-        m_filesize = size;
+        m_filesize = idx;
 #endif
     }
 	return true;
