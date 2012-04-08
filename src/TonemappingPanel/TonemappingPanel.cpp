@@ -1146,7 +1146,7 @@ void TonemappingPanel::loadParameters()
 	SavedParametersDialog dialog(currentTmoOperator);
 	if (dialog.exec())
 	{
-		QSqlTableModel *model = dialog.getModel();
+		QSqlQueryModel *model = dialog.getModel();
 		if (model->rowCount() == 0)
 			return;
 		int selectedRow = dialog.getCurrentIndex().row();
@@ -1348,7 +1348,7 @@ void TonemappingPanel::loadComments()
     SavedParametersDialog dialog(this);
 	if (dialog.exec())
 	{
-		QSqlTableModel *model = dialog.getModel();
+		QSqlQueryModel *model = dialog.getModel();
 		int selectedRow = dialog.getCurrentIndex().row();
 		QString comment, tmOperator;
 		comment = model->record(selectedRow).value("comment").toString();

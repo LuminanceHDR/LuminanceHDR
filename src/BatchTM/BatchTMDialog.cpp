@@ -587,8 +587,8 @@ void BatchTMDialog::from_database()
 {
 	SavedParametersDialog dialog(this);
 	if (dialog.exec()) {
-		QSqlTableModel *model = dialog.getModel();
-		QModelIndexList mil = dialog.getModelIndexList();
+		QSqlQueryModel *model = dialog.getModel();
+		QModelIndexList mil = dialog.getSelectedRows();
 		foreach(QModelIndex mi, mil) {
 			QString comment, tmOperator;
 			comment = model->record(mi.row()).value("comment").toString();
