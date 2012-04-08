@@ -24,11 +24,12 @@
 
 #include <QByteArray>
 #include <QDebug>
+#include <stdexcept>
 
 #ifdef USE_LCMS2
-#	include <lcms2.h>
+#include <lcms2.h>
 #else
-#	include <lcms.h>
+#include <lcms.h>
 #endif
 
 #include <stdio.h>
@@ -196,14 +197,14 @@ void my_error_handler (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
 	(*cinfo->err->format_message) (cinfo, buffer);
-	throw buffer;
+    throw std::runtime_error( std::string(buffer) );
 }
   
 void my_output_message (j_common_ptr cinfo)
 {
 	char buffer[JMSG_LENGTH_MAX];
 	(*cinfo->err->format_message) (cinfo, buffer);
-	throw buffer;
+    throw std::runtime_error( std::string(buffer) );
 }
 
 void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
@@ -353,32 +354,35 @@ QImage *JpegReader::readJpegIntoQImage()
 	ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 	ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
 	
-	for (int i = 0; cinfo.output_scanline < cinfo.output_height; i++) {
-		
-		try {
-			jpeg_read_scanlines(&cinfo, &ScanLineIn, 1);
-		}
-		catch (char *error) {
-			qDebug() << error;
-			jpeg_destroy_decompress(&cinfo);
-			fclose(infile);
-			_cmsFree(ScanLineIn);
-			_cmsFree(ScanLineTemp);
-			_cmsFree(ScanLineOut);
-			jpeg_destroy_decompress(&cinfo);
-			return NULL;
-		}
-		
-		if (doTransform) {
-			cmsDoTransform(xform, ScanLineIn, ScanLineTemp, cinfo.output_width);
-			addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
-		
-		}
-		else 
-			addAlphaValues(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
-			
-		memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
-	}
+    try
+    {
+        for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
+        {
+            jpeg_read_scanlines(&cinfo, &ScanLineIn, 1);
+
+            if (doTransform) {
+                cmsDoTransform(xform, ScanLineIn, ScanLineTemp, cinfo.output_width);
+                addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
+
+            }
+            else
+                addAlphaValues(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
+
+            memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+        }
+    }
+    catch (const std::runtime_error& err)
+    {
+        qDebug() << err.what();
+
+        jpeg_destroy_decompress(&cinfo);
+        fclose(infile);
+        _cmsFree(ScanLineIn);
+        _cmsFree(ScanLineTemp);
+        _cmsFree(ScanLineOut);
+        jpeg_destroy_decompress(&cinfo);
+        return NULL;
+    }
 
 	if (doTransform)
 		cmsDeleteTransform(xform);
