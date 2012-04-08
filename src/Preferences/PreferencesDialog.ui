@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>786</width>
+    <width>686</width>
     <height>617</height>
    </rect>
   </property>
@@ -538,7 +538,11 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>C&amp;hoose</string>
+                <string>&amp;Browse...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../icons.qrc">
+                 <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
                </property>
               </widget>
              </item>

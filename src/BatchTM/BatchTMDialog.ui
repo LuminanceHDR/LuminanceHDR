@@ -330,7 +330,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Ouput Image Width</string>
+               <string>Ouput Image Width:</string>
               </property>
              </widget>
             </item>
@@ -347,6 +347,12 @@
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>10</number>
               </property>
              </widget>
             </item>
@@ -388,6 +394,12 @@
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>10</number>
+              </property>
              </widget>
             </item>
             <item>
@@ -407,13 +419,9 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QPushButton" name="out_folder_Button">
+           <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Select &amp;Output Folder...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+             <string>Output Folder:</string>
             </property>
            </widget>
           </item>
@@ -421,6 +429,17 @@
            <widget class="QLineEdit" name="out_folder_widgets">
             <property name="readOnly">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="out_folder_Button">
+            <property name="text">
+             <string>Selec&amp;t...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
            </widget>
           </item>
@@ -554,8 +573,8 @@
      <property name="toolTip">
       <string>Overall completion progress</string>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -606,7 +625,6 @@
  </widget>
  <tabstops>
   <tabstop>remove_HDRs_Button</tabstop>
-  <tabstop>out_folder_Button</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
