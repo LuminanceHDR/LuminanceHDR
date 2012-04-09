@@ -49,11 +49,11 @@ public:
     ~SavedParametersDialog();
 
     QModelIndex getCurrentIndex();
-    QModelIndexList getModelIndexList();
-    QSqlTableModel* getModel();
+    QModelIndexList getSelectedRows();
+    QSqlQueryModel* getModel();
 
 protected:
-    QSqlTableModel* model;
+    QSqlQueryModel* model;
     QScopedPointer<Ui::SavedParametersDialog> m_Ui;
     
 };

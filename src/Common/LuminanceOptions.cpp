@@ -33,7 +33,6 @@
 #include <QString>
 #include <QLocale>
 #include <QFile>
-#include <QDir>
 
 #include "Common/LuminanceOptions.h"
 #include "Common/config.h"
@@ -396,9 +395,9 @@ void LuminanceOptions::setRawUseChroma(bool b)
     setValue(KEY_USE_CHROMA, b);
 }
 
-QString LuminanceOptions::getBatchHdrPathInput()
+QString LuminanceOptions::getBatchHdrPathInput(QString defaultPath)
 {
-    return value(KEY_BATCH_HDR_PATH_INPUT, QDir::currentPath()).toString();
+    return value(KEY_BATCH_HDR_PATH_INPUT, defaultPath).toString();
 }
 
 void LuminanceOptions::setBatchHdrPathInput(QString qstr)
@@ -406,9 +405,9 @@ void LuminanceOptions::setBatchHdrPathInput(QString qstr)
     setValue(KEY_BATCH_HDR_PATH_INPUT, qstr);
 }
 
-QString LuminanceOptions::getBatchHdrPathOutput()
+QString LuminanceOptions::getBatchHdrPathOutput(QString defaultPath)
 {
-    return value(KEY_BATCH_HDR_PATH_OUTPUT, QDir::currentPath()).toString();
+    return value(KEY_BATCH_HDR_PATH_OUTPUT, defaultPath).toString();
 }
 
 void LuminanceOptions::setBatchHdrPathOutput(QString qstr)
@@ -465,17 +464,6 @@ void LuminanceOptions::setBatchTmNumThreads(int v)
 {
     setValue(KEY_BATCH_TM_NUM_THREADS, v);
 }
-
-int LuminanceOptions::getBatchTmDefaultOutputQuality()
-{
-    return value(KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY, 100).toInt();
-}
-
-void LuminanceOptions::setBatchTmDefaultOutputQuality(int v)
-{
-    setValue(KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY, v);
-}
-
 
 QString LuminanceOptions::getBatchTmLdrFormat()
 {
@@ -639,4 +627,44 @@ int  LuminanceOptions::getPreviewWidth()
 void LuminanceOptions::setPreviewWidth(int v)
 {
     setValue(KEY_TMOWINDOW_PREVIEWS_WIDTH, v);
+}
+
+int LuminanceOptions::getCameraProfile()
+{
+	return value(KEY_COLOR_CAMERA_PROFILE, 0).toInt();
+}
+
+void LuminanceOptions::setCameraProfile(int index)
+{
+	setValue(KEY_COLOR_CAMERA_PROFILE, index);
+}
+
+QString LuminanceOptions::getCameraProfileFileName()
+{
+	return value(KEY_COLOR_CAMERA_PROFILE_FILENAME).toString();
+}
+
+void LuminanceOptions::setCameraProfileFileName(QString fname)
+{
+	setValue(KEY_COLOR_CAMERA_PROFILE_FILENAME, fname);
+}
+
+QString LuminanceOptions::getMonitorProfileFileName()
+{
+	return value(KEY_COLOR_MONITOR_PROFILE_FILENAME).toString();
+}
+
+void LuminanceOptions::setMonitorProfileFileName(QString fname)
+{
+	setValue(KEY_COLOR_MONITOR_PROFILE_FILENAME, fname);
+}
+
+QString LuminanceOptions::getPrinterProfileFileName()
+{
+	return value(KEY_COLOR_PRINTER_PROFILE_FILENAME).toString();
+}
+
+void LuminanceOptions::setPrinterProfileFileName(QString fname)
+{
+	setValue(KEY_COLOR_PRINTER_PROFILE_FILENAME, fname);
 }

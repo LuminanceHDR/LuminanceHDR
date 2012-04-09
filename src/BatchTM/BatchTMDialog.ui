@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>682</width>
-    <height>496</height>
+    <height>566</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -242,7 +242,7 @@
              </size>
             </property>
             <property name="text">
-             <string>From Database</string>
+             <string>From Data&amp;base</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
@@ -320,23 +320,132 @@
      <property name="title">
       <string>Output</string>
      </property>
-     <layout class="QHBoxLayout" name="_7">
-      <property name="margin">
-       <number>2</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="out_folder_Button">
-        <property name="text">
-         <string>Select &amp;Output Folder...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="out_folder_widgets">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Ouput Image Width:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_Width">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_Width">
+              <property name="suffix">
+               <string> %</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Output Image Quality</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="horizontalSlider_Quality">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="tickPosition">
+               <enum>QSlider::TicksBelow</enum>
+              </property>
+              <property name="tickInterval">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="spinBox_Quality">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="value">
+               <number>100</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Output Folder:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="out_folder_widgets">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="out_folder_Button">
+            <property name="text">
+             <string>Selec&amp;t...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -464,8 +573,8 @@
      <property name="toolTip">
       <string>Overall completion progress</string>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -516,7 +625,6 @@
  </widget>
  <tabstops>
   <tabstop>remove_HDRs_Button</tabstop>
-  <tabstop>out_folder_Button</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
@@ -526,5 +634,70 @@
  <resources>
   <include location="../../icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_Quality</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_Quality</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>490</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>546</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_Quality</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>horizontalSlider_Quality</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>562</x>
+     <y>268</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>481</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_Width</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_Width</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_Width</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>horizontalSlider_Width</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>85</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

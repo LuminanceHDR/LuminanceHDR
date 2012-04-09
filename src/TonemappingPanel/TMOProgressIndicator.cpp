@@ -23,6 +23,7 @@
  */
 
 #include "TMOProgressIndicator.h"
+#include "OsIntegration/osintegration.h"
 
 #include <iostream>
 
@@ -81,6 +82,7 @@ void TMOProgressIndicator::setValue(int value)
 #endif
 
     m_progressBar->setValue(value);
+    OsIntegration::getInstance().setProgress(value, m_progressBar->maximum() - m_progressBar->minimum());
 }
 
 void TMOProgressIndicator::setMaximum(int max)
@@ -96,5 +98,6 @@ void TMOProgressIndicator::setMinimum(int min)
 void TMOProgressIndicator::reset()
 {
     m_progressBar->reset();
+    OsIntegration::getInstance().setProgress(-1);
     m_isTerminated = false;
 }

@@ -37,7 +37,6 @@ set(LIBS ${LIBS} ${QT_QTCORE_LIBRARIES} ${QT_QTGUI_LIBRARIES} ${QT_QTWEBKIT_LIBR
 FIND_PACKAGE(Git)
 #FIND_PACKAGE(Git QUIET)
 IF(NOT GIT_FOUND)
-	message(STATUS "Git not found")
     FIND_FILE(GIT_EXECUTABLE git.exe 
         $ENV{CYGWIN_DIR}\\bin
         $ENV{CYGWIN_DIR}
@@ -56,10 +55,13 @@ ENDIF()
 IF(GIT_FOUND)
     include(GetGitRevisionDescription)
     get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+ELSE()
+    message(STATUS "Git not found")
 ENDIF()
 
 IF(WIN32)
-# Windows Section
+    # Windows Section
+    
     SET(OPENEXR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/OpenEXR")
     SET(TIFF_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libtiff")
     SET(LIBRAW_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libraw")
@@ -67,55 +69,45 @@ IF(WIN32)
     SET(GSL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(GSLCBLAS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/gsl")
     SET(EXIV2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/exiv2")
+    SET(LCMS2_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/lcms2")
+    SET(LIBJPEG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/../DEPs/include/libjpeg")
 		
-    IF(MSVC)
-        # Enable multi processor compilation
-        ADD_DEFINITIONS(/MP)
+    # Enable multi processor compilation
+    ADD_DEFINITIONS(/MP)
 
-        # Full optimization
-        # Davide: Don't add it by default, let CMake choose the right compilation settings based on CMake profile (Debug, Release, ...)
-        #ADD_DEFINITIONS(/Ox)
-		
-        # Enable OpenMP
-        # Davide: Line 150: inclusion of OpenMP, can you check if that works? If it does, you don't need this line
-        #ADD_DEFINITIONS(/openmp)
+    # Enable SSE2
+    ADD_DEFINITIONS(/arch:SSE2)
 
-        # Enable SSE2
-        # Davide: is it necessary?
-        ADD_DEFINITIONS(/arch:SSE2)
-		
-        ADD_DEFINITIONS(-DUNICODE )
-        ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
-        SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
-        ADD_DEFINITIONS(-DHAVE_FFTW3F)
-		
-        SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
-        SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
-        SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
-		
-        SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
-		
-        SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
-		
-        SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
-        SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
-		
-        SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
-    ELSE()
-        SET(OPENEXR_LIBRARIES "-lIlmImf.dll -lHalf.dll -lIex.dll -L${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR")
-
-        SET(TIFF_LIBRARIES "-L../DEPs/lib/libtiff -ltiff")
-
-        SET(LIBRAW_LIBRARIES "-L../DEPs/lib/libraw -lraw_r -lws2_32 -lm")
-        ADD_DEFINITIONS(-DLIBRAW_NODLL -D_REENTRANT)
-
-        SET(FFTWF_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3 -lfftw3f-3 -lm")
-
-        SET(GSL_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgsl")
-        SET(GSLCBLAS_LIBRARIES "-L${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl -lgslcblas")
-
-        SET(EXIV2_LIBRARIES "-lexiv2 -L${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2")
-    ENDIF()
+    # Don't "Treat WChar_t As Build in Type", in order to be able to use Qts (from|to)StdWString functions
+    ADD_DEFINITIONS(/Zc:wchar_t-)
+	
+    ADD_DEFINITIONS(-DUNICODE )
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DOPENEXR_DLL -D_REENTRANT)
+    SET(FFTWF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/fftw3/libfftw3f-3.lib")
+    ADD_DEFINITIONS(-DHAVE_FFTW3F)
+	
+    SET(OPENEXR_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Half.lib")
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/Iex.lib")
+    SET(OPENEXR_LIBRARIES ${OPENEXR_LIBRARIES} "${CMAKE_SOURCE_DIR}/../DEPs/lib/OpenEXR/IlmImf.lib")
+	
+    SET(TIFF_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libtiff/libtiff.lib")
+	
+    SET(LIBRAW_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/libraw/libraw.lib")
+	
+    SET(GSL_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/gsl.lib")
+    SET(GSLCBLAS_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/gsl/cblas.lib")
+	
+    SET(EXIV2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/exiv2/exiv2.lib")
+    #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2.lib")
+    SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms.lib")
+    #SET(LCMS2_LIBRARIES "${CMAKE_SOURCE_DIR}/../DEPs/lib/lcms2/lcms2_dll.lib")
+    ADD_DEFINITIONS(-DCMS_DLL)
+    #ADD_DEFINITIONS(-DUSE_LCMS2)
+    
+    # Todo check
+    SET(LIBS ${LIBS} ${LCMS2_LIBRARIES})
+    SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LIBJPEG_INCLUDE_DIR})
+    SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LCMS2_INCLUDE_DIR})
 ELSE()
 
     # Unix & Apple part
@@ -125,6 +117,8 @@ ELSE()
     FIND_PACKAGE(fftwf REQUIRED)
     FIND_PACKAGE(GSL REQUIRED)
     FIND_PACKAGE(exiv2 REQUIRED)
+    FIND_PACKAGE(libjpeg REQUIRED)
+    FIND_PACKAGE(lcms REQUIRED)
 
 ENDIF()
 
@@ -147,6 +141,12 @@ SET(LIBS ${LIBS} ${GSL_LIBRARIES} ${GSLCBLAS_LIBRARIES})
 
 SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${EXIV2_INCLUDE_DIR} "${EXIV2_INCLUDE_DIR}/exiv2")
 SET(LIBS ${LIBS} ${EXIV2_LIBRARIES})
+
+SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${JPEGLIB_INCLUDE_DIR})
+SET(LIBS ${LIBS} ${JPEGLIB_LIBRARIES})
+
+SET(INCLUDE_DIRS ${INCLUDE_DIRS} ${LCMS_INCLUDE_DIR})
+SET(LIBS ${LIBS} ${LCMS_LIBRARIES})
 
 #OpenMP Support under Linux, Windows with MSVC & MacOS X with GCC >= 4.3
 IF(MSVC)

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Luminance HDR User Manual - Color Management</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+Luminance HDR has the ability to read the color profile embedded in your RAW or JPEG files, convert the colors to the internal sRGB color space for processing with the program, use the provided monitor profile to show the result in your monitor, do soft proof and gamut check using the printer profile provided.
+To begin with the color management support in Luminance HDR click on <em>Tools->Preferences</em> then select <a href="prefs_cms.html">Color Management</a>.
+Select a profile for the monitor, printer and camera (or set the option to <strong>Built-in</strong> to use the embedded profile).
+After tonemapping an HDR, the resulting image is displayed on the monitor with the proper colors, you can then click on the <strong>Soft Proofing</strong> button on the toolbar to see how the image will appear once printed on your printer. Clicking on the <strong>Gamut Check</strong> button will show in blue the colors that are out of gamut, that is cannot be reproduced by your printer.
+If you choose to save the LDR in TIFF or JPEG format the standard sRGB profile is automatically embedded to the file for further processing with another color managed application.
+<br>
+<br>
+<br>
+<img src="images/color_management.png" width="1366" height="740" />
+
+</body>
+</html>

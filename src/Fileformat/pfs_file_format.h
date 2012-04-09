@@ -31,6 +31,8 @@
 #include "Fileformat/pfstiff.h"
 #include "Fileformat/pfsoutldrimage.h"
 #include "Fileformat/pfsinraw.h"
+#include "Fileformat/jpegwriter.h"
+#include "Fileformat/jpegreader.h"
 
 // Forward declaration
 namespace pfs {

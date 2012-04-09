@@ -69,8 +69,9 @@ void HdrInputLoader::run() {
 		//now go and fill the list of image data (real payload)
 		// check for extension: if JPEG:
 		if (extension.startsWith("JP")) {
-			QImage *newimage=new QImage(qfi.filePath());
-			if (newimage->isNull())
+			JpegReader reader(qfi.filePath());
+			QImage *newimage = reader.readJpegIntoQImage();
+			if (newimage == NULL)
 				throw "Failed Loading Image";
 
 			conditionallyRotateImage(qfi, &newimage);
@@ -81,12 +82,12 @@ void HdrInputLoader::run() {
 		}
 		//if tiff
 		else if(extension.startsWith("TIF")) {
-                        TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
+			TiffReader reader(QFile::encodeName(qfi.filePath()), QFile::encodeName(luminance_options.getTempDir()), true);
             connect(&reader, SIGNAL(maximumValue(int)), this, SIGNAL(maximumValue(int)));
             connect(&reader, SIGNAL(nextstep(int)), this, SIGNAL(nextstep(int)));
 			//if 8bit ldr tiff
 			if (reader.is8bitTiff()) {
-				QImage *newimage=reader.readIntoQImage();
+				QImage *newimage = reader.readIntoQImage();
 				if (newimage->isNull())
 					throw "Failed Loading Image";
 				
@@ -113,11 +114,11 @@ void HdrInputLoader::run() {
 			}
 		//not a jpeg of tiff file, so it's raw input (hdr)
 		} else {
-                    pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
+			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
 			if (frame == NULL)
 				throw "Failed Loading Image";
 
-                        QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
+			QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
 			emit mdrReady(frame, image_idx, expotime, outfname);
 		}
 	}

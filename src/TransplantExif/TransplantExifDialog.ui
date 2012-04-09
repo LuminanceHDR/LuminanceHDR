@@ -14,7 +14,7 @@
    <string>Copy Exif data</string>
   </property>
   <property name="windowIcon" >
-   <iconset resource="../icons.qrc" >
+   <iconset resource="../../icons.qrc" >
     <normaloff>:/new/prefix1/images/luminance.png</normaloff>:/new/prefix1/images/luminance.png</iconset>
   </property>
   <layout class="QVBoxLayout" >
@@ -59,7 +59,7 @@
           <string>Move up selected file(s)</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -73,7 +73,7 @@
           <string>Move down selected file(s)</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -87,7 +87,7 @@
           <string>Remove selected file(s) from the list</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -101,7 +101,7 @@
           <string>Append files to the list</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -225,7 +225,7 @@ p, li { white-space: pre-wrap; }
           <string>Move up selected file(s)</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -239,7 +239,7 @@ p, li { white-space: pre-wrap; }
           <string>Move down selected file(s)</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -253,7 +253,7 @@ p, li { white-space: pre-wrap; }
           <string>Remove selected file(s) from the list</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/remove.png</normaloff>:/new/prefix1/images/remove.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -267,7 +267,7 @@ p, li { white-space: pre-wrap; }
           <string>Append files to the list</string>
          </property>
          <property name="icon" >
-          <iconset resource="../icons.qrc" >
+          <iconset resource="../../icons.qrc" >
            <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
          </property>
          <property name="toolButtonStyle" >
@@ -396,7 +396,7 @@ p, li { white-space: pre-wrap; }
            <string>Clear filter text</string>
           </property>
           <property name="icon" >
-           <iconset resource="../icons.qrc" >
+           <iconset resource="../../icons.qrc" >
             <normaloff>:/new/prefix1/images/fileclose.png</normaloff>:/new/prefix1/images/fileclose.png</iconset>
           </property>
          </widget>
@@ -472,7 +472,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc" />
+  <include location="../../icons.qrc" />
  </resources>
  <connections>
   <connection>

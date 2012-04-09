@@ -713,7 +713,6 @@ void TonemappingPanel::fromGui2Txt(QString destination)
     out << "# Please edit this file by hand only if you know what you're doing, in any case never change the left hand side text (i.e. the part before the ``='')." << endl;
     out << "TMOSETTINGSVERSION=" << TMOSETTINGSVERSION << endl;
     out << "XSIZE=" << sizes[m_Ui->sizeComboBox->currentIndex()] << endl;
-    out << "QUALITY=" << LuminanceOptions().getBatchTmDefaultOutputQuality() << endl;
 
     QWidget *current_page = m_Ui->stackedWidget_operators->currentWidget();
     if (current_page == m_Ui->page_mantiuk06)
@@ -1147,7 +1146,7 @@ void TonemappingPanel::loadParameters()
 	SavedParametersDialog dialog(currentTmoOperator);
 	if (dialog.exec())
 	{
-		QSqlTableModel *model = dialog.getModel();
+		QSqlQueryModel *model = dialog.getModel();
 		if (model->rowCount() == 0)
 			return;
 		int selectedRow = dialog.getCurrentIndex().row();
@@ -1349,7 +1348,7 @@ void TonemappingPanel::loadComments()
     SavedParametersDialog dialog(this);
 	if (dialog.exec())
 	{
-		QSqlTableModel *model = dialog.getModel();
+		QSqlQueryModel *model = dialog.getModel();
 		int selectedRow = dialog.getCurrentIndex().row();
 		QString comment, tmOperator;
 		comment = model->record(selectedRow).value("comment").toString();
@@ -1470,9 +1469,9 @@ void TonemappingPanel::loadComments()
                 m_Ui->rodSlider->setValue(query.value(2).toFloat());
                 m_Ui->roddsb->setValue(query.value(2).toFloat());
                 m_Ui->pattalocal->setChecked(query.value(3).toBool());
-                m_Ui->autoYcheckbox->setChecked(query.value(3).toFloat());
-                m_Ui->pregammaSlider->setValue(query.value(4).toFloat());
-                m_Ui->pregammadsb->setValue(query.value(4).toFloat());
+                m_Ui->autoYcheckbox->setChecked(query.value(4).toBool());
+                m_Ui->pregammaSlider->setValue(query.value(5).toFloat());
+                m_Ui->pregammadsb->setValue(query.value(5).toFloat());
 			}
 		}
 		else if (tmOperator == "reinhard02")

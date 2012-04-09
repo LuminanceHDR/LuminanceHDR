@@ -45,6 +45,9 @@
 #define fmin min
 #define fminf min
 #pragma warning (disable:4996)
-#define snprintf sprintf_s
+
+#ifndef snprintf
+	#define snprintf sprintf_s
+#endif
 
 #endif

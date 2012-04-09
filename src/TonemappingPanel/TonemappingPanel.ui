@@ -2886,7 +2886,7 @@ Luminace Level</string>
              <string>Restore</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2915,7 +2915,7 @@ Luminace Level</string>
              <string>Previous</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/edit-undo.png</normaloff>:/new/prefix1/images/edit-undo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2941,7 +2941,7 @@ Luminace Level</string>
              <string>Next</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/edit-redo.png</normaloff>:/new/prefix1/images/edit-redo.png</iconset>
             </property>
             <property name="iconSize">
@@ -2998,7 +2998,7 @@ Luminace Level</string>
              <string>&amp;Save to File</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
             </property>
            </widget>
@@ -3021,7 +3021,7 @@ Luminace Level</string>
              <string>&amp;Load from File</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
            </widget>
@@ -3035,7 +3035,7 @@ Luminace Level</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
             </property>
            </widget>
@@ -3049,7 +3049,7 @@ Luminace Level</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
            </widget>
@@ -3063,7 +3063,7 @@ Luminace Level</string>
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../icons.qrc">
+             <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
             </property>
            </widget>
@@ -3244,7 +3244,7 @@ Luminace Level</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../icons.qrc">
+               <iconset resource="../../icons.qrc">
                 <normaloff>:/new/prefix1/images/undo.png</normaloff>:/new/prefix1/images/undo.png</iconset>
               </property>
               <property name="iconSize">
@@ -3311,7 +3311,7 @@ Luminace Level</string>
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="icon">
-               <iconset resource="../icons.qrc">
+               <iconset resource="../../icons.qrc">
                 <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
               </property>
               <property name="iconSize">
@@ -3347,7 +3347,7 @@ Luminace Level</string>
   </layout>
  </widget>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../../icons.qrc"/>
  </resources>
  <connections>
   <connection>

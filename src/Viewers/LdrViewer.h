@@ -30,6 +30,12 @@
 
 #include <QLabel>
 
+#ifdef USE_LCMS2
+#	include <lcms2.h>
+#else
+#	include <lcms.h>
+#endif
+
 #include "GenericViewer.h"
 
 // Forward declaration
@@ -62,11 +68,15 @@ public:
     //! \brief returns min value of the handled frame
     float getMinLuminanceValue();
 
+	void doSoftProofing(bool);
+	void undoSoftProofing();
+
 protected Q_SLOTS:
     virtual void updatePixmap();
 
 protected:
 	virtual void retranslateUi();
+	QImage *doCMSTransform(QImage *, bool, bool);
 
 private:
     QString caption; // ,postfix,exif_comment;

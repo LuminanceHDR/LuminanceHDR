@@ -30,7 +30,7 @@
 #define LUMINANCEORGANIZATION "Luminance"
 #define LUMINANCEAPPLICATION "Luminance"
 
-#define LUMINANCEVERSION "2.2.1"
+#define LUMINANCEVERSION "2.3.0"
 #define TMOSETTINGSVERSION "0.6"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
@@ -92,6 +92,11 @@
 #define KEY_USE_NOISE "Raw_Conversion_Options/use_noise"
 #define KEY_USE_CHROMA "Raw_Conversion_Options/use_chroma"
 
+#define KEY_COLOR_CAMERA_PROFILE "Color_Management_Options/camera_profile"
+#define KEY_COLOR_CAMERA_PROFILE_FILENAME "Color_Management_Options/camera_profile_filename"
+#define KEY_COLOR_MONITOR_PROFILE_FILENAME "Color_Management_Options/monitor_profile_filename"
+#define KEY_COLOR_PRINTER_PROFILE_FILENAME "Color_Management_Options/printer_profile_filename"
+
 //--------------------PATHS & co. ----------------
 #define KEY_RECENT_PATH_LOAD_SAVE_HDR "Recent_path_loadsave_hdr"
 #define KEY_RECENT_FILES "Recent_files_list"
@@ -110,6 +115,5 @@
 #define KEY_BATCH_TM_PATH_OUTPUT "batch_tm/path_ldr_output"
 #define KEY_BATCH_TM_LDR_FORMAT "batch_tm/Batch_LDR_Format"
 #define KEY_BATCH_TM_NUM_THREADS "batch_tm/Num_Batch_Threads"
-#define KEY_BATCH_TM_DEFAULT_OUTPUT_QUALITY "batch_tm/default_output_quality"
 
 #endif

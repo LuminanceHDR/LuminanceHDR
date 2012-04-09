@@ -55,6 +55,12 @@
 #define KEY_BLUE_TOOLBUTTON "preference_dialog/blue_toolButton"
 #define KEY_GREEN_TOOLBUTTON "preference_dialog/green_toolButton"
 
+#ifdef WIN32
+	#define ICC_PATH "C:\\WINDOWS\\system32\\spool\\drivers\\color"
+#else
+	#define ICC_PATH "/usr/share/color/icc"
+#endif
+
 namespace
 {
 inline double pos2value(int pos, int minpos, int maxpos, double minv, double maxv)
@@ -69,7 +75,7 @@ inline int value2pos(double value, int minpos, int maxpos, double minv, double m
     return (int) ((maxpos - minpos)*y) + minpos;
 }
 
-inline void change_color_of(QPushButton& button, const QColor& newcolor)
+void change_color_of(QPushButton& button, const QColor& newcolor)
 {
     if (newcolor.isValid())
     {
@@ -125,30 +131,17 @@ QStringList sanitizeAISparams(const QString& input_parameter_string)
 int mappingBatchTmQStringToInt(const QString& string)
 {
     if (string == "JPEG")
-    {
         return 0;
-    }
-    else if (string=="PNG")
-    {
+    else if (string == "PNG")
         return 1;
-    }
-    else if (string=="PPM")
-    {
+    else if (string == "PPM")
         return 2;
-    }
-    else if (string=="PBM")
-    {
+    else if (string == "PBM")
         return 3;
-    }
-    else if (string=="BMP")
-    {
+    else if (string == "BMP")
         return 4;
-    }
-    else if (string=="TIFF")
-    {
+    else if (string == "TIFF")
         return 5;
-    }
-
     return 0;   // I assume JPEG... at least it doesn't crash! :|
 }
 
@@ -194,55 +187,20 @@ PreferencesDialog::PreferencesDialog(QWidget *p):
 
     from_options_to_gui(); //update the gui in order to show the options
 
-    connect(m_Ui->negativeColorButton,SIGNAL(clicked()),this,SLOT(negative_clicked()));
-    connect(m_Ui->ifnanColorButton,SIGNAL(clicked()),this,SLOT(infnan_clicked()));
-    connect(m_Ui->okButton,SIGNAL(clicked()),this,SLOT(ok_clicked()));
-    connect(m_Ui->cancelButton,SIGNAL(clicked()),this,SLOT(cancel_clicked()));
-    connect(m_Ui->chooseCachePathButton,SIGNAL(clicked()),this,SLOT(updateLineEditString()));
+    toolButtonMapper = new QSignalMapper(this);
+    connect(toolButtonMapper, SIGNAL(mapped(int)), this, SLOT(toolButton_clicked(int)));
 
-    connect(m_Ui->batchLdrFormatComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(batchTmFormatSelector(int)));
+    QObject* tabEntries[] = {m_Ui->toolButtonInterface, m_Ui->toolButtonHDR, m_Ui->toolButtonTM,
+    	m_Ui->toolButtonRAW, m_Ui->toolButtonCMS, m_Ui->toolButtonExtTool
+    };
+    for (int i = 0; i < 6; i++) {
+    	toolButtonMapper->setMapping(tabEntries[i], i);
+    	connect(tabEntries[i], SIGNAL(clicked()), toolButtonMapper, SLOT(map()));
+    }
+}
 
-    connect(m_Ui->user_qual_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(user_qual_comboBox_currentIndexChanged(int)));
-    connect(m_Ui->med_passes_spinBox,SIGNAL(valueChanged(int)),this,SLOT(med_passes_spinBox_valueChanged(int)));
-    connect(m_Ui->wb_method_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(wb_method_comboBox_currentIndexChanged(int)));
-    connect(m_Ui->TK_spinBox,SIGNAL(valueChanged(int)),this,SLOT(TK_spinBox_valueChanged(int)));
-    connect(m_Ui->highlights_comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(highlights_comboBox_currentIndexChanged(int)));
-    connect(m_Ui->level_spinBox,SIGNAL(valueChanged(int)),this,SLOT(level_spinBox_valueChanged(int)));
-    connect(m_Ui->user_black_spinBox,SIGNAL(valueChanged(int)),this,SLOT(user_black_spinBox_valueChanged(int)));
-    connect(m_Ui->user_sat_spinBox,SIGNAL(valueChanged(int)),this,SLOT(user_sat_spinBox_valueChanged(int)));
-    connect(m_Ui->threshold_spinBox,SIGNAL(valueChanged(int)),this,SLOT(threshold_spinBox_valueChanged(int)));
-    connect(m_Ui->use_black_CB,SIGNAL(stateChanged(int)),this,SLOT(use_black_CB_stateChanged(int)));
-    connect(m_Ui->use_sat_CB,SIGNAL(stateChanged(int)),this,SLOT(use_sat_CB_stateChanged(int)));
-    connect(m_Ui->use_noise_CB,SIGNAL(stateChanged(int)),this,SLOT(use_noise_CB_stateChanged(int)));
-    connect(m_Ui->use_chroma_CB,SIGNAL(stateChanged(int)),this,SLOT(use_chroma_CB_stateChanged(int)));
-    connect(m_Ui->brightness_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(brightness_horizontalSlider_valueChanged(int)));
-    connect(m_Ui->brightness_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(brightness_doubleSpinBox_valueChanged(double)));
-    connect(m_Ui->red_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(red_horizontalSlider_valueChanged(int)));
-    connect(m_Ui->red_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(red_doubleSpinBox_valueChanged(double)));
-    connect(m_Ui->blue_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(blue_horizontalSlider_valueChanged(int)));
-    connect(m_Ui->blue_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(blue_doubleSpinBox_valueChanged(double)));
-    connect(m_Ui->green_horizontalSlider,SIGNAL(valueChanged(int)),this,SLOT(green_horizontalSlider_valueChanged(int)));
-    connect(m_Ui->green_doubleSpinBox,SIGNAL(valueChanged(double)),this,SLOT(green_doubleSpinBox_valueChanged(double)));
-	
-    connect(m_Ui->user_qual_toolButton,SIGNAL(clicked()),this,SLOT(user_qual_toolButton_clicked()));
-    connect(m_Ui->med_passes_toolButton,SIGNAL(clicked()),this,SLOT(med_passes_toolButton_clicked()));
-    connect(m_Ui->wb_method_toolButton,SIGNAL(clicked()),this,SLOT(wb_method_toolButton_clicked()));
-    connect(m_Ui->TK_toolButton,SIGNAL(clicked()),this,SLOT(TK_toolButton_clicked()));
-    connect(m_Ui->highlights_toolButton,SIGNAL(clicked()),this,SLOT(highlights_toolButton_clicked()));
-    connect(m_Ui->level_toolButton,SIGNAL(clicked()),this,SLOT(level_toolButton_clicked()));
-    connect(m_Ui->brightness_toolButton,SIGNAL(clicked()),this,SLOT(brightness_toolButton_clicked()));
-    connect(m_Ui->user_black_toolButton,SIGNAL(clicked()),this,SLOT(user_black_toolButton_clicked()));
-    connect(m_Ui->user_sat_toolButton,SIGNAL(clicked()),this,SLOT(user_sat_toolButton_clicked()));
-    connect(m_Ui->threshold_toolButton,SIGNAL(clicked()),this,SLOT(threshold_toolButton_clicked()));
-    connect(m_Ui->red_toolButton,SIGNAL(clicked()),this,SLOT(red_toolButton_clicked()));
-    connect(m_Ui->blue_toolButton,SIGNAL(clicked()),this,SLOT(blue_toolButton_clicked()));
-    connect(m_Ui->green_toolButton,SIGNAL(clicked()),this,SLOT(green_toolButton_clicked()));
-
-    connect(m_Ui->toolButtonInterface,SIGNAL(clicked()),this,SLOT(toolButtonInterface_clicked()));
-    connect(m_Ui->toolButtonHDR,SIGNAL(clicked()),this,SLOT(toolButtonHDR_clicked()));
-    connect(m_Ui->toolButtonTM,SIGNAL(clicked()),this,SLOT(toolButtonTM_clicked()));
-    connect(m_Ui->toolButtonRAW,SIGNAL(clicked()),this,SLOT(toolButtonRAW_clicked()));
-    connect(m_Ui->toolButtonExtTool,SIGNAL(clicked()),this,SLOT(toolButtonExtTool_clicked()));
+PreferencesDialog::~PreferencesDialog() {
+	delete toolButtonMapper;
 }
 
 void PreferencesDialog::changeEvent(QEvent *event)
@@ -252,19 +210,19 @@ void PreferencesDialog::changeEvent(QEvent *event)
 	QWidget::changeEvent(event);
 }
 
-void PreferencesDialog::negative_clicked()
+void PreferencesDialog::on_negativeColorButton_clicked()
 {
     negcolor = QColorDialog::getColor(negcolor, this);
     change_color_of(*m_Ui->negativeColorButton, negcolor);
 }
 
-void PreferencesDialog::infnan_clicked()
+void PreferencesDialog::on_ifnanColorButton_clicked()
 {
     infnancolor = QColorDialog::getColor(infnancolor, this);
     change_color_of(*m_Ui->ifnanColorButton, infnancolor);
 }
 
-void PreferencesDialog::ok_clicked()
+void PreferencesDialog::on_okButton_clicked()
 {
     LuminanceOptions luminance_options;
 
@@ -286,7 +244,6 @@ void PreferencesDialog::ok_clicked()
     // --- Batch TM
     luminance_options.setBatchTmLdrFormat( m_Ui->batchLdrFormatComboBox->currentText() );
     luminance_options.setBatchTmNumThreads( m_Ui->numThreadspinBox->value() );
-    luminance_options.setBatchTmDefaultOutputQuality( m_Ui->batchTmOutputQualitySlider->value() );
 
     // --- Other Parameters
     luminance_options.setAlignImageStackOptions( sanitizeAISparams( m_Ui->aisParamsLineEdit->text() ) );
@@ -314,6 +271,13 @@ void PreferencesDialog::ok_clicked()
     luminance_options.setRawAber0( m_Ui->red_doubleSpinBox->value() );
     luminance_options.setRawAber2( m_Ui->blue_doubleSpinBox->value() );
 
+	// --- Color Management
+	luminance_options.setCameraProfile( m_Ui->camera_comboBox->currentIndex() );
+	if ( m_Ui->camera_comboBox->currentIndex() == 2) // Custom profile
+		luminance_options.setCameraProfileFileName( m_Ui->camera_lineEdit->text() );
+	luminance_options.setMonitorProfileFileName( m_Ui->monitor_lineEdit->text() );
+	luminance_options.setPrinterProfileFileName( m_Ui->printer_lineEdit->text() );
+
     // ---- temporary... this rubbish must go away!
     luminance_options.setValue(KEY_USER_QUAL_TOOLBUTTON, m_Ui->user_qual_toolButton->isEnabled());
     luminance_options.setValue(KEY_MED_PASSES_TOOLBUTTON, m_Ui->med_passes_toolButton->isEnabled());
@@ -332,207 +296,103 @@ void PreferencesDialog::ok_clicked()
     accept();
 }
 
-void PreferencesDialog::cancel_clicked()
+void PreferencesDialog::on_cancelButton_clicked()
 {
 	reject();
 }
 
-void PreferencesDialog::batchTmFormatSelector(int index)
+void PreferencesDialog::on_med_passes_spinBox_valueChanged(int value)
 {
-    switch (index)
-    {
-    case 0: // JPEG
-        m_Ui->batchTmOutputQualitySlider->setEnabled(true);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(true);
-        break;
-    case 1: // PNG
-        m_Ui->batchTmOutputQualitySlider->setEnabled(true);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(true);
-        break;
-    case 2: // PPM
-        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
-        break;
-    case 3: // PBM
-        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
-        break;
-    case 4: // BMP
-        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
-        break;
-    case 5:
-        m_Ui->batchTmOutputQualitySlider->setEnabled(false);
-        m_Ui->batchTmOutputQualitySpinBox->setEnabled(false);
-        break;
-    default:
-        break;
-    }
+    m_Ui->med_passes_toolButton->setEnabled(value != 0);
 }
 
-void PreferencesDialog::user_qual_comboBox_currentIndexChanged(int i)
+void PreferencesDialog::on_wb_method_comboBox_currentIndexChanged(int i)
 {
-	if (i == 0)
-        m_Ui->user_qual_toolButton->setEnabled(false);
-	else
-        m_Ui->user_qual_toolButton->setEnabled(true);
+	bool isManualWb = i == 3;
+    m_Ui->TK_label->setEnabled(isManualWb);
+    m_Ui->TK_horizontalSlider->setEnabled(isManualWb);
+    m_Ui->TK_spinBox->setEnabled(isManualWb);
+    m_Ui->green_label->setEnabled(isManualWb);
+    m_Ui->green_horizontalSlider->setEnabled(isManualWb);
+    m_Ui->green_doubleSpinBox->setEnabled(isManualWb);
+
+    m_Ui->wb_method_toolButton->setEnabled(i != 1);
 }
 
-void PreferencesDialog::med_passes_spinBox_valueChanged(int value)
+void PreferencesDialog::on_TK_spinBox_valueChanged(int value)
 {
-	if (value == 0)
-        m_Ui->med_passes_toolButton->setEnabled(false);
-	else
-        m_Ui->med_passes_toolButton->setEnabled(true);
+    m_Ui->TK_toolButton->setEnabled(value != false);
 }
 
-void PreferencesDialog::wb_method_comboBox_currentIndexChanged(int i)
+void PreferencesDialog::on_highlights_comboBox_currentIndexChanged(int i)
 {
-    if (i == 3)	// Manual method
-    {
-        m_Ui->TK_label->setEnabled(true);
-        m_Ui->TK_horizontalSlider->setEnabled(true);
-        m_Ui->TK_spinBox->setEnabled(true);
-        m_Ui->green_label->setEnabled(true);
-        m_Ui->green_horizontalSlider->setEnabled(true);
-        m_Ui->green_doubleSpinBox->setEnabled(true);
-    }
-    else {
-        m_Ui->TK_label->setEnabled(false);
-        m_Ui->TK_horizontalSlider->setEnabled(false);
-        m_Ui->TK_spinBox->setEnabled(false);
-        m_Ui->green_label->setEnabled(false);
-        m_Ui->green_horizontalSlider->setEnabled(false);
-        m_Ui->green_doubleSpinBox->setEnabled(false);
-    }
-    if (i == 1)
-        m_Ui->wb_method_toolButton->setEnabled(false);
-    else
-        m_Ui->wb_method_toolButton->setEnabled(true);
+    m_Ui->highlights_toolButton->setEnabled(i != 0);
 }
 
-void PreferencesDialog::TK_spinBox_valueChanged(int value)
+void PreferencesDialog::on_level_spinBox_valueChanged(int value)
 {
-    if (value == 6500)
-        m_Ui->TK_toolButton->setEnabled(false);
-    else
-        m_Ui->TK_toolButton->setEnabled(true);
+    m_Ui->level_toolButton->setEnabled(value != 0);
 }
 
-void PreferencesDialog::highlights_comboBox_currentIndexChanged(int i)
+void PreferencesDialog::on_user_black_spinBox_valueChanged(int value)
 {
-	if (i == 0)
-        m_Ui->highlights_toolButton->setEnabled(false);
-	else
-        m_Ui->highlights_toolButton->setEnabled(true);
+    m_Ui->user_black_toolButton->setEnabled(value != 0);
 }
 
-void PreferencesDialog::level_spinBox_valueChanged(int value)
+void PreferencesDialog::on_user_sat_spinBox_valueChanged(int value)
 {
-	if (value == 0)
-        m_Ui->level_toolButton->setEnabled(false);
-	else
-        m_Ui->level_toolButton->setEnabled(true);
+	m_Ui->user_sat_toolButton->setEnabled(value != 20000);
 }
 
-void PreferencesDialog::user_black_spinBox_valueChanged(int value)
+void PreferencesDialog::on_threshold_spinBox_valueChanged(int value)
 {
-	if (value == 0)
-        m_Ui->user_black_toolButton->setEnabled(false);
-	else
-        m_Ui->user_black_toolButton->setEnabled(true);
+    m_Ui->threshold_toolButton->setEnabled(value != 100);
 }
 
-void PreferencesDialog::user_sat_spinBox_valueChanged(int value)
+void PreferencesDialog::on_use_black_CB_stateChanged(int)
 {
-	if (value == 20000)
-        m_Ui->user_sat_toolButton->setEnabled(false);
-	else
-        m_Ui->user_sat_toolButton->setEnabled(true);
+	bool checked = m_Ui->use_black_CB->isChecked();
+    m_Ui->user_black_horizontalSlider->setEnabled(checked);
+    m_Ui->user_black_spinBox->setEnabled(checked);
 }
 
-void PreferencesDialog::threshold_spinBox_valueChanged(int value)
+void PreferencesDialog::on_use_sat_CB_stateChanged(int) {
+	bool checked = m_Ui->use_sat_CB->isChecked();
+	m_Ui->user_sat_horizontalSlider->setEnabled(checked);
+	m_Ui->user_sat_spinBox->setEnabled(checked);
+}
+
+void PreferencesDialog::on_use_noise_CB_stateChanged(int)
 {
-	if (value == 100)
-        m_Ui->threshold_toolButton->setEnabled(false);
-	else
-        m_Ui->threshold_toolButton->setEnabled(true);
+	bool checked = m_Ui->use_noise_CB->isChecked();
+	m_Ui->threshold_label->setEnabled(checked);
+	m_Ui->threshold_horizontalSlider->setEnabled(checked);
+	m_Ui->threshold_spinBox->setEnabled(checked);
 }
 
-void PreferencesDialog::use_black_CB_stateChanged(int)
+void PreferencesDialog::on_use_chroma_CB_stateChanged(int)
 {
-    if (m_Ui->use_black_CB->isChecked())
-    {
-        m_Ui->user_black_horizontalSlider->setEnabled(true);
-        m_Ui->user_black_spinBox->setEnabled(true);
-	}
-	else {
-        m_Ui->user_black_horizontalSlider->setEnabled(false);
-        m_Ui->user_black_spinBox->setEnabled(false);
-	}
+	bool checked = m_Ui->use_chroma_CB->isChecked();
+	m_Ui->red_label->setEnabled(checked);
+	m_Ui->red_horizontalSlider->setEnabled(checked);
+	m_Ui->red_doubleSpinBox->setEnabled(checked);
+	m_Ui->blue_label->setEnabled(checked);
+	m_Ui->blue_horizontalSlider->setEnabled(checked);
+	m_Ui->blue_doubleSpinBox->setEnabled(checked);
 }
 
-void PreferencesDialog::use_sat_CB_stateChanged(int) {
-    if (m_Ui->use_sat_CB->isChecked()) {
-        m_Ui->user_sat_horizontalSlider->setEnabled(true);
-        m_Ui->user_sat_spinBox->setEnabled(true);
-	}
-	else {
-        m_Ui->user_sat_horizontalSlider->setEnabled(false);
-        m_Ui->user_sat_spinBox->setEnabled(false);
-	}
-}
-
-void PreferencesDialog::use_noise_CB_stateChanged(int)
-{
-    if (m_Ui->use_noise_CB->isChecked()) {
-        m_Ui->threshold_label->setEnabled(true);
-        m_Ui->threshold_horizontalSlider->setEnabled(true);
-        m_Ui->threshold_spinBox->setEnabled(true);
-	}
-	else {
-        m_Ui->threshold_label->setEnabled(false);
-        m_Ui->threshold_horizontalSlider->setEnabled(false);
-        m_Ui->threshold_spinBox->setEnabled(false);
-	}
-}
-
-void PreferencesDialog::use_chroma_CB_stateChanged(int)
-{
-    if (m_Ui->use_chroma_CB->isChecked())
-    {
-        m_Ui->red_label->setEnabled(true);
-        m_Ui->red_horizontalSlider->setEnabled(true);
-        m_Ui->red_doubleSpinBox->setEnabled(true);
-        m_Ui->blue_label->setEnabled(true);
-        m_Ui->blue_horizontalSlider->setEnabled(true);
-        m_Ui->blue_doubleSpinBox->setEnabled(true);
-	}
-	else {
-        m_Ui->red_label->setEnabled(false);
-        m_Ui->red_horizontalSlider->setEnabled(false);
-        m_Ui->red_doubleSpinBox->setEnabled(false);
-        m_Ui->blue_label->setEnabled(false);
-        m_Ui->blue_horizontalSlider->setEnabled(false);
-        m_Ui->blue_doubleSpinBox->setEnabled(false);
-	}
-}
-
-void PreferencesDialog::brightness_horizontalSlider_valueChanged(int value)
+void PreferencesDialog::on_brightness_horizontalSlider_valueChanged(int value)
 {
     m_Ui->brightness_doubleSpinBox->setValue(((double) value)/m_Ui->brightness_doubleSpinBox->maximum());
 }
 
-void PreferencesDialog::brightness_doubleSpinBox_valueChanged(double value)
+void PreferencesDialog::on_brightness_doubleSpinBox_valueChanged(double value)
 {
     m_Ui->brightness_horizontalSlider->setValue((int) (value*m_Ui->brightness_doubleSpinBox->maximum()));
-	if (fabs(value - 1.0) < 1e-4)
-        m_Ui->brightness_toolButton->setEnabled(false);
-	else
-        m_Ui->brightness_toolButton->setEnabled(true);
+	m_Ui->brightness_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
-void PreferencesDialog::red_horizontalSlider_valueChanged(int pos)
+void PreferencesDialog::on_red_horizontalSlider_valueChanged(int pos)
 {
     int minpos = m_Ui->red_horizontalSlider->minimum();
     int maxpos = m_Ui->red_horizontalSlider->maximum();
@@ -542,7 +402,7 @@ void PreferencesDialog::red_horizontalSlider_valueChanged(int pos)
     m_Ui->red_doubleSpinBox->setValue( pos2value(pos, minpos, maxpos, minv, maxv) );
 }
 
-void PreferencesDialog::red_doubleSpinBox_valueChanged(double value)
+void PreferencesDialog::on_red_doubleSpinBox_valueChanged(double value)
 {
     int minpos = m_Ui->red_horizontalSlider->minimum();
     int maxpos = m_Ui->red_horizontalSlider->maximum();
@@ -550,13 +410,10 @@ void PreferencesDialog::red_doubleSpinBox_valueChanged(double value)
     double maxv = m_Ui->red_doubleSpinBox->maximum();
 
     m_Ui->red_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
-	if (fabs(value - 1.0) < 1e-4)
-        m_Ui->red_toolButton->setEnabled(false);
-	else
-        m_Ui->red_toolButton->setEnabled(true);
+    m_Ui->red_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
-void PreferencesDialog::blue_horizontalSlider_valueChanged(int pos)
+void PreferencesDialog::on_blue_horizontalSlider_valueChanged(int pos)
 {
     int minpos = m_Ui->blue_horizontalSlider->minimum();
     int maxpos = m_Ui->blue_horizontalSlider->maximum();
@@ -566,7 +423,7 @@ void PreferencesDialog::blue_horizontalSlider_valueChanged(int pos)
     m_Ui->blue_doubleSpinBox->setValue( pos2value(pos, minpos, maxpos, minv, maxv) );
 }
 
-void PreferencesDialog::blue_doubleSpinBox_valueChanged(double value)
+void PreferencesDialog::on_blue_doubleSpinBox_valueChanged(double value)
 {
     int minpos = m_Ui->blue_horizontalSlider->minimum();
     int maxpos = m_Ui->blue_horizontalSlider->maximum();
@@ -574,13 +431,10 @@ void PreferencesDialog::blue_doubleSpinBox_valueChanged(double value)
     double maxv = m_Ui->blue_doubleSpinBox->maximum();
 
     m_Ui->blue_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
-	if (fabs(value - 1.0) < 1e-4)
-        m_Ui->blue_toolButton->setEnabled(false);
-	else
-        m_Ui->blue_toolButton->setEnabled(true);
+	m_Ui->blue_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
-void PreferencesDialog::green_horizontalSlider_valueChanged( int pos)
+void PreferencesDialog::on_green_horizontalSlider_valueChanged( int pos)
 {
     int minpos = m_Ui->green_horizontalSlider->minimum();
     int maxpos = m_Ui->green_horizontalSlider->maximum();
@@ -590,7 +444,7 @@ void PreferencesDialog::green_horizontalSlider_valueChanged( int pos)
     m_Ui->green_doubleSpinBox->setValue( pos2value(pos, minpos, maxpos, minv, maxv) );
 }
 
-void PreferencesDialog::green_doubleSpinBox_valueChanged( double value)
+void PreferencesDialog::on_green_doubleSpinBox_valueChanged( double value)
 {
     int minpos = m_Ui->green_horizontalSlider->minimum();
     int maxpos = m_Ui->green_horizontalSlider->maximum();
@@ -598,73 +452,64 @@ void PreferencesDialog::green_doubleSpinBox_valueChanged( double value)
     double maxv = m_Ui->green_doubleSpinBox->maximum();
 
     m_Ui->blue_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
-	if (fabs(value - 1.0) < 1e-4)
-        m_Ui->green_toolButton->setEnabled(false);
-	else
-        m_Ui->green_toolButton->setEnabled(true);
+	m_Ui->green_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
 }
 
-void PreferencesDialog::user_qual_toolButton_clicked()
-{
-    m_Ui->user_qual_comboBox->setCurrentIndex(0);
-    m_Ui->user_qual_toolButton->setEnabled(false);
-}
-
-void PreferencesDialog::med_passes_toolButton_clicked()
+void PreferencesDialog::on_med_passes_toolButton_clicked()
 {
     m_Ui->med_passes_horizontalSlider->setValue(0);
     m_Ui->med_passes_spinBox->setValue(0);
     m_Ui->med_passes_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::wb_method_toolButton_clicked()
+void PreferencesDialog::on_wb_method_toolButton_clicked()
 {
     m_Ui->wb_method_comboBox->setCurrentIndex(1);
     m_Ui->wb_method_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::TK_toolButton_clicked()
+void PreferencesDialog::on_TK_toolButton_clicked()
 {
     m_Ui->TK_horizontalSlider->setValue(6500);
     m_Ui->TK_spinBox->setValue(6500);
     m_Ui->TK_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::highlights_toolButton_clicked()
+void PreferencesDialog::on_highlights_toolButton_clicked()
 {
     m_Ui->highlights_comboBox->setCurrentIndex(0);
     m_Ui->highlights_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::level_toolButton_clicked()
+void PreferencesDialog::on_level_toolButton_clicked()
 {
     m_Ui->level_horizontalSlider->setValue(0);
     m_Ui->level_spinBox->setValue(0);
     m_Ui->level_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::brightness_toolButton_clicked()
+void PreferencesDialog::on_brightness_toolButton_clicked()
 {
     m_Ui->brightness_horizontalSlider->setValue(10);
     m_Ui->brightness_doubleSpinBox->setValue(1.0);
     m_Ui->brightness_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::user_black_toolButton_clicked()
+void PreferencesDialog::on_user_black_toolButton_clicked()
 {
     m_Ui->user_black_horizontalSlider->setValue(0);
     m_Ui->user_black_spinBox->setValue(0);
     m_Ui->user_black_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::user_sat_toolButton_clicked()
+void PreferencesDialog::on_user_sat_toolButton_clicked()
 {
     m_Ui->user_sat_horizontalSlider->setValue(20000);
     m_Ui->user_sat_spinBox->setValue(20000);
     m_Ui->user_sat_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::threshold_toolButton_clicked()
+void PreferencesDialog::on_threshold_toolButton_clicked()
 {
     m_Ui->use_noise_CB->setChecked(true);
     m_Ui->threshold_horizontalSlider->setValue(100);
@@ -672,7 +517,7 @@ void PreferencesDialog::threshold_toolButton_clicked()
     m_Ui->threshold_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::red_toolButton_clicked()
+void PreferencesDialog::on_red_toolButton_clicked()
 {
     int minpos = m_Ui->red_horizontalSlider->minimum();
     int maxpos = m_Ui->red_horizontalSlider->maximum();
@@ -684,7 +529,7 @@ void PreferencesDialog::red_toolButton_clicked()
     m_Ui->red_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::blue_toolButton_clicked()
+void PreferencesDialog::on_blue_toolButton_clicked()
 {
     int minpos = m_Ui->blue_horizontalSlider->minimum();
     int maxpos = m_Ui->blue_horizontalSlider->maximum();
@@ -696,7 +541,7 @@ void PreferencesDialog::blue_toolButton_clicked()
     m_Ui->blue_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::green_toolButton_clicked()
+void PreferencesDialog::on_green_toolButton_clicked()
 {
     int minpos = m_Ui->green_horizontalSlider->minimum();
     int maxpos = m_Ui->green_horizontalSlider->maximum();
@@ -708,29 +553,9 @@ void PreferencesDialog::green_toolButton_clicked()
     m_Ui->green_toolButton->setEnabled(false);
 }
 
-void PreferencesDialog::toolButtonInterface_clicked()
+void PreferencesDialog::toolButton_clicked(int index)
 {
-    m_Ui->stackedPagesWidget->setCurrentIndex(0);
-}
-
-void PreferencesDialog::toolButtonHDR_clicked()
-{
-    m_Ui->stackedPagesWidget->setCurrentIndex(1);
-}
-
-void PreferencesDialog::toolButtonTM_clicked()
-{
-    m_Ui->stackedPagesWidget->setCurrentIndex(2);
-}
-
-void PreferencesDialog::toolButtonRAW_clicked()
-{
-    m_Ui->stackedPagesWidget->setCurrentIndex(3);
-}
-
-void PreferencesDialog::toolButtonExtTool_clicked()
-{
-    m_Ui->stackedPagesWidget->setCurrentIndex(4);
+    m_Ui->stackedPagesWidget->setCurrentIndex(index);
 }
 
 void PreferencesDialog::from_options_to_gui()
@@ -751,10 +576,6 @@ void PreferencesDialog::from_options_to_gui()
     // Batch TM output format
     int current_batch_tm_output_type = mappingBatchTmQStringToInt( luminance_options.getBatchTmLdrFormat() );
     m_Ui->batchLdrFormatComboBox->setCurrentIndex( current_batch_tm_output_type );
-    batchTmFormatSelector( current_batch_tm_output_type );
-
-    m_Ui->batchTmOutputQualitySlider->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
-    m_Ui->batchTmOutputQualitySpinBox->setValue( luminance_options.getBatchTmDefaultOutputQuality() );
 
     m_Ui->numThreadspinBox->setValue( luminance_options.getBatchTmNumThreads() );
 
@@ -777,24 +598,7 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->med_passes_horizontalSlider->setValue(luminance_options.getRawMedPasses());
     m_Ui->med_passes_spinBox->setValue(luminance_options.getRawMedPasses());
     m_Ui->wb_method_comboBox->setCurrentIndex(luminance_options.getRawWhiteBalanceMethod());
-    if (luminance_options.getRawWhiteBalanceMethod() < 3)
-    {
-        //TODO
-        m_Ui->TK_label->setEnabled(false);
-        m_Ui->TK_horizontalSlider->setEnabled(false);
-        m_Ui->TK_spinBox->setEnabled(false);
-        m_Ui->green_label->setEnabled(false);
-        m_Ui->green_horizontalSlider->setEnabled(false);
-        m_Ui->green_doubleSpinBox->setEnabled(false);
-    }
-    else {
-        m_Ui->TK_label->setEnabled(true);
-        m_Ui->TK_horizontalSlider->setEnabled(true);
-        m_Ui->TK_spinBox->setEnabled(true);
-        m_Ui->green_label->setEnabled(true);
-        m_Ui->green_horizontalSlider->setEnabled(true);
-        m_Ui->green_doubleSpinBox->setEnabled(true);
-    }
+
     m_Ui->TK_horizontalSlider->setValue(luminance_options.getRawTemperatureKelvin());
     m_Ui->TK_spinBox->setValue(luminance_options.getRawTemperatureKelvin());
     m_Ui->highlights_comboBox->setCurrentIndex(luminance_options.getRawHighlightsMode());
@@ -805,51 +609,19 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->brightness_horizontalSlider->setValue((int) 10.0*luminance_options.getRawBrightness());
     m_Ui->brightness_doubleSpinBox->setValue(luminance_options.getRawBrightness());
     m_Ui->use_black_CB->setChecked(luminance_options.isRawUseBlack());
-    if ( luminance_options.isRawUseBlack() ) {
-        m_Ui->user_black_horizontalSlider->setEnabled(true);
-        m_Ui->user_black_spinBox->setEnabled(true);
-    }
-    else {
-        m_Ui->user_black_horizontalSlider->setEnabled(false);
-        m_Ui->user_black_spinBox->setEnabled(false);
-    }
+
     m_Ui->user_black_horizontalSlider->setValue(luminance_options.getRawUserBlack());
     m_Ui->user_black_spinBox->setValue(luminance_options.getRawUserBlack());
     m_Ui->use_sat_CB->setChecked(luminance_options.isRawUseSaturation());
-    if (luminance_options.isRawUseSaturation()) {
-        m_Ui->user_sat_horizontalSlider->setEnabled(true);
-        m_Ui->user_sat_spinBox->setEnabled(true);
-    }
-    else {
-        m_Ui->user_sat_horizontalSlider->setEnabled(false);
-        m_Ui->user_sat_spinBox->setEnabled(false);
-    }
+
     m_Ui->user_sat_horizontalSlider->setValue(luminance_options.getRawUserSaturation());
     m_Ui->user_sat_spinBox->setValue(luminance_options.getRawUserSaturation());
     m_Ui->use_noise_CB->setChecked(luminance_options.isRawUseNoiseReduction());
-    if ( luminance_options.isRawUseNoiseReduction() ) {
-        m_Ui->threshold_horizontalSlider->setEnabled(true);
-        m_Ui->threshold_spinBox->setEnabled(true);
-    }
-    else {
-        m_Ui->threshold_horizontalSlider->setEnabled(false);
-        m_Ui->threshold_spinBox->setEnabled(false);
-    }
+
     m_Ui->threshold_horizontalSlider->setValue( luminance_options.getRawNoiseReductionThreshold() );
     m_Ui->threshold_spinBox->setValue( luminance_options.getRawNoiseReductionThreshold() );
     m_Ui->use_chroma_CB->setChecked( luminance_options.isRawUseChroma() );
-    if ( luminance_options.isRawUseChroma() ) {
-        m_Ui->red_horizontalSlider->setEnabled(true);
-        m_Ui->red_doubleSpinBox->setEnabled(true);
-        m_Ui->blue_horizontalSlider->setEnabled(true);
-        m_Ui->blue_doubleSpinBox->setEnabled(true);
-    }
-    else {
-        m_Ui->red_horizontalSlider->setEnabled(false);
-        m_Ui->red_doubleSpinBox->setEnabled(false);
-        m_Ui->blue_horizontalSlider->setEnabled(false);
-        m_Ui->blue_doubleSpinBox->setEnabled(false);
-    }
+
     double r_minv = m_Ui->red_doubleSpinBox->minimum();
     double r_maxv = m_Ui->red_doubleSpinBox->maximum();
     double r_minpos = m_Ui->red_horizontalSlider->minimum();
@@ -883,16 +655,27 @@ void PreferencesDialog::from_options_to_gui()
     m_Ui->red_toolButton->setEnabled( luminance_options.value(KEY_RED_TOOLBUTTON).toBool());
     m_Ui->blue_toolButton->setEnabled( luminance_options.value(KEY_BLUE_TOOLBUTTON).toBool());
     m_Ui->green_toolButton->setEnabled( luminance_options.value(KEY_GREEN_TOOLBUTTON).toBool());
+	
+	int index = luminance_options.getCameraProfile();
+	m_Ui->camera_comboBox->setCurrentIndex( index );
+	if (index == 2) { // custom profile
+		m_Ui->camera_lineEdit->setText( luminance_options.getCameraProfileFileName() );
+		m_Ui->camera_lineEdit->setEnabled(true);
+		m_Ui->camera_toolButton->setEnabled(true);
+	}
+	if (index != 0)
+		m_Ui->camera_toolButton_reset->setEnabled(true);
+	m_Ui->monitor_lineEdit->setText( luminance_options.getMonitorProfileFileName() );
+	m_Ui->printer_lineEdit->setText( luminance_options.getPrinterProfileFileName() );
 }
 
-PreferencesDialog::~PreferencesDialog() {}
-
-void PreferencesDialog::updateLineEditString()
+void PreferencesDialog::on_chooseCachePathButton_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,
-                                                    tr("Choose a directory"),
-                                                    QDir::currentPath(),
-                                                    QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
+		tr("Choose a directory"),
+		QDir::currentPath(),
+		QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks
+	);
     if (!dir.isEmpty())
     {
         m_Ui->lineEditTempPath->setText(dir);
@@ -904,3 +687,50 @@ void PreferencesDialog::enterWhatsThis()
 	QWhatsThis::enterWhatsThisMode();
 }
 
+void PreferencesDialog::on_camera_comboBox_currentIndexChanged(int i)
+{
+	m_Ui->camera_lineEdit->setEnabled(i == 2);
+	m_Ui->camera_toolButton->setEnabled(i == 2);
+	m_Ui->camera_toolButton_reset->setEnabled(i != 0);
+}
+
+void PreferencesDialog::on_camera_toolButton_clicked()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
+		ICC_PATH,
+		tr("Color profile (*.icc)")
+	);
+	if (!fileName.isEmpty()) {
+		m_Ui->camera_lineEdit->setText(fileName);
+	}
+}
+
+void PreferencesDialog::on_camera_toolButton_reset_clicked()
+{
+	m_Ui->camera_comboBox->setCurrentIndex(0);
+	m_Ui->camera_lineEdit->setEnabled(false);
+	m_Ui->camera_toolButton->setEnabled(false);
+	m_Ui->camera_toolButton_reset->setEnabled(false);	
+}
+
+void PreferencesDialog::on_monitor_toolButton_clicked()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
+		ICC_PATH,
+		tr("Color profile (*.icc)")
+	);
+	if (!fileName.isEmpty()) {
+		m_Ui->monitor_lineEdit->setText(fileName);
+	}
+}
+
+void PreferencesDialog::on_printer_toolButton_clicked()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open ICC Profile"),
+		ICC_PATH,
+		tr("Color profile (*.icc)")
+	);
+	if (!fileName.isEmpty()) {
+		m_Ui->printer_lineEdit->setText(fileName);
+	}
+}

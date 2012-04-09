@@ -34,6 +34,7 @@
 #include <QSettings>
 #include <QString>
 #include <QStringList>
+#include <QDir>
 
 class LuminanceOptions: public QSettings
 {
@@ -120,8 +121,8 @@ public Q_SLOTS:
     void    setGuiLang(QString);
 
     // Batch HDR
-    QString getBatchHdrPathInput();
-    QString getBatchHdrPathOutput();
+    QString getBatchHdrPathInput(QString defaultPath = QDir::currentPath());
+    QString getBatchHdrPathOutput(QString defaultPath = QDir::currentPath());
     void    setBatchHdrPathInput(QString);
     void    setBatchHdrPathOutput(QString);
 
@@ -131,14 +132,12 @@ public Q_SLOTS:
     QString getBatchTmPathLdrOutput();
     int     getBatchTmNumThreads();
     QString getBatchTmLdrFormat();
-    int     getBatchTmDefaultOutputQuality();
 
     void    setBatchTmPathHdrInput(QString);
     void    setBatchTmPathTmoSettings(QString);
     void    setBatchTmPathLdrOutput(QString);
     void    setBatchTmNumThreads(int);
     void    setBatchTmLdrFormat(QString);
-    void    setBatchTmDefaultOutputQuality(int);
 
     int     getNumThreads() { return getBatchTmNumThreads(); }
     void    setNumThreads(int i) { setBatchTmNumThreads(i); }
@@ -189,6 +188,19 @@ public Q_SLOTS:
 
     int     getPreviewWidth();
     void    setPreviewWidth(int);
+
+	// Color Management
+	int		getCameraProfile();
+	void	setCameraProfile(int);
+
+	QString getCameraProfileFileName();
+	void	setCameraProfileFileName(QString);
+
+	QString getMonitorProfileFileName();
+	void	setMonitorProfileFileName(QString);
+
+	QString getPrinterProfileFileName();
+	void	setPrinterProfileFileName(QString);
 };
 
 #endif

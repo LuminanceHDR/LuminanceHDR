@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QMap>
+#include <QSignalMapper>
 
 namespace Ui
 {
@@ -47,60 +48,60 @@ private:
     QColor infnancolor, negcolor;
 	QMap<QString, int> fromIso639ToGuiIndex;
 	QMap<int, QString> fromGuiIndexToIso639;
+	QSignalMapper* toolButtonMapper;
 
 protected:
 	virtual void changeEvent(QEvent* event);
 
 private Q_SLOTS:
-	void negative_clicked();
-	void infnan_clicked();
-	void ok_clicked();
-	void cancel_clicked();
-	void updateLineEditString();
+	void on_negativeColorButton_clicked();
+	void on_ifnanColorButton_clicked();
+	void on_okButton_clicked();
+	void on_cancelButton_clicked();
+	void on_chooseCachePathButton_clicked();
 	void enterWhatsThis();
 	
-	void user_qual_comboBox_currentIndexChanged(int);
-	void med_passes_spinBox_valueChanged(int);
-	void wb_method_comboBox_currentIndexChanged(int);
-	void TK_spinBox_valueChanged(int);
-	void highlights_comboBox_currentIndexChanged(int);
-	void level_spinBox_valueChanged(int);
-	void user_black_spinBox_valueChanged(int);
-	void user_sat_spinBox_valueChanged(int);
-	void threshold_spinBox_valueChanged(int);
-	void use_black_CB_stateChanged(int);
-	void use_sat_CB_stateChanged(int);
-	void use_noise_CB_stateChanged(int);
-	void use_chroma_CB_stateChanged(int);
-	void brightness_horizontalSlider_valueChanged(int);
-	void brightness_doubleSpinBox_valueChanged(double);
-	void red_horizontalSlider_valueChanged(int);
-	void red_doubleSpinBox_valueChanged(double);
-	void blue_horizontalSlider_valueChanged(int);
-	void blue_doubleSpinBox_valueChanged(double);
-	void green_horizontalSlider_valueChanged(int);
-	void green_doubleSpinBox_valueChanged(double);
+	void on_med_passes_spinBox_valueChanged(int);
+	void on_wb_method_comboBox_currentIndexChanged(int);
+	void on_TK_spinBox_valueChanged(int);
+	void on_highlights_comboBox_currentIndexChanged(int);
+	void on_level_spinBox_valueChanged(int);
+	void on_user_black_spinBox_valueChanged(int);
+	void on_user_sat_spinBox_valueChanged(int);
+	void on_threshold_spinBox_valueChanged(int);
+	void on_use_black_CB_stateChanged(int);
+	void on_use_sat_CB_stateChanged(int);
+	void on_use_noise_CB_stateChanged(int);
+	void on_use_chroma_CB_stateChanged(int);
+	void on_brightness_horizontalSlider_valueChanged(int);
+	void on_brightness_doubleSpinBox_valueChanged(double);
+	void on_red_horizontalSlider_valueChanged(int);
+	void on_red_doubleSpinBox_valueChanged(double);
+	void on_blue_horizontalSlider_valueChanged(int);
+	void on_blue_doubleSpinBox_valueChanged(double);
+	void on_green_horizontalSlider_valueChanged(int);
+	void on_green_doubleSpinBox_valueChanged(double);
 
- 	void user_qual_toolButton_clicked();
-	void med_passes_toolButton_clicked();
-	void wb_method_toolButton_clicked();
-	void TK_toolButton_clicked();
-	void highlights_toolButton_clicked();
-	void level_toolButton_clicked();
-	void brightness_toolButton_clicked();
-	void user_black_toolButton_clicked();
-	void user_sat_toolButton_clicked();
-	void threshold_toolButton_clicked();
-	void red_toolButton_clicked();
-	void blue_toolButton_clicked();
-	void green_toolButton_clicked();
+	void on_camera_comboBox_currentIndexChanged(int);
 
-	void toolButtonInterface_clicked();
-	void toolButtonHDR_clicked();
-	void toolButtonTM_clicked();
-	void toolButtonRAW_clicked();
-	void toolButtonExtTool_clicked();
+	void on_med_passes_toolButton_clicked();
+	void on_wb_method_toolButton_clicked();
+	void on_TK_toolButton_clicked();
+	void on_highlights_toolButton_clicked();
+	void on_level_toolButton_clicked();
+	void on_brightness_toolButton_clicked();
+	void on_user_black_toolButton_clicked();
+	void on_user_sat_toolButton_clicked();
+	void on_threshold_toolButton_clicked();
+	void on_red_toolButton_clicked();
+	void on_blue_toolButton_clicked();
+	void on_green_toolButton_clicked();
 
-    void batchTmFormatSelector(int);
+	void on_camera_toolButton_clicked();
+	void on_camera_toolButton_reset_clicked();
+	void on_monitor_toolButton_clicked();
+	void on_printer_toolButton_clicked();
+
+	void toolButton_clicked(int);
 };
 #endif

@@ -35,7 +35,6 @@
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Libpfs/frame.h"
 
-
 namespace
 {
 // define the number of pixels to count as border of the image, because of the shadow
@@ -88,11 +87,13 @@ GenericViewer::GenericViewer(pfs::Frame* frame, QWidget *parent, bool ns):
     mPixmap = new IGraphicsPixmapItem();
     mScene->addItem(mPixmap);
     connect(mPixmap, SIGNAL(selectionReady(bool)), this, SIGNAL(selectionReady(bool)));
+    connect(mPixmap, SIGNAL(startDragging()), this, SLOT(startDragging()));
 }
 
 GenericViewer::~GenericViewer()
 {
     delete mFrame;
+	delete mPixmap;
 }
 
 void GenericViewer::retranslateUi()
@@ -412,7 +413,8 @@ void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 
     // update tonemappingoptions (if available)
     // in the current implementation, only LdrViewer redefines this function
-    setTonemappingOptions(tmopts);
+    if (tmopts != NULL)
+	    setTonemappingOptions(tmopts);
 
     // reset boundaries
     updateView();
@@ -421,4 +423,15 @@ void GenericViewer::setFrame(pfs::Frame *new_frame, TonemappingOptions* tmopts)
 pfs::Frame* GenericViewer::getFrame() const
 {
     return mFrame;
+}
+
+void GenericViewer::startDragging()
+{
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData;
+	mimeData->setImageData(mPixmap->pixmap().toImage());
+	drag->setMimeData(mimeData);
+	drag->setPixmap(mPixmap->pixmap().scaledToHeight(mPixmap->pixmap().height()/10));
+
+	Qt::DropAction dropAction = drag->exec();
 }

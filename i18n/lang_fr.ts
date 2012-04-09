@@ -306,7 +306,7 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>R&amp;emove Files</source>
-        <translation type="unfinished">Effac&amp;er Fichiers</translation>
+        <translation type="obsolete">Effac&amp;er Fichiers</translation>
     </message>
     <message>
         <source>Output</source>
@@ -374,7 +374,7 @@ See documentation for more informations.</source>
     </message>
     <message>
         <source>Tone Mapping Settings Files</source>
-        <translation type="unfinished">Fichiers de configuration pour le Tone Mapping</translation>
+        <translation type="obsolete">Fichiers de configuration pour le Tone Mapping</translation>
     </message>
     <message>
         <source>Add all the Tone Mapping Setting files in a directory to the list</source>
@@ -453,12 +453,36 @@ See documentation for more informations.</source>
         <translation type="unfinished">Toutes les tâches sont accomplies.</translation>
     </message>
     <message>
-        <source>Saving using file format: %1, (quality - if applicable): %2</source>
+        <source>Aborting...</source>
+        <translation type="unfinished">Abandon...</translation>
+    </message>
+    <message>
+        <source>Tone Mapping Settings</source>
+        <translation type="unfinished">Paramètres de tone mapping</translation>
+    </message>
+    <message>
+        <source>R&amp;emove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aborting...</source>
-        <translation type="unfinished">Abandon...</translation>
+        <source>Ouput Image Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Image Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving using file format: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Data&amp;base</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1802,6 +1826,26 @@ associée à ce protocole?</translation>
         <source>LDR image [%1 x %2]</source>
         <translation type="unfinished">Image LDR [%1 x %2]</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open monitor profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open printer profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a printer profile .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different monitor profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelsDialog</name>
@@ -2320,11 +2364,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Next Image</source>
-        <translation type="unfinished">Image suivante</translation>
+        <translation type="obsolete">Image suivante</translation>
     </message>
     <message>
         <source>Previous Image</source>
-        <translation type="unfinished">Image précédente</translation>
+        <translation type="obsolete">Image précédente</translation>
     </message>
     <message>
         <source>Adjust &amp;Levels</source>
@@ -2389,30 +2433,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Ctrl+D</source>
         <translation type="unfinished">Ctrl+D</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Next Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgDown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show Previous Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ctrl+PgUp</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lock Viewers</source>
@@ -2490,11 +2510,12 @@ p, li { white-space: pre-wrap; }
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ParametersDialog</name>
     <message>
-        <source>Saved Parameters</source>
+        <source>Soft Proofing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gamut Check</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3010,7 +3031,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wide Gamut&lt;/span&gt;: this color space is an expanded version of the Adobe RGB color space.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Pro-Photo&lt;/span&gt;: this color space is an RGB color space, developed by Kodak, that offers an especially large gamut designed for use with photographic outputs in mind.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Custom&lt;/span&gt;: use a custom output color space profile.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -3025,15 +3046,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>sRGB</source>
-        <translation type="unfinished">sRVB</translation>
+        <translation type="obsolete">sRVB</translation>
     </message>
     <message>
         <source>Adobe RGB</source>
-        <translation type="unfinished">RVB Adobe</translation>
+        <translation type="obsolete">RVB Adobe</translation>
     </message>
     <message>
         <source>Wide Gamut</source>
-        <translation type="unfinished">Gamme étendue</translation>
+        <translation type="obsolete">Gamme étendue</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -3128,14 +3149,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>RAW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pro Photo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3161,10 +3174,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Batch Tonemapping Number of Threads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Batch Tonemapping Default Output Quality</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3212,19 +3221,39 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Camera Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Camera profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Color Space</source>
+        <source>align_image_stack command line arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>align_image_stack command line arguments</source>
+        <source>Color Management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monitor Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printer profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ICC Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color profile (*.icc)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3435,6 +3464,22 @@ p, li { white-space: pre-wrap; }
         <source>Successfully loaded file %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot open camera profile. Please select a different one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I cannot perform the color transform. Please select a different camera profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ResizeDialog</name>
@@ -3491,11 +3536,146 @@ p, li { white-space: pre-wrap; }
     <name>SavedParameters</name>
     <message>
         <source>Simple</source>
+        <translation type="obsolete">Simple</translation>
+    </message>
+    <message>
+        <source>Local Contrast Threshold</source>
+        <translation type="obsolete">Seuil de contraste local</translation>
+    </message>
+    <message>
+        <source>Bias</source>
+        <translation type="obsolete">Bais</translation>
+    </message>
+    <message>
+        <source>Spatial Kernel Sigma</source>
+        <translation type="obsolete">Spatial Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Range Kernel Sigma</source>
+        <translation type="obsolete">Range Kernel Sigma</translation>
+    </message>
+    <message>
+        <source>Base Contrast</source>
+        <translation type="obsolete">Contraste de base</translation>
+    </message>
+    <message>
+        <source>Alpha</source>
+        <translation type="obsolete">Alpha</translation>
+    </message>
+    <message>
+        <source>Beta</source>
+        <translation type="obsolete">Bêta</translation>
+    </message>
+    <message>
+        <source>Color Saturation</source>
+        <translation type="obsolete">Saturation de couleur</translation>
+    </message>
+    <message>
+        <source>Noise Reduction</source>
+        <translation type="obsolete">Réduction du bruit</translation>
+    </message>
+    <message>
+        <source>Contrast Equalization</source>
+        <translation type="obsolete">Égalisation du contraste</translation>
+    </message>
+    <message>
+        <source>Contrast Factor</source>
+        <translation type="obsolete">Facteur de contraste</translation>
+    </message>
+    <message>
+        <source>Saturation Factor</source>
+        <translation type="obsolete">Facteur de saturation</translation>
+    </message>
+    <message>
+        <source>Detail Factor</source>
+        <translation type="obsolete">Facteur de détail</translation>
+    </message>
+    <message>
+        <source>Contrast Enhancement</source>
+        <translation type="obsolete">Amélioration de contraste</translation>
+    </message>
+    <message>
+        <source>Luminance Level</source>
+        <translation type="obsolete">Niveau de luminance</translation>
+    </message>
+    <message>
+        <source>Cone and Rod based on Luminance</source>
+        <translation type="obsolete">Cône et bâtonnets basés sur la luminance</translation>
+    </message>
+    <message>
+        <source>Cone Level</source>
+        <translation type="obsolete">Quantité de cônes</translation>
+    </message>
+    <message>
+        <source>Rod Level</source>
+        <translation type="obsolete">Quantité de bâtonnets</translation>
+    </message>
+    <message>
+        <source>Multiplier</source>
+        <translation type="obsolete">Facteur</translation>
+    </message>
+    <message>
+        <source>Use Scales</source>
+        <translation type="obsolete">Utiliser des échelles</translation>
+    </message>
+    <message>
+        <source>Key Value</source>
+        <translation type="obsolete">Valeur clé</translation>
+    </message>
+    <message>
+        <source>Range</source>
+        <translation type="obsolete">Étendue</translation>
+    </message>
+    <message>
+        <source>Lower Scale</source>
+        <translation type="obsolete">Échelle la plus basse</translation>
+    </message>
+    <message>
+        <source>Upper Scale</source>
+        <translation type="obsolete">Échelle la plus haute</translation>
+    </message>
+    <message>
+        <source>Brightness</source>
+        <translation type="obsolete">Luminosité</translation>
+    </message>
+    <message>
+        <source>Chromatic Adaptation</source>
+        <translation type="obsolete">Adaptation Chromatique</translation>
+    </message>
+    <message>
+        <source>Light Adaptation</source>
+        <translation type="obsolete">Adaptation de lumière</translation>
+    </message>
+</context>
+<context>
+    <name>SavedParametersDialog</name>
+    <message>
+        <source>Saved Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TM Operator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple</source>
         <translation type="unfinished">Simple</translation>
+    </message>
+    <message>
+        <source>Equation 2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Local Contrast Threshold</source>
         <translation type="unfinished">Seuil de contraste local</translation>
+    </message>
+    <message>
+        <source>Pre-gamma</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bias</source>
@@ -3530,6 +3710,10 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Réduction du bruit</translation>
     </message>
     <message>
+        <source>Old Fattal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Contrast Equalization</source>
         <translation type="unfinished">Égalisation du contraste</translation>
     </message>
@@ -3554,8 +3738,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">Niveau de luminance</translation>
     </message>
     <message>
+        <source>Manual Luminance Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Cone and Rod based on Luminance</source>
         <translation type="unfinished">Cône et bâtonnets basés sur la luminance</translation>
+    </message>
+    <message>
+        <source>Local Tonemapping</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cone Level</source>
@@ -3576,6 +3768,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Key Value</source>
         <translation type="unfinished">Valeur clé</translation>
+    </message>
+    <message>
+        <source>Phi Value</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Range</source>
@@ -3600,38 +3796,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Light Adaptation</source>
         <translation type="unfinished">Adaptation de lumière</translation>
-    </message>
-    <message>
-        <source>Equation 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pre-gamma</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Old Fattal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Manual Luminance Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Local Tonemapping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phi Value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TM Operator</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

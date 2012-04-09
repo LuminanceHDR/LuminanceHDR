@@ -25,15 +25,19 @@
  *
  */
 
-#include <iostream>
 #include <QDebug>
 #include <QScopedPointer>
+#include <QString>
+#include <QByteArray>
+#include <QMessageBox>
 
 #include "Viewers/LdrViewer.h"
 #include "Viewers/IGraphicsPixmapItem.h"
 #include "Core/TonemappingOptions.h"
 #include "Libpfs/frame.h"
 #include "Fileformat/pfsoutldrimage.h"
+#include "Common/LuminanceOptions.h"
+
 
 namespace
 {
@@ -68,19 +72,31 @@ LdrViewer::LdrViewer(pfs::Frame* frame, TonemappingOptions* opts, QWidget *paren
     // I am safe
     LdrViewer::setTonemappingOptions(opts);
 
-    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+	LuminanceOptions luminance_opts; 
 
-    setQImage(*temp_qimage);
+    //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));	
+
+	QImage *xformed_qimage = doCMSTransform(temp_qimage, false, false);
+
+	if (xformed_qimage == NULL)
+		setQImage(*temp_qimage);
+	else {
+		setQImage(*xformed_qimage);
+		delete xformed_qimage;
+	}
 
     updateView();
 
     retranslateUi();
+	
+	delete temp_qimage;
 }
 
 LdrViewer::~LdrViewer()
 {
 #ifdef QT_DEBUG
-    std::cout << "LdrViewer::~LdrViewer()" << std::endl;
+    qDebug() << "LdrViewer::~LdrViewer()";
 #endif
 }
 
@@ -117,10 +133,20 @@ void LdrViewer::updatePixmap()
     qDebug() << "void LdrViewer::updatePixmap()";
 #endif
 
-    QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+    //QScopedPointer<QImage> temp_qimage(fromLDRPFStoQImage(getFrame()));
+	QImage *temp_qimage(fromLDRPFStoQImage(getFrame()));
 
-    mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+	QImage *xformed_qimage = doCMSTransform(temp_qimage, false, false);
+
+	if (xformed_qimage == NULL) 
+    	mPixmap->setPixmap(QPixmap::fromImage(*temp_qimage));
+	else {
+    	mPixmap->setPixmap(QPixmap::fromImage(*xformed_qimage));
+		delete xformed_qimage;
+	}
+
     informativeLabel->setText( tr("LDR image [%1 x %2]").arg(getWidth()).arg(getHeight()) );
+	delete temp_qimage;
 }
 
 void LdrViewer::setTonemappingOptions(TonemappingOptions* tmopts)
@@ -147,4 +173,92 @@ float LdrViewer::getMaxLuminanceValue()
 float LdrViewer::getMinLuminanceValue()
 {
     return 0.0f;
+}
+
+QImage *LdrViewer::doCMSTransform(QImage *input_qimage, bool doProof, bool doGamutCheck)
+{
+	LuminanceOptions luminance_opts;
+	QString monitor_fname = luminance_opts.getMonitorProfileFileName();
+	qDebug() << "Monitor profile: " << monitor_fname;
+	QString printer_fname = luminance_opts.getPrinterProfileFileName();
+	qDebug() << "Printer profile: " << printer_fname;
+	
+	QImage *out_qimage = NULL;
+
+	if (!monitor_fname.isEmpty()) {
+		qDebug() << "Transform to Monitor Profile";
+		QByteArray ba = monitor_fname.toUtf8();
+
+		out_qimage = new QImage(input_qimage->width(), input_qimage->height(), QImage::Format_RGB32);		
+
+		cmsHPROFILE hsRGB, hOut, hProof;
+		cmsHTRANSFORM xform;
+
+		cmsErrorAction(LCMS_ERROR_SHOW);
+
+		hsRGB = cmsCreate_sRGBProfile();
+		hOut = cmsOpenProfileFromFile(ba.data(), "r");
+		
+		if (hOut == NULL) {
+			QMessageBox::warning(0,tr("Warning"), tr("I cannot open monitor profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+			delete out_qimage;
+			return NULL; 
+		}
+
+		if (doProof && !printer_fname.isEmpty()) {
+			QByteArray ba = printer_fname.toUtf8();
+			hProof = cmsOpenProfileFromFile(ba.data(), "r");
+			if (hProof == NULL) {
+				QMessageBox::warning(0,tr("Warning"), tr("I cannot open printer profile. Please select a different one."), QMessageBox::Ok, QMessageBox::NoButton);
+				doProof = false;
+			}
+		}
+		else if (doProof) {
+			QMessageBox::warning(0,tr("Warning"), tr("Please select a printer profile ."), QMessageBox::Ok, QMessageBox::NoButton);
+			doProof = false;
+		}
+					
+		if (doProof) {
+			quint32 dwFlags = doGamutCheck ? cmsFLAGS_SOFTPROOFING | cmsFLAGS_GAMUTCHECK : cmsFLAGS_SOFTPROOFING;
+			cmsSetAlarmCodes(255, 0, 0);
+			xform = cmsCreateProofingTransform(hsRGB, TYPE_RGBA_8, hOut, TYPE_RGBA_8, hProof, INTENT_PERCEPTUAL, INTENT_ABSOLUTE_COLORIMETRIC, dwFlags);
+		}
+		else
+			xform = cmsCreateTransform(hsRGB, TYPE_RGBA_8, hOut, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
+
+		if (xform == NULL) {
+			QMessageBox::warning(0,tr("Warning"), tr("I cannot perform the color transform. Please select a different monitor profile."), QMessageBox::Ok, QMessageBox::NoButton);
+			cmsCloseProfile(hOut);
+			delete out_qimage;
+			return NULL;		
+		}
+
+		cmsDoTransform(xform, input_qimage->bits(), out_qimage->bits(), input_qimage->width() * input_qimage->height());
+
+		cmsCloseProfile(hOut);
+		if (doProof)
+			cmsCloseProfile(hProof);
+
+		cmsDeleteTransform(xform);
+	}
+
+	return out_qimage;
+}
+
+void LdrViewer::doSoftProofing(bool doGamutCheck)
+{
+ 	QImage *image = doCMSTransform(fromLDRPFStoQImage(getFrame()), true, doGamutCheck);	
+	if (image == NULL)
+		return;
+	mPixmap->setPixmap(QPixmap::fromImage(*image));	
+	delete image;
+}
+
+void LdrViewer::undoSoftProofing()
+{
+ 	QImage *image = doCMSTransform(fromLDRPFStoQImage(getFrame()), false, false);	
+	if (image == NULL)
+		return;
+	mPixmap->setPixmap(QPixmap::fromImage(*image));
+	delete image;
 }
