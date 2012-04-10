@@ -192,11 +192,11 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation>Messaggi</translation>
+        <translation type="obsolete">Messaggi</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation>Seleziona una directory</translation>
+        <translation type="obsolete">Seleziona una directory</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -248,11 +248,11 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Select &amp;Input Folder</source>
-        <translation>Seleziona la cartella &amp;sorgente</translation>
+        <translation type="obsolete">Seleziona la cartella &amp;sorgente</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder</source>
-        <translation>Seleziona la cartella &amp;destinazione</translation>
+        <translation type="obsolete">Seleziona la cartella &amp;destinazione</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -284,7 +284,43 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>The chosen output directory contains HDR files. Those files might be overwritten.</source>
-        <translation>La directory di output selezionata contiene files HDR. Questi files potrebbero venir sovrascritti.</translation>
+        <translation type="obsolete">La directory di output selezionata contiene files HDR. Questi files potrebbero venir sovrascritti.</translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation>Destinazione</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>Elaborando</translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation>Seleziona...</translation>
+    </message>
+    <message>
+        <source>Input folder:</source>
+        <translation>Cartella di input</translation>
+    </message>
+    <message>
+        <source>Output folder:</source>
+        <translation>Cartella di output</translation>
+    </message>
+    <message>
+        <source>Choose a source directory</source>
+        <translation>Scegli cartella sorgente</translation>
+    </message>
+    <message>
+        <source>Choose a output directory</source>
+        <translation>Scegli cartella destinazione</translation>
+    </message>
+    <message>
+        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
+
+Continue?</source>
+        <translation>La cartella di uscita selezionata contiene dei files HDR. Questi file potrebbero essere sovrascritti.
+
+Continuare?</translation>
     </message>
 </context>
 <context>
@@ -327,7 +363,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder...</source>
-        <translation>Selezione una cartella di &amp;uscita...</translation>
+        <translation type="obsolete">Selezione una cartella di &amp;uscita...</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
@@ -487,7 +523,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Ouput Image Width</source>
-        <translation>Larghezza immagine</translation>
+        <translation type="obsolete">Larghezza immagine</translation>
     </message>
     <message>
         <source> %</source>
@@ -504,6 +540,18 @@ Vedi la documentazione per maggiori informazioni.</translation>
     <message>
         <source>From Data&amp;base</source>
         <translation>Da Data&amp;base</translation>
+    </message>
+    <message>
+        <source>Ouput Image Width:</source>
+        <translation>Larghezza Immagine:</translation>
+    </message>
+    <message>
+        <source>Output Folder:</source>
+        <translation>Cartella di destinazione:</translation>
+    </message>
+    <message>
+        <source>Selec&amp;t...</source>
+        <translation>Sele&amp;ziona...</translation>
     </message>
 </context>
 <context>
@@ -2680,7 +2728,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation>&amp;Scegli</translation>
+        <translation type="obsolete">&amp;Scegli</translation>
     </message>
     <message>
         <source>Which LDR image format to save to</source>
@@ -3317,6 +3365,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Color profile (*.icc)</source>
         <translation>Profilo di colore (*.icc)</translation>
+    </message>
+    <message>
+        <source>&amp;Browse...</source>
+        <translation>&amp;Sfoglia...</translation>
     </message>
 </context>
 <context>

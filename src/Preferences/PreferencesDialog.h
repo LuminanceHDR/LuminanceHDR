@@ -61,6 +61,7 @@ private Q_SLOTS:
 	void on_chooseCachePathButton_clicked();
 	void enterWhatsThis();
 	
+	void on_user_qual_comboBox_currentIndexChanged(int);
 	void on_med_passes_spinBox_valueChanged(int);
 	void on_wb_method_comboBox_currentIndexChanged(int);
 	void on_TK_spinBox_valueChanged(int);
@@ -84,6 +85,7 @@ private Q_SLOTS:
 
 	void on_camera_comboBox_currentIndexChanged(int);
 
+	void on_user_qual_toolButton_clicked();
 	void on_med_passes_toolButton_clicked();
 	void on_wb_method_toolButton_clicked();
 	void on_TK_toolButton_clicked();
