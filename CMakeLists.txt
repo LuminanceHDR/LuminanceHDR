@@ -44,17 +44,12 @@ IF(NOT GIT_FOUND)
     IF (EXISTS ${GIT_EXECUTABLE})
         SET(GIT_FOUND 1)
     ENDIF()
-    FIND_FILE(GIT_EXE git
-        $ENV{/usr/bin}
-    )
-    IF (EXISTS ${GIT_EXE})
-        SET(GIT_FOUND 1)
-    ENDIF()
 ENDIF()
 
 IF(GIT_FOUND)
     include(GetGitRevisionDescription)
     get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+    message(STATUS "Git found")
 ELSE()
     message(STATUS "Git not found")
 ENDIF()
