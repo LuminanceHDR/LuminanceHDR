@@ -292,7 +292,7 @@ Vedi la documentazione per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Progress</source>
-        <translation>Elaborando</translation>
+        <translation>Messaggi</translation>
     </message>
     <message>
         <source>Select...</source>
