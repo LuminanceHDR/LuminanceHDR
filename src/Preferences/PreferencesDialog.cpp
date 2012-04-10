@@ -301,6 +301,11 @@ void PreferencesDialog::on_cancelButton_clicked()
 	reject();
 }
 
+void PreferencesDialog::on_user_qual_comboBox_currentIndexChanged(int value)
+{
+	m_Ui->user_qual_toolButton->setEnabled(value != 0);
+}
+
 void PreferencesDialog::on_med_passes_spinBox_valueChanged(int value)
 {
     m_Ui->med_passes_toolButton->setEnabled(value != 0);
@@ -453,6 +458,11 @@ void PreferencesDialog::on_green_doubleSpinBox_valueChanged( double value)
 
     m_Ui->blue_horizontalSlider->setValue( value2pos(value, minpos, maxpos, minv, maxv) );
 	m_Ui->green_toolButton->setEnabled(fabs(value - 1.0) >= 1e-4);
+}
+
+void PreferencesDialog::on_user_qual_toolButton_clicked()
+{
+	m_Ui->user_qual_comboBox->setCurrentIndex(0);
 }
 
 void PreferencesDialog::on_med_passes_toolButton_clicked()
