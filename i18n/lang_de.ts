@@ -196,7 +196,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Select &amp;Input Folder</source>
-        <translation>&amp;Quellordner wählen</translation>
+        <translation type="obsolete">&amp;Quellordner wählen</translation>
     </message>
     <message>
         <source>Folder where created HDRs are saved</source>
@@ -204,11 +204,11 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder</source>
-        <translation>&amp;Ausgabeordner wählen</translation>
+        <translation type="obsolete">&amp;Ausgabeordner wählen</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation>Meldungen</translation>
+        <translation type="obsolete">Meldungen</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -224,7 +224,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation>Ordner wählen</translation>
+        <translation type="obsolete">Ordner wählen</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -271,7 +271,37 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The chosen output directory contains HDR files. Those files might be overwritten.</source>
+        <source>Output</source>
+        <translation type="unfinished">Ausgabe</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a source directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
+
+Continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -315,7 +345,7 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder...</source>
-        <translation>A&amp;usgabeordner wählen ...</translation>
+        <translation type="obsolete">A&amp;usgabeordner wählen ...</translation>
     </message>
     <message>
         <source>&amp;Show only:</source>
@@ -470,10 +500,6 @@ In der Dokumentation findest du weitere Informationen.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ouput Image Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,6 +513,18 @@ In der Dokumentation findest du weitere Informationen.</translation>
     </message>
     <message>
         <source>From Data&amp;base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ouput Image Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selec&amp;t...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2654,7 +2692,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation>Wä&amp;hlen</translation>
+        <translation type="obsolete">Wä&amp;hlen</translation>
     </message>
     <message>
         <source>Which LDR image format to save to</source>
@@ -3274,6 +3312,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color profile (*.icc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Browse...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

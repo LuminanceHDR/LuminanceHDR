@@ -196,7 +196,7 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Select &amp;Input Folder</source>
-        <translation type="unfinished">Selectează &amp;Fişierul De Importat</translation>
+        <translation type="obsolete">Selectează &amp;Fişierul De Importat</translation>
     </message>
     <message>
         <source>Folder where created HDRs are saved</source>
@@ -204,11 +204,11 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder</source>
-        <translation type="unfinished">Selectează &amp;Fişierul De Exportat</translation>
+        <translation type="obsolete">Selectează &amp;Fişierul De Exportat</translation>
     </message>
     <message>
         <source>Messages</source>
-        <translation type="unfinished">Mesaje</translation>
+        <translation type="obsolete">Mesaje</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -224,7 +224,7 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Choose a directory</source>
-        <translation type="unfinished">Alege un dosar</translation>
+        <translation type="obsolete">Alege un dosar</translation>
     </message>
     <message>
         <source>Started processing...</source>
@@ -271,7 +271,37 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The chosen output directory contains HDR files. Those files might be overwritten.</source>
+        <source>Output</source>
+        <translation type="unfinished">Destinație</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a source directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The chosen output directory contains HDR files. Those files might be overwritten. 
+
+Continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -355,7 +385,7 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>Select &amp;Output Folder...</source>
-        <translation type="unfinished">Selectează dosar &amp;destinație...</translation>
+        <translation type="obsolete">Selectează dosar &amp;destinație...</translation>
     </message>
     <message>
         <source>Conversion Log</source>
@@ -470,10 +500,6 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ouput Image Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> %</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,6 +513,18 @@ Vezi documentaţia pentru mai multe informaţii.</translation>
     </message>
     <message>
         <source>From Data&amp;base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ouput Image Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output Folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Selec&amp;t...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2652,7 +2690,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation type="unfinished">A&amp;lege</translation>
+        <translation type="obsolete">A&amp;lege</translation>
     </message>
     <message>
         <source>Which LDR image format to save to</source>
@@ -3123,6 +3161,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Color profile (*.icc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Browse...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
