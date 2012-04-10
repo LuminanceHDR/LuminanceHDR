@@ -12,6 +12,7 @@
 //
 
 #include "LuminancePaths.h"
+#include "help-path.hxx"
 
 #include <QApplication>
 
@@ -38,7 +39,8 @@ QString LuminancePaths::HelpDir()
   hf = LocalizedDirPath("/usr/local/share/doc/luminance-hdr/");
 #else
   //	hf = LocalizedDirPath( PREFIX + dirsep + "share" + dirsep + "fontmatrix" + dirsep + "help" + dirsep );
-  hf = LocalizedDirPath("/usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
+  //hf = LocalizedDirPath("usr" + dirsep + "share" + dirsep + "luminance-hdr" + dirsep + "help" + dirsep);
+  hf = LocalizedDirPath(HELPDIR + dirsep);
 #endif
   
 	getThis()->LuminancePathsDB["HelpDir"] = hf;
