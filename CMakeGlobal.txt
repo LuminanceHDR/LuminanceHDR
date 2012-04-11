@@ -18,7 +18,7 @@ SET(I18NDIR QCoreApplication::applicationDirPath\(\)+"/i18n")
 ENDIF()
 
 IF(UNIX)
-ADD_DEFINITIONS(-fpermissive -Wall -Wno-unknown-pragmas)
+ADD_DEFINITIONS(-Wall -Wno-unknown-pragmas)
 ENDIF()
 
 OPTION(UPDATE_TRANSLATIONS "Update source translation translations/*.ts files (WARNING: make clean will delete the source .ts files! Danger!)")
