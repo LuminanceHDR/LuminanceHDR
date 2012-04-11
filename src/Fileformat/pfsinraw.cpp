@@ -28,6 +28,7 @@
 #include <QString>
 #include <QFileInfo>
 #include <QDebug>
+#include <QFile>
 
 #include "Libpfs/domio.h"
 #include "Fileformat/pfsinraw.h"
@@ -73,11 +74,15 @@ void Temperature_to_RGB(double T, double RGB[3])
     Y = 1;
     Z = (1-xD-yD)/yD;
     max = 0;
-    for (c=0; c<3; c++) {
-	RGB[c] = X*XYZ_to_RGB[0][c] + Y*XYZ_to_RGB[1][c] + Z*XYZ_to_RGB[2][c];
-	if (RGB[c]>max) max = RGB[c];
+    for (c=0; c<3; c++)
+    {
+        RGB[c] = X*XYZ_to_RGB[0][c] + Y*XYZ_to_RGB[1][c] + Z*XYZ_to_RGB[2][c];
+        if (RGB[c]>max) max = RGB[c];
     }
-    for (c=0; c<3; c++) RGB[c] = RGB[c]/max;
+    for (c=0; c<3; c++)
+    {
+        RGB[c] = RGB[c]/max;
+    }
 }
 /*********** END UFRAW CODE *****************************************************/
 
@@ -122,25 +127,25 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
     RGB[1] = RGB[1] / options->getRawGreen();
 
-   if( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS) {
+   if ((ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
+   {
       qDebug() << "Error Opening RAW File";
       RawProcessor.recycle();
       return NULL;
     }
     
-    bool identify;
-    if( (ret = RawProcessor.adjust_sizes_info_only()) != LIBRAW_SUCCESS) 
+    bool identify = true;
+    if ((ret = RawProcessor.adjust_sizes_info_only()) != LIBRAW_SUCCESS)
+    {
       identify = false;
-    else
-      identify = true;
+    }
 
-    
     int numcolors = P1.colors;
-	std::vector<double> daylightMult(numcolors);
+    std::vector<double> daylightMult(numcolors);
 
     for(int c = 0 ; c < numcolors ; c++)
       daylightMult[c] = C.pre_mul[c];
-	
+
     if (identify) { //TODO
       RGB[0] = daylightMult[0] / RGB[0];
       RGB[1] = daylightMult[1] / RGB[1];
@@ -161,57 +166,67 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   }
 
   if (options->getRawHighlightsMode() < 3)
+  {
       OUT.highlight = options->getRawHighlightsMode();
+  }
   else
+  {
       OUT.highlight = options->getRawHighlightsMode() + options->getRawLevel();
-  
+  }
   OUT.no_auto_bright = !options->isRawAutoBrightness();
   OUT.bright = options->getRawBrightness();
 
   if ( options->isRawUseBlack() )
-    OUT.user_black = options->getRawUserBlack();
-
+  {
+      OUT.user_black = options->getRawUserBlack();
+  }
   if ( options->isRawUseSaturation() )
-    OUT.user_sat = options->getRawUserSaturation();
+  {
+      OUT.user_sat = options->getRawUserSaturation();
+  }
 
   if ( options->isRawUseNoiseReduction() )
-    OUT.threshold = options->getRawNoiseReductionThreshold();
-
+  {
+      OUT.threshold = options->getRawNoiseReductionThreshold();
+  }
   if ( options->isRawUseChroma() )
   {
-    OUT.aber[0] = options->getRawAber0();
-    OUT.aber[2] = options->getRawAber2();
+      OUT.aber[0] = options->getRawAber0();
+      OUT.aber[2] = options->getRawAber2();
   }
 
   QString fname;
   QByteArray ba;
   
-  if ( options->getCameraProfile() == 1 )
-  	OUT.camera_profile = (char*)"embed";
-  else if ( options->getCameraProfile() == 2 ) {
-	fname = options->getCameraProfileFileName();
-	ba = fname.toUtf8();
-	OUT.camera_profile = ba.data();
-	qDebug() << "Camera profile: " << fname;
+  if (options->getCameraProfile() == 1)
+  {
+      OUT.camera_profile = (char*)"embed";
+  }
+  else if (options->getCameraProfile() == 2)
+  {
+      fname = options->getCameraProfileFileName();
+      ba = QFile::encodeName( fname );
+      OUT.camera_profile = ba.data();
+      qDebug() << "Camera profile: " << fname;
   }
 
   OUT.output_color = 1; // sRGB
 
-  if ( (ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
+  if ((ret = RawProcessor.open_file(filename)) != LIBRAW_SUCCESS)
   {
     qDebug() << "Error Opening RAW File";
     RawProcessor.recycle();
     return NULL;
   }
 
-  if ( (ret = RawProcessor.unpack()) != LIBRAW_SUCCESS)
+  if ((ret = RawProcessor.unpack()) != LIBRAW_SUCCESS)
   {
     qDebug() << "Error Unpacking RAW File";
     RawProcessor.recycle();
     return NULL;
   }
 
-  if ( (ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS)
+  if ((ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS)
   {
     qDebug() << "Error Processing RAW File";
     RawProcessor.recycle();
@@ -229,7 +244,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   libraw_processed_image_t *image = RawProcessor.dcraw_make_mem_image(&ret);
 
-  if( image == NULL) {
+  if (image == NULL)
+  {
     qDebug() << "Memory Error RAW File";
     RawProcessor.recycle();
     return NULL;
@@ -241,7 +257,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   pfs::DOMIO pfsio;
   pfs::Frame *frame = pfsio.createFrame( W, H );
 
-  if (frame == NULL) {
+  if (frame == NULL)
+  {
     RawProcessor.recycle();
     return NULL;
   }
@@ -249,26 +266,35 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   pfs::Channel *Xc, *Yc, *Zc;
   frame->createXYZChannels( Xc, Yc, Zc );
 
-  pfs::Array2D* X = Xc->getChannelData();
-  pfs::Array2D* Y = Yc->getChannelData();
-  pfs::Array2D* Z = Zc->getChannelData();
-  
-  int d = 0;
+  float* r =  Xc->getChannelData()->getRawData();
+  float* g =  Yc->getChannelData()->getRawData();
+  float* b =  Zc->getChannelData()->getRawData();
 
-  for(int j = 0; j < H; j++)
+  const unsigned char* raw_data = image->data;
+  for (int idx = 0; idx < H*W; ++idx)
   {
-      for (int i = 0; i < W; i++)
-      {
-          (*X)(i,j) = image->data[d]   + 256.0*image->data[d+1];
-          (*Y)(i,j) = image->data[d+2] + 256.0*image->data[d+3];
-          (*Z)(i,j) = image->data[d+4] + 256.0*image->data[d+5];
-          d += 6;
-      }
+      *r++ = raw_data[0] + (raw_data[1] << 8); raw_data += 2;
+      *g++ = raw_data[0] + (raw_data[1] << 8); raw_data += 2;
+      *b++ = raw_data[0] + (raw_data[1] << 8); raw_data += 2;
   }
 
-  qDebug() << "Data size: " << image->data_size << " " << W*H*3*2;
-  qDebug() << "W: " << image->width << " H: " << image->height;
+//  pfs::Array2D* X = Xc->getChannelData();
+//  pfs::Array2D* Y = Yc->getChannelData();
+//  pfs::Array2D* Z = Zc->getChannelData();
+//  int d = 0;
+//  for (int j = 0; j < H; j++)
+//  {
+//      for (int i = 0; i < W; i++)
+//      {
+//          (*X)(i,j) = image->data[d]   + 256.0*image->data[d+1];
+//          (*Y)(i,j) = image->data[d+2] + 256.0*image->data[d+3];
+//          (*Z)(i,j) = image->data[d+4] + 256.0*image->data[d+5];
+//          d += 6;
+//      }
+//  }
 
+  qDebug() << "Data size: " << image->data_size << " " << W*H*3*2;
+  qDebug() << "W: " << W << " H: " << H;
 
   if (writeOnDisk)   // for align_image_stack and thumbnails
   {

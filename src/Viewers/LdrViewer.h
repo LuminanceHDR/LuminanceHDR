@@ -76,7 +76,6 @@ protected Q_SLOTS:
 
 protected:
 	virtual void retranslateUi();
-	QImage *doCMSTransform(QImage *, bool, bool);
 
 private:
     QString caption; // ,postfix,exif_comment;
