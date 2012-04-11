@@ -186,6 +186,12 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+int cms_error_handler(int ErrorCode, const char *ErrorText)
+{
+	qDebug() << ErrorText;
+	throw std::runtime_error( std::string(ErrorText) );
+}
+
 static struct my_error_mgr { 
 
 	struct  jpeg_error_mgr pub;  // "public" fields 
@@ -253,8 +259,45 @@ QImage *JpegReader::readJpegIntoQImage()
 		return NULL;
 	}
 
+	jpeg_create_decompress(&cinfo);
+	qDebug() << "Created decompressor";
+	jpeg_stdio_src(&cinfo, infile);
+	qDebug() << "Assigned input source";
+	setup_read_icc_profile(&cinfo);
+	
+	try {
+		jpeg_read_header(&cinfo, true);
+	}
+	catch (char *error)
+	{
+		qDebug() << error;
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		return NULL;
+	}
+	qDebug() << "Readed JPEG headers";
+
+	try {
+		jpeg_start_decompress(&cinfo);
+		qDebug() << "Start decompress";
+	}
+	catch (char *error) {
+		qDebug() << error;
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		return NULL;
+	}		
+
+	qDebug() << cinfo.output_width;
+	qDebug() << cinfo.output_height;
+	qDebug() << cinfo.num_components;
+	qDebug() << cinfo.jpeg_color_space;
+
 	LuminanceOptions luminance_opts;
 	int camera_profile_opt = luminance_opts.getCameraProfile();
+	
+	cmsSetErrorHandler(cms_error_handler);
+	cmsErrorAction(LCMS_ERROR_SHOW);
 
 	if (camera_profile_opt == 2) { // from file
 		
@@ -266,8 +309,6 @@ QImage *JpegReader::readJpegIntoQImage()
 		
 			ba = profile_fname.toUtf8();
 
-			cmsErrorAction(LCMS_ERROR_SHOW);
-
 			hsRGB = cmsCreate_sRGBProfile();
 			hIn = cmsOpenProfileFromFile(ba.data(), "r");
 
@@ -275,13 +316,17 @@ QImage *JpegReader::readJpegIntoQImage()
 				return NULL;
 			}
 			
-			if (cmsGetColorSpace(hIn) != icSigRgbData) {
+			if (cmsGetColorSpace(hIn) != icSigRgbData || cmsGetColorSpace(hIn) != icSigCmykData) {
 				return NULL;
 			}
 				
 
 			doTransform = true;
-        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+			
+			if (cmsGetColorSpace(hIn) == icSigRgbData)
+	        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+			else
+	        	xform = cmsCreateTransform(hIn, TYPE_CMYK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 			qDebug() << "Created transform";
 
         	if (xform == NULL) {
@@ -293,24 +338,6 @@ QImage *JpegReader::readJpegIntoQImage()
 		}
 	}
 	
-	jpeg_create_decompress(&cinfo);
-	qDebug() << "Created decompressor";
-	jpeg_stdio_src(&cinfo, infile);
-	qDebug() << "Assigned input source";
-	setup_read_icc_profile(&cinfo);
-	
-	try {
-		jpeg_read_header(&cinfo, true);
-	}
-	catch (const std::runtime_error& err)
-	{
-		qDebug() << err.what();
-		jpeg_destroy_decompress(&cinfo);
-		fclose(infile);
-		return NULL;
-	}
-	qDebug() << "Readed JPEG headers";
-
 	if (camera_profile_opt == 1 && read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true) {
 		qDebug() << "Found embedded profile";
 		hsRGB = cmsCreate_sRGBProfile();
@@ -320,40 +347,65 @@ QImage *JpegReader::readJpegIntoQImage()
 			free(EmbedBuffer);
 			return NULL;
 		}
-		if (cmsGetColorSpace(hIn) != icSigRgbData) {
-			free(EmbedBuffer);
-			return NULL;
-		}
+
+		//if (cmsGetColorSpace(hIn) != icSigRgbData || cmsGetColorSpace(hIn) != icSigCmykData) {
+		//	qDebug() << cmsGetColorSpace(hIn);
+		//	free(EmbedBuffer);
+		//	return NULL;
+		//}
+		if (cmsGetColorSpace(hIn) == icSigRgbData)
+			qDebug() << "Embedded colorspace = sRGB";
+		else if (cmsGetColorSpace(hIn) == icSigCmykData)
+			qDebug() << "Embedded colorspace = CMYK";
+		else if (cmsGetColorSpace(hIn) == icSigYCbCrData)
+			qDebug() << "Embedded colorspace = YCbCr";
+		else if (cmsGetColorSpace(hIn) == icSigLuvKData)
+			qDebug() << "Embedded colorspace = LuvK";					
 
 		doTransform = true;
-
-        xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-
+	
+		switch (cinfo.jpeg_color_space)
+		{
+			case JCS_RGB:	
+				qDebug() << "Transform colorspace = sRGB";
+				xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+				break;
+			case JCS_CMYK:		
+				qDebug() << "Transform colorspace = CMYK";
+				xform = cmsCreateTransform(hIn, TYPE_CMYK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				break;
+			case JCS_YCbCr:
+				qDebug() << "Transform colorspace = YCbCr";
+				xform = cmsCreateTransform(hIn, TYPE_YUV_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+				break;
+			case JCS_YCCK:
+				qDebug() << "Transform colorspace = YCCK";
+				xform = cmsCreateTransform(hIn, TYPE_YUVK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+				break;
+		}
 		qDebug() << "Created transform";
 
 		free(EmbedBuffer);
 	}
-	
-	try {
-		jpeg_start_decompress(&cinfo);
-		qDebug() << "Start decompress";
+	else { // assume sRGB
+		ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+		ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
+		ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
 	}
-	catch (const std::runtime_error& err) {
-		qDebug() << err.what();
-		jpeg_destroy_decompress(&cinfo);
-		fclose(infile);
-		return NULL;
-	}		
-
-	qDebug() << cinfo.output_width;
-	qDebug() << cinfo.output_height;
-	qDebug() << cinfo.num_components;
-
-	QImage *out_qimage = new QImage(cinfo.output_width, cinfo.output_height, QImage::Format_RGB32);
-	ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-	ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-	ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
 	
+	QImage *out_qimage = new QImage(cinfo.output_width, cinfo.output_height, QImage::Format_RGB32);
     try
     {
         for (int i = 0; cinfo.output_scanline < cinfo.output_height; ++i)
@@ -361,14 +413,31 @@ QImage *JpegReader::readJpegIntoQImage()
             jpeg_read_scanlines(&cinfo, &ScanLineIn, 1);
 
             if (doTransform) {
-                cmsDoTransform(xform, ScanLineIn, ScanLineTemp, cinfo.output_width);
-                addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
-
+				cmsDoTransform(xform, ScanLineIn, ScanLineTemp, cinfo.output_width);
+				switch (cinfo.jpeg_color_space)
+				{
+					case JCS_RGB:
+						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+						break;
+					case JCS_CMYK:
+						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * (cinfo.num_components - 1));
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
+						break;
+					case JCS_YCbCr:
+						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+						break;
+					case JCS_YCCK:
+						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * (cinfo.num_components - 1));
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
+						break;
+				}			
             }
-            else
+            else {
                 addAlphaValues(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
-
-            memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+	            memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+			}
         }
     }
     catch (const std::runtime_error& err)
