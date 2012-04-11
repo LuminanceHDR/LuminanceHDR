@@ -302,9 +302,9 @@ QImage *JpegReader::readJpegIntoQImage()
 	try {
 		jpeg_read_header(&cinfo, true);
 	}
-	catch (char *error)
+	catch (const std::runtime_error& err)
 	{
-		qDebug() << error;
+		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
 		fclose(infile);
 		return NULL;
@@ -338,8 +338,8 @@ QImage *JpegReader::readJpegIntoQImage()
 		jpeg_start_decompress(&cinfo);
 		qDebug() << "Start decompress";
 	}
-	catch (char *error) {
-		qDebug() << error;
+	catch (const std::runtime_error& err) {
+		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
 		fclose(infile);
 		return NULL;
