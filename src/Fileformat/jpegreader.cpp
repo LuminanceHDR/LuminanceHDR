@@ -323,7 +323,7 @@ QImage *JpegReader::readJpegIntoQImage()
 				return NULL;
 			}
 			
-			if (cmsGetColorSpace(hIn) != icSigRgbData || cmsGetColorSpace(hIn) != icSigCmykData) {
+			if (!(cmsGetColorSpace(hIn) == icSigRgbData || cmsGetColorSpace(hIn) == icSigCmykData)) {
 				return NULL;
 			}
 				
@@ -333,7 +333,7 @@ QImage *JpegReader::readJpegIntoQImage()
 			if (cmsGetColorSpace(hIn) == icSigRgbData)
 	        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 			else
-	        	xform = cmsCreateTransform(hIn, TYPE_CMYK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+	        	xform = cmsCreateTransform(hIn, TYPE_YUVK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 			qDebug() << "Created transform";
 
         	if (xform == NULL) {
