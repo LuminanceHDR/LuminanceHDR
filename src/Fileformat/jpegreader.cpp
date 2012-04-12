@@ -275,7 +275,13 @@ QImage *JpegReader::readJpegIntoQImage()
 		fclose(infile);
 		return NULL;
 	}
+	
 	qDebug() << "Readed JPEG headers";
+
+	if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
+		cinfo.out_color_space = JCS_RGB;
+	else
+		cinfo.out_color_space = JCS_CMYK;
 
 	try {
 		jpeg_start_decompress(&cinfo);
@@ -292,6 +298,7 @@ QImage *JpegReader::readJpegIntoQImage()
 	qDebug() << cinfo.output_height;
 	qDebug() << cinfo.num_components;
 	qDebug() << cinfo.jpeg_color_space;
+	qDebug() << cinfo.out_color_space;
 
 	LuminanceOptions luminance_opts;
 	int camera_profile_opt = luminance_opts.getCameraProfile();
@@ -367,6 +374,7 @@ QImage *JpegReader::readJpegIntoQImage()
 		switch (cinfo.jpeg_color_space)
 		{
 			case JCS_RGB:	
+			case JCS_YCbCr:
 				qDebug() << "Transform colorspace = sRGB";
 				xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
@@ -374,25 +382,12 @@ QImage *JpegReader::readJpegIntoQImage()
 				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
 				break;
 			case JCS_CMYK:		
-				qDebug() << "Transform colorspace = CMYK";
-				xform = cmsCreateTransform(hIn, TYPE_CMYK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				break;
-			case JCS_YCbCr:
-				qDebug() << "Transform colorspace = YCbCr";
-				xform = cmsCreateTransform(hIn, TYPE_YUV_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
-				break;
 			case JCS_YCCK:
-				qDebug() << "Transform colorspace = YCCK";
+				qDebug() << "Transform colorspace = CMYK";
 				xform = cmsCreateTransform(hIn, TYPE_YUVK_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
 				ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 				ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+				ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 				break;
 		}
 		qDebug() << "Created transform";
@@ -417,17 +412,11 @@ QImage *JpegReader::readJpegIntoQImage()
 				switch (cinfo.jpeg_color_space)
 				{
 					case JCS_RGB:
-						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
-						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
-						break;
-					case JCS_CMYK:
-						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * (cinfo.num_components - 1));
-						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
-						break;
 					case JCS_YCbCr:
 						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * cinfo.num_components);
 						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
 						break;
+					case JCS_CMYK:
 					case JCS_YCCK:
 						addAlphaValues(ScanLineTemp, ScanLineOut, cinfo.output_width * (cinfo.num_components - 1));
 						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
@@ -435,8 +424,18 @@ QImage *JpegReader::readJpegIntoQImage()
 				}			
             }
             else {
-                addAlphaValues(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
-	            memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+				switch (cinfo.jpeg_color_space)
+				{
+					case JCS_RGB:
+					case JCS_YCbCr:
+						addAlphaValues(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * (cinfo.num_components + 1));
+						break;
+					case JCS_CMYK:
+					case JCS_YCCK:
+						memcpy(out_qimage->scanLine( i ), ScanLineIn, cinfo.output_width * cinfo.num_components);
+						break;
+				}			
 			}
         }
     }
