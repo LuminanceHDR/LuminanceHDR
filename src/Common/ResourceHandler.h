@@ -90,7 +90,7 @@ public:
 
 private:
     ResourceHandler(const ResourceHandler&);
-    void operator=(const ResourceHandler&);
+    ResourceHandler& operator=(const ResourceHandler&);
 
     T* p_;
 };
