@@ -277,8 +277,10 @@ QImage *JpegReader::readJpegIntoQImage()
 		throw err;
 	}
 	qDebug() << "Readed JPEG headers";
+	
+	qDebug() << cinfo.jpeg_color_space;
 
-	if (cinfo.jpeg_color_space != JCS_RGB) {
+	if (!(cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)) {
 		jpeg_destroy_decompress(&cinfo);
 		fclose(infile);
 		throw std::runtime_error("ERROR: Wrong colorspace");
@@ -291,7 +293,6 @@ QImage *JpegReader::readJpegIntoQImage()
 		
 		QString profile_fname = luminance_opts.getCameraProfileFileName();
 		qDebug() << "Camera profile: " << profile_fname;
-
 
 		if (!profile_fname.isEmpty()) {
 		
