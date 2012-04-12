@@ -207,7 +207,7 @@
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
+              <normaloff>:/new/prefix1/images/vcs_add.png</normaloff>:/new/prefix1/images/vcs_add.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -588,11 +588,27 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>add_dir_HDRs_Button</tabstop>
+  <tabstop>add_HDRs_Button</tabstop>
+  <tabstop>remove_HDRs_Button</tabstop>
+  <tabstop>add_dir_TMopts_Button</tabstop>
+  <tabstop>add_TMopts_Button</tabstop>
+  <tabstop>from_Database_Button</tabstop>
+  <tabstop>remove_TMOpts_Button</tabstop>
+  <tabstop>listWidget_HDRs</tabstop>
+  <tabstop>listWidget_TMopts</tabstop>
+  <tabstop>horizontalSlider_Width</tabstop>
+  <tabstop>spinBox_Width</tabstop>
+  <tabstop>horizontalSlider_Quality</tabstop>
+  <tabstop>spinBox_Quality</tabstop>
+  <tabstop>out_folder_widgets</tabstop>
+  <tabstop>out_folder_Button</tabstop>
   <tabstop>filterComboBox</tabstop>
+  <tabstop>filterLineEdit</tabstop>
+  <tabstop>clearTextToolButton</tabstop>
+  <tabstop>Log_Widget</tabstop>
   <tabstop>cancelbutton</tabstop>
   <tabstop>BatchGoButton</tabstop>
-  <tabstop>listWidget_HDRs</tabstop>
-  <tabstop>out_folder_widgets</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons.qrc"/>

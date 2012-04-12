@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>ImgQualityDialog</class>
- <widget class="QDialog" name="ImgQualityDialog" >
-  <property name="geometry" >
+ <widget class="QDialog" name="ImgQualityDialog">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,47 +10,47 @@
     <height>200</height>
    </rect>
   </property>
-  <property name="sizePolicy" >
-   <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="minimumSize" >
+  <property name="minimumSize">
    <size>
     <width>380</width>
     <height>200</height>
    </size>
   </property>
-  <property name="maximumSize" >
+  <property name="maximumSize">
    <size>
     <width>380</width>
     <height>200</height>
    </size>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Save as</string>
   </property>
-  <property name="modal" >
+  <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" >
-   <item row="0" column="0" >
-    <layout class="QVBoxLayout" name="verticalLayout_2" >
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QGroupBox" name="groupBox" >
-       <property name="title" >
+      <widget class="QGroupBox" name="groupBox">
+       <property name="title">
         <string>Saved File Quality</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2" >
-        <item row="0" column="0" >
-         <layout class="QVBoxLayout" name="verticalLayout" >
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
-           <spacer name="verticalSpacer_2" >
-            <property name="orientation" >
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>335</width>
               <height>13</height>
@@ -58,36 +59,36 @@
            </spacer>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout" >
+           <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
-             <widget class="QLabel" name="label" >
-              <property name="text" >
+             <widget class="QLabel" name="label">
+              <property name="text">
                <string>Quality:</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSlider" name="horizontalSlider" >
-              <property name="maximum" >
+             <widget class="QSlider" name="horizontalSlider">
+              <property name="maximum">
                <number>100</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>100</number>
               </property>
-              <property name="orientation" >
+              <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <property name="tickPosition" >
+              <property name="tickPosition">
                <enum>QSlider::TicksBelow</enum>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBox" >
-              <property name="maximum" >
+             <widget class="QSpinBox" name="spinBox">
+              <property name="maximum">
                <number>100</number>
               </property>
-              <property name="value" >
+              <property name="value">
                <number>100</number>
               </property>
              </widget>
@@ -95,11 +96,11 @@
            </layout>
           </item>
           <item>
-           <spacer name="verticalSpacer" >
-            <property name="orientation" >
+           <spacer name="verticalSpacer">
+            <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>330</width>
               <height>13</height>
@@ -109,28 +110,28 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0" >
-         <layout class="QHBoxLayout" name="horizontalLayout_2" >
+        <item row="1" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLabel" name="label_2" >
-            <property name="text" >
+           <widget class="QLabel" name="label_2">
+            <property name="text">
              <string>File size:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_filesize" >
-            <property name="text" >
+           <widget class="QLabel" name="label_filesize">
+            <property name="text">
              <string>Unknown</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer" >
-            <property name="orientation" >
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
-            <property name="sizeHint" stdset="0" >
+            <property name="sizeHint" stdset="0">
              <size>
               <width>40</width>
               <height>20</height>
@@ -139,8 +140,8 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="getSizeButton" >
-            <property name="text" >
+           <widget class="QPushButton" name="getSizeButton">
+            <property name="text">
              <string>Ca&amp;lculate</string>
             </property>
            </widget>
@@ -151,13 +152,13 @@
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4" >
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <spacer name="horizontalSpacer_3" >
-         <property name="orientation" >
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeHint" stdset="0" >
+         <property name="sizeHint" stdset="0">
           <size>
            <width>48</width>
            <height>26</height>
@@ -166,15 +167,15 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="saveButton" >
-         <property name="text" >
+        <widget class="QPushButton" name="saveButton">
+         <property name="text">
           <string>&amp;Save</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="cancelButton" >
-         <property name="text" >
+        <widget class="QPushButton" name="cancelButton">
+         <property name="text">
           <string>&amp;Cancel</string>
          </property>
         </widget>
@@ -186,11 +187,11 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>saveButton</tabstop>
-  <tabstop>cancelButton</tabstop>
-  <tabstop>getSizeButton</tabstop>
   <tabstop>horizontalSlider</tabstop>
   <tabstop>spinBox</tabstop>
+  <tabstop>getSizeButton</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>cancelButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -200,11 +201,11 @@
    <receiver>spinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>100</x>
      <y>46</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>195</x>
      <y>50</y>
     </hint>
@@ -216,11 +217,11 @@
    <receiver>horizontalSlider</receiver>
    <slot>setValue(int)</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>226</x>
      <y>56</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>103</x>
      <y>51</y>
     </hint>
@@ -232,11 +233,11 @@
    <receiver>ImgQualityDialog</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>120</x>
      <y>132</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>41</x>
      <y>161</y>
     </hint>
@@ -248,11 +249,11 @@
    <receiver>ImgQualityDialog</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
+    <hint type="sourcelabel">
      <x>187</x>
      <y>133</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>182</x>
      <y>161</y>
     </hint>

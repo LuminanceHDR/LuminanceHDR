@@ -507,6 +507,25 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>moveup_left_button</tabstop>
+  <tabstop>movedown_left_button</tabstop>
+  <tabstop>removeleft</tabstop>
+  <tabstop>addleft</tabstop>
+  <tabstop>leftlist</tabstop>
+  <tabstop>moveup_right_button</tabstop>
+  <tabstop>movedown_right_button</tabstop>
+  <tabstop>removeright</tabstop>
+  <tabstop>addright</tabstop>
+  <tabstop>rightlist</tabstop>
+  <tabstop>filterComboBox</tabstop>
+  <tabstop>filterLineEdit</tabstop>
+  <tabstop>clearTextToolButton</tabstop>
+  <tabstop>Log_Widget</tabstop>
+  <tabstop>checkBox_dont_overwrite</tabstop>
+  <tabstop>cancelbutton</tabstop>
+  <tabstop>TransplantButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>
