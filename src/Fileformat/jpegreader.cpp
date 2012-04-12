@@ -355,11 +355,6 @@ QImage *JpegReader::readJpegIntoQImage()
 			return NULL;
 		}
 
-		//if (cmsGetColorSpace(hIn) != icSigRgbData || cmsGetColorSpace(hIn) != icSigCmykData) {
-		//	qDebug() << cmsGetColorSpace(hIn);
-		//	free(EmbedBuffer);
-		//	return NULL;
-		//}
 		if (cmsGetColorSpace(hIn) == icSigRgbData)
 			qDebug() << "Embedded colorspace = sRGB";
 		else if (cmsGetColorSpace(hIn) == icSigCmykData)
