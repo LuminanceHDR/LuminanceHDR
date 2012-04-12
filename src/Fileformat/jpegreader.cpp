@@ -260,6 +260,30 @@ QImage *JpegReader::readJpegIntoQImage()
 		return NULL;
 	}
 
+	jpeg_create_decompress(&cinfo);
+	qDebug() << "Created decompressor";
+	jpeg_stdio_src(&cinfo, infile);
+	qDebug() << "Assigned input source";
+	setup_read_icc_profile(&cinfo);
+	
+	try {
+		jpeg_read_header(&cinfo, true);
+	}
+	catch (const std::runtime_error& err)
+	{
+		qDebug() << err.what();
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		throw err;
+	}
+	qDebug() << "Readed JPEG headers";
+
+	if (cinfo.jpeg_color_space != JCS_RGB) {
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		throw std::runtime_error("ERROR: Wrong colorspace");
+	}
+
 	LuminanceOptions luminance_opts;
 	int camera_profile_opt = luminance_opts.getCameraProfile();
 
@@ -282,10 +306,9 @@ QImage *JpegReader::readJpegIntoQImage()
 				throw err;
 			}
 			if (cmsGetColorSpace(hIn) != icSigRgbData) {
-				return NULL;
-			}
-				
-
+				throw std::runtime_error("ERROR: Wrong colorspace");
+			}	
+			
 			doTransform = true;
 			try {
 		        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
@@ -301,24 +324,6 @@ QImage *JpegReader::readJpegIntoQImage()
 		}
 	}
 	
-	jpeg_create_decompress(&cinfo);
-	qDebug() << "Created decompressor";
-	jpeg_stdio_src(&cinfo, infile);
-	qDebug() << "Assigned input source";
-	setup_read_icc_profile(&cinfo);
-	
-	try {
-		jpeg_read_header(&cinfo, true);
-	}
-	catch (const std::runtime_error& err)
-	{
-		qDebug() << err.what();
-		jpeg_destroy_decompress(&cinfo);
-		fclose(infile);
-		throw err;
-	}
-	qDebug() << "Readed JPEG headers";
-
 	if (camera_profile_opt == 1 && read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true) {
 		qDebug() << "Found embedded profile";
 		try {
@@ -333,7 +338,7 @@ QImage *JpegReader::readJpegIntoQImage()
 		}
 		if (cmsGetColorSpace(hIn) != icSigRgbData) {
 			free(EmbedBuffer);
-			return NULL;
+			throw std::runtime_error("ERROR: Wrong colorspace");
 		}
 
 		doTransform = true;
