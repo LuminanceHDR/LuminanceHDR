@@ -56,6 +56,7 @@ QStringList getCliFiles(const QStringList& arguments)
 }
 
 
+#ifdef WIN32
 inline void customMessageHandler(QtMsgType type, const char *msg)
 {
 	QString txt;
@@ -79,7 +80,7 @@ inline void customMessageHandler(QtMsgType type, const char *msg)
 	QTextStream ts(&outFile);
 	ts << txt << endl;
 }
-
+#endif
 
 int main( int argc, char ** argv )
 {
