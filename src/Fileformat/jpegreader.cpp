@@ -186,6 +186,11 @@ boolean read_icc_profile (j_decompress_ptr cinfo,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+int cms_error_handler(int ErrorCode, const char *ErrorText)
+{
+	throw std::runtime_error(ErrorText);
+}
+
 static struct my_error_mgr { 
 
 	struct  jpeg_error_mgr pub;  // "public" fields 
@@ -230,6 +235,8 @@ QImage *JpegReader::readJpegIntoQImage()
 
 	cmsHPROFILE hsRGB, hIn;
 	cmsHTRANSFORM xform = NULL;
+	cmsErrorAction(LCMS_ERROR_SHOW);
+	cmsSetErrorHandler(cms_error_handler);
 	
 	unsigned int EmbedLen;
 	JOCTET * EmbedBuffer;
@@ -253,46 +260,6 @@ QImage *JpegReader::readJpegIntoQImage()
 		return NULL;
 	}
 
-	LuminanceOptions luminance_opts;
-	int camera_profile_opt = luminance_opts.getCameraProfile();
-
-	if (camera_profile_opt == 2) { // from file
-		
-		QString profile_fname = luminance_opts.getCameraProfileFileName();
-		qDebug() << "Camera profile: " << profile_fname;
-
-
-		if (!profile_fname.isEmpty()) {
-		
-			ba = profile_fname.toUtf8();
-
-			cmsErrorAction(LCMS_ERROR_SHOW);
-
-			hsRGB = cmsCreate_sRGBProfile();
-			hIn = cmsOpenProfileFromFile(ba.data(), "r");
-
-			if (hIn == NULL) {
-				return NULL;
-			}
-			
-			if (cmsGetColorSpace(hIn) != icSigRgbData) {
-				return NULL;
-			}
-				
-
-			doTransform = true;
-        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-			qDebug() << "Created transform";
-
-        	if (xform == NULL) {
-            	cmsCloseProfile(hIn);
-            	return NULL;
-        	}
-
-        	cmsCloseProfile(hIn);
-		}
-	}
-	
 	jpeg_create_decompress(&cinfo);
 	qDebug() << "Created decompressor";
 	jpeg_stdio_src(&cinfo, infile);
@@ -302,33 +269,90 @@ QImage *JpegReader::readJpegIntoQImage()
 	try {
 		jpeg_read_header(&cinfo, true);
 	}
-	catch (char *error)
+	catch (const std::runtime_error& err)
 	{
-		qDebug() << error;
+		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
 		fclose(infile);
-		return NULL;
+		throw err;
 	}
 	qDebug() << "Readed JPEG headers";
+	
+	qDebug() << cinfo.jpeg_color_space;
 
+	if (!(cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)) {
+		jpeg_destroy_decompress(&cinfo);
+		fclose(infile);
+		throw std::runtime_error("ERROR: Wrong colorspace");
+	}
+
+	LuminanceOptions luminance_opts;
+	int camera_profile_opt = luminance_opts.getCameraProfile();
+
+	if (camera_profile_opt == 2) { // from file
+		
+		QString profile_fname = luminance_opts.getCameraProfileFileName();
+		qDebug() << "Camera profile: " << profile_fname;
+
+		if (!profile_fname.isEmpty()) {
+		
+			ba = profile_fname.toUtf8();
+
+			hsRGB = cmsCreate_sRGBProfile();
+			try {
+				hIn = cmsOpenProfileFromFile(ba.data(), "r");
+			}
+			catch (const std::runtime_error& err) {
+				qDebug() << err.what();
+				throw err;
+			}
+			if (cmsGetColorSpace(hIn) != icSigRgbData) {
+				throw std::runtime_error("ERROR: Wrong colorspace");
+			}	
+			
+			doTransform = true;
+			try {
+		        	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+			}
+			catch (const std::runtime_error& err) {
+				qDebug() << err.what();
+            			cmsCloseProfile(hIn);
+				throw err;
+			}
+			qDebug() << "Created transform";
+
+        	cmsCloseProfile(hIn);
+		}
+	}
+	
 	if (camera_profile_opt == 1 && read_icc_profile(&cinfo, &EmbedBuffer, &EmbedLen) == true) {
 		qDebug() << "Found embedded profile";
-		hsRGB = cmsCreate_sRGBProfile();
-		hIn = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
-
-		if (hIn == NULL) {
+		try {
+			hsRGB = cmsCreate_sRGBProfile();
+			hIn = cmsOpenProfileFromMem(EmbedBuffer, EmbedLen);
+		}
+		catch (const std::runtime_error& err)
+		{
+			qDebug() << err.what();
 			free(EmbedBuffer);
-			return NULL;
+			throw err;
 		}
 		if (cmsGetColorSpace(hIn) != icSigRgbData) {
 			free(EmbedBuffer);
-			return NULL;
+			throw std::runtime_error("ERROR: Wrong colorspace");
 		}
 
 		doTransform = true;
 
-        xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
-
+		try {
+			xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+		}
+		catch (const std::runtime_error& err)
+		{
+			qDebug() << err.what();
+			free(EmbedBuffer);
+			throw err;
+		}
 		qDebug() << "Created transform";
 
 		free(EmbedBuffer);
@@ -338,11 +362,11 @@ QImage *JpegReader::readJpegIntoQImage()
 		jpeg_start_decompress(&cinfo);
 		qDebug() << "Start decompress";
 	}
-	catch (char *error) {
-		qDebug() << error;
+	catch (const std::runtime_error& err) {
+		qDebug() << err.what();
 		jpeg_destroy_decompress(&cinfo);
 		fclose(infile);
-		return NULL;
+		throw err;
 	}		
 
 	qDebug() << cinfo.output_width;
@@ -381,7 +405,7 @@ QImage *JpegReader::readJpegIntoQImage()
         _cmsFree(ScanLineTemp);
         _cmsFree(ScanLineOut);
         jpeg_destroy_decompress(&cinfo);
-        return NULL;
+	throw err;
     }
 
 	if (doTransform)

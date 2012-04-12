@@ -22,6 +22,7 @@
  */
 
 #include <iostream>
+#include <stdexcept>
 
 #include <QFileInfo>
 #include <QProcess>
@@ -72,7 +73,7 @@ void HdrInputLoader::run() {
 			JpegReader reader(qfi.filePath());
 			QImage *newimage = reader.readJpegIntoQImage();
 			if (newimage == NULL)
-				throw "Failed Loading Image";
+				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
 
 			conditionallyRotateImage(qfi, &newimage);
 
@@ -89,7 +90,7 @@ void HdrInputLoader::run() {
 			if (reader.is8bitTiff()) {
 				QImage *newimage = reader.readIntoQImage();
 				if (newimage->isNull())
-					throw "Failed Loading Image";
+					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
 				
 				conditionallyRotateImage(qfi, &newimage);
 
@@ -101,7 +102,7 @@ void HdrInputLoader::run() {
 			else if (reader.is16bitTiff()) {
 				pfs::Frame *frame = reader.readIntoPfsFrame();
 				if (frame == NULL)
-					throw "Failed Loading Image";
+					emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
 				emit mdrReady(frame, image_idx, expotime, fname);
 				//QApplication::restoreOverrideCursor();
 				return;
@@ -116,7 +117,7 @@ void HdrInputLoader::run() {
 		} else {
 			pfs::Frame* frame = readRawIntoPfsFrame(QFile::encodeName(fname), QFile::encodeName(luminance_options.getTempDir()), &luminance_options, true, prog_callback, this);
 			if (frame == NULL)
-				throw "Failed Loading Image";
+				emit loadFailed(tr("ERROR loading %1").arg(qfi.fileName()),image_idx);
 
 			QString outfname = QString(luminance_options.getTempDir() + "/" + qfi.completeBaseName() + ".tiff");
 			emit mdrReady(frame, image_idx, expotime, outfname);
@@ -125,6 +126,15 @@ void HdrInputLoader::run() {
 	catch(pfs::Exception e) {
 		emit loadFailed(QString(tr("ERROR: %1")).arg(e.getMessage()),image_idx);
 		//QApplication::restoreOverrideCursor();
+		return;
+	}
+	catch (QString err) {
+		emit loadFailed((err + " : %1").arg(fname), image_idx);	
+		return;
+	}
+	catch (const std::runtime_error& err)
+	{
+		emit loadFailed((QString(err.what()) + " : %1").arg(fname), image_idx);	
 		return;
 	}
 	catch (...) {

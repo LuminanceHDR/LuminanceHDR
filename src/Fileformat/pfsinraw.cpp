@@ -131,8 +131,8 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
    {
       qDebug() << "Error Opening RAW File";
       RawProcessor.recycle();
-      return NULL;
-    }
+      throw QObject::tr("Error Opening RAW File");
+   }
     
     bool identify = true;
     if ((ret = RawProcessor.adjust_sizes_info_only()) != LIBRAW_SUCCESS)
@@ -216,21 +216,21 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   {
     qDebug() << "Error Opening RAW File";
     RawProcessor.recycle();
-    return NULL;
+    throw QObject::tr("Error Opening RAW File");
   }
 
   if ((ret = RawProcessor.unpack()) != LIBRAW_SUCCESS)
   {
     qDebug() << "Error Unpacking RAW File";
     RawProcessor.recycle();
-    return NULL;
+    throw QObject::tr("Error Unpacking RAW File");
   }
 
   if ((ret = RawProcessor.dcraw_process()) != LIBRAW_SUCCESS)
   {
     qDebug() << "Error Processing RAW File";
     RawProcessor.recycle();
-    return NULL;
+    throw QObject::tr("Error Processing RAW File");
   }
 
   qDebug() << "Width: " << S.width << " Height: " << S.height;
@@ -246,9 +246,9 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
 
   if (image == NULL)
   {
-    qDebug() << "Memory Error RAW File";
+    qDebug() << "Memory Error in processing RAW File";
     RawProcessor.recycle();
-    return NULL;
+    throw QObject::tr("Memory Error in processing RAW File");
   }
 
   int W = image->width;
@@ -260,7 +260,7 @@ pfs::Frame* readRawIntoPfsFrame(const char *filename, const char *tempdir, Lumin
   if (frame == NULL)
   {
     RawProcessor.recycle();
-    return NULL;
+    throw QObject::tr("Error Creating PFS Frame");
   }
 
   pfs::Channel *Xc, *Yc, *Zc;

@@ -31,6 +31,9 @@
 #define LUMINANCEAPPLICATION "Luminance"
 
 #define LUMINANCEVERSION "2.3.0-beta1"
+#ifdef WIN32
+#define LUMINANCEVERSION_RES 2,3,0 // numeric fileversion for .rc file (format: '0,0,0')
+#endif
 #define TMOSETTINGSVERSION "0.6"
 
 #define KEY_TOOLBAR_MODE "MainWindowToolbarVisualizationMode"
