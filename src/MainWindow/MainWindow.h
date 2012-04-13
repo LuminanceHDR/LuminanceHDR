@@ -184,6 +184,7 @@ protected Q_SLOTS:
 
 	void on_actionSoft_Proofing_toggled(bool);
 	void on_actionGamut_Check_toggled(bool);
+	void updateSoftProofing(int);
 
 Q_SIGNALS:
     // update HDR
