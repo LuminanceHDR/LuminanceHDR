@@ -459,6 +459,12 @@
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="negativeColorButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -2114,11 +2120,14 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QToolButton" name="monitor_toolButton">
                   <property name="text">
-                   <string>...</string>
+                   <string>Browse...</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                  </widget>
                 </item>
@@ -2273,11 +2282,14 @@ p, li { white-space: pre-wrap; }
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>...</string>
+                   <string>Browse...</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                  </widget>
                 </item>
@@ -2334,11 +2346,14 @@ p, li { white-space: pre-wrap; }
                 <item>
                  <widget class="QToolButton" name="printer_toolButton">
                   <property name="text">
-                   <string>...</string>
+                   <string>Browse...</string>
                   </property>
                   <property name="icon">
                    <iconset resource="../../icons.qrc">
                     <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+                  </property>
+                  <property name="toolButtonStyle">
+                   <enum>Qt::ToolButtonTextBesideIcon</enum>
                   </property>
                  </widget>
                 </item>

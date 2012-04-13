@@ -2886,12 +2886,6 @@ Luminace Level</string>
          <layout class="QHBoxLayout" name="horizontalLayout_undo">
           <item>
            <widget class="QPushButton" name="defaultButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
             <property name="toolTip">
              <string>Restore operator's default values</string>
             </property>
@@ -2911,15 +2905,22 @@ Luminace Level</string>
            </widget>
           </item>
           <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QPushButton" name="undoButton">
             <property name="enabled">
              <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
             </property>
             <property name="toolTip">
              <string>Previous applied settings</string>
@@ -2943,12 +2944,6 @@ Luminace Level</string>
            <widget class="QPushButton" name="redoButton">
             <property name="enabled">
              <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
             </property>
             <property name="toolTip">
              <string>Next applied settings</string>

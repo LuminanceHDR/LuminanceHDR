@@ -36,7 +36,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
-        <string>From:</string>
+        <string>From</string>
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
@@ -71,55 +71,19 @@
            <number>0</number>
           </property>
           <item>
-           <spacer>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="moveup_left_button">
+           <widget class="QToolButton" name="addleft">
             <property name="toolTip">
-             <string>Move up selected file(s)</string>
+             <string>Append files to the list</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
+              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
             <property name="iconSize">
              <size>
               <width>24</width>
               <height>24</height>
              </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="movedown_left_button">
-            <property name="toolTip">
-             <string>Move down selected file(s)</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
           </item>
@@ -138,19 +102,16 @@
               <height>24</height>
              </size>
             </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="addleft">
+           <widget class="QToolButton" name="moveup_left_button">
             <property name="toolTip">
-             <string>Append files to the list</string>
+             <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -158,8 +119,22 @@
               <height>24</height>
              </size>
             </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="movedown_left_button">
+            <property name="toolTip">
+             <string>Move down selected file(s)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -184,7 +159,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox_3">
        <property name="title">
-        <string>To:</string>
+        <string>To</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="1">
@@ -216,55 +191,19 @@
            <number>0</number>
           </property>
           <item>
-           <spacer>
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="moveup_right_button">
+           <widget class="QToolButton" name="addright">
             <property name="toolTip">
-             <string>Move up selected file(s)</string>
+             <string>Append files to the list</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
+              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
             </property>
             <property name="iconSize">
              <size>
               <width>24</width>
               <height>24</height>
              </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="movedown_right_button">
-            <property name="toolTip">
-             <string>Move down selected file(s)</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
             </property>
            </widget>
           </item>
@@ -283,19 +222,16 @@
               <height>24</height>
              </size>
             </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="addright">
+           <widget class="QToolButton" name="moveup_right_button">
             <property name="toolTip">
-             <string>Append files to the list</string>
+             <string>Move up selected file(s)</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/add.png</normaloff>:/new/prefix1/images/add.png</iconset>
+              <normaloff>:/new/prefix1/images/uparrow.png</normaloff>:/new/prefix1/images/uparrow.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -303,8 +239,22 @@
               <height>24</height>
              </size>
             </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="movedown_right_button">
+            <property name="toolTip">
+             <string>Move down selected file(s)</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../icons.qrc">
+              <normaloff>:/new/prefix1/images/downarrow.png</normaloff>:/new/prefix1/images/downarrow.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -331,7 +281,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Log:</string>
+      <string>Log</string>
      </property>
      <layout class="QVBoxLayout">
       <property name="spacing">
@@ -508,15 +458,10 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>moveup_left_button</tabstop>
   <tabstop>movedown_left_button</tabstop>
-  <tabstop>removeleft</tabstop>
-  <tabstop>addleft</tabstop>
   <tabstop>leftlist</tabstop>
   <tabstop>moveup_right_button</tabstop>
   <tabstop>movedown_right_button</tabstop>
-  <tabstop>removeright</tabstop>
-  <tabstop>addright</tabstop>
   <tabstop>rightlist</tabstop>
   <tabstop>filterComboBox</tabstop>
   <tabstop>filterLineEdit</tabstop>
