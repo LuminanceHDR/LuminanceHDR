@@ -277,7 +277,15 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
         else if ( rawextensions.indexOf(extension) != -1 )
         {
             // raw file detected
-            hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
+		try {
+			hdrpfsframe = readRawIntoPfsFrame(encodedFileName, TempPath, &luminanceOptions, false, progress_cb, this);
+		}
+		catch (QString err)
+		{
+        		qDebug("TH: catched exception");
+			emit read_hdr_failed((err + " : %1").arg(filename));	
+			return NULL;
+		}
         }
         else
         {

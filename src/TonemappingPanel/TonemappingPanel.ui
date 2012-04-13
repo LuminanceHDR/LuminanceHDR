@@ -192,6 +192,19 @@
          </layout>
         </item>
         <item>
+         <spacer name="verticalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QStackedWidget" name="stackedWidget_operators">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -289,7 +302,7 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="0" column="2">
                <widget class="QSlider" name="contrastFactorSlider">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -311,7 +324,7 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
+              <item row="1" column="2">
                <widget class="QSlider" name="saturationFactorSlider">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -330,7 +343,7 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
+              <item row="0" column="3">
                <widget class="QDoubleSpinBox" name="contrastFactordsb">
                 <property name="minimumSize">
                  <size>
@@ -367,7 +380,7 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
+              <item row="1" column="3">
                <widget class="QDoubleSpinBox" name="saturationFactordsb">
                 <property name="minimumSize">
                  <size>
@@ -435,7 +448,7 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
+              <item row="2" column="2">
                <widget class="QSlider" name="detailFactorSlider">
                 <property name="enabled">
                  <bool>true</bool>
@@ -457,7 +470,7 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
+              <item row="2" column="3">
                <widget class="QDoubleSpinBox" name="detailFactordsb">
                 <property name="enabled">
                  <bool>true</bool>
@@ -497,7 +510,7 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
+              <item row="3" column="2">
                <widget class="QCheckBox" name="contrastEqualizCheckBox">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -516,7 +529,7 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
+              <item row="4" column="2">
                <spacer name="verticalSpacer_3">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -2931,6 +2944,12 @@ Luminace Level</string>
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="toolTip">
              <string>Next applied settings</string>
             </property>
@@ -3001,6 +3020,12 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -3024,6 +3049,12 @@ Luminace Level</string>
              <iconset resource="../../icons.qrc">
               <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
             </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
            </widget>
           </item>
           <item row="0" column="3">
@@ -3036,7 +3067,13 @@ Luminace Level</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/filesave.png</normaloff>:/new/prefix1/images/filesave.png</iconset>
+              <normaloff>:/new/prefix1/images/vcs_update.png</normaloff>:/new/prefix1/images/vcs_update.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -3050,7 +3087,13 @@ Luminace Level</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/fileopen.png</normaloff>:/new/prefix1/images/fileopen.png</iconset>
+              <normaloff>:/new/prefix1/images/vcs_commit.png</normaloff>:/new/prefix1/images/vcs_commit.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -3064,7 +3107,13 @@ Luminace Level</string>
             </property>
             <property name="icon">
              <iconset resource="../../icons.qrc">
-              <normaloff>:/new/prefix1/images/draganddrop.png</normaloff>:/new/prefix1/images/draganddrop.png</iconset>
+              <normaloff>:/new/prefix1/images/vcs_add.png</normaloff>:/new/prefix1/images/vcs_add.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -3346,6 +3395,86 @@ Luminace Level</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>applyButton</tabstop>
+  <tabstop>replaceLdrCheckBox</tabstop>
+  <tabstop>cmbOperators</tabstop>
+  <tabstop>contrastFactorSlider</tabstop>
+  <tabstop>contrastFactordsb</tabstop>
+  <tabstop>saturationFactorSlider</tabstop>
+  <tabstop>saturationFactordsb</tabstop>
+  <tabstop>detailFactorSlider</tabstop>
+  <tabstop>detailFactordsb</tabstop>
+  <tabstop>contrastEqualizCheckBox</tabstop>
+  <tabstop>displayComboBox</tabstop>
+  <tabstop>colorSaturationSlider</tabstop>
+  <tabstop>colorSaturationDSB</tabstop>
+  <tabstop>contrastEnhancementSlider</tabstop>
+  <tabstop>contrastEnhancementDSB</tabstop>
+  <tabstop>luminanceLevelCheckBox</tabstop>
+  <tabstop>luminanceLevelSlider</tabstop>
+  <tabstop>luminanceLevelDSB</tabstop>
+  <tabstop>alphaSlider</tabstop>
+  <tabstop>alphadsb</tabstop>
+  <tabstop>betaSlider</tabstop>
+  <tabstop>betadsb</tabstop>
+  <tabstop>saturation2Slider</tabstop>
+  <tabstop>saturation2dsb</tabstop>
+  <tabstop>noiseSlider</tabstop>
+  <tabstop>noisedsb</tabstop>
+  <tabstop>oldFattalCheckBox</tabstop>
+  <tabstop>biasSlider</tabstop>
+  <tabstop>biasdsb</tabstop>
+  <tabstop>baseSlider</tabstop>
+  <tabstop>basedsb</tabstop>
+  <tabstop>spatialSlider</tabstop>
+  <tabstop>spatialdsb</tabstop>
+  <tabstop>rangeSlider</tabstop>
+  <tabstop>rangedsb</tabstop>
+  <tabstop>keySlider</tabstop>
+  <tabstop>keydsb</tabstop>
+  <tabstop>phiSlider</tabstop>
+  <tabstop>phidsb</tabstop>
+  <tabstop>usescalescheckbox</tabstop>
+  <tabstop>range2Slider</tabstop>
+  <tabstop>range2dsb</tabstop>
+  <tabstop>lowerSlider</tabstop>
+  <tabstop>lowerdsb</tabstop>
+  <tabstop>upperSlider</tabstop>
+  <tabstop>upperdsb</tabstop>
+  <tabstop>brightnessSlider</tabstop>
+  <tabstop>brightnessdsb</tabstop>
+  <tabstop>chromaticAdaptSlider</tabstop>
+  <tabstop>chromaticAdaptdsb</tabstop>
+  <tabstop>lightAdaptSlider</tabstop>
+  <tabstop>lightAdaptdsb</tabstop>
+  <tabstop>simpleCheckBox</tabstop>
+  <tabstop>eq2RadioButton</tabstop>
+  <tabstop>eq4RadioButton</tabstop>
+  <tabstop>contrastSlider</tabstop>
+  <tabstop>contrastdsb</tabstop>
+  <tabstop>multiplierSlider</tabstop>
+  <tabstop>multiplierdsb</tabstop>
+  <tabstop>pattalocal</tabstop>
+  <tabstop>autoYcheckbox</tabstop>
+  <tabstop>coneSlider</tabstop>
+  <tabstop>conedsb</tabstop>
+  <tabstop>rodSlider</tabstop>
+  <tabstop>roddsb</tabstop>
+  <tabstop>defaultButton</tabstop>
+  <tabstop>undoButton</tabstop>
+  <tabstop>redoButton</tabstop>
+  <tabstop>savesettingsbutton</tabstop>
+  <tabstop>loadsettingsbutton</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>loadButton</tabstop>
+  <tabstop>loadCommentsButton</tabstop>
+  <tabstop>sizeComboBox</tabstop>
+  <tabstop>addCustomSizeButton</tabstop>
+  <tabstop>pregammaSlider</tabstop>
+  <tabstop>pregammadefault</tabstop>
+  <tabstop>pregammadsb</tabstop>
+ </tabstops>
  <resources>
   <include location="../../icons.qrc"/>
  </resources>

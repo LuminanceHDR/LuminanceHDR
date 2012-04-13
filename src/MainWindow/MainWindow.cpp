@@ -282,6 +282,7 @@ void MainWindow::createCentralWidget()
 
     connect(m_tabwidget, SIGNAL(tabCloseRequested(int)), this, SLOT(removeTab(int)));
     connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateActions(int)));
+    connect(m_tabwidget, SIGNAL(currentChanged(int)), this, SLOT(updateSoftProofing(int)));
     connect(tmPanel, SIGNAL(startTonemapping(TonemappingOptions*)), this, SLOT(tonemapImage(TonemappingOptions*)));
     connect(this, SIGNAL(updatedHDR(pfs::Frame*)), tmPanel, SLOT(updatedHDR(pfs::Frame*)));
     connect(this, SIGNAL(destroyed()), previewPanel, SLOT(deleteLater()));
@@ -1434,6 +1435,15 @@ void MainWindow::addLdrFrame(pfs::Frame *frame, TonemappingOptions* tm_options)
     m_tabwidget->setCurrentWidget(n);
 
     previewPanel->setEnabled(true);
+	
+	if (m_Ui->actionSoft_Proofing->isChecked()) {
+		LdrViewer *viewer = static_cast<LdrViewer *>(n);
+		viewer->doSoftProofing(false);
+	}
+	else if (m_Ui->actionGamut_Check->isChecked()) {
+		LdrViewer *viewer = static_cast<LdrViewer *>(n);
+		viewer->doSoftProofing(true);
+	}
 }
 
 void MainWindow::tonemapFailed(QString error_msg)
@@ -1770,3 +1780,23 @@ bool MainWindow::winEvent(MSG * message, long * result)
     return OsIntegration::getInstance().winEvent(message, result);
 }
 #endif
+
+void MainWindow::updateSoftProofing(int i)
+{
+	QWidget *wgt = m_tabwidget->widget(i);
+	GenericViewer *g_v = (GenericViewer *)wgt;
+
+	if (g_v == NULL)
+		return;
+
+	if ( !g_v->isHDR() )
+	{
+		LdrViewer *l_v = static_cast<LdrViewer*>(g_v);
+		if (!m_Ui->actionSoft_Proofing->isChecked() && !m_Ui->actionGamut_Check->isChecked())
+			l_v->undoSoftProofing();
+		else if (m_Ui->actionSoft_Proofing->isChecked())
+			l_v->doSoftProofing(false);
+		else if (m_Ui->actionGamut_Check->isChecked())
+			l_v->doSoftProofing(true);
+	}
+}
