@@ -53,7 +53,7 @@
           <item>
            <widget class="QToolButton" name="add_dir_HDRs_Button">
             <property name="toolTip">
-             <string>Add Directory (ALT + D)</string>
+             <string>Add Directory (Alt+D)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -76,7 +76,7 @@
           <item>
            <widget class="QToolButton" name="add_HDRs_Button">
             <property name="toolTip">
-             <string>Add Files (ALT+ F)</string>
+             <string>Add Files (Alt+F)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -99,7 +99,7 @@
           <item>
            <widget class="QToolButton" name="remove_HDRs_Button">
             <property name="toolTip">
-             <string>Remove Files (ALT + R)</string>
+             <string>Remove Files (Alt+R)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -154,7 +154,7 @@
           <item>
            <widget class="QToolButton" name="add_dir_TMopts_Button">
             <property name="toolTip">
-             <string>Add Directory (ALY + I)</string>
+             <string>Add Directory (Alt+I)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -177,7 +177,7 @@
           <item>
            <widget class="QToolButton" name="add_TMopts_Button">
             <property name="toolTip">
-             <string>Add Files (ALT + L)</string>
+             <string>Add Files (Alt+L)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -200,7 +200,7 @@
           <item>
            <widget class="QToolButton" name="from_Database_Button">
             <property name="toolTip">
-             <string>Add from Database (ALT +B)</string>
+             <string>Add from Database (Alt+B)</string>
             </property>
             <property name="text">
              <string>...</string>
@@ -223,7 +223,7 @@
           <item>
            <widget class="QToolButton" name="remove_TMOpts_Button">
             <property name="toolTip">
-             <string>Remove Settings (ALT+M)</string>
+             <string>Remove Settings (Alt+M)</string>
             </property>
             <property name="text">
              <string>...</string>
