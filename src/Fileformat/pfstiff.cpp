@@ -161,6 +161,8 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
     if(!TIFFGetFieldDefaulted(tif, TIFFTAG_PHOTOMETRIC, &phot))
 		throw std::runtime_error("TIFF: unspecified photometric type");
 
+	qDebug() << "Photometric type : " << phot;
+
     uint16 * extra_sample_types=0;
     uint16 extra_samples_per_pixel=0;
     switch(phot)
@@ -217,7 +219,29 @@ TiffReader::TiffReader( const char* filename, const char *tempfilespath, bool wo
             TypeOfData = FLOAT;
             qDebug("32bit float per channel");
         }
+		ColorSpace = RGB;
         break;
+	case PHOTOMETRIC_SEPARATED:
+        TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &nSamples);
+		qDebug() << "nSamples: " << nSamples;
+		TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bps);	
+        if( bps==8 )
+        {
+            TypeOfData = BYTE;
+            qDebug("8bit per channel");
+        }
+        else if( bps==16 )
+        {
+            TypeOfData = WORD;
+            qDebug("16bit per channel");
+        }
+        else
+        {
+            TypeOfData = FLOAT;
+            qDebug("32bit float per channel");
+        }
+		ColorSpace = CMYK;
+		break;
     default:
         //qFatal("Unsupported photometric type: %d",phot);
         TIFFClose(tif);
@@ -249,7 +273,14 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 			doTransform = true;
 			try {
 				hsRGB = cmsCreate_sRGBProfile();
-    	    	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+				if (ColorSpace == RGB && TypeOfData == WORD)
+	    	    	xform = cmsCreateTransform(hIn, TYPE_RGB_16, hsRGB, TYPE_RGB_16, INTENT_PERCEPTUAL, 0);
+				else if (ColorSpace == RGB && TypeOfData == BYTE)
+	    	    	xform = cmsCreateTransform(hIn, TYPE_RGB_8, hsRGB, TYPE_RGB_8, INTENT_PERCEPTUAL, 0);
+				else if (ColorSpace == CMYK && TypeOfData == WORD)
+	    	    	xform = cmsCreateTransform(hIn, TYPE_CMYK_16, hsRGB, TYPE_RGBA_16, INTENT_PERCEPTUAL, 0);
+				else
+	    	    	xform = cmsCreateTransform(hIn, TYPE_CMYK_8, hsRGB, TYPE_RGBA_8, INTENT_PERCEPTUAL, 0);
 				qDebug() << "Created transform";
 			}
 			catch(const std::runtime_error& err)
@@ -309,7 +340,12 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
         void* vp;
     } buf;
 
-	uint16* outbuf = NULL;
+	union {
+		uint16* wp;
+		uint8* bp;
+		void* vp;
+	} outbuf;
+
     uchar *data = NULL; // ?
 
     //pfs::DOMIO pfsio;
@@ -341,7 +377,10 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
 	buf.vp = _TIFFmalloc(scanlinesize);
 	
 	if (doTransform) {
-		outbuf = (uint16 *) _TIFFmalloc(scanlinesize); 
+		if (TypeOfData == WORD)
+			outbuf.vp = _TIFFmalloc(scanlinesize); 
+		else
+			outbuf.vp = _TIFFmalloc(scanlinesize); 
 	}
 	
 	qDebug() << scanlinesize;
@@ -367,29 +406,32 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
       	case WORD:
             TIFFReadScanline(tif, buf.wp, row);
 			if (doTransform) {
-				cmsDoTransform(xform, buf.wp, outbuf, image_width);
+				cmsDoTransform(xform, buf.wp, outbuf.wp, image_width);
 			}
             for( int i=0; i < image_width; i++ )
             {
-                X[row*image_width + i] = !doTransform ? buf.wp[i*nSamples]   : outbuf[i*nSamples];
-                Y[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+1] : outbuf[i*nSamples+1];
-                Z[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+2] : outbuf[i*nSamples+2];;
+                X[row*image_width + i] = !doTransform ? buf.wp[i*nSamples]   : outbuf.wp[i*nSamples];
+                Y[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+1] : outbuf.wp[i*nSamples+1];
+                Z[row*image_width + i] = !doTransform ? buf.wp[i*nSamples+2] : outbuf.wp[i*nSamples+2];;
                 if (writeOnDisk)
                 {
-                    *(data     + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+2]/256.0 : outbuf[i*nSamples+2]/256.0;
-                    *(data + 1 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+1]/256.0 : outbuf[i*nSamples+1]/256.0;
-                    *(data + 2 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples]/256.0   : outbuf[i*nSamples]/256.0;
+                    *(data     + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+2]/256.0 : outbuf.wp[i*nSamples+2]/256.0;
+                    *(data + 1 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples+1]/256.0 : outbuf.wp[i*nSamples+1]/256.0;
+                    *(data + 2 + (row*width+i)*4) = !doTransform ? buf.wp[i*nSamples]/256.0   : outbuf.wp[i*nSamples]/256.0;
                     *(data + 3 + (row*width+i)*4) = 0xff;
                 }
             }
             break;
       case BYTE:
             TIFFReadScanline(tif, buf.bp, row);
+			if (doTransform) {
+				cmsDoTransform(xform, buf.bp, outbuf.bp, image_width);
+			}
             for( int i=0; i<image_width; i++ )
             {
-                X[row*image_width + i] = pow( buf.bp[i*nSamples]/255.0, 2.2 );
-                Y[row*image_width + i] = pow( buf.bp[i*nSamples+1]/255.0, 2.2 );
-                Z[row*image_width + i] = pow( buf.bp[i*nSamples+2]/255.0, 2.2 );
+                X[row*image_width + i] = pow( !doTransform ? buf.bp[i*nSamples]/255.0 : outbuf.bp[i*nSamples]/255.0, 2.2 );
+                Y[row*image_width + i] = pow( !doTransform ? buf.bp[i*nSamples+1]/255.0 : outbuf.bp[i*nSamples+1]/255.0, 2.2 );
+                Z[row*image_width + i] = pow( !doTransform ? buf.bp[i*nSamples+2]/255.0 : outbuf.bp[i*nSamples+2]/255.0, 2.2 );
             }
             break;
         }
@@ -400,12 +442,12 @@ pfs::Frame* TiffReader::readIntoPfsFrame()
   {
 	qDebug() << err.what();
 	cmsDeleteTransform(xform);
-	_TIFFfree(outbuf);
+	_TIFFfree(outbuf.vp);
 	throw std::runtime_error(err.what());
   }
 	if (doTransform) {
 		cmsDeleteTransform(xform);
-		_TIFFfree(outbuf);
+		_TIFFfree(outbuf.vp);
 	}
 
     if (writeOnDisk) 

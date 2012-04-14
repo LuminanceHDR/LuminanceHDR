@@ -45,6 +45,7 @@ class TiffReader : public QObject {
   uint16 comp;                  /// compression type
   uint16 phot;                  /// type of photometric data
   enum {FLOATLOGLUV, FLOAT, WORD, BYTE} TypeOfData; //FLOAT is the wasting space one, FLOATLOGLUV is Greg Ward's format
+  enum {RGB, CMYK} ColorSpace;
   uint16 bps;                   /// bits per sample
   uint16 nSamples;              /// number of channels in tiff file (only 1-3 are used)
   bool has_alpha;
