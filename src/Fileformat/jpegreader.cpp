@@ -227,9 +227,13 @@ void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 void transform_to_rgb(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 {
 	for (int i = 0; i < size; i += 4) {
-		*(ScanLineOut + i)     = ( (255 - *(ScanLineIn + i + 0)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
-		*(ScanLineOut + i + 1) = ( (255 - *(ScanLineIn + i + 1)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
-		*(ScanLineOut + i + 2) = ( (255 - *(ScanLineIn + i + 2)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
+		unsigned char C = *(ScanLineIn + i + 0);
+		unsigned char M = *(ScanLineIn + i + 1);
+		unsigned char Y = *(ScanLineIn + i + 2);
+		unsigned char K = *(ScanLineIn + i + 3);
+		*(ScanLineOut + i + 2) = C*K/255;
+		*(ScanLineOut + i + 1) = M*K/255;
+		*(ScanLineOut + i + 0) = Y*K/255;
 		*(ScanLineOut + i + 3) = 255;
 	}
 }
@@ -286,13 +290,17 @@ QImage *JpegReader::readJpegIntoQImage()
 		fclose(infile);
 		throw err;
 	}
+
 	qDebug() << "Readed JPEG headers";
 	qDebug() << cinfo.jpeg_color_space;
+
 	if (cinfo.jpeg_color_space == JCS_YCCK) {
 		qDebug() << "Converting to CMYK";
 		cinfo.out_color_space = JCS_CMYK;
 	}
 
+	qDebug() << cinfo.num_components;
+	
 	//if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
 	//	cinfo.out_color_space = JCS_RGB;
 	//else
