@@ -224,6 +224,16 @@ void addAlphaValues(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
 	}
 }
 
+void transform_to_rgb(JSAMPROW ScanLineIn, unsigned char *ScanLineOut, int size)
+{
+	for (int i = 0; i < size; i += 4) {
+		*(ScanLineOut + i)     = ( (255 - *(ScanLineIn + i + 0)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
+		*(ScanLineOut + i + 1) = ( (255 - *(ScanLineIn + i + 1)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
+		*(ScanLineOut + i + 2) = ( (255 - *(ScanLineIn + i + 2)) * (255 - *(ScanLineIn + i + 3)) ) / 255;
+		*(ScanLineOut + i + 3) = 255;
+	}
+}
+
 JpegReader::JpegReader(QString filename) :
 	fname(filename)
 {
@@ -278,11 +288,15 @@ QImage *JpegReader::readJpegIntoQImage()
 	}
 	qDebug() << "Readed JPEG headers";
 	qDebug() << cinfo.jpeg_color_space;
-
-	if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
-		cinfo.out_color_space = JCS_RGB;
-	else
+	if (cinfo.jpeg_color_space == JCS_YCCK) {
+		qDebug() << "Converting to CMYK";
 		cinfo.out_color_space = JCS_CMYK;
+	}
+
+	//if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
+	//	cinfo.out_color_space = JCS_RGB;
+	//else
+	//	cinfo.out_color_space = JCS_CMYK;
 
 	try {
 		jpeg_start_decompress(&cinfo);
@@ -406,10 +420,13 @@ QImage *JpegReader::readJpegIntoQImage()
 
 		free(EmbedBuffer);
 	}
-	else { // assume sRGB
+	else { 
 		ScanLineIn  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 		ScanLineTemp  = (JSAMPROW) _cmsMalloc(cinfo.output_width * cinfo.num_components);
-		ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+		if (cinfo.jpeg_color_space == JCS_RGB || cinfo.jpeg_color_space == JCS_YCbCr)
+			ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * (cinfo.num_components + 1));
+		else
+			ScanLineOut  = (unsigned char *) _cmsMalloc(cinfo.output_width * cinfo.num_components);
 	}
 	
 	QImage *out_qimage = new QImage(cinfo.output_width, cinfo.output_height, QImage::Format_RGB32);
@@ -445,7 +462,8 @@ QImage *JpegReader::readJpegIntoQImage()
 						break;
 					case JCS_CMYK:
 					case JCS_YCCK:
-						memcpy(out_qimage->scanLine( i ), ScanLineIn, cinfo.output_width * cinfo.num_components);
+						transform_to_rgb(ScanLineIn, ScanLineOut, cinfo.output_width * cinfo.num_components);
+						memcpy(out_qimage->scanLine( i ), ScanLineOut, cinfo.output_width * cinfo.num_components);
 						break;
 				}			
 			}
