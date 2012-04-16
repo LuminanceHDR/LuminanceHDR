@@ -30,9 +30,7 @@
 #include <QFileInfo>
 #include <QString>
 #include <QByteArray>
-#ifdef QT_DEBUG
 #include <QDebug>
-#endif
 #include <QScopedPointer>
 #include <stdexcept>
 
