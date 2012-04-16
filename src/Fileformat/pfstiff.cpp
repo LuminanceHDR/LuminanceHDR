@@ -131,9 +131,9 @@ GetTIFFProfile (TIFF * in)
 ///////////////////////////////////////////////////////////////////////////////
 
 static void
-transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, int size)
+transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, uint32 size, int nSamples)
 {
-  for (int i = 0; i < size; i += 4)
+  for (uint32 i = 0; i < size; i += nSamples)
     {
       unsigned char C = *(ScanLineIn + i + 0);
       unsigned char M = *(ScanLineIn + i + 1);
@@ -143,6 +143,22 @@ transform_to_rgb (unsigned char *ScanLineIn, unsigned char *ScanLineOut, int siz
       *(ScanLineOut + i + 1) = ((255 - M) * (255 - K)) / 255;
       *(ScanLineOut + i + 2) = ((255 - Y) * (255 - K)) / 255;
       *(ScanLineOut + i + 3) = 255;
+    }
+}
+
+static void
+transform_to_rgb_16 (uint16 *ScanLineIn, uint16 *ScanLineOut, uint32 size, int nSamples)
+{
+  for (uint32 i = 0; i < size/2; i += nSamples)
+    {
+      uint16 C = *(ScanLineIn + i + 0);
+      uint16 M = *(ScanLineIn + i + 1);
+      uint16 Y = *(ScanLineIn + i + 2);
+      uint16 K = *(ScanLineIn + i + 3);
+      *(ScanLineOut + i + 0) = ((65535 - C) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 1) = ((65535 - M) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 2) = ((65535 - Y) * (65535 - K)) / 65535;
+      *(ScanLineOut + i + 3) = 65535;
     }
 }
 
@@ -438,7 +454,7 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
       outbuf.vp = _TIFFmalloc (scanlinesize);
     }
 
-  qDebug () << scanlinesize;
+  qDebug () << "scanlinesize: " << scanlinesize;
   //--- read scan lines
   const int
     image_width = width;	//X->getCols();
@@ -466,6 +482,13 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
 	      {
 		cmsDoTransform (xform, buf.wp, outbuf.wp, image_width);
 	      }
+	    else if (ColorSpace == CMYK)
+	      {
+        outbuf.vp = _TIFFmalloc (scanlinesize);
+        transform_to_rgb_16 (buf.wp, outbuf.wp, scanlinesize, nSamples);
+        memcpy (buf.wp, outbuf.wp, scanlinesize);
+        _TIFFfree (outbuf.vp);
+	      }
 	    for (int i = 0; i < image_width; i++)
 	      {
 		X[row * image_width + i] = !doTransform ? buf.wp[i * nSamples] : outbuf.wp[i * nSamples];
@@ -489,7 +512,7 @@ pfs::Frame * TiffReader::readIntoPfsFrame ()
 	    else if (ColorSpace == CMYK)
 	      {
 		outbuf.vp = _TIFFmalloc (scanlinesize);
-		transform_to_rgb (buf.bp, outbuf.bp, scanlinesize);
+		transform_to_rgb (buf.bp, outbuf.bp, scanlinesize, nSamples);
 		memcpy (buf.bp, outbuf.bp, scanlinesize);
         _TIFFfree (outbuf.vp);
 	      }
@@ -660,7 +683,7 @@ TiffReader::readIntoQImage ()
 	     {
 	     qDebug () << "Convert to RGB";
 	     uchar *rgb_bp = new uchar[scanlinesize];
-	     transform_to_rgb (bp, rgb_bp, scanlinesize);
+	     transform_to_rgb (bp, rgb_bp, scanlinesize, nSamples);
          memcpy(bp, rgb_bp, scanlinesize);
          delete[]rgb_bp;
 	     }
