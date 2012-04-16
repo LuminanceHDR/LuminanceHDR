@@ -34,7 +34,6 @@
 #include <QDebug>
 #endif
 #include <QScopedPointer>
-#include <stdexcept>
 
 #include "Core/IOWorker.h"
 #include "Fileformat/pfs_file_format.h"
@@ -302,12 +301,6 @@ pfs::Frame* IOWorker::read_hdr_frame(QString filename)
             return NULL;
         }
     }
-	catch (const std::runtime_error& err)
-	{
-		qDebug() << err.what();
-		emit read_hdr_failed(err.what()); 
-		return NULL;
-	}
     catch (...)
     {
         qDebug("TH: catched exception");
